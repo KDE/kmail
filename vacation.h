@@ -53,11 +53,11 @@ namespace KMail {
 
   protected:
     static QString composeScript( const QString & messageText,
-				  int notificationInterval,
-				  const KMime::Types::AddrSpecList & aliases,
+                                  int notificationInterval,
+                                  const KMime::Types::AddrSpecList & aliases,
                                   bool sendForSpam, const QString & excludeDomain );
     static bool parseScript( const QString & script, QString & messageText,
-			     int & notificationInterval, QStringList & aliases,
+                             int & notificationInterval, QStringList & aliases,
                              bool & sendForSpam, QString & domainName );
     KUrl findURL() const;
     void handlePutResult( KMail::SieveJob * job, bool success, bool );
@@ -71,7 +71,7 @@ namespace KMail {
   protected slots:
     void slotDialogDefaults();
     void slotGetResult( KMail::SieveJob * job, bool success,
-			const QString & script, bool active );
+                        const QString & script, bool active );
     void slotDialogOk();
     void slotDialogCancel();
     void slotPutActiveResult( KMail::SieveJob *, bool );

@@ -42,7 +42,7 @@ namespace KMail {
 
 
 //-----------------------------------------------------------------------------
-MboxJob::MboxJob( KMMessage *msg, JobType jt , KMFolder *folder  )
+MboxJob::MboxJob( KMMessage *msg, JobType jt, KMFolder *folder  )
   : FolderJob( msg, jt, folder )
 {
 }

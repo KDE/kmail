@@ -1691,7 +1691,7 @@ void KMailICalIfaceImpl::readConfig()
             if ( results[i].found == StandardFolderSearchResult::NotFound )
               operations += "<li>" + i18n( "%1: no folder found, will create it", typeName ) + "</li>";
             else if ( results[i].found == StandardFolderSearchResult::FoundByType || results[i].found == StandardFolderSearchResult::FoundByName )
-              operations += "<li>" + i18n( "%1: found folder %2, will set it as main groupware folder" ,
+              operations += "<li>" + i18n( "%1: found folder %2, will set it as main groupware folder",
                              typeName, results[i].folder->label() ) + "</li>";
           }
         }

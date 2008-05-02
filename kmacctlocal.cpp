@@ -120,7 +120,7 @@ bool KMAcctLocal::preProcess()
 
   //BroadcastStatus::instance()->reset();
   BroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from \"%1\"...", mName));
+  i18n("Preparing transmission from \"%1\"...", mName));
 
 
   Q_ASSERT( !mMailCheckProgressItem );
@@ -157,7 +157,7 @@ bool KMAcctLocal::preProcess()
     kDebug(5006) <<"mailFolder could not be locked";
     mMailFolder->close( "acctlocalMail" );
     checkDone( mHasNewMail, CheckError );
-    QString errMsg = i18n( "Transmission failed: Could not lock %1." ,
+    QString errMsg = i18n( "Transmission failed: Could not lock %1.",
         mMailFolder->location() );
     BroadcastStatus::instance()->setStatusMsg( errMsg );
     return false;
@@ -236,8 +236,8 @@ void KMAcctLocal::postProcess()
     if ( rc != 0 ) {
       KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
                                      i18n( "<qt>Cannot remove mail from "
-                                           "mailbox <b>%1</b>:<br />%2</qt>" ,
-                                       mMailFolder->location() ,
+                                           "mailbox <b>%1</b>:<br />%2</qt>",
+                                       mMailFolder->location(),
                                        strerror( rc ) ) );
     }
 

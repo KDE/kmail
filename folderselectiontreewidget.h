@@ -146,7 +146,7 @@ protected:
    * Recursively fetches folder items from the KMFolderTree
    * by starting at fti (as root). This is internal api: use reload() instead.
    */
-  void recursiveReload( KMFolderTreeItem *fti , FolderSelectionTreeWidgetItem *parent );
+  void recursiveReload( KMFolderTreeItem *fti, FolderSelectionTreeWidgetItem *parent );
 
 };
 

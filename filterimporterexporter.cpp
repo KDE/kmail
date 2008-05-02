@@ -108,7 +108,7 @@ QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KConfig *config
     QList<KMFilter *> filters;
     for ( int i=0 ; i < numFilters ; ++i ) {
         QString grpName;
-        grpName.sprintf( "%s #%d", (bPopFilter ? "PopFilter" : "Filter") , i );
+        grpName.sprintf( "%s #%d", (bPopFilter ? "PopFilter" : "Filter"), i );
         KConfigGroup group = config->group( grpName );
         KMFilter *filter = new KMFilter( group, bPopFilter );
         filter->purify();

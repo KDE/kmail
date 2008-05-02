@@ -41,7 +41,7 @@ FolderSelectionDialog::FolderSelectionDialog( KMMainWidget * parent, const QStri
     mUseGlobalSettings( useGlobalSettings )
 {
   setCaption( caption );
-  init( parent->folderTree() , mustBeReadWrite );
+  init( parent->folderTree(), mustBeReadWrite );
 }
 
 FolderSelectionDialog::FolderSelectionDialog( QWidget * parent, KMFolderTree * tree,
@@ -50,14 +50,14 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget * parent, KMFolderTree * t
     mUseGlobalSettings( useGlobalSettings )
 {
   setCaption( caption );
-  init( tree , mustBeReadWrite );
+  init( tree, mustBeReadWrite );
 }
 
-void FolderSelectionDialog::init( KMFolderTree *tree , bool mustBeReadWrite )
+void FolderSelectionDialog::init( KMFolderTree *tree, bool mustBeReadWrite )
 {
   setButtons( Ok | Cancel | User1 );
   setObjectName( "folder dialog" );
-  setButtonGuiItem( User1, KGuiItem( i18n("&New Subfolder...") , "folder-new",
+  setButtonGuiItem( User1, KGuiItem( i18n("&New Subfolder..."), "folder-new",
          i18n("Create a new subfolder under the currently selected folder") ) );
 
   QString preSelection = mUseGlobalSettings ?
@@ -65,13 +65,13 @@ void FolderSelectionDialog::init( KMFolderTree *tree , bool mustBeReadWrite )
   QWidget *vbox = new KVBox( this );
   setMainWidget( vbox );
   mTreeView = new KMail::FolderSelectionTreeWidget( vbox, tree );
-  mTreeView->reload( mustBeReadWrite , true , true , preSelection );
+  mTreeView->reload( mustBeReadWrite, true, true, preSelection );
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
            this, SLOT( slotSelect() ) );
   connect( mTreeView, SIGNAL( itemSelectionChanged() ),
            this, SLOT( slotUpdateBtnStatus() ) );
-  connect(this, SIGNAL( user1Clicked() ) , mTreeView , SLOT( addChildFolder() ) );
+  connect(this, SIGNAL( user1Clicked() ), mTreeView, SLOT( addChildFolder() ) );
   readConfig();
 }
 
@@ -131,8 +131,8 @@ void FolderSelectionDialog::readConfig()
   if ( !mTreeView->restoreLayout( group ) ) 
   {
     int colWidth = width() / 2;
-    mTreeView->setColumnWidth( mTreeView->nameColumnIndex() , colWidth );
-    mTreeView->setColumnWidth( mTreeView->pathColumnIndex() , colWidth );
+    mTreeView->setColumnWidth( mTreeView->nameColumnIndex(), colWidth );
+    mTreeView->setColumnWidth( mTreeView->pathColumnIndex(), colWidth );
   }
 }
 

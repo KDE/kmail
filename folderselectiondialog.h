@@ -116,7 +116,7 @@ protected:
   /**
    * Common initialization for all the constructors.
    */
-  void init( KMFolderTree *tree , bool mustBeReadWrite );
+  void init( KMFolderTree *tree, bool mustBeReadWrite );
 
 private:
   FolderSelectionTreeWidget * mTreeView;

@@ -116,8 +116,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   connect( mStorage, SIGNAL( msgAdded( int ) ), SIGNAL( msgAdded( int ) ) );
   connect( mStorage, SIGNAL( msgAdded( KMFolder*, quint32 ) ),
            SIGNAL( msgAdded( KMFolder*, quint32 ) ) );
-  connect( mStorage, SIGNAL( msgChanged( KMFolder*, quint32 , int ) ),
-           SIGNAL( msgChanged( KMFolder*, quint32 , int ) ) );
+  connect( mStorage, SIGNAL( msgChanged( KMFolder*, quint32, int ) ),
+           SIGNAL( msgChanged( KMFolder*, quint32, int ) ) );
   connect( mStorage, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
            SIGNAL( msgHeaderChanged( KMFolder*, int ) ) );
   connect( mStorage, SIGNAL( statusMsg( const QString& ) ),
@@ -185,7 +185,7 @@ void KMFolder::readConfig( KConfigGroup & configGroup )
   slotIdentitiesChanged();
 
   setUserWhoField( configGroup.readEntry( "WhoField" ), false );
-  uint savedId = configGroup.readEntry( "Id" , 0 );
+  uint savedId = configGroup.readEntry( "Id", 0 );
   // make sure that we don't overwrite a valid id
   if ( savedId != 0 && mId == 0 )
     mId = savedId;

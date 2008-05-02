@@ -62,7 +62,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   hlay->addWidget( l );
   hlay->addWidget( mLineEdit, 1 );
   connect( mLineEdit, SIGNAL(textChanged(const QString&)),
-	   this, SLOT(slotEnableOK(const QString&)) );
+           this, SLOT(slotEnableOK(const QString&)) );
 
   mButtonGroup = new QButtonGroup( page );
 

@@ -1101,7 +1101,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br>" + i18np( "1 new message in %2",
                                   "%1 new messages in %2",
-                                  newInFolder.find( *it ).value() ,
+                                  newInFolder.find( *it ).value(),
                               folder->prettyUrl() );
       }
     }
@@ -1116,7 +1116,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 
   if ( GlobalSettings::self()->verboseNewMailNotification() ) {
     summary = i18nc( "%1 is a list of the number of new messages per folder",
-                    "<b>New mail arrived</b><br />%1" ,
+                    "<b>New mail arrived</b><br />%1",
                 summary );
   }
   else {
@@ -1129,11 +1129,11 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 #endif
     //KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
     KNotification::event( "new-mail-arrived",
-                          summary,QPixmap() ,topLevelWidget() );
+                          summary,QPixmap(),topLevelWidget() );
   }
   else
     KNotification::event( "new-mail-arrived",
-                          summary,QPixmap() ,topLevelWidget() );
+                          summary,QPixmap(),topLevelWidget() );
 
   if (mBeepOnNew) {
     KNotification::beep();

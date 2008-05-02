@@ -163,7 +163,7 @@ void ExpireJob::done()
       cmd->start();
       moving = true;
       str = i18np( "Removing 1 old message from folder %2...",
-                  "Removing %1 old messages from folder %2...", count ,
+                  "Removing %1 old messages from folder %2...", count,
               mSrcFolder->label() );
     } else {
       // Expire by moving
@@ -213,7 +213,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
       msg = i18np( "Removed 1 old message from folder %2.",
                   "Removed %1 old messages from folder %2.",
-                  mRemovedMsgs.count() ,
+                  mRemovedMsgs.count(),
               mSrcFolder->label() );
     }
     else {
@@ -224,7 +224,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
     break;
   case KMCommand::Failed:
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
-      msg = i18n( "Removing old messages from folder %1 failed." ,
+      msg = i18n( "Removing old messages from folder %1 failed.",
               mSrcFolder->label() );
     }
     else {
@@ -234,7 +234,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
     break;
   case KMCommand::Canceled:
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
-      msg = i18n( "Removing old messages from folder %1 was canceled." ,
+      msg = i18n( "Removing old messages from folder %1 was canceled.",
               mSrcFolder->label() );
     }
     else {

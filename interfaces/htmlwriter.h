@@ -101,7 +101,7 @@ namespace KMail {
     virtual ~HtmlWriter() {}
 
     /** Stop all possibly pending processing in order to be able to
-	call #begin() again. */
+     *  call #begin() again. */
     virtual void reset() = 0;
 
     virtual void queue( const QString & str ) = 0;

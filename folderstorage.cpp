@@ -276,7 +276,7 @@ void FolderStorage::slotEmitChangedTimer()
 //-----------------------------------------------------------------------------
 void FolderStorage::emitMsgAddedSignals(int idx)
 {
-  quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder() , idx );
+  quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
   if (!mQuiet) {
     emit msgAdded(idx);
   } else {

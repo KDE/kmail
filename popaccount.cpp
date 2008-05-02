@@ -158,7 +158,7 @@ void PopAccount::processNewMail(bool _interactive)
                                        mHost + ':' + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     KConfigGroup group( &config, "<default>" );
-    QStringList uidsOfSeenMsgs = group.readEntry( "seenUidList" , QStringList() );
+    QStringList uidsOfSeenMsgs = group.readEntry( "seenUidList", QStringList() );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.reserve( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
     for ( int i = 0; i < uidsOfSeenMsgs.count(); ++i ) {
@@ -175,7 +175,7 @@ void PopAccount::processNewMail(bool _interactive)
       mTimeOfSeenMsgsVector = timeOfSeenMsgs.toVector();
     else
       mTimeOfSeenMsgsVector.clear();
-    QStringList downloadLater = group.readEntry( "downloadLater" , QStringList() );
+    QStringList downloadLater = group.readEntry( "downloadLater", QStringList() );
     for ( int i = 0; i < downloadLater.count(); ++i ) {
       mHeaderLaterUids.insert( downloadLater[i].toLatin1() );
     }
@@ -437,7 +437,7 @@ void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString 
   // when piping through external programs
   uint newSize = Util::crlf2lf( curMsgData.data(), curMsgData.size() );
   curMsgData.resize( newSize );
-  msg->fromString( curMsgData , true );
+  msg->fromString( curMsgData, true );
   if ( stage == Head ) {
     KMPopHeaders *header = mHeadersOnServer[ mHeaderIndex ];
     int size = mMsgsPendingDownload[ header->id() ];
@@ -750,7 +750,7 @@ void PopAccount::slotJobFinished() {
       mMailCheckProgressItem->setStatus(
         i18np( "Fetched 1 message from %2. Deleting messages from server...",
               "Fetched %1 messages from %2. Deleting messages from server...",
-              numMsgs ,
+              numMsgs,
           mHost ) );
       QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
       QByteArray ids = *it;
@@ -766,7 +766,7 @@ void PopAccount::slotJobFinished() {
       mMailCheckProgressItem->setStatus(
         i18np( "Fetched 1 message from %2. Terminating transmission...",
               "Fetched %1 messages from %2. Terminating transmission...",
-              numMsgs ,
+              numMsgs,
           mHost ) );
       url.setPath( "/commit" );
       kDebug(5006) <<"url:" << url.prettyUrl();
@@ -785,7 +785,7 @@ void PopAccount::slotJobFinished() {
     mMailCheckProgressItem->setStatus(
       i18np( "Fetched 1 message from %2. Terminating transmission...",
             "Fetched %1 messages from %2. Terminating transmission...",
-            numMsgs ,
+            numMsgs,
         mHost ) );
     KUrl url = getUrl();
     url.setPath( "/commit" );

@@ -478,7 +478,7 @@ void KMSender::doSendMsg()
                                    "Please set the email address of "
                                    "identity '%1' in the Identities "
                                    "section of the configuration dialog "
-                                   "and then try again." ,
+                                   "and then try again.",
                                    id.identityName() ) );
       mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
@@ -706,7 +706,7 @@ void KMSender::slotResult( KJob *job )
             "<p>Do you want me to continue sending the remaining messages?</p>",
              errString,
              mMethodStr);
-          res = KMessageBox::warningYesNo( 0 , msg ,
+          res = KMessageBox::warningYesNo( 0, msg,
                   i18n( "Continue Sending" ), KGuiItem(i18n( "&Continue Sending" )),
                   KGuiItem(i18n("&Abort Sending")) );
         } else {

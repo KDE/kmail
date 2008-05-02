@@ -83,16 +83,16 @@ namespace KMail {
     bool inlineNestedMessages() const { return true; }
     Display defaultDisplay( const partNode * node ) const {
       if ( node->hasContentDispositionInline() )
-	// explict "inline" disposition:
-	return Inline;
+        // explict "inline" disposition:
+        return Inline;
       if ( node->isAttachment() )
-	// explicit "attachment" disposition:
-	return AsIcon;
+        // explicit "attachment" disposition:
+        return AsIcon;
       if ( node->type() == DwMime::kTypeText &&
-	   node->msgPart().fileName().trimmed().isEmpty() &&
-	   node->msgPart().name().trimmed().isEmpty() )
-	// text/* w/o filename parameter:
-	return Inline;
+           node->msgPart().fileName().trimmed().isEmpty() &&
+           node->msgPart().name().trimmed().isEmpty() )
+        // text/* w/o filename parameter:
+        return Inline;
       return AsIcon;
     }
   };
@@ -157,8 +157,8 @@ namespace KMail {
     case Inlined: return inlined();
     case Hidden:  return hidden();
     }
-    kFatal( 5006 ) <<"AttachmentStrategy::create(): Unknown attachment startegy ( type =="
-		    << (int)type << ") requested!";
+    kFatal( 5006 ) << "Unknown attachment startegy ( type =="
+                   << (int)type << ") requested!";
     return 0; // make compiler happy
   }
 

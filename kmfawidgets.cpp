@@ -44,14 +44,13 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   hbl->setMargin( 0 );
   mLineEdit = new KLineEdit(this);
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
-  mBtn = new QPushButton( QString() ,this );
+  mBtn = new QPushButton( QString(),this );
   mBtn->setIcon( KIcon( "help-contents" ) );
   mBtn->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
   hbl->addWidget( mBtn );
 
-  connect( mBtn, SIGNAL(clicked()),
-	   this, SLOT(slotAddrBook()) );
+  connect( mBtn, SIGNAL(clicked()), this, SLOT(slotAddrBook()) );
 }
 
 void KMFilterActionWithAddressWidget::slotAddrBook()

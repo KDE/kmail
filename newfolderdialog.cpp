@@ -265,14 +265,14 @@ void NewFolderDialog::slotOk()
           && ( selectedFolderDir == mFolder->parent() )
           && ( mFolder->storage()->objectName() == fldName ) ) ) )
   {
-    const QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" , fldName);
+    const QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>", fldName);
     KMessageBox::error( this, message );
     return;
   }
 
   /* Ok, obvious errors caught, let's try creating it for real. */
   const QString message = i18n( "<qt>Failed to create folder <b>%1</b>."
-            "</qt> " , fldName);
+            "</qt> ", fldName);
   bool success = false;
   KMFolder *newFolder = 0;
 

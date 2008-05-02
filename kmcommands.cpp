@@ -673,7 +673,7 @@ KMCommand::Result KMEditMsgCommand::execute()
   KMMessage *msg = retrievedMessage();
   if (!msg || !msg->parent() ||
       ( !kmkernel->folderIsDraftOrOutbox( msg->parent() ) &&
-	!kmkernel->folderIsTemplates( msg->parent() ) ) ) {
+        !kmkernel->folderIsTemplates( msg->parent() ) ) ) {
     return Failed;
   }
 
@@ -1316,11 +1316,11 @@ KMCommand::Result KMForwardCommand::execute()
       // fwdMsg->setBody(msgText);
 
       for ( QList<KMMessage*>::const_iterator it2 = linklist.begin();
-	    it2 != linklist.end(); ++it2 )
+            it2 != linklist.end(); ++it2 )
       {
-	KMMessage *msg = *it;
-	TemplateParser parser( fwdMsg, TemplateParser::Forward,
-			       msg->body(), false, false, false );
+        KMMessage *msg = *it;
+        TemplateParser parser( fwdMsg, TemplateParser::Forward,
+                               msg->body(), false, false, false );
         parser.process( msg, 0, true );
 
         fwdMsg->link( (*it), MessageStatus::statusForwarded() );
@@ -2316,7 +2316,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-ms-dos-executable" ||
         mime->name() == "application/x-shellscript" )
     {
-      if (KMessageBox::warningYesNo( 0, i18nc( "@info", "Do you really want to execute <filename>%1</<filename>?" ,
+      if (KMessageBox::warningYesNo( 0, i18nc( "@info", "Do you really want to execute <filename>%1</<filename>?",
           mUrl.pathOrUrl() ), QString(), KGuiItem(i18n("Execute")), KStandardGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
@@ -2498,7 +2498,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 
       if ( KIO::NetAccess::exists( curUrl, KIO::NetAccess::DestinationSide, parentWidget() ) ) {
         if ( KMessageBox::warningContinueCancel( parentWidget(),
-              i18n( "A file named %1 already exists. Do you want to overwrite it?" ,
+              i18n( "A file named %1 already exists. Do you want to overwrite it?",
                 curUrl.fileName() ),
               i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")) ) == KMessageBox::Cancel) {
           continue;
@@ -2522,7 +2522,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
   if( bEncryptedParts )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?" ,
+          i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?",
            url.fileName() ),
           i18n( "KMail Question" ), KGuiItem(i18n("Keep Encryption")), KGuiItem(i18n("Do Not Keep")) ) ==
         KMessageBox::Yes )
@@ -2531,7 +2531,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   bool bSaveWithSig = true;
   if( node->signatureState() != KMMsgNotSigned )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?" ,
+          i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?",
            url.fileName() ),
           i18n( "KMail Question" ), KGuiItem(i18n("Keep Signature")), KGuiItem(i18n("Do Not Keep")) ) !=
         KMessageBox::Yes )
@@ -2605,8 +2605,8 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     {
       KMessageBox::error( parentWidget(),
           i18nc( "%2 is detailed error description",
-            "Could not write the file %1:\n%2" ,
-            file.fileName() ,
+            "Could not write the file %1:\n%2",
+            file.fileName(),
             QString::fromLocal8Bit( strerror( errno ) ) ),
           i18n( "KMail Error" ) );
       return Failed;
@@ -2631,7 +2631,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if ( !KIO::NetAccess::upload( tf.fileName(), url, parentWidget() ) )
     {
       KMessageBox::error( parentWidget(),
-          i18n( "Could not write the file %1." ,
+          i18n( "Could not write the file %1.",
             url.path() ),
           i18n( "KMail Error" ) );
       return Failed;

@@ -42,14 +42,14 @@ namespace KMail {
 
 
 //-----------------------------------------------------------------------------
-MaildirJob::MaildirJob( KMMessage *msg, JobType jt , KMFolder *folder )
+MaildirJob::MaildirJob( KMMessage *msg, JobType jt, KMFolder *folder )
   : FolderJob( msg, jt, folder ), mParentFolder( 0 )
 {
 }
 
 //-----------------------------------------------------------------------------
 MaildirJob::MaildirJob( QList<KMMessage*>& msgList, const QString& sets,
-                        JobType jt , KMFolder *folder )
+                        JobType jt, KMFolder *folder )
   : FolderJob( msgList, sets, jt, folder ), mParentFolder( 0 )
 {
 }

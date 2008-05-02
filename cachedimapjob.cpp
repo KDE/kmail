@@ -75,7 +75,7 @@ CachedImapJob::CachedImapJob( const QList<KMMessage*>& msgs, JobType type,
 }
 
 CachedImapJob::CachedImapJob( const QList<unsigned long>& msgs,
-			      JobType type, KMFolderCachedImap* folder )
+                              JobType type, KMFolderCachedImap* folder )
   : FolderJob( QList<KMMessage*>(), QString(), type, folder?folder->folder():0 ),
     mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( msgs.count() ), mMsg( 0 ),
     mParentFolder ( 0 )
@@ -202,7 +202,7 @@ void CachedImapJob::listMessages()
            this, SLOT( slotListMessagesResult( KJob* ) ) );
   // send the data directly for KMFolderCachedImap
   connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-           mFolder, SLOT( slotGetMessagesData( KIO::Job* , const QByteArray& ) ) );
+           mFolder, SLOT( slotGetMessagesData( KIO::Job*, const QByteArray& ) ) );
 }
 
 void CachedImapJob::slotDeleteNextMessages( KJob* job )

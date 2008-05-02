@@ -709,13 +709,13 @@ void MessageComposer::adjustCryptFlags()
 
   mKeyResolver =
     new Kleo::KeyResolver( encryptToSelf(), showKeyApprovalDialog(),
-			   mUseOpportunisticEncryption, mAllowedCryptoMessageFormats,
-			   encryptKeyNearExpiryWarningThresholdInDays(),
-			   signingKeyNearExpiryWarningThresholdInDays(),
-			   encryptRootCertNearExpiryWarningThresholdInDays(),
-			   signingRootCertNearExpiryWarningThresholdInDays(),
-			   encryptChainCertNearExpiryWarningThresholdInDays(),
-			   signingChainCertNearExpiryWarningThresholdInDays() );
+                           mUseOpportunisticEncryption, mAllowedCryptoMessageFormats,
+                           encryptKeyNearExpiryWarningThresholdInDays(),
+                           signingKeyNearExpiryWarningThresholdInDays(),
+                           encryptRootCertNearExpiryWarningThresholdInDays(),
+                           signingRootCertNearExpiryWarningThresholdInDays(),
+                           encryptChainCertNearExpiryWarningThresholdInDays(),
+                           signingChainCertNearExpiryWarningThresholdInDays() );
 
   if ( !mDisableCrypto ) {
     const KPIMIdentities::Identity &id =
@@ -2119,7 +2119,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       KMessageBox::sorry( mComposeWin,
                           i18n( "<qt><p>Error: The backend did not return "
                                 "any encoded data.</p>"
-                                "<p>Please report this bug:<br />%1</p></qt>" ,
+                                "<p>Please report this bug:<br />%1</p></qt>",
                                 bugURL ) );
       bOk = false;
     }

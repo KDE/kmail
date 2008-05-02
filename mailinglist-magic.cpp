@@ -406,9 +406,9 @@ MailingList::readConfig( KConfigGroup & config )
     config.readEntry( "MailingListHandler", (int)MailingList::KMail ) );
 
   mId = config.readEntry("MailingListId");
-  mPostURLS        = config.readEntry( "MailingListPostingAddress" , QStringList() );
-  mSubscribeURLS   = config.readEntry( "MailingListSubscribeAddress" , QStringList() );
-  mUnsubscribeURLS = config.readEntry( "MailingListUnsubscribeAddress" , QStringList() );
-  mArchiveURLS     = config.readEntry( "MailingListArchiveAddress" , QStringList() );
-  mHelpURLS        = config.readEntry( "MailingListHelpAddress" , QStringList() );
+  mPostURLS        = config.readEntry( "MailingListPostingAddress", QStringList() );
+  mSubscribeURLS   = config.readEntry( "MailingListSubscribeAddress", QStringList() );
+  mUnsubscribeURLS = config.readEntry( "MailingListUnsubscribeAddress", QStringList() );
+  mArchiveURLS     = config.readEntry( "MailingListArchiveAddress", QStringList() );
+  mHelpURLS        = config.readEntry( "MailingListHelpAddress", QStringList() );
 }

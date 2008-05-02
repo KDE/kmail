@@ -361,10 +361,12 @@ public:
     { mFilterList->createFilter( field, value ); }
 
 public slots:
-    /** Internally connected to KMFilterListBox::filterSelected.
-	Just does a simple check and then calls
-	KMSearchPatternEdit::setSearchPattern and
-	KMFilterActionEdit::setActionList. */
+  /**
+   * Internally connected to KMFilterListBox::filterSelected.
+   * Just does a simple check and then calls
+   * KMSearchPatternEdit::setSearchPattern and
+   * KMFilterActionEdit::setActionList.
+   */
   void slotFilterSelected(KMFilter * aFilter);
   /** Action for popFilter */
   void slotActionChanged(const KMPopFilterAction aAction);

@@ -891,7 +891,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
       //  whether he wishes to be notified again in "AskNextFolder"
       //  parameter (kept in the config file for kmail)
       if ( KMessageBox::questionYesNo( this,
-            i18n( "<qt>Go to the next unread message in folder <b>%1</b>?</qt>" ,
+            i18n( "<qt>Go to the next unread message in folder <b>%1</b>?</qt>",
               fti->folder()->label() ),
             i18n( "Go to Next Unread Message" ),
             KGuiItem(i18n("Go To")), KGuiItem(i18n("Do Not Go To")), // defaults
@@ -1252,7 +1252,7 @@ void KMFolderTree::addChildFolder( KMFolder *folder, QWidget * parent )
       const QString message = i18n( "<qt>Cannot create folder <b>%1</b> because of insufficient "
                                     "permissions on the server. If you think you should be able to create "
                                     "subfolders here, ask your administrator to grant you rights to do so."
-                                    "</qt> " , aFolder->label());
+                                    "</qt> ", aFolder->label());
       KMessageBox::error( this, message );
       return;
     }

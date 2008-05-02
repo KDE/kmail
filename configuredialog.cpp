@@ -173,7 +173,7 @@ namespace {
       w->setEnabled( false );
       w->setToolTip( i18n( lockedDownWarning ) );
     } else {
-	  w->setToolTip("");
+      w->setToolTip("");
     }
   }
 
@@ -3108,24 +3108,24 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
 
   // row 0: help text
   glay->addWidget( new QLabel( i18n("<qt>The following placeholders are "
-				    "supported in the reply phrases:<br />"
-				    "<table>"
-				    "<tr><td><b>%D</b>: date</td>"
-					"<td><b>%S</b>: subject</td>"
-					"<td></td></tr>"
-				    "<tr><td><b>%e</b>: sender's address</td>"
-					"<td><b>%F</b>: sender's name</td>"
-					"<td><b>%f</b>: sender's initials</td></tr>"
-				    "<tr><td><b>%T</b>: recipient's name</td>"
-					"<td><b>%t</b>: recipient's name and address</td>"
-					"<td></td></tr>"
-				    "<tr><td><b>%C</b>: carbon copy names</td>"
-					"<td><b>%c</b>: carbon copy names and addresses</td>"
-					"<td></td></tr>"
-				    "<tr><td><b>%%</b>: percent sign</td>"
-					"<td><b>%_</b>: space</td>"
-					"<td><b>%L</b>: linebreak</td></tr>"
-				    "</table></qt>"), this ),
+                                    "supported in the reply phrases:<br />"
+                                    "<table>"
+                                    "<tr><td><b>%D</b>: date</td>"
+                                    "<td><b>%S</b>: subject</td>"
+                                    "<td></td></tr>"
+                                    "<tr><td><b>%e</b>: sender's address</td>"
+                                    "<td><b>%F</b>: sender's name</td>"
+                                    "<td><b>%f</b>: sender's initials</td></tr>"
+                                    "<tr><td><b>%T</b>: recipient's name</td>"
+                                    "<td><b>%t</b>: recipient's name and address</td>"
+                                    "<td></td></tr>"
+                                    "<tr><td><b>%C</b>: carbon copy names</td>"
+                                    "<td><b>%c</b>: carbon copy names and addresses</td>"
+                                    "<td></td></tr>"
+                                    "<tr><td><b>%%</b>: percent sign</td>"
+                                    "<td><b>%_</b>: space</td>"
+                                    "<td><b>%L</b>: linebreak</td></tr>"
+                                    "</table></qt>"), this ),
                             0, 0, 0, 3 ); // row 0; cols 0..2
 
   // row 1: label and language combo box:

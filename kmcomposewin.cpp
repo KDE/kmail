@@ -170,7 +170,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
-  QDBusConnection::sessionBus().registerObject( mdbusObjectPath , this );
+  QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
   mSubjectTextWasSpellChecked = false;
   if ( kmkernel->xmlGuiInstance().isValid() ) {
@@ -262,7 +262,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
     mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mEncryptionStateIndicator );
-    p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageEncr" ,
+    p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageEncr",
                                                        defaultEncryptedColor ) );
     mEncryptionStateIndicator->setPalette( p );
     mEncryptionStateIndicator->setAutoFillBackground( true );
@@ -1143,7 +1143,7 @@ void KMComposeWin::setupActions( void )
   connect( action, SIGNAL( triggered(bool) ),
            mRecipientsEditor, SLOT( selectRecipients()) );
   action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_L ) );
-  action = new KAction( i18n("Save &Distribution List...") , this );
+  action = new KAction( i18n("Save &Distribution List..."), this );
   actionCollection()->addAction( "save_distribution_list", action );
   connect( action, SIGNAL( triggered(bool) ),
            mRecipientsEditor, SLOT( saveDistributionList() ) );
@@ -1162,7 +1162,7 @@ void KMComposeWin::setupActions( void )
   KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
 
   KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
-  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck",
+  actionCollection()->addAction( KStandardAction::Spelling, "spellcheck",
                                  mEditor, SLOT( slotCheckSpelling() ) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
@@ -2103,7 +2103,7 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
 {
   if ( !aUrl.isValid() ) {
     KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
-                                    "<p>you have to specify the full path if you wish to attach a file.</p></qt>" ,
+                                    "<p>you have to specify the full path if you wish to attach a file.</p></qt>",
                                     aUrl.prettyUrl() ) );
     return false;
   }
@@ -2498,8 +2498,8 @@ void KMComposeWin::slotInsertFile()
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
     QString encoding = KGlobal::charsets()->encodingForName(encodingStr).toLatin1();
-    QStringList urls = group.readEntry( "recent-urls" , QStringList() );
-    QStringList encodings = group.readEntry( "recent-encodings" , QStringList() );
+    QStringList urls = group.readEntry( "recent-urls", QStringList() );
+    QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
     // Prevent config file from growing without bound
     // Would be nicer to get this constant from KRecentFilesAction
     uint mMaxRecentFiles = 30;
@@ -2537,8 +2537,8 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
   {
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QStringList urls = group.readEntry( "recent-urls" , QStringList() );
-    QStringList encodings = group.readEntry( "recent-encodings" , QStringList() );
+    QStringList urls = group.readEntry( "recent-urls", QStringList() );
+    QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
     int index = urls.indexOf( u.prettyUrl() );
     if (index != -1) {
       QString encoding = encodings[ index ];

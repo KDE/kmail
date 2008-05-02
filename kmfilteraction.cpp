@@ -508,7 +508,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
 
-  QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
+  QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
   if ( commandLine.isEmpty() )
     return ErrorButGoOn;
 
@@ -1623,7 +1623,7 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 class PipeJob : public ThreadWeaver::Job
 {
   public:
-    PipeJob(QObject* parent = 0 , KMMessage* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
+    PipeJob(QObject* parent = 0, KMMessage* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
       : ThreadWeaver::Job ( parent ),
         mTempFileName( tempFileName ),
         mCmd( cmd ),
@@ -1722,7 +1722,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
 
-  QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
+  QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
   qDeleteAll( atmList );
   atmList.clear();
   if ( commandLine.isEmpty() )

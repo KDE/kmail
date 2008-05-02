@@ -311,10 +311,10 @@ void KMAcctCachedImap::addLastUnreadMsgCount( const KMFolderCachedImap *folder,
 void KMAcctCachedImap::readConfig( KConfigGroup & config ) {
   ImapAccountBase::readConfig( config );
   // Apparently this method is only ever called once (from KMKernel::init) so this is ok
-  mPreviouslyDeletedFolders = config.readEntry( "deleted-folders" , QStringList() );
+  mPreviouslyDeletedFolders = config.readEntry( "deleted-folders", QStringList() );
   mDeletedFolders.clear(); // but just in case...
-  const QStringList oldPaths = config.readEntry( "renamed-folders-paths" , QStringList() );
-  const QStringList newNames = config.readEntry( "renamed-folders-names" , QStringList() );
+  const QStringList oldPaths = config.readEntry( "renamed-folders-paths", QStringList() );
+  const QStringList newNames = config.readEntry( "renamed-folders-names", QStringList() );
   QStringList::const_iterator it = oldPaths.begin();
   QStringList::const_iterator nameit = newNames.begin();
   for( ; it != oldPaths.end() && nameit != newNames.end(); ++it, ++nameit ) {

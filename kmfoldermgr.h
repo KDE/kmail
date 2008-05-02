@@ -59,8 +59,8 @@ public:
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
   KMFolder* createFolder(const QString& fName, bool sysFldr=false,
-				 KMFolderType aFolderType=KMFolderTypeMbox,
-				 KMFolderDir *aFolderDir = 0);
+                         KMFolderType aFolderType=KMFolderTypeMbox,
+                         KMFolderDir *aFolderDir = 0);
 
   /** Physically remove given folder and delete the given folder object. */
   void remove(KMFolder* obsoleteFolder);
@@ -74,20 +74,20 @@ public:
   /** Create a list of formatted formatted folder labels and corresponding
    folders*/
   void createFolderList( QStringList *str,
-				 QList<QPointer<KMFolder> > *folders );
+                         QList<QPointer<KMFolder> > *folders );
 
   /** Auxillary function to facilitate creating a list of formatted
       folder names, suitable for showing in QComboBox */
   void createFolderList( QStringList *str,
- 				 QList<QPointer<KMFolder> > *folders,
-  				 KMFolderDir *adir,
-  				 const QString& prefix,
-				 bool i18nized=false );
+                         QList<QPointer<KMFolder> > *folders,
+                         KMFolderDir *adir,
+                         const QString& prefix,
+                         bool i18nized=false );
 
   /** Create a list of formatted formatted folder labels and corresponding
    folders. The system folder names are translated */
   void createI18nFolderList( QStringList *str,
-				 QList<QPointer<KMFolder> > *folders );
+                             QList<QPointer<KMFolder> > *folders );
 
   /** fsync all open folders to disk */
   void syncAllFolders( KMFolderDir *adir = 0 );

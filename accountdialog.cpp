@@ -736,7 +736,7 @@ void AccountDialog::makePopAccountPage()
 
   mPop.authGroup = new QGroupBox( i18n("Authentication Method"), page2 );
   mPop.authGroup->setLayout( new QVBoxLayout() );
-  mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup );
+  mPop.authUser = new QRadioButton( i18n("Clear te&xt"), mPop.authGroup );
   mPop.authUser->setObjectName( "auth clear text" );
   mPop.authLogin = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),

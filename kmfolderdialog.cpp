@@ -333,7 +333,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
 
     mNormalIconButton = new KIconButton( this );
     mNormalIconLabel->setBuddy( mNormalIconButton );
-    mNormalIconButton->setIconType( KIconLoader::NoGroup , KIconLoader::Place, false );
+    mNormalIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Place, false );
     mNormalIconButton->setIconSize( 16 );
     mNormalIconButton->setStrictIconSize( true );
     mNormalIconButton->setFixedSize( 28, 28 );

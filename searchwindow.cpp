@@ -167,7 +167,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   radioLayout->addLayout( hbl );
 
 
-  mPatternEdit = new KMSearchPatternEdit( QString(), searchWidget , false, true );
+  mPatternEdit = new KMSearchPatternEdit( QString(), searchWidget, false, true );
   mPatternEdit->setFlat( true );
   mSearchPattern = new KMSearchPattern();
   KMFolderSearch *searchFolder = 0;
@@ -568,7 +568,7 @@ void SearchWindow::slotAddMsg( int idx )
   newItem->setText( 1, from );
   newItem->setText( 2, msg->dateIsoStr() );
   newItem->setText( 3, fName );
-  newItem->setText( 4 ,QString::number( mFolder->serNum( idx ) ) );
+  newItem->setText( 4,QString::number( mFolder->serNum( idx ) ) );
   mLbxMatches->addTopLevelItem( newItem );
   if ( unget ) {
     mFolder->unGetMsg( idx );

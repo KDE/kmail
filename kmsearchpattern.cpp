@@ -47,7 +47,7 @@ using KMail::FilterLog;
 static const char* funcConfigNames[] =
   { "contains", "contains-not", "equals", "not-equal", "regexp",
     "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal",
-    "is-in-addressbook", "is-not-in-addressbook" , "is-in-category", "is-not-in-category",
+    "is-in-addressbook", "is-not-in-addressbook", "is-in-category", "is-not-in-category",
     "has-attachment", "has-no-attachment"};
 static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfigNames;
 
@@ -894,7 +894,7 @@ void KMSearchPattern::writeConfig( KConfigGroup & config ) const {
 
   int i = 0;
   QList<KMSearchRule*>::const_iterator it;
-  for ( it = begin() ; it != end() && i < FILTER_MAX_RULES ; ++i , ++it )
+  for ( it = begin() ; it != end() && i < FILTER_MAX_RULES ; ++i, ++it )
     // we could do this ourselves, but we want the rules to be extensible,
     // so we give the rule it's number and let it do the rest.
     (*it)->writeConfig( config, i );

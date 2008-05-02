@@ -91,7 +91,7 @@ namespace KMail {
     ExecCmdSpam=sa-learn --spam --no-rebuild --single
     ExecCmdHam=sa-learn --ham --no-rebuild --single
     PipeCmdNoSpam=spamassassin -d
-	DetectionHeader=X-Spam-Flag
+    DetectionHeader=X-Spam-Flag
     DetectionPattern=yes
     DetectionPattern2=
     DetectionOnly=0

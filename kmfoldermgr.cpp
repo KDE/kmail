@@ -151,7 +151,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
     }
    } else {
     // ~/Mail (or whatever the user specified) doesn't exist, create it
-    if ( KDE_mkdir( QFile::encodeName( mBasePath ) , S_IRWXU ) == -1 ) {
+    if ( KDE_mkdir( QFile::encodeName( mBasePath ), S_IRWXU ) == -1 ) {
       KMessageBox::sorry( 0, i18n( "KMail could not create folder '%1';\n"
                                    "please make sure that you can view and "
                                    "modify the content of the folder '%2'.",

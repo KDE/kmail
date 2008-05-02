@@ -42,7 +42,7 @@ public:
 public:
   static MailingList detect( const KMMessage* msg );
   static QString name( const KMMessage  *message, QByteArray &header_name,
-		       QString &header_value );
+                       QString &header_value );
 public:
   MailingList();
 

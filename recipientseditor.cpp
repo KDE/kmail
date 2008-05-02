@@ -338,7 +338,7 @@ RecipientLine *RecipientsView::activeLine()
 RecipientLine *RecipientsView::emptyLine()
 {
   RecipientLine *line;
-  foreach( line , mLines ) {
+  foreach( line, mLines ) {
     if ( line->isEmpty() ) return line;
   }
 
@@ -437,7 +437,7 @@ void RecipientsView::calculateTotal()
   int empty = 0;
 
   RecipientLine *line;
-  foreach( line , mLines ) {
+  foreach( line, mLines ) {
     if ( line->isEmpty() ) ++empty;
     else count += line->recipientsCount();
   }
@@ -552,7 +552,7 @@ void RecipientsView::resizeEvent ( QResizeEvent *ev )
   for( int i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
   }
-  ensureVisible( 0, mLines.count() * mLineHeight, 0 , 0 );
+  ensureVisible( 0, mLines.count() * mLineHeight, 0, 0 );
 }
 
 QSize RecipientsView::sizeHint() const
@@ -608,7 +608,7 @@ void RecipientsView::removeRecipient( const QString & recipient,
   QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
   while (it.hasNext()) {
-	line = it.next();
+    line = it.next();
     if ( ( line->recipient().email() == recipient ) &&
          ( line->recipientType() == type ) ) {
       break;
@@ -682,7 +682,7 @@ int RecipientsView::setFirstColumnWidth( int w )
   QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
   while(it.hasNext()) {
-	line = it.next();
+    line = it.next();
     mFirstColumnWidth = line->setComboWidth( mFirstColumnWidth );
   }
 
@@ -898,7 +898,7 @@ void RecipientsEditor::setRecipientString( const QString &str,
     if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
         i18n("Truncating recipients list to %1 of %2 entries.",
-          GlobalSettings::self()->maximumRecipients() ,
+          GlobalSettings::self()->maximumRecipients(),
           r.count() ) );
       break;
     }

@@ -1237,7 +1237,7 @@ void KMKernel::testDir( const char *_name )
   QString foldersPath = QDir::homePath() + QString( _name );
   QFileInfo info( foldersPath );
   if ( !info.exists() ) {
-    if ( KDE_mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
+    if ( KDE_mkdir( QFile::encodeName( foldersPath ), S_IRWXU ) == -1 ) {
       KMessageBox::sorry( 0, i18n( "KMail could not create folder '%1';\n"
                                    "please make sure that you can view and "
                                    "modify the content of the folder '%2'.",
@@ -1484,7 +1484,7 @@ void KMKernel::cleanupImapFolders()
   {
     KMFolderNode *node = *it;
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
-			  && ( acct->type() == KAccount::DImap )) )
+        && ( acct->type() == KAccount::DImap )) )
     {
       ++it;
     } else {

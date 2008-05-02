@@ -172,7 +172,7 @@ void ListJob::slotListResult( KJob* job )
   if ( job->error() )
   {
     mAccount->handleJobError( static_cast<KIO::Job *>(job),
-        i18n( "Error while listing folder %1: " , (*it).path),
+        i18n( "Error while listing folder %1: ", (*it).path),
         true );
   } else
   {

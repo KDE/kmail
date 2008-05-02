@@ -104,7 +104,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
   action->setToolTip( i18n("Mark selected messages as new") );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusNew()) );
-  mActionCollection->addAction( "status_new" , action );
+  mActionCollection->addAction( "status_new", action );
   mStatusMenu->addAction( action );
 
   action = new KAction( KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this );

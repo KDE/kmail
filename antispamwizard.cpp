@@ -1119,7 +1119,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
   grid->addWidget( mMarkRules, 2, 0 );
 
   mFolderTree = new FolderSelectionTreeWidget( this, mainFolderTree );
-  mFolderTree->reload( true , true , true , QString( "trash" ) );
+  mFolderTree->reload( true, true, true, QString( "trash" ) );
   grid->addWidget( mFolderTree, 3, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),

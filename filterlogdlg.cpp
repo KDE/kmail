@@ -154,10 +154,10 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
            this, SLOT(slotChangeLogMemLimit(int)) );
   mLogMemLimitSpin->setWhatsThis(
       i18n( "Collecting log data uses memory to temporarily store the "
-	    "log data; here you can limit the maximum amount of memory "
-	    "to be used: if the size of the collected log data exceeds "
-	    "this limit then the oldest data will be discarded until "
-	    "the limit is no longer exceeded. " ) );
+            "log data; here you can limit the maximum amount of memory "
+            "to be used: if the size of the collected log data exceeds "
+            "this limit then the oldest data will be discarded until "
+            "the limit is no longer exceeded. " ) );
 
   connect(FilterLog::instance(), SIGNAL(logEntryAdded(const QString&)),
           this, SLOT(slotLogEntryAdded(const QString&)));

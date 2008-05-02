@@ -325,7 +325,7 @@ namespace KMail {
     glay->addWidget( mReplyToEdit, row, 1 );
     label = new QLabel ( i18n("&Reply-To address:"), tab );
     label->setBuddy( mReplyToEdit );
-    glay->addWidget( label , row, 0 );
+    glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Reply-To addresses</h3>"
                "<p>This sets the <tt>Reply-to:</tt> header to contain a "
                "different email address to the normal <tt>From:</tt> "

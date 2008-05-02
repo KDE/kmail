@@ -173,7 +173,7 @@ class KMAIL_EXPORT KMMailtoReplyCommand : public KMCommand
 
 public:
   KMMailtoReplyCommand( QWidget *parent, const KUrl &url,
-			KMMessage *msg, const QString &selection );
+                        KMMessage *msg, const QString &selection );
 
 private:
   virtual Result execute();
@@ -187,8 +187,7 @@ class KMAIL_EXPORT KMMailtoForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoForwardCommand( QWidget *parent, const KUrl &url,
-			  KMMessage *msg );
+  KMMailtoForwardCommand( QWidget *parent, const KUrl &url, KMMessage *msg );
 
 private:
   virtual Result execute();
@@ -307,8 +306,7 @@ class KMAIL_EXPORT KMShowMsgSrcCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMShowMsgSrcCommand( QWidget *parent, KMMessage *msg,
-		       bool fixedFont );
+  KMShowMsgSrcCommand( QWidget *parent, KMMessage *msg, bool fixedFont );
   virtual Result execute();
 
 private:
@@ -352,7 +350,7 @@ class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand
 
 public:
   explicit KMOpenMsgCommand( QWidget *parent, const KUrl & url = KUrl(),
-            		     const QString & encoding = QString() );
+                             const QString & encoding = QString() );
 
 private:
   virtual Result execute();
@@ -439,7 +437,7 @@ class KMReplyListCommand : public KMCommand
 
 public:
   KMReplyListCommand( QWidget *parent, KMMessage *msg,
-		      const QString &selection = QString() );
+                      const QString &selection = QString() );
 
 private:
   virtual Result execute();
@@ -454,7 +452,7 @@ class KMAIL_EXPORT KMReplyToAllCommand : public KMCommand
 
 public:
   KMReplyToAllCommand( QWidget *parent, KMMessage *msg,
-		       const QString &selection = QString() );
+                       const QString &selection = QString() );
 
 private:
   virtual Result execute();
@@ -501,9 +499,9 @@ class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
 
 public:
   KMForwardAttachedCommand( QWidget *parent, const QList<KMMsgBase*> &msgList,
-			    uint identity = 0, KMail::Composer *win = 0 );
+                            uint identity = 0, KMail::Composer *win = 0 );
   KMForwardAttachedCommand( QWidget *parent, KMMessage * msg,
-			    uint identity = 0, KMail::Composer *win = 0 );
+                            uint identity = 0, KMail::Composer *win = 0 );
 
 private:
   virtual Result execute();
@@ -641,8 +639,7 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand( QWidget *parent,
-			 const QList<KMMsgBase*> &msgList,
-			 KMFilter *filter );
+                         const QList<KMMsgBase*> &msgList, KMFilter *filter );
 
 private:
   virtual Result execute();
@@ -657,7 +654,7 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
 
 public:
   KMMetaFilterActionCommand( KMFilter *filter, KMHeaders *headers,
-			     KMMainWidget *main );
+                             KMMainWidget *main );
 
 public slots:
   void start();
@@ -707,8 +704,7 @@ class KMAIL_EXPORT KMCopyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCopyCommand( KMFolder* destFolder,
-		 const QList<KMMsgBase*> &msgList );
+  KMCopyCommand( KMFolder* destFolder, const QList<KMMsgBase*> &msgList );
   KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
 
 protected slots:

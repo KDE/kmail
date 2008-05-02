@@ -640,7 +640,7 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
     KMMessage *msg = message( *mMessageIt );
     if (msg) {
       if ( FilterLog::instance()->isLogging() ) {
-        QString logText( i18n( "<b>Applying filter action:</b> %1" ,
+        QString logText( i18n( "<b>Applying filter action:</b> %1",
                           mFilterAction->displayString() ) );
         FilterLog::instance()->add( logText, FilterLog::appliedAction );
       }

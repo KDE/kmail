@@ -350,7 +350,7 @@ void KMFolderMbox::sync()
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
         !mIndexStream || fsync(fileno(mIndexStream))) {
-    kmkernel->emergencyExit( i18n("Could not sync index file <b>%1</b>: %2", indexLocation() , errno ? QString::fromLocal8Bit(strerror(errno)) : i18n("Internal error. Please copy down the details and report a bug.")));
+    kmkernel->emergencyExit( i18n("Could not sync index file <b>%1</b>: %2", indexLocation(), errno ? QString::fromLocal8Bit(strerror(errno)) : i18n("Internal error. Please copy down the details and report a bug.")));
     }
 }
 

@@ -115,7 +115,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
     QRadioButton* cb = new QRadioButton( i18nc( "Permissions", standardPermissions[i].userString ), groupBox );
     vbox->addWidget( cb );
     // We store the permission value (bitfield) as the id of the radiobutton in the group
-    mButtonGroup->addButton( cb , standardPermissions[i].permissions );
+    mButtonGroup->addButton( cb, standardPermissions[i].permissions );
   }
 
   vbox->addStretch( 1 );
@@ -354,7 +354,7 @@ KMail::FolderDialogACLTab::FolderDialogACLTab( KMFolderDialog* dlg, QWidget* par
 
   mStack->addWidget( mACLWidget );
 
-  connect( mListView, SIGNAL( itemActivated( QTreeWidgetItem* , int ) ),
+  connect( mListView, SIGNAL( itemActivated( QTreeWidgetItem*, int ) ),
        SLOT( slotEditACL( QTreeWidgetItem* ) ) );
   connect( mListView, SIGNAL( itemSelectionChanged() ),
        SLOT( slotSelectionChanged() ) );
@@ -774,8 +774,8 @@ void KMail::FolderDialogACLTab::slotMultiSetACLResult(KJob* job)
   mImapAccount->removeJob( it );
 
   if ( job->error() ) {
-	static_cast<KIO::Job*>(job)->ui()->setWindow( this );
-	static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    static_cast<KIO::Job*>(job)->ui()->setWindow( this );
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     if ( mAccepting ) {
       emit cancelAccept();
       mAccepting = false; // don't emit readyForAccept anymore

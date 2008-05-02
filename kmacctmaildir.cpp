@@ -22,7 +22,7 @@ using KPIM::ProgressManager;
 #include <assert.h>
 
 #ifdef HAVE_PATHS_H
-#include <paths.h>	/* defines _PATH_MAILDIR */
+#include <paths.h>       /* defines _PATH_MAILDIR */
 #endif
 
 #undef None
@@ -95,7 +95,7 @@ void KMAcctMaildir::processNewMail(bool)
   }
 
   BroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from \"%1\"...", mName));
+                          i18n("Preparing transmission from \"%1\"...", mName));
 
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
@@ -178,7 +178,7 @@ void KMAcctMaildir::processNewMail(bool)
     mMailCheckProgressItem->setStatus(
       i18np( "Fetched 1 message from maildir folder %2.",
             "Fetched %1 messages from maildir folder %2.",
-            num , mailFolder.location() ) );
+            num, mailFolder.location() ) );
 
     mMailCheckProgressItem->setComplete();
     mMailCheckProgressItem = 0;

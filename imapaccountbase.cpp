@@ -209,11 +209,11 @@ void ImapAccountBase::readConfig( KConfigGroup &config )
   setListOnlyOpenFolders( config.readEntry( "listOnlyOpenFolders", false ) );
   // read namespaces
   nsMap map;
-  QStringList list = config.readEntry( QString::number( PersonalNS) , QStringList() );
+  QStringList list = config.readEntry( QString::number( PersonalNS), QStringList() );
   if ( !list.isEmpty() ) {
     map[PersonalNS] = list.replaceInStrings( "\"", "" );
   }
-  list = config.readEntry( QString::number( OtherUsersNS) , QStringList()  );
+  list = config.readEntry( QString::number( OtherUsersNS), QStringList()  );
   if ( !list.isEmpty() ) {
     map[OtherUsersNS] = list.replaceInStrings( "\"", "" );
   }

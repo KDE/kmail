@@ -123,7 +123,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   for ( ; it != mActions.end() ; ++it ) {
 
     if ( FilterLog::instance()->isLogging() ) {
-      QString logText( i18n( "<b>Applying filter action:</b> %1" ,
+      QString logText( i18n( "<b>Applying filter action:</b> %1",
                          (*it)->displayString() ) );
       FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
@@ -301,7 +301,7 @@ void KMFilter::readConfig(KConfigGroup & config)
       } else
         KMessageBox::information( 0 /* app-global modal dialog box */,
             i18n("<qt>Unknown filter action <b>%1</b><br />in filter rule <b>%2</b>.<br />Ignoring it.</qt>",
-              config.readEntry( actName, QString() ) ,
+              config.readEntry( actName, QString() ),
               mPattern.name() ) );
     }
 
