@@ -1397,7 +1397,7 @@ void KMReaderWin::updateReaderWin()
   } else {
     mColorBar->hide();
     mMimePartTree->hide();
-    mMimePartTree->clear();
+    mMimePartTree->clearAndResetSortOrder();
     htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
     htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
@@ -1433,7 +1433,7 @@ void KMReaderWin::showHideMimeTree( bool isPlainTextTopLevel ) {
 void KMReaderWin::displayMessage() {
   KMMessage * msg = message();
 
-  mMimePartTree->clear();
+  mMimePartTree->clearAndResetSortOrder();
   showHideMimeTree( !msg || // treat no message as "text/plain"
                     ( msg->type() == DwMime::kTypeText
                    && msg->subtype() == DwMime::kSubtypePlain ) );

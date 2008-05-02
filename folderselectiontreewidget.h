@@ -24,7 +24,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <foldertreewidget.h> // libkdepim
+#include <libkdepim/foldertreewidget.h>
 
 class KMFolder;
 class KMFolderTree;

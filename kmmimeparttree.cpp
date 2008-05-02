@@ -48,24 +48,22 @@
 #include <QClipboard>
 #include <QHeaderView>
 
+#define COLUMN_DESCRIPTION 0
+#define COLUMN_TYPE 1
+#define COLUMN_ENCODING 2
+#define COLUMN_SIZE 3
+
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent )
-  : QTreeWidget( parent ),
+  : KPIM::TreeWidget( parent ),
     mReaderWin( readerWin ), mLayoutColumnsOnFirstShow( false )
 {
   // Setup the header
-  QStringList headerNames;
-  headerNames << i18n("Description") << i18n("Type")
-              << i18n("Encoding") << i18n("Size");
-
-  QTreeWidgetItem * hitem = new QTreeWidgetItem( headerNames );
-  hitem->setTextAlignment( 3 , Qt::AlignRight );
-  setHeaderItem( hitem );
-
-  header()->setContextMenuPolicy( Qt::CustomContextMenu );
-  connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
-           this, SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
+  addColumn( i18n( "Description" ) );
+  addColumn( i18n( "Type" ) );
+  addColumn( i18n( "Encoding" ) );
+  addColumn( i18n( "Size" ) , Qt::AlignRight );
 
   // Setup our mouse handlers
   connect( this, SIGNAL( itemClicked( QTreeWidgetItem* , int ) ),
@@ -84,6 +82,11 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
   //setShowToolTips( true );
   setDragEnabled( true );
 
+  setSortingEnabled( true );
+  header()->setClickable( true );
+  header()->setSortIndicator( columnCount() , Qt::AscendingOrder );
+  header()->setSortIndicatorShown( true );
+
   restoreLayoutIfPresent();
 }
 
@@ -92,25 +95,21 @@ static const char configEntry[] = "State";
 
 KMMimePartTree::~KMMimePartTree()
 {
-  // Store the view column order, width and visibility
-  KMKernel::config()->group( configGroup ).writeEntry(
-      configEntry , QVariant( header()->saveState() )
-    );
+  saveLayout( KMKernel::config() , configGroup , configEntry );
+}
+
+void KMMimePartTree::clearAndResetSortOrder()
+{
+  clear();
+  // reset the sort indicator section to something outside the allowable
+  // range in order to preserve insertion sort order.
+  header()->setSortIndicator( columnCount() , Qt::AscendingOrder );
 }
 
 void KMMimePartTree::restoreLayoutIfPresent()
 {
-  if ( KMKernel::config()->hasGroup( configGroup ) ) {
-    // Restore the view column order, width and visibility
-    QByteArray state = KMKernel::config()->group( configGroup ).readEntry(
-                           configEntry , QVariant( QVariant::ByteArray )
-                         ).toByteArray();
-
-    if( !state.isEmpty() ) {
-      header()->restoreState( state );
-      return;
-    }
-  }
+  if ( restoreLayout( KMKernel::config() , configGroup , configEntry ) )
+    return;
   // No configGroup or no configEntry.
   // Provide nice defaults on first show
   mLayoutColumnsOnFirstShow = true;
@@ -128,10 +127,10 @@ void KMMimePartTree::showEvent( QShowEvent* e )
     // So in the end, we provide heuristic defaults based on the width
     // of the widget the first time we're shown...
     int w = width();
-    header()->resizeSection( 0 , ( w / 10 ) * 6 );
-    header()->resizeSection( 1 , ( w / 10 ) * 2 );
-    header()->resizeSection( 2 , ( w / 10 ) );
-    header()->resizeSection( 3 , ( w / 10 ) );
+    header()->resizeSection( COLUMN_DESCRIPTION , ( w / 10 ) * 6 );
+    header()->resizeSection( COLUMN_TYPE , ( w / 10 ) * 2 );
+    header()->resizeSection( COLUMN_ENCODING , ( w / 10 ) );
+    header()->resizeSection( COLUMN_SIZE , ( w / 10 ) );
     mLayoutColumnsOnFirstShow = false;
   }
 
@@ -147,52 +146,6 @@ void KMMimePartTree::slotItemClicked( QTreeWidgetItem* item )
     else
       mReaderWin->setMsgPart( i->node() ); // Show the message sub-part
   }
-}
-
-void KMMimePartTree::slotHeaderContextMenuRequested( const QPoint& p )
-{
-  // Popup a menu that allows showing/hiding columns
-  KMenu popup;
-
-  popup.addTitle( i18n("View Columns") );
-
-  QTreeWidgetItem * hitem = headerItem();
-  if ( !hitem )
-    return; // oops..
-
-  // Dynamically build the menu and check the items for visible columns
-  int cc = hitem->columnCount();
-  for ( int i = 1 ; i < cc; i++ ) {
-    QAction * act = popup.addAction( hitem->text( i ) );
-    act->setData( i );
-    act->setCheckable( true );
-    if ( !header()->isSectionHidden( i ) )
-      act->setChecked( true );
-  }
-
-  connect( &popup , SIGNAL( triggered( QAction* ) ) ,
-           this , SLOT( slotToggleColumn( QAction* ) ) );
-  popup.exec( header()->mapToGlobal( p ) ); // synchronous
-
-}
-
-void KMMimePartTree::slotToggleColumn( QAction* a )
-{
-  Q_ASSERT( a );
-  if ( !a )
-    return; // hm ?
-
-  QTreeWidgetItem * hitem = headerItem();
-  if ( !hitem )
-    return; // oops..
-
-  int column = a->data().toInt();
-  Q_ASSERT( column >= 0 && column < hitem->columnCount() );
-
-  if ( a->isChecked() )
-    header()->showSection( column );
-  else
-    header()->hideSection( column );
 }
 
 void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
@@ -298,14 +251,18 @@ void KMMimePartTree::correctSize( QTreeWidgetItem * item )
   KIO::filesize_t totalSize = 0;
 
   QTreeWidgetItemIterator it( item );
-  while( QTreeWidgetItem * myChild = *it )
-  {
-    totalSize += static_cast<KMMimePartTreeItem*>(myChild)->origSize();
+  while( QTreeWidgetItem * myChild = *it ) {
+    totalSize += static_cast<KMMimePartTreeItem*>(myChild)->dataSize();
     ++it;
   }
 
-  if ( totalSize > static_cast<KMMimePartTreeItem*>(item)->origSize() )
-    item->setText( 3 , KIO::convertSize( totalSize ) );
+  KMMimePartTreeItem * mimeItem = static_cast<KMMimePartTreeItem*>(item);
+
+  if ( totalSize > mimeItem->dataSize() )
+  {
+    mimeItem->setText( COLUMN_SIZE , KIO::convertSize( totalSize ) );
+    mimeItem->setDataSize( totalSize );
+  }
 
   if ( item->parent() )
     correctSize( item->parent() );
@@ -388,79 +345,6 @@ void KMMimePartTree::slotCopy()
   QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
 }
 
-//=============================================================================
-
-KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
-                                        partNode* node,
-                                        const QString & description,
-                                        const QString & mimetype,
-                                        const QString & encoding,
-                                        KIO::filesize_t size )
-  : QTreeWidgetItem( parent ),
-    mPartNode( node ), mOrigSize( size )
-{
-  Q_ASSERT( parent );
-  if ( node )
-    node->setMimePartTreeItem( this );
-  setText( 0 , description );
-  setIconAndTextForType( mimetype );
-  setText( 2 , encoding );
-  setText( 3 , KIO::convertSize( size ) );
-  setTextAlignment( 3 , Qt::AlignRight );
-  parent->correctSize( this );
-}
-
-KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
-                                        partNode* node,
-                                        const QString & description,
-                                        const QString & mimetype,
-                                        const QString & encoding,
-                                        KIO::filesize_t size,
-                                        bool revertOrder )
-  : QTreeWidgetItem( parent ),
-    mPartNode( node ), mOrigSize(size)
-{
-  // With Qt3 the items were inserted at the beginning of the
-  // parent's child list. revertOrder caused the item to be appended.
-  // With Qt4 we get the opposite behaviour: we're appended
-  // by default and with !revertOrder we want to be prepended.
-  if ( ( !revertOrder ) && parent ) {
-    int idx = parent->indexOfChild( this );
-    if ( idx > 0 ) {
-      parent->takeChild( idx ); // should return this.
-      parent->insertChild( 0 , this );
-    }
-  }
-  // Attach to the data tree node
-  if ( node )
-    node->setMimePartTreeItem( this );
-
-  // Setup column data
-  setText( 0 , description );
-  setIconAndTextForType( mimetype );
-  setText( 2 , encoding );
-  setText( 3 , KIO::convertSize( size ) );
-  setTextAlignment( 3 , Qt::AlignRight );
-  if ( treeWidget() )
-    static_cast<KMMimePartTree*>( treeWidget() )->correctSize( this );
-}
-
-void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
-{
-  QString mimetype = mime.toLower();
-  if ( mimetype.startsWith( "multipart/" ) ) {
-    setText( 1, mimetype );
-    setIcon( 0, QIcon( SmallIcon("folder") ) );
-  } else if ( mimetype == "application/octet-stream" ) {
-    setText( 1, i18n("Unspecified Binary Data") ); // do not show "Unknown"...
-    setIcon( 0, QIcon( SmallIcon("application-octet-stream") ) );
-  } else {
-    KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
-    setText( 1, ( mtp && !mtp->comment().isEmpty() ) ? mtp->comment() : mimetype );
-    setIcon( 0, QIcon( mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), KIconLoader::Small) : SmallIcon("unknown") ) );
-  }
-}
-
 void KMMimePartTree::startDrag( Qt::DropActions )
 {
   KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( currentItem() );
@@ -482,6 +366,94 @@ void KMMimePartTree::startDrag( Qt::DropActions )
   mimeData->setUrls( urls );
   drag->setMimeData( mimeData );
   drag->exec( Qt::CopyAction );
+}
+
+
+//=============================================================================
+
+KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
+                                        partNode* node,
+                                        const QString & description,
+                                        const QString & mimetype,
+                                        const QString & encoding,
+                                        KIO::filesize_t size )
+  : QTreeWidgetItem( parent ),
+    mPartNode( node ), mDataSize( size )
+{
+  Q_ASSERT( parent );
+  if ( node )
+    node->setMimePartTreeItem( this );
+  setText( COLUMN_DESCRIPTION , description );
+  setIconAndTextForType( mimetype );
+  setText( COLUMN_ENCODING , encoding );
+  setText( COLUMN_SIZE , KIO::convertSize( size ) );
+  setTextAlignment( COLUMN_SIZE , Qt::AlignRight );
+  parent->correctSize( this );
+}
+
+KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
+                                        partNode* node,
+                                        const QString & description,
+                                        const QString & mimetype,
+                                        const QString & encoding,
+                                        KIO::filesize_t size,
+                                        bool revertOrder )
+  : QTreeWidgetItem( parent ),
+    mPartNode( node ), mDataSize(size)
+{
+  // With Qt3 the items were inserted at the beginning of the
+  // parent's child list. revertOrder caused the item to be appended.
+  // With Qt4 we get the opposite behaviour: we're appended
+  // by default and with !revertOrder we want to be prepended.
+  if ( ( !revertOrder ) && parent ) {
+    int idx = parent->indexOfChild( this );
+    if ( idx > 0 ) {
+      parent->takeChild( idx ); // should return this.
+      parent->insertChild( 0 , this );
+    }
+  }
+  // Attach to the data tree node
+  if ( node )
+    node->setMimePartTreeItem( this );
+
+  // Setup column data
+  setText( COLUMN_DESCRIPTION , description );
+  setIconAndTextForType( mimetype );
+  setText( COLUMN_ENCODING , encoding );
+  setText( COLUMN_SIZE , KIO::convertSize( size ) );
+  setTextAlignment( COLUMN_SIZE , Qt::AlignRight );
+
+
+  if ( treeWidget() )
+    static_cast<KMMimePartTree*>( treeWidget() )->correctSize( this );
+}
+
+void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
+{
+  QString mimetype = mime.toLower();
+  if ( mimetype.startsWith( "multipart/" ) ) {
+    setText( COLUMN_TYPE, mimetype );
+    setIcon( COLUMN_DESCRIPTION, QIcon( SmallIcon("folder") ) );
+  } else if ( mimetype == "application/octet-stream" ) {
+    setText( COLUMN_TYPE, i18n("Unspecified Binary Data") ); // do not show "Unknown"...
+    setIcon( COLUMN_DESCRIPTION, QIcon( SmallIcon("application-octet-stream") ) );
+  } else {
+    KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
+    setText( COLUMN_TYPE, ( mtp && !mtp->comment().isEmpty() ) ? mtp->comment() : mimetype );
+    setIcon( COLUMN_DESCRIPTION, QIcon( mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), KIconLoader::Small) : SmallIcon("unknown") ) );
+  }
+}
+
+bool KMMimePartTreeItem::operator < ( const QTreeWidgetItem &other ) const
+{
+  int sortCol = treeWidget()->sortColumn();
+
+  const KMMimePartTreeItem & item = static_cast<const KMMimePartTreeItem &>( other );
+
+  if ( sortCol == COLUMN_SIZE )
+    return mDataSize < item.dataSize();
+
+  return text(sortCol) < other.text(sortCol);
 }
 
 #include "kmmimeparttree.moc"

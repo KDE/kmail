@@ -35,7 +35,7 @@
 
 #include <kio/global.h>
 
-#include <QTreeWidget>
+#include <libkdepim/treewidget.h>
 #include <QString>
 
 class partNode;
@@ -49,10 +49,11 @@ class QAction;
  * This widget displays the message tree and allows viewing
  * the contents of single nodes in the KMReaderWin.
  */
-class KMMimePartTree : public QTreeWidget
+class KMMimePartTree : public KPIM::TreeWidget
 {
   Q_OBJECT
   friend class ::KMReaderWin;
+  friend class KMMimePartTreeItem;
 
 public:
   KMMimePartTree( KMReaderWin *readerWin,
@@ -60,20 +61,15 @@ public:
   virtual ~KMMimePartTree();
 
 public:
-
   /**
-  * Corrects the size displayed by the specified item
-  * by accounting for its current children.
-  *
-  * @param the item to correct the size for
+  * Clears the tree view by removing all the items.
+  * Resets sort order to "insertion order".
   */
-  void correctSize( QTreeWidgetItem *item );
+  void clearAndResetSortOrder();
 
 protected slots:
   void slotItemClicked( QTreeWidgetItem * );
   void slotContextMenuRequested( const QPoint & );
-  void slotHeaderContextMenuRequested( const QPoint & );
-  void slotToggleColumn( QAction * );
   void slotSaveAs();
   void slotSaveAsEncoded();
   void slotSaveAll();
@@ -86,6 +82,13 @@ protected slots:
   void slotCopy();
 
 protected:
+  /**
+  * Corrects the size displayed by the specified item
+  * by accounting for its current children.
+  *
+  * @param the item to correct the size for
+  */
+  void correctSize( QTreeWidgetItem *item );
 
   virtual void startDrag( Qt::DropActions actions );
   virtual void showEvent( QShowEvent* e );
@@ -129,24 +132,32 @@ public:
   /**
   * @returns a pointer to the partNode this item is displaying.
   */
-  partNode* node() const { return mPartNode; }
+  partNode* node() const
+    { return mPartNode; }
 
   /**
-  * @returns the initial size of the tree node data.
+  * @returns the current size of the tree node data.
   */
-  KIO::filesize_t origSize() const { return mOrigSize; }
+  KIO::filesize_t dataSize() const
+    { return mDataSize; }
 
   /**
-  * Sets the initial size of the tree node data.
+  * Sets the current size of the tree node data (does NOT update the item text)
   */
-  void setOrigSize( KIO::filesize_t size ) { mOrigSize = size; }
+  void setDataSize( KIO::filesize_t size )
+    { mDataSize = size; }
+
+  /**
+   * Operator used for item sorting.
+   */
+  virtual bool operator < ( const QTreeWidgetItem &other ) const;
 
 private:
   void setIconAndTextForType( const QString &mimetype );
 
 private:
   partNode* mPartNode;
-  KIO::filesize_t mOrigSize;
+  KIO::filesize_t mDataSize;
 };
 
 #endif // KMMIMEPARTTREE_H
