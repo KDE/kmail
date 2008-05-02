@@ -48,7 +48,9 @@ GpgME::VerificationResult KleoJobExecutor::exec(
   kDebug() << "Starting detached verification job";
   connect( job, SIGNAL(result(GpgME::VerificationResult)),
            SLOT(verificationResult(GpgME::VerificationResult)) );
-  job->start( signature, signedData );
+  GpgME::Error err = job->start( signature, signedData );
+  if ( err )
+    return VerificationResult( err );
   mEventLoop->exec();
   return mVerificationResult;
 }
@@ -61,7 +63,11 @@ GpgME::VerificationResult KleoJobExecutor::exec(
   kDebug() << "Starting opaque verfication job";
   connect( job, SIGNAL(result(GpgME::VerificationResult,QByteArray)),
            SLOT(verificationResult(GpgME::VerificationResult,QByteArray)) );
-  job->start( signedData );
+  GpgME::Error err = job->start( signedData );
+  if ( err ) {
+    plainText.clear();
+    return VerificationResult( err );
+  }
   mEventLoop->exec();
   plainText = mData;
   return mVerificationResult;
@@ -75,7 +81,11 @@ std::pair< GpgME::DecryptionResult, GpgME::VerificationResult > KleoJobExecutor:
   kDebug() << "Starting decryption job";
   connect( job, SIGNAL(result(GpgME::DecryptionResult,GpgME::VerificationResult,QByteArray)),
            SLOT(decryptResult(GpgME::DecryptionResult,GpgME::VerificationResult,QByteArray)) );
-  job->start( cipherText );
+  GpgME::Error err = job->start( cipherText );
+  if ( err ) {
+    plainText.clear();
+    return std::make_pair( DecryptionResult( err ), VerificationResult( err ) );
+  }
   mEventLoop->exec();
   plainText = mData;
   return std::make_pair( mDecryptResult, mVerificationResult );
@@ -84,7 +94,9 @@ std::pair< GpgME::DecryptionResult, GpgME::VerificationResult > KleoJobExecutor:
 GpgME::ImportResult KleoJobExecutor::exec(Kleo::ImportJob* job, const QByteArray & certData)
 {
   connect( job, SIGNAL(result(GpgME::ImportResult)), SLOT(importResult(GpgME::ImportResult)) );
-  job->start( certData );
+  GpgME::Error err = job->start( certData );
+  if ( err )
+    return ImportResult( err );
   mEventLoop->exec();
   return mImportResult;
 }
