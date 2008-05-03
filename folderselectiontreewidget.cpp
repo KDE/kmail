@@ -231,10 +231,10 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
     QTreeWidgetItemIterator clean( this );
     while ( QTreeWidgetItem *item = *clean )
     {
-      item->setDisabled( false );
       item->setHidden( false );
       item->setExpanded( true );
       item->setSelected( false );
+      item->setFlags( item->flags() | Qt::ItemIsSelectable );
       ++clean;
     }
 
@@ -247,10 +247,10 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
   QTreeWidgetItemIterator clean( this );
   while ( QTreeWidgetItem *item = *clean )
   {
-    item->setDisabled( true );
     item->setHidden( true );
     item->setExpanded( false );
     item->setSelected( false );
+    item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
     ++clean;
   }
 
@@ -259,25 +259,25 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
 
   for( QList<QTreeWidgetItem *>::Iterator it = lItems.begin(); it != lItems.end(); ++it )
   {
-    ( *it )->setDisabled( false );
+    ( *it )->setFlags( ( *it )->flags() | Qt::ItemIsSelectable );
     ( *it )->setHidden( false );
+
     // Open all the parents up to this item
     QTreeWidgetItem * p = ( *it )->parent();
     while( p )
     {
-      p->setDisabled( false ); // we'd like to keep it disabled, but it disables the entire child tree :/
       p->setHidden( false );
       p->setExpanded( true );
       p = p->parent();
     }
   }
 
-
   // Iterate through the list to find the first selectable item
   QTreeWidgetItemIterator first( this );
   while ( FolderSelectionTreeWidgetItem * item = static_cast< FolderSelectionTreeWidgetItem* >( *first ) )
   {
-    if ( ( !item->isHidden() ) && ( !item->isDisabled() ) && ( item->flags() & Qt::ItemIsSelectable ) )
+    if ( ( !item->isHidden() ) && ( !item->isDisabled() ) &&
+          ( item->flags() & Qt::ItemIsSelectable ) )
     {
       item->setSelected( true );
       setCurrentItem( item );
@@ -292,7 +292,6 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
     setColumnText( mPathColumnIndex, i18n("Path") + "  ( " + filter + " )" );
   else
     setColumnText( mPathColumnIndex, i18n("Path") );
-
 }
 
 void FolderSelectionTreeWidget::keyPressEvent( QKeyEvent *e )
@@ -317,6 +316,31 @@ void FolderSelectionTreeWidget::keyPressEvent( QKeyEvent *e )
       applyFilter( mFilter);
       return;
     break;
+
+    // Reimplement up/down arrow handling to skip non-selectable items
+    case Qt::Key_Up:
+    {
+      QTreeWidgetItem *newCurrent = currentItem();
+      do {
+        newCurrent = itemAbove( newCurrent );
+      } while ( newCurrent && !( newCurrent->flags() & Qt::ItemIsSelectable ) );
+      if ( newCurrent )
+        setCurrentItem( newCurrent );
+      return;
+    }
+    break;
+    case Qt::Key_Down:
+    {
+      QTreeWidgetItem *newCurrent = currentItem();
+      do {
+        newCurrent = itemBelow( newCurrent );
+      } while ( newCurrent && !( newCurrent->flags() & Qt::ItemIsSelectable ) );
+      if ( newCurrent )
+        setCurrentItem( newCurrent );
+      return;
+    }
+    break;
+
     default:
       int ch = s.isEmpty() ? 0 : s[0].toAscii();
       if ( !s.isEmpty() && ch >= 32 && ch <= 126 ) {
