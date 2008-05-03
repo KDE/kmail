@@ -232,7 +232,6 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
     while ( QTreeWidgetItem *item = *clean )
     {
       item->setHidden( false );
-      item->setExpanded( true );
       item->setSelected( false );
       item->setFlags( item->flags() | Qt::ItemIsSelectable );
       ++clean;
@@ -248,7 +247,6 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
   while ( QTreeWidgetItem *item = *clean )
   {
     item->setHidden( true );
-    item->setExpanded( false );
     item->setSelected( false );
     item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
     ++clean;
@@ -267,7 +265,6 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
     while( p )
     {
       p->setHidden( false );
-      p->setExpanded( true );
       p = p->parent();
     }
   }
