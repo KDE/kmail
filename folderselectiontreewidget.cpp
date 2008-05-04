@@ -298,8 +298,6 @@ void FolderSelectionTreeWidget::keyPressEvent( QKeyEvent *e )
   // in the header for the Path column). Backpace removes text from the filter
   // while the del button clears the filter completly.
 
-  QString s = e->text();
-
   switch( e->key() )
   {
     case Qt::Key_Backspace:
@@ -339,12 +337,14 @@ void FolderSelectionTreeWidget::keyPressEvent( QKeyEvent *e )
     break;
 
     default:
-      int ch = s.isEmpty() ? 0 : s[0].toAscii();
-      if ( !s.isEmpty() && ch >= 32 && ch <= 126 ) {
-        mFilter += s;
+    {
+      QString s = e->text();
+      if ( !s.isEmpty() && s.at( 0 ).isPrint() ) {
+         mFilter += s;
         applyFilter( mFilter );
         return;
       }
+    }
     break;
   }
 
