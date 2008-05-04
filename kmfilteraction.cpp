@@ -500,7 +500,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  // K3Process doesn't support a QProcess::launch() equivalent, so
+  // KProcess doesn't support a QProcess::launch() equivalent, so
   // we must use a temp file :-(
   KTemporaryFile * inFile = new KTemporaryFile;
   inFile->open();

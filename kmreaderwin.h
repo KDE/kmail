@@ -231,17 +231,17 @@ public:
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
-  QAction *mailToComposeAction() { return mMailToComposeAction; }
-  QAction *mailToReplyAction() { return mMailToReplyAction; }
-  QAction *mailToForwardAction() { return mMailToForwardAction; }
-  QAction *addAddrBookAction() { return mAddAddrBookAction; }
-  QAction *openAddrBookAction() { return mOpenAddrBookAction; }
-  QAction *copyAction() { return mCopyAction; }
-  QAction *selectAllAction() { return mSelectAllAction; }
-  QAction *copyURLAction() { return mCopyURLAction; }
-  QAction *urlOpenAction() { return mUrlOpenAction; }
-  QAction *urlSaveAsAction() { return mUrlSaveAsAction; }
-  QAction *addBookmarksAction() { return mAddBookmarksAction;}
+  KAction *mailToComposeAction() { return mMailToComposeAction; }
+  KAction *mailToReplyAction() { return mMailToReplyAction; }
+  KAction *mailToForwardAction() { return mMailToForwardAction; }
+  KAction *addAddrBookAction() { return mAddAddrBookAction; }
+  KAction *openAddrBookAction() { return mOpenAddrBookAction; }
+  KAction *copyAction() { return mCopyAction; }
+  KAction *selectAllAction() { return mSelectAllAction; }
+  KAction *copyURLAction() { return mCopyURLAction; }
+  KAction *urlOpenAction() { return mUrlOpenAction; }
+  KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
+  KAction *addBookmarksAction() { return mAddBookmarksAction;}
   // This function returns the complete data that were in this
   // message parts - *after* all encryption has been removed that
   // could be removed.
@@ -513,9 +513,10 @@ private:
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;
-  QAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+  KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
-      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
+      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction,
+      *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction,;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
   KUrl mUrlClicked;

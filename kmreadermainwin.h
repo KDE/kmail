@@ -78,7 +78,7 @@ private:
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
           *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
-          *mViewSourceAction;
+          *mViewSourceAction, *mCopyTextAction;
   KActionMenu *mForwardActionMenu;
   KActionMenu *mCopyActionMenu;
   KFontAction *fontAction;

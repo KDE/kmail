@@ -506,7 +506,7 @@ public:
 
     @short Abstract base class for filter actions with a command line as parameter.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>
-    @see KMFilterActionWithString KMFilterAction KMFilter K3Process
+    @see KMFilterActionWithString KMFilterAction KMFilter KProcess
 
 */
 class KMFilterActionWithUrl : public KMFilterAction

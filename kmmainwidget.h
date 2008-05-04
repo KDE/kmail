@@ -39,7 +39,6 @@
 #include <QHash>
 #include <QPointer>
 
-class Q3Accel;
 class QVBoxLayout;
 class QSplitter;
 class QSignalMapper;
@@ -168,12 +167,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QList<QAction*> actionList();
 
     void modifyFolder( KMFolderTreeItem *folderItem );
-
-    /**
-      Enable or disable the global accelerators. This is useful for keyboard
-      navigation inside child widgets like combo boxes.
-    */
-    void setAccelsEnabled( bool enabled = true );
 
     QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
@@ -508,9 +501,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
         *mListFilterAction;
 
-    KActionMenu *mTemplateMenu;
+    KAction *mNextMessageAction, *mPreviousMessageAction;
 
     // Custom template actions menu
+    KActionMenu *mTemplateMenu;
     CustomTemplatesMenu *mCustomTemplateMenus;
 
     KActionMenu *mThreadStatusMenu,
@@ -606,8 +600,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMail::MessageActions *mMsgActions;
 
     bool mOpenedImapFolder;
-
-    Q3Accel *mAccel;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;
     bool mVacationIndicatorActive;

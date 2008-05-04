@@ -22,8 +22,6 @@
 // Could be extended to include support for normal main window
 // widgets like a toolbar.
 
-#include <q3accel.h>
-
 #include <kicon.h>
 #include <kactionmenu.h>
 #include <kedittoolbar.h>
@@ -271,7 +269,7 @@ void KMReaderMainWin::setupAccel()
 
   mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
   connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin, SLOT(slotSaveAttachments()) );
-  
+
   mTrashAction = new KAction( KIcon( "user-trash" ), i18n("&Move to Trash"), this );
   mTrashAction->setIconText( i18n( "Trash" ) );
   mTrashAction->setToolTip( i18n( "Move message to trashcan" ) );
@@ -279,7 +277,7 @@ void KMReaderMainWin::setupAccel()
   actionCollection()->addAction( "move_to_trash", mTrashAction );
   connect( mTrashAction, SIGNAL(triggered()), this, SLOT(slotTrashMsg()) );
 
-  QAction *closeAction = KStandardAction::close( this, SLOT( close() ), actionCollection() );
+  KAction *closeAction = KStandardAction::close( this, SLOT( close() ), actionCollection() );
   KShortcut closeShortcut = KShortcut(closeAction->shortcuts());
   closeShortcut.setAlternate( QKeySequence(Qt::Key_Escape));
   closeAction->setShortcuts(closeShortcut);
@@ -331,17 +329,9 @@ void KMReaderMainWin::setupAccel()
   updateMessageMenu();
   updateCustomTemplateMenus();
 
-  Q3Accel *accel = new Q3Accel(mReaderWin, "showMsg()");
-  accel->connectItem(accel->insertItem(Qt::Key_Up),
-                     mReaderWin, SLOT(slotScrollUp()));
-  accel->connectItem(accel->insertItem(Qt::Key_Down),
-                     mReaderWin, SLOT(slotScrollDown()));
-  accel->connectItem(accel->insertItem(Qt::Key_PageUp),
-                     mReaderWin, SLOT(slotScrollPrior()));
-  accel->connectItem(accel->insertItem(Qt::Key_PageDown),
-                     mReaderWin, SLOT(slotScrollNext()));
-  accel->connectItem(accel->insertItem(KStandardShortcut::shortcut(KStandardShortcut::Copy).primary()), // ###### misses alternate(). Should be ported away from Q3Accel anyway.
-                     mReaderWin, SLOT(slotCopySelectedText()));
+  mCopyTextAction = new KAction( KStandardAction::copy(
+                   mReaderWin, SLOT( slotCopySelectedText() ), actionCollection() ) );
+
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
            this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)) );
   connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),

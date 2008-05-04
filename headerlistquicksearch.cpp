@@ -71,8 +71,6 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 
   updateComboList();
 
-  mStatusCombo->installEventFilter( this );
-
   label->setBuddy( mStatusCombo );
   connect( kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
            this, SLOT( updateComboList() ) );
@@ -99,39 +97,6 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 HeaderListQuickSearch::~HeaderListQuickSearch()
 {
 }
-
-
-bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
-{
-  if ( watched == mStatusCombo ) {
-    KMMainWidget *mainWidget = 0;
-
-    // Travel up the parents list until we find the main widget
-    for ( QWidget *curWidget = parentWidget(); curWidget; curWidget = curWidget->parentWidget() ) {
-      mainWidget = ::qobject_cast<KMMainWidget *>( curWidget );
-      if ( mainWidget )
-        break;
-    }
-
-    if ( mainWidget ) {
-      switch ( event->type() ) {
-      case QEvent::FocusIn:
-        mainWidget->setAccelsEnabled( false );
-        break;
-      case QEvent::FocusOut:
-        mainWidget->setAccelsEnabled( true );
-        break;
-      default:
-        // Avoid compiler warnings
-        break;
-      }
-    }
-  }
-
-  // In either case, always return false, we NEVER want to eat the event
-  return false;
-}
-
 
 bool HeaderListQuickSearch::itemMatches( const Q3ListViewItem *item,
                                          const QString &s ) const

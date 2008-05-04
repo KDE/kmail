@@ -661,6 +661,33 @@ void KMReaderWin::createActions( KActionCollection *ac )
   ac->addAction("toggle_fixedfont", mToggleFixFontAction );
   connect(mToggleFixFontAction, SIGNAL(triggered(bool) ), SLOT(slotToggleFixedFont()));
   mToggleFixFontAction->setShortcut(QKeySequence(Qt::Key_X));
+
+  //
+  // Scroll actions
+  //
+  mScrollUpAction = new KAction( i18n("Scroll Message Up"), this );
+  mScrollUpAction->setShortcut( QKeySequence( Qt::Key_Up ) );
+  ac->addAction( "scroll_up", mScrollUpAction );
+  connect( mScrollUpAction, SIGNAL( triggered( bool ) ),
+           this, SLOT( slotScrollUp() ) );
+
+  mScrollDownAction = new KAction( i18n("Scroll Message Down"), this );
+  mScrollDownAction->setShortcut( QKeySequence( Qt::Key_Down ) );
+  ac->addAction( "scroll_down", mScrollDownAction );
+  connect( mScrollDownAction, SIGNAL( triggered( bool ) ),
+           this, SLOT( slotScrollDown() ) );
+
+  mScrollUpMoreAction = new KAction( i18n("Scroll Message Up (More)"), this );
+  mScrollUpMoreAction->setShortcut( QKeySequence( Qt::Key_PageUp ) );
+  ac->addAction( "scroll_up_more", mScrollUpMoreAction );
+  connect( mScrollUpMoreAction, SIGNAL( triggered( bool ) ),
+           this, SLOT( slotScrollPrior() ) );
+
+  mScrollDownMoreAction = new KAction( i18n("Scroll Message Down (More)"), this );
+  mScrollDownMoreAction->setShortcut( QKeySequence( Qt::Key_PageDown ) );
+  ac->addAction( "scroll_down_more", mScrollDownMoreAction );
+  connect( mScrollDownMoreAction, SIGNAL( triggered( bool ) ),
+           this, SLOT( slotScrollNext() ) );
 }
 
 // little helper function

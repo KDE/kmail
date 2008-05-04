@@ -55,12 +55,10 @@
 #include <kicondialog.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <k3listview.h>
 #include <kvbox.h>
 
 #include <QCheckBox>
 #include <QLayout>
-#include <q3groupbox.h>
 #include <QRegExp>
 #include <QLabel>
 
@@ -72,7 +70,6 @@
 #include <QVBoxLayout>
 
 #include <assert.h>
-#include <q3buttongroup.h>
 #include <QRadioButton>
 
 #include "templatesconfiguration.h"

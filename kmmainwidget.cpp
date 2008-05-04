@@ -37,9 +37,6 @@
 #include <QShortcut>
 #include <QProcess>
 
-#include <q3accel.h>
-#include <q3stylesheet.h>
-
 #include <kicon.h>
 #include <kwindowsystem.h>
 #include <krun.h>
@@ -169,7 +166,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
-    mAccel( 0 ),
     mVacationIndicatorActive( false )
 {
   // must be the first line of the constructor:
@@ -741,8 +737,6 @@ void KMMainWidget::createWidgets()
   // Note that all widgets we create in this function have the parent 'this'.
   // They will be properly reparented in layoutSplitters()
 
-  mAccel = new Q3Accel(this, "createWidgets()");
-
   //
   // Create header view and search bar
   //
@@ -771,10 +765,17 @@ void KMMainWidget::createWidgets()
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
 
-  mAccel->connectItem(mAccel->insertItem(Qt::SHIFT+Qt::Key_Left),
-                     mHeaders, SLOT(selectPrevMessage()));
-  mAccel->connectItem(mAccel->insertItem(Qt::SHIFT+Qt::Key_Right),
-                     mHeaders, SLOT(selectNextMessage()));
+  mPreviousMessageAction = new KAction( i18n( "Extend Selection to Previous Message" ), this );
+  mPreviousMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
+  actionCollection()->addAction( "previous_message", mPreviousMessageAction );
+  connect( mPreviousMessageAction, SIGNAL( triggered( bool ) ),
+           mHeaders, SLOT( selectPrevMessage() ) );
+
+  mNextMessageAction = new KAction( i18n( "Extend Selection to Next Message" ), this );
+  mNextMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Right ) );
+  actionCollection()->addAction( "next_message", mNextMessageAction );
+  connect( mNextMessageAction, SIGNAL( triggered( bool ) ),
+           mHeaders, SLOT( selectNextMessage() ) );
 
   //
   // Create the reader window
@@ -797,16 +798,6 @@ void KMMainWidget::createWidgets()
              mHeaders, SLOT( slotNoDrag() ) );
     connect( mHeaders, SIGNAL( selected(KMMessage*) ),
              this, SLOT( slotMsgSelected(KMMessage*) ) );
-
-    mAccel->connectItem(mAccel->insertItem(Qt::Key_Up),
-        mMsgView, SLOT(slotScrollUp()));
-    mAccel->connectItem(mAccel->insertItem(Qt::Key_Down),
-        mMsgView, SLOT(slotScrollDown()));
-    mAccel->connectItem(mAccel->insertItem(Qt::Key_PageUp),
-        mMsgView, SLOT(slotScrollPrior()));
-    mAccel->connectItem(mAccel->insertItem(Qt::Key_PageDown),
-        mMsgView, SLOT(slotScrollNext()));
-
   }
 
   //
@@ -863,92 +854,82 @@ void KMMainWidget::createWidgets()
   // Create all kinds of actions
   //
   {
-    mRemoveDuplicatesAction = new KAction(i18n("Remove Duplicate Messages"), this);
-    actionCollection()->addAction("remove_duplicate_messages", mRemoveDuplicatesAction );
-    connect(mRemoveDuplicatesAction, SIGNAL(triggered(bool) ), SLOT(removeDuplicates()));
-    mRemoveDuplicatesAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Asterisk));
+    mRemoveDuplicatesAction = new KAction( i18n("Remove Duplicate Messages"), this );
+    actionCollection()->addAction( "remove_duplicate_messages", mRemoveDuplicatesAction );
+    connect( mRemoveDuplicatesAction, SIGNAL( triggered( bool ) ),
+             SLOT( removeDuplicates() ) );
+    mRemoveDuplicatesAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Asterisk ) );
   }
   {
-    QAction *action = new KAction(i18n("Move Message to Folder"), this);
-    actionCollection()->addAction("move_message_to_folder", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotMoveMsg()));
-    action->setShortcut(QKeySequence(Qt::Key_M));
+    KAction *action = new KAction( i18n("Move Message to Folder"), this );
+    action->setShortcut( QKeySequence( Qt::Key_M ) );
+    actionCollection()->addAction( "move_message_to_folder", action );
+    connect( action, SIGNAL( triggered( bool ) ),
+             SLOT( slotMoveMsg() ) );
   }
   {
-    QAction *action = new KAction(i18n("Copy Message to Folder"), this);
-    actionCollection()->addAction("copy_message_to_folder", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotCopyMsg()));
-    action->setShortcut(QKeySequence(Qt::Key_C));
+    KAction *action = new KAction( i18n("Copy Message to Folder"), this );
+    actionCollection()->addAction( "copy_message_to_folder", action );
+    connect( action, SIGNAL( triggered( bool ) ),
+             SLOT( slotCopyMsg() ) );
+    action->setShortcut( QKeySequence( Qt::Key_C ) );
   }
   {
-    QAction *action = new KAction(i18n("Jump to Folder"), this);
-    actionCollection()->addAction("jump_to_folder", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotJumpToFolder()));
-    action->setShortcut(QKeySequence(Qt::Key_J));
+    KAction *action = new KAction( i18n("Jump to Folder"), this );
+    actionCollection()->addAction( "jump_to_folder", action );
+    connect( action, SIGNAL( triggered ( bool ) ),
+             SLOT( slotJumpToFolder() ) );
+    action->setShortcut( QKeySequence( Qt::Key_J ) );
   }
   {
-    QAction *action = new KAction(i18n("Abort Current Operation"), this);
+    KAction *action = new KAction(i18n("Abort Current Operation"), this);
     actionCollection()->addAction("cancel", action );
-    connect(action, SIGNAL(triggered(bool) ), ProgressManager::instance(), SLOT(slotAbortAll()));
-    action->setShortcut(QKeySequence(Qt::Key_Escape));
-    mAccel->connectItem(mAccel->insertItem(Qt::Key_Escape),
-                        ProgressManager::instance(), SLOT(slotAbortAll()));
+    connect( action, SIGNAL( triggered( bool ) ),
+             ProgressManager::instance(), SLOT( slotAbortAll() ) );
+    action->setShortcut( QKeySequence( Qt::Key_Escape ) );
   }
   {
-    QAction *action = new KAction(i18n("Focus on Next Folder"), this);
+    KAction *action = new KAction(i18n("Focus on Next Folder"), this);
     actionCollection()->addAction("inc_current_folder", action );
-    connect(action, SIGNAL(triggered(bool) ), mFolderTree, SLOT(incCurrentFolder()));
-    action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Right));
-    mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Right),
-                        mFolderTree, SLOT(incCurrentFolder()));
+    connect( action, SIGNAL( triggered( bool ) ),
+             mFolderTree, SLOT( incCurrentFolder() ) );
+    action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Right ) );
   }
   {
-    QAction *action = new KAction(i18n("Focus on Previous Folder"), this);
+    KAction *action = new KAction(i18n("Focus on Previous Folder"), this);
     actionCollection()->addAction("dec_current_folder", action );
-    connect(action, SIGNAL(triggered(bool) ), mFolderTree, SLOT(decCurrentFolder()));
-    action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Left));
-    mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Left),
-                        mFolderTree, SLOT(decCurrentFolder()));
+    connect( action, SIGNAL( triggered( bool ) ),
+             mFolderTree, SLOT( decCurrentFolder() ) );
+    action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Left ) );
   }
   {
-    QAction *action = new KAction(i18n("Select Folder with Focus"), this);
+    KAction *action = new KAction(i18n("Select Folder with Focus"), this);
     actionCollection()->addAction("select_current_folder", action );
-    connect(action, SIGNAL(triggered(bool) ), mFolderTree, SLOT(selectCurrentFolder()));
-    action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Space));
-    mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Space),
-                        mFolderTree, SLOT(selectCurrentFolder()));
+    connect( action, SIGNAL( triggered( bool ) ),
+             mFolderTree, SLOT( selectCurrentFolder() ) );
+    action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Space ) );
   }
   {
-    QAction *action = new KAction(i18n("Focus on Next Message"), this);
+    KAction *action = new KAction(i18n("Focus on Next Message"), this);
     actionCollection()->addAction("inc_current_message", action );
-    connect(action, SIGNAL(triggered(bool) ), mHeaders, SLOT(incCurrentMessage()));
-    action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Right));
-    mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Right ),
-                         mHeaders, SLOT( incCurrentMessage() ) );
+    connect( action, SIGNAL( triggered( bool) ),
+             mHeaders, SLOT( incCurrentMessage() ) );
+    action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Right ) );
   }
   {
-    QAction *action = new KAction(i18n("Focus on Previous Message"), this);
+    KAction *action = new KAction(i18n("Focus on Previous Message"), this);
     actionCollection()->addAction("dec_current_message", action );
-    connect(action, SIGNAL(triggered(bool) ), mHeaders, SLOT(decCurrentMessage()));
-    action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Left));
-    mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Left ),
-                         mHeaders, SLOT( decCurrentMessage() ) );
+    connect( action, SIGNAL( triggered( bool ) ),
+             mHeaders, SLOT( decCurrentMessage() ) );
+    action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Left ) );
   }
   {
-    QAction *action = new KAction(i18n("Select Message with Focus"), this);
-    actionCollection()->addAction("select_current_message", action );
-    connect(action, SIGNAL(triggered(bool) ), mHeaders, SLOT( selectCurrentMessage() ));
-    action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Space));
-    mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Space ),
-                         mHeaders, SLOT( selectCurrentMessage() ) );
+    KAction *action = new KAction(i18n("Select Message with Focus"), this);
+    actionCollection()->addAction( "select_current_message", action );
+    connect( action, SIGNAL( triggered( bool ) ),
+             mHeaders, SLOT( selectCurrentMessage() ) );
+    action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Space ) );
   }
-
-  mAccel->connectItem(mAccel->insertItem(Qt::Key_M),
-                      this, SLOT(slotMoveMsg()) );
-  mAccel->connectItem(mAccel->insertItem(Qt::Key_C),
-                      this, SLOT(slotCopyMsg()) );
-  mAccel->connectItem(mAccel->insertItem(Qt::Key_J),
-                      this, SLOT(slotJumpToFolder()) );
 
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, const QString&) ),
            SLOT( startUpdateMessageActionsTimer() ) );
@@ -2664,27 +2645,27 @@ void KMMainWidget::setupActions()
                                   actionCollection() );
 
   {
-    QAction *action = new KAction(i18n("&Compact All Folders"), this);
+    KAction *action = new KAction(i18n("&Compact All Folders"), this);
     actionCollection()->addAction("compact_all_folders", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCompactAll()));
   }
   {
-    QAction *action = new KAction(i18n("&Expire All Folders"), this);
+    KAction *action = new KAction(i18n("&Expire All Folders"), this);
     actionCollection()->addAction("expire_all_folders", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
   }
   {
-    QAction *action = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
+    KAction *action = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
     actionCollection()->addAction("file_invalidate_imap_cache", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
   }
   {
-    QAction *action = new KAction(i18n("Empty All &Trash Folders"), this);
+    KAction *action = new KAction(i18n("Empty All &Trash Folders"), this);
     actionCollection()->addAction("empty_trash", action );
     connect(action, SIGNAL(triggered(bool) ), KMKernel::self(), SLOT(slotEmptyTrash()));
   }
   {
-    QAction *action = new KAction(KIcon("mail-receive"), i18n("Check &Mail"), this);
+    KAction *action = new KAction(KIcon("mail-receive"), i18n("Check &Mail"), this);
     actionCollection()->addAction("check_mail", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCheckMail()));
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_L));
@@ -2709,12 +2690,12 @@ void KMMainWidget::setupActions()
   connect(mActMenu, SIGNAL(aboutToShow()), SLOT(getAccountMenu()));
 
   {
-    QAction *action = new KAction(KIcon("mail-send"), i18n("&Send Queued Messages"), this);
+    KAction *action = new KAction(KIcon("mail-send"), i18n("&Send Queued Messages"), this);
     actionCollection()->addAction("send_queued", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
   }
   {
-    QAction *action = new KAction( i18n("Onlinestatus (unknown)"), this );
+    KAction *action = new KAction( i18n("Onlinestatus (unknown)"), this );
     actionCollection()->addAction( "online_status", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()) );
   }
@@ -2729,28 +2710,28 @@ void KMMainWidget::setupActions()
 
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
-    QAction *action = new KAction(KIcon("help-contents"), i18n("&Address Book..."), this);
+    KAction *action = new KAction(KIcon("help-contents"), i18n("&Address Book..."), this);
     actionCollection()->addAction("addressbook", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
     if (KStandardDirs::findExe("kaddressbook").isEmpty()) action->setEnabled(false);
   }
 
   {
-    QAction *action = new KAction(KIcon("pgp-keys"), i18n("Certificate Manager..."), this);
+    KAction *action = new KAction(KIcon("pgp-keys"), i18n("Certificate Manager..."), this);
     actionCollection()->addAction("tools_start_certman", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotStartCertManager()));
     // disable action if no certman binary is around
     if (KStandardDirs::findExe("kleopatra").isEmpty()) action->setEnabled(false);
   }
   {
-    QAction *action = new KAction(KIcon("pgp-keys"), i18n("GnuPG Log Viewer..."), this);
+    KAction *action = new KAction(KIcon("pgp-keys"), i18n("GnuPG Log Viewer..."), this);
     actionCollection()->addAction("tools_start_kwatchgnupg", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotStartWatchGnuPG()));
     // disable action if no kwatchgnupg binary is around
     if (KStandardDirs::findExe("kwatchgnupg").isEmpty()) action->setEnabled(false);
   }
   {
-    QAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages..."), this);
+    KAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages..."), this);
     actionCollection()->addAction("import", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotImport()));
     if (KStandardDirs::findExe("kmailcvt").isEmpty()) action->setEnabled(false);
@@ -2758,7 +2739,7 @@ void KMMainWidget::setupActions()
 
 #if !defined(NDEBUG)
   {
-    QAction *action = new KAction(i18n("&Debug Sieve..."), this);
+    KAction *action = new KAction(i18n("&Debug Sieve..."), this);
     actionCollection()->addAction("tools_debug_sieve", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotDebugSieve()));
   }
@@ -2766,47 +2747,47 @@ void KMMainWidget::setupActions()
 
   // @TODO (marc/bo): Test
   {
-    QAction *action = new KAction(KIcon("configure"), i18n("Edit \"Out of Office\" Replies..."), this);
+    KAction *action = new KAction(KIcon("configure"), i18n("Edit \"Out of Office\" Replies..."), this);
     actionCollection()->addAction("tools_edit_vacation", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditVacation()));
   }
   {
-    QAction *action = new KAction(i18n("Filter &Log Viewer..."), this);
+    KAction *action = new KAction(i18n("Filter &Log Viewer..."), this);
     actionCollection()->addAction("filter_log_viewer", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilterLogViewer()));
   }
   {
-    QAction *action = new KAction(i18n("&Anti-Spam Wizard..."), this);
+    KAction *action = new KAction(i18n("&Anti-Spam Wizard..."), this);
     actionCollection()->addAction("antiSpamWizard", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiSpamWizard()));
   }
   {
-    QAction *action = new KAction(i18n("&Anti-Virus Wizard..."), this);
+    KAction *action = new KAction(i18n("&Anti-Virus Wizard..."), this);
     actionCollection()->addAction("antiVirusWizard", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiVirusWizard()));
   }
 
   if ( GlobalSettings::allowOutOfOfficeSettings() )
     {
-    QAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
+    KAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
     actionCollection()->addAction( "tools_edit_vacation", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotEditVacation()) );
     }
 
   {
-    QAction *action = new KAction( i18n("Filter &Log Viewer..."), this );
+    KAction *action = new KAction( i18n("Filter &Log Viewer..."), this );
     actionCollection()->addAction( "filter_log_viewer", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotFilterLogViewer()) );
   }
 
   {
-    QAction *action = new KAction( i18n("&Anti-Spam Wizard..."), this );
+    KAction *action = new KAction( i18n("&Anti-Spam Wizard..."), this );
     actionCollection()->addAction( "antiSpamWizard", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAntiSpamWizard()) );
   }
 
   {
-    QAction *action = new KAction( i18n("&Anti-Virus Wizard..."), this );
+    KAction *action = new KAction( i18n("&Anti-Virus Wizard..."), this );
     actionCollection()->addAction( "antiVirusWizard", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAntiVirusWizard()) );
   }
@@ -2842,7 +2823,7 @@ void KMMainWidget::setupActions()
   mDeleteThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
 
   {
-    QAction *action = new KAction(KIcon("edit-find-mail"), i18n("&Find Messages..."), this);
+    KAction *action = new KAction(KIcon("edit-find-mail"), i18n("&Find Messages..."), this);
     actionCollection()->addAction("search_messages", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotRequestFullSearchFromQuickSearch()));
     action->setShortcut(QKeySequence(Qt::Key_S));
@@ -2853,7 +2834,7 @@ void KMMainWidget::setupActions()
   mFindInMessageAction->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::Find));
 
   {
-    QAction *action = new KAction(i18n("Select &All Messages"), this);
+    KAction *action = new KAction(i18n("Select &All Messages"), this);
     actionCollection()->addAction("mark_all_messages", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
     action->setShortcuts(KStandardShortcut::selectAll());
@@ -2927,37 +2908,37 @@ void KMMainWidget::setupActions()
   connect(mThreadBySubjectAction, SIGNAL(triggered(bool) ), SLOT(slotToggleSubjectThreading()));
 
   {
-    QAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Folder"), this);
+    KAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Folder"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
     actionCollection()->addAction("copy_folder", action);
     connect(action, SIGNAL(triggered(bool)), folderTree(), SLOT(copyFolder()));
   }
   {
-    QAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Folder"), this);
+    KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Folder"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_X));
     actionCollection()->addAction("cut_folder", action);
     connect(action, SIGNAL(triggered(bool)), folderTree(), SLOT(cutFolder()));
   }
   {
-    QAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Folder"), this);
+    KAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Folder"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_V));
     actionCollection()->addAction("paste_folder", action);
     connect(action, SIGNAL(triggered(bool)), folderTree(), SLOT(pasteFolder()));
   }
   {
-    QAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Messages"), this);
+    KAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Messages"), this);
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
     actionCollection()->addAction("copy_messages", action);
     connect(action, SIGNAL(triggered(bool)), headers(), SLOT(copyMessages()));
   }
   {
-    QAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Messages"), this);
+    KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Messages"), this);
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
     actionCollection()->addAction("cut_messages", action);
     connect(action, SIGNAL(triggered(bool)), headers(), SLOT(cutMessages()));
   }
   {
-    QAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Messages"), this);
+    KAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Messages"), this);
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_V));
     actionCollection()->addAction("paste_messages", action);
     connect(action, SIGNAL(triggered(bool)), headers(), SLOT(pasteMessages()));
@@ -2965,7 +2946,7 @@ void KMMainWidget::setupActions()
 
   //----- Message Menu
   {
-    QAction *action = new KAction(KIcon("mail-message-new"), i18n("&New Message..."), this);
+    KAction *action = new KAction(KIcon("mail-message-new"), i18n("&New Message..."), this);
     actionCollection()->addAction("new_message", action );
     action->setIconText( i18n( "New" ) );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
@@ -2982,7 +2963,7 @@ void KMMainWidget::setupActions()
            SLOT( slotNewFromTemplate(QAction*) ) );
 
   {
-    QAction *action = new KAction(KIcon("mail-message-new-list"), i18n("New Message t&o Mailing-List..."), this);
+    KAction *action = new KAction(KIcon("mail-message-new-list"), i18n("New Message t&o Mailing-List..."), this);
     actionCollection()->addAction("post_message", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPostToML()));
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N));
@@ -3153,28 +3134,28 @@ void KMMainWidget::setupActions()
                                       "total size of messages in folders.") );
 
   {
-    QAction *action = new KAction(i18nc("View->","&Expand Thread"), this);
+    KAction *action = new KAction(i18nc("View->","&Expand Thread"), this);
     actionCollection()->addAction("expand_thread", action );
     action->setShortcut(QKeySequence(Qt::Key_Period));
     action->setToolTip(i18n("Expand the current thread"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpandThread()));
   }
   {
-    QAction *action = new KAction(i18nc("View->","&Collapse Thread"), this);
+    KAction *action = new KAction(i18nc("View->","&Collapse Thread"), this);
     actionCollection()->addAction("collapse_thread", action );
     action->setShortcut(QKeySequence(Qt::Key_Comma));
     action->setToolTip( i18n("Collapse the current thread"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCollapseThread()));
   }
   {
-    QAction *action = new KAction(i18nc("View->","Ex&pand All Threads"), this);
+    KAction *action = new KAction(i18nc("View->","Ex&pand All Threads"), this);
     actionCollection()->addAction("expand_all_threads", action );
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Period));
     action->setToolTip( i18n("Expand all threads in the current folder"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpandAllThreads()));
   }
   {
-    QAction *action = new KAction(i18nc("View->","C&ollapse All Threads"), this);
+    KAction *action = new KAction(i18nc("View->","C&ollapse All Threads"), this);
     actionCollection()->addAction("collapse_all_threads", action );
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Comma));
     action->setToolTip( i18n("Collapse all threads in the current folder"));
@@ -3186,21 +3167,21 @@ void KMMainWidget::setupActions()
   connect(mViewSourceAction, SIGNAL(triggered(bool) ), SLOT(slotShowMsgSrc()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
-  QAction *dukeOfMonmoth = new KAction(i18n("&Display Message"), this);
+  KAction *dukeOfMonmoth = new KAction(i18n("&Display Message"), this);
   actionCollection()->addAction("display_message", dukeOfMonmoth );
   connect(dukeOfMonmoth, SIGNAL(triggered(bool) ), SLOT( slotDisplayCurrentMessage() ));
   dukeOfMonmoth->setShortcut(QKeySequence(Qt::Key_Return));
 
   //----- Go Menu
   {
-    QAction *action = new KAction(i18n("&Next Message"), this);
+    KAction *action = new KAction(i18n("&Next Message"), this);
     actionCollection()->addAction("go_next_message", action );
     action->setShortcuts(KShortcut( "N; Right" ));
     action->setToolTip(i18n("Go to the next message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextMessage()));
   }
   {
-    QAction *action = new KAction(i18n("Next &Unread Message"), this);
+    KAction *action = new KAction(i18n("Next &Unread Message"), this);
     actionCollection()->addAction("go_next_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Plus));
     if ( QApplication::isRightToLeft() ) {
@@ -3213,14 +3194,14 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextUnreadMessage()));
   }
   {
-    QAction *action = new KAction(i18n("&Previous Message"), this);
+    KAction *action = new KAction(i18n("&Previous Message"), this);
     actionCollection()->addAction("go_prev_message", action );
     action->setToolTip(i18n("Go to the previous message"));
     action->setShortcuts(KShortcut( "P; Left" ));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevMessage()));
   }
   {
-    QAction *action = new KAction(i18n("Previous Unread &Message"), this);
+    KAction *action = new KAction(i18n("Previous Unread &Message"), this);
     actionCollection()->addAction("go_prev_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Minus));
     if ( QApplication::isRightToLeft() ) {
@@ -3233,7 +3214,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadMessage()));
   }
   {
-    QAction *action = new KAction(i18n("Next Unread &Folder"), this);
+    KAction *action = new KAction(i18n("Next Unread &Folder"), this);
     actionCollection()->addAction("go_next_unread_folder", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextUnreadFolder()));
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Plus));
@@ -3243,7 +3224,7 @@ void KMMainWidget::setupActions()
     action->setShortcuts( shortcut );
   }
   {
-    QAction *action = new KAction(i18n("Previous Unread F&older"), this);
+    KAction *action = new KAction(i18n("Previous Unread F&older"), this);
     actionCollection()->addAction("go_prev_unread_folder", action );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Minus));
     action->setToolTip(i18n("Go to the previous folder with unread messages"));
@@ -3253,34 +3234,34 @@ void KMMainWidget::setupActions()
     action->setShortcuts( shortcut );
   }
   {
-    QAction *action = new KAction(i18nc("Go->","Next Unread &Text"), this);
+    KAction *action = new KAction(i18nc("Go->","Next Unread &Text"), this);
     actionCollection()->addAction("go_next_unread_text", action );
     action->setShortcut(QKeySequence(Qt::Key_Space));
     action->setToolTip(i18n("Go to the next unread text"));
     action->setWhatsThis( i18n("Scroll down current message. "
-			       "If at end of current message, "
-			       "go to next unread message."));
+                               "If at end of current message, "
+                               "go to next unread message."));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotReadOn()));
   }
 
   //----- Settings Menu
   {
-    QAction *action = new KAction(i18n("Configure &Filters..."), this);
+    KAction *action = new KAction(i18n("Configure &Filters..."), this);
     actionCollection()->addAction("filter", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilter()));
   }
   {
-    QAction *action = new KAction(i18n("Configure &POP Filters..."), this);
+    KAction *action = new KAction(i18n("Configure &POP Filters..."), this);
     actionCollection()->addAction("popFilter", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPopFilter()));
   }
   {
-    QAction *action = new KAction(i18n("Manage &Sieve Scripts..."), this);
+    KAction *action = new KAction(i18n("Manage &Sieve Scripts..."), this);
     actionCollection()->addAction("sieveFilters", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotManageSieveScripts()));
   }
   {
-    QAction *action = new KAction(KIcon("kmail"), i18n("KMail &Introduction"), this);
+    KAction *action = new KAction(KIcon("kmail"), i18n("KMail &Introduction"), this);
     actionCollection()->addAction("help_kmail_welcomepage", action );
     action->setToolTip( i18n("Display KMail's Welcome Page") );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotIntro()));
@@ -3290,7 +3271,7 @@ void KMMainWidget::setupActions()
 
 //  KStandardAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
   {
-    QAction *action = new KAction( KIcon("preferences-desktop-notification"),
+    KAction *action = new KAction( KIcon("preferences-desktop-notification"),
                                    i18n("Configure &Notifications..."), this );
     actionCollection()->addAction( "kmail_configure_notifications", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditNotifications()));
@@ -3298,7 +3279,7 @@ void KMMainWidget::setupActions()
 
 //  KStandardAction::preferences(this, SLOT(slotSettings()), actionCollection());
   {
-    QAction *action = new KAction(KIcon("configure"), i18n("&Configure KMail..."), this);
+    KAction *action = new KAction(KIcon("configure"), i18n("&Configure KMail..."), this);
     actionCollection()->addAction("kmail_configure_kmail", action );
     connect(action, SIGNAL(triggered(bool) ), kmkernel, SLOT(slotShowConfigurationDialog()));
   }
@@ -4171,13 +4152,6 @@ void KMMainWidget::updateFileMenu()
 
   actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
   actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::setAccelsEnabled( bool enabled )
-{
-  if ( mAccel )
-    mAccel->setEnabled( enabled );
 }
 
 //-----------------------------------------------------------------------------

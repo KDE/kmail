@@ -41,7 +41,6 @@ using KMail::TemplateParser;
 #include <kconfig.h>
 #include <khtml_part.h>
 #include <kuser.h>
-#include <k3resolver.h>
 #include <kconfiggroup.h>
 #include <KProtocolManager>
 
@@ -49,8 +48,8 @@ using KMail::TemplateParser;
 #include <QCursor>
 #include <QMessageBox>
 #include <QTextCodec>
-#include <Q3StrList>
 #include <QByteArray>
+#include <QHostInfo>
 
 #include <kmime/kmime_dateformatter.h>
 #include <kmime/kmime_charfreq.h>
@@ -3879,7 +3878,7 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
 
   QString address = loginName;
   address += '@';
-  address += KNetwork::KResolver::localHostName();
+  address += QHostInfo::localHostName();
 
   // try to determine the real name
   const KUser user( loginName );

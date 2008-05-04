@@ -60,12 +60,6 @@ public:
     virtual ~HeaderListQuickSearch();
 
     /**
-     * Used to disable the main window's accelerators when the search widget's
-     * combo has focus
-     */
-    bool eventFilter( QObject *watched, QEvent *event );
-
-    /**
      * Returns the currently entered search text.
      */
     QString currentSearchTerm() const;

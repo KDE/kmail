@@ -95,7 +95,6 @@ using MailTransport::TransportManagementWidget;
 #include <kconfig.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
-#include <k3resolver.h>
 #include <kconfiggroup.h>
 #include <kbuttongroup.h>
 #include <kcolorcombo.h>
@@ -124,9 +123,8 @@ using MailTransport::TransportManagementWidget;
 #include <QVBoxLayout>
 #include <QWhatsThis>
 #include <QDBusConnection>
-#include <q3buttongroup.h>
+#include <QHostInfo>
 #include <QTextCodec>
-#include <q3header.h>
 #include <QMenu>
 
 // other headers:
@@ -785,7 +783,7 @@ void AccountsPage::SendingTab::doLoadOther() {
       composer.readEntry( "confirm-before-send", false ) );
   QString str = general.readEntry( "Default domain" );
   if( str.isEmpty() ) {
-    str = KNetwork::KResolver::localHostName();
+    str = QHostInfo::localHostName();
   }
   mDefaultDomainEdit->setText( str );
 }
