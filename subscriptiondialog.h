@@ -32,9 +32,11 @@
 #ifndef __SUBSCRIPTIONDIALOG
 #define __SUBSCRIPTIONDIALOG
 
-#include <q3dict.h>
-#include <ksubscription.h>
 #include "imapaccountbase.h"
+
+#include <ksubscription.h>
+
+#include <QMap>
 
 using KPIM::KSubscription;
 using KPIM::GroupItem;
@@ -54,7 +56,9 @@ namespace KMail {
                               const QString &caption,
                               KAccount* acct,
                               const QString &startPath = QString() );
-      virtual ~SubscriptionDialogBase() {}
+      virtual ~SubscriptionDialogBase() {
+        mItemDict.clear();
+      }
 
       void show();
 
@@ -122,7 +126,7 @@ namespace KMail {
                   mFolderMimeTypes, mFolderAttributes;
       ImapAccountBase::jobData mJobData;
       uint mCount;
-      Q3Dict<GroupItem> mItemDict;
+      QMap<QString, GroupItem*> mItemDict;
       QString mStartPath;
       bool mSubscribed, mForceSubscriptionEnable;
       QStringList mPrefixList;

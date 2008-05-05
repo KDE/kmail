@@ -204,10 +204,14 @@ void SubscriptionDialogBase::findParentItem( QString &name, QString &path, QStri
   parentPath.remove(start, length);
 
   // find the parent by it's path
-  *parent = mItemDict[parentPath];
+  QMap<QString, GroupItem*>::Iterator it = mItemDict.find( parentPath );
+  if ( it != mItemDict.end() )
+    *parent = ( *it );
 
   // check if the item already exists
-  *oldItem = mItemDict[path];
+  it = mItemDict.find( path );
+  if ( it != mItemDict.end() )
+    *oldItem = ( *it );
 }
 
 //------------------------------------------------------------------------------

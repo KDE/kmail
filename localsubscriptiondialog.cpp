@@ -90,12 +90,13 @@ void LocalSubscriptionDialog::setCheckedStateOfAllItems()
 {
    // iterate over all items and check them, unless they are
    // in the account's local subscription blacklist
-   Q3DictIterator<GroupItem> it( mItemDict );
-   for ( ; it.current(); ++it ) {
-     GroupItem *item = it.current();
-     QString path = it.currentKey();
-     item->setOn( mAccount->locallySubscribedTo( path ) );
-   }
+  QMapIterator<QString, GroupItem*> it( mItemDict );
+  while ( it.hasNext() ) {
+    it.next();
+    QString path = it.key();
+    GroupItem *item = it.value();
+    item->setOn( mAccount->locallySubscribedTo( path ) );
+  }
 }
 
 /*virtual*/
