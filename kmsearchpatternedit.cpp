@@ -28,8 +28,6 @@ using KMail::RuleWidgetHandlerManager;
 #include <kdialog.h>
 #include <kdebug.h>
 
-#include <Q3PtrList>  // KWidgetLister in libkdepim needs to be ported
-
 #include <QButtonGroup>
 #include <QByteArray>
 #include <QComboBox>

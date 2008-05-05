@@ -46,7 +46,7 @@
 #include <QProcess>
 #include <algorithm>
 
-#include <q3scrollview.h> // temporary hack
+#include <QScrollArea>
 
 using std::for_each;
 using std::remove;
@@ -459,7 +459,7 @@ namespace {
     if ( url.hasHost() || url.path() != "/" || !url.hasRef() )
       return false;
     if ( w && !w->htmlPart()->gotoAnchor( url.ref() ) )
-      static_cast<Q3ScrollView*>( w->htmlPart()->widget() )->ensureVisible( 0, 0 );
+      static_cast<QScrollArea*>( w->htmlPart()->widget() )->ensureVisible( 0, 0 );
     return true;
   }
 }

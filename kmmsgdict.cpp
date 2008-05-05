@@ -13,7 +13,7 @@
 #include <kglobal.h>
 
 #include <QFileInfo>
-#include <Q3MemArray>
+#include <QVector>
 
 #include <stdio.h>
 #include <unistd.h>
@@ -96,15 +96,15 @@ public:
         int newsize = qMax(size + 25, index + 1);
         array.resize(newsize);
         for (int j = size; j < newsize; j++)
-          array.at(j) = 0;
+          array[j] = 0;
       }
-      array.at(index) = entry;
+      array[index] = entry;
     }
   }
 
   KMMsgDictEntry *get(int index)
   {
-    if (index >= 0 && (unsigned)index < array.size())
+    if (index >= 0 && index < array.size())
       return array.at(index);
     return 0;
   }
@@ -134,10 +134,14 @@ public:
   }
 
 public:
-  Q3MemArray<KMMsgDictEntry *> array;
+
   FILE *fp;
   bool swapByteOrder;
   off_t baseOffset;
+
+private:
+
+  QVector<KMMsgDictEntry *> array;
 };
 
 
