@@ -66,7 +66,10 @@ public:
   virtual const KMMsgBase* getMsgBase(int idx) const { return mMsgList[idx]; }
   virtual KMMsgBase* getMsgBase(int idx) { return mMsgList[idx]; }
 
-  virtual int find(const KMMsgBase* msg) const { return mMsgList.find((KMMsgBase*)msg); }
+  virtual int find(const KMMsgBase* msg) const {
+    return mMsgList.indexOf( const_cast<KMMsgBase*>( msg ) );
+  }
+
   int find( const KMMessage * msg ) const { return FolderStorage::find( msg ); }
 
   /** Registered unique serial number for the index file */

@@ -1212,16 +1212,16 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   return 0;
 }
 
-int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
+int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE *tmpfile,
                            off_t&offs, bool &done )
 {
   int rc = 0;
   QByteArray mtext;
-  int stopIndex = nbMessages == -1
-                  ? mMsgList.count()
-                  : qMin( (int)mMsgList.count(), startIndex + nbMessages );
+  unsigned int stopIndex = nbMessages == -1
+                       ? mMsgList.count()
+                       : qMin( mMsgList.count(), startIndex + nbMessages );
   //kDebug() << "KMFolderMbox: compacting from" << startIndex <<" to" << stopIndex;
-  for ( int idx = startIndex; idx < stopIndex; ++idx ) {
+  for ( unsigned int idx = startIndex; idx < stopIndex; ++idx ) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at( idx );
     size_t msize = mi->msgSize();
     if ( (size_t) mtext.size() < msize + 2 ) {

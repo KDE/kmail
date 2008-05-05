@@ -22,7 +22,7 @@
 
 #include "kmmsgbase.h"
 
-#include <q3memarray.h>
+#include <QVector>
 
 /**
  * @short An abstraction of an array of pointers to messages.
@@ -34,7 +34,7 @@
  *
  * @author Stefan Taferner <taferner@kde.org>
  */
-class KMMsgList: public Q3MemArray<KMMsgBase*>
+class KMMsgList: public QVector<KMMsgBase*>
 {
 public:
 
