@@ -164,8 +164,8 @@ void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
           SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)) );
       connect( job, SIGNAL(infoMessage(KJob *, const QString &, const QString &)),
           SLOT(slotPutMessageInfoData(KJob *, const QString &, const QString &)) );
-      connect( job, SIGNAL(processedSize(KJob *, KIO::filesize_t)),
-          SLOT(slotProcessedSize(KJob *, KIO::filesize_t)));
+      connect( job, SIGNAL( processedSize( KJob *, qulonglong ) ),
+          SLOT( slotProcessedSize( KJob *, qulonglong ) ) );
     }
   }
   else if ( jt == tCopyMessage || jt == tMoveMessage )
