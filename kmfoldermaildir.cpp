@@ -838,6 +838,8 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
 
 int KMFolderMaildir::createIndexFromContents()
 {
+  kDebug() << "Creating index for" << location();
+
   mUnreadMsgs = 0;
 
   mMsgList.clear(true);
@@ -852,7 +854,7 @@ int KMFolderMaildir::createIndexFromContents()
   dirinfo.setFile(location() + "/new");
   if (!dirinfo.exists() || !dirinfo.isDir())
   {
-    kDebug(5006) <<"Directory" << location() <<"/new doesn't exist or is a file";
+    kDebug(5006) << "Directory" << location() <<"/new doesn't exist or is a file";
     return 1;
   }
   QDir newDir(location() + "/new");
@@ -861,7 +863,7 @@ int KMFolderMaildir::createIndexFromContents()
   dirinfo.setFile(location() + "/cur");
   if (!dirinfo.exists() || !dirinfo.isDir())
   {
-    kDebug(5006) <<"Directory" << location() <<"/cur doesn't exist or is a file";
+    kDebug(5006) << "Directory" << location() <<"/cur doesn't exist or is a file";
     return 1;
   }
   QDir curDir(location() + "/cur");
@@ -917,10 +919,18 @@ KMFolderIndex::IndexStatus KMFolderMaildir::indexStatus()
   // Check whether the directories are more than 5 seconds newer than the index
   // file. The 5 seconds are added to reduce the number of false alerts due
   // to slightly out of sync clocks of the NFS server and the local machine.
-  return ((new_info.lastModified() > index_info.lastModified().addSecs(5)) ||
-          (cur_info.lastModified() > index_info.lastModified().addSecs(5)))
+  KMFolderIndex::IndexStatus status =
+      ( ( new_info.lastModified() > index_info.lastModified().addSecs( 5 ) ) ||
+        ( cur_info.lastModified() > index_info.lastModified().addSecs( 5 ) ) )
          ? KMFolderIndex::IndexTooOld
          : KMFolderIndex::IndexOk;
+  if ( status == KMFolderIndex::IndexTooOld ) {
+    kWarning() << "Index" << indexLocation() << "out of date!";
+    kWarning() << "  new:" << new_info.lastModified();
+    kWarning() << "  cur:" << cur_info.lastModified();
+    kWarning() << "  index:" << index_info.lastModified();
+  }
+  return status;
 }
 
 //-----------------------------------------------------------------------------

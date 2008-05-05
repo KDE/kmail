@@ -1477,9 +1477,22 @@ void KMMainWidget::slotTroubleshootMaildir()
   if ( !mFolder || !mFolder->folderType() == KMFolderTypeMaildir )
     return;
   KMFolderMaildir* f = static_cast<KMFolderMaildir*>( mFolder->storage() );
-  f->createIndexFromContents();
-  KMessageBox::information( this, i18n("The index of folder %1 has been recreated.", mFolder->label()),
-                            i18n("Index recreated") );
+  if ( KMessageBox::warningContinueCancel( this,
+             i18nc( "@info",
+                    "You are about to recreate the index for folder <resource>%1</resource>.<nl/>"
+                    "<warning>This will destroy all message status information.</warning><nl/>"
+                    "Are you sure you want to continue?", mFolder->label() ),
+             i18nc( "@title", "Really recreate index?" ),
+             KGuiItem( i18nc( "@action:button", "Recreate Index" ) ),
+             KStandardGuiItem::cancel(), QString(),
+             KMessageBox::Notify | KMessageBox::Dangerous )
+        == KMessageBox::Continue ) {
+    f->createIndexFromContents();
+    KMessageBox::information( this,
+                              i18n( "The index of folder %1 has been recreated.",
+                                    mFolder->label() ),
+                              i18n( "Index recreated" ) );
+  }
 }
 
 void KMMainWidget::slotInvalidateIMAPFolders() {
@@ -2877,7 +2890,7 @@ void KMMainWidget::setupActions()
   mRefreshFolderAction->setShortcut(KStandardShortcut::shortcut( KStandardShortcut::Reload ));
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mTroubleshootMaildirAction = new KAction( KIcon("tools-wizard"), i18n("Rebuild Index"), this );
+  mTroubleshootMaildirAction = new KAction( KIcon("tools-wizard"), i18n("Rebuild Index..."), this );
   actionCollection()->addAction( "troubleshoot_maildir", mTroubleshootMaildirAction );
   connect( mTroubleshootMaildirAction, SIGNAL(triggered()), SLOT(slotTroubleshootMaildir()) );
 
