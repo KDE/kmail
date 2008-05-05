@@ -1899,7 +1899,7 @@ QString KMMessage::to() const
   QList<QByteArray> rawHeaders = rawHeaderFields( "To" );
   QStringList headers;
   for ( QList<QByteArray>::Iterator it = rawHeaders.begin(); it != rawHeaders.end(); ++it ) {
-    headers << *it;
+    headers << QString::fromUtf8(*it);
   }
   return KPIMUtils::normalizeAddressesAndDecodeIdn( headers.join( ", " ) );
 }
@@ -1920,7 +1920,7 @@ QString KMMessage::toStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::replyTo() const
 {
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField("Reply-To") );
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( QString::fromUtf8(rawHeaderField("Reply-To")) );
 }
 
 
@@ -1946,7 +1946,7 @@ QString KMMessage::cc() const
   QList<QByteArray> rawHeaders = rawHeaderFields( "Cc" );
   QStringList headers;
   for ( QList<QByteArray>::Iterator it = rawHeaders.begin(); it != rawHeaders.end(); ++it ) {
-    headers << *it;
+    headers << QString::fromUtf8(*it);
   }
   return KPIMUtils::normalizeAddressesAndDecodeIdn( headers.join( ", " ) );
 }
@@ -1969,7 +1969,7 @@ QString KMMessage::ccStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::bcc() const
 {
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField("Bcc") );
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( QString::fromUtf8(rawHeaderField("Bcc")) );
 }
 
 
@@ -2008,7 +2008,7 @@ void KMMessage::setTemplates(const QString& aStr)
 QString KMMessage::who() const
 {
   if (mParent)
-    return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField(mParent->whoField().toUtf8()) );
+    return KPIMUtils::normalizeAddressesAndDecodeIdn( QString::fromUtf8(rawHeaderField(mParent->whoField().toUtf8())) );
   return from();
 }
 
@@ -2016,7 +2016,7 @@ QString KMMessage::who() const
 //-----------------------------------------------------------------------------
 QString KMMessage::from() const
 {
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField("From") );
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( QString::fromUtf8(rawHeaderField("From")) );
 }
 
 
