@@ -1166,7 +1166,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
   mWidgetStack->setCurrentIndex( count) ;
 }
 
-KMFilterAction * KMFilterActionWidget::action()
+KMFilterAction * KMFilterActionWidget::action() const
 {
   // look up the action description via the label
   // returned by QComboBox::currentText()...
@@ -1230,10 +1230,11 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 
   // load the actions into the widgets
   QList<KMFilterAction*>::const_iterator aIt;
-  Q3PtrListIterator<QWidget> wIt( mWidgetList );
-  for ( aIt = mActionList->begin(), wIt.toFirst() ;
-        (aIt != mActionList->end()) && wIt.current() ; ++aIt, ++wIt )
-    ((KMFilterActionWidget*)(*wIt))->setAction( (*aIt) );
+  QList<QWidget*>::Iterator wIt = mWidgetList.begin();
+  for ( aIt = mActionList->begin();
+        ( aIt != mActionList->end() && wIt != mWidgetList.end() );
+        ++aIt, ++wIt )
+    static_cast<KMFilterActionWidget*>( *wIt )->setAction( ( *aIt ) );
 }
 
 void KMFilterActionWidgetLister::reset()
@@ -1263,9 +1264,8 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
 
   mActionList->clear();
 
-  Q3PtrListIterator<QWidget> it( mWidgetList );
-  for ( it.toFirst() ; it.current() ; ++it ) {
-    KMFilterAction *a = ((KMFilterActionWidget*)(*it))->action();
+  foreach ( const QWidget* w, mWidgetList ) {
+    KMFilterAction *a = static_cast<const KMFilterActionWidget*>( w )->action();
     if ( a )
       mActionList->append( a );
   }

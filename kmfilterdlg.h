@@ -217,7 +217,7 @@ public:
       of actions can change during editing. Therefore the widget
       always creates a new action object from the data in the combo
       box and the widget stack and returns that. */
-  KMFilterAction *action();
+  KMFilterAction *action() const;
 
 private:
   /** This list holds an instance of every KMFilterAction

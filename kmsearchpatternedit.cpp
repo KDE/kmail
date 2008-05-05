@@ -315,7 +315,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
 
   mRuleList = aList;
 
-  if ( mWidgetList.first() ) // move this below next 'if'?
+  if ( !mWidgetList.isEmpty() ) // move this below next 'if'?
     mWidgetList.first()->blockSignals(true);
 
   if ( aList->count() == 0 ) {
@@ -326,8 +326,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
 
   int superfluousItems = (int)mRuleList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
-    kDebug(5006) <<"KMSearchRuleWidgetLister: Clipping rule list to"
-		  << mMaxWidgets << "items!";
+    kDebug(5006) << "Clipping rule list to" << mMaxWidgets << "items!";
 
     for ( ; superfluousItems ; superfluousItems-- )
       mRuleList->removeLast();
@@ -340,23 +339,22 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
 
   // load the actions into the widgets
   QList<KMSearchRule*>::const_iterator rIt;
-  Q3PtrListIterator<QWidget> wIt( mWidgetList );
-  for ( rIt = mRuleList->begin(), wIt.toFirst() ;
-	rIt != mRuleList->end() && wIt.current() ; ++rIt, ++wIt ) {
-    static_cast<KMSearchRuleWidget*>(*wIt)->setRule( (*rIt) );
+  QList<QWidget*>::Iterator wIt = mWidgetList.begin();
+  for ( rIt = mRuleList->begin();
+        rIt != mRuleList->end() && wIt != mWidgetList.end(); ++rIt, ++wIt ) {
+    static_cast<KMSearchRuleWidget*>( *wIt )->setRule( (*rIt) );
   }
-  for ( ; wIt.current() ; ++wIt )
-    ((KMSearchRuleWidget*)(*wIt))->reset();
+  for ( ; wIt != mWidgetList.end() ; ++wIt )
+    static_cast<KMSearchRuleWidget*>( *wIt )->reset();
 
-  assert( mWidgetList.first() );
+  assert( !mWidgetList.isEmpty() );
   mWidgetList.first()->blockSignals(false);
 }
 
 void KMSearchRuleWidgetLister::setHeadersOnly( bool headersOnly )
 {
-  Q3PtrListIterator<QWidget> wIt( mWidgetList );
-  for ( wIt.toFirst() ; wIt.current() ; ++wIt ) {
-    (static_cast<KMSearchRuleWidget*>(*wIt))->setHeadersOnly( headersOnly );
+  foreach ( QWidget *w, mWidgetList ) {
+    static_cast<KMSearchRuleWidget*>( w )->setHeadersOnly( headersOnly );
   }
 }
 
@@ -386,9 +384,8 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 
   mRuleList->clear();
 
-  Q3PtrListIterator<QWidget> it( mWidgetList );
-  for ( it.toFirst() ; it.current() ; ++it ) {
-    KMSearchRule *r = ((KMSearchRuleWidget*)(*it))->rule();
+  foreach ( const QWidget *w, mWidgetList ) {
+    KMSearchRule *r = static_cast<const KMSearchRuleWidget*>( w )->rule();
     if ( r )
       mRuleList->append( r );
   }
@@ -452,14 +449,14 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
   mRuleLister = new KMSearchRuleWidgetLister( this, "swl", headersOnly, absoluteDates );
   mRuleLister->slotClear();
 
-  KMSearchRuleWidget *srw = (KMSearchRuleWidget*)mRuleLister->mWidgetList.first();
-  if ( srw ) {
+  if ( !mRuleLister->mWidgetList.isEmpty() ) {
+    KMSearchRuleWidget *srw = static_cast<KMSearchRuleWidget*>( mRuleLister->mWidgetList.first() );
     connect( srw, SIGNAL(fieldChanged(const QString &)),
-	     this, SLOT(slotAutoNameHack()) );
+             this, SLOT(slotAutoNameHack()) );
     connect( srw, SIGNAL(contentsChanged(const QString &)),
-	     this, SLOT(slotAutoNameHack()) );
+             this, SLOT(slotAutoNameHack()) );
   } else
-    kDebug(5006) <<"KMSearchPatternEdit: no first KMSearchRuleWidget, though slotClear() has been called!";
+    kDebug(5006) << "No first KMSearchRuleWidget, though slotClear() has been called!";
 
   layout->addWidget( mRuleLister );
 }
