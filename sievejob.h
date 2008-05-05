@@ -67,6 +67,8 @@ namespace KMail {
 
     void kill( KJob::KillVerbosity verbosity = KJob::Quietly );
 
+    void setInteractive( bool interactive );
+
     const QStringList & sieveCapabilities() const {
       return mSieveCapabilities;
     }
@@ -88,7 +90,7 @@ namespace KMail {
      */
     void gotList( KMail::SieveJob *job, bool success,
                   const QStringList &scriptList, const QString &activeScript );
-    
+
     void result(  KMail::SieveJob * job, bool success,
                   const QString & script, bool active );
 

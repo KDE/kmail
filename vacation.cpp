@@ -435,6 +435,9 @@ namespace KMail {
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
     mSieveJob = SieveJob::get( mUrl );
+    if (checkOnly) {
+      mSieveJob->setInteractive( false );
+    }
     connect( mSieveJob, SIGNAL(gotScript(KMail::SieveJob*,bool,const QString&,bool)),
 	     SLOT(slotGetResult(KMail::SieveJob*,bool,const QString&,bool)) );
   }

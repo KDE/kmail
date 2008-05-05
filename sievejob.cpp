@@ -14,6 +14,7 @@
 
 #include "sievejob.h"
 
+#include <kjobtrackerinterface.h>
 #include <kio/job.h>
 #include <kio/deletejob.h>
 #include <kio/jobuidelegate.h>
@@ -49,6 +50,13 @@ namespace KMail {
 
   void SieveJob::kill( KJob::KillVerbosity verbosity ) {
     if ( mJob ) mJob->kill( verbosity );
+  }
+
+  void SieveJob::setInteractive( bool interactive ) {
+    if ( mJob && !interactive ) {
+      mJob->setUiDelegate( 0 );
+      KIO::getJobTracker()->unregisterJob(mJob);
+    }
   }
 
   void SieveJob::schedule( Command command ) {
@@ -177,8 +185,10 @@ namespace KMail {
 
     // check for errors:
     if ( job->error() ) {
-      static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+      if ( static_cast<KIO::Job*>(job)->ui() ) {
+        static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
+        static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+      }
 
       emit result( this, false, mScript, mUrl.fileName() == mActiveScriptName );
 
