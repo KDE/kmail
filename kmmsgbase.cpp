@@ -28,7 +28,6 @@ using KMail::MessageProperty;
 #include <kmime/kmime_util.h>
 
 #include <QTextCodec>
-#include <q3deepcopy.h>
 #include <QRegExp>
 
 #include <ctype.h>
@@ -734,10 +733,10 @@ KMMsgAttachmentState KMMsgBase::attachmentState() const
 static void swapEndian(QString &str)
 {
   uint len = str.length();
-  str = Q3DeepCopy<QString>(str);
-  QChar *unicode = const_cast<QChar*>( str.unicode() );
-  for (uint i = 0; i < len; i++)
-    unicode[i] = kmail_swap_16(unicode[i].unicode());
+  for ( uint i = 0; i < len; i++ ) {
+    QCharRef c = str[i];
+    c = kmail_swap_16( c.unicode() );
+  }
 }
 
 //-----------------------------------------------------------------------------
