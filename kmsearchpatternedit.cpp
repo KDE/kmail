@@ -337,12 +337,12 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
 
   // load the actions into the widgets
   QList<KMSearchRule*>::const_iterator rIt;
-  QList<QWidget*>::Iterator wIt = mWidgetList.begin();
+  QList<QWidget*>::const_iterator wIt = mWidgetList.constBegin();
   for ( rIt = mRuleList->begin();
-        rIt != mRuleList->end() && wIt != mWidgetList.end(); ++rIt, ++wIt ) {
+        rIt != mRuleList->end() && wIt != mWidgetList.constEnd(); ++rIt, ++wIt ) {
     static_cast<KMSearchRuleWidget*>( *wIt )->setRule( (*rIt) );
   }
-  for ( ; wIt != mWidgetList.end() ; ++wIt )
+  for ( ; wIt != mWidgetList.constEnd() ; ++wIt )
     static_cast<KMSearchRuleWidget*>( *wIt )->reset();
 
   assert( !mWidgetList.isEmpty() );

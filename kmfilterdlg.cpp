@@ -1010,7 +1010,9 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   Q_ASSERT( manager );
 
   QList<KMFilter*>::const_iterator it;
-  for ( it = manager->filters().begin() ; it != manager->filters().end() ; ++it ) {
+  for ( it = manager->filters().constBegin() ;
+        it != manager->filters().constEnd();
+        ++it ) {
     mFilterList.append( new KMFilter( **it ) ); // deep copy
     mListWidget->addItem( (*it)->pattern()->name() );
   }
@@ -1098,7 +1100,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   QList<KMFilterActionDesc*> list = kmkernel->filterActionDict()->list();
   QList<KMFilterActionDesc*>::const_iterator it;
-  for ( i=0, it = list.begin() ; it != list.end() ; ++it, ++i ) {
+  for ( i=0, it = list.constBegin() ; it != list.constEnd() ; ++it, ++i ) {
     //create an instance:
     KMFilterAction *a = (*it)->create();
     // append to the list of actions:
@@ -1230,9 +1232,9 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 
   // load the actions into the widgets
   QList<KMFilterAction*>::const_iterator aIt;
-  QList<QWidget*>::Iterator wIt = mWidgetList.begin();
+  QList<QWidget*>::ConstIterator wIt = mWidgetList.constBegin();
   for ( aIt = mActionList->begin();
-        ( aIt != mActionList->end() && wIt != mWidgetList.end() );
+        ( aIt != mActionList->end() && wIt != mWidgetList.constEnd() );
         ++aIt, ++wIt )
     static_cast<KMFilterActionWidget*>( *wIt )->setAction( ( *aIt ) );
 }
@@ -1367,8 +1369,8 @@ void KMFilterDlg::slotExportFilters()
   FilterImporterExporter exporter( this, bPopFilter );
   QList<KMFilter *> filters = mFilterList->filtersForSaving();
   exporter.exportFilters( filters );
-  QList<KMFilter *>::iterator it;
-  for ( it = filters.begin(); it != filters.end(); ++it )
+  QList<KMFilter *>::ConstIterator it;
+  for ( it = filters.constBegin(); it != filters.constEnd(); ++it )
     delete *it;
 }
 

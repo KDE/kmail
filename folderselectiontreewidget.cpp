@@ -224,6 +224,15 @@ void FolderSelectionTreeWidget::slotContextMenuRequested( const QPoint &p )
 
 void FolderSelectionTreeWidget::applyFilter( const QString& filter )
 {
+  // We would like to set items that do not match the filter to disabled,
+  // but that also disables all the children of that item (qt bug 181410,
+  // closed as WONTFIX).
+  // So instead, we mark the items as not selectable. That unfortunalty does not
+  // give us visual feedback, though.
+  // In keyPressEvent(), we change the behavior of the up/down arrow to skip
+  // non-selectable items.
+
+
   if ( filter.isEmpty() )
   {
     // Empty filter:
