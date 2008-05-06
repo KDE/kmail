@@ -567,7 +567,11 @@ public slots:
     bool        mReadOnly;
     mutable QPointer<KMAcctCachedImap> mAccount;
 
-    Q3IntDict<int> uidsOnServer;
+    // Use a QHash here instead of simply QList<ulong>. The value is actually not
+    // used, only the key, but we need a hash here for performance reasons.
+    // See commit 300663.
+    QHash<ulong,int> uidsOnServer;
+
     QList<ulong> uidsForDeletionOnServer;
     QList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
     QList<ulong> mUidsForDownload;

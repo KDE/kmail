@@ -1495,7 +1495,7 @@ bool KMFolderCachedImap::deleteMessages()
   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
   for ( ; it != uidMap.constEnd(); it++ ) {
     ulong uid ( it.key() );
-    if ( uid != 0 && !uidsOnServer.find( uid ) ) {
+    if ( uid != 0 && uidsOnServer.find( uid ) == uidsOnServer.end() ) {
       msgsForDeletion.append( getMsg( *it ) );
     }
   }
@@ -1596,7 +1596,7 @@ void KMFolderCachedImap::listMessages()
     return;
   }
   uidsOnServer.clear();
-  uidsOnServer.resize( count() * 2 );
+  uidsOnServer.reserve( count() * 2 );
   uidsForDeletionOnServer.clear();
   mMsgsForDownload.clear();
   mUidsForDownload.clear();
@@ -1656,10 +1656,9 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
 
   // Start with something largish when rebuilding the cache
   if ( uidsOnServer.size() == 0 ) {
-    uidsOnServer.resize( KMail::nextPrime( 2000 ) );
+    uidsOnServer.reserve( KMail::nextPrime( 2000 ) );
   }
 
-  const int v = 42;
   while ( pos >= 0 ) {
       /*
     KMMessage msg;
@@ -1686,11 +1685,12 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
 
     if ( !deleted ) {
       if ( uid != 0 ) {
-        if ( uidsOnServer.count() == uidsOnServer.size() ) {
-          uidsOnServer.resize( KMail::nextPrime( uidsOnServer.size() * 2 ) );
-          kDebug( 5006 ) <<"Resizing to:" << uidsOnServer.size();
+        if ( uidsOnServer.capacity() <= uidsOnServer.size() ) {
+          uidsOnServer.reserve( KMail::nextPrime( uidsOnServer.size() * 2 ) );
+          kDebug( 5006 ) << "Resizing to:" << uidsOnServer.capacity();
         }
-        uidsOnServer.insert( uid, &v );
+        // 42 is a dummy value, see the comment in the header
+        uidsOnServer.insert( uid, 42 );
       }
       bool redownload = false;
       if ( uid <= lastUid() ) {
