@@ -435,7 +435,7 @@ namespace KMail {
     kdDebug(5006) << "Vacation: found url \"" << mUrl.prettyURL() << "\"" << endl;
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
-    mSieveJob = SieveJob::get( mUrl );
+    mSieveJob = SieveJob::get( mUrl, !checkOnly );
     connect( mSieveJob, SIGNAL(gotScript(KMail::SieveJob*,bool,const QString&,bool)),
 	     SLOT(slotGetResult(KMail::SieveJob*,bool,const QString&,bool)) );
   }

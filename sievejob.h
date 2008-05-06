@@ -38,6 +38,10 @@ namespace KMail {
     SieveJob( const KURL & url, const QString & script,
 	      const QValueStack<Command> & commands,
 	      QObject * parent=0, const char * name=0 );
+    SieveJob( const KURL & url, const QString & script,
+	      const QValueStack<Command> & commands,
+	      bool showProgressInfo,
+	      QObject * parent=0, const char * name=0 );
     virtual ~SieveJob();
 
   public:
@@ -53,7 +57,7 @@ namespace KMail {
     /**
      * Get a specific Sieve script
      */
-    static SieveJob * get( const KURL & src );
+    static SieveJob * get( const KURL & src, bool showProgressInfo=true );
 
     /**
      * List all available scripts
@@ -87,14 +91,14 @@ namespace KMail {
      */
     void gotList( KMail::SieveJob *job, bool success,
                   const QStringList &scriptList, const QString &activeScript );
-    
+
     void result(  KMail::SieveJob * job, bool success,
                   const QString & script, bool active );
 
     void item( KMail::SieveJob * job, const QString & filename, bool active );
 
   protected:
-    void schedule( Command command );
+    void schedule( Command command, bool showProgressInfo );
 
   protected slots:
     void slotData( KIO::Job *, const QByteArray & ); // for get
@@ -111,6 +115,7 @@ namespace KMail {
     Existence mFileExists;
     QStringList mSieveCapabilities;
     QValueStack<Command> mCommands;
+    bool mShowProgressInfo;
 
     // List of Sieve scripts on the server, used by @ref list()
     QStringList mAvailableScripts;
