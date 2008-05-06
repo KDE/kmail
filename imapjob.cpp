@@ -446,10 +446,12 @@ void ImapJob::slotGetMessageResult( KJob * job )
       emit messageRetrieved( 0 );
       parent->ignoreJobsForMessage( msg );
       int idx = parent->find( msg );
-      if (idx != -1) parent->removeMsg( idx, true );
-      // the removeMsg will unGet the message, which will delete all
-      // jobs, including this one
-      return;
+      if ( idx != -1 ) {
+        parent->removeMsg( idx, true );
+        // the removeMsg will unGet the message, which will delete all
+        // jobs, including this one
+        return;
+      }
     }
   } else {
     emit messageUpdated(msg, mPartSpecifier);
