@@ -133,7 +133,7 @@ int KMFolderIndex::openInternal()
         shouldCreateIndexFromContents = true;
 #else
       mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "r+"); // index file
-      KMailStorageInternalsDebug << "KDE_fopen(indexLocation()=" << indexLocation() << ", \"r+\") == mIndexStream == " << mIndexStream;
+      kDebug( StorageDebug ) << "KDE_fopen(indexLocation()=" << indexLocation() << ", \"r+\") == mIndexStream == " << mIndexStream;
       if ( mIndexStream ) {
 # ifndef Q_WS_WIN
         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);

@@ -123,7 +123,9 @@ KMMsgBase::~KMMsgBase()
 {
   MessageProperty::forget( this );
   delete mTagList;
+#ifdef KMAIL_SQLITE_INDEX
   free( mData );
+#endif
 }
 
 KMFolderIndex* KMMsgBase::storage() const

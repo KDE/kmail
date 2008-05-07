@@ -467,7 +467,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     msg->cleanupHeader();
     //debugBodyParts( "after cleanup", *msg );
     msg->touch();
-    KMailStorageInternalsDebug << "***<msg>***" << msg->asString() << "***</msg>***";
+    kDebug( StorageDebug ) << "***<msg>***" << msg->asString() << "***</msg>***";
     if ( folder.addMsg( msg ) == 0 )
       // Message stored
       sernum = msg->getMsgSerNum();

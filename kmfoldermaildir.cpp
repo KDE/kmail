@@ -146,7 +146,7 @@ int KMFolderMaildir::open( const char * )
 #ifdef KMAIL_SQLITE_INDEX
 #else
       mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "r+"); // index file
-      KMailStorageInternalsDebug << "KDE_fopen(indexLocation()=" << indexLocation() << ", \"r+\") == mIndexStream == " << mIndexStream;
+      kDebug( StorageDebug ) << "KDE_fopen(indexLocation()=" << indexLocation() << ", \"r+\") == mIndexStream == " << mIndexStream;
       if ( mIndexStream ) {
 # ifndef Q_WS_WIN
         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
@@ -266,7 +266,7 @@ void KMFolderMaildir::close( const char *,  bool aForced )
 #else
     if (mIndexStream) {
 	fclose(mIndexStream);
-      KMailStorageInternalsDebug << "fclose(mIndexStream = " << mIndexStream << ")";
+      kDebug( StorageDebug ) << "fclose(mIndexStream = " << mIndexStream << ")";
 	updateIndexStreamPtr(true);
     }
   mIndexStream = 0;
@@ -587,13 +587,13 @@ DwString KMFolderMaildir::getDwString(int idx)
   if (fi.exists() && fi.isFile() && fi.isWritable() && fi.size() > 0)
   {
     FILE* stream = KDE_fopen(QFile::encodeName(abs_file), "r+");
-    KMailStorageInternalsDebug << "KDE_fopen(abs_file=" << abs_file << ", \"r+\") == stream == " << stream;
+    kDebug( StorageDebug ) << "KDE_fopen(abs_file=" << abs_file << ", \"r+\") == stream == " << stream;
     if (stream) {
       size_t msgSize = fi.size();
       char* msgText = new char[ msgSize + 1 ];
       fread(msgText, msgSize, 1, stream);
       fclose( stream );
-      KMailStorageInternalsDebug << "fclose(mIndexStream = " << stream << ")";
+      kDebug( StorageDebug ) << "fclose(mIndexStream = " << stream << ")";
       msgText[msgSize] = '\0';
       size_t newMsgSize = KMail::Util::crlf2lf( msgText, msgSize );
       DwString str;
