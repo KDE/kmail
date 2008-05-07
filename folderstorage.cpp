@@ -1195,16 +1195,25 @@ KMAccount* FolderStorage::account() const
 
 QString FolderStorage::location(const QString& suffix) const
 {
-  QString sLocation(folder()->path());
+  QString sLocation( folder()->path() );
 
   if ( !sLocation.isEmpty() )
     sLocation += "/.";
-  return sLocation + dotEscape(fileName()) + ".index." + suffix;
+  return sLocation + dotEscape( fileName() ) + ".index." + suffix;
 }
 
 QString FolderStorage::indexLocation() const
 {
+#ifdef KMAIL_SQLITE_INDEX
   return location( "db" );
+#else
+  QString sLocation( folder()->path() );
+  if ( !sLocation.isEmpty() ) {
+    sLocation += "/.";
+  }
+  sLocation += dotEscape( fileName() ) + ".index";
+  return sLocation;
+#endif
 }
 
 QString FolderStorage::idsLocation() const

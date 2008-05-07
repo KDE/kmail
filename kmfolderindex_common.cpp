@@ -162,23 +162,28 @@ int KMFolderIndex::createInternal()
     mAutoCreateIndex = false;
   }
   else {
-/* js: not needed! writeIndex() does this...
+/* js: not needed! writeIndex() does this... */
+
+// I've re-enabled this (for Linux), because writeIndex() only does this when
+// writing the temporary index did not fail. In case of an error in writeIndex(),
+// it returns early without doing this, so better be safe and do it here as well.
+//    --tmcguire
 #ifdef KMAIL_SQLITE_INDEX
-    bool ok = openDatabase( SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE );
+    //bool ok = openDatabase( SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE );
 #else
-    old_umask = umask(077);
-    mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
-    const bool updateIndexStreamPtrResult = updateIndexStreamPtr(true);
-    umask(old_umask);
+    int old_umask = umask( 077 );
+    mIndexStream = KDE_fopen( QFile::encodeName(indexLocation() ), "w+" );
+    const bool updateIndexStreamPtrResult = updateIndexStreamPtr( true );
+    umask( old_umask );
     if ( !updateIndexStreamPtrResult )
       return 1;
 
-    if (!mIndexStream)
+    if ( !mIndexStream )
       return errno;
 # ifndef Q_WS_WIN
-    fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+    fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
 # endif
-#endif*/
+#endif
   }
 
   mOpenCount++;

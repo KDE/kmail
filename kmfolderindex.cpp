@@ -484,15 +484,19 @@ bool KMFolderIndex::recreateIndex()
 
 int KMFolderIndex::writeMessages( KMMsgBase* msg, bool flush )
 {
+  // ### This only works if the size of mMsgList is > 0, otherwise msg will
+  //     not be written at all, because the loop is not executed.
+  Q_ASSERT( msg == 0 || mMsgList.high() > 0 );
+
   const uint high = mMsgList.high();
-  for (uint i=0; i<high; i++)
+  for ( uint i = 0; i < high; i++ )
   {
     KMMsgBase* msgBase = msg ? msg : mMsgList.at(i);
     if ( !msgBase )
       continue;
     int len;
     const uchar *buffer = msgBase->asIndexString( len );
-    if ( fwrite( &len,sizeof( len ), 1, mIndexStream ) != 1 )
+    if ( fwrite( &len, sizeof( len ), 1, mIndexStream ) != 1 )
       return 1;
     off_t offset = KDE_ftell( mIndexStream );
     if ( fwrite( buffer, len, 1, mIndexStream ) != 1 ) {

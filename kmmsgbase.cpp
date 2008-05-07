@@ -844,22 +844,22 @@ retry:
        len = kmail_swap_16(len);
     }
     type = (MsgPartType) tmp;
-    if(g_chunk_offset + len > mIndexLength) {
-	kDebug(5006) <<"This should never happen..";
-        if(using_mmap) {
-            g_chunk_length = 0;
-            g_chunk = 0;
-        }
-        if (!storage()->recreateIndex())
-          return QString();
-        goto retry;
+    if( g_chunk_offset + len > mIndexLength ) {
+      kDebug() << "This should never happen..";
+      if( using_mmap ) {
+        g_chunk_length = 0;
+        g_chunk = 0;
+      }
+      if ( !storage()->recreateIndex() )
+        return QString();
+      goto retry;
     }
-    if(type == t) {
-        // This works because the QString constructor does a memcpy.
-        // Otherwise we would need to be concerned about the alignment.
-	if(len)
-	    ret = QString((QChar *)(g_chunk + g_chunk_offset), len/2);
-	break;
+    if ( type == t ) {
+      // This works because the QString constructor does a memcpy.
+      // Otherwise we would need to be concerned about the alignment.
+      if ( len )
+        ret = QString((QChar *)(g_chunk + g_chunk_offset), len/2);
+      break;
     }
   } //for
   if(using_mmap) {
