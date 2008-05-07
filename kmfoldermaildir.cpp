@@ -63,6 +63,10 @@ using KPIMUtils::removeDirAndContentsRecursively;
 #define KMAIL_MAILDIR_FNAME_SEPARATOR ":"
 #endif
 
+#ifdef KMAIL_SQLITE_INDEX
+#include <sqlite3.h>
+#endif
+
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
   : KMFolderIndex(folder, name), mCurrentlyCheckingFolderSize(false)
@@ -125,26 +129,37 @@ int KMFolderMaildir::open( const char * )
   if ( !canAccess() )
     return 1;
 
-  int rc = 0;
+  int rc = openInternal();
+/* moved to openInternal()
   if (!folder()->path().isEmpty())
   {
+    bool shouldCreateIndexFromContents = false;
     if (KMFolderIndex::IndexOk != indexStatus()) // test if contents file has changed
     {
-      QString str;
+#ifdef KMAIL_SQLITE_INDEX
+#else
       mIndexStream = 0;
-      str = i18n("Folder `%1' changed; recreating index.", objectName());
-      emit statusMsg(str);
-    } else {
-      mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "r+"); // index file
-      if ( mIndexStream ) {
-#ifndef Q_WS_WIN
-        fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
 #endif
-        updateIndexStreamPtr();
+      shouldCreateIndexFromContents = true;
+      emit statusMsg( i18n("Folder `%1' changed; recreating index.", objectName()) );
+    } else {
+#ifdef KMAIL_SQLITE_INDEX
+#else
+      mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+      KMailStorageInternalsDebug << "KDE_fopen(indexLocation()=" << indexLocation() << ", \"r+\") == mIndexStream == " << mIndexStream;
+      if ( mIndexStream ) {
+# ifndef Q_WS_WIN
+        fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+# endif
+        if (!updateIndexStreamPtr())
+          return 1;
       }
+      else
+        shouldCreateIndexFromContents = true;
+#endif
     }
 
-    if (!mIndexStream)
+    if ( shouldCreateIndexFromContents )
       rc = createIndexFromContents();
     else
       rc = readIndex() ? 0 : 1;
@@ -155,13 +170,12 @@ int KMFolderMaildir::open( const char * )
     rc = createIndexFromContents();
   }
 
-  mChanged = false;
+  mChanged = false;*/
 
   //readConfig();
 
   return rc;
 }
-
 
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::createMaildirFolders( const QString &folderPath )
@@ -207,39 +221,15 @@ int KMFolderMaildir::createMaildirFolders( const QString &folderPath )
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::create()
 {
-  int rc;
-  int old_umask;
-
   assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);
 
-  rc = createMaildirFolders( location() );
+  int rc = createMaildirFolders( location() );
   if ( rc != 0 )
     return rc;
 
   // FIXME no path == no index? - till
-  if (!folder()->path().isEmpty())
-  {
-    old_umask = umask(077);
-    mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
-    updateIndexStreamPtr(true);
-    umask(old_umask);
-
-    if (!mIndexStream) return errno;
-#ifndef Q_WS_WIN
-    fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
-#endif
-  }
-  else
-  {
-    mAutoCreateIndex = false;
-  }
-
-  mOpenCount++;
-  mChanged = false;
-
-  rc = writeIndex();
-  return rc;
+  return createInternal();
 }
 
 
@@ -268,13 +258,21 @@ void KMFolderMaildir::close( const char *,  bool aForced )
 
   mMsgList.clear(true);
 
+#ifdef KMAIL_SQLITE_INDEX
+  if ( mIndexDb ) {
+    sqlite3_close( mIndexDb );
+    mIndexDb = 0;
+  }
+#else
     if (mIndexStream) {
 	fclose(mIndexStream);
+      KMailStorageInternalsDebug << "fclose(mIndexStream = " << mIndexStream << ")";
 	updateIndexStreamPtr(true);
     }
+  mIndexStream = 0;
+#endif
 
   mOpenCount   = 0;
-  mIndexStream = 0;
   mUnreadMsgs  = -1;
 
   mMsgList.reset(INIT_MSGS);
@@ -283,10 +281,13 @@ void KMFolderMaildir::close( const char *,  bool aForced )
 //-----------------------------------------------------------------------------
 void KMFolderMaildir::sync()
 {
+#ifdef KMAIL_SQLITE_INDEX
+#else
   if (mOpenCount > 0)
     if (!mIndexStream || fsync(fileno(mIndexStream))) {
     kmkernel->emergencyExit( i18n("Could not sync maildir folder.") );
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -510,32 +511,29 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   // write index entry if desired
   if (mAutoCreateIndex)
   {
+#ifdef KMAIL_SQLITE_INDEX
+#else
     assert(mIndexStream != 0);
     clearerr(mIndexStream);
     KDE_fseek(mIndexStream, 0, SEEK_END);
     off_t revert = KDE_ftell(mIndexStream);
+#endif
 
-    int len;
     KMMsgBase * mb = &aMsg->toMsgBase();
-    const uchar *buffer = mb->asIndexString(len);
-    fwrite(&len,sizeof(len), 1, mIndexStream);
-    mb->setIndexOffset( KDE_ftell(mIndexStream) );
-    mb->setIndexLength( len );
-    if(fwrite(buffer, len, 1, mIndexStream) != 1)
-      kDebug(5006) <<"Whoa!";
-
-    fflush(mIndexStream);
-    int error = ferror(mIndexStream);
+    int error = writeMessages( mb, true /*flush*/ );
 
     if ( mExportsSernums )
       error |= appendToFolderIdsFile( idx );
 
     if ( error ) {
       kDebug(5006) << "Error: Could not add message to folder (No space left on device?)";
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if ( KDE_ftell( mIndexStream ) > revert ) {
 	kDebug(5006) << "Undoing changes";
 	truncate( QFile::encodeName( indexLocation() ), revert );
       }
+#endif
       kmkernel->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
       // exit(1); // don't ever use exit(), use the above!
 
@@ -589,11 +587,13 @@ DwString KMFolderMaildir::getDwString(int idx)
   if (fi.exists() && fi.isFile() && fi.isWritable() && fi.size() > 0)
   {
     FILE* stream = KDE_fopen(QFile::encodeName(abs_file), "r+");
+    KMailStorageInternalsDebug << "KDE_fopen(abs_file=" << abs_file << ", \"r+\") == stream == " << stream;
     if (stream) {
       size_t msgSize = fi.size();
       char* msgText = new char[ msgSize + 1 ];
       fread(msgText, msgSize, 1, stream);
       fclose( stream );
+      KMailStorageInternalsDebug << "fclose(mIndexStream = " << stream << ")";
       msgText[msgSize] = '\0';
       size_t newMsgSize = KMail::Util::crlf2lf( msgText, msgSize );
       DwString str;
@@ -892,7 +892,12 @@ int KMFolderMaildir::createIndexFromContents()
     emit statusMsg(i18n("Writing index file"));
     writeIndex();
   }
-  else mHeaderOffset = 0;
+  else {
+#ifdef KMAIL_SQLITE_INDEX
+#else
+    mHeaderOffset = 0;
+#endif
+  }
 
   correctUnreadMsgsCount();
 

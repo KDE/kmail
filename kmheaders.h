@@ -42,7 +42,7 @@ enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 
 
 #define KMAIL_SORT_VERSION 1012
-#define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
+#define KMAIL_SORT_FILE(x) x->sortedLocation()
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
 #define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
 #define KMAIL_MAX_KEY_LEN 16384

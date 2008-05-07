@@ -148,7 +148,13 @@ public:
   QString location() const;
 
   /** Returns full path to index file */
-  QString indexLocation() const;
+  virtual QString indexLocation() const;
+
+  /** Returns full path to 'ids' file */
+  virtual QString idsLocation() const;
+
+  /** Returns full path to 'sorted' file */
+  virtual QString sortedLocation() const;
 
   /** Returns full path to sub directory file */
   QString subdirLocation() const;

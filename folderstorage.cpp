@@ -648,7 +648,7 @@ int FolderStorage::moveMsg( QList<KMMessage*> msglist, int *aIndex_ret )
 //-----------------------------------------------------------------------------
 int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
 {
-  QString oldLoc, oldIndexLoc, oldIdsLoc, newLoc, newIndexLoc, newIdsLoc;
+  QString oldLoc, oldIndexLoc, oldSortedLoc, oldIdsLoc, newLoc, newIndexLoc, newSortedLoc, newIdsLoc;
   QString oldSubDirLoc, newSubDirLoc;
   QString oldName;
   int rc = 0;
@@ -658,6 +658,7 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
 
   oldLoc = location();
   oldIndexLoc = indexLocation();
+  oldSortedLoc = sortedLocation();
   oldSubDirLoc = folder()->subdirLocation();
   oldIdsLoc =  KMMsgDict::instance()->getFolderIdsLocation( *this );
   QString oldConfigString = "Folder-" + folder()->idString();
@@ -673,26 +674,31 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
   folder()->setName( newName );
   newLoc = location();
   newIndexLoc = indexLocation();
+  newSortedLoc = sortedLocation();
   newSubDirLoc = folder()->subdirLocation();
   newIdsLoc = KMMsgDict::instance()->getFolderIdsLocation( *this );
 
   if ( KDE_rename( QFile::encodeName( oldLoc ),
-                   QFile::encodeName( newLoc ) ) ) {
+                   QFile::encodeName( newLoc ) ) != 0 ) {
     folder()->setName( oldName );
     folder()->setParent( oldParent );
     rc = errno;
   } else {
     // rename/move index file and index.sorted file
     if ( !oldIndexLoc.isEmpty() ) {
-      KDE_rename( QFile::encodeName( oldIndexLoc ),
-                  QFile::encodeName( newIndexLoc ) );
-      KDE_rename( QFile::encodeName( oldIndexLoc ) + ".sorted",
-                  QFile::encodeName( newIndexLoc ) + ".sorted" );
+      if ( KDE_rename( QFile::encodeName( oldIndexLoc ),
+                       QFile::encodeName( newIndexLoc ) ) != 0 )
+        return 1;
+      if ( KDE_rename( QFile::encodeName( oldSortedLoc ),
+                       QFile::encodeName( newSortedLoc ) ) != 0 )
+        return 1;
     }
 
     // rename/move serial number file
-    if ( !oldIdsLoc.isEmpty() )
-      KDE_rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) );
+    if ( !oldIdsLoc.isEmpty() ) {
+      if ( KDE_rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) ) != 0 )
+        return 1;
+    }
 
     // rename/move the subfolder directory
     KMFolderDir *child = 0;
@@ -700,8 +706,8 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
       child = folder()->child();
     }
 
-    if ( !KDE_rename( QFile::encodeName( oldSubDirLoc ),
-                      QFile::encodeName( newSubDirLoc ) ) ) {
+    if ( KDE_rename( QFile::encodeName( oldSubDirLoc ),
+                      QFile::encodeName( newSubDirLoc ) ) == 0 ) {
       // now that the subfolder directory has been renamed and/or moved also
       // change the name that is stored in the corresponding KMFolderNode
       // (provide that the name actually changed)
@@ -758,7 +764,7 @@ void FolderStorage::remove()
     KMMsgDict::mutableInstance()->removeFolderIds( *this );
     mExportsSernums = false;	// do not writeFolderIds after removal
   }
-  unlink( QFile::encodeName( indexLocation() ) + ".sorted" );
+  unlink( QFile::encodeName( sortedLocation() ) );
   unlink( QFile::encodeName( indexLocation() ) );
 
   int rc = removeContents();
@@ -989,8 +995,8 @@ void FolderStorage::readFolderIdsFile()
 void FolderStorage::invalidateFolder()
 {
   if ( !mExportsSernums ) return;
-  unlink(QFile::encodeName( indexLocation()) + ".sorted");
-  unlink(QFile::encodeName( indexLocation()) + ".ids");
+  unlink(QFile::encodeName( sortedLocation()) );
+  unlink(QFile::encodeName( idsLocation()) );
   fillMessageDict();
   KMMsgDict::mutableInstance()->writeFolderIds( *this );
   emit invalidated( folder() );
@@ -1000,21 +1006,21 @@ void FolderStorage::invalidateFolder()
 //-----------------------------------------------------------------------------
 int FolderStorage::writeFolderIdsFile() const
 {
-  if ( !mExportsSernums ) return -1;
+  if ( !mExportsSernums ) return 0;
   return KMMsgDict::mutableInstance()->writeFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
 int FolderStorage::touchFolderIdsFile()
 {
-  if ( !mExportsSernums ) return -1;
+  if ( !mExportsSernums ) return 0;
   return KMMsgDict::mutableInstance()->touchFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
 int FolderStorage::appendToFolderIdsFile( int idx )
 {
-  if ( !mExportsSernums ) return -1;
+  if ( !mExportsSernums ) return 0;
   int ret = 0;
   if ( count() == 1 ) {
     ret = KMMsgDict::mutableInstance()->writeFolderIds( *this );
@@ -1181,11 +1187,34 @@ bool FolderStorage::isMoveable() const
   return ( folder()->isSystemFolder() ) ? false : true;
 }
 
-
 /*virtual*/
 KMAccount* FolderStorage::account() const
 {
   return 0;
+}
+
+QString FolderStorage::location(const QString& suffix) const
+{
+  QString sLocation(folder()->path());
+
+  if ( !sLocation.isEmpty() )
+    sLocation += "/.";
+  return sLocation + dotEscape(fileName()) + ".index." + suffix;
+}
+
+QString FolderStorage::indexLocation() const
+{
+  return location( "db" );
+}
+
+QString FolderStorage::idsLocation() const
+{
+  return location( "ids" );
+}
+
+QString FolderStorage::sortedLocation() const
+{
+  return location( "sorted" );
 }
 
 #include "folderstorage.moc"

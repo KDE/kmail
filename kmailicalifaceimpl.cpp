@@ -467,6 +467,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     msg->cleanupHeader();
     //debugBodyParts( "after cleanup", *msg );
     msg->touch();
+    KMailStorageInternalsDebug << "***<msg>***" << msg->asString() << "***</msg>***";
     if ( folder.addMsg( msg ) == 0 )
       // Message stored
       sernum = msg->getMsgSerNum();
@@ -1734,6 +1735,9 @@ void KMailICalIfaceImpl::readConfig()
     mContacts = initFolder( KMail::ContentsTypeContact );
     mNotes    = initFolder( KMail::ContentsTypeNote );
 
+    if ( !mCalendar || !mTasks || !mJournals || !mContacts || !mNotes )
+      return;
+
     // Store final annotation (with .default) so that we won't ask again on next startup
     if ( mCalendar->folderType() == KMFolderTypeCachedImap )
       static_cast<KMFolderCachedImap *>( mCalendar->storage() )->updateAnnotationFolderType();
@@ -1932,7 +1936,11 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   folder->storage()->setContentsType( contentsType );
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
-  folder->open( "ifacefolder" );
+  if ( 0 != folder->open( "ifacefolder" ) ) {
+    kWarning() << "folder->open( \"ifacefolder\" ) ) FAILED";
+    // TODO: remove data structures?
+    return 0;
+  }
   connectFolder( folder );
   return folder;
 }

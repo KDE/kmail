@@ -16,65 +16,13 @@
     51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kmfolderindex.h"
-#include "kmfolder.h"
-#include <config-kmail.h>
+#include "kmfolderindex_common.cpp"
 
-#include <kdebug.h>
-#include <kde_file.h>
+//---------
 
-#include <QFileInfo>
-#include <QDir>
-#include <QTimer>
-#include <QByteArray>
-#include <QDateTime>
-
-#define HAVE_MMAP //need to get this into autoconf FIXME  --Sam
-#include <unistd.h>
-#ifdef HAVE_MMAP
-#include <sys/mman.h>
-#endif
-
-// Current version of the table of contents (index) files
-#define INDEX_VERSION 1506
-
-#ifndef MAX_LINE
-#define MAX_LINE 4096
-#endif
-
-#ifndef INIT_MSGS
-#define INIT_MSGS 8
-#endif
-
-#include <errno.h>
-#include <assert.h>
-#include <utime.h>
-#include <fcntl.h>
-
-#ifdef HAVE_BYTESWAP_H
-#include <byteswap.h>
-#endif
-#include <QCursor>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include "kmmsgdict.h"
-
-// We define functions as kmail_swap_NN so that we don't get compile errors
-// on platforms where bswap_NN happens to be a function instead of a define.
-
-/* Swap bytes in 32 bit value.  */
-#ifdef bswap_32
-#define kmail_swap_32(x) bswap_32(x)
+#ifdef KMAIL_SQLITE_INDEX
+# include "kmfolderindex_sqlite.cpp"
 #else
-#define kmail_swap_32(x) \
-     ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >>  8) |		      \
-      (((x) & 0x0000ff00) <<  8) | (((x) & 0x000000ff) << 24))
-#endif
-
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/file.h>
 
 KMFolderIndex::KMFolderIndex(KMFolder* folder, const char* name)
   : FolderStorage(folder, name), mMsgList(INIT_MSGS)
@@ -93,30 +41,18 @@ KMFolderIndex::~KMFolderIndex()
 {
 }
 
-
-QString KMFolderIndex::indexLocation() const
-{
-  QString sLocation(folder()->path());
-
-  if ( !sLocation.isEmpty() ) {
-    sLocation += '/';
-    sLocation += '.';
-  }
-  sLocation += dotEscape(fileName());
-  sLocation += ".index";
-
-  return sLocation;
-}
-
 int KMFolderIndex::updateIndex()
 {
   if (!mAutoCreateIndex)
     return 0;
   bool dirty = mDirty;
   mDirtyTimer->stop();
-  for (unsigned int i=0; !dirty && i<mMsgList.high(); i++)
-    if (mMsgList.at(i))
-      dirty = !mMsgList.at(i)->syncIndexString();
+  const uint high = mMsgList.high();
+  for (uint i=0; !dirty && i<high; i++) {
+    KMMsgBase *msg = mMsgList.at(i);
+    if (msg)
+      dirty = !msg->syncIndexString();
+  }
   if (!dirty) { // Update successful
       touchFolderIdsFile();
       return 0;
@@ -134,7 +70,11 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   indexName = indexLocation();
   tempName = indexName + ".temp";
-  unlink( QFile::encodeName( tempName ) );
+  {
+    int result = unlink( QFile::encodeName( tempName ) );
+    if ( ! ( result == 0 || (result == -1 && errno == ENOENT ) ) )
+      return errno;
+  }
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
@@ -142,6 +82,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   old_umask = umask( 077 );
   FILE *tmpIndexStream = KDE_fopen( QFile::encodeName( tempName ), "w" );
+  KMailStorageInternalsDebug << "KDE_fopen(tempName=" << tempName << ", \"w\") == tmpIndexStream == " << tmpIndexStream;
   umask( old_umask );
   if ( !tmpIndexStream ) {
     return errno;
@@ -164,7 +105,13 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   off_t nho = KDE_ftell(tmpIndexStream);
 
+  int fError = 0;
   if ( !createEmptyIndex ) {
+    FILE *oldIndexStream = mIndexStream; //save
+    mIndexStream = tmpIndexStream; // needed because writeMessages() operates on mIndexStream
+    fError = writeMessages( 0/*all*/, false /* !flush */ );
+    mIndexStream = oldIndexStream; //restore
+/* moved to writeMessages()
     KMMsgBase* msgBase;
     for (unsigned int i=0; i<mMsgList.high(); i++)
     {
@@ -176,27 +123,42 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
       msgBase->setIndexOffset(tmp);
       msgBase->setIndexLength(len);
       if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
-	kDebug(5006) <<"Whoa!";
-    }
+        kDebug(5006) <<"Whoa!";
+    }*/
   }
 
-  int fError = ferror( tmpIndexStream );
+  fError |= ferror( tmpIndexStream );
   if( fError != 0 ) {
     fclose( tmpIndexStream );
+    KMailStorageInternalsDebug << "fclose(tmpIndexStream = " << tmpIndexStream << ")";
     return fError;
   }
   if(    ( fflush( tmpIndexStream ) != 0 )
       || ( fsync( fileno( tmpIndexStream ) ) != 0 ) ) {
     int errNo = errno;
     fclose( tmpIndexStream );
+    kWarning() << "fflush() or fsync() failed; fclose(tmpIndexStream = " << tmpIndexStream << ")";
     return errNo;
   }
-  if( fclose( tmpIndexStream ) != 0 )
+  KMailStorageInternalsDebug << "fclose(tmpIndexStream = " << tmpIndexStream << ")";
+  if( fclose( tmpIndexStream ) != 0 ) {
+    kWarning() << "fclose() failed";
     return errno;
+  }
 
 #ifdef Q_WS_WIN
-  if (mIndexStream) // close before renaming
-    fclose(mIndexStream);
+  if (mIndexStream) { // close before renaming
+    // neither this fixes windows port: 
+    // if ( !updateIndexStreamPtr() )
+    //  return 1;
+    bool ok = fclose( mIndexStream ) == 0;
+    KMailStorageInternalsDebug << "fclose(mIndexStream = " << mIndexStream << ")";
+    mIndexStream = 0;
+    if ( !ok ) {
+      kWarning() << "fclose() failed";
+      return errno;
+    }
+  }
 #endif
 
   if ( KDE_rename(QFile::encodeName(tempName), QFile::encodeName(indexName)) != 0 )
@@ -204,22 +166,26 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   mHeaderOffset = nho;
 
 #ifndef Q_WS_WIN
-  if (mIndexStream)
+  if (mIndexStream) {
       fclose(mIndexStream);
+      KMailStorageInternalsDebug << "fclose(mIndexStream = " << mIndexStream << ")";
+  }
 #endif
 
   if ( createEmptyIndex )
     return 0;
 
   mIndexStream = KDE_fopen(QFile::encodeName(indexName), "r+"); // index file
+  KMailStorageInternalsDebug << "KDE_fopen(indexName=" << indexName << ", \"r+\") == mIndexStream == " << mIndexStream;
   assert( mIndexStream );
 #ifndef Q_WS_WIN
   fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
 #endif
 
-  updateIndexStreamPtr();
-
-  writeFolderIdsFile();
+  if ( !updateIndexStreamPtr() )
+    return 1;
+  if ( 0 != writeFolderIdsFile() )
+    return 1;
 
   setDirty( false );
   return 0;
@@ -267,10 +233,11 @@ bool KMFolderIndex::readIndex()
       fgets(line.data(), MAX_LINE, mIndexStream);
       if (feof(mIndexStream)) break;
       if (*line.data() == '\0') {
-	  fclose(mIndexStream);
-	  mIndexStream = 0;
-	  clearIndex();
-	  return false;
+        fclose(mIndexStream);
+        KMailStorageInternalsDebug << "fclose(mIndexStream = " << mIndexStream << ")";
+        mIndexStream = 0;
+        clearIndex();
+        return false;
       }
       mi = new KMMsgInfo(folder());
       mi->compat_fromOldIndexString(line, mConvertToUtf8);
@@ -334,8 +301,8 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       *gv = indexVersion;
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
-	  kDebug(5006) <<"Converting old index file" << indexLocation() <<" to utf-8";
-	  mConvertToUtf8 = true;
+        kDebug(5006) <<"Converting old index file" << indexLocation() <<" to utf-8";
+        mConvertToUtf8 = true;
       }
       return true;
   } else if (indexVersion == 1505) {
@@ -346,14 +313,14 @@ bool KMFolderIndex::readIndexHeader(int *gv)
   } else if(indexVersion > INDEX_VERSION) {
       QApplication::setOverrideCursor( QCursor( Qt::ArrowCursor ) );
       int r = KMessageBox::questionYesNo(0,
-					 i18n(
-					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
-					    "This index can be regenerated from your mail folder, but some "
-					    "information, including status flags, may be lost. Do you wish "
-					    "to downgrade your index file?" , objectName() , indexVersion), QString(), KGuiItem(i18n("Downgrade")), KGuiItem(i18n("Do Not Downgrade")) );
+        i18n(
+          "The mail index for '%1' is from an unknown version of KMail (%2).\n"
+          "This index can be regenerated from your mail folder, but some "
+          "information, including status flags, may be lost. Do you wish "
+          "to downgrade your index file?" , objectName() , indexVersion), QString(), KGuiItem(i18n("Downgrade")), KGuiItem(i18n("Do Not Downgrade")) );
       QApplication::restoreOverrideCursor();
       if (r == KMessageBox::Yes)
-	  createIndexFromContents();
+        createIndexFromContents();
       return false;
   }
   else {
@@ -388,7 +355,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
          }
       }
       if (needs_update || mIndexSwapByteOrder || (mIndexSizeOfLong != sizeof(long)))
-	setDirty( true );
+        setDirty( true );
       // Seek to end of header
       KDE_fseek(mIndexStream, endOfHeader, SEEK_SET );
 
@@ -410,38 +377,43 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
 {
     // We touch the folder, otherwise the index is regenerated, if KMail is
     // running, while the clock switches from daylight savings time to normal time
-    utime(QFile::encodeName( QDir::toNativeSeparators(location()) ), 0);
-    utime(QFile::encodeName( QDir::toNativeSeparators(indexLocation()) ), 0);
-    utime(QFile::encodeName( QDir::toNativeSeparators(KMMsgDict::getFolderIdsLocation( *this )) ), 0);
+    if (0 != utime(QFile::encodeName( QDir::toNativeSeparators(location()) ), 0))
+      kWarning() << "utime(" << QDir::toNativeSeparators(location()) << ", 0) failed (location())";
+    if (0 != utime(QFile::encodeName( QDir::toNativeSeparators(indexLocation()) ), 0))
+      kWarning() << "utime(" << QDir::toNativeSeparators(indexLocation()) << ", 0) failed (indexLocation())";
+    if (0 != utime(QFile::encodeName( QDir::toNativeSeparators(KMMsgDict::getFolderIdsLocation( *this )) ), 0))
+      kWarning() << "utime(" << QDir::toNativeSeparators(KMMsgDict::getFolderIdsLocation( *this )) << ", 0) failed (KMMsgDict::getFolderIdsLocation( *this ))";
 
-  mIndexSwapByteOrder = false;
+    mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP
     if(just_close) {
-	if(mIndexStreamPtr)
-	    munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
-	mIndexStreamPtr = 0;
-	mIndexStreamPtrLength = 0;
-	return true;
+      bool munmapResult = true;
+      if(mIndexStreamPtr)
+        munmapResult = 0 == munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
+      mIndexStreamPtr = 0;
+      mIndexStreamPtrLength = 0;
+      return munmapResult;
     }
 
     assert(mIndexStream);
     KDE_struct_stat stat_buf;
     if(KDE_fstat(fileno(mIndexStream), &stat_buf) == -1) {
-	if(mIndexStreamPtr)
-	    munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
-	mIndexStreamPtr = 0;
-	mIndexStreamPtrLength = 0;
-	return false;
+      if(mIndexStreamPtr)
+        munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
+      mIndexStreamPtr = 0;
+      mIndexStreamPtrLength = 0;
+      return false;
     }
     if(mIndexStreamPtr)
-	munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
+      if(0 != munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength))
+        return false;
     mIndexStreamPtrLength = stat_buf.st_size;
     mIndexStreamPtr = (uchar *)mmap(0, mIndexStreamPtrLength, PROT_READ, MAP_SHARED,
-				    fileno(mIndexStream), 0);
+    fileno(mIndexStream), 0);
     if(mIndexStreamPtr == MAP_FAILED) {
-	mIndexStreamPtr = 0;
-	mIndexStreamPtrLength = 0;
-	return false;
+      mIndexStreamPtr = 0;
+      mIndexStreamPtrLength = 0;
+      return false;
     }
 #endif
     return true;
@@ -481,8 +453,9 @@ void KMFolderIndex::fillMessageDict()
 {
   open( "fillDict" );
   for ( unsigned int idx = 0; idx < mMsgList.high(); idx++ ) {
-    if ( mMsgList.at( idx ) ) {
-      KMMsgDict::mutableInstance()->insert(0, mMsgList.at( idx ), idx);
+    KMMsgBase* msg = mMsgList.at(i);
+    if ( msg ) {
+      KMMsgDict::mutableInstance()->insert(0, msg, idx);
     }
   }
   close( "fillDict" );
@@ -509,5 +482,36 @@ bool KMFolderIndex::recreateIndex()
   return readIndex();
 }
 
+int KMFolderIndex::writeMessages( KMMsgBase* msg, bool flush )
+{
+  const uint high = mMsgList.high();
+  for (uint i=0; i<high; i++)
+  {
+    KMMsgBase* msgBase = msg ? msg : mMsgList.at(i);
+    if ( !msgBase )
+      continue;
+    int len;
+    const uchar *buffer = msgBase->asIndexString( len );
+    if ( fwrite( &len,sizeof( len ), 1, mIndexStream ) != 1 )
+      return 1;
+    off_t offset = KDE_ftell( mIndexStream );
+    if ( fwrite( buffer, len, 1, mIndexStream ) != 1 ) {
+      kDebug() << "Whoa!";
+      return 1;
+    }
+    msgBase->setIndexOffset( offset );
+    msgBase->setIndexLength( len );
+    if ( msg )
+      break; // only one
+  }
+  if ( flush )
+    fflush( mIndexStream );
+  int error = ferror( mIndexStream );
+  if ( error != 0 )
+    return error;
+  return 0;
+}
+
+#endif // !KMAIL_SQLITE_INDEX
 
 #include "kmfolderindex.moc"

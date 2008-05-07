@@ -74,6 +74,9 @@ using KPIM::BroadcastStatus;
 #define MSG_SEPERATOR_START_LEN (sizeof(MSG_SEPERATOR_START) - 1)
 #define MSG_SEPERATOR_REGEX "^From .*[0-9][0-9]:[0-9][0-9]"
 
+#ifdef KMAIL_SQLITE_INDEX
+#include <sqlite3.h>
+#endif
 
 //-----------------------------------------------------------------------------
 KMFolderMbox::KMFolderMbox(KMFolder* folder, const char* name)
@@ -131,8 +134,11 @@ int KMFolderMbox::open( const char *owner )
 
   lock();
 
+  rc = openInternal();
+/* moved to openInternal()
   if ( !folder()->path().isEmpty() ) {
      KMFolderIndex::IndexStatus index_status = indexStatus();
+     bool shouldCreateIndexFromContents = false;
      // test if index file exists and is up-to-date
      if ( KMFolderIndex::IndexOk != index_status ) {
        // only show a warning if the index file exists, otherwise it can be
@@ -172,22 +178,29 @@ int KMFolderMbox::open( const char *owner )
                                     KMessageBox::AllowLink );
         }
        }
-       QString str;
+#ifdef KMAIL_SQLITE_INDEX
+#else
        mIndexStream = 0;
-       str = i18n("Folder `%1' changed. Recreating index.",
-                  objectName());
-       emit statusMsg( str );
+#endif
+       shouldCreateIndexFromContents = true;
+       emit statusMsg( i18n("Folder `%1' changed. Recreating index.", objectName()) );
      } else {
+#ifdef KMAIL_SQLITE_INDEX
+#else
        mIndexStream = KDE_fopen( QFile::encodeName( indexLocation() ), "r+" ); // index file
        if ( mIndexStream ) {
-#ifndef Q_WS_WIN
+# ifndef Q_WS_WIN
          fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
-#endif
-         updateIndexStreamPtr();
+# endif
+         if ( !updateIndexStreamPtr() )
+           return 1;
        }
+       else
+         shouldCreateIndexFromContents = true;
+#endif
      }
 
-     if ( !mIndexStream ) {
+     if ( shouldCreateIndexFromContents ) {
        rc = createIndexFromContents();
      } else {
        if ( !readIndex() ) {
@@ -199,13 +212,16 @@ int KMFolderMbox::open( const char *owner )
     rc = createIndexFromContents();
   }
 
-  mChanged = false;
+  mChanged = false;*/
 
-#ifndef Q_WS_WIN
+#ifdef KMAIL_SQLITE_INDEX
+#else
+# ifndef Q_WS_WIN
   fcntl( fileno( mStream ), F_SETFD, FD_CLOEXEC );
   if ( mIndexStream ) {
      fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
   }
+# endif
 #endif
 
   return rc;
@@ -250,28 +266,10 @@ int KMFolderMbox::create()
   fcntl(fileno(mStream), F_SETFD, FD_CLOEXEC);
 #endif
 
-  if (!folder()->path().isEmpty())
-  {
-    old_umask = umask(077);
-    mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
-    updateIndexStreamPtr(true);
-    umask(old_umask);
+  rc = createInternal();
 
-    if (!mIndexStream) return errno;
-#ifndef Q_WS_WIN
-    fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
-#endif
-  }
-  else
-  {
-    mAutoCreateIndex = false;
-  }
-
-  mOpenCount++;
-  mChanged = false;
-
-  rc = writeIndex();
-  if (!rc) lock();
+  if (!rc)
+    lock();
   return rc;
 }
 
@@ -330,14 +328,23 @@ void KMFolderMbox::close( const char *owner, bool aForced )
     if ( mStream ) {
       fclose( mStream );
     }
+#ifdef KMAIL_SQLITE_INDEX
+    if ( mIndexDb )
+      sqlite3_close( mIndexDb );
+#else
     if ( mIndexStream ) {
       fclose( mIndexStream );
       updateIndexStreamPtr( true );
     }
+#endif
   }
+#ifdef KMAIL_SQLITE_INDEX
+  mIndexDb = 0;
+#else
+  mIndexStream = 0;
+#endif
   mOpenCount   = 0;
   mStream      = 0;
-  mIndexStream = 0;
   mFilesLocked = false;
   mUnreadMsgs  = -1;
 
@@ -347,11 +354,14 @@ void KMFolderMbox::close( const char *owner, bool aForced )
 //-----------------------------------------------------------------------------
 void KMFolderMbox::sync()
 {
+#ifdef KMAIL_SQLITE_INDEX
+#else
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
         !mIndexStream || fsync(fileno(mIndexStream))) {
     kmkernel->emergencyExit( i18n("Could not sync index file <b>%1</b>: %2", indexLocation(), errno ? QString::fromLocal8Bit(strerror(errno)) : i18n("Internal error. Please copy down the details and report a bug.")));
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -392,6 +402,8 @@ int KMFolderMbox::lock()
         return errno;
       }
 
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if (mIndexStream)
       {
         rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
@@ -407,6 +419,7 @@ int KMFolderMbox::lock()
           return rc;
         }
       }
+#endif
       break;
 
     case procmail_lockfile:
@@ -424,6 +437,8 @@ int KMFolderMbox::lock()
         mReadOnly = true;
         return rc;
       }
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if( mIndexStream )
       {
         cmd_str = "lockfile -l20 -r5 " + QFile::encodeName(KShell::quoteArg(indexLocation() + ".lock"));
@@ -436,6 +451,7 @@ int KMFolderMbox::lock()
           return rc;
         }
       }
+#endif
       break;
 
     case mutt_dotlock:
@@ -448,6 +464,8 @@ int KMFolderMbox::lock()
         mReadOnly = true;
         return rc;
       }
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock " + QFile::encodeName(KShell::quoteArg(indexLocation()));
@@ -460,6 +478,7 @@ int KMFolderMbox::lock()
           return rc;
         }
       }
+#endif
       break;
 
     case mutt_dotlock_privileged:
@@ -472,6 +491,8 @@ int KMFolderMbox::lock()
         mReadOnly = true;
         return rc;
       }
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock -p " + QFile::encodeName(KShell::quoteArg(indexLocation()));
@@ -484,6 +505,7 @@ int KMFolderMbox::lock()
           return rc;
         }
       }
+#endif
       break;
 
     case lock_none:
@@ -543,7 +565,11 @@ int KMFolderMbox::unlock()
   switch( mLockType )
   {
     case FCNTL:
-      if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, &fl);
+#ifdef KMAIL_SQLITE_INDEX
+#else
+      if (mIndexStream)
+        fcntl(fileno(mIndexStream), F_SETLK, &fl);
+#endif
       fcntl(fileno(mStream), F_SETLK, &fl);
       rc = errno;
       break;
@@ -556,31 +582,40 @@ int KMFolderMbox::unlock()
         cmd_str += QFile::encodeName(KShell::quoteArg(location() + ".lock"));
 
       rc = system( cmd_str.data() );
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if( mIndexStream )
       {
         cmd_str = "rm -f " + QFile::encodeName(KShell::quoteArg(indexLocation() + ".lock"));
         rc = system( cmd_str.data() );
       }
+#endif
       break;
 
     case mutt_dotlock:
       cmd_str = "mutt_dotlock -u " + QFile::encodeName(KShell::quoteArg(location()));
       rc = system( cmd_str.data() );
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock -u " + QFile::encodeName(KShell::quoteArg(indexLocation()));
         rc = system( cmd_str.data() );
       }
+#endif
       break;
 
     case mutt_dotlock_privileged:
       cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(KShell::quoteArg(location()));
       rc = system( cmd_str.data() );
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(KShell::quoteArg(indexLocation()));
         rc = system( cmd_str.data() );
       }
+#endif
       break;
 
     case lock_none:
@@ -850,7 +885,10 @@ int KMFolderMbox::createIndexFromContents()
     emit statusMsg( i18n("Writing index file") );
     writeIndex();
   } else {
+#ifdef KMAIL_SQLITE_INDEX
+#else
     mHeaderOffset = 0;
+#endif
   }
 
   correctUnreadMsgsCount();
@@ -1153,23 +1191,16 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
 
   // write index entry if desired
   if ( mAutoCreateIndex ) {
+#ifdef KMAIL_SQLITE_INDEX
+#else
     assert( mIndexStream != 0 );
     clearerr( mIndexStream );
     KDE_fseek( mIndexStream, 0, SEEK_END );
     revert = KDE_ftell( mIndexStream );
+#endif
 
     KMMsgBase * mb = &aMsg->toMsgBase();
-    int len;
-    const uchar *buffer = mb->asIndexString( len );
-    fwrite( &len,sizeof( len ), 1, mIndexStream );
-    mb->setIndexOffset( KDE_ftell( mIndexStream ) );
-    mb->setIndexLength( len );
-    if ( fwrite( buffer, len, 1, mIndexStream ) != 1 ) {
-      kDebug() << "Whoa!";
-    }
-
-    fflush( mIndexStream );
-    error = ferror( mIndexStream );
+    error = writeMessages( mb, true /*flush*/ );
 
     if ( mExportsSernums ) {
       error |= appendToFolderIdsFile( idx );
@@ -1177,10 +1208,13 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
 
     if (error) {
       kWarning() <<"Error: Could not add message to folder (No space left on device?)";
+#ifdef KMAIL_SQLITE_INDEX
+#else
       if ( KDE_ftell( mIndexStream ) > revert ) {
         kWarning() <<"Undoing changes";
         truncate( QFile::encodeName( indexLocation() ), revert );
       }
+#endif
       if ( errno ) {
         kmkernel->emergencyExit( i18n("Could not add message to folder: ") +
                                  QString::fromLocal8Bit( strerror( errno ) ) );

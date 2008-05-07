@@ -176,7 +176,9 @@ void MboxCompactionJob::done( int rc )
   if ( !rc ) {
     bool autoCreate = mbox->autoCreateIndex();
     QString box( realLocation() );
-    KDE_rename( QFile::encodeName( mTempName ), QFile::encodeName( box ) );
+    rc = KDE_rename( QFile::encodeName( mTempName ), QFile::encodeName( box ) );
+    if ( rc != 0 )
+      return;
     mbox->writeIndex();
     mbox->writeConfig();
     mbox->setAutoCreateIndex( false );

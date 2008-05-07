@@ -380,7 +380,7 @@ QList<unsigned long> KMMsgDict::serNumList(QList<KMMsgBase *> msgList)
 
 QString KMMsgDict::getFolderIdsLocation( const FolderStorage &storage )
 {
-  return storage.indexLocation() + ".ids";
+  return storage.idsLocation();
 }
 
 //-----------------------------------------------------------------------------

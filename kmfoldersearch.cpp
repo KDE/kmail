@@ -745,16 +745,7 @@ int KMFolderSearch::find( const KMMsgBase* msg ) const
 
 QString KMFolderSearch::indexLocation() const
 {
-  QString sLocation(folder()->path());
-
-  if ( !sLocation.isEmpty() )
-    sLocation += '/';
-  sLocation += '.';
-  sLocation += dotEscape( fileName() );
-  sLocation += ".index";
-  sLocation += ".search";
-
-  return sLocation;
+  return location( "search" );
 }
 
 int KMFolderSearch::updateIndex()
@@ -810,8 +801,9 @@ int KMFolderSearch::writeIndex( bool )
   if ( fsync( fileno(tmpIndexStream ) ) != 0) return errno;
   if ( fclose( tmpIndexStream ) != 0 ) return errno;
 
-  KDE_rename( QFile::encodeName( tempName ),
-              QFile::encodeName( indexLocation() ) );
+  if ( KDE_rename( QFile::encodeName( tempName ),
+                   QFile::encodeName( indexLocation() ) ) != 0 )
+    return 1;
   mDirty = false;
   mUnlinked = false;
 

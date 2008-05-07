@@ -102,7 +102,13 @@ public:
   QString location() const;
 
   /** Returns full path to index file */
-  virtual QString indexLocation() const = 0;
+  virtual QString indexLocation() const;
+
+  /** Returns full path to 'ids' file */
+  virtual QString idsLocation() const;
+
+  /** Returns full path to 'sorted' file */
+  virtual QString sortedLocation() const;
 
   /** Returns, if the folder can't contain mails, but only subfolder */
   virtual bool noContent() const { return mNoContent; }
@@ -601,6 +607,9 @@ friend class KMMsgDict;
   virtual void truncateIndex() = 0;
 
   virtual qint64 doFolderSize() const { return 0; };
+
+  /** Returns full path to .index, .ids or .sorted file (depending on @a suffix). */
+  virtual QString location(const QString& suffix) const;
 
   int mOpenCount;
   int mQuiet;

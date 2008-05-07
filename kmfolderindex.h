@@ -23,6 +23,10 @@
 #include "folderstorage.h"
 #include "kmmsglist.h"
 
+#ifdef KMAIL_SQLITE_INDEX
+struct sqlite3;
+#endif
+
 /**
  * @short A FolderStorage with an index for faster access to often used
  * message properties..
@@ -75,6 +79,7 @@ public:
   /** Registered unique serial number for the index file */
   int serialIndexId() const { return mIndexId; }
 
+#ifndef KMAIL_SQLITE_INDEX
   /** If we have mmap(2), then we have a pointer to the
    *   mmap()ed index file; return a pointer to the memory
    *   region containing the file.
@@ -88,8 +93,8 @@ public:
 
   bool indexSwapByteOrder() { return mIndexSwapByteOrder; }
   int  indexSizeOfLong() { return mIndexSizeOfLong; }
+#endif // !KMAIL_SQLITE_INDEX
 
-  virtual QString indexLocation() const;
   virtual int writeIndex( bool createEmptyIndex = false );
 
   bool recreateIndex();
@@ -109,8 +114,6 @@ protected:
       failure. */
   virtual int createIndexFromContents() = 0;
 
-  bool updateIndexStreamPtr(bool just_close=false);
-
   /** Tests whether the contents of this folder is newer than the index.
       Should return IndexTooOld if the index is older than the contents.
       Should return IndexMissing if there is contents but no index.
@@ -125,19 +128,54 @@ protected:
      * when that has been invalidated. */
   virtual void fillMessageDict();
 
-  /** table of contents file */
-  FILE* mIndexStream;
+  /** Writes messages to the index. The stream is flushed if @a flush is true. 
+   If @a msg is 0, all mesages from mMsgList are written, else only @a is written.
+  */
+  int writeMessages( KMMsgBase* msg, bool flush = true );
+
+  /** Opens index stream (or database) without creating it.
+   Called by KMFolderMaildir::open() and KMFolderMbox::open(). */
+  int openInternal();
+
+  /** Creates index stream (or database).
+   Called by KMFolderMaildir::create() and KMFolderMbox::create(). */
+  int createInternal();
+
   /** list of index entries or messages */
   KMMsgList mMsgList;
 
+
+#ifdef KMAIL_SQLITE_INDEX
+  /** Opens database pointed by indexLocation() filename in mode @a mode,
+   which can be SQLITE_OPEN_READWRITE or SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE. 
+   Sets mIndexDb. */
+  bool openDatabase( int mode );
+
+  /** Used by writeMessages() */
+  enum WriteMessagesMode {
+    OverwriteMessages, //!< writeMessages() will first clear all messages and then write them
+    UpdateExistingMessages //!< writeMessages() will update data for existing messages and add any new message
+  };
+
+  int writeMessages( KMMsgBase* msg, WriteMessagesMode mode );
+
+  /** main SQlite db handle */
+  sqlite3 *mIndexDb;
+#else
+  bool updateIndexStreamPtr(bool just_close=false);
+
+  /** table of contents file */
+  FILE* mIndexStream;
   /** offset of header of index file */
   off_t mHeaderOffset;
-
   uchar *mIndexStreamPtr;
   size_t mIndexStreamPtrLength;
-  int mIndexId;
+
   bool mIndexSwapByteOrder; // Index file was written with swapped byte order
   int mIndexSizeOfLong; // Index file was written with longs of this size
+#endif
+
+  int mIndexId;
 };
 
 #endif /*kmfolderindex_h*/

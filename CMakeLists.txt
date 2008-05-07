@@ -5,6 +5,8 @@ check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
 check_include_files(paths.h HAVE_PATHS_H)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
+
 check_include_files(sys/inotify.h SYS_INOTIFY_H_FOUND)
 macro_bool_to_01(SYS_INOTIFY_H_FOUND HAVE_SYS_INOTIFY_H)
 
@@ -23,6 +25,7 @@ configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 add_definitions ( -DKDE_DEFAULT_DEBUG_AREA=5006 )
+add_definitions (-DKMailStorageInternalsDebug=kDebug\(5120\))
 
 qt4_generate_dbus_interface( kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a )
 qt4_generate_dbus_interface( kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a )
@@ -250,9 +253,23 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningco
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc templatesconfiguration_kfg.kcfgc customtemplates_kfg.kcfgc )
 
-kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
+if(WIN32)
+  find_package(Sqlite)
+  if (NOT SQLITE_FOUND)
+    MESSAGE(FATAL_ERROR "You need SQLite library for indexing")
+  endif(NOT SQLITE_FOUND)
+  add_definitions(-DKMAIL_SQLITE_INDEX) # to alter declaration of KMFolderIndex
+  include_directories(${SQLITE_INCLUDE_DIR})
+#  set(kmailprivate_LIB_SRCS ${kmailprivate_LIB_SRCS} kmfolderindex_sqlite.cpp)
+else(WIN32)
+#  set(kmailprivate_LIB_SRCS ${kmailprivate_LIB_SRCS} kmfolderindex.cpp)
+endif(WIN32)
 
+kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 kdepim4_link_unique_libraries(kmailprivate ${KDE4_KHTML_LIBRARY} ${KDE4_THREADWEAVER_LIBRARY} ${KDE4_KMIME_LIBRARY} ${KDE4_KPIMIDENTITIES_LIBRARY} ${KDE4_PHONON_LIBRARY} ${KDE4_KNOTIFYCONFIG_LIBRARY} ${KDE4_KTNEF_LIBRARY} ${KDE4_KUTILS_LIBRARY} ${KDE4_MAILTRANSPORT_LIBRARY} ${KDE4_KIMAP_LIBRARY} ${KDE4_KPARTS_LIBRARY} kleo ${QGPGME_LIBRARIES} mimelib ksieve kpgp kdepim ${QT_QT3SUPPORT_LIBRARY})
+if(WIN32)
+  kdepim4_link_unique_libraries(kmailprivate ${SQLITE_LIBRARIES})
+endif(WIN32)
 
 if(Nepomuk_FOUND)
    kdepim4_link_unique_libraries(kmailprivate ${NEPOMUK_LIBRARIES} )

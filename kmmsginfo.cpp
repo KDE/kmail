@@ -131,12 +131,15 @@ public:
 };
 
 //-----------------------------------------------------------------------------
+#ifdef KMAIL_SQLITE_INDEX
+KMMsgInfo::KMMsgInfo(KMFolder* p, char* data, short len, sqlite_int64 dbId) :
+    KMMsgBase(p, data, len, dbId),
+#else
 KMMsgInfo::KMMsgInfo(KMFolder* p, off_t off, short len) :
-    KMMsgBase(p),
+    KMMsgBase(p, off, len),
+#endif
     kd(0)
 {
-    setIndexOffset(off);
-    setIndexLength(len);
     setEnableUndo(true);
 }
 
@@ -215,7 +218,11 @@ void KMMsgInfo::init(const QByteArray& aSubject, const QByteArray& aFrom,
                      off_t aFolderOffset, size_t aMsgSize,
                      size_t aMsgSizeServer, ulong aUID)
 {
+#ifdef KMAIL_SQLITE_INDEX
+    mData = 0;
+#else
     mIndexOffset = 0;
+#endif
     mIndexLength = 0;
     if(!kd)
         kd = new KMMsgInfoPrivate;

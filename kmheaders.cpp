@@ -655,8 +655,9 @@ void KMHeaders::writeFolderConfig (void)
   config.writeEntry("Current", currentItemIndex());
   HeaderItem* current = currentHeaderItem();
   ulong sernum = 0;
-  if ( current && mFolder->getMsgBase( current->msgId() ) )
-    sernum = mFolder->getMsgBase( current->msgId() )->getMsgSerNum();
+  KMMsgBase* msgBase;
+  if ( current && (msgBase = mFolder->getMsgBase( current->msgId() ) ) )
+    sernum = msgBase->getMsgSerNum();
   config.writeEntry("CurrentSerialNum", (qulonglong) sernum );
 
   config.writeEntry("OrderOfArrival", mPaintInfo.orderOfArrival );
@@ -2619,7 +2620,7 @@ void KMHeaders::setNestedOverride( bool override )
   mNestedOverride = override;
   setRootIsDecorated( nestingPolicy != AlwaysOpen
                       && isThreaded() );
-  QString sortFile = mFolder->indexLocation() + ".sorted";
+  QString sortFile = mFolder->sortedLocation();
   unlink(QFile::encodeName(sortFile));
   reset();
 }
@@ -2629,7 +2630,7 @@ void KMHeaders::setSubjectThreading( bool aSubjThreading )
 {
   mSortInfo.dirty = true;
   mSubjThreading = aSubjThreading;
-  QString sortFile = mFolder->indexLocation() + ".sorted";
+  QString sortFile = mFolder->sortedLocation();
   unlink(QFile::encodeName(sortFile));
   reset();
 }
@@ -2847,7 +2848,8 @@ bool KMHeaders::writeSortOrder()
         kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
-    KDE_rename(QFile::encodeName(tempName), QFile::encodeName(sortFile));
+    if ( KDE_rename(QFile::encodeName(tempName), QFile::encodeName(sortFile)) != 0 )
+      return false;
   }
 
   return true;
@@ -3603,7 +3605,8 @@ QList< Q_UINT32 > KMHeaders::selectedSernums()
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem* item = static_cast<HeaderItem*>( it.current() );
       KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
-      list.append( msgBase->getMsgSerNum() );
+      if ( msgBase )
+        list.append( msgBase->getMsgSerNum() );
     }
   }
   return list;
@@ -3627,7 +3630,8 @@ QList< Q_UINT32 > KMHeaders::selectedVisibleSernums()
       }
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
-      list.append( msgBase->getMsgSerNum() );
+      if ( msgBase )
+        list.append( msgBase->getMsgSerNum() );
     }
     ++it;
   }

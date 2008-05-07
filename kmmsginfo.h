@@ -29,7 +29,11 @@ class KMMessage;
 class KMMsgInfo: public KMMsgBase
 {
 public:
+#ifdef KMAIL_SQLITE_INDEX
+  explicit KMMsgInfo(KMFolder* p, char* data=0, short len=0, sqlite_int64 dbId=0);
+#else
   explicit KMMsgInfo(KMFolder* parent, off_t off=0, short len=0);
+#endif
   virtual ~KMMsgInfo();
 
   /** left for old style index files */

@@ -259,6 +259,16 @@ QString KMFolder::indexLocation() const
   return mStorage ? mStorage->indexLocation() : QString();
 }
 
+QString KMFolder::sortedLocation() const
+{
+  return mStorage ? mStorage->sortedLocation() : QString();
+}
+
+QString KMFolder::idsLocation() const
+{
+  return mStorage ? mStorage->idsLocation() : QString();
+}
+
 QString KMFolder::subdirLocation() const
 {
   QString sLocation( path() );

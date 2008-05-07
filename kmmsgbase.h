@@ -28,6 +28,10 @@ using KPIM::MessageStatus;
 #include <QString>
 #include <time.h>
 
+#ifdef KMAIL_SQLITE_INDEX
+#include <sqlite3.h>
+#endif
+
 class QByteArray;
 class QStringList;
 class QTextCodec;
@@ -90,6 +94,13 @@ class KMMsgBase
 {
 public:
   KMMsgBase(KMFolder* p=0);
+
+#ifdef KMAIL_SQLITE_INDEX
+  KMMsgBase(KMFolder* aParentFolder, char* data, short len, sqlite_int64 id);
+#else
+  KMMsgBase(KMFolder* aParentFolder, off_t off, short len);
+#endif
+
   virtual ~KMMsgBase();
 
   /** Return owning storage. */
@@ -211,11 +222,21 @@ public:
   virtual ulong UID(void) const = 0;
   virtual void setUID(ulong uid) = 0;
 
+
+#ifdef KMAIL_SQLITE_INDEX
+  /** data */
+  virtual void setData(char* data) { mData = data; }
+  virtual const char* data() const { return mData; }
+  /** id of the message (unique within the database) */
+  virtual void setDbId(sqlite_int64 dbId) { mDbId = dbId; }
+  virtual sqlite_int64 dbId() const { return mDbId; }
+#else
   /** offset into index file */
   virtual void setIndexOffset(off_t off) { mIndexOffset = off; }
   virtual off_t indexOffset() const { return mIndexOffset; }
+#endif
 
-  /** size in index file */
+  /** size in index file (or length of the data() in case of SQLite storage) */
   virtual void setIndexLength(short len) { mIndexLength = len; }
   virtual short indexLength() const { return mIndexLength; }
 
@@ -342,7 +363,12 @@ public:
 
 protected:
   KMFolder* mParent;
+#ifdef KMAIL_SQLITE_INDEX
+  char* mData;
+  sqlite_int64 mDbId; //!< id of the message (unique within the database)
+#else
   off_t mIndexOffset;
+#endif
   short mIndexLength;
   bool mDirty;
   bool mEnableUndo;
@@ -381,8 +407,10 @@ public:
   off_t getLongPart(MsgPartType) const;
   /** access to string msgparts */
   QString getStringPart(MsgPartType) const;
+#ifndef KMAIL_SQLITE_INDEX
   /** sync'ing just one KMMsgBase */
   bool syncIndexString() const;
+#endif
 };
 
 #endif /*kmmsgbase_h*/

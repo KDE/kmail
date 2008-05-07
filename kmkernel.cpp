@@ -2135,16 +2135,21 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   KConfigGroup generalGroup( config(), "General" );
 
   if ( generalGroup.readEntry( "auto-expiring", true ) ) {
-    the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-    the_imapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-    the_dimapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
+    if ( the_folderMgr )
+      the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
+    if ( the_imapFolderMgr )
+      the_imapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
+    if ( the_dimapFolderMgr )
+      the_dimapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
     // the_searchFolderMgr: no expiry there
   }
 
   if ( generalGroup.readEntry( "auto-compaction", true ) ) {
-    the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
+    if ( the_folderMgr )
+      the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
     // the_imapFolderMgr: no compaction
-    the_dimapFolderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
+    if ( the_dimapFolderMgr )
+      the_dimapFolderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
     // the_searchFolderMgr: no compaction
   }
 

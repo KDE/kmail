@@ -204,8 +204,8 @@ bool KMFolderDir::reload(void)
       // ignore all hidden files except our subfolder containers
       continue;
     }
-    if( fname == ".directory" ) {
-      // ignore .directory files (not created by us)
+    if( fname == ".directory" || fname.endsWith( ".index.db" ) ) {
+      // ignore .directory and *.index.db files (not created by us)
       continue;
     }
     // Collect subdirectories.

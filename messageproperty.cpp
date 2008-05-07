@@ -63,9 +63,8 @@ void MessageProperty::setFiltering( const KMMsgBase *msgBase, bool filter )
 
 KMFolder* MessageProperty::filterFolder( quint32 serNum )
 {
-  if (sFolders.contains(serNum))
-    return sFolders[serNum].operator->();
-  return 0;
+  QMap<quint32, QPointer<KMFolder> >::ConstIterator it = sFolders.constFind( serNum );
+  return it == sFolders.constEnd() ? 0 : (*it).operator->();
 }
 
 void MessageProperty::setFilterFolder( quint32 serNum, KMFolder* folder )
@@ -85,9 +84,8 @@ void MessageProperty::setFilterFolder( const KMMsgBase *msgBase, KMFolder* folde
 
 ActionScheduler* MessageProperty::filterHandler( quint32 serNum )
 {
-  if ( sHandlers.contains( serNum ))
-    return sHandlers[serNum].operator->();
-  return 0;
+  QMap<quint32, QPointer<ActionScheduler> >::ConstIterator it = sHandlers.constFind( serNum );
+  return it == sHandlers.constEnd() ? 0 : (*it).operator->();
 }
 
 void MessageProperty::setFilterHandler( quint32 serNum, ActionScheduler* handler )
@@ -110,16 +108,16 @@ void MessageProperty::setFilterHandler( const KMMsgBase *msgBase, ActionSchedule
 
 bool MessageProperty::transferInProgress( quint32 serNum )
 {
-  if (sTransfers.contains(serNum))
-    return sTransfers[serNum];
-  return false;
+  QMap<quint32, int >::ConstIterator it = sTransfers.constFind( serNum );
+  return it == sTransfers.constEnd() ? false : *it;
 }
 
 void MessageProperty::setTransferInProgress( quint32 serNum, bool transfer, bool force )
 {
   int transferInProgress = 0;
-  if (sTransfers.contains(serNum))
-    transferInProgress = sTransfers[serNum];
+  QMap<quint32, int >::ConstIterator it = sTransfers.constFind( serNum );
+  if (it != sTransfers.constEnd())
+    transferInProgress = *it;
   if ( force && !transfer )
     transferInProgress = 0;
   else
@@ -144,9 +142,8 @@ void MessageProperty::setTransferInProgress( const KMMsgBase *msgBase, bool tran
 
 quint32 MessageProperty::serialCache( const KMMsgBase *msgBase )
 {
-  if (sSerialCache.contains( msgBase ))
-    return sSerialCache[msgBase];
-  return 0;
+  QMap<const KMMsgBase*, long >::ConstIterator it = sSerialCache.constFind( msgBase );
+  return it == sSerialCache.constEnd() ? 0 : *it;
 }
 
 void MessageProperty::setSerialCache( const KMMsgBase *msgBase, quint32 serNum )

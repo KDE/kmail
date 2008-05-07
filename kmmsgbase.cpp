@@ -75,18 +75,55 @@ using KMail::MessageProperty;
 
 //-----------------------------------------------------------------------------
 KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
-  : mParent( aParentFolder ), mIndexOffset( 0 ),
-    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ),
-    mStatus(), mTagList( 0 )
+  : mParent( aParentFolder ),
+#ifdef KMAIL_SQLITE_INDEX
+    mData( 0 ),
+    mDbId( 0 ),
+#else
+    mIndexOffset( 0 ),
+#endif
+    mIndexLength( 0 ),
+    mDirty( false ),
+    mEnableUndo( false ),
+    mStatus(),
+    mTagList( 0 )
 {
 }
 
+#ifdef KMAIL_SQLITE_INDEX
+KMMsgBase::KMMsgBase( KMFolder* aParentFolder, char* data, short len, sqlite_int64 dbId )
+  : mParent( aParentFolder ),
+    mData( data ),
+    mDbId( dbId ),
+#else
+KMMsgBase::KMMsgBase(KMFolder* aParentFolder, off_t off, short len)
+  : mParent( aParentFolder ),
+    mIndexOffset( off ),
+#endif
+    mIndexLength( len ),
+    mDirty( false ),
+    mEnableUndo( false ),
+    mStatus(),
+    mTagList( 0 )
+{
+}
+
+//----------------------------------------------------------------------------
+KMMsgBase::KMMsgBase( const KMMsgBase& other )
+ : mTagList( 0 )
+#ifdef KMAIL_SQLITE_INDEX
+ , mData( 0 )
+#endif
+{
+    assign( &other );
+}
 
 //-----------------------------------------------------------------------------
 KMMsgBase::~KMMsgBase()
 {
   MessageProperty::forget( this );
   delete mTagList;
+  free( mData );
 }
 
 KMFolderIndex* KMMsgBase::storage() const
@@ -103,7 +140,14 @@ void KMMsgBase::assign(const KMMsgBase* other)
 {
   mParent = other->mParent;
   mDirty  = other->mDirty;
+#ifdef KMAIL_SQLITE_INDEX
+  free( mData );
+  mData = (char*)malloc( other->mIndexLength );
+  mDbId = other->mDbId;
+  memcpy( mData, other->mData, other->mIndexLength );
+#else
   mIndexOffset = other->mIndexOffset;
+#endif
   mIndexLength = other->mIndexLength;
   //Not sure why these 4 are copied here, but mStatus is not. Nevertheless,
   //it probably does no harm to copy the taglist here
@@ -122,13 +166,6 @@ KMMsgBase& KMMsgBase::operator=(const KMMsgBase& other)
 {
   assign(&other);
   return *this;
-}
-
-
-//----------------------------------------------------------------------------
-KMMsgBase::KMMsgBase( const KMMsgBase& other ) : mTagList( 0 )
-{
-    assign( &other );
 }
 
 //-----------------------------------------------------------------------------
@@ -761,11 +798,14 @@ namespace {
 //-----------------------------------------------------------------------------
 QString KMMsgBase::getStringPart(MsgPartType t) const
 {
-retry:
   QString ret;
-
-  g_chunk_offset = 0;
+retry:
   bool using_mmap = false;
+#ifdef KMAIL_SQLITE_INDEX
+  bool swapByteOrder = false;
+  g_chunk = (uchar*)mData;
+  g_chunk_length = mIndexLength;
+#else
   bool swapByteOrder = storage()->indexSwapByteOrder();
   if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
@@ -788,20 +828,21 @@ retry:
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
     KDE_fseek(storage()->mIndexStream, first_off, SEEK_SET);
   }
+#endif // !KMAIL_SQLITE_INDEX
 
   MsgPartType type;
-  quint16 l;
-  while(g_chunk_offset < mIndexLength) {
+  quint16 len;
+  for ( g_chunk_offset = 0; g_chunk_offset < mIndexLength; g_chunk_offset += len ) {
     quint32 tmp;
     copy_from_stream(tmp);
-    copy_from_stream(l);
+    copy_from_stream(len);
     if (swapByteOrder)
     {
        tmp = kmail_swap_32(tmp);
-       l = kmail_swap_16(l);
+       len = kmail_swap_16(len);
     }
     type = (MsgPartType) tmp;
-    if(g_chunk_offset + l > mIndexLength) {
+    if(g_chunk_offset + len > mIndexLength) {
 	kDebug(5006) <<"This should never happen..";
         if(using_mmap) {
             g_chunk_length = 0;
@@ -814,12 +855,11 @@ retry:
     if(type == t) {
         // This works because the QString constructor does a memcpy.
         // Otherwise we would need to be concerned about the alignment.
-	if(l)
-	    ret = QString((QChar *)(g_chunk + g_chunk_offset), l/2);
+	if(len)
+	    ret = QString((QChar *)(g_chunk + g_chunk_offset), len/2);
 	break;
     }
-    g_chunk_offset += l;
-  }
+  } //for
   if(using_mmap) {
       g_chunk_length = 0;
       g_chunk = 0;
@@ -829,12 +869,12 @@ retry:
   // QStrings in Qt3 expect host ordering.
   // On e.g. Intel host ordering is LSB, on e.g. Sparc it is MSB.
 
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+# if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
   // Byte order is little endian (swap is true)
   swapEndian(ret);
-#else
+# else
   // Byte order is big endian (swap is false)
-#endif
+# endif
 
   return ret;
 }
@@ -844,11 +884,17 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
 {
 retry:
   off_t ret = 0;
-
-  g_chunk_offset = 0;
   bool using_mmap = false;
-  int sizeOfLong = storage()->indexSizeOfLong();
+
+#ifdef KMAIL_SQLITE_INDEX
+  //todo reenable
+  bool swapByteOrder = false;
+  int sizeOfLong = sizeof(long);
+  g_chunk = (uchar*)mData;
+  g_chunk_length = mIndexLength;
+#else
   bool swapByteOrder = storage()->indexSwapByteOrder();
+  int sizeOfLong = storage()->indexSizeOfLong();
   if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
       free(g_chunk);
@@ -866,11 +912,12 @@ retry:
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
     KDE_fseek(storage()->mIndexStream, first_off, SEEK_SET);
   }
+#endif // !KMAIL_SQLITE_INDEX
 
-  while (g_chunk_offset < mIndexLength) {
+  quint16 len;
+  for ( g_chunk_offset = 0; g_chunk_offset < mIndexLength; g_chunk_offset += len ) {
     quint32 tmp;
     copy_from_stream(tmp);
-    quint16 len;
     copy_from_stream(len);
     if (swapByteOrder)
     {
@@ -946,12 +993,12 @@ retry:
       }
       break;
     }
-    g_chunk_offset += len;
-  }
+  } // for
   if(using_mmap) {
     g_chunk_length = 0;
     g_chunk = 0;
   }
+
   return ret;
 }
 
@@ -982,8 +1029,9 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 {
   unsigned int csize = 256;
   static uchar *ret = 0; //different static buffer here for we may use the other buffer in the functions below
-  if(!ret)
+  if(!ret) {
     ret = (uchar *)malloc(csize);
+  }
   length = 0;
 
   unsigned long tmp;
@@ -1040,21 +1088,24 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 #undef STORE_DATA_LEN
 #undef STORE_DATA
 
+#ifndef KMAIL_SQLITE_INDEX
 bool KMMsgBase::syncIndexString() const
 {
   if(!dirty())
     return true;
   int len;
   const uchar *buffer = asIndexString(len);
-  if (len == mIndexLength) {
-    Q_ASSERT(storage()->mIndexStream);
-    KDE_fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
-    assert( mIndexOffset > 0 );
-    fwrite( buffer, len, 1, storage()->mIndexStream);
-    return true;
-  }
-  return false;
+  if (len != mIndexLength)
+    return false;
+
+  Q_ASSERT(storage()->mIndexStream);
+  KDE_fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
+  assert( mIndexOffset > 0 );
+  if ( fwrite( buffer, len, 1, storage()->mIndexStream) != 1 )
+    return false;
+  return true;
 }
+#endif
 
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 static bool sReplaceSubjPrefix, sReplaceForwSubjPrefix;
