@@ -20,6 +20,8 @@
 #ifndef kmfolderindex_h
 #define kmfolderindex_h
 
+#include <QtCore/QFlags>
+
 #include "folderstorage.h"
 #include "kmmsglist.h"
 
@@ -99,6 +101,14 @@ public:
 
   bool recreateIndex();
 
+  //! options for openInternal()
+  enum OpenInternalOption {
+    NoOptions = 0x0,
+    CheckIfIndexTooOld = 0x1,
+    CreateIndexFromContentsWhenReadIndexFailed = 0x2
+  };
+  Q_DECLARE_FLAGS( OpenInternalOptions, OpenInternalOption )
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   virtual int updateIndex();
@@ -141,7 +151,7 @@ protected:
    If @a checkIfIndexTooOld is true, message "The index of folder .. seems 
    to be out of date" is displayed.
    Called by KMFolderMaildir::open() and KMFolderMbox::open(). */
-  int openInternal( bool checkIfIndexTooOld );
+  int openInternal( OpenInternalOptions options );
 
   /** Creates index stream (or database).
    Called by KMFolderMaildir::create() and KMFolderMbox::create(). */
@@ -183,5 +193,7 @@ protected:
 
   int mIndexId;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( KMFolderIndex::OpenInternalOptions )
 
 #endif /*kmfolderindex_h*/

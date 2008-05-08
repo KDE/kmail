@@ -129,7 +129,7 @@ int KMFolderMaildir::open( const char * )
   if ( !canAccess() )
     return 1;
 
-  int rc = openInternal( false /* !checkIfIndexTooOld */ );
+  int rc = openInternal( NoOptions );
 /* moved to openInternal()
   if (!folder()->path().isEmpty())
   {

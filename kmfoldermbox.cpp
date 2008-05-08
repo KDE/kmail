@@ -134,7 +134,7 @@ int KMFolderMbox::open( const char *owner )
 
   lock();
 
-  rc = openInternal( true /*checkIfIndexTooOld*/ );
+  rc = openInternal( CheckIfIndexTooOld | CreateIndexFromContentsWhenReadIndexFailed );
 /* moved to openInternal()
   if ( !folder()->path().isEmpty() ) {
      KMFolderIndex::IndexStatus index_status = indexStatus();
