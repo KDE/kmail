@@ -204,7 +204,11 @@ bool KMFolderDir::reload(void)
       // ignore all hidden files except our subfolder containers
       continue;
     }
-    if( fname == ".directory" || fname.endsWith( ".index.db" ) ) {
+    if ( fname == ".directory"
+#ifdef KMAIL_SQLITE_INDEX
+    || fname.endsWith( ".index.db" ) 
+#endif
+    ) {
       // ignore .directory and *.index.db files (not created by us)
       continue;
     }
