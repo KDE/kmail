@@ -133,9 +133,15 @@ protected:
   */
   int writeMessages( KMMsgBase* msg, bool flush = true );
 
+  /** @overload writeMessages( KMMsgBase* msg, bool flush ) 
+   Allows to specify index stream to use. */
+  int writeMessages( KMMsgBase* msg, bool flush, FILE* indexStream );
+
   /** Opens index stream (or database) without creating it.
+   If @a checkIfIndexTooOld is true, message "The index of folder .. seems 
+   to be out of date" is displayed.
    Called by KMFolderMaildir::open() and KMFolderMbox::open(). */
-  int openInternal();
+  int openInternal( bool checkIfIndexTooOld );
 
   /** Creates index stream (or database).
    Called by KMFolderMaildir::create() and KMFolderMbox::create(). */

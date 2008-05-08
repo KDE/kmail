@@ -73,7 +73,7 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 
-int KMFolderIndex::openInternal()
+int KMFolderIndex::openInternal( bool checkIfIndexTooOld )
 {
   int rc = 0;
   if ( folder()->path().isEmpty() )
@@ -86,7 +86,7 @@ int KMFolderIndex::openInternal()
     KMFolderIndex::IndexStatus index_status = indexStatus();
     if ( KMFolderIndex::IndexOk != index_status ) // test if contents file has changed
     {
-      if ( KMFolderIndex::IndexTooOld == index_status ) {
+      if ( checkIfIndexTooOld && KMFolderIndex::IndexTooOld == index_status ) {
          QString msg = i18n("<qt><p>The index of folder '%2' seems "
                             "to be out of date. To prevent message "
                             "corruption the index will be "
