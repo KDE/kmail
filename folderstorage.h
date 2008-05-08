@@ -608,7 +608,8 @@ friend class KMMsgDict;
 
   virtual qint64 doFolderSize() const { return 0; };
 
-  /** Returns full path to .index, .ids or .sorted file (depending on @a suffix). */
+  /** Returns full path to .index, .index.ids or .index.sorted file (depending on @a suffix). 
+   The former path (in case of mmap-based implementation) is returned when @a suffix is empty. */
   virtual QString location(const QString& suffix) const;
 
   int mOpenCount;

@@ -1199,7 +1199,12 @@ QString FolderStorage::location(const QString& suffix) const
 
   if ( !sLocation.isEmpty() )
     sLocation += "/.";
-  return sLocation + dotEscape( fileName() ) + ".index." + suffix;
+  sLocation += dotEscape( fileName() ) + ".index";
+  if ( !suffix.isEmpty() ) {
+    sLocation += ".";
+    sLocation += suffix;
+  }
+  return sLocation;
 }
 
 QString FolderStorage::indexLocation() const
@@ -1207,12 +1212,7 @@ QString FolderStorage::indexLocation() const
 #ifdef KMAIL_SQLITE_INDEX
   return location( "db" );
 #else
-  QString sLocation( folder()->path() );
-  if ( !sLocation.isEmpty() ) {
-    sLocation += "/.";
-  }
-  sLocation += dotEscape( fileName() ) + ".index";
-  return sLocation;
+  return location( QString() );
 #endif
 }
 
