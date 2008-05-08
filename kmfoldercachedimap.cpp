@@ -1765,10 +1765,13 @@ void KMFolderCachedImap::getMessagesResult( KMail::FolderJob *job, bool lastSet 
 void KMFolderCachedImap::slotProgress( unsigned long done, unsigned long total )
 {
   int progressSpan = 100 - 5 - mProgress;
+  int additionalProgress = ( total == 0 ) ?
+                           progressSpan :
+                           ( progressSpan * done ) / total;
 
   // Progress info while retrieving new emails
   // (going from mProgress to mProgress+progressSpan)
-  newState( mProgress + ( progressSpan * done ) / total, QString() );
+  newState( mProgress + additionalProgress, QString() );
 }
 
 void KMFolderCachedImap::setAccount( KMAcctCachedImap *aAccount )
