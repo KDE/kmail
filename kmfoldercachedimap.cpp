@@ -1495,7 +1495,7 @@ bool KMFolderCachedImap::deleteMessages()
   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
   for ( ; it != uidMap.constEnd(); it++ ) {
     ulong uid ( it.key() );
-    if ( uid != 0 && uidsOnServer.find( uid ) == uidsOnServer.end() ) {
+    if ( uid != 0 && !uidsOnServer.contains( uid ) ) {
       msgsForDeletion.append( getMsg( *it ) );
     }
   }
@@ -1689,8 +1689,7 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
           uidsOnServer.reserve( KMail::nextPrime( uidsOnServer.size() * 2 ) );
           kDebug( 5006 ) << "Resizing to:" << uidsOnServer.capacity();
         }
-        // 42 is a dummy value, see the comment in the header
-        uidsOnServer.insert( uid, 42 );
+        uidsOnServer.insert( uid );
       }
       bool redownload = false;
       if ( uid <= lastUid() ) {
