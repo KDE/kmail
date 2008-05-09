@@ -260,9 +260,6 @@ if(WIN32)
   endif(NOT SQLITE_FOUND)
   add_definitions(-DKMAIL_SQLITE_INDEX) # to alter declaration of KMFolderIndex
   include_directories(${SQLITE_INCLUDE_DIR})
-#  set(kmailprivate_LIB_SRCS ${kmailprivate_LIB_SRCS} kmfolderindex_sqlite.cpp)
-else(WIN32)
-#  set(kmailprivate_LIB_SRCS ${kmailprivate_LIB_SRCS} kmfolderindex.cpp)
 endif(WIN32)
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
