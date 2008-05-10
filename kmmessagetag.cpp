@@ -168,6 +168,7 @@ KMMessageTagMgr::~KMMessageTagMgr()
   writeConfig( false );
   clear();
   delete mTagDict;
+  delete mTagList;
 }
 
 const KMMessageTagDescription *KMMessageTagMgr::find( const QString &aLabel ) const 
@@ -228,12 +229,11 @@ void KMMessageTagMgr::addTag( KMMessageTagDescription *aDesc, bool emitChange )
 {
   if (! aDesc)
     return;
-  KMMessageTagDescription *tmp_ptr = new KMMessageTagDescription( *aDesc );
-  mTagDict->insert( tmp_ptr->label(), tmp_ptr );
+  mTagDict->insert( aDesc->label(), aDesc );
   QList<KMMessageTagDescription *>::iterator it = mTagList->begin(); 
-  while ( it != mTagList->end() && (*it)->priority() < tmp_ptr->priority() )
+  while ( it != mTagList->end() && (*it)->priority() < aDesc->priority() )
     it++;
-  mTagList->insert( it, tmp_ptr );
+  mTagList->insert( it, aDesc );
 
   if ( emitChange )
     emit msgTagListChanged();

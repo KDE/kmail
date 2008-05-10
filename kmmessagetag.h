@@ -169,6 +169,7 @@ class KMMessageTagMgr : public QObject
     //This function shouldn't be public since it doesn't emit msgTagListChanged
     void clear(void);
 
+    //! Add the tag. This method takes ownership of @p aDesc.
     void addTag( KMMessageTagDescription *aDesc, bool emitChange = true );
 
     QHash<QString,KMMessageTagDescription*> *mTagDict;
