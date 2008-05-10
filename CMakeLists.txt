@@ -112,7 +112,6 @@ set(kmailprivate_LIB_SRCS
    kmmsgbase.cpp
    kmmsglist.cpp
    kmaddrbook.cpp
-   signatureconfigurator.cpp
    xfaceconfigurator.cpp
    networkaccount.cpp
    imapaccountbase.cpp

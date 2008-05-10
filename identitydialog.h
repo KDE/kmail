@@ -48,9 +48,9 @@ namespace Kleo {
 }
 namespace KPIMIdentities {
   class Identity;
+  class SignatureConfigurator;
 }
 namespace KMail {
-  class SignatureConfigurator;
   class XFaceConfigurator;
   class FolderRequester;
 }
@@ -112,7 +112,7 @@ namespace KMail {
     QCheckBox                    *mCustom;
     KPushButton                  *mCopyGlobal;
     // "signature" tab:
-    KMail::SignatureConfigurator *mSignatureConfigurator;
+    KPIMIdentities::SignatureConfigurator *mSignatureConfigurator;
     // "X-Face" tab:
     KMail::XFaceConfigurator *mXFaceConfigurator;
   };

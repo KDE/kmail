@@ -32,7 +32,6 @@
 #include "identitydialog.h"
 
 // other KMail headers:
-#include "signatureconfigurator.h"
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
 //Added by qt3to4:
@@ -49,6 +48,8 @@ using KMail::FolderRequester;
 
 // other kdepim headers:
 #include <kpimidentities/identity.h>
+#include <kpimidentities/signatureconfigurator.h>
+
 #include <libkdepim/addresseelineedit.h>
 // libkleopatra:
 #include "libkleo/ui/keyrequester.h"
@@ -450,7 +451,7 @@ namespace KMail {
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new SignatureConfigurator( tabWidget );
+    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( tabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mSignatureConfigurator, i18n("&Signature") );
 
