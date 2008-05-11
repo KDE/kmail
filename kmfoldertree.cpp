@@ -530,8 +530,7 @@ void KMFolderTree::reload(bool openFolders)
   KMFolder* oldCurrentFolder =
     ( oldCurrent ? static_cast<KMFolderTreeItem*>(oldCurrent)->folder(): 0 );
   for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it ) {
-    KMFolderTreeItem * fti = dynamic_cast<KMFolderTreeItem*>(it.current());
-    Q_ASSERT(fti);
+    KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     writeIsListViewItemOpen( fti );
     if ( fti->isSelected() )
       selected = fti->folder();
@@ -699,9 +698,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
     if ( node->isDir() )
       continue;
 
-    KMFolder * folder = dynamic_cast<KMFolder*>(node);
-    Q_ASSERT(folder);
-
+    KMFolder * folder = static_cast<KMFolder*>(node);
     KMFolderTreeItem * fti = 0;
     if (!parent)
     {
