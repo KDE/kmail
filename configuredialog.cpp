@@ -2723,6 +2723,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
   mMsgTagDict->clear();
+  qDeleteAll(*mMsgTagList);
   mMsgTagList->clear();
   mTagListBox->clear();
 
