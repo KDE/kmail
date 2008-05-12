@@ -31,7 +31,6 @@ using KMail::AccountManager;
 #include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
-#include <kiconeffect.h>
 #include <kcolorscheme.h>
 #include <kwindowsystem.h>
 #include <kdebug.h>
