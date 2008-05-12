@@ -77,7 +77,6 @@ private:
   int mNewMessagePopupId;
 
   QPixmap mDefaultIcon;
-  QImage mLightIconImage;
 
   QVector<KMFolder*> mPopupFolders;
   QMap<QPointer<KMFolder>, int> mFoldersWithUnread;

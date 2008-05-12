@@ -74,10 +74,6 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = KIcon( "internet-mail" ).pixmap( 22 );
-
-  mLightIconImage = mDefaultIcon.toImage();
-  KIconEffect::deSaturate( mLightIconImage, 0.60f );
-
   setIcon( mDefaultIcon );
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
@@ -199,18 +195,32 @@ void KMSystemTray::updateCount()
     float countFontSize = countFont.pointSizeF();
     QFontMetrics qfm( countFont );
     int width = qfm.width( countString );
-    if( width > oldPixmapWidth )
+    if( width > (oldPixmapWidth - 2) )
     {
-      countFontSize *= float( oldPixmapWidth ) / float( width );
+      countFontSize *= float( oldPixmapWidth - 2 ) / float( width );
       countFont.setPointSizeF( countFontSize );
     }
 
     // Overlay the light KMail icon with the number image
-    QImage iconWithNumberImage = mLightIconImage.copy();
+    QImage iconWithNumberImage = mDefaultIcon.toImage().copy();
     QPainter p( &iconWithNumberImage );
     p.setFont( countFont );
-    KColorScheme scheme( QPalette::Active, KColorScheme::Window );
+    KColorScheme scheme( QPalette::Active, KColorScheme::View );
+
+    qfm = QFontMetrics( countFont );
+    QRect boundingRect = qfm.tightBoundingRect( countString );
+    boundingRect.adjust( 0, 0, 0, 2 );
+    boundingRect.setHeight( qMin( boundingRect.height(), oldPixmapWidth ) );
+    boundingRect.moveTo( (oldPixmapWidth - boundingRect.width()) / 2,
+                         ((oldPixmapWidth - boundingRect.height()) / 2) - 1 );
+    p.setOpacity( 0.7 );
+    p.setBrush( scheme.background( KColorScheme::LinkBackground ) );
+    p.setPen( scheme.background( KColorScheme::LinkBackground ).color() );
+    p.drawRoundedRect( boundingRect, 2.0, 2.0 );
+
+    p.setBrush( Qt::NoBrush );
     p.setPen( scheme.foreground( KColorScheme::LinkText ).color() );
+    p.setOpacity( 1.0 );
     p.drawText( iconWithNumberImage.rect(), Qt::AlignCenter, countString );
 
     setIcon( QPixmap::fromImage( iconWithNumberImage ) );
