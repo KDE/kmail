@@ -444,7 +444,7 @@
       </entry>
 
       <entry name="ShowSnippetManager" type="Bool">
-          <label>Show the text snippet management and insertion panel in the composer</label>
+          <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
           <default>false</default>
       </entry>
       <entry name="SnippetSplitterPosition" type="IntList"/>
@@ -452,6 +452,11 @@
       <entry name="MaximumAttachmentSize" type="Int">
           <label>The maximum size in MB that email attachments are allowed to have (-1 for no limit).</label>
           <default>-1</default>
+      </entry>
+
+      <entry name="ShowGnuPGAuditLogAfterSuccessfulSignEncrypt" type="Bool">
+          <label>Show the GnuPG Audit Log even after crypto operations that completed successfully.</label>
+          <default>false</default>
       </entry>
 
     </group>

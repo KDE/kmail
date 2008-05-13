@@ -28,17 +28,15 @@ namespace KMail {
   class PartMetaData {
   public:
     PartMetaData()
-      : isSigned( false ),
+      : sigSummary( GpgME::Signature::None ),
+        isSigned( false ),
         isGoodSignature( false ),
-        sigSummary( GpgME::Signature::None ),
         isEncrypted( false ),
         isDecryptable( false ),
         technicalProblem( false ),
         isEncapsulatedRfc822Message( false )
     {
     }
-    bool isSigned;
-    bool isGoodSignature;
     GpgME::Signature::Summary sigSummary;
     QString signClass;
     QString signer;
@@ -49,11 +47,14 @@ namespace KMail {
     int status_code; // to be used for i18n of OpenPGP and S/MIME CryptPlugs
     QString errorText;
     QDateTime creationTime;
-    bool isEncrypted;
-    bool isDecryptable;
     QString decryptionError;
-    bool technicalProblem;
-    bool isEncapsulatedRfc822Message;
+    QString auditLog;
+    bool isSigned : 1;
+    bool isGoodSignature : 1;
+    bool isEncrypted : 1;
+    bool isDecryptable : 1;
+    bool technicalProblem : 1;
+    bool isEncapsulatedRfc822Message : 1;
   };
 
 } // namespace KMail

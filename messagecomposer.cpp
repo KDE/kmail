@@ -62,6 +62,7 @@
 #include "kleo/signencryptjob.h"
 #include "kleo/signjob.h"
 #include "kleo/specialjob.h"
+#include <ui/messagebox.h>
 
 #include <mimelib/mimepp.h>
 
@@ -2269,6 +2270,9 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
     return;
   }
 
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Signing Operation") );
+
   mSignature = signature;
   if ( mSignature.isEmpty() ) {
     KMessageBox::sorry( mComposeWin,
@@ -2315,6 +2319,10 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray &encryptedBody,
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }
+
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Encryption Operation") );
+
   return Kpgp::Ok;
 }
 
@@ -2357,6 +2365,10 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray &encryptedBod
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }
+
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Encryption Operation") );
+
   return Kpgp::Ok;
 }
 

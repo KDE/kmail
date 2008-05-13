@@ -449,6 +449,7 @@ namespace KMail {
         if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
+          messagePart.auditLog = job->auditLogAsHtml();
         } else {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
@@ -456,6 +457,7 @@ namespace KMail {
         if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
+          messagePart.auditLog = job->auditLogAsHtml();
         } else {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
@@ -633,10 +635,12 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       bool showWarning,
                                       bool& passphraseError,
                                       bool& actuallyEncrypted,
-                                      QString& aErrorText )
+                                      QString& aErrorText,
+                                      QString& auditLog )
 {
   passphraseError = false;
   aErrorText.clear();
+  auditLog = QString::null;
   bool bDecryptionOk = false;
   enum { NO_PLUGIN, NOT_INITIALIZED, CANT_DECRYPT }
     cryptPlugError = NO_PLUGIN;
@@ -707,6 +711,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         || decryptResult.error().code() == GPG_ERR_NO_SECKEY;
       actuallyEncrypted = decryptResult.error().code() != GPG_ERR_NO_DATA;
       aErrorText = QString::fromLocal8Bit( decryptResult.error().asString() );
+      auditLog = job->auditLogAsHtml();
 
       kDebug() << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
       if ( bDecryptionOk )
@@ -1220,7 +1225,8 @@ namespace KMail {
                                      true,
                                      passphraseError,
                                      actuallyEncrypted,
-                                     messagePart.errorText );
+                                     messagePart.errorText,
+                                     messagePart.auditLog );
 
     // paint the frame
     if ( mReader ) {
@@ -1371,7 +1377,8 @@ namespace KMail {
                                          true,
                                          passphraseError,
                                          actuallyEncrypted,
-                                         messagePart.errorText );
+                                         messagePart.errorText,
+                                         messagePart.auditLog );
 
         // paint the frame
         if ( mReader ) {
@@ -1533,7 +1540,8 @@ namespace KMail {
                           false,
                           passphraseError,
                           actuallyEncrypted,
-                          messagePart.errorText ) ) {
+                          messagePart.errorText,
+                          messagePart.auditLog ) ) {
         kDebug() << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !";
         isEncrypted = true;
         node->setEncryptionState( KMMsgFullyEncrypted );
