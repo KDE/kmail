@@ -2169,14 +2169,14 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
         if( isSMIME )
             startKeyHREF =
                 QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">")
-                .arg( cryptProto->displayName() )
-                .arg( cryptProto->name() )
-                .arg( QString::fromLatin1( block.keyId ) );
+                .arg( cryptProto->displayName(),
+                      cryptProto->name(),
+                      QString::fromLatin1( block.keyId ) );
         QString keyWithWithoutURL
             = isSMIME
             ? QString("%1%2</a>")
-                .arg( startKeyHREF )
-                .arg( cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
+                .arg( startKeyHREF,
+                      cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
             : "0x" + QString::fromUtf8( block.keyId );
 
 
