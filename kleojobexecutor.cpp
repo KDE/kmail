@@ -51,7 +51,7 @@ GpgME::VerificationResult KleoJobExecutor::exec(
   GpgME::Error err = job->start( signature, signedData );
   if ( err )
     return VerificationResult( err );
-  mEventLoop->exec();
+  mEventLoop->exec( QEventLoop::ExcludeUserInputEvents );
   return mVerificationResult;
 }
 
@@ -68,7 +68,7 @@ GpgME::VerificationResult KleoJobExecutor::exec(
     plainText.clear();
     return VerificationResult( err );
   }
-  mEventLoop->exec();
+  mEventLoop->exec( QEventLoop::ExcludeUserInputEvents );
   plainText = mData;
   return mVerificationResult;
 }
@@ -86,7 +86,7 @@ std::pair< GpgME::DecryptionResult, GpgME::VerificationResult > KleoJobExecutor:
     plainText.clear();
     return std::make_pair( DecryptionResult( err ), VerificationResult( err ) );
   }
-  mEventLoop->exec();
+  mEventLoop->exec( QEventLoop::ExcludeUserInputEvents );
   plainText = mData;
   return std::make_pair( mDecryptResult, mVerificationResult );
 }
@@ -97,7 +97,7 @@ GpgME::ImportResult KleoJobExecutor::exec(Kleo::ImportJob* job, const QByteArray
   GpgME::Error err = job->start( certData );
   if ( err )
     return ImportResult( err );
-  mEventLoop->exec();
+  mEventLoop->exec( QEventLoop::ExcludeUserInputEvents );
   return mImportResult;
 }
 
