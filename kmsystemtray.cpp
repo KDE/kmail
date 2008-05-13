@@ -72,7 +72,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   mUpdateTimer->setSingleShot( true );
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
-  mDefaultIcon = KIcon( "internet-mail" ).pixmap( 22 );
+  mDefaultIcon = KIcon( "kmail" ).pixmap( 22 );
   setIcon( mDefaultIcon );
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
