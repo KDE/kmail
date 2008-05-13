@@ -37,6 +37,7 @@ add_custom_target(kmail_xml ALL
 add_subdirectory( interfaces )
 add_subdirectory( about )
 add_subdirectory( pics )
+add_subdirectory( icons )
 add_subdirectory( profiles )
 add_subdirectory( avscripts )
 add_subdirectory( tests )
