@@ -3009,10 +3009,11 @@ void KMHeaders::buildSubjectThreadingTree( Q3MemArray<SortCacheItem *> sortCache
          * they should mostly be prepended at the very start, so insertion is
          * cheap. */
         int p=0;
+        time_t mi_date = mi->date();
         foreach ( SortCacheItem *sci, *mSubjectLists[subjMD5] ) {
           KMMsgBase *mb = mFolder->getMsgBase( sci->id() );
-          if ( mb->date() < mi->date())
-              break;
+          if ( mb->date() < mi_date )
+            break;
           p++;
         }
         mSubjectLists[subjMD5]->insert( p, sortCache[x]);

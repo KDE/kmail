@@ -4,6 +4,7 @@ INCLUDE(CheckIncludeFiles)
 check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
 check_include_files(paths.h HAVE_PATHS_H)
+check_function_exists(mmap HAVE_MMAP)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 

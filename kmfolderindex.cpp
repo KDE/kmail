@@ -18,7 +18,9 @@
 
 #include "kmfolderindex_common.cpp"
 
-//---------
+#ifdef HAVE_MMAP
+#include <sys/mman.h>
+#endif
 
 #ifdef KMAIL_SQLITE_INDEX
 # include "kmfolderindex_sqlite.cpp"
@@ -366,52 +368,55 @@ bool KMFolderIndex::readIndexHeader(int *gv)
 }
 
 
-#ifdef HAVE_MMAP
 bool KMFolderIndex::updateIndexStreamPtr(bool just_close)
-#else
-bool KMFolderIndex::updateIndexStreamPtr(bool)
-#endif
 {
-    // We touch the folder, otherwise the index is regenerated, if KMail is
-    // running, while the clock switches from daylight savings time to normal time
-    if (0 != utime(QFile::encodeName( QDir::toNativeSeparators(location()) ), 0))
-      kWarning() << "utime(" << QDir::toNativeSeparators(location()) << ", 0) failed (location())";
-    if (0 != utime(QFile::encodeName( QDir::toNativeSeparators(indexLocation()) ), 0))
-      kWarning() << "utime(" << QDir::toNativeSeparators(indexLocation()) << ", 0) failed (indexLocation())";
-    if (0 != utime(QFile::encodeName( QDir::toNativeSeparators(KMMsgDict::getFolderIdsLocation( *this )) ), 0))
-      kWarning() << "utime(" << QDir::toNativeSeparators(KMMsgDict::getFolderIdsLocation( *this )) << ", 0) failed (KMMsgDict::getFolderIdsLocation( *this ))";
+#ifndef HAVE_MMAP
+  Q_UNUSED( just_close );
+#endif
 
-    mIndexSwapByteOrder = false;
+  // We touch the folder, otherwise the index is regenerated, if KMail is
+  // running, while the clock switches from daylight savings time to normal time
+  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( location() ) ), 0 ) )
+    kWarning() << "utime(" << QDir::toNativeSeparators( location() ) << ", 0) failed (location())";
+  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( indexLocation() ) ), 0 ) )
+    kWarning() << "utime(" << QDir::toNativeSeparators( indexLocation() ) << ", 0) failed (indexLocation())";
+  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( KMMsgDict::getFolderIdsLocation( *this ) ) ), 0 ) )
+    kWarning() << "utime(" << QDir::toNativeSeparators( KMMsgDict::getFolderIdsLocation( *this ) ) << ", 0) failed (KMMsgDict::getFolderIdsLocation( *this ))";
+
+  mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP
-    if(just_close) {
-      bool munmapResult = true;
-      if(mIndexStreamPtr)
-        munmapResult = 0 == munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
-      mIndexStreamPtr = 0;
-      mIndexStreamPtrLength = 0;
-      return munmapResult;
-    }
+  if ( just_close ) {
+    bool munmapResult = true;
+    if( mIndexStreamPtr )
+      munmapResult = 0 == munmap( reinterpret_cast<char *>( mIndexStreamPtr ), mIndexStreamPtrLength );
+    mIndexStreamPtr = 0;
+    mIndexStreamPtrLength = 0;
+    return munmapResult;
+  }
 
-    assert(mIndexStream);
-    KDE_struct_stat stat_buf;
-    if(KDE_fstat(fileno(mIndexStream), &stat_buf) == -1) {
-      if(mIndexStreamPtr)
-        munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
-      mIndexStreamPtr = 0;
-      mIndexStreamPtrLength = 0;
+  assert( mIndexStream );
+  KDE_struct_stat stat_buf;
+  if ( KDE_fstat( fileno( mIndexStream ), &stat_buf ) == -1 ) {
+    if( mIndexStreamPtr )
+      munmap( reinterpret_cast<char *>( mIndexStreamPtr ), mIndexStreamPtrLength );
+    mIndexStreamPtr = 0;
+    mIndexStreamPtrLength = 0;
+    return false;
+  }
+
+  if ( mIndexStreamPtr )
+    if ( 0 != munmap( reinterpret_cast<char *>( mIndexStreamPtr ), mIndexStreamPtrLength ) )
       return false;
-    }
-    if(mIndexStreamPtr)
-      if(0 != munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength))
-        return false;
-    mIndexStreamPtrLength = stat_buf.st_size;
-    mIndexStreamPtr = (uchar *)mmap(0, mIndexStreamPtrLength, PROT_READ, MAP_SHARED,
-    fileno(mIndexStream), 0);
-    if(mIndexStreamPtr == MAP_FAILED) {
-      mIndexStreamPtr = 0;
-      mIndexStreamPtrLength = 0;
-      return false;
-    }
+
+  mIndexStreamPtrLength = stat_buf.st_size;
+  mIndexStreamPtr = static_cast<uchar *>( mmap( 0, mIndexStreamPtrLength,
+                                                PROT_READ, MAP_SHARED,
+                                                fileno( mIndexStream ), 0 ) );
+  if ( mIndexStreamPtr == MAP_FAILED ) {
+    mIndexStreamPtr = 0;
+    mIndexStreamPtrLength = 0;
+    return false;
+  }
 #endif
     return true;
 }
