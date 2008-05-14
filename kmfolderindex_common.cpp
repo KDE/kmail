@@ -18,6 +18,7 @@
 
 #include "kmfolderindex.h"
 #include "kmfolder.h"
+#include "messageproperty.h"
 #include <config-kmail.h>
 
 #include <kdebug.h>
@@ -193,4 +194,29 @@ int KMFolderIndex::createInternal()
   mChanged = false;
 
   return writeIndex();
+}
+
+void KMFolderIndex::addToSerialCache() const
+{
+  Q_ASSERT( mOpenCount > 0 );
+
+  KMFolder *fld = folder();
+  int count = mMsgList.count();
+  const KMMsgDict *dict = KMMsgDict::instance();
+  unsigned int index = 0;
+  Q_ASSERT( fld );
+
+  if ( fld ) {
+    QVector<KMMsgBase*>::ConstIterator it = mMsgList.constBegin();
+    while ( it != mMsgList.constEnd() ) {
+      const KMMsgBase *msg = *it;
+      if ( msg ) {
+        unsigned long msn = dict->getMsgSerNum( fld, index );
+        if ( msn )
+          KMail::MessageProperty::setSerialCache( msg, msn );
+      }
+      ++it;
+      ++index;
+    }
+  }
 }

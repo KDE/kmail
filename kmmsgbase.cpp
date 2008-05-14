@@ -769,12 +769,12 @@ KMMsgAttachmentState KMMsgBase::attachmentState() const
 }
 
 //-----------------------------------------------------------------------------
-static void swapEndian(QString &str)
+static void swapEndian( QString &str )
 {
-  uint len = str.length();
-  for ( uint i = 0; i < len; i++ ) {
-    QCharRef c = str[i];
-    c = kmail_swap_16( c.unicode() );
+  QChar *data = str.data();
+  while ( !data->isNull() ) {
+    *data = kmail_swap_16( data->unicode() );
+    data++;
   }
 }
 

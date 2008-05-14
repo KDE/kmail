@@ -78,6 +78,17 @@ public:
 
   int find( const KMMessage * msg ) const { return FolderStorage::find( msg ); }
 
+  /**
+   * Adds all messages of this folder to the serial number cache
+   * (by calling MessageProperty::setSerialCache for each message).
+   *
+   * This makes subsequent calls to KMMsgBase::getMsgSerNum() much faster since
+   * the serial number is already in the cache.
+   *
+   * The folder needs to be open for this.
+   */
+  void addToSerialCache() const;
+
   /** Registered unique serial number for the index file */
   int serialIndexId() const { return mIndexId; }
 

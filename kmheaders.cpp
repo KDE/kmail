@@ -3093,6 +3093,15 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 
     if ( !mFolder->isOpened() ) mFolder->open( "kmheaders" );
 
+    // At all items of the folder to the serial cache. This makes constructing
+    // HeaderItems much faster, since they no longer need to call the expensive
+    // KMFolderIndex::find() when trying to get the serial number.
+    if ( mFolder->storage() ) {
+      KMFolderIndex *index = dynamic_cast<KMFolderIndex*>( mFolder->storage() );
+      if ( index )
+        index->addToSerialCache();
+    }
+
     //all cases
     qint32 column, ascending, threaded, discovered_count, sorted_count, appended;
     qint32 deleted_count = 0;
