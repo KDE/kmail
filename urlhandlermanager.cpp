@@ -55,14 +55,14 @@ using std::find;
 KMail::URLHandlerManager * KMail::URLHandlerManager::self = 0;
 
 namespace {
-  class ShowHtmlSwitchURLHandler : public KMail::URLHandler {
+  class KMailProtocolURLHandler : public KMail::URLHandler {
   public:
-    ShowHtmlSwitchURLHandler() : KMail::URLHandler() {}
-    ~ShowHtmlSwitchURLHandler() {}
+    KMailProtocolURLHandler() : KMail::URLHandler() {}
+    ~KMailProtocolURLHandler() {}
 
     bool handleClick( const KUrl &, KMReaderWin * ) const;
-    bool handleContextMenuRequest( const KUrl &, const QPoint &, KMReaderWin * ) const {
-      return false;
+    bool handleContextMenuRequest( const KUrl & url, const QPoint &, KMReaderWin * ) const {
+      return url.protocol() == "kmail";
     }
     QString statusBarMessage( const KUrl &, KMReaderWin * ) const;
   };
@@ -124,6 +124,16 @@ namespace {
     bool handleClick( const KUrl &, KMReaderWin * ) const;
     bool handleContextMenuRequest( const KUrl &, const QPoint &, KMReaderWin * ) const;
     QString statusBarMessage( const KUrl &, KMReaderWin * ) const;
+  };
+
+  class ShowAuditLogURLHandler : public KMail::URLHandler {
+  public:
+      ShowAuditLogURLHandler() : KMail::URLHandler() {}
+      ~ShowAuditLogURLHandler() {}
+
+      bool handleClick( const KUrl &, KMReaderWin * ) const;
+      bool handleContextMenuRequest( const KUrl &, const QPoint &, KMReaderWin * ) const;
+      QString statusBarMessage( const KUrl &, KMReaderWin * ) const;
   };
 
   class FallBackURLHandler : public KMail::URLHandler {
@@ -255,13 +265,14 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
 //
 
 KMail::URLHandlerManager::URLHandlerManager() {
-  registerHandler( new ShowHtmlSwitchURLHandler() );
+  registerHandler( new KMailProtocolURLHandler() );
   registerHandler( new ExpandCollapseQuoteURLManager() );
   registerHandler( new SMimeURLHandler() );
   registerHandler( new MailToURLHandler() );
   registerHandler( new HtmlAnchorHandler() );
   registerHandler( new AttachmentURLHandler() );
   registerHandler( mBodyPartURLHandlerManager = new BodyPartURLHandlerManager() );
+  registerHandler( new ShowAuditLogURLHandler() );
   registerHandler( new FallBackURLHandler() );
 }
 
@@ -327,6 +338,8 @@ QString KMail::URLHandlerManager::statusBarMessage( const KUrl & url, KMReaderWi
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 
+#include <ui/messagebox.h>
+
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <khtml_part.h>
@@ -334,7 +347,7 @@ QString KMail::URLHandlerManager::statusBarMessage( const KUrl & url, KMReaderWi
 #include <QString>
 
 namespace {
-  bool ShowHtmlSwitchURLHandler::handleClick( const KUrl & url, KMReaderWin * w ) const {
+  bool KMailProtocolURLHandler::handleClick( const KUrl & url, KMReaderWin * w ) const {
     if ( url.protocol() == "kmail" ) {
       if ( !w )
         return false;
@@ -363,10 +376,11 @@ namespace {
       }
 
       if ( url.path() == "showSignatureDetails" ) {
-        w->setShowSignatureDetails();
+        w->setShowSignatureDetails( true );
         w->update( true );
         return true;
       }
+
       if ( url.path() == "hideSignatureDetails" ) {
         w->setShowSignatureDetails( false );
         w->update( true );
@@ -377,7 +391,7 @@ namespace {
     return false;
   }
 
-  QString ShowHtmlSwitchURLHandler::statusBarMessage( const KUrl & url, KMReaderWin * ) const {
+  QString KMailProtocolURLHandler::statusBarMessage( const KUrl & url, KMReaderWin * ) const {
     if ( url.protocol() == "kmail" )
     {
       if ( url.path() == "showHTML" )
@@ -385,7 +399,13 @@ namespace {
       if ( url.path() == "loadExternal" )
         return i18n("Load external references from the Internet for this message.");
       if ( url.path() == "goOnline" )
-        return i18n("Work online");
+        return i18n("Work online.");
+      if ( url.path() == "decryptMessage" )
+        return i18n("Decrypt message.");
+      if ( url.path() == "showSignatureDetails" )
+        return i18n("Show signature details.");
+      if ( url.path() == "hideSignatureDetails" )
+        return i18n("Hide signature details.");
     }
     return QString() ;
   }
@@ -506,6 +526,36 @@ namespace {
     if ( !name.isEmpty() )
       return i18n( "Attachment: %1", name );
     return i18n( "Attachment #%1 (unnamed)", KMReaderWin::msgPartFromUrl( url ) );
+  }
+}
+
+namespace {
+  static QString extractAuditLog( const KUrl & url ) {
+    if ( url.protocol() != "kmail" || url.path() != "showAuditLog" )
+      return QString();
+    assert( !url.queryItem( "log" ).isEmpty() );
+    return url.queryItem( "log" );
+  }
+
+  bool ShowAuditLogURLHandler::handleClick( const KUrl & url, KMReaderWin * w ) const {
+    const QString auditLog = extractAuditLog( url );
+    if ( auditLog.isEmpty() )
+        return false;
+    Kleo::MessageBox::auditLog( w, auditLog );
+    return true;
+  }
+
+  bool ShowAuditLogURLHandler::handleContextMenuRequest( const KUrl & url, const QPoint &, KMReaderWin * w ) const {
+    Q_UNUSED( w );
+    // disable RMB for my own links:
+    return !extractAuditLog( url ).isEmpty();
+  }
+
+  QString ShowAuditLogURLHandler::statusBarMessage( const KUrl & url, KMReaderWin * ) const {
+    if ( extractAuditLog( url ).isEmpty() )
+      return QString();
+    else
+      return i18n("Show GnuPG Audit Log for this operation");
   }
 }
 
