@@ -89,6 +89,8 @@
 #include <algorithm>
 #include <memory>
 
+#undef MessageBox // Windows: avoid clash between MessageBox define and Kleo::MessageBox
+
 // ## keep default values in sync with configuredialog.cpp, Security::CryptoTab::setup()
 // This should be ported to a .kcfg one day I suppose (dfaure).
 
