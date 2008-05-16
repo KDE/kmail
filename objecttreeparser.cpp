@@ -802,9 +802,14 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   }
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
-    const QByteArray cstr( curNode->msgPart().bodyDecoded() );
+    const QByteArray partBody( curNode->msgPart().bodyDecoded() );
+    QString bodyText;
+    if ( mReader->htmlMail() )
+      bodyText = codecFor( curNode )->toUnicode( partBody );
+    else
+      bodyText = KMMessage::html2source( partBody );
 
-    mRawReplyString = cstr;
+    mRawReplyString = partBody;
     if ( curNode->isFirstTextPart() ) {
       mTextualContent += curNode->msgPart().bodyToUnicode();
       mTextualContentCharset = curNode->msgPart().charset();
@@ -818,20 +823,32 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
          showOnlyOneMimePart() )
     {
       if ( mReader->htmlMail() ) {
-        // ---Sven's strip </BODY> and </HTML> from end of attachment start-
-        // We must fo this, or else we will see only 1st inlined html
-        // attachment.  It is IMHO enough to search only for </BODY> and
-        // put \0 there.
-        QString str = QString::fromLatin1( cstr );
-        int i = str.lastIndexOf("</body>", Qt::CaseInsensitive );
+
+        // Strip <html>, <head>, and <body>, so we don't end up having those tags
+        // twice, which confuses KHTML (especially with a signed
+        // multipart/alternative message, the signature bars get rendered at the
+        // wrong place)
+        bodyText = bodyText.replace( "<html>", QString(), Qt::CaseInsensitive );
+        bodyText = bodyText.replace( "<head>", QString(), Qt::CaseInsensitive );
+        bodyText = bodyText.replace( "</head>", QString(), Qt::CaseInsensitive );
+        QRegExp bodyRegExp( "<body.*>" ); //the body tag might have additional attributes,
+        bodyRegExp.setMinimal( true );    //so make sure to match them as well
+        bodyRegExp.setCaseSensitivity( Qt::CaseInsensitive );
+        bodyText = bodyText.replace( bodyRegExp, QString() );
+
+        // Strip </BODY> and </HTML> from end.
+        // We must do this, or else the message will not be displayed correctly
+        // because we have two </body> or </html> tags in the generated HTML.
+        // It is IMHO enough to search only for </BODY> and put \0 there.
+        int i = bodyText.lastIndexOf( "</body>", -1, Qt::CaseInsensitive );
         if ( 0 <= i )
-          str.truncate(i);
-        else // just in case - search for </html>
-        {
-          i = str.lastIndexOf("</html>", Qt::CaseInsensitive );
-          if ( 0 <= i ) str.truncate(i);
+          bodyText.truncate(i);
+        else { // just in case - search for </html>
+          i = bodyText.lastIndexOf( "</html>", -1, Qt::CaseInsensitive );
+          if ( 0 <= i )
+            bodyText.truncate(i);
         }
-        // ---Sven's strip </BODY> and </HTML> from end of attachment end-
+
         // Show the "external references" warning (with possibility to load
         // external references only if loading external references is disabled
         // and the HTML code contains obvious external references). For
@@ -839,7 +856,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         // have an easy way to load them but that shouldn't be a problem
         // because only spam contains obfuscated external references.
         if ( !mReader->htmlLoadExternal() &&
-             containsExternalReferences( str ) ) {
+             containsExternalReferences( bodyText ) ) {
           htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
           htmlWriter()->queue( i18n("<b>Note:</b> This HTML message may contain external "
                                     "references to images etc. For security/privacy reasons "
@@ -859,7 +876,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                   "<a href=\"kmail:showHTML\">by clicking here</a>.") );
         htmlWriter()->queue( "</div><br><br>" );
       }
-      htmlWriter()->queue( codecFor( curNode )->toUnicode( mReader->htmlMail() ? cstr : KMMessage::html2source( cstr )));
+      htmlWriter()->queue( bodyText );
       mReader->mColorBar->setHtmlMode();
       return true;
     }
