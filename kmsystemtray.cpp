@@ -460,81 +460,75 @@ void KMSystemTray::updateNewMessages()
   for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
         it1 != mPendingUpdates.end(); ++it1)
   {
-  KMFolder *fldr = it1.key();
-  if ( !fldr ) // deleted folder
-    continue;
+    KMFolder *fldr = it1.key();
+    if ( !fldr ) // deleted folder
+      continue;
 
-  /** The number of unread messages in that folder */
-  int unread = fldr->countUnread();
+    // The number of unread messages in that folder
+    int unread = fldr->countUnread();
 
-  QMap<QPointer<KMFolder>, int>::Iterator it =
-      mFoldersWithUnread.find(fldr);
-  bool unmapped = (it == mFoldersWithUnread.end());
+    QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.find( fldr );
+    bool unmapped = ( it == mFoldersWithUnread.end() );
 
-  /** If the folder is not mapped yet, increment count by numUnread
-      in folder */
-  if(unmapped) mCount += unread;
-  /* Otherwise, get the difference between the numUnread in the folder and
-   * our last known version, and adjust mCount with that difference */
-  else
-  {
-    int diff = unread - it.value();
-    mCount += diff;
-  }
+    // If the folder is not mapped yet, increment count by numUnread
+    // in folder
+    if ( unmapped )
+      mCount += unread;
 
-  if(unread > 0)
-  {
-    /** Add folder to our internal store, or update unread count if already mapped */
-    mFoldersWithUnread.insert(fldr, unread);
-    //kDebug(5006) <<"There are now" << mFoldersWithUnread.count() <<" folders with unread";
-  }
-
-  /**
-   * Look for folder in the list of folders already represented.  If there are
-   * unread messages and the system tray icon is hidden, show it.  If there are
-   * no unread messages, remove the folder from the mapping.
-   */
-  if(unmapped)
-  {
-    /** Spurious notification, ignore */
-    if(unread == 0) continue;
-
-    /** Make sure the icon will be displayed */
-    if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread )
-         && !isVisible() ) {
-      show();
+    //Otherwise, get the difference between the numUnread in the folder and
+    // our last known version, and adjust mCount with that difference
+    else {
+      int diff = unread - it.value();
+      mCount += diff;
     }
 
-  } else
-  {
+    if ( unread > 0 ) {
+      // Add folder to our internal store, or update unread count if already mapped
+      mFoldersWithUnread.insert( fldr, unread );
+      //kDebug(5006) <<"There are now" << mFoldersWithUnread.count() <<" folders with unread";
+    }
 
-    if(unread == 0)
-    {
-      kDebug(5006) <<"Removing folder from internal store" << fldr->name();
+    /*
+     * Look for folder in the list of folders already represented.  If there are
+     * unread messages and the system tray icon is hidden, show it.  If there are
+     * no unread messages, remove the folder from the mapping.
+     */
+    if ( unmapped ) {
 
-      /** Remove the folder from the internal store */
-      mFoldersWithUnread.remove(fldr);
+      // Spurious notification, ignore
+      if ( unread == 0 )
+        continue;
 
-      /** if this was the last folder in the dictionary, hide the systemtray icon */
-      if(mFoldersWithUnread.count() == 0)
-      {
-        mPopupFolders.clear();
-        disconnect(this, SLOT(selectedAccount(int)));
+      // Make sure the icon will be displayed
+      if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) &&
+           !isVisible() ) {
+        show();
+      }
+    }
+    else {
+      if ( unread == 0 ) {
+        kDebug(5006) << "Removing folder from internal store" << fldr->name();
 
-        mCount = 0;
+        // Remove the folder from the internal store
+        mFoldersWithUnread.remove(fldr);
 
-        if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-          hide();
+        // if this was the last folder in the dictionary, hide the systemtray icon
+        if ( mFoldersWithUnread.count() == 0 ) {
+          mPopupFolders.clear();
+          disconnect ( this, SLOT( selectedAccount( int ) ) );
+          mCount = 0;
+
+          if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
+            hide();
+          }
         }
       }
     }
   }
-
-  }
   mPendingUpdates.clear();
   updateCount();
 
-  /** Update tooltip to reflect count of unread messages */
+  // Update tooltip to reflect count of unread messages
   setToolTip( mCount == 0 ? i18n("KMail - There are no unread messages")
                           : i18np("KMail - 1 unread message",
                                   "KMail - %1 unread messages",
