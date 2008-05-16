@@ -240,6 +240,7 @@ void KMSystemTray::foldersChanged()
    * unread message was in a folder that was just removed.
    */
   mFoldersWithUnread.clear();
+  mPendingUpdates.clear();
   mCount = 0;
 
   if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
