@@ -781,8 +781,11 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
 {
     if (!lvi)
         return;
-    lvi->setSelected( lvi );
-    mLbxMatches->setCurrentItem( lvi );
+    if ( !lvi->isSelected() ) {
+      lvi->setSelected( lvi );
+      mLbxMatches->setCurrentItem( lvi );
+    }
+
     // FIXME is this ever unGetMsg()'d?
     if (!message())
         return;
