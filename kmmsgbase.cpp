@@ -1012,18 +1012,20 @@ retry:
 #define memcpy_networkorder(to, from, len)  memcpy(to, from, len)
 #endif
 
-#define STORE_DATA_LEN(type, x, len, network_order) do { \
-	int len2 = (len > 256) ? 256 : len; \
-	if(csize < (length + (len2 + sizeof(short) + sizeof(MsgPartType)))) \
-    	   ret = (uchar *)realloc(ret, csize += len2+sizeof(short)+sizeof(MsgPartType)); \
-        quint32 t = (quint32) type; memcpy(ret+length, &t, sizeof(t)); \
-        quint16 l = len2; memcpy(ret+length+sizeof(t), &l, sizeof(l)); \
-        if (network_order) \
-           memcpy_networkorder(ret+length+sizeof(t)+sizeof(l), x, len2); \
-        else \
-           memcpy(ret+length+sizeof(t)+sizeof(l), x, len2); \
-        length += len2+sizeof(t)+sizeof(l); \
-    } while(0)
+#define STORE_DATA_LEN(type, x, len, network_order) \
+  do { \
+    int len2 = (len > 256) ? 256 : len; \
+    if(csize < (length + (len2 + sizeof(short) + sizeof(MsgPartType)))) \
+      ret = (uchar *)realloc(ret, csize += len2+sizeof(short)+sizeof(MsgPartType)); \
+    quint32 t = (quint32) type; memcpy(ret+length, &t, sizeof(t)); \
+    quint16 l = len2; memcpy(ret+length+sizeof(t), &l, sizeof(l)); \
+    if (network_order) \
+       memcpy_networkorder(ret+length+sizeof(t)+sizeof(l), x, len2); \
+    else \
+       memcpy(ret+length+sizeof(t)+sizeof(l), x, len2); \
+    length += len2+sizeof(t)+sizeof(l); \
+  } while(0)
+
 #define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x), false)
 
 //-----------------------------------------------------------------------------
