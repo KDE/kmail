@@ -273,6 +273,8 @@ const QPixmap *HeaderItem::statusIcon(KMMsgBase *msgBase) const
   return 0;
 }
 
+K_GLOBAL_STATIC( QPixmap, s_mergedpix )
+
 const QPixmap *HeaderItem::pixmap(int col) const
 {
   KMHeaders *headers = static_cast<KMHeaders*>(listView());
@@ -323,9 +325,8 @@ const QPixmap *HeaderItem::pixmap(int col) const
       if ( status.isTodo() ) pixmaps << *KMHeaders::pixTodo;
 
     if ( !pixmaps.isEmpty() ) {
-      static QPixmap mergedpix;
-      mergedpix = pixmapMerge( pixmaps );
-      return &mergedpix;
+      *s_mergedpix = pixmapMerge( pixmaps );
+      return s_mergedpix;
     }
     else
       return 0;
