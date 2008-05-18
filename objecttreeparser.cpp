@@ -803,11 +803,6 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
     const QByteArray partBody( curNode->msgPart().bodyDecoded() );
-    QString bodyText;
-    if ( mReader->htmlMail() )
-      bodyText = codecFor( curNode )->toUnicode( partBody );
-    else
-      bodyText = KMMessage::html2source( partBody );
 
     mRawReplyString = partBody;
     if ( curNode->isFirstTextPart() ) {
@@ -817,6 +812,12 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
     if ( !mReader )
       return true;
+
+    QString bodyText;
+    if ( mReader->htmlMail() )
+      bodyText = codecFor( curNode )->toUnicode( partBody );
+    else
+      bodyText = KMMessage::html2source( partBody );
 
     if ( curNode->isFirstTextPart() ||
          attachmentStrategy()->defaultDisplay( curNode ) == AttachmentStrategy::Inline ||
