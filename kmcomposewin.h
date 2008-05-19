@@ -29,7 +29,6 @@
 #include <QList>
 #include <QPalette>
 #include <QPointer>
-#include <QTextListFormat>
 
 // KDE includes
 #include <kglobalsettings.h>
@@ -445,7 +444,7 @@ class KMComposeWin : public KMail::Composer
 
     void slotCleanSpace();
     void slotToggleMarkup();
-    void slotTextModeChanged( KPIM::KMeditor::Mode );
+    void slotTextModeChanged( KRichTextEdit::Mode );
     void htmlToolBarVisibilityChanged( bool visible );
     void slotSpellcheckDoneClearStatus();
 
@@ -467,10 +466,6 @@ class KMComposeWin : public KMail::Composer
     void slotAttachFileData( KIO::Job *, const QByteArray & );
     void slotAttachFileResult( KJob * );
 
-    void slotAlignLeft();
-    void slotAlignCenter();
-    void slotAlignRight();
-    void fontChanged( const QFont & );
     void slotCursorPositionChanged();
 
     void slotSpellCheckingStatus( const QString & status );
@@ -742,15 +737,8 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
     KToggleAction *mDictionaryAction, *mSnippetAction;
 
-    KPIM::KMStyleListSelectAction *listAction;
-    KFontAction *fontAction;
-    KFontSizeAction *fontSizeAction;
-    KToggleAction *alignLeftAction, *alignCenterAction, *alignRightAction;
-    KToggleAction *textBoldAction, *textItalicAction, *textUnderAction;
-    KToggleAction *plainTextAction, *markupAction;
-    KAction *actionFormatColor, *actionFormatReset;
-    KAction *actionConfigureLink;
-    KAction *mHtmlToolbar;
+    KToggleAction *markupAction;
+    KAction *actionFormatReset;
 
     KSelectAction *mEncodingAction;
     KSelectAction *mCryptoModuleAction;

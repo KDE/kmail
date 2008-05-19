@@ -470,7 +470,7 @@ void MessageComposer::readFromComposeWin()
   if ( mAutoCharset ) {
     QByteArray charset =
       KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(),
-                                    mComposeWin->mEditor->textOrHTML() );
+                                    mComposeWin->mEditor->textOrHtml() );
     if ( charset.isEmpty() ) {
       KMessageBox::sorry( mComposeWin,
                           i18n( "No suitable encoding could be found for "
@@ -2167,7 +2167,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
   QString text;
 
   if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() ) {
-    text = mComposeWin->mEditor->textOrHTML();
+    text = mComposeWin->mEditor->textOrHtml();
   } else {
     text = mComposeWin->mEditor->toWrappedPlainText();
   }

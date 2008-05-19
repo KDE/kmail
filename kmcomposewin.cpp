@@ -31,7 +31,6 @@
 
 // LIBKDEPIM includes
 #include <libkdepim/kaddrbookexternal.h>
-#include <libkdepim/kmstylelistselectaction.h>
 #include <libkdepim/recentaddresses.h>
 
 using KPIM::RecentAddresses;
@@ -85,8 +84,6 @@ using KPIM::DictionaryComboBox;
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kfiledialog.h>
-#include <kfontaction.h>
-#include <kfontsizeaction.h>
 #include <kinputdialog.h>
 #include <kmenu.h>
 #include <kmimetypetrader.h>
@@ -372,7 +369,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     setMsg( aMsg );
   }
   mRecipientsEditor->setFocus();
-  fontChanged( mEditor->currentFont() ); // set toolbar buttons to correct values
+  mEditor->updateActionStates(); // set toolbar buttons to correct values
 
   mDone = true;
 }
@@ -1108,7 +1105,7 @@ void KMComposeWin::setupActions( void )
   connect( mActLaterMenu, SIGNAL(aboutToShow()), this,
            SLOT(getTransportMenu()) );
 
-  QAction *action = new KAction( KIcon( "document-save" ), i18n("Save as &Draft"), this );
+  KAction *action = new KAction( KIcon( "document-save" ), i18n("Save as &Draft"), this );
   actionCollection()->addAction("save_in_drafts", action );
   connect( action, SIGNAL(triggered(bool) ), SLOT(slotSaveDraft()) );
 
@@ -1228,8 +1225,8 @@ void KMComposeWin::setupActions( void )
   mEncodingAction->setItems( encodings );
   mEncodingAction->setCurrentItem( -1 );
 
-  connect( mEditor, SIGNAL( textModeChanged( KPIM::KMeditor::Mode ) ),
-           this, SLOT( slotTextModeChanged( KPIM::KMeditor::Mode ) ) );
+  connect( mEditor, SIGNAL( textModeChanged( KRichTextEdit::Mode ) ),
+           this, SLOT( slotTextModeChanged( KRichTextEdit::Mode ) ) );
 
   //these are checkable!!!
   markupAction = new KToggleAction( i18n("Formatting (HTML)"), this );
@@ -1373,61 +1370,18 @@ void KMComposeWin::setupActions( void )
       Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
   slotSelectCryptoModule( true );
 
-
-  listAction = new KMStyleListSelectAction( i18n("Select Style"), this );
-  actionCollection()->addAction( "text_list", listAction );
-
-  connect( listAction, SIGNAL( applyStyle(QTextListFormat::Style) ),
-           mEditor, SLOT( slotChangeParagStyle(QTextListFormat::Style) ) );
-  fontAction = new KFontAction(i18n("Select Font"), this);
-  actionCollection()->addAction("text_font", fontAction );
-  connect( fontAction, SIGNAL( triggered( const QString& ) ),
-           mEditor, SLOT( slotFontFamilyChanged( const QString& ) ) );
-  fontSizeAction = new KFontSizeAction(i18n("Select Size"), this);
-  actionCollection()->addAction("text_size", fontSizeAction );
-  connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
-           mEditor, SLOT( slotFontSizeChanged( int ) ) );
-  alignLeftAction = new KToggleAction( KIcon( "format-justify-left" ), i18n("Align Left"), this );
-  alignLeftAction->setIconText( i18n("Left") );
-  actionCollection()->addAction( "align_left", alignLeftAction );
-  connect( alignLeftAction, SIGNAL( triggered(bool) ), SLOT( slotAlignLeft() ) );
-  alignLeftAction->setChecked( true );
-  alignRightAction = new KToggleAction( KIcon( "format-justify-right" ), i18n("Align Right"), this );
-  alignRightAction->setIconText( i18n("Right") );
-  actionCollection()->addAction( "align_right", alignRightAction );
-  connect( alignRightAction, SIGNAL( triggered(bool) ), SLOT( slotAlignRight() ) );
-  alignCenterAction = new KToggleAction( KIcon( "format-justify-center" ), i18n("Align Center"), this );
-  alignCenterAction->setIconText( i18n("Center") );
-  actionCollection()->addAction( "align_center", alignCenterAction );
-  connect( alignCenterAction, SIGNAL( triggered(bool) ), SLOT( slotAlignCenter() ) );
-  textBoldAction = new KToggleAction( KIcon( "format-text-bold" ), i18n("&Bold"), this );
-  actionCollection()->addAction( "text_bold", textBoldAction );
-  connect( textBoldAction, SIGNAL( triggered(bool) ),
-           mEditor, SLOT( slotTextBold(bool) ) );
-  textBoldAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_B ) );
-  textItalicAction = new KToggleAction( KIcon( "format-text-italic" ), i18n("&Italic"), this );
-  actionCollection()->addAction( "text_italic", textItalicAction );
-  connect( textItalicAction, SIGNAL( triggered(bool) ),
-           mEditor, SLOT( slotTextItalic(bool) ) );
-  textItalicAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_I ) );
-  textUnderAction = new KToggleAction( KIcon( "format-text-underline" ), i18n("&Underline"), this );
-  actionCollection()->addAction( "text_under", textUnderAction );
-  connect( textUnderAction, SIGNAL( triggered(bool) ),
-           mEditor, SLOT( slotTextUnder(bool) ) );
-  textUnderAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_U ) );
   actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
   actionFormatReset->setIconText( i18n("Reset Font") );
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
-  actionFormatColor = new KAction( KIcon( "format-stroke-color" ), i18n("Text Color..."), this );
-  actionFormatColor->setIconText( i18n("Text Color") );
-  actionCollection()->addAction("format_color", actionFormatColor );
-  connect( actionFormatColor, SIGNAL(triggered(bool) ),mEditor, SLOT( slotTextColor() ));
-  actionConfigureLink = new KAction( KIcon( "insert-link" ), i18n("Manage Link..."), this );
-  actionConfigureLink->setIconText( i18nc("Short toolbar text for the \"Manage Link...\" action", "Link") );
-  actionCollection()->addAction( "manage_link", actionConfigureLink );
-  connect( actionConfigureLink, SIGNAL( triggered(bool) ),
-           mEditor, SLOT( slotConfigureLink() ) );
+
+  mEditor->setRichTextSupport( KRichTextWidget::FullTextFormattingSupport |
+                               KRichTextWidget::FullListSupport |
+                               KRichTextWidget::SupportAlignment |
+                               KRichTextWidget::SupportRuleLine |
+                               KRichTextWidget::SupportHyperlinks |
+                               KRichTextWidget::SupportAlignment );
+  mEditor->createActions( actionCollection() );
 
   createGUI( "kmcomposerui.rc" );
   connect( toolBar( "htmlToolBar" )->toggleViewAction(),
@@ -1465,8 +1419,6 @@ void KMComposeWin::setupEditor( void )
   // Font setup
   slotUpdateFont();
 
-  connect( mEditor, SIGNAL( currentFontChanged( const QFont & ) ),
-           this, SLOT( fontChanged( const QFont & ) ) );
   connect( mEditor, SIGNAL( cursorPositionChanged() ),
            this, SLOT( slotCursorPositionChanged() ) );
   slotCursorPositionChanged();
@@ -3847,19 +3799,15 @@ void KMComposeWin::enableHtml()
     toolBar( "htmlToolBar" )->show();
   if ( !markupAction->isChecked() )
     markupAction->setChecked( true );
-  // set buttons in correct position
-  fontChanged( mEditor->currentFont() ); 
+
   mSaveFont = mEditor->currentFont();
-  bool _bold = textBoldAction->isChecked();
-  bool _italic = textItalicAction->isChecked();
-  textBoldAction->setChecked( _bold );
-  textItalicAction->setChecked( _italic );
+  mEditor->updateActionStates();
 }
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::disableHtml()
 {
-  mEditor->switchToPlainText();
+  mEditor->toPlainText();
   slotUpdateFont();
   if ( toolBar( "htmlToolBar" )->isVisible() )
     toolBar( "htmlToolBar" )->hide();
@@ -4182,89 +4130,14 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
   mAlwaysSend = bAlways;
 }
 
-void KMComposeWin::slotAlignLeft()
-{
-  mEditor->slotAlignLeft();
-  alignCenterAction->setChecked( false );
-  alignRightAction->setChecked( false );
-}
-
-void KMComposeWin::slotAlignCenter()
-{
-  mEditor->slotAlignCenter();
-  alignLeftAction->setChecked( false );
-  alignRightAction->setChecked( false );
-}
-
-void KMComposeWin::slotAlignRight()
-{
-  mEditor->setAlignment( Qt::AlignRight );
-  alignLeftAction->setChecked( false );
-  alignCenterAction->setChecked( false );
-}
-
 void KMComposeWin::slotFormatReset()
 {
-  mEditor->setColor( mForeColor );
-  mEditor->setFont( mSaveFont ); // fontChanged is called now
-}
-
-void KMComposeWin::fontChanged( const QFont &f )
-{
-  QFont fontTemp = f;
-  fontTemp.setBold( true );
-  fontTemp.setItalic( true );
-  QFontInfo fontInfo( fontTemp );
-
-  if ( fontInfo.bold() ) {
-    textBoldAction->setChecked( f.bold() );
-    textBoldAction->setEnabled( true ) ;
-  } else {
-    textBoldAction->setEnabled( false );
-  }
-
-  if ( fontInfo.italic() ) {
-    textItalicAction->setChecked( f.italic() );
-    textItalicAction->setEnabled( true );
-  } else {
-    textItalicAction->setEnabled( false );
-  }
-
-  textUnderAction->setChecked( f.underline() );
-
-  fontAction->setFont( f.family() );
-  fontSizeAction->setFontSize( f.pointSize() );
+  mEditor->setTextForegroundColor( mForeColor );
+  mEditor->setFont( mSaveFont );
 }
 
 void KMComposeWin::slotCursorPositionChanged()
 {
-  // Update alignment action states
-  switch ( mEditor->alignment() )
-  {
-    case Qt::AlignLeft :
-      alignLeftAction->setChecked( true );
-      alignCenterAction->setChecked( false );
-      alignRightAction->setChecked( false );
-      break;
-    case Qt::AlignHCenter :
-      alignLeftAction->setChecked( false );
-      alignCenterAction->setChecked( true );
-      alignRightAction->setChecked( false );
-      break;
-    case Qt::AlignRight :
-      alignLeftAction->setChecked( false );
-      alignCenterAction->setChecked( false );
-      alignRightAction->setChecked( true );
-      break;
-  }
-
-  // Update list style action state
-  QTextList *list = mEditor->textCursor().currentList();
-  if ( list )
-    listAction->setCurrentStyle( list->format().style() );
-  else
-    listAction->setCurrentStyle( QTextListFormat::ListStyleUndefined );
-
   // Change Line/Column info in status bar
   int col, line;
   QString temp;
