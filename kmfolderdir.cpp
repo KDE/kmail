@@ -5,6 +5,7 @@
 #include "kmfoldersearch.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
+#include "kmfoldermgr.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -220,6 +221,12 @@ bool KMFolderDir::reload(void)
        continue;
     }
 
+    // define folder parameters
+    QString folderName;
+    KMFolderType folderType;
+    bool withIndex = true;
+    bool exportedSernums = true;
+
     if ( mDirType == KMImapDir
       && path().startsWith( KMFolderImap::cacheLocation() ) )
     {
@@ -227,10 +234,8 @@ bool KMFolderDir::reload(void)
        if ( KMFolderImap::encodeFileName(
                 KMFolderImap::decodeFileName( fname ) ) == fname )
        {
-          KMFolder* folder = new KMFolder(  this, KMFolderImap::decodeFileName( fname ),
-                                  KMFolderTypeImap );
-          append(folder);
-          folderList.append(folder);
+          folderName = KMFolderImap::decodeFileName( fname );
+          folderType = KMFolderTypeImap;
        }
     }
     else if ( mDirType == KMDImapDir
@@ -244,17 +249,15 @@ bool KMFolderDir::reload(void)
           QString imapcachefile = QString::fromLatin1(".%1.uidcache").arg(fname);
           if ( dir.exists( imapcachefile) || dir.exists( maildir ) )
           {
-             KMFolder* folder = new KMFolder( this, fname, KMFolderTypeCachedImap );
-             append(folder);
-             folderList.append(folder);
+             folderName = fname;
+             folderType = KMFolderTypeCachedImap;
           }
        }
     }
     else if ( mDirType == KMSearchDir)
     {
-       KMFolder* folder = new KMFolder( this, fname, KMFolderTypeSearch );
-       append(folder);
-       folderList.append(folder);
+       folderName = fname;
+       folderType = KMFolderTypeSearch;
     }
     else if ( mDirType == KMStandardDir )
     {
@@ -265,18 +268,26 @@ bool KMFolderDir::reload(void)
           // Maildir folder
           if( dir.exists( fname + "/new" ) )
           {
-             KMFolder* folder = new KMFolder( this, fname, KMFolderTypeMaildir );
-             append(folder);
-             folderList.append(folder);
+             folderName = fname;
+             folderType = KMFolderTypeMaildir;
           }
        }
        else
        {
           // all other files are folders (at the moment ;-)
-          KMFolder* folder = new KMFolder( this, fname, KMFolderTypeMbox );
-          append(folder);
-          folderList.append(folder);
+          folderName = fname;
+          folderType = KMFolderTypeMbox;
        }
+    }
+
+//TODO    if ( &manager()->dir() == this && folderName == QLatin1String( "outbox" ) )
+//TODO      withIndex = false;
+
+    // create folder
+    if ( !folderName.isEmpty() ) {
+      KMFolder* newFolder = new KMFolder( this, folderName, folderType, withIndex, exportedSernums );
+      append( newFolder );
+      folderList.append( newFolder );
     }
   }
 
