@@ -1366,9 +1366,13 @@ void KMFolderTree::cleanupConfigFile()
     {
       KMFolder* folder = kmkernel->findFolderById( name );
       if ( folder ) {
-          if ( kmkernel->iCalIface().hideResourceFolder( folder )
+        if ( kmkernel->iCalIface().hideResourceFolder( folder )
            ||  kmkernel->iCalIface().hideResourceAccountRoot( folder ) )
-        continue; // hidden IMAP resource folder, don't delete info
+          continue; // hidden IMAP resource folder, don't delete info
+        if ( folder->noContent() )
+          continue; // we hide nocontent folders if they have no child folders
+        if ( folder == kmkernel->inboxFolder() )
+          continue; // local inbox can be hidden as well
       }
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
