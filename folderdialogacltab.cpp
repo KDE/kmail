@@ -202,7 +202,7 @@ unsigned int KMail::ACLEntryDialog::permissions() const
 {
   QAbstractButton* button = mButtonGroup->checkedButton();
   if( !button )
-    return -1; // hm ?
+    return static_cast<unsigned int>(-1); // hm ?
   return mButtonGroup->id( button );
 }
 
