@@ -1162,30 +1162,24 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
 //-----------------------------------------------------------------------------
 QByteArray KMMessage::createForwardBody()
 {
-  QString s;
-  QByteArray str;
-
-  if (sHeaderStrategy == HeaderStrategy::all()) {
-    s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
-    s += headerAsString();
-    str = asQuotedString(s, "", QString(), false, false).toUtf8();
-    str += "\n-------------------------------------------------------\n";
+  QString tmp;
+  if (s->headerStrategy == HeaderStrategy::all()) {
+    tmp = "\n\n----------  " + s->forwardStr + "  ----------\n\n"
+      + headerAsString();
   } else {
-    s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
-    s += "Subject: " + subject() + '\n';
-    s += "Date: "
+    tmp = "\n\n----------  " + s->forwardStr + "  ----------\n\n"
+      + "Subject: " + subject() + '\n'
+      + "Date: "
          + KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
-                                             date(), sReplyLanguage, false )
-         + '\n';
-    s += "From: " + from() + '\n';
-    s += "To: " + to() + '\n';
-    if (!cc().isEmpty()) s += "Cc: " + cc() + '\n';
-    s += '\n';
-    str = asQuotedString(s, "", QString(), false, false).toUtf8();
-    str += "\n-------------------------------------------------------\n";
+                                             date(), s->replyLanguage, false )
+         + '\n'
+      + "From: " + from() + '\n'
+      + "To: " + to() + '\n'
+      + ( cc().isEmpty() ? QString() : ("Cc: " + cc() + '\n') )
+      + '\n';
   }
-
-  return str;
+  return asQuotedString(tmp, "", QString(), false, false).toUtf8()
+    + "\n-------------------------------------------------------\n";
 }
 
 void KMMessage::sanitizeHeaders( const QStringList& whiteList )
