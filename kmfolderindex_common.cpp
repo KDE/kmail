@@ -201,7 +201,6 @@ void KMFolderIndex::addToSerialCache() const
   Q_ASSERT( mOpenCount > 0 );
 
   KMFolder *fld = folder();
-  int count = mMsgList.count();
   const KMMsgDict *dict = KMMsgDict::instance();
   unsigned int index = 0;
   Q_ASSERT( fld );
