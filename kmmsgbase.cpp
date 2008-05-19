@@ -802,12 +802,12 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
 {
   QString ret;
 retry:
-  bool using_mmap = false;
 #ifdef KMAIL_SQLITE_INDEX
   bool swapByteOrder = false;
   g_chunk = (uchar*)mData;
   g_chunk_length = mIndexLength;
 #else
+  bool using_mmap = false;
   bool swapByteOrder = storage()->indexSwapByteOrder();
   if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
@@ -846,10 +846,12 @@ retry:
     type = (MsgPartType) tmp;
     if( g_chunk_offset + len > mIndexLength ) {
       kDebug() << "This should never happen..";
+#ifndef KMAIL_SQLITE_INDEX
       if( using_mmap ) {
         g_chunk_length = 0;
         g_chunk = 0;
       }
+#endif
       if ( !storage()->recreateIndex() )
         return QString();
       goto retry;
@@ -862,10 +864,12 @@ retry:
       break;
     }
   } //for
+#ifndef KMAIL_SQLITE_INDEX
   if(using_mmap) {
       g_chunk_length = 0;
       g_chunk = 0;
   }
+#endif
   // Normally we need to swap the byte order because the QStrings are written
   // in the style of Qt2 (MSB -> network ordered).
   // QStrings in Qt3 expect host ordering.
@@ -886,7 +890,6 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
 {
 retry:
   off_t ret = 0;
-  bool using_mmap = false;
 
 #ifdef KMAIL_SQLITE_INDEX
   //todo reenable
@@ -895,6 +898,7 @@ retry:
   g_chunk = (uchar*)mData;
   g_chunk_length = mIndexLength;
 #else
+  bool using_mmap = false;
   bool swapByteOrder = storage()->indexSwapByteOrder();
   int sizeOfLong = storage()->indexSizeOfLong();
   if (storage()->indexStreamBasePtr()) {
@@ -930,10 +934,12 @@ retry:
 
     if (g_chunk_offset + len > mIndexLength) {
       kDebug(5006) <<"This should never happen..";
+#ifndef KMAIL_SQLITE_INDEX
       if(using_mmap) {
         g_chunk_length = 0;
         g_chunk = 0;
       }
+#endif
       if (!storage()->recreateIndex())
         return 0;
       goto retry;
@@ -996,10 +1002,12 @@ retry:
       break;
     }
   } // for
+#ifndef KMAIL_SQLITE_INDEX
   if(using_mmap) {
     g_chunk_length = 0;
     g_chunk = 0;
   }
+#endif
 
   return ret;
 }

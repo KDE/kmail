@@ -503,10 +503,12 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   aMsg->setParent(folder());
   aMsg->setMsgSize( msgText.length() );
   idx = mMsgList.append( &aMsg->toMsgBase(), mExportsSernums );
-  if (aMsg->getMsgSerNum() <= 0)
+  const unsigned long msgSerNum = aMsg->getMsgSerNum();
+  kDebug( Test1Area ) << "getMsgSerNum:" << msgSerNum;
+  if ( msgSerNum <= 0 )
     aMsg->setMsgSerNum();
   else
-    replaceMsgSerNum( aMsg->getMsgSerNum(), &aMsg->toMsgBase(), idx );
+    replaceMsgSerNum( msgSerNum, &aMsg->toMsgBase(), idx );
 
   // write index entry if desired
   if (mAutoCreateIndex)

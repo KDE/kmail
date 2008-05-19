@@ -75,21 +75,28 @@ using namespace KMime::Types;
 
 using namespace KMime;
 
-static DwString emptyString("");
+struct KMMessageStaticData
+{
+  KMMessageStaticData()
+    : emptyString(""), headerStrategy( HeaderStrategy::rich() )
+  {
+  }
 
-// Values that are set from the config file with KMMessage::readConfig()
-static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote,
-  sWordWrap;
-static int sWrapCol;
-static QStringList sPrefCharsets;
+  DwString emptyString;
 
-QString KMMessage::sForwardStr;
-const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
+  // Values that are set from the config file with KMMessage::readConfig()
+  QString replyLanguage, replyStr, replyAllStr, forwardStr, indentPrefixStr;
+  bool smartQuote : 1, wordWrap : 1;
+  int wrapCol;
+  QStringList prefCharsets;
+  const HeaderStrategy* headerStrategy;
+  QList<KMMessage*> pendingDeletes;
+};
+
+K_GLOBAL_STATIC( KMMessageStaticData, s )
+
 //helper
 static void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart );
-
-QList<KMMessage*> KMMessage::sPendingDeletes;
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
@@ -266,8 +273,8 @@ bool KMMessage::transferInProgress() const
 void KMMessage::setTransferInProgress(bool value, bool force)
 {
   MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
-  if ( !transferInProgress() && sPendingDeletes.contains( this ) ) {
-    sPendingDeletes.removeAll( this );
+  if ( !transferInProgress() && s->pendingDeletes.contains( this ) ) {
+    s->pendingDeletes.removeAll( this );
     if ( parent() ) {
       int idx = parent()->find( this );
       if ( idx > 0 ) {
@@ -444,7 +451,7 @@ QString KMMessage::formatString(const QString& aStr) const
            like this change to a short XX/XX/YY date format.
            At least not for the default. -sanders */
         result += KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
-            date(), sReplyLanguage, false );
+            date(), s->replyLanguage, false );
         break;
       case 'e':
         result += from();
@@ -843,8 +850,8 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
   content += '\n';
 
   const QString headerStr = formatString( aHeaderStr );
-  if ( sSmartQuote && sWordWrap )
-    return headerStr + smartQuote( content, sWrapCol );
+  if ( s->smartQuote && s->wordWrap )
+    return headerStr + smartQuote( content, s->wrapCol );
   return headerStr + content;
 }
 
@@ -882,7 +889,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   }
 
   // use the "On ... Joe User wrote:" header by default
-  replyStr = sReplyAllStr;
+  replyStr = s->replyAllStr;
 
   switch( replyStrategy ) {
   case KMail::ReplySmart : {
@@ -899,7 +906,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     else {
       // doesn't seem to be a mailing list, reply to From: address
       toStr = from();
-      replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+      replyStr = s->replyStr; // reply to author, so use "On ... you wrote:"
       replyAll = false;
     }
     // strip all my addresses from the list of recipients
@@ -1026,7 +1033,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     else if ( !from().isEmpty() ) {
       toStr = from();
     }
-    replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+    replyStr = s->replyStr; // reply to author, so use "On ... you wrote:"
     replyAll = false;
     break;
   }
@@ -1048,8 +1055,8 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 //      QByteArray cStr = selection.toLatin1();
 //      msg->setBody( cStr );
 //    }else{
-//      msg->setBody(asQuotedString(replyStr + '\n', sIndentPrefixStr, selection,
-//                                  sSmartQuote, allowDecryption).toUtf8());
+//      msg->setBody(asQuotedString(replyStr + '\n', s->indentPrefixStr, selection,
+//                                  s->smartQuote, allowDecryption).toUtf8());
 //    }
 //  }
 
@@ -1058,7 +1065,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   // If the reply shouldn't be blank, apply the template to the message
   if ( !noQuote ) {
     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-                           selection, sSmartQuote, allowDecryption, selectionIsBody );
+                           selection, s->smartQuote, allowDecryption, selectionIsBody );
     if ( !tmpl.isEmpty() )
       parser.process( tmpl, this );
     else
@@ -1288,7 +1295,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
   else
     parser.process( this );
 
-  // QByteArray encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
+  // QByteArray encoding = autoDetectCharset(charset(), s->prefCharsets, msg->body());
   // if (encoding.isEmpty()) encoding = "utf-8";
   // msg->setCharset(encoding);
   // force utf-8
@@ -2366,7 +2373,7 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
     if ( type != Unstructured )
       kDebug(5006) <<"value: \"" << value <<"\"";
 #endif
-    QByteArray encoding = autoDetectCharset( charset(), sPrefCharsets, value );
+    QByteArray encoding = autoDetectCharset( charset(), s->prefCharsets, value );
     if (encoding.isEmpty())
        encoding = "utf-8";
     aValue = encodeRFC2047String( value, encoding );
@@ -3103,7 +3110,7 @@ void KMMessage::deleteBodyParts()
 //-----------------------------------------------------------------------------
 DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 {
-  DwBodyPart* part = DwBodyPart::NewBodyPart(emptyString, 0);
+  DwBodyPart* part = DwBodyPart::NewBodyPart(s->emptyString, 0);
 
   if ( !aPart )
     return part;
@@ -3114,7 +3121,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   QByteArray cte      = aPart->cteStr();
   QByteArray contDesc = aPart->contentDescriptionEncoded();
   QByteArray contDisp = aPart->contentDisposition();
-  QByteArray encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
+  QByteArray encoding = autoDetectCharset(charset, s->prefCharsets, aPart->name());
   if (encoding.isEmpty()) encoding = "utf-8";
   QByteArray name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
   bool RFC2231encoded = aPart->name() != QString(name);
@@ -3193,7 +3200,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 
   if (!paramAttr.isEmpty())
   {
-    QByteArray encoding = autoDetectCharset(charset, sPrefCharsets,
+    QByteArray encoding = autoDetectCharset(charset, s->prefCharsets,
                                             aPart->parameterValue());
     if (encoding.isEmpty()) encoding = "utf-8";
     QByteArray paramValue;
@@ -3899,32 +3906,32 @@ void KMMessage::readConfig()
 
   { // area for config group "KMMessage #n"
     KConfigGroup config( KMKernel::config(), QString("KMMessage #%1").arg(languageNr) );
-    sReplyLanguage = config.readEntry("language",KGlobal::locale()->language());
-    sReplyStr = config.readEntry("phrase-reply",
+    s->replyLanguage = config.readEntry("language",KGlobal::locale()->language());
+    s->replyStr = config.readEntry("phrase-reply",
       i18n("On %D, you wrote:"));
-    sReplyAllStr = config.readEntry("phrase-reply-all",
+    s->replyAllStr = config.readEntry("phrase-reply-all",
       i18n("On %D, %F wrote:"));
-    sForwardStr = config.readEntry("phrase-forward",
+    s->forwardStr = config.readEntry("phrase-forward",
       i18n("Forwarded Message"));
-    sIndentPrefixStr = config.readEntry("indent-prefix",">%_");
+    s->indentPrefixStr = config.readEntry("indent-prefix",">%_");
   }
 
   { // area for config group "Composer"
     KConfigGroup config( KMKernel::config(), "Composer" );
-    sSmartQuote = GlobalSettings::self()->smartQuote();
-    sWordWrap = GlobalSettings::self()->wordWrap();
-    sWrapCol = GlobalSettings::self()->lineWrapWidth();
-    if ((sWrapCol == 0) || (sWrapCol > 78))
-      sWrapCol = 78;
-    if (sWrapCol < 30)
-      sWrapCol = 30;
+    s->smartQuote = GlobalSettings::self()->smartQuote();
+    s->wordWrap = GlobalSettings::self()->wordWrap();
+    s->wrapCol = GlobalSettings::self()->lineWrapWidth();
+    if ((s->wrapCol == 0) || (s->wrapCol > 78))
+      s->wrapCol = 78;
+    if (s->wrapCol < 30)
+      s->wrapCol = 30;
 
-    sPrefCharsets = config.readEntry("pref-charsets", QStringList() );
+    s->prefCharsets = config.readEntry("pref-charsets", QStringList() );
   }
 
   { // area for config group "Reader"
     KConfigGroup config( KMKernel::config(), "Reader" );
-    sHeaderStrategy = HeaderStrategy::create( config.readEntry( "header-set-displayed", "rich" ) );
+    s->headerStrategy = HeaderStrategy::create( config.readEntry( "header-set-displayed", "rich" ) );
   }
 }
 
@@ -3932,8 +3939,8 @@ QByteArray KMMessage::defaultCharset()
 {
   QByteArray retval;
 
-  if (!sPrefCharsets.isEmpty())
-    retval = sPrefCharsets[0].toLatin1();
+  if (!s->prefCharsets.isEmpty())
+    retval = s->prefCharsets[0].toLatin1();
 
   if (retval.isEmpty()  || (retval == "locale")) {
     retval = QByteArray(kmkernel->networkCodec()->name());
@@ -3947,7 +3954,7 @@ QByteArray KMMessage::defaultCharset()
 
 const QStringList &KMMessage::preferredCharsets()
 {
-  return sPrefCharsets;
+  return s->prefCharsets;
 }
 
 //-----------------------------------------------------------------------------
@@ -4317,5 +4324,5 @@ QByteArray KMMessage::mboxMessageSeparator()
 
 void KMMessage::deleteWhenUnused()
 {
-  sPendingDeletes << this;
+  s->pendingDeletes << this;
 }

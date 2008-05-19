@@ -29,13 +29,14 @@
 
 #include "sieveconfig.h"
 
+#include <kio/slave.h>
+
 #include <QString>
 
 class AccountManager;
 class KConfig/*Base*/;
 class KUrl;
 namespace KIO {
-  class Slave;
   class MetaData;
 }
 
@@ -128,14 +129,14 @@ namespace KMail {
 
   protected:
     KMail::SieveConfig mSieveConfig;
-    KIO::Slave * mSlave;
+    QPointer<KIO::Slave> mSlave;
     QString mLogin, mPasswd, mAuth, mHost, mOldPassKey;
     unsigned short int mPort;
     bool mStorePasswd : 1;
     bool mUseSSL : 1;
     bool mUseTLS : 1;
     bool mAskAgain : 1;
-    bool mPasswdDirty, mStorePasswdInConfig;
+    bool mPasswdDirty : 1, mStorePasswdInConfig : 1;
   };
 
 } // namespace KMail

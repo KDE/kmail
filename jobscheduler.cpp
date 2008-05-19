@@ -35,6 +35,17 @@
 
 using namespace KMail;
 
+ScheduledTask::ScheduledTask( KMFolder* folder, bool immediate )
+  : mCurrentFolder( folder ), mImmediate( immediate )
+{
+  kDebug( Test1Area ) << this << "idString=" << (mCurrentFolder ? mCurrentFolder->idString() : QString()) << "immediate=" << mImmediate;
+}
+
+ScheduledTask::~ScheduledTask()
+{
+  kDebug( Test1Area ) << this << "idString=" << (mCurrentFolder ? mCurrentFolder->idString() : QString()) << "immediate=" << mImmediate;
+}
+
 JobScheduler::JobScheduler( QObject* parent, const char* name )
   : QObject( parent ), mTimer( this ),
     mPendingImmediateTasks( 0 ),
@@ -49,9 +60,8 @@ JobScheduler::JobScheduler( QObject* parent, const char* name )
 JobScheduler::~JobScheduler()
 {
   // delete tasks in tasklist (no autodelete for QValueList)
-  for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
-    delete (*it);
-  }
+  qDeleteAll( mTaskList );
+  mTaskList.clear();
   delete mCurrentTask;
   delete mCurrentJob;
 }
@@ -247,12 +257,18 @@ void JobScheduler::resume()
 
 ////
 
-KMail::ScheduledJob::ScheduledJob( KMFolder* folder, bool immediate )
+ScheduledJob::ScheduledJob( KMFolder* folder, bool immediate )
   : FolderJob( 0, tOther, folder ), mImmediate( immediate ),
     mOpeningFolder( false )
 {
   mCancellable = true;
   mSrcFolder = folder;
+  kDebug( Test1Area ) << this << "mDestFolder->idString=" << (mDestFolder ? mDestFolder->idString() : QString()) << "immediate=" << mImmediate;
+}
+
+ScheduledJob::~ScheduledJob()
+{
+  kDebug( Test1Area ) << this << "mDestFolder->idString=" << (mDestFolder ? mDestFolder->idString() : QString()) << "immediate=" << mImmediate;
 }
 
 #include "jobscheduler.moc"

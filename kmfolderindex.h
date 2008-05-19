@@ -184,7 +184,13 @@ protected:
     UpdateExistingMessages //!< writeMessages() will update data for existing messages and add any new message
   };
 
+  /* Writes messages to index database for the folder. Inserts or replaces existing messages,
+   depending on @a mode. */
   int writeMessages( KMMsgBase* msg, WriteMessagesMode mode );
+
+  /* Executes "DELETE FROM messages WHERE id=.." for every id included in @a rowsToDelete. 
+   Used in readIndex() for messages with 0 serial number, especially for the outbox. */
+  bool deleteIndexRows( const QList<sqlite3_int64>& rowsToDelete );
 
   /** main SQlite db handle */
   sqlite3 *mIndexDb;

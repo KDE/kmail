@@ -2059,6 +2059,10 @@ KMCommand::Result KMMoveCommand::execute()
   mProgressItem->setTotalItems( mSerNumList.count() );
 
   for ( QList<quint32>::ConstIterator it = mSerNumList.constBegin(); it != mSerNumList.constEnd(); ++it ) {
+    if ( *it == 0 ) {
+      kDebug(5006) << "serial number == 0!";
+      continue; // invalid message
+    }
     KMFolder *srcFolder;
     int idx = -1;
     KMMsgDict::instance()->getLocation( *it, &srcFolder, &idx );

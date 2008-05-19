@@ -872,8 +872,6 @@ private:
   bool mReadyToShow :1;
   bool mComplete :1;
   bool mIsParsed :1;
-  static const KMail::HeaderStrategy * sHeaderStrategy;
-  static QString sForwardStr;
   const QTextCodec * mOverrideCodec;
 
   QString mFileName;
@@ -886,7 +884,6 @@ private:
   KMMessage* mUnencryptedMsg;
   DwBodyPart* mLastUpdated;
   int mCursorPos;
-  static QList<KMMessage*> sPendingDeletes;
 };
 
 

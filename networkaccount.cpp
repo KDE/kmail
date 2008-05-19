@@ -45,11 +45,11 @@ namespace KMail {
 
 
  // for restricting number of concurrent connections to the same server
-  static QMap<QString, int> s_serverConnections;
+  typedef QHash<QString, int> ServerConnectionsHash;
+  K_GLOBAL_STATIC( ServerConnectionsHash, s_serverConnections )
 
   NetworkAccount::NetworkAccount( AccountManager * parent, const QString & name, uint id )
     : KMAccount( parent, name, id ),
-      mSlave( 0 ),
       mAuth( "*" ),
       mPort( 0 ),
       mStorePasswd( false ),
@@ -348,20 +348,21 @@ namespace KMail {
       mCheckingMail = checking;
       if ( host().isEmpty() )
           return;
+    ServerConnectionsHash::Iterator serverConnectionsIt( s_serverConnections->find( host() ) );
     if ( checking ) {
-        if ( s_serverConnections.find( host() ) != s_serverConnections.end() )
-            s_serverConnections[host()] += 1;
+        if ( serverConnectionsIt != s_serverConnections->end() )
+            *serverConnectionsIt += 1;
         else
-            s_serverConnections[host()] = 1;
+            s_serverConnections->insert( host(), 1 );
         kDebug(5006) <<"check mail started - connections for host"
                 << host() << "now is"
-                << s_serverConnections[host()];
+                << s_serverConnections->value( host() );
     } else {
-            if ( s_serverConnections.find( host() ) != s_serverConnections.end() &&
-                s_serverConnections[host()] > 0 ) {
-                s_serverConnections[host()] -= 1;
+            if ( serverConnectionsIt != s_serverConnections->end() &&
+                *serverConnectionsIt > 0 ) {
+                *serverConnectionsIt -= 1;
                 kDebug(5006) <<"connections to server" << host()
-                        << "now" << s_serverConnections[host()];
+                        << "now" << *serverConnectionsIt;
             }
     }
 }
@@ -370,14 +371,15 @@ namespace KMail {
   {
       bool offlineMode = KMKernel::isOffline();
 
+      ServerConnectionsHash::Iterator serverConnectionsIt( s_serverConnections->find( host() ) );
       kDebug(5006) <<"for host" << host()
               << "current connections="
-              << (s_serverConnections.find(host())==s_serverConnections.end() ? 0 : s_serverConnections[host()])
+              << (serverConnectionsIt==s_serverConnections->end() ? 0 : *serverConnectionsIt)
               << "and limit is" << GlobalSettings::self()->maxConnectionsPerHost();
       bool connectionLimitForHostReached = !host().isEmpty()
               && GlobalSettings::self()->maxConnectionsPerHost() > 0
-              && s_serverConnections.find( host() ) != s_serverConnections.end()
-              && s_serverConnections[host()] >= GlobalSettings::self()->maxConnectionsPerHost();
+              && serverConnectionsIt!=s_serverConnections->end()
+              && *serverConnectionsIt >= GlobalSettings::self()->maxConnectionsPerHost();
       kDebug(5006) <<"connection limit reached:"
               << connectionLimitForHostReached;
 
@@ -386,7 +388,7 @@ namespace KMail {
 
   void NetworkAccount::resetConnectionList( NetworkAccount* acct )
   {
-    s_serverConnections[ acct->host() ] = 0;
+    s_serverConnections->remove( acct->host() );
   }
 
 } // namespace KMail

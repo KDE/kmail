@@ -56,9 +56,8 @@ public:
   /// Create a scheduled task for a given folder
   /// If @p immediate is true, the scheduler will run this task as soon
   /// as possible (but won't interrupt a currently running job for it)
-  ScheduledTask( KMFolder* folder, bool immediate )
-    : mCurrentFolder( folder ), mImmediate( immediate ) {}
-  virtual ~ScheduledTask() {}
+  ScheduledTask( KMFolder* folder, bool immediate );
+  virtual ~ScheduledTask();
 
   /// Run this task, i.e. create a job for it.
   /// Important: the job's execute() method must either call open() on the
@@ -143,6 +142,7 @@ class ScheduledJob : public FolderJob
 {
 public:
   ScheduledJob( KMFolder* folder, bool immediate );
+  ~ScheduledJob();
 
   bool isOpeningFolder() const { return mOpeningFolder; }
 

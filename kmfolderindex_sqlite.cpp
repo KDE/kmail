@@ -206,10 +206,12 @@ bool KMFolderIndex::readIndex()
   const char selectSql[] = "SELECT id, data FROM messages";
   int result = sqlite3_prepare_v2( mIndexDb, selectSql, -1, &pStmt, 0 );
   bool ok = true;
+  QList<sqlite3_int64> rowsToDelete; // rows with 0 serial number to delete later
   if( result != SQLITE_OK ) {
     ok = false;
     kWarning() << "sqlite3_prepare_v2() error: sql=" << selectSql << errorMessage( result, mIndexDb );
   }
+  kDebug( Test1Area ) << fileName();
   while ( ok ) {
     result = sqlite3_step( pStmt );
     if ( result == SQLITE_DONE )
@@ -239,6 +241,12 @@ bool KMFolderIndex::readIndex()
         ++mUnreadMsgs;
     }
     mMsgList.append(mi, false);
+    kDebug( Test1Area ) << "getMsgSerNum:" << mi->getMsgSerNum();
+    if ( mi->getMsgSerNum() == 0 ) {
+      kDebug() << "mi->getMsgSerNum() == 0: let's rebuild the index";
+      rowsToDelete.append( dbId );
+      break;
+    }
   } // while
 
   if ( pStmt ) {
@@ -248,71 +256,73 @@ bool KMFolderIndex::readIndex()
       kWarning() << "sqlite3_reset() error " << errorMessage( result, mIndexDb );
     }
     result = sqlite3_finalize( pStmt );
+    if ( result == SQLITE_OK && prevResult != SQLITE_OK )
+      result = prevResult; // rollback if sqlite3_finalize() or prev. command failed
+  }
+
+  mTotalMsgs = mMsgList.count();
+  if ( ok )
+    ok = deleteIndexRows( rowsToDelete );
+
+  return ok;
+}
+
+bool KMFolderIndex::deleteIndexRows( const QList<sqlite3_int64>& rowsToDelete )
+{
+  if ( rowsToDelete.isEmpty() )
+    return true;
+
+  if ( !executeQuery( mIndexDb, "BEGIN" ) )
+    return false;
+  // We're preparing both versions of statements because regardless of the mode
+  // both could be used.
+  const char sqlDelete[] = "DELETE FROM messages WHERE id=?";
+  sqlite3_stmt *pDeleteStmt = 0;
+  int result = sqlite3_prepare_v2( mIndexDb, sqlDelete, -1, &pDeleteStmt, 0 );
+  if( result != SQLITE_OK ) {
+    kWarning() << "sqlite3_prepare_v2() error: sql=" << sqlDelete << errorMessage( result, mIndexDb );
+  }
+  if( result == SQLITE_OK ) {
+    result = sqlite3_prepare_v2( mIndexDb, sqlDelete, -1, &pDeleteStmt, 0 );
+    if( result != SQLITE_OK ) {
+      kWarning() << "sqlite3_prepare_v2() error: sql=" << sqlDelete << errorMessage( result, mIndexDb );
+    }
+  }
+  if( result == SQLITE_OK ) {
+    QList<sqlite3_int64>::ConstIterator constEnd( rowsToDelete.constEnd() );
+    for ( QList<sqlite3_int64>::ConstIterator it( rowsToDelete.constBegin() ); it != constEnd; ++it ) {
+      result = sqlite3_bind_int64( pDeleteStmt, 1, *it ); // bind existing id value
+      if ( result != SQLITE_OK ) {
+        kWarning() << "sqlite3_bind_int64() error " << errorMessage( result, mIndexDb );
+        break;
+      }
+      result = sqlite3_step(pDeleteStmt);
+      if ( result != SQLITE_DONE ) {
+        kWarning() << "sqlite3_step() error " << errorMessage( result, mIndexDb );
+        break;
+      }
+      result = sqlite3_reset(pDeleteStmt);
+      if ( result != SQLITE_OK ) {
+        kWarning() << "sqlite3_reset() error " << errorMessage( result, mIndexDb );
+        break;
+      }
+    }
+  }
+  // free the resources
+  if ( pDeleteStmt ) {
+    int prevResult = result;
+    result = sqlite3_finalize( pDeleteStmt );
     if( result == SQLITE_OK && prevResult != SQLITE_OK )
       result = prevResult; // rollback if sqlite3_finalize() or prev. command failed
   }
-/*  if ( result != SQLITE_OK ) {
+
+  // commit or rollback
+  if ( result != SQLITE_OK ) {
     executeQuery( mIndexDb, "ROLLBACK" );
     return false;
-  }*/
-
-/*old impl:
-  while (!feof(mIndexStream))
-  {
-    mi = 0;
-    if(version >= 1505) {
-      if(!fread(&len, sizeof(len), 1, mIndexStream))
-        break;
-
-      if (mIndexSwapByteOrder)
-        len = kmail_swap_32(len);
-
-      off_t offs = KDE_ftell(mIndexStream);
-      if(KDE_fseek(mIndexStream, len, SEEK_CUR))
-        break;
-      mi = new KMMsgInfo(folder(), offs, len);
-    }
-    else
-    {
-      QByteArray line( MAX_LINE, '\0' );
-      fgets(line.data(), MAX_LINE, mIndexStream);
-      if (feof(mIndexStream)) break;
-      if (*line.data() == '\0') {
-        fclose(mIndexStream);
-        KMailStorageInternalsDebug << "fclose(mIndexStream = " << mIndexStream << ")";
-        mIndexStream = 0;
-        clearIndex();
-        return false;
-      }
-      mi = new KMMsgInfo(folder());
-      mi->compat_fromOldIndexString(line, mConvertToUtf8);
-    }
-    if(!mi)
-      break;
-
-    if (mi->status().isDeleted())
-    {
-      delete mi;  // skip messages that are marked as deleted
-      setDirty( true );
-      needsCompact = true;  //We have deleted messages - needs to be compacted
-      continue;
-    }
-    if ((mi->status().isNew()) || (mi->status().isUnread()) ||
-        (folder() == kmkernel->outboxFolder()))
-    {
-      ++mUnreadMsgs;
-      if (mUnreadMsgs == 0) ++mUnreadMsgs;
-    }
-    mMsgList.append(mi, false);
-  }*/
-
-/*  if( version < 1505)
-  {
-    mConvertToUtf8 = false;
-    setDirty( true );
-    writeIndex();
-  }*/
-  mTotalMsgs = mMsgList.count();
+  }
+  if ( !executeQuery( mIndexDb, "COMMIT" ) )
+    return false;
   return true;
 }
 
