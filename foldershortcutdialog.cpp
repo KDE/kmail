@@ -81,11 +81,7 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   mKeySeqWidget->setKeySequence( folder->shortcut().primary(),
                                  KKeySequenceWidget::NoValidate );
-#if KDE_IS_VERSION(4,0,60)
   mKeySeqWidget->setCheckActionCollections( mMainWidget->actionCollections() );
-#else
-  mKeySeqWidget->setCheckActionList( mMainWidget->actionList() );
-#endif
 }
 
 FolderShortcutDialog::~FolderShortcutDialog()

@@ -1700,7 +1700,6 @@ void KMMessage::initHeader( uint id )
   setSubject("");
   setDateToday();
 
-#if KDE_IS_VERSION(4,0,60)
   // user agent, e.g. KMail/1.9.50 (Windows/5.0; KDE/3.97.1; i686; svn-762186; 2008-01-15)
   QStringList extraInfo;
 # if defined KMAIL_SVN_REVISION_STRING && defined KMAIL_SVN_LAST_CHANGE
@@ -1709,18 +1708,6 @@ void KMMessage::initHeader( uint id )
   setHeaderField("User-Agent",
     KProtocolManager::userAgentForApplication( "KMail", KMAIL_VERSION, extraInfo )
   );
-#else
-  // <FIXME remove later for KDE < 4.0.60 (jstaniek) >
-  // user agent, e.g. KMail/1.9.50 (KDE/3.97.1; svn-762186; 2008-01-15)
-  setHeaderField("User-Agent", QString::fromLatin1("KMail/" KMAIL_VERSION " (KDE/%1.%2.%3")
-    .arg( KDE::versionMajor() ).arg( KDE::versionMinor() ).arg( KDE::versionRelease() )
-# if defined KMAIL_SVN_REVISION_STRING && defined KMAIL_SVN_LAST_CHANGE
-    + "; " KMAIL_SVN_REVISION_STRING "; " KMAIL_SVN_LAST_CHANGE
-# endif
-    + ")"
-  );
-  // </FIXME>
-#endif
 
   // This will allow to change Content-Type:
   setHeaderField("Content-Type","text/plain");

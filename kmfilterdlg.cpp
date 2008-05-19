@@ -257,13 +257,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
       gl->addWidget( mKeySeqWidget, 7, 3, 1, 1);
       mKeySeqWidget->setEnabled( false );
-#if KDE_IS_VERSION(4,0,60)
       mKeySeqWidget->setCheckActionCollections(
                              kmkernel->getKMMainWidget()->actionCollections() );
-#else
-      mKeySeqWidget->setCheckActionList(
-                             kmkernel->getKMMainWidget()->actionList() );
-#endif
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
       gl->addWidget( mConfigureToolbar, 8, 0, 1, 4 );
       mConfigureToolbar->setEnabled( false );
