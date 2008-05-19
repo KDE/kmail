@@ -69,7 +69,7 @@ void ListJob::execute()
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
   {
     kWarning(5006) <<"ListJob - got no connection";
-    delete this;
+    deleteLater();
     return;
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
@@ -88,7 +88,7 @@ void ListJob::execute()
       mPath = static_cast<KMFolderCachedImap*>(mStorage)->imapPath();
     } else {
       kError(5006) <<"ListJob - no valid path and no folder given";
-      delete this;
+      deleteLater();
       return;
     }
   }
@@ -106,9 +106,9 @@ void ListJob::execute()
                         mType == ImapAccountBase::ListFolderOnlySubscribed );
   jd.path = mPath;
   jd.curNamespace = mNamespace;
-  QString status = mDestFolder ? mDestFolder->prettyUrl() : QString();
   if ( mParentProgressItem )
   {
+    QString status = mDestFolder ? mDestFolder->prettyUrl() : QString();
     jd.progressItem = ProgressManager::createProgressItem(
         mParentProgressItem,
         "ListDir" + ProgressManager::getUniqueID(),
@@ -157,7 +157,7 @@ void ListJob::slotConnectionResult( int errorCode, const QString& errorMsg )
   else {
     if ( mParentProgressItem )
       mParentProgressItem->setComplete();
-    delete this;
+    deleteLater();
   }
 }
 
@@ -166,7 +166,7 @@ void ListJob::slotListResult( KJob* job )
   ImapAccountBase::JobIterator it = mAccount->findJob( static_cast<KIO::Job *>(job) );
   if ( it == mAccount->jobsEnd() )
   {
-    delete this;
+    deleteLater();
     return;
   }
   if ( job->error() )
@@ -181,7 +181,7 @@ void ListJob::slotListResult( KJob* job )
         mSubfolderMimeTypes, mSubfolderAttributes, *it );
     mAccount->removeJob( it );
   }
-  delete this;
+  deleteLater();
 }
 
 void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
@@ -189,13 +189,13 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   ImapAccountBase::JobIterator it = mAccount->findJob( job );
   if ( it == mAccount->jobsEnd() )
   {
-    delete this;
+    deleteLater();
     return;
   }
   if( (*it).progressItem )
     (*it).progressItem->setProgress( 50 );
-  for ( KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
-        udsIt != uds.end(); udsIt++ )
+  for ( KIO::UDSEntryList::ConstIterator udsIt = uds.constBegin();
+        udsIt != uds.constEnd(); udsIt++ )
   {
     // get the needed information
     const QString name = udsIt->stringValue( KIO::UDSEntry::UDS_NAME );
@@ -214,7 +214,7 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
       // Some servers send _lots_ of duplicates
       // This check is too slow for huge lists
       if ( mSubfolderPaths.count() > 100 ||
-           mSubfolderPaths.indexOf(url.path()) == -1 )
+           !mSubfolderPaths.contains(url.path()) )
       {
         mSubfolderNames.append( name );
         mSubfolderPaths.append( url.path() );

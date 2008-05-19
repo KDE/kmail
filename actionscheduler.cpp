@@ -382,7 +382,7 @@ void ActionScheduler::finish()
     mExecutingLock = false;
     emit result( aResult );
     if (mAutoDestruct)
-      delete this;
+      deleteLater();
   }
   // else a message may be in the process of being fetched or filtered
   // wait until both of these commitments are finished  then this

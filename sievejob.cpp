@@ -198,7 +198,7 @@ namespace KMail {
 	emit gotScript( this, false, mScript, mUrl.fileName() == mActiveScriptName );
 
       mJob = 0;
-      delete this;
+      deleteLater();
       return;
     }
 
@@ -220,7 +220,7 @@ namespace KMail {
 	emit gotScript( this, true, mScript, mUrl.fileName() == mActiveScriptName );
 
       mJob = 0; // deletes itself on returning from this slot
-      delete this;
+      deleteLater();
       return;
     } else {
       // schedule the next command:
