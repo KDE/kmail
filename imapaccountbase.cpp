@@ -1299,8 +1299,8 @@ void ImapAccountBase::setImapSeenStatus(KMFolder * folder, const QString & path,
    ImapAccountBase::jobData jd( url.url(), folder );
    jd.path = path;
    insertJob(job, jd);
-   connect(job, SIGNAL(result(KIO::Job *)),
-           SLOT(slotSetStatusResult(KIO::Job *)));
+   connect(job, SIGNAL(result(KJob *)),
+           SLOT(slotSetStatusResult(KJob *)));
 }
 
 //-----------------------------------------------------------------------------
