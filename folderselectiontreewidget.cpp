@@ -130,12 +130,14 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
 
   mFilter = QString();
 
+  setUpdatesEnabled( false );
   for (
          KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( mFolderTree->firstChild() ) ;
          fti;
          fti = static_cast<KMFolderTreeItem *>( fti->nextSibling() )
      )
      recursiveReload( fti, 0 );
+  setUpdatesEnabled( true );
 
   if ( preSelection.isEmpty() )
     return; // nothing more to do
