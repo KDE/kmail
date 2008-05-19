@@ -787,8 +787,15 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         // if no 'href' is found or the distance between 'href' and '"http[s]:'
         // is larger than 7 (7 is the distance in 'href = "http[s]:') then
         // we assume that we have found an external reference
-        if ( ( hrefPos == -1 ) || ( pos - hrefPos > 7 ) )
-          return true;
+        if ( ( hrefPos == -1 ) || ( pos - hrefPos > 7 ) ) {
+
+          // HTML messages created by KMail itself for now contain the following:
+          // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+          // Make sure not to show an external references warning for this string
+          int dtdPos = str.indexOf( "http://www.w3.org/TR/REC-html40/strict.dtd", pos + 1 );
+          if ( dtdPos != ( pos + 1 ) )
+            return true;
+        }
       }
       // find next occurrence of "http: or "https:
       if ( pos == httpPos ) {
