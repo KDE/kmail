@@ -145,7 +145,7 @@ namespace KMail {
     struct jobData
     {
       // Needed by QMap, don't use
-      jobData() : url(QString()), parent(0), current(0), total(1), done(0), offset(0), progressItem(0),
+      jobData() : parent(0), current(0), total(1), done(0), offset(0), progressItem(0),
                   onlySubscribed(false), quiet(false), cancellable(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
@@ -164,7 +164,7 @@ namespace KMail {
       QList<KMMessage*> msgList;
       int total, done, offset;
       KPIM::ProgressItem *progressItem;
-      bool onlySubscribed, quiet, cancellable;
+      bool onlySubscribed : 1, quiet : 1, cancellable : 1;
     };
 
     typedef QMap<KJob *, jobData>::Iterator JobIterator;
