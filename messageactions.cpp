@@ -81,7 +81,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
            this, SLOT(slotNoQuoteReplyToMsg()) );
 
 
-  mCreateTodoAction = new KAction( KIcon("view-pim-tasks"), i18n("Create To-do/Reminder..."), this );
+  mCreateTodoAction = new KAction( KIcon("task-new"), i18n("Create To-do/Reminder..."), this );
   mCreateTodoAction->setIconText( i18n( "Create To-do" ) );
   mActionCollection->addAction( "create_todo", mCreateTodoAction );
   connect( mCreateTodoAction, SIGNAL(activated()),
