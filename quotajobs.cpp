@@ -125,6 +125,10 @@ void QuotaJobs::GetStorageQuotaJob::slotQuotarootResult( const QStringList& root
     }
     if ( mStorageQuotaInfo.isValid() )
       emit storageQuotaResult( mStorageQuotaInfo );
+    // Our subjob is done for all we care although it technically isn't yet (we would need to wait
+    // for its finished() signal), however our dtor will cancel all still running subjobs which kills
+    // the slave, so detach our subjob and let it cleanup itself.
+    clearSubjobs();
     emitResult();
 }
 
