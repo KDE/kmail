@@ -62,8 +62,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 
-  QVBoxLayout *topLayout = new QVBoxLayout();
-  layout()->addItem( topLayout );
+  QVBoxLayout *topLayout = new QVBoxLayout( mainWidget() );
   topLayout->setObjectName( "topLayout" );
   topLayout->setSpacing( spacingHint() );
 
