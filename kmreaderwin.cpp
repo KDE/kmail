@@ -444,12 +444,6 @@ void KMReaderWin::createWidgets() {
   mColorBar->setObjectName( "mColorBar" );
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
-
-  // work-around for a scrolling bug
-  // see http://bugs.kde.org/show_bug.cgi?id=161148
-  mViewer->view()->setSmoothScrollingMode( KHTMLView::SSMDisabled );
-
-  mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
 }
 
