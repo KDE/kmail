@@ -92,7 +92,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   label = new QLabel( i18n("Mailing list description:"), mlGroup );
   label->setEnabled( false );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-		    label, SLOT(setEnabled(bool)) );
+                    label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 4, 0 );
   mMLId = new QLabel( "", mlGroup );
   mMLId->setBuddy( label );
@@ -103,7 +103,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   label = new QLabel( i18n("Preferred handler:"), mlGroup );
   label->setEnabled(false);
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-		    label, SLOT(setEnabled(bool)) );
+                    label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 5, 0 );
   mMLHandlerCombo = new QComboBox( mlGroup );
   mMLHandlerCombo->addItem( i18n("KMail"), MailingList::KMail );
@@ -117,7 +117,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   label = new QLabel( i18n("&Address type:"), mlGroup );
   label->setEnabled(false);
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-		    label, SLOT(setEnabled(bool)) );
+                    label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 6, 0 );
   mAddressCombo = new QComboBox( mlGroup );
   label->setBuddy( mAddressCombo );
@@ -131,10 +131,10 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   handleButton->setEnabled( false );
   if( mFolder)
   {
-  	QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-			    handleButton, SLOT(setEnabled(bool)) );
-  	QObject::connect( handleButton, SIGNAL(clicked()),
-                    SLOT(slotInvokeHandler()) );
+    QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+                      handleButton, SLOT(setEnabled(bool)) );
+    QObject::connect( handleButton, SIGNAL(clicked()),
+                      SLOT(slotInvokeHandler()) );
   }
   groupLayout->addWidget( handleButton, 6, 2 );
 
@@ -167,7 +167,8 @@ void MailingListFolderPropertiesDialog::slotOk()
 
 void MailingListFolderPropertiesDialog::load()
 {
-  if (mFolder) mMailingList = mFolder->mailingList();
+  if ( mFolder )
+    mMailingList = mFolder->mailingList();
   mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available") : mMailingList.id()) );
   mMLHandlerCombo->setCurrentIndex( mMailingList.handler() );
   mEditList->insertStringList( mMailingList.postURLS().toStringList() );
@@ -349,7 +350,8 @@ void MailingListFolderPropertiesDialog::slotInvokeHandler()
   default:
     kWarning( 5006 )<<"Wrong entry in the mailing list entry combo!";
   }
-  if ( command ) command->start();
+  if ( command )
+    command->start();
 }
 
 #include "mailinglistpropertiesdialog.moc"
