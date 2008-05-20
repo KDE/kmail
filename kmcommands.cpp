@@ -2593,7 +2593,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       size_t size = cstr.size();
       if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
         // convert CRLF to LF before writing text attachments to disk
-        size = KMail::Util::crlf2lf( cstr.data(), size );
+        size = KMail::Util::crlf2lf( data.data(), size );
       }
       data.resize( size );
     }
