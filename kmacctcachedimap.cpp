@@ -127,7 +127,7 @@ QList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disconnec
     if ((*it).parent)
       folderList << static_cast<KMFolderCachedImap*>((*it).parent->storage());
     // Kill the job - except if it's the one that already died and is calling us
-    if ( !it.key()->error() && mSlave ) {
+    if ( mSlave && !it.key()->error() ) {
       it.key()->kill();
       mSlave = 0; // killing a job, kills the slave
     }
