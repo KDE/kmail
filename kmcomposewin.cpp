@@ -3807,7 +3807,7 @@ void KMComposeWin::enableHtml()
 //-----------------------------------------------------------------------------
 void KMComposeWin::disableHtml()
 {
-  mEditor->toPlainText();
+  mEditor->switchToPlainText();
   slotUpdateFont();
   if ( toolBar( "htmlToolBar" )->isVisible() )
     toolBar( "htmlToolBar" )->hide();
