@@ -99,8 +99,6 @@ QPixmap* KMHeaders::pixUndefinedSigned = 0;
 QPixmap* KMHeaders::pixFullyEncrypted = 0;
 QPixmap* KMHeaders::pixPartiallyEncrypted = 0;
 QPixmap* KMHeaders::pixUndefinedEncrypted = 0;
-QPixmap* KMHeaders::pixEncryptionProblematic = 0;
-QPixmap* KMHeaders::pixSignatureProblematic = 0;
 QPixmap* KMHeaders::pixAttachment = 0;
 QPixmap* KMHeaders::pixReadFwd = 0;
 QPixmap* KMHeaders::pixReadReplied = 0;
@@ -200,8 +198,6 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixFullyEncrypted        = new QPixmap( UserIcon( "mail-encrypted-full"         ) );
     pixPartiallyEncrypted    = new QPixmap( UserIcon( "mail-encrypted-part"         ) );
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "mail-encrypted"              ) );
-    pixEncryptionProblematic = new QPixmap( UserIcon( "mail-problematic-encryption" ) );
-    pixSignatureProblematic  = new QPixmap( UserIcon( "mail-problematic-signature"  ) );
     pixAttachment            = new QPixmap( SmallIcon( "mail-attachment"            ) );
     pixReadFwd               = new QPixmap( UserIcon( "mail-forwarded"              ) );
     pixReadReplied           = new QPixmap( UserIcon( "mail-replied"                ) );

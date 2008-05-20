@@ -236,7 +236,6 @@ const QPixmap *HeaderItem::cryptoIcon(KMMsgBase *msgBase) const
     case KMMsgFullyEncrypted        : return KMHeaders::pixFullyEncrypted;
     case KMMsgPartiallyEncrypted    : return KMHeaders::pixPartiallyEncrypted;
     case KMMsgEncryptionStateUnknown: return KMHeaders::pixUndefinedEncrypted;
-    case KMMsgEncryptionProblematic : return KMHeaders::pixEncryptionProblematic;
     default                         : return 0;
   }
 }
@@ -248,7 +247,6 @@ const QPixmap *HeaderItem::signatureIcon(KMMsgBase *msgBase) const
     case KMMsgFullySigned          : return KMHeaders::pixFullySigned;
     case KMMsgPartiallySigned      : return KMHeaders::pixPartiallySigned;
     case KMMsgSignatureStateUnknown: return KMHeaders::pixUndefinedSigned;
-    case KMMsgSignatureProblematic : return KMHeaders::pixSignatureProblematic;
     default                        : return 0;
   }
 }

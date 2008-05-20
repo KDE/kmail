@@ -302,8 +302,7 @@ protected:
     *pixQueued, *pixFwd, *pixFlag, *pixWatched, *pixIgnored, *pixSpam, *pixHam,
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
-    *pixFiller, *pixEncryptionProblematic,
-    *pixSignatureProblematic, *pixAttachment,
+    *pixFiller, *pixAttachment,
     *pixReadFwd, *pixReadReplied, *pixReadFwdReplied,*pixTodo;
 
   /** Look for color changes */
