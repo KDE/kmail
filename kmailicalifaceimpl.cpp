@@ -1296,7 +1296,7 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
 // Find message matching a given serial number
 KMMessage *KMailICalIfaceImpl::findMessageBySerNum( quint32 serNum, KMFolder* folder )
 {
-  if( !folder ) return 0;
+  if( !folder || serNum == 0 ) return 0;
 
   KMMessage *message = 0;
   KMFolder* aFolder = 0;
