@@ -31,6 +31,7 @@ using KMail::RuleWidgetHandlerManager;
 #include <QButtonGroup>
 #include <QByteArray>
 #include <QComboBox>
+#include <QHBoxLayout>
 #include <QRadioButton>
 
 #include <assert.h>
