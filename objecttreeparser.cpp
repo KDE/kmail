@@ -104,6 +104,7 @@ using KPIMUtils::LinkLocator;
 #include <QBuffer>
 #include <QPixmap>
 #include <QPainter>
+#include <QPointer>
 
 // other headers
 #include <sys/stat.h>
@@ -449,7 +450,7 @@ namespace KMail {
         if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
-          messagePart.auditLog = job->auditLogAsHtml();
+          messagePart.auditLog = executor.auditLogAsHtml();
         } else {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
@@ -457,7 +458,7 @@ namespace KMail {
         if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
-          messagePart.auditLog = job->auditLogAsHtml();
+          messagePart.auditLog = executor.auditLogAsHtml();
         } else {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }

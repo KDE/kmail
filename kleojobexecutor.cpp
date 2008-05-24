@@ -28,6 +28,8 @@
 #include <QBuffer>
 #include <QEventLoop>
 
+#include <cassert>
+
 using namespace KMail;
 using namespace Kleo;
 using namespace GpgME;
@@ -104,15 +106,21 @@ GpgME::ImportResult KleoJobExecutor::exec(Kleo::ImportJob* job, const QByteArray
 void KleoJobExecutor::verificationResult(const GpgME::VerificationResult & result)
 {
   kDebug() << "Detached verification job finished";
+  Kleo::Job * job = dynamic_cast<Kleo::Job*>( sender() );
+  assert(job);
   mVerificationResult = result;
+  mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
 }
 
 void KleoJobExecutor::verificationResult(const GpgME::VerificationResult & result, const QByteArray & plainText)
 {
   kDebug() << "Opaque verification job finished";
+  Kleo::Job * job = dynamic_cast<Kleo::Job*>( sender() );
+  assert(job);
   mVerificationResult = result;
   mData = plainText;
+  mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
 }
 
@@ -122,16 +130,28 @@ void KleoJobExecutor::decryptResult(
     const QByteArray & plainText )
 {
   kDebug() << "Decryption job finished";
+  Kleo::Job * job = dynamic_cast<Kleo::Job*>( sender() );
+  assert(job);
   mVerificationResult = verificationresult;
   mDecryptResult = decryptionresult;
   mData = plainText;
+  mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
 }
 
 void KleoJobExecutor::importResult(const GpgME::ImportResult & result)
 {
+  Kleo::Job * job = dynamic_cast<Kleo::Job*>( sender() );
+  assert(job);
   mImportResult = result;
+  mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
+}
+
+
+QString KleoJobExecutor::auditLogAsHtml() const
+{
+    return mAuditLog;
 }
 
 #include "kleojobexecutor.moc"

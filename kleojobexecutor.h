@@ -58,6 +58,8 @@ class KleoJobExecutor : public QObject
                                                                        QByteArray &plainText );
     GpgME::ImportResult exec( Kleo::ImportJob* job, const QByteArray &certData );
 
+    QString auditLogAsHtml() const;
+
   private slots:
     void verificationResult( const GpgME::VerificationResult &result );
     void verificationResult( const GpgME::VerificationResult &result, const QByteArray &plainText );
@@ -72,6 +74,7 @@ class KleoJobExecutor : public QObject
     GpgME::DecryptionResult mDecryptResult;
     GpgME::ImportResult mImportResult;
     QByteArray mData;
+    QString mAuditLog;
 };
 
 }
