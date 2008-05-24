@@ -143,24 +143,8 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
      recursiveReload( fti, 0 );
   //setUpdatesEnabled( true );
 
-  if ( preSelection.isEmpty() )
-    return; // nothing more to do
-
-  QTreeWidgetItemIterator it( this );
-  while ( FolderSelectionTreeWidgetItem * fitem = static_cast<FolderSelectionTreeWidgetItem *>( *it ) )
-  {
-    if ( fitem->folder() ) {
-      if ( fitem->folder()->idString() == preSelection ) {
-        // found
-        fitem->setSelected( true );
-        scrollToItem( fitem );
-        setCurrentItem( fitem );
-        return;
-      }
-    }
-    ++it;
-  }
-
+  if ( !preSelection.isEmpty() )
+    setFolder( preSelection );
 }
 
 KMFolder * FolderSelectionTreeWidget::folder() const
@@ -182,6 +166,7 @@ void FolderSelectionTreeWidget::setFolder( KMFolder *folder )
     {
       ( *it )->setSelected( true );
       scrollToItem( *it );
+      setCurrentItem( *it );
       return;
     }
   }
