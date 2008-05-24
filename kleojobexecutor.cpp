@@ -151,7 +151,7 @@ void KleoJobExecutor::importResult(const GpgME::ImportResult & result)
 
 QString KleoJobExecutor::auditLogAsHtml() const
 {
-    return mAuditLog;
+  return mAuditLog;
 }
 
 #include "kleojobexecutor.moc"
