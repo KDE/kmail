@@ -4370,9 +4370,10 @@ void KMComposeWin::insertSignature( bool append, int pos )
    {
       mEditor->sync();
       if ( append ) {
-       mEditor->append(mOldSigText);
+        mEditor->setText( mEditor->text() + mOldSigText );
     } else {
-       mEditor->insertAt(mOldSigText, pos, 0);
+        mOldSigText = "\n\n"+mOldSigText+"\n";
+        mEditor->insertAt(mOldSigText, pos, 0);
     }
     mEditor->update();
     mEditor->setModified(mod);

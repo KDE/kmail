@@ -515,10 +515,11 @@ QString TemplatesConfiguration::defaultNewMessage() {
 
 QString TemplatesConfiguration::defaultReply() {
   return i18n(
+    "%CURSOR\n"
+    "%BLANK\n"
     "%REM=\"Default reply template\"%-\n"
     "On %ODATEEN %OTIMELONGEN you wrote:\n"
     "%QUOTE\n"
-    "%CURSOR\n"
     );
 }
 
