@@ -1609,8 +1609,8 @@ void KMFolderTree::slotRenameFolder(Q3ListViewItem *item, int col,
   else
           fldName = oldFldName;
 
-  fldName.replace("/", "");
-  fldName.replace(QRegExp("^\\."), "");
+  fldName.remove( '/' );
+  fldName.remove( QRegExp("^\\.") );
 
   if (fldName.isEmpty())
           fldName = i18n("unnamed");

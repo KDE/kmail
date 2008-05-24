@@ -1201,7 +1201,7 @@ QString FolderStorage::location(const QString& suffix) const
     sLocation += "/.";
   sLocation += dotEscape( fileName() ) + ".index";
   if ( !suffix.isEmpty() ) {
-    sLocation += ".";
+    sLocation += '.';
     sLocation += suffix;
   }
   return sLocation;

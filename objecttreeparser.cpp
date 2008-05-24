@@ -2842,7 +2842,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     {
       // don't write empty <div ...></div> blocks (they have zero height)
       // ignore ^M DOS linebreaks
-      if( !line.replace('\015', "").isEmpty() )
+      if( !line.remove( '\015' ).isEmpty() )
       {
          htmlStr +=QString( "<div dir=\"%1\">" ).arg( line.isRightToLeft() ? "rtl":"ltr" );
          htmlStr += LinkLocator::convertToHtml( line, convertFlags );

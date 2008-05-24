@@ -125,7 +125,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   assert(!aBasePath.isEmpty());
 
   if (aBasePath.startsWith('~'))
-    mBasePath = QDir::homePath() + "/" + aBasePath.mid(1);
+    mBasePath = QDir::homePath() + '/' + aBasePath.mid(1);
   else
     mBasePath = aBasePath;
 

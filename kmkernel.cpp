@@ -147,9 +147,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   // (Introduction to i18n, 6.6 Limit of Locale technology):
   // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
-  // is the standard for Internet, and Shift-JIS is the encoding 
+  // is the standard for Internet, and Shift-JIS is the encoding
   // for Windows and Macintosh.
-  if ( netCodec->name().toLower() == "eucjp" 
+  if ( netCodec->name().toLower() == "eucjp"
 #if defined Q_WS_WIN || defined Q_WS_MACX
     || netCodec->name().toLower() == "shift-jis" // OK?
 #endif
@@ -705,7 +705,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
   int retval;
   bool readFolderMsgIds = false;
   QString _foldername = foldername.trimmed();
-  _foldername = _foldername.replace('\\',""); //try to prevent ESCAPE Sequences
+  _foldername = _foldername.remove( '\\' ); //try to prevent ESCAPE Sequences
 
   if ( foldername != mAddMessageLastFolder ) {
     mAddMessageMsgIds.clear();
@@ -879,7 +879,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
   bool createNewFolder = false;
 
   QString _foldername = foldername.trimmed();
-  _foldername = _foldername.replace('\\',""); //try to prevent ESCAPE Sequences
+  _foldername = _foldername.remove( '\\' ); //try to prevent ESCAPE Sequences
 
   if ( foldername != mAddMessageLastFolder ) {
     createNewFolder = true;

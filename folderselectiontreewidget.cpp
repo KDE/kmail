@@ -87,7 +87,7 @@ void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSe
   // Build the path (ParentItemPath/CurrentItemName)
   QString path;
   if( parent )
-    path = parent->text( mPathColumnIndex ) + "/";
+    path = parent->text( mPathColumnIndex ) + '/';
   path += fti->text( 0 );
 
   item->setText( mNameColumnIndex, fti->text( 0 ) );

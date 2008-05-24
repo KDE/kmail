@@ -1429,7 +1429,7 @@ static QString cleanedUpHeaderString( const QString &s )
 {
   // remove invalid characters from the header strings
   QString res( s );
-  res.replace( '\r', "" );
+  res.remove( '\r' );
   res.replace( '\n', " " );
   return res.trimmed();
 }
