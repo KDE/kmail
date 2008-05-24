@@ -130,14 +130,18 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
 
   mFilter = QString();
 
-  setUpdatesEnabled( false );
+  // Calling setUpdatesEnabled() here causes weird effects (including crashes)
+  // in the folder requester (used by the filtering dialog).
+  // So disable it for now, this makes the folderselection dialog appear much
+  // slower though :(
+  //setUpdatesEnabled( false );
   for (
          KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( mFolderTree->firstChild() ) ;
          fti;
          fti = static_cast<KMFolderTreeItem *>( fti->nextSibling() )
      )
      recursiveReload( fti, 0 );
-  setUpdatesEnabled( true );
+  //setUpdatesEnabled( true );
 
   if ( preSelection.isEmpty() )
     return; // nothing more to do
