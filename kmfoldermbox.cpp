@@ -1192,6 +1192,9 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   // write index entry if desired
   if ( mAutoCreateIndex ) {
 #ifdef KMAIL_SQLITE_INDEX
+    // reset the db id, in case we have one, we are about to change folders
+    // and can't reuse it there
+    aMsg->setDbId( 0 );
 #else
     assert( mIndexStream != 0 );
     clearerr( mIndexStream );
