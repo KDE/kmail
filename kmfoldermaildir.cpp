@@ -403,11 +403,10 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
 */
-  KMFolder* msgParent;
   int idx(-1);
 
   // take message out of the folder it is currently in, if any
-  msgParent = aMsg->parent();
+  KMFolder* msgParent = aMsg->parent();
   if (msgParent)
   {
     if (msgParent==folder() && !kmkernel->folderIsDraftOrOutbox(folder()))
@@ -514,6 +513,9 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   if (mAutoCreateIndex)
   {
 #ifdef KMAIL_SQLITE_INDEX
+    // reset the db id, in case we have one, we are about to change folders
+    // and can't reuse it there
+    aMsg->setDbId( 0 );
 #else
     assert(mIndexStream != 0);
     clearerr(mIndexStream);
