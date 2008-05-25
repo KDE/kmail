@@ -525,10 +525,11 @@ QString TemplatesConfiguration::defaultReply() {
 
 QString TemplatesConfiguration::defaultReplyAll() {
   return i18n(
+    "%CURSOR\n"
+    "%BLANK\n"
     "%REM=\"Default reply all template\"%-\n"
     "On %ODATEEN %OTIMELONGEN %OFROMNAME wrote:\n"
     "%QUOTE\n"
-    "%CURSOR\n"
     );
 }
 
