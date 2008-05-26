@@ -182,26 +182,26 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixUns                   = new QPixmap( SmallIcon( "mail-unread"                ) );
     pixDel                   = new QPixmap( UserIcon( "mail-deleted"                ) );
     pixRead                  = new QPixmap( SmallIcon( "mail-read"                  ) );
-    pixRep                   = new QPixmap( UserIcon( "mail-replied"                ) );
+    pixRep                   = new QPixmap( SmallIcon( "mail-replied"               ) );
     pixQueued                = new QPixmap( SmallIcon( "mail-queued"                ) );
     pixTodo                  = new QPixmap( SmallIcon( "mail-task"                  ) );
     pixSent                  = new QPixmap( UserIcon( "mail-sent"                   ) );
-    pixFwd                   = new QPixmap( UserIcon( "mail-forwarded"              ) );
+    pixFwd                   = new QPixmap( SmallIcon( "mail-forwarded"             ) );
     pixFlag                  = new QPixmap( SmallIcon( "emblem-important"           ) );
     pixWatched               = new QPixmap( UserIcon( "mail-thread-watch"           ) );
     pixIgnored               = new QPixmap( UserIcon( "mail-thread-ignored"         ) );
     pixSpam                  = new QPixmap( UserIcon( "mail-mark-junk"              ) );
     pixHam                   = new QPixmap( SmallIcon( "mail-mark-notjunk"          ) );
-    pixFullySigned           = new QPixmap( UserIcon( "mail-signed-verified"        ) );
-    pixPartiallySigned       = new QPixmap( UserIcon( "mail-signed-part"            ) );
-    pixUndefinedSigned       = new QPixmap( UserIcon( "mail-signed"                 ) );
+    pixFullySigned           = new QPixmap( SmallIcon( "mail-signed-verified"       ) );
+    pixPartiallySigned       = new QPixmap( SmallIcon( "mail-signed-part"           ) );
+    pixUndefinedSigned       = new QPixmap( SmallIcon( "mail-signed"                ) );
     pixFullyEncrypted        = new QPixmap( UserIcon( "mail-encrypted-full"         ) );
     pixPartiallyEncrypted    = new QPixmap( UserIcon( "mail-encrypted-part"         ) );
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "mail-encrypted"              ) );
     pixAttachment            = new QPixmap( SmallIcon( "mail-attachment"            ) );
-    pixReadFwd               = new QPixmap( UserIcon( "mail-forwarded"              ) );
-    pixReadReplied           = new QPixmap( UserIcon( "mail-replied"                ) );
-    pixReadFwdReplied        = new QPixmap( UserIcon( "mail-forwarded-replied"      ) );
+    pixReadFwd               = new QPixmap( SmallIcon( "mail-forwarded"              ) );
+    pixReadReplied           = new QPixmap( SmallIcon( "mail-replied"                ) );
+    pixReadFwdReplied        = new QPixmap( SmallIcon( "mail-forwarded-replied"      ) );
   }
 
   header()->setStretchEnabled( false );
