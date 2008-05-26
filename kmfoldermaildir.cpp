@@ -52,7 +52,7 @@ using KMail::MaildirJob;
 
 using KPIMUtils::removeDirAndContentsRecursively;
 
-// A separator for "uniq:info" (see the original maildir specification 
+// A separator for "uniq:info" (see the original maildir specification
 // at http://cr.yp.to/proto/maildir.html.
 // Windows uses '!' charater instead as ':' is not supported by the OS.
 // TODO make it configurable - jstaniek
@@ -516,6 +516,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     // reset the db id, in case we have one, we are about to change folders
     // and can't reuse it there
     aMsg->setDbId( 0 );
+    aMsg->setDirty( true );
 #else
     assert(mIndexStream != 0);
     clearerr(mIndexStream);
