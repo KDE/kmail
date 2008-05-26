@@ -724,10 +724,10 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                   BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       disconnect(mFolder, SIGNAL(viewConfigChanged()), this, SLOT(reset()));
       writeSortOrder();
-      mFolder->close( "kmheaders" );
       // System folders remain open but we also should write the index from
       // time to time
       if (mFolder->dirty()) mFolder->writeIndex();
+      mFolder->close( "kmheaders" );
     }
 
     mSortInfo.removed = 0;
