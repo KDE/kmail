@@ -71,7 +71,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   if ( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
     msg->setSubject( status );
     QString tsubject = subject;
-    tsubject.replace( i18n( "Answer: " ), "" );
+    tsubject.remove( i18n( "Answer: " ) );
     if ( status == QLatin1String( "cancel" ) ) {
       msg->setSubject( i18n( "Declined: %1", tsubject ) );
     } else if ( status == QLatin1String("tentative") ) {

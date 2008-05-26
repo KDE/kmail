@@ -87,7 +87,7 @@ void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSe
   // Build the path (ParentItemPath/CurrentItemName)
   QString path;
   if( parent )
-    path = parent->text( mPathColumnIndex ) + "/";
+    path = parent->text( mPathColumnIndex ) + '/';
   path += fti->text( 0 );
 
   item->setText( mNameColumnIndex, fti->text( 0 ) );
@@ -130,33 +130,21 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
 
   mFilter = QString();
 
-  setUpdatesEnabled( false );
+  // Calling setUpdatesEnabled() here causes weird effects (including crashes)
+  // in the folder requester (used by the filtering dialog).
+  // So disable it for now, this makes the folderselection dialog appear much
+  // slower though :(
+  //setUpdatesEnabled( false );
   for (
          KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( mFolderTree->firstChild() ) ;
          fti;
          fti = static_cast<KMFolderTreeItem *>( fti->nextSibling() )
      )
      recursiveReload( fti, 0 );
-  setUpdatesEnabled( true );
+  //setUpdatesEnabled( true );
 
-  if ( preSelection.isEmpty() )
-    return; // nothing more to do
-
-  QTreeWidgetItemIterator it( this );
-  while ( FolderSelectionTreeWidgetItem * fitem = static_cast<FolderSelectionTreeWidgetItem *>( *it ) )
-  {
-    if ( fitem->folder() ) {
-      if ( fitem->folder()->idString() == preSelection ) {
-        // found
-        fitem->setSelected( true );
-        scrollToItem( fitem );
-        setCurrentItem( fitem );
-        return;
-      }
-    }
-    ++it;
-  }
-
+  if ( !preSelection.isEmpty() )
+    setFolder( preSelection );
 }
 
 KMFolder * FolderSelectionTreeWidget::folder() const
@@ -178,6 +166,7 @@ void FolderSelectionTreeWidget::setFolder( KMFolder *folder )
     {
       ( *it )->setSelected( true );
       scrollToItem( *it );
+      setCurrentItem( *it );
       return;
     }
   }

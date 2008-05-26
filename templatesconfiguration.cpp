@@ -508,7 +508,7 @@ QString TemplatesConfiguration::defaultReply() {
     "%REM=\"Default reply template\"%-\n"
     "On %ODATEEN %OTIMELONGEN you wrote:\n"
     "%QUOTE\n"
-    "%CURSOR\n"
+    "%CURSOR"
     );
 }
 
@@ -517,7 +517,7 @@ QString TemplatesConfiguration::defaultReplyAll() {
     "%REM=\"Default reply all template\"%-\n"
     "On %ODATEEN %OTIMELONGEN %OFROMNAME wrote:\n"
     "%QUOTE\n"
-    "%CURSOR\n"
+    "%CURSOR"
     );
 }
 
@@ -533,7 +533,7 @@ QString TemplatesConfiguration::defaultForward() {
     "To: %OTOADDR\n"
     "\n"
     "%TEXT\n"
-    "-------------------------------------------------------\n"
+    "-------------------------------------------------------"
     );
 }
 
