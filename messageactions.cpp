@@ -109,10 +109,10 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   action = new KAction( KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this );
   action->setToolTip( i18n("Mark selected messages as unread") );
-  action->setShortcut( Qt::CTRL+Qt::Key_U );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusUnread()) );
   mActionCollection->addAction( "status_unread", action );
+  action->setShortcut( Qt::CTRL+Qt::Key_U );
   mStatusMenu->addAction( action );
 
   mStatusMenu->addSeparator();
