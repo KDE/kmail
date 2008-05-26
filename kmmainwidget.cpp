@@ -3260,12 +3260,14 @@ void KMMainWidget::setupActions()
   //----- Settings Menu
   {
     KAction *action = new KAction(i18n("Configure &Filters..."), this);
+    action->setMenuRole( QAction::NoRole ); // do not move to application menu on OS X
     actionCollection()->addAction("filter", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilter()));
   }
   {
     KAction *action = new KAction(i18n("Configure &POP Filters..."), this);
     actionCollection()->addAction("popFilter", action );
+    action->setMenuRole( QAction::NoRole ); // do not move to application menu on OS X
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPopFilter()));
   }
   {
@@ -3286,6 +3288,7 @@ void KMMainWidget::setupActions()
   {
     KAction *action = new KAction( KIcon("preferences-desktop-notification"),
                                    i18n("Configure &Notifications..."), this );
+    action->setMenuRole( QAction::NoRole ); // do not move to application menu on OS X
     actionCollection()->addAction( "kmail_configure_notifications", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditNotifications()));
   }
