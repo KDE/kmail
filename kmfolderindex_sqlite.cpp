@@ -33,7 +33,7 @@ QString errorMessage( int code, sqlite3* db )
 QString querySingleString( sqlite3* db, const QString& sql, int _column, bool& _result )
 {
   _result = false;
-  if ( !db ) return QString(); 
+  if ( !db ) return QString();
   sqlite3_stmt *pStmt;
   int result = sqlite3_prepare_v2( db, sql.toUtf8().constData(), -1, &pStmt, 0 );
   if ( result != SQLITE_OK ) {
@@ -61,7 +61,7 @@ QString querySingleString( sqlite3* db, const QString& sql, int _column, bool& _
 
 bool executeQuery( sqlite3* db, const char* sql )
 {
-  if ( !db ) return false; 
+  if ( !db ) return false;
   char* errMsg = 0;
   int result = sqlite3_exec( db, sql, 0, 0, &errMsg );
   if( result != SQLITE_OK ){
@@ -104,7 +104,7 @@ int KMFolderIndex::updateIndex()
   if (!mAutoCreateIndex)
     return 0;
   mDirtyTimer->stop();
-  if ( mIndexDb && 
+  if ( mIndexDb &&
 	  (!mDirty || 0 == writeMessages( 0/* all */, UpdateExistingMessages ) ) ) {
       touchFolderIdsFile();
       return 0;
@@ -140,7 +140,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
     if ( indexFile.exists() && !indexFile.remove() )
       return 1;
   }
-  
+
   bool ok = openDatabase( SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE );
   if ( !ok )
     return 1;
@@ -366,7 +366,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
           "The mail index for '%1' is from an unknown version of KMail (%2).\n"
           "This index can be regenerated from your mail folder, but some "
           "information, including status flags, may be lost. Do you wish "
-          "to downgrade your index file?" , objectName() , indexVersion), 
+          "to downgrade your index file?" , objectName() , indexVersion),
           QString(), KGuiItem(i18n("Downgrade")), KGuiItem(i18n("Do Not Downgrade")) );
       QApplication::restoreOverrideCursor();
       if (r == KMessageBox::Yes)
@@ -615,7 +615,7 @@ int KMFolderIndex::writeMessages( KMMsgBase* msg, WriteMessagesMode mode )
       }
       msgBase->setDbId( newId );
     }
-    
+
     result = sqlite3_reset(pStmt);
     if ( result != SQLITE_OK ) {
       kWarning() << "sqlite3_reset() error " << errorMessage( result, mIndexDb );
@@ -649,3 +649,10 @@ int KMFolderIndex::writeMessages( KMMsgBase* msg, WriteMessagesMode mode )
   return 0;
 }
 
+void KMFolderIndex::msgStatusChanged( const MessageStatus& oldStatus,
+                                      const MessageStatus& newStatus,
+                                      int idx )
+{
+  mDirty = true;
+  FolderStorage::msgStatusChanged(oldStatus, newStatus, idx);
+}

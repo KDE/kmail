@@ -36,7 +36,7 @@ struct sqlite3;
  * This class represents a message store which has an index for providing fast
  * access to often used message properties, namely those displayed in the list
  * of messages (KMHeaders).
- * 
+ *
  * @author Don Sanders <sanders@kde.org>
  */
 
@@ -149,17 +149,17 @@ protected:
      * when that has been invalidated. */
   virtual void fillMessageDict();
 
-  /** Writes messages to the index. The stream is flushed if @a flush is true. 
+  /** Writes messages to the index. The stream is flushed if @a flush is true.
    If @a msg is 0, all mesages from mMsgList are written, else only @a is written.
   */
   int writeMessages( KMMsgBase* msg, bool flush = true );
 
-  /** @overload writeMessages( KMMsgBase* msg, bool flush ) 
+  /** @overload writeMessages( KMMsgBase* msg, bool flush )
    Allows to specify index stream to use. */
   int writeMessages( KMMsgBase* msg, bool flush, FILE* indexStream );
 
   /** Opens index stream (or database) without creating it.
-   If @a checkIfIndexTooOld is true, message "The index of folder .. seems 
+   If @a checkIfIndexTooOld is true, message "The index of folder .. seems
    to be out of date" is displayed.
    Called by KMFolderMaildir::open() and KMFolderMbox::open(). */
   int openInternal( OpenInternalOptions options );
@@ -173,8 +173,12 @@ protected:
 
 
 #ifdef KMAIL_SQLITE_INDEX
+  virtual void msgStatusChanged( const MessageStatus& oldStatus,
+                                 const MessageStatus& newStatus,
+                                 int idx);
+
   /** Opens database pointed by indexLocation() filename in mode @a mode,
-   which can be SQLITE_OPEN_READWRITE or SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE. 
+   which can be SQLITE_OPEN_READWRITE or SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE.
    Sets mIndexDb. */
   bool openDatabase( int mode );
 
@@ -188,7 +192,7 @@ protected:
    depending on @a mode. */
   int writeMessages( KMMsgBase* msg, WriteMessagesMode mode );
 
-  /* Executes "DELETE FROM messages WHERE id=.." for every id included in @a rowsToDelete. 
+  /* Executes "DELETE FROM messages WHERE id=.." for every id included in @a rowsToDelete.
    Used in readIndex() for messages with 0 serial number, especially for the outbox. */
   bool deleteIndexRows( const QList<sqlite3_int64>& rowsToDelete );
 
