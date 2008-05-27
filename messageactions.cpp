@@ -112,6 +112,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusUnread()) );
   mActionCollection->addAction( "status_unread", action );
+  action->setShortcut( Qt::CTRL+Qt::Key_U );
   mStatusMenu->addAction( action );
 
   mStatusMenu->addSeparator();

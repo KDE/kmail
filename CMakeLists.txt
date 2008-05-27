@@ -324,8 +324,7 @@ install(TARGETS kmail_bodypartformatter_application_octetstream  DESTINATION ${P
 
 set(kmail_SRCS main.cpp )
 
-# todo: use KMail icon
-kde4_add_app_icon(kmail_SRCS "${KDE4_ICON_DIR}/oxygen/*/apps/internet-mail.png")
+kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
 
 kde4_add_executable(kmail ${kmail_SRCS})
 
@@ -353,6 +352,4 @@ install( FILES
          ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
          DESTINATION
          ${KDE4_DBUS_INTERFACES_DIR} )
-
-kde4_install_icons( ${ICON_INSTALL_DIR} )
 
