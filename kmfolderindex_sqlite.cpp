@@ -656,3 +656,14 @@ void KMFolderIndex::msgStatusChanged( const MessageStatus& oldStatus,
   mDirty = true;
   FolderStorage::msgStatusChanged(oldStatus, newStatus, idx);
 }
+
+KMMsgBase * KMFolderIndex::takeIndexEntry(int idx)
+{
+  KMMsgBase* msg = mMsgList.take( idx );
+  if ( msg->dbId() > 0 ) {
+    QList<sqlite3_int64> l;
+    l << msg->dbId();
+    deleteIndexRows( l );
+  }
+  return msg;
+}

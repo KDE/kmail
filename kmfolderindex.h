@@ -64,7 +64,7 @@ public:
   virtual ~KMFolderIndex();
   virtual int count(bool cache = false) const;
 
-  virtual KMMsgBase* takeIndexEntry( int idx ) { return mMsgList.take( idx ); }
+  virtual KMMsgBase* takeIndexEntry( int idx );
   virtual KMMsgInfo* setIndexEntry( int idx, KMMessage *msg );
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false);
   virtual void truncateIndex();
