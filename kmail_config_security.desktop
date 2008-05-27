@@ -10,6 +10,7 @@ X-KDE-HasReadOnlyMode=false
 X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
+X-KDE-Weight=500
 
 Name=Security
 Name[af]=Sekuriteit
