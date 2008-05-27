@@ -306,11 +306,13 @@ void CachedImapJob::slotGetNextMessage(KJob * job)
       mMsg->setMsgSizeServer(size);
       mMsg->setTransferInProgress( false );
       int index = 0;
+      mFolder->open( "KMFolderCachedImap::slotGetNextMessage" );
       mFolder->addMsgInternal( mMsg, true, &index );
 
       if ( kmkernel->iCalIface().isResourceFolder( mFolder->folder() ) ) {
         mFolder->setStatus( index, MessageStatus::statusRead(), false );
       }
+      mFolder->close( "KMFolderCachedImap::slotGetNextMessage" );
 
       emit messageRetrieved( mMsg );
       if ( index > 0 ) mFolder->unGetMsg( index );
