@@ -294,7 +294,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
       else {
         QString tmpArg = args->arg(i);
         KUrl url( tmpArg );
-        if ( url.isValid() )
+        if (url.isValid() && !url.protocol().isEmpty())
           attachURLs += url;
         else
           to += tmpArg + ", ";
