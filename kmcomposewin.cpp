@@ -1008,8 +1008,10 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
     mGrid->addWidget( aLbl, aRow, 0 );
 
     mGrid->addWidget( aCbx, aRow, 1 );
+    aCbx->show();
     if ( aChk ) {
       mGrid->addWidget( aChk, aRow, 2 );
+      aChk->show();
     }
     aRow++;
   } else {
