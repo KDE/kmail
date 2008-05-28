@@ -22,6 +22,9 @@
 #include <kdebug.h>
 #include <kdbusservicestarter.h>
 
+#include <QDBusInterface>
+#include <QDBusReply>
+
 void KMail::KorgHelper::ensureRunning()
 {
   QString error;
@@ -29,25 +32,15 @@ void KMail::KorgHelper::ensureRunning()
   int result = KDBusServiceStarter::self()->findServiceFor( "DBUS/Organizer",
                                          QString(), &error, &dbusService );
   if ( result == 0 ) {
-#ifdef __GNUC__
-#warning Port me!
-#endif
-#if 0
     // OK, so korganizer (or kontact) is running. Now ensure the object we want is available
     // [that's not the case when kontact was already running, but korganizer not loaded into it...]
-    static const char* const dcopObjectId = "KOrganizerIface";
-    QCString dummy;
-    if ( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) ) {
-      DCOPRef ref( dcopService, dcopService ); // talk to the KUniqueApplication or its kontact wrapper
-      DCOPReply reply = ref.call( "load()" );
-      if ( reply.isValid() && (bool)reply ) {
-        kDebug() <<"Loaded" << dcopService <<" successfully";
-        Q_ASSERT( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) );
-      } else
-        kWarning() << "Error loading" << dcopService;
-    }
-#endif
-  }
-  else
+    QDBusInterface iface( "org.kde.korganizer", "/korganizer_PimApplication", "org.kde.KUniqueApplication" );
+    if ( iface.isValid() ) {
+      QDBusReply<bool> r = iface.call( "load" );
+      if ( !r.isValid() || !r.value() )
+        kWarning() << "Loading korganizer failed: " << iface.lastError().message();
+    } else
+      kWarning() << "Couldn't obtain korganizer D-Bus interface" << iface.lastError().message();
+  } else
     kWarning() << "Couldn't start DBUS/Organizer: " << dbusService << " " << error;
 }
