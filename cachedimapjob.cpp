@@ -701,6 +701,7 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
         // kDebug(5006) <<"Expunging the mailbox" << mFolder->name()
         //               << "!";
         mFolder->expunge();
+        mFolder->open( "cachedimap" ); // reopen after the forced close by expunge() for KMFolderCachedImap
         mFolder->setLastUid( 0 );
         mFolder->clearUidMap();
       }
