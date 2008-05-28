@@ -330,7 +330,7 @@ kde4_add_executable(kmail ${kmail_SRCS})
 
 kdepim4_link_unique_libraries(kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
-install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
+install(TARGETS kmail  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 
 

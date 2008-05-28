@@ -18,7 +18,7 @@
  *
  */
 
-#include <kuniqueapplication.h>
+#include <libkdepim/pimapplication.h>
 #include <kglobal.h>
 #include "kmkernel.h" //control center
 #include "kmail_options.h"
@@ -33,10 +33,10 @@
 
 //-----------------------------------------------------------------------------
 
-class KMailApplication : public KUniqueApplication
+class KMailApplication : public KPIM::PimApplication
 {
 public:
-  KMailApplication() : KUniqueApplication(),
+  KMailApplication() : KPIM::PimApplication(),
                        mDelayedInstanceCreation( false ),
                        mEventLoopReached( false ) { }
   virtual int newInstance();
