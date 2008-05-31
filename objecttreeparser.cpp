@@ -470,12 +470,12 @@ namespace KMail {
       kDebug() << "returned from CRYPTPLUG";
 
     // ### only one signature supported
-    if ( signatures.size() > 0 ) {
+    if ( !signatures.empty() ) {
       kDebug() << "\nFound signature";
-      GpgME::Signature signature = signatures[0];
+      GpgME::Signature signature = signatures.front();
 
       messagePart.status_code = signatureToStatus( signature );
-      messagePart.status = QString::fromUtf8( signature.status().asString() );
+      messagePart.status = QString::fromLocal8Bit( signature.status().asString() );
       for ( uint i = 1; i < signatures.size(); ++i ) {
         if ( signatureToStatus( signatures[i] ) != messagePart.status_code ) {
           messagePart.status_code = GPGME_SIG_STAT_DIFF;
