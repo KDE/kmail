@@ -644,7 +644,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   mBtnDelete->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
-  mBtnNew->setToolTip( i18n("New") );
+  mBtnNew->setToolTip( i18nc("@action:button in filter list manipulator", "New") );
   mBtnCopy->setToolTip( i18n("Copy") );
   mBtnDelete->setToolTip( i18n("Delete"));
   mBtnNew->setWhatsThis( i18n(_wt_filterlist_new) );

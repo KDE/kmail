@@ -232,22 +232,22 @@ namespace KMail {
 
   // If you change the ordering here; also do it in the enum below
   static const MessageStatus StatusValues[] = {
-    { I18N_NOOP( "Important" ),        "emblem-important"    },
-    { I18N_NOOP( "New" ),              "mail-unread-new"     },
-    { I18N_NOOP( "Unread" ),           "mail-unread"         },
-    { I18N_NOOP( "Read" ),             "mail-read"           },
-    { I18N_NOOP( "Old" ),              0                     },
-    { I18N_NOOP( "Deleted" ),          "mail-deleted"        },
-    { I18N_NOOP( "Replied" ),          "mail-replied"        },
-    { I18N_NOOP( "Forwarded" ),        "mail-forwarded"      },
-    { I18N_NOOP( "Queued" ),           "mail-queued"         },
-    { I18N_NOOP( "Sent" ),             "mail-sent"           },
-    { I18N_NOOP( "Watched" ),          "mail-thread-watch"   },
-    { I18N_NOOP( "Ignored" ),          "mail-thread-ignored" },
-    { I18N_NOOP( "Spam" ),             "mail-mark-junk"      },
-    { I18N_NOOP( "Ham" ),              "mail-mark-notjunk"   },
-    { I18N_NOOP( "To Do" ),            "mail-task"           },
-    { I18N_NOOP( "Has Attachment"),    "mail-attachment"     }
+    { I18N_NOOP( "Important" ),              "emblem-important"    },
+    { I18N_NOOP2("message status", "New" ), "mail-unread-new"     },
+    { I18N_NOOP( "Unread" ),                 "mail-unread"         },
+    { I18N_NOOP( "Read" ),                   "mail-read"           },
+    { I18N_NOOP( "Old" ),                    0                     },
+    { I18N_NOOP( "Deleted" ),                "mail-deleted"        },
+    { I18N_NOOP( "Replied" ),                "mail-replied"        },
+    { I18N_NOOP( "Forwarded" ),              "mail-forwarded"      },
+    { I18N_NOOP( "Queued" ),                 "mail-queued"         },
+    { I18N_NOOP( "Sent" ),                   "mail-sent"           },
+    { I18N_NOOP( "Watched" ),                "mail-thread-watch"   },
+    { I18N_NOOP( "Ignored" ),                "mail-thread-ignored" },
+    { I18N_NOOP( "Spam" ),                   "mail-mark-junk"      },
+    { I18N_NOOP( "Ham" ),                    "mail-mark-notjunk"   },
+    { I18N_NOOP( "To Do" ),                  "mail-task"           },
+    { I18N_NOOP( "Has Attachment"),          "mail-attachment"     }
   };
   // If you change the ordering here; also do it in the array above
   enum StatusValueTypes {

@@ -2961,7 +2961,7 @@ void KMMainWidget::setupActions()
   {
     KAction *action = new KAction(KIcon("mail-message-new"), i18n("&New Message..."), this);
     actionCollection()->addAction("new_message", action );
-    action->setIconText( i18n( "New" ) );
+    action->setIconText( i18nc("@action:intoolbar New Empty Message", "New" ) );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
     action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));
   }
