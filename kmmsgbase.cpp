@@ -621,12 +621,18 @@ QString KMMsgBase::decodeRFC2231String(const QByteArray& _str)
   {
     if (st.at(p) == 37)
     {
-      ch = st.at(p+1) - 48;
-      if (ch > 16) ch -= 7;
-      ch2 = st.at(p+2) - 48;
-      if (ch2 > 16) ch2 -= 7;
-      st[p] = ch * 16 + ch2;
-      st.remove( p+1, 2 );
+      // Only try to decode the percent-encoded character if the percent sign
+      // is really followed by two other characters, see testcase at bug 163024
+      if ( p + 2 < st.length() ) {
+        ch = st.at(p+1) - 48;
+        if (ch > 16)
+          ch -= 7;
+        ch2 = st.at(p+2) - 48;
+        if (ch2 > 16)
+          ch2 -= 7;
+        st[p] = ch * 16 + ch2;
+        st.remove( p+1, 2 );
+      }
     }
     p++;
   }
