@@ -230,7 +230,7 @@
           <choice name="IcalVcard"/>
           <choice name="XML"/>
         </choices>
-        <default>IcalVcard</default>
+        <default>XML</default>
       </entry>
 
       <entry name="TheIMAPResourceFolderParent" type="String">
