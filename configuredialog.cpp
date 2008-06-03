@@ -4708,7 +4708,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   mStorageFormatCombo = new QComboBox( false, mBox );
   storageFormatLA->setBuddy( mStorageFormatCombo );
   QStringList formatLst;
-  formatLst << i18n("Standard (Ical / Vcard)") << i18n("Kolab (XML)");
+  formatLst << i18n("deprecated Kolab1 (iCal/vCard)") << i18n("Kolab2 (XML)");
   mStorageFormatCombo->insertStringList( formatLst );
   grid->addWidget( mStorageFormatCombo, 0, 1 );
   QToolTip::add( mStorageFormatCombo, toolTip );
