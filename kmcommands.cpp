@@ -2167,8 +2167,10 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
     if ( !mLostBoys.isEmpty() ) {
       kDebug(5006) <<"### Not all moved messages reported back that they were" << endl
                     <<  "### added to the target folder. Did uidValidity change?";
+      completeMove( Failed );
     }
-    completeMove( OK );
+    else
+      completeMove( OK );
   } else {
     // Should we inform the user here or leave that to the caller?
     completeMove( Failed );
