@@ -677,7 +677,7 @@ void KMSender::slotResult( KJob *job )
         "The message will stay in the 'outbox' folder until you either "
         "fix the problem (e.g. a broken address) or remove the message "
         "from the 'outbox' folder.\n"
-        "The following transport protocol was used:\n  %2",
+        "The following transport was used:\n  %2",
        errString,
        mMethodStr);
     if (!errString.isEmpty()) KMessageBox::error(0,msg);
@@ -702,7 +702,7 @@ void KMSender::slotResult( KJob *job )
             "<p>The message will stay in the 'outbox' folder until you either "
             "fix the problem (e.g. a broken address) or remove the message "
             "from the 'outbox' folder.</p>"
-            "<p>The following transport protocol was used:  %2</p>"
+            "<p>The following transport was used:  %2</p>"
             "<p>Do you want me to continue sending the remaining messages?</p>",
              errString,
              mMethodStr);
@@ -714,7 +714,7 @@ void KMSender::slotResult( KJob *job )
             "The message will stay in the 'outbox' folder until you either "
             "fix the problem (e.g. a broken address) or remove the message "
             "from the 'outbox' folder.\n"
-            "The following transport protocol was used:\n %2",
+            "The following transport was used:\n %2",
              errString,
              mMethodStr);
           KMessageBox::error(0,msg);

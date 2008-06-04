@@ -1198,7 +1198,7 @@ void KMComposeWin::setupActions( void )
   //----- Message-Encoding Submenu
   mEncodingAction = new KSelectAction( KIcon( "accessories-character-map" ), i18n("Se&t Encoding"), this );
   actionCollection()->addAction( "charsets", mEncodingAction );
-  connect( mEncodingAction, SIGNAL(triggered(bool)), SLOT(slotSetCharset()) );
+  connect( mEncodingAction, SIGNAL(triggered(int)), SLOT(slotSetCharset()) );
   mWordWrapAction = new KToggleAction( i18n( "&Wordwrap" ), this );
   actionCollection()->addAction( "wordwrap", mWordWrapAction );
   mWordWrapAction->setChecked( GlobalSettings::self()->wordWrap() );
