@@ -2741,7 +2741,12 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("tools_start_kwatchgnupg", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotStartWatchGnuPG()));
     // disable action if no kwatchgnupg binary is around
-    if (KStandardDirs::findExe("kwatchgnupg").isEmpty()) action->setEnabled(false);
+    bool usableKWatchGnupg = !KStandardDirs::findExe("kwatchgnupg").isEmpty();
+#ifdef Q_OS_WIN32
+    // not ported yet, underlying infrastructure missing on Windows
+    usableKWatchGnupg = false;
+#endif
+    action->setEnabled(usableKWatchGnupg);
   }
   {
     KAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages..."), this);
