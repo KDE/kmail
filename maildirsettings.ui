@@ -1,0 +1,156 @@
+<ui version="4.0" >
+ <class>MaildirPage</class>
+ <widget class="QWidget" name="MaildirPage" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>419</width>
+    <height>261</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" colspan="2" >
+    <widget class="QLabel" name="titleLabel" >
+     <property name="font" >
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Account Type: Maildir Account</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <widget class="QLabel" name="label_2" >
+     <property name="text" >
+      <string>Account &amp;name:</string>
+     </property>
+     <property name="buddy" >
+      <cstring>nameEdit</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="KSeparator" name="kseparator" />
+   </item>
+   <item row="2" column="1" >
+    <widget class="KLineEdit" name="nameEdit" />
+   </item>
+   <item row="3" column="0" >
+    <widget class="QLabel" name="label_3" >
+     <property name="text" >
+      <string>Folder &amp;location:</string>
+     </property>
+     <property name="buddy" >
+      <cstring>locationEdit</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" >
+    <widget class="QComboBox" name="locationEdit" />
+   </item>
+   <item row="3" column="2" >
+    <widget class="QPushButton" name="choose" >
+     <property name="text" >
+      <string>Choo&amp;se..</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3" >
+    <widget class="QCheckBox" name="includeInCheck" >
+     <property name="text" >
+      <string>Include in &amp;manual mail check</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="3" >
+    <widget class="QCheckBox" name="intervalCheck" >
+     <property name="text" >
+      <string>Enable &amp;interval mail checking</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" >
+    <widget class="QLabel" name="intervalLabel" >
+     <property name="text" >
+      <string>Check inter&amp;val:</string>
+     </property>
+     <property name="buddy" >
+      <cstring>intervalSpin</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1" >
+    <widget class="KIntNumInput" name="intervalSpin" >
+     <property name="suffix" >
+      <string> min</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" >
+    <widget class="QLabel" name="label_5" >
+     <property name="text" >
+      <string>&amp;Destination folder:</string>
+     </property>
+     <property name="buddy" >
+      <cstring>folderCombo</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1" >
+    <widget class="QComboBox" name="folderCombo" />
+   </item>
+   <item row="8" column="0" >
+    <widget class="QLabel" name="label_6" >
+     <property name="text" >
+      <string>&amp;Pre-command:</string>
+     </property>
+     <property name="buddy" >
+      <cstring>precommand</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1" >
+    <widget class="KLineEdit" name="precommand" />
+   </item>
+   <item row="9" column="0" >
+    <spacer name="verticalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <extends>QWidget</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KSeparator</class>
+   <extends>QFrame</extends>
+   <header>kseparator.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

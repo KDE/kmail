@@ -316,822 +316,203 @@ AccountDialog::~AccountDialog()
 
 void AccountDialog::makeLocalAccountPage()
 {
-  ProcmailRCParser procmailrcParser;
   QWidget *page = new QWidget( this );
+  mLocal.ui.setupUi( page );
   setMainWidget( page );
-  QGridLayout *topLayout = new QGridLayout( page );
-  topLayout->setSpacing( spacingHint() );
-  topLayout->setMargin( 0 );
-  topLayout->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
-  topLayout->setRowStretch( 11, 10 );
-  topLayout->setColumnStretch( 1, 10 );
 
-  mLocal.titleLabel = new QLabel( i18n("Account Type: Local Account"), page );
-  topLayout->addWidget( mLocal.titleLabel, 0, 0, 1, 3 );
-  QFont titleFont( mLocal.titleLabel->font() );
-  titleFont.setBold( true );
-  mLocal.titleLabel->setFont( titleFont );
-  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
-  topLayout->addWidget( hline, 1, 0, 1, 3 );
+  ProcmailRCParser procmailrcParser;
+  mLocal.ui.locationEdit->addItems( procmailrcParser.getSpoolFilesList() );
+  mLocal.ui.choose->setAutoDefault( false );
+  mLocal.ui.procmailLockFileName->addItems( procmailrcParser.getLockFilesList() );
+  mLocal.ui.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1 );
 
-  QLabel *label = new QLabel( i18n("Account &name:"), page );
-  topLayout->addWidget( label, 2, 0 );
-  mLocal.nameEdit = new KLineEdit( page );
-  label->setBuddy( mLocal.nameEdit );
-  topLayout->addWidget( mLocal.nameEdit, 2, 1 );
-
-  label = new QLabel( i18n("File &location:"), page );
-  topLayout->addWidget( label, 3, 0 );
-  mLocal.locationEdit = new QComboBox( page );
-  mLocal.locationEdit->setEditable( true );
-  label->setBuddy( mLocal.locationEdit );
-  topLayout->addWidget( mLocal.locationEdit, 3, 1 );
-  mLocal.locationEdit->addItems(procmailrcParser.getSpoolFilesList());
-
-  QPushButton *choose = new QPushButton( i18n("Choo&se..."), page );
-  choose->setAutoDefault( false );
-  connect( choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
-  topLayout->addWidget( choose, 3, 2 );
-
-  QGroupBox *group = new QGroupBox( i18n("Locking Method"), page );
-  QGridLayout *groupLayout = new QGridLayout();
-  group->setLayout( groupLayout );
-  groupLayout->setAlignment( Qt::AlignTop );
-  groupLayout->setSpacing( 6 );
-  groupLayout->setMargin( 11 );
-
-  mLocal.lockProcmail = new QRadioButton( i18n("Procmail loc&kfile:"), group);
-  groupLayout->addWidget(mLocal.lockProcmail, 0, 0);
-
-  mLocal.procmailLockFileName = new QComboBox( group );
-  mLocal.procmailLockFileName->setEditable( true );
-  groupLayout->addWidget(mLocal.procmailLockFileName, 0, 1);
-  mLocal.procmailLockFileName->addItems(procmailrcParser.getLockFilesList());
-  mLocal.procmailLockFileName->setEnabled(false);
-
-  QObject::connect(mLocal.lockProcmail, SIGNAL(toggled(bool)),
-                   mLocal.procmailLockFileName, SLOT(setEnabled(bool)));
-
-  mLocal.lockMutt = new QRadioButton(
-    i18n("&Mutt dotlock"), group);
-  groupLayout->addWidget(mLocal.lockMutt, 1, 0);
-
-  mLocal.lockMuttPriv = new QRadioButton(
-    i18n("M&utt dotlock privileged"), group);
-  groupLayout->addWidget(mLocal.lockMuttPriv, 2, 0);
-
-  mLocal.lockFcntl = new QRadioButton(
-    i18n("&FCNTL"), group);
-  groupLayout->addWidget(mLocal.lockFcntl, 3, 0);
-
-  mLocal.lockNone = new QRadioButton(
-    i18n("Non&e (use with care)"), group);
-  groupLayout->addWidget(mLocal.lockNone, 4, 0);
-
-  topLayout->addWidget( group, 4, 0, 1, 3 );
-
-  mLocal.includeInCheck =
-    new QCheckBox( i18n("Include in m&anual mail check"),
-                   page );
-  topLayout->addWidget( mLocal.includeInCheck, 5, 0, 1, 3 );
-
-  mLocal.intervalCheck =
-    new QCheckBox( i18n("Enable &interval mail checking"), page );
-  topLayout->addWidget( mLocal.intervalCheck, 6, 0, 1, 3 );
-  connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
+  connect( mLocal.ui.choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
+  connect( mLocal.ui.lockProcmail, SIGNAL(toggled(bool)),
+           mLocal.ui.procmailLockFileName, SLOT(setEnabled(bool)) );
+  connect( mLocal.ui.intervalCheck, SIGNAL(toggled(bool)),
            this, SLOT(slotEnableLocalInterval(bool)) );
-  mLocal.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
-  topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
-  mLocal.intervalSpin = new KIntNumInput( page );
-  mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
-  mLocal.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(),
-                                 10000, 1 );
-  mLocal.intervalSpin->setSliderEnabled( false );
-  mLocal.intervalSpin->setSuffix( i18n(" min") );
-  mLocal.intervalSpin->setValue( 1 );
-  topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
-
-  label = new QLabel( i18n("&Destination folder:"), page );
-  topLayout->addWidget( label, 8, 0 );
-  mLocal.folderCombo = new QComboBox( page );
-  mLocal.folderCombo->setEditable( false );
-  label->setBuddy( mLocal.folderCombo );
-  topLayout->addWidget( mLocal.folderCombo, 8, 1 );
-
-  label = new QLabel( i18n("&Pre-command:"), page );
-  topLayout->addWidget( label, 9, 0 );
-  mLocal.precommand = new KLineEdit( page );
-  label->setBuddy( mLocal.precommand );
-  topLayout->addWidget( mLocal.precommand, 9, 1 );
-
-  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect( KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),
+           SLOT(slotFontChanged()) );
 }
 
 void AccountDialog::makeMaildirAccountPage()
 {
+  QWidget *page = new QWidget( this );
+  mMaildir.ui.setupUi( page );
+  setMainWidget( page );
   ProcmailRCParser procmailrcParser;
 
-  QWidget *page = new QWidget( this );
-  setMainWidget( page );
-  QGridLayout *topLayout = new QGridLayout( page );
-  topLayout->setSpacing( spacingHint() );
-  topLayout->setMargin( 0 );
-  topLayout->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
-  topLayout->setRowStretch( 11, 10 );
-  topLayout->setColumnStretch( 1, 10 );
+  mMaildir.ui.locationEdit->addItems( procmailrcParser.getSpoolFilesList() );
+  mMaildir.ui.choose->setAutoDefault( false );
+  mMaildir.ui.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1 );
 
-  mMaildir.titleLabel = new QLabel( i18n("Account Type: Maildir Account"), page );
-  topLayout->addWidget( mMaildir.titleLabel, 0, 0, 1, 3 );
-  QFont titleFont( mMaildir.titleLabel->font() );
-  titleFont.setBold( true );
-  mMaildir.titleLabel->setFont( titleFont );
-  QFrame *hline = new QFrame( page );
-  hline->setFrameShape ( QFrame::HLine );
-  hline->setFrameShadow( QFrame::Sunken);
-  topLayout->addWidget( hline, 1, 0, 1, 3 );
-
-  mMaildir.nameEdit = new KLineEdit( page );
-  topLayout->addWidget( mMaildir.nameEdit, 2, 1 );
-  QLabel *label = new QLabel( i18n("Account &name:"), page );
-  label->setBuddy( mMaildir.nameEdit );
-  topLayout->addWidget( label, 2, 0 );
-
-  mMaildir.locationEdit = new QComboBox( page );
-  mMaildir.locationEdit->setEditable( true );
-  topLayout->addWidget( mMaildir.locationEdit, 3, 1 );
-  mMaildir.locationEdit->addItems(procmailrcParser.getSpoolFilesList());
-  label = new QLabel( i18n("Folder &location:"), page );
-  label->setBuddy( mMaildir.locationEdit );
-  topLayout->addWidget( label, 3, 0 );
-
-  QPushButton *choose = new QPushButton( i18n("Choo&se..."), page );
-  choose->setAutoDefault( false );
-  connect( choose, SIGNAL(clicked()), this, SLOT(slotMaildirChooser()) );
-  topLayout->addWidget( choose, 3, 2 );
-
-  mMaildir.includeInCheck =
-    new QCheckBox( i18n("Include in &manual mail check"), page );
-  topLayout->addWidget( mMaildir.includeInCheck, 4, 0, 1, 3 );
-
-  mMaildir.intervalCheck =
-    new QCheckBox( i18n("Enable &interval mail checking"), page );
-  topLayout->addWidget( mMaildir.intervalCheck, 5, 0, 1, 3 );
-  connect( mMaildir.intervalCheck, SIGNAL(toggled(bool)),
+  connect( mMaildir.ui.choose, SIGNAL(clicked()),
+           this, SLOT(slotMaildirChooser()) );
+  connect( mMaildir.ui.intervalCheck, SIGNAL(toggled(bool)),
            this, SLOT(slotEnableMaildirInterval(bool)) );
-  mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
-  topLayout->addWidget( mMaildir.intervalLabel, 6, 0 );
-  mMaildir.intervalSpin = new KIntNumInput( page );
-  mMaildir.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(),
-                                   10000, 1 );
-  mMaildir.intervalSpin->setSliderEnabled( false );
-  mMaildir.intervalSpin->setSuffix( i18n(" min") );
-  mMaildir.intervalSpin->setValue( 1 );
-  mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
-  topLayout->addWidget( mMaildir.intervalSpin, 6, 1 );
-
-  mMaildir.folderCombo = new QComboBox( page );
-  mMaildir.folderCombo->setEditable( false );
-  topLayout->addWidget( mMaildir.folderCombo, 7, 1 );
-  label = new QLabel(i18n("&Destination folder:"), page );
-  label->setBuddy( mMaildir.folderCombo );
-  topLayout->addWidget( label, 7, 0 );
-
-  mMaildir.precommand = new KLineEdit( page );
-  topLayout->addWidget( mMaildir.precommand, 8, 1 );
-  label = new QLabel( i18n("&Pre-command:"), page );
-  label->setBuddy( mMaildir.precommand );
-  topLayout->addWidget( label, 8, 0 );
-
-  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect( KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),
+           SLOT(slotFontChanged()) );
 }
 
 
 void AccountDialog::makePopAccountPage()
 {
   QWidget *page = new QWidget( this );
+  mPop.ui.setupUi( page );
   setMainWidget( page );
-  QVBoxLayout *topLayout = new QVBoxLayout( page );
-  topLayout->setSpacing( spacingHint() );
-  topLayout->setMargin( 0 );
 
-  mPop.titleLabel = new QLabel( page );
-  mPop.titleLabel->setText( i18n("Account Type: POP Account") );
-  QFont titleFont( mPop.titleLabel->font() );
-  titleFont.setBold( true );
-  mPop.titleLabel->setFont( titleFont );
-  topLayout->addWidget( mPop.titleLabel );
-  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
-  topLayout->addWidget( hline );
-
-  QTabWidget *tabWidget = new QTabWidget(page);
-  topLayout->addWidget( tabWidget );
-
-  QWidget *page1 = new QWidget( tabWidget );
-  tabWidget->addTab( page1, i18n("&General") );
-
-  QGridLayout *grid = new QGridLayout( page1 );
-  grid->setSpacing( spacingHint() );
-  grid->setMargin( marginHint() );
-  grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
-  grid->setRowStretch( 15, 10 );
-  grid->setColumnStretch( 1, 10 );
-
-  QLabel *label = new QLabel( i18n("Account &name:"), page1 );
-  grid->addWidget( label, 0, 0 );
-  mPop.nameEdit = new KLineEdit( page1 );
-  label->setBuddy( mPop.nameEdit );
-  grid->addWidget( mPop.nameEdit, 0, 1 );
-
-  label = new QLabel( i18n("&Login:"), page1 );
-  label->setWhatsThis( i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
-  grid->addWidget( label, 1, 0 );
-  mPop.loginEdit = new KLineEdit( page1 );
-  label->setBuddy( mPop.loginEdit );
-  grid->addWidget( mPop.loginEdit, 1, 1 );
-
-  label = new QLabel( i18n("P&assword:"), page1 );
-  grid->addWidget( label, 2, 0 );
-  mPop.passwordEdit = new KLineEdit( page1 );
-  mPop.passwordEdit->setEchoMode( QLineEdit::Password );
-  label->setBuddy( mPop.passwordEdit );
-  grid->addWidget( mPop.passwordEdit, 2, 1 );
-  connect( mPop.passwordEdit, SIGNAL( textEdited( const QString& ) ),
+  connect( mPop.ui.passwordEdit, SIGNAL( textEdited( const QString& ) ),
            this, SLOT( slotPopPasswordChanged( const QString& ) ) );
 
-  label = new QLabel( i18n("Ho&st:"), page1 );
-  grid->addWidget( label, 3, 0 );
-  mPop.hostEdit = new KLineEdit( page1 );
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
-  mPop.hostEdit->setValidator(mValidator);
-  label->setBuddy( mPop.hostEdit );
-  grid->addWidget( mPop.hostEdit, 3, 1 );
+  mPop.ui.hostEdit->setValidator( mValidator );
+  mPop.ui.portEdit->setValidator( new QIntValidator(this) );
 
-  label = new QLabel( i18n("&Port:"), page1 );
-  grid->addWidget( label, 4, 0 );
-  mPop.portEdit = new KLineEdit( page1 );
-  mPop.portEdit->setValidator( new QIntValidator(this) );
-  label->setBuddy( mPop.portEdit );
-  grid->addWidget( mPop.portEdit, 4, 1 );
-
-  mPop.storePasswordCheck =
-    new QCheckBox( i18n("Sto&re POP password"), page1 );
-  mPop.storePasswordCheck->setWhatsThis(
-                   i18n("Check this option to have KMail store "
-                   "the password.\nIf KWallet is available "
-                   "the password will be stored there which is considered "
-                   "safe.\nHowever, if KWallet is not available, "
-                   "the password will be stored in KMail's configuration "
-                   "file. The password is stored in an "
-                   "obfuscated format, but should not be "
-                   "considered secure from decryption efforts "
-                   "if access to the configuration file is obtained.") );
-  grid->addWidget( mPop.storePasswordCheck, 5, 0, 1, 2 );
-
-  mPop.leaveOnServerCheck =
-    new QCheckBox( i18n("Lea&ve fetched messages on the server"), page1 );
-  connect( mPop.leaveOnServerCheck, SIGNAL( clicked() ),
+  connect( mPop.ui.leaveOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotLeaveOnServerClicked() ) );
-  grid->addWidget( mPop.leaveOnServerCheck, 6, 0, 1, 2 );
-  KHBox *afterDaysBox = new KHBox( page1 );
-  afterDaysBox->setSpacing( KDialog::spacingHint() );
-  mPop.leaveOnServerDaysCheck =
-    new QCheckBox( i18n("Leave messages on the server for"), afterDaysBox );
-  connect( mPop.leaveOnServerDaysCheck, SIGNAL( toggled(bool) ),
+  connect( mPop.ui.leaveOnServerDaysCheck, SIGNAL( toggled(bool) ),
            this, SLOT( slotEnableLeaveOnServerDays(bool)) );
-  mPop.leaveOnServerDaysSpin = new KIntNumInput( afterDaysBox );
-  mPop.leaveOnServerDaysSpin->setRange( 1, 365, 1 );
-  mPop.leaveOnServerDaysSpin->setSliderEnabled( false );
-  connect( mPop.leaveOnServerDaysSpin, SIGNAL(valueChanged(int)),
+  connect( mPop.ui.leaveOnServerDaysSpin, SIGNAL(valueChanged(int)),
            SLOT(slotLeaveOnServerDaysChanged(int)));
-  mPop.leaveOnServerDaysSpin->setValue( 1 );
-  afterDaysBox->setStretchFactor( mPop.leaveOnServerDaysSpin, 1 );
-  grid->addWidget( afterDaysBox, 7, 0, 1, 2 );
-  KHBox *leaveOnServerCountBox = new KHBox( page1 );
-  leaveOnServerCountBox->setSpacing( KDialog::spacingHint() );
-  mPop.leaveOnServerCountCheck =
-    new QCheckBox( i18n("Keep only the last"), leaveOnServerCountBox );
-  connect( mPop.leaveOnServerCountCheck, SIGNAL( toggled(bool) ),
+  connect( mPop.ui.leaveOnServerCountCheck, SIGNAL( toggled(bool) ),
            this, SLOT( slotEnableLeaveOnServerCount(bool)) );
-  mPop.leaveOnServerCountSpin = new KIntNumInput( leaveOnServerCountBox );
-  mPop.leaveOnServerCountSpin->setRange( 1, 999999, 1 );
-  mPop.leaveOnServerCountSpin->setSliderEnabled( false );
-  connect( mPop.leaveOnServerCountSpin, SIGNAL(valueChanged(int)),
+  connect( mPop.ui.leaveOnServerCountSpin, SIGNAL(valueChanged(int)),
            SLOT(slotLeaveOnServerCountChanged(int)));
-  mPop.leaveOnServerCountSpin->setValue( 100 );
-  grid->addWidget( leaveOnServerCountBox, 8, 0, 1, 2 );
-  KHBox *leaveOnServerSizeBox = new KHBox( page1 );
-  leaveOnServerSizeBox->setSpacing( KDialog::spacingHint() );
-  mPop.leaveOnServerSizeCheck =
-    new QCheckBox( i18n("Keep only the last"), leaveOnServerSizeBox );
-  connect( mPop.leaveOnServerSizeCheck, SIGNAL( toggled(bool) ),
+  connect( mPop.ui.leaveOnServerSizeCheck, SIGNAL( toggled(bool) ),
            this, SLOT( slotEnableLeaveOnServerSize(bool)) );
-  mPop.leaveOnServerSizeSpin = new KIntNumInput( leaveOnServerSizeBox );
-  mPop.leaveOnServerSizeSpin->setRange( 1, 999999, 1 );
-  mPop.leaveOnServerSizeSpin->setSliderEnabled( false );
-  mPop.leaveOnServerSizeSpin->setSuffix( i18n(" MB") );
-  mPop.leaveOnServerSizeSpin->setValue( 10 );
-  grid->addWidget( leaveOnServerSizeBox, 9, 0, 1, 2 );
 
-  mPop.includeInCheck =
-    new QCheckBox( i18n("Include in man&ual mail check"), page1 );
-  grid->addWidget( mPop.includeInCheck, 10, 0, 1, 2 );
-
-  KHBox * hbox = new KHBox( page1 );
-  hbox->setSpacing( KDialog::spacingHint() );
-  mPop.filterOnServerCheck =
-    new QCheckBox( i18n("&Filter messages if they are greater than"), hbox );
-  mPop.filterOnServerSizeSpin = new KIntNumInput ( hbox );
-  mPop.filterOnServerSizeSpin->setEnabled( false );
-  hbox->setStretchFactor( mPop.filterOnServerSizeSpin, 1 );
-  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100 );
-  mPop.filterOnServerSizeSpin->setSliderEnabled( false );
-  connect(mPop.filterOnServerSizeSpin, SIGNAL(valueChanged(int)),
+  connect(mPop.ui.filterOnServerSizeSpin, SIGNAL(valueChanged(int)),
           SLOT(slotFilterOnServerSizeChanged(int)));
-  mPop.filterOnServerSizeSpin->setValue( 50000 );
-  grid->addWidget( hbox, 11, 0, 1, 2 );
-  connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
-           mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
-  connect( mPop.filterOnServerCheck, SIGNAL( clicked() ),
+  connect( mPop.ui.filterOnServerCheck, SIGNAL(toggled(bool)),
+           mPop.ui.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
+  connect( mPop.ui.filterOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotFilterOnServerClicked() ) );
-  QString msg = i18n("If you select this option, POP Filters will be used to "
-                     "decide what to do with messages. You can then select "
-                     "to download, delete or keep them on the server." );
-  mPop.filterOnServerCheck->setWhatsThis( msg );
-  mPop.filterOnServerSizeSpin->setWhatsThis( msg );
 
-  mPop.intervalCheck =
-    new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addWidget( mPop.intervalCheck, 12, 0, 1, 2 );
-  connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
+  connect( mPop.ui.intervalCheck, SIGNAL(toggled(bool)),
            this, SLOT(slotEnablePopInterval(bool)) );
-  mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
-  grid->addWidget( mPop.intervalLabel, 13, 0 );
-  mPop.intervalSpin = new KIntNumInput( page1 );
-  mPop.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(),
-                               10000, 1 );
-  mPop.intervalSpin->setSliderEnabled( false );
-  mPop.intervalSpin->setSuffix( i18n(" min") );
-  mPop.intervalSpin->setValue( 1 );
-  mPop.intervalLabel->setBuddy( mPop.intervalSpin );
-  grid->addWidget( mPop.intervalSpin, 13, 1 );
+  mPop.ui.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(),
+                                  10000, 1 );
 
-  label = new QLabel( i18n("Des&tination folder:"), page1 );
-  grid->addWidget( label, 14, 0 );
-  mPop.folderCombo = new QComboBox( page1 );
-  label->setBuddy( mPop.folderCombo );
-  grid->addWidget( mPop.folderCombo, 14, 1 );
-
-  label = new QLabel( i18n("Pre-com&mand:"), page1 );
-  grid->addWidget( label, 15, 0 );
-  mPop.precommand = new KLineEdit( page1 );
-  label->setBuddy(mPop.precommand);
-  grid->addWidget( mPop.precommand, 15, 1 );
-
-  QWidget *page2 = new QWidget( tabWidget );
-  tabWidget->addTab( page2, i18n("&Extras") );
-  QVBoxLayout *vlay = new QVBoxLayout( page2 );
-  vlay->setSpacing( spacingHint() );
-  vlay->setMargin( marginHint() );
-
-  vlay->addSpacing( KDialog::spacingHint() );
-
-  QHBoxLayout *buttonLay = new QHBoxLayout();
-  vlay->addLayout( buttonLay );
-  mPop.checkCapabilities =
-    new QPushButton( i18n("Check &What the Server Supports"), page2 );
-  connect( mPop.checkCapabilities, SIGNAL(clicked()),
+//  Page 2
+  connect( mPop.ui.checkCapabilities, SIGNAL(clicked()),
            SLOT(slotCheckPopCapabilities()) );
-  buttonLay->addStretch();
-  buttonLay->addWidget( mPop.checkCapabilities );
-  buttonLay->addStretch();
-
-  vlay->addSpacing( KDialog::spacingHint() );
-
-  mPop.encryptionGroup = new QGroupBox( i18n("Encryption"), page2 );
-  mPop.encryptionGroup->setLayout( new QVBoxLayout() );
-  mPop.encryptionNone =
-    new QRadioButton( i18n("&None"), mPop.encryptionGroup );
-  mPop.encryptionSSL =
-    new QRadioButton( i18n("Use &SSL for secure mail download"),
-    mPop.encryptionGroup );
-  mPop.encryptionTLS =
-    new QRadioButton( i18n("Use &TLS for secure mail download"),
-    mPop.encryptionGroup );
-  mPop.encryptionGroup->layout()->addWidget( mPop.encryptionNone );
-  mPop.encryptionGroup->layout()->addWidget( mPop.encryptionSSL );
-  mPop.encryptionGroup->layout()->addWidget( mPop.encryptionTLS );
-
   mPop.encryptionButtonGroup = new QButtonGroup();
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionNone,
+  mPop.encryptionButtonGroup->addButton( mPop.ui.encryptionNone,
                                          Transport::EnumEncryption::None );
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionSSL,
+  mPop.encryptionButtonGroup->addButton( mPop.ui.encryptionSSL,
                                          Transport::EnumEncryption::SSL );
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionTLS,
+  mPop.encryptionButtonGroup->addButton( mPop.ui.encryptionTLS,
                                          Transport::EnumEncryption::TLS );
 
   connect( mPop.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
            SLOT(slotPopEncryptionChanged(int)) );
-  vlay->addWidget( mPop.encryptionGroup );
 
-  mPop.authGroup = new QGroupBox( i18n("Authentication Method"), page2 );
-  mPop.authGroup->setLayout( new QVBoxLayout() );
-  mPop.authUser = new QRadioButton( i18n("Clear te&xt"), mPop.authGroup );
-  mPop.authUser->setObjectName( "auth clear text" );
-  mPop.authLogin = new QRadioButton( i18nc("Please translate this "
-    "authentication method only if you have a good reason", "&LOGIN"),
-    mPop.authGroup );
-  mPop.authLogin->setObjectName( "auth login" );
-  mPop.authPlain = new QRadioButton( i18nc("Please translate this "
-    "authentication method only if you have a good reason", "&PLAIN"),
-    mPop.authGroup  );
-  mPop.authPlain->setObjectName( "auth plain" );
-  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup );
-  mPop.authCRAM_MD5->setObjectName( "auth cram-md5" );
-  mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup );
-  mPop.authDigestMd5->setObjectName( "auth digest-md5" );
-  mPop.authNTLM = new QRadioButton( i18n("&NTLM"), mPop.authGroup );
-  mPop.authNTLM->setObjectName( "auth ntlm" );
-  mPop.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mPop.authGroup );
-  mPop.authGSSAPI->setObjectName( "auth gssapi" );
   if ( KProtocolInfo::capabilities("pop3").contains("SASL") == 0 )
   {
-    mPop.authNTLM->hide();
-    mPop.authGSSAPI->hide();
+    mPop.ui.authNTLM->hide();
+    mPop.ui.authGSSAPI->hide();
   }
-  mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup );
-  mPop.authAPOP->setObjectName( "auth apop" );
-
-  mPop.authGroup->layout()->addWidget( mPop.authUser );
-  mPop.authGroup->layout()->addWidget( mPop.authLogin );
-  mPop.authGroup->layout()->addWidget( mPop.authPlain );
-  mPop.authGroup->layout()->addWidget( mPop.authCRAM_MD5 );
-  mPop.authGroup->layout()->addWidget( mPop.authDigestMd5 );
-  mPop.authGroup->layout()->addWidget( mPop.authNTLM );
-  mPop.authGroup->layout()->addWidget( mPop.authGSSAPI );
-  mPop.authGroup->layout()->addWidget( mPop.authAPOP );
-
   mPop.authButtonGroup = new QButtonGroup();
-  mPop.authButtonGroup->addButton( mPop.authUser );
-  mPop.authButtonGroup->addButton( mPop.authLogin );
-  mPop.authButtonGroup->addButton( mPop.authPlain );
-  mPop.authButtonGroup->addButton( mPop.authCRAM_MD5 );
-  mPop.authButtonGroup->addButton( mPop.authDigestMd5 );
-  mPop.authButtonGroup->addButton( mPop.authNTLM );
-  mPop.authButtonGroup->addButton( mPop.authGSSAPI );
-  mPop.authButtonGroup->addButton( mPop.authAPOP );
+  mPop.authButtonGroup->addButton( mPop.ui.authUser );
+  mPop.authButtonGroup->addButton( mPop.ui.authLogin );
+  mPop.authButtonGroup->addButton( mPop.ui.authPlain );
+  mPop.authButtonGroup->addButton( mPop.ui.authCRAM_MD5 );
+  mPop.authButtonGroup->addButton( mPop.ui.authDigestMd5 );
+  mPop.authButtonGroup->addButton( mPop.ui.authNTLM );
+  mPop.authButtonGroup->addButton( mPop.ui.authGSSAPI );
+  mPop.authButtonGroup->addButton( mPop.ui.authAPOP );
 
-  vlay->addWidget( mPop.authGroup );
-
-  mPop.usePipeliningCheck =
-    new QCheckBox( i18n("&Use pipelining for faster mail download"), page2 );
-  connect( mPop.usePipeliningCheck, SIGNAL(clicked()),
+  connect( mPop.ui.usePipeliningCheck, SIGNAL(clicked()),
            SLOT(slotPipeliningClicked()) );
-  vlay->addWidget( mPop.usePipeliningCheck );
 
-  vlay->addStretch();
-
-  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),
+          SLOT(slotFontChanged()));
 }
 
 
 void AccountDialog::makeImapAccountPage( bool connected )
 {
   QWidget *page = new QWidget( this );
+  mImap.ui.setupUi( page );
   setMainWidget( page );
-  QVBoxLayout *topLayout = new QVBoxLayout( page );
-  topLayout->setSpacing( spacingHint() );
-  topLayout->setMargin( 0 );
-
-  mImap.titleLabel = new QLabel( page );
   if( connected )
-    mImap.titleLabel->setText( i18n("Account Type: Disconnected IMAP Account") );
+    mImap.ui.titleLabel->setText( i18n("Account Type: Disconnected IMAP Account") );
   else
-    mImap.titleLabel->setText( i18n("Account Type: IMAP Account") );
-  QFont titleFont( mImap.titleLabel->font() );
-  titleFont.setBold( true );
-  mImap.titleLabel->setFont( titleFont );
-  topLayout->addWidget( mImap.titleLabel );
-  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
-  topLayout->addWidget( hline );
+    mImap.ui.titleLabel->setText( i18n("Account Type: IMAP Account") );
 
-  QTabWidget *tabWidget = new QTabWidget(page);
-  topLayout->addWidget( tabWidget );
-
-  QWidget *page1 = new QWidget( tabWidget );
-  tabWidget->addTab( page1, i18n("&General") );
-
-  int row = -1;
-  QGridLayout *grid = new QGridLayout( page1 );
-  grid->setSpacing( spacingHint() );
-  grid->setMargin( marginHint() );
-  grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*16, 0 ), 0, 1 );
-
-  ++row;
-  QLabel *label = new QLabel( i18n("Account &name:"), page1 );
-  grid->addWidget( label, row, 0 );
-  mImap.nameEdit = new KLineEdit( page1 );
-  label->setBuddy( mImap.nameEdit );
-  grid->addWidget( mImap.nameEdit, row, 1 );
-
-  ++row;
-  label = new QLabel( i18n("&Login:"), page1 );
-  label->setWhatsThis( i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
-  grid->addWidget( label, row, 0 );
-  mImap.loginEdit = new KLineEdit( page1 );
-  label->setBuddy( mImap.loginEdit );
-  grid->addWidget( mImap.loginEdit, row, 1 );
-
-  ++row;
-  label = new QLabel( i18n("P&assword:"), page1 );
-  grid->addWidget( label, row, 0 );
-  mImap.passwordEdit = new KLineEdit( page1 );
-  mImap.passwordEdit->setEchoMode( QLineEdit::Password );
-  label->setBuddy( mImap.passwordEdit );
-  grid->addWidget( mImap.passwordEdit, row, 1 );
-
-  ++row;
-  label = new QLabel( i18n("Ho&st:"), page1 );
-  grid->addWidget( label, row, 0 );
-  mImap.hostEdit = new KLineEdit( page1 );
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
-  mImap.hostEdit->setValidator(mValidator);
-  label->setBuddy( mImap.hostEdit );
-  grid->addWidget( mImap.hostEdit, row, 1 );
+  mImap.ui.hostEdit->setValidator( mValidator );
+  mImap.ui.portEdit->setValidator( new QIntValidator(this) );
 
-  ++row;
-  label = new QLabel( i18n("&Port:"), page1 );
-  grid->addWidget( label, row, 0 );
-  mImap.portEdit = new KLineEdit( page1 );
-  mImap.portEdit->setValidator( new QIntValidator(this) );
-  label->setBuddy( mImap.portEdit );
-  grid->addWidget( mImap.portEdit, row, 1 );
+  mImap.ui.button->setAutoRaise( true );
+  mImap.ui.button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+  mImap.ui.button->setFixedSize( 22, 22 );
+  mImap.ui.button->setIcon( KIcon("view-refresh") );
+  mImap.ui.editPNS->setIcon( KIcon("document-properties") );
+  mImap.ui.editPNS->setFixedSize( 22, 22 );
+  mImap.ui.editONS->setIcon( KIcon("document-properties") );
+  mImap.ui.editONS->setFixedSize( 22, 22 );
+  mImap.ui.editSNS->setIcon( KIcon("document-properties") );
+  mImap.ui.editSNS->setFixedSize( 22, 22 );
 
-  // namespace list
-  ++row;
-  KHBox* box = new KHBox( page1 );
-  QLabel* namespaceLabel = new QLabel( i18n("Namespaces:"), box );
-  namespaceLabel->setWhatsThis( i18n( "Here you see the different namespaces that your IMAP server supports."
-        "Each namespace represents a prefix that separates groups of folders."
-        "Namespaces allow KMail for example to display your personal folders and shared folders in one account." ) );
-  // button to reload
-  QToolButton* button = new QToolButton( box );
-  button->setAutoRaise(true);
-  button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
-  button->setFixedSize( 22, 22 );
-  button->setIcon( KIcon("view-refresh") );
-  connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
-  button->setWhatsThis(
-      i18n("Reload the namespaces from the server. This overwrites any changes.") );
-  grid->addWidget( box, row, 0 );
-
-  // grid with label, namespace list and edit button
-  QWidget* listbox = new QWidget( page1 );
-  label = new QLabel( i18n("Personal"), listbox );
-  label->setWhatsThis( i18n( "Personal namespaces include your personal folders." ) );
-  mImap.personalNS = new KLineEdit( listbox );
-  mImap.personalNS->setReadOnly( true );
-  mImap.editPNS = new QToolButton( listbox );
-  mImap.editPNS->setIcon( KIcon("document-properties") );
-  mImap.editPNS->setAutoRaise( true );
-  mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
-  mImap.editPNS->setFixedSize( 22, 22 );
-  connect( mImap.editPNS, SIGNAL(clicked()), this, SLOT(slotEditPersonalNamespace()) );
-
-  QGridLayout* listboxLayout = new QGridLayout;
-  listboxLayout->setMargin( 0 );
-  listboxLayout->setSpacing( KDialog::spacingHint() );
-  listboxLayout->addWidget( label, 0, 0 );
-  listboxLayout->addWidget( mImap.personalNS, 0, 1 );
-  listboxLayout->addWidget( mImap.editPNS, 0, 2 );
-
-  label = new QLabel( i18n("Other Users"), listbox );
-  label->setWhatsThis( i18n( "These namespaces include the folders of other users." ) );
-  mImap.otherUsersNS = new KLineEdit( listbox );
-  mImap.otherUsersNS->setReadOnly( true );
-  mImap.editONS = new QToolButton( listbox );
-  mImap.editONS->setIcon( KIcon("document-properties") );
-  mImap.editONS->setAutoRaise( true );
-  mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
-  mImap.editONS->setFixedSize( 22, 22 );
-  connect( mImap.editONS, SIGNAL(clicked()), this, SLOT(slotEditOtherUsersNamespace()) );
-
-  listboxLayout->addWidget( label, 1, 0 );
-  listboxLayout->addWidget( mImap.otherUsersNS, 1, 1 );
-  listboxLayout->addWidget( mImap.editONS, 1, 2 );
-
-  label = new QLabel( i18n("Shared"), listbox );
-  label->setWhatsThis( i18n( "These namespaces include the shared folders." ) );
-  mImap.sharedNS = new KLineEdit( listbox );
-  mImap.sharedNS->setReadOnly( true );
-  mImap.editSNS = new QToolButton( listbox );
-  mImap.editSNS->setIcon( KIcon("document-properties") );
-  mImap.editSNS->setAutoRaise( true );
-  mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
-  mImap.editSNS->setFixedSize( 22, 22 );
-  connect( mImap.editSNS, SIGNAL(clicked()), this, SLOT(slotEditSharedNamespace()) );
-
-  listboxLayout->addWidget( label, 2, 0 );
-  listboxLayout->addWidget( mImap.sharedNS, 2, 1 );
-  listboxLayout->addWidget( mImap.editSNS, 2, 2 );
-  listbox->setLayout( listboxLayout );
-
-  namespaceLabel->setBuddy( listbox );
-  grid->addWidget( listbox, row, 1 );
-
-  ++row;
-  mImap.storePasswordCheck =
-    new QCheckBox( i18n("Sto&re IMAP password"), page1 );
-  mImap.storePasswordCheck->setWhatsThis(
-                   i18n("Check this option to have KMail store "
-                   "the password.\nIf KWallet is available "
-                   "the password will be stored there which is considered "
-                   "safe.\nHowever, if KWallet is not available, "
-                   "the password will be stored in KMail's configuration "
-                   "file. The password is stored in an "
-                   "obfuscated format, but should not be "
-                   "considered secure from decryption efforts "
-                   "if access to the configuration file is obtained.") );
-  grid->addWidget( mImap.storePasswordCheck, row, 0, 1, 2 );
-
-  if( !connected ) {
-    ++row;
-    mImap.autoExpungeCheck =
-      new QCheckBox( i18n("Automaticall&y compact folders (expunges deleted messages)"), page1);
-    grid->addWidget( mImap.autoExpungeCheck, row, 0, 1, 2 );
-  }
-
-  ++row;
-  mImap.hiddenFoldersCheck = new QCheckBox( i18n("Sho&w hidden folders"), page1);
-  grid->addWidget( mImap.hiddenFoldersCheck, row, 0, 1, 2 );
-
-
-  ++row;
-  mImap.subscribedFoldersCheck = new QCheckBox(
-    i18n("Show only s&ubscribed folders"), page1);
-  grid->addWidget( mImap.subscribedFoldersCheck, row, 0, 1, 2 );
-
-  ++row;
-  mImap.locallySubscribedFoldersCheck = new QCheckBox(
-    i18n("Show only &locally subscribed folders"), page1);
-  grid->addWidget( mImap.locallySubscribedFoldersCheck, row, 0, 1, 2 );
-
-  if ( !connected ) {
+  if( connected ) {
     // not implemented for disconnected yet
-    ++row;
-    mImap.loadOnDemandCheck = new QCheckBox(
-        i18n("Load attach&ments on demand"), page1);
-    mImap.loadOnDemandCheck->setWhatsThis(
-        i18n("Activate this to load attachments not automatically when you select the email but only when you click on the attachment. This way also big emails are shown instantly.") );
-    grid->addWidget( mImap.loadOnDemandCheck, row, 0, 1, 2 );
+    mImap.ui.autoExpungeCheck->hide();
+    mImap.ui.loadOnDemandCheck->hide();
+    mImap.ui.listOnlyOpenCheck->hide();
   }
 
-  if ( !connected ) {
-    // not implemented for disconnected yet
-    ++row;
-    mImap.listOnlyOpenCheck = new QCheckBox(
-        i18n("List only open folders"), page1);
-    mImap.listOnlyOpenCheck->setWhatsThis(
-        i18n("Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.") );
-    grid->addWidget( mImap.listOnlyOpenCheck, row, 0, 1, 2 );
-  }
 
-  ++row;
-  mImap.includeInCheck =
-    new QCheckBox( i18n("Include in manual mail chec&k"), page1 );
-  grid->addWidget( mImap.includeInCheck, row, 0, 1, 2 );
-
-  ++row;
-  mImap.intervalCheck =
-    new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addWidget( mImap.intervalCheck, row, 0, 1, 3 );
-  connect( mImap.intervalCheck, SIGNAL(toggled(bool)),
-           this, SLOT(slotEnableImapInterval(bool)) );
-  ++row;
-  mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
-  grid->addWidget( mImap.intervalLabel, row, 0 );
-  mImap.intervalSpin = new KIntNumInput( page1 );
-  mImap.intervalSpin->setRange( GlobalSettings::minimumCheckInterval(), 60, 1 );
-  mImap.intervalSpin->setSliderEnabled( false );
-  mImap.intervalSpin->setValue( 1 );
-  mImap.intervalSpin->setSuffix( i18n( " min" ) );
-  mImap.intervalLabel->setBuddy( mImap.intervalSpin );
-  grid->addWidget( mImap.intervalSpin, row, 1 );
-
-  ++row;
-  label = new QLabel( i18n("&Trash folder:"), page1 );
-  grid->addWidget( label, row, 0 );
-  mImap.trashCombo = new FolderRequester( page1,
-      kmkernel->getKMMainWidget()->folderTree() );
+  QGridLayout *layout = static_cast<QGridLayout*>( mImap.ui.generalTab->layout() );
+  int rows = layout->rowCount();
+  mImap.trashCombo = new FolderRequester( page,
+                      kmkernel->getKMMainWidget()->folderTree() );
   mImap.trashCombo->setShowOutbox( false );
-  label->setBuddy( mImap.trashCombo );
-  grid->addWidget( mImap.trashCombo, row, 1 );
+  mImap.ui.trashLabel->setBuddy( mImap.trashCombo );
+  layout->addWidget( mImap.trashCombo, rows - 3, 1 );
+  mImap.ui.trashLabel->setBuddy( mImap.trashCombo );
 
-  ++row;
-  mImap.useDefaultIdentityCheck = new QCheckBox( i18n("Use default identity"), page );
-  connect( mImap.useDefaultIdentityCheck, SIGNAL( toggled(bool) ),
-           this, SLOT( slotIdentityCheckboxChanged() ) );
-  grid->addWidget( mImap.useDefaultIdentityCheck, row, 0 );
-
-  ++row;
-  mImap.identityLabel = new QLabel( i18n("Identity:"), page1 );
-  grid->addWidget( mImap.identityLabel, row, 0 );
-  mImap.identityCombo = new KPIMIdentities::IdentityCombo(kmkernel->identityManager(), page1 );
-  mImap.identityLabel->setBuddy( mImap.identityCombo );
-  grid->addWidget( mImap.identityCombo, row, 1 );
-
-  QWidget *page2 = new QWidget( tabWidget );
-  tabWidget->addTab( page2, i18n("S&ecurity") );
-  QVBoxLayout *vlay = new QVBoxLayout( page2 );
-  vlay->setSpacing( spacingHint() );
-  vlay->setMargin( marginHint() );
-
-  vlay->addSpacing( KDialog::spacingHint() );
-
-  QHBoxLayout *buttonLay = new QHBoxLayout();
-  vlay->addLayout( buttonLay );
-  mImap.checkCapabilities =
-    new QPushButton( i18n("Check &What the Server Supports"), page2 );
-  connect(mImap.checkCapabilities, SIGNAL(clicked()),
-    SLOT(slotCheckImapCapabilities()));
-  buttonLay->addStretch();
-  buttonLay->addWidget( mImap.checkCapabilities );
-  buttonLay->addStretch();
-
-  vlay->addSpacing( KDialog::spacingHint() );
-
-  mImap.encryptionGroup = new QGroupBox( i18n("Encryption"), page2 );
-  mImap.encryptionGroup->setLayout( new QVBoxLayout() );
-  mImap.encryptionNone =
-    new QRadioButton( i18n("&None"), mImap.encryptionGroup );
-  mImap.encryptionSSL =
-    new QRadioButton( i18n("Use &SSL for secure mail download"),
-    mImap.encryptionGroup );
-  mImap.encryptionTLS =
-    new QRadioButton( i18n("Use &TLS for secure mail download"),
-    mImap.encryptionGroup );
-  mImap.encryptionGroup->layout()->addWidget( mImap.encryptionNone );
-  mImap.encryptionGroup->layout()->addWidget( mImap.encryptionSSL );
-  mImap.encryptionGroup->layout()->addWidget( mImap.encryptionTLS );
-
+  mImap.identityCombo = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), page );
+  mImap.ui.identityLabel->setBuddy( mImap.identityCombo );
+  layout->addWidget( mImap.identityCombo, rows - 1, 1 );
+  mImap.ui.identityLabel->setBuddy( mImap.identityCombo );
+    
   mImap.encryptionButtonGroup = new QButtonGroup();
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionNone,
+  mImap.encryptionButtonGroup->addButton( mImap.ui.encryptionNone,
                                           Transport::EnumEncryption::None );
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionSSL,
+  mImap.encryptionButtonGroup->addButton( mImap.ui.encryptionSSL,
                                           Transport::EnumEncryption::SSL );
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionTLS,
+  mImap.encryptionButtonGroup->addButton( mImap.ui.encryptionTLS,
                                           Transport::EnumEncryption::TLS );
 
-  connect( mImap.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
-           SLOT(slotImapEncryptionChanged(int)) );
-
-  vlay->addWidget( mImap.encryptionGroup );
-
-  mImap.authGroup = new QGroupBox( i18n("Authentication Method"), page2 );
-  mImap.authGroup->setLayout( new QVBoxLayout() );
-  mImap.authUser = new QRadioButton( i18n("Clear te&xt"), mImap.authGroup );
-  mImap.authLogin = new QRadioButton( i18nc("Please translate this "
-    "authentication method only if you have a good reason", "&LOGIN"),
-    mImap.authGroup );
-  mImap.authPlain = new QRadioButton( i18nc("Please translate this "
-    "authentication method only if you have a good reason", "&PLAIN"),
-     mImap.authGroup );
-  mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mImap.authGroup );
-  mImap.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mImap.authGroup );
-  mImap.authNTLM = new QRadioButton( i18n("&NTLM"), mImap.authGroup );
-  mImap.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mImap.authGroup );
-  mImap.authAnonymous = new QRadioButton( i18n("&Anonymous"), mImap.authGroup );
-
-  mImap.authGroup->layout()->addWidget( mImap.authUser );
-  mImap.authGroup->layout()->addWidget( mImap.authLogin );
-  mImap.authGroup->layout()->addWidget( mImap.authPlain );
-  mImap.authGroup->layout()->addWidget( mImap.authCramMd5 );
-  mImap.authGroup->layout()->addWidget( mImap.authDigestMd5 );
-  mImap.authGroup->layout()->addWidget( mImap.authNTLM );
-  mImap.authGroup->layout()->addWidget( mImap.authGSSAPI );
-  mImap.authGroup->layout()->addWidget( mImap.authAnonymous );
-
   mImap.authButtonGroup = new QButtonGroup();
-  mImap.authButtonGroup->addButton( mImap.authUser );
-  mImap.authButtonGroup->addButton( mImap.authLogin );
-  mImap.authButtonGroup->addButton( mImap.authPlain );
-  mImap.authButtonGroup->addButton( mImap.authCramMd5 );
-  mImap.authButtonGroup->addButton( mImap.authDigestMd5 );
-  mImap.authButtonGroup->addButton( mImap.authNTLM );
-  mImap.authButtonGroup->addButton( mImap.authGSSAPI );
-  mImap.authButtonGroup->addButton( mImap.authAnonymous );
+  mImap.authButtonGroup->addButton( mImap.ui.authUser );
+  mImap.authButtonGroup->addButton( mImap.ui.authLogin );
+  mImap.authButtonGroup->addButton( mImap.ui.authPlain );
+  mImap.authButtonGroup->addButton( mImap.ui.authCramMd5 );
+  mImap.authButtonGroup->addButton( mImap.ui.authDigestMd5 );
+  mImap.authButtonGroup->addButton( mImap.ui.authNTLM );
+  mImap.authButtonGroup->addButton( mImap.ui.authGSSAPI );
+  mImap.authButtonGroup->addButton( mImap.ui.authAnonymous );
 
-  vlay->addWidget( mImap.authGroup );
-
-  vlay->addStretch();
+  // Connect all slots.
+  connect( mImap.ui.button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
+  connect( mImap.ui.editPNS, SIGNAL(clicked()), this, SLOT(slotEditPersonalNamespace()) );
+  connect( mImap.ui.editONS, SIGNAL(clicked()), this, SLOT(slotEditOtherUsersNamespace()) );
+  connect( mImap.ui.editSNS, SIGNAL(clicked()), this, SLOT(slotEditSharedNamespace()) );
+  connect( mImap.ui.intervalCheck, SIGNAL(toggled(bool)), this, SLOT(slotEnableImapInterval(bool)) );
+  connect( mImap.ui.useDefaultIdentityCheck, SIGNAL( toggled(bool) ), this, SLOT( slotIdentityCheckboxChanged() ) );
+  connect( mImap.ui.checkCapabilities, SIGNAL(clicked()), SLOT(slotCheckImapCapabilities()));
+  connect( mImap.encryptionButtonGroup, SIGNAL(buttonClicked(int)), SLOT(slotImapEncryptionChanged(int)) );
 
   // TODO (marc/bo): Test this
-  mSieveConfigEditor = new SieveConfigEditor( tabWidget );
+  mSieveConfigEditor = new SieveConfigEditor( mImap.ui.tabWidget );
   mSieveConfigEditor->layout()->setMargin( KDialog::marginHint() );
-  tabWidget->addTab( mSieveConfigEditor, i18n("&Filtering") );
+  mImap.ui.tabWidget->addTab( mSieveConfigEditor, i18n("&Filtering") );
 
-  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect( KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()) );
 }
 
 
@@ -1147,196 +528,194 @@ void AccountDialog::setupSettings()
     KMAcctLocal *acctLocal = static_cast<KMAcctLocal*>(mAccount);
 
     if ( acctLocal->location().isEmpty() )
-        acctLocal->setLocation( procmailrcParser.getSpoolFilesList().first() );
+      acctLocal->setLocation( procmailrcParser.getSpoolFilesList().first() );
     else
-        mLocal.locationEdit->addItem( acctLocal->location() );
+      mLocal.ui.locationEdit->addItem( acctLocal->location() );
 
     if ( acctLocal->procmailLockFileName().isEmpty() )
-        acctLocal->setProcmailLockFileName( procmailrcParser.getLockFilesList().first() );
+      acctLocal->setProcmailLockFileName( procmailrcParser.getLockFilesList().first() );
     else
-        mLocal.procmailLockFileName->addItem( acctLocal->procmailLockFileName() );
+      mLocal.ui.procmailLockFileName->addItem( acctLocal->procmailLockFileName() );
 
-    mLocal.nameEdit->setText( mAccount->name() );
-    mLocal.nameEdit->setFocus();
-    mLocal.locationEdit->setEditText( acctLocal->location() );
+    mLocal.ui.nameEdit->setText( mAccount->name() );
+    mLocal.ui.nameEdit->setFocus();
+    mLocal.ui.locationEdit->setEditText( acctLocal->location() );
     if (acctLocal->lockType() == mutt_dotlock)
-      mLocal.lockMutt->setChecked(true);
+      mLocal.ui.lockMutt->setChecked(true);
     else if (acctLocal->lockType() == mutt_dotlock_privileged)
-      mLocal.lockMuttPriv->setChecked(true);
+      mLocal.ui.lockMuttPriv->setChecked(true);
     else if (acctLocal->lockType() == procmail_lockfile) {
-      mLocal.lockProcmail->setChecked(true);
-      mLocal.procmailLockFileName->setEditText(acctLocal->procmailLockFileName());
+      mLocal.ui.lockProcmail->setChecked(true);
+      mLocal.ui.procmailLockFileName->setEditText(acctLocal->procmailLockFileName());
     } else if (acctLocal->lockType() == FCNTL)
-      mLocal.lockFcntl->setChecked(true);
+      mLocal.ui.lockFcntl->setChecked(true);
     else if (acctLocal->lockType() == lock_none)
-      mLocal.lockNone->setChecked(true);
+      mLocal.ui.lockNone->setChecked(true);
 
-    mLocal.intervalSpin->setValue( qMax(1, interval) );
-    mLocal.intervalCheck->setChecked( interval >= 1 );
-    mLocal.includeInCheck->setChecked( !mAccount->checkExclude() );
-    mLocal.precommand->setText( mAccount->precommand() );
+    mLocal.ui.intervalSpin->setValue( qMax(1, interval) );
+    mLocal.ui.intervalCheck->setChecked( interval >= 1 );
+    mLocal.ui.includeInCheck->setChecked( !mAccount->checkExclude() );
+    mLocal.ui.precommand->setText( mAccount->precommand() );
 
     slotEnableLocalInterval( interval >= 1 );
-    folderCombo = mLocal.folderCombo;
+    folderCombo = mLocal.ui.folderCombo;
   }
   else if( accountType == KAccount::Pop )
   {
     PopAccount &ap = *(PopAccount*)mAccount;
-    mPop.nameEdit->setText( mAccount->name() );
-    mPop.nameEdit->setFocus();
-    mPop.loginEdit->setText( ap.login() );
-    mPop.passwordEdit->setText( ap.passwd());
-    mPop.hostEdit->setText( ap.host() );
-    mPop.portEdit->setText( QString("%1").arg( ap.port() ) );
-    mPop.usePipeliningCheck->setChecked( ap.usePipelining() );
-    mPop.storePasswordCheck->setChecked( ap.storePasswd() );
-    mPop.leaveOnServerCheck->setChecked( ap.leaveOnServer() );
-    mPop.leaveOnServerDaysCheck->setEnabled( ap.leaveOnServer() );
-    mPop.leaveOnServerDaysCheck->setChecked( ap.leaveOnServerDays() >= 1 );
-    mPop.leaveOnServerDaysSpin->setValue( ap.leaveOnServerDays() >= 1 ?
+    mPop.ui.nameEdit->setText( mAccount->name() );
+    mPop.ui.nameEdit->setFocus();
+    mPop.ui.loginEdit->setText( ap.login() );
+    mPop.ui.passwordEdit->setText( ap.passwd());
+    mPop.ui.hostEdit->setText( ap.host() );
+    mPop.ui.portEdit->setText( QString("%1").arg( ap.port() ) );
+    mPop.ui.usePipeliningCheck->setChecked( ap.usePipelining() );
+    mPop.ui.storePasswordCheck->setChecked( ap.storePasswd() );
+    mPop.ui.leaveOnServerCheck->setChecked( ap.leaveOnServer() );
+    mPop.ui.leaveOnServerDaysCheck->setEnabled( ap.leaveOnServer() );
+    mPop.ui.leaveOnServerDaysCheck->setChecked( ap.leaveOnServerDays() >= 1 );
+    mPop.ui.leaveOnServerDaysSpin->setValue( ap.leaveOnServerDays() >= 1 ?
                                             ap.leaveOnServerDays() : 7 );
-    mPop.leaveOnServerCountCheck->setEnabled( ap.leaveOnServer() );
-    mPop.leaveOnServerCountCheck->setChecked( ap.leaveOnServerCount() >= 1 );
-    mPop.leaveOnServerCountSpin->setValue( ap.leaveOnServerCount() >= 1 ?
+    mPop.ui.leaveOnServerCountCheck->setEnabled( ap.leaveOnServer() );
+    mPop.ui.leaveOnServerCountCheck->setChecked( ap.leaveOnServerCount() >= 1 );
+    mPop.ui.leaveOnServerCountSpin->setValue( ap.leaveOnServerCount() >= 1 ?
                                             ap.leaveOnServerCount() : 100 );
-    mPop.leaveOnServerSizeCheck->setEnabled( ap.leaveOnServer() );
-    mPop.leaveOnServerSizeCheck->setChecked( ap.leaveOnServerSize() >= 1 );
-    mPop.leaveOnServerSizeSpin->setValue( ap.leaveOnServerSize() >= 1 ?
+    mPop.ui.leaveOnServerSizeCheck->setEnabled( ap.leaveOnServer() );
+    mPop.ui.leaveOnServerSizeCheck->setChecked( ap.leaveOnServerSize() >= 1 );
+    mPop.ui.leaveOnServerSizeSpin->setValue( ap.leaveOnServerSize() >= 1 ?
                                             ap.leaveOnServerSize() : 10 );
-    mPop.filterOnServerCheck->setChecked( ap.filterOnServer() );
-    mPop.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
-    mPop.intervalCheck->setChecked( interval >= 1 );
-    mPop.intervalSpin->setValue( qMax(1, interval) );
-    mPop.includeInCheck->setChecked( !mAccount->checkExclude() );
-    mPop.precommand->setText( ap.precommand() );
+    mPop.ui.filterOnServerCheck->setChecked( ap.filterOnServer() );
+    mPop.ui.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
+    mPop.ui.intervalCheck->setChecked( interval >= 1 );
+    mPop.ui.intervalSpin->setValue( qMax(1, interval) );
+    mPop.ui.includeInCheck->setChecked( !mAccount->checkExclude() );
+    mPop.ui.precommand->setText( ap.precommand() );
     if (ap.useSSL())
-      mPop.encryptionSSL->setChecked( true );
+      mPop.ui.encryptionSSL->setChecked( true );
     else if (ap.useTLS())
-      mPop.encryptionTLS->setChecked( true );
-    else mPop.encryptionNone->setChecked( true );
+      mPop.ui.encryptionTLS->setChecked( true );
+    else mPop.ui.encryptionNone->setChecked( true );
     if (ap.auth() == "LOGIN")
-      mPop.authLogin->setChecked( true );
+      mPop.ui.authLogin->setChecked( true );
     else if (ap.auth() == "PLAIN")
-      mPop.authPlain->setChecked( true );
+      mPop.ui.authPlain->setChecked( true );
     else if (ap.auth() == "CRAM-MD5")
-      mPop.authCRAM_MD5->setChecked( true );
+      mPop.ui.authCRAM_MD5->setChecked( true );
     else if (ap.auth() == "DIGEST-MD5")
-      mPop.authDigestMd5->setChecked( true );
+      mPop.ui.authDigestMd5->setChecked( true );
     else if (ap.auth() == "NTLM")
-      mPop.authNTLM->setChecked( true );
+      mPop.ui.authNTLM->setChecked( true );
     else if (ap.auth() == "GSSAPI")
-      mPop.authGSSAPI->setChecked( true );
+      mPop.ui.authGSSAPI->setChecked( true );
     else if (ap.auth() == "APOP")
-      mPop.authAPOP->setChecked( true );
-    else mPop.authUser->setChecked( true );
+      mPop.ui.authAPOP->setChecked( true );
+    else mPop.ui.authUser->setChecked( true );
 
-    slotEnableLeaveOnServerDays( mPop.leaveOnServerDaysCheck->isEnabled() ?
+    slotEnableLeaveOnServerDays( mPop.ui.leaveOnServerDaysCheck->isEnabled() ?
                                    ap.leaveOnServerDays() >= 1 : 0);
-    slotEnableLeaveOnServerCount( mPop.leaveOnServerCountCheck->isEnabled() ?
+    slotEnableLeaveOnServerCount( mPop.ui.leaveOnServerCountCheck->isEnabled() ?
                                     ap.leaveOnServerCount() >= 1 : 0);
-    slotEnableLeaveOnServerSize( mPop.leaveOnServerSizeCheck->isEnabled() ?
+    slotEnableLeaveOnServerSize( mPop.ui.leaveOnServerSizeCheck->isEnabled() ?
                                     ap.leaveOnServerSize() >= 1 : 0);
     slotEnablePopInterval( interval >= 1 );
-    folderCombo = mPop.folderCombo;
+    folderCombo = mPop.ui.folderCombo;
   }
   else if( accountType == KAccount::Imap )
   {
     KMAcctImap &ai = *(KMAcctImap*)mAccount;
-    mImap.nameEdit->setText( mAccount->name() );
-    mImap.nameEdit->setFocus();
-    mImap.loginEdit->setText( ai.login() );
-    mImap.passwordEdit->setText( ai.passwd());
-    mImap.hostEdit->setText( ai.host() );
-    mImap.portEdit->setText( QString("%1").arg( ai.port() ) );
-    mImap.autoExpungeCheck->setChecked( ai.autoExpunge() );
-    mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
-    mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
-    mImap.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
-    mImap.loadOnDemandCheck->setChecked( ai.loadOnDemand() );
-    mImap.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
-    mImap.storePasswordCheck->setChecked( ai.storePasswd() );
-    mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( qMax(1, interval) );
-    mImap.includeInCheck->setChecked( !ai.checkExclude() );
-    mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( qMax(1, interval) );
+    mImap.ui.nameEdit->setText( mAccount->name() );
+    mImap.ui.nameEdit->setFocus();
+    mImap.ui.loginEdit->setText( ai.login() );
+    mImap.ui.passwordEdit->setText( ai.passwd());
+    mImap.ui.hostEdit->setText( ai.host() );
+    mImap.ui.portEdit->setText( QString("%1").arg( ai.port() ) );
+    mImap.ui.autoExpungeCheck->setChecked( ai.autoExpunge() );
+    mImap.ui.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
+    mImap.ui.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
+    mImap.ui.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
+    mImap.ui.loadOnDemandCheck->setChecked( ai.loadOnDemand() );
+    mImap.ui.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
+    mImap.ui.storePasswordCheck->setChecked( ai.storePasswd() );
+    mImap.ui.intervalCheck->setChecked( interval >= 1 );
+    mImap.ui.intervalSpin->setValue( qMax(1, interval) );
+    mImap.ui.includeInCheck->setChecked( !ai.checkExclude() );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
     mImap.identityCombo->setCurrentIdentity( mAccount->identityId() );
-    mImap.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
+    mImap.ui.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
     if (ai.useSSL())
-      mImap.encryptionSSL->setChecked( true );
+      mImap.ui.encryptionSSL->setChecked( true );
     else if (ai.useTLS())
-      mImap.encryptionTLS->setChecked( true );
-    else mImap.encryptionNone->setChecked( true );
+      mImap.ui.encryptionTLS->setChecked( true );
+    else mImap.ui.encryptionNone->setChecked( true );
     if (ai.auth() == "CRAM-MD5")
-      mImap.authCramMd5->setChecked( true );
+      mImap.ui.authCramMd5->setChecked( true );
     else if (ai.auth() == "DIGEST-MD5")
-      mImap.authDigestMd5->setChecked( true );
+      mImap.ui.authDigestMd5->setChecked( true );
     else if (ai.auth() == "NTLM")
-      mImap.authNTLM->setChecked( true );
+      mImap.ui.authNTLM->setChecked( true );
     else if (ai.auth() == "GSSAPI")
-      mImap.authGSSAPI->setChecked( true );
+      mImap.ui.authGSSAPI->setChecked( true );
     else if (ai.auth() == "ANONYMOUS")
-      mImap.authAnonymous->setChecked( true );
+      mImap.ui.authAnonymous->setChecked( true );
     else if (ai.auth() == "PLAIN")
-      mImap.authPlain->setChecked( true );
+      mImap.ui.authPlain->setChecked( true );
     else if (ai.auth() == "LOGIN")
-      mImap.authLogin->setChecked( true );
-    else mImap.authUser->setChecked( true );
+      mImap.ui.authLogin->setChecked( true );
+    else mImap.ui.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
   else if( accountType == KAccount::DImap )
   {
     KMAcctCachedImap &ai = *(KMAcctCachedImap*)mAccount;
-    mImap.nameEdit->setText( mAccount->name() );
-    mImap.nameEdit->setFocus();
-    mImap.loginEdit->setText( ai.login() );
-    mImap.passwordEdit->setText( ai.passwd());
-    mImap.hostEdit->setText( ai.host() );
-    mImap.portEdit->setText( QString("%1").arg( ai.port() ) );
-    mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
-    mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
-    mImap.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
-    mImap.storePasswordCheck->setChecked( ai.storePasswd() );
-    mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( qMax(1, interval) );
-    mImap.includeInCheck->setChecked( !ai.checkExclude() );
-    mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( qMax(1, interval) );
+    mImap.ui.nameEdit->setText( mAccount->name() );
+    mImap.ui.nameEdit->setFocus();
+    mImap.ui.loginEdit->setText( ai.login() );
+    mImap.ui.passwordEdit->setText( ai.passwd());
+    mImap.ui.hostEdit->setText( ai.host() );
+    mImap.ui.portEdit->setText( QString("%1").arg( ai.port() ) );
+    mImap.ui.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
+    mImap.ui.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
+    mImap.ui.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
+    mImap.ui.storePasswordCheck->setChecked( ai.storePasswd() );
+    mImap.ui.intervalCheck->setChecked( interval >= 1 );
+    mImap.ui.intervalSpin->setValue( qMax(1, interval) );
+    mImap.ui.includeInCheck->setChecked( !ai.checkExclude() );
+    mImap.ui.intervalCheck->setChecked( interval >= 1 );
+    mImap.ui.intervalSpin->setValue( qMax(1, interval) );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
     mImap.identityCombo->setCurrentIdentity( mAccount->identityId() );
-    mImap.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
+    mImap.ui.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
     if (ai.useSSL())
-      mImap.encryptionSSL->setChecked( true );
+      mImap.ui.encryptionSSL->setChecked( true );
     else if (ai.useTLS())
-      mImap.encryptionTLS->setChecked( true );
-    else mImap.encryptionNone->setChecked( true );
+      mImap.ui.encryptionTLS->setChecked( true );
+    else mImap.ui.encryptionNone->setChecked( true );
     if (ai.auth() == "CRAM-MD5")
-      mImap.authCramMd5->setChecked( true );
+      mImap.ui.authCramMd5->setChecked( true );
     else if (ai.auth() == "DIGEST-MD5")
-      mImap.authDigestMd5->setChecked( true );
+      mImap.ui.authDigestMd5->setChecked( true );
     else if (ai.auth() == "GSSAPI")
-      mImap.authGSSAPI->setChecked( true );
+      mImap.ui.authGSSAPI->setChecked( true );
     else if (ai.auth() == "NTLM")
-      mImap.authNTLM->setChecked( true );
+      mImap.ui.authNTLM->setChecked( true );
     else if (ai.auth() == "ANONYMOUS")
-      mImap.authAnonymous->setChecked( true );
+      mImap.ui.authAnonymous->setChecked( true );
     else if (ai.auth() == "PLAIN")
-      mImap.authPlain->setChecked( true );
+      mImap.ui.authPlain->setChecked( true );
     else if (ai.auth() == "LOGIN")
-      mImap.authLogin->setChecked( true );
-    else mImap.authUser->setChecked( true );
+      mImap.ui.authLogin->setChecked( true );
+    else mImap.ui.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
@@ -1344,16 +723,16 @@ void AccountDialog::setupSettings()
   {
     KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
 
-    mMaildir.nameEdit->setText( mAccount->name() );
-    mMaildir.nameEdit->setFocus();
-    mMaildir.locationEdit->setEditText( acctMaildir->location() );
+    mMaildir.ui.nameEdit->setText( mAccount->name() );
+    mMaildir.ui.nameEdit->setFocus();
+    mMaildir.ui.locationEdit->setEditText( acctMaildir->location() );
 
-    mMaildir.intervalSpin->setValue( qMax(1, interval) );
-    mMaildir.intervalCheck->setChecked( interval >= 1 );
-    mMaildir.includeInCheck->setChecked( !mAccount->checkExclude() );
-    mMaildir.precommand->setText( mAccount->precommand() );
+    mMaildir.ui.intervalSpin->setValue( qMax(1, interval) );
+    mMaildir.ui.intervalCheck->setChecked( interval >= 1 );
+    mMaildir.ui.includeInCheck->setChecked( !mAccount->checkExclude() );
+    mMaildir.ui.precommand->setText( mAccount->precommand() );
     slotEnableMaildirInterval( interval >= 1 );
-    folderCombo = mMaildir.folderCombo;
+    folderCombo = mMaildir.ui.folderCombo;
   }
   else // Unknown account type
     return;
@@ -1416,18 +795,18 @@ void AccountDialog::setupSettings()
 
 void AccountDialog::slotLeaveOnServerClicked()
 {
-  bool state = mPop.leaveOnServerCheck->isChecked();
-  mPop.leaveOnServerDaysCheck->setEnabled( state );
-  mPop.leaveOnServerCountCheck->setEnabled( state );
-  mPop.leaveOnServerSizeCheck->setEnabled( state );
+  bool state = mPop.ui.leaveOnServerCheck->isChecked();
+  mPop.ui.leaveOnServerDaysCheck->setEnabled( state );
+  mPop.ui.leaveOnServerCountCheck->setEnabled( state );
+  mPop.ui.leaveOnServerSizeCheck->setEnabled( state );
   if ( state ) {
-    if ( mPop.leaveOnServerDaysCheck->isChecked() ) {
+    if ( mPop.ui.leaveOnServerDaysCheck->isChecked() ) {
       slotEnableLeaveOnServerDays( state );
     }
-    if ( mPop.leaveOnServerCountCheck->isChecked() ) {
+    if ( mPop.ui.leaveOnServerCountCheck->isChecked() ) {
       slotEnableLeaveOnServerCount( state );
     }
-    if ( mPop.leaveOnServerSizeCheck->isChecked() ) {
+    if ( mPop.ui.leaveOnServerSizeCheck->isChecked() ) {
       slotEnableLeaveOnServerSize( state );
     }
   } else {
@@ -1436,7 +815,7 @@ void AccountDialog::slotLeaveOnServerClicked()
     slotEnableLeaveOnServerSize( state );
   }
   if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::UIDL ) &&
-       mPop.leaveOnServerCheck->isChecked() ) {
+       mPop.ui.leaveOnServerCheck->isChecked() ) {
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support unique "
                                    "message numbers, but this is a "
@@ -1452,7 +831,7 @@ void AccountDialog::slotLeaveOnServerClicked()
 void AccountDialog::slotFilterOnServerClicked()
 {
   if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::Top ) &&
-       mPop.filterOnServerCheck->isChecked() ) {
+       mPop.ui.filterOnServerCheck->isChecked() ) {
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support "
                                    "fetching message headers, but this is a "
@@ -1467,7 +846,7 @@ void AccountDialog::slotFilterOnServerClicked()
 
 void AccountDialog::slotPipeliningClicked()
 {
-  if (mPop.usePipeliningCheck->isChecked())
+  if (mPop.ui.usePipeliningCheck->isChecked())
     KMessageBox::information( topLevelWidget(),
       i18n("Please note that this feature can cause some POP3 servers "
       "that do not support pipelining to send corrupted mail;\n"
@@ -1486,8 +865,8 @@ void AccountDialog::slotPopEncryptionChanged( int id )
 {
   kDebug(5006) << "ID:" << id;
   // adjust port
-  if ( id == Transport::EnumEncryption::SSL || mPop.portEdit->text() == "995" )
-    mPop.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "995" : "110" );
+  if ( id == Transport::EnumEncryption::SSL || mPop.ui.portEdit->text() == "995" )
+    mPop.ui.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "995" : "110" );
 
   enablePopFeatures();
   const QAbstractButton *old = mPop.authButtonGroup->checkedButton();
@@ -1498,17 +877,17 @@ void AccountDialog::slotPopEncryptionChanged( int id )
 void AccountDialog::slotPopPasswordChanged(const QString& text)
 {
   if ( text.isEmpty() )
-    mPop.storePasswordCheck->setCheckState( Qt::Unchecked );
+    mPop.ui.storePasswordCheck->setCheckState( Qt::Unchecked );
   else
-    mPop.storePasswordCheck->setCheckState( Qt::Checked );
+    mPop.ui.storePasswordCheck->setCheckState( Qt::Checked );
 }
 
 void AccountDialog::slotImapEncryptionChanged( int id )
 {
   kDebug(5006) << id;
   // adjust port
-  if ( id == Transport::EnumEncryption::SSL || mImap.portEdit->text() == "993" )
-    mImap.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "993" : "143" );
+  if ( id == Transport::EnumEncryption::SSL || mImap.ui.portEdit->text() == "993" )
+    mImap.ui.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "993" : "143" );
 
   enableImapAuthMethods();
   QAbstractButton *old = mImap.authButtonGroup->checkedButton();
@@ -1519,7 +898,7 @@ void AccountDialog::slotImapEncryptionChanged( int id )
 
 void AccountDialog::slotCheckPopCapabilities()
 {
-  if ( mPop.hostEdit->text().isEmpty() || mPop.portEdit->text().isEmpty() )
+  if ( mPop.ui.hostEdit->text().isEmpty() || mPop.ui.portEdit->text().isEmpty() )
   {
      KMessageBox::sorry( this, i18n( "Please specify a server and port on "
                                      "the General tab first." ) );
@@ -1528,24 +907,24 @@ void AccountDialog::slotCheckPopCapabilities()
   delete mServerTest;
   mServerTest = new ServerTest( this );
   Transport::EnumEncryption::type encryptionType;
-  if ( mPop.encryptionSSL->isChecked() )
+  if ( mPop.ui.encryptionSSL->isChecked() )
     encryptionType = Transport::EnumEncryption::SSL;
   else
     encryptionType = Transport::EnumEncryption::None;
-  mServerTest->setPort( encryptionType, mPop.portEdit->text().toInt() );
-  mServerTest->setServer( mPop.hostEdit->text() );
+  mServerTest->setPort( encryptionType, mPop.ui.portEdit->text().toInt() );
+  mServerTest->setServer( mPop.ui.hostEdit->text() );
   mServerTest->setProtocol( "pop" );
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
            this, SLOT( slotPopCapabilities(QList<int>) ) );
   mServerTest->start();
   mServerTestFailed = false;
-  mPop.checkCapabilities->setEnabled( false );
+  mPop.ui.checkCapabilities->setEnabled( false );
 }
 
 
 void AccountDialog::slotCheckImapCapabilities()
 {
-  if ( mImap.hostEdit->text().isEmpty() || mImap.portEdit->text().isEmpty() )
+  if ( mImap.ui.hostEdit->text().isEmpty() || mImap.ui.portEdit->text().isEmpty() )
   {
      KMessageBox::sorry( this, i18n( "Please specify a server and port on "
               "the General tab first." ) );
@@ -1554,23 +933,23 @@ void AccountDialog::slotCheckImapCapabilities()
   delete mServerTest;
   mServerTest = new ServerTest( this );
   Transport::EnumEncryption::type encryptionType;
-  if ( mImap.encryptionSSL->isChecked() )
+  if ( mImap.ui.encryptionSSL->isChecked() )
     encryptionType = Transport::EnumEncryption::SSL;
   else
     encryptionType = Transport::EnumEncryption::None;
-  mServerTest->setPort( encryptionType, mImap.portEdit->text().toInt() );
-  mServerTest->setServer( mImap.hostEdit->text() );
+  mServerTest->setPort( encryptionType, mImap.ui.portEdit->text().toInt() );
+  mServerTest->setServer( mImap.ui.hostEdit->text() );
   mServerTest->setProtocol( "imap" );
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
            this, SLOT( slotImapCapabilities(QList<int>) ) );
   mServerTest->start();
   mServerTestFailed = false;
-  mImap.checkCapabilities->setEnabled(false);
+  mImap.ui.checkCapabilities->setEnabled(false);
 }
 
 void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
 {
-  mPop.checkCapabilities->setEnabled( true );
+  mPop.ui.checkCapabilities->setEnabled( true );
 
   // If the servertest did not find any useable authentication modes, assume the
   // connection failed and don't disable any of the radioboxes.
@@ -1579,9 +958,9 @@ void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
     return;
   }
 
-  mPop.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
-  mPop.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
-  mPop.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
+  mPop.ui.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
+  mPop.ui.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
+  mPop.ui.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
   checkHighest( mPop.encryptionButtonGroup );
 }
 
@@ -1600,17 +979,17 @@ void AccountDialog::enablePopFeatures()
   if ( mPop.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::TLS )
     supportedAuths = mServerTest->tlsProtocols();
 
-  mPop.authPlain->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::PLAIN ) );
-  mPop.authLogin->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::LOGIN ) );
-  mPop.authCRAM_MD5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) );
-  mPop.authDigestMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) );
-  mPop.authNTLM->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::NTLM ) );
-  mPop.authGSSAPI->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::GSSAPI ) );
-  mPop.authAPOP->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::APOP ) );
+  mPop.ui.authPlain->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::PLAIN ) );
+  mPop.ui.authLogin->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::LOGIN ) );
+  mPop.ui.authCRAM_MD5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) );
+  mPop.ui.authDigestMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) );
+  mPop.ui.authNTLM->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::NTLM ) );
+  mPop.ui.authGSSAPI->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::GSSAPI ) );
+  mPop.ui.authAPOP->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::APOP ) );
 
   if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::Pipelining ) &&
-       mPop.usePipeliningCheck->isChecked() ) {
-    mPop.usePipeliningCheck->setChecked( false );
+       mPop.ui.usePipeliningCheck->isChecked() ) {
+    mPop.ui.usePipeliningCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support "
                                    "pipelining; therefore, this option has "
@@ -1630,8 +1009,8 @@ void AccountDialog::enablePopFeatures()
   }
 
   if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::UIDL ) &&
-       mPop.leaveOnServerCheck->isChecked() ) {
-    mPop.leaveOnServerCheck->setChecked( false );
+       mPop.ui.leaveOnServerCheck->isChecked() ) {
+    mPop.ui.leaveOnServerCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support unique "
                                    "message numbers, but this is a "
@@ -1645,8 +1024,8 @@ void AccountDialog::enablePopFeatures()
   }
 
   if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::Top ) &&
-       mPop.filterOnServerCheck->isChecked() ) {
-    mPop.filterOnServerCheck->setChecked( false );
+       mPop.ui.filterOnServerCheck->isChecked() ) {
+    mPop.ui.filterOnServerCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support "
                                    "fetching message headers, but this is a "
@@ -1662,7 +1041,7 @@ void AccountDialog::enablePopFeatures()
 
 void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
 {
-  mImap.checkCapabilities->setEnabled( true );
+  mImap.ui.checkCapabilities->setEnabled( true );
 
   // If the servertest did not find any useable authentication modes, assume the
   // connection failed and don't disable any of the radioboxes.
@@ -1671,34 +1050,34 @@ void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
     return;
   }
 
-  mImap.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
-  mImap.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
-  mImap.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
+  mImap.ui.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
+  mImap.ui.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
+  mImap.ui.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
   checkHighest( mImap.encryptionButtonGroup );
 }
 
 void AccountDialog::slotLeaveOnServerDaysChanged ( int value )
 {
-  mPop.leaveOnServerDaysSpin->setSuffix( i18np(" day", " days", value) );
+  mPop.ui.leaveOnServerDaysSpin->setSuffix( i18np(" day", " days", value) );
 }
 
 
 void AccountDialog::slotLeaveOnServerCountChanged ( int value )
 {
-  mPop.leaveOnServerCountSpin->setSuffix( i18np(" message", " messages", value) );
+  mPop.ui.leaveOnServerCountSpin->setSuffix( i18np(" message", " messages", value) );
 }
 
 
 void AccountDialog::slotFilterOnServerSizeChanged ( int value )
 {
-  mPop.filterOnServerSizeSpin->setSuffix( i18np(" byte", " bytes", value) );
+  mPop.ui.filterOnServerSizeSpin->setSuffix( i18np(" byte", " bytes", value) );
 }
 
 void AccountDialog::slotIdentityCheckboxChanged()
 {
   if ( mAccount->type() == KAccount::Imap ||
        mAccount->type() == KAccount::DImap  ) {
-     mImap.identityCombo->setEnabled( !mImap.useDefaultIdentityCheck->isChecked() );
+     mImap.identityCombo->setEnabled( !mImap.ui.useDefaultIdentityCheck->isChecked() );
    }
    else
      assert( false );
@@ -1718,13 +1097,13 @@ void AccountDialog::enableImapAuthMethods()
   if ( mImap.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::TLS )
     supportedAuths = mServerTest->tlsProtocols();
 
-  mImap.authPlain->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::PLAIN ) );
-  mImap.authLogin->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::LOGIN ) );
-  mImap.authCramMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) );
-  mImap.authDigestMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) );
-  mImap.authNTLM->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::NTLM ) );
-  mImap.authGSSAPI->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::GSSAPI ) );
-  mImap.authAnonymous->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::ANONYMOUS ) );
+  mImap.ui.authPlain->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::PLAIN ) );
+  mImap.ui.authLogin->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::LOGIN ) );
+  mImap.ui.authCramMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) );
+  mImap.ui.authDigestMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) );
+  mImap.ui.authNTLM->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::NTLM ) );
+  mImap.ui.authGSSAPI->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::GSSAPI ) );
+  mImap.ui.authAnonymous->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::ANONYMOUS ) );
 }
 
 
@@ -1756,108 +1135,108 @@ void AccountDialog::saveSettings()
     KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
 
     if (acctLocal) {
-      mAccount->setName( mLocal.nameEdit->text() );
-      acctLocal->setLocation( mLocal.locationEdit->currentText() );
-      if (mLocal.lockMutt->isChecked())
+      mAccount->setName( mLocal.ui.nameEdit->text() );
+      acctLocal->setLocation( mLocal.ui.locationEdit->currentText() );
+      if (mLocal.ui.lockMutt->isChecked())
         acctLocal->setLockType(mutt_dotlock);
-      else if (mLocal.lockMuttPriv->isChecked())
+      else if (mLocal.ui.lockMuttPriv->isChecked())
         acctLocal->setLockType(mutt_dotlock_privileged);
-      else if (mLocal.lockProcmail->isChecked()) {
+      else if (mLocal.ui.lockProcmail->isChecked()) {
         acctLocal->setLockType(procmail_lockfile);
-        acctLocal->setProcmailLockFileName(mLocal.procmailLockFileName->currentText());
+        acctLocal->setProcmailLockFileName(mLocal.ui.procmailLockFileName->currentText());
       }
-      else if (mLocal.lockNone->isChecked())
+      else if (mLocal.ui.lockNone->isChecked())
         acctLocal->setLockType(lock_none);
       else acctLocal->setLockType(FCNTL);
     }
 
-    mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ?
-                                mLocal.intervalSpin->value() : 0 );
-    mAccount->setCheckExclude( !mLocal.includeInCheck->isChecked() );
+    mAccount->setCheckInterval( mLocal.ui.intervalCheck->isChecked() ?
+                                mLocal.ui.intervalSpin->value() : 0 );
+    mAccount->setCheckExclude( !mLocal.ui.includeInCheck->isChecked() );
 
-    mAccount->setPrecommand( mLocal.precommand->text() );
+    mAccount->setPrecommand( mLocal.ui.precommand->text() );
 
-    mAccount->setFolder( mFolderList.at(mLocal.folderCombo->currentIndex()) );
+    mAccount->setFolder( mFolderList.at(mLocal.ui.folderCombo->currentIndex()) );
   }
   else if( accountType == KAccount::Pop )
   {
-    mAccount->setName( mPop.nameEdit->text() );
-    mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ?
-                                mPop.intervalSpin->value() : 0 );
-    mAccount->setCheckExclude( !mPop.includeInCheck->isChecked() );
+    mAccount->setName( mPop.ui.nameEdit->text() );
+    mAccount->setCheckInterval( mPop.ui.intervalCheck->isChecked() ?
+                                mPop.ui.intervalSpin->value() : 0 );
+    mAccount->setCheckExclude( !mPop.ui.includeInCheck->isChecked() );
 
-    mAccount->setFolder( mFolderList.at(mPop.folderCombo->currentIndex()) );
+    mAccount->setFolder( mFolderList.at(mPop.ui.folderCombo->currentIndex()) );
 
     initAccountForConnect();
     PopAccount &epa = *(PopAccount*)mAccount;
-    epa.setUsePipelining( mPop.usePipeliningCheck->isChecked() );
-    epa.setLeaveOnServer( mPop.leaveOnServerCheck->isChecked() );
-    epa.setLeaveOnServerDays( mPop.leaveOnServerCheck->isChecked() ?
-                              ( mPop.leaveOnServerDaysCheck->isChecked() ?
-                                mPop.leaveOnServerDaysSpin->value() : -1 ) : 0);
-    epa.setLeaveOnServerCount( mPop.leaveOnServerCheck->isChecked() ?
-                               ( mPop.leaveOnServerCountCheck->isChecked() ?
-                                 mPop.leaveOnServerCountSpin->value() : -1 ) : 0 );
-    epa.setLeaveOnServerSize( mPop.leaveOnServerCheck->isChecked() ?
-                              ( mPop.leaveOnServerSizeCheck->isChecked() ?
-                                mPop.leaveOnServerSizeSpin->value() : -1 ) : 0 );
-    epa.setFilterOnServer( mPop.filterOnServerCheck->isChecked() );
-    epa.setFilterOnServerCheckSize (mPop.filterOnServerSizeSpin->value() );
-    epa.setPrecommand( mPop.precommand->text() );
+    epa.setUsePipelining( mPop.ui.usePipeliningCheck->isChecked() );
+    epa.setLeaveOnServer( mPop.ui.leaveOnServerCheck->isChecked() );
+    epa.setLeaveOnServerDays( mPop.ui.leaveOnServerCheck->isChecked() ?
+                              ( mPop.ui.leaveOnServerDaysCheck->isChecked() ?
+                                mPop.ui.leaveOnServerDaysSpin->value() : -1 ) : 0);
+    epa.setLeaveOnServerCount( mPop.ui.leaveOnServerCheck->isChecked() ?
+                               ( mPop.ui.leaveOnServerCountCheck->isChecked() ?
+                                 mPop.ui.leaveOnServerCountSpin->value() : -1 ) : 0 );
+    epa.setLeaveOnServerSize( mPop.ui.leaveOnServerCheck->isChecked() ?
+                              ( mPop.ui.leaveOnServerSizeCheck->isChecked() ?
+                                mPop.ui.leaveOnServerSizeSpin->value() : -1 ) : 0 );
+    epa.setFilterOnServer( mPop.ui.filterOnServerCheck->isChecked() );
+    epa.setFilterOnServerCheckSize (mPop.ui.filterOnServerSizeSpin->value() );
+    epa.setPrecommand( mPop.ui.precommand->text() );
 
   }
   else if( accountType == KAccount::Imap )
   {
-    mAccount->setName( mImap.nameEdit->text() );
-    mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
-                                mImap.intervalSpin->value() : 0 );
+    mAccount->setName( mImap.ui.nameEdit->text() );
+    mAccount->setCheckInterval( mImap.ui.intervalCheck->isChecked() ?
+                                mImap.ui.intervalSpin->value() : 0 );
     mAccount->setIdentityId( mImap.identityCombo->currentIdentity() );
-    mAccount->setUseDefaultIdentity( mImap.useDefaultIdentityCheck->isChecked() );
-    mAccount->setCheckExclude( !mImap.includeInCheck->isChecked() );
+    mAccount->setUseDefaultIdentity( mImap.ui.useDefaultIdentityCheck->isChecked() );
+    mAccount->setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     mAccount->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()) );
 
     initAccountForConnect();
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
-    epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
-    epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
-    epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
-    epa.setOnlyLocallySubscribedFolders( mImap.locallySubscribedFoldersCheck->isChecked() );
-    epa.setLoadOnDemand( mImap.loadOnDemandCheck->isChecked() );
-    epa.setListOnlyOpenFolders( mImap.listOnlyOpenCheck->isChecked() );
+    epa.setAutoExpunge( mImap.ui.autoExpungeCheck->isChecked() );
+    epa.setHiddenFolders( mImap.ui.hiddenFoldersCheck->isChecked() );
+    epa.setOnlySubscribedFolders( mImap.ui.subscribedFoldersCheck->isChecked() );
+    epa.setOnlyLocallySubscribedFolders( mImap.ui.locallySubscribedFoldersCheck->isChecked() );
+    epa.setLoadOnDemand( mImap.ui.loadOnDemandCheck->isChecked() );
+    epa.setListOnlyOpenFolders( mImap.ui.listOnlyOpenCheck->isChecked() );
     KMFolder *t = mImap.trashCombo->folder();
     if ( t )
       epa.setTrash( mImap.trashCombo->folder()->idString() );
     else
       epa.setTrash( kmkernel->trashFolder()->idString() );
-    epa.setCheckExclude( !mImap.includeInCheck->isChecked() );
+    epa.setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
   }
   else if( accountType == KAccount::DImap )
   {
-    mAccount->setName( mImap.nameEdit->text() );
-    mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
-                                mImap.intervalSpin->value() : 0 );
+    mAccount->setName( mImap.ui.nameEdit->text() );
+    mAccount->setCheckInterval( mImap.ui.intervalCheck->isChecked() ?
+                                mImap.ui.intervalSpin->value() : 0 );
     mAccount->setIdentityId( mImap.identityCombo->currentIdentity() );
-    mAccount->setUseDefaultIdentity( mImap.useDefaultIdentityCheck->isChecked() );
-    mAccount->setCheckExclude( !mImap.includeInCheck->isChecked() );
+    mAccount->setUseDefaultIdentity( mImap.ui.useDefaultIdentityCheck->isChecked() );
+    mAccount->setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()) );
     //kDebug(5006) <<"account for folder" << mAccount->folder()->name();
 
     initAccountForConnect();
     KMAcctCachedImap &epa = *(KMAcctCachedImap*)mAccount;
-    epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
-    epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
-    epa.setOnlyLocallySubscribedFolders( mImap.locallySubscribedFoldersCheck->isChecked() );
-    epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
-    epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
+    epa.setHiddenFolders( mImap.ui.hiddenFoldersCheck->isChecked() );
+    epa.setOnlySubscribedFolders( mImap.ui.subscribedFoldersCheck->isChecked() );
+    epa.setOnlyLocallySubscribedFolders( mImap.ui.locallySubscribedFoldersCheck->isChecked() );
+    epa.setStorePasswd( mImap.ui.storePasswordCheck->isChecked() );
+    epa.setPasswd( mImap.ui.passwordEdit->text(), epa.storePasswd() );
     KMFolder *t = mImap.trashCombo->folder();
     if ( t )
       epa.setTrash( mImap.trashCombo->folder()->idString() );
     else
       epa.setTrash( kmkernel->trashFolder()->idString() );
-    epa.setCheckExclude( !mImap.includeInCheck->isChecked() );
+    epa.setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
   }
@@ -1866,10 +1245,10 @@ void AccountDialog::saveSettings()
     KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
 
     if (acctMaildir) {
-        mAccount->setName( mMaildir.nameEdit->text() );
-        acctMaildir->setLocation( mMaildir.locationEdit->currentText() );
+        mAccount->setName( mMaildir.ui.nameEdit->text() );
+        acctMaildir->setLocation( mMaildir.ui.locationEdit->currentText() );
 
-        KMFolder *targetFolder = mFolderList.at(mMaildir.folderCombo->currentIndex());
+        KMFolder *targetFolder = mFolderList.at(mMaildir.ui.folderCombo->currentIndex());
         if ( targetFolder->location()  == acctMaildir->location() ) {
             /*
                Prevent data loss if the user sets the destination folder to be the same as the
@@ -1880,11 +1259,11 @@ void AccountDialog::saveSettings()
         }
         mAccount->setFolder( targetFolder );
     }
-    mAccount->setCheckInterval( mMaildir.intervalCheck->isChecked() ?
-                                mMaildir.intervalSpin->value() : 0 );
-    mAccount->setCheckExclude( !mMaildir.includeInCheck->isChecked() );
+    mAccount->setCheckInterval( mMaildir.ui.intervalCheck->isChecked() ?
+                                mMaildir.ui.intervalSpin->value() : 0 );
+    mAccount->setCheckExclude( !mMaildir.ui.includeInCheck->isChecked() );
 
-    mAccount->setPrecommand( mMaildir.precommand->text() );
+    mAccount->setPrecommand( mMaildir.ui.precommand->text() );
   }
 
   if ( accountType == KAccount::Imap ||
@@ -1917,11 +1296,11 @@ void AccountDialog::saveSettings()
   if (newAcct)
   {
     if( accountType == KAccount::Local ) {
-      newAcct->setFolder( mFolderList.at(mLocal.folderCombo->currentIndex()), true );
+      newAcct->setFolder( mFolderList.at(mLocal.ui.folderCombo->currentIndex()), true );
     } else if ( accountType == KAccount::Pop ) {
-      newAcct->setFolder( mFolderList.at(mPop.folderCombo->currentIndex()), true );
+      newAcct->setFolder( mFolderList.at(mPop.ui.folderCombo->currentIndex()), true );
     } else if ( accountType == KAccount::Maildir ) {
-      newAcct->setFolder( mFolderList.at(mMaildir.folderCombo->currentIndex()), true );
+      newAcct->setFolder( mFolderList.at(mMaildir.ui.folderCombo->currentIndex()), true );
     } else if ( accountType == KAccount::Imap ) {
       newAcct->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()), true );
     } else if ( accountType == KAccount::DImap ) {
@@ -1955,7 +1334,7 @@ void AccountDialog::slotLocationChooser()
     return;
   }
 
-  mLocal.locationEdit->setEditText( url.path() );
+  mLocal.ui.locationEdit->setEditText( url.path() );
   directory = url.directory();
 }
 
@@ -1968,52 +1347,52 @@ void AccountDialog::slotMaildirChooser()
   if( dir.isEmpty() )
     return;
 
-  mMaildir.locationEdit->setEditText( dir );
+  mMaildir.ui.locationEdit->setEditText( dir );
   directory = dir;
 }
 
 void AccountDialog::slotEnableLeaveOnServerDays( bool state )
 {
-  if ( state && !mPop.leaveOnServerDaysCheck->isEnabled()) return;
-  mPop.leaveOnServerDaysSpin->setEnabled( state );
+  if ( state && !mPop.ui.leaveOnServerDaysCheck->isEnabled()) return;
+  mPop.ui.leaveOnServerDaysSpin->setEnabled( state );
 }
 
 void AccountDialog::slotEnableLeaveOnServerCount( bool state )
 {
-  if ( state && !mPop.leaveOnServerCountCheck->isEnabled()) return;
-  mPop.leaveOnServerCountSpin->setEnabled( state );
+  if ( state && !mPop.ui.leaveOnServerCountCheck->isEnabled()) return;
+  mPop.ui.leaveOnServerCountSpin->setEnabled( state );
   return;
 }
 
 void AccountDialog::slotEnableLeaveOnServerSize( bool state )
 {
-  if ( state && !mPop.leaveOnServerSizeCheck->isEnabled()) return;
-  mPop.leaveOnServerSizeSpin->setEnabled( state );
+  if ( state && !mPop.ui.leaveOnServerSizeCheck->isEnabled()) return;
+  mPop.ui.leaveOnServerSizeSpin->setEnabled( state );
   return;
 }
 
 void AccountDialog::slotEnablePopInterval( bool state )
 {
-  mPop.intervalSpin->setEnabled( state );
-  mPop.intervalLabel->setEnabled( state );
+  mPop.ui.intervalSpin->setEnabled( state );
+  mPop.ui.intervalLabel->setEnabled( state );
 }
 
 void AccountDialog::slotEnableImapInterval( bool state )
 {
-  mImap.intervalSpin->setEnabled( state );
-  mImap.intervalLabel->setEnabled( state );
+  mImap.ui.intervalSpin->setEnabled( state );
+  mImap.ui.intervalLabel->setEnabled( state );
 }
 
 void AccountDialog::slotEnableLocalInterval( bool state )
 {
-  mLocal.intervalSpin->setEnabled( state );
-  mLocal.intervalLabel->setEnabled( state );
+  mLocal.ui.intervalSpin->setEnabled( state );
+  mLocal.ui.intervalLabel->setEnabled( state );
 }
 
 void AccountDialog::slotEnableMaildirInterval( bool state )
 {
-  mMaildir.intervalSpin->setEnabled( state );
-  mMaildir.intervalLabel->setEnabled( state );
+  mMaildir.ui.intervalSpin->setEnabled( state );
+  mMaildir.ui.intervalLabel->setEnabled( state );
 }
 
 void AccountDialog::slotFontChanged( void )
@@ -2021,21 +1400,21 @@ void AccountDialog::slotFontChanged( void )
   KAccount::Type accountType = mAccount->type();
   if( accountType == KAccount::Local )
   {
-    QFont titleFont( mLocal.titleLabel->font() );
+    QFont titleFont( mLocal.ui.titleLabel->font() );
     titleFont.setBold( true );
-    mLocal.titleLabel->setFont(titleFont);
+    mLocal.ui.titleLabel->setFont(titleFont);
   }
   else if( accountType == KAccount::Pop )
   {
-    QFont titleFont( mPop.titleLabel->font() );
+    QFont titleFont( mPop.ui.titleLabel->font() );
     titleFont.setBold( true );
-    mPop.titleLabel->setFont(titleFont);
+    mPop.ui.titleLabel->setFont(titleFont);
   }
   else if( accountType == KAccount::Imap )
   {
-    QFont titleFont( mImap.titleLabel->font() );
+    QFont titleFont( mImap.ui.titleLabel->font() );
     titleFont.setBold( true );
-    mImap.titleLabel->setFont(titleFont);
+    mImap.ui.titleLabel->setFont(titleFont);
   }
 }
 
@@ -2045,9 +1424,9 @@ void AccountDialog::slotReloadNamespaces()
        mAccount->type() == KAccount::DImap )
   {
     initAccountForConnect();
-    mImap.personalNS->setText( i18n("Fetching Namespaces...") );
-    mImap.otherUsersNS->setText( QString() );
-    mImap.sharedNS->setText( QString() );
+    mImap.ui.personalNS->setText( i18n("Fetching Namespaces...") );
+    mImap.ui.otherUsersNS->setText( QString() );
+    mImap.ui.sharedNS->setText( QString() );
     ImapAccountBase* ai = static_cast<ImapAccountBase*>( mAccount );
     connect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
@@ -2065,39 +1444,39 @@ void AccountDialog::slotConnectionResult( int errorCode, const QString& )
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
     disconnect( ai, SIGNAL( connectionResult(int, const QString&) ),
           this, SLOT( slotConnectionResult(int, const QString&) ) );
-    mImap.personalNS->setText( QString() );
+    mImap.ui.personalNS->setText( QString() );
   }
 }
 
 void AccountDialog::slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map )
 {
   disconnect( this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
-  mImap.personalNS->setText( QString() );
-  mImap.otherUsersNS->setText( QString() );
-  mImap.sharedNS->setText( QString() );
+  mImap.ui.personalNS->setText( QString() );
+  mImap.ui.otherUsersNS->setText( QString() );
+  mImap.ui.sharedNS->setText( QString() );
   mImap.nsMap = map;
 
   ImapAccountBase::namespaceDelim ns = map[ImapAccountBase::PersonalNS];
   ImapAccountBase::namespaceDelim::ConstIterator it;
   if ( !ns.isEmpty() ) {
-    mImap.personalNS->setText( namespaceListToString( ns.keys() ) );
-    mImap.editPNS->setEnabled( true );
+    mImap.ui.personalNS->setText( namespaceListToString( ns.keys() ) );
+    mImap.ui.editPNS->setEnabled( true );
   } else {
-    mImap.editPNS->setEnabled( false );
+    mImap.ui.editPNS->setEnabled( false );
   }
   ns = map[ImapAccountBase::OtherUsersNS];
   if ( !ns.isEmpty() ) {
-    mImap.otherUsersNS->setText( namespaceListToString( ns.keys() ) );
-    mImap.editONS->setEnabled( true );
+    mImap.ui.otherUsersNS->setText( namespaceListToString( ns.keys() ) );
+    mImap.ui.editONS->setEnabled( true );
   } else {
-    mImap.editONS->setEnabled( false );
+    mImap.ui.editONS->setEnabled( false );
   }
   ns = map[ImapAccountBase::SharedNS];
   if ( !ns.isEmpty() ) {
-    mImap.sharedNS->setText( namespaceListToString( ns.keys() ) );
-    mImap.editSNS->setEnabled( true );
+    mImap.ui.sharedNS->setText( namespaceListToString( ns.keys() ) );
+    mImap.ui.editSNS->setEnabled( true );
   } else {
-    mImap.editSNS->setEnabled( false );
+    mImap.ui.editSNS->setEnabled( false );
   }
 }
 
@@ -2121,53 +1500,53 @@ void AccountDialog::initAccountForConnect()
   NetworkAccount &na = *(NetworkAccount*)mAccount;
 
   if ( type == KAccount::Pop ) {
-    na.setHost( mPop.hostEdit->text().trimmed() );
-    na.setPort( mPop.portEdit->text().toInt() );
-    na.setLogin( mPop.loginEdit->text().trimmed() );
-    na.setStorePasswd( mPop.storePasswordCheck->isChecked() );
-    na.setPasswd( mPop.passwordEdit->text(), na.storePasswd() );
-    na.setUseSSL( mPop.encryptionSSL->isChecked() );
-    na.setUseTLS( mPop.encryptionTLS->isChecked() );
-    if (mPop.authUser->isChecked())
+    na.setHost( mPop.ui.hostEdit->text().trimmed() );
+    na.setPort( mPop.ui.portEdit->text().toInt() );
+    na.setLogin( mPop.ui.loginEdit->text().trimmed() );
+    na.setStorePasswd( mPop.ui.storePasswordCheck->isChecked() );
+    na.setPasswd( mPop.ui.passwordEdit->text(), na.storePasswd() );
+    na.setUseSSL( mPop.ui.encryptionSSL->isChecked() );
+    na.setUseTLS( mPop.ui.encryptionTLS->isChecked() );
+    if (mPop.ui.authUser->isChecked())
       na.setAuth("USER");
-    else if (mPop.authLogin->isChecked())
+    else if (mPop.ui.authLogin->isChecked())
       na.setAuth("LOGIN");
-    else if (mPop.authPlain->isChecked())
+    else if (mPop.ui.authPlain->isChecked())
       na.setAuth("PLAIN");
-    else if (mPop.authCRAM_MD5->isChecked())
+    else if (mPop.ui.authCRAM_MD5->isChecked())
       na.setAuth("CRAM-MD5");
-    else if (mPop.authDigestMd5->isChecked())
+    else if (mPop.ui.authDigestMd5->isChecked())
       na.setAuth("DIGEST-MD5");
-    else if (mPop.authNTLM->isChecked())
+    else if (mPop.ui.authNTLM->isChecked())
       na.setAuth("NTLM");
-    else if (mPop.authGSSAPI->isChecked())
+    else if (mPop.ui.authGSSAPI->isChecked())
       na.setAuth("GSSAPI");
-    else if (mPop.authAPOP->isChecked())
+    else if (mPop.ui.authAPOP->isChecked())
       na.setAuth("APOP");
     else na.setAuth("AUTO");
   }
   else if ( type == KAccount::Imap ||
             type == KAccount::DImap ) {
-    na.setHost( mImap.hostEdit->text().trimmed() );
-    na.setPort( mImap.portEdit->text().toInt() );
-    na.setLogin( mImap.loginEdit->text().trimmed() );
-    na.setStorePasswd( mImap.storePasswordCheck->isChecked() );
-    na.setPasswd( mImap.passwordEdit->text(), na.storePasswd() );
-    na.setUseSSL( mImap.encryptionSSL->isChecked() );
-    na.setUseTLS( mImap.encryptionTLS->isChecked() );
-    if (mImap.authCramMd5->isChecked())
+    na.setHost( mImap.ui.hostEdit->text().trimmed() );
+    na.setPort( mImap.ui.portEdit->text().toInt() );
+    na.setLogin( mImap.ui.loginEdit->text().trimmed() );
+    na.setStorePasswd( mImap.ui.storePasswordCheck->isChecked() );
+    na.setPasswd( mImap.ui.passwordEdit->text(), na.storePasswd() );
+    na.setUseSSL( mImap.ui.encryptionSSL->isChecked() );
+    na.setUseTLS( mImap.ui.encryptionTLS->isChecked() );
+    if (mImap.ui.authCramMd5->isChecked())
       na.setAuth("CRAM-MD5");
-    else if (mImap.authDigestMd5->isChecked())
+    else if (mImap.ui.authDigestMd5->isChecked())
       na.setAuth("DIGEST-MD5");
-    else if (mImap.authNTLM->isChecked())
+    else if (mImap.ui.authNTLM->isChecked())
       na.setAuth("NTLM");
-    else if (mImap.authGSSAPI->isChecked())
+    else if (mImap.ui.authGSSAPI->isChecked())
       na.setAuth("GSSAPI");
-    else if (mImap.authAnonymous->isChecked())
+    else if (mImap.ui.authAnonymous->isChecked())
       na.setAuth("ANONYMOUS");
-    else if (mImap.authLogin->isChecked())
+    else if (mImap.ui.authLogin->isChecked())
       na.setAuth("LOGIN");
-    else if (mImap.authPlain->isChecked())
+    else if (mImap.ui.authPlain->isChecked())
       na.setAuth("PLAIN");
     else na.setAuth("*");
   }
