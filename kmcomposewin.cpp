@@ -2063,8 +2063,7 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
   }
 
   const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
-  const uint maximumAttachmentSizeInBytes = maxAttachmentSize*1024*1024;
-  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrUrl() ).size() > maximumAttachmentSizeInBytes ) {
+  if ( aUrl.isLocalFile() && maxAttachmentSize >= 0 && QFileInfo( aUrl.pathOrUrl() ).size() > (maxAttachmentSize*1024*1024 /*in bytes*/ ) ) {
     KMessageBox::sorry( this, i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p>", maxAttachmentSize ) );
     return false;
   }
