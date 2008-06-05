@@ -720,8 +720,13 @@ void ActionScheduler::moveMessage()
 void ActionScheduler::moveMessageFinished( KMCommand *command )
 {
   timeOutTimer->stop();
-  if ( command->result() != KMCommand::OK )
+  bool movingFailed = false;
+  if ( command->result() != KMCommand::OK ) {
     mResult = ResultError;
+    movingFailed = true;
+    kWarning() << "Moving the message from the temporary filter folder to the "
+                  "target folder failed. Message will stay unfiltered.";
+  }
 
   if (!mSrcFolder->count())
     mSrcFolder->expunge();
@@ -738,7 +743,7 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
 
   mResult = mOldReturnCode; // ignore errors in deleting original message
   KMCommand *cmd = 0;
-  if (msg && msg->parent()) {
+  if ( msg && msg->parent() && !movingFailed ) {
     cmd = new KMMoveCommand( 0, msg );
 //    cmd->start(); // Note: sensitive logic here.
   }
@@ -746,22 +751,21 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   if (mResult == ResultOk) {
     mExecutingLock = false;
     if (cmd)
-	connect( cmd, SIGNAL( completed( KMCommand * ) ),
-		 this, SLOT( processMessage() ) );
+      connect( cmd, SIGNAL( completed( KMCommand * ) ),
+               this, SLOT( processMessage() ) );
     else
-	processMessageTimer->start( 0 );
+      processMessageTimer->start( 0 );
   } else {
     // Note: An alternative to consider is just calling
     //       finishTimer->start and returning
     if (cmd)
-	connect( cmd, SIGNAL( completed( KMCommand * ) ),
-		 this, SLOT( finish() ) );
+      connect( cmd, SIGNAL( completed( KMCommand * ) ),
+               this, SLOT( finish() ) );
     else
-	finishTimer->start( 0 );
+      finishTimer->start( 0 );
   }
   if (cmd)
     cmd->start();
-  // else moveMessageFinished should call finish
 }
 
 void ActionScheduler::copyMessageFinished( KMCommand *command )
