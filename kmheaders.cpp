@@ -1313,9 +1313,38 @@ QList<Q3ListViewItem*> KMHeaders::currentThread() const
 
 void KMHeaders::setThreadStatus( const MessageStatus& status, bool toggle)
 {
-  SerNumList serNums;
+  QList<Q3ListViewItem*> curThread;
 
-  foreach ( Q3ListViewItem *item, currentThread() )
+  if ( mFolder ) {
+    QList<Q3ListViewItem*> topOfThreads;
+
+    // for each selected item...
+    for ( Q3ListViewItem *item = firstChild(); item; item = item->itemBelow() ) {
+      if ( item->isSelected() ) {
+        // ...find the top-level item:
+        Q3ListViewItem *top = item;
+        while ( top->parent() )
+          top = top->parent();
+        if ( !topOfThreads.contains( top ) ) {
+          topOfThreads.append( top );
+        }
+      }
+    }
+
+    // for each thread found...
+    foreach ( Q3ListViewItem *item, topOfThreads ) {
+        Q3ListViewItem *top = item;
+
+        // collect the items in this thread:
+        Q3ListViewItem *topOfNextThread = top->nextSibling();
+        for ( Q3ListViewItemIterator it( top ) ;
+              it.current() && it.current() != topOfNextThread ; ++it )
+          curThread.append( it.current() );
+    }
+  }
+
+  SerNumList serNums;
+  foreach ( Q3ListViewItem *item, curThread )
   {
     const int id = static_cast<HeaderItem*>( item )->msgId();
     KMMsgBase *msgBase = mFolder->getMsgBase( id );

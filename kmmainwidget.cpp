@@ -3453,15 +3453,10 @@ void KMMainWidget::updateMessageActions()
     bool allSelectedInCommonThread = false;
     if ( mHeaders->isThreaded() && count > 1 ) {
       allSelectedInCommonThread = true;
-      Q3ListViewItem * curItemParent = mHeaders->currentItem();
-      while ( curItemParent->parent() )
-        curItemParent = curItemParent->parent();
       QList<Q3ListViewItem*>::const_iterator it;
       for ( it = selectedItems.begin(); it != selectedItems.end(); ++ it ) {
         Q3ListViewItem * item = *it;
-        while ( item->parent() )
-          item = item->parent();
-        if ( item != curItemParent ) {
+        if ( item->parent() == 0 && item->childCount() == 0 ) {
           allSelectedInCommonThread = false;
           break;
         }
