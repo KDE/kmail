@@ -318,6 +318,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 #ifndef KDEPIM_NEW_DISTRLISTS
     , mDistributionListManager( 0 )
 #endif
+    ,mLdapSearchDialog( 0 )
 {
 //  KWin::setType( winId(), NET::Dock );
 
@@ -783,12 +784,12 @@ void RecipientsPicker::resetSearch()
 
 void RecipientsPicker::slotSearchLDAP()
 {
-    if ( !ldapSearchDialog ) {
-        ldapSearchDialog = new KPIM::LDAPSearchDialog( this );
-        connect( ldapSearchDialog, SIGNAL( addresseesAdded() ),
+    if ( !mLdapSearchDialog ) {
+        mLdapSearchDialog = new KPIM::LDAPSearchDialog( this );
+        connect( mLdapSearchDialog, SIGNAL( addresseesAdded() ),
                  SLOT(ldapSearchResult() ) );
     }
-    ldapSearchDialog->show();
+    mLdapSearchDialog->show();
 
 }
 
@@ -796,7 +797,7 @@ void RecipientsPicker::ldapSearchResult()
 {
     kdDebug() << k_funcinfo ;
 
-    QStringList emails = QStringList::split(',', ldapSearchDialog->selectedEMails() );
+    QStringList emails = QStringList::split(',', mLdapSearchDialog->selectedEMails() );
     QStringList::iterator it( emails.begin() );
     QStringList::iterator end( emails.end() );
     for ( ; it != end; ++it ){
