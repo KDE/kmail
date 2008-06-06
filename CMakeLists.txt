@@ -58,7 +58,6 @@ endif(Nepomuk_FOUND)
 set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}" )
 
 ########### next target ###############
-
 set(kmailprivate_LIB_SRCS
    kmmessage.cpp
    kmmainwin.cpp
@@ -250,7 +249,7 @@ qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interf
 
 
 
-kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui snippetdlgbase.ui )
+kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui snippetdlgbase.ui imapsettings.ui localsettings.ui maildirsettings.ui popsettings.ui)
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc templatesconfiguration_kfg.kcfgc customtemplates_kfg.kcfgc )
 

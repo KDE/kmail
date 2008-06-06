@@ -1,0 +1,530 @@
+<ui version="4.0" >
+ <class>PopPage</class>
+ <widget class="QWidget" name="PopPage" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>506</width>
+    <height>611</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QLabel" name="titleLabel" >
+     <property name="font" >
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Account Type: POP Account</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="KSeparator" name="kseparator" />
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page1" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>486</width>
+        <height>536</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Gene&amp;ral</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_2" >
+         <property name="whatsThis" >
+          <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
+         </property>
+         <property name="text" >
+          <string>Account &amp;name:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>nameEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="KLineEdit" name="nameEdit" />
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="label_3" >
+         <property name="text" >
+          <string>&amp;Login:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>loginEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="KLineEdit" name="loginEdit" />
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_4" >
+         <property name="text" >
+          <string>P&amp;assword:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>passwordEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" >
+        <widget class="KLineEdit" name="passwordEdit" >
+         <property name="echoMode" >
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" >
+        <widget class="QLabel" name="label_5" >
+         <property name="text" >
+          <string>Ho&amp;st:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>hostEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" >
+        <widget class="KLineEdit" name="hostEdit" />
+       </item>
+       <item row="4" column="0" >
+        <widget class="QLabel" name="label_6" >
+         <property name="text" >
+          <string>&amp;Port:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>portEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" >
+        <widget class="KLineEdit" name="portEdit" />
+       </item>
+       <item row="5" column="0" colspan="2" >
+        <widget class="QCheckBox" name="storePasswordCheck" >
+         <property name="text" >
+          <string>Sto&amp;re POP password</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2" >
+        <widget class="QCheckBox" name="leaveOnServerCheck" >
+         <property name="text" >
+          <string>Lea&amp;ve fetched messages on the server</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2" >
+        <layout class="QHBoxLayout" name="horizontalLayout_3" >
+         <item>
+          <widget class="QCheckBox" name="leaveOnServerDaysCheck" >
+           <property name="text" >
+            <string>Leave messages on the server for</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KIntNumInput" name="leaveOnServerDaysSpin" >
+           <property name="enabled" >
+            <bool>false</bool>
+           </property>
+           <property name="value" >
+            <number>1</number>
+           </property>
+           <property name="minimum" >
+            <number>0</number>
+           </property>
+           <property name="maximum" >
+            <number>365</number>
+           </property>
+           <property name="suffix" >
+            <string> days</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="8" column="0" colspan="2" >
+        <layout class="QHBoxLayout" name="horizontalLayout" >
+         <item>
+          <widget class="QCheckBox" name="leaveOnServerCountCheck" >
+           <property name="text" >
+            <string>Keep onl&amp;y the last</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KIntNumInput" name="leaveOnServerCountSpin" >
+           <property name="enabled" >
+            <bool>false</bool>
+           </property>
+           <property name="value" >
+            <number>100</number>
+           </property>
+           <property name="minimum" >
+            <number>0</number>
+           </property>
+           <property name="maximum" >
+            <number>999999</number>
+           </property>
+           <property name="suffix" >
+            <string> messages</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="9" column="0" colspan="2" >
+        <layout class="QHBoxLayout" name="horizontalLayout_2" >
+         <item>
+          <widget class="QCheckBox" name="leaveOnServerSizeCheck" >
+           <property name="text" >
+            <string>Keep only the last</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KIntNumInput" name="leaveOnServerSizeSpin" >
+           <property name="enabled" >
+            <bool>false</bool>
+           </property>
+           <property name="value" >
+            <number>10</number>
+           </property>
+           <property name="minimum" >
+            <number>1</number>
+           </property>
+           <property name="maximum" >
+            <number>999999</number>
+           </property>
+           <property name="suffix" >
+            <string> MB</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="10" column="0" colspan="2" >
+        <widget class="QCheckBox" name="includeInCheck" >
+         <property name="text" >
+          <string>Include in man&amp;ual mail check</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0" colspan="2" >
+        <layout class="QHBoxLayout" name="horizontalLayout_4" >
+         <item>
+          <widget class="QCheckBox" name="filterOnServerCheck" >
+           <property name="whatsThis" >
+            <string>If you select this option, POP Filters will be used to decide what to do with messages. You can then select to download, delete or keep them on the server.</string>
+           </property>
+           <property name="text" >
+            <string>&amp;Filter messages if they are greater than</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KIntNumInput" name="filterOnServerSizeSpin" >
+           <property name="enabled" >
+            <bool>false</bool>
+           </property>
+           <property name="whatsThis" >
+            <string>If you select this option, POP Filters will be used to decide what to do with messages. You can then select to download, delete or keep them on the server.</string>
+           </property>
+           <property name="value" >
+            <number>50000</number>
+           </property>
+           <property name="minimum" >
+            <number>1</number>
+           </property>
+           <property name="maximum" >
+            <number>10000000</number>
+           </property>
+           <property name="referencePoint" >
+            <number>100</number>
+           </property>
+           <property name="suffix" >
+            <string> bytes</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="12" column="0" colspan="2" >
+        <widget class="QCheckBox" name="intervalCheck" >
+         <property name="text" >
+          <string>Enable &amp;interval mail checking</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="0" >
+        <widget class="QLabel" name="intervalLabel" >
+         <property name="text" >
+          <string>Chec&amp;k interval:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>intervalSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1" >
+        <widget class="KIntNumInput" name="intervalSpin" >
+         <property name="minimum" >
+          <number>0</number>
+         </property>
+         <property name="suffix" >
+          <string> min</string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0" >
+        <widget class="QLabel" name="label_8" >
+         <property name="text" >
+          <string>Des&amp;tination folder:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>folderCombo</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="1" >
+        <widget class="QComboBox" name="folderCombo" />
+       </item>
+       <item row="15" column="0" >
+        <widget class="QLabel" name="label_9" >
+         <property name="text" >
+          <string>Pre-com&amp;mand:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>precommand</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1" >
+        <widget class="KLineEdit" name="precommand" />
+       </item>
+       <item row="16" column="0" >
+        <spacer name="verticalSpacer_2" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page2" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>486</width>
+        <height>536</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>&amp;Extras</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4" >
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" >
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="checkCapabilities" >
+           <property name="text" >
+            <string>Check &amp;What the Server Supports</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Encryption</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3" >
+          <item>
+           <widget class="QRadioButton" name="encryptionNone" >
+            <property name="text" >
+             <string>&amp;None</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="encryptionSSL" >
+            <property name="text" >
+             <string>Use &amp;SSL for secure mail download</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="encryptionTLS" >
+            <property name="text" >
+             <string>Use &amp;TLS for secure mail download</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="title" >
+          <string>Authentication Method</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2" >
+          <item>
+           <widget class="QRadioButton" name="authUser" >
+            <property name="text" >
+             <string>Clear te&amp;xt</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="authLogin" >
+            <property name="text" >
+             <string>&amp;LOGIN</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="authPlain" >
+            <property name="text" >
+             <string>&amp;PLAIN</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="authCRAM_MD5" >
+            <property name="text" >
+             <string>CRAM-MD&amp;5</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="authDigestMd5" >
+            <property name="text" >
+             <string>&amp;DIGEST-MD5</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="authNTLM" >
+            <property name="text" >
+             <string>NTL&amp;M</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="authGSSAPI" >
+            <property name="text" >
+             <string>&amp;GSSAPI</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="authAPOP" >
+            <property name="text" >
+             <string>&amp;APOP</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="usePipeliningCheck" >
+         <property name="text" >
+          <string>&amp;Use pipelining for faster mail download</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <extends>QWidget</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KSeparator</class>
+   <extends>QFrame</extends>
+   <header>kseparator.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

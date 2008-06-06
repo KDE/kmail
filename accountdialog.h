@@ -25,6 +25,10 @@
 
 #include <config-kmail.h>
 #include "imapaccountbase.h"
+#include "ui_imapsettings.h"
+#include "ui_localsettings.h"
+#include "ui_maildirsettings.h"
+#include "ui_popsettings.h"
 
 #include <kdialog.h>
 #include <klineedit.h>
@@ -71,127 +75,29 @@ class AccountDialog : public KDialog
   private:
     struct LocalWidgets
     {
-      QLabel       *titleLabel;
-      QLineEdit    *nameEdit;
-      QComboBox    *locationEdit;
-      QRadioButton *lockMutt;
-      QRadioButton *lockMuttPriv;
-      QRadioButton *lockProcmail;
-      QComboBox    *procmailLockFileName;
-      QRadioButton *lockFcntl;
-      QRadioButton *lockNone;
-      QLineEdit    *precommand;
-      QCheckBox    *includeInCheck;
-      QCheckBox    *intervalCheck;
-      QLabel       *intervalLabel;
-      KIntNumInput *intervalSpin;
-      QComboBox    *folderCombo;
+      Ui::LocalPage ui;
     };
 
     struct MaildirWidgets
     {
-      QLabel       *titleLabel;
-      QLineEdit    *nameEdit;
-      QComboBox    *locationEdit;
-      QLineEdit    *precommand;
-      QCheckBox    *includeInCheck;
-      QCheckBox    *intervalCheck;
-      QLabel       *intervalLabel;
-      KIntNumInput *intervalSpin;
-      QComboBox    *folderCombo;
+      Ui::MaildirPage ui;
     };
 
     struct PopWidgets
     {
-      QLabel       *titleLabel;
-      QLineEdit    *nameEdit;
-      QLineEdit    *loginEdit;
-      QLineEdit    *passwordEdit;
-      QLineEdit    *hostEdit;
-      QLineEdit    *portEdit;
-      QLineEdit    *precommand;
-      QGroupBox    *encryptionGroup;
+      Ui::PopPage ui;
       QButtonGroup *encryptionButtonGroup;
-      QRadioButton *encryptionNone;
-      QRadioButton *encryptionSSL;
-      QRadioButton *encryptionTLS;
-      QGroupBox    *authGroup;
       QButtonGroup *authButtonGroup;
-      QRadioButton *authUser;
-      QRadioButton *authPlain;
-      QRadioButton *authLogin;
-      QRadioButton *authCRAM_MD5;
-      QRadioButton *authDigestMd5;
-      QRadioButton *authNTLM;
-      QRadioButton *authGSSAPI;
-      QRadioButton *authAPOP;
-
-      QPushButton  *checkCapabilities;
-      QCheckBox    *usePipeliningCheck;
-      QCheckBox    *storePasswordCheck;
-      QCheckBox    *leaveOnServerCheck;
-      QCheckBox    *leaveOnServerDaysCheck;
-      KIntNumInput *leaveOnServerDaysSpin;
-      QCheckBox    *leaveOnServerCountCheck;
-      KIntNumInput *leaveOnServerCountSpin;
-      QCheckBox    *leaveOnServerSizeCheck;
-      KIntNumInput *leaveOnServerSizeSpin;
-      QCheckBox    *includeInCheck;
-      QCheckBox    *intervalCheck;
-      QCheckBox    *filterOnServerCheck;
-      QLabel       *intervalLabel;
-      KIntNumInput *intervalSpin;
-      KIntNumInput *filterOnServerSizeSpin;
-      QComboBox    *folderCombo;
     };
 
     struct ImapWidgets
     {
-      QLabel       *titleLabel;
-      QLineEdit    *nameEdit;
-      QLineEdit    *loginEdit;
-      QLineEdit    *passwordEdit;
-      QLineEdit    *hostEdit;
-      QLineEdit    *portEdit;
-      QCheckBox    *autoExpungeCheck;     // only used by normal (online) IMAP
-      QCheckBox    *hiddenFoldersCheck;
-      QCheckBox    *subscribedFoldersCheck;
-      QCheckBox    *locallySubscribedFoldersCheck;
-      QCheckBox    *loadOnDemandCheck;
-      QCheckBox    *storePasswordCheck;
-      QCheckBox    *progressDialogCheck;  // only used by Disconnected IMAP
-      QCheckBox    *includeInCheck;
-      QCheckBox    *intervalCheck;
-      QCheckBox    *listOnlyOpenCheck;
-      QLabel       *intervalLabel;
-      KIntNumInput *intervalSpin;
-      QGroupBox    *encryptionGroup;
+      Ui::ImapPage ui;
       QButtonGroup *encryptionButtonGroup;
-      QRadioButton *encryptionNone;
-      QRadioButton *encryptionSSL;
-      QRadioButton *encryptionTLS;
-      QGroupBox    *authGroup;
       QButtonGroup *authButtonGroup;
-      QRadioButton *authUser;
-      QRadioButton *authPlain;
-      QRadioButton *authLogin;
-      QRadioButton *authCramMd5;
-      QRadioButton *authDigestMd5;
-      QRadioButton *authGSSAPI;
-      QRadioButton *authNTLM;
-      QRadioButton *authAnonymous;
-      QPushButton  *checkCapabilities;
       FolderRequester *trashCombo;
-      KLineEdit    *personalNS;
-      KLineEdit    *otherUsersNS;
-      KLineEdit    *sharedNS;
-      QToolButton  *editPNS;
-      QToolButton  *editONS;
-      QToolButton  *editSNS;
       ImapAccountBase::nsDelimMap nsMap;
       KPIMIdentities::IdentityCombo    *identityCombo;
-      QCheckBox    *useDefaultIdentityCheck;
-      QLabel       *identityLabel;
     };
 
   private slots:
