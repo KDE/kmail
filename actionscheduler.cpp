@@ -60,9 +60,9 @@ bool ActionScheduler::sEnabled = false;
 bool ActionScheduler::sEnabledChecked = false;
 
 ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
-				 QList<KMFilter*> filters,
-				 KMHeaders *headers,
-				 KMFolder *srcFolder)
+                                 QList<KMFilter*> filters,
+                                 KMHeaders *headers,
+                                 KMFolder *srcFolder)
   : mSet( set ), mHeaders( headers )
 {
   ++count;
@@ -178,7 +178,7 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
   }
   if ( mSrcFolder ) {
     connect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
-	     this, SLOT(msgAdded(KMFolder*, quint32)) );
+             this, SLOT(msgAdded(KMFolder*, quint32)) );
     connect( mSrcFolder, SIGNAL(closed()),
              this, SLOT(folderClosedOrExpunged()) );
     connect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
@@ -263,16 +263,17 @@ void ActionScheduler::execFilters( KMMsgBase *msgBase )
 
 void ActionScheduler::execFilters(quint32 serNum)
 {
-  if (mResult != ResultOk) {
-      if ((mResult != ResultCriticalError) &&
-	  !mExecuting && !mExecutingLock && !mFetchExecuting) {
-	  mResult = ResultOk; // Recoverable error
-	  if (!mFetchSerNums.isEmpty()) {
-	      mFetchSerNums.push_back( mFetchSerNums.first() );
-	      mFetchSerNums.pop_front();
-	  }
-      } else
-	  return; // An error has already occurred don't even try to process this msg
+  if ( mResult != ResultOk ) {
+    if ( ( mResult != ResultCriticalError ) &&
+         !mExecuting && !mExecutingLock && !mFetchExecuting ) {
+      mResult = ResultOk; // Recoverable error
+      if ( !mFetchSerNums.isEmpty() ) {
+        mFetchSerNums.push_back( mFetchSerNums.first() );
+        mFetchSerNums.pop_front();
+      }
+    }
+    else
+      return; // An error has already occurred don't even try to process this msg
   }
   if (MessageProperty::filtering( serNum )) {
     // Not good someone else is already filtering this msg
@@ -362,8 +363,8 @@ void ActionScheduler::finish()
     // then abandon filtering of queued messages.
     if (!mDeleteSrcFolder && !mDestFolder.isNull() ) {
       while ( mSrcFolder->count() > 0 ) {
-	KMMessage *msg = mSrcFolder->getMsg( 0 );
-	mDestFolder->moveMsg( msg );
+        KMMessage *msg = mSrcFolder->getMsg( 0 );
+        mDestFolder->moveMsg( msg );
       }
 
       // Wait a little while before closing temp folders, just in case
@@ -434,7 +435,7 @@ void ActionScheduler::fetchMessage()
     fetchTimeOutTimer->start( 60 * 1000 );
     FolderJob *job = msg->parent()->createJob( msg );
     connect( job, SIGNAL(messageRetrieved( KMMessage* )),
-	     SLOT(messageFetched( KMMessage* )) );
+             SLOT(messageFetched( KMMessage* )) );
     lastJob = job;
     job->start();
   } else {
@@ -797,7 +798,7 @@ void ActionScheduler::fetchTimeOut()
   assert( lastJob );
   // sometimes imap jobs seem to just stall so give up and move on
   disconnect( lastJob, SIGNAL(messageRetrieved( KMMessage* )),
-	      this, SLOT(messageFetched( KMMessage* )) );
+              this, SLOT(messageFetched( KMMessage* )) );
   lastJob->kill();
   lastJob = 0;
   fetchMessageTimer->start( 0 );
@@ -805,47 +806,47 @@ void ActionScheduler::fetchTimeOut()
 
 QString ActionScheduler::debug()
 {
-    QString res;
-    QList<ActionScheduler*>::iterator it;
-    int i = 1;
-    for ( it = schedulerList->begin(); it != schedulerList->end(); ++it ) {
-	res.append( QString( "ActionScheduler #%1.\n" ).arg( i ) );
-	if ((*it)->mAccount && kmkernel->acctMgr()->find( (*it)->mAccountId )) {
-	    res.append( QString( "Account %1, Name %2.\n" )
-			.arg( (*it)->mAccountId )
-			.arg( kmkernel->acctMgr()->find( (*it)->mAccountId )->name() ) );
-	}
-	res.append( QString( "mExecuting %1, " ).arg( (*it)->mExecuting ? "true" : "false" ) );
-	res.append( QString( "mExecutingLock %1, " ).arg( (*it)->mExecutingLock ? "true" : "false" ) );
-	res.append( QString( "mFetchExecuting %1.\n" ).arg( (*it)->mFetchExecuting ? "true" : "false" ) );
-	res.append( QString( "mOriginalSerNum %1.\n" ).arg( (*it)->mOriginalSerNum ) );
-	res.append( QString( "mSerNums count %1, " ).arg( (*it)->mSerNums.count() ) );
-	res.append( QString( "mFetchSerNums count %1.\n" ).arg( (*it)->mFetchSerNums.count() ) );
-	res.append( QString( "mResult " ) );
-	if ((*it)->mResult == ResultOk)
-	    res.append( QString( "ResultOk.\n" ) );
-	else if ((*it)->mResult == ResultError)
-	    res.append( QString( "ResultError.\n" ) );
-	else if ((*it)->mResult == ResultCriticalError)
-	    res.append( QString( "ResultCriticalError.\n" ) );
-	else
-	    res.append( QString( "Unknown.\n" ) );
-
-	++i;
+  QString res;
+  QList<ActionScheduler*>::iterator it;
+  int i = 1;
+  for ( it = schedulerList->begin(); it != schedulerList->end(); ++it ) {
+    res.append( QString( "ActionScheduler #%1.\n" ).arg( i ) );
+    if ((*it)->mAccount && kmkernel->acctMgr()->find( (*it)->mAccountId )) {
+      res.append( QString( "Account %1, Name %2.\n" )
+          .arg( (*it)->mAccountId )
+          .arg( kmkernel->acctMgr()->find( (*it)->mAccountId )->name() ) );
     }
-    return res;
+    res.append( QString( "mExecuting %1, " ).arg( (*it)->mExecuting ? "true" : "false" ) );
+    res.append( QString( "mExecutingLock %1, " ).arg( (*it)->mExecutingLock ? "true" : "false" ) );
+    res.append( QString( "mFetchExecuting %1.\n" ).arg( (*it)->mFetchExecuting ? "true" : "false" ) );
+    res.append( QString( "mOriginalSerNum %1.\n" ).arg( (*it)->mOriginalSerNum ) );
+    res.append( QString( "mSerNums count %1, " ).arg( (*it)->mSerNums.count() ) );
+    res.append( QString( "mFetchSerNums count %1.\n" ).arg( (*it)->mFetchSerNums.count() ) );
+    res.append( QString( "mResult " ) );
+    if ((*it)->mResult == ResultOk)
+      res.append( QString( "ResultOk.\n" ) );
+    else if ((*it)->mResult == ResultError)
+      res.append( QString( "ResultError.\n" ) );
+    else if ((*it)->mResult == ResultCriticalError)
+      res.append( QString( "ResultCriticalError.\n" ) );
+    else
+      res.append( QString( "Unknown.\n" ) );
+
+    ++i;
+  }
+  return res;
 }
 
 bool ActionScheduler::isEnabled()
 {
-    if (sEnabledChecked)
-	return sEnabled;
-
-    sEnabledChecked = true;
-    KConfig* config = KMKernel::config();
-    KConfigGroup group(config, "General");
-    sEnabled = group.readEntry("action-scheduler", false );
+  if (sEnabledChecked)
     return sEnabled;
+
+  sEnabledChecked = true;
+  KConfig* config = KMKernel::config();
+  KConfigGroup group(config, "General");
+  sEnabled = group.readEntry("action-scheduler", false );
+  return sEnabled;
 }
 
 bool ActionScheduler::ignoreChanges( bool ignore )
