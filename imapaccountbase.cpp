@@ -1488,6 +1488,10 @@ void ImapAccountBase::changeLocalSubscription( const QString &imapPath, bool sub
     // blacklist
     mLocalSubscriptionBlackList.insert( imapPath );
   }
+
+  // Save the modified subscription state immediately, to prevent the sync process
+  // from destroying the mail on the server, see bug 163268.
+  kmkernel->acctMgr()->writeConfig( true /* withSync*/ );
 }
 
 QStringList ImapAccountBase::locallyBlacklistedFolders() const
