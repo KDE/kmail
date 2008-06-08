@@ -2315,7 +2315,9 @@ KMCommand::Result KMUrlClickedCommand::execute()
            (mUrl.protocol() == "smb")  || (mUrl.protocol() == "fish")  ||
            (mUrl.protocol() == "news"))
   {
-    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Opening URL..."));
+    KPIM::BroadcastStatus::instance()->setTransientStatusMsg( i18n("Opening URL..."));
+    QTimer::singleShot( 2000, KPIM::BroadcastStatus::instance(), SLOT( reset() ) );
+
     KMimeType::Ptr mime = KMimeType::findByUrl( mUrl );
     if (mime->name() == "application/x-desktop" ||
         mime->name() == "application/x-executable" ||
