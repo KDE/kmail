@@ -3527,8 +3527,8 @@ void KMMainWidget::updateMessageActions()
         editAction()->setEnabled( !msg->transferInProgress() );
     }
 
-    // Enable / Disable the filters in the toolbar
-    foreach ( QAction *filterAction, mFilterTBarActions ) {
+    // Enable / disable all filters.
+    foreach ( QAction *filterAction, mFilterMenuActions ) {
       filterAction->setEnabled( count > 0 );
     }
 
@@ -3648,12 +3648,6 @@ void KMMainWidget::slotShowStartupFolder()
   if ( mFolderTree ) {
     mFolderTree->showFolder( startup );
   }
-
-  // Update the message actions. This needs to be done here, since above, we
-  // add the filter actions to the toolbar, and updateMessageActions() takes
-  // care of disabling them in no message is selected (i.e. the startup folder
-  // is empty).
-  updateMessageActions();
 }
 
 void KMMainWidget::slotShowTip()
@@ -3958,6 +3952,9 @@ void KMMainWidget::initializeFilterActions()
     mFilterTBarActions.prepend( mToolbarActionSeparator );
     mGUIClient->plugActionList( "toolbar_filter_actions", mFilterTBarActions );
   }
+
+  // Our filters have changed, now enable/disable them
+  updateMessageActions();
 }
 
 void KMMainWidget::slotFolderRemoved( KMFolder *folder )
