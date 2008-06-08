@@ -38,7 +38,7 @@
       </font>
      </property>
      <property name="whatsThis" >
-      <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is3      the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
+      <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
      </property>
      <property name="currentIndex" >
       <number>0</number>
