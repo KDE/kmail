@@ -789,6 +789,7 @@ void RecipientsPicker::slotSearchLDAP()
         connect( mLdapSearchDialog, SIGNAL( addresseesAdded() ),
                  SLOT(ldapSearchResult() ) );
     }
+    mLdapSearchDialog->setSearchText( mSearchLine->text() );
     mLdapSearchDialog->show();
 
 }
