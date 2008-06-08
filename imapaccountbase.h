@@ -542,6 +542,7 @@ namespace KMail {
 
     bool mErrorDialogIsActive : 1;
     bool mPasswordDialogIsActive : 1;
+    bool mPasswordEnteredAndEmpty : 1;
     bool mACLSupport : 1;
     bool mAnnotationSupport : 1;
     bool mQuotaSupport : 1;
