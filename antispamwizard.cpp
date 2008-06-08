@@ -904,6 +904,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
 
   mScanProgressText = new QLabel( this );
   mScanProgressText->setText( "" ) ;
+  mScanProgressText->setWordWrap( true );
   layout->addWidget( mScanProgressText );
 
   mToolsList = new QListWidget( this );
