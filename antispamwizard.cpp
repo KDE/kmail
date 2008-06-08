@@ -857,15 +857,21 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   mLayout = new QHBoxLayout( this );
   mLayout->setSpacing( KDialog::spacingHint() );
   mLayout->setMargin( KDialog::marginHint() );
+
+  QVBoxLayout * sideLayout = new QVBoxLayout();
+  mLayout->addItem( sideLayout );
+  mLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
+
   mPixmap = new QPixmap( UserIcon(banner) );
   mBannerLabel = new QLabel( this );
   mBannerLabel->setPixmap( *mPixmap );
   mBannerLabel->setScaledContents( false );
   mBannerLabel->setFrameShape( QFrame::StyledPanel );
   mBannerLabel->setFrameShadow( QFrame::Sunken );
+  mBannerLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
 
-  mLayout->addWidget( mBannerLabel );
-  mLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
+  sideLayout->addWidget( mBannerLabel );
+  sideLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
 }
 
 
