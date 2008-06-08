@@ -249,10 +249,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
 
   toggleSystemTray();
 
-  // must be the last line of the constructor:
-  mStartupDone = true;
-
-
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
   mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
@@ -260,6 +256,9 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   connect( mVacationScriptIndicator, SIGNAL(clicked()), SLOT(slotEditVacation()) );
   if ( GlobalSettings::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
+
+  // must be the last line of the constructor:
+  mStartupDone = true;
 }
 
 
@@ -636,29 +635,9 @@ void KMMainWidget::readConfig()
     layoutSplitters();
   }
 
-  if ( mStartupDone ) {
-
-    // Update systray
-    toggleSystemTray();
-
-    mFolderTree->showFolder( mFolder );
-
-    // sanders - New code
-    mHeaders->setFolder(mFolder);
-    if (mMsgView) {
-      int aIdx = mHeaders->currentItemIndex();
-      if (aIdx != -1)
-        mMsgView->setMsg( mFolder->getMsg(aIdx), true );
-      else
-        mMsgView->clear( true );
-    }
-    updateMessageActions();
-    show();
-    // sanders - Maybe this fixes a bug?
-
-  }
   updateMessageMenu();
   updateFileMenu();
+  toggleSystemTray();
   setUpdatesEnabled( true );
 }
 
@@ -3669,6 +3648,12 @@ void KMMainWidget::slotShowStartupFolder()
   if ( mFolderTree ) {
     mFolderTree->showFolder( startup );
   }
+
+  // Update the message actions. This needs to be done here, since above, we
+  // add the filter actions to the toolbar, and updateMessageActions() takes
+  // care of disabling them in no message is selected (i.e. the startup folder
+  // is empty).
+  updateMessageActions();
 }
 
 void KMMainWidget::slotShowTip()
