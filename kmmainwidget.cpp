@@ -3548,6 +3548,11 @@ void KMMainWidget::updateMessageActions()
         editAction()->setEnabled( !msg->transferInProgress() );
     }
 
+    // Enable / Disable the filters in the toolbar
+    foreach ( QAction *filterAction, mFilterTBarActions ) {
+      filterAction->setEnabled( count > 0 );
+    }
+
     mApplyAllFiltersAction->setEnabled(count);
     mApplyFilterActionsMenu->setEnabled(count);
 }
