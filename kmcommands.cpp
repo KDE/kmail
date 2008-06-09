@@ -1313,17 +1313,13 @@ KMCommand::Result KMForwardCommand::execute()
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->setCharset("utf-8");
-      // fwdMsg->setBody(msgText);
 
-      for ( QList<KMMessage*>::const_iterator it2 = linklist.begin();
-            it2 != linklist.end(); ++it2 )
-      {
-        KMMessage *msg = *it;
+      foreach( KMMessage *msg, linklist ) {
         TemplateParser parser( fwdMsg, TemplateParser::Forward,
                                msg->body(), false, false, false );
         parser.process( msg, 0, true );
 
-        fwdMsg->link( (*it), MessageStatus::statusForwarded() );
+        fwdMsg->link( msg, MessageStatus::statusForwarded() );
       }
 
       KCursorSaver busy(KBusyPtr::busy());
@@ -2315,7 +2311,9 @@ KMCommand::Result KMUrlClickedCommand::execute()
            (mUrl.protocol() == "smb")  || (mUrl.protocol() == "fish")  ||
            (mUrl.protocol() == "news"))
   {
-    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Opening URL..."));
+    KPIM::BroadcastStatus::instance()->setTransientStatusMsg( i18n("Opening URL..."));
+    QTimer::singleShot( 2000, KPIM::BroadcastStatus::instance(), SLOT( reset() ) );
+
     KMimeType::Ptr mime = KMimeType::findByUrl( mUrl );
     if (mime->name() == "application/x-desktop" ||
         mime->name() == "application/x-executable" ||

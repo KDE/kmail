@@ -1380,16 +1380,37 @@ void KMKernel::init()
   group.writeEntry("first-start", false);
   the_previousVersion = group.readEntry("previous-version");
   group.writeEntry("previous-version", KMAIL_VERSION);
+
   QString foldersPath = group.readPathEntry( "folders", QString() );
-  kDebug(5006) <<"foldersPath (from config): '" << foldersPath <<"'";
+  QString standardFolderPath = localDataPath() + "mail";
+  kDebug() << "foldersPath (from config):" << foldersPath;
 
   if ( foldersPath.isEmpty() ) {
-    foldersPath = localDataPath() + "mail";
+    foldersPath = standardFolderPath;
     if ( transferMail( foldersPath ) ) {
       group.writePathEntry( "folders", foldersPath );
     }
-    kDebug(5006) <<"foldersPath (after transferMail): '" << foldersPath <<"'";
+    kDebug() << "foldersPath (after transferMail):" << foldersPath;
   }
+  else {
+    // Check if the folder path from config really exists.
+    // When migrating from KDE3 to KDE4, some distros change the home directory
+    // from .kde to .kde4, and if the user has copied the config file + app data
+    // over to .kde4, the config file then contains the incorrect entry.
+    // Therefore, we fall back to KDEHOME/share/apps/kmail/mail if the folders
+    // can't be found.
+    QDir configFolderDir( foldersPath );
+    if ( foldersPath.contains( ".kde/share/apps/kmail/mail" ) &&
+         !configFolderDir.exists() ) {
+      QDir standardConfigDir( standardFolderPath );
+      if ( standardConfigDir.exists() ) {
+        foldersPath = standardFolderPath;
+        kDebug() << "foldersPath from config doesn't exist, using standard "
+                    "path instead";
+      }
+    }
+  }
+
   //Here because folderMgr's need it when they read the index and sort tags
   the_msgTagMgr = new KMMessageTagMgr();
   the_msgTagMgr->readConfig();

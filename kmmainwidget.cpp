@@ -249,10 +249,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
 
   toggleSystemTray();
 
-  // must be the last line of the constructor:
-  mStartupDone = true;
-
-
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
   mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
@@ -260,6 +256,9 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   connect( mVacationScriptIndicator, SIGNAL(clicked()), SLOT(slotEditVacation()) );
   if ( GlobalSettings::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
+
+  // must be the last line of the constructor:
+  mStartupDone = true;
 }
 
 
@@ -636,29 +635,9 @@ void KMMainWidget::readConfig()
     layoutSplitters();
   }
 
-  if ( mStartupDone ) {
-
-    // Update systray
-    toggleSystemTray();
-
-    mFolderTree->showFolder( mFolder );
-
-    // sanders - New code
-    mHeaders->setFolder(mFolder);
-    if (mMsgView) {
-      int aIdx = mHeaders->currentItemIndex();
-      if (aIdx != -1)
-        mMsgView->setMsg( mFolder->getMsg(aIdx), true );
-      else
-        mMsgView->clear( true );
-    }
-    updateMessageActions();
-    show();
-    // sanders - Maybe this fixes a bug?
-
-  }
   updateMessageMenu();
   updateFileMenu();
+  toggleSystemTray();
   setUpdatesEnabled( true );
 }
 
@@ -3551,6 +3530,11 @@ void KMMainWidget::updateMessageActions()
         editAction()->setEnabled( !msg->transferInProgress() );
     }
 
+    // Enable / disable all filters.
+    foreach ( QAction *filterAction, mFilterMenuActions ) {
+      filterAction->setEnabled( count > 0 );
+    }
+
     mApplyAllFiltersAction->setEnabled(count);
     mApplyFilterActionsMenu->setEnabled(count);
 }
@@ -3971,6 +3955,9 @@ void KMMainWidget::initializeFilterActions()
     mFilterTBarActions.prepend( mToolbarActionSeparator );
     mGUIClient->plugActionList( "toolbar_filter_actions", mFilterTBarActions );
   }
+
+  // Our filters have changed, now enable/disable them
+  updateMessageActions();
 }
 
 void KMMainWidget::slotFolderRemoved( KMFolder *folder )

@@ -90,6 +90,7 @@ ImapAccountBase::ImapAccountBase( AccountManager *parent, const QString &name, u
     mProgressEnabled( false ),
     mErrorDialogIsActive( false ),
     mPasswordDialogIsActive( false ),
+    mPasswordEnteredAndEmpty( false ),
     mACLSupport( true ),
     mAnnotationSupport( true ),
     mQuotaSupport( true ),
@@ -293,8 +294,12 @@ ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
     return Connecting;
   }
 
+  // Show the password dialog if the password wasn't entered
+  // before (passwd().isEmpty() && !mPasswordEnteredAndEmpty) or the
+  // entered password was wrong (mAskAgain).
   if ( mAskAgain ||
-       ( ( passwd().isEmpty() || login().isEmpty() ) && auth() != "GSSAPI" ) ) {
+       ( ( ( passwd().isEmpty() && !mPasswordEnteredAndEmpty ) ||
+           login().isEmpty() ) && auth() != "GSSAPI" ) ) {
 
     Q_ASSERT( !mSlave ); // disconnected on 'wrong login' error already, or first try
     QString log = login();
@@ -316,10 +321,16 @@ ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
     if (ret != QDialog::Accepted ) {
       mPasswordDialogIsActive = false;
       mAskAgain = false;
+      mPasswordEnteredAndEmpty = false;
       emit connectionResult( KIO::ERR_USER_CANCELED, QString() );
       return Error;
     }
     mPasswordDialogIsActive = false;
+
+    // If the user entered an empty password, we need to be able to keep apart
+    // the case from the case that the user simply didn't enter a password at all.
+    mPasswordEnteredAndEmpty = dlg.password().isEmpty();
+
     // The user has been given the chance to change login and
     // password, so copy both from the dialog:
     setPasswd( dlg.password(), dlg.keepPassword() );
@@ -1488,6 +1499,10 @@ void ImapAccountBase::changeLocalSubscription( const QString &imapPath, bool sub
     // blacklist
     mLocalSubscriptionBlackList.insert( imapPath );
   }
+
+  // Save the modified subscription state immediately, to prevent the sync process
+  // from destroying the mail on the server, see bug 163268.
+  kmkernel->acctMgr()->writeConfig( true /* withSync*/ );
 }
 
 QStringList ImapAccountBase::locallyBlacklistedFolders() const
