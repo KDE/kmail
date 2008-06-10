@@ -21,9 +21,7 @@
 #ifndef KWINDOWPOSITIONER_H
 #define KWINDOWPOSITIONER_H
 
-#include <QObject>
-//Added by qt3to4:
-#include <QEvent>
+#include <QWidget>
 
 
 class KWindowPositioner : public QObject
@@ -33,8 +31,6 @@ class KWindowPositioner : public QObject
     enum Mode { Right, Bottom };
 
     KWindowPositioner( QWidget *master, QWidget *slave, Mode mode = Bottom );
-
-    bool eventFilter( QObject *watched, QEvent *e );
 
     void reposition();
     
