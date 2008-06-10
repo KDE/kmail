@@ -465,20 +465,18 @@ void AccountDialog::makeImapAccountPage( bool connected )
   }
 
 
-  QGridLayout *layout = static_cast<QGridLayout*>( mImap.ui.generalTab->layout() );
-  int rows = layout->rowCount();
   mImap.trashCombo = new FolderRequester( page,
                       kmkernel->getKMMainWidget()->folderTree() );
   mImap.trashCombo->setShowOutbox( false );
   mImap.ui.trashLabel->setBuddy( mImap.trashCombo );
-  layout->addWidget( mImap.trashCombo, rows - 3, 1 );
+  mImap.ui.trashLayout->addWidget( mImap.trashCombo, 1 );
   mImap.ui.trashLabel->setBuddy( mImap.trashCombo );
 
   mImap.identityCombo = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), page );
   mImap.ui.identityLabel->setBuddy( mImap.identityCombo );
-  layout->addWidget( mImap.identityCombo, rows - 1, 1 );
+  mImap.ui.identityLayout->addWidget( mImap.identityCombo, 1 );
   mImap.ui.identityLabel->setBuddy( mImap.identityCombo );
-    
+
   mImap.encryptionButtonGroup = new QButtonGroup();
   mImap.encryptionButtonGroup->addButton( mImap.ui.encryptionNone,
                                           Transport::EnumEncryption::None );
