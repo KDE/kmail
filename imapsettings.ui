@@ -5,15 +5,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>713</height>
+    <width>439</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" >
-   <item row="0" column="0" >
+  <layout class="QVBoxLayout" name="verticalLayout_5" >
+   <item>
     <widget class="QLabel" name="titleLabel" >
      <property name="font" >
       <font>
@@ -26,10 +26,10 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
+   <item>
     <widget class="KSeparator" name="kseparator" />
    </item>
-   <item row="2" column="0" >
+   <item>
     <widget class="QTabWidget" name="tabWidget" >
      <property name="font" >
       <font>
@@ -48,14 +48,14 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>519</width>
-        <height>634</height>
+        <width>419</width>
+        <height>449</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>&amp;General</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout" >
+      <layout class="QGridLayout" name="gridLayout_2" >
        <item row="0" column="0" >
         <widget class="QLabel" name="label_2" >
          <property name="text" >
@@ -66,8 +66,15 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1" >
-        <widget class="KLineEdit" name="nameEdit" />
+       <item row="0" column="1" colspan="2" >
+        <widget class="KLineEdit" name="nameEdit" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0" >
         <widget class="QLabel" name="label_5" >
@@ -82,8 +89,15 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1" >
-        <widget class="KLineEdit" name="loginEdit" />
+       <item row="1" column="1" colspan="2" >
+        <widget class="KLineEdit" name="loginEdit" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0" >
         <widget class="QLabel" name="label_3" >
@@ -95,8 +109,14 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1" >
+       <item row="2" column="1" colspan="2" >
         <widget class="KLineEdit" name="passwordEdit" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="echoMode" >
           <enum>QLineEdit::Password</enum>
          </property>
@@ -112,8 +132,15 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1" >
-        <widget class="KLineEdit" name="hostEdit" />
+       <item row="3" column="1" colspan="2" >
+        <widget class="KLineEdit" name="hostEdit" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="4" column="0" >
         <widget class="QLabel" name="label_7" >
@@ -125,127 +152,17 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1" >
-        <widget class="KLineEdit" name="portEdit" />
-       </item>
-       <item row="5" column="0" >
-        <layout class="QHBoxLayout" name="horizontalLayout_2" >
-         <item>
-          <widget class="QLabel" name="label_6" >
-           <property name="whatsThis" >
-            <string>Here you see the different namespaces that your IMAP server supports.
-Each namespace represents a prefix that separates groups of folders.
-Namespaces allow KMail for example to display your personal folders and shared folders in one account.</string>
-           </property>
-           <property name="text" >
-            <string>Namespaces:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="button" >
-           <property name="whatsThis" >
-            <string>Reload the namespaces from the server. This overwrites any changes.</string>
-           </property>
-           <property name="text" >
-            <string>...</string>
-           </property>
-           <property name="autoRaise" >
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="5" column="1" >
-        <widget class="QWidget" native="1" name="widget_2" >
-         <layout class="QVBoxLayout" name="verticalLayout_3" >
-          <item>
-           <layout class="QGridLayout" name="_3" >
-            <item row="3" column="2" >
-             <widget class="KLineEdit" name="otherUsersNS" />
-            </item>
-            <item row="4" column="2" >
-             <widget class="KLineEdit" name="sharedNS" />
-            </item>
-            <item row="0" column="2" >
-             <widget class="KLineEdit" name="personalNS" />
-            </item>
-            <item row="0" column="1" >
-             <widget class="QLabel" name="label_9" >
-              <property name="whatsThis" >
-               <string>Personal namespaces include your personal folders.</string>
-              </property>
-              <property name="text" >
-               <string>Personal</string>
-              </property>
-              <property name="buddy" >
-               <cstring>personalNS</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1" >
-             <widget class="QLabel" name="label_14" >
-              <property name="whatsThis" >
-               <string>These namespaces include the folders of other users.</string>
-              </property>
-              <property name="text" >
-               <string>Other Users</string>
-              </property>
-              <property name="buddy" >
-               <cstring>otherUsersNS</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1" >
-             <widget class="QLabel" name="label_15" >
-              <property name="whatsThis" >
-               <string>These namespaces include the shared folders.</string>
-              </property>
-              <property name="text" >
-               <string>Shared</string>
-              </property>
-              <property name="buddy" >
-               <cstring>sharedNS</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3" >
-             <widget class="QToolButton" name="editPNS" >
-              <property name="text" >
-               <string>...</string>
-              </property>
-              <property name="autoRaise" >
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="3" >
-             <widget class="QToolButton" name="editONS" >
-              <property name="text" >
-               <string>...</string>
-              </property>
-              <property name="autoRaise" >
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="3" >
-             <widget class="QToolButton" name="editSNS" >
-              <property name="text" >
-               <string>...</string>
-              </property>
-              <property name="autoRaise" >
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
+       <item row="4" column="1" colspan="2" >
+        <widget class="KLineEdit" name="portEdit" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
         </widget>
        </item>
-       <item row="6" column="0" colspan="2" >
+       <item row="5" column="0" colspan="3" >
         <widget class="QCheckBox" name="storePasswordCheck" >
          <property name="whatsThis" >
           <string>Check this option to have KMail store the password.
@@ -257,69 +174,21 @@ However, if KWallet is not available, the password will be stored in KMail's con
          </property>
         </widget>
        </item>
-       <item row="7" column="0" colspan="2" >
-        <widget class="QCheckBox" name="autoExpungeCheck" >
-         <property name="text" >
-          <string>Automaticall&amp;y compact folders (expunges deleted messages)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0" colspan="2" >
-        <widget class="QCheckBox" name="hiddenFoldersCheck" >
-         <property name="text" >
-          <string>Sho&amp;w hidden folders</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0" colspan="2" >
-        <widget class="QCheckBox" name="subscribedFoldersCheck" >
-         <property name="text" >
-          <string>Show only s&amp;ubscribed folders</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="2" >
-        <widget class="QCheckBox" name="locallySubscribedFoldersCheck" >
-         <property name="text" >
-          <string>Show only &amp;locally subscribed folders</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0" colspan="2" >
-        <widget class="QCheckBox" name="loadOnDemandCheck" >
-         <property name="whatsThis" >
-          <string>Activate this to load attachments not automatically when you select the email but only when you click on the attachment. This way also big emails are shown instantly.</string>
-         </property>
-         <property name="text" >
-          <string>Load attach&amp;ments on demand</string>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="0" colspan="2" >
-        <widget class="QCheckBox" name="listOnlyOpenCheck" >
-         <property name="whatsThis" >
-          <string>Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.</string>
-         </property>
-         <property name="text" >
-          <string>List only open folders</string>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="0" colspan="2" >
+       <item row="6" column="0" colspan="3" >
         <widget class="QCheckBox" name="includeInCheck" >
          <property name="text" >
           <string>Include in manual mail chec&amp;k</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="0" colspan="2" >
+       <item row="7" column="0" colspan="3" >
         <widget class="QCheckBox" name="intervalCheck" >
          <property name="text" >
           <string>Enable &amp;interval mail checking</string>
          </property>
         </widget>
        </item>
-       <item row="15" column="0" >
+       <item row="8" column="0" >
         <widget class="QLabel" name="intervalLabel" >
          <property name="text" >
           <string>Check inter&amp;val:</string>
@@ -329,28 +198,7 @@ However, if KWallet is not available, the password will be stored in KMail's con
          </property>
         </widget>
        </item>
-       <item row="16" column="0" >
-        <widget class="QLabel" name="trashLabel" >
-         <property name="text" >
-          <string>&amp;Trash folder:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="0" colspan="2" >
-        <widget class="QCheckBox" name="useDefaultIdentityCheck" >
-         <property name="text" >
-          <string>Use &amp;default identity</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="0" >
-        <widget class="QLabel" name="identityLabel" >
-         <property name="text" >
-          <string>Identity:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="1" >
+       <item row="8" column="1" colspan="2" >
         <widget class="KIntNumInput" name="intervalSpin" >
          <property name="minimum" >
           <number>0</number>
@@ -363,6 +211,286 @@ However, if KWallet is not available, the password will be stored in KMail's con
          </property>
         </widget>
        </item>
+       <item row="9" column="0" >
+        <spacer name="verticalSpacer_3" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>152</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="optionsTab" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>419</width>
+        <height>449</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>&amp;Advanced</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7" >
+       <item>
+        <widget class="QCheckBox" name="autoExpungeCheck" >
+         <property name="text" >
+          <string>Automaticall&amp;y compact folders (expunges deleted messages)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="hiddenFoldersCheck" >
+         <property name="text" >
+          <string>Sho&amp;w hidden folders</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="subscribedFoldersCheck" >
+         <property name="text" >
+          <string>Show only s&amp;ubscribed folders</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="locallySubscribedFoldersCheck" >
+         <property name="text" >
+          <string>Show only &amp;locally subscribed folders</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="loadOnDemandCheck" >
+         <property name="whatsThis" >
+          <string>Activate this to load attachments not automatically when you select the email but only when you click on the attachment. This way also big emails are shown instantly.</string>
+         </property>
+         <property name="text" >
+          <string>Load attach&amp;ments on demand</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="listOnlyOpenCheck" >
+         <property name="whatsThis" >
+          <string>Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.</string>
+         </property>
+         <property name="text" >
+          <string>List only open folders</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="trashLayout" >
+         <item>
+          <widget class="QLabel" name="trashLabel" >
+           <property name="text" >
+            <string>&amp;Trash folder:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="identityBox" >
+         <property name="title" >
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6" >
+          <item>
+           <widget class="QCheckBox" name="useDefaultIdentityCheck" >
+            <property name="text" >
+             <string>Use &amp;default identity</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="identityLayout" >
+            <item>
+             <widget class="QLabel" name="identityLabel" >
+              <property name="text" >
+               <string>Identity:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="namespaceBox" >
+         <property name="title" >
+          <string/>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3" >
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2" >
+            <item>
+             <widget class="QLabel" name="label_6" >
+              <property name="whatsThis" >
+               <string>Here you see the different namespaces that your IMAP server supports.
+Each namespace represents a prefix that separates groups of folders.
+Namespaces allow KMail for example to display your personal folders and shared folders in one account.</string>
+              </property>
+              <property name="text" >
+               <string>Namespaces:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="button" >
+              <property name="whatsThis" >
+               <string>Reload the namespaces from the server. This overwrites any changes.</string>
+              </property>
+              <property name="text" >
+               <string>...</string>
+              </property>
+              <property name="autoRaise" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QWidget" native="1" name="widget_2" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3" >
+             <item>
+              <layout class="QGridLayout" name="_3" >
+               <item row="3" column="2" >
+                <widget class="KLineEdit" name="otherUsersNS" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2" >
+                <widget class="KLineEdit" name="sharedNS" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2" >
+                <widget class="KLineEdit" name="personalNS" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" >
+                <widget class="QLabel" name="label_9" >
+                 <property name="whatsThis" >
+                  <string>Personal namespaces include your personal folders.</string>
+                 </property>
+                 <property name="text" >
+                  <string>Personal</string>
+                 </property>
+                 <property name="buddy" >
+                  <cstring>personalNS</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1" >
+                <widget class="QLabel" name="label_14" >
+                 <property name="whatsThis" >
+                  <string>These namespaces include the folders of other users.</string>
+                 </property>
+                 <property name="text" >
+                  <string>Other Users</string>
+                 </property>
+                 <property name="buddy" >
+                  <cstring>otherUsersNS</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1" >
+                <widget class="QLabel" name="label_15" >
+                 <property name="whatsThis" >
+                  <string>These namespaces include the shared folders.</string>
+                 </property>
+                 <property name="text" >
+                  <string>Shared</string>
+                 </property>
+                 <property name="buddy" >
+                  <cstring>sharedNS</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3" >
+                <widget class="QToolButton" name="editPNS" >
+                 <property name="text" >
+                  <string>...</string>
+                 </property>
+                 <property name="autoRaise" >
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="3" >
+                <widget class="QToolButton" name="editONS" >
+                 <property name="text" >
+                  <string>...</string>
+                 </property>
+                 <property name="autoRaise" >
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="3" >
+                <widget class="QToolButton" name="editSNS" >
+                 <property name="text" >
+                  <string>...</string>
+                 </property>
+                 <property name="autoRaise" >
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>53</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="securityTab" >
@@ -370,14 +498,14 @@ However, if KWallet is not available, the password will be stored in KMail's con
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>519</width>
-        <height>634</height>
+        <width>419</width>
+        <height>449</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>S&amp;ecurity</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5" >
+      <layout class="QVBoxLayout" name="verticalLayout" >
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout" >
          <item>
@@ -387,8 +515,8 @@ However, if KWallet is not available, the password will be stored in KMail's con
            </property>
            <property name="sizeHint" stdset="0" >
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -407,8 +535,8 @@ However, if KWallet is not available, the password will be stored in KMail's con
            </property>
            <property name="sizeHint" stdset="0" >
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -517,8 +645,8 @@ However, if KWallet is not available, the password will be stored in KMail's con
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
-           <width>20</width>
-           <height>40</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -526,19 +654,6 @@ However, if KWallet is not available, the password will be stored in KMail's con
       </layout>
      </widget>
     </widget>
-   </item>
-   <item row="3" column="0" >
-    <spacer name="verticalSpacer_2" >
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
