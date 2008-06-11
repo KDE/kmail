@@ -367,7 +367,6 @@ void AccountDialog::makePopAccountPage()
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
   mPop.ui.hostEdit->setValidator( mValidator );
-  mPop.ui.portEdit->setValidator( new QIntValidator(this) );
 
   connect( mPop.ui.leaveOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotLeaveOnServerClicked() ) );
@@ -566,7 +565,7 @@ void AccountDialog::setupSettings()
     mPop.ui.loginEdit->setText( ap.login() );
     mPop.ui.passwordEdit->setText( ap.passwd());
     mPop.ui.hostEdit->setText( ap.host() );
-    mPop.ui.portEdit->setText( QString("%1").arg( ap.port() ) );
+    mPop.ui.portEdit->setValue( ap.port() );
     mPop.ui.usePipeliningCheck->setChecked( ap.usePipelining() );
     mPop.ui.storePasswordCheck->setChecked( ap.storePasswd() );
     mPop.ui.leaveOnServerCheck->setChecked( ap.leaveOnServer() );
@@ -863,8 +862,8 @@ void AccountDialog::slotPopEncryptionChanged( int id )
 {
   kDebug(5006) << "ID:" << id;
   // adjust port
-  if ( id == Transport::EnumEncryption::SSL || mPop.ui.portEdit->text() == "995" )
-    mPop.ui.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "995" : "110" );
+  if ( id == Transport::EnumEncryption::SSL || mPop.ui.portEdit->value() == 995 )
+    mPop.ui.portEdit->setValue( ( id == Transport::EnumEncryption::SSL ) ? 995 : 110 );
 
   enablePopFeatures();
   const QAbstractButton *old = mPop.authButtonGroup->checkedButton();
@@ -896,7 +895,7 @@ void AccountDialog::slotImapEncryptionChanged( int id )
 
 void AccountDialog::slotCheckPopCapabilities()
 {
-  if ( mPop.ui.hostEdit->text().isEmpty() || mPop.ui.portEdit->text().isEmpty() )
+  if ( mPop.ui.hostEdit->text().isEmpty() )
   {
      KMessageBox::sorry( this, i18n( "Please specify a server and port on "
                                      "the General tab first." ) );
@@ -909,7 +908,7 @@ void AccountDialog::slotCheckPopCapabilities()
     encryptionType = Transport::EnumEncryption::SSL;
   else
     encryptionType = Transport::EnumEncryption::None;
-  mServerTest->setPort( encryptionType, mPop.ui.portEdit->text().toInt() );
+  mServerTest->setPort( encryptionType, mPop.ui.portEdit->value() );
   mServerTest->setServer( mPop.ui.hostEdit->text() );
   mServerTest->setProtocol( "pop" );
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
@@ -1499,7 +1498,7 @@ void AccountDialog::initAccountForConnect()
 
   if ( type == KAccount::Pop ) {
     na.setHost( mPop.ui.hostEdit->text().trimmed() );
-    na.setPort( mPop.ui.portEdit->text().toInt() );
+    na.setPort( mPop.ui.portEdit->value() );
     na.setLogin( mPop.ui.loginEdit->text().trimmed() );
     na.setStorePasswd( mPop.ui.storePasswordCheck->isChecked() );
     na.setPasswd( mPop.ui.passwordEdit->text(), na.storePasswd() );
