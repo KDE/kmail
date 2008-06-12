@@ -443,7 +443,6 @@ void AccountDialog::makeImapAccountPage( bool connected )
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
   mImap.ui.hostEdit->setValidator( mValidator );
-  mImap.ui.portEdit->setValidator( new QIntValidator(this) );
 
   mImap.ui.button->setAutoRaise( true );
   mImap.ui.button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -625,7 +624,7 @@ void AccountDialog::setupSettings()
     mImap.ui.loginEdit->setText( ai.login() );
     mImap.ui.passwordEdit->setText( ai.passwd());
     mImap.ui.hostEdit->setText( ai.host() );
-    mImap.ui.portEdit->setText( QString("%1").arg( ai.port() ) );
+    mImap.ui.portEdit->setValue( ai.port() );
     mImap.ui.autoExpungeCheck->setChecked( ai.autoExpunge() );
     mImap.ui.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.ui.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
@@ -675,7 +674,7 @@ void AccountDialog::setupSettings()
     mImap.ui.loginEdit->setText( ai.login() );
     mImap.ui.passwordEdit->setText( ai.passwd());
     mImap.ui.hostEdit->setText( ai.host() );
-    mImap.ui.portEdit->setText( QString("%1").arg( ai.port() ) );
+    mImap.ui.portEdit->setValue( ai.port() );
     mImap.ui.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.ui.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.ui.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
@@ -883,8 +882,8 @@ void AccountDialog::slotImapEncryptionChanged( int id )
 {
   kDebug(5006) << id;
   // adjust port
-  if ( id == Transport::EnumEncryption::SSL || mImap.ui.portEdit->text() == "993" )
-    mImap.ui.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "993" : "143" );
+  if ( id == Transport::EnumEncryption::SSL || mImap.ui.portEdit->value() == 993 )
+    mImap.ui.portEdit->setValue( ( id == Transport::EnumEncryption::SSL ) ? 993 : 143 );
 
   enableImapAuthMethods();
   QAbstractButton *old = mImap.authButtonGroup->checkedButton();
@@ -921,7 +920,7 @@ void AccountDialog::slotCheckPopCapabilities()
 
 void AccountDialog::slotCheckImapCapabilities()
 {
-  if ( mImap.ui.hostEdit->text().isEmpty() || mImap.ui.portEdit->text().isEmpty() )
+  if ( mImap.ui.hostEdit->text().isEmpty() )
   {
      KMessageBox::sorry( this, i18n( "Please specify a server and port on "
               "the General tab first." ) );
@@ -934,7 +933,7 @@ void AccountDialog::slotCheckImapCapabilities()
     encryptionType = Transport::EnumEncryption::SSL;
   else
     encryptionType = Transport::EnumEncryption::None;
-  mServerTest->setPort( encryptionType, mImap.ui.portEdit->text().toInt() );
+  mServerTest->setPort( encryptionType, mImap.ui.portEdit->value() );
   mServerTest->setServer( mImap.ui.hostEdit->text() );
   mServerTest->setProtocol( "imap" );
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
@@ -1525,7 +1524,7 @@ void AccountDialog::initAccountForConnect()
   else if ( type == KAccount::Imap ||
             type == KAccount::DImap ) {
     na.setHost( mImap.ui.hostEdit->text().trimmed() );
-    na.setPort( mImap.ui.portEdit->text().toInt() );
+    na.setPort( mImap.ui.portEdit->value() );
     na.setLogin( mImap.ui.loginEdit->text().trimmed() );
     na.setStorePasswd( mImap.ui.storePasswordCheck->isChecked() );
     na.setPasswd( mImap.ui.passwordEdit->text(), na.storePasswd() );
