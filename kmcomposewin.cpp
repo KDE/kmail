@@ -2271,12 +2271,12 @@ void KMComposeWin::slotAttachFile()
   fdlg.setCaption( i18n("Attach File") );
   fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
   fdlg.setMode( KFile::Files );
-  fdlg.exec();
-  KUrl::List files = fdlg.selectedUrls();
+  if ( fdlg.exec() != QDialog::Accepted )
+    return;
 
-  for ( KUrl::List::Iterator it = files.begin(); it != files.end(); ++it ) {
-    addAttach(*it);
-  }
+  const KUrl::List files = fdlg.selectedUrls();
+  foreach ( const KUrl& url, files )
+    addAttach( url );
 }
 
 //-----------------------------------------------------------------------------
