@@ -55,7 +55,7 @@
       <attribute name="title" >
        <string>&amp;General</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2" >
+      <layout class="QGridLayout" name="gridLayout" >
        <item row="0" column="0" >
         <widget class="QLabel" name="label_2" >
          <property name="text" >
@@ -66,8 +66,28 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1" colspan="2" >
+       <item row="0" column="1" >
         <widget class="KLineEdit" name="nameEdit" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="label_4" >
+         <property name="text" >
+          <string>Ho&amp;st:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>hostEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="KLineEdit" name="hostEdit" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
            <horstretch>0</horstretch>
@@ -76,7 +96,33 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" >
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_7" >
+         <property name="text" >
+          <string>&amp;Port:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>portEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" >
+        <widget class="KIntNumInput" name="portEdit" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimum" >
+          <number>1</number>
+         </property>
+         <property name="maximum" >
+          <number>65535</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" >
         <widget class="QLabel" name="label_5" >
          <property name="whatsThis" >
           <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
@@ -89,7 +135,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1" colspan="2" >
+       <item row="3" column="1" >
         <widget class="KLineEdit" name="loginEdit" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
@@ -99,7 +145,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" >
+       <item row="4" column="0" >
         <widget class="QLabel" name="label_3" >
          <property name="text" >
           <string>P&amp;assword:</string>
@@ -109,7 +155,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1" colspan="2" >
+       <item row="4" column="1" >
         <widget class="KLineEdit" name="passwordEdit" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
@@ -122,53 +168,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0" >
-        <widget class="QLabel" name="label_4" >
-         <property name="text" >
-          <string>Ho&amp;st:</string>
-         </property>
-         <property name="buddy" >
-          <cstring>hostEdit</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="2" >
-        <widget class="KLineEdit" name="hostEdit" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" >
-        <widget class="QLabel" name="label_7" >
-         <property name="text" >
-          <string>&amp;Port:</string>
-         </property>
-         <property name="buddy" >
-          <cstring>portEdit</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1" colspan="2" >
-        <widget class="KIntNumInput" name="portEdit" >
-	 <property name="minimum" >
-	  <number>1</number>
-	 </property>
-	 <property name="maximum" >
-	  <number>65535</number>
-	 </property>
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="3" >
+       <item row="5" column="0" colspan="2" >
         <widget class="QCheckBox" name="storePasswordCheck" >
          <property name="whatsThis" >
           <string>Check this option to have KMail store the password.
@@ -180,14 +180,14 @@ However, if KWallet is not available, the password will be stored in KMail's con
          </property>
         </widget>
        </item>
-       <item row="6" column="0" colspan="3" >
+       <item row="6" column="0" colspan="2" >
         <widget class="QCheckBox" name="includeInCheck" >
          <property name="text" >
           <string>Include in manual mail chec&amp;k</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0" colspan="3" >
+       <item row="7" column="0" colspan="2" >
         <widget class="QCheckBox" name="intervalCheck" >
          <property name="text" >
           <string>Enable &amp;interval mail checking</string>
@@ -204,7 +204,7 @@ However, if KWallet is not available, the password will be stored in KMail's con
          </property>
         </widget>
        </item>
-       <item row="8" column="1" colspan="2" >
+       <item row="8" column="1" >
         <widget class="KIntNumInput" name="intervalSpin" >
          <property name="minimum" >
           <number>0</number>
@@ -513,43 +513,6 @@ Namespaces allow KMail for example to display your personal folders and shared f
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout" >
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout" >
-         <item>
-          <spacer name="horizontalSpacer_2" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="checkCapabilities" >
-           <property name="text" >
-            <string>Check &amp;What the Server Supports</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
         <widget class="QGroupBox" name="encryptionGroup" >
          <property name="title" >
           <string>Encryption</string>
@@ -645,6 +608,43 @@ Namespaces allow KMail for example to display your personal folders and shared f
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout" >
+         <item>
+          <spacer name="horizontalSpacer_2" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="checkCapabilities" >
+           <property name="text" >
+            <string>Check &amp;What the Server Supports</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="verticalSpacer" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -678,6 +678,7 @@ Namespaces allow KMail for example to display your personal folders and shared f
    <class>KSeparator</class>
    <extends>QFrame</extends>
    <header>kseparator.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
