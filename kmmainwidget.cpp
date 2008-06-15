@@ -37,6 +37,7 @@
 #include <QShortcut>
 #include <QProcess>
 
+#include <kaboutdata.h>
 #include <kicon.h>
 #include <kwindowsystem.h>
 #include <krun.h>
@@ -62,6 +63,7 @@
 #include <kconfiggroup.h>
 #include <ktoolinvocation.h>
 #include <kxmlguifactory.h>
+#include <kxmlguiclient.h>
 #include <kstatusbar.h>
 #include <kaction.h>
 #include <kvbox.h>
@@ -1084,10 +1086,6 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   }
 
   if(kmkernel->xmlGuiInstance().isValid()) {
-#ifdef __GNUC__
-#warning "kde4 : port ?"
-#endif
-    //KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
     KNotification::event( "new-mail-arrived",
                           summary,QPixmap(),topLevelWidget() );
   }
@@ -3296,16 +3294,19 @@ void KMMainWidget::setupActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-//  if(kmkernel->xmlGuiInstance())
-//    KNotifyDialog::configure(this, 0, kmkernel->xmlGuiInstance()->aboutData());
-//  else
-    KNotifyConfigWidget::configure(this);
+  KComponentData d = kmkernel->xmlGuiInstance();
+  if ( d.isValid() ) {
+    const KAboutData *a = d.aboutData();
+    KNotifyConfigWidget::configure( this, a->appName() );
+  } else {
+    KNotifyConfigWidget::configure( this );
+  }
 }
 
 void KMMainWidget::slotEditKeys()
 {
   KShortcutsDialog::configure( actionCollection(),
-    KShortcutsEditor::LetterShortcutsAllowed );
+                               KShortcutsEditor::LetterShortcutsAllowed );
 }
 
 //-----------------------------------------------------------------------------
