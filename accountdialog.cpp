@@ -515,7 +515,10 @@ void AccountDialog::makeImapAccountPage( bool connected )
 void AccountDialog::setupSettings()
 {
   QComboBox *folderCombo = 0;
+  bool intervalCheckingEnabled = ( mAccount->checkInterval() > 0 );
   int interval = mAccount->checkInterval();
+  if ( !intervalCheckingEnabled ) // Default to 5 minutes when the user enables
+    interval = 5;                 // interval checking for the first time
 
   KAccount::Type accountType = mAccount->type();
   if( accountType == KAccount::Local )
@@ -548,12 +551,12 @@ void AccountDialog::setupSettings()
     else if (acctLocal->lockType() == lock_none)
       mLocal.ui.lockNone->setChecked(true);
 
-    mLocal.ui.intervalSpin->setValue( qMax(1, interval) );
-    mLocal.ui.intervalCheck->setChecked( interval >= 1 );
+    mLocal.ui.intervalSpin->setValue( interval );
+    mLocal.ui.intervalCheck->setChecked( intervalCheckingEnabled );
     mLocal.ui.includeInCheck->setChecked( !mAccount->checkExclude() );
     mLocal.ui.precommand->setText( mAccount->precommand() );
 
-    slotEnableLocalInterval( interval >= 1 );
+    slotEnableLocalInterval( intervalCheckingEnabled );
     folderCombo = mLocal.ui.folderCombo;
   }
   else if( accountType == KAccount::Pop )
@@ -582,8 +585,8 @@ void AccountDialog::setupSettings()
                                             ap.leaveOnServerSize() : 10 );
     mPop.ui.filterOnServerCheck->setChecked( ap.filterOnServer() );
     mPop.ui.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
-    mPop.ui.intervalCheck->setChecked( interval >= 1 );
-    mPop.ui.intervalSpin->setValue( qMax(1, interval) );
+    mPop.ui.intervalCheck->setChecked( intervalCheckingEnabled );
+    mPop.ui.intervalSpin->setValue( interval );
     mPop.ui.includeInCheck->setChecked( !mAccount->checkExclude() );
     mPop.ui.precommand->setText( ap.precommand() );
     if (ap.useSSL())
@@ -613,7 +616,7 @@ void AccountDialog::setupSettings()
                                     ap.leaveOnServerCount() >= 1 : 0);
     slotEnableLeaveOnServerSize( mPop.ui.leaveOnServerSizeCheck->isEnabled() ?
                                     ap.leaveOnServerSize() >= 1 : 0);
-    slotEnablePopInterval( interval >= 1 );
+    slotEnablePopInterval( intervalCheckingEnabled );
     folderCombo = mPop.ui.folderCombo;
   }
   else if( accountType == KAccount::Imap )
@@ -632,14 +635,14 @@ void AccountDialog::setupSettings()
     mImap.ui.loadOnDemandCheck->setChecked( ai.loadOnDemand() );
     mImap.ui.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
     mImap.ui.storePasswordCheck->setChecked( ai.storePasswd() );
-    mImap.ui.intervalCheck->setChecked( interval >= 1 );
-    mImap.ui.intervalSpin->setValue( qMax(1, interval) );
+    mImap.ui.intervalCheck->setChecked( intervalCheckingEnabled );
+    mImap.ui.intervalSpin->setValue( interval);
     mImap.ui.includeInCheck->setChecked( !ai.checkExclude() );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
-    slotEnableImapInterval( interval >= 1 );
+    slotEnableImapInterval( intervalCheckingEnabled );
     mImap.identityCombo->setCurrentIdentity( mAccount->identityId() );
     mImap.ui.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
@@ -679,16 +682,14 @@ void AccountDialog::setupSettings()
     mImap.ui.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.ui.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
     mImap.ui.storePasswordCheck->setChecked( ai.storePasswd() );
-    mImap.ui.intervalCheck->setChecked( interval >= 1 );
-    mImap.ui.intervalSpin->setValue( qMax(1, interval) );
+    mImap.ui.intervalCheck->setChecked( intervalCheckingEnabled );
+    mImap.ui.intervalSpin->setValue( interval );
     mImap.ui.includeInCheck->setChecked( !ai.checkExclude() );
-    mImap.ui.intervalCheck->setChecked( interval >= 1 );
-    mImap.ui.intervalSpin->setValue( qMax(1, interval) );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
-    slotEnableImapInterval( interval >= 1 );
+    slotEnableImapInterval( intervalCheckingEnabled );
     mImap.identityCombo->setCurrentIdentity( mAccount->identityId() );
     mImap.ui.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
@@ -723,11 +724,11 @@ void AccountDialog::setupSettings()
     mMaildir.ui.nameEdit->setFocus();
     mMaildir.ui.locationEdit->setEditText( acctMaildir->location() );
 
-    mMaildir.ui.intervalSpin->setValue( qMax(1, interval) );
-    mMaildir.ui.intervalCheck->setChecked( interval >= 1 );
+    mMaildir.ui.intervalSpin->setValue( interval );
+    mMaildir.ui.intervalCheck->setChecked( intervalCheckingEnabled );
     mMaildir.ui.includeInCheck->setChecked( !mAccount->checkExclude() );
     mMaildir.ui.precommand->setText( mAccount->precommand() );
-    slotEnableMaildirInterval( interval >= 1 );
+    slotEnableMaildirInterval( intervalCheckingEnabled );
     folderCombo = mMaildir.ui.folderCombo;
   }
   else // Unknown account type
