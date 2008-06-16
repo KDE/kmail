@@ -147,7 +147,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
 #ifdef Q_WS_WIN
   if (mIndexStream) { // close before renaming
-    // neither this fixes windows port: 
+    // neither this fixes windows port:
     // if ( !updateIndexStreamPtr() )
     //  return 1;
     bool ok = fclose( mIndexStream ) == 0;
@@ -517,6 +517,11 @@ int KMFolderIndex::writeMessages( KMMsgBase* msg, bool flush, FILE* indexStream 
 int KMFolderIndex::writeMessages( KMMsgBase* msg, bool flush )
 {
   return writeMessages( msg, flush, mIndexStream );
+}
+
+KMMsgBase * KMFolderIndex::takeIndexEntry(int idx)
+{
+  return mMsgList.take( idx );
 }
 
 #endif // !KMAIL_SQLITE_INDEX
