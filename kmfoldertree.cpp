@@ -2105,11 +2105,12 @@ void KMFolderTree::updateCopyActions()
 
 void KMFolderTree::slotAddToFavorites()
 {
-  QValueList<QGuardedPtr<KMFolder> > folders = selectedFolders();
   KMail::FavoriteFolderView *favView = mMainWidget->favoriteFolderView();
   assert( favView );
-  for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it = folders.constBegin(); it != folders.constEnd(); ++it )
-    favView->addFolder( *it );
+  for ( QListViewItemIterator it( this ); it.current(); ++it ) {
+    if ( it.current()->isSelected() )
+      favView->addFolder( static_cast<KMFolderTreeItem*>( it.current() ) );
+  }
 }
 
 void KMFolderTree::slotUnhideLocalInbox()
