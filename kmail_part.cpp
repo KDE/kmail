@@ -171,21 +171,6 @@ void KMailPart::slotNameChanged( KMFolderTreeItem *fti )
 
 //-----------------------------------------------------------------------------
 
-// The sole purpose of the following class is to publicize the protected
-// method KParts::MainWindow::createGUI() since we need to call it so that
-// the toolbar is redrawn when necessary.
-// It can be removed once createGUI() has been made public _and_ we don't
-// longer rely on kdelibs 3.2.
-class KPartsMainWindowWithPublicizedCreateGUI : public KParts::MainWindow
-{
-public:
-  void createGUIPublic( KParts::Part *part ) {
-    createGUI( part );
-  }
-};
-
-//-----------------------------------------------------------------------------
-
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
   kDebug(5006);
