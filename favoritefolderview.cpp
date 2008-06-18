@@ -538,6 +538,13 @@ void FavoriteFolderView::addFolder()
   addFolder( folder, fti ? prettyName( fti ) : folder->label() );
 }
 
+void KMail::FavoriteFolderView::addFolder(KMFolderTreeItem * fti)
+{
+  if ( !fti || !fti->folder() )
+    return;
+  addFolder( fti->folder(), prettyName( fti ) );
+}
+
 KMFolderTreeItem * FavoriteFolderView::findFolderTreeItem(KMFolder * folder) const
 {
   assert( folder );

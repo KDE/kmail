@@ -2189,8 +2189,10 @@ void KMFolderTree::slotAddToFavorites()
 {
   KMail::FavoriteFolderView *favView = mMainWidget->favoriteFolderView();
   assert( favView );
-  foreach ( const QPointer<KMFolder> &f, selectedFolders() )
-    favView->addFolder( f );
+  for ( Q3ListViewItemIterator it( this ); it.current(); ++it ) {
+    if ( it.current()->isSelected() )
+      favView->addFolder( static_cast<KMFolderTreeItem*>( it.current() ) );
+  }
 }
 
 void KMFolderTree::slotUnhideLocalInbox()
