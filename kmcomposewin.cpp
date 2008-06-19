@@ -1776,7 +1776,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
       else
         mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
       //mEditor->insertLine("\n", -1); <-- why ?
-    } else mEditor->setText("");
+    } else mEditor->clear();
     for( int i = firstAttachment; i < num; ++i ) {
       KMMessagePart *msgPart = new KMMessagePart;
       mMsg->bodyPart(i, msgPart);
