@@ -488,8 +488,9 @@ namespace KMail {
       // get key for this signature
       Kleo::KeyListJob *job = cryptProto->keyListJob();
       std::vector<GpgME::Key> keys;
-      GpgME::KeyListResult keyListRes = job->exec( QStringList( QString::fromLatin1( signature.fingerprint() ) ),
-                                                   false, keys );
+      if ( signature.fingerprint() ) // if the fingerprint is empty, the keylisting would return all available keys
+        GpgME::KeyListResult keyListRes = job->exec( QStringList( QString::fromLatin1( signature.fingerprint() ) ),
+                                                     false, keys );
       GpgME::Key key;
       if ( keys.size() == 1 )
         key = keys[0];
