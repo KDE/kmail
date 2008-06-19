@@ -712,7 +712,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         || decryptResult.error().code() == GPG_ERR_NO_SECKEY;
       actuallyEncrypted = decryptResult.error().code() != GPG_ERR_NO_DATA;
       aErrorText = QString::fromLocal8Bit( decryptResult.error().asString() );
-      auditLog = job->auditLogAsHtml();
+      auditLog = executor.auditLogAsHtml();
 
       kDebug() << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
       if ( bDecryptionOk )
