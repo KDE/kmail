@@ -747,7 +747,7 @@ RecipientsPicker* SideWidget::picker() const
     mRecipientPicker = new RecipientsPicker( non_const_this );
     connect( mRecipientPicker, SIGNAL( pickedRecipient( const Recipient & ) ),
              non_const_this, SIGNAL( pickedRecipient( const Recipient & ) ) );
-    mPickerPositioner = new KWindowPositioner( non_const_this, mRecipientPicker );
+    mPickerPositioner = new KWindowPositioner( mSelectButton, mRecipientPicker );
   }
   return mRecipientPicker;
 }
@@ -813,9 +813,8 @@ void SideWidget::pickRecipient()
   RecipientsPicker *p = picker();
   p->setDefaultType( mView->activeLine()->recipientType() );
   p->setRecipients( mView->recipients() );
-  p->show();
   mPickerPositioner->reposition();
-  p->raise();
+  p->show();
 }
 
 

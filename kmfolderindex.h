@@ -122,7 +122,8 @@ public:
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
-  virtual int updateIndex();
+  virtual int updateIndex() { return updateIndex( false ); }
+  int updateIndex( bool aboutToClose );
 
 protected:
   bool readIndex();

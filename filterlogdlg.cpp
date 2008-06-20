@@ -258,7 +258,7 @@ void FilterLogDialog::slotUser2()
   fdlg.setMode( KFile::File );
   fdlg.setSelection( "kmail-filter.log" );
   fdlg.setOperationMode( KFileDialog::Saving );
-  if ( fdlg.exec() )
+  if ( fdlg.exec() == QDialog::Accepted )
   {
     fileName = fdlg.selectedFile();
     if ( !FilterLog::instance()->saveToFile( fileName ) )

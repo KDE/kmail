@@ -717,7 +717,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
       disconnect(mFolder, SIGNAL(cleared()),
                  this, SLOT(folderCleared()));
       disconnect(mFolder, SIGNAL(expunged( KMFolder* )),
-                 this, SLOT(folderCleared()));
+                 this, SLOT(folderClosed()));
       disconnect(mFolder, SIGNAL(closed()),
                  this, SLOT(folderClosed()));
       disconnect( mFolder, SIGNAL( statusMsg( const QString& ) ),
@@ -751,7 +751,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
       connect(mFolder, SIGNAL(cleared()),
               this, SLOT(folderCleared()));
       connect(mFolder, SIGNAL(expunged( KMFolder* )),
-                 this, SLOT(folderCleared()));
+                 this, SLOT(folderClosed()));
       connect(mFolder, SIGNAL(closed()),
                  this, SLOT(folderClosed()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),

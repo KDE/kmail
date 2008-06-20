@@ -1,5 +1,5 @@
 /**
- * kmeditor.cpp
+ * kmcomposereditor.cpp
  *
  * Copyright (C)  2007, 2008 Laurent Montel <montel@kde.org>
  *

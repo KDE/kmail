@@ -315,7 +315,7 @@ void KMFolderMbox::close( const char *owner, bool aForced )
         //      exit(1); backed out due to broken nfs
       }
 
-      updateIndex();
+      updateIndex( true );
       writeConfig();
   }
 

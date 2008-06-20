@@ -1309,13 +1309,13 @@ void AccountDialog::saveSettings()
 
 void AccountDialog::slotLocationChooser()
 {
-  static QString directory( "/" );
+  static QString directory( QDir::rootPath() );
 
   KFileDialog dialog( directory, QString(), this );
   dialog.setCaption( i18n("Choose Location") );
+  dialog.setMode( KFile::LocalOnly );
 
-  bool result = dialog.exec();
-  if( result == false )
+  if( dialog.exec() != QDialog::Accepted )
   {
     return;
   }
@@ -1337,7 +1337,7 @@ void AccountDialog::slotLocationChooser()
 
 void AccountDialog::slotMaildirChooser()
 {
-  static QString directory( "/" );
+  static QString directory( QDir::rootPath() );
 
   QString dir = KFileDialog::getExistingDirectory(directory, this, i18n("Choose Location"));
 

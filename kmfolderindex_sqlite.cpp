@@ -98,8 +98,13 @@ KMFolderIndex::~KMFolderIndex()
 {
 }
 
-int KMFolderIndex::updateIndex()
+int KMFolderIndex::updateIndex( bool aboutToClose )
 {
+  if ( !aboutToClose && !isOpened() ) {
+    kWarning() << "updateIndex() called on a closed folder!";
+    return 0;
+  }
+
 // TODO: run SQL "update" only for dirty messages
   if (!mAutoCreateIndex)
     return 0;
@@ -130,6 +135,11 @@ bool KMFolderIndex::openDatabase( int mode )
 
 int KMFolderIndex::writeIndex( bool createEmptyIndex )
 {
+  if ( !createEmptyIndex && !isOpened() ) {
+    kWarning() << "writeIndex() called on a closed folder!";
+    return 0;
+  }
+
   QString indexName = QDir::toNativeSeparators( indexLocation() );
   if ( mIndexDb ) {
     sqlite3_close( mIndexDb );

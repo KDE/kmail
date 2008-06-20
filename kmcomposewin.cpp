@@ -2063,8 +2063,7 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
   }
 
   const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
-  const uint maximumAttachmentSizeInBytes = maxAttachmentSize*1024*1024;
-  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrUrl() ).size() > maximumAttachmentSizeInBytes ) {
+  if ( aUrl.isLocalFile() && maxAttachmentSize >= 0 && QFileInfo( aUrl.pathOrUrl() ).size() > (maxAttachmentSize*1024*1024 /*in bytes*/ ) ) {
     KMessageBox::sorry( this, i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p>", maxAttachmentSize ) );
     return false;
   }
@@ -2272,12 +2271,12 @@ void KMComposeWin::slotAttachFile()
   fdlg.setCaption( i18n("Attach File") );
   fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
   fdlg.setMode( KFile::Files );
-  fdlg.exec();
-  KUrl::List files = fdlg.selectedUrls();
+  if ( fdlg.exec() != QDialog::Accepted )
+    return;
 
-  for ( KUrl::List::Iterator it = files.begin(); it != files.end(); ++it ) {
-    addAttach(*it);
-  }
+  const KUrl::List files = fdlg.selectedUrls();
+  foreach ( const KUrl& url, files )
+    addAttach( url );
 }
 
 //-----------------------------------------------------------------------------

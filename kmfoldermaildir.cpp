@@ -252,7 +252,7 @@ void KMFolderMaildir::close( const char *,  bool aForced )
 
   if (mAutoCreateIndex)
   {
-      updateIndex();
+      updateIndex( true );
       writeConfig();
   }
 

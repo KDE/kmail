@@ -43,8 +43,9 @@ KMFolderIndex::~KMFolderIndex()
 {
 }
 
-int KMFolderIndex::updateIndex()
+int KMFolderIndex::updateIndex( bool aboutToClose )
 {
+  Q_UNUSED( aboutToClose );
   if (!mAutoCreateIndex)
     return 0;
   bool dirty = mDirty;
