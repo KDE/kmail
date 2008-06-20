@@ -470,12 +470,12 @@ namespace KMail {
       kDebug() << "returned from CRYPTPLUG";
 
     // ### only one signature supported
-    if ( signatures.size() > 0 ) {
+    if ( !signatures.empty() ) {
       kDebug() << "\nFound signature";
-      GpgME::Signature signature = signatures[0];
+      GpgME::Signature signature = signatures.front();
 
       messagePart.status_code = signatureToStatus( signature );
-      messagePart.status = QString::fromUtf8( signature.status().asString() );
+      messagePart.status = QString::fromLocal8Bit( signature.status().asString() );
       for ( uint i = 1; i < signatures.size(); ++i ) {
         if ( signatureToStatus( signatures[i] ) != messagePart.status_code ) {
           messagePart.status_code = GPGME_SIG_STAT_DIFF;
@@ -488,8 +488,9 @@ namespace KMail {
       // get key for this signature
       Kleo::KeyListJob *job = cryptProto->keyListJob();
       std::vector<GpgME::Key> keys;
-      GpgME::KeyListResult keyListRes = job->exec( QStringList( QString::fromLatin1( signature.fingerprint() ) ),
-                                                   false, keys );
+      if ( signature.fingerprint() ) // if the fingerprint is empty, the keylisting would return all available keys
+        GpgME::KeyListResult keyListRes = job->exec( QStringList( QString::fromLatin1( signature.fingerprint() ) ),
+                                                     false, keys );
       GpgME::Key key;
       if ( keys.size() == 1 )
         key = keys[0];
@@ -712,7 +713,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         || decryptResult.error().code() == GPG_ERR_NO_SECKEY;
       actuallyEncrypted = decryptResult.error().code() != GPG_ERR_NO_DATA;
       aErrorText = QString::fromLocal8Bit( decryptResult.error().asString() );
-      auditLog = job->auditLogAsHtml();
+      auditLog = executor.auditLogAsHtml();
 
       kDebug() << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
       if ( bDecryptionOk )

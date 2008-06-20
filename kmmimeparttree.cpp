@@ -141,8 +141,14 @@ void KMMimePartTree::slotItemClicked( QTreeWidgetItem* item )
 {
   if ( const KMMimePartTreeItem * i = dynamic_cast<KMMimePartTreeItem*>( item ) ) {
     // Display the clicked tree node in the reader window
-    if ( mReaderWin->mRootNode == i->node() )
+    if ( mReaderWin->mRootNode == i->node() ) {
+      const bool selected = i->isSelected();
       mReaderWin->update( true ); // Force update so the reader will display the whole message
+      if ( selected ) {
+        setCurrentItem( invisibleRootItem()->child( 0 ) );
+        invisibleRootItem()->child( 0 )->setSelected( true );
+      }
+    }
     else
       mReaderWin->setMsgPart( i->node() ); // Show the message sub-part
   }
@@ -151,22 +157,24 @@ void KMMimePartTree::slotItemClicked( QTreeWidgetItem* item )
 void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
 {
   KMMimePartTreeItem * item = dynamic_cast<KMMimePartTreeItem *>( itemAt( p ) );
-  if ( !item )
-    return;
-
-  bool isAttachment = ( item->node()->nodeId() > 2 ) &&
+  const bool isAttachment = item && ( item->node()->nodeId() > 2 ) &&
                       ( item->node()->typeString() != "Multipart" );
+  const bool isRoot = item && mReaderWin->mRootNode == item->node();
 
   KMenu popup;
 
-  popup.addAction( SmallIcon( "document-save-as" ), i18n( "Save &As..." ),
-                   this, SLOT( slotSaveAs() ) );
+  if ( !isRoot ) {
+    if ( item ) {
+      popup.addAction( SmallIcon( "document-save-as" ), i18n( "Save &As..." ),
+                     this, SLOT( slotSaveAs() ) );
+    }
 
-  if ( isAttachment ) {
-    popup.addAction( SmallIcon( "document-open" ), i18nc( "to open", "Open" ),
-                     this, SLOT( slotOpen() ) );
-    popup.addAction( i18n( "Open With..." ), this, SLOT( slotOpenWith() ) );
-    popup.addAction( i18nc( "to view something", "View" ), this, SLOT( slotView() ) );
+    if ( isAttachment ) {
+      popup.addAction( SmallIcon( "document-open" ), i18nc( "to open", "Open" ),
+                       this, SLOT( slotOpen() ) );
+      popup.addAction( i18n( "Open With..." ), this, SLOT( slotOpenWith() ) );
+      popup.addAction( i18nc( "to view something", "View" ), this, SLOT( slotView() ) );
+    }
   }
 
   /*
@@ -179,19 +187,21 @@ void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
                    SLOT( slotSaveAll() ) );
 
   // edit + delete only for attachments
-  if ( isAttachment ) {
-    popup.addAction( SmallIcon( "edit-copy" ), i18n( "Copy" ),
-                     this, SLOT( slotCopy() ) );
-    if ( GlobalSettings::self()->allowAttachmentDeletion() )
-      popup.addAction( SmallIcon( "edit-delete" ), i18n( "Delete Attachment" ),
-                       this, SLOT( slotDelete() ) );
-    if ( GlobalSettings::self()->allowAttachmentEditing() )
-      popup.addAction( SmallIcon( "document-properties" ), i18n( "Edit Attachment" ),
-                       this, SLOT( slotEdit() ) );
-  }
+  if ( !isRoot ) {
+    if ( isAttachment ) {
+      popup.addAction( SmallIcon( "edit-copy" ), i18n( "Copy" ),
+                       this, SLOT( slotCopy() ) );
+      if ( GlobalSettings::self()->allowAttachmentDeletion() )
+        popup.addAction( SmallIcon( "edit-delete" ), i18n( "Delete Attachment" ),
+                         this, SLOT( slotDelete() ) );
+      if ( GlobalSettings::self()->allowAttachmentEditing() )
+        popup.addAction( SmallIcon( "document-properties" ), i18n( "Edit Attachment" ),
+                         this, SLOT( slotEdit() ) );
+    }
 
-  if ( item->node()->nodeId() > 0 )
-    popup.addAction( i18n( "Properties" ), this, SLOT( slotProperties() ) );
+    if ( item && item->node()->nodeId() > 0 )
+      popup.addAction( i18n( "Properties" ), this, SLOT( slotProperties() ) );
+  }
   popup.exec( viewport()->mapToGlobal( p ) );
 }
 
