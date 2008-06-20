@@ -553,7 +553,6 @@ void KMMainWidget::readConfig()
 
 
     if( layoutChanged ) {
-      hide();
       deleteWidgets();
       createWidgets();
     }

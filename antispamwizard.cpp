@@ -909,7 +909,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
   layout->addWidget( mIntroText );
 
   mScanProgressText = new QLabel( this );
-  mScanProgressText->setText( "" ) ;
+  mScanProgressText->clear();
   mScanProgressText->setWordWrap( true );
   layout->addWidget( mScanProgressText );
 
@@ -923,7 +923,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
            this, SLOT(processSelectionChange(void)) );
 
   mSelectionHint = new QLabel( this );
-  mSelectionHint->setText( "" );
+  mSelectionHint->clear();
   layout->addWidget( mSelectionHint );
 
   layout->addStretch();

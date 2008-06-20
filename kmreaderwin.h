@@ -461,7 +461,7 @@ private slots:
 private:
   void adjustLayout();
   void createWidgets();
-  void createActions( KActionCollection * ac );
+  void createActions();
   void saveSplitterSizes( KConfigGroup & c ) const;
 
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,

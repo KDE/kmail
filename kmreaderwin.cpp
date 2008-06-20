@@ -502,7 +502,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mAtmUpdate = false;
 
   createWidgets();
-  createActions( actionCollection );
+  createActions();
   initHtmlWidget();
   readConfig();
 
@@ -526,8 +526,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   setMsg( 0, false );
 }
 
-void KMReaderWin::createActions( KActionCollection *ac )
+void KMReaderWin::createActions()
 {
+  KActionCollection *ac = mActionCollection;
   if ( !ac ) {
     return;
   }

@@ -2753,13 +2753,18 @@ KMCommand::Result KMResendMessageCommand::execute()
   newMsg->removeHeaderField( "Message-Id" );
   newMsg->setParent( 0 );
 
+  // Remember the identity for the message before removing the headers which
+  // store the identity information.
+  uint originalIdentity = newMsg->identityUoid();
+
+  // Remove all unnecessary headers
   QStringList whiteList;
   whiteList << "To" << "Cc" << "Bcc" << "Subject";
   newMsg->sanitizeHeaders( whiteList );
 
-  // make sure we have an identity set, default, if necessary
-  newMsg->setHeaderField("X-KMail-Identity", QString::number( newMsg->identityUoid() ));
-  newMsg->applyIdentity( newMsg->identityUoid() );
+  // Set the identity from above
+  newMsg->setHeaderField( "X-KMail-Identity", QString::number( originalIdentity ) );
+  newMsg->applyIdentity( originalIdentity );
 
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
