@@ -1045,9 +1045,9 @@ namespace {
     for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
       if ( KMail::StatusValues[ i ].icon != 0 )
         statusCombo->addItem( SmallIcon( KMail::StatusValues[ i ].icon ),
-                              i18n( KMail::StatusValues[ i ].text ) );
+                              i18nc("message status",  KMail::StatusValues[ i ].text ) );
       else
-        statusCombo->addItem( i18n( KMail::StatusValues[ i ].text ) );
+        statusCombo->addItem( i18nc("message status",  KMail::StatusValues[ i ].text ) );
     }
     statusCombo->adjustSize();
     QObject::connect( statusCombo, SIGNAL( activated( int ) ),
@@ -1129,7 +1129,7 @@ namespace {
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
-      return i18n( KMail::StatusValues[ status ].text );
+      return i18nc( "message status", KMail::StatusValues[ status ].text );
     else
       return QString();
   }
