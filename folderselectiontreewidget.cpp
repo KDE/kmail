@@ -96,7 +96,6 @@ void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSe
   item->setFolderType( static_cast<KPIM::FolderTreeWidgetItem::FolderType>( fti->type() ) );
   QPixmap pix = fti->normalIcon( KIconLoader::SizeSmall );
   item->setIcon( mNameColumnIndex, pix.isNull() ? SmallIcon( "folder" ) : QIcon( pix ) );
-  item->setExpanded( true );
 
   // Make items without folders and readonly items unselectable
   // if we're told so
@@ -130,18 +129,16 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
 
   mFilter = QString();
 
-  // Calling setUpdatesEnabled() here causes weird effects (including crashes)
-  // in the folder requester (used by the filtering dialog).
-  // So disable it for now, this makes the folderselection dialog appear much
-  // slower though :(
-  //setUpdatesEnabled( false );
   for (
          KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( mFolderTree->firstChild() ) ;
          fti;
          fti = static_cast<KMFolderTreeItem *>( fti->nextSibling() )
      )
      recursiveReload( fti, 0 );
-  //setUpdatesEnabled( true );
+
+  // we do this here in one go after all items have been created, as that is
+  // faster than expanding each item, which triggers a lot of updates
+  expandAll();
 
   if ( !preSelection.isEmpty() )
     setFolder( preSelection );
