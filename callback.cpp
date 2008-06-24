@@ -170,7 +170,8 @@ QString Callback::receiver() const
       selectMessage = i18n("<qt>None of your identities match the "
           "receiver of this message,<br>please "
           "choose which of the following addresses "
-          "is yours, if any:");
+          "is yours, if any, or select one of your identities to use in the reply:");
+      addrs += kmkernel->identityManager()->allEmails();
     } else {
       selectMessage = i18n("<qt>Several of your identities match the "
           "receiver of this message,<br>please "
