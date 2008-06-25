@@ -77,7 +77,7 @@ public:
    * side subscription managed by the ctor parameter.
    */
   void setHonorLocalSubscription( bool value );
-  
+
   /**
    * Return whether the listing includes only folders that the
    * account is subscribed to locally. This is different from the server
@@ -97,17 +97,11 @@ public:
   void setComplete( bool complete ) { mComplete = complete; }
 
   /** Set parent progress item */
-  void setParentProgressItem( KPIM::ProgressItem* it ) { 
+  void setParentProgressItem( KPIM::ProgressItem* it ) {
     mParentProgressItem = it; }
 
   /** Set the namespace for this listing */
   void setNamespace( const QString& ns ) { mNamespace = ns; }
-
-protected:
-  /**
-   * Does the actual KIO::listDir
-   */
-  void doListing( const KURL& url, const ImapAccountBase::jobData& jd );
 
 protected slots:
   /**
