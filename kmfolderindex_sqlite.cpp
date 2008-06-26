@@ -20,17 +20,17 @@
 //-----------------------------------------------------------------------------
 // utils
 
-QString errorMessage( int code, const char* msg )
+static QString errorMessage( int code, const char* msg )
 {
   return QString("error #%1 message=%2").arg(code).arg( QString::fromUtf8( msg ) );
 }
 
-QString errorMessage( int code, sqlite3* db )
+static QString errorMessage( int code, sqlite3* db )
 {
   return errorMessage( code, sqlite3_errmsg(db) );
 }
 
-QString querySingleString( sqlite3* db, const QString& sql, int _column, bool& _result )
+static QString querySingleString( sqlite3* db, const QString& sql, int _column, bool& _result )
 {
   _result = false;
   if ( !db ) return QString();
@@ -59,7 +59,7 @@ QString querySingleString( sqlite3* db, const QString& sql, int _column, bool& _
   return QString();
 }
 
-bool executeQuery( sqlite3* db, const char* sql )
+static bool executeQuery( sqlite3* db, const char* sql )
 {
   if ( !db ) return false;
   char* errMsg = 0;
@@ -73,7 +73,7 @@ bool executeQuery( sqlite3* db, const char* sql )
   return true;
 }
 
-bool executeQuery( sqlite3* db, const QString& sql )
+static bool executeQuery( sqlite3* db, const QString& sql )
 {
   return executeQuery( db, sql.toUtf8().constData() );
 }
