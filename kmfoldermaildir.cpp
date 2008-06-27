@@ -432,7 +432,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   if ( !uidHeader.isEmpty() && stripUid )
     aMsg->setHeaderField( "X-UID", uidHeader );
 
-  if ( msgText.length() <= 0 ) {
+  if ( msgText.isEmpty() ) {
     kDebug(5006) <<"Message added to folder `" << objectName() <<"' contains no data. Ignoring it.";
     return 0;
   }
@@ -458,7 +458,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   // now move the file to the correct location
   QString new_loc(location() + "/cur/");
   new_loc += filename;
-  if (moveInternal(tmp_file, new_loc, filename, aMsg->messageStatus()).isNull())
+  if (moveInternal(tmp_file, new_loc, filename, aMsg->messageStatus()).isEmpty())
   {
     file.remove();
     return -1;
