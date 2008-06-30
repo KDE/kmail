@@ -984,7 +984,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   ++row;
   mImap.subscribedFoldersCheck = new QCheckBox(
-    i18n("Show only s&ubscribed folders"), page1);
+    i18n("Show only serverside s&ubscribed folders"), page1);
   grid->addMultiCellWidget( mImap.subscribedFoldersCheck, row, row, 0, 1 );
 
   ++row;
