@@ -131,6 +131,22 @@ bool KMAcctImap::handleError( int errorCode, const QString &errorMsg, KIO::Job* 
   return ImapAccountBase::handleError( errorCode, errorMsg, job, context, abortSync );
 }
 
+void KMAcctImap::registerJob( KMail::ImapJob *job )
+{
+  if ( !job )
+    return;
+  if ( mImapJobList.contains( job ) )
+    return;
+  mImapJobList.append( job );
+}
+
+void KMAcctImap::unregisterJob( KMail::ImapJob *job )
+{
+  if ( !job )
+    return;
+  mImapJobList.removeAll( job );
+}
+
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::killAllJobs( bool disconnectSlave )
@@ -170,13 +186,12 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
   }
   // remove the jobs
   mapJobData.clear();
-  // KMAccount::deleteFolderJobs(); doesn't work here always, it deletes jobs from
-  // its own mJobList instead of our mJobList...
   KMAccount::deleteFolderJobs();
-  foreach ( ImapJob *job, mJobList ) {
-    job->kill();
-  }
-  mJobList.clear();
+
+  while( mImapJobList.count() > 0 )
+    mImapJobList.takeFirst()->kill();
+
+  mImapJobList.clear();
   // make sure that no new-mail-check is blocked
   if (mCountRemainChecks > 0)
   {
@@ -194,7 +209,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 {
   if (!msg) return;
   QList<ImapJob*>::const_iterator it;
-  for ( it = mJobList.begin(); (*it) && it != mJobList.constEnd(); ++it )
+  for ( it = mImapJobList.begin(); (*it) && it != mImapJobList.constEnd(); ++it )
   {
     ImapJob *job = (*it);
     if ( job->msgList().first() == msg )
@@ -208,7 +223,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 {
   QList<ImapJob*>::const_iterator it;
-  for ( it = mJobList.begin(); (*it) && it != mJobList.constEnd(); ++it )
+  for ( it = mImapJobList.begin(); (*it) && it != mImapJobList.constEnd(); ++it )
   {
     ImapJob *job = (*it);
     if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder )
