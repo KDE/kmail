@@ -31,6 +31,11 @@
 
 #include "kmstartup.h"
 
+#ifdef Q_WS_WIN
+#include <unistd.h>
+#include <windows.h>
+#endif
+
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KPIM::PimApplication
@@ -92,7 +97,11 @@ int main(int argc, char *argv[])
   // a bit harder: You should pass --nofork as commandline argument when using
   // a debugger. In gdb you can do this by typing "set args --nofork" before
   // typing "run".
-
+#if 0 // for testing KUniqueAppliaction on Windows
+  MessageBoxA(NULL, 
+             QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(), 
+             QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
+#endif
   KMail::AboutData about;
 
   KCmdLineArgs::init(argc, argv, &about);
