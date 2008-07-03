@@ -65,6 +65,7 @@ void FolderSelectionDialog::init( KMFolderTree *tree, bool mustBeReadWrite )
   QWidget *vbox = new KVBox( this );
   setMainWidget( vbox );
   mTreeView = new KMail::FolderSelectionTreeWidget( vbox, tree );
+  mTreeView->setSortingEnabled( false );
   mTreeView->reload( mustBeReadWrite, true, true, preSelection );
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
@@ -73,6 +74,7 @@ void FolderSelectionDialog::init( KMFolderTree *tree, bool mustBeReadWrite )
            this, SLOT( slotUpdateBtnStatus() ) );
   connect(this, SIGNAL( user1Clicked() ), mTreeView, SLOT( addChildFolder() ) );
   readConfig();
+  mTreeView->resizeColumnToContents(0);
 }
 
 FolderSelectionDialog::~FolderSelectionDialog()
