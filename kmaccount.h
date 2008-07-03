@@ -324,6 +324,7 @@ protected:
 private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mNewInFolder;
+  QEventLoop *mPrecommandEventLoop;
 };
 
 #endif /*kmaccount_h*/

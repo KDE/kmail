@@ -355,14 +355,10 @@ void PopAccount::slotAbortRequested()
 void PopAccount::startJob()
 {
   // Run the precommand
-  if (!runPrecommand(precommand()))
-    {
-      KMessageBox::sorry(0,
-                         i18n("Could not execute precommand: %1", precommand()),
-                         i18n("KMail Error Message"));
-      checkDone( false, CheckError );
-      return;
-    }
+  if ( !runPrecommand(precommand() ) ) {
+    checkDone( false, CheckError );
+    return;
+  }
   // end precommand code
 
   KUrl url = getUrl();
