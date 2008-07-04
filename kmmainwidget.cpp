@@ -2628,7 +2628,7 @@ void KMMainWidget::setupActions()
   mSaveAsAction = new KAction(KIcon("document-save"), i18n("Save &As..."), this);
   actionCollection()->addAction("file_save_as", mSaveAsAction );
   connect(mSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveMsg()));
-  mSaveAsAction->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::Save));
+  mSaveAsAction->setShortcut(KStandardShortcut::save());
 
   mOpenAction = KStandardAction::open( this, SLOT( slotOpenMsg() ),
                                   actionCollection() );
@@ -2822,16 +2822,20 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotRequestFullSearchFromQuickSearch()));
     action->setShortcut(QKeySequence(Qt::Key_S));
   }
+
   mFindInMessageAction = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
   actionCollection()->addAction("find_in_messages", mFindInMessageAction );
   connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
-  mFindInMessageAction->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::Find));
+  //FIXME: this causes ambiguous Ctrl-F problems and the shortcut fails
+  //unfortunately, this has the side-effect of having a blank Ctrl-F shortcut
+  //string on the Find menu.
+  //mFindInMessageAction->setShortcut(KStandardShortcut::find());
 
   {
     KAction *action = new KAction(i18n("Select &All Messages"), this);
     actionCollection()->addAction("mark_all_messages", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
-    action->setShortcuts(KStandardShortcut::selectAll());
+    action->setShortcut(KStandardShortcut::selectAll());
   }
 
   //----- Folder Menu
@@ -2868,7 +2872,7 @@ void KMMainWidget::setupActions()
   mRefreshFolderAction = new KAction(KIcon("view-refresh"), i18n("Check Mail &in This Folder"), this);
   actionCollection()->addAction("refresh_folder", mRefreshFolderAction );
   connect(mRefreshFolderAction, SIGNAL(triggered(bool) ), SLOT(slotRefreshFolder()));
-  mRefreshFolderAction->setShortcut(KStandardShortcut::shortcut( KStandardShortcut::Reload ));
+  mRefreshFolderAction->setShortcut(KStandardShortcut::reload());
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
   mTroubleshootMaildirAction = new KAction( KIcon("tools-wizard"), i18n("Rebuild Index..."), this );
@@ -2946,7 +2950,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
     // do not set a New shortcut if kmail is a component
     if ( !kmkernel->xmlGuiInstance().isValid() ) {
-      action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));
+      action->setShortcut(KStandardShortcut::openNew());
     }
   }
 
