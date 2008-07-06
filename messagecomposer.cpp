@@ -560,11 +560,7 @@ void MessageComposer::readFromComposeWin()
 
   mIsRichText = ( mComposeWin->mEditor->textMode() == KMeditor::Rich );
   mIdentityUid = mComposeWin->identityUid();
-  mText = breakLinesAndApplyCodec();
-  // Hopefully we can get rid of this eventually, it's needed to be able
-  // to break the plain/text version of a multipart/alternative (html) mail
-  // according to the line breaks of the richtext version.
-  mLineBreakColumn = mComposeWin->mEditor->lineWrapColumnOrWidth();
+  breakLinesAndApplyCodec();
 }
 
 static QByteArray escape_quoted_string( const QByteArray &str ) {
@@ -1253,7 +1249,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage &theMessage,
                                                    bool doSign, bool doEncrypt )
 {
   // preprocess the body text
-  QByteArray body = mText;
+  QByteArray body = mBodyText;
   if (body.isNull()) {
     mRc = false;
     return;
@@ -1335,7 +1331,7 @@ void MessageComposer::composeChiasmusMessage( KMMessage &theMessage,
   assert( chiasmus ); // kmcomposewin code should have made sure
 
   // preprocess the body text
-  QByteArray body = mText;
+  QByteArray body = mBodyText;
   if (body.isNull()) {
     mRc = false;
     return;
@@ -1419,7 +1415,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   theMessage.setBody( "This message is in MIME format." );
 
   // preprocess the body text
-  QByteArray body = mText;
+  QByteArray body = mBodyText;
   if (body.isNull()) {
     mRc = false;
     return;
@@ -1493,14 +1489,12 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     textBodyPart.setTypeStr( "text" );
     textBodyPart.setSubtypeStr( "plain" );
 
-    QByteArray textbody = plainTextFromMarkup( mText );
-
     // the signed body must not be 8bit encoded
     textBodyPart.setBodyAndGuessCte(
-      textbody, allowedCTEs,
+      mPlainText, allowedCTEs,
       !kmkernel->msgSender()->sendQuotedPrintable() && !doSign, doSign );
     textBodyPart.setCharset( mCharset );
-    textBodyPart.setBodyEncoded( textbody );
+    textBodyPart.setBodyEncoded( mPlainText );
     DwBodyPart *textDwPart = theMessage.createDWBodyPart( &textBodyPart );
     textDwPart->Assemble();
     newbody += "--";
@@ -1513,7 +1507,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     KMMessagePart htmlBodyPart;
     htmlBodyPart.setTypeStr( "text" );
     htmlBodyPart.setSubtypeStr( "html" );
-    QByteArray htmlbody = mText;
+    QByteArray htmlbody = mHtmlSource;
     // the signed body must not be 8bit encoded
     htmlBodyPart.setBodyAndGuessCte(
       htmlbody, allowedCTEs,
@@ -2133,71 +2127,54 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 }
 
 //-----------------------------------------------------------------------------
-QByteArray MessageComposer::plainTextFromMarkup( const QString &markupText ) const
+void MessageComposer::breakLinesAndApplyCodec()
 {
-  KMeditor *hackConspiratorTextEdit = new KMeditor( markupText );
-  if ( !mDisableBreaking ) {
-    hackConspiratorTextEdit->enableWordWrap( mLineBreakColumn );
-  }
-  QString text = hackConspiratorTextEdit->toWrappedPlainText();
-  QByteArray textbody;
+  // Get the HTML source and the plain text, with proper breaking
+  //
+  // Note that previous versions of KMail only stored mBodyText and then used
+  // a hidden edit widget to remove the formatting in case mBodyText was HTML,
+  // but this was not reliable as the hidden edit widget introduced bugs such
+  // as http://bugs.kde.org/show_bug.cgi?id=165190.
+  //
+  // Therefore, we now read the plain text version directly from the composer,
+  // which returns the correct result.
+  QString plainText, htmlSource;
+  htmlSource = mComposeWin->mEditor->toHtml();
+  if ( mDisableBreaking || !GlobalSettings::self()->wordWrap() )
+    plainText = mComposeWin->mEditor->toPlainText();
+  else
+    plainText = mComposeWin->mEditor->toWrappedPlainText();
 
+  // Now, convert the string to a bytearray with the right codec
+  QByteArray plainTextEncoded, htmlSourceEncoded;
+  QString newPlainText;
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
   if ( mCharset == "us-ascii" ) {
-    textbody = KMMsgBase::toUsAscii( text );
+    plainTextEncoded = KMMsgBase::toUsAscii( plainText );
+    htmlSourceEncoded = KMMsgBase::toUsAscii( htmlSource );
+    newPlainText = QString::fromLatin1( plainTextEncoded );
   } else if ( codec == 0 ) {
-    kDebug(5006) << "Something is wrong and I can not get a codec.";
-    textbody = text.toLocal8Bit();
+    kDebug() << "Something is wrong and I can not get a codec.";
+    plainTextEncoded = plainText.toLocal8Bit();
+    htmlSourceEncoded = htmlSource.toLocal8Bit();
+    newPlainText = QString::fromLocal8Bit( plainTextEncoded );
   } else {
-    text = codec->toUnicode( text.toLatin1() );
-    textbody = codec->fromUnicode( text );
-  }
-  if ( textbody.isNull() ) {
-    textbody = "";
+    plainTextEncoded = codec->fromUnicode( plainText );
+    htmlSourceEncoded = codec->fromUnicode( htmlSource );
+    newPlainText = codec->toUnicode( plainTextEncoded );
   }
 
-  delete hackConspiratorTextEdit;
-  return textbody;
-}
-
-//-----------------------------------------------------------------------------
-QByteArray MessageComposer::breakLinesAndApplyCodec() const
-{
-  QByteArray cText;
-  QString text;
-
-  if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() ) {
-    text = mComposeWin->mEditor->textOrHtml();
-  } else {
-    text = mComposeWin->mEditor->toWrappedPlainText();
-  }
-
-  QString newText;
-  const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
-
-  if ( mCharset == "us-ascii" ) {
-    cText = KMMsgBase::toUsAscii( text );
-    newText = QString::fromLatin1( cText );
-  } else if ( codec == 0 ) {
-    kDebug(5006) << "Something is wrong and I can not get a codec.";
-    cText = text.toLocal8Bit();
-    newText = QString::fromLocal8Bit( cText );
-  } else {
-    cText = codec->fromUnicode( text );
-    newText = codec->toUnicode( cText );
-  }
-  if ( cText.isNull() ) {
-    cText = "";
-  }
-
-  if ( !text.isEmpty() && ( newText != text ) ) {
+  // Check if we didn't loose any characters during encoding.
+  // This can be checked by decoding the encoded text and comparing it with the
+  // original, it should be the same.
+  if ( !plainText.isEmpty() && ( newPlainText != plainText ) ) {
     // FIXME the whole thing here is completely broken, see
     //       bug 149309 and 145163.
     //       Furthermore, there is no reason the set the text to the editor,
     //       it will just break rich text formatting anyway. text() and
     //       setText() are evil.
     QString oldText = mComposeWin->mEditor->text();
-    mComposeWin->mEditor->setText( newText );
+    mComposeWin->mEditor->setText( newPlainText );
     KCursorSaver idle( KBusyPtr::idle() );
     bool anyway = ( KMessageBox::warningYesNo(
                       mComposeWin,
@@ -2208,7 +2185,6 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
                       KGuiItem( i18n("Change Encoding") ) ) == KMessageBox::Yes );
     if ( !anyway ) {
       mComposeWin->mEditor->setText( oldText );
-      return QByteArray();
     }
   }
 
@@ -2223,11 +2199,21 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
   //  signed and transmitted (signed message and transmitted message
   //  MUST be identical).
   // So make sure that the body ends with a <LF>.
-  if ( cText.isEmpty() || !cText.endsWith('\n') ) {
-    kDebug(5006) << "Added an <LF> on the last line";
-    cText += '\n';
+  if ( plainTextEncoded.isEmpty() || !plainTextEncoded.endsWith('\n') ) {
+    kDebug() << "Added an <LF> on the last line";
+    plainTextEncoded += '\n';
   }
-  return cText;
+  if ( htmlSourceEncoded.isEmpty() || !htmlSourceEncoded.endsWith('\n') ) {
+    kDebug() << "Added an <LF> on the last line";
+    htmlSourceEncoded += '\n';
+  }
+
+  mPlainText = plainTextEncoded;
+  mHtmlSource = htmlSourceEncoded;
+  if ( mIsRichText )
+    mBodyText = mHtmlSource;
+  else
+    mBodyText = mPlainText;
 }
 
 //-----------------------------------------------------------------------------
