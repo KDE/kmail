@@ -45,6 +45,10 @@ class DistributionListManager;
 }
 #endif
 
+namespace KPIM {
+class  LDAPSearchDialog;
+}
+
 class RecipientItem
 {
   public:
@@ -213,7 +217,8 @@ class RecipientsPicker : public QDialog
     void setFocusList();
     void resetSearch();
     void insertAddressBook( AddressBook * );
-
+    void slotSearchLDAP();
+    void ldapSearchResult();
   private:
     KABC::StdAddressBook *mAddressBook;
 
@@ -224,7 +229,10 @@ class RecipientsPicker : public QDialog
     QPushButton *mToButton;
     QPushButton *mCcButton;
     QPushButton *mBccButton;
-
+    
+    QPushButton *mSearchLDAPButton;
+    KPIM::LDAPSearchDialog            *ldapSearchDialog;
+    
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
     RecipientsCollection *mDistributionLists;
