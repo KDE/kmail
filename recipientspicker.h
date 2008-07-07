@@ -229,10 +229,10 @@ class RecipientsPicker : public QDialog
     QPushButton *mToButton;
     QPushButton *mCcButton;
     QPushButton *mBccButton;
-    
+
     QPushButton *mSearchLDAPButton;
-    KPIM::LDAPSearchDialog            *ldapSearchDialog;
-    
+    KPIM::LDAPSearchDialog *mLdapSearchDialog;
+
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
     RecipientsCollection *mDistributionLists;
