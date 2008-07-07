@@ -855,8 +855,6 @@ void RecipientsPicker::slotSearchLDAP()
 
 void RecipientsPicker::ldapSearchResult()
 {
-    kdDebug() << k_funcinfo ;
-
     QStringList emails = QStringList::split(',', mLdapSearchDialog->selectedEMails() );
     QStringList::iterator it( emails.begin() );
     QStringList::iterator end( emails.end() );
@@ -867,8 +865,14 @@ void RecipientsPicker::ldapSearchResult()
         KABC::Addressee ad;
         ad.setNameFromString( name );
         ad.insertEmail( email );
+#ifdef KDEPIM_NEW_DISTRLISTS
+        RecipientItem *item = new RecipientItem( mAddressBook );
+#else
+        RecipientItem *item = new RecipientItem;
+#endif
+        item->setAddressee( ad, ad.preferredEmail() );
+        emit pickedRecipient( Recipient( item->recipient(), Recipient::Undefined ) );
     }
-
 }
 
 #include "recipientspicker.moc"
