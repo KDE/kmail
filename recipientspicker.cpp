@@ -848,6 +848,7 @@ void RecipientsPicker::slotSearchLDAP()
         connect( mLdapSearchDialog, SIGNAL( addresseesAdded() ),
                  SLOT(ldapSearchResult() ) );
     }
+    mLdapSearchDialog->setSearchText( mSearchLine->text() );
     mLdapSearchDialog->show();
 
 }
@@ -866,7 +867,6 @@ void RecipientsPicker::ldapSearchResult()
         KABC::Addressee ad;
         ad.setNameFromString( name );
         ad.insertEmail( email );
-        //addAddresseeToSelected( ad, selectedToItem() );
     }
 
 }
