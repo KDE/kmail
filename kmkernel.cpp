@@ -1682,6 +1682,7 @@ void KMKernel::cleanup(void)
   the_imapFolderMgr = 0;
   delete the_dimapFolderMgr;
   the_dimapFolderMgr = 0;
+  // Delete the_acctMgr here since it is used in the other *Mgrs above.
   delete the_acctMgr;
   the_acctMgr = 0;
   delete the_searchFolderMgr;
