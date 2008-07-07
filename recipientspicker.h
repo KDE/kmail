@@ -52,10 +52,12 @@ class RecipientItem
 
 #ifdef KDEPIM_NEW_DISTRLISTS
     RecipientItem( KABC::AddressBook *ab );
-    void setDistributionList( const KPIM::DistributionList& );
+    void setDistributionList( KPIM::DistributionList& );
+    KPIM::DistributionList& distributionList();
 #else
     RecipientItem();
     void setDistributionList( KABC::DistributionList * );
+    KABC::DistributionList * distributionList();
 #endif
     void setAddressee( const KABC::Addressee &, const QString &email );
 
@@ -70,11 +72,19 @@ class RecipientItem
 
     QString key() const { return mKey; }
 
-    QString toolTip() const;
+    QString tooltip() const;
 
   private:
+#ifdef KDEPIM_NEW_DISTRLISTS
+    QString createTooltip( KPIM::DistributionList & ) const;
+#else
+    QString createTooltip( KABC::DistributionList * ) const;
+#endif
+
     KABC::Addressee mAddressee;
+    QString mName;
     QString mEmail;
+    QString mRecipient;
 #ifdef KDEPIM_NEW_DISTRLISTS
     KPIM::DistributionList mDistributionList;
     KABC::AddressBook *mAddressBook;
@@ -82,7 +92,8 @@ class RecipientItem
     KABC::DistributionList *mDistributionList;
 #endif
     QString mType;
-
+    QString mTooltip;
+    
     QPixmap mIcon;
 
     QString mKey;
@@ -114,8 +125,11 @@ class RecipientsListToolTip : public QToolTip
 class RecipientsCollection
 {
   public:
-    RecipientsCollection();
+    RecipientsCollection( const QString & );
     ~RecipientsCollection();
+
+    void setReferenceContainer( bool );
+    bool isReferenceContainer() const;
 
     void setTitle( const QString & );
     QString title() const;
@@ -125,14 +139,20 @@ class RecipientsCollection
     RecipientItem::List items() const;
 
     bool hasEquivalentItem( RecipientItem * ) const;
+    RecipientItem * getEquivalentItem( RecipientItem *) const;
 
     void clear();
 
     void deleteAll();
 
+    QString id() const;
+
   private:
+    // flag to indicate if this collection contains just references
+    // or should manage memory (de)allocation as well.
+    bool mIsReferenceContainer;
+    QString mId;
     QString mTitle;
-    RecipientItem::List mItems;
     QMap<QString, RecipientItem *> mKeyMap;
 };
 
@@ -181,6 +201,8 @@ class RecipientsPicker : public QDialog
 
     void setDefaultButton( QPushButton *button );
 
+    void rebuildAllRecipientsList();
+
   protected slots:
     void updateList();
     void slotToClicked();
@@ -205,6 +227,7 @@ class RecipientsPicker : public QDialog
 
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
+    RecipientsCollection *mDistributionLists;
     RecipientsCollection *mSelectedRecipients;
 
 #ifndef KDEPIM_NEW_DISTRLISTS
