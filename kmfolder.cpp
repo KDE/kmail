@@ -153,6 +153,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
 KMFolder::~KMFolder()
 {
+  mStorage->close( "~KMFolder", true );
   delete mAcctList;
   if ( mHasIndex ) mStorage->deregisterFromMessageDict();
   delete mStorage;
