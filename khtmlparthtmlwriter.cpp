@@ -98,8 +98,8 @@ namespace KMail {
       mHtmlQueue.clear();
       mState = Begun; // don't run into end()'s warning
       end();
+      mState = Ended;
     }
-    mState = Ended;
   }
 
   void KHtmlPartHtmlWriter::write( const QString & str ) {
