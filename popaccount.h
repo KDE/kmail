@@ -36,6 +36,11 @@ public:
 
   virtual KIO::MetaData slaveConfig() const;
 
+  /**
+   * Reimplemented from KMAccount
+   */
+  virtual void cancelMailCheck();
+
   /** A weak assignment operator */
   virtual void pseudoAssign( const KMAccount * a );
 
