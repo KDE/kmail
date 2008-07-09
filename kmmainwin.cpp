@@ -84,7 +84,7 @@ KMMainWin::~KMMainWin()
   KMKernel::config()->sync();
   KGlobal::deref();
 
-  if ( !kmkernel->haveSystemTrayApplet() ) {
+  if ( mReallyClose ) {
     // Check if this was the last KMMainWin
     uint not_withdrawn = 0;
     foreach ( KMainWindow* window, KMainWindow::memberList() ) {
