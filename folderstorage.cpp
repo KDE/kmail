@@ -688,16 +688,29 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
     if ( !oldIndexLoc.isEmpty() ) {
       if ( KDE_rename( QFile::encodeName( oldIndexLoc ),
                        QFile::encodeName( newIndexLoc ) ) != 0 )
+      {
+        kWarning() << "Failed to rename the index file from" << oldIndexLoc
+                   << "to" << newIndexLoc;
         return 1;
+      }
       if ( KDE_rename( QFile::encodeName( oldSortedLoc ),
                        QFile::encodeName( newSortedLoc ) ) != 0 )
-        return 1;
+      {
+        kWarning() << "Failed to rename the sorted file from" << oldSortedLoc
+                   << "to" << newSortedLoc;
+        // Don't return here, the sorted file is not that critically, and apparently
+        // sometimes doesn't exist (in case of empty folder, for example).
+        //return 1;
+      }
     }
 
     // rename/move serial number file
     if ( !oldIdsLoc.isEmpty() ) {
-      if ( KDE_rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) ) != 0 )
+      if ( KDE_rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) ) != 0 ) {
+        kWarning() << "Failed to rename the serial number file from" << oldIdsLoc
+                   << "to" << newIdsLoc;
         return 1;
+      }
     }
 
     // rename/move the subfolder directory
