@@ -120,7 +120,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
            this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
 
-  setXMLFile( "kmail_part.rc" );
+  setXMLFile( "kmail_part.rc", true );
 #endif
 
   KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
