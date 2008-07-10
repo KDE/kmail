@@ -215,6 +215,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
 KMFolderCachedImap::~KMFolderCachedImap()
 {
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
+  writeConfig();
 }
 
 void KMFolderCachedImap::reallyDoClose( const char* owner )
