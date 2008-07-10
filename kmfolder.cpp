@@ -127,7 +127,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
   connect( mStorage, SIGNAL( contentsTypeChanged( KMail::FolderContentsType ) ),
                 this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
-  
+
   connect( mStorage, SIGNAL( folderSizeChanged() ),
            this, SLOT( slotFolderSizeChanged() ) );
 
@@ -148,6 +148,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
 KMFolder::~KMFolder()
 {
+  mStorage->close( "~KMFolder", true );
   delete mAcctList;
   if ( mHasIndex ) mStorage->deregisterFromMessageDict();
   delete mStorage;
