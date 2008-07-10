@@ -176,8 +176,8 @@ public:
   /** Re-parse the current message. */
   void update(bool force = false);
 
-  /** Print current message. */
-  virtual void printMsg(void);
+  /** Print message. */
+  virtual void printMsg(  KMMessage* aMsg );
 
   /** Return selected text */
   QString copyText();
@@ -401,6 +401,12 @@ protected slots:
   void slotDelayedResize();
   void slotHandleAttachment( int );
 
+  /** Print message. Called on as a response of finished() signal of mPartHtmlWriter
+      after rendering is finished.
+      In the very end it deletes the KMReaderWin window that was created 
+      for the purpose of rendering. */
+  void slotPrintMsg();
+
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
@@ -521,6 +527,10 @@ private:
   KToggleAction *mToggleFixFontAction;
   KUrl mUrlClicked;
   KMail::HtmlWriter * mHtmlWriter;
+  /** This pointer is kept only to be able to connect and disconnect signal 
+      in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
+  KMail::KHtmlPartHtmlWriter * mPartHtmlWriter;
+
   // an attachment should be updated
   bool mAtmUpdate;
   int mChoice;
