@@ -1897,15 +1897,17 @@ bool KMComposeWin::queryClose ()
                                                     i18n("Do you want to save the message for later or discard it?"),
                                                     i18n("Close Composer"),
                                                     KGuiItem(savebut, "document-save", QString(), savetext),
-                                                    KStandardGuiItem::discard() );
-    if ( rc == KMessageBox::Cancel )
+                                                    KStandardGuiItem::discard(),
+                                                    KStandardGuiItem::cancel());
+    if ( rc == KMessageBox::Cancel ) {
       return false;
-    else if ( rc == KMessageBox::Yes ) {
+    } else if ( rc == KMessageBox::Yes ) {
       // doSend will close the window. Just return false from this method
       if (istemplate) slotSaveTemplate();
       else slotSaveDraft();
       return false;
     }
+    //else fall through: return true
   }
   cleanupAutoSave();
   return true;
