@@ -142,7 +142,7 @@ public:
    * already properly set by the caller.
    */
   virtual void readConfig(KConfig& config);
-  virtual void readTimerConfig();
+  void readTimerConfig();
 
   /**
    * Write all account information to given config file. The config group
