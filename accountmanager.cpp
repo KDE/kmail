@@ -113,6 +113,12 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
   mNewMailArrived = false;
   mInteractive = interactive;
 
+ // if sync has been requested by the user then check if check-interval was disabled by user, if yes, then 
+ // de-install the timer
+ // Safe guard against an infinite sync loop (kolab/issue2607)
+  if ( mInteractive ) 
+      account->readTimerConfig();
+
   // queue the account
   mAcctTodo.append(account);
 
