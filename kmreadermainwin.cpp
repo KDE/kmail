@@ -165,6 +165,7 @@ void KMReaderMainWin::slotTrashMsg()
 void KMReaderMainWin::slotPrintMsg()
 {
   KMPrintCommand *command = new KMPrintCommand( this, mReaderWin->message(),
+      mReaderWin->headerStyle(), mReaderWin->headerStrategy(),
       mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
       mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
   command->setOverrideFont( mReaderWin->cssHelper()->bodyFont( mReaderWin->isFixedFont(), true /*printing*/ ) );
