@@ -1596,26 +1596,19 @@ void KMPrintCommand::setOverrideFont( const QFont& font )
 }
 
 
-// KMReaderWin object kept here after previous call of execute(); it is deleted 
-QPointer<KMReaderWin> s_printerWin;
-
 KMCommand::Result KMPrintCommand::execute()
 {
-  if ( s_printerWin && s_printerWin->htmlWriter() )
-    s_printerWin->htmlWriter()->reset(); // stop any previous processing
-  if ( !s_printerWin ) {
-    // the window will be deleted after printout is performed, in KMReaderWin::slotPrintMsg()
-    s_printerWin = new KMReaderWin( kmkernel->mainWin(), 0, 0 );
-  }
-  s_printerWin->setPrinting( true );
-  s_printerWin->readConfig();
-  s_printerWin->setHtmlOverride( mHtmlOverride );
-  s_printerWin->setHtmlLoadExtOverride( mHtmlLoadExtOverride );
-  s_printerWin->setUseFixedFont( mUseFixedFont );
-  s_printerWin->setOverrideEncoding( mEncoding );
-  s_printerWin->setPrintFont( mOverrideFont );
-  s_printerWin->setDecryptMessageOverwrite( true );
-  s_printerWin->printMsg( retrievedMessage() );
+  // the window will be deleted after printout is performed, in KMReaderWin::slotPrintMsg()
+  KMReaderWin *printerWin = new KMReaderWin( kmkernel->mainWin(), 0, 0 );
+  printerWin->setPrinting( true );
+  printerWin->readConfig();
+  printerWin->setHtmlOverride( mHtmlOverride );
+  printerWin->setHtmlLoadExtOverride( mHtmlLoadExtOverride );
+  printerWin->setUseFixedFont( mUseFixedFont );
+  printerWin->setOverrideEncoding( mEncoding );
+  printerWin->setPrintFont( mOverrideFont );
+  printerWin->setDecryptMessageOverwrite( true );
+  printerWin->printMsg( retrievedMessage() );
 
   return OK;
 }

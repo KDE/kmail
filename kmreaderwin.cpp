@@ -481,7 +481,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
-    mPartHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
     mShowSignatureDetails( false )
@@ -825,7 +824,6 @@ void KMReaderWin::slotCycleAttachmentStrategy() {
 KMReaderWin::~KMReaderWin()
 {
   delete mHtmlWriter; mHtmlWriter = 0;
-  mPartHtmlWriter = 0;
   delete mCSSHelper;
   if (mAutoDelete) delete message();
   delete mRootNode; mRootNode = 0;

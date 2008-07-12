@@ -527,9 +527,9 @@ private:
   KToggleAction *mToggleFixFontAction;
   KUrl mUrlClicked;
   KMail::HtmlWriter * mHtmlWriter;
-  /** This pointer is kept only to be able to connect and disconnect signal 
+  /** Used only to be able to connect and disconnect finished() signal 
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
-  KMail::KHtmlPartHtmlWriter * mPartHtmlWriter;
+  QPointer<KMail::KHtmlPartHtmlWriter> mPartHtmlWriter;
 
   // an attachment should be updated
   bool mAtmUpdate;
