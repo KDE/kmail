@@ -127,7 +127,7 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
   if ( selected.isEmpty() && folder() )
     selected = folder()->idString();
 
-  mFilter = QString();
+  mFilter.clear();
 
   for (
          KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( mFolderTree->firstChild() ) ;

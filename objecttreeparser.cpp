@@ -642,7 +642,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 {
   passphraseError = false;
   aErrorText.clear();
-  auditLog = QString::null;
+  auditLog.clear();
   bool bDecryptionOk = false;
   enum { NO_PLUGIN, NOT_INITIALIZED, CANT_DECRYPT }
     cryptPlugError = NO_PLUGIN;
