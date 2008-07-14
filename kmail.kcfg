@@ -124,7 +124,7 @@
       </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
-        <default>kate %f</default>
+        <default>kwrite %f</default>
       </entry>
       <entry name="UseExternalEditor" type="Bool" key="use-external-editor">
         <label>Use e&amp;xternal editor instead of composer</label>
