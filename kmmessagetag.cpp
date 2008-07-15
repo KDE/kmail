@@ -118,7 +118,7 @@ void KMMessageTagDescription::readConfig( const KConfigGroup& group )
   mTextFont = group.readEntry( "text-font", QFont() );
 
   mInToolbar = group.readEntry( "toolbar", false );
-  mIconName = group.readEntry( "icon", "rss_tag" );
+  mIconName = group.readEntry( "icon", "mail-tagged" );
 
   QString shortcut( group.readEntry( "shortcut", QString() ) );
   if ( !shortcut.isEmpty() )
