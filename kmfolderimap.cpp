@@ -1555,6 +1555,13 @@ KMFolderImap::ignoreJobsForMessage( KMMessage* msg )
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderImap::rememberSerialNumber( const KMMessage *msg )
+{
+  mMetaDataMap.insert( msg->msgIdMD5(), new KMMsgMetaData( msg->status(),
+                                                           msg->getMsgSerNum() ) );
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
 {
   if ( data.isEmpty() ) {

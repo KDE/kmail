@@ -465,6 +465,14 @@ protected slots:
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
 
   /**
+   * Puts the serial number and other metadata of the message into a map.
+   * When the same message later is added to the folder, for example by calling
+   * addMsg(), slotGetMessagesData() then examines the metadata map and assigns
+   * the old serial number to the new message.
+   */
+  void rememberSerialNumber( const KMMessage *msg );
+
+  /**
    * For creating a new subfolder
    */
   void slotCreateFolderResult(KJob * job);

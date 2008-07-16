@@ -139,10 +139,35 @@ private:
   static KMFolderMgr *tempFolderMgr;
   static int refCount, count;
   static bool sEnabled, sEnabledChecked;
+
+  // Iterates over the messages in mSerNums, describes which message is being
+  // filtered currently.
+  // In processMessage(), this iterator is set to the next message which is available
+  // for processing (thus processMessage() is called once for every message).
   QList<quint32>::Iterator mMessageIt;
+
+  // Iterates over all available filters. Used in filterMessage(), which is
+  // called once for every filter.
   QList<KMFilter*>::iterator mFilterIt;
+
+  // Iterates over all filter actions of the current filter. Used in
+  // actionMessage(), which is called once for every filter action.
   QList<KMFilterAction*>::iterator mFilterActionIt;
-  QList<quint32> mSerNums, mFetchSerNums;
+
+  // List of serial numbers of message that are in the temporary filter folder
+  // and await processing.
+  // Serial numbers are added as soon as new messages are added to the temp folder,
+  // and removed as soon as the message is moved back to the original
+  // source folder (or the target folder if specified in a filter action).
+  QList<quint32> mSerNums;
+
+  // List of serial numbers of messages that need to be fetched from the orginal
+  // source folder.
+  // Once they are fetched, the messages are copied into the temporary filter folder.
+  // Serial numbers are added when execFilters() is called by the user, and
+  // removed as soon as the message is fetched from the original source folder.
+  QList<quint32> mFetchSerNums;
+
   QList<QPointer<KMFolder> > mOpenFolders;
   QList<KMFilter*> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;

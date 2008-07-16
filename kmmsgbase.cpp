@@ -293,7 +293,7 @@ void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 }
 
 //-----------------------------------------------------------------------------
-MessageStatus& KMMsgBase::status()
+MessageStatus& KMMsgBase::status() const
 {
   return mStatus;
 }
