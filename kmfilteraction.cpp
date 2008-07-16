@@ -1723,8 +1723,6 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
-  qDeleteAll( atmList );
-  atmList.clear();
   if ( commandLine.isEmpty() )
     handler->actionMessage( ErrorButGoOn );
 
@@ -1741,11 +1739,14 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   QString tempFileName = inFile->fileName();
   KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
       false, false, false );
-  inFile->close();
 
- PipeJob *job = new PipeJob(0, aMsg, commandLine, tempFileName);
- QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
- kmkernel->weaver()->enqueue(job);
+  inFile->close();
+  qDeleteAll( atmList );
+  atmList.clear();
+
+  PipeJob *job = new PipeJob(0, aMsg, commandLine, tempFileName);
+  QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
+  kmkernel->weaver()->enqueue(job);
 }
 
 //=============================================================================
