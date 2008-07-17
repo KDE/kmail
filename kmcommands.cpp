@@ -2456,6 +2456,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 
   Result globalResult = OK;
   int unnamedAtmCount = 0;
+  bool overwriteAll = false;
   for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.begin();
         it != mAttachmentMap.end();
         ++it ) {
@@ -2506,12 +2507,26 @@ void KMSaveAttachmentsCommand::slotSaveAll()
      }
 
 
-      if ( KIO::NetAccess::exists( curUrl, KIO::NetAccess::DestinationSide, parentWidget() ) ) {
-        if ( KMessageBox::warningContinueCancel( parentWidget(),
-              i18n( "A file named %1 already exists. Do you want to overwrite it?",
-                curUrl.fileName() ),
-              i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")) ) == KMessageBox::Cancel) {
-          continue;
+      if ( !overwriteAll && KIO::NetAccess::exists( curUrl, KIO::NetAccess::DestinationSide, parentWidget() ) ) {
+        if ( mAttachmentMap.count() == 1 ) {
+          if ( KMessageBox::warningContinueCancel( parentWidget(),
+                i18n( "A file named %1 already exists. Do you want to overwrite it?",
+                  curUrl.fileName() ),
+                i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")) ) == KMessageBox::Cancel) {
+            continue;
+          }
+        }
+        else {
+          int button = KMessageBox::warningYesNoCancel(
+                parentWidget(),
+                i18n( "A file named %1 already exists. Do you want to overwrite it?",
+                  curUrl.fileName() ),
+                i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")), 
+                KGuiItem(i18n("Overwrite &All")) );
+          if ( button == KMessageBox::Cancel )
+            continue;
+          else if ( button == KMessageBox::No )
+            overwriteAll = true;
         }
       }
       // save
