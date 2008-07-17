@@ -649,6 +649,19 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   }
 }
 
+static int dimapAccountCount()
+{
+  KMail::AccountManager *mgr = kmkernel->acctMgr();
+  KMAccount *account = mgr->first();
+  int count = 0;
+  while ( account ) {
+    if ( dynamic_cast<KMAcctCachedImap*>( account ) )
+      ++count;
+    account = mgr->next();
+  }
+  return count;
+}
+
 static QString subresourceLabelForPresentation( const KMFolder * folder )
 {
   QString label = folder->prettyUrl();
@@ -672,7 +685,12 @@ static QString subresourceLabelForPresentation( const KMFolder * folder )
       QStringList remainder(parts);
       remainder.pop_front();
       remainder.pop_front();
-      label = i18n("My %1", remainder.join( QString::fromLatin1("/") ) );
+      if ( dimapAccountCount() > 1 ) {
+        label = i18n( "My %1 (%2)", remainder.join( QString::fromLatin1("/") ),
+                      static_cast<const KMFolderCachedImap*>( folder->storage() )->account()->name() );
+      } else {
+        label = i18n("My %1", remainder.join( QString::fromLatin1("/") ) );
+      }
       break;
     }
   }
