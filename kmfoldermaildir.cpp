@@ -294,17 +294,15 @@ void KMFolderMaildir::sync()
 int KMFolderMaildir::expungeContents()
 {
   // nuke all messages in this folder now
-  QDir d(location() + "/new");
-  // d.setFilter(QDir::Files); coolo: QFile::remove returns false for non-files
-  QStringList files(d.entryList());
-  QStringList::ConstIterator it(files.begin());
-  for ( ; it != files.end(); ++it)
-    QFile::remove(d.filePath(*it));
+  QDir d( location() + "/new" );
+  QStringList files( d.entryList( QDir::Files | QDir::NoDotAndDotDot ) );
+  foreach ( const QString& file, files )
+    QFile::remove( d.filePath(file) );
 
   d.setPath(location() + "/cur");
-  files = d.entryList();
-  for (it = files.begin(); it != files.end(); ++it)
-    QFile::remove(d.filePath(*it));
+  files = d.entryList( QDir::Files | QDir::NoDotAndDotDot );
+  foreach ( const QString& file, files )
+    QFile::remove( d.filePath( file ) );
 
   return 0;
 }
@@ -863,7 +861,7 @@ int KMFolderMaildir::createIndexFromContents()
     return 1;
   }
   QDir newDir(location() + "/new");
-  newDir.setFilter(QDir::Files);
+  newDir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 
   dirinfo.setFile(location() + "/cur");
   if (!dirinfo.exists() || !dirinfo.isDir())
@@ -872,7 +870,7 @@ int KMFolderMaildir::createIndexFromContents()
     return 1;
   }
   QDir curDir(location() + "/cur");
-  curDir.setFilter(QDir::Files);
+  curDir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 
   // then, we look for all the 'cur' files
   QFileInfoList list = curDir.entryInfoList();
