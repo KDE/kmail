@@ -2700,21 +2700,21 @@ void KMMainWidget::setupActions()
 
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
-    KAction *action = new KAction(KIcon("help-contents"), i18n("&Address Book..."), this);
+    KAction *action = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
     actionCollection()->addAction("addressbook", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
     if (KStandardDirs::findExe("kaddressbook").isEmpty()) action->setEnabled(false);
   }
 
   {
-    KAction *action = new KAction(KIcon("pgp-keys"), i18n("Certificate Manager..."), this);
+    KAction *action = new KAction(KIcon("pgp-keys"), i18n("Certificate Manager"), this);
     actionCollection()->addAction("tools_start_certman", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotStartCertManager()));
     // disable action if no certman binary is around
     if (KStandardDirs::findExe("kleopatra").isEmpty()) action->setEnabled(false);
   }
   {
-    KAction *action = new KAction(KIcon("pgp-keys"), i18n("GnuPG Log Viewer..."), this);
+    KAction *action = new KAction(KIcon("pgp-keys"), i18n("GnuPG Log Viewer"), this);
     actionCollection()->addAction("tools_start_kwatchgnupg", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotStartWatchGnuPG()));
     // disable action if no kwatchgnupg binary is around
@@ -2726,7 +2726,7 @@ void KMMainWidget::setupActions()
     action->setEnabled(usableKWatchGnupg);
   }
   {
-    KAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages..."), this);
+    KAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages"), this);
     actionCollection()->addAction("import", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotImport()));
     if (KStandardDirs::findExe("kmailcvt").isEmpty()) action->setEnabled(false);
