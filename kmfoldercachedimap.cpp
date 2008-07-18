@@ -2753,7 +2753,10 @@ void KMFolderCachedImap::slotUpdateLastUid()
       // highest one as well. If not, our notion of the highest
       // uid we've seen thus far is wrong, which is dangerous, so
       // don't update the mLastUid, then.
-      bool sane = false;
+      // Not entirely true though, mails might have been moved out
+      // of the folder already by filters, thus giving us a higher tentative
+      // uid than we actually observe here.
+      bool sane = count() == 0;
 
       for (int i=0;i<count(); i++ ) {
           ulong uid = getMsgBase(i)->UID();
@@ -2763,11 +2766,8 @@ void KMFolderCachedImap::slotUpdateLastUid()
               kdWarning(5006) << "uid: " << uid << " mTentativeHighestUid: " << mTentativeHighestUid << endl;
               assert( false );
               break;
-          } else if ( uid == mTentativeHighestUid || lastUid() ) {
-              // we've found our highest uid, all is well
-              sane = true;
           } else {
-              // must be smaller, that's ok, let's wait for bigger fish
+              sane = true;
           }
       }
       if (sane) {
