@@ -67,7 +67,9 @@ int TemplateParser::parseQuotes( const QString &prefix, const QString &str,
   int pos = prefix.length();
   int len;
   int str_len = str.length();
-  QChar qc = '"';
+  QList< QChar > quoteChars;
+  quoteChars.append( '"' );
+  quoteChars.append( 0x201C );
   QChar prev = QChar::null;
 
   pos++;
@@ -85,7 +87,7 @@ int TemplateParser::parseQuotes( const QString &prefix, const QString &str,
     } else {
       if ( c == '\\' ) {
         prev = c;
-      } else if ( c == qc ) {
+      } else if ( quoteChars.contains( c ) ) {
         break;
       } else {
         quote.append( c );
