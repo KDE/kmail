@@ -371,7 +371,6 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   vlay->addWidget( mRemoveButton );
   vlay->addWidget( mSetAsDefaultButton );
   vlay->addStretch( 1 );
-  load();
 }
 
 void IdentityPage::load()
@@ -639,8 +638,6 @@ AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent )
   //
   mSendingTab = new SendingTab();
   addTab( mSendingTab, i18n( "&Sending" ) );
-
-  load();
 }
 
 AccountsPageSendingTab::~AccountsPageSendingTab()
@@ -1272,8 +1269,6 @@ AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent 
   //
   mMessageTagTab = new MessageTagTab();
   addTab( mMessageTagTab, i18n("&Message Tags") );
-
-  load();
 }
 
 
@@ -2823,7 +2818,6 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
   //
   mAttachmentsTab = new AttachmentsTab();
   addTab( mAttachmentsTab, i18nc("Config->Composer->Attachments", "A&ttachments") );
-  load();
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const {
@@ -3933,7 +3927,6 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
   //
   mCryptPlugTab = new CryptPlugTab();
   addTab( mCryptPlugTab, i18n("Crypto Backe&nds") );
-  load();
 }
 
 
@@ -4813,7 +4806,6 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
 
   mGroupwareTab = new GroupwareTab();
   addTab( mGroupwareTab, i18n("&Groupware") );
-  load();
 }
 
 QString MiscPage::FolderTab::helpAnchor() const {
