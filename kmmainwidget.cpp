@@ -2944,7 +2944,10 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("new_message", action );
     action->setIconText( i18nc("@action:intoolbar New Empty Message", "New" ) );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
-    action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));
+    // do not set a New shortcut if kmail is a component
+    if ( !kmkernel->xmlGuiInstance().isValid() ) {
+      action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));
+    }
   }
 
   mTemplateMenu = new KActionMenu( KIcon( "document-new" ), i18n("Message From &Template"),
