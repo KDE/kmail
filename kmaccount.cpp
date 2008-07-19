@@ -44,14 +44,14 @@ using KMail::FolderJob;
 
 //-----------------------------------------------------------------------------
 KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
-  : QObject(parent), mPrecommand(precommand)
+  : QObject( parent ), mPrecommand( precommand )
 {
   BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1", precommand ));
 
   mPrecommandProcess.setShellCommand(precommand);
 
-  connect(&mPrecommandProcess, SIGNAL(processFinished(int, QProcess::ExitStatus)),
+  connect(&mPrecommandProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
           SLOT(precommandExited(int, QProcess::ExitStatus)));
 }
 
@@ -66,8 +66,9 @@ bool KMPrecommand::start()
 {
   mPrecommandProcess.start();
   const bool ok = mPrecommandProcess.waitForStarted();
-  if (!ok) KMessageBox::error(0, i18n("Could not execute precommand '%1'.",
-     mPrecommand));
+  if ( !ok )
+    KMessageBox::error( 0, i18n("Could not execute precommand '%1'.",
+                        mPrecommand) );
   return ok;
 }
 
@@ -75,7 +76,6 @@ bool KMPrecommand::start()
 //-----------------------------------------------------------------------------
 void KMPrecommand::precommandExited(int exitCode, QProcess::ExitStatus)
 {
- 
   if (exitCode != 0)
     KMessageBox::error(0, i18n("The precommand exited with code %1:\n%2",
        exitCode, strerror(exitCode)));
@@ -96,7 +96,8 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mPrecommandSuccess(true),
     mUseDefaultIdentity(true),
     mHasInbox(false),
-    mMailCheckProgressItem(0)
+    mMailCheckProgressItem(0),
+    mPrecommandEventLoop( 0 )
 {
   assert(aOwner != 0);
   mIdentityId = kmkernel->identityManager()->defaultIdentity().uoid();
@@ -371,6 +372,10 @@ bool KMAccount::runPrecommand(const QString &precommand)
   if ( precommand.isEmpty() )
     return true;
 
+  // Don't do anything if there is a running pre-command
+  if ( mPrecommandEventLoop != 0 )
+    return true;
+
   KMPrecommand precommandProcess(precommand, this);
 
   BroadcastStatus::instance()->setStatusMsg(
@@ -380,9 +385,15 @@ bool KMAccount::runPrecommand(const QString &precommand)
           SLOT(precommandExited(bool)));
 
   kDebug(5006) <<"Running precommand" << precommand;
-  if (!precommandProcess.start()) return false;
+  if ( !precommandProcess.start() )
+    return false;
 
-  QEventLoop ().exec();
+  // Start an event loop. This makes sure GUI events are still processed while
+  // the precommand is running (which may take a while).
+  // The exec call will block until the event loop is exited, which happens in
+  // precommandExited().
+  mPrecommandEventLoop = new QEventLoop();
+  mPrecommandEventLoop->exec();
 
   return mPrecommandSuccess;
 }
@@ -390,9 +401,14 @@ bool KMAccount::runPrecommand(const QString &precommand)
 //-----------------------------------------------------------------------------
 void KMAccount::precommandExited(bool success)
 {
+  Q_ASSERT( mPrecommandEventLoop != 0 );
   mPrecommandSuccess = success;
 
-  QEventLoop ().exit ();
+  // Exit and delete the event loop. This makes sure the execution continues
+  // in runPrecommand(), where the event loop was entered.
+  mPrecommandEventLoop->exit();
+  delete mPrecommandEventLoop;
+  mPrecommandEventLoop = 0;
 }
 
 void KMAccount::slotIdentitiesChanged()
