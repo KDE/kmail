@@ -82,14 +82,6 @@ protected slots:
   void slotCopy();
 
 protected:
-  /**
-  * Corrects the size displayed by the specified item
-  * by accounting for its current children.
-  *
-  * @param the item to correct the size for
-  */
-  void correctSize( QTreeWidgetItem *item );
-
   virtual void startDrag( Qt::DropActions actions );
   virtual void showEvent( QShowEvent* e );
 
@@ -154,6 +146,11 @@ public:
 
 private:
   void setIconAndTextForType( const QString &mimetype );
+  /**
+   * Correct the dataSize() for this item by accounting
+   * for the size of the children items.
+   */
+  void correctSize();
 
 private:
   partNode* mPartNode;

@@ -250,33 +250,6 @@ void KMMimePartTree::slotSaveAll()
   command->start();
 }
 
-//-----------------------------------------------------------------------------
-void KMMimePartTree::correctSize( QTreeWidgetItem * item )
-{
-  if ( !item )
-    return;
-
-  // Gather size for all the children
-
-  KIO::filesize_t totalSize = 0;
-
-  QTreeWidgetItemIterator it( item );
-  while( QTreeWidgetItem * myChild = *it ) {
-    totalSize += static_cast<KMMimePartTreeItem*>(myChild)->dataSize();
-    ++it;
-  }
-
-  KMMimePartTreeItem * mimeItem = static_cast<KMMimePartTreeItem*>(item);
-
-  if ( totalSize > mimeItem->dataSize() )
-  {
-    mimeItem->setText( columnSize, KIO::convertSize( totalSize ) );
-    mimeItem->setDataSize( totalSize );
-  }
-
-  if ( item->parent() )
-    correctSize( item->parent() );
-}
 
 void KMMimePartTree::slotDelete()
 {
@@ -398,7 +371,6 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
   setText( columnEncoding, encoding );
   setText( columnSize, KIO::convertSize( size ) );
   setTextAlignment( columnSize, Qt::AlignRight );
-  parent->correctSize( this );
 }
 
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
@@ -434,9 +406,37 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
   setTextAlignment( columnSize, Qt::AlignRight );
 
 
-  if ( treeWidget() )
-    static_cast<KMMimePartTree*>( treeWidget() )->correctSize( this );
+  if ( parent )
+    static_cast<KMMimePartTreeItem*>( parent )->correctSize();
 }
+
+void KMMimePartTreeItem::correctSize()
+{
+  int childCnt = childCount();
+
+  if ( childCnt < 1 )
+    return; // nothing to correct
+
+  KIO::filesize_t totalChildSize = 0;
+
+  int idx = 0;
+  while ( idx < childCnt )
+  {
+    KMMimePartTreeItem * ch = static_cast<KMMimePartTreeItem*>( child( idx ) );
+    totalChildSize += ch->dataSize();
+    idx++;
+  }
+
+  if ( totalChildSize > dataSize() )
+  {
+    setText( columnSize, KIO::convertSize( totalChildSize ) );
+    setDataSize( totalChildSize );
+  }
+
+  if ( parent() )
+    static_cast<KMMimePartTreeItem*>( parent() )->correctSize();
+}
+
 
 void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
 {
