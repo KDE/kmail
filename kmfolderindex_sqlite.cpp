@@ -140,25 +140,27 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
     return 0;
   }
 
-  QString indexName = QDir::toNativeSeparators( indexLocation() );
   if ( mIndexDb ) {
     sqlite3_close( mIndexDb );
     mIndexDb = 0;
   }
-  {
-    QFile indexFile( indexName );
-    if ( indexFile.exists() && !indexFile.remove() )
+
+  const QString indexName = QDir::toNativeSeparators( indexLocation() );
+  const bool existingDatabase = QFile::exists( indexName );
+  const bool ok = openDatabase( SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE );
+  if ( !ok ) {
+      kWarning() << "Opening the db " << indexName << " failed!";
       return 1;
   }
-
-  bool ok = openDatabase( SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE );
-  if ( !ok )
-    return 1;
 
   // create data structures if not available
   // - index version
   QString sql( QLatin1String("PRAGMA user_version = ") + QString::number( INDEX_VERSION ) );
   if ( !executeQuery( mIndexDb, sql ) )
+    return 1;
+
+  // - drop the 'messages' table, if it exists
+  if ( existingDatabase && !executeQuery( mIndexDb, "DROP TABLE messages" ) )
     return 1;
 
   // - 'messages' table
@@ -359,7 +361,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
   if ( ok )
     indexVersion = str.toInt(&ok);
   if ( !ok ) {
-    qWarning() << "index file has invalid header '" << str << "'";
+    kWarning() << "index file has invalid header '" << str << "'";
     return false;
   }
 
