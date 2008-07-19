@@ -3214,9 +3214,6 @@ void KMComposeWin::slotMarkAll()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotClose()
 {
-#ifdef __GNUC__
-#warning "Port me: make sure to set/unset the  Qt::WA_DeleteOnClose flag to match the old behavior of close(false)"
-#endif
   close();
 }
 
