@@ -90,6 +90,7 @@ namespace KMail {
     mHtmlPart->view()->setUpdatesEnabled( true );
     mHtmlPart->view()->viewport()->repaint();
     mState = Ended;
+    emit finished();
   }
 
   void KHtmlPartHtmlWriter::reset() {

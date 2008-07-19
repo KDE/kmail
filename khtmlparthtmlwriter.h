@@ -62,6 +62,9 @@ namespace KMail {
     void flush();
     void embedPart( const QByteArray & contentId, const QString & url );
 
+  signals:
+    void finished();
+
   private slots:
     void slotWriteNextHtmlChunk();
 

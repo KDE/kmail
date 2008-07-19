@@ -122,6 +122,7 @@ using KMail::TemplateParser;
 
 #include <kpimutils/kfileio.h>
 #include "calendarinterface.h"
+#include "interfaces/htmlwriter.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -1598,21 +1599,22 @@ void KMPrintCommand::setOverrideFont( const QFont& font )
   mOverrideFont = font;
 }
 
+
 KMCommand::Result KMPrintCommand::execute()
 {
-  KMReaderWin printWin( 0, 0, 0 );
-  printWin.setPrinting( true );
-  printWin.readConfig();
+  // the window will be deleted after printout is performed, in KMReaderWin::slotPrintMsg()
+  KMReaderWin *printerWin = new KMReaderWin( kmkernel->mainWin(), 0, 0 );
+  printerWin->setPrinting( true );
+  printerWin->readConfig();
   if ( mHeaderStyle != 0 && mHeaderStrategy != 0 )
-    printWin.setHeaderStyleAndStrategy( mHeaderStyle, mHeaderStrategy );
-  printWin.setHtmlOverride( mHtmlOverride );
-  printWin.setHtmlLoadExtOverride( mHtmlLoadExtOverride );
-  printWin.setUseFixedFont( mUseFixedFont );
-  printWin.setOverrideEncoding( mEncoding );
-  printWin.setPrintFont( mOverrideFont );
-  printWin.setDecryptMessageOverwrite( true );
-  printWin.setMsg( retrievedMessage(), true );
-  printWin.printMsg();
+    printerWin->setHeaderStyleAndStrategy( mHeaderStyle, mHeaderStrategy );
+  printerWin->setHtmlOverride( mHtmlOverride );
+  printerWin->setHtmlLoadExtOverride( mHtmlLoadExtOverride );
+  printerWin->setUseFixedFont( mUseFixedFont );
+  printerWin->setOverrideEncoding( mEncoding );
+  printerWin->setPrintFont( mOverrideFont );
+  printerWin->setDecryptMessageOverwrite( true );
+  printerWin->printMsg( retrievedMessage() );
 
   return OK;
 }
@@ -3022,7 +3024,7 @@ void KMHandleAttachmentCommand::atmOpenWith()
 
   url.setPath( fname );
   lst.append( url );
-  if ( (! KRun::displayOpenWithDialog(lst, 0, autoDelete)) && autoDelete ) {
+  if ( (! KRun::displayOpenWithDialog(lst, kmkernel->mainWin(), autoDelete)) && autoDelete ) {
     QFile::remove( url.path() );
   }
 }
