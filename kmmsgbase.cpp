@@ -667,7 +667,7 @@ QByteArray KMMsgBase::extractRFC2231HeaderField( const QByteArray &aStr,
       startPart += fnamePart.matchedLength();
       // handle empty field:
       if ( startPart == aStr.length() )
-          return str;
+        return str;
       assert( startPart < aStr.length() );
       // Quoted values end at the ending quote
       if ( aStr[startPart] == '"' ) {
