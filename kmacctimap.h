@@ -110,8 +110,20 @@ protected:
   virtual bool handleError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
   virtual void cancelMailCheck();
 
-  QList<KMail::ImapJob*> mJobList;
+  /**
+   * The ImapJob calls this to register when it's created
+   */
+  void registerJob( KMail::ImapJob *job );
+
+  /**
+   * The ImapJob calls this to register when it's destroyed
+   */
+  void unregisterJob( KMail::ImapJob *job );
+
   QPointer<KMFolderImap> mFolder;
+
+private:
+  QList<KMail::ImapJob*> mImapJobList;
 
 protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */
