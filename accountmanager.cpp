@@ -36,7 +36,6 @@ AccountManager::AccountManager()
 //-----------------------------------------------------------------------------
 AccountManager::~AccountManager()
 {
-  writeConfig( false );
   qDeleteAll(mAcctList);
 }
 

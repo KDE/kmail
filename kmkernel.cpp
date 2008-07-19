@@ -1619,6 +1619,8 @@ void KMKernel::cleanup(void)
   the_shuttingDown = true;
   closeAllKMailWindows();
 
+  // Write the config while all other managers are alive
+  the_acctMgr->writeConfig(false);
   delete the_filterMgr;
   the_filterMgr = 0;
   delete the_msgSender;
