@@ -1619,8 +1619,6 @@ void KMKernel::cleanup(void)
   the_shuttingDown = true;
   closeAllKMailWindows();
 
-  delete the_acctMgr;
-  the_acctMgr = 0;
   delete the_filterMgr;
   the_filterMgr = 0;
   delete the_msgSender;
@@ -1684,6 +1682,8 @@ void KMKernel::cleanup(void)
   the_imapFolderMgr = 0;
   delete the_dimapFolderMgr;
   the_dimapFolderMgr = 0;
+  delete the_acctMgr;
+  the_acctMgr = 0;
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
   delete mConfigureDialog;
