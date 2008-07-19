@@ -2801,11 +2801,11 @@ void KMFolderCachedImap::slotSetAnnotationResult( KJob *job )
          contentsType() == ContentsTypeMail ) {
       if ( mAccount->slave() ) {
         mAccount->removeJob( static_cast<KIO::Job*>( job ) );
-      } else {
-        cont =
-          mAccount->handleJobError( static_cast<KIO::Job*>( job ),
-                                    i18n( "Error while setting annotation: " ) + '\n' );
-      }
+      } 
+    } else {
+      cont =
+        mAccount->handleJobError( static_cast<KIO::Job*>( job ),
+                                  i18n( "Error while setting annotation: " ) + '\n' );
     }
   } else {
     if ( mAccount->slave() ) {
@@ -2820,7 +2820,34 @@ void KMFolderCachedImap::slotSetAnnotationResult( KJob *job )
 void KMFolderCachedImap::slotUpdateLastUid()
 {
   if ( mTentativeHighestUid != 0 ) {
-    setLastUid( mTentativeHighestUid );
+
+    // Sanity checking:
+    // By now all new mails should be downloaded, which means
+    // that iteration over the folder should yield only UIDs
+    // lower or equal to what we think the highes ist, and the
+    // highest one as well. If not, our notion of the highest
+    // uid we've seen thus far is wrong, which is dangerous, so
+    // don't update the mLastUid, then.
+    // Not entirely true though, mails might have been moved out
+    // of the folder already by filters, thus giving us a higher tentative
+    // uid than we actually observe here.
+    bool sane = count() == 0;
+
+    for ( int i = 0;i < count(); i++ ) {
+      ulong uid = getMsgBase(i)->UID();
+      if ( uid > mTentativeHighestUid && uid > lastUid() ) {
+        kWarning(5006) << "DANGER: Either the server listed a wrong highest uid, "
+          "or we parsed it wrong. Send email to adam@kde.org, please, and include this log.";
+        kWarning(5006) << "uid: " << uid << " mTentativeHighestUid: " << mTentativeHighestUid;
+        assert( false );
+        break;
+      } else {
+        sane = true;
+      }
+    }
+    if ( sane ) {
+      setLastUid( mTentativeHighestUid );
+    }
   }
   mTentativeHighestUid = 0;
 }
