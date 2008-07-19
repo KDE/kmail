@@ -33,6 +33,7 @@
 #include "kmfolderimap.h"
 #include "kmfolder.h"
 #include "kmmsgpart.h"
+#include "messageproperty.h"
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 #include "util.h"
@@ -106,7 +107,7 @@ void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
     return;
   }
   account->registerJob( this );
-  //account->mJobList.append( this );
+
   if ( jt == tPutMessage )
   {
     // transfers the complete message to the server
@@ -131,7 +132,8 @@ void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
       QByteArray cstr( curMsg->asString() );
       int a = cstr.indexOf("\nX-UID: ");
       int b = cstr.indexOf('\n', a);
-      if (a != -1 && b != -1 && cstr.indexOf("\n\n") > a) cstr.remove(a, b-a);
+      if (a != -1 && b != -1 && cstr.indexOf("\n\n") > a)
+        cstr.remove(a, b-a);
       jd.data.resize( cstr.length() + cstr.count( "\n" ) - cstr.count( "\r\n" ) );
       unsigned int i = 0;
       char prevChar = '\0';
@@ -167,6 +169,22 @@ void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
           SLOT(slotPutMessageInfoData(KJob *, const QString &, const QString &)) );
       connect( job, SIGNAL( processedSize( KJob *, qulonglong ) ),
           SLOT( slotProcessedSize( KJob *, qulonglong ) ) );
+
+      // When moving the message, we want to keep the serial number if the
+      // message property is set (by the action scheduler).
+      // To do this, create metadata, which is later read by
+      // KMFolderImap::slotGetMessagesData().
+      if ( MessageProperty::keepSerialNumber( msg->getMsgSerNum() ) ) {
+
+        // Note that we can't rely on connecting infoMessage() to something like
+        // slotCopyMessageInfoData(), since that only works when the server supports
+        // UIDPLUS.
+        folder->rememberSerialNumber( curMsg );
+
+        // Forget that property again, so we don't end up keeping the serial number
+        // the next time we do something with that message
+        MessageProperty::setKeepSerialNumber( msg->getMsgSerNum(), false );
+      }
     }
   }
   else if ( jt == tCopyMessage || jt == tMoveMessage )
