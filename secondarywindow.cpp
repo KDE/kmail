@@ -76,7 +76,6 @@ namespace KMail {
       }
       // END of code borrowed from KMainWindow::closeEvent
     } else {
-      KMessageBox::information( this, "I AM THERE" );
       KMainWindow::closeEvent( e );
     }
   }
