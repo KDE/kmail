@@ -133,17 +133,13 @@ class MessageComposer : public QObject {
     void composeInlineOpenPGPMessage( KMMessage &theMessage,
                                       bool doSign, bool doEncrypt );
 
-    /*
-      Gets the message ready for sending or saving.
-      This must be done _before_ signing and/or encrypting it.
-    */
-    QByteArray breakLinesAndApplyCodec() const;
-
-    /*
-      Creates a plain text version of a marked up mail for use as the plain
-      part in a multipart/alternative mail.
-    */
-    QByteArray plainTextFromMarkup( const QString &markupText ) const;
+    /**
+     * This sets the member variables mHtmlSource and mPlainText and mBodyText.
+     * The text is taken from the composer (with proper wordwrapping) and
+     * then encoded with the correct codec.
+     * The user is warned if the codec can't encode all characters.
+     */
+    void breakLinesAndApplyCodec();
 
     /*
       Gets the signature for a message (into mMessage).
@@ -253,8 +249,13 @@ class MessageComposer : public QObject {
     bool mRc; // Set this to false, if something fails during the processes
     bool mHoldJobs; // Don't run the next job yet
 
-    QByteArray mText; // textual representation of the message text, encoded
-    unsigned int mLineBreakColumn; // used for line breaking
+    // The HTML source and the plain text version of the composer's text, encoded
+    QByteArray mHtmlSource;
+    QByteArray mPlainText;
+
+    // Convenience variable, this is the same as one of the two variables above,
+    // depending on the HTML mode
+    QByteArray mBodyText; 
 
     // These are the variables of the big composeMessage(X,Y,Z) message
     KMMessagePart *mNewBodyPart;
