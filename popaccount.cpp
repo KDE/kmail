@@ -113,6 +113,12 @@ void PopAccount::init(void)
 }
 
 //-----------------------------------------------------------------------------
+void PopAccount::cancelMailCheck()
+{
+  slotAbortRequested();
+}
+
+//-----------------------------------------------------------------------------
 void PopAccount::pseudoAssign( const KMAccount * a ) {
   slotAbortRequested();
   NetworkAccount::pseudoAssign( a );

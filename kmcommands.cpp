@@ -2163,8 +2163,8 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
     /* Unfortunately older UW imap servers change uid validity for each put job.
      * Yes, it is really that broken. *sigh* So we cannot report error here, I guess. */
     if ( !mLostBoys.isEmpty() ) {
-      kDebug(5006) <<"### Not all moved messages reported back that they were" << endl
-                    <<  "### added to the target folder. Did uidValidity change?";
+      kDebug() << "### Not all moved messages reported back that they were";
+      kDebug() << "### added to the target folder. Did uidValidity change?";
       completeMove( Failed );
     }
     else
