@@ -676,34 +676,57 @@ void PopAccount::slotJobFinished() {
     kmkernel->folderMgr()->syncAllFolders();
 
     KUrl url = getUrl();
+
+    // Check if we want to keep any messages.
+    //
+    // The default is to delete all messages which have been sucessfully downloaded
+    // or which we have seen before (which are remembered in the config file).
+    // This excludes only messages which we have not seen before and at
+    // the same time failed to download correctly, or messages which the pop
+    // filter manager decided to leave on the server (the "download later" option)
+    // The messages which we want to delete are contained in idsOfMsgsToDelete.
+    //
+    // In the code below, we check if any "leave on server" rules apply and remove
+    // the messages which should be left on the server from idsOfMsgsToDelete.
+    // This is done by storing the messages to leave on the server in idsToSave,
+    // which is later subtracted from idsOfMsgsToDelete.
+
+    // Start with an empty list of messages to keep
     QList< QPair<time_t, QByteArray> > idsToSave;
-    // Check if we want to keep any messages
+
     if ( mLeaveOnServer && !idsOfMsgsToDelete.isEmpty() ) {
-      // Keep all messages on server
-      if ( mLeaveOnServerDays == -1 && mLeaveOnServerCount <= 0 &&
-           mLeaveOnServerSize <= 0 )
-        idsOfMsgsToDelete.clear();
-      // Delete old messages
-      else if ( mLeaveOnServerDays > 0 && !mTimeOfNextSeenMsgsMap.isEmpty() ) {
+
+      // If the time-limited leave rule is checked, add the newer messages to
+      // the list of messages to keep
+      if ( mLeaveOnServerDays > 0 && !mTimeOfNextSeenMsgsMap.isEmpty() ) {
         time_t timeLimit = time(0) - (86400 * mLeaveOnServerDays);
-        kDebug(5006) <<"timeLimit is" << timeLimit;
         for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
               it != idsOfMsgsToDelete.end(); ++it ) {
           time_t msgTime = mTimeOfNextSeenMsgsMap[ mUidForIdMap[*it] ];
-          kDebug(5006) <<"id:" << *it <<" msgTime:" << msgTime;
           if ( msgTime >= timeLimit || msgTime == 0 ) {
-            kDebug(5006) <<"Saving msg id" << *it;
             QPair<time_t, QByteArray> pair( msgTime, *it );
             idsToSave.append( pair );
           }
         }
       }
+
+      // Otherwise, add all messages to the list of messages to keep - this may
+      // be reduced in the following number-limited leave rule and size-limited
+      // leave rule checks
+      else {
+        foreach ( const QByteArray id, idsOfMsgsToDelete ) {
+          time_t msgTime = mTimeOfNextSeenMsgsMap[ mUidForIdMap[id] ];
+          QPair<time_t, QByteArray> pair( msgTime, id );
+          idsToSave.append( pair );
+        }
+      }
+
       // sort the idsToSave list so that in the following we remove the oldest messages
       qSort( idsToSave );
+
       // Delete more old messages if there are more than mLeaveOnServerCount
       if ( mLeaveOnServerCount > 0 ) {
         int numToDelete = idsToSave.count() - mLeaveOnServerCount;
-        kDebug(5006) <<"numToDelete is" << numToDelete;
         if ( numToDelete > 0 && numToDelete < idsToSave.count() ) {
           // get rid of the first numToDelete messages
           #ifdef DEBUG
@@ -715,6 +738,7 @@ void PopAccount::slotJobFinished() {
         else if ( numToDelete >= idsToSave.count() )
           idsToSave.clear();
       }
+
       // Delete more old messages until we're under mLeaveOnServerSize MBs
       if ( mLeaveOnServerSize > 0 ) {
         const long limitInBytes = mLeaveOnServerSize * ( 1024 * 1024 );
@@ -734,9 +758,9 @@ void PopAccount::slotJobFinished() {
           idsToSave = idsToSave.mid( firstMsgToKeep );
       }
       // Save msgs from deletion
-      kDebug(5006) <<"Going to save" << idsToSave.count();
+      kDebug(5006) << "Going to save" << idsToSave.count();
       for ( int i = 0; i < idsToSave.count(); ++i ) {
-        kDebug(5006) <<"keeping msg id" << idsToSave[i].second;
+        kDebug(5006) << "keeping msg id" << idsToSave[i].second;
         idsOfMsgsToDelete.remove( idsToSave[i].second );
       }
     }
@@ -762,7 +786,6 @@ void PopAccount::slotJobFinished() {
         ids += *it;
       }
       url.setPath( "/remove/" + ids );
-      kDebug(5006) <<"url:" << url.prettyUrl();
     } else {
       stage = Quit;
       mMailCheckProgressItem->setStatus(
@@ -771,7 +794,6 @@ void PopAccount::slotJobFinished() {
               numMsgs,
           mHost ) );
       url.setPath( "/commit" );
-      kDebug(5006) <<"url:" << url.prettyUrl();
     }
     job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
     connectJob();
