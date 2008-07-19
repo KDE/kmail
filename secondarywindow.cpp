@@ -37,7 +37,7 @@
 #include <kglobal.h>
 //Added by qt3to4:
 #include <QCloseEvent>
-
+#include <KMessageBox>
 namespace KMail {
 
   //---------------------------------------------------------------------------
@@ -71,13 +71,14 @@ namespace KMail {
       if ( settingsDirty() && autoSaveSettings() )
         saveAutoSaveSettings();
 
-      if ( queryClose() ) {
-        e->accept();
+      if ( !queryClose() ) {
+        e->ignore();
       }
       // END of code borrowed from KMainWindow::closeEvent
-    }
-    else
+    } else {
+      KMessageBox::information( this, "I AM THERE" );
       KMainWindow::closeEvent( e );
+    }
   }
 
 } // namespace KMail
