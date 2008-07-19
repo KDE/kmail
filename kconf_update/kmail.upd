@@ -181,22 +181,6 @@ Id=4.0-misc
 File=kmailrc
 Script=kmail-4.0-misc.pl,perl
 
-Id=4.1.0
-File=kmailrc
-Group=MessageTag #0
-RemoveKey=icon
-Group=MessageTag #1
-RemoveKey=icon
-Group=MessageTag #2
-RemoveKey=icon
-Group=MessageTag #3
-RemoveKey=icon
-Group=MessageTag #4
-RemoveKey=icon
-Group=MessageTag #5
-RemoveKey=icon
-
-
 #
 # Important notice:
 # If you add updates here, keep this text below them.
