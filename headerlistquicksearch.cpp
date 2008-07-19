@@ -178,7 +178,7 @@ void HeaderListQuickSearch::slotStatusChanged( int index )
 void HeaderListQuickSearch::insertStatus(KMail::StatusValueTypes which)
 {
   mStatusCombo->addItem( SmallIcon( KMail::StatusValues[which].icon ),
-    i18n( KMail::StatusValues[ which ].text ) );
+    i18nc( "message status", KMail::StatusValues[ which ].text ) );
   statusList.append( KMail::StatusValues[ which ].text );
 }
 
