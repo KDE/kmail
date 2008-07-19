@@ -368,6 +368,10 @@ QLabel *AccountWizard::createInfoLabel( const QString &msg )
 
 void AccountWizard::accept()
 {
+  //Disable finish button to keep user from pressing it repeatedly
+  //when dialog is waiting for server checks
+  enableButton( KDialog::User1, false );
+
   // store identity information
   KPIMIdentities::IdentityManager *manager = mKernel->identityManager();
   KPIMIdentities::Identity &identity =
