@@ -2222,7 +2222,7 @@ QList<ulong> KMFolderImap::splitSets(const QString &uids)
   QList<ulong> uidlist;
 
   // ex: 1205,1204,1203,1202,1236:1238
-  QString buffer = QString();
+  QString buffer;
   int setstart = -1;
   // iterate over the uids
   for (int i = 0; i < uids.length(); i++)
