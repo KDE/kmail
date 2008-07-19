@@ -125,10 +125,6 @@ void KMFolderImap::close( const char *owner, bool aForced )
     return;
   }
 
-  // FIXME is this still needed?
-  if ( account() ) {
-    account()->ignoreJobsForFolder( folder() );
-  }
   int idx = count();
   while ( --idx >= 0 ) {
     if ( mMsgList[idx]->isMessage() ) {
