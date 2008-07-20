@@ -67,9 +67,13 @@ int TemplateParser::parseQuotes( const QString &prefix, const QString &str,
   int pos = prefix.length();
   int len;
   int str_len = str.length();
+
+  // Also allow the german lower double-quote sign as quote separator, not only
+  // the standard ASCII quote ("). This fixes bug 166728.
   QList< QChar > quoteChars;
   quoteChars.append( '"' );
   quoteChars.append( 0x201C );
+
   QChar prev = QChar::null;
 
   pos++;
