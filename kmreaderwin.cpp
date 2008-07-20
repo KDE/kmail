@@ -1047,13 +1047,15 @@ void KMReaderWin::initHtmlWidget(void)
   // register our own event filter for shift-click
   mViewer->view()->viewport()->installEventFilter( this );
 
-  if ( !htmlWriter() )
+  if ( !htmlWriter() ) {
+    mPartHtmlWriter = new KHtmlPartHtmlWriter( mViewer, 0 );
 #ifdef KMAIL_READER_HTML_DEBUG
     mHtmlWriter = new TeeHtmlWriter( new FileHtmlWriter( QString() ),
-                                     new KHtmlPartHtmlWriter( mViewer, 0 ) );
+                                     mPartHtmlWriter );
 #else
-    mHtmlWriter = new KHtmlPartHtmlWriter( mViewer, 0 );
+    mHtmlWriter = mPartHtmlWriter;
 #endif
+  }
 
   connect(mViewer->browserExtension(),
           SIGNAL(openUrlRequest(const KUrl &, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)),this,
@@ -1736,10 +1738,20 @@ void KMReaderWin::showVCard( KMMessagePart * msgPart ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::printMsg()
+void KMReaderWin::printMsg( KMMessage* aMsg )
 {
+  disconnect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
+  connect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
+  setMsg( aMsg, true );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotPrintMsg()
+{
+  disconnect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
   if (!message()) return;
   mViewer->view()->print();
+  deleteLater();
 }
 
 
