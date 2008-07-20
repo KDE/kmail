@@ -1579,10 +1579,14 @@ KMCommand::Result KMCustomForwardCommand::execute()
 }
 
 
-KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMessage *msg, bool htmlOverride, bool htmlLoadExtOverride,
-  bool useFixedFont, const QString & encoding )
-  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ),
+KMPrintCommand::KMPrintCommand( QWidget *parent, KMMessage *msg,
+                                const KMail::HeaderStyle *headerStyle,
+                                const KMail::HeaderStrategy *headerStrategy,
+                                bool htmlOverride, bool htmlLoadExtOverride,
+                                bool useFixedFont, const QString & encoding )
+  : KMCommand( parent, msg ),
+    mHeaderStyle( headerStyle ), mHeaderStrategy( headerStrategy ),
+    mHtmlOverride( htmlOverride ),
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
     mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
@@ -1602,6 +1606,8 @@ KMCommand::Result KMPrintCommand::execute()
   KMReaderWin *printerWin = new KMReaderWin( kmkernel->mainWin(), 0, 0 );
   printerWin->setPrinting( true );
   printerWin->readConfig();
+  if ( mHeaderStyle != 0 && mHeaderStrategy != 0 )
+    printerWin->setHeaderStyleAndStrategy( mHeaderStyle, mHeaderStrategy );
   printerWin->setHtmlOverride( mHtmlOverride );
   printerWin->setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printerWin->setUseFixedFont( mUseFixedFont );

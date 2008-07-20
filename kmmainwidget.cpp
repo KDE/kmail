@@ -1935,6 +1935,7 @@ void KMMainWidget::slotPrintMsg()
                                : reader.readEntry( "useFixedFont", false );
   KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
+                        mMsgView->headerStyle(), mMsgView->headerStrategy(),
                         htmlOverride, htmlLoadExtOverride,
                         useFixedFont, overrideEncoding() );
   command->start();
