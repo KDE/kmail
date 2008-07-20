@@ -616,7 +616,11 @@ void PopAccount::slotJobFinished() {
       mPopFilterConfirmationDialog->exec();
     }
 
-    if ( mPopFilterConfirmationDialog->result() == QDialog::Accepted ) {
+    // If the dialog was accepted or never shown (because all pop filters already
+    // set the actions), mark the messages for deletion, download or for keeping
+    // them. Then advance to the next stage, the download stage.
+    if ( !dlgPopup ||
+         mPopFilterConfirmationDialog->result() == QDialog::Accepted ) {
 
       for ( int i = 0; i < mHeadersOnServer.count(); ++i ) {
         const KMPopHeaders *header = mHeadersOnServer[i];
