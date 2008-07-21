@@ -130,49 +130,6 @@ int KMFolderMaildir::open( const char * )
     return 1;
 
   int rc = openInternal( NoOptions );
-/* moved to openInternal()
-  if (!folder()->path().isEmpty())
-  {
-    bool shouldCreateIndexFromContents = false;
-    if (KMFolderIndex::IndexOk != indexStatus()) // test if contents file has changed
-    {
-#ifdef KMAIL_SQLITE_INDEX
-#else
-      mIndexStream = 0;
-#endif
-      shouldCreateIndexFromContents = true;
-      emit statusMsg( i18n("Folder `%1' changed; recreating index.", objectName()) );
-    } else {
-#ifdef KMAIL_SQLITE_INDEX
-#else
-      mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "r+"); // index file
-      kDebug( StorageDebug ) << "KDE_fopen(indexLocation()=" << indexLocation() << ", \"r+\") == mIndexStream == " << mIndexStream;
-      if ( mIndexStream ) {
-# ifndef Q_WS_WIN
-        fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
-# endif
-        if (!updateIndexStreamPtr())
-          return 1;
-      }
-      else
-        shouldCreateIndexFromContents = true;
-#endif
-    }
-
-    if ( shouldCreateIndexFromContents )
-      rc = createIndexFromContents();
-    else
-      rc = readIndex() ? 0 : 1;
-  }
-  else
-  {
-    mAutoCreateIndex = false;
-    rc = createIndexFromContents();
-  }
-
-  mChanged = false;*/
-
-  //readConfig();
 
   return rc;
 }
@@ -524,6 +481,8 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 
     KMMsgBase * mb = &aMsg->toMsgBase();
     int error = writeMessages( mb, true /*flush*/ );
+    if ( error )
+	kDebug(5006) << "Error: writing the index for this folder failed";
 
     if ( mExportsSernums )
       error |= appendToFolderIdsFile( idx );
