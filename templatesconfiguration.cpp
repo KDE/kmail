@@ -304,55 +304,6 @@ void TemplatesConfiguration::saveToFolder( const QString &id )
   t.writeConfig();
 }
 
-void TemplatesConfiguration::loadFromPhrases()
-{
-  int currentNr = GlobalSettings::self()->replyCurrentLanguage();
-
-  ReplyPhrases replyPhrases( QString::number( currentNr ) );
-
-  textEdit_new->setText( defaultNewMessage() );
-
-  QString str;
-
-  str = replyPhrases.phraseReplySender();
-  if ( !str.isEmpty() ) {
-    textEdit_reply->setText( convertPhrases( str ) + "\n%QUOTE\n%CURSOR\n" );
-  }
-  else {
-    textEdit_reply->setText( defaultReply() );
-  }
-
-  str = replyPhrases.phraseReplyAll();
-  if ( !str.isEmpty() ) {
-    textEdit_reply_all->setText( convertPhrases( str ) + "\n%QUOTE\n%CURSOR\n" );
-  }
-  else {
-    textEdit_reply_all->setText( defaultReplyAll() );
-  }
-
-  str = replyPhrases.phraseForward();
-  if ( !str.isEmpty() ) {
-    textEdit_forward->setText( i18n(
-    "%REM=\"Default forward template\"%-\n"
-    "----------  %1  ----------\n"
-    "%TEXT\n"
-    "-------------------------------------------------------\n",
-    convertPhrases( str ) ) );
-  }
-  else {
-    textEdit_forward->setText( defaultForward() );
-  }
-
-  str = replyPhrases.indentPrefix();
-  if ( !str.isEmpty() ) {
-    // no need to convert indentPrefix() because it is passed to KMMessage::asQuotedString() as is
-    lineEdit_quote->setText( str );
-  }
-  else {
-    lineEdit_quote->setText( defaultQuoteString() );
-  }
-}
-
 void TemplatesConfiguration::importFromPhrases()
 {
   kDebug(5006);
@@ -381,19 +332,19 @@ void TemplatesConfiguration::importFromPhrases()
 
   str = replyPhrases.phraseForward();
   if ( !str.isEmpty() ) {
-    GlobalSettings::self()->setTemplateForward( i18n(
-    "%REM=\"Default forward template\"%-\n"
-    "\n"
-    "----------  %1  ----------\n"
-    "\n"
-    "Subject: %OFULLSUBJECT\n"
-    "Date: %ODATE\n"
-    "From: %OFROMADDR\n"
-    "To: %OTOADDR\n"
-    "\n"
-    "%TEXT\n"
-    "-------------------------------------------------------\n",
-    convertPhrases( str ) ) );
+    GlobalSettings::self()->setTemplateForward(
+      "%REM=\"" + i18n( "Default forward template" ) + "\"%-\n" +
+      i18n( "\n"
+            "----------  %1  ----------\n"
+            "\n"
+            "Subject: %OFULLSUBJECT\n"
+            "Date: %ODATE\n"
+            "From: %OFROMADDR\n"
+            "To: %OTOADDR\n"
+            "\n"
+            "%TEXT\n"
+            "-------------------------------------------------------\n",
+            convertPhrases( str ) ) );
   }
   else {
     GlobalSettings::self()->setTemplateForward( defaultForward() );
@@ -497,44 +448,39 @@ void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCu
 }
 
 QString TemplatesConfiguration::defaultNewMessage() {
-  return i18n(
-    "%REM=\"Default new message template\"%-\n"
-    "%BLANK"
-    );
+  return "%REM=\"" + i18n( "Default new message template" ) + "\"%-\n"
+         "%BLANK";
 }
 
 QString TemplatesConfiguration::defaultReply() {
-  return i18n(
-    "%REM=\"Default reply template\"%-\n"
-    "On %ODATEEN %OTIMELONGEN you wrote:\n"
-    "%QUOTE\n"
-    "%CURSOR"
-    );
+  return
+    "%REM=\"" + i18n( "Default reply template" ) + "\"%-\n" +
+    i18n( "On %ODATEEN %OTIMELONGEN you wrote:\n"
+          "%QUOTE\n"
+          "%CURSOR" );
 }
 
 QString TemplatesConfiguration::defaultReplyAll() {
-  return i18n(
-    "%REM=\"Default reply all template\"%-\n"
-    "On %ODATEEN %OTIMELONGEN %OFROMNAME wrote:\n"
-    "%QUOTE\n"
-    "%CURSOR"
-    );
+  return
+    "%REM=\"" + i18n( "Default reply all template" ) + "\"%-\n" +
+    i18n( "On %ODATEEN %OTIMELONGEN %OFROMNAME wrote:\n"
+          "%QUOTE\n"
+          "%CURSOR" );
 }
 
 QString TemplatesConfiguration::defaultForward() {
-  return i18n(
-    "%REM=\"Default forward template\"%-\n"
-    "\n"
-    "----------  Forwarded Message  ----------\n"
-    "\n"
-    "Subject: %OFULLSUBJECT\n"
-    "Date: %ODATE\n"
-    "From: %OFROMADDR\n"
-    "To: %OTOADDR\n"
-    "\n"
-    "%TEXT\n"
-    "-------------------------------------------------------"
-    );
+  return
+    "%REM=\"" + i18n( "Default forward template" ) + "\"%-\n" +
+    i18n( "\n"
+          "----------  Forwarded Message  ----------\n"
+          "\n"
+          "Subject: %OFULLSUBJECT\n"
+          "Date: %ODATE\n"
+          "From: %OFROMADDR\n"
+          "To: %OTOADDR\n"
+          "\n"
+          "%TEXT\n"
+          "-------------------------------------------------------" );
 }
 
 QString TemplatesConfiguration::defaultQuoteString() {

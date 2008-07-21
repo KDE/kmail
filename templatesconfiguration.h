@@ -40,9 +40,6 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
     void loadFromFolder( const QString &id, uint identity = 0 );
     void saveToFolder( const QString &id );
 
-    /** Do import settings from 'Phrases' configuration. */
-    void loadFromPhrases();
-
     /** Do import 'Phrases' settings and store them as global templates. */
     static void importFromPhrases();
 
