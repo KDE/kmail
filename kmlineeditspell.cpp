@@ -102,6 +102,9 @@ void KMLineEdit::insertEmails( const QStringList & emails )
 void KMLineEdit::dropEvent(QDropEvent *event)
 {
   const QMimeData *md = event->mimeData();
+
+  // Case one: The user dropped a text/directory (i.e. vcard), so decode its
+  //           contents
   if ( KPIM::KVCardDrag::canDecode( md ) ) {
     KABC::Addressee::List list;
     KPIM::KVCardDrag::fromMimeData( md, list );
@@ -110,31 +113,51 @@ void KMLineEdit::dropEvent(QDropEvent *event)
     for ( ait = list.begin(); ait != list.end(); ++ait ){
       insertEmails( (*ait).emails() );
     }
-  } else if ( KUrl::List::canDecode( md ) ) {
+  }
+
+  // Case two: The user dropped a list or Urls.
+  // Iterate over that list. For mailto: Urls, just add the addressee to the list,
+  // and for other Urls, download the Url and assume it points to a vCard
+  else if ( KUrl::List::canDecode( md ) ) {
     KUrl::List urls = KUrl::List::fromMimeData( md );
-    //kDebug(5006) <<"urlList";
-    KUrl::List::Iterator it = urls.begin();
-    KABC::VCardConverter converter;
     KABC::Addressee::List list;
-    QString fileName;
-    QString caption( i18n( "vCard Import Failed" ) );
-    for ( it = urls.begin(); it != urls.end(); ++it ) {
-      if ( KIO::NetAccess::download( *it, fileName, parentWidget() ) ) {
-        QFile file( fileName );
-        file.open( QIODevice::ReadOnly );
-        const QByteArray data = file.readAll();
-        file.close();
-        list += converter.parseVCards( data );
-        KIO::NetAccess::removeTempFile( fileName );
-      } else {
-        QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>", (*it).url() );
-        KMessageBox::error( parentWidget(), text, caption );
+
+    foreach ( KUrl url, urls ) {
+
+      // First, let's deal with mailto Urls. The path() part contains the
+      // email-address.
+      if ( url.protocol() == "mailto" ) {
+        KABC::Addressee addressee;
+        addressee.insertEmail( url.path(), true /* preferred */ );
+        list += addressee;
       }
+
+      // Otherwise, download the vCard to which the Url points
+      else {
+        KABC::VCardConverter converter;
+        QString fileName;
+        if ( KIO::NetAccess::download( url, fileName, parentWidget() ) ) {
+          QFile file( fileName );
+          file.open( QIODevice::ReadOnly );
+          const QByteArray data = file.readAll();
+          file.close();
+          list += converter.parseVCards( data );
+          KIO::NetAccess::removeTempFile( fileName );
+        } else {
+          QString caption( i18n( "vCard Import Failed" ) );
+          QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>", url.url() );
+          KMessageBox::error( parentWidget(), text, caption );
+        }
+      }
+      // Now, let the user choose which addressee to add.
       KABC::Addressee::List::Iterator ait;
-      for ( ait = list.begin(); ait != list.end(); ++ait )
-        insertEmails((*ait).emails());
+      foreach( const KABC::Addressee& addressee, list )
+        insertEmails( addressee.emails() );
     }
-  } else {
+  }
+
+  // Case three: Let AddresseeLineEdit deal with the rest
+  else {
     KPIM::AddresseeLineEdit::dropEvent( event );
   }
 }
