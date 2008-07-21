@@ -299,7 +299,7 @@ QString KMMsgInfo::fileName(void) const
 //-----------------------------------------------------------------------------
 QString KMMsgInfo::tagString( void ) const
 {
-	return tagList()->join( "," );
+    return tagList()->join( "," );
 }
 KMMessageTagList* KMMsgInfo::tagList( void ) const
 {
