@@ -401,6 +401,7 @@ public:
     MsgStatusPart = 16,
     MsgSizeServerPart = 17,
     MsgUIDPart = 18,
+    // unicode string
     MsgTagPart = 19
   };
   /** access to long msgparts */
