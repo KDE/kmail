@@ -694,13 +694,6 @@ void ActionScheduler::moveMessage()
   MessageProperty::setFilterHandler( *mMessageIt, 0 );
   MessageProperty::setFiltering( *mMessageIt, false );
 
-  // If the target folder is an online IMAP folder, make sure to keep the same
-  // serial number (otherwise the move commands thinks the message wasn't moved
-  // correctly, which would trigger the error case in moveMessageFinished().
-  Q_ASSERT( folder );
-  if ( folder && folder->storage() && dynamic_cast<KMFolderImap*>( folder->storage() ) )
-    MessageProperty::setKeepSerialNumber( msg->getMsgSerNum(), true );
-
   mSerNums.removeAll( *mMessageIt );
 
   KMMessage *orgMsg = 0;
@@ -729,6 +722,13 @@ void ActionScheduler::moveMessage()
 
   if (msg && folder && kmkernel->folderIsTrash( folder ))
     KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
+
+  // If the target folder is an online IMAP folder, make sure to keep the same
+  // serial number (otherwise the move commands thinks the message wasn't moved
+  // correctly, which would trigger the error case in moveMessageFinished().
+  Q_ASSERT( folder );
+  if ( folder && folder->storage() && dynamic_cast<KMFolderImap*>( folder->storage() ) )
+    MessageProperty::setKeepSerialNumber( msg->getMsgSerNum(), true );
 
   timeOutTime = QTime::currentTime();
   KMCommand *cmd = new KMMoveCommand( folder, msg );
