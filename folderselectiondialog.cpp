@@ -32,6 +32,7 @@
 #include <kconfiggroup.h>
 
 #include <QLayout>
+#include <QLabel>
 
 namespace KMail {
 
@@ -64,6 +65,7 @@ void FolderSelectionDialog::init( KMFolderTree *tree, bool mustBeReadWrite )
     GlobalSettings::self()->lastSelectedFolder() : QString();
   QWidget *vbox = new KVBox( this );
   setMainWidget( vbox );
+  new QLabel( i18n("You can start typing to filter the list of folders."), vbox );
   mTreeView = new KMail::FolderSelectionTreeWidget( vbox, tree );
   mTreeView->setSortingEnabled( false );
   mTreeView->reload( mustBeReadWrite, true, true, preSelection );
