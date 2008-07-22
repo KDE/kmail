@@ -13,6 +13,7 @@
 
 #include <qlayout.h>
 #include <qtoolbutton.h>
+#include <qlabel.h>
 
 
 using namespace KMail;
@@ -31,7 +32,9 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
 
   QString preSelection = mUseGlobalSettings ?
     GlobalSettings::self()->lastSelectedFolder() : QString::null;
-  mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
+  QWidget * container = makeVBoxMainWidget();
+  new QLabel( i18n("You can start typing to filter the list of folders"), container );
+  mTreeView = new KMail::SimpleFolderTree( container, ft,
                                            preSelection, mustBeReadWrite );
   init();
 }
@@ -48,7 +51,9 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
 {
   QString preSelection = mUseGlobalSettings ?
     GlobalSettings::self()->lastSelectedFolder() : QString::null;
-  mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), tree,
+  QWidget * container = makeVBoxMainWidget();
+  new QLabel( i18n("You can start typing to filter the list of folders"), container );
+  mTreeView = new KMail::SimpleFolderTree( container, tree,
                                            preSelection, mustBeReadWrite );
   init();
 }
