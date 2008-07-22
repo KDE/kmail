@@ -82,7 +82,7 @@ public:
   virtual QString fileName(void) const;
   virtual QString tagString( void ) const; 
   virtual KMMessageTagList *tagList( void ) const; 
-  virtual MessageStatus& status();
+  virtual MessageStatus& status() const;
   virtual KMMsgEncryptionState encryptionState() const;
   virtual KMMsgSignatureState signatureState() const;
   virtual KMMsgMDNSentState mdnSentState() const;

@@ -34,6 +34,7 @@
 #include "messageproperty.h"
 #include "kmfilter.h"
 #include "kmfolderindex.h"
+#include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kmcommands.h"
@@ -272,9 +273,16 @@ void ActionScheduler::execFilters(quint32 serNum)
         mFetchSerNums.pop_front();
       }
     }
-    else
-      return; // An error has already occurred don't even try to process this msg
+    else {
+      kDebug() << "Not starting filtering because of error. mExecuting=" << mExecuting
+               << "mExecutingLock=" << mExecutingLock
+               << "mFetchExecuting=" << mFetchExecuting;
+
+      // An error has already occurred don't even try to process this msg
+      return;
+    }
   }
+
   if (MessageProperty::filtering( serNum )) {
     // Not good someone else is already filtering this msg
     mResult = ResultError;
@@ -333,29 +341,36 @@ KMMessage *ActionScheduler::message(quint32 serNum)
 
 void ActionScheduler::finish()
 {
+  // FIXME: In case of errors, the locks don't get reset. Which means when filtering
+  //        one message errors out, and we will later filter another one, filtering
+  //        will not start because of this.
+  //        There is some cleanup code below, but this might not be the best thing
+  //        to do here: When a single message fails, we want to continue with the
+  //        rest and not completely reset everything...
   if (mResult != ResultOk) {
     // Must handle errors immediately
     emit result( mResult );
     return;
   }
+  kDebug() << "Filtering finished.";
 
   if (!mExecuting) {
 
-  if (!mFetchSerNums.isEmpty()) {
-    // Possibly if (mResult == ResultOk) should cancel job and start again.
-    // Believe smarter logic to bail out if an error has occurred is required.
-    // Perhaps should be testing for mFetchExecuting or at least set it to true
-    fetchMessageTimer->start( 0 ); // give it a bit of time at a test
-    return;
-  } else {
-    mFetchExecuting = false;
-  }
+    if (!mFetchSerNums.isEmpty()) {
+      // Possibly if (mResult == ResultOk) should cancel job and start again.
+      // Believe smarter logic to bail out if an error has occurred is required.
+      // Perhaps should be testing for mFetchExecuting or at least set it to true
+      fetchMessageTimer->start( 0 ); // give it a bit of time at a test
+      return;
+    } else {
+      mFetchExecuting = false;
+    }
 
-  if (mSerNums.begin() != mSerNums.end()) {
-    mExecuting = true;
-    processMessageTimer->start( 0 );
-    return;
-  }
+    if (mSerNums.begin() != mSerNums.end()) {
+      mExecuting = true;
+      processMessageTimer->start( 0 );
+      return;
+    }
 
     // If an error has occurred and a permanent source folder has
     // been set then move all the messages left in the source folder
@@ -510,7 +525,6 @@ void ActionScheduler::enqueue(quint32 serNum)
 
 void ActionScheduler::processMessage()
 {
-  kDebug(5006) << debug();
   QString statusMsg = i18n( "%1 messages waiting to be filtered",
                             mFetchSerNums.count() );
   KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
@@ -533,6 +547,7 @@ void ActionScheduler::processMessage()
   if ((mMessageIt == mSerNums.end()) || (mResult != ResultOk)) {
     mExecutingLock = false;
     mExecuting = false;
+    kDebug() << "Stopping filtering, error or end of message list.";
     finishTimer->start( 0 );
     return;
   }
@@ -678,6 +693,14 @@ void ActionScheduler::moveMessage()
     mOriginalSerNum = 0;
   MessageProperty::setFilterHandler( *mMessageIt, 0 );
   MessageProperty::setFiltering( *mMessageIt, false );
+
+  // If the target folder is an online IMAP folder, make sure to keep the same
+  // serial number (otherwise the move commands thinks the message wasn't moved
+  // correctly, which would trigger the error case in moveMessageFinished().
+  Q_ASSERT( folder );
+  if ( folder && folder->storage() && dynamic_cast<KMFolderImap*>( folder->storage() ) )
+    MessageProperty::setKeepSerialNumber( msg->getMsgSerNum(), true );
+
   mSerNums.removeAll( *mMessageIt );
 
   KMMessage *orgMsg = 0;
@@ -688,7 +711,7 @@ void ActionScheduler::moveMessage()
   if (!orgMsg || !orgMsg->parent()) {
     // Original message is gone, no point filtering it anymore
     mSrcFolder->removeMsg( mSrcFolder->find( msg ) );
-    kDebug(5006) <<"The original serial number is missing."
+    kDebug(5006) << "The original serial number is missing."
                  << "Cannot complete the filtering.";
     mExecutingLock = false;
     processMessageTimer->start( 0 );
@@ -710,7 +733,7 @@ void ActionScheduler::moveMessage()
   timeOutTime = QTime::currentTime();
   KMCommand *cmd = new KMMoveCommand( folder, msg );
   connect( cmd, SIGNAL( completed( KMCommand * ) ),
-	   this, SLOT( moveMessageFinished( KMCommand * ) ) );
+           this, SLOT( moveMessageFinished( KMCommand * ) ) );
   cmd->start();
   // sometimes the move command doesn't complete so time out after a minute
   // and move onto the next message
@@ -723,10 +746,23 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   timeOutTimer->stop();
   bool movingFailed = false;
   if ( command->result() != KMCommand::OK ) {
-    mResult = ResultError;
+
+    // Simply ignore the error. Moving the message back might have failed because
+    // of GoogleMail preventing duplicates (see bug 166150).
+    // We ignore the error because otherwise filtering would not continue with
+    // the next message, filtering would just stop until KMail is restarted.
+    // Normally, finish() is supposed to clear the error state properly, but
+    // it doesn't do that and changing it can break all kind of logic.
+    //
+    // Note that ignoring the error does not mean dataloss, it just means that
+    // the filter actions will not work for the message. By setting movingFailed
+    // to false, we prevent the deletion of the original source message.
+    //mResult = ResultError;
+
     movingFailed = true;
     kWarning() << "Moving the message from the temporary filter folder to the "
                   "target folder failed. Message will stay unfiltered.";
+    kWarning() << "This might be because you're using GMail, see bug 166150.";
   }
 
   if (!mSrcFolder->count())
@@ -743,30 +779,36 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   }
 
   mResult = mOldReturnCode; // ignore errors in deleting original message
+
+  // Delete the original message, because we have just moved the filtered message
+  // from the temporary filtering folder to the target folder, and don't need the
+  // old unfiltered message there anymore.
   KMCommand *cmd = 0;
   if ( msg && msg->parent() && !movingFailed ) {
     cmd = new KMMoveCommand( 0, msg );
-//    cmd->start(); // Note: sensitive logic here.
   }
 
-  if (mResult == ResultOk) {
-    mExecutingLock = false;
-    if (cmd)
-      connect( cmd, SIGNAL( completed( KMCommand * ) ),
-               this, SLOT( processMessage() ) );
-    else
-      processMessageTimer->start( 0 );
-  } else {
-    // Note: An alternative to consider is just calling
-    //       finishTimer->start and returning
-    if (cmd)
-      connect( cmd, SIGNAL( completed( KMCommand * ) ),
-               this, SLOT( finish() ) );
-    else
-      finishTimer->start( 0 );
-  }
-  if (cmd)
+  // When the above deleting is finished, filtering that single mail is complete.
+  // The next state is processMessage(), which will start filtering the next
+  // message if we still have mails in the temporary filter folder.
+  // If there are no unfiltered messages there or an error was encountered,
+  // processMessage() will stop filtering by setting mExecuting to false
+  // and then going to the finish() state.
+  //
+  // processMessage() will only do something if mExecutingLock if false.
+  //
+  // We can't advance to the finish() state just here, because that
+  // wouldn't reset mExecuting at all, so we make sure that the next stage is
+  // processMessage() in all cases.
+  mExecutingLock = false;
+
+  if ( cmd ) {
+    connect( cmd, SIGNAL( completed( KMCommand * ) ),
+             this, SLOT( processMessage() ) );
     cmd->start();
+  }
+  else
+    processMessageTimer->start( 0 );
 }
 
 void ActionScheduler::copyMessageFinished( KMCommand *command )

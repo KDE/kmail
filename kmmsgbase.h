@@ -116,7 +116,7 @@ public:
   virtual bool isMessage(void) const;
 
   /** Status object of the message. */
-  virtual MessageStatus& status();
+  virtual MessageStatus& status() const;
 
   /** Const reference to a status object of a message. */
   const MessageStatus& messageStatus() const;
