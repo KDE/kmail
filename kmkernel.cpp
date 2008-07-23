@@ -1529,7 +1529,7 @@ void KMKernel::init()
   mBackgroundTasksTimer = new QTimer( this, "mBackgroundTasksTimer" );
   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-  mBackgroundTasksTimer->start( 10000, true ); // 10s minute, singleshot
+  mBackgroundTasksTimer->start( 10000, true ); // 10s, singleshot
 #else
   mBackgroundTasksTimer->start( 5 * 60000, true ); // 5 minutes, singleshot
 #endif

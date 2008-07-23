@@ -1395,7 +1395,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     // Notify that the old folder resource is no longer available
     subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
 
-    if ( contentsType == 0 ) {
+    if ( contentsType == KMail::ContentsTypeMail ) {
       // Delete the old entry, stop listening and stop here
       mExtraFolders.remove( location );
       folder->disconnect( this );
@@ -1405,7 +1405,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   } else {
     if ( ef && !ef->folder ) // deleted folder, clean up
       mExtraFolders.remove( location );
-    if ( contentsType == 0 )
+    if ( contentsType == KMail::ContentsTypeMail )
         return;
 
     //kdDebug(5006) << "registering " << location << " as extra folder" << endl;
