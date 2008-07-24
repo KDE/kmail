@@ -5366,19 +5366,20 @@ void MiscPage::GroupwareTab::save()
   QString folderId;
   if (  format == 0 ) {
     KMFolder* folder = mFolderCombo->folder();
-    if (  folder )
+    if ( folder )
       folderId = folder->idString();
+
     KMAccount* account = 0;
     // Didn't find an easy way to find the account for a given folder...
     // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
     for( KMAccount *a = kmkernel->acctMgr()->first();
-        a && !account; // stop when found
-        a = kmkernel->acctMgr()->next() ) {
+         a && !account; // stop when found
+         a = kmkernel->acctMgr()->next() ) {
       if( a->folder() && a->folder()->child() ) {
-        for (QList<KMFolderNode*>::iterator it = a->folder()->child()->begin();
-            it != a->folder()->child()->end();
-            ++it) {
-          if ( *it && static_cast<KMFolder*>(*it) == folder ) {
+        for ( QList<KMFolderNode*>::iterator it = a->folder()->child()->begin();
+              it != a->folder()->child()->end();
+              ++it ) {
+          if ( *it && static_cast<KMFolder*>( *it ) == folder ) {
             account = a;
             break;
           }
