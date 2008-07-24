@@ -18,6 +18,7 @@ using KMail::ObjectTreeParser;
 #include "undostack.h"
 #include "kmversion.h"
 #include "config-kmail.h"
+#include "version-kmail.h"
 #include "kmmessagetag.h"
 #include "headerstrategy.h"
 #include "globalsettings.h"
@@ -1704,6 +1705,8 @@ void KMMessage::initHeader( uint id )
   QStringList extraInfo;
 # if defined KMAIL_SVN_REVISION_STRING && defined KMAIL_SVN_LAST_CHANGE
   extraInfo << KMAIL_SVN_REVISION_STRING << KMAIL_SVN_LAST_CHANGE;
+#else
+#error forgot to include version-kmail.h
 # endif
   setHeaderField("User-Agent",
     KProtocolManager::userAgentForApplication( "KMail", KMAIL_VERSION, extraInfo )

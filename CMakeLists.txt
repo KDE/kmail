@@ -23,6 +23,7 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
   endif ( KdeSubversion_FOUND )
 endif (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
+configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h )
 
 add_definitions ( -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS )
 add_definitions ( -DKDE_DEFAULT_DEBUG_AREA=5006 )
