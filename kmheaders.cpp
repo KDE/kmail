@@ -1998,32 +1998,40 @@ void KMHeaders::findUnreadAux( HeaderItem*& item,
 }
 
 //-----------------------------------------------------------------------------
-int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool acceptCurrent)
+int KMHeaders::findUnread( bool aDirNext, int aStartAt, bool onlyNew, bool acceptCurrent )
 {
   HeaderItem *item, *pitem;
   bool foundUnreadMessage = false;
 
-  if (!mFolder) return -1;
-  if (mFolder->count() == -1) return -1;
+  if ( !mFolder ) {
+    return -1;
+  }
+  if ( mFolder->count() == -1 ) {
+    return -1;
+  }
 
-  if ((aStartAt >= 0) && (aStartAt < (int)mItems.size()))
+  if ( ( aStartAt >= 0 ) && ( aStartAt < (int)mItems.size() ) ) {
     item = mItems[aStartAt];
-  else {
+  } else {
     item = currentHeaderItem();
-    if (!item) {
-      if (aDirNext)
-        item = static_cast<HeaderItem*>(firstChild());
-      else
-        item = static_cast<HeaderItem*>(lastChild());
+    if ( !item ) {
+      if ( aDirNext ) {
+        item = static_cast<HeaderItem*>( firstChild() );
+      } else {
+        item = static_cast<HeaderItem*>( lastChild() );
+      }
     }
-    if (!item)
+    if ( !item ) {
       return -1;
+    }
 
-    if ( !acceptCurrent )
-        if (aDirNext)
-            item = static_cast<HeaderItem*>(item->itemBelow());
-        else
-            item = static_cast<HeaderItem*>(item->itemAbove());
+    if ( !acceptCurrent ) {
+      if ( aDirNext ) {
+        item = static_cast<HeaderItem*>( item->itemBelow() );
+      } else {
+        item = static_cast<HeaderItem*>( item->itemAbove() );
+      }
+    }
   }
 
   pitem =  item;
@@ -2788,7 +2796,9 @@ bool KMHeaders::writeSortOrder()
         } else if( i->nextSibling()) {
           i = i->nextSibling();
         } else {
-            for(i=0; !i && s.count(); i = s.pop()->nextSibling());
+            for ( i=0; !i && s.count(); i = s.pop()->nextSibling() ) {
+              ;
+            }
         }
       }
     }

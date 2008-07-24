@@ -68,7 +68,7 @@ public:
   ~KMMsgMetaData() {}
   const MessageStatus& status() const { return mStatus; }
   const MessageStatus& messageStatus() const { return mStatus; }
-  const quint32 serNum() const { return mSerNum; }
+  quint32 serNum() const { return mSerNum; }
 private:
   MessageStatus mStatus;
   quint32 mSerNum;
@@ -252,7 +252,7 @@ return encodeFileName( KMFolderMbox::fileName() ); }
 /**
 * Get the serial number for the given UID (if available)
 */
-const ulong serNumForUID( ulong uid );
+ulong serNumForUID( ulong uid );
 
 /**
 * Save the metadata for the UID
@@ -378,7 +378,7 @@ void slotSimpleData(KIO::Job * job, const QByteArray & data);
 * Connected to the result signal of the copy/move job
 */
 void slotCopyMsgResult( KMail::FolderJob* job );
-  
+
   /**
    * Convert IMAP seen flag to a message status.
    * @param newMsg specifies whether unseen messages are new or unread

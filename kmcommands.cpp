@@ -1860,21 +1860,22 @@ KMCommand::Result KMCopyCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
 
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ )
-  {
+  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ ) {
     msgBase = (*it);
     KMFolder *srcFolder = msgBase->parent();
-    if (isMessage = msgBase->isMessage())
-    {
-      msg = static_cast<KMMessage*>(msgBase);
+    isMessage = msgBase->isMessage();
+    if ( isMessage ) {
+      msg = static_cast<KMMessage*>( msgBase );
     } else {
-      idx = srcFolder->find(msgBase);
-      assert(idx != -1);
-      msg = srcFolder->getMsg(idx);
+      idx = srcFolder->find( msgBase );
+      assert( idx != -1 );
+      msg = srcFolder->getMsg( idx );
       // corrupt IMAP cache, see FolderStorage::getMsg()
       if ( msg == 0 ) {
-        KMessageBox::error( parentWidget(), i18n("Corrupt IMAP cache detected in folder %1. "
-            "Copying of messages aborted.", srcFolder->prettyUrl() ) );
+        KMessageBox::error( parentWidget(),
+                            i18n( "Corrupt IMAP cache detected in folder %1. "
+                                  "Copying of messages aborted.",
+                                  srcFolder->prettyUrl() ) );
         deleteLater();
         return Failed;
       }
@@ -2523,7 +2524,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
                 parentWidget(),
                 i18n( "A file named %1 already exists. Do you want to overwrite it?",
                   curUrl.fileName() ),
-                i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")), 
+                i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")),
                 KGuiItem(i18n("Overwrite &All")) );
           if ( button == KMessageBox::Cancel )
             continue;

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-/** @file 
+/** @file
     This file defines KMMessageTagDescription, KMMessageTagMgr and KMMessageTagList classes. They
     are used for adding custom tagging support to kmail.
 
@@ -40,11 +40,11 @@ class KConfigGroup;
 
 /** This is the class holding information about how the tag modifies appearance
 of the header line.*/
-class KMMessageTagDescription 
+class KMMessageTagDescription
 {
   /*Label and priority are not that commonly used, might be able to remove later*/
   public:
-    /** Constructor used for reading the tag description from a KConfigGroup 
+    /** Constructor used for reading the tag description from a KConfigGroup
         @p aGroup . Calls readConfig( @p aGroup ) .It defaults to certain values
         for values that are not defined in the configuration.
 
@@ -59,16 +59,16 @@ class KMMessageTagDescription
             which tag to modify the appearance if the message has multiple
             tags. Note that Important and Todo flags still dominate tags.
       @param aTextColor Text color
-      @param aBackgroundColor Background color. 
+      @param aBackgroundColor Background color.
       @param aTextFont Font of the text
       @param aInToolbar Whether the toggle button appears in the toolbar
       @param aIconName The name for the corresponding icon that will appear in
               the menus and toolbar. The default value is an icon packaged with
               akregator.
       */
-    KMMessageTagDescription( const QString &aLabel, const QString &aName, 
-                  const int aPriority = -1, 
-                  const QColor &aTextColor = QColor(), 
+    KMMessageTagDescription( const QString &aLabel, const QString &aName,
+                  const int aPriority = -1,
+                  const QColor &aTextColor = QColor(),
                   const QColor &aBackgroundColor = QColor(),
                   const QFont &aTextFont = QFont(),
                   const bool aInToolbar = false,
@@ -78,13 +78,13 @@ class KMMessageTagDescription
     /** Accessor functions */
     const QString label() const { return mLabel; }
     const QString name() const { return mName; }
-    const int priority() const { return mPriority; }
+    int priority() const { return mPriority; }
     const QColor textColor() const { return mTextColor; }
     const QColor backgroundColor() const { return mBackgroundColor; }
     const QFont textFont() const { return mTextFont; }
-    const bool inToolbar() const { return mInToolbar; }
+    bool inToolbar() const { return mInToolbar; }
     const QString toolbarIconName() const { return mIconName; }
-    const bool isEmpty() const { return mEmpty; }
+    bool isEmpty() const { return mEmpty; }
     const KShortcut shortcut() { return mShortcut; }
 
     void setLabel( const QString & );
@@ -124,7 +124,7 @@ class KMMessageTagDescription
 dictionary for fast access. Allows updating of the GUI after modifications to
 the tags by emitting msgTagListChanged() . All changes to tags should be done
 through this class*/
-class KMMessageTagMgr : public QObject 
+class KMMessageTagMgr : public QObject
 {
   Q_OBJECT
 
@@ -154,7 +154,7 @@ class KMMessageTagMgr : public QObject
     /** @return @c true if the tags are modified after the initial config read*/
     bool isDirty( void ) const { return mDirty; }
     /**Fills the tag dictionary from the given pointer list @p aTagList . The
-       dictionary is cleared first, so @p aTagList should be a complete set of 
+       dictionary is cleared first, so @p aTagList should be a complete set of
        tags ordered in decreasing priority. The tag descriptions that @p aTagList
        points to are copied, so it is safe to delete them afterwards.
        @param aTagList Pointer list that contains a full set of tags and is
@@ -179,7 +179,7 @@ class KMMessageTagMgr : public QObject
 
 /** A thin wrapper around QStringList for implementing ordering of tag
 labels according to their priorities. The sorting algorithm is bubble sorting*/
-class KMMessageTagList : public QStringList 
+class KMMessageTagList : public QStringList
 {
   public:
     KMMessageTagList();
