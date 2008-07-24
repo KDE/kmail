@@ -5368,6 +5368,24 @@ void MiscPage::GroupwareTab::save()
     KMFolder* folder = mFolderCombo->folder();
     if (  folder )
       folderId = folder->idString();
+    KMAccount* account = 0;
+    // Didn't find an easy way to find the account for a given folder...
+    // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
+    for( KMAccount *a = kmkernel->acctMgr()->first();
+        a && !account; // stop when found
+        a = kmkernel->acctMgr()->next() ) {
+      if( a->folder() && a->folder()->child() ) {
+        for (QList<KMFolderNode*>::iterator it = a->folder()->child()->begin();
+            it != a->folder()->child()->end();
+            ++it) {
+          if ( *it && static_cast<KMFolder*>(*it) == folder ) {
+            account = a;
+            break;
+          }
+        }
+      }
+    }
+    GlobalSettings::self()->setTheIMAPResourceAccount( account ? account->id() : 0 );
   } else {
     // Inbox folder of the selected account
     KMAccount* acct = mAccountCombo->currentAccount();
