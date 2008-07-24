@@ -203,7 +203,7 @@ void RecipientLine::analyzeLine( const QString &text )
   }
 }
 
-int RecipientLine::recipientsCount()
+int RecipientLine::recipientsCount() const
 {
   return mRecipientsCount;
 }
@@ -240,12 +240,12 @@ void RecipientLine::activate()
   mEdit->setFocus();
 }
 
-bool RecipientLine::isActive()
+bool RecipientLine::isActive() const
 {
   return mEdit->hasFocus();
 }
 
-bool RecipientLine::isEmpty()
+bool RecipientLine::isEmpty() const
 {
   return mEdit->text().isEmpty();
 }
@@ -305,6 +305,11 @@ void RecipientLine::clear()
   mEdit->clear();
 }
 
+void RecipientLine::setEditFont( const QFont& font )
+{
+  mEdit->setFont( font );
+}
+
 // ------------ RecipientsView ---------------------
 
 RecipientsView::RecipientsView( QWidget *parent )
@@ -317,6 +322,7 @@ RecipientsView::RecipientsView( QWidget *parent )
   setWidgetResizable( true );
   setFrameStyle( QFrame::NoFrame );
 
+  mEditFont = KGlobalSettings::generalFont();
   mPage = new QWidget;
 
   mPage->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
@@ -330,16 +336,17 @@ RecipientsView::RecipientsView( QWidget *parent )
   addLine();
 }
 
-RecipientLine *RecipientsView::activeLine()
+RecipientLine *RecipientsView::activeLine() const
 {
   return mLines.last();
 }
 
-RecipientLine *RecipientsView::emptyLine()
+RecipientLine *RecipientsView::emptyLine() const
 {
   RecipientLine *line;
   foreach( line, mLines ) {
-    if ( line->isEmpty() ) return line;
+    if ( line->isEmpty() )
+      return line;
   }
 
   return 0;
@@ -348,6 +355,7 @@ RecipientLine *RecipientsView::emptyLine()
 RecipientLine *RecipientsView::addLine()
 {
   RecipientLine *line = new RecipientLine( widget() );
+  line->setEditFont( mEditFont );
   //addChild( line, 0, mLines.count() * mLineHeight );
   mTopLayout->addWidget( line );
   line->mEdit->setCompletionMode( mCompletionMode );
@@ -690,6 +698,14 @@ int RecipientsView::setFirstColumnWidth( int w )
   return mFirstColumnWidth;
 }
 
+void RecipientsView::setEditFont( const QFont& font )
+{
+  mEditFont = font;
+  foreach ( RecipientLine *line, mLines ) {
+    line->setEditFont( mEditFont );
+  }
+}
+
 void RecipientsView::moveCompletionPopup()
 {
   foreach ( RecipientLine *const line, mLines ) {
@@ -978,6 +994,11 @@ void RecipientsEditor::selectRecipients()
 void RecipientsEditor::setCompletionMode( KGlobalSettings::Completion mode )
 {
   mRecipientsView->setCompletionMode( mode );
+}
+
+void RecipientsEditor::setEditFont( const QFont& font )
+{
+  mRecipientsView->setEditFont( font );
 }
 
 #include "recipientseditor.moc"

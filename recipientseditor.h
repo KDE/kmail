@@ -59,7 +59,8 @@ class Recipient
     static int typeToId( Type );
     static Type idToType( int );
 
-    QString typeLabel() const;    static QString typeLabel( Type );
+    QString typeLabel() const;
+    static QString typeLabel( Type );
     static QStringList allTypeLabels();
 
   private:
@@ -111,9 +112,9 @@ class RecipientLine : public QWidget
     void setRecipient( const QString & );
 
     void activate();
-    bool isActive();
+    bool isActive() const;
 
-    bool isEmpty();
+    bool isEmpty() const;
 
     /** Returns true if the user has made any modifications to this
         RecipientLine.
@@ -131,7 +132,12 @@ class RecipientLine : public QWidget
 
     void clear();
 
-    int recipientsCount();
+    int recipientsCount() const;
+
+    /**
+     * Sets the font which will be used for the lineedits.
+     */
+    void setEditFont( const QFont& font );
 
   signals:
     void returnPressed( RecipientLine * );
@@ -171,9 +177,9 @@ class RecipientsView : public QScrollArea
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
-    RecipientLine *activeLine();
+    RecipientLine *activeLine() const;
 
-    RecipientLine *emptyLine();
+    RecipientLine *emptyLine() const;
 
     Recipient::List recipients() const;
 
@@ -201,6 +207,11 @@ class RecipientsView : public QScrollArea
       * Returns the width that is actually being used.
       */
     int setFirstColumnWidth( int );
+
+    /**
+     * Sets the font which will be used for the lineedits.
+     */
+    void setEditFont( const QFont& font );
 
   public slots:
     void setCompletionMode( KGlobalSettings::Completion );
@@ -235,6 +246,7 @@ class RecipientsView : public QScrollArea
 
   private:
     QList<RecipientLine*> mLines;
+    QFont mEditFont;
     QPointer<RecipientLine> mCurDelLine;
     int mLineHeight;
     int mFirstColumnWidth;
@@ -323,6 +335,11 @@ class KMAIL_EXPORT RecipientsEditor : public QWidget
       * Set completion mode for all lines
       */
     void setCompletionMode( KGlobalSettings::Completion );
+
+    /**
+     * Sets the font which will be used for the lineedits.
+     */
+    void setEditFont( const QFont& font );
 
   public slots:
     void setFocus();
