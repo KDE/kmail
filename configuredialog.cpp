@@ -1588,7 +1588,7 @@ void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
   KConfigGroup reader( profile, "Reader" );
 
   if ( reader.hasKey( "defaultColors" ) )
-    mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", false ) );
+    mCustomColorCheck->setChecked( !GlobalSettings::self()->useDefaultColors() );
   if ( reader.hasKey( "RecycleQuoteColors" ) )
     mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
 
@@ -1602,7 +1602,7 @@ void AppearancePage::ColorsTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
 
   bool customColors = mCustomColorCheck->isChecked();
-  reader.writeEntry( "defaultColors", !customColors );
+  GlobalSettings::self()->setUseDefaultColors( !customColors );
 
   for ( int i = 0 ; i < numColorNames ; i++ )
     // Don't write color info when we use default colors, but write

@@ -44,29 +44,22 @@ KMComposerEditor::~KMComposerEditor()
 
 void KMComposerEditor::changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter)
 {
-  QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
-  QColor defaultColor2( 0x00, 0x70, 0x00 );
-  QColor defaultColor3( 0x00, 0x60, 0x00 );
-  QColor defaultForeground( qApp->palette().color( QPalette::Text ) );
+  // defaults from kmreaderwin.cpp. FIXME: centralize somewhere.
+  QColor color1( 0x00, 0x80, 0x00 );
+  QColor color2( 0x00, 0x70, 0x00 );
+  QColor color3( 0x00, 0x60, 0x00 );
+  QColor misspelled = Qt::red;
 
-  // FIXME: Use KColorScheme? Centralize default color management somewhere
-  //        look at background color?
+  if ( !GlobalSettings::self()->useDefaultColors() ) {
+    KConfigGroup readerConfig( KMKernel::config(), "Reader" );
+    color3 = readerConfig.readEntry( "QuotedText3", color3  );
+    color2 = readerConfig.readEntry( "QuotedText2", color2  );
+    color1 = readerConfig.readEntry( "QuotedText1", color1  );
+    misspelled = readerConfig.readEntry( "MisspelledColor", misspelled );
+  }
 
-  KConfigGroup readerConfig( KMKernel::config(), "Reader" );
-  QColor textColor;
-  if ( !readerConfig.readEntry( "defaultColors", true ) )
-    textColor = readerConfig.readEntry( "ForegroundColor", defaultForeground );
-  else
-    textColor = defaultForeground;
-  QColor quoteColor1 = readerConfig.readEntry( "QuotedText3", defaultColor3  );
-  QColor quoteColor2 = readerConfig.readEntry( "QuotedText2", defaultColor2  );
-  QColor quoteColor3 = readerConfig.readEntry( "QuotedText1", defaultColor1  );
-
-  // FIXME: No function in Sonnet::Highlighter to set this
-  // QColor defaultMisspelled = Qt::red;
-  // QColor misspelled = readerConfig.readEntry( "MisspelledColor", defaultMisspelled );
-
-  highlighter->setQuoteColor( textColor, quoteColor1, quoteColor2, quoteColor3 );
+  highlighter->setQuoteColor( Qt::black /* ignored anyway */,
+                              color3, color2, color1, misspelled );
 }
 
 QString KMComposerEditor::smartQuote( const QString & msg )

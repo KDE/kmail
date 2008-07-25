@@ -245,22 +245,28 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     hbox->addWidget( mSignatureStateIndicator );
 
     KConfigGroup reader( KMKernel::config(), "Reader" );
-    QPalette p( mSignatureStateIndicator->palette() );
 
+    // Get the colors for the label
+    QPalette p( mSignatureStateIndicator->palette() );
     KColorScheme scheme( QPalette::Active, KColorScheme::View );
     QColor defaultSignedColor =  // pgp signed
         scheme.background( KColorScheme::PositiveBackground ).color();
     QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
-    p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageOkKeyOk",
-                                                       defaultSignedColor ) );
+    QColor signedColor = defaultSignedColor;
+    QColor encryptedColor = defaultEncryptedColor;
+    if ( !GlobalSettings::self()->useDefaultColors() ) {
+      signedColor = reader.readEntry( "PGPMessageOkKeyOk", defaultSignedColor );
+      encryptedColor = reader.readEntry( "PGPMessageEncr", defaultEncryptedColor );
+    }
+
+    p.setColor( QColorGroup::Window, signedColor );
     mSignatureStateIndicator->setPalette( p );
     mSignatureStateIndicator->setAutoFillBackground( true );
 
     mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
     mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mEncryptionStateIndicator );
-    p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageEncr",
-                                                       defaultEncryptedColor ) );
+    p.setColor( QColorGroup::Window, encryptedColor);
     mEncryptionStateIndicator->setPalette( p );
     mEncryptionStateIndicator->setAutoFillBackground( true );
   }

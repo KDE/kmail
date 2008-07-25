@@ -949,8 +949,7 @@ void KMReaderWin::readConfig(void)
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
-  mShowColorbar = reader.readEntry( "showColorbar",
-      Kpgp::Module::getKpgp()->usePGP() ) ;
+  mShowColorbar = reader.readEntry( "showColorbar", Kpgp::Module::getKpgp()->usePGP() ) ;
   // if the value defaults to enabled and KMail (with color bar) is used for
   // the first time the config dialog doesn't know this if we don't save the
   // value now
@@ -984,6 +983,7 @@ void KMReaderWin::readConfig(void)
 
   if (message())
     update();
+  mColorBar->update();
   KMMessage::readConfig();
 }
 

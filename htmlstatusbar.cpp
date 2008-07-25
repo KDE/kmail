@@ -55,12 +55,12 @@ KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, Qt::WF
   // Don't force a minimum height to the reader widget
   setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Ignored ) );
   setAutoFillBackground( true );
-  upd();
+  update();
 }
 
 KMail::HtmlStatusBar::~HtmlStatusBar() {}
 
-void KMail::HtmlStatusBar::upd() {
+void KMail::HtmlStatusBar::update() {
   QPalette pal = palette();
   pal.setColor( backgroundRole(), bgColor() );
   pal.setColor( foregroundRole(), fgColor() );
@@ -84,7 +84,7 @@ void KMail::HtmlStatusBar::setMode( Mode m ) {
   if ( m == mode() )
     return;
   mMode = m;
-  upd();
+  update();
 }
 
 QString KMail::HtmlStatusBar::message() const {
@@ -114,14 +114,22 @@ namespace {
 
 QColor KMail::HtmlStatusBar::fgColor() const {
   KConfigGroup conf( config(), "Reader" );
-  QColor def;
+  QColor defaultColor, color;
   switch ( mode() ) {
   case Html:
-    def = Qt::white;
-    return conf.readEntry( "ColorbarForegroundHTML", def );
+    defaultColor = Qt::white;
+    color = defaultColor;
+    if ( !GlobalSettings::self()->useDefaultColors() ) {
+      color = conf.readEntry( "ColorbarForegroundHTML", defaultColor );
+    }
+    return color;
   case Normal:
-    def = Qt::black;
-    return conf.readEntry( "ColorbarForegroundPlain", def );
+    defaultColor = Qt::black;
+    color = defaultColor;
+    if ( !GlobalSettings::self()->useDefaultColors() ) {
+      color = conf.readEntry( "ColorbarForegroundPlain", defaultColor );
+    }
+    return color;
   default:
   case Neutral:
     return Qt::black;
@@ -131,14 +139,22 @@ QColor KMail::HtmlStatusBar::fgColor() const {
 QColor KMail::HtmlStatusBar::bgColor() const {
   KConfigGroup conf( config(), "Reader" );
 
-  QColor def;
+  QColor defaultColor, color;
   switch ( mode() ) {
   case Html:
-    def = Qt::black;
-    return conf.readEntry( "ColorbarBackgroundHTML", def );
+    defaultColor = Qt::black;
+    color = defaultColor;
+    if ( !GlobalSettings::self()->useDefaultColors() ) {
+      color = conf.readEntry( "ColorbarBackgroundHTML", defaultColor );
+    }
+    return color;
   case Normal:
-    def = Qt::lightGray;
-    return conf.readEntry( "ColorbarBackgroundPlain", def );
+    defaultColor = Qt::lightGray;
+    color = defaultColor;
+    if ( !GlobalSettings::self()->useDefaultColors() ) {
+      color = conf.readEntry( "ColorbarBackgroundPlain", defaultColor );
+    }
+    return color;
   default:
   case Neutral:
     return Qt::white;

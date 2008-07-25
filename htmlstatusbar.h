@@ -76,6 +76,9 @@ namespace KMail {
     bool isNormal() const { return mode() == Normal ; }
     bool isNeutral() const { return mode() == Neutral ; }
 
+    // Update the status bar, for example when the color scheme changed.
+    void update();
+
   public slots:
     /** Switch to "html mode". */
     void setHtmlMode();
@@ -87,7 +90,6 @@ namespace KMail {
     void setMode( Mode m );
 
   private:
-    void upd();
     QString message() const;
     QColor bgColor() const;
     QColor fgColor() const;
