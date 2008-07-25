@@ -612,7 +612,6 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
                                       const QString &_attachURL)
 {
   KUrl attachURL( _attachURL );
-  KMail::Composer *win = 0;
   KMMessage *msg = new KMMessage;
   KMFolder *folder = 0;
   uint id = 0;
@@ -621,12 +620,8 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
     //create message with required folder identity
     folder = currentFolder();
     id = folder ? folder->identity() : 0;
-    msg->initHeader( id );
-    win = makeComposer( msg, id );
-  } else {
-    msg->initHeader();
-    win = makeComposer( msg );
   }
+  msg->initHeader( id );
   msg->setCharset( "utf-8" );
   //set basic headers
   if ( !to.isEmpty() ) {
@@ -643,6 +638,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
                          QString(), false, false, false );
   parser.process( NULL, folder );
 
+  KMail::Composer *win = makeComposer( msg, id );
 
   //Add the attachment if we have one
   if ( !attachURL.isEmpty() && attachURL.isValid() ) {
