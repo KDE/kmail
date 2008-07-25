@@ -69,7 +69,7 @@ void RecipientItem::setDistributionList( KPIM::DistributionList &list )
   mKey = list.name();
 
   int count = list.entries( mAddressBook ).count();
-  mEmail = i18n( "1 email address", "%1 email addresses", count );
+  mEmail = i18n( "1 email address", "%n email addresses", count );
 
   mRecipient = mName;
 
@@ -86,7 +86,7 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
   mKey = list->name();
 
   int count = list->entries().count();
-  mEmail = i18n( "1 email address", "%1 email addresses", count );
+  mEmail = i18n( "1 email address", "%n email addresses", count );
 
   mRecipient = mName;
 
