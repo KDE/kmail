@@ -1229,8 +1229,9 @@ KMCommand::Result KMForwardCommand::execute()
     // ask if they want a mime digest forward
 
     if (KMessageBox::questionYesNo( parentWidget(),
-                                    i18n("Forward selected messages as "
-                                         "a MIME digest?"), QString(), KGuiItem(i18n("Send Digest")), KGuiItem(i18n("Send")) )
+                                    i18n("Do you want to forward the selected messages as "
+                                         "attachments in one message (as a MIME digest) or as "
+                                         "individual messages?"), QString(), KGuiItem(i18n("Send As Digest")), KGuiItem(i18n("Send Individually")) )
         == KMessageBox::Yes) {
       uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
