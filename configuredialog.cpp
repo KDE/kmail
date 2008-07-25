@@ -1455,10 +1455,7 @@ QString AppearancePage::ColorsTab::helpAnchor() const {
 static const struct {
   const char * configName;
   const char * displayName;
-} colorNames[] = { // adjust setup() if you change this:
-  { "BackgroundColor", I18N_NOOP("Composer Background") },
-  { "AltBackgroundColor", I18N_NOOP("Alternative Background Color") },
-  { "ForegroundColor", I18N_NOOP("Normal Text") },
+} colorNames[] = { // adjust doLoadOther if you change this:
   { "QuotedText1", I18N_NOOP("Quoted Text - First Level") },
   { "QuotedText2", I18N_NOOP("Quoted Text - Second Level") },
   { "QuotedText3", I18N_NOOP("Quoted Text - Third Level") },
@@ -1550,9 +1547,6 @@ void AppearancePage::ColorsTab::doLoadOther() {
   KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
   static const QColor defaultColor[ numColorNames ] = {
-    scheme.background( KColorScheme::NormalBackground ).color(), // bg
-    scheme.background( KColorScheme::AlternateBackground ).color(), // alt bg
-    scheme.foreground( KColorScheme::NormalText ).color(), // fg
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
     QColor( 0x00, 0x70, 0x00 ), // quoted l2
     QColor( 0x00, 0x60, 0x00 ), // quoted l3

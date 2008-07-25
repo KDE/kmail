@@ -54,15 +54,13 @@ namespace KMail {
 
     mRecycleQuoteColors = reader.readEntry( "RecycleQuoteColors", false );
 
+    mForegroundColor = KColorScheme( QPalette::Active ).foreground().color();
+    mBackgroundColor = KColorScheme( QPalette::Active ).background().color();
     if ( !reader.readEntry( "defaultColors", true ) ) {
-      mForegroundColor =
-        reader.readEntry( "ForegroundColor", mForegroundColor );
       mLinkColor =
         reader.readEntry( "LinkColor", mLinkColor );
       mVisitedLinkColor =
         reader.readEntry( "FollowedColor", mVisitedLinkColor );
-      mBackgroundColor =
-        reader.readEntry( "BackgroundColor", mBackgroundColor );
       cPgpEncrH =
         reader.readEntry( "PGPMessageEncr", cPgpEncrH );
       cPgpOk1H  =

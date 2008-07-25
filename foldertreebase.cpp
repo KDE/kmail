@@ -105,7 +105,7 @@ int FolderTreeBase::dndMode(bool alwaysAsk)
 
 bool FolderTreeBase::event(QEvent * e)
 {
-  if ( e->type() == QEvent::ApplicationPaletteChange ) {
+  if ( e->type() == QEvent::PaletteChange ) {
      readColorConfig();
      return true;
   }
@@ -117,27 +117,17 @@ void FolderTreeBase::readColorConfig()
   KConfigGroup cg = KMKernel::config()->group( "Reader" );
 
   // Custom/System color support
-  QColor c1 = KColorScheme( QPalette::Active, KColorScheme::View ).foreground().color();
   QColor c2 = QColor( "blue" );
-  QColor c4 = KColorScheme( QPalette::Active, KColorScheme::View ).background().color();
   QColor c5 = QColor( "red" );
 
   if ( !cg.readEntry( "defaultColors", true ) ) {
-    mPaintInfo.colFore = cg.readEntry( "ForegroundColor", c1 );
     mPaintInfo.colUnread = cg.readEntry( "UnreadMessage", c2 );
-    mPaintInfo.colBack = cg.readEntry( "BackgroundColor", c4 );
     mPaintInfo.colCloseToQuota = cg.readEntry( "CloseToQuotaColor", c5 );
   }
   else {
-    mPaintInfo.colFore = c1;
     mPaintInfo.colUnread = c2;
-    mPaintInfo.colBack = c4;
     mPaintInfo.colCloseToQuota = c5;
   }
-  QPalette newPal = kapp->palette();
-  newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
-  newPal.setColor( QColorGroup::Text, mPaintInfo.colFore );
-  setPalette( newPal );
 }
 
 bool FolderTreeBase::hideLocalInbox() const

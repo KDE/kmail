@@ -514,13 +514,9 @@ void FavoriteFolderView::readColorConfig()
   FolderTreeBase::readColorConfig();
   // Custom/System color support
   KConfigGroup cg = KMKernel::config()->group( "Reader" );
-  QColor c = KColorScheme( QPalette::Normal, KColorScheme::View ).background(
-                           KColorScheme::AlternateBackground ).color();
-  if ( !cg.readEntry( "defaultColors", true ) )
-    mPaintInfo.colBack = cg.readEntry( "AltBackgroundColor", c );
-  else
-    mPaintInfo.colBack = c;
-
+  QColor backgroundColor  = KColorScheme( QPalette::Normal, KColorScheme::View ).background(
+                                          KColorScheme::AlternateBackground ).color();
+  mPaintInfo.colBack = backgroundColor;
   QPalette newPal = palette();
   newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
   setPalette( newPal );

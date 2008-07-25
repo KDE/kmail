@@ -435,7 +435,7 @@ void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
 bool KMHeaders::event(QEvent *e)
 {
   bool result = K3ListView::event(e);
-  if (e->type() == QEvent::ApplicationPaletteChange)
+  if (e->type() == QEvent::PaletteChange)
   {
      readColorConfig();
   }
@@ -448,40 +448,23 @@ void KMHeaders::readColorConfig (void)
 {
   // Custom/System colors
   KConfigGroup config( KMKernel::config(), "Reader" );
-  QColor c1=QColor(qApp->palette().color( QPalette::Text ));
   QColor c2=QColor("red");
   QColor c3=QColor("blue");
-  QColor c4=QColor(qApp->palette().color( QPalette::Base ));
   QColor c5=QColor(0,0x7F,0);
   QColor c6=QColor(0,0x98,0);
-  QColor c7=KColorScheme( QPalette::Active, KColorScheme::View ).background( KColorScheme::AlternateBackground ).color();
 
   if (!config.readEntry( "defaultColors", true ) ) {
-    mPaintInfo.colFore = config.readEntry( "ForegroundColor", c1 );
-    mPaintInfo.colBack = config.readEntry( "BackgroundColor", c4 );
-    QPalette newPal = qApp->palette();
-    newPal.setColor( QPalette::Base, mPaintInfo.colBack );
-    newPal.setColor( QPalette::Text, mPaintInfo.colFore );
-    setPalette( newPal );
     mPaintInfo.colNew = config.readEntry( "NewMessage", c2 );
     mPaintInfo.colUnread = config.readEntry( "UnreadMessage", c3 );
     mPaintInfo.colFlag = config.readEntry( "FlagMessage", c5 );
     mPaintInfo.colTodo = config.readEntry( "TodoMessage", c6 );
-    c7 = config.readEntry( "AltBackgroundColor", c7 );
   }
   else {
-    mPaintInfo.colFore = c1;
-    mPaintInfo.colBack = c4;
-    QPalette newPal = qApp->palette();
-    newPal.setColor( QPalette::Base, c4 );
-    newPal.setColor( QPalette::Text, c1 );
-    setPalette( newPal );
     mPaintInfo.colNew = c2;
     mPaintInfo.colUnread = c3;
     mPaintInfo.colFlag = c5;
     mPaintInfo.colTodo = c6;
   }
-  setAlternateBackground(c7);
 }
 
 //-----------------------------------------------------------------------------

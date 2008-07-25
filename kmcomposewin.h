@@ -154,15 +154,6 @@ class KMComposeWin : public KMail::Composer
    */
 
   private:
-    /**
-     * To catch palette changes
-     */
-    virtual bool event( QEvent *e );
-
-    /**
-     * update colors
-     */
-    void readColorConfig();
 
     /**
      * Write settings to app's config file.
@@ -799,7 +790,6 @@ class KMComposeWin : public KMail::Composer
     void slotUpdateSignatureAndEncrypionStateIndicators();
 
   private:
-    QColor mForeColor, mBackColor;
     QFont mSaveFont;
     QSplitter *mHeadersToEditorSplitter;
     QWidget* mHeadersArea;

@@ -530,45 +530,6 @@ void KMComposeWin::setBody( const QString &body )
 }
 
 //-----------------------------------------------------------------------------
-bool KMComposeWin::event( QEvent *e )
-{
-  if ( e->type() == QEvent::ApplicationPaletteChange ) {
-    readColorConfig();
-  }
-  return KMail::Composer::event( e );
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::readColorConfig( void )
-{
-  if ( GlobalSettings::self()->useDefaultColors() ) {
-    mForeColor = QColor( qApp->palette().color( QPalette::Text ) );
-    mBackColor = QColor( qApp->palette().color( QPalette::Base ) );
-  } else {
-    mForeColor = GlobalSettings::self()->foregroundColor();
-    mBackColor = GlobalSettings::self()->backgroundColor();
-  }
-
-  // Color setup
-  mPalette = qApp->palette();
-  mPalette.setColor( QPalette::Base, mBackColor );
-  mPalette.setColor( QPalette::Text, mForeColor );
-#ifdef __GNUC__
-# warning "FIXME: Do we need to call setDisabled/setActive/setInactive or are the setColor calls enough??"
-#endif
-  //   mPalette.setDisabled(cgrp);
-  //   mPalette.setActive(cgrp);
-  //   mPalette.setInactive(cgrp);
-
-  mEdtFrom->setPalette( mPalette );
-  mEdtReplyTo->setPalette( mPalette );
-  mEdtSubject->setPalette( mPalette );
-  mTransport->setPalette( mPalette );
-  mEditor->setPalette( mPalette );
-  mFcc->setPalette( mPalette );
-}
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::readConfig( void )
 {
   mDefCharset = KMMessage::defaultCharset();
@@ -584,8 +545,6 @@ void KMComposeWin::readConfig( void )
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   mRecipientsEditor->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
-
-  readColorConfig();
 
   if ( GlobalSettings::self()->useDefaultFonts() ) {
     mBodyFont = KGlobalSettings::generalFont();
@@ -983,9 +942,6 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
     aLbl->setFixedWidth( mLabelWidth );
     aLbl->setBuddy( aEdt );
     mGrid->addWidget( aLbl, aRow, 0 );
-    QPalette pal;
-    pal.setColor( aEdt->backgroundRole(), mBackColor );
-    aEdt->setPalette( pal );
     aEdt->show();
 
     if ( aBtn ) {
@@ -4139,7 +4095,7 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 
 void KMComposeWin::slotFormatReset()
 {
-  mEditor->setTextForegroundColor( mForeColor );
+  mEditor->setTextForegroundColor( palette().text().color() );
   mEditor->setFont( mSaveFont );
 }
 

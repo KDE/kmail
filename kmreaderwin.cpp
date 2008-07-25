@@ -907,7 +907,7 @@ void KMReaderWin::removeTempFiles()
 //-----------------------------------------------------------------------------
 bool KMReaderWin::event(QEvent *e)
 {
-  if (e->type() == QEvent::ApplicationPaletteChange)
+  if (e->type() == QEvent::PaletteChange)
   {
     delete mCSSHelper;
     mCSSHelper = new KMail::CSSHelper( mViewer->view() );
