@@ -194,7 +194,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
-  setUpdatesEnabled( false ); //Enabled again in readConfig()
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
@@ -536,7 +535,6 @@ void KMMainWidget::readConfig()
   // on startup, the layout is always new and we need to relayout the widgets
   bool layoutChanged = !mStartupDone;
 
-  setUpdatesEnabled( false );
   if ( mStartupDone )
   {
     writeConfig();
@@ -639,7 +637,6 @@ void KMMainWidget::readConfig()
   updateMessageMenu();
   updateFileMenu();
   toggleSystemTray();
-  setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
