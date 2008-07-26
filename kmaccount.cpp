@@ -384,7 +384,8 @@ bool KMAccount::runPrecommand(const QString &precommand)
   connect(&precommandProcess, SIGNAL(finished(bool)),
           SLOT(precommandExited(bool)));
 
-  kDebug(5006) <<"Running precommand" << precommand;
+  kDebug(5006) << "Running precommand" << precommand;
+  mPrecommandEventLoop = new QEventLoop();
   if ( !precommandProcess.start() )
     return false;
 
@@ -392,8 +393,9 @@ bool KMAccount::runPrecommand(const QString &precommand)
   // the precommand is running (which may take a while).
   // The exec call will block until the event loop is exited, which happens in
   // precommandExited().
-  mPrecommandEventLoop = new QEventLoop();
-  mPrecommandEventLoop->exec();
+  if ( mPrecommandEventLoop ) { // yes it can be 0 due to races with precommandProcess.start()
+    mPrecommandEventLoop->exec();
+  }
 
   return mPrecommandSuccess;
 }
@@ -407,7 +409,9 @@ void KMAccount::precommandExited(bool success)
   // Exit and delete the event loop. This makes sure the execution continues
   // in runPrecommand(), where the event loop was entered.
   mPrecommandEventLoop->exit();
-  delete mPrecommandEventLoop;
+
+  // Use deleteLater, because we are called inside of this very eventloop
+  mPrecommandEventLoop->deleteLater();
   mPrecommandEventLoop = 0;
 }
 
