@@ -938,8 +938,6 @@ void KMReaderWin::readConfig(void)
   mHtmlMail = reader.readEntry( "htmlMail", false );
   mHtmlLoadExternal = reader.readEntry( "htmlLoadExternal", false );
 
-  setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
-                             HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
   KToggleAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
   if ( raction )
     raction->setChecked( true );
@@ -979,6 +977,11 @@ void KMReaderWin::readConfig(void)
 
   readGlobalOverrideCodec();
 
+  // Note that this call triggers an update, see this call has to be at the
+  // bottom when all settings are already est.
+  setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
+                             HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
+
   if (message())
     update();
   KMMessage::readConfig();
@@ -991,11 +994,6 @@ void KMReaderWin::adjustLayout() {
   else
     mSplitter->insertWidget( 0, mMimePartTree );
   mSplitter->setSizes( mSplitterSizes );
-
-  if ( mMimeTreeMode == 2 && mMsgDisplay )
-    mMimePartTree->show();
-  else
-    mMimePartTree->hide();
 
   if ( mShowColorbar && mMsgDisplay )
     mColorBar->show();
