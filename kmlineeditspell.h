@@ -27,16 +27,18 @@
 
 class KMLineEdit : public KPIM::AddresseeLineEdit
 {
-    Q_OBJECT
-public:
-    explicit KMLineEdit(bool useCompletion, QWidget *parent = 0,
-    			const char *name = 0);
+  Q_OBJECT
 
-signals:
+  public:
+    explicit KMLineEdit( bool useCompletion, QWidget *parent = 0,
+                         const char *name = 0 );
+
+  signals:
     void focusUp();
     void focusDown();
 
-protected:
+  protected:
+
     // Inherited. Always called by the parent when this widget is created.
     virtual void loadContacts();
 
@@ -44,10 +46,10 @@ protected:
 
     virtual void contextMenuEvent( QContextMenuEvent*e );
 
-private slots:
+  private slots:
     void editRecentAddresses();
 
-private:
+  private:
     void dropEvent( QDropEvent *event );
     void insertEmails( const QStringList & emails );
 };
@@ -55,17 +57,18 @@ private:
 
 class KMLineEditSpell : public KMLineEdit
 {
-    Q_OBJECT
-public:
-    explicit KMLineEditSpell(bool useCompletion, QWidget *parent = 0,
-    			     const char *name = 0);
+  Q_OBJECT
+
+  public:
+    explicit KMLineEditSpell( bool useCompletion, QWidget *parent = 0,
+                              const char *name = 0 );
     void highLightWord( unsigned int length, unsigned int pos );
     void spellCheckDone( const QString &s );
     void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);
     void spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos);
 
- signals:
-  void subjectTextSpellChecked();
+  signals:
+    void subjectTextSpellChecked();
 };
 
 #endif // __KMAIL_KMLINEEDITSPELL_H__
