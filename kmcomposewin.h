@@ -71,7 +71,6 @@ class KRecentFilesAction;
 class MessageComposer;
 class RecipientsEditor;
 class KMLineEdit;
-class KMLineEditSpell;
 class KMAtmListViewItem;
 class SnippetWidget;
 
@@ -255,15 +254,6 @@ class KMComposeWin : public KMail::Composer
       */
      static QString prettyMimeType( const QString &type );
 
-  private: // kmedit:
-    KMLineEditSpell *sujectLineWidget() const { return mEdtSubject;}
-    void setSubjectTextWasSpellChecked( bool _spell ) {
-      mSubjectTextWasSpellChecked = _spell;
-    }
-    bool subjectTextWasSpellChecked() const {
-      return mSubjectTextWasSpellChecked;
-    }
-
   public: // callback
     /** Disabled signing and encryption completely for this composer window. */
     void setSigningAndEncryptionDisabled( bool v )
@@ -343,7 +333,6 @@ class KMComposeWin : public KMail::Composer
      * Check spelling of text.
      */
     void slotSpellcheckConfig();
-    void slotSubjectTextSpellChecked();
 
     /**
      * Change crypto plugin to be used for signing/encrypting messages,
@@ -682,7 +671,7 @@ class KMComposeWin : public KMail::Composer
     KPIMIdentities::IdentityCombo    *mIdentity;
     KMFolderComboBox *mFcc;
     KMLineEdit *mEdtFrom, *mEdtReplyTo;
-    KMLineEditSpell *mEdtSubject;
+    KMLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
@@ -753,8 +742,6 @@ class KMComposeWin : public KMail::Composer
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
     }
-
-    bool mSubjectTextWasSpellChecked;
 
     QString addQuotesToText( const QString &inputText ) const;
     // helper method for rethinkFields

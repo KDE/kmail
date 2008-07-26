@@ -54,21 +54,4 @@ class KMLineEdit : public KPIM::AddresseeLineEdit
     void insertEmails( const QStringList & emails );
 };
 
-
-class KMLineEditSpell : public KMLineEdit
-{
-  Q_OBJECT
-
-  public:
-    explicit KMLineEditSpell( bool useCompletion, QWidget *parent = 0,
-                              const char *name = 0 );
-    void highLightWord( unsigned int length, unsigned int pos );
-    void spellCheckDone( const QString &s );
-    void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);
-    void spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos);
-
-  signals:
-    void subjectTextSpellChecked();
-};
-
 #endif // __KMAIL_KMLINEEDITSPELL_H__

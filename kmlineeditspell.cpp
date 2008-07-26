@@ -210,40 +210,4 @@ void KMLineEdit::loadContacts()
   }
 }
 
-
-KMLineEditSpell::KMLineEditSpell(bool useCompletion,
-                       QWidget *parent, const char *name)
-    : KMLineEdit(useCompletion,parent,name)
-{
-}
-
-
-void KMLineEditSpell::highLightWord( unsigned int length, unsigned int pos )
-{
-  setSelection ( pos, length );
-}
-
-void KMLineEditSpell::spellCheckDone( const QString &s )
-{
-  if ( s != text() )
-    setText( s );
-}
-
-void KMLineEditSpell::spellCheckerMisspelling( const QString &_text, const QStringList&, unsigned int pos)
-{
-  highLightWord( _text.length(),pos );
-}
-
-void KMLineEditSpell::spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos)
-{
-  if ( old!= corr )
-  {
-    setSelection ( pos, old.length() );
-    insert( corr );
-    setSelection ( pos, corr.length() );
-    emit subjectTextSpellChecked();
-  }
-}
-
-
 #include "kmlineeditspell.moc"

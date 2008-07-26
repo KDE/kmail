@@ -169,7 +169,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
   QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
-  mSubjectTextWasSpellChecked = false;
   if ( kmkernel->xmlGuiInstance().isValid() ) {
     setComponentData( kmkernel->xmlGuiInstance() );
   }
@@ -204,7 +203,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
            SLOT( slotCompletionModeChanged( KGlobalSettings::Completion ) ) );
   connect( mRecipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
 
-  mEdtSubject = new KMLineEditSpell( false, mHeadersArea, "subjectLine" );
+  mEdtSubject = new KMLineEdit( false, mHeadersArea, "subjectLine" );
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
   mLblFcc = new QLabel( i18n("&Sent-Mail folder:"), mHeadersArea );
@@ -334,8 +333,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   applyMainWindowSettings( KMKernel::config()->group( "Composer") );
 
-  connect( mEdtSubject, SIGNAL( subjectTextSpellChecked() ),
-           SLOT( slotSubjectTextSpellChecked() ) );
   connect( mEdtSubject, SIGNAL(textChanged(const QString&)),
            SLOT(slotUpdWinTitle(const QString&)) );
   connect( mIdentity, SIGNAL(identityChanged(uint)),
@@ -3803,12 +3800,6 @@ void KMComposeWin::htmlToolBarVisibilityChanged( bool visible )
     enableHtml();
   else
     disableHtml();
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSubjectTextSpellChecked()
-{
-  mSubjectTextWasSpellChecked = true;
 }
 
 //-----------------------------------------------------------------------------
