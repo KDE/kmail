@@ -192,8 +192,12 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
     // Collect all accounts
     AccountManager *am = kmkernel->acctMgr();
     assert( am );
-    for ( KMAccount *a = am->first(); a; a = am->next() )
-        mAccountList.append( a );
+    QList<KMAccount*>::iterator accountIt = am->begin();
+    while ( accountIt != am->end() ) {
+      KMAccount *account = *accountIt;
+      ++accountIt;
+      mAccountList.append( account );
+    }
 
     mEdit = new QTextEdit( this );
     mEdit->setReadOnly( true );

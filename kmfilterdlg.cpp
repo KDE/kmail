@@ -561,14 +561,16 @@ void KMFilterDlg::slotUpdateAccountList()
   // slotApplicableAccountsChanged(), which will read the incomplete item
   // state and write that back to the filter
   mAccountList->blockSignals( true );
-  for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
-       a = kmkernel->acctMgr()->next() ) {
+  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
+  while ( accountIt != kmkernel->acctMgr()->end() ) {
+    KMAccount *account = *accountIt;
+    ++accountIt;
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
-    listItem->setText( 0, a->name() );
-    listItem->setText( 1, KAccount::displayNameForType( a->type() ) );
-    listItem->setText( 2, QString( "%1" ).arg( a->id() ) );
+    listItem->setText( 0, account->name() );
+    listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
+    listItem->setText( 2, QString( "%1" ).arg( account->id() ) );
     if ( mFilter )
-      listItem->setCheckState( 0, mFilter->applyOnAccount( a->id() ) ?
+      listItem->setCheckState( 0, mFilter->applyOnAccount( account->id() ) ?
                                   Qt::Checked : Qt::Unchecked );
     top = listItem;
   }

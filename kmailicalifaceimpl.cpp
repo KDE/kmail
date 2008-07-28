@@ -652,12 +652,13 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
 static int dimapAccountCount()
 {
   KMail::AccountManager *mgr = kmkernel->acctMgr();
-  KMAccount *account = mgr->first();
+  QList<KMAccount*>::iterator accountIt = mgr->begin();
   int count = 0;
-  while ( account ) {
+  while ( accountIt != mgr->end() ) {
+    KMAccount *account = *accountIt;
+    ++accountIt;
     if ( dynamic_cast<KMAcctCachedImap*>( account ) )
       ++count;
-    account = mgr->next();
   }
   return count;
 }

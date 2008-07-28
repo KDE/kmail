@@ -3979,8 +3979,10 @@ void KMMainWidget::slotFolderRemoved( KMFolder *folder )
 void KMMainWidget::initializeIMAPActions( bool setState /* false the first time, true later on */ )
 {
   bool hasImapAccount = false;
-  for( KMAccount *a = kmkernel->acctMgr()->first(); a;
-       a = kmkernel->acctMgr()->next() ) {
+  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
+  while ( accountIt != kmkernel->acctMgr()->end() ) {
+    KMAccount *a = *accountIt;
+    ++accountIt;
     if ( a->type() == KAccount::DImap ) {
       hasImapAccount = true;
       break;

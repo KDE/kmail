@@ -1146,13 +1146,15 @@ void AccountsPage::ReceivingTab::doLoadOther() {
   mAccountList->clear();
   QTreeWidgetItem *top = 0;
 
-  for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
-       a = kmkernel->acctMgr()->next() ) {
+  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
+  while ( accountIt != kmkernel->acctMgr()->end() ) {
+    KMAccount *account = *accountIt;
+    ++accountIt;
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
-    listItem->setText( 0, a->name() );
-    listItem->setText( 1, KAccount::displayNameForType( a->type() ) );
-    if( a->folder() )
-      listItem->setText( 2, a->folder()->label() );
+    listItem->setText( 0, account->name() );
+    listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
+    if( account->folder() )
+      listItem->setText( 2, account->folder()->label() );
     top = listItem;
   }
   QTreeWidgetItem *listItem = mAccountList->topLevelItemCount() == 0 ?
@@ -5298,14 +5300,16 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
     selectedAccount = kmkernel->acctMgr()->find( accountId );
   else {
     // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
-    for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
-         a = kmkernel->acctMgr()->next() ) {
-      if( a->folder() && a->folder()->child() ) {
+    QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
+    while ( accountIt != kmkernel->acctMgr()->end() ) {
+      KMAccount *account = *accountIt;
+      ++accountIt;
+      if( account->folder() && account->folder()->child() ) {
         // Look inside that folder for an INBOX
         KMFolderNode *node = 0;
         QList<KMFolderNode*>::const_iterator it;
-        for ( it = a->folder()->child()->constBegin();
-              it != a->folder()->child()->constEnd();
+        for ( it = account->folder()->child()->constBegin();
+              it != account->folder()->child()->constEnd();
               ++it ) {
           node = *it;
           if (!node->isDir() && node->name() == "INBOX")
@@ -5313,7 +5317,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
         }
 
         if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
-          selectedAccount = a;
+          selectedAccount = account;
           break;
         }
       }
@@ -5363,24 +5367,28 @@ void MiscPage::GroupwareTab::save()
     if ( folder )
       folderId = folder->idString();
 
-    KMAccount* account = 0;
+    KMAccount* foundAccount = 0;
     // Didn't find an easy way to find the account for a given folder...
     // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
-    for( KMAccount *a = kmkernel->acctMgr()->first();
-         a && !account; // stop when found
-         a = kmkernel->acctMgr()->next() ) {
-      if( a->folder() && a->folder()->child() ) {
-        for ( QList<KMFolderNode*>::iterator it = a->folder()->child()->begin();
-              it != a->folder()->child()->end();
+    QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
+    while ( accountIt != kmkernel->acctMgr()->end() ) {
+      KMAccount *curAccount = *accountIt;
+      ++accountIt;
+      if( curAccount->folder() && curAccount->folder()->child() ) {
+        for ( QList<KMFolderNode*>::iterator it = curAccount->folder()->child()->begin();
+              it != curAccount->folder()->child()->end();
               ++it ) {
           if ( *it && static_cast<KMFolder*>( *it ) == folder ) {
-            account = a;
+            foundAccount = curAccount;
             break;
           }
         }
       }
+      if ( foundAccount )
+        break;
     }
-    GlobalSettings::self()->setTheIMAPResourceAccount( account ? account->id() : 0 );
+    GlobalSettings::self()->setTheIMAPResourceAccount( foundAccount ?
+                                                       foundAccount->id() : 0 );
   } else {
     // Inbox folder of the selected account
     KMAccount* acct = mAccountCombo->currentAccount();

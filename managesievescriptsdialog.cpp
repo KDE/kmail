@@ -108,7 +108,10 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
   KMail::AccountManager * am = kmkernel->acctMgr();
   assert( am );
   Q3CheckListItem * last = 0;
-  for ( KMAccount * a = am->first() ; a ; a = am->next() ) {
+  QList<KMAccount*>::iterator accountIt = am->begin();
+  while ( accountIt != am->end() ) {
+    KMAccount *a = *accountIt;
+    ++accountIt;
     last = new Q3CheckListItem( mListView, last, a->name(), Q3CheckListItem::Controller );
     last->setPixmap( 0, SmallIcon( "network-server" ) );
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {

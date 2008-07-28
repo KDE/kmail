@@ -1511,12 +1511,15 @@ void KMKernel::cleanupImapFolders()
   }
 
   the_imapFolderMgr->quiet(true);
-  for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
-  {
+  QList<KMAccount*>::iterator accountIt = the_acctMgr->begin();
+  while ( accountIt != the_acctMgr->end() ) {
+    acct = *accountIt;
+    ++accountIt;
     KMFolderImap *fld;
     KMAcctImap *imapAcct;
 
-    if (acct->type() != KAccount::Imap) continue;
+    if (acct->type() != KAccount::Imap)
+      continue;
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
       ->findOrCreate(QString::number(acct->id()), false, acct->id())->storage());
     fld->setNoContent(true);
@@ -1529,8 +1532,11 @@ void KMKernel::cleanupImapFolders()
   the_imapFolderMgr->quiet(false);
 
   the_dimapFolderMgr->quiet( true );
-  for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
-  {
+  accountIt = the_acctMgr->begin();
+  while ( accountIt != the_acctMgr->end() ) {
+    acct = *accountIt;
+    ++accountIt;
+
     KMFolderCachedImap *cfld = 0;
     KMAcctCachedImap *cachedImapAcct;
 
@@ -2077,8 +2083,10 @@ void KMKernel::slotEmptyTrash()
     return;
   }
 
-  for (KMAccount* acct = acctMgr()->first(); acct; acct = acctMgr()->next())
-  {
+  QList<KMAccount*>::iterator accountIt = acctMgr()->begin();
+  while ( accountIt != acctMgr()->end() ) {
+    KMAccount *acct = *accountIt;
+    ++accountIt;
     KMFolder* trash = findFolderById(acct->trash());
     if (trash)
     {

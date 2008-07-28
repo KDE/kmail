@@ -95,9 +95,11 @@ KMAccount* AccountComboBox::currentAccount() const
 
 QList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
 {
-  QList<KMAccount *> lst;
-  for( KMAccount *a = kmkernel->acctMgr()->first(); a;
-       a = kmkernel->acctMgr()->next() ) {
+  QList<KMAccount*> lst;
+  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
+  while ( accountIt != kmkernel->acctMgr()->end() ) {
+    KMAccount *a = *accountIt;
+    ++accountIt;
     if ( a && a->type() == KAccount::DImap ) { //// ## proko2 hack. Need a list of allowed account types as ctor param
       lst.append( a );
     }

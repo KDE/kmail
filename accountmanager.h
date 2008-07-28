@@ -93,16 +93,15 @@ class KMAIL_EXPORT AccountManager: public QObject
     bool remove( KMAccount *account );
 
     /**
-      First account of the list.
-    */
-    const KMAccount *first() const { return const_cast<AccountManager*>(this)->first(); }
-    KMAccount *first();
+     * @return an iterator pointing to the first account.
+     */
+    QList<KMAccount*>::iterator begin();
 
     /**
-      Next account of the list/
-    */
-    const KMAccount *next() const { return const_cast<AccountManager*>(this)->next(); }
-    KMAccount *next();
+     * @return an iterator pointing to the imaginary item after the last item
+     *         in the account list.
+     */
+    QList<KMAccount*>::iterator end();
 
     /**
       Processes all accounts looking for new mail.
@@ -164,7 +163,6 @@ class KMAIL_EXPORT AccountManager: public QObject
     uint createId();
 
     AccountList   mAcctList;
-    AccountList::Iterator mPtrListInterfaceProxyIterator;
     AccountList   mAcctChecking;
     AccountList   mAcctTodo;
     bool mNewMailArrived;

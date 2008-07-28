@@ -515,8 +515,10 @@ void AntiSpamWizard::checkToolAvailability()
       kDebug(5006) <<"Testing for server pattern:" << pattern;
 
       AccountManager* mgr = kmkernel->acctMgr();
-      KMAccount* account = mgr->first();
-      while ( account ) {
+      QList<KMAccount*>::iterator accountIt = mgr->begin();
+      while ( accountIt != mgr->end() ) {
+        KMAccount *account = *accountIt;
+        ++accountIt;
         if ( account->type() == KAccount::Pop ||
              account->type() == KAccount::Imap ||
              account->type() == KAccount::DImap ) {
@@ -526,7 +528,6 @@ void AntiSpamWizard::checkToolAvailability()
             found = true;
           }
         }
-        account = mgr->next();
       }
     }
     else {

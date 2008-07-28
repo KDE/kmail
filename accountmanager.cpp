@@ -282,26 +282,16 @@ KMAccount* AccountManager::find( const uint id ) const
   return 0;
 }
 
-
 //-----------------------------------------------------------------------------
-KMAccount* AccountManager::first()
+QList<KMAccount*>::iterator AccountManager::begin()
 {
-  if ( !mAcctList.empty() ) {
-    mPtrListInterfaceProxyIterator = mAcctList.begin();
-    return *mPtrListInterfaceProxyIterator;
-  } else {
-    return 0;
-  }
+  return mAcctList.begin();
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* AccountManager::next()
+QList<KMAccount*>::iterator AccountManager::end()
 {
-    ++mPtrListInterfaceProxyIterator;
-    if ( mPtrListInterfaceProxyIterator == mAcctList.end() )
-        return 0;
-    else
-        return *mPtrListInterfaceProxyIterator;
+  return mAcctList.end();
 }
 
 //-----------------------------------------------------------------------------

@@ -515,17 +515,21 @@ namespace KMail {
   KUrl Vacation::findURL() const {
     AccountManager * am = kmkernel->acctMgr();
     assert( am );
-    for ( KMAccount * a = am->first() ; a ; a = am->next() )
-      if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( a ) ) {
+    QList<KMAccount*>::iterator accountIt = am->begin();
+    while ( accountIt != am->end() ) {
+      KMAccount *account = *accountIt;
+      ++accountIt;
+      if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( account ) ) {
         KUrl u = findUrlForAccount( iab );
         if ( !u.isEmpty() )
           return u;
       }
+    }
     return KUrl();
   }
 
   bool Vacation::parseScript( const QString & script, QString & messageText,
-			      int & notificationInterval, QStringList & aliases,
+                              int & notificationInterval, QStringList & aliases,
                               bool & sendForSpam, QString & domainName ) {
     if ( script.trimmed().isEmpty() ) {
       messageText = defaultMessageText();
