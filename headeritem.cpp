@@ -372,8 +372,8 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   MessageStatus status = mMsgBase->status();
 
   QColorGroup _cg( cg );
-  QColor c = _cg.color( QPalette::Text );
-  QColor *color = const_cast<QColor *>( &headers->paintInfo()->colFore );
+  QColor originalColor = _cg.color( QPalette::Text );
+  QColor color = KColorScheme( QPalette::Active ).foreground().color();
   QFont font = p->font();
   int weight = font.weight();
 
@@ -388,7 +388,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
     if ( firstTag ) {
       tmp_fgcolor = firstTag->textColor();
       if ( tmp_fgcolor.isValid() ) {
-        color = &tmp_fgcolor;
+        color = tmp_fgcolor;
       }
       QFont tmp_font = firstTag->textFont();
       if ( tmp_font != QFont() ) {
@@ -401,23 +401,23 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   // for color and font family "important" overrides "new" overrides "unread"
   // overrides "todo" for the weight we use the maximal weight
   if ( status.isTodo() ) {
-    color = const_cast<QColor*>( &headers->paintInfo()->colTodo );
+    color = headers->paintInfo()->colTodo;
     font = headers->todoFont();
     weight = qMax( weight, font.weight() );
   }
   if ( status.isUnread() ) {
-    color = const_cast<QColor*>( &headers->paintInfo()->colUnread );
+    color = headers->paintInfo()->colUnread;
     font = headers->unreadFont();
     weight = qMax( weight, font.weight() );
   }
   if ( status.isNew() ) {
-    color = const_cast<QColor*>( &headers->paintInfo()->colNew );
+    color = headers->paintInfo()->colNew;
     font = headers->newFont();
     weight = qMax( weight, font.weight() );
   }
 
   if ( status.isImportant() ) {
-    color = const_cast<QColor*>( &headers->paintInfo()->colFlag );
+    color = headers->paintInfo()->colFlag;
     font = headers->importantFont();
     weight = qMax( weight, font.weight() );
   }
@@ -427,11 +427,11 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
 
   QColor cdisabled = KGlobalSettings::inactiveTextColor();
   if ( headers->isMessageCut( msgSerNum() ) ) {
-    color = &cdisabled;
+    color = cdisabled;
   }
 
   // set color and font
-  _cg.setColor( QPalette::Text, *color );
+  _cg.setColor( QPalette::Text, color );
   font.setWeight( weight );
   p->setFont( font );
 
@@ -443,7 +443,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   }
 
   // reset color
-  _cg.setColor( QPalette::Text, c );
+  _cg.setColor( QPalette::Text, originalColor );
 }
 
 QString HeaderItem::generate_key( KMHeaders *headers,
