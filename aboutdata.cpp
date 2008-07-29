@@ -45,6 +45,8 @@ namespace KMail {
   };
 
   // This file should not be changed by anybody other than the maintainer
+  // If you change the maintainer here, change it in the MAINTAINERS file in the
+  // top level kdepim folder as well.
 
   static const about_data authors[] = {
     { "Thomas McGuire", I18N_NOOP("Maintainer"),
