@@ -510,8 +510,11 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
   if ( commandLine.isEmpty() )
+  {
+    qDeleteAll( atmList );
+    atmList.clear();
     return ErrorButGoOn;
-
+  }
   // The parentheses force the creation of a subshell
   // in which the user-specified command is executed.
   // This is to really catch all output of the command as well
