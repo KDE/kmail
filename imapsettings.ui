@@ -37,9 +37,6 @@
        <bold>false</bold>
       </font>
      </property>
-     <property name="whatsThis" >
-      <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
-     </property>
      <property name="currentIndex" >
       <number>0</number>
      </property>
@@ -142,6 +139,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="whatsThis" >
+           <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
          </property>
         </widget>
        </item>
