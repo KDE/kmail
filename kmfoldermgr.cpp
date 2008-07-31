@@ -331,20 +331,22 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr,
 //-----------------------------------------------------------------------------
 void KMFolderMgr::remove(KMFolder* aFolder)
 {
-  if (!aFolder) return;
+  if ( !aFolder )
+    return;
+
   // remember the original folder to trigger contentsChanged later
-  if (!mRemoveOrig) mRemoveOrig = aFolder;
-  if (aFolder->child())
+  if ( !mRemoveOrig )
+    mRemoveOrig = aFolder;
+
+  if ( aFolder->child() )
   {
     // call remove for every child
-
-    QList<KMFolderNode*>::const_iterator it;
-    for ( it = (*aFolder->child()).begin(); it != (*aFolder->child()).end(); ++it )
-    {
-      KMFolderNode *node = *it;
-      if (node->isDir()) continue;
-      KMFolder *folder = static_cast<KMFolder*>(node);
-      remove(folder);
+    KMFolderNodeList childs = *aFolder->child();
+    foreach( KMFolderNode *child, childs ) {
+      if ( child->isDir() )
+        continue;
+      KMFolder *folder = static_cast<KMFolder*>( child );
+      remove( folder );
     }
   }
   emit folderRemoved(aFolder);
