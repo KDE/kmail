@@ -233,6 +233,7 @@ namespace KMail {
   // If you change the ordering here; also do it in the enum below
   static const MessageStatus StatusValues[] = {
     { I18N_NOOP2( "message status", "Important" ),              "emblem-important"    },
+    { I18N_NOOP2( "message status", "Action Item" ),            "mail-task"           },
     { I18N_NOOP2( "message status", "New" ),                    "mail-unread-new"     },
     { I18N_NOOP2( "message status", "Unread" ),                 "mail-unread"         },
     { I18N_NOOP2( "message status", "Read" ),                   "mail-read"           },
@@ -245,26 +246,25 @@ namespace KMail {
     { I18N_NOOP2( "message status", "Ignored" ),                "mail-thread-ignored" },
     { I18N_NOOP2( "message status", "Spam" ),                   "mail-mark-junk"      },
     { I18N_NOOP2( "message status", "Ham" ),                    "mail-mark-notjunk"   },
-    { I18N_NOOP2( "message status", "Action Item" ),            "mail-task"           },
-    { I18N_NOOP2( "message status", "Has Attachment"),          "mail-attachment"     }
+    { I18N_NOOP2( "message status", "Has Attachment"),          "mail-attachment"     } //must be last
   };
   // If you change the ordering here; also do it in the array above
   enum StatusValueTypes {
     StatusImportant = 0,
-    StatusNew = 1,
-    StatusUnread = 2,
-    StatusRead = 3,
-    StatusDeleted = 4,
-    StatusReplied = 5,
-    StatusForwarded = 6,
-    StatusQueued = 7,
-    StatusSent = 8,
-    StatusWatched = 9,
-    StatusIgnored = 10,
-    StatusSpam = 11,
-    StatusHam = 12,
-    StatusToAct = 13,
-    StatusHasAttachment = 14
+    StatusToAct = 1,
+    StatusNew = 2,
+    StatusUnread = 3,
+    StatusRead = 4,
+    StatusDeleted = 5,
+    StatusReplied = 6,
+    StatusForwarded = 7,
+    StatusQueued = 8,
+    StatusSent = 9,
+    StatusWatched = 10,
+    StatusIgnored = 11,
+    StatusSpam = 12,
+    StatusHam = 13,
+    StatusHasAttachment = 14 //must be last
   };
 
   static const int StatusValueCount =
