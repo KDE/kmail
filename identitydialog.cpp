@@ -466,7 +466,6 @@ namespace KMail {
 
     connect( tabWidget, SIGNAL(currentChanged(QWidget*)),
              SLOT(slotAboutToShow(QWidget*)) );
-    connect( this, SIGNAL(okClicked()),SLOT(slotOk()));
     setHelp( QString(), "kmail" );
   }
 
@@ -545,8 +544,13 @@ namespace KMail {
     return true;
   }
 
-  void IdentityDialog::slotOk()
+  void IdentityDialog::slotButtonClicked( int button )
   {
+    if ( button != KDialog::Ok ) {
+      KDialog::slotButtonClicked( button );
+      return;
+    }
+
     const QString email = mEmailEdit->text().trimmed();
 
     // Validate email addresses
@@ -605,14 +609,16 @@ namespace KMail {
       err = true;
     }
 
-    if ( err )
+    if ( err ) {
       if ( KMessageBox::warningContinueCancel( this, msg,
                                                i18n("Email Address Not Found in Key/Certificates"),
                                                KStandardGuiItem::cont(),
                                                KStandardGuiItem::cancel(),
                                                "warn_email_not_in_certificate" )
-           != KMessageBox::Continue)
+           != KMessageBox::Continue) {
         return;
+      }
+    }
 
 
     if ( mSignatureConfigurator->isSignatureEnabled() &&
@@ -625,7 +631,7 @@ namespace KMail {
       }
     }
 
-    return;
+    accept();
   }
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,

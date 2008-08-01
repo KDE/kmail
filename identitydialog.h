@@ -76,8 +76,9 @@ namespace KMail {
 
   protected slots:
     void slotAboutToShow( QWidget * w );
+
     /*! \reimp */
-    void slotOk();
+    virtual void slotButtonClicked( int button );
 
     // copy default templates to identity templates
     void slotCopyGlobal();
