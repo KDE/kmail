@@ -451,11 +451,11 @@ void KMFilterMgr::appendFilters( const QList<KMFilter*> &filters,
   if ( replaceIfNameExists ) {
     QList<KMFilter*>::const_iterator it1 = filters.begin();
     for ( ; it1 != filters.end() ; ++it1 ) {
-      QList<KMFilter*>::const_iterator it2 = mFilters.begin();
-      for ( ; it2 != mFilters.end() ; ++it2 ) {
-        if ( (*it1)->name() == (*it2)->name() ) {
-          mFilters.removeAll( (*it2) );
-          it2 = mFilters.constBegin();
+      for ( int i = 0; i < mFilters.count(); i++ ) {
+        KMFilter *filter = mFilters[i];
+        if ( (*it1)->name() == filter->name() ) {
+          mFilters.removeAll( filter );
+          i = 0;
         }
       }
     }
