@@ -81,8 +81,10 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
            this, SLOT(slotNoQuoteReplyToMsg()) );
 
 
-  mCreateTodoAction = new KAction( KIcon("task-new"), i18n("Create To-do/Reminder..."), this );
+  mCreateTodoAction = new KAction( KIcon( "task-new" ), i18n( "Create To-do/Reminder..." ), this );
   mCreateTodoAction->setIconText( i18n( "Create To-do" ) );
+  mCreateTodoAction->setToolTip( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
+  mCreateTodoAction->setWhatsThis( i18n( "This option starts the KOrganizer to-do editor with initial values taken from the currently selected message. Then you can edit the to-do to your liking before saving it to your calendar." ) );
   mActionCollection->addAction( "create_todo", mCreateTodoAction );
   connect( mCreateTodoAction, SIGNAL(activated()),
            this, SLOT(slotCreateTodo()) );
@@ -125,13 +127,13 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
   mActionCollection->addAction( "status_flag", mToggleFlagAction );
   mStatusMenu->addAction( mToggleFlagAction );
 
-  mToggleTodoAction = new KToggleAction( KIcon("mail-mark-task"),
-                                         i18n("Mark Message as &Action Item"), this );
-  connect( mToggleTodoAction, SIGNAL(activated()),
-           this, SLOT(slotSetMsgStatusTodo()) );
-  mToggleTodoAction->setCheckedState( KGuiItem(i18n("Remove &Action Item Message Mark")) );
-  mActionCollection->addAction( "status_todo", mToggleTodoAction );
-  mStatusMenu->addAction( mToggleTodoAction );
+  mToggleToActAction = new KToggleAction( KIcon("mail-mark-task"),
+                                          i18n("Mark Message as &Action Item"), this );
+  connect( mToggleToActAction, SIGNAL(activated()),
+           this, SLOT(slotSetMsgStatusToAct()) );
+  mToggleToActAction->setCheckedState( KGuiItem(i18n("Remove &Action Item Message Mark")) );
+  mActionCollection->addAction( "status_toact", mToggleToActAction );
+  mStatusMenu->addAction( mToggleToActAction );
 
   mEditAction = new KAction( KIcon("accessories-text-editor"), i18n("&Edit Message"), this );
   mActionCollection->addAction( "edit", mEditAction );
@@ -182,10 +184,10 @@ void MessageActions::updateActions()
 
   mStatusMenu->setEnabled( multiVisible );
   mToggleFlagAction->setEnabled( flagsAvailable );
-  mToggleTodoAction->setEnabled( flagsAvailable );
+  mToggleToActAction->setEnabled( flagsAvailable );
 
   if ( mCurrentMessage ) {
-    mToggleTodoAction->setChecked( mCurrentMessage->status().isTodo() );
+    mToggleToActAction->setChecked( mCurrentMessage->status().isToAct() );
     mToggleFlagAction->setChecked( mCurrentMessage->status().isImportant() );
   }
 
@@ -253,9 +255,9 @@ void MessageActions::slotSetMsgStatusFlag()
   setMessageStatus( KPIM::MessageStatus::statusImportant(), true );
 }
 
-void MessageActions::slotSetMsgStatusTodo()
+void MessageActions::slotSetMsgStatusToAct()
 {
-  setMessageStatus( KPIM::MessageStatus::statusTodo(), true );
+  setMessageStatus( KPIM::MessageStatus::statusToAct(), true );
 }
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )

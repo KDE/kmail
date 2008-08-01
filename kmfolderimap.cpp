@@ -1469,7 +1469,7 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int sup
     { 2, KPIM::MessageStatus::statusReplied(), true },
     { 4, KPIM::MessageStatus::statusImportant(), true },
     { 128, KPIM::MessageStatus::statusForwarded(), false },
-    { 256, KPIM::MessageStatus::statusTodo(), false },
+    { 256, KPIM::MessageStatus::statusToAct(), false },
     { 512, KPIM::MessageStatus::statusWatched(), false },
     { 1024, KPIM::MessageStatus::statusIgnored(), false }
   };
@@ -1527,7 +1527,7 @@ QString KMFolderImap::statusToFlags( const MessageStatus& status, int supportedF
     // non standard flags
     if ( status.isForwarded() && ((supportedFlags & 64) || (supportedFlags & 128)) )
       flags += "$FORWARDED ";
-    if ( status.isTodo() && ((supportedFlags & 64) || (supportedFlags & 256)) )
+    if ( status.isToAct() && ((supportedFlags & 64) || (supportedFlags & 256)) )
       flags += "$TODO ";
     if ( status.isWatched() && ((supportedFlags & 64) || (supportedFlags & 512)) )
       flags += "$WATCHED ";

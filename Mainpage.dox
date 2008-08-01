@@ -504,7 +504,7 @@ Currently allocated bits for the Status BitField are:
     20..23	     0001: FullySigned, 0010: PartiallySigned, 1xxx: Problem
 
     # "workflow stati":
-    24..25	     01: Important, 10: ToDo, 11: Later (from Moz/Evo)
+    24..25	     01: Important, 10: ToAct, 11: Later (from Moz/Evo)
     26..27	     01: Work, 10: Personal, 11: reserved (dto.)
     28..29	     01: ThreadWatched, 10: ThreadIgnored, 11: reserved
     30..31	     reserved

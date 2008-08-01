@@ -190,7 +190,7 @@ public:
   QFont newFont() const { return mNewFont; }
   QFont unreadFont() const { return mUnreadFont; }
   QFont importantFont() const { return mImportantFont; }
-  QFont todoFont() const { return mTodoFont; }
+  QFont toActFont() const { return mToActFont; }
   QFont dateFont() const { return mDateFont; }
 
   /**
@@ -303,7 +303,7 @@ protected:
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
     *pixFiller, *pixAttachment,
-    *pixReadFwd, *pixReadReplied, *pixReadFwdReplied,*pixTodo;
+    *pixReadFwd, *pixReadReplied, *pixReadFwdReplied,*pixToAct;
 
   /** Look for color changes */
   virtual bool event(QEvent *e);
@@ -451,7 +451,7 @@ private:
   /** Current colours and backing pixmap */
   KPaintInfo mPaintInfo;
 
-  QFont mNewFont, mUnreadFont, mImportantFont, mDateFont,mTodoFont;
+  QFont mNewFont, mUnreadFont, mImportantFont, mDateFont,mToActFont;
 
   /** Icons shown in header */
   static QIcon *up, *down;

@@ -57,7 +57,7 @@ class KMMessageTagDescription
       @param aName Visible name for the tag
       @param aPriority Priority of the tag. 0 is the highest. Used in defining
             which tag to modify the appearance if the message has multiple
-            tags. Note that Important and Todo flags still dominate tags.
+            tags. Note that Important and ToAct flags still dominate tags.
       @param aTextColor Text color
       @param aBackgroundColor Background color.
       @param aTextFont Font of the text

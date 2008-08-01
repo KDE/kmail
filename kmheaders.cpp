@@ -85,7 +85,7 @@ QPixmap* KMHeaders::pixDel = 0;
 QPixmap* KMHeaders::pixRead = 0;
 QPixmap* KMHeaders::pixRep = 0;
 QPixmap* KMHeaders::pixQueued = 0;
-QPixmap* KMHeaders::pixTodo = 0;
+QPixmap* KMHeaders::pixToAct = 0;
 QPixmap* KMHeaders::pixSent = 0;
 QPixmap* KMHeaders::pixFwd = 0;
 QPixmap* KMHeaders::pixFlag = 0;
@@ -147,7 +147,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   mColumns.insert(act, KPaintInfo::COL_IMPORTANT);
   act = mPopup->addAction(i18n("Action Item"));
   act->setCheckable(true);
-  mColumns.insert(act, KPaintInfo::COL_TODO);
+  mColumns.insert(act, KPaintInfo::COL_TOACT);
   act = mPopup->addAction(i18n("Attachment"));
   act->setCheckable(true);
   mColumns.insert(act, KPaintInfo::COL_ATTACHMENT);
@@ -184,7 +184,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixRead                  = new QPixmap( SmallIcon( "mail-read"                  ) );
     pixRep                   = new QPixmap( SmallIcon( "mail-replied"               ) );
     pixQueued                = new QPixmap( SmallIcon( "mail-queued"                ) );
-    pixTodo                  = new QPixmap( SmallIcon( "mail-task"                  ) );
+    pixToAct                 = new QPixmap( SmallIcon( "mail-task"                  ) );
     pixSent                  = new QPixmap( SmallIcon( "mail-sent"                  ) );
     pixFwd                   = new QPixmap( SmallIcon( "mail-forwarded"             ) );
     pixFlag                  = new QPixmap( SmallIcon( "emblem-important"           ) );
@@ -215,7 +215,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
 
   mPaintInfo.statusCol         = addColumn( *pixNew           , "", 0 );
   mPaintInfo.importantCol      = addColumn( *pixFlag          , "", 0 );
-  mPaintInfo.todoCol           = addColumn( *pixTodo          , "", 0 );
+  mPaintInfo.toActCol          = addColumn( *pixToAct         , "", 0 );
   mPaintInfo.attachmentCol     = addColumn( *pixAttachment    , "", 0 );
   mPaintInfo.spamHamCol        = addColumn( *pixSpam          , "", 0 );
   mPaintInfo.watchedIgnoredCol = addColumn( *pixWatched       , "", 0 );
@@ -320,11 +320,11 @@ void KMHeaders::slotToggleColumn(QAction* act, int mode)
         moveToCol = 0;
       break;
     }
-    case KPaintInfo::COL_TODO:
+    case KPaintInfo::COL_TOACT:
     {
-      show  = &mPaintInfo.showTodo;
-      col   = &mPaintInfo.todoCol;
-      width = pixTodo->width() + 8;
+      show  = &mPaintInfo.showToAct;
+      col   = &mPaintInfo.toActCol;
+      width = pixToAct->width() + 8;
       if ( *col == header()->mapToIndex( *col ) )
         moveToCol = 0;
       break;
@@ -457,13 +457,13 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colNew = config.readEntry( "NewMessage", c2 );
     mPaintInfo.colUnread = config.readEntry( "UnreadMessage", c3 );
     mPaintInfo.colFlag = config.readEntry( "FlagMessage", c5 );
-    mPaintInfo.colTodo = config.readEntry( "TodoMessage", c6 );
+    mPaintInfo.colToAct = config.readEntry( "TodoMessage", c6 );
   }
   else {
     mPaintInfo.colNew = c2;
     mPaintInfo.colUnread = c3;
     mPaintInfo.colFlag = c5;
-    mPaintInfo.colTodo = c6;
+    mPaintInfo.colToAct = c6;
   }
 }
 
@@ -493,7 +493,7 @@ void KMHeaders::readConfig (void)
     slotToggleColumn(mColumns.key(KPaintInfo::COL_IMPORTANT), show);
 
     show = config.readEntry( "showTodoColumn", false );
-    slotToggleColumn(mColumns.key(KPaintInfo::COL_TODO), show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_TOACT), show);
 
     show = config.readEntry( "showSpamHamColumn", false );
     slotToggleColumn(mColumns.key(KPaintInfo::COL_SPAM_HAM), show);
@@ -536,11 +536,11 @@ void KMHeaders::readConfig (void)
       mNewFont = config.readEntry( "list-new-font", listFont );
       mUnreadFont = config.readEntry( "list-unread-font", listFont );
       mImportantFont = config.readEntry( "list-important-font", listFont );
-      mTodoFont = config.readEntry( "list-todo-font", listFont );
+      mToActFont = config.readEntry( "list-todo-font", listFont );
       mDateFont = KGlobalSettings::fixedFont();
       mDateFont = config.readEntry( "list-date-font", mDateFont );
     } else {
-      mNewFont= mUnreadFont = mImportantFont = mDateFont = mTodoFont =
+      mNewFont= mUnreadFont = mImportantFont = mDateFont = mToActFont =
         KGlobalSettings::generalFont();
       setFont( mDateFont );
     }
@@ -651,7 +651,7 @@ void KMHeaders::writeConfig (void)
   config.writeEntry("showMessageSize"         , mPaintInfo.showSize);
   config.writeEntry("showAttachmentColumn"    , mPaintInfo.showAttachment);
   config.writeEntry("showImportantColumn"     , mPaintInfo.showImportant);
-  config.writeEntry("showTodoColumn"          , mPaintInfo.showTodo);
+  config.writeEntry("showTodoColumn"          , mPaintInfo.showToAct);
   config.writeEntry("showSpamHamColumn"       , mPaintInfo.showSpamHam);
   config.writeEntry("showWatchedIgnoredColumn", mPaintInfo.showWatchedIgnored);
   config.writeEntry("showStatusColumn"        , mPaintInfo.showStatus);
@@ -2364,8 +2364,8 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
       setMsgStatus( KPIM::MessageStatus::statusImportant(), true );
     } else if ( section == mPaintInfo.importantCol && flagsToggleable ) {
       setMsgStatus( KPIM::MessageStatus::statusImportant(), true );
-    } else if ( section == mPaintInfo.todoCol && flagsToggleable ) {
-      setMsgStatus( KPIM::MessageStatus::statusTodo(), true );
+    } else if ( section == mPaintInfo.toActCol && flagsToggleable ) {
+      setMsgStatus( KPIM::MessageStatus::statusToAct(), true );
     } else if ( section == mPaintInfo.watchedIgnoredCol && flagsToggleable ) {
       if ( msg->status().isWatched() || msg->status().isIgnored() )
         setMsgStatus( KPIM::MessageStatus::statusIgnored(), true );
@@ -2451,7 +2451,7 @@ void KMHeaders::slotRMB()
   if ( item ) {
     int section = header()->sectionAt( viewportToContents( viewport()->mapFromGlobal( QCursor::pos() ) ).x() );
     if ( section == mPaintInfo.flagCol || section == mPaintInfo.importantCol
-         || section == mPaintInfo.todoCol || section == mPaintInfo.statusCol ) {
+         || section == mPaintInfo.toActCol || section == mPaintInfo.statusCol ) {
       mOwner->messageActions()->messageStatusMenu()->menu()->exec( QCursor::pos() );
       return;
     }

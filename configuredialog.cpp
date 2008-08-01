@@ -1289,7 +1289,7 @@ static const struct {
   { "list-new-font", I18N_NOOP("Message List - New Messages"), true, false },
   { "list-unread-font", I18N_NOOP("Message List - Unread Messages"), true, false },
   { "list-important-font", I18N_NOOP("Message List - Important Messages"), true, false },
-  { "list-todo-font", I18N_NOOP("Message List - Todo Messages"), true, false },
+  { "list-todo-font", I18N_NOOP("Message List - Action Item Messages"), true, false },
   { "list-date-font", I18N_NOOP("Message List - Date Field"), true, false },
   { "folder-font", I18N_NOOP("Folder List"), true, false },
   { "quote1-font", I18N_NOOP("Quoted Text - First Level"), false, false },
@@ -1467,7 +1467,7 @@ static const struct {
   { "NewMessage", I18N_NOOP("New Message") },
   { "UnreadMessage", I18N_NOOP("Unread Message") },
   { "FlagMessage", I18N_NOOP("Important Message") },
-  { "TodoMessage", I18N_NOOP("Todo Message") },
+  { "TodoMessage", I18N_NOOP("Action Item Message") },
   { "PGPMessageEncr", I18N_NOOP("OpenPGP Message - Encrypted") },
   { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP Message - Valid Signature with Trusted Key") },
   { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP Message - Valid Signature with Untrusted Key") },
@@ -1558,7 +1558,7 @@ void AppearancePage::ColorsTab::doLoadOther() {
     Qt::red, // new msg
     Qt::blue, // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
-    scheme.foreground( KColorScheme::LinkText ).color(), // todo mgs
+    scheme.foreground( KColorScheme::LinkText ).color(), // action item mgs
     QColor( 0x00, 0x80, 0xFF ), // pgp encrypted
     scheme.background( KColorScheme::PositiveBackground ).color(), // pgp ok, trusted key
     QColor( 0xFF, 0xFF, 0x40 ), // pgp ok, untrusted key

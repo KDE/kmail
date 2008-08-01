@@ -2367,9 +2367,9 @@ void KMMainWidget::slotSetThreadStatusRead()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSetThreadStatusTodo()
+void KMMainWidget::slotSetThreadStatusToAct()
 {
-  mHeaders->setThreadStatus( MessageStatus::statusTodo(), true);
+  mHeaders->setThreadStatus( MessageStatus::statusToAct(), true);
 }
 
 //-----------------------------------------------------------------------------
@@ -3058,11 +3058,11 @@ void KMMainWidget::setupActions()
   mToggleThreadImportantAction->setCheckedState( KGuiItem(i18n("Remove &Important Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadImportantAction );
 
-  mToggleThreadTodoAction = new KToggleAction(KIcon("mail-mark-task"), i18n("Mark Thread as &Action Item"), this);
-  actionCollection()->addAction("thread_todo", mToggleThreadTodoAction );
-  connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
-  mToggleThreadTodoAction->setCheckedState( KGuiItem(i18n("Remove &To-do Thread Mark")) );
-  mThreadStatusMenu->addAction( mToggleThreadTodoAction );
+  mToggleThreadToActAction = new KToggleAction(KIcon("mail-mark-task"), i18n("Mark Thread as &Action Item"), this);
+  actionCollection()->addAction("thread_toact", mToggleThreadToActAction );
+  connect(mToggleThreadToActAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusToAct()));
+  mToggleThreadToActAction->setCheckedState( KGuiItem(i18n("Remove &Action Item Thread Mark")) );
+  mThreadStatusMenu->addAction( mToggleThreadToActAction );
 
   //------- "Watch and ignore thread" actions
   mWatchThreadAction = new KToggleAction(KIcon("mail-thread-watch"), i18n("&Watch Thread"), this);
@@ -3467,7 +3467,7 @@ void KMMainWidget::updateMessageActions()
     mMarkThreadAsNewAction->setEnabled( thread_actions );
     mMarkThreadAsReadAction->setEnabled( thread_actions );
     mMarkThreadAsUnreadAction->setEnabled( thread_actions );
-    mToggleThreadTodoAction->setEnabled( thread_actions && flags_available );
+    mToggleThreadToActAction->setEnabled( thread_actions && flags_available );
     mToggleThreadImportantAction->setEnabled( thread_actions && flags_available );
     mTrashThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
     mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
@@ -3476,7 +3476,7 @@ void KMMainWidget::updateMessageActions()
       MessageStatus status = mHeaders->currentMsg()->status();
       updateMessageTagActions( count );
       if (thread_actions) {
-        mToggleThreadTodoAction->setChecked( status.isTodo() );
+        mToggleThreadToActAction->setChecked( status.isToAct() );
         mToggleThreadImportantAction->setChecked( status.isImportant() );
         mWatchThreadAction->setChecked( status.isWatched() );
         mIgnoreThreadAction->setChecked( status.isIgnored() );

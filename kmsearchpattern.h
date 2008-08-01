@@ -265,7 +265,7 @@ namespace KMail {
     StatusIgnored = 11,
     StatusSpam = 12,
     StatusHam = 13,
-    StatusToDo = 14,
+    StatusToAct = 14,
     StatusHasAttachment = 15
   };
 

@@ -80,7 +80,7 @@ class MessageActions : public QObject
     void slotSetMsgStatusNew();
     void slotSetMsgStatusUnread();
     void slotSetMsgStatusRead();
-    void slotSetMsgStatusTodo();
+    void slotSetMsgStatusToAct();
     void slotSetMsgStatusFlag();
 
   private:
@@ -96,7 +96,7 @@ class MessageActions : public QObject
             *mReplyListAction, *mNoQuoteReplyAction;
     KAction *mCreateTodoAction;
     KActionMenu *mStatusMenu;
-    KToggleAction *mToggleFlagAction, *mToggleTodoAction;
+    KToggleAction *mToggleFlagAction, *mToggleToActAction;
     KAction *mEditAction;
 };
 

@@ -359,7 +359,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSetThreadStatusUnread();
     void slotSetThreadStatusRead();
     void slotSetThreadStatusImportant();
-    void slotSetThreadStatusTodo();
+    void slotSetThreadStatusToAct();
     void slotSetThreadStatusWatched();
     void slotSetThreadStatusIgnored();
     void slotToggleUnread();
@@ -513,7 +513,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *mMarkThreadAsReadAction;
     KAction *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadImportantAction;
-    KToggleAction *mToggleThreadTodoAction;
+    KToggleAction *mToggleThreadToActAction;
     KToggleAction *mToggleThreadFlagAction;
     KToggleAction* mSizeColumnToggle;
 

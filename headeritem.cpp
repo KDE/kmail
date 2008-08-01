@@ -105,7 +105,7 @@ void HeaderItem::irefresh()
   mSerNum = mMsgBase->getMsgSerNum();
   MessageStatus status = mMsgBase->status();
   if ( status.isNew() || status.isUnread() || status.isImportant()
-      || status.isTodo() || status.isWatched() ) {
+      || status.isToAct() || status.isWatched() ) {
     setOpen(true);
     HeaderItem * topOfThread = this;
     while(topOfThread->parent())
@@ -319,8 +319,8 @@ const QPixmap *HeaderItem::pixmap(int col) const
     if ( !headers->mPaintInfo.showImportant )
       if ( status.isImportant() ) pixmaps << *KMHeaders::pixFlag;
 
-    if ( !headers->mPaintInfo.showTodo )
-      if ( status.isTodo() ) pixmaps << *KMHeaders::pixTodo;
+    if ( !headers->mPaintInfo.showToAct )
+      if ( status.isToAct() ) pixmaps << *KMHeaders::pixToAct;
 
     if ( !pixmaps.isEmpty() ) {
       *s_mergedpix = pixmapMerge( pixmaps );
@@ -340,9 +340,9 @@ const QPixmap *HeaderItem::pixmap(int col) const
     if ( status.isImportant() )
       return KMHeaders::pixFlag;
   }
-  else if ( col == headers->paintInfo()->todoCol ) {
-    if ( status.isTodo() )
-      return KMHeaders::pixTodo;
+  else if ( col == headers->paintInfo()->toActCol ) {
+    if ( status.isToAct() )
+      return KMHeaders::pixToAct;
   }
   else if ( col == headers->paintInfo()->spamHamCol ) {
     if ( status.isSpam() ) return KMHeaders::pixSpam;
@@ -399,10 +399,10 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   }
 
   // for color and font family "important" overrides "new" overrides "unread"
-  // overrides "todo" for the weight we use the maximal weight
-  if ( status.isTodo() ) {
-    color = headers->paintInfo()->colTodo;
-    font = headers->todoFont();
+  // overrides "action item" for the weight we use the maximal weight
+  if ( status.isToAct() ) {
+    color = headers->paintInfo()->colToAct;
+    font = headers->toActFont();
     weight = qMax( weight, font.weight() );
   }
   if ( status.isUnread() ) {
@@ -521,8 +521,8 @@ QString HeaderItem::generate_key( KMHeaders *headers,
     QString s( status.isImportant() ? "1" : "0" );
     return ret + s + sortArrival;
   }
-  else if ( column == paintInfo->todoCol ) {
-    QString s( status.isTodo() ? "1": "0" );
+  else if ( column == paintInfo->toActCol ) {
+    QString s( status.isToAct() ? "1": "0" );
     return ret + s + sortArrival;
   }
   else if (column == paintInfo->spamHamCol) {
@@ -591,7 +591,7 @@ int HeaderItem::compare( Q3ListViewItem *i, int col, bool ascending ) const
       ( col == headers->paintInfo()->sizeCol           ) ||
       ( col == headers->paintInfo()->attachmentCol     ) ||
       ( col == headers->paintInfo()->importantCol      ) ||
-      ( col == headers->paintInfo()->todoCol           ) ||
+      ( col == headers->paintInfo()->toActCol          ) ||
       ( col == headers->paintInfo()->spamHamCol        ) ||
       ( col == headers->paintInfo()->signedCol         ) ||
       ( col == headers->paintInfo()->cryptoCol         ) ||

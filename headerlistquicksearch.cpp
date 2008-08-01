@@ -137,7 +137,7 @@ void HeaderListQuickSearch::updateComboList()
   insertStatus( StatusImportant );
   insertStatus( StatusReplied );
   insertStatus( StatusForwarded );
-  insertStatus( StatusToDo );
+  insertStatus( StatusToAct );
   insertStatus( StatusHasAttachment );
   insertStatus( StatusWatched );
   insertStatus( StatusIgnored );
