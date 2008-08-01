@@ -457,7 +457,7 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colNew = config.readEntry( "NewMessage", c2 );
     mPaintInfo.colUnread = config.readEntry( "UnreadMessage", c3 );
     mPaintInfo.colFlag = config.readEntry( "FlagMessage", c5 );
-    mPaintInfo.colToAct = config.readEntry( "TodoMessage", c6 );
+    mPaintInfo.colToAct = config.readEntry( "ToActMessage", c6 );
   }
   else {
     mPaintInfo.colNew = c2;
@@ -492,7 +492,7 @@ void KMHeaders::readConfig (void)
     show = config.readEntry( "showImportantColumn", false );
     slotToggleColumn(mColumns.key(KPaintInfo::COL_IMPORTANT), show);
 
-    show = config.readEntry( "showTodoColumn", false );
+    show = config.readEntry( "showToActColumn", false );
     slotToggleColumn(mColumns.key(KPaintInfo::COL_TOACT), show);
 
     show = config.readEntry( "showSpamHamColumn", false );
@@ -536,7 +536,7 @@ void KMHeaders::readConfig (void)
       mNewFont = config.readEntry( "list-new-font", listFont );
       mUnreadFont = config.readEntry( "list-unread-font", listFont );
       mImportantFont = config.readEntry( "list-important-font", listFont );
-      mToActFont = config.readEntry( "list-todo-font", listFont );
+      mToActFont = config.readEntry( "list-toact-font", listFont );
       mDateFont = KGlobalSettings::fixedFont();
       mDateFont = config.readEntry( "list-date-font", mDateFont );
     } else {
@@ -651,7 +651,7 @@ void KMHeaders::writeConfig (void)
   config.writeEntry("showMessageSize"         , mPaintInfo.showSize);
   config.writeEntry("showAttachmentColumn"    , mPaintInfo.showAttachment);
   config.writeEntry("showImportantColumn"     , mPaintInfo.showImportant);
-  config.writeEntry("showTodoColumn"          , mPaintInfo.showToAct);
+  config.writeEntry("showToActColumn"         , mPaintInfo.showToAct);
   config.writeEntry("showSpamHamColumn"       , mPaintInfo.showSpamHam);
   config.writeEntry("showWatchedIgnoredColumn", mPaintInfo.showWatchedIgnored);
   config.writeEntry("showStatusColumn"        , mPaintInfo.showStatus);

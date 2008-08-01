@@ -181,6 +181,15 @@ Id=4.0-misc
 File=kmailrc
 Script=kmail-4.0-misc.pl,perl
 
+Id=4.2
+File=kmailrc
+Group=General
+Key=showTodoColumn,showToActColumn
+Group=Reader
+Key=TodoMessage,ToActMessage
+Group=Fonts
+Key=list-todo-font,list-toact-font
+
 #
 # Important notice:
 # If you add updates here, keep this text below them.
