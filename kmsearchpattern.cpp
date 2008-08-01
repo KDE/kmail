@@ -69,7 +69,7 @@ static struct _statusNames statusNames[] = {
   { "Sent", MessageStatus::statusSent() },
   { "Watched", MessageStatus::statusWatched() },
   { "Ignored", MessageStatus::statusIgnored() },
-  { "To Do", MessageStatus::statusTodo() },
+  { "Action Item", MessageStatus::statusTodo() },
   { "Spam", MessageStatus::statusSpam() },
   { "Ham", MessageStatus::statusHam() },
   { "Has Attachment", MessageStatus::statusHasAttachment() }

@@ -246,7 +246,7 @@ namespace KMail {
     { I18N_NOOP2( "message status", "Ignored" ),                "mail-thread-ignored" },
     { I18N_NOOP2( "message status", "Spam" ),                   "mail-mark-junk"      },
     { I18N_NOOP2( "message status", "Ham" ),                    "mail-mark-notjunk"   },
-    { I18N_NOOP2( "message status", "To Do" ),                  "mail-task"           },
+    { I18N_NOOP2( "message status", "Action Item" ),            "mail-task"           },
     { I18N_NOOP2( "message status", "Has Attachment"),          "mail-attachment"     }
   };
   // If you change the ordering here; also do it in the array above
