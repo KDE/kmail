@@ -32,8 +32,6 @@ KMMainWin::KMMainWin(QWidget *)
   // modal subdialogs will only affect this dialog, not the other windows
   setAttribute( Qt::WA_GroupLeader );
 
-  KGlobal::ref();
-
   KAction *action  = new KAction( KIcon("window-new"), i18n("New &Window"), this );
   actionCollection()->addAction( "new_mail_client", action );
   connect( action, SIGNAL( triggered(bool) ), SLOT( slotNewMailReader() ) );
@@ -82,7 +80,6 @@ KMMainWin::~KMMainWin()
 {
   saveMainWindowSettings( KMKernel::config()->group( "Main Window") );
   KMKernel::config()->sync();
-  KGlobal::deref();
 
   if ( mReallyClose ) {
     // Check if this was the last KMMainWin
