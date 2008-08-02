@@ -3940,6 +3940,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   }
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+  mEditor->setSpellCheckLanguage( mDictionaryCombo->realDictionaryName() );
 
   if ( !mBtnFcc->isChecked() ) {
     setFcc( ident.fcc() );
