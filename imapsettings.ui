@@ -9,9 +9,6 @@
     <height>524</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>Form</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5" >
    <item>
     <widget class="QLabel" name="titleLabel" >
@@ -36,9 +33,6 @@
        <weight>50</weight>
        <bold>false</bold>
       </font>
-     </property>
-     <property name="whatsThis" >
-      <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
      </property>
      <property name="currentIndex" >
       <number>0</number>
@@ -142,6 +136,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="whatsThis" >
+           <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
          </property>
         </widget>
        </item>
