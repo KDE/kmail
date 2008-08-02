@@ -342,7 +342,7 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *nam
   mapper->setMapping( action, CInsert );
   menu->addAction( action );
 
-  action = new KAction( i18n( "DNL" ), menu );
+  action = new KAction( i18nc( "All characters, up to and including the next newline, are discarded without performing any macro expansion", "Discard to Next Line" ), menu );
   connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
   mapper->setMapping( action, CDnl );
   menu->addAction( action );
