@@ -467,8 +467,16 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
       return -1;
     }
 
-    //if (!msn)
-      //kDebug(5006) <<"Dict found zero serial number in folder" << folder->label();
+    // We found a serial number that is zero. This is not allowed, and would
+    // later cause problems like in bug 149715.
+    // Therefore, we invalidate the folder when this happens.
+    if ( msn == 0 ) {
+      kWarning() << "Found serial number zero at index" << index << "in folder" << filename;
+      kWarning() << "Invalidating folder.";
+      fclose( fp );
+      delete rentry;
+      return -1;
+    }
 
     // Insert into the dict. Don't use dict->replace() as we _know_
     // there is no entry with the same msn, we just made sure.
@@ -565,6 +573,9 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
     quint32 msn = rentry->getMsn(index);
     if (!fwrite(&msn, sizeof(msn), 1, fp))
       return -1;
+    if ( msn == 0 ) {
+      kWarning() << "Serial number of message at index" << index << "is zero in folder" << storage.label();
+    }
   }
 
   rentry->sync();
