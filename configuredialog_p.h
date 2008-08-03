@@ -524,6 +524,10 @@ private: // data
   KButtonGroup *mNestingPolicy;
   KButtonGroup *mDateDisplay;
   QLineEdit    *mCustomDateFormatEdit;
+  QString      mCustomDateWhatsThis;
+
+private slots:
+  void slotLinkClicked( const QString & link );
 };
 
 class AppearancePageReaderTab : public ConfigModuleTab {

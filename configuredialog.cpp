@@ -1677,6 +1677,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   vlay->addWidget( mFolderQuickSearchCB );
+  vlay->addSpacing( KDialog::spacingHint() );		// space before next box
 
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
@@ -1748,7 +1749,7 @@ static const struct {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
   { I18N_NOOP("Fancy for&mat (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("C&ustom format (Shift+F1 for help):"),
+  { I18N_NOOP("C&ustom format:"),
     KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
@@ -1821,7 +1822,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   // "Date Display" group:
   mDateDisplay = new KButtonGroup( this );
   mDateDisplay->setTitle( i18n("Date Display") );
-  //mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
   gvlay = new QVBoxLayout( mDateDisplay );
   gvlay->setSpacing( KDialog::spacingHint() );
 
@@ -1836,14 +1836,26 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
     gvlay->addWidget( radio );
 
     if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
-      mCustomDateFormatEdit = new KLineEdit( mDateDisplay );
+      QWidget *hb = new QWidget( mDateDisplay );
+      QHBoxLayout *hbl = new QHBoxLayout( hb );
+
+      mCustomDateFormatEdit = new KLineEdit( hb );
       mCustomDateFormatEdit->setEnabled( false );
-      gvlay->addWidget( mCustomDateFormatEdit );
+
+      hbl->addWidget( mCustomDateFormatEdit, 1 );
       connect( radio, SIGNAL(toggled(bool)),
                mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
       connect( mCustomDateFormatEdit, SIGNAL(textChanged(const QString&)),
                this, SLOT(slotEmitChanged(void)) );
-      QString customDateWhatsThis =
+
+      QLabel *l = new QLabel( i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a>"), mDateDisplay );
+      connect( l, SIGNAL(linkActivated(const QString &)),
+               SLOT(slotLinkClicked(const QString &)) );
+
+      hbl->addSpacing( KDialog::spacingHint() );
+      hbl->addWidget( l );
+
+      mCustomDateWhatsThis =
         i18n("<qt><p><strong>These expressions may be used for the date:"
              "</strong></p>"
              "<ul>"
@@ -1875,8 +1887,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
              "</ul>"
              "<p><strong>All other input characters will be ignored."
              "</strong></p></qt>");
-      mCustomDateFormatEdit->setWhatsThis( customDateWhatsThis );
-      radio->setWhatsThis( customDateWhatsThis );
+      mCustomDateFormatEdit->setWhatsThis( mCustomDateWhatsThis );
+      radio->setWhatsThis( mCustomDateWhatsThis );
+      gvlay->addWidget( hb );
     }
   } // end for loop populating mDateDisplay
 
@@ -1886,6 +1899,11 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 
 
   vlay->addStretch( 10 ); // spacer
+}
+
+void AppearancePageHeadersTab::slotLinkClicked( const QString & link ) {
+    if ( link == "whatsthis1" )
+      QWhatsThis::showText( QCursor::pos(), mCustomDateWhatsThis );
 }
 
 void AppearancePage::HeadersTab::doLoadOther() {
