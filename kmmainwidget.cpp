@@ -2961,12 +2961,13 @@ void KMMainWidget::setupActions()
   connect( mTemplateMenu->menu(), SIGNAL( triggered(QAction*) ), this,
            SLOT( slotNewFromTemplate(QAction*) ) );
 
-  {
-    KAction *action = new KAction(KIcon("mail-message-new-list"), i18n("New Message t&o Mailing-List..."), this);
-    actionCollection()->addAction("post_message", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotPostToML()));
-    action->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N));
-  }
+  mPostToMailinglistAction = new KAction( KIcon( "mail-message-new-list" ),
+                                          i18n( "New Message t&o Mailing-List..." ),
+                                          this );
+  actionCollection()->addAction("post_message", mPostToMailinglistAction );
+  connect( mPostToMailinglistAction, SIGNAL( triggered(bool) ),
+           SLOT( slotPostToML() ) );
+  mPostToMailinglistAction->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_N ) );
 
   mForwardActionMenu = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("message_forward", mForwardActionMenu );
@@ -3560,6 +3561,9 @@ void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
   bool multiFolder = folderTree()->selectedFolders().count() > 1;
+  bool mailingList = mFolder && mFolder->isMailingListEnabled() && !multiFolder;
+
+  mPostToMailinglistAction->setEnabled( mailingList );
   mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );

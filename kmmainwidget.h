@@ -566,7 +566,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       *mExpireFolderAction, *mCompactFolderAction, *mRefreshFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mFolderShortCutCommandAction, *mTroubleshootFolderAction, *mRemoveDuplicatesAction,
-      *mTroubleshootMaildirAction;
+      *mTroubleshootMaildirAction, *mPostToMailinglistAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction,
       *mThreadMessagesAction, *mThreadBySubjectAction;
     KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
