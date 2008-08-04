@@ -1836,24 +1836,21 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
     gvlay->addWidget( radio );
 
     if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
-      QWidget *hb = new QWidget( mDateDisplay );
-      QHBoxLayout *hbl = new QHBoxLayout( hb );
+      KHBox *hbox = new KHBox( mDateDisplay );
+      hbox->setSpacing( KDialog::spacingHint() );
 
-      mCustomDateFormatEdit = new KLineEdit( hb );
+      mCustomDateFormatEdit = new KLineEdit( hbox );
       mCustomDateFormatEdit->setEnabled( false );
+      hbox->setStretchFactor( mCustomDateFormatEdit, 1 );
 
-      hbl->addWidget( mCustomDateFormatEdit, 1 );
       connect( radio, SIGNAL(toggled(bool)),
                mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
       connect( mCustomDateFormatEdit, SIGNAL(textChanged(const QString&)),
                this, SLOT(slotEmitChanged(void)) );
 
-      QLabel *l = new QLabel( i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a>"), mDateDisplay );
-      connect( l, SIGNAL(linkActivated(const QString &)),
+      QLabel *formatHelp = new QLabel( i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a>"), hbox );
+      connect( formatHelp, SIGNAL(linkActivated(const QString &)),
                SLOT(slotLinkClicked(const QString &)) );
-
-      hbl->addSpacing( KDialog::spacingHint() );
-      hbl->addWidget( l );
 
       mCustomDateWhatsThis =
         i18n("<qt><p><strong>These expressions may be used for the date:"
@@ -1889,7 +1886,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
              "</strong></p></qt>");
       mCustomDateFormatEdit->setWhatsThis( mCustomDateWhatsThis );
       radio->setWhatsThis( mCustomDateWhatsThis );
-      gvlay->addWidget( hb );
+      gvlay->addWidget( hbox );
     }
   } // end for loop populating mDateDisplay
 
@@ -1902,8 +1899,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 }
 
 void AppearancePageHeadersTab::slotLinkClicked( const QString & link ) {
-    if ( link == "whatsthis1" )
-      QWhatsThis::showText( QCursor::pos(), mCustomDateWhatsThis );
+  if ( link == "whatsthis1" )
+    QWhatsThis::showText( QCursor::pos(), mCustomDateWhatsThis );
 }
 
 void AppearancePage::HeadersTab::doLoadOther() {
