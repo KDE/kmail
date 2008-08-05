@@ -1768,7 +1768,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // "General Options" group:
-  group = new QGroupBox( i18n( "General Options" ), this );
+  group = new QGroupBox( i18n( "General" ), this );
   //  group->layout()->setSpacing( KDialog::spacingHint() );
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );

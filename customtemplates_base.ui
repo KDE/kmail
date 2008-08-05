@@ -10,39 +10,40 @@
    </rect>
   </property>
   <layout class="QVBoxLayout" >
-   <property name="margin" >
-    <number>11</number>
-   </property>
    <property name="spacing" >
     <number>6</number>
+   </property>
+   <property name="margin" >
+    <number>11</number>
    </property>
    <item>
     <widget class="QSplitter" name="splitter2" >
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="childrenCollapsible" >
+      <bool>false</bool>
+     </property>
      <widget class="QWidget" name="layout9" >
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>0</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
        </property>
+       <property name="margin" >
+        <number>0</number>
+       </property>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>0</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
          </property>
+         <property name="margin" >
+          <number>0</number>
+         </property>
          <item>
-          <widget class="KLineEdit" native="1" name="mName" >
+          <widget class="KLineEdit" name="mName" >
            <property name="sizePolicy" >
-            <sizepolicy>
-             <hsizetype>3</hsizetype>
-             <vsizetype>0</vsizetype>
+            <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -56,19 +57,17 @@
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" native="1" name="mAdd" />
+          <widget class="KPushButton" name="mAdd" />
          </item>
          <item>
-          <widget class="KPushButton" native="1" name="mRemove" />
+          <widget class="KPushButton" name="mRemove" />
          </item>
         </layout>
        </item>
        <item>
         <widget class="QTreeWidget" name="mList" >
          <property name="sizePolicy" >
-          <sizepolicy>
-           <hsizetype>5</hsizetype>
-           <vsizetype>7</vsizetype>
+          <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -88,13 +87,14 @@
          </column>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="mHelp" />
+       </item>
       </layout>
      </widget>
      <widget class="QFrame" name="mEditFrame" >
       <property name="sizePolicy" >
-       <sizepolicy>
-        <hsizetype>7</hsizetype>
-        <vsizetype>5</vsizetype>
+       <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
         <horstretch>12</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -106,18 +106,16 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>0</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>0</number>
        </property>
        <item>
         <widget class="QTextEdit" name="mEdit" >
          <property name="sizePolicy" >
-          <sizepolicy>
-           <hsizetype>7</hsizetype>
-           <vsizetype>7</vsizetype>
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
            <horstretch>3</horstretch>
            <verstretch>1</verstretch>
           </sizepolicy>
@@ -178,9 +176,7 @@
          <item row="1" column="1" >
           <widget class="QLabel" name="textLabel1" >
            <property name="sizePolicy" >
-            <sizepolicy>
-             <hsizetype>5</hsizetype>
-             <vsizetype>5</vsizetype>
+            <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
              <horstretch>1</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -196,14 +192,11 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0" >
-          <widget class="TemplatesInsertCommand" native="1" name="mInsertCommand" />
+         <item row="0" column="2" >
+          <widget class="KKeySequenceWidget" name="mKeySequenceWidget" />
          </item>
          <item row="0" column="0" >
-          <widget class="QLabel" name="mHelp" />
-         </item>
-         <item row="0" column="2" >
-          <widget class="KKeySequenceWidget" native="1" name="mKeySequenceWidget" />
+          <widget class="TemplatesInsertCommand" native="1" name="mInsertCommand" />
          </item>
         </layout>
        </item>
@@ -216,26 +209,26 @@
  <layoutdefault spacing="6" margin="11" />
  <customwidgets>
   <customwidget>
-   <class>TemplatesInsertCommand</class>
-   <extends>QWidget</extends>
-   <header>templatesinsertcommand.h</header>
-  </customwidget>
-  <customwidget>
    <class>KKeySequenceWidget</class>
    <extends>QWidget</extends>
    <header>kkeysequencewidget.h</header>
   </customwidget>
   <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>KPushButton</class>
-   <extends>QWidget</extends>
+   <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>KLineEdit</class>
+   <class>TemplatesInsertCommand</class>
    <extends>QWidget</extends>
-   <header>klineedit.h</header>
-   <container>1</container>
+   <header>templatesinsertcommand.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
