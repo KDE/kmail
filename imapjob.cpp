@@ -650,8 +650,8 @@ void ImapJob::slotCopyMessageResult( KIO::Job *job )
     QString errStr = i18n("Error while copying messages.");
     if ( (*it).progressItem )
       (*it).progressItem->setStatus( errStr );
-    account->handleJobError( job, errStr  );
-    deleteLater();
+    if ( account->handleJobError( job, errStr  ) )
+      deleteLater();
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )
