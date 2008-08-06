@@ -24,6 +24,10 @@
 #include "globalsettings.h"
 
 #include <libkdepim/recentaddresses.h>
+#include <libkdepim/ldapsearchdialog.h>
+
+#include <kpimutils/email.h>
+
 #ifdef KDEPIM_NEW_DISTRLISTS
 #include <libkdepim/distributionlist.h>
 #else
@@ -330,6 +334,7 @@ void RecipientsTreeWidget::keyPressEvent ( QKeyEvent *event ) {
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
   : QDialog( parent )
+    ,mLdapSearchDialog( 0 )
 {
   setObjectName("RecipientsPicker");
   setWindowTitle( i18n("Select Recipient") );
@@ -380,6 +385,10 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( mSearchLine );
   label->setBuddy( label );
   connect( mSearchLine, SIGNAL( downPressed() ), SLOT( setFocusList() ) );
+
+  mSearchLDAPButton = new QPushButton( i18n("Search &Directory Service"), this );
+  searchLayout->addWidget( mSearchLDAPButton );
+  connect( mSearchLDAPButton, SIGNAL( clicked() ), SLOT( slotSearchLDAP() ) );
 
   QBoxLayout *buttonLayout = new QHBoxLayout();
   topLayout->addItem( buttonLayout );
@@ -798,5 +807,39 @@ void RecipientsPicker::setFocusList()
   mRecipientList->setFocus();
 }
 
+
+void RecipientsPicker::slotSearchLDAP()
+{
+    if ( !mLdapSearchDialog ) {
+        mLdapSearchDialog = new KPIM::LdapSearchDialog( this );
+        connect( mLdapSearchDialog, SIGNAL( addresseesAdded() ),
+                 SLOT(ldapSearchResult() ) );
+    }
+    mLdapSearchDialog->setSearchText( mSearchLine->text() );
+    mLdapSearchDialog->show();
+
+}
+
+void RecipientsPicker::ldapSearchResult()
+{
+    QStringList emails = QStringList::split(',', mLdapSearchDialog->selectedEMails() );
+    QStringList::iterator it( emails.begin() );
+    QStringList::iterator end( emails.end() );
+    for ( ; it != end; ++it ){
+        QString name;
+        QString email;
+        KPIMUtils::extractEmailAddressAndName( (*it), email, name );
+        KABC::Addressee ad;
+        ad.setNameFromString( name );
+        ad.insertEmail( email );
+#ifdef KDEPIM_NEW_DISTRLISTS
+        RecipientItem *item = new RecipientItem( mAddressBook );
+#else
+        RecipientItem *item = new RecipientItem;
+#endif
+        item->setAddressee( ad, ad.preferredEmail() );
+        emit pickedRecipient( Recipient( item->recipient(), Recipient::Undefined ) );
+    }
+}
 
 #include "recipientspicker.moc"
