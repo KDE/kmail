@@ -693,7 +693,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
   QList<KMFolderNode*>::const_iterator it;
   KMFolderNode * node;
   for ( it = fdir->constBegin();
-      ( node = *it ) && ( it != fdir->constEnd() );
+      ( it != fdir->constEnd() ) && ( node = *it );
       ++it ) {
     if ( node->isDir() )
       continue;
