@@ -483,7 +483,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
-    mShowSignatureDetails( false )
+    mShowSignatureDetails( false ),
+    mShowAttachmentQuicklist( true )
 {
   mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
@@ -544,6 +545,13 @@ void KMReaderWin::createActions()
            this, SLOT(slotCycleHeaderStyles()) );
 
   QActionGroup *group = new QActionGroup( this );
+  raction = new KToggleAction( i18nc("View->headers->", "&Enterprise Headers"), this);
+  ac->addAction("view_headers_enterprise", raction);
+  connect(raction, SIGNAL(triggered(bool)), SLOT(slotEnterpriseHeaders()));
+  raction->setToolTip( i18n("Show the list of headers in Enterprise style") );
+  group->addAction(raction);
+  headerMenu->addAction(raction);
+
   raction  = new KToggleAction(i18nc("View->headers->", "&Fancy Headers"), this);
   ac->addAction("view_headers_fancy", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotFancyHeaders()));
@@ -696,6 +704,8 @@ KToggleAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, con
   if ( !mActionCollection )
     return 0;
   const char * actionName = 0;
+  if ( style == HeaderStyle::enterprise() )
+    actionName = "view_headers_enterprise";
   if ( style == HeaderStyle::fancy() )
     actionName = "view_headers_fancy";
   else if ( style == HeaderStyle::brief() )
@@ -731,6 +741,11 @@ KToggleAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrateg
     return static_cast<KToggleAction*>(mActionCollection->action(actionName));
   else
     return 0;
+}
+
+void KMReaderWin::slotEnterpriseHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
+                             HeaderStrategy::rich() );
 }
 
 void KMReaderWin::slotFancyHeaders() {
@@ -772,6 +787,10 @@ void KMReaderWin::slotCycleHeaderStyles() {
   const HeaderStyle * style = headerStyle();
 
   const char * actionName = 0;
+  if ( style == HeaderStyle::enterprise() ) {
+    slotFancyHeaders();
+    actionName = "view_headers_fancy";
+  }
   if ( style == HeaderStyle::fancy() ) {
     slotBriefHeaders();
     actionName = "view_headers_brief";
@@ -786,8 +805,8 @@ void KMReaderWin::slotCycleHeaderStyles() {
       slotAllHeaders();
       actionName = "view_headers_all";
     } else if ( strategy == HeaderStrategy::all() ) {
-      slotFancyHeaders();
-      actionName = "view_headers_fancy";
+      slotEnterpriseHeaders();
+      actionName = "view_headers_enterprise";
     }
   }
 
@@ -1488,6 +1507,8 @@ void KMReaderWin::displayMessage() {
 
   htmlWriter()->queue("</body></html>");
   htmlWriter()->flush();
+
+  QTimer::singleShot( 1, this, SLOT(injectAttachments()) );
 }
 
 
@@ -1546,7 +1567,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
-  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard) );
+  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard, true ) );
 
   // show message content
   ObjectTreeParser otp( this );
@@ -1652,7 +1673,7 @@ kDebug(5006) <<"|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPart
 
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
+QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLevel)
 {
   kFatal( !headerStyle(), 5006 )
     << "trying to writeMsgHeader() without a header style set!";
@@ -1662,7 +1683,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
   if (hasVCard)
     href = QString("file:") + KUrl::toPercentEncoding( mTempFiles.last() );
 
-  return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting );
+  return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting, topLevel );
 }
 
 
@@ -1758,13 +1779,18 @@ int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
 {
   if ( aUrl.isEmpty() ) return -1;
 
+  bool ok;
+  if ( aUrl.url().startsWith( "#att" ) ) {
+    int res = aUrl.url().mid( 4 ).toInt( &ok );
+    if ( ok ) return res;
+  }
+
   if ( !aUrl.isLocalFile() ) return -1;
 
   QString path = aUrl.path();
   uint right = path.lastIndexOf( '/' );
   uint left = path.lastIndexOf( '.', right );
 
-  bool ok;
   int res = path.mid( left + 1, right - left - 1 ).toInt( &ok );
   return ( ok ) ? res : -1;
 }
@@ -2205,6 +2231,8 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
   if( node ) {
     mAtmCurrent = id;
     mAtmCurrentName = name;
+    if ( mAtmCurrentName.isEmpty() )
+      mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
 
     KMMessagePart& msgPart = node->msgPart();
     QString pname = msgPart.fileName();
@@ -2239,6 +2267,8 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     kWarning(5006) << "Could not find node" << id;
     return;
   }
+  if ( mAtmCurrentName.isEmpty() )
+    mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
 
   KMMessagePart& msgPart = node->msgPart();
   if (kasciistricmp(msgPart.typeStr(), "message")==0)
@@ -2638,6 +2668,111 @@ bool KMReaderWin::decryptMessage() const
   if ( !GlobalSettings::self()->alwaysDecrypt() )
     return mDecrytMessageOverwrite;
   return true;
+}
+
+void KMReaderWin::injectAttachments()
+{
+  // inject attachments in header view
+  // we have to do that after the otp has run so we also see encrypted parts
+  DOM::Document doc = mViewer->htmlDocument();
+  DOM::Element injectionPoint = doc.getElementById( "attachmentInjectionPoint" );
+  if ( injectionPoint.isNull() )
+    return;
+
+  QString imgpath( KStandardDirs::locate("data","kmail/pics/") );
+  QString visibility;
+  QString urlHandle;
+  QString imgSrc;
+  if( !showAttachmentQuicklist() )
+    {
+      urlHandle.append( "kmail:showAttachmentQuicklist" );
+      imgSrc.append( "attachmentQuicklistClosed.png" );
+    } else {
+      urlHandle.append( "kmail:hideAttachmentQuicklist" );
+      imgSrc.append( "attachmentQuicklistOpened.png" );
+    }
+
+  QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
+  if ( html.isEmpty() )
+    return;
+
+    if ( headerStyle() == HeaderStyle::fancy() )
+      html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
+
+    QString link("");
+    link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
+    html.prepend( link );
+
+    assert( injectionPoint.tagName() == "div" );
+    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+}
+
+static QColor nextColor( const QColor & c )
+{
+  int h, s, v;
+  c.hsv( &h, &s, &v );
+  return QColor( (h + 50) % 360, QMAX(s, 64), v, QColor::Hsv );
+}
+
+QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
+{
+  if ( !node )
+    return QString();
+
+  QString html;
+  if ( node->firstChild() ) {
+    QString subHtml = renderAttachments( node->firstChild(), nextColor( bgColor ) );
+    if ( !subHtml.isEmpty() ) {
+
+      QString visibility;
+      if( !showAttachmentQuicklist() )
+	{
+	  visibility.append( "display:none;" );
+	}
+
+      QString margin;
+      if ( node != mRootNode || headerStyle() != HeaderStyle::enterprise() )
+        margin = "padding:2px; margin:2px; ";
+      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+        html += QString::fromLatin1("<div style=\"background:%1; %2"
+            "vertical-align:middle; float:left; %3\">").arg( bgColor.name() ).arg( margin ).arg( visibility );
+      html += subHtml;
+      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+        html += "</div>";
+    }
+  } else {
+    QString label, icon;
+    icon = node->msgPart().iconName( KIconLoader::Small );
+    label = node->msgPart().contentDescription();
+    if( label.isEmpty() )
+      label = node->msgPart().name().stripWhiteSpace();
+    if( label.isEmpty() )
+      label = node->msgPart().fileName();
+    bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
+    if ( !typeBlacklisted && node->msgPart().typeStr() == "application" ) {
+      typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
+          || node->msgPart().subtypeStr() == "pgp-signature"
+          || node->msgPart().subtypeStr() == "pkcs7-mime"
+          || node->msgPart().subtypeStr() == "pkcs7-signature";
+    }
+    typeBlacklisted = typeBlacklisted || node == mRootNode;
+    if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
+      html += "<div style=\"float:left;\">";
+      html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
+      html += QString::fromLatin1( "<a href=\"#att%1\">" ).arg( node->nodeId() );
+      html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
+      if ( headerStyle() == HeaderStyle::enterprise() ) {
+        QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
+        QFontMetrics fm( bodyFont );
+        html += fm.elidedText( label, Qt::ElideRight, 140 );
+      } else
+        html += label;
+      html += "</a></span></div> ";
+    }
+  }
+
+  html += renderAttachments( node->nextSibling(), nextColor ( bgColor ) );
+  return html;
 }
 
 #include "kmreaderwin.moc"

@@ -302,6 +302,12 @@ public:
   /** Show signature details. */
   void setShowSignatureDetails( bool showDetails = true ) { mShowSignatureDetails = showDetails; }
 
+  /* show or hide the list that points to the attachments */
+  bool showAttachmentQuicklist() const { return mShowAttachmentQuicklist; }
+
+  /* show or hide the list that points to the attachments */
+  void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true ) { mShowAttachmentQuicklist = showAttachmentQuicklist; }
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -386,6 +392,7 @@ protected slots:
   void slotCycleHeaderStyles();
   void slotBriefHeaders();
   void slotFancyHeaders();
+  void slotEnterpriseHeaders();
   void slotStandardHeaders();
   void slotLongHeaders();
   void slotAllHeaders();
@@ -431,7 +438,7 @@ protected:
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false);
+  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false, bool topLevel=false);
 
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString() if writing failed.
@@ -463,6 +470,7 @@ protected:
 
 private slots:
   void slotSetEncoding();
+  void injectAttachments();
 
 private:
   void adjustLayout();
@@ -475,6 +483,8 @@ private:
   KToggleAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
+
+  QString renderAttachments( partNode *node, const QColor &bgColor );
 
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
@@ -539,6 +549,7 @@ private:
 	int mLevelQuote;
   bool mDecrytMessageOverwrite;
   bool mShowSignatureDetails;
+  bool mShowAttachmentQuicklist;
 };
 
 

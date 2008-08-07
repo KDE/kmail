@@ -3720,7 +3720,7 @@ QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
+QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const QString& cssStyle, bool aLink)
 {
   if( aEmail.isEmpty() )
     return aEmail;
@@ -3734,17 +3734,21 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
        ++it ) {
     if( !(*it).isEmpty() ) {
       QString address = *it;
-      result += "<a href=\"mailto:"
+      if(aLink) {
+	result += "<a href=\"mailto:"
               + KMMessage::encodeMailtoUrl( address )
-              + "\">";
+	  + "\" "+cssStyle+">";
+      }
       if( stripped )
         address = KMMessage::stripEmailAddr( address );
       result += KMMessage::quoteHtmlChars( address, true );
-      result += "</a>, ";
+      if(aLink) 
+	result += "</a>, ";
     }
   }
   // cut of the trailing ", "
-  result.truncate( result.length() - 2 );
+  if(aLink)  
+    result.truncate( result.length() - 2 );
 
   //kDebug(5006) << "('" << aEmail << "') returns:\n-->" << result << "<--";
   return result;

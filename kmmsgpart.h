@@ -20,6 +20,8 @@
 #ifndef kmmsgpart_h
 #define kmmsgpart_h
 
+#include <kiconloader.h>
+
 #include <QString>
 
 template <typename T>
@@ -139,7 +141,7 @@ public:
   /** Tries to find a good icon for the 'Content-Type' by scanning
     the installed mimelnk files. Returns the found icon. If no matching
     icon is found, the one for application/octet-stream is returned. */
-  QString iconName() const;
+  QString iconName( int size = KIconLoader::Desktop ) const;
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
