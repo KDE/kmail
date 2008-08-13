@@ -256,7 +256,7 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 if(WIN32)
   find_package(Sqlite)
   if (NOT SQLITE_FOUND)
-    MESSAGE(FATAL_ERROR "You need SQLite library for indexing")
+    message(FATAL_ERROR "You need SQLite library for indexing")
   endif(NOT SQLITE_FOUND)
   add_definitions(-DKMAIL_SQLITE_INDEX) # to alter declaration of KMFolderIndex
   include_directories(${SQLITE_INCLUDE_DIR})
@@ -327,7 +327,7 @@ kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.p
 
 kde4_add_executable(kmail ${kmail_SRCS})
 
-kdepim4_link_unique_libraries(kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
+kdepim4_link_unique_libraries(kmail  ${KDE4_KDEUI_LIBS} ${KDE4_KDECORE_LIBS} kmailprivate )
 
 install(TARGETS kmail  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
