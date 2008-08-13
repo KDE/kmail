@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>524</height>
+    <width>377</width>
+    <height>530</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5" >
@@ -38,14 +38,6 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="generalTab" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>419</width>
-        <height>449</height>
-       </rect>
-      </property>
       <attribute name="title" >
        <string>&amp;General</string>
       </attribute>
@@ -138,7 +130,7 @@
           </sizepolicy>
          </property>
          <property name="whatsThis" >
-           <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
+          <string>Your Internet Service Provider gave you a &lt;em>user name&lt;/em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em>@&lt;/em>).</string>
          </property>
         </widget>
        </item>
@@ -230,14 +222,6 @@ However, if KWallet is not available, the password will be stored in KMail's con
       </layout>
      </widget>
      <widget class="QWidget" name="optionsTab" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>419</width>
-        <height>449</height>
-       </rect>
-      </property>
       <attribute name="title" >
        <string>&amp;Advanced</string>
       </attribute>
@@ -497,14 +481,6 @@ Namespaces allow KMail for example to display your personal folders and shared f
       </layout>
      </widget>
      <widget class="QWidget" name="securityTab" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>419</width>
-        <height>449</height>
-       </rect>
-      </property>
       <attribute name="title" >
        <string>S&amp;ecurity</string>
       </attribute>
@@ -605,41 +581,63 @@ Namespaces allow KMail for example to display your personal folders and shared f
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout" >
-         <item>
-          <spacer name="horizontalSpacer_2" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="checkCapabilities" >
-           <property name="text" >
-            <string>Check &amp;What the Server Supports</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QStackedWidget" name="checkCapabilitiesStack" >
+         <property name="currentIndex" >
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="page" >
+          <layout class="QVBoxLayout" name="verticalLayout_8" >
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout" >
+             <item>
+              <spacer name="horizontalSpacer_2" >
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="checkCapabilities" >
+               <property name="text" >
+                <string>Check &amp;What the Server Supports</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer" >
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_2" >
+          <layout class="QVBoxLayout" name="verticalLayout_9" >
+           <item>
+            <widget class="QProgressBar" name="checkCapabilitiesProgress" >
+             <property name="value" >
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer" >
