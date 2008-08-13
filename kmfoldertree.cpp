@@ -1975,12 +1975,12 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
 
       if ( subMenu )
       {
+        popup->addSeparator();
         QAction* act;
         if ( action == MoveMessage || action == MoveFolder )
           act = popup->addAction( i18n("Move to This Folder") );
         else
           act = popup->addAction( i18n("Copy to This Folder") );
-        popup->addSeparator();
         aMenuToFolder->insert( act, fti->folder() );
       }
       menu->addMenu( popup );
