@@ -50,7 +50,7 @@ namespace KMail {
 
   static const about_data authors[] = {
     { "Thomas McGuire", I18N_NOOP("Maintainer"),
-      "thomas.mcguire@gmx.net", 0 },
+      "mcguire@kde.org", 0 },
     { "Stefan Taferner", I18N_NOOP("Original author"),
       "taferner@kde.org", 0 },
     { "Michael H\303\244ckel", I18N_NOOP("Former maintainer"),
