@@ -1749,8 +1749,7 @@ static const struct {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
   { I18N_NOOP("Fancy for&mat (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("C&ustom format:"),
-    KMime::DateFormatter::Custom }
+  { I18N_NOOP("C&ustom format:"), KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
