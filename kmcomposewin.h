@@ -146,8 +146,6 @@ class KMComposeWin : public KMail::Composer
                                      const QString & paramValue,
                                      const QByteArray & contDisp );
 
-    Q_SCRIPTABLE void setBody( const QString & body );
-
   /**
    * End of D-Bus callable stuff
    */

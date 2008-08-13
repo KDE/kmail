@@ -1346,8 +1346,6 @@ KMCommand::Result KMForwardCommand::execute()
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
     win->setCharset( fwdMsg->codec()->name(), true );
-    win->setBody( fwdMsg->bodyToUnicode() );
-    win->setReplyFocus();
     win->show();
   }
 
@@ -1571,8 +1569,6 @@ KMCommand::Result KMCustomForwardCommand::execute()
     {
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->setCharset( fwdMsg->codec()->name(), true );
-      win->setBody( fwdMsg->bodyToUnicode() );
-      win->setReplyFocus();
       win->show();
     }
   }

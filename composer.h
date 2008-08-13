@@ -61,7 +61,6 @@ class Composer : public KMail::SecondaryWindow
                                 const QString &paramValue,
                                 const QByteArray &contDisp ) = 0;
   public: // kmcommand
-    virtual void setBody( const QString &body ) = 0;
     virtual QString dbusObjectPath() const = 0;
   public: // kmkernel, kmcommands, callback
     /**

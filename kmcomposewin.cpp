@@ -280,8 +280,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mHeadersToEditorSplitter->addWidget( mSplitter );
   mEditor->setAcceptDrops( true );
   connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ),
-           mEditor, SLOT( setSpellCheckLanguage( const QString & ) ) );
-  connect( mEditor, SIGNAL( spellcheckLanguageChanged(const QString &) ),
+           mEditor, SLOT( setSpellCheckingLanguage( const QString & ) ) );
+  connect( mEditor, SIGNAL( languageChanged(const QString &) ),
            this, SLOT( slotLanguageChanged(const QString&) ) );
   connect( mEditor, SIGNAL( spellCheckStatus(const QString &)),
            this, SLOT( slotSpellCheckingStatus(const QString &) ) );
@@ -518,12 +518,6 @@ void KMComposeWin::slotAttachPNGImageData( const QByteArray &image )
 
   addAttachment( attName, "base64", image, "image", "png", QByteArray(),
                  QString(), QByteArray() );
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::setBody( const QString &body )
-{
-  mEditor->setPlainText( body );
 }
 
 //-----------------------------------------------------------------------------
@@ -1122,7 +1116,7 @@ void KMComposeWin::setupActions( void )
 
   KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
   actionCollection()->addAction( KStandardAction::Spelling, "spellcheck",
-                                 mEditor, SLOT( slotCheckSpelling() ) );
+                                 mEditor, SLOT( checkSpelling() ) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection()->addAction("paste_quoted", mPasteQuotation );
@@ -1180,6 +1174,8 @@ void KMComposeWin::setupActions( void )
   mAutoSpellCheckingAction->setChecked( spellCheckingEnabled );
   slotAutoSpellCheckingToggled( spellCheckingEnabled );
   connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
+  connect( mEditor, SIGNAL( checkSpellingChanged( bool ) ),
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
 
   QStringList encodings = KMMsgBase::supportedEncodings( true );
@@ -3805,7 +3801,11 @@ void KMComposeWin::htmlToolBarVisibilityChanged( bool visible )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
-  mEditor->toggleSpellChecking( on );
+  mAutoSpellCheckingAction->setChecked( on );
+  if ( on == mEditor->checkSpellingEnabled() )
+    return;
+
+  mEditor->setCheckSpellingEnabled( on );
 
   QString temp;
   if ( on ) {
@@ -3894,7 +3894,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   }
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
-  mEditor->setSpellCheckLanguage( mDictionaryCombo->realDictionaryName() );
+  mEditor->setSpellCheckingLanguage( mDictionaryCombo->realDictionaryName() );
 
   if ( !mBtnFcc->isChecked() ) {
     setFcc( ident.fcc() );
