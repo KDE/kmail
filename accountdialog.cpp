@@ -80,6 +80,25 @@ using namespace MailTransport;
 #define _PATH_MAILDIR "/var/spool/mail"
 #endif
 
+namespace {
+
+class BusyCursorHelper : public QObject
+{
+public:
+  inline BusyCursorHelper( QObject *parent )
+         : QObject( parent )
+  {
+    qApp->setOverrideCursor( Qt::BusyCursor );
+  }
+
+  inline ~BusyCursorHelper()
+  {
+    qApp->restoreOverrideCursor();
+  }
+};
+
+}
+
 namespace KMail {
 
 class ProcmailRCParser
@@ -903,6 +922,9 @@ void AccountDialog::slotCheckPopCapabilities()
   }
   delete mServerTest;
   mServerTest = new ServerTest( this );
+  BusyCursorHelper *busyCursorHelper = new BusyCursorHelper( mServerTest );
+  mServerTest->setProgressBar( mPop.ui.checkCapabilitiesProgress );
+  mPop.ui.checkCapabilitiesStack->setCurrentIndex( 1 );
   Transport::EnumEncryption::type encryptionType;
   if ( mPop.ui.encryptionSSL->isChecked() )
     encryptionType = Transport::EnumEncryption::SSL;
@@ -913,9 +935,10 @@ void AccountDialog::slotCheckPopCapabilities()
   mServerTest->setProtocol( "pop" );
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
            this, SLOT( slotPopCapabilities(QList<int>) ) );
+  connect( mServerTest, SIGNAL( finished(QList<int>) ),
+           busyCursorHelper, SLOT( deleteLater() ) );
   mServerTest->start();
   mServerTestFailed = false;
-  mPop.ui.checkCapabilities->setEnabled( false );
 }
 
 
@@ -929,6 +952,9 @@ void AccountDialog::slotCheckImapCapabilities()
   }
   delete mServerTest;
   mServerTest = new ServerTest( this );
+  BusyCursorHelper *busyCursorHelper = new BusyCursorHelper( mServerTest );
+  mServerTest->setProgressBar( mImap.ui.checkCapabilitiesProgress );
+  mImap.ui.checkCapabilitiesStack->setCurrentIndex( 1 );
   Transport::EnumEncryption::type encryptionType;
   if ( mImap.ui.encryptionSSL->isChecked() )
     encryptionType = Transport::EnumEncryption::SSL;
@@ -939,14 +965,15 @@ void AccountDialog::slotCheckImapCapabilities()
   mServerTest->setProtocol( "imap" );
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
            this, SLOT( slotImapCapabilities(QList<int>) ) );
+  connect( mServerTest, SIGNAL( finished(QList<int>) ),
+           busyCursorHelper, SLOT( deleteLater() ) );
   mServerTest->start();
   mServerTestFailed = false;
-  mImap.ui.checkCapabilities->setEnabled(false);
 }
 
 void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
 {
-  mPop.ui.checkCapabilities->setEnabled( true );
+  mPop.ui.checkCapabilitiesStack->setCurrentIndex( 0 );
 
   // If the servertest did not find any useable authentication modes, assume the
   // connection failed and don't disable any of the radioboxes.
@@ -1038,7 +1065,7 @@ void AccountDialog::enablePopFeatures()
 
 void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
 {
-  mImap.ui.checkCapabilities->setEnabled( true );
+  mImap.ui.checkCapabilitiesStack->setCurrentIndex( 0 );
 
   // If the servertest did not find any useable authentication modes, assume the
   // connection failed and don't disable any of the radioboxes.
