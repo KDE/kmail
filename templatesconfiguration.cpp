@@ -334,17 +334,24 @@ void TemplatesConfiguration::importFromPhrases()
   if ( !str.isEmpty() ) {
     GlobalSettings::self()->setTemplateForward(
       "%REM=\"" + i18n( "Default forward template" ) + "\"%-\n" +
-      i18n( "\n"
-            "----------  %1  ----------\n"
-            "\n"
-            "Subject: %OFULLSUBJECT\n"
-            "Date: %ODATE\n"
-            "From: %OFROMADDR\n"
-            "To: %OTOADDR\n"
-            "\n"
-            "%TEXT\n"
-            "-------------------------------------------------------\n",
-            convertPhrases( str ) ) );
+      i18nc( "Default template for forwarded messages."
+             "%1: forward phrase, e.g. \"Forwarded Message\", "
+             "%2: subject of original message, %3: date of original message, "
+             "%4: mail address of sender of original message, "
+             "%5: mail address of receiver of original message, "
+             "%6: text of original message",
+             "\n"
+             "----------  %1  ----------\n"
+             "\n"
+             "Subject: %2\n"
+             "Date: %3\n"
+             "From: %4\n"
+             "To: %5\n"
+             "\n"
+             "%6\n"
+             "-------------------------------------------------------\n",
+             convertPhrases( str ), "%OFULLSUBJECT", "%ODATE", "%OFROMADDR",
+             "%OTOADDR", "%TEXT" ) );
   }
   else {
     GlobalSettings::self()->setTemplateForward( defaultForward() );
@@ -455,32 +462,44 @@ QString TemplatesConfiguration::defaultNewMessage() {
 QString TemplatesConfiguration::defaultReply() {
   return
     "%REM=\"" + i18n( "Default reply template" ) + "\"%-\n" +
-    i18n( "On %ODATEEN %OTIMELONGEN you wrote:\n"
-          "%QUOTE\n"
-          "%CURSOR" );
+    i18nc( "Default reply template."
+           "%1: date of original message, %2: time of original message, "
+           "%3: quoted text of original message, %4: cursor Position",
+           "On %1 %2 you wrote:\n"
+           "%3\n"
+           "%4", "%ODATE", "%OTIMELONG", "%QUOTE", "%CURSOR" );
 }
 
 QString TemplatesConfiguration::defaultReplyAll() {
   return
     "%REM=\"" + i18n( "Default reply all template" ) + "\"%-\n" +
-    i18n( "On %ODATEEN %OTIMELONGEN %OFROMNAME wrote:\n"
-          "%QUOTE\n"
-          "%CURSOR" );
+    i18nc( "Default reply all template: %1: date, %2: time, %3: name of original sender, "
+           "%4: quoted text of original message, %5: cursor position",
+           "On %1 %2 %3 wrote:\n"
+           "%4\n"
+           "%5",
+           "%ODATE", "%OTIMELONG", "%OFROMNAME", "%QUOTE", "%CURSOR");
 }
 
 QString TemplatesConfiguration::defaultForward() {
   return
     "%REM=\"" + i18n( "Default forward template" ) + "\"%-\n" +
-    i18n( "\n"
-          "----------  Forwarded Message  ----------\n"
-          "\n"
-          "Subject: %OFULLSUBJECT\n"
-          "Date: %ODATE\n"
-          "From: %OFROMADDR\n"
-          "To: %OTOADDR\n"
-          "\n"
-          "%TEXT\n"
-          "-------------------------------------------------------" );
+    i18nc( "Default forward template: %1: subject of original message, "
+           "%2: date of original message, "
+           "%3: mail address of original sender, "
+           "%4: mail address of original receiver, "
+           "%5: original message text",
+           "\n"
+           "----------  Forwarded Message  ----------\n"
+           "\n"
+           "Subject: %1\n"
+           "Date: %2\n"
+           "From: %3\n"
+           "To: %4\n"
+           "\n"
+           "%5\n"
+           "-------------------------------------------------------",
+           "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%OTOADDR", "%TEXT" );
 }
 
 QString TemplatesConfiguration::defaultQuoteString() {
