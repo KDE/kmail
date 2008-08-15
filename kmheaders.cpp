@@ -1970,8 +1970,8 @@ void KMHeaders::findUnreadAux( HeaderItem*& item,
       MessageStatus status = msgBase->status();
       if ( status.isUnread() || status.isNew() )
         foundUnreadMessage = true;
-      if ( !onlyNew && ( status.isUnread() || status.isNew() )
-          || onlyNew && status.isNew())
+      if ( ( !onlyNew && ( status.isUnread() || status.isNew() ) )
+        || ( onlyNew && status.isNew() ) )
         lastUnread = newItem;
       if (newItem == item) break;
       newItem = static_cast<HeaderItem*>(newItem->itemBelow());
