@@ -303,7 +303,8 @@ void FavoriteFolderView::itemClicked(int button, Q3ListViewItem * item)
   if ( !item->isSelected() )
     item->setSelected( true );
   item->repaint();
-  handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
+  if ( button & Qt::LeftButton )
+    handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
 }
 
 void FavoriteFolderView::folderTreeSelectionChanged(KMFolder * folder)
