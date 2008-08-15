@@ -1865,7 +1865,7 @@ void KMHeaders::selectNextMessage()
       /* test to see if we need to unselect messages on back track */
       (below->isSelected() ? setSelected(lvi, false) : setSelected(below, true));
       setCurrentItem(below);
-      makeHeaderVisible();
+      ensureCurrentItemVisible();
       setFolderInfoStatus();
     }
   }
@@ -1904,7 +1904,7 @@ void KMHeaders::selectPrevMessage()
       /* test to see if we need to unselect messages on back track */
       (above->isSelected() ? setSelected(lvi, false) : setSelected(above, true));
       setCurrentItem(above);
-      makeHeaderVisible();
+      ensureCurrentItemVisible();
       setFolderInfoStatus();
     }
   }
