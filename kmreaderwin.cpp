@@ -1934,10 +1934,16 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint &p )
+void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
 {
   mAtmCurrent = id;
-  mAtmCurrentName = name;
+  mAtmCurrentName = fileName;
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint &p )
+{
+  prepareHandleAttachment( id, name );
   KMenu *menu = new KMenu();
   QAction *action;
 
@@ -2633,7 +2639,7 @@ void KMReaderWin::slotEditAttachment(partNode * node)
   command->start();
 }
 
-KMail::CSSHelper* KMReaderWin::cssHelper()
+KMail::CSSHelper* KMReaderWin::cssHelper() const
 {
   return mCSSHelper;
 }

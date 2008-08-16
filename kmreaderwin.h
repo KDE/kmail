@@ -282,6 +282,13 @@ public:
       emit popupMenu( *message(), url, p );
   }
 
+  /**
+   * Sets the current attachment ID and the current attachment temporary filename
+   * to the given values.
+   * Call this so that slotHandleAttachment() knows which attachment to handle.
+   */
+  void prepareHandleAttachment( int id, const QString& fileName );
+
   void showAttachmentPopup( int id, const QString & name, const QPoint & p );
 
   /** Set the serial number of the message this reader window is currently
@@ -301,6 +308,8 @@ public:
 
   /** Show signature details. */
   void setShowSignatureDetails( bool showDetails = true ) { mShowSignatureDetails = showDetails; }
+
+  KMail::CSSHelper* cssHelper() const;
 
 signals:
   /** Emitted after parsing of a message to have it stored
@@ -380,7 +389,15 @@ public slots:
 
   void slotDeleteAttachment( partNode* node );
   void slotEditAttachment( partNode* node );
-  KMail::CSSHelper* cssHelper();
+
+  /**
+   * Does an action for the current attachment.
+   * The action is defined by the KMHandleAttachmentCommand::AttachmentAction
+   * enum.
+   * prepareHandleAttachment() needs to be called before calling this to set the
+   * correct attachment ID.
+   */
+  void slotHandleAttachment( int action );
 
 protected slots:
   void slotCycleHeaderStyles();
@@ -399,7 +416,6 @@ protected slots:
   /** Some attachment operations. */
   void slotAtmView( int id, const QString& name );
   void slotDelayedResize();
-  void slotHandleAttachment( int );
 
   /** Print message. Called on as a response of finished() signal of mPartHtmlWriter
       after rendering is finished.
