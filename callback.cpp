@@ -171,6 +171,7 @@ QString Callback::receiver() const
           "receiver of this message,<br>please "
           "choose which of the following addresses "
           "is yours, if any:");
+      addrs += kmkernel->identityManager()->allEmails();
     } else {
       selectMessage = i18n("<qt>Several of your identities match the "
           "receiver of this message,<br>please "

@@ -55,6 +55,7 @@ class FavoriteFolderView : public FolderTreeBase
 
     KMFolderTreeItem* addFolder( KMFolder *folder, const QString &name = QString::null,
                                  QListViewItem *after = 0 );
+    void addFolder( KMFolderTreeItem *fti );
 
   public slots:
     void folderTreeSelectionChanged( KMFolder *folder );
