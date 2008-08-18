@@ -37,10 +37,24 @@ namespace KMail {
 		      QObject * parent, const char * name )
     : QObject( parent, name ),
       mUrl( url ), mJob( 0 ), mDec( 0 ),
-      mScript( script ), mFileExists( DontKnow ), mCommands( commands )
+      mScript( script ), mFileExists( DontKnow ), mCommands( commands ),
+      mShowProgressInfo(true)
   {
     assert( !commands.isEmpty() );
-    schedule( commands.top() );
+    schedule( commands.top(), true );
+  }
+
+  SieveJob::SieveJob( const KURL & url, const QString & script,
+		      const QValueStack<Command> & commands,
+                      bool showProgressInfo,
+		      QObject * parent, const char * name )
+    : QObject( parent, name ),
+      mUrl( url ), mJob( 0 ), mDec( 0 ),
+      mScript( script ), mFileExists( DontKnow ), mCommands( commands ),
+      mShowProgressInfo(showProgressInfo)
+  {
+    assert( !commands.isEmpty() );
+    schedule( commands.top(), showProgressInfo );
   }
 
   SieveJob::~SieveJob() {
@@ -53,17 +67,17 @@ namespace KMail {
     if ( mJob ) mJob->kill( quiet );
   }
 
-  void SieveJob::schedule( Command command ) {
+  void SieveJob::schedule( Command command, bool showProgressInfo ) {
     switch ( command ) {
     case Get:
       kdDebug(5006) << "SieveJob::schedule: get( " << mUrl.prettyURL() << " )" << endl;
-      mJob = KIO::get( mUrl );
+      mJob = KIO::get( mUrl, false /*reload*/, showProgressInfo );
       connect( mJob, SIGNAL(data(KIO::Job*,const QByteArray&)),
 	       SLOT(slotData(KIO::Job*,const QByteArray&)) );
       break;
     case Put:
       kdDebug(5006) << "SieveJob::schedule: put( " << mUrl.prettyURL() << " )" << endl;
-      mJob = KIO::put( mUrl, 0600, true /*overwrite*/, false /*resume*/ );
+      mJob = KIO::put( mUrl, 0600, true /*overwrite*/, false /*resume*/, showProgressInfo );
       connect( mJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
 	       SLOT(slotDataReq(KIO::Job*,QByteArray&)) );
       break;
@@ -87,7 +101,7 @@ namespace KMail {
 	url.setQuery( query );
 	kdDebug(5006) << "SieveJob::schedule: listDir's real URL: " << url.prettyURL()
 		  << endl;
-	mJob = KIO::listDir( url );
+	mJob = KIO::listDir( url, showProgressInfo );
 	connect( mJob, SIGNAL(entries(KIO::Job*,const KIO::UDSEntryList&)),
 		 SLOT(slotEntries(KIO::Job*,const KIO::UDSEntryList&)) );
 	break;
@@ -95,18 +109,19 @@ namespace KMail {
     case List:
       kdDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.prettyURL() << " )" << endl;
       {
-	mJob = KIO::listDir( mUrl );
+	mJob = KIO::listDir( mUrl, showProgressInfo );
 	connect( mJob, SIGNAL( entries(KIO::Job *, const KIO::UDSEntryList & ) ),
 		 SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList & ) ) );
 	break;
       }
     case Delete:
       kdDebug(5006) << "SieveJob::schedule: delete( " << mUrl.prettyURL() << " )" << endl;
-      mJob = KIO::del( mUrl );
+      mJob = KIO::del( mUrl, false/*shred*/, showProgressInfo );
       break;
     default:
       assert( 0 );
     }
+    mJob->setInteractive(showProgressInfo);
     // common to all jobs:
     connect( mJob, SIGNAL(result(KIO::Job*)), SLOT(slotResult(KIO::Job*)) );
   }
@@ -189,7 +204,9 @@ namespace KMail {
 
     // check for errors:
     if ( job->error() ) {
-      job->showErrorDialog( 0 );
+      if ( job->isInteractive() ) {
+        job->showErrorDialog( 0 );
+      }
 
       emit result( this, false, mScript, mUrl.fileName() == mActiveScriptName );
 
@@ -225,7 +242,7 @@ namespace KMail {
       return;
     } else {
       // schedule the next command:
-      schedule( mCommands.top() );
+      schedule( mCommands.top(), mShowProgressInfo );
     }
   }
 
@@ -240,11 +257,11 @@ namespace KMail {
     return new SieveJob( dest, script, commands );
   }
 
-  SieveJob * SieveJob::get( const KURL & src ) {
+  SieveJob * SieveJob::get( const KURL & src, bool showProgressInfo ) {
     QValueStack<Command> commands;
     commands.push( Get );
     commands.push( SearchActive );
-    return new SieveJob( src, QString::null, commands );
+    return new SieveJob( src, QString::null, commands, showProgressInfo );
   }
 
   SieveJob * SieveJob::list( const KURL & src ) {
