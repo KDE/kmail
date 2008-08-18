@@ -301,6 +301,11 @@ void KMFolderCachedImap::readConfig()
 
 void KMFolderCachedImap::writeConfig()
 {
+  // don't re-write the config of a removed folder, this has just been deleted in
+  // the folder manager
+  if ( mFolderRemoved )
+    return;
+
   KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
   configGroup.writeEntry( "ImapPath", mImapPath );
   configGroup.writeEntry( "NoContent", mNoContent );
