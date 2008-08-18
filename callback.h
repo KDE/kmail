@@ -69,6 +69,9 @@ public:
   /** Get the receiver of the mail */
   QString receiver() const;
 
+  /** Returns the sender of the mail. */
+  QString sender() const;
+
   /** Close the main window showing this message, if it's a secondary window. */
   void closeIfSecondaryWindow() const;
 

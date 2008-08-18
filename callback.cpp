@@ -211,3 +211,8 @@ bool Callback::deleteInvitationAfterReply() const
 {
     return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
 }
+
+QString Callback::sender() const
+{
+  return mMsg->from();
+}
