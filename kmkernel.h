@@ -226,6 +226,9 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE int viewMessage( const KUrl & messageFile );
 
+  Q_SCRIPTABLE void loadProfile( const QString& path );
+
+  Q_SCRIPTABLE void saveToProfile( const QString& path ) const;
 Q_SIGNALS:
 
   Q_SCRIPTABLE void unreadCountChanged();
