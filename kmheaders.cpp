@@ -192,7 +192,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixIgnored               = new QPixmap( UserIcon( "mail-thread-ignored"         ) );
     pixSpam                  = new QPixmap( SmallIcon( "mail-mark-junk"             ) );
     pixHam                   = new QPixmap( SmallIcon( "mail-mark-notjunk"          ) );
-    pixFullySigned           = new QPixmap( SmallIcon( "mail-signed-verified"       ) );
+    pixFullySigned           = new QPixmap( SmallIcon( "mail-signed-fully"          ) );
     pixPartiallySigned       = new QPixmap( SmallIcon( "mail-signed-part"           ) );
     pixUndefinedSigned       = new QPixmap( SmallIcon( "mail-signature-unknown"     ) );
     pixFullyEncrypted        = new QPixmap( UserIcon( "mail-encrypted-full"         ) );
