@@ -321,7 +321,9 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 
 QStringList KMKernel::accounts()
 {
-  return kmkernel->acctMgr()->getAccounts();
+  if( kmkernel->acctMgr() )
+     return kmkernel->acctMgr()->getAccounts();
+  return QStringList();
 }
 
 void KMKernel::checkAccount (const QString &account) //might create a new reader but won't show!!
