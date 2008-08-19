@@ -194,7 +194,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixHam                   = new QPixmap( SmallIcon( "mail-mark-notjunk"          ) );
     pixFullySigned           = new QPixmap( SmallIcon( "mail-signed-verified"       ) );
     pixPartiallySigned       = new QPixmap( SmallIcon( "mail-signed-part"           ) );
-    pixUndefinedSigned       = new QPixmap( SmallIcon( "unknown"                    ) );
+    pixUndefinedSigned       = new QPixmap( SmallIcon( "mail-signature-unknown"     ) );
     pixFullyEncrypted        = new QPixmap( UserIcon( "mail-encrypted-full"         ) );
     pixPartiallyEncrypted    = new QPixmap( UserIcon( "mail-encrypted-part"         ) );
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "mail-encrypted"              ) );
