@@ -390,6 +390,13 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( mSearchLDAPButton );
   connect( mSearchLDAPButton, SIGNAL( clicked() ), SLOT( slotSearchLDAP() ) );
 
+  KConfig config( "kabldaprc" );
+  KConfigGroup group = config.group( "LDAP" );
+  int numHosts = group.readEntry( "NumSelectedHosts", 0 );
+  if ( !numHosts ) {
+     mSearchLDAPButton->setVisible( false );
+  }
+
   QBoxLayout *buttonLayout = new QHBoxLayout();
   topLayout->addItem( buttonLayout );
 
