@@ -63,6 +63,12 @@
       <arg name="sernum" type="u" direction="in"/>
       <arg name="filename" type="s" direction="in"/>
     </method>
+    <method name="attachmentMimetype">
+      <arg type="s" direction="out"/>
+      <arg name="resource" type="s" direction="in"/>
+      <arg name="sernum" type="u" direction="in"/>
+      <arg name="filename" type="s" direction="in"/>
+    </method>
     <method name="listAttachments">
       <arg type="as" direction="out"/>
       <arg name="resource" type="s" direction="in"/>

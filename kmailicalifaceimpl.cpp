@@ -970,6 +970,36 @@ QString KMailICalIfaceImpl::getAttachment( const QString& resource,
   return url.url();
 }
 
+QString KMailICalIfaceImpl::attachmentMimetype( const QString & resource,
+                                                quint32 sernum,
+                                                const QString & filename )
+{
+  if( !mUseResourceIMAP )
+    return QString();
+  KMFolder* f = findResourceFolder( resource );
+  if( !f || storageFormat( f ) != StorageXML ) {
+    kdError(5006) << "attachmentMimetype(" << resource << ") : Wrong folder" << endl;
+    return QString();
+  }
+
+  KMMessage* msg = findMessageBySerNum( sernum, f );
+  if( msg ) {
+    // Message found - look for the attachment:
+    DwBodyPart* part = findBodyPart( *msg, filename );
+    if ( part ) {
+      KMMessagePart kmPart;
+      msg->bodyPart( part, &kmPart );
+      return QString( kmPart.typeStr() ) + "/" + QString( kmPart.subtypeStr() );
+    } else {
+      kdDebug(5006) << "Attachment " << filename << " not found." << endl;
+    }
+  } else {
+    kdDebug(5006) << "Message not found." << endl;
+  }
+
+  return QString();
+}
+
 QStringList KMailICalIfaceImpl::listAttachments(const QString & resource, quint32 sernum)
 {
   QStringList rv;
