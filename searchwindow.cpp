@@ -238,6 +238,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   connect(mLbxMatches, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
           this, SLOT(slotShowMsg(QTreeWidgetItem *,int)));
+  connect(mLbxMatches, SIGNAL(currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *)),
+          this, SLOT(slotCurrentChanged(QTreeWidgetItem *)));
   connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
            this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
   mLbxMatches->setDragEnabled( true );
@@ -253,20 +255,24 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
     mSearchFolderEdt->setText(i18n("Last Search"));
 
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
-  mSearchFolderBtn = new KPushButton(i18n("&Rename"), searchWidget);
-  mSearchFolderBtn->setEnabled(false);
-  mSearchFolderOpenBtn = new KPushButton(i18n("Op&en"), searchWidget);
+  mSearchFolderOpenBtn = new KPushButton(i18n("Op&en Search Folder"), searchWidget);
   mSearchFolderOpenBtn->setEnabled(false);
   connect( mSearchFolderEdt, SIGNAL( textChanged( const QString &)),
-           this, SLOT( updateCreateButton( const QString & )));
-  connect( mSearchFolderBtn, SIGNAL( clicked() ),
+           this, SLOT( scheduleRename( const QString & )));
+  connect( &mRenameTimer, SIGNAL( timeout() ),
            this, SLOT( renameSearchFolder() ));
   connect( mSearchFolderOpenBtn, SIGNAL( clicked() ),
            this, SLOT( openSearchFolder() ));
+
+  mSearchResultOpenBtn = new KPushButton(i18n("Open &Message"), searchWidget);
+  mSearchResultOpenBtn->setEnabled(false);
+  connect( mSearchResultOpenBtn, SIGNAL( clicked() ),
+           this, SLOT( slotShowSelectedMsg() ));
+
   hbl2->addWidget(mSearchFolderLbl);
   hbl2->addWidget(mSearchFolderEdt);
-  hbl2->addWidget(mSearchFolderBtn);
   hbl2->addWidget(mSearchFolderOpenBtn);
+  hbl2->addWidget(mSearchResultOpenBtn);
 
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertPermanentItem(i18n("AMiddleLengthText..."), 0);
@@ -498,6 +504,7 @@ void SearchWindow::slotSearch()
            this, SLOT( slotAddMsg( int ) ) );
   connect( mFolder, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
            this, SLOT( slotRemoveMsg( KMFolder*, quint32 ) ) );
+  mSearchFolderEdt->setEnabled(false);
   KMSearch *search = new KMSearch();
   connect( search, SIGNAL( finished( bool ) ),
            this, SLOT( searchDone() ) );
@@ -516,10 +523,6 @@ void SearchWindow::slotSearch()
   mFolder->setSearch( search );
   enableGUI();
 
-  if ( mFolder && !mFolders.contains( mFolder.operator->()->folder() ) ) {
-    mFolder->open( "searchwindow" );
-    mFolders.append(mFolder.operator->()->folder());
-  }
   mTimer->start( 200 );
 }
 
@@ -537,6 +540,8 @@ void SearchWindow::searchDone()
 
     mLbxMatches->setSortingEnabled( true );
     mLbxMatches->sortByColumn( mSortColumn, mSortOrder );
+
+    mSearchFolderEdt->setEnabled(true);
 }
 
 void SearchWindow::slotAddMsg( int idx )
@@ -623,10 +628,15 @@ void SearchWindow::closeEvent(QCloseEvent *e)
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::updateCreateButton( const QString &s )
+void SearchWindow::scheduleRename(const QString &s)
 {
-    mSearchFolderBtn->setEnabled( s != i18n("Last Search") &&
-                                  mSearchFolderOpenBtn->isEnabled() );
+  if (!s.isEmpty() && s != i18n("Last Search")) {
+    mRenameTimer.start(250, true);
+    mSearchFolderOpenBtn->setEnabled(false);
+  } else {
+    mRenameTimer.stop();
+    mSearchFolderOpenBtn->setEnabled(true);
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -646,6 +656,7 @@ void SearchWindow::renameSearchFolder()
       ++i;
     }
   }
+  mSearchFolderOpenBtn->setEnabled(true);
 }
 
 void SearchWindow::openSearchFolder()
@@ -689,6 +700,18 @@ bool SearchWindow::slotShowMsg(QTreeWidgetItem *item,int)
 
     mKMMainWidget->slotSelectMessage(message);
     return true;
+}
+
+//-----------------------------------------------------------------------------
+void SearchWindow::slotShowSelectedMsg()
+{
+  slotShowMsg( mLbxMatches->currentItem(), 0 );
+}
+
+//-----------------------------------------------------------------------------
+void SearchWindow::slotCurrentChanged(QTreeWidgetItem *item)
+{
+  mSearchResultOpenBtn->setEnabled( item!=0 );
 }
 
 //-----------------------------------------------------------------------------
