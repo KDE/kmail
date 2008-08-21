@@ -705,8 +705,8 @@ namespace KMail {
         // reverse colors for encapsulated
         if( !topLevel ){
             activeColorDark = activeColor.dark(50);
-            fontColor = qApp->palette().active().text();
-	    linkColor = "";
+            fontColor = QColor(Qt::black);
+	    linkColor = "class =\"black\"";
         }
 
 	QStringList headerParts;
@@ -765,7 +765,7 @@ namespace KMail {
 	    headerStr +=
 		"     <tr> \n"
 		"      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\"></td> \n"
-		"      <td style=\"font-weight: bolder; font-size: 120%;"+borderSettings+"\">"+message->subject()+"</td> \n"
+		"      <td style=\"font-weight: bolder; font-size: 120%; padding-right: 91px; "+borderSettings+"\">"+message->subject()+"</td> \n"
 		"     </tr> \n";
 	}
 
@@ -820,7 +820,7 @@ namespace KMail {
 
         // attachments
         headerStr +=
-        "<div class=\"noprint\" style=\"position: fixed; top: 60px; right: 20px; width: 91px; height: 200px;\">"
+        "<div class=\"noprint\" style=\"position: absolute; top: 60px; right: 20px; width: 91px; height: 200px;\">"
         "<div id=\"attachmentInjectionPoint\"></div>"
         "</div>\n";
     }

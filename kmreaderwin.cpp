@@ -2696,12 +2696,15 @@ void KMReaderWin::injectAttachments()
   if ( html.isEmpty() )
     return;
 
-    if ( headerStyle() == HeaderStyle::fancy() )
-      html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
-
     QString link("");
-    link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
-    html.prepend( link );
+    if ( headerStyle() == HeaderStyle::fancy() ) {
+      link += "<div style=\"text-align: left;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
+      html.prepend( link );
+      html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
+    } else {
+      link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
+      html.prepend( link );
+    }
 
     assert( injectionPoint.tagName() == "div" );
     static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
