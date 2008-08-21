@@ -138,6 +138,10 @@ public:
                       quint32 sernum,
                       const QString& filename );
 
+  QString attachmentMimetype( const QString &resource,
+                              quint32 sernum,
+                              const QString &filename );
+
   QStringList listAttachments( const QString &resource, quint32 sernum );
 
 
