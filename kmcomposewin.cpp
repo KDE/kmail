@@ -4062,6 +4062,7 @@ void KMComposeWin::slotConfigChanged()
   readConfig();
   updateAutoSave();
   rethinkFields();
+  slotWordWrapToggled( mWordWrapAction->isChecked() );
 }
 
 /*
