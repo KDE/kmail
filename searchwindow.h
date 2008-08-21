@@ -23,6 +23,7 @@
 
 #include <QList>
 #include <QPointer>
+#include <QTimer>
 #include <QTreeWidget>
 
 #include <KDialog>
@@ -100,11 +101,13 @@ protected slots:
   virtual void slotClose();
   virtual void slotSearch();
   virtual void slotStop();
-  void updateCreateButton( const QString &);
+  void scheduleRename(const QString &);
   void renameSearchFolder();
   void openSearchFolder();
   void folderInvalidated(KMFolder *);
   virtual bool slotShowMsg(QTreeWidgetItem *,int);
+  void slotShowSelectedMsg();
+  void slotCurrentChanged(QTreeWidgetItem *);
   virtual void updateContextMenuActions();
   virtual void slotContextMenuRequested( QTreeWidgetItem* );
   virtual void copySelectedToFolder( QAction* );
@@ -155,8 +158,8 @@ protected:
   MatchListView* mLbxMatches;
   QLabel *mSearchFolderLbl;
   QLineEdit *mSearchFolderEdt;
-  KPushButton *mSearchFolderBtn;
   KPushButton *mSearchFolderOpenBtn;
+  KPushButton *mSearchResultOpenBtn;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<QAction*,KMFolder*> mMenuToFolder;
@@ -165,6 +168,7 @@ protected:
     *mSaveAtchAction, *mCopyAction, *mCutAction;
   KActionMenu *mForwardActionMenu;
   QList<QPointer<KMFolder> > mFolders;
+  QTimer mRenameTimer;
 
   // not owned by us
   KMMainWidget* mKMMainWidget;
