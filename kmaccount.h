@@ -138,6 +138,7 @@ public:
    * manager when a new account is created.
    */
   virtual void readConfig(KConfigGroup& config);
+  void readTimerConfig();
 
   /**
    * Write all account information to given config file.

@@ -173,6 +173,16 @@ void KMAccount::readConfig(KConfigGroup& config)
     installTimer();
 }
 
+void KMAccount::readTimerConfig()
+{
+  // Re-reads and checks check-interval value and deinstalls timer incase check-interval
+  // for mail check is disabled.
+  // Or else, the mail sync goes into a infinite loop (kolab/issue2607)
+  if (mInterval == 0)
+    deinstallTimer();
+  else
+    installTimer();
+}
 
 //-----------------------------------------------------------------------------
 void KMAccount::writeConfig(KConfigGroup& config)
