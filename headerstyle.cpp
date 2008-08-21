@@ -101,6 +101,7 @@ namespace KMail {
   QString BriefHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
                                     const QString & vCardName, bool printing, bool topLevel ) const {
+    Q_UNUSED( topLevel );
     if ( !message ) return QString();
     if ( !strategy )
       strategy = HeaderStrategy::brief();
@@ -199,6 +200,7 @@ namespace KMail {
   QString PlainHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
                                     const QString & vCardName, bool printing, bool topLevel ) const {
+    Q_UNUSED( topLevel );
     if ( !message ) return QString();
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -396,6 +398,7 @@ namespace KMail {
   QString FancyHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
                                     const QString & vCardName, bool printing, bool topLevel ) const {
+    Q_UNUSED( topLevel );
     if ( !message ) return QString();
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -685,7 +688,8 @@ namespace KMail {
     // The direction of the header is determined according to the direction
     // of the application layout.
 
-    QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
+    QString dir = ( QApplication::layoutDirection() == Qt::RightToLeft ) ?
+        "rtl" : "ltr" ;
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
@@ -703,7 +707,8 @@ namespace KMail {
     // colors depend on if its encapsulated or not
     QColor fontColor( Qt::white );
     QString linkColor = "class =\"white\"";
-    const QColor activeColor = qApp->palette().active().highlight();
+    const QColor activeColor = KColorScheme( QPalette::Active, KColorScheme::Selection ).
+                                   background().color();
     QColor activeColorDark = activeColor.dark(130);
     // reverse colors for encapsulated
     if( !topLevel ){
@@ -726,7 +731,7 @@ namespace KMail {
     }
 
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
-    QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ", " );
+    QString headerPart = " " + headerParts.filter( QRegExp( "\\S" ) ).join( ", " );
 
     // Prepare the date string (when printing always use the localized date)
     QString dateString;

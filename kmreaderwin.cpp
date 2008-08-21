@@ -2691,7 +2691,8 @@ void KMReaderWin::injectAttachments()
     imgSrc.append( "attachmentQuicklistOpened.png" );
   }
 
-  QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
+  QColor background = KColorScheme( QPalette::Active, KColorScheme::View ).background().color();
+  QString html = renderAttachments( mRootNode, background );
   if ( html.isEmpty() )
     return;
 
@@ -2712,8 +2713,8 @@ void KMReaderWin::injectAttachments()
 static QColor nextColor( const QColor & c )
 {
   int h, s, v;
-  c.hsv( &h, &s, &v );
-  return QColor( (h + 50) % 360, QMAX(s, 64), v, QColor::Hsv );
+  c.getHsv( &h, &s, &v );
+  return QColor::fromHsv( (h + 50) % 360, QMAX(s, 64), v );
 }
 
 QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
@@ -2746,7 +2747,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     icon = node->msgPart().iconName( KIconLoader::Small );
     label = node->msgPart().contentDescription();
     if( label.isEmpty() )
-      label = node->msgPart().name().stripWhiteSpace();
+      label = node->msgPart().name().trimmed();
     if( label.isEmpty() )
       label = node->msgPart().fileName();
     bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
