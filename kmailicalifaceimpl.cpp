@@ -979,7 +979,7 @@ QString KMailICalIfaceImpl::attachmentMimetype( const QString & resource,
     return QString();
   KMFolder* f = findResourceFolder( resource );
   if( !f || storageFormat( f ) != StorageXML ) {
-    kdError(5006) << "attachmentMimetype(" << resource << ") : Wrong folder" << endl;
+    kError() << "attachmentMimetype(" << resource << ") : Wrong folder";
     return QString();
   }
 
@@ -992,10 +992,10 @@ QString KMailICalIfaceImpl::attachmentMimetype( const QString & resource,
       msg->bodyPart( part, &kmPart );
       return QString( kmPart.typeStr() ) + "/" + QString( kmPart.subtypeStr() );
     } else {
-      kdDebug(5006) << "Attachment " << filename << " not found." << endl;
+      kDebug() << "Attachment " << filename << " not found.";
     }
   } else {
-    kdDebug(5006) << "Message not found." << endl;
+    kDebug() << "Message not found.";
   }
 
   return QString();
