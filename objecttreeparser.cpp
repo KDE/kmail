@@ -258,6 +258,8 @@ namespace KMail {
 
       ProcessResult processResult;
 
+      if ( mReader )
+        htmlWriter()->queue( QString::fromLatin1("<a name=\"att%1\"/>").arg( node->nodeId() ) );
       if ( const Interface::BodyPartFormatter * formatter
            = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
         PartNodeBodyPart part( *node, codecFor( node ) );

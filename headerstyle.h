@@ -57,7 +57,7 @@ namespace KMail {
     //
     // Factory methods:
     //
-    enum Type { Brief, Plain, Fancy };
+    enum Type { Brief, Plain, Fancy, Enterprise };
 
     static const HeaderStyle * create( Type type );
     static const HeaderStyle * create( const QString & type );
@@ -65,6 +65,7 @@ namespace KMail {
     static const HeaderStyle * brief();
     static const HeaderStyle * plain();
     static const HeaderStyle * fancy();
+    static const HeaderStyle * enterprise();
 
     //
     // Methods for handling the styles:
@@ -79,7 +80,7 @@ namespace KMail {
     virtual QString format( const KMMessage * message,
 			    const KMail::HeaderStrategy * strategy,
 			    const QString & vCardName,
-			    bool printing=false ) const = 0;
+			    bool printing = false, bool topLevel = false ) const = 0;
   };
 
 } // namespace KMail

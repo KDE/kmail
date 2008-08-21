@@ -657,7 +657,7 @@ public:
    * only the name part and not the given emailAddr.
    */
   static QString emailAddrAsAnchor(const QString& emailAddr,
-          bool stripped=true);
+          bool stripped = true, const QString& cssStyle = QString(), bool link = true);
 
   /** Strips an address from an address list. This is for example used
       when replying to all.

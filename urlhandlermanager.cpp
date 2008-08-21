@@ -387,6 +387,19 @@ namespace {
         return true;
       }
 
+      if ( url.path() == "showAttachmentQuicklist" ) {
+        w->saveRelativePosition();
+        w->setShowAttachmentQuicklist( true );
+        w->update( true );
+        return true;
+      }
+
+      if ( url.path() == "hideAttachmentQuicklist" ) {
+        w->saveRelativePosition();
+        w->setShowAttachmentQuicklist( false );
+        w->update( true );
+        return true;
+      }
     }
     return false;
   }
