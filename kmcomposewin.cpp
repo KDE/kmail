@@ -521,7 +521,7 @@ void KMComposeWin::slotAttachPNGImageData( const QByteArray &image )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::readConfig( void )
+void KMComposeWin::readConfig( bool reload /* = false */ )
 {
   mDefCharset = KMMessage::defaultCharset();
   mBtnIdentity->setChecked( GlobalSettings::self()->stickyIdentity() );
@@ -551,23 +551,24 @@ void KMComposeWin::readConfig( void )
   mEdtSubject->setFont( mBodyFont );
   mRecipientsEditor->setEditFont( mBodyFont );
 
-  QSize siz = GlobalSettings::self()->composerSize();
-  if ( siz.width() < 200 ) {
-    siz.setWidth( 200 );
-  }
-  if ( siz.height() < 200 ) {
-    siz.setHeight( 200 );
-  }
-  resize( siz );
+  if ( !reload ) {
+    QSize siz = GlobalSettings::self()->composerSize();
+    if ( siz.width() < 200 ) {
+      siz.setWidth( 200 );
+    }
+    if ( siz.height() < 200 ) {
+      siz.setHeight( 200 );
+    }
+    resize( siz );
 
-  if ( !GlobalSettings::self()->snippetSplitterPosition().isEmpty() ) {
-    mSnippetSplitter->setSizes( GlobalSettings::self()->snippetSplitterPosition() );
-  } else {
-    QList<int> defaults;
-    defaults << (int)(width() * 0.8) << (int)(width() * 0.2);
-    mSnippetSplitter->setSizes( defaults );
+    if ( !GlobalSettings::self()->snippetSplitterPosition().isEmpty() ) {
+      mSnippetSplitter->setSizes( GlobalSettings::self()->snippetSplitterPosition() );
+    } else {
+      QList<int> defaults;
+      defaults << (int)(width() * 0.8) << (int)(width() * 0.2);
+      mSnippetSplitter->setSizes( defaults );
+    }
   }
-
 
   mIdentity->setCurrentIdentity( mId );
 
@@ -4059,7 +4060,7 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode )
 
 void KMComposeWin::slotConfigChanged()
 {
-  readConfig();
+  readConfig( true /*reload*/);
   updateAutoSave();
   rethinkFields();
   slotWordWrapToggled( mWordWrapAction->isChecked() );

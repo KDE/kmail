@@ -348,7 +348,7 @@ class KMComposeWin : public KMail::Composer
     /**
      * Read settings from app's config file.
      */
-    void readConfig( void );
+    void readConfig( bool reload = false );
 
     /**
      * Change window title to given string.
