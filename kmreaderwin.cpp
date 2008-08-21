@@ -546,11 +546,11 @@ void KMReaderWin::createActions()
 
   QActionGroup *group = new QActionGroup( this );
   raction = new KToggleAction( i18nc("View->headers->", "&Enterprise Headers"), this);
-  ac->addAction("view_headers_enterprise", raction);
-  connect(raction, SIGNAL(triggered(bool)), SLOT(slotEnterpriseHeaders()));
+  ac->addAction( "view_headers_enterprise", raction );
+  connect( raction, SIGNAL(triggered(bool)), SLOT(slotEnterpriseHeaders()) );
   raction->setToolTip( i18n("Show the list of headers in Enterprise style") );
-  group->addAction(raction);
-  headerMenu->addAction(raction);
+  group->addAction( raction );
+  headerMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->headers->", "&Fancy Headers"), this);
   ac->addAction("view_headers_fancy", raction );
@@ -1567,7 +1567,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
-  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard, true ) );
+  htmlWriter()->queue( writeMsgHeader( aMsg, hasVCard, true ) );
 
   // show message content
   ObjectTreeParser otp( this );
@@ -2683,31 +2683,30 @@ void KMReaderWin::injectAttachments()
   QString visibility;
   QString urlHandle;
   QString imgSrc;
-  if( !showAttachmentQuicklist() )
-    {
-      urlHandle.append( "kmail:showAttachmentQuicklist" );
-      imgSrc.append( "attachmentQuicklistClosed.png" );
-    } else {
-      urlHandle.append( "kmail:hideAttachmentQuicklist" );
-      imgSrc.append( "attachmentQuicklistOpened.png" );
-    }
+  if( !showAttachmentQuicklist() ) {
+    urlHandle.append( "kmail:showAttachmentQuicklist" );
+    imgSrc.append( "attachmentQuicklistClosed.png" );
+  } else {
+    urlHandle.append( "kmail:hideAttachmentQuicklist" );
+    imgSrc.append( "attachmentQuicklistOpened.png" );
+  }
 
   QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
   if ( html.isEmpty() )
     return;
 
-    QString link("");
-    if ( headerStyle() == HeaderStyle::fancy() ) {
-      link += "<div style=\"text-align: left;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
-      html.prepend( link );
-      html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
-    } else {
-      link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
-      html.prepend( link );
-    }
+  QString link("");
+  if ( headerStyle() == HeaderStyle::fancy() ) {
+    link += "<div style=\"text-align: left;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
+    html.prepend( link );
+    html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
+  } else {
+    link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
+    html.prepend( link );
+  }
 
-    assert( injectionPoint.tagName() == "div" );
-    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+  assert( injectionPoint.tagName() == "div" );
+  static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
 }
 
 static QColor nextColor( const QColor & c )
@@ -2728,17 +2727,16 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     if ( !subHtml.isEmpty() ) {
 
       QString visibility;
-      if( !showAttachmentQuicklist() )
-	{
-	  visibility.append( "display:none;" );
-	}
+      if( !showAttachmentQuicklist() ) {
+        visibility.append( "display:none;" );
+      }
 
       QString margin;
       if ( node != mRootNode || headerStyle() != HeaderStyle::enterprise() )
         margin = "padding:2px; margin:2px; ";
       if ( node->msgPart().typeStr() == "message" || node == mRootNode )
         html += QString::fromLatin1("<div style=\"background:%1; %2"
-            "vertical-align:middle; float:left; %3\">").arg( bgColor.name() ).arg( margin ).arg( visibility );
+                "vertical-align:middle; float:left; %3\">").arg( bgColor.name() ).arg( margin ).arg( visibility );
       html += subHtml;
       if ( node->msgPart().typeStr() == "message" || node == mRootNode )
         html += "</div>";
@@ -2754,9 +2752,9 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
     if ( !typeBlacklisted && node->msgPart().typeStr() == "application" ) {
       typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
-          || node->msgPart().subtypeStr() == "pgp-signature"
-          || node->msgPart().subtypeStr() == "pkcs7-mime"
-          || node->msgPart().subtypeStr() == "pkcs7-signature";
+                     || node->msgPart().subtypeStr() == "pgp-signature"
+                     || node->msgPart().subtypeStr() == "pkcs7-mime"
+                     || node->msgPart().subtypeStr() == "pkcs7-signature";
     }
     typeBlacklisted = typeBlacklisted || node == mRootNode;
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
@@ -2768,8 +2766,9 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
         html += fm.elidedText( label, Qt::ElideRight, 140 );
-      } else
+      } else {
         html += label;
+      }
       html += "</a></span></div> ";
     }
   }

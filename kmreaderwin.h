@@ -410,7 +410,7 @@ protected slots:
 
   /** Print message. Called on as a response of finished() signal of mPartHtmlWriter
       after rendering is finished.
-      In the very end it deletes the KMReaderWin window that was created 
+      In the very end it deletes the KMReaderWin window that was created
       for the purpose of rendering. */
   void slotPrintMsg();
 
@@ -438,7 +438,7 @@ protected:
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false, bool topLevel=false);
+  QString writeMsgHeader( KMMessage* aMsg, bool hasVCard = false, bool topLevel = false );
 
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString() if writing failed.
@@ -537,7 +537,7 @@ private:
   KToggleAction *mToggleFixFontAction;
   KUrl mUrlClicked;
   KMail::HtmlWriter * mHtmlWriter;
-  /** Used only to be able to connect and disconnect finished() signal 
+  /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
   QPointer<KMail::KHtmlPartHtmlWriter> mPartHtmlWriter;
 

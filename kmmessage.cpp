@@ -3734,21 +3734,23 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const
        ++it ) {
     if( !(*it).isEmpty() ) {
       QString address = *it;
-      if(aLink) {
-	result += "<a href=\"mailto:"
-              + KMMessage::encodeMailtoUrl( address )
-	  + "\" "+cssStyle+">";
+      if( aLink ) {
+        result += "<a href=\"mailto:"
+                + KMMessage::encodeMailtoUrl( address )
+                + "\" "+cssStyle+">";
       }
       if( stripped )
         address = KMMessage::stripEmailAddr( address );
       result += KMMessage::quoteHtmlChars( address, true );
-      if(aLink) 
-	result += "</a>, ";
+      if( aLink ) {
+        result += "</a>, ";
+      }
     }
   }
   // cut of the trailing ", "
-  if(aLink)  
+  if( aLink ) {
     result.truncate( result.length() - 2 );
+  }
 
   //kDebug(5006) << "('" << aEmail << "') returns:\n-->" << result << "<--";
   return result;
