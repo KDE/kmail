@@ -199,6 +199,7 @@ public:
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMaildir::isReadOnly() || mReadOnly; }
+  bool canDeleteMessages() const;
 
 
   /**

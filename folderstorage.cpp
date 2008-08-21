@@ -85,8 +85,8 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
 
   mHasChildren = HasNoChildren;
   mContentsType = KMail::ContentsTypeMail;
- 
-  connect(this, SIGNAL(closed(KMFolder*)), mFolder, SIGNAL(closed()));  
+
+  connect(this, SIGNAL(closed(KMFolder*)), mFolder, SIGNAL(closed()));
 }
 
 //-----------------------------------------------------------------------------
@@ -477,11 +477,11 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
 KMMessage* FolderStorage::getMsg(int idx)
 {
   if ( mOpenCount <= 0 ) {
-    kdWarning(5006) << "FolderStorage::getMsg was called on a closed folder: " << folder()->prettyURL() << endl; 
+    kdWarning(5006) << "FolderStorage::getMsg was called on a closed folder: " << folder()->prettyURL() << endl;
     return 0;
   }
-  if ( idx < 0 || idx >= count() ) { 
-    kdWarning(5006) << "FolderStorage::getMsg was asked for an invalid index. idx =" << idx << " count()=" << count() << endl; 
+  if ( idx < 0 || idx >= count() ) {
+    kdWarning(5006) << "FolderStorage::getMsg was asked for an invalid index. idx =" << idx << " count()=" << count() << endl;
     return 0;
   }
 
@@ -914,7 +914,7 @@ void FolderStorage::readConfig()
   mCompactable = config->readBoolEntry("Compactable", true);
   if ( mSize == -1 )
       mSize = config->readNum64Entry("FolderSize", -1);
-  
+
   int type = config->readNumEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );
@@ -1171,6 +1171,11 @@ bool FolderStorage::isMoveable() const
 KMAccount* FolderStorage::account() const
 {
     return 0;
+}
+
+bool FolderStorage::canDeleteMessages() const
+{
+  return !isReadOnly();
 }
 
 #include "folderstorage.moc"

@@ -294,6 +294,7 @@ public:
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }
+  bool canDeleteMessages() const;
 
   /**
    * The user's rights on this folder - see bitfield in ACLJobs namespace.
