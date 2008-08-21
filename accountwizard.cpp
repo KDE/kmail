@@ -525,6 +525,8 @@ void AccountWizard::createAccount()
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
       acct->setHost( mIncomingServer->text() );
+      if ( !mPassword->text().isEmpty() )
+        acct->setStorePasswd( true );
       break;
     }
     case AccountTypeBox::IMAP:
@@ -534,6 +536,8 @@ void AccountWizard::createAccount()
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
       acct->setHost( mIncomingServer->text() );
+      if ( !mPassword->text().isEmpty() )
+        acct->setStorePasswd( true );
       break;
     }
     case AccountTypeBox::dIMAP:
@@ -543,6 +547,8 @@ void AccountWizard::createAccount()
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
       acct->setHost( mIncomingServer->text() );
+      if ( !mPassword->text().isEmpty() )
+        acct->setStorePasswd( true );
       break;
     }
     case AccountTypeBox::Maildir:
