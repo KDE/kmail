@@ -327,6 +327,8 @@ public:
   KMailICalIfaceImpl& iCalIface();
 
   bool firstStart() const { return the_firstStart; }
+  /** Mark first start as done */
+  void firstStartDone() { the_firstStart = false; }
   QString previousVersion() const { return the_previousVersion; }
   bool startingUp() const { return the_startingUp; }
   void setStartingUp (bool flag) { the_startingUp = flag; }

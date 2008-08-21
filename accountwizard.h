@@ -36,6 +36,12 @@ class KLineEdit;
 class QCheckBox;
 class QLabel;
 class QPushButton;
+class QRadioButton;
+class QAbstractButton;
+class QButtonGroup;
+namespace KMail {
+  class IdentityListView;
+}
 
 class KMAccount;
 class KMKernel;
@@ -77,10 +83,12 @@ class AccountWizard : public KAssistantDialog
     void transportCreated();
     void createAccount();
     void accountCreated();
+    void createIdentity();
     void finished();
 
   private slots:
     void slotCurrentPageChanged( KPageWidgetItem *current );
+    void slotIdentityStateChanged( int mode );
 
     void popCapabilities( QList<int> encryptionModes );
     void imapCapabilities( QList<int> encryptionModes );
@@ -88,16 +96,26 @@ class AccountWizard : public KAssistantDialog
 
   private:
     QString accountName() const;
+    QString identityName() const;
     QLabel *createInfoLabel( const QString &msg );
 
     void checkPopCapabilities( const QString &server );
     void checkImapCapabilities( const QString &server );
     void checkSmtpCapabilities( const QString &server );
+    /**
+     * Check if there is any configured identities or just the
+     * Default (empty) one.
+     */
+    bool onlyDefaultIdentity() const;
+    /** Clear the fields in the AccountInformationPage. */
+    void clearAccountInfo();
 
     KPageWidgetItem *mWelcomePage;
 
     KPageWidgetItem *mAccountTypePage;
     AccountTypeBox *mTypeBox;
+
+    QCheckBox *mCreateNewIdentity;
 
     KPageWidgetItem *mAccountInformationPage;
     KLineEdit *mRealName;

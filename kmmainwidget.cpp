@@ -138,6 +138,7 @@ using KMail::HeaderListQuickSearch;
 #include "templateparser.h"
 using KMail::TemplateParser;
 #include "statusbarlabel.h"
+#include "accountwizard.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -2752,7 +2753,11 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("antiVirusWizard", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiVirusWizard()));
   }
-
+  {
+    KAction *action = new KAction( i18n("&Account Wizard..."), this );
+    actionCollection()->addAction( "accountWizard", action );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotAccountWizard()) );
+  }
   if ( GlobalSettings::allowOutOfOfficeSettings() )
   {
     KAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
@@ -4131,6 +4136,12 @@ void KMMainWidget::slotAntiVirusWizard()
 {
   AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this, folderTree() );
   wiz.exec();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotAccountWizard()
+{
+  AccountWizard::start( kmkernel, this );
 }
 
 //-----------------------------------------------------------------------------

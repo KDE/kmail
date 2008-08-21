@@ -47,6 +47,10 @@ using KMail::AccountManager;
 #include <mailtransport/servertest.h>
 using namespace MailTransport;
 
+#include "identitylistview.h"
+using KMail::IdentityListView;
+using KMail::IdentityListViewItem;
+
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <klineedit.h>
@@ -63,6 +67,9 @@ using namespace MailTransport;
 #include <QListWidget>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QRadioButton>
+#include <QButtonGroup>
+#include <QTreeWidget>
 
 class AccountTypeBox : public QListWidget
 {
@@ -129,13 +136,11 @@ void AccountWizard::start( KMKernel *kernel, QWidget *parent )
 {
   KConfigGroup wizardConfig( KMKernel::config(), "AccountWizard" );
 
-  if ( wizardConfig.readEntry( "ShowOnStartup", true ) ) {
-    AccountWizard wizard( kernel, parent );
-    int result = wizard.exec();
-    if ( result == QDialog::Accepted ) {
-      wizardConfig.writeEntry( "ShowOnStartup", false );
-      kernel->slotConfigChanged();
-    }
+  AccountWizard wizard( kernel, parent );
+  int result = wizard.exec();
+  if ( result == QDialog::Accepted ) {
+    wizardConfig.writeEntry( "ShowOnStartup", false );
+    kernel->slotConfigChanged();
   }
 }
 
@@ -146,16 +151,6 @@ void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current )
   } else if ( current == mAccountTypePage ) {
     if ( !mTypeBox->currentItem() ) {
       mTypeBox->setType( AccountTypeBox::POP3 );
-    }
-  } else if ( current == mAccountInformationPage ) {
-    if ( mRealName->text().isEmpty() && mEMailAddress->text().isEmpty() &&
-         mOrganization->text().isEmpty() ) {
-      KPIMIdentities::IdentityManager *manager = mKernel->identityManager();
-      const KPIMIdentities::Identity &identity = manager->defaultIdentity();
-
-      mRealName->setText( identity.fullName() );
-      mEMailAddress->setText( identity.emailAddr() );
-      mOrganization->setText( identity.organization() );
     }
   } else if ( current == mLoginInformationPage ) {
     if ( mLoginName->text().isEmpty() ) {
@@ -188,23 +183,55 @@ void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current )
   }
 }
 
+void AccountWizard::slotIdentityStateChanged( int mode )
+{
+  if ( mode == Qt::Checked) {
+    setAppropriate( mAccountInformationPage, true );
+  } else {
+    setAppropriate( mAccountInformationPage, false );
+  }
+}
+
 void AccountWizard::setupWelcomePage()
 {
   KVBox *box = new KVBox( this );
   box->setSpacing( KDialog::spacingHint() );
 
-  QLabel *label = new QLabel( i18n( "Welcome to KMail" ), box );
+  QLabel *label = new QLabel( i18n( "Welcome to KMail's account wizard" ), box );
   QFont font = label->font();
   font.setBold( true );
   label->setFont( font );
 
-  QLabel *message = new QLabel( i18n( "<qt>It seems you have started KMail for the first time. "
-                    "You can use this wizard to setup your mail accounts. Just "
-                    "enter the connection data that you received from your email provider "
-                    "into the following pages.</qt>" ), box );
+  QLabel *message;
+  if ( kmkernel->firstStart() ) {
+    message = new QLabel( i18n( "<qt>It seems you have started KMail for the first time.<br>"
+                      "You can use this wizard to setup your mail accounts. "
+                      "Just enter the connection data that you received from your email provider "
+                      "into the following pages.</qt>" ), box );
+  } else {
+    message = new QLabel( i18n( "<qt>You can use this wizard to setup your mail accounts.<br>"
+                     "Just enter the connection data that you received from your email provider "
+                      "into the following pages.</qt>" ), box );
+  }
   message->setWordWrap( true );
 
-  mWelcomePage = new KPageWidgetItem( box, i18n("Welcome") );
+  mCreateNewIdentity = new QCheckBox( i18n( "Create a new identity" ), box );
+  QString helpText( i18n( "An identity is your email address, "
+                                        "name, organization and so on.<br>"
+                                        "Do not uncheck this if you don't know what "
+                                        "you are doing<br>as some servers refuses to send mail "
+                                        "if the sending identity<br>does not match the one belonging "
+                                        "to that account.") );
+  mCreateNewIdentity->setToolTip( helpText );
+  mCreateNewIdentity->setWhatsThis( helpText );
+  mCreateNewIdentity->setChecked( true );
+  if ( onlyDefaultIdentity() ) {
+    mCreateNewIdentity->setVisible( false );
+  }
+  connect( mCreateNewIdentity, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotIdentityStateChanged( int ) ) );
+
+  mWelcomePage = new KPageWidgetItem( box, i18n("Account Wizard") );
   addPage( mWelcomePage );
 }
 
@@ -338,15 +365,44 @@ void AccountWizard::chooseLocation()
   }
 }
 
+void AccountWizard::clearAccountInfo()
+{
+  mRealName->clear();
+  mEMailAddress->clear();
+  mOrganization->clear();
+}
+
+QString AccountWizard::identityName() const
+{
+  // create identity name
+  QString name( i18nc( "Default name for new email accounts/identities.", "Unnamed" ) );
+
+  QString idName = mEMailAddress->text();
+  int pos = idName.indexOf( '@' );
+  if ( pos != -1 ) {
+    name = idName.mid( 0, pos );
+  }
+
+  // Make the name a bit more human friendly
+  name.replace( '.', ' ' );
+  pos = name.indexOf( ' ' );
+  if ( pos != 0 ) {
+    name[ pos + 1 ] = name[ pos + 1 ].toUpper();
+  }
+  name[ 0 ] = name[ 0 ].toUpper();
+  return name;
+}
+
 QString AccountWizard::accountName() const
 {
   // create account name
-  QString name( i18n( "None" ) );
+  // Use the domain part of the incoming server
+  QString name( i18nc( "Default name for new email accounts/identities.", "Unnamed" ) );
 
-  QString email = mEMailAddress->text();
-  int pos = email.indexOf( '@' );
+  QString server = mIncomingServer->text();
+  int pos = server.indexOf( '.' );
   if ( pos != -1 ) {
-    name = email.mid( pos + 1 );
+    name = server.mid( pos + 1 );
     name[ 0 ] = name[ 0 ].toUpper();
   }
 
@@ -366,24 +422,42 @@ QLabel *AccountWizard::createInfoLabel( const QString &msg )
   return label;
 }
 
+bool AccountWizard::onlyDefaultIdentity() const
+{
+  KPIMIdentities::IdentityManager* manager = kmkernel->identityManager();
+  if ( manager->identities().count() == 1 && !manager->defaultIdentity().mailingAllowed() ) {
+    return true;
+  }
+  return false;
+}
+
 void AccountWizard::accept()
 {
   //Disable finish button to keep user from pressing it repeatedly
   //when dialog is waiting for server checks
   enableButton( KDialog::User1, false );
 
+  //TODO: Add mProgress to the widget in some way...
+  QTimer::singleShot( 0, this, SLOT( createTransport() ) );
+}
+
+void AccountWizard::createIdentity()
+{
   // store identity information
   KPIMIdentities::IdentityManager *manager = mKernel->identityManager();
-  KPIMIdentities::Identity &identity =
-    manager->modifyIdentityForUoid( manager->defaultIdentity().uoid() );
-
-  identity.setFullName( mRealName->text() );
-  identity.setEmailAddr( mEMailAddress->text() );
-  identity.setOrganization( mOrganization->text() );
-
+  KPIMIdentities::Identity *identity = 0;
+  if ( onlyDefaultIdentity() ) {
+    identity = &manager->modifyIdentityForUoid( manager->defaultIdentity().uoid() );
+  } else {
+    identity = &manager->newFromScratch( identityName() );
+  }
+  Q_ASSERT( identity != 0 );
+  identity->setFullName( mRealName->text() );
+  identity->setEmailAddr( mEMailAddress->text() );
+  identity->setOrganization( mOrganization->text() );
+  identity->setTransport( mTransport->name() );
   manager->commit();
-
-  QTimer::singleShot( 0, this, SLOT( createTransport() ) );
+  QTimer::singleShot( 0, this, SLOT( createAccount() ) );
 }
 
 void AccountWizard::createTransport()
@@ -391,7 +465,6 @@ void AccountWizard::createTransport()
   mTransport = TransportManager::self()->createTransport();
 
   if ( mLocalDelivery->isChecked() ) { // local delivery
-
     QString pathToSendmail = KStandardDirs::findExe( "sendmail" );
     if ( pathToSendmail.isEmpty() ) {
       pathToSendmail = KStandardDirs::findExe( "sendmail", "/usr/sbin" );
@@ -411,7 +484,7 @@ void AccountWizard::createTransport()
     QTimer::singleShot( 0, this, SLOT( transportCreated() ) );
   } else { // delivery via SMTP
     mTransport->setType( Transport::EnumType::SMTP );
-    mTransport->setName(accountName() );
+    mTransport->setName( accountName() );
     mTransport->setHost( mOutgoingServer->text() );
     mTransport->setUserName( mLoginName->text() );
     mTransport->setPassword( mPassword->text() );
@@ -426,7 +499,11 @@ void AccountWizard::transportCreated()
 {
   mTransport->writeConfig();
   TransportManager::self()->addTransport( mTransport );
-  QTimer::singleShot( 0, this, SLOT( createAccount() ) );
+  if ( mCreateNewIdentity->isChecked() ) {
+    QTimer::singleShot( 0, this, SLOT( createIdentity() ) );
+  } else {
+    QTimer::singleShot( 0, this, SLOT( createAccount() ) );
+  }
 }
 
 void AccountWizard::createAccount()
@@ -499,7 +576,7 @@ void AccountWizard::accountCreated()
 void AccountWizard::finished()
 {
   GlobalSettings::self()->writeConfig();
-
+  kmkernel->firstStartDone();
   KAssistantDialog::accept();
 }
 

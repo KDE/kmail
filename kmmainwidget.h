@@ -381,6 +381,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotAntiSpamWizard();
     void slotAntiVirusWizard();
     void slotFilterLogViewer();
+    void slotAccountWizard();
 
     /** Message navigation */
     void slotNextMessage();
