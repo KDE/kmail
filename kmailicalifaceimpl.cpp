@@ -66,6 +66,7 @@ using KMail::AccountManager;
 
 #include <kdebug.h>
 #include <kiconloader.h>
+#include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kurl.h>
@@ -1783,8 +1784,9 @@ void KMailICalIfaceImpl::readConfig()
     for(QList<QPointer<KMFolder> >::iterator it = folderList.begin();
         it != folderList.end(); ++it)
     {
-      FolderStorage* storage = (*it)->storage();
-      if ( storage->contentsType() != 0 ) {
+      KMFolderCachedImap* storage = dynamic_cast<KMFolderCachedImap*>( (*it)->storage() );
+      if ( storage && storage->contentsType() != 0 ) {
+        storage->updateAnnotationFolderType();
         folderContentsTypeChanged( *it, storage->contentsType() );
       }
     }
@@ -1928,6 +1930,19 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
 
   // Find the folder
   StandardFolderSearchResult result = findStandardResourceFolder( mFolderParentDir, contentsType );
+
+  // deal with multiple default groupware folders
+  if ( result.folders.count() > 1 && result.found == StandardFolderSearchResult::FoundAndStandard ) {
+    QStringList labels;
+    for ( QList<KMFolder*>::ConstIterator it = result.folders.begin(); it != result.folders.end(); ++it )
+      labels << (*it)->prettyUrl();
+    const QString selected = KInputDialog::getItem( i18n("Default folder"),
+        i18n("There are multiple %1 default folders, please choose one:",
+             localizedDefaultFolderName( contentsType ) ), labels );
+    if ( !selected.isEmpty() )
+      result.folder = result.folders[ labels.findIndex( selected ) ];
+  }
+
   KMFolder* folder = result.folder;
 
   if ( !folder ) {
@@ -2127,21 +2142,22 @@ static void vPartMicroParser( const QString& str, QString& s )
 }
 
 // Returns the first child folder having the given annotation
-static KMFolder* findFolderByAnnotation( KMFolderDir* folderParentDir, const QString& annotation )
+static QList<KMFolder*> findFolderByAnnotation( KMFolderDir* folderParentDir, const QString& annotation )
 {
-    QList<KMFolderNode*>::const_iterator it;
-    for ( it = folderParentDir->begin(); it != folderParentDir->end(); ++it ) {
-      if ( !(*it)->isDir() ) {
-        KMFolder* folder = static_cast<KMFolder *>( *it );
-        if ( folder->folderType() == KMFolderTypeCachedImap ) {
-          QString folderAnnotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
-          //kDebug() <<"findStandardResourceFolder:" << folder->name() <<" has annotation" << folderAnnotation;
-          if ( folderAnnotation == annotation )
-            return folder;
-        }
+  QList<KMFolder*> rv;
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = folderParentDir->begin(); it != folderParentDir->end(); ++it ) {
+    if ( !(*it)->isDir() ) {
+      KMFolder* folder = static_cast<KMFolder *>( *it );
+      if ( folder->folderType() == KMFolderTypeCachedImap ) {
+        QString folderAnnotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
+        //kDebug() <<"findStandardResourceFolder:" << folder->name() <<" has annotation" << folderAnnotation;
+        if ( folderAnnotation == annotation )
+          rv.append( folder );
       }
     }
-    return 0;
+  }
+  return rv;
 }
 
 KMailICalIfaceImpl::StandardFolderSearchResult KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType )
@@ -2149,14 +2165,14 @@ KMailICalIfaceImpl::StandardFolderSearchResult KMailICalIfaceImpl::findStandardR
   if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
   {
     // Look for a folder with an annotation like "event.default"
-    KMFolder* folder = findFolderByAnnotation( folderParentDir, QString( s_folderContentsType[contentsType].annotation ) + ".default" );
-    if ( folder )
-      return StandardFolderSearchResult( folder, StandardFolderSearchResult::FoundAndStandard );
+    QList<KMFolder*> folders = findFolderByAnnotation( folderParentDir, QString( s_folderContentsType[contentsType].annotation ) + ".default" );
+    if ( !folders.isEmpty() )
+      return StandardFolderSearchResult( folders, StandardFolderSearchResult::FoundAndStandard );
 
     // Fallback: look for a folder with an annotation like "event"
-    folder = findFolderByAnnotation( folderParentDir, QString( s_folderContentsType[contentsType].annotation ) );
-    if ( folder )
-      return StandardFolderSearchResult( folder, StandardFolderSearchResult::FoundByType );
+    folders = findFolderByAnnotation( folderParentDir, QString( s_folderContentsType[contentsType].annotation ) );
+    if ( !folders.isEmpty() )
+      return StandardFolderSearchResult( folders, StandardFolderSearchResult::FoundByType );
 
     // Fallback: look for the folder by name (we'll need to change its type)
     KMFolderNode* node = folderParentDir->hasNamedFolder( localizedDefaultFolderName( contentsType ) );

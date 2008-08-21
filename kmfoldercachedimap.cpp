@@ -2498,9 +2498,8 @@ void KMFolderCachedImap::updateAnnotationFolderType()
     newType = KMailICalIfaceImpl::annotationForContentsType( mContentsType );
     if ( kmkernel->iCalIface().isStandardResourceFolder( folder() ) ) {
       newSubType = "default";
-    } else {
-      // preserve unknown subtypes, like drafts etc. And preserve ".default" too.
-      newSubType = oldSubType;
+    } else if ( oldSubType != "default" ) {
+      newSubType = oldSubType; // preserve unknown subtypes, like drafts etc.
     }
   }
 
@@ -2806,7 +2805,7 @@ void KMFolderCachedImap::slotSetAnnotationResult( KJob *job )
          contentsType() == ContentsTypeMail ) {
       if ( mAccount->slave() ) {
         mAccount->removeJob( static_cast<KIO::Job*>( job ) );
-      } 
+      }
     } else {
       cont =
         mAccount->handleJobError( static_cast<KIO::Job*>( job ),

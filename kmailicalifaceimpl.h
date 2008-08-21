@@ -281,7 +281,10 @@ private:
     enum FoundEnum { FoundAndStandard, NotFound, FoundByType, FoundByName };
     StandardFolderSearchResult() : folder( 0 ) {}
     StandardFolderSearchResult( KMFolder* f, FoundEnum e ) : folder( f ), found( e ) {}
+    StandardFolderSearchResult( const QList<KMFolder*> &f, FoundEnum e ) :
+        folder( f.first() ), folders( f ), found( e ) {}
     KMFolder* folder; // NotFound implies folder==0 of course.
+    QList<KMFolder*> folders; // in case we found multiple default folders (which should not happen)
     FoundEnum found;
   };
 
