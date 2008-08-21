@@ -1940,7 +1940,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
         i18n("There are multiple %1 default folders, please choose one:",
              localizedDefaultFolderName( contentsType ) ), labels );
     if ( !selected.isEmpty() )
-      result.folder = result.folders[ labels.findIndex( selected ) ];
+      result.folder = result.folders[ labels.indexOf( selected ) ];
   }
 
   KMFolder* folder = result.folder;
