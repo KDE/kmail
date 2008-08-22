@@ -390,6 +390,11 @@ QString AccountWizard::identityName() const
     name[ pos + 1 ] = name[ pos + 1 ].toUpper();
   }
   name[ 0 ] = name[ 0 ].toUpper();
+
+  KPIMIdentities::IdentityManager *manager = mKernel->identityManager();
+  if ( !manager->isUnique( name ) ) {
+    name = manager->makeUnique( name );
+  }
   return name;
 }
 
@@ -406,6 +411,10 @@ QString AccountWizard::accountName() const
     name[ 0 ] = name[ 0 ].toUpper();
   }
 
+  AccountManager *manager = mKernel->acctMgr();
+  if ( !manager->isUnique( name ) ) {
+    name = manager->makeUnique( name );
+  }
   return name;
 }
 

@@ -421,4 +421,27 @@ void AccountManager::readPasswords()
   }
 }
 
+//-----------------------------------------------------------------------------
+bool AccountManager::isUnique( const QString &aName ) const
+{
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    if ( (*it)->name() == aName ) return false;
+  }
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+QString AccountManager::makeUnique( const QString &name ) const
+{
+  int suffix = 1;
+  QString result = name;
+  while ( getAccounts().contains( result ) ) {
+    result = i18nc( "%1: name; %2: number appended to it to make it unique"
+                    "among a list of names", "%1 #%2",
+                    name, suffix );
+    suffix++;
+  }
+  return result;
+}
+
 #include "accountmanager.moc"

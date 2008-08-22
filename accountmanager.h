@@ -68,6 +68,12 @@ class KMAIL_EXPORT AccountManager: public QObject
     */
     void add( KMAccount *account );
 
+    /** @return whether the @p nameis unique */
+    bool isUnique( const QString &name ) const;
+
+    /** @return a unique name for a new identity based on@p name*/
+    QString makeUnique( const QString &aName ) const;
+
     /**
       Find account by name. Returns 0 if account does not exist.
       Search is done case sensitive.
