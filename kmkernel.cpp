@@ -1867,9 +1867,17 @@ void KMKernel::dumpDeadLetters()
   if ( !KMainWindow::memberList )
     return;
 
-  for ( QPtrListIterator<KMainWindow> it(*KMainWindow::memberList) ; it.current() != 0; ++it )
-    if ( KMail::Composer * win = ::qt_cast<KMail::Composer*>( it.current() ) )
+  for ( QPtrListIterator<KMainWindow> it(*KMainWindow::memberList) ; it.current() != 0; ++it ) {
+    if ( KMail::Composer * win = ::qt_cast<KMail::Composer*>( it.current() ) ) {
       win->autoSaveMessage();
+      // saving the message has to be finished right here, we are called from a dtor,
+      // therefore we have no chance to finish this later
+      // yes, this is ugly and potentially dangerous, but the alternative is losing
+      // currently composed messages...
+      while ( win->isComposing() )
+        qApp->processEvents();
+    }
+  }
 }
 
 

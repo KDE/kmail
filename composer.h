@@ -66,11 +66,18 @@ namespace KMail {
     virtual void setMsg( KMMessage * newMsg, bool mayAutoSign=true,
                          bool allowDecryption=false, bool isModified=false) = 0;
 
+    /**
+    * Returns @c true while the message composing is in progress.
+    */
+   virtual bool isComposing() const = 0;
+
   public: // kmkernel
     /**
      * Set the filename which is used for autosaving.
      */
     virtual void setAutoSaveFilename( const QString & filename ) = 0;
+
+
 
   public: // kmkernel, callback
     /**

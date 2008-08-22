@@ -160,6 +160,11 @@ public: // kmkernel, kmcommands, callback
 
    void disableWordWrap();
 
+   /**
+    * Returns @c true while the message composing is in progress.
+    */
+   bool isComposing() const { return mComposer != 0; }
+
 private: // kmedit
   /**
    * Returns message of the composer. To apply the user changes to the
