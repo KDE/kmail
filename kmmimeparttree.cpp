@@ -298,16 +298,10 @@ void KMMimePartTree::startHandleAttachmentCommand( int action )
     return;
 
   partNode *node = static_cast<KMMimePartTreeItem *>( selected.first() )->node();
-
   QString name = mReaderWin->tempFileUrlFromPartNode( node ).path();
 
-  KMHandleAttachmentCommand *command = new KMHandleAttachmentCommand(
-      node, mReaderWin->message(), node->nodeId(), name,
-      KMHandleAttachmentCommand::AttachmentAction( action ),
-      KService::Ptr(), this );
-  connect( command, SIGNAL( showAttachment( int, const QString& ) ),
-           mReaderWin, SLOT( slotAtmView( int, const QString& ) ) );
-  command->start();
+  mReaderWin->prepareHandleAttachment( node->nodeId(), name );
+  mReaderWin->slotHandleAttachment( action );
 }
 
 void KMMimePartTree::slotCopy()
