@@ -1014,6 +1014,11 @@ void KMReaderWin::adjustLayout() {
     mSplitter->insertWidget( 0, mMimePartTree );
   mSplitter->setSizes( mSplitterSizes );
 
+  if ( mMimeTreeMode == 2 && mMsgDisplay )   
+    mMimePartTree->show();
+  else
+    mMimePartTree->hide();
+
   if ( mShowColorbar && mMsgDisplay )
     mColorBar->show();
   else
