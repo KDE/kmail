@@ -2737,12 +2737,6 @@ void KMMainWidget::setupActions()
   }
 #endif
 
-  // @TODO (marc/bo): Test
-  {
-    KAction *action = new KAction(KIcon("configure"), i18n("Edit \"Out of Office\" Replies..."), this);
-    actionCollection()->addAction("tools_edit_vacation", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditVacation()));
-  }
   {
     KAction *action = new KAction(i18n("Filter &Log Viewer..."), this);
     actionCollection()->addAction("filter_log_viewer", action );
@@ -2760,28 +2754,10 @@ void KMMainWidget::setupActions()
   }
 
   if ( GlobalSettings::allowOutOfOfficeSettings() )
-    {
+  {
     KAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
     actionCollection()->addAction( "tools_edit_vacation", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotEditVacation()) );
-    }
-
-  {
-    KAction *action = new KAction( i18n("Filter &Log Viewer..."), this );
-    actionCollection()->addAction( "filter_log_viewer", action );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotFilterLogViewer()) );
-  }
-
-  {
-    KAction *action = new KAction( i18n("&Anti-Spam Wizard..."), this );
-    actionCollection()->addAction( "antiSpamWizard", action );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotAntiSpamWizard()) );
-  }
-
-  {
-    KAction *action = new KAction( i18n("&Anti-Virus Wizard..."), this );
-    actionCollection()->addAction( "antiVirusWizard", action );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotAntiVirusWizard()) );
   }
 
   //----- Edit Menu
