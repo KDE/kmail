@@ -21,6 +21,7 @@
 #include <kdebug.h>
 #include <kconfiggroup.h>
 #include <kbuttongroup.h>
+#include <kpimidentities/identitymanager.h>
 
 // Qt headers:
 #include <QTabWidget>
@@ -124,11 +125,10 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
     return;
   }
   // or name doesn't yet exist.
-  for ( int i = 0 ; i < mComboBox->count() ; i++ )
-    if ( mComboBox->itemText(i) == name ) {
-      enableButtonOk( false );
-      return;
-    }
+  if ( ! kmkernel->identityManager()->isUnique( name ) ) {
+    enableButtonOk( false );
+    return;
+  }
   enableButtonOk( true );
 }
 

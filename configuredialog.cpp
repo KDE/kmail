@@ -747,22 +747,6 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   mDefaultDomainEdit->setWhatsThis( msg );
 }
 
-
-// adds a number to @p name to make the name unique
-static inline QString uniqueName( const QStringList & list,
-                                  const QString & name )
-{
-  int suffix = 1;
-  QString result = name;
-  while ( list.contains( result )  ) {
-    result = i18nc("%1: name; %2: number appended to it to make it unique "
-                  "among a list of names", "%1 %2",
-        name, suffix );
-    suffix++;
-  }
-  return result;
-}
-
 void AccountsPage::SendingTab::doLoadFromGlobalSettings() {
   mSendOnCheckCombo->setCurrentIndex( GlobalSettings::self()->sendOnCheck() );
 }
@@ -988,15 +972,13 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
 
   AccountDialog dialog( i18n("Add Account"), account, this );
 
-  QStringList accountNames = occupiedNames();
-
   if( dialog.exec() != QDialog::Accepted ) {
     delete account;
     return;
   }
 
   account->deinstallTimer();
-  account->setName( uniqueName( accountNames, account->name() ) );
+  account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
 
   QTreeWidgetItem *after = mAccountList->topLevelItemCount() > 0 ?
       mAccountList->topLevelItem( mAccountList->topLevelItemCount() - 1 ) :
@@ -1071,7 +1053,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
   if( dialog.exec() != QDialog::Accepted ) return;
 
-  account->setName( uniqueName( accountNames, account->name() ) );
+  account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
 
   listItem->setText( 0, account->name() );
   listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
