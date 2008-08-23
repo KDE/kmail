@@ -148,7 +148,8 @@ FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, QWidget * pare
   setShowSortIndicator( false );
 
   connect( this, SIGNAL(selectionChanged()), SLOT(selectionChanged()) );
-  connect( this, SIGNAL(clicked(Q3ListViewItem*)), SLOT(itemClicked(Q3ListViewItem*)) );
+  connect( this, SIGNAL(mouseButtonClicked(int,Q3ListViewItem*,const QPoint&,int)),
+           SLOT(itemClicked(int,Q3ListViewItem*)) );
   connect( this, SIGNAL(dropped(QDropEvent*,Q3ListViewItem*)), SLOT(dropped(QDropEvent*,Q3ListViewItem*)) );
   connect( this, SIGNAL(contextMenuRequested(Q3ListViewItem*, const QPoint &, int)),
            SLOT(contextMenu(Q3ListViewItem*,const QPoint&)) );
@@ -251,7 +252,6 @@ void FavoriteFolderView::selectionChanged()
   KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   ft->showFolder( fti->folder() );
-  handleGroupwareFolder( fti );
 }
 
 static void selectKontactPlugin( const QString &plugin )
@@ -297,13 +297,14 @@ void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
   }
 }
 
-void FavoriteFolderView::itemClicked(Q3ListViewItem * item)
+void FavoriteFolderView::itemClicked(int button, Q3ListViewItem * item)
 {
   if ( !item ) return;
   if ( !item->isSelected() )
     item->setSelected( true );
   item->repaint();
-  handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
+  if ( button & Qt::LeftButton )
+    handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
 }
 
 void FavoriteFolderView::folderTreeSelectionChanged(KMFolder * folder)
