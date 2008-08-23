@@ -469,13 +469,11 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
 
     // We found a serial number that is zero. This is not allowed, and would
     // later cause problems like in bug 149715.
-    // Therefore, we invalidate the folder when this happens.
+    // Therefore, use a fresh serial number instead
     if ( msn == 0 ) {
       kWarning() << "Found serial number zero at index" << index << "in folder" << filename;
-      kWarning() << "Invalidating folder.";
-      fclose( fp );
-      delete rentry;
-      return -1;
+      msn = getNextMsgSerNum();
+      Q_ASSERT( msn != 0 );
     }
 
     // Insert into the dict. Don't use dict->replace() as we _know_
