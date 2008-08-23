@@ -39,6 +39,7 @@
 #include <kconfiggroup.h>
 
 #include <QBoxLayout>
+#include <QFormLayout>
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QKeyEvent>
@@ -334,27 +335,16 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   setObjectName("RecipientsPicker");
   setWindowTitle( i18n("Select Recipient") );
 
-  QBoxLayout *topLayout = new QVBoxLayout( this );
+  QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( KDialog::marginHint() );
 
-  QBoxLayout *resLayout = new QHBoxLayout();
-  topLayout->addItem( resLayout );
-
-  QLabel *label = new QLabel( i18n("Address book:"), this );
-  resLayout->addWidget( label );
+  QFormLayout *resLayout = new QFormLayout( this );
+  topLayout->addLayout( resLayout );
 
   mCollectionCombo = new QComboBox( this );
-  resLayout->addWidget( mCollectionCombo );
-  resLayout->addItem( new QSpacerItem( 1, 1, QSizePolicy::Expanding ) );
-
   connect( mCollectionCombo, SIGNAL( activated( int ) ), SLOT( updateList() ) );
-
-  QBoxLayout *searchLayout = new QHBoxLayout();
-  topLayout->addItem( searchLayout );
-
-  label = new QLabel( i18n("&Search:"), this );
-  searchLayout->addWidget( label );
+  resLayout->addRow( i18n("Address book:"), mCollectionCombo );
 
   mRecipientList = new RecipientsTreeWidget( this );
   mRecipientList->setSelectionMode( QAbstractItemView::ExtendedSelection );
@@ -370,6 +360,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   mRecipientList->setColumnWidth( 1, 200 );
   mRecipientList->setColumnWidth( 2, 200 );
   topLayout->addWidget( mRecipientList );
+  topLayout->setStretchFactor( mRecipientList, 1 );
 
   connect( mRecipientList, SIGNAL( itemDoubleClicked(QTreeWidgetItem*,int) ),
            SLOT( slotPicked() ) );
@@ -377,16 +368,15 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
            SLOT( slotPicked() ) );
 
   mSearchLine = new SearchLine( this, mRecipientList );
-  searchLayout->addWidget( mSearchLine );
-  label->setBuddy( label );
   connect( mSearchLine, SIGNAL( downPressed() ), SLOT( setFocusList() ) );
+  resLayout->addRow( i18n("Search:"), mSearchLine );
 
-  QBoxLayout *buttonLayout = new QHBoxLayout();
-  topLayout->addItem( buttonLayout );
+  QHBoxLayout *buttonLayout = new QHBoxLayout();
+  topLayout->addLayout( buttonLayout );
 
-  buttonLayout->addStretch( 1 );
+  buttonLayout->addStretch( 1 );			// right align buttons
 
-  mToButton = new QPushButton( i18n("Add as To"), this );
+  mToButton = new QPushButton( i18n("Add as &To"), this );
   buttonLayout->addWidget( mToButton );
   connect( mToButton, SIGNAL( clicked() ), SLOT( slotToClicked() ) );
 
@@ -394,7 +384,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   buttonLayout->addWidget( mCcButton );
   connect( mCcButton, SIGNAL( clicked() ), SLOT( slotCcClicked() ) );
 
-  mBccButton = new QPushButton( i18n("Add as BCC"), this );
+  mBccButton = new QPushButton( i18n("Add as &BCC"), this );
   buttonLayout->addWidget( mBccButton );
   connect( mBccButton, SIGNAL( clicked() ), SLOT( slotBccClicked() ) );
 
