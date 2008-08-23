@@ -316,6 +316,8 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
+  if ( !kmkernel->askToGoOnline() )
+    return;
   kmkernel->acctMgr()->checkMail(false);
 }
 
