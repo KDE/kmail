@@ -102,7 +102,7 @@ void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
       account = static_cast<KMFolderImap*>(msg_parent->storage())->account();
   }
   if ( !account ||
-       account->makeConnection() == ImapAccountBase::Error ) {
+       account->makeConnection() != ImapAccountBase::Connected ) {
     deleteLater();
     return;
   }
