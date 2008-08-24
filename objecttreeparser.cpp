@@ -1860,9 +1860,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
 
     QString fileName = mReader->writeMessagePartToTempFile( msgPart, partNum );
 
-    QString href = fileName.isEmpty() ?
-      "part://" + QString::number( partNum + 1 ) :
-      "file:" + KUrl::toPercentEncoding( fileName ) ;
+    QString href = "file:" + KUrl::toPercentEncoding( fileName ) ;
 
     QString iconName;
     if( inlineImage )

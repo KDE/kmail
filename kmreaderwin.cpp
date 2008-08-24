@@ -1697,6 +1697,15 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLeve
 QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
                                                  int aPartNum )
 {
+  // If the message part is already written to a file, no point in doing it again.
+  // This function is called twice actually, once from the rendering of the attachment
+  // in the body and once for the header.
+  const partNode * node = mRootNode->findId( aPartNum );
+  KUrl existingFileName = tempFileUrlFromPartNode( node );
+  if ( !existingFileName.isEmpty() ) {
+    return existingFileName.path();
+  }
+
   QString fileName = aMsgPart->fileName();
   if( fileName.isEmpty() )
     fileName = aMsgPart->name();
@@ -1783,19 +1792,13 @@ void KMReaderWin::slotPrintMsg()
 int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
 {
   if ( aUrl.isEmpty() ) return -1;
-
-  bool ok;
-  if ( aUrl.url().startsWith( "#att" ) ) {
-    int res = aUrl.url().mid( 4 ).toInt( &ok );
-    if ( ok ) return res;
-  }
-
   if ( !aUrl.isLocalFile() ) return -1;
 
   QString path = aUrl.path();
   uint right = path.lastIndexOf( '/' );
   uint left = path.lastIndexOf( '.', right );
 
+  bool ok;
   int res = path.mid( left + 1, right - left - 1 ).toInt( &ok );
   return ( ok ) ? res : -1;
 }
@@ -2772,7 +2775,10 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
       html += "<div style=\"float:left;\">";
       html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
-      html += QString::fromLatin1( "<a href=\"#att%1\">" ).arg( node->nodeId() );
+      QString fileName = writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
+      QString href = "file:" + KUrl::toPercentEncoding( fileName ) ;
+      html += QString::fromLatin1( "<a href=\"" ) + href +
+              QString::fromLatin1( "\">" );
       html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
       if ( headerStyle() == HeaderStyle::enterprise() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
