@@ -2777,7 +2777,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       if ( headerStyle() == HeaderStyle::enterprise() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
-        html += fm.elidedText( label, Qt::ElideRight, 140 );
+        html += fm.elidedText( label, Qt::ElideRight, 180 );
       } else {
         html += label;
       }
