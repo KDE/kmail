@@ -819,7 +819,7 @@ void RecipientsPicker::slotSearchLDAP()
 
 void RecipientsPicker::ldapSearchResult()
 {
-  QStringList emails = QStringList::split(',', mLdapSearchDialog->selectedEMails() );
+  QStringList emails = mLdapSearchDialog->selectedEMails().split(',');
   QStringList::iterator it( emails.begin() );
   QStringList::iterator end( emails.end() );
   for ( ; it != end; ++it ){
