@@ -261,7 +261,7 @@ namespace KMail {
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
       headerStr.append( i18n("From: ") +
-                        KMMessage::emailAddrAsAnchor( fromStr, "", false ) );
+                        KMMessage::emailAddrAsAnchor( fromStr, false, "", true ) );
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
