@@ -1125,7 +1125,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
        fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
     folderMenu->addAction(KIcon("folder-bookmarks"),
-        i18n("Subscription..."), mMainWidget,
+        i18n("Serverside Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
     folderMenu->addAction(SmallIcon("folder-bookmarks"),
         i18n("Local Subscription..."), mMainWidget,
