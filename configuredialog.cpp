@@ -1053,7 +1053,8 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
   if( dialog.exec() != QDialog::Accepted ) return;
 
-  account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
+  if ( accountNames.contains( account->name() ) )
+    account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
 
   listItem->setText( 0, account->name() );
   listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
