@@ -527,9 +527,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         // kDebug(5006) << "Set attachCharset to" << attachCharset;
         msgPart->setCharset( attachCharset );
       }
-      // Don't show the composer window, if the automatic sending is checked
-      KConfigGroup options( config(), "Groupware" );
-      iCalAutoSend = options.readEntry( "AutomaticSending", true );
+      // Don't show the composer window if the automatic sending is checked
+      iCalAutoSend = GlobalSettings::self()->automaticSending();
     }
   }
 

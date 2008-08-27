@@ -5261,6 +5261,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   }
 
   mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
+  mExchangeCompatibleInvitations->setChecked( GlobalSettings::self()->exchangeCompatibleInvitations() );
 
   mLegacyBodyInvites->blockSignals( true );
   mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
@@ -5331,14 +5332,6 @@ void MiscPage::GroupwareTab::save()
   KConfigGroup groupware( KMKernel::config(), "Groupware" );
 
   // Write the groupware config
-  if ( mEnableGwCB ) {
-    groupware.writeEntry( "GroupwareEnabled", mEnableGwCB->isChecked() );
-  }
-  groupware.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
-  groupware.writeEntry( "LegacyBodyInvites", mLegacyBodyInvites->isChecked() );
-  groupware.writeEntry( "ExchangeCompatibleInvitations", mExchangeCompatibleInvitations->isChecked() );
-  groupware.writeEntry( "AutomaticSending", mAutomaticSending->isChecked() );
-
   if ( mEnableGwCB ) {
     GlobalSettings::self()->setGroupwareEnabled( mEnableGwCB->isChecked() );
   }
