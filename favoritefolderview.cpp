@@ -28,6 +28,7 @@
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
 #include "korghelper.h"
+#include "folderviewtooltip.h"
 
 #include <libkdepim/maillistdrag.h>
 #include <libkdepim/kaddrbookexternal.h>
@@ -65,60 +66,12 @@ FavoriteFolderViewItem::FavoriteFolderViewItem(FavoriteFolderView * parent, cons
   connect( folder, SIGNAL(msgRemoved(KMFolder*)), SLOT(updateCount()) );
   connect( folder, SIGNAL(folderSizeChanged( KMFolder* )), SLOT(updateCount()) );
 
-  updateCount();
+  QTimer::singleShot( 0, this, SLOT(updateCount()) );
+
   if ( unreadCount() > 0 )
     setPixmap( 0, unreadIcon( iconSize() ) );
   else
     setPixmap( 0, normalIcon( iconSize() ) );
-}
-
-void FavoriteFolderViewItem::updateCount()
-{
-  // FIXME: share with KMFolderTree
-  if ( !folder() ) {
-    setTotalCount( -1 );
-    return;
-  }
-
-  // get the unread count
-  int count = 0;
-  if (folder() && folder()->noContent()) // always empty
-    count = -1;
-  else {
-    count = folder()->countUnread();
-  }
-   bool repaint = false;
-  if ( unreadCount() != count ) {
-     adjustUnreadCount( count );
-     repaint = true;
-  }
-
-  // get the total-count
-  if ( folder()->noContent() )
-    count = -1;
-  else {
-    // get the cached count if the folder is not open
-    count = folder()->count( !folder()->isOpened() );
-  }
-  if ( count != totalCount() ) {
-    setTotalCount(count);
-    repaint = true;
-  }
-
-  if ( !folder()->noContent() ) {
-    qint64 size = folder()->storage()->folderSize();
-    if ( size != folderSize() ) {
-      setFolderSize( size );
-      repaint = true;
-    }
-  }
-
-  if ( folderIsCloseToQuota() != folder()->storage()->isCloseToQuota() )
-    setFolderIsCloseToQuota( folder()->storage()->isCloseToQuota() );
-
-  if (repaint) {
-    this->repaint();
-  }
 }
 
 void FavoriteFolderViewItem::nameChanged()
@@ -128,7 +81,6 @@ void FavoriteFolderViewItem::nameChanged()
   setText( 0, txt );
   mOldName = folder()->label();
 }
-
 
 QList<FavoriteFolderView*> FavoriteFolderView::mInstances;
 
@@ -154,6 +106,7 @@ FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, QWidget * pare
   connect( this, SIGNAL(contextMenuRequested(Q3ListViewItem*, const QPoint &, int)),
            SLOT(contextMenu(Q3ListViewItem*,const QPoint&)) );
   connect( this, SIGNAL(moved()), SLOT(notifyInstancesOnChange()) );
+  connect( this, SIGNAL(triggerRefresh()), SLOT(refresh()) );
 
   connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
   connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
@@ -168,6 +121,8 @@ FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, QWidget * pare
   QFont f = font();
   f.setItalic( true );
   setFont( f );
+
+  new FolderViewToolTip( this );
 
   mInstances.append( this );
 }
@@ -240,6 +195,7 @@ KMFolderTreeItem* FavoriteFolderView::addFolder(KMFolder * folder, const QString
   else
     item->moveItem( lastItem() );
   ensureItemVisible( item );
+  insertIntoFolderToItemMap( folder, item );
   notifyInstancesOnChange();
   return item;
 }
@@ -344,6 +300,7 @@ void FavoriteFolderView::folderRemoved(KMFolder * folder)
   }
   for ( int i = 0; i < delItems.count(); ++i )
     delete delItems[i];
+  removeFromFolderToItemMap( folder );
 }
 
 void FavoriteFolderView::dropped(QDropEvent * e, Q3ListViewItem * after)
@@ -590,6 +547,17 @@ void FavoriteFolderView::notifyInstancesOnChange()
       continue;
     (*it)->readConfig();
   }
+}
+
+void FavoriteFolderView::refresh()
+{
+  for ( Q3ListViewItemIterator it( this ); it.current(); ++it ) {
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( it.current() );
+    if ( !fti || !fti->folder() )
+      continue;
+    fti->repaint();
+  }
+  update();
 }
 
 #include "favoritefolderview.moc"

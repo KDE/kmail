@@ -25,6 +25,7 @@
 #include "kmheaders.h"
 #include "kmmainwidget.h"
 #include "messagecopyhelper.h"
+#include "folderstorage.h"
 
 #include <libkdepim/maillistdrag.h>
 using KPIM::MailList;
@@ -175,6 +176,72 @@ void FolderTreeBase::handleMailListDrop(QDropEvent * event, KMFolder *destinatio
       new MessageCopyHelper( serNums, destination, action == DRAG_MOVE, this );
     }
   }
+}
+
+void FolderTreeBase::slotUpdateCounts(KMFolder * folder, bool force /* = false*/)
+{
+  // kDebug(5006) << "KMFolderTree::slotUpdateCounts()" << endl;
+  Q3ListViewItem * current;
+  if ( folder )
+    current = indexOfFolder( folder );
+  else
+    current = currentItem();
+
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( current );
+
+  // sanity check
+  if ( !fti ) return;
+  if ( !fti->folder() ) fti->setTotalCount( -1 );
+
+  // get the unread count
+  int count = 0;
+  if ( folder && folder->noContent() ) { // always empty
+    count = -1;
+  } else if ( fti->folder() ) {
+    count = fti->folder()->countUnread();
+  }
+
+  // set it
+  bool repaint = false;
+  if ( fti->unreadCount() != count ) {
+     fti->adjustUnreadCount( count );
+     repaint = true;
+  }
+  if ( isTotalActive() || force ) {
+    // get the total-count
+    if (fti->folder()->noContent()) {
+      count = -1;
+    } else {
+      // get the cached count if the folder is not open
+      count = fti->folder()->count( !fti->folder()->isOpened() );
+    }
+    // set it
+    if ( count != fti->totalCount() ) {
+      fti->setTotalCount( count );
+      repaint = true;
+    }
+  }
+  if ( isSizeActive() || force ) {
+    if ( !fti->folder()->noContent() ) {
+      int size = folder->storage()->folderSize();
+      if ( size != fti->folderSize() ) {
+        fti->setFolderSize( size );
+        repaint = true;
+      }
+    }
+  }
+  if ( fti->folderIsCloseToQuota() != folder->storage()->isCloseToQuota() ) {
+    fti->setFolderIsCloseToQuota( folder->storage()->isCloseToQuota() );
+  }
+
+  if ( fti->parent() && !fti->parent()->isOpen() )
+    repaint = false; // we're not visible
+  if ( repaint ) {
+    fti->setNeedsRepaint( true );
+    emit triggerRefresh();
+  }
+  // tell the kernel that one of the counts has changed
+  kmkernel->messageCountChanged();
 }
 
 #include "foldertreebase.moc"

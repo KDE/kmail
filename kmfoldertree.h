@@ -100,6 +100,7 @@ public slots:
   void slotShowExpiryProperties();
   void slotIconsChanged();
   void slotNameChanged();
+  void updateCount();
 
 protected:
   void init();
@@ -131,15 +132,6 @@ public:
 
   /** Recusively add folders in a folder directory to a listview item. */
   virtual void addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent );
-
-  /** Find index of given folder. Returns 0 if not found */
-  virtual Q3ListViewItem* indexOfFolder( const KMFolder* folder ) const
-  {
-     if ( mFolderToItem.contains( folder ) )
-       return mFolderToItem[ folder ];
-     else
-       return 0;
-  }
 
   /** create a folderlist */
   void createFolderList( QStringList *str,
@@ -178,16 +170,6 @@ public:
 
   /** Select the folder and make sure it's visible */
   void showFolder( KMFolder* );
-
-  void insertIntoFolderToItemMap( const KMFolder *folder, KMFolderTreeItem* item )
-  {
-    mFolderToItem.insert( folder, item );
-  }
-
-  void removeFromFolderToItemMap( const KMFolder *folder )
-  {
-    mFolderToItem.remove( folder );
-  }
 
   /** Valid actions for the folderToPopup method */
   enum MenuAction {
@@ -287,9 +269,6 @@ protected slots:
   /** Check if the new name is valid and confirm the new name */
   void slotRenameFolder( Q3ListViewItem * item, int col, const QString& text);
 
-  /** Update the total and unread columns (if available) */
-  void slotUpdateCounts(KMFolder * folder);
-  void slotUpdateCounts(KMFolderImap * folder, bool success = true);
   /** Update the total and unread columns but delayed */
   void slotUpdateCountsDelayed(KMFolder * folder);
   void slotUpdateCountTimeout();
@@ -368,7 +347,6 @@ private:
   QAction *mUnreadAction,*mTotalAction, *mSizeAction;
 
   bool mReloading;
-  QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
   QList<QPointer<KMFolder> > mCopySourceFolders;
   bool mCutFolder;
 
