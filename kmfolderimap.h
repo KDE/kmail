@@ -133,12 +133,6 @@ public:
   /** Remove the IMAP folder on the server and if successful also locally */
   virtual void remove();
 
-  /** Close folder. If force is TRUE the files are closed even if
-      others still use it (e.g. other mail reader windows). This also
-      cancels all pending jobs.
-  */
-  virtual void close( const char *owner, bool force=false );
-
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge();
 
@@ -281,6 +275,9 @@ virtual bool isAutoExpire() const { return false; }
 
 void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 
+  /** Closes and cancels all pending jobs. */
+  virtual void reallyDoClose();
+
 /** Return the trash folder. */
 KMFolder* trashFolder() const;
 
@@ -378,7 +375,7 @@ void slotSimpleData(KIO::Job * job, const QByteArray & data);
 * Connected to the result signal of the copy/move job
 */
 void slotCopyMsgResult( KMail::FolderJob* job );
-  
+
   /**
    * Convert IMAP seen flag to a message status.
    * @param newMsg specifies whether unseen messages are new or unread

@@ -102,6 +102,14 @@ FolderStorage::~FolderStorage()
 }
 
 
+void FolderStorage::close( const char*, bool aForced )
+{
+  if (mOpenCount <= 0) return;
+  if (mOpenCount > 0) mOpenCount--;
+  if (mOpenCount > 0 && !aForced) return;
+    reallyDoClose();
+}
+
 //-----------------------------------------------------------------------------
 QString FolderStorage::dotEscape(const QString& aStr)
 {

@@ -103,9 +103,9 @@ KMFolderMbox::~KMFolderMbox()
 //-----------------------------------------------------------------------------
 int KMFolderMbox::open( const char *owner )
 {
+#ifdef FOLDER_REFCOUNT_DEBUGGING
   mOwners.append( owner );
 
-#ifdef FOLDER_REFCOUNT_DEBUGGING
   kDebug() << endl << "open" << mOpenCount << folder()->name()
            << mOwners << ", adding:" << owner;
 //           << mOwners << ", adding:" << owner << kBacktrace();
@@ -275,39 +275,8 @@ int KMFolderMbox::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMbox::close( const char *owner, bool aForced )
+void KMFolderMbox::reallyDoClose()
 {
-#ifdef FOLDER_REFCOUNT_DEBUGGING
-  kDebug() << "\nclose" << folder()->name() << mOwners
-           << owner << mOpenCount;
-//           << owner << mOpenCount << kBacktrace();
-#endif
-  int ownerPos = mOwners.indexOf( owner );
-  if ( !aForced && !mOwners.isEmpty() ) {
-    assert( ownerPos != -1 );
-    mOwners.removeAt( ownerPos );
-  } else {
-    mOwners.clear();
-  }
-
-  if ( mOpenCount <= 0 || !mStream ) {
-    return;
-  }
-  if ( mOpenCount > 0 ) {
-    mOpenCount--;
-  }
-  if ( mOpenCount > 0 && !aForced ) {
-    return;
-  }
-#if 0 // removed hack that prevented closing system folders (see kmail-devel discussion about mail expiring)
-  if ( (folder() != kmkernel->inboxFolder())
-        && folder()->isSystemFolder() && !aForced )
-  {
-      mOpenCount = 1;
-      return;
-  }
-#endif
-
   if ( mAutoCreateIndex ) {
       if ( KMFolderIndex::IndexOk != indexStatus() ) {
         kDebug() << "Critical error:" << location()

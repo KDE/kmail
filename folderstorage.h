@@ -278,7 +278,8 @@ public:
     If @p force is TRUE the files are closed regardless of reference count,
     and the reference count will be set to zero.
     @p owner is for debugging. */
-  virtual void close( const char *owner, bool force = false ) = 0;
+  virtual void close( const char *owner, bool force = false );
+  virtual void reallyDoClose() = 0;
 
   /** Try releasing @p folder if possible, something is attempting an exclusive access to it.
       Currently used for KMFolderSearch and the background tasks like expiry. */
@@ -608,7 +609,7 @@ friend class KMMsgDict;
 
   virtual qint64 doFolderSize() const { return 0; };
 
-  /** Returns full path to .index, .index.ids or .index.sorted file (depending on @a suffix). 
+  /** Returns full path to .index, .index.ids or .index.sorted file (depending on @a suffix).
    The former path (in case of mmap-based implementation) is returned when @a suffix is empty. */
   virtual QString location(const QString& suffix) const;
 
