@@ -260,6 +260,10 @@ void AccountManager::add( KMAccount *account )
 {
   if ( account ) {
     mAcctList.append( account );
+
+    KMFolder *folder = account->folder();		// init folder's account list
+    if ( folder && !folder->hasAccounts() ) account->setFolder( folder, true );
+
     emit accountAdded( account );
     account->installTimer();
   }
