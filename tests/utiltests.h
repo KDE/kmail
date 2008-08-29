@@ -17,6 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
+#ifndef UTILTESTS_H
 #define UTILTESTS_H
 
 #include <qobject.h>
