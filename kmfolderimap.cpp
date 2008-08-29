@@ -45,6 +45,7 @@ using KMail::ListJob;
 using KMail::SearchJob;
 #include "renamejob.h"
 using KMail::RenameJob;
+#include "acljobs.h"
 
 #include <kdebug.h>
 #include <kio/scheduler.h>
@@ -2462,6 +2463,15 @@ void KMFolderImap::finishMailCheck( const char *dbg, imapState state )
   mContentState = state;
   emit folderComplete( this, mContentState == imapFinished );
   close( dbg );
+}
+
+bool KMFolderImap::canDeleteMessages() const
+{
+  if ( isReadOnly() )
+    return false;
+  if ( mUserRights > 0 && !(mUserRights & KMail::ACLJobs::Delete) )
+    return false;
+  return true;
 }
 
 #include "kmfolderimap.moc"

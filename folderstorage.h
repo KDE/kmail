@@ -355,6 +355,9 @@ public:
   /** Is the folder read-only? */
   virtual bool isReadOnly() const = 0;
 
+  /** Can messages in this folder be deleted? */
+  virtual bool canDeleteMessages() const;
+
   /** Returns the label of the folder for visualization. */
   QString label() const;
 
