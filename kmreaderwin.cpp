@@ -1014,7 +1014,7 @@ void KMReaderWin::adjustLayout() {
     mSplitter->insertWidget( 0, mMimePartTree );
   mSplitter->setSizes( mSplitterSizes );
 
-  if ( mMimeTreeMode == 2 && mMsgDisplay )   
+  if ( mMimeTreeMode == 2 && mMsgDisplay )
     mMimePartTree->show();
   else
     mMimePartTree->hide();
@@ -2749,9 +2749,13 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       QString margin;
       if ( node != mRootNode || headerStyle() != HeaderStyle::enterprise() )
         margin = "padding:2px; margin:2px; ";
+      QString align = "left";
+      if ( headerStyle() == HeaderStyle::enterprise() )
+        align = "right";
       if ( node->msgPart().typeStr() == "message" || node == mRootNode )
         html += QString::fromLatin1("<div style=\"background:%1; %2"
-                "vertical-align:middle; float:left; %3\">").arg( bgColor.name() ).arg( margin ).arg( visibility );
+                "vertical-align:middle; float:%3; %4\">").arg( bgColor.name() ).arg( margin )
+                                                         .arg( align ).arg( visibility );
       html += subHtml;
       if ( node->msgPart().typeStr() == "message" || node == mRootNode )
         html += "</div>";
