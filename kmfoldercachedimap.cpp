@@ -211,13 +211,13 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
   // if we fail to read a uid file but there is one, nuke it
   if ( readUidCache() == -1 ) {
     if ( QFile::exists( uidCacheLocation() ) ) {
-        KMessageBox::error( 0,
-        i18n( "The UID cache file for folder %1 could not be read. There "
-              "could be a problem with file system permission, or it is corrupted.",
-              folder->prettyUrl() ) );
-        // try to unlink it, in case it was corruped. If it couldn't be read
-        // because of permissions, this will fail, which is fine
-        unlink( QFile::encodeName( uidCacheLocation() ) );
+      KMessageBox::error( 0,
+      i18n( "The UID cache file for folder %1 could not be read. There "
+            "could be a problem with file system permission, or it is corrupted.",
+            folder->prettyUrl() ) );
+      // try to unlink it, in case it was corruped. If it couldn't be read
+      // because of permissions, this will fail, which is fine
+      unlink( QFile::encodeName( uidCacheLocation() ) );
     }
   }
 
