@@ -35,12 +35,37 @@ class FolderTreeBase : public KPIM::KFolderTree
     /** Returns the main widget that this widget is a child of. */
     KMMainWidget* mainWidget() const { return mMainWidget; }
 
+    /** Find index of given folder. Returns 0 if not found */
+    virtual Q3ListViewItem* indexOfFolder( const KMFolder *folder ) const
+    {
+       if ( mFolderToItem.contains( folder ) )
+         return mFolderToItem[ folder ];
+       else
+         return 0;
+    }
+
+    void insertIntoFolderToItemMap( const KMFolder *folder, Q3ListViewItem *item )
+    {
+      mFolderToItem.insert( folder, item );
+    }
+
+    void removeFromFolderToItemMap( const KMFolder *folder )
+    {
+      mFolderToItem.remove( folder );
+    }
+
   signals:
     /** Messages have been dropped onto a folder */
     void folderDrop(KMFolder*);
 
     /** Messages have been dropped onto a folder with Ctrl */
     void folderDropCopy(KMFolder*);
+
+    void triggerRefresh();
+
+  public slots:
+    /** Update the total and unread columns (if available, or if forced) */
+    void slotUpdateCounts(KMFolder *folder, bool force = false );
 
   protected:
     enum {
@@ -65,6 +90,7 @@ class FolderTreeBase : public KPIM::KFolderTree
 
   protected:
     KMMainWidget *mMainWidget;
+    QMap<const KMFolder*, Q3ListViewItem*> mFolderToItem;
 };
 
 }

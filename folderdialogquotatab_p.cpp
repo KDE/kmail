@@ -71,8 +71,6 @@ QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
       layout->addWidget( mProgressBar, 2, 1 );
       box->addWidget( stuff );
       box->addStretch( 2 );
-
-      readConfig();
 }
 
 void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
@@ -81,31 +79,10 @@ void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
       // casting to int is safe
       int current = info.current().toInt();
       int max = info.max().toInt();
-      int factor = static_cast<int> ( pow( 1000.0, mFactor ) );
       mProgressBar->setMaximum( max );
       mProgressBar->setValue( current );
-      mInfoLabel->setText( i18n("%1 of %2 %3 used", current/factor,
-                                max/factor, mUnits ) );
+      mInfoLabel->setText( info.toString() );
       mRootLabel->setText( info.root() );
-}
-
-void QuotaWidget::readConfig()
-{
-      if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::KB )
-      {
-            mUnits = QString( i18n("KB") );
-            mFactor = 0;
-      }
-      else if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::MB )
-           {
-                mUnits = QString( i18n("MB") );
-                mFactor = 1;
-           }
-      else if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::GB )
-           {
-               mUnits = QString( i18n("GB") );
-               mFactor = 2;
-           }
 }
 
 

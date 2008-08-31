@@ -152,9 +152,9 @@ protected slots:
   int slotFilterMsg( KMMessage* );
 
 private:
+  int mCountRemainChecks;
   /** used to reset connection errors */
   QTimer mErrorTimer;
-  int mCountRemainChecks;
   QList<quint32> mFilterSerNums;
   QHash<QString, int> mFilterSerNumsToSave;
   KMail::ActionScheduler *mScheduler;
