@@ -227,6 +227,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     /** Reimplemented from KMFolderMaildir */
     virtual KMMessage *take( int idx );
+    bool canDeleteMessages() const;
 
     /** Reimplemented from KMFolderMaildir */
     virtual int addMsg( KMMessage *msg, int *index_return = 0 );

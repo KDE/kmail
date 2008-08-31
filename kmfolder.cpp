@@ -585,6 +585,11 @@ bool KMFolder::isReadOnly() const
   return mStorage->isReadOnly();
 }
 
+bool KMFolder::canDeleteMessages() const
+{
+  return mStorage->canDeleteMessages();
+}
+
 QString KMFolder::label() const
 {
   if ( !mSystemLabel.isEmpty() )

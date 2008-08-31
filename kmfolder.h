@@ -365,6 +365,9 @@ public:
   /** Is the folder read-only? */
   bool isReadOnly() const;
 
+  /** Can messages in this folder be deleted? */
+  bool canDeleteMessages() const;
+
   /** Returns true if the folder is a kmail system folder. These are
     the folders 'inbox', 'outbox', 'sent', 'trash', 'drafts', 'templates'.
     The name of these folders is nationalized in the folder display and

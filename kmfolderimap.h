@@ -296,6 +296,7 @@ bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }
 * @return 0 when not known yet
 */
 unsigned int userRights() const { return mUserRights; }
+bool canDeleteMessages() const;
 
 /** Set the user's rights on this folder - called by getUserRights */
 void setUserRights( unsigned int userRights );

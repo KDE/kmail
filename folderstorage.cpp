@@ -1247,4 +1247,9 @@ QString FolderStorage::sortedLocation() const
   return location( "sorted" );
 }
 
+bool FolderStorage::canDeleteMessages() const
+{
+  return !isReadOnly();
+}
+
 #include "folderstorage.moc"

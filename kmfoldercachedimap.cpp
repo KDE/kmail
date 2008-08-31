@@ -3194,4 +3194,13 @@ void KMFolderCachedImap::slotRescueDone(KMCommand * command)
   serverSyncInternal();
 }
 
+bool KMFolderCachedImap::canDeleteMessages() const
+{
+  if ( isReadOnly() )
+    return false;
+  if ( userRights() > 0 && !(userRights() & ACLJobs::Delete) )
+    return false;
+  return true;
+}
+
 #include "kmfoldercachedimap.moc"

@@ -3451,7 +3451,7 @@ void KMMainWidget::updateMessageActions()
     mMarkThreadAsUnreadAction->setEnabled( thread_actions );
     mToggleThreadToActAction->setEnabled( thread_actions && flags_available );
     mToggleThreadImportantAction->setEnabled( thread_actions && flags_available );
-    mTrashThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
+    mTrashThreadAction->setEnabled( thread_actions && mFolder->canDeleteMessages() );
     mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
@@ -3467,8 +3467,8 @@ void KMMainWidget::updateMessageActions()
 
     mMoveActionMenu->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mCopyActionMenu->setEnabled( mass_actions );
-    mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
-    mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
+    mTrashAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
+    mDeleteAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
     mFindInMessageAction->setEnabled( mass_actions );
     mForwardAction->setEnabled( mass_actions );
     mForwardAttachedAction->setEnabled( mass_actions );
