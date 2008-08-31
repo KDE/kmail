@@ -24,6 +24,10 @@
 #include "globalsettings.h"
 
 #include <libkdepim/recentaddresses.h>
+#include <libkdepim/ldapsearchdialog.h>
+
+#include <kpimutils/email.h>
+
 #ifdef KDEPIM_NEW_DISTRLISTS
 #include <libkdepim/distributionlist.h>
 #else
@@ -34,6 +38,7 @@
 #include <kabc/resource.h>
 #include <kiconloader.h>
 #include <kdialog.h>
+#include <khbox.h>
 #include <kwindowsystem.h>
 #include <kmessagebox.h>
 #include <kconfiggroup.h>
@@ -331,6 +336,7 @@ void RecipientsTreeWidget::keyPressEvent ( QKeyEvent *event ) {
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
   : QDialog( parent )
+    ,mLdapSearchDialog( 0 )
 {
   setObjectName("RecipientsPicker");
   setWindowTitle( i18n("Select Recipient") );
@@ -367,12 +373,23 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   connect( mRecipientList, SIGNAL( returnPressed() ),
            SLOT( slotPicked() ) );
 
-  mSearchLine = new SearchLine( this, mRecipientList );
+  KHBox *searchLineAndLDAP = new KHBox();
+  mSearchLine = new SearchLine( searchLineAndLDAP, mRecipientList );
   connect( mSearchLine, SIGNAL( downPressed() ), SLOT( setFocusList() ) );
-  resLayout->addRow( i18n("Search:"), mSearchLine );
 
-  QHBoxLayout *buttonLayout = new QHBoxLayout();
-  topLayout->addLayout( buttonLayout );
+  mSearchLDAPButton = new QPushButton( i18n("Search &Directory Service"), searchLineAndLDAP );
+  connect( mSearchLDAPButton, SIGNAL( clicked() ), SLOT( slotSearchLDAP() ) );
+  resLayout->addRow( i18n("Search:"), searchLineAndLDAP );
+
+  KConfig config( "kabldaprc" );
+  KConfigGroup group = config.group( "LDAP" );
+  int numHosts = group.readEntry( "NumSelectedHosts", 0 );
+  if ( !numHosts ) {
+     mSearchLDAPButton->setVisible( false );
+  }
+
+  QBoxLayout *buttonLayout = new QHBoxLayout();
+  topLayout->addItem( buttonLayout );
 
   buttonLayout->addStretch( 1 );			// right align buttons
 
@@ -788,5 +805,38 @@ void RecipientsPicker::setFocusList()
   mRecipientList->setFocus();
 }
 
+
+void RecipientsPicker::slotSearchLDAP()
+{
+  if ( !mLdapSearchDialog ) {
+    mLdapSearchDialog = new KPIM::LdapSearchDialog( this );
+    connect( mLdapSearchDialog, SIGNAL( addresseesAdded() ),
+             SLOT(ldapSearchResult() ) );
+  }
+  mLdapSearchDialog->setSearchText( mSearchLine->text() );
+  mLdapSearchDialog->show();
+}
+
+void RecipientsPicker::ldapSearchResult()
+{
+  QStringList emails = mLdapSearchDialog->selectedEMails().split(',');
+  QStringList::iterator it( emails.begin() );
+  QStringList::iterator end( emails.end() );
+  for ( ; it != end; ++it ){
+    QString name;
+    QString email;
+    KPIMUtils::extractEmailAddressAndName( (*it), email, name );
+    KABC::Addressee ad;
+    ad.setNameFromString( name );
+    ad.insertEmail( email );
+#ifdef KDEPIM_NEW_DISTRLISTS
+    RecipientItem *item = new RecipientItem( mAddressBook );
+#else
+    RecipientItem *item = new RecipientItem;
+#endif
+    item->setAddressee( ad, ad.preferredEmail() );
+    emit pickedRecipient( Recipient( item->recipient(), Recipient::Undefined ) );
+  }
+}
 
 #include "recipientspicker.moc"
