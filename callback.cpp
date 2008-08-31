@@ -99,8 +99,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
 
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
-  KConfigGroup options( KMKernel::config(), "Groupware" );
-  if ( !options.readEntry( "LegacyMangleFromToHeaders", true ) ) {
+  if ( !GlobalSettings::self()->legacyMangleFromToHeaders() ) {
     // Try and match the receiver with an identity
     const KPIMIdentities::Identity &identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
@@ -133,7 +132,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
     cWin->addAttach( msgPart );
   }
 
-  if ( options.readEntry( "AutomaticSending", true ) ) {
+  if ( GlobalSettings::self()->automaticSending() ) {
     cWin->setAttribute( Qt::WA_DeleteOnClose );
     cWin->slotSendNow();
   } else {
