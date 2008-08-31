@@ -1372,6 +1372,8 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   int idx = srcFolder->find(msg);
   assert(idx != -1);
   if ( !msg->transferInProgress() ) {
+    // kill existing jobs since we are about to delete the message
+    srcFolder->ignoreJobsForMessage( msg );
     srcFolder->removeMsg(idx);
     delete msg;
   } else {
