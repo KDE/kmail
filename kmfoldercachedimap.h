@@ -108,6 +108,9 @@ class KMFolderCachedImap : public KMFolderMaildir
     */
     void initializeFrom( KMFolderCachedImap *parent );
 
+    /**  @reimpl */
+    void reallyDoClose();
+
     virtual void readConfig();
     virtual void writeConfig();
 
@@ -548,6 +551,7 @@ public slots:
       SYNC_STATE_CHECK_UIDVALIDITY,
       SYNC_STATE_RENAME_FOLDER
     } mSyncState;
+  void rememberDeletion( int );
 
     int mProgress;
     int mStatusFlagsJobs;
@@ -647,6 +651,7 @@ public slots:
     int mRescueCommandCount;
 
   int mPermanentFlags;
+  QMap<ulong,void*> mDeletedUIDsSinceLastSync;
 };
 
 #endif /*kmfoldercachedimap_h*/

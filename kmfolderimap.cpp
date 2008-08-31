@@ -105,23 +105,14 @@ KMFolderImap::~KMFolderImap()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::close( const char *owner, bool aForced )
+void KMFolderImap::reallyDoClose()
 {
-  if ( mOpenCount > 0 ) {
-    mOpenCount--;
-  }
-  if ( mOpenCount == 0 && isSelected() && !aForced ) {
+  if ( isSelected() ) {
     kWarning(5006) <<"Trying to close the selected folder" << label()
                    << "- ignoring!";
 //                   << "- ignoring!" << kBacktrace();
     mOpenCount++;
     abort();
-    return;
-  }
-  if ( mOpenCount > 0 && !aForced ) {
-    // The inherited close will decrement again, so we have to adjust.
-    mOpenCount++;
-    KMFolderMbox::close( owner, aForced );
     return;
   }
 
@@ -137,9 +128,7 @@ void KMFolderImap::close( const char *owner, bool aForced )
 
   mCheckingValidity = false;
 
-  // The inherited close will decrement again, so we have to adjust.
-  mOpenCount++;
-  KMFolderMbox::close( owner, aForced );
+  KMFolderMbox::reallyDoClose();
 }
 
 KMFolder* KMFolderImap::trashFolder() const

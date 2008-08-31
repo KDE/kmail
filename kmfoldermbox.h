@@ -78,9 +78,8 @@ public:
     fopen call otherwise (errno). */
   virtual int open( const char *owner );
 
-  /** Close folder. If force is true the files are closed even if
-    others still use it (e.g. other mail reader windows). */
-  virtual void close( const char *owner, bool force=false );
+  /** @reimpl */
+  virtual void reallyDoClose();
 
   virtual bool canAccess() const;
 

@@ -86,6 +86,7 @@ using namespace KMail;
 #include <errno.h>
 
 #define UIDCACHE_VERSION 1
+#define MAIL_LOSS_DEBUGGING 0
 
 static QString incidencesForToString( KMFolderCachedImap::IncidencesFor r )
 {
@@ -213,14 +214,15 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
 
 KMFolderCachedImap::~KMFolderCachedImap()
 {
-  if ( !mFolderRemoved ) {
-    writeConfig();
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
+}
+
+void KMFolderCachedImap::reallyDoClose()
+{
+  if( !mFolderRemoved ) {
     writeUidCache();
   }
-
-  if ( kmkernel->undoStack() ) {
-    kmkernel->undoStack()->folderDestroyed( folder() );
-  }
+  KMFolderMaildir::reallyDoClose();
 }
 
 void KMFolderCachedImap::initializeFrom( KMFolderCachedImap *parent )
@@ -293,6 +295,14 @@ void KMFolderCachedImap::readConfig()
   if ( mImapPath.isEmpty() ) {
     mImapPathCreation = group.readEntry("ImapPathCreation");
   }
+
+  QStringList uids = group.readEntry( "UIDSDeletedSinceLastSync", QStringList() );
+#if MAIL_LOSS_DEBUGGING
+  kdDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyUrl() << endl << uids << endl;
+#endif
+  for ( QStringList::iterator it = uids.begin(); it != uids.end(); it++ ) {
+      mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
+  }
 }
 
 void KMFolderCachedImap::writeConfig()
@@ -313,6 +323,17 @@ void KMFolderCachedImap::writeConfig()
       configGroup.writeEntry( "ImapPathCreation", mImapPathCreation );
     } else {
       configGroup.deleteEntry( "ImapPathCreation" );
+    }
+    if ( !mDeletedUIDsSinceLastSync.isEmpty() ) {
+        QList<ulong> uids = mDeletedUIDsSinceLastSync.keys();
+        QStringList uidstrings;
+        for( QList<ulong>::iterator it = uids.begin(); it != uids.end(); it++ ) {
+            uidstrings.append(  QString::number( (*it) ) );
+        }
+        configGroup.writeEntry( "UIDSDeletedSinceLastSync", uidstrings );
+#if MAIL_LOSS_DEBUGGING
+        kDebug( 5006 ) << "WRITING OUT UIDSDeletedSinceLastSync in: " << folder( )->prettyUrl( ) << endl << uidstrings;
+#endif
     }
   }
   writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
@@ -394,6 +415,9 @@ int KMFolderCachedImap::readUidCache()
           setUidValidity( QString::fromLocal8Bit( buf ).trimmed() );
           len = uidcache.readLine( buf, sizeof( buf ) );
           if ( len > 0 ) {
+#if MAIL_LOSS_DEBUGGING
+            kDebug(5006) << "Reading in last uid from cache: " << QString::fromLocal8Bit(buf).stripWhiteSpace() << " in " << folder()->prettyUrl();
+#endif
             // load the last known highest uid from the on disk cache
             setLastUid( QString::fromLocal8Bit( buf ).trimmed().toULong() );
             return 0;
@@ -414,7 +438,9 @@ int KMFolderCachedImap::writeUidCache()
     }
     return 0;
   }
-
+#if MAIL_LOSS_DEBUGGING
+  kDebug(5006) << "Writing out UID cache lastuid: " << lastUid()  << " in: " << folder()->prettyUrl();
+#endif
   QFile uidcache( uidCacheLocation() );
   if ( uidcache.open( QIODevice::WriteOnly ) ) {
     QTextStream str( &uidcache );
@@ -450,6 +476,7 @@ void KMFolderCachedImap::reloadUidMap()
 KMMessage *KMFolderCachedImap::take( int idx )
 {
   uidMapDirty = true;
+  rememberDeletion( idx );
   return KMFolderMaildir::take( idx );
 }
 
@@ -492,9 +519,21 @@ int KMFolderCachedImap::addMsg( KMMessage *msg, int *index_return )
   return rc;
 }
 
+void KMFolderCachedImap::rememberDeletion( int idx )
+{
+  KMMsgBase *msg = getMsgBase( idx );
+  assert(msg);
+  long uid = msg->UID();
+  assert(uid>=0);
+  mDeletedUIDsSinceLastSync.insert(uid, 0);
+  kDebug(5006) << "Explicit delete of UID " << uid << " at index: " << idx << " in " << folder()->prettyUrl();
+}
+
+/* Reimplemented from KMFolderMaildir */
 void KMFolderCachedImap::removeMsg( int idx, bool imapQuiet )
 {
   uidMapDirty = true;
+  rememberDeletion( idx );
   // Remove it from disk
   KMFolderMaildir::removeMsg( idx, imapQuiet );
 }
@@ -556,6 +595,9 @@ KMFolder *KMFolderCachedImap::trashFolder() const
 
 void KMFolderCachedImap::setLastUid( ulong uid )
 {
+#if MAIL_LOSS_DEBUGGING
+  kDebug(5006) << "Setting mLastUid to: " << uid  <<  " in " << folder()->prettyUrl();
+#endif
   mLastUid = uid;
   if ( uidWriteTimer == -1 ) {
     // Write in one minute
@@ -588,11 +630,24 @@ KMMsgBase *KMFolderCachedImap::findByUID( ulong uid )
   QMap<ulong,int>::Iterator it = uidMap.find( uid );
   if ( it != uidMap.end() ) {
     KMMsgBase *msg = getMsgBase( *it );
+#if MAIL_LOSS_DEBUGGING
+    kDebug(5006) << "Folder: " << folder()->prettyUrl();
+    kDebug(5006) << "UID " << uid << " is supposed to be in the map";
+    kDebug(5006) << "UID's index is to be " << *it;
+    kDebug(5006) << "There is a message there? " << (msg != 0);
+    if ( msg ) {
+      kDebug(5006) << "Its UID is: " << msg->UID();
+    }
+#endif
+
     if ( msg && msg->UID() == uid ) {
       return msg;
     }
+    kDebug(5006) << "########## Didn't find uid: " << uid << "in cache athough it's supposed to be there!";
   } else {
+#if MAIL_LOSS_DEBUGGING
     kDebug(5006) <<"Didn't find uid:" << uid <<"in cache!";
+#endif
   }
   // Not found by now
   // if ( mapReloaded )
@@ -1709,11 +1764,26 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
          */
         KMMsgBase *existingMessage = findByUID( uid );
         if ( !existingMessage ) {
-          if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
-            uidsForDeletionOnServer << uid;
+#if MAIL_LOSS_DEBUGGING
+           kDebug(5006) << "Looking at uid " << uid << " high water is: " << lastUid() << " we should delete it";
+#endif
+          // double check we deleted it since the last sync
+          if ( mDeletedUIDsSinceLastSync.contains(uid) ) {
+            if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
+#if MAIL_LOSS_DEBUGGING
+              kDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!";
+#endif
+              uidsForDeletionOnServer << uid;
+            } else {
+              redownload = true;
+            }
           } else {
+            kDebug(5006) << "WARNING: ####### ";
+            kDebug(5006) << "Message locally missing but not deleted in folder: " << folder()->prettyUrl();
+            kDebug(5006) << "The missing UID: " << uid << ". It will be redownloaded ";
             redownload = true;
           }
+
         } else {
           /*
            * If this is a read only folder, ignore status updates from the
@@ -1729,6 +1799,9 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
         }
       }
       if ( uid > lastUid() || redownload ) {
+#if MAIL_LOSS_DEBUGGING
+        kDebug(5006) << "Looking at uid " << uid << " high water is: " << lastUid() << " we should download it";
+#endif
         /*
          * The message is new since the last sync, but we might have
          * just uploaded it, in which case the uid map already contains it.
@@ -1741,6 +1814,9 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
         }
         // Remember the highest uid and once the download is completed, update mLastUid
         if ( uid > mTentativeHighestUid ) {
+#if MAIL_LOSS_DEBUGGING
+          kDebug(5006) << "Setting the tentative highest UID to: " << uid;
+#endif
           mTentativeHighestUid = uid;
         }
       }
@@ -2850,10 +2926,14 @@ void KMFolderCachedImap::slotUpdateLastUid()
       }
     }
     if ( sane ) {
+#if MAIL_LOSS_DEBUGGING
+      kDebug(5006) << "Tentative highest UID test was sane, writing out: " << mTentativeHighestUid;
+#endif
       setLastUid( mTentativeHighestUid );
     }
   }
   mTentativeHighestUid = 0;
+  mDeletedUIDsSinceLastSync.clear();
 }
 
 bool KMFolderCachedImap::isMoveable() const
@@ -2913,7 +2993,7 @@ bool KMFolderCachedImap::isCloseToQuota() const
     //kDebug(5006) <<"Quota ratio:" << ratio <<"%" << mQuotaInfo.toString();
     closeToQuota = ( ratio > 0 && ratio >= GlobalSettings::closeToQuotaThreshold() );
   }
-  //kDebug(5006) <<"Folder:" << folder()->prettyURL() <<" is over quota:" << closeToQuota;
+  //kDebug(5006) <<"Folder:" << folder()->prettyUrl() <<" is over quota:" << closeToQuota;
   return closeToQuota;
 }
 
