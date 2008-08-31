@@ -355,41 +355,6 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
   contextMenu.exec( point );
 }
 
-//Port the code below to QTreeWidgetItem::setToolTip() once the folder tree stuff
-//is based on QTreeWidget. --tmcguire
-#ifdef __GNUC__
-#warning Port me!
-#endif
-bool FavoriteFolderView::event( QEvent *e )
-{
-  return FolderTreeBase::event( e );
-  /*
-  if ( e->type() == QEvent::ToolTip ) {
-    QHelpEvent *he = static_cast<QHelpEvent *>( e );
-
-    FavoriteFolderViewItem *item = static_cast<FavoriteFolderViewItem*>( itemAt( he->pos() ) );
-    if  ( !item )
-      return FolderTreeBase::event( e );
-    const QRect iRect = itemRect( item );
-    if ( !iRect.isValid() )
-      return FolderTreeBase::event( e );
-    const QRect headerRect = header()->sectionRect( 0 );
-    if ( !headerRect.isValid() )
-      return FolderTreeBase::event( e );
-
-    QString tipText = i18n("<qt><b>%1</b><br>Total: %2<br>Unread: %3<br>Size: %4",
-        item->folder()->prettyUrl().replace( " ", "&nbsp;" ),
-        item->totalCount() < 0 ? "-" : QString::number( item->totalCount() ),
-        item->unreadCount() < 0 ? "-" : QString::number( item->unreadCount() ),
-        KIO::convertSize( item->folderSize() ) );
-    QRect validIn( headerRect.left(), iRect.top(), headerRect.width(), iRect.height() );
-    QToolTip::showText( he->pos(), tipText, this, validIn );
-    return true;
-  } else {
-    return FolderTreeBase::event( e );
-  }*/
-}
-
 void FavoriteFolderView::removeFolder()
 {
   delete mContextMenuItem;

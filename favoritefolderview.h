@@ -66,7 +66,6 @@ class FavoriteFolderView : public FolderTreeBase
   protected:
     bool acceptDrag(QDropEvent* e) const;
     virtual void contentsDragEnterEvent( QDragEnterEvent *e );
-    virtual bool event( QEvent *e );
     void readColorConfig();
 
   private:
