@@ -213,8 +213,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
     if ( QFile::exists( uidCacheLocation() ) ) {
         KMessageBox::error( 0,
         i18n( "The UID cache file for folder %1 could not be read. There "
-              "could be a problem with file system permission, or it is corrupted."
-              ).arg( folder->prettyUrl() ) );
+              "could be a problem with file system permission, or it is corrupted.",
+              folder->prettyUrl() ) );
         // try to unlink it, in case it was corruped. If it couldn't be read
         // because of permissions, this will fail, which is fine
         unlink( QFile::encodeName( uidCacheLocation() ) );
@@ -310,7 +310,7 @@ void KMFolderCachedImap::readConfig()
 
   QStringList uids = group.readEntry( "UIDSDeletedSinceLastSync", QStringList() );
 #if MAIL_LOSS_DEBUGGING
-  kdDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyUrl() << endl << uids << endl;
+  kDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyUrl() << endl << uids;
 #endif
   for ( QStringList::iterator it = uids.begin(); it != uids.end(); it++ ) {
       mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
@@ -430,7 +430,7 @@ int KMFolderCachedImap::readUidCache()
           len = uidcache.readLine( buf, sizeof( buf ) );
           if ( len > 0 ) {
 #if MAIL_LOSS_DEBUGGING
-            kDebug(5006) << "Reading in last uid from cache: " << QString::fromLocal8Bit(buf).stripWhiteSpace() << " in " << folder()->prettyUrl();
+            kDebug(5006) << "Reading in last uid from cache: " << QString::fromLocal8Bit(buf).trimmed() << " in " << folder()->prettyUrl();
 #endif
             // load the last known highest uid from the on disk cache
             setLastUid( QString::fromLocal8Bit( buf ).trimmed().toULong() );
@@ -471,7 +471,7 @@ int KMFolderCachedImap::writeUidCache()
   }
   KMessageBox::error( 0,
         i18n( "The UID cache file for folder %1 could not be written. There "
-              "could be a problem with file system permission." ).arg( folder()->prettyUrl() ) );
+              "could be a problem with file system permission.", folder()->prettyUrl() ) );
 
   return -1;
 }
@@ -1595,8 +1595,8 @@ bool KMFolderCachedImap::deleteMessages()
 #ifdef MAIL_LOSS_DEBUGGING
     if ( KMessageBox::warningYesNo(
              0, i18n( "<qt><p>Mails on the server in folder <b>%1</b> were deleted. "
-                 "Do you want to delete them locally?<br>UIDs: %2</p></qt>" )
-             .arg( folder()->prettyUrl() ).arg( uids.join(",") ) ) == KMessageBox::Yes )
+                 "Do you want to delete them locally?<br>UIDs: %2</p></qt>",
+             folder()->prettyUrl(), uids.join(",") ) ) == KMessageBox::Yes )
 #endif
       removeMessages( msgsForDeletion );
   }
