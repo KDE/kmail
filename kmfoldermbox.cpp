@@ -109,6 +109,8 @@ int KMFolderMbox::open( const char *owner )
   kDebug() << endl << "open" << mOpenCount << folder()->name()
            << mOwners << ", adding:" << owner;
 //           << mOwners << ", adding:" << owner << kBacktrace();
+#else
+  Q_UNUSED( owner );
 #endif
   int rc = 0;
 
