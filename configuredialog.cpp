@@ -5083,7 +5083,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mStorageFormatCombo->setEditable( false );
   storageFormatLA->setBuddy( mStorageFormatCombo );
   QStringList formatLst;
-  formatLst << i18n("Standard (Ical / Vcard)") << i18n("Kolab (XML)");
+  formatLst << i18n("deprecated Kolab1 (iCal/vCard)") << i18n("Kolab2 (XML)");
   mStorageFormatCombo->addItems( formatLst );
   grid->addWidget( mStorageFormatCombo, 0, 1 );
   mStorageFormatCombo->setToolTip( toolTip );
