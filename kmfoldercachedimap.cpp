@@ -324,17 +324,19 @@ void KMFolderCachedImap::writeConfig()
     } else {
       configGroup.deleteEntry( "ImapPathCreation" );
     }
-    if ( !mDeletedUIDsSinceLastSync.isEmpty() ) {
-        QList<ulong> uids = mDeletedUIDsSinceLastSync.keys();
-        QStringList uidstrings;
-        for( QList<ulong>::iterator it = uids.begin(); it != uids.end(); it++ ) {
-            uidstrings.append(  QString::number( (*it) ) );
-        }
-        configGroup.writeEntry( "UIDSDeletedSinceLastSync", uidstrings );
-#if MAIL_LOSS_DEBUGGING
-        kDebug( 5006 ) << "WRITING OUT UIDSDeletedSinceLastSync in: " << folder( )->prettyUrl( ) << endl << uidstrings;
-#endif
+  }
+  if ( !mDeletedUIDsSinceLastSync.isEmpty() ) {
+    QList<ulong> uids = mDeletedUIDsSinceLastSync.keys();
+    QStringList uidstrings;
+    for( QList<ulong>::iterator it = uids.begin(); it != uids.end(); it++ ) {
+      uidstrings.append(  QString::number( (*it) ) );
     }
+    configGroup.writeEntry( "UIDSDeletedSinceLastSync", uidstrings );
+#if MAIL_LOSS_DEBUGGING
+    kDebug( 5006 ) << "WRITING OUT UIDSDeletedSinceLastSync in: " << folder( )->prettyUrl( ) << endl << uidstrings;
+#endif
+  } else {
+    configGroup.deleteEntry( "UIDSDeletedSinceLastSync" );
   }
   writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
   KMFolderMaildir::writeConfig();
