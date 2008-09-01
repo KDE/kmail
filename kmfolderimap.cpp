@@ -113,7 +113,7 @@ void KMFolderImap::reallyDoClose()
                    << "- ignoring!";
 //                   << "- ignoring!" << kBacktrace();
     mOpenCount++;
-    abort();
+    //abort();
     return;
   }
 
