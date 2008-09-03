@@ -41,6 +41,16 @@ public:
       sync, which is more efficient. */
   void requestSync();
 
+  /**
+   * Return the list of keywords used for detecting whether the user
+   * forgot to add an attachment.
+   * The entires are already translated.
+   *
+   * Use this instead of the auto-generated attachmentKeywords(), as it already
+   * takes default values into account
+   */
+  QStringList forgottenAttachmentKeywords() const;
+
 private slots:
   void slotSyncNow();
 
