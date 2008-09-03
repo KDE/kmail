@@ -2139,7 +2139,8 @@ void MessageComposer::breakLinesAndApplyCodec()
   // Therefore, we now read the plain text version directly from the composer,
   // which returns the correct result.
   QString plainText, htmlSource;
-  htmlSource = mComposeWin->mEditor->toHtml();
+  htmlSource = mComposeWin->mEditor->toCleanHtml();
+
   if ( mDisableBreaking || !GlobalSettings::self()->wordWrap() )
     plainText = mComposeWin->mEditor->toPlainText();
   else
