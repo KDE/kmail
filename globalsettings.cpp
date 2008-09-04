@@ -59,18 +59,4 @@ GlobalSettings::~GlobalSettings()
 {
 }
 
-QStringList GlobalSettings::forgottenAttachmentKeywords() const
-{
-  QStringList attachWordsList = attachmentKeywords();
-  if ( attachWordsList.isEmpty() ) {
-
-    QString defaultKeywords = i18nc(
-             "comma-separated list of keywords that are used to detect whether "
-             "the user forgot to attach his attachment",
-             "attachment,attached" );
-    return defaultKeywords.split( ',' );
-  }
-  return attachWordsList;
-}
- 
 #include "globalsettings.moc"

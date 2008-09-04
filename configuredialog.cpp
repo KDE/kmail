@@ -3843,7 +3843,7 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings() {
   mMissingAttachmentDetectionCheck->setChecked(
     GlobalSettings::self()->showForgottenAttachmentWarning() );
 
-  QStringList attachWordsList = GlobalSettings::self()->forgottenAttachmentKeywords();
+  QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
   mAttachWordsListEditor->setStringList( attachWordsList );
 }
 

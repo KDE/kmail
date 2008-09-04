@@ -390,6 +390,12 @@
         <default>true</default>
       </entry>
       <entry name="AttachmentKeywords" type="StringList" key="attachment-keywords">
+        <default code="true">
+          i18nc(
+                "comma-separated list of keywords that are used to detect whether "
+                "the user forgot to attach his attachment",
+                "attachment,attached" ).split( ',' )
+        </default>
       </entry>
       <entry name="ShowMessagePartDialogOnAttach" type="Bool" key="showMessagePartDialogOnAttach">
         <default>false</default>

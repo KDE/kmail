@@ -1879,7 +1879,7 @@ bool KMComposeWin::userForgotAttachment()
     return false;
   }
 
-  QStringList attachWordsList = GlobalSettings::self()->forgottenAttachmentKeywords();
+  QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
 
   QRegExp rx ( QString::fromLatin1("\\b") +
                attachWordsList.join("\\b|\\b") +
