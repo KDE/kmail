@@ -261,8 +261,18 @@ void AccountManager::add( KMAccount *account )
   if ( account ) {
     mAcctList.append( account );
 
-    KMFolder *folder = account->folder();		// init folder's account list
-    if ( folder && !folder->hasAccounts() ) account->setFolder( folder, true );
+    // KMAccount::setFolder has a side
+    // effect, it calls KMAcctFolder::addAccount which initialises the
+    // folder's account list (KMFolder::mAcctList). This list is then checked
+    // in FolderTreeBase::hideLocalInbox (via KMFolder::hasAccounts) to
+    // decide whether the inbox is to be shown.
+    //
+    // Unless this is done, the folder's account list is never initialised
+    // with the newly created account.
+    // This fixes bug 168544.
+    KMFolder *folder = account->folder();
+    if ( folder && !folder->hasAccounts() )
+      account->setFolder( folder, true );
 
     emit accountAdded( account );
     account->installTimer();
