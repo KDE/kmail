@@ -624,7 +624,7 @@ void KMHeaders::readFolderConfig (void)
   mCurrentItem = config.readEntry( "Current", 0 );
   mCurrentItemSerNum = config.readEntry( "CurrentSerialNum", 0 );
 
-  mPaintInfo.orderOfArrival = config.readEntry( "OrderOfArrival", true );
+  mPaintInfo.orderOfArrival = config.readEntry( "OrderOfArrival", false );
   mPaintInfo.status = config.readEntry( "Status", false );
 
   { //area for config group "Geometry"
