@@ -2122,15 +2122,15 @@ QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
     return QString();
 
   if( type == KFolderTreeItem::Contacts )
-    return QString::fromLatin1( "kmgroupware_folder_contacts" );
+    return QString::fromLatin1( "text-directory" );
   else if( type == KFolderTreeItem::Calendar )
-    return QString::fromLatin1( "kmgroupware_folder_calendar" );
+    return QString::fromLatin1( "text-calendar" );
   else if( type == KFolderTreeItem::Notes )
-    return QString::fromLatin1( "kmgroupware_folder_notes" );
+    return QString::fromLatin1( "view-pim-notes" );
   else if( type == KFolderTreeItem::Tasks )
-    return QString::fromLatin1( "kmgroupware_folder_tasks" );
+    return QString::fromLatin1( "view-pim-tasks" );
   else if( type == KFolderTreeItem::Journals )
-    return QString::fromLatin1( "kmgroupware_folder_journals" );
+    return QString::fromLatin1( "view-pim-journal" );
 
   return QString();
 }
