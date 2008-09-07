@@ -1793,9 +1793,17 @@ void KMKernel::dumpDeadLetters()
     return; //All documents should be saved before shutting down is set!
 
   // make all composer windows autosave their contents
-  foreach ( KMainWindow* window, KMainWindow::memberList() )
-    if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( window ) )
+  foreach ( KMainWindow* window, KMainWindow::memberList() ) {
+    if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( window ) ) {
       win->autoSaveMessage();
+      // saving the message has to be finished right here, we are called from a dtor,
+      // therefore we have no chance to finish this later
+      // yes, this is ugly and potentially dangerous, but the alternative is losing
+      // currently composed messages...
+      while ( win->isComposing() )
+        qApp->processEvents();
+    }
+  }
 }
 
 
