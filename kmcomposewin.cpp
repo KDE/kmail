@@ -103,6 +103,11 @@ using KPIM::DictionaryComboBox;
 #include <kwindowsystem.h>
 #include <kzip.h>
 
+#include <kdeversion.h>
+#if KDE_IS_VERSION( 4, 1 ,64 )
+#include <kencodingprober.h>
+#endif
+
 #include <kio/jobuidelegate.h>
 #include <kio/scheduler.h>
 
@@ -2276,9 +2281,20 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     }
     return;
   }
-  const QByteArray partCharset = (*it).url.fileEncoding().isEmpty()
-    ? mCharset
-    : QByteArray((*it).url.fileEncoding().toLatin1());
+  QByteArray partCharset;
+  if ( !( *it ).url.fileEncoding().isEmpty() ) {
+    partCharset = (*it).url.fileEncoding().toLatin1();
+  } else {
+#if KDE_IS_VERSION( 4, 1, 64 )
+    KEncodingProber prober;
+    prober.feed( (*it).data );
+    kDebug() << "Autodetected charset: " << prober.encodingName() << " confidence: " << prober.confidence();
+    if ( prober.confidence() > 0.6 )
+      partCharset = prober.encodingName();
+#endif
+    if ( partCharset.isEmpty() )
+      partCharset = mCharset;
+  }
 
   KMMessagePart* msgPart;
 
@@ -2312,7 +2328,8 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
 
   QByteArray encoding = KMMsgBase::autoDetectCharset(partCharset,
                                                      KMMessage::preferredCharsets(), name);
-  if (encoding.isEmpty()) encoding = "utf-8";
+  if ( encoding.isEmpty() )
+    encoding = "utf-8";
 
   QByteArray encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
