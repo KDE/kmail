@@ -2756,6 +2756,7 @@ void KMHeaders::folderCleared()
   mImperfectlyThreadedList.clear();
   mPrevCurrent = 0;
   emit selected(0);
+  emit selectionChanged();
 }
 
 void KMHeaders::folderClosed()
