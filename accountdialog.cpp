@@ -1134,9 +1134,11 @@ void AccountDialog::enableImapAuthMethods()
 void AccountDialog::checkHighest( QButtonGroup *btnGroup )
 {
   kDebug(5006) << btnGroup;
-  QAbstractButton *btn;
-  foreach (btn, btnGroup->buttons()) {
-    if (btn && btn->isEnabled()) {
+  QListIterator<QAbstractButton*> it( btnGroup->buttons() );
+  it.toBack();
+  while ( it.hasPrevious() ) {
+    QAbstractButton *btn = it.previous();
+    if ( btn && btn->isEnabled() ) {
       btn->animateClick();
       return;
     }
