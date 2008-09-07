@@ -115,7 +115,7 @@ void KMFolderImap::close( const char *owner, bool aForced )
                    << "- ignoring!";
 //                   << "- ignoring!" << kBacktrace();
     mOpenCount++;
-    abort();
+    //abort();
     return;
   }
   if ( mOpenCount > 0 && !aForced ) {
