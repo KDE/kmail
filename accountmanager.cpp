@@ -7,6 +7,7 @@
 #include "accountmanager.h"
 
 #include "kmaccount.h"
+#include "kmacctfolder.h"
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "popaccount.h"
@@ -239,6 +240,11 @@ void AccountManager::add( KMAccount *account )
 {
   if ( account ) {
     mAcctList.append( account );
+    // init folder's account list
+    KMAcctFolder *folder = static_cast<KMAcctFolder*>( account->folder() );
+    if ( folder && !folder->hasAccounts() ) {
+      folder->addAccount( account );
+    }
     emit accountAdded( account );
     account->installTimer();
   }

@@ -432,6 +432,9 @@ void KMFolderTree::connectSignals()
   connect(kmkernel->acctMgr(), SIGNAL(accountRemoved(KMAccount*)),
           this, SLOT(slotAccountRemoved(KMAccount*)));
 
+  connect(kmkernel->acctMgr(), SIGNAL(accountAdded(KMAccount*)),
+          this, SLOT(slotUnhideLocalInbox()));
+
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
 
