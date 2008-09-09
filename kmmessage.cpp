@@ -356,6 +356,7 @@ void KMMessage::removePrivateHeaderFields() {
   removeHeaderField("X-KMail-Link-Message");
   removeHeaderField("X-KMail-Link-Type");
   removeHeaderField( "X-KMail-Markup" );
+  removeHeaderField( "X-KMail-QuotePrefix" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1072,6 +1073,8 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     else
       parser.process( this );
   }
+  msg->setHeaderField( "X-KMail-QuotePrefix",
+                       formatString( GlobalSettings::self()->quoteString() ) );
 
   msg->link( this, MessageStatus::statusReplied() );
 

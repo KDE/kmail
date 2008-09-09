@@ -69,7 +69,6 @@ using MailTransport::Transport;
 #include "objecttreeparser.h"
 #include "partNode.h"
 #include "recipientseditor.h"
-#include "replyphrases.h"
 #include "stl_util.h"
 
 using KMail::AttachmentListView;
@@ -1664,6 +1663,13 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   }
   setCharset( mCharset );
 
+  // Restore the quote prefix. We can't just use the global quote prefix here,
+  // since the prefix is different for each message, it might for example depend
+  // on the original sender in a reply.
+  QString quotePrefix = newMsg->headerField( "X-KMail-QuotePrefix" );
+  if ( !quotePrefix.isEmpty() )
+    mEditor->setQuotePrefixName( quotePrefix );
+
   /* Handle the special case of non-mime mails */
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
     mCharset=mMsg->charset();
@@ -3001,21 +3007,6 @@ void KMComposeWin::slotUpdateFont()
                                   mFixedFont : mBodyFont );
 }
 
-QString KMComposeWin::quotePrefixName() const
-{
-  if ( !msg() ) {
-    return QString();
-  }
-
-  int languageNr = GlobalSettings::self()->replyCurrentLanguage();
-  ReplyPhrases replyPhrases( QString::number( languageNr ) );
-  replyPhrases.readConfig();
-  QString quotePrefix = msg()->formatString( replyPhrases.indentPrefix() );
-
-  quotePrefix = msg()->formatString( quotePrefix );
-  return quotePrefix;
-}
-
 QString KMComposeWin::smartQuote( const QString & msg )
 {
   return KMMessage::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
@@ -3056,7 +3047,7 @@ void KMComposeWin::slotPasteAsAttachment()
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
   QString answer = QString( inputText );
-  QString indentStr = quotePrefixName();
+  QString indentStr = mEditor->quotePrefixName();
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );
   answer += '\n';
@@ -3465,6 +3456,13 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     mSigningAndEncryptionExplicitlyDisabled;
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
+
+  // Save the quote prefix which is used for this message. Each message can have
+  // a different quote prefix, for example depending on the original sender.
+  if ( mEditor->quotePrefixName().isEmpty() )
+    mMsg->removeHeaderField( "X-KMail-QuotePrefix" );
+  else
+    mMsg->setHeaderField( "X-KMail-QuotePrefix", mEditor->quotePrefixName() );
 
   if ( mEditor->textMode() == KMeditor::Rich ) {
     kDebug(5006) << "Html mode";

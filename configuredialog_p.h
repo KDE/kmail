@@ -125,52 +125,6 @@ private:
   QButtonGroup *mButtonGroup;
 };
 
-
-//
-//
-// Language item handling
-//
-//
-
-struct LanguageItem
-{
-  LanguageItem() {}
-  LanguageItem( const QString & language, const QString & reply=QString(),
-                const QString & replyAll=QString(),
-                const QString & forward=QString(),
-                const QString & indentPrefix=QString() ) :
-    mLanguage( language ), mReply( reply ), mReplyAll( replyAll ),
-    mForward( forward ), mIndentPrefix( indentPrefix ) {}
-
-  QString mLanguage, mReply, mReplyAll, mForward, mIndentPrefix;
-};
-
-typedef QList<LanguageItem> LanguageItemList;
-
-class NewLanguageDialog : public KDialog
-{
-  Q_OBJECT
-
-  public:
-    explicit NewLanguageDialog( LanguageItemList & suppressedLangs, QWidget *parent=0 );
-    QString language() const;
-
-  private:
-    QComboBox *mComboBox;
-};
-
-
-class LanguageComboBox : public QComboBox
-{
-  Q_OBJECT
-
-  public:
-    LanguageComboBox( QWidget *parent=0 );
-    int insertLanguage( const QString & language );
-    QString language() const;
-    void setLanguage( const QString & language );
-};
-
 //
 //
 // Profile dialog
@@ -721,37 +675,6 @@ private:
   KUrlRequester *mEditorRequester;
 };
 
-class ComposerPagePhrasesTab : public ConfigModuleTab {
-  Q_OBJECT
-public:
-  ComposerPagePhrasesTab( QWidget * parent=0 );
-  QString helpAnchor() const;
-
-  void save();
-
-private slots:
-  void slotNewLanguage();
-  void slotRemoveLanguage();
-  void slotLanguageChanged( const QString& );
-  void slotAddNewLanguage( const QString& );
-
-private:
-  virtual void doLoadFromGlobalSettings();
-  void setLanguageItemInformation( int index );
-  void saveActiveLanguageItem();
-
-private:
-  LanguageComboBox *mPhraseLanguageCombo;
-  QPushButton      *mRemoveButton;
-  QLineEdit        *mPhraseReplyEdit;
-  QLineEdit        *mPhraseReplyAllEdit;
-  QLineEdit        *mPhraseForwardEdit;
-  QLineEdit        *mPhraseIndentPrefixEdit;
-
-  int              mActiveLanguageItem;
-  LanguageItemList mLanguageList;
-};
-
 class ComposerPageTemplatesTab : public ConfigModuleTab {
   Q_OBJECT
 public:
@@ -887,7 +810,6 @@ public:
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef ComposerPageGeneralTab GeneralTab;
-  typedef ComposerPagePhrasesTab PhrasesTab;
   typedef ComposerPageTemplatesTab TemplatesTab;
   typedef ComposerPageCustomTemplatesTab CustomTemplatesTab;
   typedef ComposerPageSubjectTab SubjectTab;
@@ -897,7 +819,6 @@ public:
 
 private:
   GeneralTab  *mGeneralTab;
-  PhrasesTab  *mPhrasesTab;
   TemplatesTab  *mTemplatesTab;
   CustomTemplatesTab  *mCustomTemplatesTab;
   SubjectTab  *mSubjectTab;

@@ -9,34 +9,16 @@
 
   <group name="Templates #$(folder)">
     <entry name="UseCustomTemplates" type="Bool" key="UseCustomTemplates">
-      <label></label>
-      <whatsthis></whatsthis>
-      <default>false</default>
     </entry>
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
-      <label></label>
-      <whatsthis></whatsthis>
-      <default></default>
     </entry>
     <entry name="TemplateReply" type="String" key="TemplateReply">
-      <label></label>
-      <whatsthis></whatsthis>
-      <default></default>
     </entry>
     <entry name="TemplateReplyAll" type="String" key="TemplateReplyAll">
-      <label></label>
-      <whatsthis></whatsthis>
-      <default></default>
     </entry>
     <entry name="TemplateForward" type="String" key="TemplateForward">
-      <label></label>
-      <whatsthis></whatsthis>
-      <default></default>
     </entry>
     <entry name="QuoteString" type="String" key="QuoteString">
-      <label></label>
-      <whatsthis></whatsthis>
-      <default></default>
     </entry>
   </group>
 

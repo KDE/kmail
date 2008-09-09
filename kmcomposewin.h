@@ -119,7 +119,6 @@ class KMComposeWin : public KMail::Composer
     static Composer *create( KMMessage *msg = 0, uint identity = 0 );
 
   QString dbusObjectPath() const;
-  QString quotePrefixName() const;
   QString smartQuote( const QString & msg );
 
   /**
@@ -215,10 +214,11 @@ class KMComposeWin : public KMail::Composer
      void setFolder( KMFolder *aFolder ) { mFolder = aFolder; }
 
   public: // kmkernel, kmcommand, mailserviceimpl
+
     /**
-     * Recode to the specified charset
+     * Reimplemented
      */
-     void setCharset( const QByteArray &aCharset, bool forceDefault = false );
+     virtual void setCharset( const QByteArray &aCharset, bool forceDefault = false );
 
   public: // kmcommand
     /**

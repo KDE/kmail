@@ -29,7 +29,6 @@
 #include <QLabel>
 #include <QLayout>
 //Added by qt3to4:
-#include <QPixmap>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QShowEvent>
@@ -185,104 +184,6 @@ QSize ListView::sizeHint() const
 
   s.setHeight( h*mVisibleItem + lineWidth()*2 + header()->sizeHint().height());*/
   return s;
-}
-
-
-static QString flagPng = QString::fromLatin1("/flag.png");
-
-NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
-                                      QWidget *parent )
-  : KDialog( parent )
-{
-  setCaption( i18n("New Language") );
-  setButtons( Ok|Cancel );
-  // layout the page (a combobox with label):
-  QWidget *page = new QWidget( this );
-  setMainWidget( page );
-  QHBoxLayout *hlay = new QHBoxLayout( page );
-  hlay->setSpacing( spacingHint() );
-  hlay->setMargin( 0 );
-  mComboBox = new QComboBox( page );
-  mComboBox->setEditable( false );
-  QLabel *l = new QLabel( i18n("Choose &language:"), page );
-  l->setBuddy( mComboBox );
-  hlay->addWidget( l );
-  hlay->addWidget( mComboBox, 1 );
-
-  QStringList pathList = KGlobal::dirs()->findAllResources( "locale",
-                               QString::fromLatin1("*/entry.desktop") );
-  // extract a list of language tags that should not be included:
-  QStringList suppressedAcronyms;
-  for ( LanguageItemList::Iterator lit = suppressedLangs.begin();
-        lit != suppressedLangs.end(); ++lit )
-    suppressedAcronyms << (*lit).mLanguage;
-
-  // populate the combo box:
-  for ( QStringList::ConstIterator it = pathList.begin();
-        it != pathList.end(); ++it )
-  {
-    KConfig entry( *it, KConfig::SimpleConfig);
-    KConfigGroup group( &entry, "KCM Locale" );
-    // full name:
-    QString name = group.readEntry( "Name" );
-    // {2,3}-letter abbreviation:
-    // we extract it from the path: "/prefix/de/entry.desktop" -> "de"
-    QString acronym = (*it).section( '/', -2, -2 );
-
-    if ( !suppressedAcronyms.contains( acronym )  ) {
-      // not found:
-      QString displayname = QString::fromLatin1("%1 (%2)")
-          .arg( name ).arg( acronym );
-      QPixmap flag( KStandardDirs::locate("locale", acronym + flagPng ) );
-      mComboBox->addItem( flag, displayname );
-    }
-  }
-  if ( !mComboBox->count() ) {
-    mComboBox->addItem( i18n("No More Languages Available") );
-    enableButtonOk( false );
-  } else mComboBox->model()->sort( 0 );
-}
-
-QString NewLanguageDialog::language() const
-{
-  QString s = mComboBox->currentText();
-  int i = s.lastIndexOf( '(' );
-  return s.mid( i + 1, s.length() - i - 2 );
-}
-
-
-LanguageComboBox::LanguageComboBox( QWidget *parent )
-  : QComboBox( parent )
-{
-}
-
-int LanguageComboBox::insertLanguage( const QString & language )
-{
-  static QString entryDesktop = QString::fromLatin1("/entry.desktop");
-  KConfig entry( KStandardDirs::locate("locale", language + entryDesktop) );
-  KConfigGroup group( &entry, "KCM Locale" );
-  QString name = group.readEntry( "Name" );
-  QString output = QString::fromLatin1("%1 (%2)").arg( name ).arg( language );
-  addItem( QPixmap( KStandardDirs::locate("locale", language + flagPng ) ), output );
-  return findText(output);
-}
-
-QString LanguageComboBox::language() const
-{
-  QString s = currentText();
-  int i = s.lastIndexOf( '(' );
-  return s.mid( i + 1, s.length() - i - 2 );
-}
-
-void LanguageComboBox::setLanguage( const QString & language )
-{
-  QString parenthizedLanguage = QString::fromLatin1("(%1)").arg( language );
-  for (int i = 0; i < count(); i++)
-    // ### FIXME: use .endWith():
-    if ( itemText(i).contains( parenthizedLanguage ) ) {
-      setCurrentIndex(i);
-      return;
-    }
 }
 
 //

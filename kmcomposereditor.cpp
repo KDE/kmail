@@ -69,7 +69,12 @@ QString KMComposerEditor::smartQuote( const QString & msg )
 
 QString KMComposerEditor::quotePrefixName() const
 {
-   return m_composerWin->quotePrefixName();
+  return m_quotePrefix;
+}
+
+void KMComposerEditor::setQuotePrefixName( const QString &quotePrefix )
+{
+  m_quotePrefix = quotePrefix;
 }
 
 void KMComposerEditor::dropEvent( QDropEvent *e )

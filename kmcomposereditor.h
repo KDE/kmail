@@ -39,12 +39,26 @@ class KMComposerEditor : public KMeditor
 
     ~KMComposerEditor();
 
+    /**
+     * @return the quote prefix set before with setQuotePrefixName(), or an empty
+     *         string if that was never called.
+     */
     virtual QString quotePrefixName() const;
+
+    /**
+     * Sets a quote prefix. Lines starting with the passed quote prefix will
+     * be highlighted as quotes (in addition to lines that are starting with
+     * '>' and '|').
+     */
+    void setQuotePrefixName( const QString &quotePrefix );
+
     virtual QString smartQuote( const QString & msg );
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
   private:
      KMComposeWin *m_composerWin;
+     QString m_quotePrefix;
+
   protected:
      void dropEvent( QDropEvent *e );
      bool canInsertFromMimeData( const QMimeData *source ) const;
