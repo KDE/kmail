@@ -57,8 +57,30 @@ if test "x$kde_enable_inotify" = "xyes"; then
   AC_LANG_RESTORE
   ])
 
-  if test "$kde_cv_have_inotify" = "yes" ; then
+  AC_CACHE_VAL(kde_cv_have_sys_inotify,
+  [
+  kde_cv_have_sys_inotify=no
+  AC_LANG_SAVE
+  AC_LANG_C
+
+  AC_TRY_COMPILE(
+  [
+#include <sys/inotify.h>
+  ],
+  [
+#ifndef IN_ALL_EVENTS
+#error no inotify notification
+#endif
+  ],kde_cv_have_sys_inotify=yes,kde_cv_have_sys_inotify=no)
+
+  AC_LANG_RESTORE
+  ])
+
+  if test "$kde_cv_have_inotify" = "yes" -o "$kde_cv_have_sys_inotify" = "yes"; then
     AC_DEFINE_UNQUOTED(HAVE_INOTIFY, 1, [Define if your system has Linux Inode Notification])
+    if test "$kde_cv_have_sys_inotify" = "yes"; then
+      AC_DEFINE_UNQUOTED(HAVE_SYS_INOTIFY, 1, [Define if your system has glibc support for inotify])
+    fi
     AC_MSG_RESULT(yes)
   else
     AC_MSG_RESULT(no)

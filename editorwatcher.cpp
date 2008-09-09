@@ -32,7 +32,11 @@
 #include <cassert>
 
 // inotify stuff taken from kdelibs/kio/kio/kdirwatch.cpp
-#ifdef HAVE_INOTIFY
+#ifdef HAVE_SYS_INOTIFY
+#include <sys/ioctl.h>
+#include <sys/inotify.h>
+#include <fcntl.h>
+#elif HAVE_INOTIFY
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <fcntl.h>
