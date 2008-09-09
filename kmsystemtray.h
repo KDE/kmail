@@ -31,6 +31,7 @@
 
 class KMFolder;
 class QPoint;
+class QMenu;
 
 /**
  * KMSystemTray extends KSystemTray and handles system
@@ -74,8 +75,9 @@ private:
 
   int mMode;
   int mCount;
-  int mNewMessagePopupId;
 
+  QMenu *mNewMessagesPopup;
+  QAction *mSendQueued;
   QPixmap mDefaultIcon;
 
   QVector<KMFolder*> mPopupFolders;

@@ -38,9 +38,9 @@ using KMail::AccountManager;
 
 #include <QPainter>
 #include <QBitmap>
-
 #include <QWidget>
 #include <QObject>
+#include <QSignalMapper>
 
 #include <math.h>
 #include <assert.h>
@@ -63,7 +63,8 @@ KMSystemTray::KMSystemTray(QWidget *parent)
     mDesktopOfMainWin( 0 ),
     mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
-    mNewMessagePopupId(-1)
+    mNewMessagesPopup( 0 ),
+    mSendQueued( 0 )
 {
   kDebug(5006) <<"Initting systray";
 
@@ -123,8 +124,8 @@ void KMSystemTray::buildPopupMenu()
     contextMenu()->addAction( action );
   if ( ( action = mainWidget->action("check_mail_in") ) )
     contextMenu()->addAction( action );
-  if ( ( action = mainWidget->action("send_queued") ) )
-    contextMenu()->addAction( action );
+  if ( ( mSendQueued = mainWidget->action("send_queued") ) )
+    contextMenu()->addAction( mSendQueued );
   if ( ( action = mainWidget->action("send_queued_via") ) )
     contextMenu()->addAction( action );
   contextMenu()->addSeparator();
@@ -303,27 +304,35 @@ void KMSystemTray::slotContextMenuAboutToShow()
   // the base KMainWidget is closed.
   buildPopupMenu();
 
-  if(mNewMessagePopupId != -1)
-  {
-    contextMenu()->removeItem(mNewMessagePopupId);
+  if ( mNewMessagesPopup != 0 ) {
+    contextMenu()->removeAction( mNewMessagesPopup->menuAction() );
+    delete mNewMessagesPopup;
+    mNewMessagesPopup = 0;
   }
 
-  if(mFoldersWithUnread.count() > 0)
+  if ( mFoldersWithUnread.count() > 0 )
   {
-    KMenu *newMessagesPopup = new KMenu();
+    mNewMessagesPopup = new KMenu();
 
     QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
+    QSignalMapper *folderMapper = new QSignalMapper( this );
+    connect( folderMapper, SIGNAL( mapped( int ) ),
+             this, SLOT( selectedAccount( int ) ) );
+
     for(uint i=0; it != mFoldersWithUnread.end(); ++i)
     {
-      kDebug(5006) <<"Adding folder";
       mPopupFolders.append( it.key() );
-      QString item = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
-      newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
+      QString folderText = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
+      QAction *action = new QAction( folderText, this );
+      connect( action, SIGNAL( triggered( bool ) ),
+               folderMapper, SLOT( map() ) );
+      folderMapper->setMapping( action, i );
+      mNewMessagesPopup->addAction( action );
       ++it;
     }
 
-    mNewMessagePopupId = contextMenu()->insertItem(i18n("New Messages In"),
-                                                newMessagesPopup, mNewMessagePopupId, 3);
+    mNewMessagesPopup->setTitle( i18n("New Messages In") );
+    contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
 
     kDebug(5006) <<"Folders added";
   }
