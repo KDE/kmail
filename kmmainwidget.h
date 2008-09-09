@@ -371,6 +371,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
     void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
     void slotMarkAll();
+    void slotFocusQuickSearch();
     void slotSearch();
     void slotSearchClosed();
     void slotFind();

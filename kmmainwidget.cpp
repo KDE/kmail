@@ -729,6 +729,13 @@ void KMMainWidget::createWidgets()
   mHeaders->setObjectName( "headers" );
   mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders );
   mQuickSearchLine->setObjectName( "headers quick search line" );
+  {
+    KAction *action = new KAction( i18n("Set Focus to Quick Search"), this );
+    action->setShortcut( QKeySequence( Qt::Key_Alt + Qt::Key_Q ) );
+    actionCollection()->addAction( "focus_to_quickseach", action );
+    connect( action, SIGNAL( triggered( bool ) ),
+             SLOT( slotFocusQuickSearch() ) );
+  }
 
   connect( mQuickSearchLine, SIGNAL( requestFullSearch() ),
            this, SLOT( slotRequestFullSearchFromQuickSearch() ) );
@@ -913,6 +920,12 @@ void KMMainWidget::createWidgets()
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
            SLOT( startUpdateMessageActionsTimer() ) );
+}
+
+//-------------------------------------------------------------------------
+void KMMainWidget::slotFocusQuickSearch()
+{
+  mQuickSearchLine->setFocus();
 }
 
 //-------------------------------------------------------------------------
