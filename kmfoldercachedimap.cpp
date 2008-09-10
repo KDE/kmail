@@ -682,7 +682,7 @@ KMMsgBase *KMFolderCachedImap::findByUID( ulong uid )
     // Since the uid map is just rebuilt, no need for the sanity check
     return getMsgBase( *it );
   } else {
-#ifdef MAIL_LOSS_DEBUGGING
+#if MAIL_LOSS_DEBUGGING
     kDebug(5006) <<"Reloaded, but stil didn't find uid:" << uid;
 #endif
   }
@@ -1592,7 +1592,7 @@ bool KMFolderCachedImap::deleteMessages()
   }
 
   if ( !msgsForDeletion.isEmpty() ) {
-#ifdef MAIL_LOSS_DEBUGGING
+#if MAIL_LOSS_DEBUGGING
     if ( KMessageBox::warningYesNo(
              0, i18n( "<qt><p>Mails on the server in folder <b>%1</b> were deleted. "
                  "Do you want to delete them locally?<br>UIDs: %2</p></qt>",
@@ -1876,7 +1876,7 @@ void KMFolderCachedImap::getMessagesResult( KMail::FolderJob *job, bool lastSet 
   if ( !job->error() && !mFoundAnIMAPDigest ) {
     kWarning(5006) << "######## Folderlisting did not complete, but there was no error! "
           "Aborting sync of folder: " << folder()->prettyUrl();
-#ifdef MAIL_LOSS_DEBUGGING
+#if MAIL_LOSS_DEBUGGING
     kmkernel->emergencyExit( i18n("Folder listing failed in interesting ways." ) );
 #endif
   }
