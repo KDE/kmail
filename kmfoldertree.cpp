@@ -245,8 +245,15 @@ void KMFolderTreeItem::slotIconsChanged()
 {
   kdDebug(5006) << k_funcinfo << endl;
   // this is prone to change, so better check
+  KFolderTreeItem::Type newType = type();
   if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
-      setType( kmkernel->iCalIface().folderType(mFolder) );
+    newType = kmkernel->iCalIface().folderType(mFolder);
+
+  // reload the folder tree if the type changed, needed because of the
+  // various type-dependent folder hiding options
+  if ( type() != newType )
+    QTimer::singleShot( 0, static_cast<KMFolderTree*>( listView() ), SLOT(reload()) );
+  setType( newType );
 
   if ( unreadCount() > 0 )
     setPixmap( 0, unreadIcon( iconSize() ) );

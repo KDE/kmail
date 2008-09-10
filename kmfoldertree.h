@@ -115,9 +115,6 @@ public:
   /** Save config options */
   void writeConfig();
 
-  /** Get/refresh the folder tree */
-  virtual void reload(bool openFolders = false);
-
   /** Recusively add folders in a folder directory to a listview item. */
   virtual void addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent );
 
@@ -188,6 +185,9 @@ signals:
   void nameChanged( KMFolderTreeItem * );
 
 public slots:
+  /** Get/refresh the folder tree */
+  virtual void reload(bool openFolders = false);
+
   /** Select the next folder with unread messages */
   void nextUnreadFolder();
 
