@@ -1966,7 +1966,7 @@ void KMKernel::emergencyExit( const QString& reason )
   }
 
   kWarning(5006) << mesg;
-  KNotification::event(KNotification::Catastrophe, mesg);
+  KMessageBox::error( 0, mesg );
 
   ::exit(1);
 }
