@@ -88,6 +88,7 @@ public slots:
   void slotShowExpiryProperties();
   void slotIconsChanged();
   void slotNameChanged();
+  void slotNoContentChanged();
   void updateCount();
 
 protected:
@@ -230,6 +231,9 @@ public slots:
 
   /** Pastes a previously copied/cutted folder below the currently selected folder. */
   void pasteFolder();
+
+  /** Reload the folder tree (using a single shot timer) */
+  void delayedReload();
 
 protected slots:
   //  void slotRMB(int, int);

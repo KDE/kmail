@@ -1178,4 +1178,12 @@ bool FolderStorage::canDeleteMessages() const
   return !isReadOnly();
 }
 
+void FolderStorage::setNoContent(bool aNoContent)
+{
+  const bool changed = aNoContent != mNoContent;
+  mNoContent = aNoContent;
+  if ( changed )
+    emit noContentChanged();
+}
+
 #include "folderstorage.moc"

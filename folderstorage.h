@@ -106,8 +106,7 @@ public:
   virtual bool noContent() const { return mNoContent; }
 
   /** Specify, that the folder can't contain mails. */
-  virtual void setNoContent(bool aNoContent)
-    { mNoContent = aNoContent; }
+  virtual void setNoContent(bool aNoContent);
 
   /** Returns, if the folder can't have children */
   virtual bool noChildren() const { return mNoChildren; }
@@ -453,6 +452,9 @@ signals:
 
   /** Emitted when the readonly status of the folder changes. */
   void readOnlyChanged(KMFolder*);
+
+  /** Emitted when the no content state of the folder changes. */
+  void noContentChanged();
 
   /** Emitted before a message is removed from the folder. */
   void msgRemoved(KMFolder*, Q_UINT32 sernum);
