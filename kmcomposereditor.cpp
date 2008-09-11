@@ -69,7 +69,10 @@ QString KMComposerEditor::smartQuote( const QString & msg )
 
 QString KMComposerEditor::quotePrefixName() const
 {
-  return m_quotePrefix;
+  if ( !m_quotePrefix.simplified().isEmpty() )
+    return m_quotePrefix;
+  else
+    return ">";
 }
 
 void KMComposerEditor::setQuotePrefixName( const QString &quotePrefix )
