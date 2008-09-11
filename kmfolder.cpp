@@ -126,6 +126,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
            SIGNAL( numUnreadMsgsChanged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( removed( KMFolder*, bool ) ),
            SIGNAL( removed( KMFolder*, bool ) ) );
+  connect( mStorage, SIGNAL(noContentChanged()),
+           SIGNAL(noContentChanged()) );
 
   connect( mStorage, SIGNAL( contentsTypeChanged( KMail::FolderContentsType ) ),
                 this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
