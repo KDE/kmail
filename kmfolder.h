@@ -609,6 +609,9 @@ signals:
   /** Emitted when the folder's size changes. */
   void folderSizeChanged( KMFolder * );
 
+  /** Emitted when the no content state changed. */
+  void noContentChanged();
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   int updateIndex();

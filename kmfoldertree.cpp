@@ -250,8 +250,15 @@ void KMFolderTreeItem::slotIconsChanged()
 {
   kDebug(5006) ;
   // this is prone to change, so better check
+  KFolderTreeItem::Type newType = type();
   if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
-      setType( kmkernel->iCalIface().folderType(mFolder) );
+    newType = kmkernel->iCalIface().folderType(mFolder);
+
+  // reload the folder tree if the type changed, needed because of the
+  // various type-dependent folder hiding options
+  if ( type() != newType )
+    static_cast<KMFolderTree*>( listView() )->delayedReload();
+  setType( newType );
 
   if ( unreadCount() > 0 )
     setPixmap( 0, unreadIcon( iconSize() ) );
@@ -266,6 +273,13 @@ void KMFolderTreeItem::slotNameChanged()
   setText( 0, mFolder->label() );
   emit nameChanged( this );
   repaint();
+}
+
+void KMFolderTreeItem::slotNoContentChanged()
+{
+  // reload the folder tree if the no content state changed, needed because
+  // we hide no-content folders if their child nodes are hidden
+  QTimer::singleShot( 0, static_cast<KMFolderTree*>( listView() ), SLOT(reload()) );
 }
 
 //----------------------------------------------------------------------------
@@ -605,6 +619,11 @@ void KMFolderTree::reload(bool openFolders)
     connect(fti->folder(),SIGNAL(nameChanged()),
             fti,SLOT(slotNameChanged()));
 
+    disconnect( fti->folder(), SIGNAL(noContentChanged()),
+                fti, SLOT(slotNoContentChanged()) );
+    connect( fti->folder(), SIGNAL(noContentChanged()),
+             fti, SLOT(slotNoContentChanged()) );
+
     // we want to be noticed of changes to update the unread/total columns
     disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,quint32)),
         this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
@@ -753,6 +772,8 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
         // It is
         removeFromFolderToItemMap( folder );
         delete fti;
+        // still, it might change in the future, so we better check the change signals
+        connect ( folder, SIGNAL(noContentChanged()), SLOT(delayedReload()) );
         continue;
       }
 
@@ -2136,6 +2157,11 @@ void KMFolderTree::slotUnhideLocalInbox()
   disconnect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,quint32)),
               this, SLOT(slotUnhideLocalInbox()) );
   reload();
+}
+
+void KMFolderTree::delayedReload()
+{
+  QTimer::singleShot( 0, this, SLOT(reload()) );
 }
 
 #include "kmfoldertree.moc"
