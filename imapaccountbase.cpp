@@ -989,6 +989,11 @@ QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * j
 bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
                                    KIO::Job* job, const QString& context, bool abortSync )
 {
+  // supress autodeletion while we are in here, we run subeventloops
+  // which might execute any deleteLater() we trigger indirectly via kill()
+  const bool wasAutoDelete = job->isAutoDelete();
+  job->setAutoDelete( false );
+
   // Copy job's data before a possible killAllJobs
   QStringList errors;
   if ( job && job->error() != KIO::ERR_SLAVE_DEFINED /*workaround for kdelibs-3.2*/) {
@@ -1071,6 +1076,11 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
   if ( job && !jobsKilled ) {
     removeJob( job );
   }
+
+  // restore autodeletion, so once the caller (emitResult()) continues
+  // its execution it will delete the job if needed
+  job->setAutoDelete( wasAutoDelete );
+
   return !jobsKilled; // jobsKilled==false -> continue==true
 }
 
