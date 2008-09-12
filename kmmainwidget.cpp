@@ -1083,11 +1083,15 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 
   if(kmkernel->xmlGuiInstance().isValid()) {
     KNotification::event( "new-mail-arrived",
-                          summary,QPixmap(),topLevelWidget() );
+                          summary,QPixmap(),topLevelWidget(),
+                          KNotification::CloseOnTimeout,
+                          kmkernel->xmlGuiInstance() );
   }
   else
     KNotification::event( "new-mail-arrived",
-                          summary,QPixmap(),topLevelWidget() );
+                          summary,QPixmap(),topLevelWidget(),
+                          KNotification::CloseOnTimeout,
+                          kmkernel->xmlGuiInstance() );
 
   if (mBeepOnNew) {
     KNotification::beep();
