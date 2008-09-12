@@ -442,7 +442,8 @@ private:
     *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
     *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
     *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-    *mFavoritesCheckMailAction;
+    *mFavoritesCheckMailAction,
+    *mMoveMsgToFolderAction;
   // Composition actions
   KAction *mPrintAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
