@@ -124,9 +124,8 @@ int KMFolderMbox::open( const char *owner )
   mFilesLocked = false;
   mStream = KDE_fopen( QFile::encodeName( location() ), "r+" ); // messages file
   if ( !mStream ) {
-    KNotification::event( "warning",
-                          i18n("Cannot open file \"%1\":\n%2",
-                               location(), strerror( errno ) ) );
+    KMessageBox::sorry( 0, i18n( "Cannot open file \"%1\":\n%2",
+                                 location(), strerror( errno ) ) );
     kDebug() << "Cannot open folder `" << location() <<"':" << strerror(errno);
     mOpenCount = 0;
     return errno;
