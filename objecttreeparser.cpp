@@ -2710,7 +2710,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   assert( mReader );
   assert( cssHelper() );
 
-  int convertFlags = LinkLocator::PreserveSpaces;
+  int convertFlags = LinkLocator::PreserveSpaces | LinkLocator::HighlightText;
   if ( decorate && GlobalSettings::self()->showEmoticons() ) {
     convertFlags |= LinkLocator::ReplaceSmileys;
   }
@@ -2783,7 +2783,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     bool actHidden = false;
     QString textExpand;
 
-    // This quoted line needs be hiden
+    // This quoted line needs be hidden
     if (GlobalSettings::self()->showExpandQuotesMark() && mReader->mLevelQuote >= 0
         && mReader->mLevelQuote <= ( actQuoteLevel ) )
       actHidden = true;
