@@ -991,8 +991,9 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
 {
   // supress autodeletion while we are in here, we run subeventloops
   // which might execute any deleteLater() we trigger indirectly via kill()
-  const bool wasAutoDelete = job->isAutoDelete();
-  job->setAutoDelete( false );
+  const bool wasAutoDelete = job && job->isAutoDelete();
+  if ( job )
+    job->setAutoDelete( false );
 
   // Copy job's data before a possible killAllJobs
   QStringList errors;
@@ -1079,7 +1080,8 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
 
   // restore autodeletion, so once the caller (emitResult()) continues
   // its execution it will delete the job if needed
-  job->setAutoDelete( wasAutoDelete );
+  if ( job )
+    job->setAutoDelete( wasAutoDelete );
 
   return !jobsKilled; // jobsKilled==false -> continue==true
 }
