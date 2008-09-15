@@ -737,8 +737,8 @@ QString KMFolder::idString() const
   QString escapedName = name();
   /* Escape [ and ] as they are disallowed for kconfig sections and that is
      what the idString is primarily used for. */
-  escapedName.replace( "[", "%(" );
-  escapedName.replace( "]", "%)" );
+  escapedName.replace( '[', "%(" );
+  escapedName.replace( ']', "%)" );
   return relativePath + escapedName;
 }
 

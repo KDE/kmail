@@ -731,7 +731,7 @@ namespace KMail {
     }
 
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
-    QString headerPart = " " + headerParts.filter( QRegExp( "\\S" ) ).join( ", " );
+    QString headerPart = ' ' + headerParts.filter( QRegExp( "\\S" ) ).join( ", " );
 
     // Prepare the date string (when printing always use the localized date)
     QString dateString;

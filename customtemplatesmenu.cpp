@@ -111,7 +111,7 @@ void CustomTemplatesMenu::update()
     KAction *action;
     switch ( t.type() ) {
     case CustomTemplates::TReply:
-      action = new KAction( (*it).replace( "&", "&&" ), mOwnerActionCollection );
+      action = new KAction( (*it).replace( '&', "&&" ), mOwnerActionCollection );
       action->setShortcut( t.shortcut() );
       connect( action, SIGNAL(triggered(bool)), mCustomReplyMapper, SLOT(map()) );
       mCustomReplyMapper->setMapping( action, idx );
@@ -121,7 +121,7 @@ void CustomTemplatesMenu::update()
       break;
 
     case CustomTemplates::TReplyAll:
-      action = new KAction( (*it).replace( "&", "&&" ), mOwnerActionCollection );
+      action = new KAction( (*it).replace( '&', "&&" ), mOwnerActionCollection );
       action->setShortcut( t.shortcut() );
       connect( action, SIGNAL(triggered(bool)), mCustomReplyAllMapper, SLOT(map()) );
       mCustomReplyAllMapper->setMapping( action, idx );
@@ -131,7 +131,7 @@ void CustomTemplatesMenu::update()
       break;
 
     case CustomTemplates::TForward:
-      action = new KAction( (*it).replace( "&", "&&" ), mOwnerActionCollection );
+      action = new KAction( (*it).replace( '&', "&&" ), mOwnerActionCollection );
       action->setShortcut( t.shortcut() );
       connect( action, SIGNAL(triggered(bool)), mCustomForwardMapper, SLOT(map()) );
       mCustomForwardMapper->setMapping( action, idx );
@@ -141,19 +141,19 @@ void CustomTemplatesMenu::update()
       break;
 
     case CustomTemplates::TUniversal:
-      action = new KAction( (*it).replace( "&", "&&" ), mOwnerActionCollection );
+      action = new KAction( (*it).replace( '&', "&&" ), mOwnerActionCollection );
       connect( action, SIGNAL(triggered(bool)), mCustomReplyMapper, SLOT(map()) );
       mCustomReplyMapper->setMapping( action, idx );
       mCustomReplyActionMenu->addAction( action );
       mCustomTemplateActions.append( action );
       ++replyc;
-      action = new KAction( (*it).replace( "&", "&&" ), mOwnerActionCollection );
+      action = new KAction( (*it).replace( '&', "&&" ), mOwnerActionCollection );
       connect( action, SIGNAL(triggered(bool)), mCustomReplyAllMapper, SLOT(map()) );
       mCustomReplyAllMapper->setMapping( action, idx );
       mCustomReplyAllActionMenu->addAction( action );
       mCustomTemplateActions.append( action );
       ++replyallc;
-      action = new KAction( (*it).replace( "&", "&&" ), mOwnerActionCollection );
+      action = new KAction( (*it).replace( '&', "&&" ), mOwnerActionCollection );
       connect( action, SIGNAL(triggered(bool)), mCustomForwardMapper, SLOT(map()) );
       mCustomForwardMapper->setMapping( action, idx );
       mCustomForwardActionMenu->addAction( action );

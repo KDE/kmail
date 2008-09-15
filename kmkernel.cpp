@@ -728,7 +728,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = _foldername.split("/", QString::SkipEmptyParts);
+        QStringList subFList = _foldername.split('/', QString::SkipEmptyParts);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
@@ -900,7 +900,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = _foldername.split("/", QString::SkipEmptyParts);
+        QStringList subFList = _foldername.split('/', QString::SkipEmptyParts);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;

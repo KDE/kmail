@@ -992,8 +992,8 @@ void KMComposeWin::getTransportMenu()
   availTransports = TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for ( it = availTransports.begin(); it != availTransports.end() ; ++it ) {
-    QAction *action1 = new QAction( (*it).replace( "&", "&&" ), mActNowMenu );
-    QAction *action2 = new QAction( (*it).replace( "&", "&&" ), mActLaterMenu );
+    QAction *action1 = new QAction( (*it).replace( '&', "&&" ), mActNowMenu );
+    QAction *action2 = new QAction( (*it).replace( '&', "&&" ), mActLaterMenu );
     action1->setData( TransportManager::self()->transportByName( *it )->id() );
     action2->setData( TransportManager::self()->transportByName( *it )->id() );
     mActNowMenu->addAction( action1 );
@@ -3016,7 +3016,7 @@ void KMComposeWin::slotPasteAsAttachment()
 {
   if ( KUrl::List::canDecode( QApplication::clipboard()->mimeData() ) )
   {
-    QStringList data = QApplication::clipboard()->text().split("\n", QString::SkipEmptyParts);
+    QStringList data = QApplication::clipboard()->text().split('\n', QString::SkipEmptyParts);
     for ( QStringList::Iterator it=data.begin(); it!=data.end(); ++it )
     {
       addAttach( *it );

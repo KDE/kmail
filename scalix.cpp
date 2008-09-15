@@ -27,7 +27,7 @@ using namespace Scalix;
 
 FolderAttributeParser::FolderAttributeParser( const QString &attribute )
 {
-  QStringList parts = attribute.split( ",", QString::SkipEmptyParts );
+  QStringList parts = attribute.split( ',', QString::SkipEmptyParts );
 
   for ( int i = 0; i < parts.count(); ++i ) {
     if ( parts[i].startsWith( "\\X-SpecialFolder=" ) )

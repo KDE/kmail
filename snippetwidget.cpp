@@ -142,7 +142,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
 {
   SnippetItem *item = new SnippetItem( parent, name, text );
   const QString actionName = i18n( "Snippet %1", name );
-  const QString normalizedName = QString( actionName ).replace( " ", "_" );
+  const QString normalizedName = QString( actionName ).replace( ' ', '_' );
   item->setToolTip( 0, text );
   if ( !mActionCollection->action( normalizedName ) ) {
     KAction *action = mActionCollection->addAction( normalizedName,

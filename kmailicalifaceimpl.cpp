@@ -991,7 +991,7 @@ QString KMailICalIfaceImpl::attachmentMimetype( const QString & resource,
     if ( part ) {
       KMMessagePart kmPart;
       msg->bodyPart( part, &kmPart );
-      return QString( kmPart.typeStr() ) + "/" + QString( kmPart.subtypeStr() );
+      return QString( kmPart.typeStr() ) + '/' + QString( kmPart.subtypeStr() );
     } else {
       kDebug() << "Attachment " << filename << " not found.";
     }

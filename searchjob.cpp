@@ -193,7 +193,7 @@ void SearchJob::slotSearchData( KJob* job, const QString& data, const QString& )
   } else
   {
     // remember the uids the server found
-    mImapSearchHits = data.split( " ", QString::SkipEmptyParts );
+    mImapSearchHits = data.split( ' ', QString::SkipEmptyParts );
 
     if ( canMapAllUIDs() )
     {
@@ -412,7 +412,7 @@ void SearchJob::slotSearchDataSingleMessage( KJob* job, const QString& data,cons
     return;
   }
   // remember what the server found
-  mImapSearchHits = data.split( " ", QString::SkipEmptyParts );
+  mImapSearchHits = data.split( ' ', QString::SkipEmptyParts );
 
   // add the local search
   int idx = -1;

@@ -1161,7 +1161,7 @@ void KMMainWidget::slotShowNewFromTemplate()
       subj = i18n("No Subject");
 
     QAction *templateAction = mTemplateMenu->menu()->addAction(
-        KStringHandler::rsqueeze( subj.replace( "&", "&&" ) ) );
+        KStringHandler::rsqueeze( subj.replace( '&', "&&" ) ) );
     templateAction->setData( idx );
   }
 
@@ -2593,7 +2593,7 @@ void KMMainWidget::getAccountMenu()
   QStringList::Iterator it;
   foreach ( QString accountName, actList )
   {
-    QAction* action = mActMenu->addAction( accountName.replace("&", "&&") );
+    QAction* action = mActMenu->addAction( accountName.replace('&', "&&") );
     action->setData( accountName );
   }
 }
@@ -2607,7 +2607,7 @@ void KMMainWidget::getTransportMenu()
   availTransports = MailTransport::TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for(it = availTransports.begin(); it != availTransports.end() ; ++it)
-    mSendMenu->addAction((*it).replace("&", "&&"));
+    mSendMenu->addAction((*it).replace('&', "&&"));
 }
 
 
@@ -3765,7 +3765,7 @@ void KMMainWidget::initializeMessageTagActions()
       continue;
     QString cleanName = i18n("Message Tag %1", it.value()->name() );
     QString iconText = it.value()->name();
-    cleanName.replace("&","&&");
+    cleanName.replace('&',"&&");
     tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()),
       cleanName, this );
     tagAction->setShortcut( it.value()->shortcut() );
@@ -3931,7 +3931,7 @@ void KMMainWidget::initializeFilterActions()
   for ( ;it != kmkernel->filterMgr()->filters().end(); ++it ) {
     if ( !(*it)->isEmpty() && (*it)->configureShortcut() ) {
       filterName = QString( "Filter %1").arg( (*it)->name() );
-      normalizedName = filterName.replace(" ", "_");
+      normalizedName = filterName.replace(' ', '_');
       if ( action( normalizedName.toUtf8() ) ) {
         continue;
       }
@@ -4030,7 +4030,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
 
   QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
   QString actionname = i18n( "Folder Shortcut %1", folder->idString() );
-  QString normalizedName = actionname.replace(" ", "_");
+  QString normalizedName = actionname.replace(' ', '_');
   QAction * action = actionCollection()->addAction( normalizedName );
   mFolderTree->addAction( action );
   action->setText( actionlabel );

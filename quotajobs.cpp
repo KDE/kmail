@@ -58,7 +58,7 @@ void QuotaJobs::GetQuotarootJob::slotInfoMessage( KJob*, const QString& str,
                                                   const QString& )
 {
   // Parse the result
-  QStringList results = str.split("\r");
+  QStringList results = str.split('\r');
   QStringList roots;
   QuotaInfoList quotas;
   if ( results.size() > 0 ) {

@@ -1900,7 +1900,7 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       continue;
     }
     QString label = fti->text( 0 );
-    label.replace( "&","&&" );
+    label.replace( '&',"&&" );
     if ( fti->firstChild() )
     {
       // new level
