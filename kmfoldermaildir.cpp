@@ -818,19 +818,14 @@ int KMFolderMaildir::createIndexFromContents()
   curDir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 
   // then, we look for all the 'cur' files
-  QFileInfoList list = curDir.entryInfoList();
-  QFileInfo fi;
-
-  Q_FOREACH( fi, list )
+  foreach( const QFileInfo& fi, curDir.entryInfoList() )
   {
     MessageStatus st = MessageStatus::statusRead();
     readFileHeaderIntern( curDir.path(), fi.fileName(), st );
   }
 
   // then, we look for all the 'new' files
-  list = newDir.entryInfoList();
-
-  Q_FOREACH( fi, list )
+  foreach( const QFileInfo& fi, newDir.entryInfoList() )
   {
     MessageStatus st = MessageStatus::statusNew();
     readFileHeaderIntern( newDir.path(), fi.fileName(), st );

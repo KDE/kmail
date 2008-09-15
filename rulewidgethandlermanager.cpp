@@ -345,29 +345,6 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
 
 //-----------------------------------------------------------------------------
 
-namespace {
-  // FIXME (Qt >= 4.0):
-  // This is a simplified and constified copy of QObject::child(). According
-  // to a comment in qobject.h QObject::child() will be made const in Qt 4.0.
-  // So once we require Qt 4.0 this can be removed.
-  QObject* QObject_child_const( const QObject *parent,
-                                const char *objName )
-  {
-    const QObjectList list = parent->children();
-    if ( list.isEmpty() )
-      return 0;
-
-    QObject *obj = 0;
-    Q_FOREACH( obj, list ) {
-      if ( !objName || qstrcmp( objName, obj->objectName().toLatin1().data() ) == 0 )
-        break;
-    }
-    return obj;
-  }
-}
-
-//-----------------------------------------------------------------------------
-
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
 #include "kmaddrbook.h"
@@ -469,11 +446,8 @@ namespace {
   KMSearchRule::Function TextRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
-                                                     "textRuleFuncCombo" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<QComboBox*>( functionStack->child( "textRuleFuncCombo",
-    //                                                  0, false ) );
+      functionStack->findChild<QComboBox*>( QString( "textRuleFuncCombo" ) );
+    
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return TextFunctions[funcCombo->currentIndex()].id;
     }
@@ -498,12 +472,8 @@ namespace {
     // here we gotta check the combobox which contains the categories
     if ( func  == KMSearchRule::FuncIsInCategory ||
          func  == KMSearchRule::FuncIsNotInCategory ) {
-      const QComboBox *combo=
-        dynamic_cast<QComboBox*>( QObject_child_const( valueStack,
-                                                       "categoryCombo" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<QComboBox*>( valueStack->child( "categoryCombo",
-    //                                               0, false ) );
+      const QComboBox *combo = valueStack->findChild<QComboBox*>( "categoryCombo" );
+      
       if ( combo ) {
         return combo->currentText();
       }
@@ -514,12 +484,8 @@ namespace {
     }
 
     //in other cases of func it is a lineedit
-    const RegExpLineEdit *lineEdit =
-      dynamic_cast<RegExpLineEdit*>( QObject_child_const( valueStack,
-                                                          "regExpLineEdit" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-    //                                                    0, false ) );
+    const RegExpLineEdit *lineEdit = valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );    
+    
     if ( lineEdit ) {
       return lineEdit->text();
       }
@@ -787,12 +753,8 @@ namespace {
 
   KMSearchRule::Function MessageRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
-    const QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
-                                                     "messageRuleFuncCombo" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
-    //                                                  0, false ) );
+    const QComboBox *funcCombo = functionStack->findChild<QComboBox*>( "messageRuleFuncCombo" );
+    
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return MessageFunctions[funcCombo->currentIndex()].id;
     }
@@ -817,12 +779,9 @@ namespace {
   QString MessageRuleWidgetHandler::currentValue( const QStackedWidget *valueStack,
                                                   KMSearchRule::Function ) const
   {
-    const RegExpLineEdit *lineEdit =
-      dynamic_cast<RegExpLineEdit*>( QObject_child_const( valueStack,
-                                                          "regExpLineEdit" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-    //                                                    0, false ) );
+    const RegExpLineEdit *lineEdit
+              = valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+    
     if ( lineEdit ) {
       return lineEdit->text();
     }
@@ -1059,12 +1018,8 @@ namespace {
 
   KMSearchRule::Function StatusRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
-    const QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
-                                                     "statusRuleFuncCombo" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<QComboBox*>( functionStack->child( "statusRuleFuncCombo",
-    //                                                  0, false ) );
+    const QComboBox *funcCombo = functionStack->findChild<QComboBox*>( "statusRuleFuncCombo" );
+    
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return StatusFunctions[funcCombo->currentIndex()].id;
     }
@@ -1088,12 +1043,8 @@ namespace {
 
   int StatusRuleWidgetHandler::currentStatusValue( const QStackedWidget *valueStack ) const
   {
-    const QComboBox *statusCombo =
-      dynamic_cast<QComboBox*>( QObject_child_const( valueStack,
-                                                     "statusRuleValueCombo" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<QComboBox*>( valueStack->child( "statusRuleValueCombo",
-    //                                               0, false ) );
+    const QComboBox *statusCombo = valueStack->findChild<QComboBox*>( "statusRuleValueCombo" );
+    
     if ( statusCombo ) {
       return statusCombo->currentIndex();
     }
@@ -1309,12 +1260,8 @@ namespace {
 
   KMSearchRule::Function NumericRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
-    const QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
-                                                     "numericRuleFuncCombo" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<QComboBox*>( functionStack->child( "numericRuleFuncCombo",
-    //                                                  0, false ) );
+    const QComboBox *funcCombo = functionStack->findChild<QComboBox*>( "numericRuleFuncCombo" );
+    
     if ( funcCombo && funcCombo->currentIndex() >= 0 ) {
       return NumericFunctions[funcCombo->currentIndex()].id;
     }
@@ -1338,12 +1285,8 @@ namespace {
 
   QString NumericRuleWidgetHandler::currentValue( const QStackedWidget *valueStack ) const
   {
-    const KIntNumInput *numInput =
-      dynamic_cast<KIntNumInput*>( QObject_child_const( valueStack,
-                                                        "KIntNumInput" ) );
-    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
-    //  dynamic_cast<KIntNumInput*>( valueStack->child( "KIntNumInput",
-    //                                                  0, false ) );
+    const KIntNumInput *numInput = valueStack->findChild<KIntNumInput*>( "KIntNumInput" );
+    
     if ( numInput ) {
       return QString::number( numInput->value() );
     }

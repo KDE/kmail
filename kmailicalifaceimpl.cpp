@@ -431,7 +431,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
 
-  foreach ( const CustomHeader header, customHeaders )
+  foreach ( const CustomHeader& header, customHeaders )
     msg->setHeaderField( header.name, header.value );
   // In case of the ical format, simply add the plain text content with the
   // right content type
@@ -834,7 +834,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
-    foreach ( const CustomHeader header, customHeaders )
+    foreach ( const CustomHeader& header, customHeaders )
       newMsg->setHeaderField( header.name, header.value );
     newMsg->setParent( 0 ); // workaround strange line in KMMsgBase::assign. newMsg is not in any folder yet.
     // Note that plainTextBody isn't used in this branch. We assume it's still valid from when the mail was created.

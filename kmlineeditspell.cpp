@@ -122,7 +122,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
     KUrl::List urls = KUrl::List::fromMimeData( md );
     KABC::Addressee::List list;
 
-    foreach ( KUrl url, urls ) {
+    foreach ( const KUrl& url, urls ) {
 
       // First, let's deal with mailto Urls. The path() part contains the
       // email-address.

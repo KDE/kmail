@@ -2591,9 +2591,11 @@ void KMMainWidget::getAccountMenu()
   mActMenu->clear();
   actList = kmkernel->acctMgr()->getAccounts();
   QStringList::Iterator it;
-  foreach ( QString accountName, actList )
+  foreach ( const QString& accountName, actList )
   {
-    QAction* action = mActMenu->addAction( accountName.replace('&', "&&") );
+    // Explicitly make a copy, as we're not changing values of the list but only
+    // the local copy which is passed to action.
+    QAction* action = mActMenu->addAction( QString( accountName ).replace('&', "&&") );
     action->setData( accountName );
   }
 }

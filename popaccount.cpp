@@ -718,7 +718,7 @@ void PopAccount::slotJobFinished() {
       // be reduced in the following number-limited leave rule and size-limited
       // leave rule checks
       else {
-        foreach ( const QByteArray id, idsOfMsgsToDelete ) {
+        foreach ( const QByteArray& id, idsOfMsgsToDelete ) {
           time_t msgTime = mTimeOfNextSeenMsgsMap[ mUidForIdMap[id] ];
           QPair<time_t, QByteArray> pair( msgTime, id );
           idsToSave.append( pair );
