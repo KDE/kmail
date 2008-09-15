@@ -465,7 +465,7 @@ void SnippetWidget::readConfig()
     strNameVal = kcg.readEntry(strKeyName, "");
     strTextVal = kcg.readEntry(strKeyText, "");
 
-    if (strNameVal != "" && strTextVal != "") {
+    if (!strNameVal.isEmpty() && !strTextVal.isEmpty()) {
       _mapSaved[strNameVal] = strTextVal;
     }
   }
