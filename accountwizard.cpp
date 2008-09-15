@@ -218,7 +218,7 @@ void AccountWizard::setupWelcomePage()
   mCreateNewIdentity = new QCheckBox( i18n( "Create a new identity" ), box );
   QString helpText( i18n( "An identity is your email address, "
                                         "name, organization and so on.<br>"
-                                        "Do not uncheck this if you don't know what "
+                                        "Do not uncheck this if you do not know what "
                                         "you are doing<br>as some servers refuses to send mail "
                                         "if the sending identity<br>does not match the one belonging "
                                         "to that account.") );
