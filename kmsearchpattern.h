@@ -285,7 +285,7 @@ class KMSearchRuleStatus : public KMSearchRule
 public:
    explicit KMSearchRuleStatus( const QByteArray & field=0, Function function=FuncContains,
                                 const QString & contents=QString() );
-   KMSearchRuleStatus( MessageStatus status, Function function=FuncContains );
+   explicit KMSearchRuleStatus( MessageStatus status, Function function=FuncContains );
 
    virtual bool isEmpty() const ;
    virtual bool matches( const KMMessage * msg ) const;
