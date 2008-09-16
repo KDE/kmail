@@ -1,14 +1,5 @@
 [Desktop Entry]
 Name=KMail view
-Name[eo]=Retpoŝto
-Name[mk]=КПошта
-Name[ne]=केडीई पत्र
-Name[pa]=ਕੇ-ਮੇਲ
-Name[sv]=Kmail
-Name[ta]=Kஅஞ்சல்
-Name[th]=จัดการจดหมาย K
-Name[x-test]=xxKMailxx
-Name[zh_TW]=KMail 郵件軟體
 Type=Application
 Exec=kmail --view %u
 Icon=kmail
