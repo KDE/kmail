@@ -36,10 +36,10 @@
 **
 *******************************************************************************/
 
+#include "foldershortcutdialog.h"
 
 #include <QLabel>
 #include <QGroupBox>
-
 
 #include <kkeysequencewidget.h>
 #include <klocale.h>
@@ -47,7 +47,6 @@
 #include <kvbox.h>
 
 #include "kmmainwidget.h"
-#include "foldershortcutdialog.h"
 #include "kmfolder.h"
 
 #include <QFrame>

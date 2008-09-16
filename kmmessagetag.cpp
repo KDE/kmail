@@ -28,8 +28,10 @@
 **
 *******************************************************************************/
 
-#include <config-kmail.h>
 #include "kmmessagetag.h"
+
+#include <config-kmail.h>
+
 #include "kmkernel.h"
 
 #include <QStringList>
@@ -41,6 +43,7 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <krandom.h>
+
 #ifdef Nepomuk_FOUND
 #include <nepomuk/resourcemanager.h>
 #endif

@@ -17,13 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
+#include "kmfoldermbox.h"
+
 #include <config-kmail.h>
 #include <QFileInfo>
 #include <QList>
 #include <QRegExp>
 #include <QByteArray>
 
-#include "kmfoldermbox.h"
 #include "folderstorage.h"
 #include "kmfolder.h"
 #include "kmkernel.h"

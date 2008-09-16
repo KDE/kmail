@@ -1,5 +1,7 @@
 // kmfoldermgr.cpp
 
+#include "kmfoldermgr.h"
+
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -22,7 +24,6 @@
 
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"
-#include "kmfoldermgr.h"
 #include "folderstorage.h"
 #include "kmfolder.h"
 #include "kmfoldercachedimap.h"

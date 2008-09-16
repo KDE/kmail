@@ -29,11 +29,12 @@
   your version.
 */
 
+#include "localsubscriptiondialog.h"
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include "localsubscriptiondialog.h"
 #include "kmkernel.h"
 #include "accountmanager.h"
 #include "kmmessage.h"

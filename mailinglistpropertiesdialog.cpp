@@ -26,12 +26,13 @@
 **   your version.
 *******************************************************************************/
 
-#include <QLayout>
+#include "mailinglistpropertiesdialog.h"
 
 #include <QLabel>
 #include <QComboBox>
 #include <QGroupBox>
 #include <QCheckBox>
+#include <QLayout>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -44,7 +45,6 @@
 
 #include "kmfolder.h"
 #include "mailinglist-magic.h"
-#include "mailinglistpropertiesdialog.h"
 
 using namespace KMail;
 

@@ -17,9 +17,10 @@
 */
 
 //Factor byteswap stuff into one header file
+#include "kmfoldersearch.h"
 
 #include <config-kmail.h>
-#include "kmfoldersearch.h"
+
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmsearchpattern.h"

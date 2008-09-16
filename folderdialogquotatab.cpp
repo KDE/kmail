@@ -31,6 +31,8 @@
  */
 
 #include "folderdialogquotatab.h"
+#include "folderdialogquotatab_p.h"
+
 #include "kmfolder.h"
 #include "kmfoldertype.h"
 #include "kmfolderimap.h"
@@ -43,8 +45,6 @@
 #include <qlabel.h>
 #include <qprogressbar.h>
 #include <qwhatsthis.h>
-
-#include "folderdialogquotatab_p.h"
 
 #include <assert.h>
 

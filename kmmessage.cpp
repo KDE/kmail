@@ -1,14 +1,15 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 // kmmessage.cpp
 
+#include "kmmessage.h"
+
+#include <config-kmail.h>
+
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
 // needed temporarily until KMime is replacing the partNode helper class:
 #include "partNode.h"
-
-
 #define ALLOW_GUI 1
 #include "kmkernel.h"
-#include "kmmessage.h"
 #include "mailinglist-magic.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;
@@ -17,7 +18,6 @@ using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
 #include "undostack.h"
 #include "kmversion.h"
-#include "config-kmail.h"
 #include "version-kmail.h"
 #include "kmmessagetag.h"
 #include "headerstrategy.h"

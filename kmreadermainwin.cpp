@@ -22,6 +22,8 @@
 // Could be extended to include support for normal main window
 // widgets like a toolbar.
 
+#include "kmreaderwin.h"
+
 #include <kicon.h>
 #include <kactionmenu.h>
 #include <kedittoolbar.h>
@@ -40,7 +42,6 @@
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
-#include "kmreaderwin.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"

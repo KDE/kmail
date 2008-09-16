@@ -1,10 +1,10 @@
 // kmmsgbase.cpp
 
+#include "kmmsgbase.h"
+
 #include <config-kmail.h>
 
-#include "kmmsgbase.h"
 #include "globalsettings.h"
-
 #include "kmfolderindex.h"
 #include "kmfolder.h"
 #include "kmheaders.h"

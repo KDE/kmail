@@ -20,11 +20,11 @@
  *
  */
 
-// This must be first
-#include <config-kmail.h>
 // my headers:
 #include "configuredialog.h"
 #include "configuredialog_p.h"
+
+#include <config-kmail.h>
 
 #include "globalsettings.h"
 #include "templatesconfiguration_kfg.h"

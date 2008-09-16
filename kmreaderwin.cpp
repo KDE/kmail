@@ -20,9 +20,9 @@
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
 //#define KMAIL_READER_HTML_DEBUG 1
-#include <config-kmail.h>
-
 #include "kmreaderwin.h"
+
+#include <config-kmail.h>
 
 #include "globalsettings.h"
 #include "kmversion.h"

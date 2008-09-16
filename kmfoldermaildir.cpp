@@ -2,13 +2,14 @@
 // kmfoldermaildir.cpp
 // Author: Kurt Granroth <granroth@kde.org>
 
+#include "kmfoldermaildir.h"
+
 #include <QDir>
 #include <QRegExp>
 #include <QByteArray>
 #include <QFileInfo>
 
 #include <kpimutils/kfileio.h>
-#include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "undostack.h"

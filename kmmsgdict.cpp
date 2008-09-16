@@ -1,9 +1,10 @@
 /* kmail message dictionary */
 /* Author: Ronen Tzur <rtzur@shani.net> */
 
+#include "kmmsgdict.h"
+
 #include "kmfolderindex.h"
 #include "kmfolder.h"
-#include "kmmsgdict.h"
 #include "kmdict.h"
 #include "globalsettings.h"
 #include "folderstorage.h"
