@@ -680,7 +680,7 @@ namespace KMail {
                                          const HeaderStrategy * strategy,
                                          const QString & vCardName, bool printing, bool topLevel ) const
   {
-    if ( !message ) return QString::null;
+    if ( !message ) return QString();
     if ( !strategy ) {
       strategy = HeaderStrategy::brief();
     }
