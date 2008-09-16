@@ -16,6 +16,7 @@
 
 // other KDE headers:
 #include <kconfig.h>
+#include <kcombobox.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -85,7 +86,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   // row 4: combobox with existing identities and label
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
-  mComboBox = new QComboBox( page );
+  mComboBox = new KComboBox( page );
   mComboBox->setEditable( false );
   mComboBox->addItems( identities );
   mComboBox->setEnabled( false );

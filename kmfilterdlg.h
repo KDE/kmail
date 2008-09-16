@@ -32,7 +32,6 @@
 #include <QList>
 #include <QMap>
 #include <QRadioButton>
-#include <QComboBox>
 #include <QString>
 
 class KMSearchPatternEdit;
@@ -42,6 +41,7 @@ class QPushButton;
 class QStackedWidget;
 class QCheckBox;
 class QTreeWidget;
+class KComboBox;
 class KIconButton;
 class KKeySequenceWidget;
 
@@ -228,7 +228,7 @@ private:
   /** The combo box that contains the labels of all KMFilterActions.
       It's @p activated(int) signal is internally
       connected to the @p raiseWidget(int) slot of @p mWidgetStack. */
-  QComboBox      *mComboBox;
+  KComboBox      *mComboBox;
   /** The widget stack that holds all the parameter widgets for the
       filter actions. */
   QStackedWidget   *mWidgetStack;

@@ -30,6 +30,7 @@ using KMail::AccountManager;
 using KMail::FilterImporterExporter;
 
 // other KDE headers:
+#include <kcombobox.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -41,6 +42,7 @@ using KMail::FilterImporterExporter;
 #include <kkeysequencewidget.h>
 #include <kpushbutton.h>
 #include <kconfiggroup.h>
+#include <ktabwidget.h>
 #include <kvbox.h>
 
 // Qt headers:
@@ -156,19 +158,19 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   topLayout->addWidget( mFilterList, 1 /*stretch*/ );
 
   if(!bPopFilter) {
-    QTabWidget *tabWidget = new QTabWidget( w );
+    KTabWidget *tabWidget = new KTabWidget( w );
     tabWidget->setObjectName( "kmfd_tab" );
     topLayout->addWidget( tabWidget );
 
     page1 = new QWidget( tabWidget );
-    tabWidget->addTab( page1, i18n("&General") );
+    tabWidget->addTab( page1, i18n("General") );
     hbl = new QHBoxLayout( page1 );
     hbl->setObjectName( "kmfd_hbl" );
     hbl->setSpacing( spacingHint() );
     hbl->setMargin( 0 );
 
     page2 = new QWidget( tabWidget );
-    tabWidget->addTab( page2, i18n("A&dvanced") );
+    tabWidget->addTab( page2, i18n("Advanced") );
     vbl2 = new QVBoxLayout( page2 );
     vbl2->setObjectName( "kmfd_vbl2" );
     vbl2->setSpacing( spacingHint() );
@@ -1087,7 +1089,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   int i;
 
-  mComboBox = new QComboBox( this );
+  mComboBox = new KComboBox( this );
   mComboBox->setEditable( false );
   assert( mComboBox );
   mWidgetStack = new QStackedWidget(this);

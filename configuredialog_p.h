@@ -7,11 +7,8 @@
 
 #include "kmail_export.h"
 
-#include <klineedit.h>
-#include <QComboBox>
 #include <QPointer>
 #include <QString>
-
 #include <QStringList>
 #include <QLabel>
 #include <QList>
@@ -21,9 +18,12 @@
 #include <QTreeWidget>
 #include <QHash>
 
+#include <klineedit.h>
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <kcmodule.h>
 #include <klocale.h>
+
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
@@ -121,7 +121,7 @@ protected slots:
 
 private:
   QLineEdit  *mLineEdit;
-  QComboBox  *mComboBox;
+  KComboBox  *mComboBox;
   QButtonGroup *mButtonGroup;
 };
 
@@ -302,9 +302,9 @@ private:
 
 private:
   QCheckBox   *mConfirmSendCheck;
-  QComboBox   *mSendOnCheckCombo;
-  QComboBox   *mSendMethodCombo;
-  QComboBox   *mMessagePropertyCombo;
+  KComboBox   *mSendOnCheckCombo;
+  KComboBox   *mSendMethodCombo;
+  KComboBox   *mMessagePropertyCombo;
   QLineEdit   *mDefaultDomainEdit;
 };
 
@@ -398,7 +398,7 @@ private:
 
 private:
   QCheckBox    *mCustomFontCheck;
-  QComboBox    *mFontLocationCombo;
+  KComboBox    *mFontLocationCombo;
   KFontChooser *mFontChooser;
 
   int          mActiveFontIndex;
@@ -508,8 +508,8 @@ private: // data
   QCheckBox *mShowExpandQuotesMark;
   KIntSpinBox  *mCollapseQuoteLevelSpin;
   QCheckBox *mShrinkQuotesCheck;
-  QComboBox *mCharsetCombo;
-  QComboBox *mOverrideCharsetCombo;
+  KComboBox *mCharsetCombo;
+  KComboBox *mOverrideCharsetCombo;
 };
 
 
@@ -995,15 +995,15 @@ private:
 private:
   QCheckBox    *mEmptyFolderConfirmCheck;
   QCheckBox    *mExcludeImportantFromExpiry;
-  QComboBox    *mLoopOnGotoUnread;
-  QComboBox    *mMailboxPrefCombo;
-  QComboBox    *mActionEnterFolder;
+  KComboBox    *mLoopOnGotoUnread;
+  KComboBox    *mMailboxPrefCombo;
+  KComboBox    *mActionEnterFolder;
   QCheckBox    *mEmptyTrashCheck;
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
   KMail::FolderRequester *mOnStartupOpenFolder;
-  QComboBox    *mQuotaCmbBox;
+  KComboBox    *mQuotaCmbBox;
 };
 
 class MiscPageGroupwareTab : public ConfigModuleTab  {
@@ -1027,8 +1027,8 @@ private:
   QWidget* mBox;
   KVBox* gBox;
 
-  QComboBox* mStorageFormatCombo;
-  QComboBox* mLanguageCombo;
+  KComboBox* mStorageFormatCombo;
+  KComboBox* mLanguageCombo;
 
   QLabel* mFolderComboLabel;
   QStackedWidget* mFolderComboStack;

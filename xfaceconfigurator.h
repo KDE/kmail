@@ -18,16 +18,14 @@
 #define __KMAIL_XFACECONFIGURATOR_H__
 
 #include <QWidget>
-#include <QTextEdit>
-//Added by qt3to4:
-#include <QLabel>
 
+class KComboBox;
+class KTextEdit;
 class KUrl;
 
 class QCheckBox;
 class QString;
 class QLabel;
-class QComboBox;
 
 namespace KMail {
 
@@ -46,9 +44,9 @@ namespace KMail {
 
   protected:
     QCheckBox     * mEnableCheck;
-    QTextEdit     * mTextEdit;
+    KTextEdit     * mTextEdit;
     QLabel        * mXFaceLabel;
-    QComboBox     * mSourceCombo;
+    KComboBox     * mSourceCombo;
 
 
   private:

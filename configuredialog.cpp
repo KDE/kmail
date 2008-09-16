@@ -681,7 +681,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "send on check" combo:
-  mSendOnCheckCombo = new QComboBox( group );
+  mSendOnCheckCombo = new KComboBox( group );
   mSendOnCheckCombo->setEditable( false );
   mSendOnCheckCombo->addItems( QStringList()
                                       << i18n("Never Automatically")
@@ -692,7 +692,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "default send method" combo:
-  mSendMethodCombo = new QComboBox( group );
+  mSendMethodCombo = new KComboBox( group );
   mSendMethodCombo->setEditable( false );
   mSendMethodCombo->addItems( QStringList()
                                       << i18n("Send Now")
@@ -704,7 +704,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // "message property" combo:
   // ### FIXME: remove completely?
-  mMessagePropertyCombo = new QComboBox( group );
+  mMessagePropertyCombo = new KComboBox( group );
   mMessagePropertyCombo->setEditable( false );
   mMessagePropertyCombo->addItems( QStringList()
                      << i18n("Allow 8-bit")
@@ -1305,7 +1305,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
   // "font location" combo box and label:
   hlay = new QHBoxLayout(); // inherites spacing
   vlay->addLayout( hlay );
-  mFontLocationCombo = new QComboBox( this );
+  mFontLocationCombo = new KComboBox( this );
   mFontLocationCombo->setEditable( false );
   mFontLocationCombo->setEnabled( false ); // !mCustomFontCheck->isChecked()
 
@@ -2077,7 +2077,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   // Fallback Character Encoding
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
-  mCharsetCombo = new QComboBox( this );
+  mCharsetCombo = new KComboBox( this );
   mCharsetCombo->addItems( KMMsgBase::supportedEncodings( false ) );
 
   connect( mCharsetCombo, SIGNAL( activated( int ) ),
@@ -2096,7 +2096,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   // Override Character Encoding
   QHBoxLayout *hlay2 = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay2 );
-  mOverrideCharsetCombo = new QComboBox( this );
+  mOverrideCharsetCombo = new KComboBox( this );
   QStringList encodings = KMMsgBase::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
   mOverrideCharsetCombo->addItems( encodings );
@@ -4591,7 +4591,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   // "when trying to find unread messages" combo + label: stretch 0
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
-  mLoopOnGotoUnread = new QComboBox( this );
+  mLoopOnGotoUnread = new KComboBox( this );
   mLoopOnGotoUnread->setEditable( false );
   label = new QLabel(
            i18nc("to be continued with \"do not loop\", \"loop in current folder\", "
@@ -4613,7 +4613,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   // when entering a folder
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
-  mActionEnterFolder = new QComboBox( this );
+  mActionEnterFolder = new KComboBox( this );
   mActionEnterFolder->setEditable( false );
   label = new QLabel(
            i18nc("to be continued with \"jump to first new message\", "
@@ -4660,7 +4660,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   // "default mailbox format" combo + label: stretch 0
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
-  mMailboxPrefCombo = new QComboBox( this );
+  mMailboxPrefCombo = new KComboBox( this );
   mMailboxPrefCombo->setEditable( false );
   label = new QLabel(i18nc("to be continued with \"flat files\" and "
                            "\"directories\", resp.",
@@ -4717,7 +4717,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   // "Quota Units"
   hlay = new QHBoxLayout();
   vlay->addLayout( hlay );
-  mQuotaCmbBox = new QComboBox( this );
+  mQuotaCmbBox = new KComboBox( this );
   mQuotaCmbBox->setEditable( false );
   label = new QLabel( i18n("Quota units: "), this );
   label->setBuddy( mQuotaCmbBox );
@@ -4833,7 +4833,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   grid->addWidget( storageFormatLA, 0, 0 );
   storageFormatLA->setToolTip( toolTip );
   storageFormatLA->setWhatsThis( whatsThis );
-  mStorageFormatCombo = new QComboBox( mBox );
+  mStorageFormatCombo = new KComboBox( mBox );
   mStorageFormatCombo->setEditable( false );
   storageFormatLA->setBuddy( mStorageFormatCombo );
   QStringList formatLst;
@@ -4854,7 +4854,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   grid->addWidget( languageLA, 1, 0 );
   languageLA->setToolTip( toolTip );
   languageLA->setWhatsThis( whatsThis );
-  mLanguageCombo = new QComboBox( mBox );
+  mLanguageCombo = new KComboBox( mBox );
   mLanguageCombo->setEditable( false );
   languageLA->setBuddy( mLanguageCombo );
   QStringList lst;

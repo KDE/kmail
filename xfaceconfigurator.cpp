@@ -31,38 +31,31 @@
 */
 
 #include "xfaceconfigurator.h"
+
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <kimageio.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <ktextedit.h>
 #include <kurl.h>
 #include <kio/netaccess.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-using namespace KIO;
 #include <kxface.h>
-using namespace KPIM;
 #include <kabc/stdaddressbook.h>
 #include <kabc/addressee.h>
-using namespace KABC;
 
-#include <QBitmap>
 #include <QCheckBox>
-#include <QComboBox>
-#include <QImage>
+#include <QHBoxLayout>
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
-
 #include <QStackedWidget>
-
+#include <QVBoxLayout>
 
 // #include <assert.h>
-
+using namespace KABC;
+using namespace KIO;
 using namespace KMail;
 using namespace KPIM;
 
@@ -110,7 +103,7 @@ namespace KMail {
     // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout( hlay );
-    mSourceCombo = new QComboBox( this );
+    mSourceCombo = new KComboBox( this );
     mSourceCombo->setEditable( false );
     mSourceCombo->setWhatsThis(
                     i18n("Click on the widgets below to obtain help on the input methods."));
@@ -187,7 +180,7 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
     page_vlay->setSpacing( KDialog::spacingHint() );
-    mTextEdit = new QTextEdit( page );
+    mTextEdit = new KTextEdit( page );
     page_vlay->addWidget( mTextEdit );
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
