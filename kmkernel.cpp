@@ -485,6 +485,27 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QCString &attachContDisp,
                             const QCString &attachCharset )
 {
+  kdDebug(5006) << "KMKernel::openComposer called (deprecated version)" << endl;
+  return openComposer ( to, cc, bcc, subject, body, hidden,
+                        attachName, attachCte, attachData,
+                        attachType, attachSubType, attachParamAttr,
+                        attachParamValue, attachContDisp, attachCharset, 0 );
+}
+
+int KMKernel::openComposer (const QString &to, const QString &cc,
+                            const QString &bcc, const QString &subject,
+                            const QString &body, int hidden,
+                            const QString &attachName,
+                            const QCString &attachCte,
+                            const QCString &attachData,
+                            const QCString &attachType,
+                            const QCString &attachSubType,
+                            const QCString &attachParamAttr,
+                            const QString &attachParamValue,
+                            const QCString &attachContDisp,
+                            const QCString &attachCharset,
+                            unsigned int identity )
+{
   kdDebug(5006) << "KMKernel::openComposer()" << endl;
 
   KMMessage *msg = new KMMessage;
@@ -495,6 +516,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !bcc.isEmpty() ) msg->setBcc(bcc);
   if ( !subject.isEmpty() ) msg->setSubject(subject);
   if ( !to.isEmpty() ) msg->setTo(to);
+  if ( identity > 0 ) msg->setHeaderField( "X-KMail-Identity", QString::number( identity ) );
   if ( !body.isEmpty() ) {
     msg->setBody(body.utf8());
   } else {
