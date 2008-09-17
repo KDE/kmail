@@ -1,5 +1,12 @@
 [Desktop Entry]
 Name=KMail view
+Name[km]=ទិដ្ឋភាព KMail
+Name[nds]=KMail-Ansicht
+Name[pt]=Janela do KMail
+Name[pt_BR]=Janela do KMail
+Name[sv]=Kmail-vy
+Name[uk]=Перегляд KMail
+Name[zh_TW]=KMail 檢視
 Type=Application
 Exec=kmail --view %u
 Icon=kmail
