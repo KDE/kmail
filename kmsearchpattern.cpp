@@ -17,9 +17,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-
-#include "kmaddrbook.h"
 #include "kmsearchpattern.h"
+#include "kmaddrbook.h"
 #include "kmmsgdict.h"
 #include "filterlog.h"
 using KMail::FilterLog;

@@ -22,6 +22,7 @@
 // Could be extended to include support for normal main window
 // widgets like a toolbar.
 
+#include "kmreadermainwin.h"
 #include "kmreaderwin.h"
 
 #include <kicon.h>
@@ -49,8 +50,6 @@
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "kmmsgdict.h"
-
-#include "kmreadermainwin.h"
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
