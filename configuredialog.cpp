@@ -628,7 +628,7 @@ AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent )
   // "Receiving" tab:
   //
   mReceivingTab = new ReceivingTab();
-  addTab( mReceivingTab, i18n( "&Receiving" ) );
+  addTab( mReceivingTab, i18n( "Receiving" ) );
   connect( mReceivingTab, SIGNAL(accountListChanged(const QStringList &)),
            this, SIGNAL(accountListChanged(const QStringList &)) );
 
@@ -636,7 +636,7 @@ AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent )
   // "Sending" tab:
   //
   mSendingTab = new SendingTab();
-  addTab( mSendingTab, i18n( "&Sending" ) );
+  addTab( mSendingTab, i18n( "Sending" ) );
 }
 
 AccountsPageSendingTab::~AccountsPageSendingTab()
@@ -1216,43 +1216,43 @@ AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent 
   // "Fonts" tab:
   //
   mFontsTab = new FontsTab();
-  addTab( mFontsTab, i18n("&Fonts") );
+  addTab( mFontsTab, i18n("Fonts") );
 
   //
   // "Colors" tab:
   //
   mColorsTab = new ColorsTab();
-  addTab( mColorsTab, i18n("Color&s") );
+  addTab( mColorsTab, i18n("Colors") );
 
   //
   // "Layout" tab:
   //
   mLayoutTab = new LayoutTab();
-  addTab( mLayoutTab, i18n("La&yout") );
+  addTab( mLayoutTab, i18n("Layout") );
 
   //
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, i18n("M&essage List") );
+  addTab( mHeadersTab, i18n("Message List") );
 
   //
   // "Reader window" tab:
   //
   mReaderTab = new ReaderTab();
-  addTab( mReaderTab, i18n("Message W&indow") );
+  addTab( mReaderTab, i18n("Message Window") );
 
   //
   // "System Tray" tab:
   //
   mSystemTrayTab = new SystemTrayTab();
-  addTab( mSystemTrayTab, i18n("System &Tray") );
+  addTab( mSystemTrayTab, i18n("System Tray") );
 
   //
   // "Message Tag" tab:
   //
   mMessageTagTab = new MessageTagTab();
-  addTab( mMessageTagTab, i18n("&Message Tags") );
+  addTab( mMessageTagTab, i18n("Message Tags") );
 }
 
 
@@ -2765,45 +2765,45 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
   // "General" tab:
   //
   mGeneralTab = new GeneralTab();
-  addTab( mGeneralTab, i18n("&General") );
+  addTab( mGeneralTab, i18n("General") );
   addConfig( GlobalSettings::self(), mGeneralTab );
 
   //
   // "Templates" tab:
   //
   mTemplatesTab = new TemplatesTab();
-  addTab( mTemplatesTab, i18n("Standard &Templates") );
+  addTab( mTemplatesTab, i18n("Standard Templates") );
 
   //
   // "Custom Templates" tab:
   //
   mCustomTemplatesTab = new CustomTemplatesTab();
-  addTab( mCustomTemplatesTab, i18n("&Custom Templates") );
+  addTab( mCustomTemplatesTab, i18n("Custom Templates") );
 
   //
   // "Subject" tab:
   //
   mSubjectTab = new SubjectTab();
-  addTab( mSubjectTab, i18n("&Subject") );
+  addTab( mSubjectTab, i18n("Subject") );
   addConfig( GlobalSettings::self(), mSubjectTab );
 
   //
   // "Charset" tab:
   //
   mCharsetTab = new CharsetTab();
-  addTab( mCharsetTab, i18n("Cha&rset") );
+  addTab( mCharsetTab, i18n("Charset") );
 
   //
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, i18n("H&eaders") );
+  addTab( mHeadersTab, i18n("Headers") );
 
   //
   // "Attachments" tab:
   //
   mAttachmentsTab = new AttachmentsTab();
-  addTab( mAttachmentsTab, i18nc("Config->Composer->Attachments", "A&ttachments") );
+  addTab( mAttachmentsTab, i18nc("Config->Composer->Attachments", "Attachments") );
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const {
@@ -3650,7 +3650,7 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
   // "Reading" tab:
   //
   mGeneralTab = new GeneralTab(); //  @TODO: rename
-  addTab( mGeneralTab, i18n("&Reading") );
+  addTab( mGeneralTab, i18n("Reading") );
 
   //
   // "Composing" tab:
@@ -3668,13 +3668,13 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
   // "S/MIME Validation" tab:
   //
   mSMimeTab = new SMimeTab();
-  addTab( mSMimeTab, i18n("S/MIME &Validation") );
+  addTab( mSMimeTab, i18n("S/MIME Validation") );
 
   //
   // "Crypto Backends" tab:
   //
   mCryptPlugTab = new CryptPlugTab();
-  addTab( mCryptPlugTab, i18n("Crypto Backe&nds") );
+  addTab( mCryptPlugTab, i18n("Crypto Backends") );
 }
 
 
@@ -4550,10 +4550,10 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
   : ConfigModuleWithTabs( instance, parent )
 {
   mFolderTab = new FolderTab();
-  addTab( mFolderTab, i18n("&Folders") );
+  addTab( mFolderTab, i18n("Folders") );
 
   mGroupwareTab = new GroupwareTab();
-  addTab( mGroupwareTab, i18n("&Groupware") );
+  addTab( mGroupwareTab, i18n("Groupware") );
 }
 
 QString MiscPage::FolderTab::helpAnchor() const {
