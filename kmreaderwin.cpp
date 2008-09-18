@@ -2728,7 +2728,7 @@ static QColor nextColor( const QColor & c )
 {
   int h, s, v;
   c.getHsv( &h, &s, &v );
-  return QColor::fromHsv( (h + 50) % 360, QMAX(s, 64), v );
+  return QColor::fromHsv( (h + 50) % 360, qMax(s, 64), v );
 }
 
 QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
