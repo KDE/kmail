@@ -121,7 +121,7 @@ void KMMimePartTree::showEvent( QShowEvent* e )
     // This seems to be the best way to provide reasonable defaults
     // for the column widths. We're triggered before the tree
     // is actually filled so fitting to contents is not an option (here).
-    // Having a fuction called from outside seems to be an overkill.
+    // Having a function called from outside seems to be an overkill.
     // QHeaderView::ResizeToContents can't be set since it disables
     // user resizing of columns...
     // So in the end, we provide heuristic defaults based on the width

@@ -76,7 +76,7 @@ public:
    *
    * @param mustBeReadWrite If true, the read-only folders become non selectable
    * @param showOutbox If trye, the otbox folder is shown
-   * @param showImapFolders Wheter to show the IMAP folder hierarchy
+   * @param showImapFolders Whether to show the IMAP folder hierarchy
    * @param preSelection The initial folder to select
    */
   void reload(

@@ -683,7 +683,7 @@ void PopAccount::slotJobFinished() {
 
     // Check if we want to keep any messages.
     //
-    // The default is to delete all messages which have been sucessfully downloaded
+    // The default is to delete all messages which have been successfully downloaded
     // or which we have seen before (which are remembered in the config file).
     // This excludes only messages which we have not seen before and at
     // the same time failed to download correctly, or messages which the pop

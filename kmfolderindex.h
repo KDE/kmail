@@ -151,7 +151,7 @@ protected:
   virtual void fillMessageDict();
 
   /** Writes messages to the index. The stream is flushed if @a flush is true.
-   If @a msg is 0, all mesages from mMsgList are written, else only @a is written.
+   If @a msg is 0, all messages from mMsgList are written, else only @a is written.
   */
   int writeMessages( KMMsgBase* msg, bool flush = true );
 

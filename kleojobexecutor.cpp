@@ -62,7 +62,7 @@ GpgME::VerificationResult KleoJobExecutor::exec(
     const QByteArray & signedData,
     QByteArray & plainText )
 {
-  kDebug() << "Starting opaque verfication job";
+  kDebug() << "Starting opaque verification job";
   connect( job, SIGNAL(result(GpgME::VerificationResult,QByteArray)),
            SLOT(verificationResult(GpgME::VerificationResult,QByteArray)) );
   GpgME::Error err = job->start( signedData );

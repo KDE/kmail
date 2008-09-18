@@ -342,8 +342,8 @@ void KMFolderMgr::remove(KMFolder* aFolder)
   if ( aFolder->child() )
   {
     // call remove for every child
-    KMFolderNodeList childs = *aFolder->child();
-    foreach( KMFolderNode *child, childs ) {
+    KMFolderNodeList children = *aFolder->child();
+    foreach( KMFolderNode *child, children ) {
       if ( child->isDir() )
         continue;
       KMFolder *folder = static_cast<KMFolder*>( child );

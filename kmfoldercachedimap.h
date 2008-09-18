@@ -614,7 +614,7 @@ public slots:
     ulong mTentativeHighestUid;
 
     /** Used to determine whether listing messages yielded a sensible result.
-     * Only then is the deletion o messages (which relies on succesful
+     * Only then is the deletion o messages (which relies on successful
      * listing) attempted, during the sync.  */
     bool mFoundAnIMAPDigest;
 

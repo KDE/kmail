@@ -80,7 +80,7 @@ public:
    * the folder is free-standing (/var/spool/mail/foo), this is used for the full path to
    * the folder's storage location.
    * @param aFolderType The type of folder to create.
-   * @param withIndex Wether this folder has an index. No-index folders are
+   * @param withIndex Whether this folder has an index. No-index folders are
    * those used by KMail internally, the Outbox, and those of local spool accounts,
    * for example.
    * @param exportedSernums whether this folder exports its serial numbers to
@@ -395,7 +395,7 @@ public:
   { return mMailingList; }
   QString mailingListPostAddress() const;
 
-  /** Get / set wether the default identity should be used instead of the
+  /** Get / set whether the default identity should be used instead of the
    *  identity specified by setIdentity(). */
   void setUseDefaultIdentity( bool useDefaultIdentity );
   bool useDefaultIdentity() const { return mUseDefaultIdentity; }

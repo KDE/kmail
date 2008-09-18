@@ -204,7 +204,7 @@ namespace KMail {
 
     // check for new tasks:
     if ( !mCommands.empty() ) {
-      // Don't fail get'ting a non-existant script:
+      // Don't fail getting a non-existent script:
       if ( mCommands.top() == Get && mFileExists == No ) {
 	mScript.clear();
 	mCommands.pop();

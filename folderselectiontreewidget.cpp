@@ -293,7 +293,7 @@ void FolderSelectionTreeWidget::keyPressEvent( QKeyEvent *e )
   // Handle keyboard filtering.
   // Each key with text is appended to our search filter (which gets displayed
   // in the header for the Path column). Backpace removes text from the filter
-  // while the del button clears the filter completly.
+  // while the del button clears the filter completely.
 
   switch( e->key() )
   {

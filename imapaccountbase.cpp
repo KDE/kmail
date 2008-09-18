@@ -989,7 +989,7 @@ QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * j
 bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
                                    KIO::Job* job, const QString& context, bool abortSync )
 {
-  // supress autodeletion while we are in here, we run subeventloops
+  // suppress autodeletion while we are in here, we run subeventloops
   // which might execute any deleteLater() we trigger indirectly via kill()
   const bool wasAutoDelete = job && job->isAutoDelete();
   if ( job )

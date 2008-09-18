@@ -297,7 +297,7 @@ public:
 
   QWidget* mainWindow() { return mMainWindow; }
 
-  /** Returns wether the message should be decryted. */
+  /** Returns whether the message should be decryted. */
   bool decryptMessage() const;
 
   /** Enforce message decryption. */

@@ -53,9 +53,9 @@ using KMail::MaildirJob;
 
 using KPIMUtils::removeDirAndContentsRecursively;
 
-// A separator for "uniq:info" (see the original maildir specification
+// A separator for "uniq:info" (see the original maildir specification // krazy:exclude=spelling
 // at http://cr.yp.to/proto/maildir.html.
-// Windows uses '!' charater instead as ':' is not supported by the OS.
+// Windows uses '!' character instead as ':' is not supported by the OS.
 // TODO make it configurable - jstaniek
 // TODO check what the choice for Thunderbird 3 - jstaniek
 #ifdef Q_WS_WIN
