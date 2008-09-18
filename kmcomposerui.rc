@@ -1,4 +1,5 @@
-<!DOCTYPE kpartgui ><kpartgui version="410" name="kmcomposer" >
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
+<kpartgui version="410" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -99,7 +100,8 @@
   <Action name="sign_message" />
   <Action name="encrypt_message" />
  </ToolBar>
- <ToolBar noMerge="1" newline="true" hidden="true" enable="0" name="htmlToolBar" iconText="icononly" ><text>HTML Toolbar</text>
+ <ToolBar noMerge="1" newline="true" hidden="true" enable="0" name="htmlToolBar" iconText="icononly" >
+  <text>HTML Toolbar</text>
   <Action name="format_list_style" />
   <Action name="format_font_family" />
   <Action name="format_font_size" />
