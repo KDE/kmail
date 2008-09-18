@@ -17,7 +17,6 @@
 
 #include <QLayout>
 #include <q3listview.h>
-#include <QTextEdit>
 #include <QMenu>
 //Added by qt3to4:
 #include <QVBoxLayout>
@@ -315,7 +314,7 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   QVBoxLayout * vlay = new QVBoxLayout( frame );
   vlay->setSpacing( spacingHint() );
   vlay->setMargin( 0 );
-  mTextEdit = new QTextEdit( frame);
+  mTextEdit = new KTextEdit( frame);
   vlay->addWidget( mTextEdit );
   mTextEdit->setAcceptRichText( false );
   mTextEdit->setWordWrapMode ( QTextOption::NoWrap );

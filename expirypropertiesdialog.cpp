@@ -10,7 +10,6 @@
 #include <QSpinBox>
 #include <QLabel>
 #include <QRadioButton>
-#include <QComboBox>
 #include <QLayout>
 #include <QGroupBox>
 #include <QVBoxLayout>

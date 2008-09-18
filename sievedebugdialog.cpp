@@ -27,6 +27,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <ktextedit.h>
 
 #include <kmime/kmime_header_parsing.h>
 #include <ksieve/error.h>
@@ -40,7 +41,6 @@
 using KMail::AccountManager;
 #include "kmkernel.h"
 #include "sievejob.h"
-#include <QTextEdit>
 
 using KMail::SieveJob;
 using KMime::Types::AddrSpecList;
@@ -199,7 +199,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
       mAccountList.append( account );
     }
 
-    mEdit = new QTextEdit( this );
+    mEdit = new KTextEdit( this );
     mEdit->setReadOnly( true );
     setMainWidget( mEdit );
 

@@ -2,8 +2,7 @@
 #define __KMAIL__MANAGESIEVESCRIPTSDIALOG_P_H__
 
 #include <kdialog.h>
-
-#include <QTextEdit>
+#include <ktextedit.h>
 
 namespace KMail {
 
@@ -18,7 +17,7 @@ public:
   void setScript( const QString & script ) { mTextEdit->setText( script ); }
 
 private:
-  QTextEdit * mTextEdit;
+  KTextEdit * mTextEdit;
 };
 
 }

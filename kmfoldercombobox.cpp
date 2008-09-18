@@ -4,12 +4,10 @@
 
 #include "kmfoldercombobox.h"
 #include "kmfoldermgr.h"
-//Added by qt3to4:
-#include <QList>
 
 //-----------------------------------------------------------------------------
 
-KMFolderComboBox::KMFolderComboBox( QWidget *parent ) : QComboBox( parent )
+KMFolderComboBox::KMFolderComboBox( QWidget *parent ) : KComboBox( parent )
 {
   init();
 }

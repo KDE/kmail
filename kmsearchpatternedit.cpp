@@ -24,13 +24,13 @@
 #include "rulewidgethandlermanager.h"
 using KMail::RuleWidgetHandlerManager;
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdebug.h>
 
 #include <QButtonGroup>
 #include <QByteArray>
-#include <QComboBox>
 #include <QHBoxLayout>
 #include <QRadioButton>
 
@@ -110,7 +110,7 @@ void KMSearchRuleWidget::initWidget()
   hlay->setMargin( 0 );
 
   // initialize the header field combo box
-  mRuleField = new QComboBox( this );
+  mRuleField = new KComboBox( this );
   mRuleField->setObjectName( "mRuleField" );
   mRuleField->setEditable( true );
   mRuleField->addItems( mFilterFieldList );

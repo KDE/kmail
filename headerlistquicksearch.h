@@ -35,14 +35,8 @@
 #include "kmsearchpattern.h"
 #include <k3listviewsearchline.h>
 
-//Added by qt3to4:
-#include <QLabel>
-#include <QEvent>
-#include <QToolBar>
-class QComboBox;
-class QLabel;
+class KComboBox;
 class K3ListView;
-class KActionCollection;
 
 namespace KMail {
 
@@ -95,7 +89,7 @@ private slots:
 private:
     /** Helper method for the filling of the status combo. */
     void insertStatus(KMail::StatusValueTypes which);
-    QComboBox *mStatusCombo;
+    KComboBox *mStatusCombo;
     KPIM::MessageStatus mStatus;
     QVector<QString> statusList;
     int mComboStatusCount;

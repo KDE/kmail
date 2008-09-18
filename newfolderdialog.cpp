@@ -37,6 +37,8 @@
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 
+#include <kcombobox.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kmessagebox.h>
@@ -45,8 +47,6 @@
 #include <QVariant>
 #include <QPushButton>
 #include <QLabel>
-#include <QLineEdit>
-#include <QComboBox>
 #include <QLayout>
 #include <QRegExp>
 #include <QVBoxLayout>
@@ -85,8 +85,9 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   mNameLabel->setText( i18n( "&Name:" ) );
   mNameHBox->addWidget( mNameLabel );
 
-  mNameLineEdit = new QLineEdit( privateLayoutWidget );
+  mNameLineEdit = new KLineEdit( privateLayoutWidget );
   mNameLineEdit->setObjectName( "mNameLineEdit" );
+  mNameLineEdit->setClearButtonShown( true );
   mNameLabel->setBuddy( mNameLineEdit );
   mNameLineEdit->setWhatsThis( i18n( "Enter a name for the new folder." ) );
   mNameLineEdit->setFocus();
@@ -106,7 +107,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mMailboxFormatLabel->setText( i18n( "Mailbox &format:" ) );
     mFormatHBox->addWidget( mMailboxFormatLabel );
 
-    mFormatComboBox = new QComboBox( privateLayoutWidget );
+    mFormatComboBox = new KComboBox( privateLayoutWidget );
     mFormatComboBox->setEditable( false );
     mFormatComboBox->setObjectName( "mFormatComboBox" );
     mMailboxFormatLabel->setBuddy( mFormatComboBox );
@@ -139,7 +140,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mContentsLabel->setText( i18n( "Folder &contains:" ) );
     mContentsHBox->addWidget( mContentsLabel );
 
-    mContentsComboBox = new QComboBox(  privateLayoutWidget );
+    mContentsComboBox = new KComboBox(  privateLayoutWidget );
     mContentsComboBox->setEditable( false );
     mContentsComboBox->setObjectName( "mContentsComboBox" );
     mContentsLabel->setBuddy( mContentsComboBox );
@@ -186,7 +187,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
       mNamespacesLabel->setText( i18n( "Namespace for &folder:" ) );
       mNamespacesHBox->addWidget( mNamespacesLabel );
 
-      mNamespacesComboBox = new QComboBox( privateLayoutWidget );
+      mNamespacesComboBox = new KComboBox( privateLayoutWidget );
       mNamespacesComboBox->setEditable( false );
       mNamespacesComboBox->setObjectName( "mNamespacesComboBox" );
       mNamespacesLabel->setBuddy( mNamespacesComboBox );

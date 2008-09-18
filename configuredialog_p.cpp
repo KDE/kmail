@@ -18,6 +18,7 @@
 #include <kconfig.h>
 #include <kcombobox.h>
 #include <kstandarddirs.h>
+#include <ktabwidget.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfiggroup.h>
@@ -25,13 +26,10 @@
 #include <kpimidentities/identitymanager.h>
 
 // Qt headers:
-#include <QTabWidget>
 #include <QRadioButton>
 #include <QLabel>
-#include <QLayout>
 //Added by qt3to4:
 #include <QHBoxLayout>
-#include <QHeaderView>
 #include <QShowEvent>
 #include <QVBoxLayout>
 #include <QResizeEvent>
@@ -58,6 +56,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   vlay->addLayout( hlay );
   mLineEdit = new KLineEdit( page );
   mLineEdit->setFocus();
+  mLineEdit->setClearButtonShown( true );
   QLabel *l = new QLabel( i18n("&New identity:"), page );
   l->setBuddy( mLineEdit );
   hlay->addWidget( l );
@@ -297,7 +296,7 @@ ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWid
   QVBoxLayout *vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( 0 );
-  mTabWidget = new QTabWidget( this );
+  mTabWidget = new KTabWidget( this );
   vlay->addWidget( mTabWidget );
 }
 

@@ -51,7 +51,6 @@ using namespace MailTransport;
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QLayout>
-#include <QTabWidget>
 #include <QRadioButton>
 #include <QValidator>
 #include <QLabel>

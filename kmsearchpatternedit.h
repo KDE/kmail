@@ -25,18 +25,18 @@
 #include <QGroupBox>
 #include <QByteArray>
 
+class KComboBox;
 class KMSearchRule;
 class KMSearchPattern;
 class KMSearchPatternEdit;
 
 class QAbstractButton;
-class QComboBox;
 class QRadioButton;
 class QStackedWidget;
 
 /** A widget to edit a single KMSearchRule.
-    It consists of an editable QComboBox for the field,
-    a read-only QComboBox for the function and
+    It consists of an editable KComboBox for the field,
+    a read-only KComboBox for the function and
     a QLineEdit for the content or the pattern (in case of regexps).
     It manages the i18n itself, so field name should be in it's english form.
 
@@ -106,7 +106,7 @@ private:
   void initFieldList( bool headersOnly, bool absoluteDates );
 
   QStringList mFilterFieldList;
-  QComboBox *mRuleField;
+  KComboBox *mRuleField;
   QStackedWidget *mFunctionStack;
   QStackedWidget *mValueStack;
   bool mAbsoluteDates;

@@ -45,11 +45,11 @@ class QComboBox;
 class QEvent;
 class QGridLayout;
 class QLabel;
-class QLineEdit;
 class QPushButton;
 class QSplitter;
 class QTreeWidgetItem;
 
+class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
 class KMFolderComboBox;
@@ -499,7 +499,7 @@ class KMComposeWin : public KMail::Composer
      */
 
     void rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                            QLabel *aLbl, QLineEdit *aEdt,
+                            QLabel *aLbl, KLineEdit *aEdt,
                             QPushButton *aBtn = 0 );
 
     void rethinkHeaderLine( int value, int mask, int &row,

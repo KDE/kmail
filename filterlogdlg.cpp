@@ -36,17 +36,15 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <ktextedit.h>
 #include <kvbox.h>
 
 #include <QCheckBox>
 #include <QLabel>
 #include <QSpinBox>
 #include <QStringList>
-#include <qtextedit.h>
-
-#include <qgroupbox.h>
+#include <QGroupBox>
 #include <QVBoxLayout>
-
 
 #include <errno.h>
 
@@ -67,9 +65,9 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   QFrame *page = new KVBox( this );
   setMainWidget( page );
 
-  mTextEdit = new QTextEdit( page );
+  mTextEdit = new KTextEdit( page );
   mTextEdit->setReadOnly( true );
-  mTextEdit->setLineWrapMode ( QTextEdit::NoWrap );
+  mTextEdit->setLineWrapMode ( KTextEdit::NoWrap );
   mTextEdit->setAcceptRichText( false );
 
   QString text;

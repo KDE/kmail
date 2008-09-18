@@ -32,12 +32,10 @@
 #include "kmfolderdir.h"
 #include "accountmanager.h"
 #include <kdebug.h>
-//Added by qt3to4:
-#include <QList>
 
 using namespace KMail;
 
-AccountComboBox::AccountComboBox( QWidget* parent ) : QComboBox( parent )
+AccountComboBox::AccountComboBox( QWidget* parent ) : KComboBox( parent )
 {
   connect( kmkernel->acctMgr(), SIGNAL( accountAdded( KMAccount* ) ),
            this, SLOT( slotRefreshAccounts() ) );

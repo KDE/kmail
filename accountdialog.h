@@ -34,15 +34,12 @@
 #include <klineedit.h>
 
 #include <QPointer>
-#include <QLabel>
 #include <QList>
 
 class QRegExpValidator;
 class QCheckBox;
-class QComboBox;
 class QPushButton;
 class QLabel;
-class QLineEdit;
 class QRadioButton;
 class QToolButton;
 class KIntNumInput;

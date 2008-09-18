@@ -317,7 +317,7 @@ protected:
 
 /** Abstract base class for KMail's filter actions that need a
     parameter which can be chosen from a fixed set, e.g. 'set
-    identity'.  Can create a QComboBox as parameter widget. A
+    identity'.  Can create a KComboBox as parameter widget. A
     subclass of this must provide at least implementations for the
     following methods:
 
@@ -375,7 +375,7 @@ protected:
 
 /** Abstract base class for KMail's filter actions that need a
     mail folder as parameter, e.g. 'move into folder'. Can
-    create a QComboBox as parameter widget. A subclass of this
+    create a KComboBox as parameter widget. A subclass of this
     must provide at least implementations for the following methods:
 
     @li virtual KMFilterAction::ReturnCodes KMFilterAction::process
@@ -446,7 +446,7 @@ protected:
 
 /** Abstract base class for KMail's filter actions that need a mail
     address as parameter, e.g. 'forward to'. Can create a
-    QComboBox (capable of completion from the address book) as
+    KComboBox (capable of completion from the address book) as
     parameter widget. A subclass of this must provide at least
     implementations for the following methods:
 

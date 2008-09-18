@@ -16,9 +16,7 @@
 #include "vacationdialog.h"
 
 #include <kmime/kmime_header_parsing.h>
-#include <QGridLayout>
-#include <QApplication>
-#include <QByteArray>
+
 using KMime::Types::AddrSpecList;
 using KMime::Types::AddressList;
 using KMime::Types::MailboxList;
@@ -28,14 +26,17 @@ using KMime::HeaderParsing::parseAddressList;
 #include <klocale.h>
 #include <kdebug.h>
 #include <kwindowsystem.h>
+#include <kiconloader.h>
+#include <klineedit.h>
+#include <ktextedit.h>
 
+#include <QGridLayout>
+#include <QApplication>
+#include <QByteArray>
 #include <QLayout>
 #include <QLabel>
 #include <QCheckBox>
-#include <QLineEdit>
-#include <QTextEdit>
-#include <kiconloader.h>
-#include <qvalidator.h>
+#include <QValidator>
 
 namespace KMail {
 
@@ -73,7 +74,7 @@ namespace KMail {
     // Message text edit:
     ++row;
     glay->setRowStretch( row, 1 );
-    mTextEdit = new QTextEdit( frame );
+    mTextEdit = new KTextEdit( frame );
     mTextEdit->setObjectName( "mTextEdit" );
     mTextEdit->setAcceptRichText( false );
     glay->addWidget( mTextEdit, row, 0, 1, 2 );
@@ -90,8 +91,9 @@ namespace KMail {
 
     // "Send responses for these addresses" lineedit and label:
     ++row;
-    mMailAliasesEdit = new QLineEdit( frame );
+    mMailAliasesEdit = new KLineEdit( frame );
     mMailAliasesEdit->setObjectName( "mMailAliasesEdit" );
+    mMailAliasesEdit->setClearButtonShown( true );
     QLabel *tmpLabel = new QLabel( i18n("&Send responses for these addresses:"), frame );
     tmpLabel->setBuddy( mMailAliasesEdit );
     glay->addWidget( tmpLabel, row, 0 );
@@ -109,8 +111,9 @@ namespace KMail {
     mDomainCheck = new QCheckBox( i18n("Only react to mail coming from domain"), frame );
     mDomainCheck->setObjectName( "mDomainCheck" );
     mDomainCheck->setChecked( false );
-    mDomainEdit = new QLineEdit( frame );
+    mDomainEdit = new KLineEdit( frame );
     mDomainEdit->setObjectName( "mDomainEdit" );
+    mDomainEdit->setClearButtonShown( true );
     mDomainEdit->setEnabled( false );
     mDomainEdit->setValidator( new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), mDomainEdit ) );
     glay->addWidget( mDomainCheck, row, 0 );

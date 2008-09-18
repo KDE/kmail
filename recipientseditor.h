@@ -27,7 +27,8 @@
 #include "kmail_export.h"
 #include "kmlineeditspell.h"
 
-#include <QComboBox>
+#include <kcombobox.h>
+
 #include <QList>
 #include <QScrollArea>
 
@@ -68,7 +69,7 @@ class Recipient
     Type mType;
 };
 
-class RecipientComboBox : public QComboBox
+class RecipientComboBox : public KComboBox
 {
     Q_OBJECT
   public:
@@ -162,7 +163,7 @@ class RecipientLine : public QWidget
 
   private:
     friend class RecipientsView;
-    QComboBox *mCombo;
+    KComboBox *mCombo;
     RecipientLineEdit *mEdit;
     int mRecipientsCount;
     bool mModified;

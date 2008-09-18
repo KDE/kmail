@@ -22,15 +22,13 @@
 
 #include <kdialog.h>
 #include <kio/global.h>
-//Added by qt3to4:
-#include <QLabel>
 
 class KMMessagePart;
 class KComboBox;
-class QComboBox;
+class KLineEdit;
+
 class QCheckBox;
 class QLabel;
-class QLineEdit;
 
 #undef None
 
@@ -126,9 +124,9 @@ protected:
   KComboBox  *mMimeType;
   QLabel     *mIcon;
   QLabel     *mSize;
-  QLineEdit  *mFileName;
-  QLineEdit  *mDescription;
-  QComboBox  *mEncoding;
+  KLineEdit  *mFileName;
+  KLineEdit  *mDescription;
+  KComboBox  *mEncoding;
   QCheckBox  *mInline;
   QCheckBox  *mEncrypted;
   QCheckBox  *mSigned;

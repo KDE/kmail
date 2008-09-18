@@ -33,10 +33,11 @@
 
 #include <KLocale>
 #include <KDebug>
+#include <KLineEdit>
 #include <KMessageBox>
 #include <KInputDialog>
+
 #include <QLabel>
-#include <QLineEdit>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
@@ -115,9 +116,10 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   QLabel *label = new QLabel( i18n("&Name:"), topFrame );
   titleLayout->addWidget( label );
 
-  mTitleEdit = new QLineEdit( topFrame );
+  mTitleEdit = new KLineEdit( topFrame );
   titleLayout->addWidget( mTitleEdit );
   mTitleEdit->setFocus();
+  mTitleEdit->setClearButtonShown( true );
   label->setBuddy( mTitleEdit );
 
   mRecipientsList = new QTreeWidget( topFrame );

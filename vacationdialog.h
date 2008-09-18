@@ -16,14 +16,13 @@
 #define __KMAIL_VACATIONDIALOG_H__
 
 #include "kdialog.h"
-//Added by qt3to4:
-#include <QList>
+
+class KIntSpinBox;
+class KLineEdit;
+class KTextEdit;
 
 class QString;
 class QCheckBox;
-class QLineEdit;
-class QTextEdit;
-class KIntSpinBox;
 template <typename T> class QList;
 
 namespace KMime {
@@ -69,11 +68,11 @@ namespace KMail {
   protected:
     QCheckBox   * mActiveCheck;
     KIntSpinBox * mIntervalSpin;
-    QLineEdit   * mMailAliasesEdit;
-    QTextEdit   * mTextEdit;
+    KLineEdit   * mMailAliasesEdit;
+    KTextEdit   * mTextEdit;
     QCheckBox   * mSpamCheck;
     QCheckBox   * mDomainCheck;
-    QLineEdit   * mDomainEdit;
+    KLineEdit   * mDomainEdit;
 
   };
 

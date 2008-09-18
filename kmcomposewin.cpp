@@ -931,7 +931,7 @@ QWidget *KMComposeWin::connectFocusMoving( QWidget *prev, QWidget *next )
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, QLineEdit *aEdt,
+                                      QLabel *aLbl, KLineEdit *aEdt,
                                       QPushButton *aBtn )
 {
   if ( aValue & aMask ) {
@@ -3064,8 +3064,8 @@ void KMComposeWin::slotUndo()
 
   if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->undo();
-  } else if (::qobject_cast<QLineEdit*>( fw )) {
-    static_cast<QLineEdit*>( fw )->undo();
+  } else if (::qobject_cast<KLineEdit*>( fw )) {
+    static_cast<KLineEdit*>( fw )->undo();
   }
 }
 
@@ -3078,8 +3078,8 @@ void KMComposeWin::slotRedo()
 
   if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->redo();
-  } else if (::qobject_cast<QLineEdit*>( fw )) {
-    static_cast<QLineEdit*>( fw )->redo();
+  } else if (::qobject_cast<KLineEdit*>( fw )) {
+    static_cast<KLineEdit*>( fw )->redo();
   }
 }
 
@@ -3093,8 +3093,8 @@ void KMComposeWin::slotCut()
 
   if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->cut();
-  } else if ( ::qobject_cast<QLineEdit*>( fw ) ) {
-    static_cast<QLineEdit*>( fw )->cut();
+  } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
+    static_cast<KLineEdit*>( fw )->cut();
   }
 }
 
@@ -3159,8 +3159,8 @@ void KMComposeWin::slotMarkAll()
     return;
   }
 
-  if ( ::qobject_cast<QLineEdit*>( fw ) ) {
-    static_cast<QLineEdit*>( fw )->selectAll();
+  if ( ::qobject_cast<KLineEdit*>( fw ) ) {
+    static_cast<KLineEdit*>( fw )->selectAll();
   } else if (::qobject_cast<KMComposerEditor*>( fw )) {
     static_cast<KTextEdit*>( fw )->selectAll();
   }

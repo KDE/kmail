@@ -36,11 +36,11 @@
 #include "configuredialog_p.h"
 
 //Added by qt3to4:
-#include <QLabel>
 #include <QList>
 
 class QCheckBox;
-class QComboBox;
+class QLabel;
+class KComboBox;
 class KMFolder;
 class KMFolderDir;
 class KIconButton;
@@ -131,9 +131,9 @@ private:
   void initializeWithValuesFromFolder( KMFolder* folder );
 
 private:
-  QComboBox *mShowSenderReceiverComboBox;
-  QComboBox *mContentsComboBox;
-  QComboBox *mIncidencesForComboBox;
+  KComboBox *mShowSenderReceiverComboBox;
+  KComboBox *mContentsComboBox;
+  KComboBox *mIncidencesForComboBox;
   QCheckBox *mAlarmsBlockedCheckBox;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;

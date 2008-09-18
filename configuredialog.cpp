@@ -80,6 +80,7 @@ using KMime::DateFormatter;
 using MailTransport::TransportManagementWidget;
 
 // other KDE headers:
+#include <klineedit.h>
 #include <klocale.h>
 #include <kcharsets.h>
 #include <kascii.h>
@@ -114,7 +115,6 @@ using MailTransport::TransportManagementWidget;
 #include <QLayout>
 #include <QList>
 #include <QRadioButton>
-#include <QLineEdit>
 #include <QGroupBox>
 #include <QToolTip>
 #include <QListWidget>
@@ -2310,7 +2310,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QHBoxLayout *addremovegrid = new QHBoxLayout();
   tageditgrid->addLayout( addremovegrid );
 
-  mTagAddLineEdit = new QLineEdit( mTagsGroupBox );
+  mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
   addremovegrid->addWidget( mTagAddLineEdit );
 
   mTagAddButton = new QPushButton( mTagsGroupBox );
@@ -2367,7 +2367,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   spacer->addSpacing( 2 * KDialog::spacingHint() );
 
   //First row for renaming
-  mTagNameLineEdit = new QLineEdit( mTagSettingGroupBox );
+  mTagNameLineEdit = new KLineEdit( mTagSettingGroupBox );
   settings->addWidget( mTagNameLineEdit, 1, 1 );
 
   QLabel *namelabel = new QLabel( i18n("Name:") , mTagSettingGroupBox );
@@ -3338,6 +3338,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mMessageIdSuffixEdit = new KLineEdit( this );
+  mMessageIdSuffixEdit->setClearButtonShown( true );
   // only ASCII letters, digits, plus, minus and dots are allowed
   mMessageIdSuffixValidator =
     new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), this );

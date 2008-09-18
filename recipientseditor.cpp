@@ -117,14 +117,14 @@ QStringList Recipient::allTypeLabels()
 
 
 RecipientComboBox::RecipientComboBox( QWidget *parent )
-  : QComboBox( parent )
+  : KComboBox( parent )
 {
 }
 
 void RecipientComboBox::keyPressEvent( QKeyEvent *ev )
 {
   if ( ev->key() == Qt::Key_Right ) emit rightPressed();
-  else QComboBox::keyPressEvent( ev );
+  else KComboBox::keyPressEvent( ev );
 }
 
 

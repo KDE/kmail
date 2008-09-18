@@ -34,12 +34,12 @@
 
 #include <kdialog.h>
 
-
-class QLineEdit;
 class QCheckBox;
-class QComboBox;
 class QString;
 class TemplatesConfiguration;
+
+class KComboBox;
+class KLineEdit;
 class KPushButton;
 
 namespace Kleo {
@@ -89,20 +89,20 @@ namespace KMail {
 
   protected:
     // "general" tab:
-    QLineEdit                    *mNameEdit;
-    QLineEdit                    *mOrganizationEdit;
-    QLineEdit                    *mEmailEdit;
+    KLineEdit                    *mNameEdit;
+    KLineEdit                    *mOrganizationEdit;
+    KLineEdit                    *mEmailEdit;
     // "cryptography" tab:
     QWidget                      *mCryptographyTab;
     Kleo::SigningKeyRequester    *mPGPSigningKeyRequester;
     Kleo::EncryptionKeyRequester *mPGPEncryptionKeyRequester;
     Kleo::SigningKeyRequester    *mSMIMESigningKeyRequester;
     Kleo::EncryptionKeyRequester *mSMIMEEncryptionKeyRequester;
-    QComboBox                    *mPreferredCryptoMessageFormat;
+    KComboBox                    *mPreferredCryptoMessageFormat;
     // "advanced" tab:
-    QLineEdit                        *mReplyToEdit;
-    QLineEdit                        *mBccEdit;
-    KPIM::DictionaryComboBox        *mDictionaryCombo;
+    KLineEdit                        *mReplyToEdit;
+    KLineEdit                        *mBccEdit;
+    KPIM::DictionaryComboBox         *mDictionaryCombo;
     FolderRequester                  *mFccCombo;
     FolderRequester                  *mDraftsCombo;
     FolderRequester                  *mTemplatesCombo;

@@ -62,6 +62,7 @@ using namespace KMail;
 #include <kio/global.h>
 #include <kio/scheduler.h>
 
+#include <kcombobox.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -76,7 +77,6 @@ using namespace KMail;
 #include <QVector>
 #include <QBuffer>
 #include <QButtonGroup>
-#include <QComboBox>
 #include <QFile>
 #include <QLabel>
 #include <QLayout>
@@ -150,7 +150,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
   KHBox *hbox = new KHBox( page );
   QLabel *scopeLabel = new QLabel( i18n( "Scope:" ), hbox );
   scopeLabel->setEnabled( false );
-  mIndexScope = new QComboBox( hbox );
+  mIndexScope = new KComboBox( hbox );
   mIndexScope->addItem( i18n( "Only Current Folder" ) );
   mIndexScope->addItem( i18n( "Current Folder & All Subfolders" ) );
   mIndexScope->addItem( i18n( "All Folders of This Account" ) );

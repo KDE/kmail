@@ -455,7 +455,7 @@ void AntiSpamWizard::accept()
     KMKernel::self()->filterMgr()->appendFilters(
           filterList, replaceExistingFilters );
 
-  QDialog::accept();
+  KDialog::accept();
 }
 
 

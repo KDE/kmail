@@ -1,5 +1,5 @@
 /* kmail folder-list combo-box
- * A specialized QComboBox widget that refreshes its contents when
+ * A specialized KComboBox widget that refreshes its contents when
  * the folder list changes.
  */
 
@@ -8,11 +8,12 @@
 
 #include "kmfolder.h"
 
-#include <QComboBox>
 #include <QPointer>
 #include <QList>
 
-class KMFolderComboBox : public QComboBox
+#include <kcombobox.h>
+
+class KMFolderComboBox : public KComboBox
 {
   Q_OBJECT
 

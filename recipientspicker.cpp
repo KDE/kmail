@@ -36,8 +36,8 @@
 
 #include <klocale.h>
 #include <kabc/resource.h>
+#include <kcombobox.h>
 #include <kiconloader.h>
-#include <kdialog.h>
 #include <khbox.h>
 #include <kwindowsystem.h>
 #include <kmessagebox.h>
@@ -45,7 +45,6 @@
 
 #include <QBoxLayout>
 #include <QFormLayout>
-#include <QComboBox>
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
@@ -335,11 +334,12 @@ void RecipientsTreeWidget::keyPressEvent ( QKeyEvent *event ) {
 }
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
-  : QDialog( parent )
+  : KDialog( parent )
     ,mLdapSearchDialog( 0 )
 {
   setObjectName("RecipientsPicker");
   setWindowTitle( i18n("Select Recipient") );
+  setButtons( None );
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
@@ -348,7 +348,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   QFormLayout *resLayout = new QFormLayout( this );
   topLayout->addLayout( resLayout );
 
-  mCollectionCombo = new QComboBox( this );
+  mCollectionCombo = new KComboBox( this );
   connect( mCollectionCombo, SIGNAL( activated( int ) ), SLOT( updateList() ) );
   resLayout->addRow( i18n("Address book:"), mCollectionCombo );
 
@@ -774,7 +774,7 @@ void RecipientsPicker::keyPressEvent( QKeyEvent *ev )
   if ( ev->key() == Qt::Key_Escape )
     close();
 
-  QDialog::keyPressEvent( ev );
+  KDialog::keyPressEvent( ev );
 }
 
 void RecipientsPicker::readConfig()

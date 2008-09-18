@@ -37,10 +37,10 @@ class QTabWidget;
 class QRegExpValidator;
 class QPoint;
 class QGroupBox;
-class QLineEdit;
 class QSpinBox;
 class QListWidget;
 
+class KLineEdit;
 class KButtonGroup;
 class KUrlRequester;
 class KFontChooser;
@@ -120,7 +120,7 @@ protected slots:
   virtual void slotEnableOK( const QString & );
 
 private:
-  QLineEdit  *mLineEdit;
+  KLineEdit  *mLineEdit;
   KComboBox  *mComboBox;
   QButtonGroup *mButtonGroup;
 };
@@ -305,7 +305,7 @@ private:
   KComboBox   *mSendOnCheckCombo;
   KComboBox   *mSendMethodCombo;
   KComboBox   *mMessagePropertyCombo;
-  QLineEdit   *mDefaultDomainEdit;
+  KLineEdit   *mDefaultDomainEdit;
 };
 
 
@@ -477,7 +477,7 @@ private: // data
   QCheckBox    *mCryptoIconsCheck;
   KButtonGroup *mNestingPolicy;
   KButtonGroup *mDateDisplay;
-  QLineEdit    *mCustomDateFormatEdit;
+  KLineEdit    *mCustomDateFormatEdit;
   QString      mCustomDateWhatsThis;
 
 private slots:
@@ -587,7 +587,7 @@ private:
   void swapTagsInListBox( const int first, const int second );
 
 private: // data
-  QLineEdit *mTagNameLineEdit, *mTagAddLineEdit;
+  KLineEdit *mTagNameLineEdit, *mTagAddLineEdit;
   QPushButton *mTagAddButton, *mTagRemoveButton,
               *mTagUpButton, *mTagDownButton;
 
@@ -770,12 +770,12 @@ private:
 
 private:
   QCheckBox   *mCreateOwnMessageIdCheck;
-  QLineEdit   *mMessageIdSuffixEdit;
+  KLineEdit   *mMessageIdSuffixEdit;
   QRegExpValidator *mMessageIdSuffixValidator;
   ListView    *mTagList;
   QPushButton *mRemoveHeaderButton;
-  QLineEdit   *mTagNameEdit;
-  QLineEdit   *mTagValueEdit;
+  KLineEdit   *mTagNameEdit;
+  KLineEdit   *mTagValueEdit;
   QLabel      *mTagNameLabel;
   QLabel      *mTagValueLabel;
 };

@@ -32,13 +32,13 @@
 #include "headerlistquicksearch.h"
 
 #include <QApplication>
-#include <QComboBox>
 #include <QEvent>
 #include <QLabel>
 #include <QTimer>
 #include <QToolButton>
 
 #include <kaction.h>
+#include <kcombobox.h>
 #include <kiconloader.h>
 #include <k3listview.h>
 #include <klocale.h>
@@ -65,7 +65,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   label->setObjectName( "quick search status label" );
   parent->layout()->addWidget( label );
 
-  mStatusCombo = new QComboBox( parent );
+  mStatusCombo = new KComboBox( parent );
   mStatusCombo->setObjectName( "quick search status combo box" );
   parent->layout()->addWidget( mStatusCombo );
 

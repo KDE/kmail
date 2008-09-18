@@ -61,16 +61,14 @@
 #include <QLayout>
 #include <QRegExp>
 #include <QLabel>
-
-
 #include <QGridLayout>
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QList>
 #include <QVBoxLayout>
+#include <QRadioButton>
 
 #include <assert.h>
-#include <QRadioButton>
 
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
@@ -453,7 +451,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
 
   QLabel *sender_label = new QLabel( i18n("Sho&w column:" ), this );
   gl->addWidget( sender_label, row, 0 );
-  mShowSenderReceiverComboBox = new QComboBox( this );
+  mShowSenderReceiverComboBox = new KComboBox( this );
   mShowSenderReceiverComboBox->setToolTip( tip );
   sender_label->setBuddy(mShowSenderReceiverComboBox);
   gl->addWidget( mShowSenderReceiverComboBox, row, 1 );
@@ -474,7 +472,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     ++row;
     label = new QLabel( i18n("&Folder contents:"), this );
     gl->addWidget( label, row, 0 );
-    mContentsComboBox = new QComboBox( this );
+    mContentsComboBox = new KComboBox( this );
     label->setBuddy( mContentsComboBox );
     gl->addWidget( mContentsComboBox, row, 1 );
 
@@ -506,7 +504,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     ++row;
     QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
     gl->addWidget( label, row, 0 );
-    mIncidencesForComboBox = new QComboBox( this );
+    mIncidencesForComboBox = new KComboBox( this );
     label->setBuddy( mIncidencesForComboBox );
     gl->addWidget( mIncidencesForComboBox, row, 1 );
 

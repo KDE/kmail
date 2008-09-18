@@ -29,20 +29,14 @@
 #ifndef NEW_FOLDER_DIALOG_H
 #define NEW_FOLDER_DIALOG_H
 
-#include <QVariant>
-#include <QDialog>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGridLayout>
 #include <kdialog.h>
 
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
 class QLabel;
-class QLineEdit;
-class QComboBox;
+class KComboBox;
+class KLineEdit;
 class KMFolder;
 
 namespace KMail {
@@ -56,13 +50,13 @@ class NewFolderDialog : public KDialog
     ~NewFolderDialog() {}
 
     QLabel* mNameLabel;
-    QLineEdit* mNameLineEdit;
+    KLineEdit* mNameLineEdit;
     QLabel* mMailboxFormatLabel;
-    QComboBox* mFormatComboBox;
+    KComboBox* mFormatComboBox;
     QLabel* mContentsLabel;
-    QComboBox* mContentsComboBox;
+    KComboBox* mContentsComboBox;
     QLabel* mNamespacesLabel;
-    QComboBox* mNamespacesComboBox;
+    KComboBox* mNamespacesComboBox;
 
   protected:
     QVBoxLayout* mTopLevelLayout;

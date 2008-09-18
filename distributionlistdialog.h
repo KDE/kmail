@@ -24,7 +24,7 @@
 #include "recipientseditor.h"
 #include <kdialog.h>
 
-class QLineEdit;
+class KLineEdit;
 class QTreeWidget;
 
 class DistributionListDialog : public KDialog
@@ -39,7 +39,7 @@ class DistributionListDialog : public KDialog
     void slotUser1();
 
   private:
-    QLineEdit *mTitleEdit;
+    KLineEdit *mTitleEdit;
     QTreeWidget *mRecipientsList;
 };
 

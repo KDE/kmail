@@ -31,14 +31,13 @@
 
 #include "mailinglist-magic.h"
 #include <kdialog.h>
-#include <QLabel>
 
-class KMFolder;
 class QCheckBox;
-class QComboBox;
 class QPushButton;
 class QLabel;
+class KComboBox;
 class KEditListBox;
+class KMFolder;
 
 namespace KMail
 {
@@ -73,9 +72,9 @@ private:
 
   bool          mMLInfoChanged;
   QCheckBox    *mHoldsMailingList;
-  QComboBox    *mMLHandlerCombo;
+  KComboBox    *mMLHandlerCombo;
   QPushButton  *mDetectButton;
-  QComboBox    *mAddressCombo;
+  KComboBox    *mAddressCombo;
   int           mLastItem;
   KEditListBox *mEditList;
   QLabel       *mMLId;

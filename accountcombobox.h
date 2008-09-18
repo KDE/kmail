@@ -28,9 +28,10 @@
 #ifndef KMAIL_ACCOUNTCOMBOBOX_H
 #define KMAIL_ACCOUNTCOMBOBOX_H
 
-#include <QComboBox>
 //Added by qt3to4:
 #include <QList>
+
+#include <KComboBox>
 
 class KMAccount;
 
@@ -41,7 +42,7 @@ namespace KMail {
  * WARNING: this widget is hardcoded to only display disconnected imap
  * accounts, in this branch.
  */
-class AccountComboBox : public QComboBox
+class AccountComboBox : public KComboBox
 {
   Q_OBJECT
 

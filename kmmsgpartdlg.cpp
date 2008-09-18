@@ -12,6 +12,7 @@
 // other kdenetwork includes: (none)
 
 // other KDE includes:
+#include <klineedit.h>
 #include <kmimetype.h>
 #include <kiconloader.h>
 #include <kaboutdata.h>
@@ -28,7 +29,6 @@
 //Added by qt3to4:
 #include <QGridLayout>
 #include <QByteArray>
-#include <klineedit.h>
 #include <QCheckBox>
 
 // other includes:
@@ -79,7 +79,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 0: Type combobox:
   mMimeType = new KComboBox( true, frame );
-  mMimeType->setInsertPolicy( QComboBox::NoInsert );
+  mMimeType->setInsertPolicy( KComboBox::NoInsert );
   mMimeType->setValidator( new KMimeTypeValidator( mMimeType ) );
   mMimeType->addItems( QStringList()
                                << QString::fromLatin1("text/html")
@@ -116,6 +116,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 2: "Name" lineedit and label:
   mFileName = new KLineEdit( frame );
+  mFileName->setClearButtonShown( true );
   label = new QLabel( i18n("&Name:"), frame );
   label->setBuddy( mFileName );
   glay->addWidget( label, 2, 0 );
@@ -131,6 +132,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 3: "Description" lineedit and label:
   mDescription = new KLineEdit( frame );
+  mDescription->setClearButtonShown( true );
   label = new QLabel( i18n("&Description:"), frame );
   label->setBuddy( mDescription );
   glay->addWidget( label, 3, 0 );
@@ -145,7 +147,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mDescription->setWhatsThis( msg );
 
   // row 4: "Encoding" combobox and label:
-  mEncoding = new QComboBox( frame );
+  mEncoding = new KComboBox( frame );
   mEncoding->setEditable( false );
   mEncoding->addItems( mI18nizedEncodings );
   label = new QLabel( i18n("&Encoding:"), frame );

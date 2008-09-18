@@ -29,7 +29,6 @@
 #include "mailinglistpropertiesdialog.h"
 
 #include <QLabel>
-#include <QComboBox>
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QLayout>
@@ -37,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <keditlistbox.h>
 #include <kdebug.h>
@@ -105,7 +105,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
                     label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 5, 0 );
-  mMLHandlerCombo = new QComboBox( mlGroup );
+  mMLHandlerCombo = new KComboBox( mlGroup );
   mMLHandlerCombo->addItem( i18n("KMail"), MailingList::KMail );
   mMLHandlerCombo->addItem( i18n("Browser"), MailingList::Browser );
   mMLHandlerCombo->setEnabled( false );
@@ -119,7 +119,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
                     label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 6, 0 );
-  mAddressCombo = new QComboBox( mlGroup );
+  mAddressCombo = new KComboBox( mlGroup );
   label->setBuddy( mAddressCombo );
   groupLayout->addWidget( mAddressCombo, 6, 1 );
   mAddressCombo->setEnabled( false );

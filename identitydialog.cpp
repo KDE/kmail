@@ -70,15 +70,14 @@ using MailTransport::TransportManager;
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <kconfiggroup.h>
+#include <kcombobox.h>
+#include <ktabwidget.h>
 
 // Qt headers:
-#include <QTabWidget>
 #include <QLabel>
-
 #include <QLayout>
 #include <QPushButton>
 #include <QCheckBox>
-#include <QComboBox>
 
 // other headers:
 #include <gpgme++/key.h>
@@ -113,7 +112,7 @@ namespace KMail {
     QVBoxLayout * vlay = new QVBoxLayout( page );
     vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
-    QTabWidget *tabWidget = new QTabWidget( page );
+    KTabWidget *tabWidget = new KTabWidget( page );
     tabWidget->setObjectName( "config-identity-tab" );
     vlay->addWidget( tabWidget );
 
@@ -288,7 +287,7 @@ namespace KMail {
 
     // "Preferred Crypto Message Format" combobox and label:
     ++row;
-    mPreferredCryptoMessageFormat = new QComboBox( tab );
+    mPreferredCryptoMessageFormat = new KComboBox( tab );
     mPreferredCryptoMessageFormat->setEditable( false );
     QStringList l;
     l << Kleo::cryptoMessageFormatToLabel( Kleo::AutoFormat )

@@ -25,13 +25,14 @@
 
 #include <kabc/addressee.h>
 #include <kabc/stdaddressbook.h>
+#include <KDialog>
 #include <KTreeWidgetSearchLine>
 
-#include <QDialog>
 #include <QPixmap>
 #include <QTreeWidgetItem>
 
-class QComboBox;
+class KComboBox;
+
 class QKeyEvent;
 class QTreeWidget;
 class QWidget;
@@ -183,7 +184,7 @@ class RecipientsTreeWidget : public QTreeWidget
 
 using namespace KABC;
 
-class RecipientsPicker : public QDialog
+class RecipientsPicker : public KDialog
 {
   Q_OBJECT
   public:
@@ -229,7 +230,7 @@ class RecipientsPicker : public QDialog
   private:
     KABC::StdAddressBook *mAddressBook;
 
-    QComboBox *mCollectionCombo;
+    KComboBox *mCollectionCombo;
     RecipientsTreeWidget *mRecipientList;
     KTreeWidgetSearchLine *mSearchLine;
 

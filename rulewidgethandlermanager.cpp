@@ -352,10 +352,10 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <QComboBox>
 #include <QLabel>
 
 //=============================================================================
@@ -394,7 +394,7 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack );
+    KComboBox *funcCombo = new KComboBox( functionStack );
     funcCombo->setObjectName( "textRuleFuncCombo" );
     for ( int i = 0; i < TextFunctionCount; ++i ) {
       funcCombo->addItem( i18n( TextFunctions[i].displayName ) );
@@ -429,7 +429,7 @@ namespace {
     }
 
     if ( number == 2 ) {
-      QComboBox *combo =  new QComboBox( valueStack );
+      KComboBox *combo =  new KComboBox( valueStack );
       combo->setObjectName( "categoryCombo" );
       QStringList categories = KabcBridge::categories();
       combo->addItems( categories );
@@ -445,8 +445,8 @@ namespace {
 
   KMSearchRule::Function TextRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
-    const QComboBox *funcCombo =
-      functionStack->findChild<QComboBox*>( QString( "textRuleFuncCombo" ) );
+    const KComboBox *funcCombo =
+      functionStack->findChild<KComboBox*>( QString( "textRuleFuncCombo" ) );
     
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return TextFunctions[funcCombo->currentIndex()].id;
@@ -472,7 +472,7 @@ namespace {
     // here we gotta check the combobox which contains the categories
     if ( func  == KMSearchRule::FuncIsInCategory ||
          func  == KMSearchRule::FuncIsNotInCategory ) {
-      const QComboBox *combo = valueStack->findChild<QComboBox*>( "categoryCombo" );
+      const KComboBox *combo = valueStack->findChild<KComboBox*>( "categoryCombo" );
       
       if ( combo ) {
         return combo->currentText();
@@ -540,8 +540,8 @@ namespace {
   {
 
     // reset the function combo box
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "textRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "textRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
@@ -560,8 +560,8 @@ namespace {
       valueStack->setCurrentWidget( lineEdit );
     }
 
-    QComboBox *combo =
-            valueStack->findChild<QComboBox*>( "categoryCombo" );
+    KComboBox *combo =
+            valueStack->findChild<KComboBox*>( "categoryCombo" );
 
     if (combo) {
       combo->blockSignals( true );
@@ -587,8 +587,8 @@ namespace {
     for ( ; i < TextFunctionCount; ++i )
       if ( func == TextFunctions[i].id )
         break;
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "textRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "textRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
@@ -610,8 +610,8 @@ namespace {
     }
     else if ( func == KMSearchRule::FuncIsInCategory ||
               func == KMSearchRule::FuncIsNotInCategory) {
-      QComboBox *combo =
-              valueStack->findChild<QComboBox*>( "categoryCombo" );
+      KComboBox *combo =
+              valueStack->findChild<KComboBox*>( "categoryCombo" );
 
       combo->blockSignals( true );
       for ( i = 0; i < combo->count(); ++i )
@@ -712,7 +712,7 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack );
+    KComboBox *funcCombo = new KComboBox( functionStack );
     funcCombo->setObjectName( "messageRuleFuncCombo" );
     for ( int i = 0; i < MessageFunctionCount; ++i ) {
       funcCombo->addItem( i18n( MessageFunctions[i].displayName ) );
@@ -753,7 +753,7 @@ namespace {
 
   KMSearchRule::Function MessageRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
-    const QComboBox *funcCombo = functionStack->findChild<QComboBox*>( "messageRuleFuncCombo" );
+    const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "messageRuleFuncCombo" );
     
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return MessageFunctions[funcCombo->currentIndex()].id;
@@ -840,8 +840,8 @@ namespace {
                                         QStackedWidget *valueStack ) const
   {
     // reset the function combo box
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "messageRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "messageRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
@@ -878,8 +878,8 @@ namespace {
     for ( ; i < MessageFunctionCount; ++i )
       if ( func == MessageFunctions[i].id )
         break;
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "messageRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "messageRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
@@ -979,7 +979,7 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack );
+    KComboBox *funcCombo = new KComboBox( functionStack );
     funcCombo->setObjectName( "statusRuleFuncCombo" );
     for ( int i = 0; i < StatusFunctionCount; ++i ) {
       funcCombo->addItem( i18n( StatusFunctions[i].displayName ) );
@@ -999,7 +999,7 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *statusCombo = new QComboBox( valueStack );
+    KComboBox *statusCombo = new KComboBox( valueStack );
     statusCombo->setObjectName( "statusRuleValueCombo" );
     for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
       if ( KMail::StatusValues[ i ].icon != 0 )
@@ -1018,7 +1018,7 @@ namespace {
 
   KMSearchRule::Function StatusRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
-    const QComboBox *funcCombo = functionStack->findChild<QComboBox*>( "statusRuleFuncCombo" );
+    const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "statusRuleFuncCombo" );
     
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return StatusFunctions[funcCombo->currentIndex()].id;
@@ -1043,7 +1043,7 @@ namespace {
 
   int StatusRuleWidgetHandler::currentStatusValue( const QStackedWidget *valueStack ) const
   {
-    const QComboBox *statusCombo = valueStack->findChild<QComboBox*>( "statusRuleValueCombo" );
+    const KComboBox *statusCombo = valueStack->findChild<KComboBox*>( "statusRuleValueCombo" );
     
     if ( statusCombo ) {
       return statusCombo->currentIndex();
@@ -1098,8 +1098,8 @@ namespace {
                                        QStackedWidget *valueStack ) const
   {
     // reset the function combo box
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "statusRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "statusRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
@@ -1108,8 +1108,8 @@ namespace {
     }
 
     // reset the status value combo box
-    QComboBox *statusCombo =
-            valueStack->findChild<QComboBox*>( "statusRuleValueCombo" );
+    KComboBox *statusCombo =
+            valueStack->findChild<KComboBox*>( "statusRuleValueCombo" );
 
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
@@ -1135,8 +1135,8 @@ namespace {
     for ( ; funcIndex < StatusFunctionCount; ++funcIndex )
       if ( func == StatusFunctions[funcIndex].id )
         break;
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "statusRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "statusRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
@@ -1157,8 +1157,8 @@ namespace {
       if ( value == QString::fromLatin1(
                KMail::StatusValues[ valueIndex ].text ) )
         break;
-    QComboBox *statusCombo =
-            valueStack->findChild<QComboBox*>( "statusRuleValueCombo" );
+    KComboBox *statusCombo =
+            valueStack->findChild<KComboBox*>( "statusRuleValueCombo" );
 
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
@@ -1228,7 +1228,7 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack );
+    KComboBox *funcCombo = new KComboBox( functionStack );
     funcCombo->setObjectName( "numericRuleFuncCombo" );
     for ( int i = 0; i < NumericFunctionCount; ++i ) {
       funcCombo->addItem( i18n( NumericFunctions[i].displayName ) );
@@ -1260,7 +1260,7 @@ namespace {
 
   KMSearchRule::Function NumericRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
-    const QComboBox *funcCombo = functionStack->findChild<QComboBox*>( "numericRuleFuncCombo" );
+    const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "numericRuleFuncCombo" );
     
     if ( funcCombo && funcCombo->currentIndex() >= 0 ) {
       return NumericFunctions[funcCombo->currentIndex()].id;
@@ -1332,8 +1332,8 @@ namespace {
                                         QStackedWidget *valueStack ) const
   {
     // reset the function combo box
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "numericRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "numericRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
@@ -1385,8 +1385,8 @@ namespace {
     for ( ; funcIndex < NumericFunctionCount; ++funcIndex )
       if ( func == NumericFunctions[funcIndex].id )
         break;
-    QComboBox *funcCombo =
-            functionStack->findChild<QComboBox*>( "numericRuleFuncCombo" );
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "numericRuleFuncCombo" );
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );

@@ -24,9 +24,10 @@
 #include <kdialog.h>
 #include <kurl.h>
 
+class KTextEdit;
+
 class QString;
 class QStringList;
-class QTextEdit;
 template <typename T> class QList;
 
 class KMAccount;
@@ -77,7 +78,7 @@ protected:
     KMail::SieveJob *mSieveJob;
     KUrl mUrl;
 
-    QTextEdit *mEdit;
+    KTextEdit *mEdit;
 
     // Copied from AccountManager, because we have to do an async iteration
     // WARNING: When copy/pasting this code, be aware that accounts may
