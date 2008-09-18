@@ -117,7 +117,7 @@ namespace KMail {
     vlay->addWidget( tabWidget );
 
     tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("&General") );
+    tabWidget->addTab( tab, i18n("General") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
@@ -174,7 +174,7 @@ namespace KMail {
     //
     row = -1;
     mCryptographyTab = tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("Cryptograph&y") );
+    tabWidget->addTab( tab, i18n("Cryptography") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
@@ -310,7 +310,7 @@ namespace KMail {
     //
     row = -1;
     tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("&Advanced") );
+    tabWidget->addTab( tab, i18n("Advanced") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
@@ -413,7 +413,7 @@ namespace KMail {
     // Tab Widget: Templates
     //
     tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("&Templates") );
+    tabWidget->addTab( tab, i18n("Templates") );
     vlay = new QVBoxLayout( tab );
     vlay->setMargin( marginHint() );
     vlay->setSpacing( spacingHint() );
@@ -452,11 +452,11 @@ namespace KMail {
     //
     mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( tabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
-    tabWidget->addTab( mSignatureConfigurator, i18n("&Signature") );
+    tabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
     mXFaceConfigurator = new XFaceConfigurator( tabWidget );
     mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
-    tabWidget->addTab( mXFaceConfigurator, i18n("&Picture") );
+    tabWidget->addTab( mXFaceConfigurator, i18n("Picture") );
 
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     if ( geometry.hasKey( "Identity Dialog size" ) )
