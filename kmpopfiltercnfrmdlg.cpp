@@ -50,8 +50,10 @@ KMPopHeadersView::KMPopHeadersView( QWidget *parent,
   mDialog = dialog;
 
   QStringList headerNames;
-  headerNames << "" << "" << "" << i18n("Subject") << i18n("Sender")
-              << i18n("Receiver") << i18n("Date") << i18n("Size");
+  headerNames << "" << "" << ""
+              << i18nc("@title:column Column containing message subjects", "Subject")
+              << i18nc("@title:column", "Sender") << i18nc("@title:column", "Receiver")
+              << i18nc("@title:column", "Date") << i18nc("@title:column", "Size");
   QTreeWidgetItem *headerItem = new QTreeWidgetItem( headerNames );
   headerItem->setTextAlignment( 0, Qt::AlignHCenter );
   headerItem->setTextAlignment( 1, Qt::AlignHCenter );
@@ -292,7 +294,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
       : KDialog( parent )
 {
   setUpdatesEnabled( false );
-  setCaption( i18n("POP Filter") );
+  setCaption( i18nc("@title:window", "POP Filter") );
   setButtons( Ok | Help | Cancel );
   setHelp( "popfilters" );
   unsigned int rulesetCount = 0;
@@ -307,27 +309,27 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
   mainLayout->setMargin( 0 );
 
   QLabel *infoLabel = new QLabel(
-            i18n( "Messages to filter found on POP Account: <b>%1</b><p>"
-                  "The messages shown exceed the maximum size limit you defined "
-                  "for this account.<br />You can select what you want to do "
-                  "with them by checking the appropriate button.</p>",
+            i18nc( "@info", "<title>Messages to filter found on POP Account: <emphasis>%1</emphasis></title>"
+                  "<para>The messages shown exceed the maximum size limit you defined "
+                  "for this account.</para><para>You can select what you want to do "
+                  "with them by checking the appropriate button.</para>",
                   account ), mainWidget );
   mainLayout->addWidget( infoLabel );
 
-  QGroupBox *upperBox = new QGroupBox( i18n("Messages Exceeding Size"), mainWidget );
+  QGroupBox *upperBox = new QGroupBox(i18nc( "@info", "Messages Exceeding Size"), mainWidget );
   QVBoxLayout *upperBoxLayout = new QVBoxLayout( upperBox );
   upperBox->hide();
   KMPopHeadersView *upperHeadersView = new KMPopHeadersView( upperBox, this );
   upperBoxLayout->addWidget( upperHeadersView );
   mainLayout->addWidget( upperBox );
 
-  QGroupBox *lowerBox = new QGroupBox( i18n("Ruleset Filtered Messages: none"),
+  QGroupBox *lowerBox = new QGroupBox( i18nc("@title:group","Ruleset Filtered Messages: none"),
                                        mainWidget );
   QVBoxLayout *lowerBoxLayout = new QVBoxLayout( lowerBox );
   QString checkBoxText(
       (showLaterMsgs) ?
-      i18n("Show messages matched by a ruleset and tagged 'Download' or 'Delete'") :
-      i18n("Show messages matched by a filter ruleset") );
+      i18nc("@option:check", "Show messages matched by a ruleset and tagged 'Download' or 'Delete'") :
+      i18nc("@option:check", "Show messages matched by a filter ruleset") );
   QCheckBox* cb = new QCheckBox( checkBoxText, lowerBox );
   cb->setEnabled( false );
   mFilteredHeaders = new KMPopHeadersView( lowerBox, this );
@@ -383,7 +385,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
   mFilteredHeaders->slotSectionClicked( 7 );
 
   if ( rulesetCount )
-    lowerBox->setTitle( i18n("Ruleset Filtered Messages: %1", rulesetCount ) );
+    lowerBox->setTitle( i18nc("@title:group", "Ruleset Filtered Messages: %1", rulesetCount ) );
 
   // connect signals and slots
   connect( cb, SIGNAL( toggled(bool) ),
@@ -402,21 +404,21 @@ void KMPopFilterCnfrmDlg::setupLVI( KMPopHeadersViewItem *lvi, KMMessage *msg )
   // set the subject
   QString tmp = msg->subject();
   if( tmp.isEmpty() )
-    tmp = i18n("No Subject");
+    tmp = i18nc("@item:intext", "No Subject");
   lvi->setText( 3, tmp );
   lvi->setToolTip( 3, tmp );
 
   // set the sender
   tmp = msg->fromStrip();
   if( tmp.isEmpty() )
-    tmp = i18n("Unknown");
+    tmp = i18nc("@item:intext Sender of message is unknown", "Unknown");
   lvi->setText( 4, tmp );
   lvi->setToolTip( 4, tmp );
 
   // set the receiver
   tmp = msg->toStrip();
   if( tmp.isEmpty() )
-    tmp = i18n("Unknown");
+    tmp = i18nc("@item:intext Receiver of message is unknown", "Unknown");
   lvi->setText( 5, tmp );
   lvi->setToolTip( 5, tmp );
 

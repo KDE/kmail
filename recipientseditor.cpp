@@ -94,16 +94,16 @@ QString Recipient::typeLabel( Recipient::Type type )
 {
   switch( type ) {
     case To:
-      return i18n("To");
+      return i18nc("@label:listbox Recipient of an email message.", "To");
     case Cc:
-      return i18n("CC");
+      return i18nc("@label:listbox Carbon Copy recipient of an email message.", "CC");
     case Bcc:
-      return i18n("BCC");
+      return i18nc("@label:listbox Blind carbon copy recipient of an email message.", "BCC");
     case Undefined:
       break;
   }
 
-  return i18n("<Undefined RecipientType>");
+  return i18nc("@label:listbox", "<placeholder>Undefined RecipientType</placeholder>");
 }
 
 QStringList Recipient::allTypeLabels()
@@ -156,7 +156,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   mCombo = new RecipientComboBox( this );
   mCombo->addItems( recipientTypes );
   topLayout->addWidget( mCombo );
-  mCombo->setToolTip( i18n("Select type of recipient") );
+  mCombo->setToolTip( i18nc("@label:listbox","Select type of recipient") );
 
   mEdit = new RecipientLineEdit( this );
   mEdit->setClearButtonShown( true );
@@ -736,18 +736,20 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
 
   topLayout->addStretch( 1 );
 
-  mDistributionListButton = new QPushButton( i18n("Save List..."), this );
+  mDistributionListButton = new QPushButton(
+    i18nc("@action:button","Save List..."), this );
   topLayout->addWidget( mDistributionListButton );
   mDistributionListButton->hide();
   connect( mDistributionListButton, SIGNAL( clicked() ),
     SIGNAL( saveDistributionList() ) );
   mDistributionListButton->setToolTip(
-    i18n("Save recipients as distribution list") );
+    i18nc( "@info:tooltip", "Save recipients as distribution list") );
 
-  mSelectButton = new QPushButton( i18n("Se&lect..."), this );
+  mSelectButton = new QPushButton(
+    i18nc( "@action:button Open recipient selection dialog.", "Se&lect..."), this );
   topLayout->addWidget( mSelectButton );
   connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
-  mSelectButton->setToolTip( i18n("Select recipients from address book") );
+  mSelectButton->setToolTip( i18nc("@info:tooltip","Select recipients from address book") );
   updateTotalToolTip();
 }
 
@@ -776,7 +778,8 @@ void SideWidget::setFocus()
 void SideWidget::setTotal( int recipients, int lines )
 {
   QString labelText;
-  if ( recipients == 0 ) labelText = i18n("No recipients");
+  if ( recipients == 0 ) labelText = i18nc("@info:status Number of recipients selected"
+    , "No recipients");
   else labelText = i18np("1 recipient","%1 recipients", recipients );
   mTotalLabel->setText( labelText );
 
@@ -816,9 +819,9 @@ void SideWidget::updateTotalToolTip()
     }
   }
 
-  text += i18n("<b>To:</b><br/>") + to;
-  if ( !cc.isEmpty() ) text += i18n("<b>CC:</b><br/>") + cc;
-  if ( !bcc.isEmpty() ) text += i18n("<b>BCC:</b><br/>") + bcc;
+  text += i18nc("@info:tooltip", "<interface>To:</interface><nl/>") + to;
+  if ( !cc.isEmpty() ) text += i18nc("@info:tooltip", "<interface>CC:</interface><nl/>") + cc;
+  if ( !bcc.isEmpty() ) text += i18nc("@info:tooltip", "<interface>BCC:</interface><nl/>") + bcc;
 
   text.append( "</qt>" );
   mTotalLabel->setToolTip( text );
@@ -912,7 +915,7 @@ void RecipientsEditor::setRecipientString( const QString &str,
   for( it = r.begin(); it != r.end(); ++it ) {
     if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
-        i18n("Truncating recipients list to %1 of %2 entries.",
+        i18nc("@info:status", "Truncating recipients list to %1 of %2 entries.",
           GlobalSettings::self()->maximumRecipients(),
           r.count() ) );
       break;
