@@ -147,7 +147,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   // value in the QSpinBox is in KB while it's in Byte in the FilterLog
   mLogMemLimitSpin->setValue( FilterLog::instance()->getMaxLogSize() / 1024 );
   mLogMemLimitSpin->setSuffix( " KB" );
-  mLogMemLimitSpin->setSpecialValueText( i18n("unlimited") );
+  mLogMemLimitSpin->setSpecialValueText(
+    i18nc("@label:spinbox Set the size of the logfile to unlimited.", "unlimited") );
   connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
            this, SLOT(slotChangeLogMemLimit(int)) );
   mLogMemLimitSpin->setWhatsThis(

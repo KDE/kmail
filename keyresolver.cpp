@@ -541,17 +541,17 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
     const QString msg =
       key.protocol() == GpgME::OpenPGP
       ? ( mine ? sign
-	  ? ki18np("<p>Your OpenPGP signing key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+	  ? ki18np("<p>Your OpenPGP signing key</p><p align=\"center\"><b>%2</b> (KeyID 0x%3)</p>"
 		   "<p>expires in less than a day.</p>",
-		   "<p>Your OpenPGP signing key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+		   "<p>Your OpenPGP signing key</p><p align=\"center\"><b>%2</b> (KeyID 0x%3)</p>"
 		   "<p>expires in less than %1 days.</p>")
-	  : ki18np("<p>Your OpenPGP encryption key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+	  : ki18np("<p>Your OpenPGP encryption key</p><p align=\"center\"><b>%2</b> (KeyID 0x%3)</p>"
 		   "<p>expires in less than a day.</p>",
-		   "<p>Your OpenPGP encryption key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+		   "<p>Your OpenPGP encryption key</p><p align=\"center\"><b>%2</b> (KeyID 0x%3)</p>"
 		   "<p>expires in less than %1 days.</p>")
-	  : ki18np("<p>The OpenPGP key for</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+	  : ki18np("<p>The OpenPGP key for</p><p align=\"center\"><b>%2</b> (KeyID 0x%3)</p>"
 		   "<p>expires in less than a day.</p>",
-		   "<p>The OpenPGP key for</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+		   "<p>The OpenPGP key for</p><p align=\"center\"><b>%2</b> (KeyID 0x%3)</p>"
 		   "<p>expires in less than %1 days.</p>") )
 		  .subs( daysTillExpiry )
 		  .subs( QString::fromUtf8( key.userID(0).id() ) )
@@ -560,42 +560,42 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
       : ( ca
 	  ? ( key.isRoot()
 	      ? ( mine ? sign
-		  ? ki18np("<p>The root certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		  ? ki18np("<p>The root certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than a day.</p>",
-			   "<p>The root certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+			   "<p>The root certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than %1 days.</p>")
-		  : ki18np("<p>The root certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		  : ki18np("<p>The root certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than a day.</p>",
-			   "<p>The root certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+			   "<p>The root certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than %1 days.</p>")
-		  : ki18np("<p>The root certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		  : ki18np("<p>The root certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for S/MIME certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than a day.</p>",
-			   "<p>The root certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+			   "<p>The root certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for S/MIME certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than %1 days.</p>") )
 	      : ( mine ? sign
-		  ? ki18np("<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		  ? ki18np("<p>The intermediate CA certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than a day.</p>",
-			   "<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+			   "<p>The intermediate CA certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than %1 days.</p>")
-		  : ki18np("<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		  : ki18np("<p>The intermediate CA certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than a day.</p>",
-			   "<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+			   "<p>The intermediate CA certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than %1 days.</p>")
-		  : ki18np("<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		  : ki18np("<p>The intermediate CA certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for S/MIME certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than a day.</p>",
-			   "<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
-			   "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+			   "<p>The intermediate CA certificate</p><p align=\"center\"><b>%4</b></p>"
+			   "<p>for S/MIME certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 			   "<p>expires in less than %1 days.</p>") ) )
 			   .subs( daysTillExpiry )
 			   .subs( Kleo::DN( orig.userID(0).id() ).prettyDN() )
@@ -603,17 +603,17 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 			   .subs( Kleo::DN( key.userID(0).id() ).prettyDN() )
 			   .toString()
 	  : ( mine ? sign
-	      ? ki18np("<p>Your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+	      ? ki18np("<p>Your S/MIME signing certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 		       "<p>expires in less than a day.</p>",
-		       "<p>Your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		       "<p>Your S/MIME signing certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 		       "<p>expires in less than %1 days.</p>")
-	      : ki18np("<p>Your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+	      : ki18np("<p>Your S/MIME encryption certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 		       "<p>expires in less than a day.</p>",
-		       "<p>Your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+		       "<p>Your S/MIME encryption certificate</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 		       "<p>expires in less than %1 days.</p>")
-	      : ki18np("<p>The S/MIME certificate for</p><p align=center><b>%2</b> (serial number %3)</p>"
+	      : ki18np("<p>The S/MIME certificate for</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 		       "<p>expires in less than a day.</p>",
-		       "<p>The S/MIME certificate for</p><p align=center><b>%2</b> (serial number %3)</p>"
+		       "<p>The S/MIME certificate for</p><p align=\"center\"><b>%2</b> (serial number %3)</p>"
 		       "<p>expires in less than %1 days.</p>" ) )
 		       .subs( daysTillExpiry )
 		       .subs( Kleo::DN( key.userID(0).id() ).prettyDN() )

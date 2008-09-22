@@ -148,7 +148,8 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
   topLayout->addWidget( mIndexButton );
 
   KHBox *hbox = new KHBox( page );
-  QLabel *scopeLabel = new QLabel( i18n( "Scope:" ), hbox );
+  QLabel *scopeLabel = new QLabel(
+    i18nc( "@label:listbox Scope used when rebuilding index.","Scope:" ), hbox );
   scopeLabel->setEnabled( false );
   mIndexScope = new KComboBox( hbox );
   mIndexScope->addItem( i18n( "Only Current Folder" ) );
@@ -1595,7 +1596,7 @@ bool KMFolderCachedImap::deleteMessages()
 #if MAIL_LOSS_DEBUGGING
     if ( KMessageBox::warningYesNo(
              0, i18n( "<qt><p>Mails on the server in folder <b>%1</b> were deleted. "
-                 "Do you want to delete them locally?<br>UIDs: %2</p></qt>",
+                 "Do you want to delete them locally?</p><p>UIDs: %2</p></qt>",
              folder()->prettyUrl(), uids.join(",") ) ) == KMessageBox::Yes )
 #endif
       removeMessages( msgsForDeletion );

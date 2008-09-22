@@ -113,7 +113,9 @@ void SnippetWidget::slotAdd()
   /* still no group, let's make a default one */
   if (!group ) {
     if ( _list.isEmpty() ) {
-      group = new SnippetGroup(this, i18n("General"), SnippetGroup::getMaxId() );
+      group = new SnippetGroup(this
+        , i18nc( "@label:listbox General group for often used snippets in mail.", "General")
+        , SnippetGroup::getMaxId() );
       _list.append( group );
     } else {
       group = dynamic_cast<SnippetGroup*>( _list.first() );

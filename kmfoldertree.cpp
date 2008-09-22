@@ -1697,7 +1697,9 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       removeUnreadColumn();
       reload();
     } else {
-      addUnreadColumn( i18n("Unread"), 70 );
+      addUnreadColumn(
+        i18nc( "@title:column Collumn showing the number of unread email messages."
+        , "Unread"), 70 );
       reload();
     }
     // toggle KMenu
@@ -1710,7 +1712,9 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       removeTotalColumn();
       reload();
     } else {
-      addTotalColumn( i18n("Total"), 70 );
+      addTotalColumn(
+        i18nc("@title:column Collumn showing the total number of messages"
+        , "Total"), 70 );
       reload(openFolders);
     }
     // toggle KMenu
