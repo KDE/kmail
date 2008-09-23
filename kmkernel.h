@@ -198,7 +198,8 @@ public Q_SLOTS:
                                  const QByteArray & attachParamAttr,
                                  const QString & attachParamValue,
                                  const QByteArray & attachContDisp,
-                                 const QByteArray & attachCharset );
+                                 const QByteArray & attachCharset,
+                                 unsigned int identity );
 
   Q_SCRIPTABLE QDBusObjectPath openComposer( const QString & to,
                                              const QString & cc,
