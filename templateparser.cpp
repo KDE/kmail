@@ -244,7 +244,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( str );
         } else if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Cannot insert content from file %1: %2",
+                              i18nc( "@info:status", "Cannot insert content from file %1: %2",
                                     path, file.errorString() ) );
         }
 
@@ -277,7 +277,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( QString::fromLocal8Bit( content, content.size() ) );
         } else if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Cannot insert content from file %1: %2",
+                              i18nc( "@info:status", "Cannot insert content from file %1: %2",
                                     path, file.errorString() ));
         }
 

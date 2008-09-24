@@ -777,7 +777,8 @@ void AccountDialog::setupSettings()
   }
   if( acctFolder == 0 )
   {
-    folderCombo->addItem( i18n("<none>") );
+    folderCombo->addItem( i18nc("Placeholder for the case that there is no folder."
+      , "<none>") );
   }
   else
   {
@@ -1510,7 +1511,7 @@ const QString AccountDialog::namespaceListToString( const QStringList& list )
   QStringList myList = list;
   for ( QStringList::Iterator it = myList.begin(); it != myList.end(); ++it ) {
     if ( (*it).isEmpty() ) {
-      (*it) = '<' + i18n("Empty") + '>';
+      (*it) = '<' + i18nc("Empty namespace string.", "Empty") + '>';
     }
   }
   return myList.join(",");
@@ -1624,9 +1625,9 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
 
   QString ns;
   if ( mType == ImapAccountBase::PersonalNS ) {
-    ns = i18n("Personal");
+    ns = i18nc("Personal namespace", "Personal");
   } else if ( mType == ImapAccountBase::OtherUsersNS ) {
-    ns = i18n("Other Users");
+    ns = i18nc("Namespace accessible for others.", "Other Users");
   } else {
     ns = i18n("Shared");
   }

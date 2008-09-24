@@ -163,14 +163,14 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     topLayout->addWidget( tabWidget );
 
     page1 = new QWidget( tabWidget );
-    tabWidget->addTab( page1, i18n("General") );
+    tabWidget->addTab( page1, i18nc("General mail filter settings.", "General") );
     hbl = new QHBoxLayout( page1 );
     hbl->setObjectName( "kmfd_hbl" );
     hbl->setSpacing( spacingHint() );
     hbl->setMargin( 0 );
 
     page2 = new QWidget( tabWidget );
-    tabWidget->addTab( page2, i18n("Advanced") );
+    tabWidget->addTab( page2, i18nc("Advanced mail filter settings.","Advanced") );
     vbl2 = new QVBoxLayout( page2 );
     vbl2->setObjectName( "kmfd_vbl2" );
     vbl2->setSpacing( spacingHint() );
@@ -625,8 +625,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   mBtnDown->setIcon( KIcon( "go-down" ) );
   mBtnDown->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
-  mBtnUp->setToolTip( i18n("Up") );
-  mBtnDown->setToolTip( i18n("Down") );
+  mBtnUp->setToolTip( i18nc("Move selected filter up.", "Up") );
+  mBtnDown->setToolTip( i18nc("Move selected filter down.", "Down") );
   mBtnUp->setWhatsThis( i18n(_wt_filterlist_up) );
   mBtnDown->setWhatsThis( i18n(_wt_filterlist_down) );
 
