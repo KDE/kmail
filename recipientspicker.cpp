@@ -180,16 +180,16 @@ QString RecipientItem::createTooltip( KABC::DistributionList *distributionList )
 {
   QString txt = "<qt>";
 
-  txt += "<b>" + i18n("Distribution List %1" ).arg ( distributionList.name() ) + "</b>";
+  txt += "<b>" + i18n("Distribution List %1" ).arg ( distributionList->name() ) + "</b>";
   txt += "<ul>";
   KABC::DistributionList::Entry::List entries = distributionList->entries();
   KABC::DistributionList::Entry::List::ConstIterator it;
   for( it = entries.begin(); it != entries.end(); ++it ) {
     txt += "<li>";
-    txt += (*it).addressee().realName() + ' ';
+    txt += (*it).addressee.realName() + ' ';
     txt += "<em>";
-    if ( (*it).email().isEmpty() ) txt += (*it).addressee().preferredEmail();
-    else txt += (*it).email();
+    if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
+    else txt += (*it).email;
     txt += "</em>";
     txt += "</li>";
   }
