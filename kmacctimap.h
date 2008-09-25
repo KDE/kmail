@@ -55,7 +55,7 @@ public:
   ConnectionState makeConnection();
 
   /**
-   * Kill all jobs related the the specified folder/msg
+   * Kill all jobs related to the specified folder/msg
    */
   virtual void ignoreJobsForMessage( KMMessage * msg );
   virtual void ignoreJobsForFolder( KMFolder * folder );

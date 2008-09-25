@@ -502,7 +502,7 @@ MessageStatus& KMMsgInfo::status() const
         if ( mStatus.isOfUnknownStatus() ) {
             // We are opening an old index for the first time, get the legacy
             // status and merge it in.
-            // This is kept to provide an upgrade path from the the old single
+            // This is kept to provide an upgrade path from the old single
             // status to the new multiple status scheme.
             KMLegacyMsgStatus legacyMsgStatus = (KMLegacyMsgStatus)getLongPart(MsgLegacyStatusPart);
             mStatus.setRead();

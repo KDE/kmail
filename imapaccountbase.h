@@ -222,7 +222,7 @@ namespace KMail {
     void getACL( KMFolder* folder, const QString& imapPath );
 
     /**
-     * Retrieve the the quota inforamiton on the folder
+     * Retrieve the quota information on the folder
      * identified by @p imapPath.
      * Emits receivedQuotaInfo signal on success/error.
      */

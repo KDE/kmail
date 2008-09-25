@@ -630,7 +630,7 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
     else
       (*mapSave).remove(var);
 
-    strReturn = te->toPlainText();    //copy the entered values back the the given map
+    strReturn = te->toPlainText();    //copy the entered values back to the given map
   }
 
   //do some cleanup

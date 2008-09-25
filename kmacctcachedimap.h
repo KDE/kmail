@@ -75,7 +75,7 @@ public:
   virtual void processNewMail( bool interactive );
 
   /**
-   * Kill all jobs related the the specified folder
+   * Kill all jobs related to the specified folder
    */
   void killJobsForItem(KMFolderTreeItem * fti);
 

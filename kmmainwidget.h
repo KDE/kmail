@@ -410,7 +410,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateFolderMenu();
     /**
       Enable or disable the "mark all as read" action. Needs to happen more
-      often the the other updates and is therefor in its own method.
+      often than the other updates and is therefor in its own method.
     */
     void updateMarkAsReadAction();
 
