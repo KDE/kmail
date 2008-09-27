@@ -209,7 +209,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 {
   if (!msg) return;
   QList<ImapJob*>::const_iterator it;
-  for ( it = mImapJobList.begin(); it != mImapJobList.constEnd() && (*it); ++it )
+  for ( it = mImapJobList.contBegin(); it != mImapJobList.constEnd() && (*it); ++it )
   {
     ImapJob *job = (*it);
     if ( job->msgList().first() == msg )
