@@ -117,7 +117,7 @@ namespace KMail {
     vlay->addWidget( tabWidget );
 
     tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("General") );
+    tabWidget->addTab( tab, i18nc("@title:tab General identity settings.","General") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
@@ -310,7 +310,7 @@ namespace KMail {
     //
     row = -1;
     tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("Advanced") );
+    tabWidget->addTab( tab, i18nc("@title:tab Advanced identity settings.","Advanced") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );

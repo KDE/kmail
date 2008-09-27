@@ -62,7 +62,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
 
   QLabel *labelDays = new QLabel;
   labelDays->setObjectName( "labelDays" );
-  labelDays->setText( i18n("days") );
+  labelDays->setText( i18nc( "Unit label of the expiry time.", "days" ) );
   daysBox->addWidget( labelDays, 0, 2, Qt::AlignLeft );
 
   expireUnreadMailCB = new QCheckBox;
@@ -80,7 +80,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
 
   QLabel *labelDays2 = new QLabel;
   labelDays2->setObjectName( "labelDays2" );
-  labelDays2->setText( i18n("days") );
+  labelDays2->setText( i18nc( "Unit label of the expiry time.", "days" ) );
   daysBox->addWidget( labelDays2, 1, 2, Qt::AlignLeft );
   daysBox->setColumnStretch( 3, 1 );
   globalVBox->addLayout( daysBox );

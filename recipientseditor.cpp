@@ -778,9 +778,10 @@ void SideWidget::setFocus()
 void SideWidget::setTotal( int recipients, int lines )
 {
   QString labelText;
-  if ( recipients == 0 ) labelText = i18nc("@info:status Number of recipients selected"
+  if ( recipients == 0 ) labelText = i18nc("@info:status No recipients selected"
     , "No recipients");
-  else labelText = i18np("1 recipient","%1 recipients", recipients );
+  else labelText = i18ncp("@info:status Number of recipients selected"
+    , "1 recipient","%1 recipients", recipients );
   mTotalLabel->setText( labelText );
 
   if ( lines > 3 ) mTotalLabel->show();

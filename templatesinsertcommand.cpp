@@ -160,7 +160,7 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *nam
   mapper->setMapping( action, COFromLName );
   menu->addAction( action );
 
-  action = new KAction( i18n( "Subject" ), menu );
+  action = new KAction( i18nc( "Template value for subject of the message", "Subject" ), menu );
   connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
   mapper->setMapping( action, COFullSubject );
   menu->addAction( action );
@@ -284,7 +284,7 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *nam
   mapper->setMapping( action, CFromLName );
   menu->addAction( action );
 
-  action = new KAction( i18n( "Subject" ), menu );
+  action = new KAction( i18nc( "Template subject command.", "Subject" ), menu );
   connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
   mapper->setMapping( action, CFullSubject );
   menu->addAction( action );
@@ -329,7 +329,7 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *nam
   menu->addAction( action );
 
   // ******************************************************
-  menu = new KActionMenu( i18n( "Miscellaneous" ), mMenu );
+  menu = new KActionMenu( i18nc( "Miscellaneous template commands menu", "Miscellaneous" ), mMenu );
   mMenu->addAction( menu );
 
   action = new KAction( i18n( "Set Cursor Position" ), menu );

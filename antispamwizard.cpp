@@ -571,16 +571,24 @@ void AntiSpamWizard::slotBuildSummary()
     text = ""; // TODO add summary for the virus part
   }
   else { // AntiSpam mode
-    if ( mSpamRulesPage->markAsReadSelected() )
-      text = i18n( "<p>Messages classified as spam are marked as read." );
-    else
-      text = i18n( "<p>Messages classified as spam are not marked as read." );
-
-    if ( mSpamRulesPage->moveSpamSelected() )
-      text += i18n( "<br />Spam messages are moved into the folder named <i>" )
-            + mSpamRulesPage->selectedSpamFolderName() + "</i>.</p>";
-    else
-      text += i18n( "<br />Spam messages are not moved into a certain folder.</p>" );
+    if ( mSpamRulesPage->markAsReadSelected() ) {
+      if ( mSpamRulesPage->moveSpamSelected() )
+        text = i18n( "<p>Messages classified as spam are marked as read."
+                     "<br />Spam messages are moved into the folder named <i>%1</i>.</p>"
+                     , mSpamRulesPage->selectedSpamFolderName() );
+      else
+        text = i18n( "<p>Messages classified as spam are marked as read."
+                     "<br />Spam messages are not moved into a certain folder.</p>" );
+    }
+    else {
+      if ( mSpamRulesPage->moveSpamSelected() )
+        text = i18n( "<p>Messages classified as spam are not marked as read."
+                     "<br />Spam messages are moved into the folder named <i>%1</i>.</p>"
+                     , mSpamRulesPage->selectedSpamFolderName() );
+      else
+        text = i18n( "<p>Messages classified as spam are not marked as read."
+                     "<br />Spam messages are not moved into a certain folder.</p>" );
+    }
 
     for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
           it != mToolList.end(); ++it ) {
@@ -604,8 +612,8 @@ void AntiSpamWizard::slotBuildSummary()
       if ( atLeastOneUnsurePattern ) {
         sortFilterOnExistance( i18n( "Semi spam (unsure) handling" ),
                                newFilters, replaceFilters );
-        text += i18n( "<p>The folder for messages classified as unsure (probably spam) is <i>" )
-              + mSpamRulesPage->selectedUnsureFolderName() + "</i>.</p>";
+        text += i18n( "<p>The folder for messages classified as unsure (probably spam) is <i>%1</i>.</p>"
+          , mSpamRulesPage->selectedUnsureFolderName() );
       }
     }
 
@@ -617,11 +625,11 @@ void AntiSpamWizard::slotBuildSummary()
 
     // Show the filters in the summary
     if ( !newFilters.isEmpty() )
-      text += i18n( "<p>The wizard will create the following filters:<ul>" )
-            + newFilters + "</ul></p>";
+      text += i18n( "<p>The wizard will create the following filters:<ul>%1</ul></p>"
+                , newFilters );
     if ( !replaceFilters.isEmpty() )
-      text += i18n( "<p>The wizard will replace the following filters:<ul>" )
-            + replaceFilters + "</ul></p>";
+      text += i18n( "<p>The wizard will replace the following filters:<ul>%1</ul></p>"
+                , replaceFilters );
   }
 
   mSummaryPage->setSummaryText( text );

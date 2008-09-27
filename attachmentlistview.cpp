@@ -44,9 +44,13 @@ AttachmentListView::AttachmentListView( KMail::Composer * composer,
   setIndentation( 0 );
   setAllColumnsShowFocus( true );
   QStringList headerNames;
-  headerNames << i18n("Name") << i18n("Size") << i18n("Encoding") 
-      << i18n("Type") << i18n("Compress") << i18n("Encrypt") 
-      << i18n("Sign");
+  headerNames << i18nc("@title collumn attachment name.", "Name")
+              << i18nc("@title collumn attachment size.", "Size")
+              << i18nc("@title collumn attachment encoding.", "Encoding")
+              << i18nc("@title collumn attachment type.", "Type")
+              << i18nc("@title collumn attachment compression checkbox.", "Compress")
+              << i18nc("@title collumn attachment encryption checkbox.", "Encrypt")
+              << i18nc("@title collumn attachment signed checkbox.", "Sign");
   setHeaderLabels( headerNames ); 
 
   header()->setResizeMode( QHeaderView::Interactive );

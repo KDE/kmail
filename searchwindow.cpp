@@ -124,7 +124,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   setCaption( i18n("Find Messages") );
   setButtons( User1 | User2 | Close );
   setDefaultButton( User1 );
-  setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "edit-find" ) );
+  setButtonGuiItem( User1, KGuiItem( i18nc("@action:button Search for messags", "&Search"), "edit-find" ) );
   setButtonGuiItem( User2, KStandardGuiItem::stop() );
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(
                                IconSize( KIconLoader::Desktop ),
@@ -224,8 +224,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mLbxMatches->setAllColumnsShowFocus( true );
   mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
   QStringList headerNames;
-  headerNames << i18n("Subject") << i18n("Sender/Receiver") << i18n("Date")
-              << i18n("Folder") << "";
+  headerNames << i18nc("@title:column Subject of the found message.", "Subject")
+              << i18nc("@title:column Sender of the found message.", "Sender/Receiver")
+              << i18nc("@title:column date of receival ofthe found message.", "Date")
+              << i18nc("@title:column Folder in which the message is found.", "Folder") << "";
   mLbxMatches->setHeaderLabels( headerNames );
   mLbxMatches->header()->setStretchLastSection( false );
   mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
@@ -275,7 +277,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertPermanentItem(i18n("AMiddleLengthText..."), 0);
-  mStatusBar->changeItem(i18n("Ready."), 0);
+  mStatusBar->changeItem(i18nc("@info:status finished searching.", "Ready."), 0);
   mStatusBar->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
   mStatusBar->insertPermanentItem(QString(), 1, 1);
   mStatusBar->setItemAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
@@ -323,7 +325,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   actionCollection()->addAction("search_message_forward", mForwardActionMenu );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
            SLOT(slotForwardMsg()) );
-  mForwardAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
+  mForwardAction  = new KAction(KIcon("mail-forward")
+    , i18nc("@action:inmenu Forward message inline.", "&Inline..."), this);
   actionCollection()->addAction("search_message_forward_inline", mForwardAction );
   connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
   mForwardActionMenu->addAction( mForwardAction );
@@ -402,7 +405,7 @@ void SearchWindow::updStatus(void)
 
     if (search && !search->running()) {
         if(!mStopped) {
-            genMsg = i18n("Done");
+            genMsg = i18nc("Search finished.", "Done");
             detailMsg = i18np("%1 match (%2)", "%1 matches (%2)", numMatches,
                          i18np("%1 message processed",
                                   "%1 messages processed", count));

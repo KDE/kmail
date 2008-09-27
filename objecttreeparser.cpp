@@ -568,7 +568,7 @@ namespace KMail {
         txt = "<hr><b><h2>";
         txt.append( i18n( "The crypto engine returned no cleartext data." ) );
         txt.append( "</h2></b>" );
-        txt.append( "<br>&nbsp;<br>" );
+        txt.append( "<br/>&nbsp;<br/>" );
         txt.append( i18n( "Status: " ) );
         if ( !messagePart.status.isEmpty() ) {
           txt.append( "<i>" );
@@ -576,7 +576,7 @@ namespace KMail {
           txt.append( "</i>" );
         }
         else
-          txt.append( i18n("(unknown)") );
+          txt.append( i18nc("Status of message unknown.","(unknown)") );
         if ( mReader )
           htmlWriter()->queue(txt);
       }
@@ -1518,7 +1518,7 @@ namespace KMail {
       htmlWriter()->queue( "<b>" + i18n( "Certificate import details:" ) + "</b><br>" );
       for ( std::vector<GpgME::Import>::const_iterator it = imports.begin() ; it != imports.end() ; ++it ) {
         if ( (*it).error() )
-          htmlWriter()->queue( i18n( "Failed: %1 (%2)", (*it).fingerprint(),
+          htmlWriter()->queue( i18nc( "Certificate import failed.", "Failed: %1 (%2)", (*it).fingerprint(),
                                  QString::fromLocal8Bit( (*it).error().asString() ) ) );
         else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
           if ( (*it).status() & GpgME::Import::ContainedSecretKey )
@@ -2264,7 +2264,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         if( !blockAddrs.contains( msgFrom, Qt::CaseInsensitive ) ) {
                             greenCaseWarning =
                                 "<u>" +
-                                i18n("Warning:") +
+                                i18nc("Start of warning message."
+                                  ,"Warning:") +
                                 "</u> " +
                                 i18n("Sender's mail address is not stored "
                                      "in the %1 used for signing.", certificate) +
@@ -2289,7 +2290,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     } else {
                         greenCaseWarning =
                             "<u>" +
-                            i18n("Warning:") +
+                            i18nc("Start of warning message.","Warning:") +
                             "</u> " +
                             i18n("No mail address is stored in the %1 used for signing, "
                                  "so we cannot compare it to the sender's address %2.",

@@ -1749,7 +1749,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // "General Options" group:
-  group = new QGroupBox( i18n( "General" ), this );
+  group = new QGroupBox( i18nc( "General options for the message list.", "General" ), this );
   //  group->layout()->setSpacing( KDialog::spacingHint() );
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );
@@ -1829,7 +1829,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
       connect( mCustomDateFormatEdit, SIGNAL(textChanged(const QString&)),
                this, SLOT(slotEmitChanged(void)) );
 
-      QLabel *formatHelp = new QLabel( i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a>"), hbox );
+      QLabel *formatHelp = new QLabel(
+        i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox );
       connect( formatHelp, SIGNAL(linkActivated(const QString &)),
                SLOT(slotLinkClicked(const QString &)) );
 
@@ -1849,7 +1850,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
              "<li>yyyy - the year as a four digit number (0000-9999)</li>"
              "</ul>"
              "<p><strong>These expressions may be used for the time:"
-             "</string></p> "
+             "</strong></p> "
              "<ul>"
              "<li>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display)</li>"
              "<li>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display)</li>"
@@ -2370,7 +2371,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mTagNameLineEdit = new KLineEdit( mTagSettingGroupBox );
   settings->addWidget( mTagNameLineEdit, 1, 1 );
 
-  QLabel *namelabel = new QLabel( i18n("Name:") , mTagSettingGroupBox );
+  QLabel *namelabel = new QLabel( i18nc("@label:listbox Name of the tag", "Name:")
+    , mTagSettingGroupBox );
   namelabel->setBuddy( mTagNameLineEdit );
   settings->addWidget( namelabel , 1 , 0 );
 
@@ -2765,7 +2767,7 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
   // "General" tab:
   //
   mGeneralTab = new GeneralTab();
-  addTab( mGeneralTab, i18n("General") );
+  addTab( mGeneralTab, i18nc("General settings for the composer.", "General") );
   addConfig( GlobalSettings::self(), mGeneralTab );
 
   //
@@ -2784,7 +2786,7 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
   // "Subject" tab:
   //
   mSubjectTab = new SubjectTab();
-  addTab( mSubjectTab, i18n("Subject") );
+  addTab( mSubjectTab, i18nc("Settings regarding the subject when composing a message.","Subject") );
   addConfig( GlobalSettings::self(), mSubjectTab );
 
   //
@@ -3367,14 +3369,15 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   glay->setColumnStretch( 1, 1 );
   mTagList = new ListView( this );
   mTagList->setObjectName( "tagList" );
-  mTagList->setHeaderLabels( QStringList() << i18n("Name") << i18n("Value") );
+  mTagList->setHeaderLabels( QStringList() << i18nc("@title:column Name of the mime header.","Name")
+    << i18nc("@title:column Value of the mimeheader.","Value") );
   mTagList->setSortingEnabled( false );
   connect( mTagList, SIGNAL(itemSelectionChanged()),
            this, SLOT(slotMimeHeaderSelectionChanged()) );
   glay->addWidget( mTagList, 0, 0, 3, 2 );
 
   // "new" and "remove" buttons:
-  button = new QPushButton( i18n("Ne&w"), this );
+  button = new QPushButton( i18nc("@action:button Add new mime header field.","Ne&w"), this );
   connect( button, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
   button->setAutoDefault( false );
   glay->addWidget( button, 0, 2 );
@@ -3387,7 +3390,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   // "name" and "value" line edits and labels:
   mTagNameEdit = new KLineEdit( this );
   mTagNameEdit->setEnabled( false );
-  mTagNameLabel = new QLabel( i18n("&Name:"), this );
+  mTagNameLabel = new QLabel( i18nc("@label:textbox Name of the mime header.","&Name:"), this );
   mTagNameLabel->setBuddy( mTagNameEdit );
   mTagNameLabel->setEnabled( false );
   glay->addWidget( mTagNameLabel, 3, 0 );
@@ -4859,7 +4862,10 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mLanguageCombo->setEditable( false );
   languageLA->setBuddy( mLanguageCombo );
   QStringList lst;
-  lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
+  lst << i18nc("@item:inlistbox Englis language.", "English")
+    << i18nc("@item:inlistbox German language", "German")
+    << i18nc("@item:inlistbox French language", "French")
+    << i18nc("@item:inlistbox Dutch language", "Dutch");
   mLanguageCombo->addItems( lst );
   grid->addWidget( mLanguageCombo, 1, 1 );
   mLanguageCombo->setToolTip( toolTip );
@@ -4968,8 +4974,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
   mExchangeCompatibleInvitations->setToolTip(
-    i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server,<br>"
-          "has a problem understanding standards-compliant groupware e-mail.<br>"
+    i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server,<br/>"
+          "has a problem understanding standards-compliant groupware e-mail.<br/>"
           "Turn this option on to send groupware invitations in a way that Microsoft Exchange understands." ) );
   mExchangeCompatibleInvitations->setWhatsThis( i18n( GlobalSettings::self()->
            exchangeCompatibleInvitationsItem()->whatsThis().toUtf8() ) );
@@ -5001,8 +5007,7 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
                         "resulting messages look very odd.<br />People that have email "
                         "programs that do understand invitations will still "
                         "be able to work with this.</qt>" );
-    KMessageBox::information( this, txt, QString(),
-                              "LegacyBodyInvitesWarning" );
+    KMessageBox::information( this, txt, QString(), "LegacyBodyInvitesWarning" );
   }
   // Invitations in the body are autosent in any case (no point in editing raw ICAL)
   // So the autosend option is only available if invitations are sent as attachment.
@@ -5035,7 +5040,8 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   i = GlobalSettings::self()->theIMAPResourceStorageFormat();
   mStorageFormatCombo->setCurrentIndex(i);
   slotStorageFormatChanged( i );
-  mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
+  mOnlyShowGroupwareFolders->setChecked(
+    GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
   mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
   mDeleteInvitations->setChecked( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() );
 

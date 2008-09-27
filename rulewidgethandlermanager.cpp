@@ -1363,7 +1363,7 @@ namespace {
     }
     else {
       numInput->setMinimum( -10000 );
-      numInput->setSuffix( i18n( " days" ) );
+      numInput->setSuffix( i18nc( "Unit suffix where units are days.", " days" ) );
       numInput->setSliderEnabled( false );
     }
   }

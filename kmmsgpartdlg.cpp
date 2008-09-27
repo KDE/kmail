@@ -41,7 +41,7 @@ static const struct {
   { KMMsgPartDialog::SevenBit, I18N_NOOP("None (7-bit text)") },
   { KMMsgPartDialog::EightBit, I18N_NOOP("None (8-bit text)") },
   { KMMsgPartDialog::QuotedPrintable, I18N_NOOP("Quoted Printable") },
-  { KMMsgPartDialog::Base64, I18N_NOOP("Base 64") },
+  { KMMsgPartDialog::Base64, I18N_NOOP2("Base 64 message encoding.", "Base 64") },
 };
 static const int numEncodingTypes =
   sizeof encodingTypes / sizeof *encodingTypes;
@@ -117,7 +117,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   // row 2: "Name" lineedit and label:
   mFileName = new KLineEdit( frame );
   mFileName->setClearButtonShown( true );
-  label = new QLabel( i18n("&Name:"), frame );
+  label = new QLabel( i18nc("file name of the attachment.", "&Name:"), frame );
   label->setBuddy( mFileName );
   glay->addWidget( label, 2, 0 );
   glay->addWidget( mFileName, 2, 1 );

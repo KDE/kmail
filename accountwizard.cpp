@@ -204,12 +204,12 @@ void AccountWizard::setupWelcomePage()
 
   QLabel *message;
   if ( kmkernel->firstStart() ) {
-    message = new QLabel( i18n( "<qt>It seems you have started KMail for the first time.<br>"
+    message = new QLabel( i18n( "<qt>It seems you have started KMail for the first time.<br/>"
                       "You can use this wizard to setup your mail accounts. "
                       "Just enter the connection data that you received from your email provider "
                       "into the following pages.</qt>" ), box );
   } else {
-    message = new QLabel( i18n( "<qt>You can use this wizard to setup your mail accounts.<br>"
+    message = new QLabel( i18n( "<qt>You can use this wizard to setup your mail accounts.<br/>"
                      "Just enter the connection data that you received from your email provider "
                       "into the following pages.</qt>" ), box );
   }
@@ -217,10 +217,10 @@ void AccountWizard::setupWelcomePage()
 
   mCreateNewIdentity = new QCheckBox( i18n( "Create a new identity" ), box );
   QString helpText( i18n( "An identity is your email address, "
-                                        "name, organization and so on.<br>"
+                                        "name, organization and so on.<br/>"
                                         "Do not uncheck this if you do not know what "
-                                        "you are doing<br>as some servers refuses to send mail "
-                                        "if the sending identity<br>does not match the one belonging "
+                                        "you are doing<br/>as some servers refuses to send mail "
+                                        "if the sending identity<br/>does not match the one belonging "
                                         "to that account.") );
   mCreateNewIdentity->setToolTip( helpText );
   mCreateNewIdentity->setWhatsThis( helpText );

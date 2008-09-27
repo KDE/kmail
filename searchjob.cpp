@@ -257,9 +257,10 @@ void SearchJob::slotSearchFolder()
       QString question = i18n("To execute your search all messages of the folder %1 "
           "have to be downloaded from the server. This may take some time. "
           "Do you want to continue your search?", mFolder->label() );
-      if ( KMessageBox::warningContinueCancel( 0, question,
-            i18n("Continue Search"), KGuiItem(i18n("&Search")), KStandardGuiItem::cancel(),
-            "continuedownloadingforsearch" ) != KMessageBox::Continue )
+      if ( KMessageBox::warningContinueCancel( 0, question
+             , i18n("Continue Search"), KGuiItem( i18nc( "Continue search button.", "&Search") )
+             , KStandardGuiItem::cancel(), "continuedownloadingforsearch" )
+           != KMessageBox::Continue )
       {
         QList<quint32> serNums;
         emit searchDone( serNums, mSearchPattern, true );

@@ -254,7 +254,7 @@ namespace KMail {
                         .arg(subjectDir);
 
     if ( strategy->showHeader( "date" ) )
-      headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
+      headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br/>\n");
 
     if ( strategy->showHeader( "from" ) ) {
       QString fromStr = message->from();
@@ -270,24 +270,24 @@ namespace KMail {
           && !message->headerField("Organization").isEmpty())
         headerStr.append("&nbsp;&nbsp;(" +
               strToHtml(message->headerField("Organization")) + ')');
-      headerStr.append("<br>\n");
+      headerStr.append("<br/>\n");
     }
 
     if ( strategy->showHeader( "to" ) )
-      headerStr.append(i18n("To: ")+
-                       KMMessage::emailAddrAsAnchor(message->to(),false) + "<br>\n");
+      headerStr.append(i18nc("To-field of the mailheader.", "To: ")+
+                       KMMessage::emailAddrAsAnchor(message->to(),false) + "<br/>\n");
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
       headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(message->cc(),false) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->cc(),false) + "<br/>\n");
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
       headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(message->bcc(),false) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->bcc(),false) + "<br/>\n");
 
     if ( strategy->showHeader( "reply-to" ) && !message->replyTo().isEmpty())
       headerStr.append(i18n("Reply to: ")+
-                     KMMessage::emailAddrAsAnchor(message->replyTo(),false) + "<br>\n");
+                     KMMessage::emailAddrAsAnchor(message->replyTo(),false) + "<br/>\n");
 
     headerStr += "</div>\n";
 
@@ -301,7 +301,7 @@ namespace KMail {
     for ( const DwField * field = headers.FirstField() ; field ; field = field->Next() ) {
       result += ( field->FieldNameStr() + ": " ).c_str();
       result += strToHtml( field->FieldBodyStr().c_str() );
-      result += "<br>\n";
+      result += "<br/>\n";
     }
 
     return result;
@@ -594,7 +594,7 @@ namespace KMail {
     if ( strategy->showHeader( "to" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
                    "<td>%2</td></tr>\n")
-                            .arg(i18n("To: "))
+                            .arg(i18nc("To-field of the mail header.","To: "))
                             .arg(KMMessage::emailAddrAsAnchor(message->to(),false)));
 
     // cc line, if any
@@ -801,7 +801,7 @@ namespace KMail {
     // to, cc, bcc
     headerStr +=
       "     <tr> "
-      "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\">"+i18n("To: ")+"</td> "
+      "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\">"+i18nc("To field of the mail header.", "To: ")+"</td> "
       "      <td style=\""+borderSettings+"\">"
       +headerPart+
       "      </td> "
