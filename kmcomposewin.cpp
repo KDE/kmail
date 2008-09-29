@@ -1008,7 +1008,7 @@ void KMComposeWin::setupActions( void )
 
   if ( kmkernel->msgSender()->sendImmediate() ) {
     //default = send now, alternative = queue
-    QAction *action = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
+    KAction *action = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
     actionCollection()->addAction("send_default", action );
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow() ));
