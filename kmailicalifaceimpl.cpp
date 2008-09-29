@@ -1750,9 +1750,11 @@ void KMailICalIfaceImpl::readConfig()
         }
         operations += "</ul>";
 
-        msg = i18n("<qt>KMail found the following groupware folders in %1 and needs to perform the following operations: %2"
-                   "<br />If you do not want this, cancel"
-                   " and the IMAP resource will be disabled", parentFolderName, operations);
+        msg = i18n( "<qt>KMail found the following groupware folders in %1 and"
+                    "needs to perform the following operations: %2<nl/>"
+                    "If you do not want this, cancel"
+                    " and the IMAP resource will be disabled</qt>"
+                    , parentFolderName, operations );
 
       }
 

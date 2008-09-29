@@ -386,7 +386,9 @@ void FavoriteFolderView::renameFolder()
   if ( !mContextMenuItem )
     return;
   bool ok;
-  QString name = KInputDialog::getText( i18n("Rename Favorite"), i18n("Name:"), mContextMenuItem->text( 0 ), &ok, this );
+  QString name = KInputDialog::getText( i18n("Rename Favorite")
+                                , i18nc( "@label:textbox New name of the folder.", "Name:")
+                                , mContextMenuItem->text( 0 ), &ok, this );
   if ( !ok )
     return;
   mContextMenuItem->setText( 0, name );
@@ -409,9 +411,10 @@ QString FavoriteFolderView::prettyName(KMFolderTreeItem * fti)
     }
   } else {
     if ( fti->protocol() != KFolderTreeItem::Local && fti->protocol() != KFolderTreeItem::NONE ) {
-      name = i18n( "%1 on %2", fti->text( 0 ), accountFti->text( 0 ) );
+      name = i18nc( "@item {FOLDER} on {MAIL ACCOUNT}", "%1 on %2", fti->text( 0 )
+              , accountFti->text( 0 ) );
     } else {
-      name = i18n( "%1 (local)", fti->text( 0 ) );
+      name = i18nc( "@item Local folder.", "%1 (local)", fti->text( 0 ) );
     }
   }
   return name;

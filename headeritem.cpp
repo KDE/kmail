@@ -159,14 +159,14 @@ QString HeaderItem::text( int col) const
     else
       tmp = mMsgBase->fromStrip();
     if (tmp.isEmpty())
-      tmp = i18n("Unknown");
+      tmp = i18nc("Unknown mail header.","Unknown");
     else
       tmp = tmp.simplified();
 
   } else if ( col == headers->paintInfo()->receiverCol ) {
     tmp = mMsgBase->toStrip();
     if (tmp.isEmpty())
-      tmp = i18n("Unknown");
+      tmp = i18nc("Unknown mail header.","Unknown");
     else
       tmp = tmp.simplified();
 

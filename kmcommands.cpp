@@ -2326,7 +2326,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-ms-dos-executable" ||
         mime->name() == "application/x-shellscript" )
     {
-      if (KMessageBox::warningYesNo( 0, i18nc( "@info", "Do you really want to execute <filename>%1</<filename>?",
+      if (KMessageBox::warningYesNo( 0, i18nc( "@info", "Do you really want to execute <filename>%1</filename>?",
           mUrl.pathOrUrl() ), QString(), KGuiItem(i18n("Execute")), KStandardGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }

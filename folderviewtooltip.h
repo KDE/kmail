@@ -43,7 +43,7 @@ class FolderViewToolTip : public QObject
       }
 
       item->updateCount();
-      QString tipText = i18n( "<qt><b>%1</b><br>Total: %2<br>Unread: %3<br>Size: %4",
+      QString tipText = i18n( "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3<br/>Size: %4</qt>",
                               item->folder()->prettyUrl().replace( " ", "&nbsp;" ),
                               item->totalCount() < 0 ? "-" : QString::number( item->totalCount() ),
                               item->unreadCount() < 0 ? "-" : QString::number( item->unreadCount() ),
@@ -52,7 +52,7 @@ class FolderViewToolTip : public QObject
       if ( KMFolderCachedImap* imap = dynamic_cast<KMFolderCachedImap*>( item->folder()->storage() ) ) {
           QuotaInfo info = imap->quotaInfo();
           if ( info.isValid() && !info.isEmpty() )
-              tipText += i18n("<br>Quota: %1", info.toString() );
+              tipText += i18n("<br/>Quota: %1", info.toString() );
       }
 
       QToolTip::showText( mListView->viewport()->mapToGlobal( point ), tipText, mListView );

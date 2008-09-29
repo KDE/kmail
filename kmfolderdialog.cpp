@@ -119,7 +119,7 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
   QFrame *box;
 
   box = new KVBox;
-  addPage( box, i18n("General") );
+  addPage( box, i18nc("@title:tab General settings for a folder.", "General") );
   tab = new FolderDialogGeneralTab( this, aName, box );
   addTab( tab );
 
@@ -284,7 +284,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     topLayout->addItem( hl );
     hl->setSpacing( KDialog::spacingHint() );
 
-    label = new QLabel( i18n("&Name:"), this );
+    label = new QLabel( i18nc("@label:textbox Name of the folder.","&Name:"), this );
     hl->addWidget( label );
 
     mNameEdit = new KLineEdit( this );
@@ -322,7 +322,8 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     ihl->addWidget( mIconsCheckBox );
     ihl->addStretch( 2 );
 
-    mNormalIconLabel = new QLabel( i18n("&Normal:"), this );
+    mNormalIconLabel = new QLabel(
+      i18nc("Icon used for folders with no unread messages.", "&Normal:"), this );
     mNormalIconLabel->setEnabled( false );
     ihl->addWidget( mNormalIconLabel );
 
@@ -337,7 +338,8 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     mNormalIconButton->setEnabled( false );
     ihl->addWidget( mNormalIconButton );
 
-    mUnreadIconLabel = new QLabel( i18n("&Unread:"), this );
+    mUnreadIconLabel = new QLabel(
+      i18nc("Icon used for folders which do have unread messages.","&Unread:"), this );
     mUnreadIconLabel->setEnabled( false );
     ihl->addWidget( mUnreadIconLabel );
 
@@ -455,9 +457,9 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   mShowSenderReceiverComboBox->setToolTip( tip );
   sender_label->setBuddy(mShowSenderReceiverComboBox);
   gl->addWidget( mShowSenderReceiverComboBox, row, 1 );
-  mShowSenderReceiverComboBox->insertItem(0, i18n("Default"));
-  mShowSenderReceiverComboBox->insertItem(1, i18n("Sender"));
-  mShowSenderReceiverComboBox->insertItem(2, i18n("Receiver"));
+  mShowSenderReceiverComboBox->insertItem(0, i18nc("@item:inlistbox Show default value.", "Default"));
+  mShowSenderReceiverComboBox->insertItem(1, i18nc("@item:inlistbox Show sender.", "Sender"));
+  mShowSenderReceiverComboBox->insertItem(2, i18nc("@item:inlistbox Show receiver.", "Receiver"));
 
   QString whoField;
   if (mDlg->folder()) whoField = mDlg->folder()->userWhoField();

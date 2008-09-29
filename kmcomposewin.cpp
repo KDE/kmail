@@ -214,8 +214,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mLblTransport = new QLabel( i18n("&Mail transport:"), mHeadersArea );
   mLblFrom = new QLabel( i18nc("sender address field", "&From:"), mHeadersArea );
   mLblReplyTo = new QLabel( i18n("&Reply to:"), mHeadersArea );
-  mLblSubject = new QLabel( i18n("S&ubject:"), mHeadersArea );
-  QString sticky = i18n("Sticky");
+  mLblSubject = new QLabel( i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea );
+  QString sticky = i18nc("@option:check Sticky identity.", "Sticky");
   mBtnIdentity = new QCheckBox( sticky, mHeadersArea );
   mBtnFcc = new QCheckBox( sticky, mHeadersArea );
   mBtnTransport = new QCheckBox( sticky, mHeadersArea );
@@ -1149,7 +1149,8 @@ void KMComposeWin::setupActions( void )
   mFixedFontAction->setChecked( GlobalSettings::self()->useFixedFont() );
 
   //these are checkable!!!
-  mUrgentAction = new KToggleAction( i18n("&Urgent"), this );
+  mUrgentAction = new KToggleAction(
+    i18nc("@action:inmenu Mark the email as urgent.","&Urgent"), this );
   actionCollection()->addAction( "urgent", mUrgentAction );
   mRequestMDNAction = new KToggleAction( i18n("&Request Disposition Notification"), this );
   actionCollection()->addAction("options_request_mdn", mRequestMDNAction );
@@ -1218,7 +1219,8 @@ void KMComposeWin::setupActions( void )
   mReplyToAction = new KToggleAction(i18n("&Reply To"), this);
   actionCollection()->addAction("show_reply_to", mReplyToAction );
   connect( mReplyToAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-  mSubjectAction = new KToggleAction(i18n("S&ubject"), this);
+  mSubjectAction = new KToggleAction(
+    i18nc("@action:inmenu Show the subject in the composer window.", "S&ubject"), this);
   actionCollection()->addAction("show_subject", mSubjectAction );
   connect(mSubjectAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
   //end of checkable
@@ -1367,7 +1369,9 @@ void KMComposeWin::setupStatusBar( void )
 
   statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QString( "     " )), 3, 0) ;
   statusBar()->insertPermanentItem( i18n(" Column: %1 ", QString( "     " ) ), 2, 0 );
-  statusBar()->insertPermanentItem( i18n(" Line: %1 ", QString( "     " ) ), 1, 0 );
+  statusBar()->insertPermanentItem(
+    i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
+      , QString( "     " ) ), 1, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -2024,7 +2028,9 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
 
   const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
   if ( aUrl.isLocalFile() && maxAttachmentSize >= 0 && QFileInfo( aUrl.pathOrUrl() ).size() > (maxAttachmentSize*1024*1024 /*in bytes*/ ) ) {
-    KMessageBox::sorry( this, i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p>", maxAttachmentSize ) );
+    KMessageBox::sorry( this,
+      i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p></qt>"
+            , maxAttachmentSize ) );
     return false;
   }
 
@@ -4105,7 +4111,7 @@ void KMComposeWin::slotCursorPositionChanged()
   QString temp;
   line = mEditor->linePosition();
   col = mEditor->columnNumber();
-  temp = i18n( " Line: %1 ", line + 1 );
+  temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1 );
   statusBar()->changeItem( temp, 1 );
   temp = i18n( " Column: %1 ", col + 1 );
   statusBar()->changeItem( temp, 2 );

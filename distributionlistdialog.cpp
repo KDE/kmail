@@ -100,11 +100,11 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
 {
   QFrame *topFrame = new QFrame( this );
   setMainWidget( topFrame );
-  setCaption( i18n("Save Distribution List") );
+  setCaption( i18nc("@title:window", "Save Distribution List") );
   setButtons( User1 | Cancel );
   setDefaultButton( User1 );
   setModal( false );
-  setButtonText( User1, i18n("Save List") );
+  setButtonText( User1, i18nc("@action:button","Save List") );
 
   QBoxLayout *topLayout = new QVBoxLayout( topFrame );
   topLayout->setSpacing( spacingHint() );
@@ -113,7 +113,8 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   titleLayout->setSpacing( spacingHint() );
   topLayout->addItem( titleLayout );
 
-  QLabel *label = new QLabel( i18n("&Name:"), topFrame );
+  QLabel *label = new QLabel(
+    i18nc("@label:textbox Name of the distribution list.", "&Name:"), topFrame );
   titleLayout->addWidget( label );
 
   mTitleEdit = new KLineEdit( topFrame );
@@ -124,7 +125,8 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
 
   mRecipientsList = new QTreeWidget( topFrame );
   mRecipientsList->setHeaderLabels(
-                     QStringList() << i18n( "Name" ) << i18n( "Email" )
+                     QStringList() << i18nc( "@title:column Name of the recipient","Name" )
+                                   << i18nc( "@title:column Email of the recipient", "Email" )
                                   );
   mRecipientsList->setRootIsDecorated( false );
   topLayout->addWidget( mRecipientsList );
@@ -181,7 +183,7 @@ void DistributionListDialog::slotUser1()
 
   if ( isEmpty ) {
     KMessageBox::information( this,
-                              i18n("There are no recipients in your list. "
+                              i18nc("@info", "There are no recipients in your list. "
                                    "First select some recipients, "
                                    "then try again.") );
     return;
@@ -191,8 +193,8 @@ void DistributionListDialog::slotUser1()
 
   if ( name.isEmpty() ) {
     bool ok = false;
-    name = KInputDialog::getText( i18n("New Distribution List"),
-      i18n("Please enter name:"), QString(), &ok, this );
+    name = KInputDialog::getText( i18nc("@title:window","New Distribution List"),
+      i18nc("@label:textbox","Please enter name:"), QString(), &ok, this );
     if ( !ok || name.isEmpty() )
       return;
   }
@@ -203,8 +205,8 @@ void DistributionListDialog::slotUser1()
   if ( ab->findDistributionListByName( name ) ) {
 #endif
     KMessageBox::information( this,
-      i18n( "<qt>Distribution list with the given name <b>%1</b> "
-        "already exists. Please select a different name.</qt>", name ) );
+      i18nc( "@info", "<para>Distribution list with the given name <placeholder>%1</placeholder> "
+        "already exists. Please select a different name.</para>", name ) );
     return;
   }
 

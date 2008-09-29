@@ -64,8 +64,7 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
            this, SLOT( slotInsertCommand(const QString &, int) ) );
 
   mHelpString =
-    i18n( "<qt>"
-	  "<p>Here you can create and manage templates to use when "
+    i18n( "<p>Here you can create and manage templates to use when "
 	  "composing new messages, replies or forwarded messages.</p>"
 	  "<p>The message templates support substitution commands, "
 	  "either simply type them or select them from "

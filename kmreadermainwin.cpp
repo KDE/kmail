@@ -303,7 +303,8 @@ void KMReaderMainWin::setupAccel()
   connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->addAction( mForwardAttachedAction );
 
-  mForwardAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
+  mForwardAction  = new KAction(KIcon("mail-forward")
+    , i18nc("@action:inmenu Forward current message inline.", "&Inline..."), this);
   actionCollection()->addAction("message_forward_inline", mForwardAction );
   connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
   mForwardAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));

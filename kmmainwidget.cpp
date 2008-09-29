@@ -576,25 +576,34 @@ void KMMainWidget::readConfig()
       * but otherwise the restoreLayout from KMFolderTree
       * doesn't know that to do */
       if ( unreadColumn == 1 )
-        mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
+        mFolderTree->addUnreadColumn(
+          i18nc("@title:column Number of unread messages.", "Unread"), 70 );
       else if ( totalColumn == 1 )
-        mFolderTree->addTotalColumn( i18n("Total"), 70 );
+        mFolderTree->addTotalColumn(
+          i18nc("@title:column Total number of messages.", "Total"), 70 );
       else if ( sizeColumn == 1 )
-        mFolderTree->addSizeColumn( i18n("Size"), 70 );
+        mFolderTree->addSizeColumn(
+          i18nc("@title:column Size of the messages.", "Size"), 70 );
 
       if ( unreadColumn == 2 )
-        mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
+        mFolderTree->addUnreadColumn(
+          i18nc("@title:column Number of unread messages.", "Unread"), 70 );
       else if ( totalColumn == 2 )
-        mFolderTree->addTotalColumn( i18n("Total"), 70 );
+        mFolderTree->addTotalColumn(
+          i18nc("@title:column Total number of messages.", "Total"), 70 );
       else if ( sizeColumn == 2 )
-        mFolderTree->addSizeColumn( i18n("Size"), 70 );
+        mFolderTree->addSizeColumn(
+          i18nc("@title:column Size of the messages.", "Size"), 70 );
 
       if ( unreadColumn == 3 )
-        mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
+        mFolderTree->addUnreadColumn(
+          i18nc("@title:column Number of unread messages.", "Unread"), 70 );
       else if ( totalColumn == 3 )
-        mFolderTree->addTotalColumn( i18n("Total"), 70 );
+        mFolderTree->addTotalColumn(
+          i18nc("@title:column Total number of messages.", "Total"), 70 );
       else if ( sizeColumn == 3 )
-        mFolderTree->addSizeColumn( i18n("Size"), 70 );
+        mFolderTree->addSizeColumn(
+          i18nc("@title:column Size of the messages.", "Size"), 70 );
 
       slotFolderTreeColumnsChanged();
       mFolderTree->updatePopup();
@@ -1348,25 +1357,25 @@ void KMMainWidget::slotRemoveFolder()
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
-                   "<b>%1</b> and all its subfolders? Those subfolders might "
+                   "<filename>%1</filename> and all its subfolders? Those subfolders might "
                    "not be empty and their contents will be discarded as well. "
                    "<p><b>Beware</b> that discarded messages are not saved "
-                   "into your Trash folder and are permanently deleted.</qt>",
+                   "into your Trash folder and are permanently deleted.</p></qt>",
                 Qt::escape( mFolder->label() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
-                   "<b>%1</b>, discarding its contents? "
+                   "<filename>%1</filename>, discarding its contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
-                   "into your Trash folder and are permanently deleted.</qt>",
+                   "into your Trash folder and are permanently deleted.</p></qt>",
                 Qt::escape( mFolder->label() ) );
       }
       else {
-        str = i18n("<qt>Are you sure you want to delete the folder <b>%1</b> "
+        str = i18n("<qt>Are you sure you want to delete the folder <filename>%1</filename> "
                    "and all its subfolders, discarding their contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
-                   "into your Trash folder and are permanently deleted.</qt>",
+                   "into your Trash folder and are permanently deleted.</p></qt>",
               Qt::escape( mFolder->label() ) );
       }
     }
@@ -2979,7 +2988,8 @@ void KMMainWidget::setupActions()
   mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
   connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->addAction( forwardAttachedAction() );
-  mForwardAction = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
+  mForwardAction = new KAction(KIcon("mail-forward"),
+    i18nc("@action:inmenu Message->Forward->", "&Inline..."), this);
   actionCollection()->addAction("message_forward_inline", mForwardAction );
   connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
   mForwardAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
@@ -3189,7 +3199,7 @@ void KMMainWidget::setupActions()
     } else {
       action->setIcon( KIcon( "go-next" ) );
     }
-    action->setIconText( i18n( "Next" ) );
+    action->setIconText( i18nc( "@action:inmenu Goto next unread message", "Next" ) );
     action->setToolTip(i18n("Go to the next unread message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextUnreadMessage()));
   }
@@ -3209,7 +3219,7 @@ void KMMainWidget::setupActions()
     } else {
       action->setIcon( KIcon( "go-previous" ) );
     }
-    action->setIconText( i18n( "Previous" ) );
+    action->setIconText( i18nc( "@action:inmenu Goto previous unread message.","Previous" ) );
     action->setToolTip(i18n("Go to the previous unread message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadMessage()));
   }

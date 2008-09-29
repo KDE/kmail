@@ -52,9 +52,9 @@ static const struct {
   { "<size>",        I18N_NOOP( "Size in Bytes" ) },
   { "<age in days>", I18N_NOOP( "Age in Days" )   },
   { "<status>",      I18N_NOOP( "Message Status" )        },
-  { "Subject",       I18N_NOOP( "Subject" )  },
+  { "Subject",       I18N_NOOP2( "Subject of an email.", "Subject" )  },
   { "From",          I18N_NOOP( "From" )  },
-  { "To",            I18N_NOOP( "To" )  },
+  { "To",            I18N_NOOP2( "Receiver of an email.", "To" )  },
   { "CC",            I18N_NOOP( "CC" )  }
 };
 static const int SpecialRuleFieldsCount =
