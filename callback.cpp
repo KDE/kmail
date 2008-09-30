@@ -188,10 +188,14 @@ QString Callback::receiver() const
                            "is yours:</qt>");
     }
 
+    // select default identity by default
+    const QString defaultAddr = kmkernel->identityManager()->defaultIdentity().emailAddr();
+    const int defaultIndex = qMax( 0, addrs.indexOf( defaultAddr ) );
+
     mReceiver = KInputDialog::getItem(
       i18n( "Select Address" ),
       selectMessage,
-      addrs + ccaddrs, 0, false, &ok, kmkernel->mainWin() );
+      addrs + ccaddrs, defaultIndex, false, &ok, kmkernel->mainWin() );
     if ( !ok ) {
       mReceiver.clear();
     }
