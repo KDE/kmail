@@ -861,7 +861,8 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
       // update progress
       account()->listDirProgressItem()->incCompletedItems();
       account()->listDirProgressItem()->updateProgress();
-      account()->listDirProgressItem()->setStatus( folder()->prettyUrl() + i18n(" completed") );
+      account()->listDirProgressItem()->setStatus( folder()->prettyUrl()
+        + i18nc("@info:status Number of folders for which update is completed.", " completed") );
 
       f->initializeFrom( this, subfolderPaths[i], subfolderMimeTypes[i] );
       f->setChildrenState( subfolderAttributes[i] );

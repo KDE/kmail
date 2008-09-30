@@ -82,7 +82,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
   mNameLabel = new QLabel( privateLayoutWidget );
   mNameLabel->setObjectName( "mNameLabel" );
-  mNameLabel->setText( i18n( "&Name:" ) );
+  mNameLabel->setText( i18nc( "@label:textbox Name of the new folder.", "&Name:" ) );
   mNameHBox->addWidget( mNameLabel );
 
   mNameLineEdit = new KLineEdit( privateLayoutWidget );

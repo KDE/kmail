@@ -73,11 +73,11 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
     QString tsubject = subject;
     tsubject.remove( i18n( "Answer: " ) );
     if ( status == QLatin1String( "cancel" ) ) {
-      msg->setSubject( i18n( "Declined: %1", tsubject ) );
+      msg->setSubject( i18nc( "Not able to attend.", "Declined: %1", tsubject ) );
     } else if ( status == QLatin1String("tentative") ) {
-      msg->setSubject( i18n( "Tentative: %1", tsubject ) );
+      msg->setSubject( i18nc( "Unsure if it is possible to attend.", "Tentative: %1", tsubject ) );
     } else if ( status == QLatin1String("accepted") ) {
-      msg->setSubject( i18n( "Accepted: %1", tsubject ) );
+      msg->setSubject( i18nc( "Accepted the invitation.", "Accepted: %1", tsubject ) );
     } else {
       msg->setSubject( subject );
     }

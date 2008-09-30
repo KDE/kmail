@@ -301,7 +301,7 @@ void KMAcctImap::processNewMail(bool interactive)
   mMailCheckProgressItem =
     ProgressManager::createProgressItem(
         "MailCheckAccount" + name(),
-        i18n( "Checking account: %1", Qt::escape( name() ) ),
+        i18nc( "@info:status", "Checking account: %1", Qt::escape( name() ) ),
         QString(), // status
         true, // can be canceled
         useSSL() || useTLS() );
@@ -398,7 +398,8 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   if ( mMailCheckProgressItem ) {
     mMailCheckProgressItem->incCompletedItems();
     mMailCheckProgressItem->updateProgress();
-    mMailCheckProgressItem->setStatus( folder->prettyUrl() + i18n(" completed") );
+    mMailCheckProgressItem->setStatus( folder->prettyUrl()
+      + i18nc("@info:status Number of emails retrieved.", " completed") );
   }
   mCountRemainChecks--;
 
@@ -603,7 +604,8 @@ int KMAcctImap::slotFilterMsg( KMMessage *msg )
                                                     id() );
   if (filterResult == 2) {
     // something went horribly wrong (out of space?)
-    kmkernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
+    kmkernel->emergencyExit(
+      i18nc( "@info:status", "Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
     return 2;
   }
   if (msg->parent()) { // unGet this msg

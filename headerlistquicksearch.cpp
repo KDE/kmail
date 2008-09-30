@@ -57,7 +57,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
     mComboStatusCount( 0 ), mFilterWithTag( false ), mTagLabel() 
 
 {
-  setClickMessage( i18n("Search") );
+  setClickMessage( i18nc("Search for messages.","Search") );
 
   parent->layout()->addWidget( this );
 

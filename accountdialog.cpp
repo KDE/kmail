@@ -778,7 +778,7 @@ void AccountDialog::setupSettings()
   if( acctFolder == 0 )
   {
     folderCombo->addItem( i18nc("Placeholder for the case that there is no folder."
-      , "<none>") );
+      , "<placeholder>none</placeholder>") );
   }
   else
   {

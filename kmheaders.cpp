@@ -142,7 +142,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   QAction* act = mPopup->addAction(i18n("Status"));
   act->setCheckable(true);
   mColumns.insert(act, KPaintInfo::COL_STATUS);
-  act = mPopup->addAction(i18n("Important"));
+  act = mPopup->addAction(i18nc("@action:inmenu Mark message as important.", "Important"));
   act->setCheckable(true);
   mColumns.insert(act, KPaintInfo::COL_IMPORTANT);
   act = mPopup->addAction(i18n("Action Item"));
@@ -207,7 +207,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   header()->setStretchEnabled( false );
   header()->setResizeEnabled( false );
 
-  mPaintInfo.subCol      = addColumn( i18n("Subject"), 310 );
+  mPaintInfo.subCol      = addColumn( i18nc("@title:column Subject of message.", "Subject"), 310 );
   mPaintInfo.senderCol   = addColumn( i18n("Sender"),  170 );
   mPaintInfo.dateCol     = addColumn( i18n("Date"),    170 );
   mPaintInfo.sizeCol     = addColumn( i18n("Size"),      0 );
@@ -787,7 +787,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
       colText = i18n( "Date (Order of Arrival)" );
     setColumnText( mPaintInfo.dateCol, colText);
 
-    colText = i18n( "Subject" );
+    colText = i18nc( "@title:column Subject of email.", "Subject" );
     if (mPaintInfo.status)
       colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.subCol, colText);
@@ -1409,7 +1409,8 @@ void KMHeaders::setFolderInfoStatus ()
   if ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
     str = unread ? i18np( "1 unsent", "%1 unsent", unread ) : i18n( "0 unsent" );
   else
-    str = unread ? i18np( "1 unread", "%1 unread", unread ) : i18n( "0 unread" );
+    str = unread ? i18ncp( "Number of unread messages.", "1 unread", "%1 unread", unread )
+      : i18nc( "No unread messages.", "0 unread" );
   const int count = mFolder->count();
   str = count ? i18np( "1 message, %2.", "%1 messages, %2.", count, str )
               : i18n( "0 messages" ); // no need for "0 unread" to be added here
@@ -2663,7 +2664,7 @@ void KMHeaders::setSorting( int column, bool ascending )
       colText = i18n( "Date (Order of Arrival)" );
     setColumnText( mPaintInfo.dateCol, colText);
 
-    colText = i18n( "Subject" );
+    colText = i18nc( "@title:column Subject of the email.", "Subject" );
     if (mPaintInfo.status)
       colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.subCol, colText);
