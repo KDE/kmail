@@ -855,10 +855,10 @@ void KMMainWidget::createWidgets()
     mRemoveDuplicatesAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Asterisk ) );
   }
   {
-    KAction *action = new KAction( i18n("Move Message to Folder"), this );
-    action->setShortcut( QKeySequence( Qt::Key_M ) );
-    actionCollection()->addAction( "move_message_to_folder", action );
-    connect( action, SIGNAL( triggered( bool ) ),
+    mMoveMsgToFolderAction = new KAction( i18n("Move Message to Folder"), this );
+    mMoveMsgToFolderAction->setShortcut( QKeySequence( Qt::Key_M ) );
+    actionCollection()->addAction( "move_message_to_folder", mMoveMsgToFolderAction );
+    connect( mMoveMsgToFolderAction, SIGNAL( triggered( bool ) ),
              SLOT( slotMoveMsg() ) );
   }
   {
@@ -3482,7 +3482,7 @@ void KMMainWidget::updateMessageActions()
     mToggleThreadToActAction->setEnabled( thread_actions && flags_available );
     mToggleThreadImportantAction->setEnabled( thread_actions && flags_available );
     mTrashThreadAction->setEnabled( thread_actions && mFolder->canDeleteMessages() );
-    mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
+    mDeleteThreadAction->setEnabled( thread_actions && mFolder->canDeleteMessages() );
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
       MessageStatus status = mHeaders->currentMsg()->status();
@@ -3495,7 +3495,8 @@ void KMMainWidget::updateMessageActions()
       }
     }
 
-    mMoveActionMenu->setEnabled( mass_actions && !mFolder->isReadOnly() );
+    mMoveActionMenu->setEnabled( mass_actions && mFolder->canDeleteMessages() );
+    mMoveMsgToFolderAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
     mCopyActionMenu->setEnabled( mass_actions );
     mTrashAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
     mDeleteAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
@@ -3589,12 +3590,12 @@ void KMMainWidget::updateFolderMenu()
   if ( mTroubleshootFolderAction )
     mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
   mTroubleshootMaildirAction->setVisible( mFolder && mFolder->folderType() == KMFolderTypeMaildir );
-  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() && !multiFolder );
+  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && mFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() && !multiFolder);
+  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder );
+  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mHeaders->folder() ? true : false );
@@ -3610,7 +3611,7 @@ void KMMainWidget::updateFolderMenu()
   mThreadBySubjectAction->setChecked( mFolderThreadSubjPref );
 
   mNewFolderAction->setEnabled( !multiFolder );
-  mRemoveDuplicatesAction->setEnabled( !multiFolder );
+  mRemoveDuplicatesAction->setEnabled( !multiFolder && mFolder && mFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder );
 }
 

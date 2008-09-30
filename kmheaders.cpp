@@ -2491,7 +2491,7 @@ void KMHeaders::slotRMB()
   msgCopyMenu->setTitle(i18n("&Copy To"));
   menu->addMenu( msgCopyMenu );
 
-  if ( mFolder->isReadOnly() ) {
+  if ( !mFolder->canDeleteMessages() ) {
     QAction* act = menu->addAction( i18n("&Move To") );
     act->setEnabled( false );
   } else {
@@ -3574,7 +3574,7 @@ void KMHeaders::updateActions()
     cut->setEnabled( false );
   } else {
     copy->setEnabled( true );
-    if ( folder() && folder()->isReadOnly() )
+    if ( folder() && !folder()->canDeleteMessages() )
       cut->setEnabled( false );
     else
       cut->setEnabled( true );

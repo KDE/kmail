@@ -492,7 +492,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-      *mFavoritesCheckMailAction;
+      *mFavoritesCheckMailAction,
+      *mMoveMsgToFolderAction;
     // Composition actions
     KAction *mPrintAction,
       *mForwardAction, *mForwardAttachedAction,
