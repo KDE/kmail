@@ -212,7 +212,7 @@ void FolderTreeBase::slotUpdateCounts(KMFolder * folder, bool force /* = false*/
     }
   }
   if ( isSizeActive() || force ) {
-    if ( !fti->folder()->noContent() ) {
+    if ( folder && !fti->folder()->noContent() ) {
       int size = folder->storage()->folderSize();
       if ( size != fti->folderSize() ) {
         fti->setFolderSize( size );
@@ -220,7 +220,7 @@ void FolderTreeBase::slotUpdateCounts(KMFolder * folder, bool force /* = false*/
       }
     }
   }
-  if ( fti->folderIsCloseToQuota() != folder->storage()->isCloseToQuota() ) {
+  if ( folder && ( fti->folderIsCloseToQuota() != folder->storage()->isCloseToQuota() ) ) {
     fti->setFolderIsCloseToQuota( folder->storage()->isCloseToQuota() );
   }
 

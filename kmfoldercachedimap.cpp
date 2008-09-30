@@ -3064,7 +3064,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
       break;
     }
     KMFolderDir *inboxDir = inboxFolder->child();
-    if ( !inboxDir && !inboxFolder->storage() )
+    if ( !inboxDir || !inboxFolder->storage() )
       break;
     assert( inboxFolder->storage()->folderType() == KMFolderTypeCachedImap );
 
