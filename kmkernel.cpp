@@ -471,7 +471,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QByteArray &attachParamAttr,
                             const QString &attachParamValue,
                             const QByteArray &attachContDisp,
-                            const QByteArray &attachCharset )
+                            const QByteArray &attachCharset,
+                            unsigned int identity )
 {
   kDebug(5006);
 
@@ -483,6 +484,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !bcc.isEmpty() ) msg->setBcc(bcc);
   if ( !subject.isEmpty() ) msg->setSubject(subject);
   if ( !to.isEmpty() ) msg->setTo(to);
+  if ( identity > 0 ) msg->setHeaderField( "X-KMail-Identity", QString::number( identity ) );
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
   } else {
