@@ -2728,6 +2728,8 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 
   unsigned int pos, beg;
   const unsigned int length = s.length();
+  bool paraIsRTL;
+  bool startNewPara = true;
 
   // skip leading empty lines
   for ( pos = 0; pos < length && s[pos] <= ' '; pos++ )
@@ -2846,12 +2848,19 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
       // ignore ^M DOS linebreaks
       if( !line.remove( '\015' ).isEmpty() )
       {
-         htmlStr +=QString( "<div dir=\"%1\">" ).arg( line.isRightToLeft() ? "rtl":"ltr" );
+         if ( startNewPara )
+           paraIsRTL = line.isRightToLeft();
+         htmlStr += QString( "<div dir=\"%1\">" ).arg( paraIsRTL ? "rtl" : "ltr" );
          htmlStr += LinkLocator::convertToHtml( line, convertFlags );
          htmlStr += QString( "</div>" );
+         startNewPara = looksLikeParaBreak( s, pos );
       }
       else
+      {
         htmlStr += "<br>";
+        // after an empty line, always start a new paragraph
+        startNewPara = true;
+      }
     }
   } /* while() */
 
@@ -2874,6 +2883,80 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     if ( mReader && mReader->overrideCodec() )
       return mReader->overrideCodec();
     return node->msgPart().codec();
+  }
+
+  // Guesstimate if the newline at newLinePos actually separates paragraphs in the text s
+  // We use several heuristics:
+  // 1. If newLinePos points after or before (=at the very beginning of) text, it is not between paragraphs
+  // 2. If the previous line was longer than the wrap size, we want to consider it a paragraph on its own
+  //    (some clients, notably Outlook, send each para as a line in the plain-text version).
+  // 3. Otherwise, we check if the newline could have been inserted for wrapping around; if this
+  //    was the case, then the previous line will be shorter than the wrap size (which we already
+  //    know because of item 2 above), but adding the first word from the next line will make it
+  //    longer than the wrap size.
+  bool ObjectTreeParser::looksLikeParaBreak( const QString& s, unsigned int newLinePos ) const
+  {
+    const unsigned int WRAP_COL = 78;
+
+    unsigned int length = s.length();
+    // 1. Is newLinePos at an end of the text?
+    if ( newLinePos >= length-1 || newLinePos == 0 ) {
+      return false;
+    }
+
+    // 2. Is the previous line really a paragraph -- longer than the wrap size?
+
+    // First char of prev line -- works also for first line
+    unsigned prevStart = s.lastIndexOf( '\n', newLinePos - 1 ) + 1;
+    unsigned prevLineLength = newLinePos - prevStart;
+    if ( prevLineLength > WRAP_COL ) {
+      return true;
+    }
+
+    // find next line to delimit search for first word
+    unsigned int nextStart = newLinePos + 1;
+    int nextEnd = s.indexOf( '\n', nextStart );
+    if ( nextEnd == -1 ) {
+      nextEnd = length;
+    }
+    QString nextLine = s.mid( nextStart, nextEnd - nextStart );
+    length = nextLine.length();
+    // search for first word in next line
+    unsigned int wordStart;
+    bool found = false;
+    for ( wordStart = 0; !found && wordStart < length; wordStart++ ) {
+      switch ( nextLine[wordStart].toLatin1() ) {
+        case '>':
+        case '|':
+        case ' ':  // spaces, tabs and quote markers don't count
+        case '\t':
+        case '\r':
+          break;
+        default: 
+          found = true;
+          break;
+      }
+    } /* for() */
+
+    if ( !found ) {
+      // next line is essentially empty, it seems -- empty lines are
+      // para separators
+      return true; 
+    }
+    //Find end of first word.
+    //Note: flowText (in kmmessage.cpp) separates words for wrap by
+    //spaces only. This should be consistent, which calls for some
+    //refactoring.
+    int wordEnd = nextLine.indexOf( ' ', wordStart );
+    if ( wordEnd == (-1) ) {
+      wordEnd = length;
+    }
+    int wordLength = wordEnd - wordStart;
+
+    // 3. If adding a space and the first word to the prev line don't
+    //    make it reach the wrap column, then the break was probably
+    //    meaningful
+    return prevLineLength + wordLength + 1 < WRAP_COL;
   }
 
 #ifdef MARCS_DEBUG

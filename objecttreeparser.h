@@ -262,6 +262,11 @@ namespace KMail {
     QString quotedHTML(const QString& pos, bool decorate);
 
     const QTextCodec * codecFor( partNode * node ) const;
+    /** Check if the newline at position @p newLinePos in string @p s 
+        seems to separate two paragraphs (important for correct BiDi
+        behavior, but is heuristic because paragraphs are not
+        well-defined) */
+    bool looksLikeParaBreak(const QString& s, unsigned int newLinePos) const;
 
 #ifdef MARCS_DEBUG
     void dumpToFile( const char * filename, const char * dataStart, size_t dataLen );
