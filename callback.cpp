@@ -40,6 +40,7 @@
 #include "composer.h"
 #include "kmreaderwin.h"
 #include "secondarywindow.h"
+#include "kmcommands.h"
 
 #include <kpimutils/email.h>
 
@@ -227,6 +228,13 @@ bool Callback::askForComment( KCal::Attendee::PartStat status ) const
 bool Callback::deleteInvitationAfterReply() const
 {
   return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
+}
+
+
+void Callback::deleteInvitation() const
+{
+  const unsigned long sernum = getMsg()->getMsgSerNum();
+  ( new KMDeleteMsgCommand( sernum ) )->start();
 }
 
 QString Callback::sender() const
