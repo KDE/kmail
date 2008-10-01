@@ -290,7 +290,12 @@
      <item>
       <widget class="QLineEdit" name="lineEdit_quote" >
        <property name="whatsThis" >
-        <string>&lt;qt>The following placeholders are supported in the quote indicator:&lt;br />&lt;table>&lt;tr>    &lt;td>&lt;b>%D&lt;/b>: date&lt;/td>    &lt;td>&lt;b>%S&lt;/b>: subject&lt;/td>    &lt;td>&lt;/td>&lt;/tr>&lt;tr>    &lt;td>&lt;b>%e&lt;/b>: sender's address&lt;/td>    &lt;td>&lt;b>%F&lt;/b>: sender's name&lt;/td>    &lt;td>&lt;b>%f&lt;/b>: sender's initials&lt;/td>&lt;/tr>&lt;tr>    &lt;td>&lt;b>%T&lt;/b>: recipient's name&lt;/td>    &lt;td>&lt;b>%t&lt;/b>: recipient's name and address&lt;/td>    &lt;td>&lt;/td>&lt;/tr>&lt;tr>    &lt;td>&lt;b>%C&lt;/b>: carbon copy names&lt;/td>    &lt;td>&lt;b>%c&lt;/b>: carbon copy names and addresses&lt;/td>    &lt;td>&lt;/td>&lt;/tr>&lt;tr>    &lt;td>&lt;b>%%&lt;/b>: percent sign&lt;/td>    &lt;td>&lt;b>%_&lt;/b>: space&lt;/td>    &lt;td>&lt;b>%L&lt;/b>: linebreak&lt;/td>&lt;/tr>&lt;/table>&lt;/qt></string>
+           <string>
+             &lt;qt&gt;The following placeholders are supported in the quote indicator:
+             &lt;li&gt;%f: sender's initals&lt;/li&gt;
+             &lt;li&gt;%%: percent sign&lt;/li&gt;
+             &lt;li&gt;%_: space&lt;/li&gt;&lt;/qt&gt;
+           </string>
        </property>
       </widget>
      </item>

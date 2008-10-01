@@ -1306,7 +1306,6 @@ KMCommand::Result KMForwardCommand::execute()
         if (id == 0)
           id = (*it)->headerField("X-KMail-Identity").trimmed().toUInt();
 
-        // msgText += (*it)->createForwardBody();
         linklist.append( (*it) );
       }
       if ( id == 0 )
@@ -1527,7 +1526,6 @@ KMCommand::Result KMCustomForwardCommand::execute()
       if (id == 0)
         id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
 
-      // msgText += msg->createForwardBody();
       linklist.append( msg );
     }
     if ( id == 0 )

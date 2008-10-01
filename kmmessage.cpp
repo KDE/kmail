@@ -86,7 +86,6 @@ struct KMMessageStaticData
   DwString emptyString;
 
   // Values that are set from the config file with KMMessage::readConfig()
-  QString replyLanguage, replyStr, replyAllStr, forwardStr, indentPrefixStr;
   bool smartQuote : 1, wordWrap : 1;
   int wrapCol;
   QStringList prefCharsets;
@@ -434,38 +433,23 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
 //-----------------------------------------------------------------------------
 QString KMMessage::formatString(const QString& aStr) const
 {
-  QString result, str;
-  QChar ch;
-  uint j;
+  QString result;
 
   if (aStr.isEmpty())
     return aStr;
 
   unsigned int strLength(aStr.length());
   for (uint i=0; i<strLength;) {
-    ch = aStr[i++];
+    QChar ch = aStr[i++];
     if (ch == '%') {
       ch = aStr[i++];
       switch (ch.toLatin1()) {
-      case 'D':
-        /* I'm not too sure about this change. Is it not possible
-           to have a long form of the date used? I don't
-           like this change to a short XX/XX/YY date format.
-           At least not for the default. -sanders */
-        result += KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
-            date(), s->replyLanguage, false );
-        break;
-      case 'e':
-        result += from();
-        break;
-      case 'F':
-        result += fromStrip();
-        break;
-      case 'f':
+      case 'f': // sender's initals
       {
-        str = fromStrip();
+        QString str = fromStrip();
 
-        for (j=0; str[j]>' '; j++)
+        uint j = 0;
+        for (; str[j]>' '; j++)
           ;
         unsigned int strLength(str.length());
         for (; j < strLength && str[j] <= ' '; j++)
@@ -478,26 +462,8 @@ QString KMMessage::formatString(const QString& aStr) const
             result += str[1];
       }
       break;
-      case 'T':
-        result += toStrip();
-        break;
-      case 't':
-        result += to();
-        break;
-      case 'C':
-        result += ccStrip();
-        break;
-      case 'c':
-        result += cc();
-        break;
-      case 'S':
-        result += subject();
-        break;
       case '_':
         result += ' ';
-        break;
-      case 'L':
-        result += '\n';
         break;
       case '%':
         result += '%';
@@ -830,8 +796,7 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
     return result;
 }
 
-QString KMMessage::asQuotedString( const QString& aHeaderStr,
-                                   const QString& aIndentStr,
+QString KMMessage::asQuotedString( const QString& aIndentStr,
                                    const QString& selection /*.clear() */,
                                    bool aStripSignature /* = true */,
                                    bool allowDecryption /* = true */) const
@@ -851,10 +816,9 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
   content.prepend( indentStr );
   content += '\n';
 
-  const QString headerStr = formatString( aHeaderStr );
   if ( s->smartQuote && s->wordWrap )
-    return headerStr + smartQuote( content, s->wrapCol );
-  return headerStr + content;
+    return smartQuote( content, s->wrapCol );
+  return content;
 }
 
 //-----------------------------------------------------------------------------
@@ -866,7 +830,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    const QString &tmpl /* = QString() */ )
 {
   KMMessage* msg = new KMMessage;
-  QString str, replyStr, mailingListStr, replyToStr, toStr;
+  QString str, mailingListStr, replyToStr, toStr;
   QStringList mailingListAddresses;
   QByteArray refStr, headerName;
   bool replyAll = true;
@@ -890,9 +854,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       mailingListAddresses << rx.cap(1) + '@' + rx.cap(2);
   }
 
-  // use the "On ... Joe User wrote:" header by default
-  replyStr = s->replyAllStr;
-
   switch( replyStrategy ) {
   case KMail::ReplySmart : {
     if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
@@ -908,7 +869,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     else {
       // doesn't seem to be a mailing list, reply to From: address
       toStr = from();
-      replyStr = s->replyStr; // reply to author, so use "On ... you wrote:"
       replyAll = false;
     }
     // strip all my addresses from the list of recipients
@@ -1035,7 +995,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     else if ( !from().isEmpty() ) {
       toStr = from();
     }
-    replyStr = s->replyStr; // reply to author, so use "On ... you wrote:"
     replyAll = false;
     break;
   }
@@ -1051,16 +1010,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     msg->setReferences(refStr);
   //In-Reply-To = original msg-id
   msg->setReplyToId(msgId());
-
-//  if (!noQuote) {
-//    if( selectionIsBody ){
-//      QByteArray cStr = selection.toLatin1();
-//      msg->setBody( cStr );
-//    }else{
-//      msg->setBody(asQuotedString(replyStr + '\n', s->indentPrefixStr, selection,
-//                                  s->smartQuote, allowDecryption).toUtf8());
-//    }
-//  }
 
   msg->setSubject( replySubject() );
 
@@ -1167,30 +1116,6 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
   msg->link( this, MessageStatus::statusForwarded() );
 
   return msg;
-}
-
-
-//-----------------------------------------------------------------------------
-QByteArray KMMessage::createForwardBody()
-{
-  QString tmp;
-  if (s->headerStrategy == HeaderStrategy::all()) {
-    tmp = "\n\n----------  " + s->forwardStr + "  ----------\n\n"
-      + headerAsString();
-  } else {
-    tmp = "\n\n----------  " + s->forwardStr + "  ----------\n\n"
-      + "Subject: " + subject() + '\n'
-      + "Date: "
-         + KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
-                                             date(), s->replyLanguage, false )
-         + '\n'
-      + "From: " + from() + '\n'
-      + "To: " + to() + '\n'
-      + ( cc().isEmpty() ? QString() : ("Cc: " + cc() + '\n') )
-      + '\n';
-  }
-  return asQuotedString(tmp, "", QString(), false, false).toUtf8()
-    + "\n-------------------------------------------------------\n";
 }
 
 void KMMessage::sanitizeHeaders( const QStringList& whiteList )
@@ -3901,19 +3826,6 @@ void KMMessage::readConfig()
 
   KConfigGroup config( KMKernel::config(), "General" );
 
-  int languageNr = config.readEntry( "reply-current-language", 0 );
-
-  { // area for config group "KMMessage #n"
-    KConfigGroup config( KMKernel::config(), QString("KMMessage #%1").arg(languageNr) );
-    s->replyLanguage = config.readEntry("language",KGlobal::locale()->language());
-    s->replyStr = config.readEntry("phrase-reply",
-      i18n("On %D, you wrote:"));
-    s->replyAllStr = config.readEntry("phrase-reply-all",
-      i18n("On %D, %F wrote:"));
-    s->forwardStr = config.readEntry("phrase-forward",
-      i18n("Forwarded Message"));
-    s->indentPrefixStr = config.readEntry("indent-prefix",">%_");
-  }
 
   { // area for config group "Composer"
     KConfigGroup config( KMKernel::config(), "Composer" );

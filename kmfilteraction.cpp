@@ -1481,7 +1481,6 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( KMMessage *aMsg ) con
 
   msg->initFromMessage( aMsg );
 
-  // QString st = QString::fromUtf8( aMsg->createForwardBody() );
   TemplateParser parser( msg, TemplateParser::Forward,
                          aMsg->body(), false, false, false);
   parser.process( aMsg );

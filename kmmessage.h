@@ -174,9 +174,6 @@ public:
    */
   KMMessage* createRedirect( const QString &toStr );
 
-  /** Create the forwarded body for the message. */
-  QByteArray createForwardBody();
-
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
@@ -818,23 +815,16 @@ public:
   */
   QByteArray mboxMessageSeparator();
 
-  /** Returns message body with quoting header and indented by the
-    given indentation string. This is suitable for including the message
-    in another message of for replies, forwards. The header string is
-    a template where the following fields are replaced with the
-    corresponding values:
-    <pre>
-        %D: date of this message
-        %S: subject of this message
-        %F: sender (from) of this message
-        %%: a single percent sign
-    </pre>
-    No attachments are handled if includeAttach is false.
-    The signature is stripped if aStripSignature is true and
-    smart quoting is turned on. Signed or encrypted texts
-    get converted to plain text when allowDecryption is true. */
-  QString asQuotedString( const QString & headerStr,
-          const QString & indentStr,
+  /**
+   * Returns message body indented by the
+   * given indentation string. This is suitable for including the message
+   * in another message of for replies, forwards.
+   *
+   * No attachments are handled if includeAttach is false.
+   * The signature is stripped if aStripSignature is true and
+   * smart quoting is turned on. Signed or encrypted texts
+   * get converted to plain text when allowDecryption is true. */
+  QString asQuotedString( const QString & indentStr,
           const QString & selection=QString(),
           bool aStripSignature=true,
           bool allowDecryption=true) const;

@@ -291,7 +291,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QString str =
               pipe( pipe_cmd, mOrigMsg->asPlainText( mSmartQuote, mAllowDecryption ) );
-          QString quote = mOrigMsg->asQuotedString( "", mQuoteString, str,
+          QString quote = mOrigMsg->asQuotedString( mQuoteString, str,
                                                     mSmartQuote, mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
             quote.chop( 1 );
@@ -302,7 +302,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug(5006) <<"Command: QUOTE";
         i += strlen( "QUOTE" );
         if ( mOrigMsg ) {
-          QString quote = mOrigMsg->asQuotedString( "", mQuoteString, mSelection,
+          QString quote = mOrigMsg->asQuotedString( mQuoteString, mSelection,
                                                     mSmartQuote, mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
             quote.chop( 1 );
@@ -313,7 +313,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug(5006) <<"Command: QHEADERS";
         i += strlen( "QHEADERS" );
         if ( mOrigMsg ) {
-          QString quote = mOrigMsg->asQuotedString( "", mQuoteString,
+          QString quote = mOrigMsg->asQuotedString( mQuoteString,
                                                     mOrigMsg->headerAsSendableString(),
                                                     mSmartQuote, false );
           if ( quote.endsWith( '\n' ) )
