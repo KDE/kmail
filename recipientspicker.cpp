@@ -359,9 +359,9 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   mRecipientList->setAlternatingRowColors( true );
   mRecipientList->setSortingEnabled( true );
   mRecipientList->sortItems( 1, Qt::AscendingOrder );
-  mRecipientList->setHeaderLabels( QStringList() << i18n("->")
-                                                 << i18n("Name")
-                                                 << i18n("Email") );
+  mRecipientList->setHeaderLabels( QStringList() << i18nc("@title:column", "->")
+                                                 << i18nc("@title:column Name of the recipient.", "Name")
+                                                 << i18nc("@title:column Email of the recipient.", "Email") );
   mRecipientList->setColumnWidth( 0, 80);
   mRecipientList->setColumnWidth( 1, 200 );
   mRecipientList->setColumnWidth( 2, 200 );
@@ -379,7 +379,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   mSearchLDAPButton = new QPushButton( i18n("Search &Directory Service"), searchLineAndLDAP );
   connect( mSearchLDAPButton, SIGNAL( clicked() ), SLOT( slotSearchLDAP() ) );
-  resLayout->addRow( i18n("Search:"), searchLineAndLDAP );
+  resLayout->addRow( i18nc("Search for recipient.", "Search:"), searchLineAndLDAP );
 
   KConfig config( "kabldaprc" );
   KConfigGroup group = config.group( "LDAP" );
@@ -443,7 +443,7 @@ RecipientsPicker::~RecipientsPicker()
 
 void RecipientsPicker::initCollections()
 {
-  mAllRecipients = new RecipientsCollection( i18n("All") );
+  mAllRecipients = new RecipientsCollection( i18nc("All collections containing recipients.", "All") );
   mAllRecipients->setReferenceContainer( true );
   mDistributionLists = new RecipientsCollection( i18n("Distribution Lists") );
   mSelectedRecipients = new RecipientsCollection( i18n("Selected Recipients") );

@@ -941,10 +941,10 @@ bool ImapAccountBase::handlePutError( KIO::Job* job, jobData& jd, KMFolder* fold
   // Use double-quotes around the subject to keep the sentence readable,
   // but don't use double quotes around the sender since from() might return a double-quoted name already
   const QString subject = msg->subject().isEmpty() ?
-                          i18n( "<unknown>" ) :
+                          i18nc( "Unknown subject.", "<placeholder>unknown</placeholder>" ) :
                           QString("\"%1\"").arg( msg->subject() );
   const QString from = msg->from().isEmpty() ?
-                       i18n( "<unknown>" ) :
+                       i18nc( "Unknown sender.", "<placeholder>unknown</placeholder>" ) :
                        msg->from();
   QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>"
