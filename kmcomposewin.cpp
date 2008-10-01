@@ -183,7 +183,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
-    mPreserveUserCursorPosition( false )
+    mPreserveUserCursorPosition( false ),
+    mPreventFccOverwrite( false )
 {
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -2122,6 +2123,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   // do this even for new messages
   mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
+
+  // honor "keep reply in this folder" setting even when the identity is changed later on
+  mPreventFccOverwrite = ( !newMsg->fcc().isEmpty() && ident.fcc() != newMsg->fcc() );
 }
 
 
@@ -4727,8 +4731,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
-  if ( !mBtnFcc->isChecked() ) {
-      setFcc( ident.fcc() );
+  if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
+    setFcc( ident.fcc() );
   }
 
   QString edtText = mEditor->text();

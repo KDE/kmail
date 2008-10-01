@@ -910,6 +910,8 @@ private:
    *   accidentally moving the cursor.
    */
   bool mPreserveUserCursorPosition;
+
+  bool mPreventFccOverwrite;
 };
 
 #endif
