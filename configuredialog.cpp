@@ -4672,7 +4672,7 @@ void SecurityPage::SMimeTab::slotUpdateHTTPActions() {
   mWidget->systemHTTPProxy->setEnabled( enableProxySettings );
   mWidget->useCustomHTTPProxyRB->setEnabled( enableProxySettings );
   mWidget->honorHTTPProxyRB->setEnabled( enableProxySettings );
-  mWidget->customHTTPProxy->setEnabled( enableProxySettings );
+  mWidget->customHTTPProxy->setEnabled( enableProxySettings && mWidget->useCustomHTTPProxyRB->isChecked());
 
   if ( !mWidget->useCustomHTTPProxyRB->isChecked() &&
        !mWidget->honorHTTPProxyRB->isChecked() )
