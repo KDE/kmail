@@ -2035,7 +2035,8 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
     if ( source )
       sourceFolderName = source->label();
 
-    if ( parent->hasNamedFolder( sourceFolderName ) || sourceFolderNames.contains( sourceFolderName ) ) {
+    if ( parent && ( parent->hasNamedFolder( sourceFolderName ) ||
+         sourceFolderNames.contains( sourceFolderName ) ) ) {
       KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> here because a folder with the same name already exists.</qt>", sourceFolderName ) );
       return;
     }
