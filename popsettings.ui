@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
+    <width>395</width>
     <height>455</height>
    </rect>
   </property>
@@ -35,7 +35,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page1" >
       <attribute name="title" >
@@ -214,7 +214,7 @@
           <number>365</number>
          </property>
          <property name="suffix" >
-          <string> days</string>
+          <string comment="Number of days that the message will be left on the server." > days</string>
          </property>
         </widget>
        </item>

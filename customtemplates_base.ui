@@ -82,7 +82,7 @@
          </column>
          <column>
           <property name="text" >
-           <string>Name</string>
+           <string comment="Name of the custom template.">Name</string>
           </property>
          </column>
         </widget>
@@ -140,7 +140,7 @@
           <widget class="QComboBox" name="mType" >
            <item>
             <property name="text" >
-             <string>Universal</string>
+             <string comment="Universal custom template type.">Universal</string>
             </property>
            </item>
            <item>
@@ -155,7 +155,7 @@
            </item>
            <item>
             <property name="text" >
-             <string>Forward</string>
+             <string comment="Template type for forwarding messages.">Forward</string>
             </property>
            </item>
           </widget>

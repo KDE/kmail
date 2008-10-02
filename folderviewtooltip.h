@@ -45,8 +45,10 @@ class FolderViewToolTip : public QObject
       item->updateCount();
       QString tipText = i18n( "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3<br/>Size: %4</qt>",
                               item->folder()->prettyUrl().replace( " ", "&nbsp;" ),
-                              item->totalCount() < 0 ? "-" : "" + item->totalCount(),
-                              item->unreadCount() < 0 ? "-" : "" + item->unreadCount(),
+                              item->totalCount() < 0 ? "-"
+                                : i18nc("Total number of emails.", "%1", item->totalCount()),
+                              item->unreadCount() < 0 ? "-"
+                                : i18nc("Number of unread emails.", "%1", item->unreadCount()),
                               KIO::convertSize( item->folderSize() ) );
 
       if ( KMFolderCachedImap* imap = dynamic_cast<KMFolderCachedImap*>( item->folder()->storage() ) ) {

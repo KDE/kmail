@@ -114,7 +114,7 @@ It is recommended to leave this option turned on for maximum security.
             <item row="1" column="1" >
               <widget class="QSpinBox" name="mWarnSignKeyExpiresSB" >
                 <property name="suffix" >
-                  <string> days</string>
+                  <string comment="Number of days the signature certificate should be valid without issuing a warning. " > days</string>
                 </property>
                 <property name="maximum" >
                   <number>999</number>
@@ -141,7 +141,7 @@ The recommended SPHINX setting is 14 days.
             <item row="1" column="2" >
               <widget class="QSpinBox" name="mWarnEncrKeyExpiresSB" >
                 <property name="suffix" >
-                  <string> days</string>
+                  <string comment="the minimum number of days the encryption certificate should be valid without issuing a warning." > days</string>
                 </property>
                 <property name="maximum" >
                   <number>999</number>
@@ -168,7 +168,7 @@ The recommended SPHINX setting is 14 days.
             <item row="2" column="2" >
               <widget class="QSpinBox" name="mWarnEncrChainCertExpiresSB" >
                 <property name="suffix" >
-                  <string> days</string>
+                  <string comment="The minimum number of days all certificates in the chain should be valid"> days</string>
                 </property>
                 <property name="maximum" >
                   <number>999</number>
@@ -195,7 +195,7 @@ The recommended SPHINX setting is 14 days.
             <item row="2" column="1" >
               <widget class="QSpinBox" name="mWarnSignChainCertExpiresSB" >
                 <property name="suffix" >
-                  <string> days</string>
+                  <string comment="The minimum number of days the CA certificate should be valid"> days</string>
                 </property>
                 <property name="maximum" >
                   <number>999</number>
@@ -222,7 +222,7 @@ The recommended SPHINX setting is 14 days.
             <item row="3" column="1" >
               <widget class="QSpinBox" name="mWarnSignRootCertExpiresSB" >
                 <property name="suffix" >
-                  <string> days</string>
+                  <string comment="The minimum number of days the root certificate should be valid"> days</string>
                 </property>
                 <property name="maximum" >
                   <number>999</number>
@@ -249,7 +249,7 @@ The recommended SPHINX setting is 14 days.
             <item row="3" column="2" >
               <widget class="QSpinBox" name="mWarnEncrRootCertExpiresSB" >
                 <property name="suffix" >
-                  <string> days</string>
+                  <string comment="the minimum number of days the root certificate should be valid"> days</string>
                 </property>
                 <property name="maximum" >
                   <number>999</number>

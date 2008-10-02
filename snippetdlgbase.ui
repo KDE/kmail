@@ -32,7 +32,7 @@
    <item row="1" column="0" >
     <widget class="QLabel" name="textLabelGroup" >
      <property name="text" >
-      <string>Group:</string>
+      <string comment="Group to which the snippet belongs.">Group:</string>
      </property>
      <property name="wordWrap" >
       <bool>false</bool>
