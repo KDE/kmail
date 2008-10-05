@@ -107,7 +107,7 @@ SnippetGroup * SnippetItem::findGroupById(int id, const QList<SnippetItem *> &li
 int SnippetGroup::iMaxId = 1;
 
 SnippetGroup::SnippetGroup( QTreeWidget *parent, const QString &name, int id )
- : SnippetItem( parent, name, i18n("GROUP") )
+ : SnippetItem( parent, name, "GROUP" )
 {
   if (id > 0) {
     iId = id;
