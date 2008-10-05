@@ -951,7 +951,7 @@ int KMFolderMaildir::removeContents()
    * that would otherwise be deleted. */
   QDir dir(location());
   if ( dir.count() == 2 ) { // only . and ..
-    if ( !removeDirAndContentsRecursively( location() ), 0 ) return 1;
+    if ( !removeDirAndContentsRecursively( location() ) ) return 1;
   }
   return 0;
 }

@@ -1919,7 +1919,7 @@ KMCommand::Result KMCopyCommand::execute()
   } // end for
 
   bool deleteNow = false;
-  if (!localList.isEmpty())
+  if ( !localList.isEmpty() && mDestFolder )
   {
     QList<int> index;
     mDestFolder->addMessages( localList, index );
@@ -1940,7 +1940,7 @@ KMCommand::Result KMCopyCommand::execute()
 
 //TODO: Get rid of the other cases just use this one for all types of folder
 //TODO: requires adding copyMsg and getFolder methods to KMFolder.h
-  if (!list.isEmpty())
+  if ( !list.isEmpty() && mDestFolder )
   {
     // copy the message(s); note: the list is empty afterwards!
     KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
@@ -1953,7 +1953,8 @@ KMCommand::Result KMCopyCommand::execute()
   // only close the folder and delete the job if we're done
   // otherwise this is done in slotMsgAdded or slotFolderComplete
   if ( deleteNow ) {
-    mDestFolder->close( "kmcommand" );
+    if ( mDestFolder )
+      mDestFolder->close( "kmcommand" );
     setResult( OK );
     emit completed( this );
     deleteLater();
