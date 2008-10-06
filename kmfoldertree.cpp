@@ -1379,7 +1379,7 @@ void KMFolderTree::cleanupConfigFile()
   Q3ListViewItemIterator fldIt(this);
   QMap<QString,bool> folderMap;
   KMFolderTreeItem *fti;
-  for (Q3ListViewItemIterator fldIt(this); fldIt.current(); fldIt++)
+  for (Q3ListViewItemIterator fldIt(this); fldIt.current(); ++fldIt)
   {
     fti = static_cast<KMFolderTreeItem*>(fldIt.current());
     if (fti && fti->folder())
@@ -1388,7 +1388,7 @@ void KMFolderTree::cleanupConfigFile()
   QStringList groupList = config->groupList();
   QString name;
   for (QStringList::Iterator grpIt = groupList.begin();
-    grpIt != groupList.end(); grpIt++)
+    grpIt != groupList.end(); ++grpIt)
   {
     if ((*grpIt).left(7) != "Folder-") continue;
     name = (*grpIt).mid(7);

@@ -1666,7 +1666,7 @@ void KMKernel::cleanup(void)
   the_folderMgr->createFolderList(&strList, &folders);
 
   QList<QPointer<KMFolder> >::const_iterator it;
-  for ( it = folders.begin(); it != folders.end(); it++ ) {
+  for ( it = folders.begin(); it != folders.end(); ++it ) {
     folder = *it;
     if ( !folder || folder->isDir() ) {
       continue;

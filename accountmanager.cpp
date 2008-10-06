@@ -95,16 +95,15 @@ void AccountManager::readConfig(void)
   KMAccount* acct;
   QString acctName;
   QString groupName;
-  int i, num;
 
   for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it )
       delete *it;
   mAcctList.clear();
 
   KConfigGroup general(config, "General");
-  num = general.readEntry( "accounts", 0 );
+  int num = general.readEntry( "accounts", 0 );
 
-  for (i=1; i<=num; i++)
+  for (int i=1; i<=num; i++)
   {
     groupName.sprintf("Account %d", i);
     KConfigGroup group(config, groupName);

@@ -205,7 +205,7 @@ static inline std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgM
   std::vector<GpgME::Key> ickies;
   std::vector<GpgME::Key>::const_iterator it = keys.begin();
   const std::vector<GpgME::Key>::const_iterator end = keys.end();
-  for ( ; it != end ; it++ ) {
+  for ( ; it != end ; ++it ) {
     const GpgME::Key key = *it;
     assert( ValidTrustedEncryptionKey( key ) );
     const std::vector<GpgME::UserID> uids = key.userIDs();

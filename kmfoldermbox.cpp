@@ -803,14 +803,14 @@ int KMFolderMbox::createIndexFromContents()
     /* Reverted, as it breaks reading the sent mail status, for example.
        -till */
     if ( ( needStatus & 1) && strncasecmp( line, "Status:", 7 ) == 0 )  {
-      for ( i=0; i<4 && line[i+8] > ' '; i++ ) {
+      for ( i=0; i<4 && line[i+8] > ' '; ++i ) {
         status[i] = line[i+8];
       }
       status[i] = '\0';
       needStatus &= ~1;
     } else if ( ( needStatus & 2 ) &&
                 strncasecmp( line, "X-Status:", 9 ) == 0 ) {
-      for ( i=0; i<4 && line[i+10] > ' '; i++ ) {
+      for ( i=0; i<4 && line[i+10] > ' '; ++i ) {
         xstatus[i] = line[i+10];
       }
       xstatus[i] = '\0';

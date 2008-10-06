@@ -45,12 +45,12 @@ void KMMsgList::clear( bool doDelete, bool syncDict )
 //-----------------------------------------------------------------------------
 bool KMMsgList::resize( unsigned int aSize )
 {
-  unsigned int i, oldSize = size();
+  unsigned int oldSize = size();
   KMMsgBase* msg;
 
   // delete messages that will get lost, if any
   if ( aSize < mHigh ) {
-    for ( i = aSize; i < mHigh; i++ )
+    for ( unsigned int i = aSize; i < mHigh; i++ )
     {
       msg = operator[]( i );
       if ( msg ) {
@@ -65,7 +65,7 @@ bool KMMsgList::resize( unsigned int aSize )
   QVector<KMMsgBase*>::resize( aSize );
 
   // initialize new elements
-  for ( i = oldSize; i < aSize; i++ )
+  for ( unsigned int i = oldSize; i < aSize; i++ )
     operator[]( i ) = 0;
 
   return true;

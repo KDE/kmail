@@ -254,14 +254,14 @@ int operator==( KMMsgBase & m1, KMMsgBase & m2 )
 //-----------------------------------------------------------------------------
 int FolderStorage::expungeOldMsg(int days)
 {
-  int i, msgnb=0;
+  int msgnb=0;
   time_t msgTime, maxTime;
   const KMMsgBase* mb;
   QList<int> rmvMsgList;
 
   maxTime = time(0) - days * 3600 * 24;
 
-  for (i=count()-1; i>=0; i--) {
+  for (int i=count()-1; i>=0; i--) {
     mb = getMsgBase(i);
     assert(mb);
     msgTime = mb->date();

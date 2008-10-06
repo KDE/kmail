@@ -1645,7 +1645,7 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
      * Note: This potentially resets too many items if there is more than one
      *       move going on. Oh well, I suppose no animals will be harmed.
      * */
-    for (Q3ListViewItemIterator it(this); it.current(); it++) {
+    for (Q3ListViewItemIterator it(this); it.current(); ++it) {
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
       if ( item->aboutToBeDeleted() ) {
         item->setAboutToBeDeleted ( false );
@@ -1755,7 +1755,7 @@ void KMHeaders::setSelectedByIndex( QList<int> items, bool selected )
 void KMHeaders::clearSelectableAndAboutToBeDeleted( quint32 serNum )
 {
   // fugly, but I see no way around it
-  for (Q3ListViewItemIterator it(this); it.current(); it++) {
+  for (Q3ListViewItemIterator it(this); it.current(); ++it) {
     HeaderItem *item = static_cast<HeaderItem*>(it.current());
     if ( item->aboutToBeDeleted() ) {
       KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
@@ -1772,7 +1772,7 @@ void KMHeaders::clearSelectableAndAboutToBeDeleted( quint32 serNum )
 KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 {
   mSelMsgBaseList.clear();
-  for (Q3ListViewItemIterator it(this); it.current(); it++) {
+  for (Q3ListViewItemIterator it(this); it.current(); ++it) {
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
       if ( !item->aboutToBeDeleted() ) { // we are already working on this one
@@ -1793,7 +1793,7 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 QList<int> KMHeaders::selectedItems()
 {
   QList<int> items;
-  for ( Q3ListViewItemIterator it(this); it.current(); it++ )
+  for ( Q3ListViewItemIterator it(this); it.current(); ++it )
   {
     if ( it.current()->isSelected() && it.current()->isVisible() )
     {
@@ -3153,7 +3153,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 
             CREATE_TIMER(parse);
             START_TIMER(parse);
-            for(x = 0; !feof(sortStream) && !error; x++) {
+            for(x = 0; !feof(sortStream) && !error; x++) { // krazy:excludeall=postfixop
                 off_t offset = KDE_ftell(sortStream);
                 KMFolder *folder;
                 //parse
@@ -3602,7 +3602,7 @@ bool KMHeaders::isMessageCut(quint32 serNum) const
 QList< Q_UINT32 > KMHeaders::selectedSernums()
 {
   QList<Q_UINT32> list;
-  for ( Q3ListViewItemIterator it(this); it.current(); it++ ) {
+  for ( Q3ListViewItemIterator it(this); it.current(); ++it ) {
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem* item = static_cast<HeaderItem*>( it.current() );
       KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );

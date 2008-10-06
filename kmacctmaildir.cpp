@@ -83,7 +83,6 @@ void KMAcctMaildir::processNewMail(bool)
                               false /* no index */, false /* don't export sernums */);
 
   long num = 0;
-  long i;
   int rc;
   KMMessage* msg;
   bool addedOk;
@@ -135,7 +134,7 @@ void KMAcctMaildir::processNewMail(bool)
 
   mMailCheckProgressItem->setTotalItems( num );
 
-  for (i=0; i<num; i++)
+  for (long i=0; i<num; i++)
   {
 
     if( kmkernel->mailCheckAborted() ) {

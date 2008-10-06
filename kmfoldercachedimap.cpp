@@ -313,7 +313,7 @@ void KMFolderCachedImap::readConfig()
 #if MAIL_LOSS_DEBUGGING
   kDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyUrl() << endl << uids;
 #endif
-  for ( QStringList::iterator it = uids.begin(); it != uids.end(); it++ ) {
+  for ( QStringList::iterator it = uids.begin(); it != uids.end(); ++it ) {
       mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
   }
 }
@@ -341,7 +341,7 @@ void KMFolderCachedImap::writeConfig()
   if ( !mDeletedUIDsSinceLastSync.isEmpty() ) {
     QList<ulong> uids = mDeletedUIDsSinceLastSync.keys();
     QStringList uidstrings;
-    for( QList<ulong>::iterator it = uids.begin(); it != uids.end(); it++ ) {
+    for( QList<ulong>::iterator it = uids.begin(); it != uids.end(); ++it ) {
       uidstrings.append(  QString::number( (*it) ) );
     }
     configGroup.writeEntry( "UIDSDeletedSinceLastSync", uidstrings );
@@ -1584,7 +1584,7 @@ bool KMFolderCachedImap::deleteMessages()
    */
   QStringList uids;
   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
-  for ( ; it != uidMap.constEnd(); it++ ) {
+  for ( ; it != uidMap.constEnd(); ++it ) {
     ulong uid ( it.key() );
     if ( uid != 0 && !uidsOnServer.contains( uid ) ) {
       uids << QString::number( uid );

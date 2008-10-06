@@ -1429,7 +1429,7 @@ void KMFolderImap::slotListFolderEntries( KIO::Job *job,
     return;
   }
   for ( KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
-        udsIt != uds.end(); udsIt++)
+        udsIt != uds.end(); ++udsIt)
   {
     const QString name = udsIt->stringValue( KIO::UDSEntry::UDS_NAME );
     const QString mimeType = udsIt->stringValue( KIO::UDSEntry::UDS_MIME_TYPE );

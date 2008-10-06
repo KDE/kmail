@@ -741,7 +741,7 @@ QList<KMMsgBase*> SearchWindow::selectedMessages()
     QList<KMMsgBase*> msgList;
     KMFolder* folder = 0;
     int msgIndex = -1;
-    for (QTreeWidgetItemIterator it(mLbxMatches); (*it); it++)
+    for (QTreeWidgetItemIterator it(mLbxMatches); (*it); ++it)
         if ((*it)->isSelected()) {
             KMMsgDict::instance()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
                                            &folder, &msgIndex);

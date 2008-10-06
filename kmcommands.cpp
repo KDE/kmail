@@ -253,7 +253,7 @@ void KMCommand::slotStart()
   }
 
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ )
+  for ( it = mMsgList.begin(); it != mMsgList.end(); ++it )
     if ( !( (*it)->parent() ) ) {
       emit messagesTransfered( Failed );
       return;
@@ -311,7 +311,7 @@ void KMCommand::transferSelectedMsgs()
     mProgressDialog->setMinimumDuration(1000);
   }
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ )
+  for ( it = mMsgList.begin(); it != mMsgList.end(); ++it )
   {
     KMMsgBase *mb = (*it);
     // check if all messages are complete
@@ -812,7 +812,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   // change, or become invalid when changing the current message, switching
   // folders, etc.
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = msgList.begin(); it != msgList.end(); it++ ) {
+  for ( it = msgList.begin(); it != msgList.end(); ++it ) {
     mMsgList.append( (*it)->getMsgSerNum() );
     mTotalSize += (*it)->msgSize();
     if ( (*it)->parent() != 0 ) {
@@ -1301,7 +1301,7 @@ KMCommand::Result KMForwardCommand::execute()
       uint id = 0;
       QList<KMMessage*> linklist;
       QList<KMMessage*>::const_iterator it;
-      for ( it = msgList.begin(); it != msgList.end(); it++ ) {
+      for ( it = msgList.begin(); it != msgList.end(); ++it ) {
         // set the identity
         if (id == 0)
           id = (*it)->headerField("X-KMail-Identity").trimmed().toUInt();
@@ -1696,7 +1696,7 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = msgList.begin(); it != msgList.end(); it++ )
+  for ( it = msgList.begin(); it != msgList.end(); ++it )
     serNumList.append( (*it)->getMsgSerNum() );
 }
 
@@ -1713,7 +1713,7 @@ KMCommand::Result KMFilterActionCommand::execute()
   progressItem->setTotalItems( msgCountToFilter );
 
   QList<quint32>::const_iterator it;
-  for ( it = serNumList.begin(); it != serNumList.end(); it++ ) {
+  for ( it = serNumList.begin(); it != serNumList.end(); ++it ) {
     quint32 serNum = *it;
     int diff = msgCountToFilter - ++msgCount;
     if ( diff < 10 || !( msgCount % 10 ) || msgCount <= 10 ) {
@@ -1855,7 +1855,7 @@ KMCommand::Result KMCopyCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
 
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ ) {
+  for ( it = mMsgList.begin(); it != mMsgList.end(); ++it ) {
     msgBase = (*it);
     KMFolder *srcFolder = msgBase->parent();
     isMessage = msgBase->isMessage();

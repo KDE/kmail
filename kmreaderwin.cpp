@@ -909,7 +909,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
 void KMReaderWin::removeTempFiles()
 {
   for (QStringList::Iterator it = mTempFiles.begin(); it != mTempFiles.end();
-    it++)
+    ++it)
   {
     QFile::remove(*it);
   }

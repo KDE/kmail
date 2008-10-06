@@ -267,18 +267,17 @@ void KMFilter::readConfig(KConfigGroup & config)
     mIcon = config.readEntry( "Icon", "system-run" );
     bAutoNaming = config.readEntry( "AutomaticName", false );
 
-    int i, numActions;
     QString actName, argsName;
 
     mActions.clear();
 
-    numActions = config.readEntry( "actions", 0 );
+    int numActions = config.readEntry( "actions", 0 );
     if (numActions > FILTER_MAX_ACTIONS) {
       numActions = FILTER_MAX_ACTIONS ;
       KMessageBox::information( 0, i18n("<qt>Too many filter actions in filter rule <b>%1</b>.</qt>", mPattern.name() ) );
     }
 
-    for ( i=0 ; i < numActions ; i++ ) {
+    for ( int i=0 ; i < numActions ; i++ ) {
       actName.sprintf("action-name-%d", i);
       argsName.sprintf("action-args-%d", i);
       // get the action description...

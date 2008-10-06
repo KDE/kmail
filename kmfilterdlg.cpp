@@ -1141,14 +1141,13 @@ KMFilterActionWidget::~KMFilterActionWidget()
 
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 {
-  int i=0;
   bool found = false;
   int count = mComboBox->count() - 1 ; // last entry is the empty one
   QString label = ( aAction ) ? aAction->label() : QString() ;
 
   // find the index of typeOf(aAction) in mComboBox
   // and clear the other widgets on the way.
-  for ( ; i < count ; i++ )
+  for ( int i = 0; i < count ; i++ )
     if ( aAction && mComboBox->itemText(i) == label ) {
       //...set the parameter widget to the settings
       // of aAction...

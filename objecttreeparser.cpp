@@ -2726,10 +2726,10 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   const QString normalEndTag = "</div>";
   const QString quoteEnd = "</div>";
 
-  unsigned int pos, beg;
   const unsigned int length = s.length();
   bool paraIsRTL;
   bool startNewPara = true;
+  unsigned int pos, beg;
 
   // skip leading empty lines
   for ( pos = 0; pos < length && s[pos] <= ' '; pos++ )

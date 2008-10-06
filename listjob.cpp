@@ -195,7 +195,7 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   if( (*it).progressItem )
     (*it).progressItem->setProgress( 50 );
   for ( KIO::UDSEntryList::ConstIterator udsIt = uds.constBegin();
-        udsIt != uds.constEnd(); udsIt++ )
+        udsIt != uds.constEnd(); ++udsIt )
   {
     // get the needed information
     const QString name = udsIt->stringValue( KIO::UDSEntry::UDS_NAME );

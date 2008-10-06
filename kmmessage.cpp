@@ -579,7 +579,7 @@ static bool flushPart(QString &msg, QStringList &part,
    QString text;
    for(QStringList::Iterator it2 = part.begin();
        it2 != part.end();
-       it2++)
+       ++it2)
    {
       QString line = (*it2);
 

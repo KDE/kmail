@@ -123,7 +123,7 @@ void ExpireJob::slotDoWork()
 #ifdef DEBUG_SCHEDULER
   kDebug(5006) <<"ExpireJob: checking messages" << mCurrentIndex <<" to" << stopIndex;
 #endif
-  for( ; mCurrentIndex >= stopIndex; mCurrentIndex-- ) {
+  for( ; mCurrentIndex >= stopIndex; --mCurrentIndex ) {
     const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
     if (mb == 0)
       continue;
