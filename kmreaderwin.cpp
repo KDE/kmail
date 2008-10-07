@@ -444,6 +444,11 @@ void KMReaderWin::createWidgets() {
   mColorBar->setObjectName( "mColorBar" );
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
+  // Remove the select all action from khtml part. It's redefined to
+  // CTRL-SHIFT-A in kmail and clashes with kmails CTRL-A action.
+  mViewer->actionCollection()->removeAction(
+          mViewer->actionCollection()->action(
+                  KStandardAction::name(KStandardAction::SelectAll)));
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
