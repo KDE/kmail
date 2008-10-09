@@ -1676,7 +1676,7 @@ void KMKernel::cleanup(void)
   strList.clear();
   folders.clear();
   the_searchFolderMgr->createFolderList(&strList, &folders);
-  for ( it = folders.begin(); it != folders.end(); it++ ) {
+  for ( it = folders.begin(); it != folders.end(); ++it ) {
     folder = *it;
     if ( !folder || folder->isDir() ) {
       continue;
