@@ -205,7 +205,7 @@ void DistributionListDialog::slotUser1()
   if ( ab->findDistributionListByName( name ) ) {
 #endif
     KMessageBox::information( this,
-      i18nc( "@info", "<para>Distribution list with the given name <placeholder>%1</placeholder> "
+      i18nc( "@info", "<para>Distribution list with the given name <resource>%1</resource> "
         "already exists. Please select a different name.</para>", name ) );
     return;
   }

@@ -1357,7 +1357,7 @@ void KMMainWidget::slotRemoveFolder()
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
-                   "<filename>%1</filename> and all its subfolders? Those subfolders might "
+                   "<resource>%1</resource> and all its subfolders? Those subfolders might "
                    "not be empty and their contents will be discarded as well. "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
@@ -1366,13 +1366,13 @@ void KMMainWidget::slotRemoveFolder()
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
-                   "<filename>%1</filename>, discarding its contents? "
+                   "<resource>%1</resource>, discarding its contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
                 Qt::escape( mFolder->label() ) );
       }
       else {
-        str = i18n("<qt>Are you sure you want to delete the folder <filename>%1</filename> "
+        str = i18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
                    "and all its subfolders, discarding their contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",

@@ -820,9 +820,13 @@ void SideWidget::updateTotalToolTip()
     }
   }
 
-  text += i18nc("@info:tooltip", "<interface>To:</interface><nl/>") + to;
-  if ( !cc.isEmpty() ) text += i18nc("@info:tooltip", "<interface>CC:</interface><nl/>") + cc;
-  if ( !bcc.isEmpty() ) text += i18nc("@info:tooltip", "<interface>BCC:</interface><nl/>") + bcc;
+  text += i18nc("@info:tooltip %1 list of emails", "<interface>To:</interface><nl/>%1", to);
+  if ( !cc.isEmpty() ) {
+    text += i18nc("@info:tooltip %1 list of emails", "<interface>CC:</interface><nl/>%1", cc);
+  }
+  if ( !bcc.isEmpty() ) {
+    text += i18nc("@info:tooltip %1 list of emails", "<interface>BCC:</interface><nl/>%1", bcc);
+  }
 
   text.append( "</qt>" );
   mTotalLabel->setToolTip( text );
