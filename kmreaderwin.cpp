@@ -638,43 +638,82 @@ void KMReaderWin::createActions()
   mSelectEncodingAction->setItems( encodings );
   mSelectEncodingAction->setCurrentItem( 0 );
 
-  mMailToComposeAction  = new KAction(i18n("New Message To..."), this);
+  //
+  // Message Menu
+  //
+
+  // new message to
+  mMailToComposeAction = new KAction( KIcon( "mail-message-new" ),
+                                      i18n( "New Message To..." ), this );
   ac->addAction("mail_new", mMailToComposeAction );
-  connect(mMailToComposeAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoCompose()));
-  mMailToReplyAction  = new KAction(i18n("Reply To..."), this);
-  ac->addAction("mailto_reply", mMailToReplyAction );
-  connect(mMailToReplyAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoReply()));
-  mMailToForwardAction  = new KAction(i18n("Forward To..."), this);
-  ac->addAction("mailto_forward", mMailToForwardAction );
-  connect(mMailToForwardAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoForward()));
-  mAddAddrBookAction  = new KAction(i18n("Add to Address Book"), this);
-  ac->addAction("add_addr_book", mAddAddrBookAction );
-  connect(mAddAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoAddAddrBook()));
-  mOpenAddrBookAction  = new KAction(i18n("Open in Address Book"), this);
-  ac->addAction("openin_addr_book", mOpenAddrBookAction );
-  connect(mOpenAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoOpenAddrBook()));
-  mCopyAction = ac->addAction(KStandardAction::Copy,  "kmail_copy", this, SLOT(slotCopySelectedText()));
+  connect( mMailToComposeAction, SIGNAL(triggered(bool)),
+           SLOT(slotMailtoCompose()) );
+
+  // reply to
+  mMailToReplyAction = new KAction( KIcon( "mail-reply-sender" ),
+                                    i18n( "Reply To..." ), this );
+  ac->addAction( "mailto_reply", mMailToReplyAction );
+  connect( mMailToReplyAction, SIGNAL(triggered(bool)),
+           SLOT(slotMailtoReply()) );
+
+  // forward to
+  mMailToForwardAction = new KAction( KIcon( "mail-forward" ),
+                                      i18n( "Forward To..." ), this );
+  ac->addAction( "mailto_forward", mMailToForwardAction );
+  connect( mMailToForwardAction, SIGNAL(triggered(bool)),
+           SLOT(slotMailtoForward()) );
+
+  // add to addressbook
+  mAddAddrBookAction = new KAction( KIcon( "contact-new" ),
+                                    i18n( "Add to Address Book" ), this );
+  ac->addAction( "add_addr_book", mAddAddrBookAction );
+  connect( mAddAddrBookAction, SIGNAL(triggered(bool)),
+           SLOT(slotMailtoAddAddrBook()) );
+
+  // open in addressbook
+  mOpenAddrBookAction = new KAction( KIcon( "view-pim-contacts" ),
+                                     i18n( "Open in Address Book" ), this );
+  ac->addAction( "openin_addr_book", mOpenAddrBookAction );
+  connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
+           SLOT(slotMailtoOpenAddrBook()) );
+
+  // copy selected text to clipboard
+  mCopyAction = ac->addAction( KStandardAction::Copy, "kmail_copy", this,
+                               SLOT(slotCopySelectedText()) );
+
+  // copy all text to clipboard
   mSelectAllAction  = new KAction(i18n("Select All Text"), this);
   ac->addAction("mark_all_text", mSelectAllAction );
   connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
   mSelectAllAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_A));
-  mCopyURLAction  = new KAction(i18n("Copy Link Address"), this);
-  ac->addAction("copy_url", mCopyURLAction );
-  connect(mCopyURLAction, SIGNAL(triggered(bool) ), SLOT(slotUrlCopy()));
-  mUrlOpenAction  = new KAction(i18n("Open URL"), this);
-  ac->addAction("open_url", mUrlOpenAction );
-  connect(mUrlOpenAction, SIGNAL(triggered(bool) ), SLOT(slotUrlOpen()));
-  mAddBookmarksAction  = new KAction(KIcon("bookmark-new"), i18n("Bookmark This Link"), this);
-  ac->addAction("add_bookmarks", mAddBookmarksAction );
-  connect(mAddBookmarksAction, SIGNAL(triggered(bool) ), SLOT(slotAddBookmarks()));
-  mUrlSaveAsAction  = new KAction(i18n("Save Link As..."), this);
-  ac->addAction("saveas_url", mUrlSaveAsAction );
-  connect(mUrlSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotUrlSave()));
 
-  mToggleFixFontAction  = new KToggleAction(i18n("Use Fi&xed Font"), this);
-  ac->addAction("toggle_fixedfont", mToggleFixFontAction );
-  connect(mToggleFixFontAction, SIGNAL(triggered(bool) ), SLOT(slotToggleFixedFont()));
-  mToggleFixFontAction->setShortcut(QKeySequence(Qt::Key_X));
+  // copy Email address to clipboard
+  mCopyURLAction = new KAction( KIcon( "edit-copy" ),
+                                i18n( "Copy Email Address" ), this );
+  ac->addAction( "copy_url", mCopyURLAction );
+  connect( mCopyURLAction, SIGNAL(triggered(bool)), SLOT(slotUrlCopy()) );
+
+  // open URL
+  mUrlOpenAction = new KAction( i18n( "Open URL" ), this );
+  ac->addAction( "open_url", mUrlOpenAction );
+  connect( mUrlOpenAction, SIGNAL(triggered(bool)), SLOT(slotUrlOpen()) );
+
+  // bookmark message
+  mAddBookmarksAction = new KAction( KIcon( "bookmark-new" ), i18n( "Bookmark This Link" ), this );
+  ac->addAction( "add_bookmarks", mAddBookmarksAction );
+  connect( mAddBookmarksAction, SIGNAL(triggered(bool)),
+           SLOT(slotAddBookmarks()) );
+
+  // save URL as
+  mUrlSaveAsAction = new KAction( i18n( "Save Link As..." ), this );
+  ac->addAction( "saveas_url", mUrlSaveAsAction );
+  connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
+
+  // use fixed font
+  mToggleFixFontAction = new KToggleAction( i18n( "Use Fi&xed Font" ), this );
+  ac->addAction( "toggle_fixedfont", mToggleFixFontAction );
+  connect( mToggleFixFontAction, SIGNAL(triggered(bool)), SLOT(slotToggleFixedFont()) );
+  mToggleFixFontAction->setShortcut( QKeySequence( Qt::Key_X ) );
 
   //
   // Scroll actions
