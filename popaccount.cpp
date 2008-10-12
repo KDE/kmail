@@ -881,7 +881,7 @@ void PopAccount::saveUidList()
   group.writeEntry( "seenUidTimeList", seenUidTimeList );
   QByteArray laterList;
   laterList.reserve( mHeaderLaterUids.count() * 5 ); // what's the average size of a uid?
-  foreach( const QByteArray& uid, mHeaderLaterUids.values() ) {
+  foreach( const QByteArray& uid, mHeaderLaterUids ) {
       if ( !laterList.isEmpty() )
           laterList += ',';
       laterList.append( uid );
