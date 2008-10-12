@@ -2245,7 +2245,7 @@ void KMComposeWin::setCharset( const QByteArray &aCharset, bool forceDefault )
         ++it, i++ ) {
     if (i > 0 && ((mCharset == "us-ascii" && i == 1) ||
                   (i != 1 && KGlobal::charsets()->codecForName(
-                                                               KGlobal::charsets()->encodingForName(*it))
+                                     KGlobal::charsets()->encodingForName(*it))
                    == KGlobal::charsets()->codecForName(mCharset))))
       {
         mEncodingAction->setCurrentItem( i );
@@ -2470,7 +2470,7 @@ void KMComposeWin::slotInsertFile()
   {
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QString encoding = KGlobal::charsets()->encodingForName(encodingStr).toLatin1();
+    QString encoding = KMMsgBase::encodingForName(encodingStr).toLatin1();
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
     // Prevent config file from growing without bound
@@ -2534,8 +2534,7 @@ void KMComposeWin::slotSetCharset()
   }
   mAutoCharset = false;
 
-  mCharset = KGlobal::charsets()->encodingForName( mEncodingAction->
-                                                   currentText() ).toLatin1();
+  mCharset = KMMsgBase::encodingForName( mEncodingAction->currentText() ).toLatin1();
 }
 
 //-----------------------------------------------------------------------------
