@@ -1998,9 +1998,9 @@ void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-                              const QList<KMMsgBase*> &msgList)
-  : mDestFolder( destFolder ), mProgressItem( 0 )
-{
+                                const QList<KMMsgBase*> &msgList)
+    : mDestFolder( destFolder ), mProgressItem( 0 )
+  {
   foreach ( KMMsgBase *msgBase, msgList )
     mSerNumList.append( msgBase->getMsgSerNum() );
 }
@@ -2020,7 +2020,7 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
 }
 
 KMMoveCommand::KMMoveCommand( quint32 )
-  : mProgressItem( 0 )
+  :  mDestFolder( 0 ), mProgressItem( 0 )
 {
 }
 
@@ -2064,11 +2064,12 @@ KMCommand::Result KMMoveCommand::execute()
       kDebug(5006) << "serial number == 0!";
       continue; // invalid message
     }
-    KMFolder *srcFolder;
+    KMFolder *srcFolder = 0;
     int idx = -1;
     KMMsgDict::instance()->getLocation( *it, &srcFolder, &idx );
     if (srcFolder == mDestFolder)
       continue;
+    assert(srcFolder);
     assert(idx != -1);
     if ( !srcFolder->isOpened() ) {
       srcFolder->open( "kmcommand" );
@@ -2248,12 +2249,15 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( quint32 sernum )
   KMFolder *srcFolder = 0;
   int idx;
   KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
+
   if ( srcFolder ) {
     KMMsgBase *msg = srcFolder->getMsgBase( idx );
     srcFolder->open( "kmcommand" );
     mOpenedFolders.push_back( srcFolder );
     addMsg( msg );
     setDestFolder( findTrashFolder( srcFolder ) );
+  } else {
+    kWarning( 5006 ) << "Failed to find a source folder for serial number: " << sernum;
   }
 }
 
