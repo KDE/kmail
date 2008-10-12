@@ -1099,7 +1099,7 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
       QStringList encodings = mSelectEncodingAction->items();
       int i = 0;
       for ( QStringList::const_iterator it = encodings.begin(), end = encodings.end(); it != end; ++it, ++i ) {
-        if ( KGlobal::charsets()->encodingForName( *it ) == encoding ) {
+        if ( KMMsgBase::encodingForName( *it ) == encoding ) {
           mSelectEncodingAction->setCurrentItem( i );
           break;
         }
@@ -1139,7 +1139,7 @@ void KMReaderWin::slotSetEncoding()
   if ( mSelectEncodingAction->currentItem() == 0 ) // Auto
     mOverrideEncoding.clear();
   else
-    mOverrideEncoding = KGlobal::charsets()->encodingForName( mSelectEncodingAction->currentText() );
+    mOverrideEncoding = KMMsgBase::encodingForName( mSelectEncodingAction->currentText() );
   update( true );
 }
 

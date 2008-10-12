@@ -400,6 +400,20 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
 }
 
 //-----------------------------------------------------------------------------
+QString KMMsgBase::encodingForName( const QString &descriptiveName )
+{
+  QString encoding = KGlobal::charsets()->encodingForName( descriptiveName );
+
+  // According to http://www.iana.org/assignments/character-sets, uppercase is
+  // prefered in MIME headers
+  if ( encoding.toUpper().contains( "ISO " ) ) {
+    encoding = encoding.toUpper();
+    encoding.replace( "ISO ", "ISO-" );
+  }
+  return encoding;
+}
+
+//-----------------------------------------------------------------------------
 QByteArray fallbackCharsetForRFC2047Decoding( const QByteArray &prefCharset )
 {
   QByteArray charsetName;

@@ -2138,8 +2138,8 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   bool found = false;
   for( ; it != end; ++it)
   {
-    const QString encoding = KGlobal::charsets()->encodingForName(*it);
-    if ( encoding == "ISO 8859-15" )
+    const QString encoding = KMMsgBase::encodingForName(*it);
+    if ( encoding == "ISO-8859-15" )
         indexOfLatin9 = i;
     if( encoding == currentEncoding )
     {
@@ -2167,7 +2167,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   int i = 0;
   for( ; it != end; ++it)
   {
-    if( KGlobal::charsets()->encodingForName(*it) == currentOverrideEncoding )
+    if( KMMsgBase::encodingForName(*it) == currentOverrideEncoding )
     {
       mOverrideCharsetCombo->setCurrentIndex( i );
       break;
@@ -2211,11 +2211,11 @@ void AppearancePage::ReaderTab::save() {
 
   GlobalSettings::self()->setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
   GlobalSettings::self()->setFallbackCharacterEncoding(
-      KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
+      KMMsgBase::encodingForName( mCharsetCombo->currentText() ) );
   GlobalSettings::self()->setOverrideCharacterEncoding(
       mOverrideCharsetCombo->currentIndex() == 0 ?
         QString() :
-        KGlobal::charsets()->encodingForName( mOverrideCharsetCombo->currentText() ) );
+        KMMsgBase::encodingForName( mOverrideCharsetCombo->currentText() ) );
 }
 
 

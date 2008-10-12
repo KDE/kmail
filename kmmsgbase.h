@@ -259,6 +259,14 @@ public:
   /** Return a list of the supported encodings */
   static QStringList supportedEncodings(bool usAscii);
 
+  /**
+   * Drop-in replacement for KCharsets::encodingForName(). The problem with
+   * the KCharsets function is that it returns "human-readable" encoding names
+   * like "ISO 8859-15" instead of valid encoding names like "ISO-8859-15".
+   * This function fixes this by replacing whitespace with a hyphen.
+   */
+  static QString encodingForName( const QString &descriptiveName );
+
   /** Copy all values from other to this object. */
   void assign(const KMMsgBase* other);
 
