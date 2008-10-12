@@ -88,12 +88,12 @@ static const struct {
   const char* annotation;
   const char* translatedName;
 } s_folderContentsType[] = {
-  { "Mail", "application/x-vnd.kolab.mail", KFolderTreeItem::Other, "mail", I18N_NOOP( "Mail" ) },
-  { "Calendar", "application/x-vnd.kolab.event", KFolderTreeItem::Calendar, "event", I18N_NOOP( "Calendar" ) },
-  { "Contact", "application/x-vnd.kolab.contact", KFolderTreeItem::Contacts, "contact", I18N_NOOP( "Contacts" ) },
-  { "Note", "application/x-vnd.kolab.note", KFolderTreeItem::Notes, "note", I18N_NOOP( "Notes" ) },
-  { "Task", "application/x-vnd.kolab.task", KFolderTreeItem::Tasks, "task", I18N_NOOP( "Tasks" ) },
-  { "Journal", "application/x-vnd.kolab.journal", KFolderTreeItem::Journals, "journal", I18N_NOOP( "Journal" ) }
+  { "Mail", "application/x-vnd.kolab.mail", KFolderTreeItem::Other, "mail", I18N_NOOP2( "type of folder content", "Mail" ) },
+  { "Calendar", "application/x-vnd.kolab.event", KFolderTreeItem::Calendar, "event", I18N_NOOP2( "type of folder content", "Calendar" ) },
+  { "Contact", "application/x-vnd.kolab.contact", KFolderTreeItem::Contacts, "contact", I18N_NOOP2( "type of folder content", "Contacts" ) },
+  { "Note", "application/x-vnd.kolab.note", KFolderTreeItem::Notes, "note", I18N_NOOP2( "type of folder content", "Notes" ) },
+  { "Task", "application/x-vnd.kolab.task", KFolderTreeItem::Tasks, "task", I18N_NOOP2( "type of folder content", "Tasks" ) },
+  { "Journal", "application/x-vnd.kolab.journal", KFolderTreeItem::Journals, "journal", I18N_NOOP2( "type of folder content", "Journal" ) }
 };
 
 static QString folderContentsType( KMail::FolderContentsType type )
@@ -121,7 +121,7 @@ static KMail::FolderContentsType folderContentsType( const QString& type )
 
 static QString localizedDefaultFolderName( KMail::FolderContentsType type )
 {
-  return i18n( s_folderContentsType[type].translatedName );
+  return i18nc( "type of folder content", s_folderContentsType[type].translatedName );
 }
 
 const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContentsType type )
@@ -1971,8 +1971,9 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
     for ( QList<KMFolder*>::ConstIterator it = result.folders.begin(); it != result.folders.end(); ++it )
       labels << (*it)->prettyUrl();
     const QString selected = KInputDialog::getItem( i18n("Default folder"),
-        i18n("There are multiple %1 default folders, please choose one:",
-             localizedDefaultFolderName( contentsType ) ), labels );
+        i18nc( "%1 is one of the messages with context 'type of folder content'",
+               "There are multiple %1 default folders, please choose one:",
+               localizedDefaultFolderName( contentsType ) ), labels );
     if ( !selected.isEmpty() )
       result.folder = result.folders[ labels.indexOf( selected ) ];
   }

@@ -478,12 +478,12 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     label->setBuddy( mContentsComboBox );
     gl->addWidget( mContentsComboBox, row, 1 );
 
-    mContentsComboBox->addItem( i18n( "Mail" ) );
-    mContentsComboBox->addItem( i18n( "Calendar" ) );
-    mContentsComboBox->addItem( i18n( "Contacts" ) );
-    mContentsComboBox->addItem( i18n( "Notes" ) );
-    mContentsComboBox->addItem( i18n( "Tasks" ) );
-    mContentsComboBox->addItem( i18n( "Journal" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Mail" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Calendar" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Contacts" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Notes" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Tasks" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Journal" ) );
     if ( mDlg->folder() )
       mContentsComboBox->setCurrentIndex( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),

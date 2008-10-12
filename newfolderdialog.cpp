@@ -145,12 +145,12 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mContentsComboBox->setObjectName( "mContentsComboBox" );
     mContentsLabel->setBuddy( mContentsComboBox );
     mContentsComboBox->setWhatsThis( i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as-is." ) );
-    mContentsComboBox->addItem( i18n( "Mail" ) );
-    mContentsComboBox->addItem( i18n( "Calendar" ) );
-    mContentsComboBox->addItem( i18n( "Contacts" ) );
-    mContentsComboBox->addItem( i18n( "Notes" ) );
-    mContentsComboBox->addItem( i18n( "Tasks" ) );
-    mContentsComboBox->addItem( i18n( "Journal" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Mail" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Calendar" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Contacts" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Notes" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Tasks" ) );
+    mContentsComboBox->addItem( i18nc( "type of folder content", "Journal" ) );
     if ( mFolder ) // inherit contents type from papa
       mContentsComboBox->setCurrentIndex( mFolder->storage()->contentsType() );
     mContentsHBox->addWidget( mContentsComboBox );
