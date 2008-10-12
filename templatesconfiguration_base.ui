@@ -292,9 +292,11 @@
        <property name="whatsThis" >
            <string>
              &lt;qt&gt;The following placeholders are supported in the quote indicator:
-             &lt;li&gt;%f: sender's initals&lt;/li&gt;
+             &lt;ul&gt;
+             &lt;li&gt;%f: sender's initials&lt;/li&gt;
              &lt;li&gt;%%: percent sign&lt;/li&gt;
-             &lt;li&gt;%_: space&lt;/li&gt;&lt;/qt&gt;
+             &lt;li&gt;%_: space&lt;/li&gt;
+             &lt;/ul&gt;&lt;/qt&gt;
            </string>
        </property>
       </widget>
