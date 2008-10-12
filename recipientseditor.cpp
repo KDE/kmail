@@ -606,7 +606,7 @@ void RecipientsView::removeRecipient( const QString & recipient,
 {
   // search a line which matches recipient and type
   QListIterator<RecipientLine*> it( mLines );
-  RecipientLine *line;
+  RecipientLine *line = 0;
   while (it.hasNext()) {
     line = it.next();
     if ( ( line->recipient().email() == recipient ) &&
