@@ -727,7 +727,7 @@ void ActionScheduler::moveMessage()
   // serial number (otherwise the move commands thinks the message wasn't moved
   // correctly, which would trigger the error case in moveMessageFinished().
   Q_ASSERT( folder );
-  if ( folder && folder->storage() && dynamic_cast<KMFolderImap*>( folder->storage() ) )
+  if ( msg && folder && folder->storage() && dynamic_cast<KMFolderImap*>( folder->storage() ) )
     MessageProperty::setKeepSerialNumber( msg->getMsgSerNum(), true );
 
   timeOutTime = QTime::currentTime();

@@ -329,7 +329,7 @@ KMMsgSignatureState  partNode::overallSignatureState() const
             if( myState != KMMsgFullySigned )
                 myState = KMMsgPartiallySigned;
             break;
-        case KMMsgEncryptionProblematic:
+        case KMMsgSignatureProblematic:
             break;
         }
     }
