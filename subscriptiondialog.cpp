@@ -142,7 +142,7 @@ void SubscriptionDialogBase::createListViewItem( int i )
       item = 0;
       if (folders.count() > 1)
       {
-        // we have to create more then one level, so better check if this
+        // we have to create more than one level, so better check if this
         // folder already exists somewhere
         item = mItemDict[path];
       }
