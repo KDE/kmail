@@ -37,6 +37,7 @@
 using namespace MailTransport;
 #include "globalsettings.h"
 
+#include <KComboBox>
 #include <KGlobalSettings>
 #include <KFileDialog>
 #include <KLocale>
@@ -55,7 +56,6 @@ using namespace MailTransport;
 #include <QValidator>
 #include <QLabel>
 #include <QPushButton>
-#include <QComboBox>
 #include <QToolButton>
 #include <QGroupBox>
 #include <QGridLayout>
@@ -532,7 +532,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
 void AccountDialog::setupSettings()
 {
-  QComboBox *folderCombo = 0;
+  KComboBox *folderCombo = 0;
   bool intervalCheckingEnabled = ( mAccount->checkInterval() > 0 );
   int interval = mAccount->checkInterval();
   if ( !intervalCheckingEnabled ) // Default to 5 minutes when the user enables

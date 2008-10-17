@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>316</height>
+    <width>450</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -52,50 +52,27 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex" >
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_new" >
       <property name="geometry" >
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>94</width>
-        <height>60</height>
+        <width>426</width>
+        <height>345</height>
        </rect>
       </property>
       <attribute name="label" >
        <string>New Message</string>
       </attribute>
-      <layout class="QHBoxLayout" >
-       <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QTextEdit" name="textEdit_new" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-           <horstretch>3</horstretch>
-           <verstretch>3</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize" >
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" >
+        <widget class="KTextEdit" name="textEdit_new" >
          <property name="font" >
           <font>
            <family>Monospace</family>
            <pointsize>9</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-           <underline>false</underline>
-           <strikeout>false</strikeout>
           </font>
          </property>
          <property name="lineWrapMode" >
@@ -113,8 +90,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>192</height>
+        <width>426</width>
+        <height>345</height>
        </rect>
       </property>
       <attribute name="label" >
@@ -161,8 +138,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>192</height>
+        <width>426</width>
+        <height>345</height>
        </rect>
       </property>
       <attribute name="label" >
@@ -209,8 +186,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>349</width>
-        <height>192</height>
+        <width>426</width>
+        <height>345</height>
        </rect>
       </property>
       <attribute name="label" >
@@ -307,6 +284,11 @@
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <customwidgets>
+  <customwidget>
+   <class>KTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>ktextedit.h</header>
+  </customwidget>
   <customwidget>
    <class>TemplatesInsertCommand</class>
    <extends>QWidget</extends>

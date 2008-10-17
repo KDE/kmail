@@ -250,6 +250,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   hbl2->setObjectName( "kmfs_hbl2" );
   mSearchFolderLbl = new QLabel( i18n("Search folder &name:"), searchWidget );
   mSearchFolderEdt = new KLineEdit( searchWidget );
+  mSearchFolderEdt->setClearButtonShown( true );
   if ( searchFolder )
     mSearchFolderEdt->setText( searchFolder->folder()->name() );
   else
