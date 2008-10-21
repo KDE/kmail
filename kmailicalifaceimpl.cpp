@@ -1645,6 +1645,7 @@ void KMailICalIfaceImpl::readConfig()
   bool enabled = GlobalSettings::self()->theIMAPResourceEnabled() &&
                  ( GlobalSettings::self()->theIMAPResourceAccount() != 0 );
 
+  bool justEnabled = false;
   if( !enabled ) {
     if( mUseResourceIMAP == true ) {
       // Shutting down
@@ -1653,6 +1654,8 @@ void KMailICalIfaceImpl::readConfig()
       reloadFolderTree();
     }
     return;
+  } else {
+    justEnabled = enabled != mUseResourceIMAP;
   }
   mUseResourceIMAP = enabled;
 
@@ -1933,6 +1936,17 @@ void KMailICalIfaceImpl::readConfig()
   }
 
   reloadFolderTree();
+
+  if ( justEnabled ) {
+    for ( int i = KMail::ContentsTypeCalendar; i <= KMail::ContentsTypeLast; ++i ) {
+      foreach ( const KMail::SubResource &res,
+                subresourcesKolab( folderContentsType( (FolderContentsType)i ) ) ) {
+        emit subresourceAdded( folderContentsType( (FolderContentsType)i ),
+                               res.location, res.label,
+                               res.writable, res.alarmRelevant );
+      }
+    }
+  }
 }
 
 void KMailICalIfaceImpl::slotCheckDone()
