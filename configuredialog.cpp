@@ -1980,9 +1980,10 @@ void AppearancePage::HeadersTab::save() {
 
   int dateDisplayID = mDateDisplay->selected();
   // check bounds:
-  assert( dateDisplayID >= 0 ); assert( dateDisplayID < numDateDisplayConfig );
-  general.writeEntry( "dateFormat",
-                      (int)dateDisplayConfig[ dateDisplayID ].dateDisplay );
+  if ( ( dateDisplayID >= 0 ) && ( dateDisplayID < numDateDisplayConfig ) ) {
+    general.writeEntry( "dateFormat",
+                        (int)dateDisplayConfig[ dateDisplayID ].dateDisplay );
+  }
   general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
 }
 
