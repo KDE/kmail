@@ -72,6 +72,7 @@ GenericName[xh]=Umxhasi Weposi
 GenericName[zh_CN]=邮件客户程序
 GenericName[zh_TW]=收發信軟體
 Terminal=false
-
 X-KDE-StartupNotify=true
+X-DBUS-StartupType=Unique
+X-DBUS-ServiceName=org.kde.kmail
 Categories=Qt;KDE;Network;
