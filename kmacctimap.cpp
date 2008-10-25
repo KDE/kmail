@@ -92,6 +92,7 @@ KMAcctImap::~KMAcctImap()
   QStringList serNums;
   QHashIterator<QString, int> it( mFilterSerNumsToSave );
   while ( it.hasNext() ) {
+    it.next();
     serNums.append( it.key() );
   }
   config.group("<default>").writeEntry( "unfiltered", serNums );
