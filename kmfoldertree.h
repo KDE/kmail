@@ -88,6 +88,9 @@ public:
   /** dnd */
   virtual bool acceptDrag(QDropEvent* e) const;
 
+  /** Returns the icon size. */
+  virtual int iconSize() const { return 16; }
+
 signals:
   /** Our icon changed */
   void iconChanged( KMFolderTreeItem * );
@@ -106,8 +109,6 @@ protected:
   KMFolder* mFolder;
   /** Returns true when top-level/account icons should be used */
   virtual bool useTopLevelIcon() const { return depth() == 0; }
-  /** Returns the icon size. */
-  virtual int iconSize() const { return 16; }
 
 private:
   bool mNeedsRepaint;

@@ -2494,21 +2494,23 @@ void KMHeaders::slotRMB()
   }
   menu->addSeparator();
 
-  QMenu *msgCopyMenu = new QMenu(menu);
+  QMenu *msgCopyMenu = new QMenu( menu );
   mOwner->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
-      &mMenuToFolder, msgCopyMenu );
-  msgCopyMenu->setTitle(i18n("&Copy To"));
+                                           &mMenuToFolder, msgCopyMenu );
+  msgCopyMenu->setTitle( i18n( "&Copy To" ) );
+  msgCopyMenu->setIcon( KIcon( "edit-copy" ) );
   menu->addMenu( msgCopyMenu );
 
   if ( mFolder->isReadOnly() ) {
-    QAction* act = menu->addAction( i18n("&Move To") );
+    QAction *act = menu->addAction( i18n( "&Move To" ) );
     act->setEnabled( false );
   } else {
-    QMenu *msgMoveMenu = new QMenu(menu);
+    QMenu *msgMoveMenu = new QMenu( menu );
     mOwner->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this,
-        &mMenuToFolder, msgMoveMenu );
-    msgMoveMenu->setTitle(i18n("&Move To"));
-    menu->addMenu( msgMoveMenu) ;
+                                             &mMenuToFolder, msgMoveMenu );
+    msgMoveMenu->setTitle( i18n( "&Move To" ) );
+    msgMoveMenu->setIcon( KIcon( "go-jump" ) );
+    menu->addMenu( msgMoveMenu ) ;
   }
   menu->addSeparator();
   menu->addAction( mOwner->messageActions()->messageStatusMenu() ); // Mark Message menu
