@@ -167,7 +167,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mComposer( 0 ),
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
-    mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 )
+    mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
+    mPreventFccOverwrite( false )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
@@ -1800,6 +1801,9 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     mEditor->setCursorPositionFromStart( mMsg->getCursorPos() );
 
   setModified( isModified );
+
+  // honor "keep reply in this folder" setting even when the identity is changed later on
+  mPreventFccOverwrite = ( !newMsg->fcc().isEmpty() && ident.fcc() != newMsg->fcc() );
 }
 
 //-----------------------------------------------------------------------------
@@ -3907,7 +3911,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
   mEditor->setSpellCheckingLanguage( mDictionaryCombo->realDictionaryName() );
 
-  if ( !mBtnFcc->isChecked() ) {
+  if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
     setFcc( ident.fcc() );
   }
 

@@ -831,6 +831,8 @@ class KMComposeWin : public KMail::Composer
 
     QLabel *mSignatureStateIndicator;
     QLabel *mEncryptionStateIndicator;
+
+    bool mPreventFccOverwrite;
 };
 
 #endif
