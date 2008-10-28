@@ -242,9 +242,12 @@ void KMCommand::slotStart()
       return;
   }
 
-  KMMsgBase *mb = *(mMsgList.begin());
-  if ( (mMsgList.count() == 1) && ( mb->isMessage() ) &&
-      ( mb->parent() == 0 ) )
+  KMMsgBase *mb = 0;
+  if ( mMsgList.size() > 0 )
+    mb = *(mMsgList.begin());
+
+  if ( ( mb ) && ( mMsgList.count() == 1 ) && ( mb->isMessage() ) &&
+       ( mb->parent() == 0 ) )
   {
     // Special case of operating on message that isn't in a folder
     mRetrievedMsgs.append((KMMessage*)mMsgList.takeFirst());
