@@ -3062,19 +3062,23 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("file_save_attachments", mSaveAttachmentsAction );
   connect(mSaveAttachmentsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveAttachments()));
 
-  mMoveActionMenu = new KActionMenu(i18n("&Move To"), this);
-  actionCollection()->addAction("move_to", mMoveActionMenu );
+  mMoveActionMenu =
+    new KActionMenu( KIcon( "go-jump" ), i18n( "&Move To" ), this );
+  actionCollection()->addAction( "move_to", mMoveActionMenu );
 
-  mCopyActionMenu = new KActionMenu(i18n("&Copy To"), this);
-  actionCollection()->addAction("copy_to", mCopyActionMenu );
+  mCopyActionMenu =
+    new KActionMenu( KIcon( "edit-copy" ), i18n( "&Copy To" ), this );
+  actionCollection()->addAction( "copy_to", mCopyActionMenu );
 
-  mApplyAllFiltersAction = new KAction(KIcon("view-filter"), i18n("Appl&y All Filters"), this);
-  actionCollection()->addAction("apply_filters", mApplyAllFiltersAction );
-  connect(mApplyAllFiltersAction, SIGNAL(triggered(bool) ), SLOT(slotApplyFilters()));
-  mApplyAllFiltersAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_J));
+  mApplyAllFiltersAction =
+    new KAction( KIcon( "view-filter" ), i18n( "Appl&y All Filters" ), this );
+  actionCollection()->addAction( "apply_filters", mApplyAllFiltersAction );
+  connect( mApplyAllFiltersAction, SIGNAL(triggered(bool)),
+           SLOT(slotApplyFilters()) );
+  mApplyAllFiltersAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_J ) );
 
-  mApplyFilterActionsMenu = new KActionMenu(i18n("A&pply Filter"), this);
-  actionCollection()->addAction("apply_filter_actions", mApplyFilterActionsMenu );
+  mApplyFilterActionsMenu = new KActionMenu( i18n( "A&pply Filter" ), this );
+  actionCollection()->addAction( "apply_filter_actions", mApplyFilterActionsMenu );
 
   //----- View Menu
   // Unread Submenu

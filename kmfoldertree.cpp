@@ -1116,12 +1116,13 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     }
 
     // copy folder
-    QMenu *copyMenu =  folderMenu->addMenu( i18n("&Copy Folder To") );
+    QMenu *copyMenu =
+      folderMenu->addMenu( KIcon("edit-copy"), i18n("&Copy Folder To" ) );
     folderToPopupMenu( CopyFolder, this, &mMenuToFolder, copyMenu );
 
-    if ( fti->folder()->isMoveable() )
-    {
-      QMenu *moveMenu = folderMenu->addMenu( i18n("&Move Folder To") );
+    if ( fti->folder()->isMoveable() ) {
+      QMenu *moveMenu =
+        folderMenu->addMenu( KIcon( "go-jump" ), i18n( "&Move Folder To" ) );
       folderToPopupMenu( MoveFolder, this, &mMenuToFolder, moveMenu );
     }
 
@@ -1941,13 +1942,15 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
     } else
     {
       // insert an item
-      QAction* act = menu->addAction( label );
-      if ( fti->folder() )
+      QAction *act = menu->addAction( fti->normalIcon( fti->iconSize() ), label );
+      if ( fti->folder() ) {
         aMenuToFolder->insert( act, fti->folder() );
+      }
       bool enabled = (fti->folder() ? true : false);
       if ( fti->folder() &&
-           ( fti->folder()->isReadOnly() || fti->folder()->noContent() ) )
+           ( fti->folder()->isReadOnly() || fti->folder()->noContent() ) ) {
         enabled = false;
+      }
       act->setEnabled( enabled );
     }
 

@@ -833,17 +833,19 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
     menu->addSeparator();
     menu->addAction( mCopyAction );
     menu->addAction( mCutAction );
-    msgCopyMenu->setTitle(i18n("&Copy To"));
+    msgCopyMenu->setTitle( i18n( "&Copy To" ) );
+    msgCopyMenu->setIcon( KIcon( "edit-copy" ) );
     menu->addMenu( msgCopyMenu );
-    msgMoveMenu->setTitle(i18n("&Move To"));
-    menu->addSeparator();
+    msgMoveMenu->setTitle( i18n( "&Move To" ) );
+    msgMoveMenu->setIcon( KIcon( "go-jump" ) );
     menu->addMenu( msgMoveMenu );
+    menu->addSeparator();
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtchAction );
     menu->addAction( mPrintAction );
     menu->addSeparator();
     menu->addAction( mClearAction );
-    menu->exec (QCursor::pos(), 0);
+    menu->exec( QCursor::pos(), 0 );
     delete menu;
 }
 
