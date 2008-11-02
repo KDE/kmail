@@ -255,8 +255,9 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 if(WIN32)
   find_package(Sqlite)
+  macro_log_feature(SQLITE_FOUND "SQLite" "A C library that implements an SQL database engine" "http://www.sqlite.org" TRUE "version 3" "Required for KMail indexing [Windows ONLY].")
   if (NOT SQLITE_FOUND)
-    message(FATAL_ERROR "You need SQLite library for indexing")
+    macro_display_feature_log()
   endif(NOT SQLITE_FOUND)
   add_definitions(-DKMAIL_SQLITE_INDEX) # to alter declaration of KMFolderIndex
   include_directories(${SQLITE_INCLUDE_DIR})
