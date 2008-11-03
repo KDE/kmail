@@ -55,6 +55,7 @@ KMMainWin::KMMainWin(QWidget *)
                                 actionCollection() );
 
   KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
+  connect( qApp, SIGNAL(lastWindowClosed()), qApp, SLOT(quit()));
   createGUI( "kmmainwin.rc" );
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
