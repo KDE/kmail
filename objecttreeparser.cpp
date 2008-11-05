@@ -1811,7 +1811,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     mReader->mTempFiles.append( dir + QDir::separator() + att->name() );
     QString href = "file:" + KUrl::toPercentEncoding( dir + QDir::separator() + att->name() );
 
-    KMimeType::Ptr mimeType = KMimeType::mimeType( att->mimeTag() );
+    KMimeType::Ptr mimeType = KMimeType::mimeType( att->mimeTag(), KMimeType::ResolveAliases );
     QString iconName = KIconLoader::global()->iconPath( mimeType->iconName(), KIconLoader::Desktop );
 
     htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +

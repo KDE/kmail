@@ -329,7 +329,7 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
   }
 #endif
   // find a mimetype icon:
-  KMimeType::Ptr mt = KMimeType::mimeType( mimeType );
+  KMimeType::Ptr mt = KMimeType::mimeType( mimeType, KMimeType::ResolveAliases );
   if ( !mt.isNull() )
     mIcon->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mt->iconName(),
                       KIconLoader::Desktop ) );

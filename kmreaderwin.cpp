@@ -2270,7 +2270,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   // determine the MIME type of the attachment
   KMimeType::Ptr mimetype;
   // prefer the value of the Content-Type header
-  mimetype = KMimeType::mimeType( QString::fromLatin1( contentTypeStr ) );
+  mimetype = KMimeType::mimeType( QString::fromLatin1( contentTypeStr ), KMimeType::ResolveAliases );
   if ( mimetype.isNull() ) {
     // consider the filename if mimetype can not be found by content-type
     mimetype = KMimeType::findByPath( name, 0, true /* no disk access */ );

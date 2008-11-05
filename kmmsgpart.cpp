@@ -315,7 +315,7 @@ QString KMMessagePart::iconName() const
   kAsciiToLower( mimeType.data() );
 
   QString fileName;
-  KMimeType::Ptr mime = KMimeType::mimeType( mimeType );
+  KMimeType::Ptr mime = KMimeType::mimeType( mimeType, KMimeType::ResolveAliases );
   if (mime) {
     fileName = mime->iconName();
   } else {

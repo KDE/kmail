@@ -442,7 +442,7 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
     setText( columnType, i18n("Unspecified Binary Data") ); // do not show "Unknown"...
     setIcon( columnDescription, QIcon( SmallIcon("application-octet-stream") ) );
   } else {
-    KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
+    KMimeType::Ptr mtp = KMimeType::mimeType( mimetype, KMimeType::ResolveAliases );
     setText( columnType, ( mtp && !mtp->comment().isEmpty() ) ? mtp->comment() : mimetype );
     setIcon( columnDescription, QIcon( mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), KIconLoader::Small) : SmallIcon("unknown") ) );
   }
