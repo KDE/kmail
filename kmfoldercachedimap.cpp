@@ -181,6 +181,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ),
     mIncidencesFor( IncForAdmins ),
+    mSharedSeenFlags( false ),
     mIsSelected( false ),
     mCheckFlags( true ), mReadOnly( false ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
@@ -190,7 +191,9 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mFolderRemoved( false ),
     mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
-    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
+    mIncidencesForChanged( false ),
+    mSharedSeenFlagsChanged( false ),
+    mPersonalNamespacesCheckDone( true ),
     mQuotaInfo(), mAlarmsBlocked( false ),
     mRescueCommandCount( 0 ),
     mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
@@ -263,6 +266,7 @@ void KMFolderCachedImap::readConfig()
   mAlarmsBlocked = config->readBoolEntry( "AlarmsBlocked", false );
 //  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
+  mSharedSeenFlags = config->readBoolEntry( "SharedSeenFlags", false );
 
   mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
   mOldUserRights = mUserRights;
@@ -287,6 +291,7 @@ void KMFolderCachedImap::readConfig()
 
   mAnnotationFolderTypeChanged = config->readBoolEntry( "AnnotationFolderTypeChanged", false );
   mIncidencesForChanged = config->readBoolEntry( "IncidencesForChanged", false );
+  mSharedSeenFlagsChanged = config->readBoolEntry( "SharedSeenFlagsChanged", false );
   if ( mImapPath.isEmpty() ) {
     mImapPathCreation = config->readEntry("ImapPathCreation");
   }
@@ -347,6 +352,8 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
     configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
     configGroup.writeEntry( "AlarmsBlocked", mAlarmsBlocked );
+    configGroup.writeEntry( "SharedSeenFlags", mSharedSeenFlags );
+    configGroup.writeEntry( "SharedSeenFlagsChanged", mSharedSeenFlagsChanged );
     configGroup.writeEntry( "UserRights", mUserRights );
 
     configGroup.deleteEntry( "StorageQuotaUsage");
@@ -1096,6 +1103,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_GET_ANNOTATIONS: {
 #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
 #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
+#define KOLAB_SHAREDSEEN "/vendor/cmu/cyrus-imapd/sharedseen"
 //#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
     mSyncState = SYNC_STATE_SET_ANNOTATIONS;
 
@@ -1119,6 +1127,8 @@ void KMFolderCachedImap::serverSyncInternal()
         annotations << KOLAB_FOLDERTYPE;
       if ( !mIncidencesForChanged )
         annotations << KOLAB_INCIDENCESFOR;
+      if ( !mSharedSeenFlagsChanged )
+        annotations << KOLAB_SHAREDSEEN;
       if ( !annotations.isEmpty() ) {
         newState( mProgress, i18n("Retrieving annotations"));
         KURL url = mAccount->getUrl();
@@ -1156,6 +1166,12 @@ void KMFolderCachedImap::serverSyncInternal()
         KMail::AnnotationAttribute attr( KOLAB_INCIDENCESFOR, "value.shared", val );
         annotations.append( attr );
         kdDebug(5006) << "Setting incidences-for annotation for " << label() << " to " << val << endl;
+      }
+      if ( mSharedSeenFlagsChanged ) {
+        const QString val = mSharedSeenFlags ? "true" : "false";
+        KMail::AnnotationAttribute attr( KOLAB_SHAREDSEEN, "value.shared", val );
+        annotations.append( attr );
+        kdDebug(5006) << k_funcinfo << "Setting sharedseen annotation for " << label() << " to " << val << endl;
       }
       if ( !annotations.isEmpty() ) {
         KIO::Job* job =
@@ -2518,6 +2534,14 @@ void KMFolderCachedImap::setIncidencesFor( IncidencesFor incfor )
   }
 }
 
+void KMFolderCachedImap::setSharedSeenFlags(bool b)
+{
+  if ( mSharedSeenFlags != b ) {
+    mSharedSeenFlags = b;
+    mSharedSeenFlagsChanged = true;
+  }
+}
+
 void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QString& value, bool found)
 {
   if ( entry == KOLAB_FOLDERTYPE ) {
@@ -2583,6 +2607,10 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
     if ( found ) {
       mIncidencesFor = incidencesForFromString( value );
       Q_ASSERT( mIncidencesForChanged == false );
+    }
+  } else if ( entry == KOLAB_SHAREDSEEN ) {
+    if ( found ) {
+      mSharedSeenFlags = value == "true";
     }
   }
 }
@@ -2703,6 +2731,8 @@ KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& 
     // The incidences-for changed, we must trigger the freebusy creation.
     // HACK: in theory we would need a new enum value for this.
     kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::ACL );
+  } else if ( entry == KOLAB_SHAREDSEEN ) {
+    mSharedSeenFlagsChanged = false;
   }
 }
 

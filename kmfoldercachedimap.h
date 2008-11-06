@@ -284,6 +284,11 @@ public:
   /// For the folder properties dialog
   void setIncidencesFor( IncidencesFor incfor );
 
+  /** Returns wether the seen flag is shared among all users or every users has her own seen flags (default). */
+  bool sharedSeenFlags() const { return mSharedSeenFlags; }
+  /** Enable shared seen flags (requires server support). */
+  void setSharedSeenFlags( bool b );
+
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
 
@@ -473,6 +478,7 @@ private:
   QString     mFolderAttributes;
   QString     mAnnotationFolderType;
   IncidencesFor mIncidencesFor;
+  bool mSharedSeenFlags;
 
   bool        mHasInbox;
   bool        mIsSelected;
@@ -534,6 +540,8 @@ private:
   bool mAnnotationFolderTypeChanged;
   /// Set to true when the "incidences-for" annotation needs to be set on the next sync
   bool mIncidencesForChanged;
+  /// Set to true when the "sharedseen" annotation needs to be set on the next sync
+  bool mSharedSeenFlagsChanged;
 
   QStringList mNamespacesToList;
   int mNamespacesToCheck;

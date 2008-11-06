@@ -247,7 +247,9 @@ static void addLine( QWidget *parent, QVBoxLayout* layout )
 KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                                                  const QString& aName,
                                                  QWidget* parent, const char* name )
-  : FolderDiaTab( parent, name ), mDlg( dlg )
+  : FolderDiaTab( parent, name ),
+  mSharedSeenFlagsCheckBox( 0 ),
+  mDlg( dlg )
 {
 
 
@@ -460,7 +462,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   } else {
     mContentsComboBox = 0;
   }
-  
+
   mIncidencesForComboBox = 0;
   mAlarmsBlockedCheckBox = 0;
 
@@ -478,7 +480,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     label->setBuddy( mIncidencesForComboBox );
     gl->addWidget( mIncidencesForComboBox, row, 1 );
 
-    const QString whatsThisForMyOwnFolders = 
+    const QString whatsThisForMyOwnFolders =
       i18n( "This setting defines which users sharing "
           "this folder should get \"busy\" periods in their freebusy lists "
           "and should see the alarms for the events or tasks in this folder. "
@@ -513,6 +515,17 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         mIncidencesForComboBox->setEnabled( false );
         mAlarmsBlockedCheckBox->setEnabled( false );
     }
+  }
+
+  if ( mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
+    kdDebug() << k_funcinfo << mDlg->folder()->folderType() << endl;
+    mSharedSeenFlagsCheckBox = new QCheckBox( this );
+    mSharedSeenFlagsCheckBox->setText( i18n( "Share unread state with all users" ) );
+    ++row;
+    gl->addMultiCellWidget( mSharedSeenFlagsCheckBox, row, row, 0, 1 );
+    QWhatsThis::add( mSharedSeenFlagsCheckBox, i18n( "If enabled, the unread state of messages in this folder will be the same "
+        "for all users having access to this folders. If disabled (the default), every user with access to this folder has her "
+        "own unread state." ) );
   }
   topLayout->addStretch( 100 ); // eat all superfluous space
 
@@ -567,6 +580,11 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( mAlarmsBlockedCheckBox ) {
     KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
     mAlarmsBlockedCheckBox->setChecked( dimap->alarmsBlocked() );
+  }
+  if ( mSharedSeenFlagsCheckBox ) {
+    KMFolderCachedImap *dimap = static_cast<KMFolderCachedImap*>( folder->storage() );
+    mSharedSeenFlagsCheckBox->setChecked( dimap->sharedSeenFlags() );
+    mSharedSeenFlagsCheckBox->setDisabled( folder->isReadOnly() );
   }
 }
 
@@ -668,6 +686,10 @@ bool FolderDiaGeneralTab::save()
       }
       if ( mAlarmsBlockedCheckBox && mAlarmsBlockedCheckBox->isChecked() != dimap->alarmsBlocked() ) {
         dimap->setAlarmsBlocked( mAlarmsBlockedCheckBox->isChecked() );
+        dimap->writeConfig();
+      }
+      if ( mSharedSeenFlagsCheckBox && mSharedSeenFlagsCheckBox->isChecked() != dimap->sharedSeenFlags() ) {
+        dimap->setSharedSeenFlags( mSharedSeenFlagsCheckBox->isChecked() );
         dimap->writeConfig();
       }
     }
