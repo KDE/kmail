@@ -4045,7 +4045,6 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 
     // search for the bodypart
     mLastUpdated = findDwBodyPart( getFirstDwBodyPart(), specifier );
-    kDebug(5006) << specifier;
     if (!mLastUpdated)
     {
       kWarning(5006) << "Can not find part" << specifier;

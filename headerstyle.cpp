@@ -490,7 +490,6 @@ namespace KMail {
     }
     else // TODO: find a usable one
     {
-      kDebug( 5006 ) <<"Multiple / No addressees matched email address; Count is" << addresses.count();
       userHTML = "&nbsp;";
     }
 

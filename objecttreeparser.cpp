@@ -235,8 +235,6 @@ namespace KMail {
 //-----------------------------------------------------------------------------
 
   void ObjectTreeParser::parseObjectTree( partNode * node ) {
-    kDebug() << (node ? "node OK, " : "no node, ")
-             << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE");
 
     if ( !node )
       return;
@@ -1844,8 +1842,6 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
   void ObjectTreeParser::writePartIcon( KMMessagePart * msgPart, int partNum, bool inlineImage ) {
     if ( !mReader || !msgPart )
       return;
-
-    kDebug() << "writePartIcon: PartNum:" << partNum;
 
     QString label = msgPart->fileName();
     if( label.isEmpty() )

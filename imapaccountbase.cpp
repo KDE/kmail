@@ -1209,16 +1209,16 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   }
   for ( it = parts.begin(); it != parts.end(); ++it ) {
     KMMessagePart *part = (*it);
-    kDebug(5006) << "Load" << part->partSpecifier()
-                 << "(" << part->originalContentTypeStr() << ")";
+    //kDebug(5006) << "Load" << part->partSpecifier()
+    //             << "(" << part->originalContentTypeStr() << ")";
     if ( part->loadHeaders() ) {
-      kDebug(5006) <<"load HEADER";
+      //kDebug(5006) <<"load HEADER";
       FolderJob *job =
         msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, part->partSpecifier()+".MIME" );
       job->start();
     }
     if ( part->loadPart() ) {
-      kDebug(5006) <<"load Part";
+      //kDebug(5006) <<"load Part";
       FolderJob *job =
         msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, part->partSpecifier() );
       job->start();
@@ -1236,8 +1236,8 @@ void ImapAccountBase::constructParts( QDataStream &stream, int count, KMMessageP
     KMMessagePart* part = new KMMessagePart( stream );
     part->setParent( parentKMPart );
     mBodyPartList.append( part );
-    kDebug(5006) << "Created id" << part->partSpecifier()
-                 << "of type" << part->originalContentTypeStr();
+    //kDebug(5006) << "Created id" << part->partSpecifier()
+    //             << "of type" << part->originalContentTypeStr();
     DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
 
     if ( parent ) {

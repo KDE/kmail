@@ -127,7 +127,7 @@ partNode * partNode::fromMessage( const KMMessage * msg ) {
   root->buildObjectTree();
 
   root->setFromAddress( msg->from() );
-  root->dump();
+  //root->dump();
   return root;
 }
 
@@ -391,13 +391,6 @@ int partNode::calcNodeIdOrFindNode( int &curId, const partNode* findNode, int fi
 
 partNode* partNode::findType( int type, int subType, bool deep, bool wide )
 {
-#ifndef NDEBUG
-  DwString typeStr, subTypeStr;
-  DwTypeEnumToStr( mType, typeStr );
-  DwSubtypeEnumToStr( mSubType, subTypeStr );
-  kDebug(5006) << "Is looking at" << typeStr.c_str()
-               << "/" << subTypeStr.c_str();
-#endif
     if(    (mType != DwMime::kTypeUnknown)
            && (    (type == DwMime::kTypeUnknown)
                    || (type == mType) )
@@ -493,8 +486,6 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
     // remove linebreak+whitespace from folded Content-Description
     cntDesc.replace( QRegExp("\\n\\s*"), " " );
 
-kDebug(5006) <<"      Inserting one item into MimePartTree";
-kDebug(5006) <<"                Content-Type:" << cntType;
     if( parentItem )
       mMimePartTreeItem = new KMMimePartTreeItem( parentItem,
                                                   this,

@@ -43,7 +43,6 @@ using namespace KMail;
 
 // static
 SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
-  kDebug(5006) ;
   SpamScores scores;
   SpamAgents agents = AntiSpamConfig::instance()->uniqueAgents();
 

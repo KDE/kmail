@@ -912,7 +912,6 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
 {
   if ( !mAtmUpdate ) {
     // reparse the msg
-    kDebug(5006) << "Message";
     updateReaderWin();
     return;
   }
@@ -1190,7 +1189,6 @@ void KMReaderWin::setPrintFont( const QFont& font )
 //-----------------------------------------------------------------------------
 const QTextCodec * KMReaderWin::overrideCodec() const
 {
-  kDebug(5006) <<" mOverrideEncoding == '" << mOverrideEncoding <<"'";
   if ( mOverrideEncoding.isEmpty() || mOverrideEncoding == "Auto" ) // Auto
     return 0;
   else
@@ -1565,10 +1563,6 @@ void KMReaderWin::displayMessage() {
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
-#ifndef NDEBUG
-  kDebug( 5006 ) << "aMsg" << ( aMsg == message() ? "==" : "!=" ) << "aMsg )";
-#endif
-
   KMMessagePart msgPart;
 
   assert(aMsg!=0);
@@ -1713,7 +1707,6 @@ kDebug(5006) <<"|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPart
     kDebug(5006) << "Invoce saving in decrypted form:";
     emit replaceMsgByUnencryptedVersion();
   } else {
-    kDebug(5006) << "Finished parsing and displaying of message.";
     showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
                       rootNodeCntSubtype == DwMime::kSubtypePlain );
   }
