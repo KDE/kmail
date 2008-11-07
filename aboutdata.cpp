@@ -101,7 +101,7 @@ namespace KMail {
       "matt@caifex.org", 0 },
     { "Christer Kaivo-oja", 0,
       "whizkid@telia.com", 0 },
-    { "Lars Knoll", I18N_NOOP("Original encryption support\n"
+    { "Lars Knoll", I18N_NOOP("Original encryption support<br>"
                               "PGP 2 and PGP 5 support"),
       "knoll@kde.org", 0 },
     { "J. Nick Koston", I18N_NOOP("GnuPG support"),
@@ -134,6 +134,8 @@ namespace KMail {
       "aseigo@olympusproject.org", 0 },
     { "George Staikos", 0,
       "staikos@kde.org", 0 },
+    { "Szymon Stefanek", I18N_NOOP( "Summer of Code student<br>New message list and new folder tree" ),
+      "pragma@kvirc.net", 0 },
     { "Jason Stephenson", 0,
       "panda@mis.net", 0 },
     { "Jacek Stolarczyk", 0,
