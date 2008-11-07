@@ -40,8 +40,6 @@
 #include <QList>
 #include <QTime>
 
-class KMHeaders;
-
 namespace KMail {
 
 /* A class for asynchronous filtering of messages */
@@ -54,7 +52,6 @@ public:
 
   ActionScheduler(KMFilterMgr::FilterSet set,
 		  QList<KMFilter*> filters,
-                  KMHeaders *headers = 0,
 		  KMFolder *srcFolder = 0);
   ~ActionScheduler();
 

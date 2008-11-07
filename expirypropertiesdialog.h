@@ -7,19 +7,19 @@
 class QCheckBox;
 class QSpinBox;
 class QRadioButton;
-class KMFolderTree;
 class KMFolder;
 
 namespace KMail {
 
   class FolderRequester;
+  class MainFolderView;
 
 class ExpiryPropertiesDialog : public KDialog
 {
     Q_OBJECT
 
 public:
-    ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* folder );
+    ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* folder );
     ~ExpiryPropertiesDialog();
 
 protected slots:

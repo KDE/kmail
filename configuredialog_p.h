@@ -470,15 +470,10 @@ private: // methods
   void setDateDisplay( int id, const QString & format );
 
 private: // data
-  QCheckBox    *mShowQuickSearch;
-  QCheckBox    *mMessageSizeCheck;
-  QCheckBox    *mAttachmentCheck;
-  QCheckBox    *mNestedMessagesCheck;
-  QCheckBox    *mCryptoIconsCheck;
-  KButtonGroup *mNestingPolicy;
+  QCheckBox    *mDisplayMessageToolTips;
   KButtonGroup *mDateDisplay;
   KLineEdit    *mCustomDateFormatEdit;
-  QString      mCustomDateWhatsThis;
+  QString       mCustomDateWhatsThis;
 
 private slots:
   void slotLinkClicked( const QString & link );

@@ -23,7 +23,6 @@
 
 #include "folderselectiondialog.h"
 #include "folderselectiontreewidget.h"
-#include "kmfoldertree.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "globalsettings.h"
@@ -42,10 +41,10 @@ FolderSelectionDialog::FolderSelectionDialog( KMMainWidget * parent, const QStri
     mUseGlobalSettings( useGlobalSettings )
 {
   setCaption( caption );
-  init( parent->folderTree(), mustBeReadWrite );
+  init( parent->mainFolderView(), mustBeReadWrite );
 }
 
-FolderSelectionDialog::FolderSelectionDialog( QWidget * parent, KMFolderTree * tree,
+FolderSelectionDialog::FolderSelectionDialog( QWidget * parent, MainFolderView * tree,
     const QString& caption, bool mustBeReadWrite, bool useGlobalSettings )
   : KDialog( parent ), // anywidget as parent, modal
     mUseGlobalSettings( useGlobalSettings )
@@ -54,7 +53,7 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget * parent, KMFolderTree * t
   init( tree, mustBeReadWrite );
 }
 
-void FolderSelectionDialog::init( KMFolderTree *tree, bool mustBeReadWrite )
+void FolderSelectionDialog::init( MainFolderView *tree, bool mustBeReadWrite )
 {
   setButtons( Ok | Cancel | User1 );
   setObjectName( "folder dialog" );

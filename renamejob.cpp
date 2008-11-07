@@ -205,10 +205,10 @@ void RenameJob::folderCopyComplete(bool success)
   kDebug(5006) <<"deleting old folder";
   // move complete or not necessary
   // save our settings
-  QString oldconfig = "Folder-" + mStorage->folder()->idString();
+  QString oldconfig = mStorage->folder()->configGroupName();
   KConfig* config = KMKernel::config();
   QMap<QString, QString> entries = config->entryMap( oldconfig );
-  KConfigGroup saver(config, "Folder-" + mNewFolder->idString());
+  KConfigGroup saver(config, mNewFolder->configGroupName());
   for ( QMap<QString, QString>::Iterator it = entries.begin();
         it != entries.end(); ++it )
   {

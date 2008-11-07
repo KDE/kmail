@@ -35,9 +35,10 @@
 #include <klineedit.h>
 
 class KMFolder;
-class KMFolderTree;
 
 namespace KMail {
+
+  class MainFolderView;
 
   /**
    * A widget that contains a KLineEdit which shows the current folder
@@ -55,7 +56,7 @@ namespace KMail {
        * @param parent the parent widget
        * @param tree the KMFolderTree to get the folders
        */
-      FolderRequester( QWidget *parent, KMFolderTree* tree );
+      FolderRequester( QWidget *parent, MainFolderView* tree );
       virtual ~FolderRequester();
 
       /** Returns selected folder */
@@ -102,7 +103,7 @@ namespace KMail {
     protected:
       KLineEdit* edit;
       KMFolder* mFolder;
-      KMFolderTree* mFolderTree;
+      MainFolderView* mFolderTree;
       QString mFolderId;
       bool mMustBeReadWrite;
       bool mShowOutbox;

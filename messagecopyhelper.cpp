@@ -110,4 +110,18 @@ bool MessageCopyHelper::inReadOnlyFolder(const QList< quint32 > & sernums)
   return false;
 }
 
+KMFolder * MessageCopyHelper::firstSourceFolder( const QList<quint32> &sernums )
+{
+  KMFolder *f = 0;
+  int index;
+  for ( QList<quint32>::ConstIterator it = sernums.begin(); it != sernums.end(); ++it ) {
+    KMMsgDict::instance()->getLocation( *it, &f, &index );
+    if ( !f ) // not found
+      continue;
+    return f;
+  }
+  return 0;
+}
+
+
 #include "messagecopyhelper.moc"

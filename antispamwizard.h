@@ -43,12 +43,12 @@
 #include <QBoxLayout>
 
 class KMFolder;
-class KMFolderTree;
 class QLabel;
 
 namespace KMail {
 
   class FolderSelectionTreeWidget;
+  class MainFolderView;
   class FolderRequester;
 
   class ASWizInfoPage;
@@ -124,7 +124,7 @@ namespace KMail {
           within one of the wizard pages.
       */
       AntiSpamWizard( WizardMode mode,
-                      QWidget * parent, KMFolderTree * mainFolderTree );
+                      QWidget * parent, MainFolderView * mainFolderTree );
 
     protected:
       /**
@@ -336,7 +336,7 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      ASWizSpamRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
+      ASWizSpamRulesPage( QWidget * parent, const char * name, MainFolderView * mainFolderTree );
 
       bool markAsReadSelected() const;
       bool moveSpamSelected() const;
@@ -368,7 +368,7 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      ASWizVirusRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
+      ASWizVirusRulesPage( QWidget * parent, const char * name, MainFolderView * mainFolderTree );
 
       bool pipeRulesSelected() const;
       bool moveRulesSelected() const;

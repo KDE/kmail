@@ -1,213 +1,454 @@
-/*
-    Copyright (c) 2007 Volker Krause <vkrause@kde.org>
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
+/******************************************************************************
+ *
+ *  Copyright (c) 2007 Volker Krause <vkrause@kde.org>
+ *  Copyright 2008 Szymon Tomasz Stefanek <pragma@kvirc.net>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ *******************************************************************************/
 
 #include "favoritefolderview.h"
 
-#include "kmfolder.h"
-#include "kmfoldermgr.h"
-#include "folderselectiondialog.h"
-#include "kmmainwidget.h"
-#include "kmailicalifaceimpl.h"
 #include "folderstorage.h"
+#include "folderselectiondialog.h"
+#include "globalsettings.h"
+#include "kmacctcachedimap.h"
+#include "kmfolder.h"
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
-#include "kmacctcachedimap.h"
+#include "kmmainwidget.h"
 #include "korghelper.h"
-#include "folderviewtooltip.h"
+#include "mainfolderview.h"
 
-#include <libkdepim/maillistdrag.h>
-#include <libkdepim/kaddrbookexternal.h>
-
-#include <kcolorscheme.h>
-#include <kdebug.h>
-#include <kglobalsettings.h>
-#include <kiconloader.h>
+#include <kicon.h>
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kmenu.h>
-#include <kio/global.h>
 
-//#include <QHelpEvent>
-#include <QtCore/QTimer>
-#include <QtGui/QToolTip>
+#include <libkdepim/broadcaststatus.h>
+#include <libkdepim/kaddrbookexternal.h>
+
 #include <QDBusConnection>
 #include <QDBusInterface>
 
-#include <cassert>
 
-using namespace KMail;
-
-FavoriteFolderViewItem::FavoriteFolderViewItem(FavoriteFolderView * parent, const QString & name, KMFolder * folder)
-  : KMFolderTreeItem( parent, name, folder ),
-  mOldName( folder->label() )
+namespace KMail
 {
-  // same stuff as in KMFolderTreeItem again, this time even with virtual methods working
-  init();
-  connect( folder, SIGNAL(nameChanged()), SLOT(nameChanged()) );
-  connect( folder, SIGNAL(iconsChanged()), SLOT(slotIconsChanged()) );
 
-  connect( folder, SIGNAL(msgAdded(KMFolder*,quint32)), SLOT(updateCount()) );
-  connect( folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)), SLOT(updateCount()) );
-  connect( folder, SIGNAL(msgRemoved(KMFolder*)), SLOT(updateCount()) );
-  connect( folder, SIGNAL(folderSizeChanged( KMFolder* )), SLOT(updateCount()) );
-
-  QTimer::singleShot( 0, this, SLOT(updateCount()) );
-
-  if ( unreadCount() > 0 )
-    setPixmap( 0, unreadIcon( iconSize() ) );
-  else
-    setPixmap( 0, normalIcon( iconSize() ) );
+FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, FolderViewManager *manager, QWidget *parent, const char *name )
+: FolderView( mainWidget, manager, parent, "FavoriteFolderView", name )
+{
+  setRootIsDecorated( false ); // we have only toplevel items
+  setSortingPolicy( SortByDragAndDropKey );
+  setColumnText( LabelColumn, i18n( "Favorite Folders" ) );
 }
 
-void FavoriteFolderViewItem::nameChanged()
-{
-  QString txt = text( 0 );
-  txt.replace( mOldName, folder()->label() );
-  setText( 0, txt );
-  mOldName = folder()->label();
-}
-
-QList<FavoriteFolderView*> FavoriteFolderView::mInstances;
-
-FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, QWidget * parent) :
-    FolderTreeBase( mainWidget, parent ),
-    mReadingConfig( false )
-{
-  assert( mainWidget );
-  addColumn( i18n("Favorite Folders") );
-  setResizeMode( LastColumn );
-  header()->setClickEnabled( false );
-  setDragEnabled( true );
-  setAcceptDrops( true );
-  setRootIsDecorated( false );
-  setSelectionMode( Q3ListView::Single );
-  setSorting( -1 );
-  setShowSortIndicator( false );
-
-  connect( this, SIGNAL(selectionChanged()), SLOT(selectionChanged()) );
-  connect( this, SIGNAL(mouseButtonClicked(int,Q3ListViewItem*,const QPoint&,int)),
-           SLOT(itemClicked(int,Q3ListViewItem*)) );
-  connect( this, SIGNAL(dropped(QDropEvent*,Q3ListViewItem*)), SLOT(dropped(QDropEvent*,Q3ListViewItem*)) );
-  connect( this, SIGNAL(contextMenuRequested(Q3ListViewItem*, const QPoint &, int)),
-           SLOT(contextMenu(Q3ListViewItem*,const QPoint&)) );
-  connect( this, SIGNAL(moved()), SLOT(notifyInstancesOnChange()) );
-  connect( this, SIGNAL(triggerRefresh()), SLOT(refresh()) );
-
-  connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
-  connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
-  connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
-  connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
-
-  connect( kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)), SLOT(folderRemoved(KMFolder*)) );
-  connect( kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)), SLOT(folderRemoved(KMFolder*)) );
-  connect( kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)), SLOT(folderRemoved(KMFolder*)) );
-  connect( kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)), SLOT(folderRemoved(KMFolder*)) );
-
-  QFont f = font();
-  f.setItalic( true );
-  setFont( f );
-
-  new FolderViewToolTip( this );
-
-  mInstances.append( this );
-}
-
-FavoriteFolderView::~FavoriteFolderView()
-{
-  mInstances.removeAll( this );
-}
-
-void FavoriteFolderView::readConfig()
-{
-  mReadingConfig = true;
-  clear();
-  QList<int> folderIds = GlobalSettings::self()->favoriteFolderIds();
-  QStringList folderNames = GlobalSettings::self()->favoriteFolderNames();
-  Q3ListViewItem *afterItem = 0;
-  for ( int i = 0; i < folderIds.count(); ++i ) {
-    KMFolder *folder = kmkernel->folderMgr()->findById( folderIds[i] );
-    if ( !folder )
-      folder = kmkernel->imapFolderMgr()->findById( folderIds[i] );
-    if ( !folder )
-      folder = kmkernel->dimapFolderMgr()->findById( folderIds[i] );
-    if ( !folder )
-      folder = kmkernel->searchFolderMgr()->findById( folderIds[i] );
-    QString name;
-    if ( folderNames.count() > i )
-      name = folderNames[i];
-    afterItem = addFolder( folder, name, afterItem );
-  }
-  if ( firstChild() )
-    ensureItemVisible( firstChild() );
-
-  // folder tree is not yet populated at this point
-  QTimer::singleShot( 0, this, SLOT(initializeFavorites()) );
-
-  readColorConfig();
-  mReadingConfig = false;
-}
-
-void FavoriteFolderView::writeConfig()
-{
-  QList<int> folderIds;
-  QStringList folderNames;
-  for ( Q3ListViewItemIterator it( this ); it.current(); ++it ) {
-    KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-    folderIds << fti->folder()->id();
-    folderNames << fti->text( 0 );
-  }
-  GlobalSettings::self()->setFavoriteFolderIds( folderIds );
-  GlobalSettings::self()->setFavoriteFolderNames( folderNames );
-}
-
-bool FavoriteFolderView::acceptDrag(QDropEvent * e) const
-{
-  KMFolderTree *ft = mainWidget()->folderTree();
-  assert( ft );
-  if ( e->provides( "application/x-qlistviewitem" ) &&
-       (e->source() == ft->viewport() || e->source() == viewport() ) )
-    return true;
-  return FolderTreeBase::acceptDrag( e );
-}
-
-KMFolderTreeItem* FavoriteFolderView::addFolder(KMFolder * folder, const QString &name, Q3ListViewItem *after)
+FolderViewItem * FavoriteFolderView::createItem(
+      FolderViewItem *,
+      const QString &label,
+      KMFolder *folder,
+      KPIM::FolderTreeWidgetItem::Protocol proto,
+      KPIM::FolderTreeWidgetItem::FolderType type
+    )
 {
   if ( !folder )
     return 0;
-  KMFolderTreeItem *item = new FavoriteFolderViewItem( this, name.isEmpty() ? folder->label() : name, folder );
-  if ( after )
-    item->moveItem( after );
-  else
-    item->moveItem( lastItem() );
-  ensureItemVisible( item );
-  insertIntoFolderToItemMap( folder, item );
-  notifyInstancesOnChange();
+
+  int idx = GlobalSettings::self()->favoriteFolderIds().indexOf( folder->id() );
+  if ( idx < 0 )
+  {
+    // Not in favorites. If the folder is an inbox which we haven't seen before
+    // (i.e. a new account), then add it, else return here already.
+
+    // The old FavoriteFolderView code contains a snippet that automatically
+    // adds the inboxes of all the accounts to the view.
+    // While this is a quiestionable rule, Thomas says that it might be for some
+    // usability reason so I'm adding it here too....
+    if ( type != FolderViewItem::Inbox )
+      return 0; // not an inbox
+    if ( GlobalSettings::self()->favoriteFolderViewSeenInboxes().contains( folder->id() ) )
+      return 0; // already seen
+
+    QList<int> seenInboxes = GlobalSettings::self()->favoriteFolderViewSeenInboxes();
+    seenInboxes.append( folder->id() ); // FIXME: this list never shrinks
+    GlobalSettings::self()->setFavoriteFolderViewSeenInboxes( seenInboxes );
+  }
+
+  // If we reached this point, we want to add the folder to the favorite folder
+  // view
+
+  QString name;
+  bool newFavorite = !( idx >= 0 && idx < GlobalSettings::self()->favoriteFolderNames().count() );
+  if ( !newFavorite )
+    name = GlobalSettings::self()->favoriteFolderNames().at( idx );
+
+  if ( name.isEmpty() )
+  {
+    name = label;
+
+    // locate the item's parent
+    if ( proto == FolderViewItem::Local )
+      name += QString(" (%1)").arg( i18n("Local Folders") );
+    else {
+      KMFolder *owner = folder;
+      while( owner->ownerFolder() )
+        owner = owner->ownerFolder();
+
+      name += QString(" (%1)").arg( owner->label() );
+    }
+
+    // Ok, we created a new folder here, so make sure it is also in the list of
+    // favorite folder ids and names. Otherwise, the item would not be added on
+    // the next reload()
+    QList<int> idList = GlobalSettings::self()->favoriteFolderIds();
+    QList<QString> nameList = GlobalSettings::self()->favoriteFolderNames();
+    idList.append( folder->id() );
+    nameList.append( name );
+    GlobalSettings::self()->setFavoriteFolderIds( idList );
+    GlobalSettings::self()->setFavoriteFolderNames( nameList );
+  }
+
+  FolderViewItem *item = new FolderViewItem( this, name, folder, proto, type );
   return item;
 }
 
-void FavoriteFolderView::selectionChanged()
+void FavoriteFolderView::storeFavorites()
 {
-  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( selectedItem() );
-  if ( !fti )
+  QList<int> lIds;
+  QStringList lNames;
+
+  QTreeWidgetItemIterator it( this );
+  while( FolderViewItem * item = static_cast<FolderViewItem *>( *it ) )
+  {
+    lIds.append( item->folder()->id() );  
+    lNames.append( item->labelText() );
+    ++it;
+  }
+
+  GlobalSettings::self()->setFavoriteFolderIds( lIds );
+  GlobalSettings::self()->setFavoriteFolderNames( lNames );
+}
+
+void FavoriteFolderView::appendAddFolderActionToMenu( KMenu *menu ) const
+{
+  menu->addAction( KIcon( "bookmark-new" ), i18n( "Add Favorite Folder..." ),
+                   this, SLOT( addFolder() ) );
+}
+
+void FavoriteFolderView::fillContextMenuViewStructureRelatedActions( KMenu *menu, FolderViewItem */*item*/, bool multiSelection )
+{
+  menu->addAction( KIcon( "edit-delete" ), i18n( "Remove From Favorites" ), this, SLOT( removeFolders() ) );
+  if ( !multiSelection )
+    menu->addAction( KIcon( "edit-rename" ), i18n( "Rename Favorite..." ), this, SLOT( renameFolder() ) );
+  appendAddFolderActionToMenu( menu );
+}
+
+void FavoriteFolderView::fillContextMenuNoItem( KMenu *mneu )
+{
+  appendAddFolderActionToMenu( mneu );
+}
+
+//=======================================================================================
+// DND Machinery: we allow adding items from outside and maybe sorting stuff by dnd.
+//
+
+class FoldersDropAction
+{
+public:
+  enum Action
+  {
+    Accept,
+    Reject
+  };
+
+public:
+  // in
+  QDropEvent *event;
+  FavoriteFolderView *view;
+  // out 
+  Action action;
+  FolderViewItem *reference;
+  FolderView::DropInsertPosition position;
+  QRect validityRect;
+  QString description;
+};
+
+static void computeFoldersDropAction( FoldersDropAction *act )
+{
+  act->reference = static_cast<FolderViewItem *>( act->view->itemAt( act->event->pos() ) );
+
+  if ( !act->reference )
+  {
+    // not over an item: try to use the last item in the view as reference
+    int cc = act->view->topLevelItemCount();
+    if ( cc < 1 )
+    {
+      // nothing in the view at all: totally new items, accept on the whole viewport
+      act->action = FoldersDropAction::Accept;
+      act->validityRect = act->view->viewport()->rect();
+      act->description = i18n("Add Folders to Favorites");
+      return;
+    }
+
+    act->reference = static_cast<FolderViewItem *>( act->view->topLevelItem( cc - 1 ) );
+    // now item != 0 (and item is visible)
+  }
+
+  QRect r = act->view->visualItemRect( act->reference );
+  QRect mouseRect( act->event->pos().x() - 1, act->event->pos().y() - 1, 2, 2 );
+
+  // set defaults
+  act->action = FoldersDropAction::Reject;
+  act->validityRect = mouseRect;
+
+  // make sure we're not dragging stuff over itself
+
+  QList<QPointer<KMFolder> > lFolders = DraggedFolderList::get();
+  if ( lFolders.isEmpty() )
+    return; // nothing we can accept
+
+  for ( QList< QPointer< KMFolder > >::Iterator it = lFolders.begin(); it != lFolders.end(); ++it )
+  {
+    if ( !( *it ) )
+      return; // one of the folders was lost in the way: don't bother
+    if ( ( *it ) == act->reference->folder() )
+      return; // inserting above or below itself
+  }
+
+  act->action = FoldersDropAction::Accept;
+
+  if ( act->event->pos().y() < ( r.top() + ( r.height() / 2 ) ) )
+  {
+    act->position = FolderView::AboveReference;
+    act->validityRect = r;
+    act->validityRect.setHeight( r.height() / 2 );
+    act->description = i18n( "Insert Folders Above %1", act->reference->labelText() );
     return;
-  KMFolderTree *ft = mainWidget()->folderTree();
-  assert( ft );
-  ft->showFolder( fti->folder() );
+  }
+
+  r.setTop( r.top() + ( r.height() / 2 ) );  
+  r.setHeight( r.height() / 2 );
+  act->validityRect = r.united( mouseRect );
+  act->position = FolderView::BelowReference;  
+  act->description = i18n( "Insert Folders Below %1", act->reference->labelText() );
+}
+
+void FavoriteFolderView::handleFoldersDragMoveEvent( QDragMoveEvent *e )
+{
+  FoldersDropAction act;
+  act.event = e;
+  act.view = this;
+
+  computeFoldersDropAction( &act );
+  if ( act.action == FoldersDropAction::Accept )
+  {
+    e->accept( act.validityRect );
+    setDropIndicatorData( 0, act.reference, act.position );
+  } else {
+    e->ignore( act.validityRect );
+    setDropIndicatorData( 0, 0 );
+  }
+
+  KPIM::BroadcastStatus::instance()->setStatusMsg( act.description );
+}
+
+void FavoriteFolderView::handleFoldersDropEvent( QDropEvent *e )
+{
+  FoldersDropAction act;
+  act.event = e;
+  act.view = this;
+
+  computeFoldersDropAction( &act );
+
+  if ( act.action != FoldersDropAction::Accept )
+  {
+    e->ignore();
+    return;
+  }
+
+  e->accept();
+
+  int refIdx;
+  if ( act.reference )
+  {
+    refIdx = indexOfTopLevelItem( act.reference );
+    if ( act.position == FolderView::AboveReference )
+      refIdx--;
+  } else {
+    refIdx = -1;
+  }
+
+  QList<QPointer<KMFolder> > lFolders = DraggedFolderList::get();
+  if ( lFolders.isEmpty() )
+    return; // nothing we can accept
+
+  setUpdatesEnabled( false );
+
+  for ( QList<QPointer<KMFolder> >::Iterator it = lFolders.begin(); it != lFolders.end(); ++it )
+  {
+    if ( !( *it ) )
+      continue; // umphf
+
+    FolderViewItem *moved = findItemByFolder( *it );
+    if ( !moved )
+      moved = addFolderInternal( *it );
+    if ( !moved )
+      continue; // umphf x 2
+    int removedIdx = indexOfTopLevelItem( moved );
+    takeTopLevelItem( removedIdx );
+    if ( removedIdx >= refIdx )
+      refIdx++;
+    insertTopLevelItem( refIdx, moved );
+  }
+
+  setUpdatesEnabled( true );
+
+  if ( sortingPolicy() == SortByDragAndDropKey )
+  {
+    fixSortingKeysForChildren( invisibleRootItem() );
+    sortByColumn( LabelColumn, Qt::AscendingOrder );
+  }
+}
+
+void FavoriteFolderView::addFolder( KMFolder *fld )
+{
+  if ( findItemByFolder( fld ) )
+    return; // already there
+
+  if ( !addFolderInternal( fld ) )
+    return;
+
+  if ( sortingPolicy() == SortByDragAndDropKey )
+    fixSortingKeysForChildren( invisibleRootItem() );
+}
+
+FolderViewItem * FavoriteFolderView::addFolderInternal( KMFolder *fld )
+{
+  QList<int> lIds = GlobalSettings::self()->favoriteFolderIds();
+  if ( lIds.contains( fld->id() ) )
+    return 0; // ugh
+
+  // add it to the list so createItem won't filter it out
+  lIds.append( fld->id() );
+  GlobalSettings::self()->setFavoriteFolderIds( lIds );
+
+  QStringList lNames = GlobalSettings::self()->favoriteFolderNames();
+  lNames.append(QString());
+  GlobalSettings::self()->setFavoriteFolderNames( lNames );
+
+  FolderViewItem * it = createItem(
+      0, ( fld )->label(), ( fld ),
+      FolderViewItem::protocolByFolder( fld ),
+      FolderViewItem::folderTypeByFolder( fld )
+    );
+
+  // re-store favorites with the right item name
+  storeFavorites();
+
+  return it;
+}
+
+void FavoriteFolderView::addFolder()
+{
+  FolderSelectionDialog dlg( mainWidget(), i18n("Add Favorite Folder"), false );
+  if ( dlg.exec() != QDialog::Accepted )
+    return;
+  KMFolder *folder = dlg.folder();
+  if ( !folder )
+    return;
+  addFolderInternal( folder );
+}
+
+void FavoriteFolderView::renameFolder()
+{
+  FolderViewItem * it = static_cast<FolderViewItem *>( currentItem() );
+  if ( !it )
+    return;
+
+  // We would REALLY like to use the nice Qt item renaming method but we can't
+  // since KMMainWidget assigns the return key to a QAction default shortcut.
+  // We never get the return key and thus never can end editing succesfully.
+  // An action-disabling workaround requires too much code to be implemented.
+
+  bool ok;
+  QString name = KInputDialog::getText( i18n( "Rename Favorite" ),
+                                        i18nc( "@label:textbox New name of the folder.", "Name:" ),
+                                        it->labelText(), &ok, this );
+  if ( !ok )
+    return;
+
+  it->setLabelText( name );
+
+  storeFavorites();
+}
+
+void FavoriteFolderView::removeFolders()
+{
+  QList<QTreeWidgetItem *> lSelected = selectedItems();
+  if ( lSelected.isEmpty() )
+    return;
+
+  for( QList<QTreeWidgetItem *>::Iterator it = lSelected.begin(); it != lSelected.end(); ++it )
+  {
+    FolderViewItem * item = static_cast<FolderViewItem *>( *it );
+    if ( !item )
+      continue; // hum
+    if ( !item->folder() )
+      continue;
+
+    delete item;
+  }
+
+  storeFavorites();
+}
+
+void FavoriteFolderView::checkMail()
+{
+  bool found = false;
+
+  QTreeWidgetItemIterator it( this );
+
+  while( *it )
+  {
+    FolderViewItem *fti = static_cast<FolderViewItem*>( *it );
+
+    if (
+        fti->folder()->folderType() == KMFolderTypeImap ||
+        fti->folder()->folderType() == KMFolderTypeCachedImap
+      )
+    {
+      if ( !found )
+        if ( !kmkernel->askToGoOnline() )
+          break;
+
+      found = true;
+
+      if ( fti->folder()->folderType() == KMFolderTypeImap )
+      {
+        KMFolderImap *imap = static_cast<KMFolderImap*>( fti->folder()->storage() );
+        imap->getAndCheckFolder();
+      } else if ( fti->folder()->folderType() == KMFolderTypeCachedImap )
+      {
+        KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
+        f->account()->processNewMailSingleFolder( fti->folder() );
+      }
+    }
+
+    ++it;
+  }
+
 }
 
 static void selectKontactPlugin( const QString &plugin )
@@ -220,16 +461,20 @@ static void selectKontactPlugin( const QString &plugin )
   delete kontact;
 }
 
-void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
+void FavoriteFolderView::activateItemInternal( FolderViewItem *fvi, bool keepSelection, bool notifyManager, bool middleButton )
 {
-  if ( !fti || !fti->folder() || !fti->folder()->storage() )
+  FolderView::activateItemInternal( fvi, keepSelection, notifyManager, middleButton );
+
+  // handle groupware folders
+  if ( !fvi || !fvi->folder() || !fvi->folder()->storage() )
     return;
-  switch ( fti->folder()->storage()->contentsType() ) {
+  switch ( fvi->folder()->storage()->contentsType() )
+  {
     case KMail::ContentsTypeContact:
-      KPIM::KAddrBookExternal::openAddressBook( this );
+        KPIM::KAddrBookExternal::openAddressBook( this );
       break;
     case KMail::ContentsTypeNote:
-      selectKontactPlugin( "kontact_knotesplugin" );
+        selectKontactPlugin( "kontact_knotesplugin" );
       break;
     case KMail::ContentsTypeCalendar:
     case KMail::ContentsTypeTask:
@@ -237,7 +482,8 @@ void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
     {
       KMail::KorgHelper::ensureRunning();
       QString plugin;
-      switch ( fti->folder()->storage()->contentsType() ) {
+      switch ( fvi->folder()->storage()->contentsType() )
+      {
         case KMail::ContentsTypeCalendar:
           plugin = QLatin1String( "kontact_korganizerplugin" ); break;
         case KMail::ContentsTypeTask:
@@ -247,281 +493,13 @@ void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
         default: assert( false );
       }
       selectKontactPlugin( plugin );
-      break;
     }
-    default: break;
+    break;
+    default: // make gcc happy
+    break;
   }
 }
 
-void FavoriteFolderView::itemClicked(int button, Q3ListViewItem * item)
-{
-  if ( !item ) return;
-  if ( !item->isSelected() )
-    item->setSelected( true );
-  item->repaint();
-  if ( button & Qt::LeftButton )
-    handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
-}
-
-void FavoriteFolderView::folderTreeSelectionChanged(KMFolder * folder)
-{
-  blockSignals( true );
-  bool found = false;
-  for ( Q3ListViewItemIterator it( this ); it.current(); ++it ) {
-    KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-    if ( fti->folder() == folder && !fti->isSelected() ) {
-      fti->setSelected( true );
-      setCurrentItem( fti );
-      ensureItemVisible( fti );
-      fti->repaint();
-      found = true;
-    } else if ( fti->folder() != folder && fti->isSelected() ) {
-      fti->setSelected( false );
-      fti->repaint();
-    }
-  }
-  blockSignals( false );
-  if ( !found ) {
-    clearSelection();
-    setSelectionMode( Q3ListView::NoSelection );
-    setSelectionMode( Q3ListView::Single );
-  }
-}
-
-void FavoriteFolderView::folderRemoved(KMFolder * folder)
-{
-  QList<KMFolderTreeItem *> delItems;
-  for ( Q3ListViewItemIterator it( this ); it.current(); ++it ) {
-    KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-    if ( fti->folder() == folder )
-      delItems << fti;
-    if ( fti == mContextMenuItem )
-      mContextMenuItem = 0;
-  }
-  for ( int i = 0; i < delItems.count(); ++i )
-    delete delItems[i];
-  removeFromFolderToItemMap( folder );
-}
-
-void FavoriteFolderView::dropped(QDropEvent * e, Q3ListViewItem * after)
-{
-  Q3ListViewItem* afterItem = after;
-  KMFolderTree *ft = mainWidget()->folderTree();
-  assert( ft );
-  if ( e->source() == ft->viewport() && e->provides( "application/x-qlistviewitem" ) ) {
-    for ( Q3ListViewItemIterator it( ft ); it.current(); ++it ) {
-      if ( !it.current()->isSelected() )
-        continue;
-      KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-      if ( !fti->folder() )
-        continue;
-      afterItem = addFolder( fti->folder(), prettyName( fti ), afterItem );
-    }
-    e->accept();
-  }
-}
-
-void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point)
-{
-  KMFolderTree *ft = mainWidget()->folderTree();
-  assert( ft );
-  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( item );
-  mContextMenuItem = fti;
-  KMenu contextMenu;
-  if ( fti && fti->folder() ) {
-    contextMenu.addAction( SmallIcon( "edit-delete" ), i18n( "Remove From Favorites" ),
-                           this, SLOT( removeFolder() ) );
-    contextMenu.addAction( SmallIcon( "edit-rename" ), i18n( "Rename Favorite..." ),
-                           this, SLOT( renameFolder() ) );
-    contextMenu.addSeparator();
-
-    contextMenu.addAction( mainWidget()->action( "mark_all_as_read" ) );
-    if ( fti->folder()->folderType() == KMFolderTypeImap
-         || fti->folder()->folderType() == KMFolderTypeCachedImap ) {
-      contextMenu.addAction( mainWidget()->action( "refresh_folder" ) );
-    }
-
-    if ( fti->folder()->isMailingListEnabled() )
-      contextMenu.addAction( mainWidget()->action( "post_message" ) );
-
-    contextMenu.addAction( SmallIcon( "configure-shortcuts" ), i18n( "&Assign Shortcut..." ),
-                           fti, SLOT( assignShortcut() ) );
-    contextMenu.addAction( i18n( "Expire..." ), fti, SLOT(slotShowExpiryProperties()) );
-    contextMenu.addAction( mainWidget()->action( "modify" ) );
-  } else {
-    contextMenu.addAction( SmallIcon( "bookmark-new" ), i18n( "Add Favorite Folder..." ),
-                           this, SLOT( addFolder() ) );
-  }
-  contextMenu.exec( point );
-}
-
-void FavoriteFolderView::removeFolder()
-{
-  delete mContextMenuItem;
-  mContextMenuItem = 0;
-  notifyInstancesOnChange();
-}
-
-void FavoriteFolderView::initializeFavorites()
-{
-  QList<int> seenInboxes = GlobalSettings::self()->favoriteFolderViewSeenInboxes();
-  KMFolderTree *ft = mainWidget()->folderTree();
-  assert( ft );
-  for ( Q3ListViewItemIterator it( ft ); it.current(); ++it ) {
-    KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-    if ( fti->type() == KFolderTreeItem::Inbox && fti->folder() && !seenInboxes.contains( fti->folder()->id() ) ) {
-      seenInboxes.append( fti->folder()->id() );
-      if ( fti->folder() == kmkernel->inboxFolder() && hideLocalInbox() )
-        continue;
-      if ( kmkernel->iCalIface().hideResourceFolder( fti->folder() ) )
-        continue;
-      addFolder( fti->folder(), prettyName( fti ) );
-    }
-  }
-  GlobalSettings::self()->setFavoriteFolderViewSeenInboxes( seenInboxes );
-}
-
-void FavoriteFolderView::renameFolder()
-{
-  if ( !mContextMenuItem )
-    return;
-  bool ok;
-  QString name = KInputDialog::getText( i18n("Rename Favorite")
-                                , i18nc( "@label:textbox New name of the folder.", "Name:")
-                                , mContextMenuItem->text( 0 ), &ok, this );
-  if ( !ok )
-    return;
-  mContextMenuItem->setText( 0, name );
-  notifyInstancesOnChange();
-}
-
-QString FavoriteFolderView::prettyName(KMFolderTreeItem * fti)
-{
-  assert( fti );
-  assert( fti->folder() );
-  QString name = fti->folder()->label();
-  Q3ListViewItem *accountFti = fti;
-  while ( accountFti->parent() )
-    accountFti = accountFti->parent();
-  if ( fti->type() == KFolderTreeItem::Inbox ) {
-    if ( fti->protocol() == KFolderTreeItem::Local || fti->protocol() == KFolderTreeItem::NONE ) {
-      name = i18n( "Local Inbox" );
-    } else {
-      name = i18n( "Inbox of %1", accountFti->text( 0 ) );
-    }
-  } else {
-    if ( fti->protocol() != KFolderTreeItem::Local && fti->protocol() != KFolderTreeItem::NONE ) {
-      name = i18nc( "@item {FOLDER} on {MAIL ACCOUNT}", "%1 on %2", fti->text( 0 )
-              , accountFti->text( 0 ) );
-    } else {
-      name = i18nc( "@item Local folder.", "%1 (local)", fti->text( 0 ) );
-    }
-  }
-  return name;
-}
-
-void FavoriteFolderView::contentsDragEnterEvent(QDragEnterEvent * e)
-{
-  if ( e->provides( "application/x-qlistviewitem" ) ) {
-    setDropVisualizer( true );
-    setDropHighlighter( false );
-  } else if ( e->mimeData()->hasFormat( KPIM::MailList::mimeDataType() ) ) {
-    setDropVisualizer( false );
-    setDropHighlighter( true );
-  } else {
-    setDropVisualizer( false );
-    setDropHighlighter( false );
-  }
-  e->accept();
-}
-
-void FavoriteFolderView::readColorConfig()
-{
-  FolderTreeBase::readColorConfig();
-  // Custom/System color support
-  KConfigGroup cg = KMKernel::config()->group( "Reader" );
-  QColor backgroundColor  = KColorScheme( QPalette::Normal, KColorScheme::View ).background(
-                                          KColorScheme::AlternateBackground ).color();
-  mPaintInfo.colBack = backgroundColor;
-  QPalette newPal = palette();
-  newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
-  setPalette( newPal );
-}
-
-void FavoriteFolderView::addFolder()
-{
-  FolderSelectionDialog dlg( mainWidget(), i18n("Add Favorite Folder"), false );
-  if ( dlg.exec() != QDialog::Accepted )
-    return;
-  KMFolder *folder = dlg.folder();
-  if ( !folder )
-    return;
-  KMFolderTreeItem *fti = findFolderTreeItem( folder );
-  addFolder( folder, fti ? prettyName( fti ) : folder->label() );
-}
-
-void KMail::FavoriteFolderView::addFolder(KMFolderTreeItem * fti)
-{
-  if ( !fti || !fti->folder() )
-    return;
-  addFolder( fti->folder(), prettyName( fti ) );
-}
-
-KMFolderTreeItem * FavoriteFolderView::findFolderTreeItem(KMFolder * folder) const
-{
-  assert( folder );
-  KMFolderTree *ft = mainWidget()->folderTree();
-  assert( ft );
-  for ( Q3ListViewItemIterator it( ft ); it.current(); ++it ) {
-    KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-    if ( fti->folder() == folder )
-      return fti;
-  }
-  return 0;
-}
-
-void FavoriteFolderView::checkMail()
-{
-  bool found = false;
-  for ( Q3ListViewItemIterator it( this ); it.current(); ++it ) {
-    KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-    if ( fti->folder()->folderType() == KMFolderTypeImap || fti->folder()->folderType() == KMFolderTypeCachedImap ) {
-      if ( !found )
-        if ( !kmkernel->askToGoOnline() )
-          break;
-      found = true;
-      if ( fti->folder()->folderType() == KMFolderTypeImap ) {
-        KMFolderImap *imap = static_cast<KMFolderImap*>( fti->folder()->storage() );
-        imap->getAndCheckFolder();
-      } else if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
-        KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
-        f->account()->processNewMailSingleFolder( fti->folder() );
-      }
-    }
-  }
-}
-
-void FavoriteFolderView::notifyInstancesOnChange()
-{
-  if ( mReadingConfig )
-    return;
-  writeConfig();
-  for ( QList<FavoriteFolderView*>::ConstIterator it = mInstances.begin(); it != mInstances.end(); ++it ) {
-    if ( (*it) == this || (*it)->mReadingConfig )
-      continue;
-    (*it)->readConfig();
-  }
-}
-
-void FavoriteFolderView::refresh()
-{
-  for ( Q3ListViewItemIterator it( this ); it.current(); ++it ) {
-    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( it.current() );
-    if ( !fti || !fti->folder() )
-      continue;
-    fti->repaint();
-  }
-  update();
-}
+} // namespace KMail
 
 #include "favoritefolderview.moc"

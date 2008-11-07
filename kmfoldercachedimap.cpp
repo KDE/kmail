@@ -254,7 +254,7 @@ void KMFolderCachedImap::initializeFrom( KMFolderCachedImap *parent )
 void KMFolderCachedImap::readConfig()
 {
   KConfig *config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + folder()->idString() );
+  KConfigGroup group( config, folder()->configGroupName() );
   if ( mImapPath.isEmpty() ) {
     mImapPath = group.readEntry( "ImapPath" );
   }
@@ -325,7 +325,8 @@ void KMFolderCachedImap::writeConfig()
   if ( mFolderRemoved )
     return;
 
-  KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
+  KConfigGroup configGroup( KMKernel::config(), folder()->configGroupName() );
+
   configGroup.writeEntry( "ImapPath", mImapPath );
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
@@ -357,7 +358,7 @@ void KMFolderCachedImap::writeConfig()
 
 void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig()
 {
-  KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
+  KConfigGroup configGroup( KMKernel::config(), folder()->configGroupName() );
   if ( !folder()->noContent() ) {
     configGroup.writeEntry( "AnnotationFolderTypeChanged", mAnnotationFolderTypeChanged );
     configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );

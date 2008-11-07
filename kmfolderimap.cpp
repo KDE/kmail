@@ -24,7 +24,6 @@
 #include "kmfolderimap.h"
 #include "kmfolder.h"
 #include "kmfoldermbox.h"
-#include "kmfoldertree.h"
 #include "kmmsgdict.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"
@@ -195,7 +194,7 @@ void KMFolderImap::setAccount(KMAcctImap *aAccount)
 void KMFolderImap::readConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroup group(config, "Folder-" + folder()->idString());
+  KConfigGroup group(config, folder()->configGroupName());
   mCheckMail = group.readEntry( "checkmail", true );
 
   mUidValidity = group.readEntry("UidValidity");
@@ -219,7 +218,7 @@ void KMFolderImap::readConfig()
 void KMFolderImap::writeConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroup group(config, "Folder-" + folder()->idString());
+  KConfigGroup group(config, folder()->configGroupName());
   group.writeEntry("checkmail", mCheckMail);
   group.writeEntry("UidValidity", mUidValidity);
   group.writeEntry("ImapPath", mImapPath);

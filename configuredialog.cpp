@@ -53,6 +53,7 @@ using KMail::ImapAccountBase;
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "kmmessagetag.h"
+#include "mainfolderview.h"
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
@@ -1754,6 +1755,15 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );
 
+  mDisplayMessageToolTips = new QCheckBox( i18n("Display Tooltips for Messages and Group Headers"), group );
+  gvlay->addWidget( mDisplayMessageToolTips );
+
+  connect( mDisplayMessageToolTips, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+/*
+  
+
   mShowQuickSearch = new QCheckBox( i18n("Show Quick Search"), group );
   gvlay->addWidget( mShowQuickSearch );
 
@@ -1779,26 +1789,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mNestedMessagesCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+*/
 
   vlay->addWidget( group );
-
-  // "Message Header Threading Options" group:
-  mNestingPolicy = new KButtonGroup( this );
-  mNestingPolicy->setTitle( i18n("Threaded Message List Options") );
-  //mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
-  gvlay = new QVBoxLayout( mNestingPolicy );
-  gvlay->setSpacing( KDialog::spacingHint() );
-
-  gvlay->addWidget( new QRadioButton( i18n("Always &keep threads open"), mNestingPolicy ) );
-  gvlay->addWidget( new QRadioButton( i18n("Threads default to o&pen"), mNestingPolicy ) );
-  gvlay->addWidget( new QRadioButton( i18n("Threads default to closed"), mNestingPolicy ) );
-  gvlay->addWidget( new QRadioButton( i18n("Open threads that contain ne&w, unread "
-                           "or important messages and open watched threads."), mNestingPolicy ) );
-
-  vlay->addWidget( mNestingPolicy );
-
-  connect( mNestingPolicy, SIGNAL( changed( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
 
   // "Date Display" group:
   mDateDisplay = new KButtonGroup( this );
@@ -1890,16 +1883,15 @@ void AppearancePage::HeadersTab::doLoadOther() {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   // "General Options":
+/*
   mNestedMessagesCheck->setChecked( geometry.readEntry( "nestedMessages", false ) );
   mMessageSizeCheck->setChecked( general.readEntry( "showMessageSize", false ) );
   mCryptoIconsCheck->setChecked( general.readEntry( "showCryptoIcons", false ) );
   mAttachmentCheck->setChecked( general.readEntry( "showAttachmentIcon", true ) );
   mShowQuickSearch->setChecked( GlobalSettings::self()->quickSearchActive() );
+*/
 
-  // "Message Header Threading Options":
-  int num = geometry.readEntry( "nestingPolicy", 3 );
-  if ( num < 0 || num > 3 ) num = 3;
-  mNestingPolicy->setSelected( num );
+  mDisplayMessageToolTips->setChecked( general.readEntry( "displayMessageToolTips", true ) );
 
   // "Date Display":
   setDateDisplay( general.readEntry( "dateFormat",
@@ -1928,6 +1920,10 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
   KConfigGroup general( profile, "General" );
   KConfigGroup geometry( profile, "Geometry" );
 
+  if ( general.hasKey( "displayMessageToolTips" ) )
+    mDisplayMessageToolTips->setChecked( general.readEntry( "displayMessageToolTips", true ) );
+
+/*
   if ( geometry.hasKey( "nestedMessages" ) )
     mNestedMessagesCheck->setChecked( geometry.readEntry( "nestedMessages", false ) );
   if ( general.hasKey( "showMessageSize" ) )
@@ -1937,12 +1933,7 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
     mCryptoIconsCheck->setChecked( general.readEntry( "showCryptoIcons", false ) );
   if ( general.hasKey( "showAttachmentIcon" ) )
     mAttachmentCheck->setChecked( general.readEntry( "showAttachmentIcon", false ) );
-
-  if ( geometry.hasKey( "nestingPolicy" ) ) {
-    int num = geometry.readEntry( "nestingPolicy", 0 );
-    if ( num < 0 || num > 3 ) num = 3;
-    mNestingPolicy->setSelected( num );
-  }
+*/
 
   if ( general.hasKey( "dateFormat" ) )
     setDateDisplay( general.readEntry( "dateFormat", 0 ),
@@ -1953,30 +1944,15 @@ void AppearancePage::HeadersTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  if ( geometry.readEntry( "nestedMessages", false )
-       != mNestedMessagesCheck->isChecked() ) {
-    int result = KMessageBox::warningContinueCancel( this,
-                   i18n("Changing the global threading setting will override "
-                        "all folder specific values."),
-                   QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
-                   "threadOverride" );
-    if ( result == KMessageBox::Continue ) {
-      geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
-      // remove all threadMessagesOverride keys from all [Folder-*] groups:
-      QStringList groups = KMKernel::config()->groupList().filter( QRegExp("^Folder-") );
-      kDebug(5006) <<"groups.count() ==" << groups.count();
-      for ( QStringList::const_iterator it = groups.begin() ; it != groups.end() ; ++it ) {
-        KConfigGroup group( KMKernel::config(), *it );
-        group.deleteEntry( "threadMessagesOverride" );
-      }
-    }
-  }
+  general.writeEntry( "displayMessageToolTips", mDisplayMessageToolTips->isChecked() );
 
+/*
   geometry.writeEntry( "nestingPolicy", mNestingPolicy->selected() );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
   general.writeEntry( "showCryptoIcons", mCryptoIconsCheck->isChecked() );
   general.writeEntry( "showAttachmentIcon", mAttachmentCheck->isChecked() );
   GlobalSettings::self()->setQuickSearchActive( mShowQuickSearch->isChecked() );
+*/
 
   int dateDisplayID = mDateDisplay->selected();
   // check bounds:
@@ -3980,8 +3956,7 @@ void SecurityPage::GeneralTab::save() {
       {
         if (*it)
         {
-          KConfigGroup config(KMKernel::config(),
-            "Folder-" + (*it)->idString());
+          KConfigGroup config( KMKernel::config(), (*it)->configGroupName() );
           config.writeEntry("htmlMailOverride", false);
         }
       }
@@ -4702,7 +4677,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mOnStartupOpenFolder = new FolderRequester( this,
-      kmkernel->getKMMainWidget()->folderTree() );
+      kmkernel->getKMMainWidget()->mainFolderView() );
   label = new QLabel( i18n("Open this folder on startup:"), this );
   label->setBuddy( mOnStartupOpenFolder );
   hlay->addWidget( label );
@@ -4887,7 +4862,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   // First possibility in the widgetstack: a combo showing the list of all folders
   // This is used with the ical/vcard storage
   mFolderCombo = new FolderRequester( mBox,
-      kmkernel->getKMMainWidget()->folderTree() );
+      kmkernel->getKMMainWidget()->mainFolderView() );
   mFolderComboStack->insertWidget( 0,mFolderCombo );
   mFolderCombo->setToolTip( toolTip );
   mFolderCombo->setWhatsThis( whatsThis );

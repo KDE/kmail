@@ -27,12 +27,12 @@
 #include <kdialog.h>          // kdelibs
 
 class KMFolder;
-class KMFolderTree;
 class KMMainWidget;
 
 namespace KMail {
 
 class FolderSelectionTreeWidget;
+class MainFolderView;
 
 
 /**
@@ -66,7 +66,7 @@ public:
    */
   FolderSelectionDialog(
       QWidget * parent,
-      KMFolderTree * tree,
+      MainFolderView * tree,
       const QString& caption,
       bool mustBeReadWrite,
       bool useGlobalSettings = true
@@ -116,7 +116,7 @@ protected:
   /**
    * Common initialization for all the constructors.
    */
-  void init( KMFolderTree *tree, bool mustBeReadWrite );
+  void init( MainFolderView *tree, bool mustBeReadWrite );
 
 private:
   FolderSelectionTreeWidget * mTreeView;

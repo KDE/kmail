@@ -43,24 +43,23 @@ class QVBoxLayout;
 class QSplitter;
 class QSignalMapper;
 class QToolBar;
+class QTabWidget;
 
 class KActionMenu;
 class KConfig;
 class KToggleAction;
-class K3ListViewSearchLine;
+class KTreeWidgetSearchLine;
 
 class KMFolder;
-class KMFolderTree;
-class KMFolderTreeItem;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
 class KMMessage;
 class KMFolder;
 class KMSystemTray;
-class KMHeaders;
 class KMMessageTagDescription;
 typedef QPair<KMMessageTagDescription*,KAction*> MessageTagPtrPair;
 class CustomTemplatesMenu;
+
 
 template <typename T> class QList;
 template <typename T, typename S> class QMap;
@@ -74,14 +73,18 @@ namespace KMail {
   class Vacation;
   class SieveDebugDialog;
   class FolderJob;
-  class HeaderListQuickSearch;
   class SearchWindow;
   class ImapAccountBase;
   class FavoriteFolderView;
   class StatusBarLabel;
+  class MainFolderView;
+  class FolderViewManager;
+  namespace MessageListView
+  {
+    class MessageSet;
+    class Pane;
+  }
 }
-
-typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
@@ -113,8 +116,20 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
-    KMFolderTree* folderTree() const  { return mFolderTree; }
-    KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
+
+    KMail::MainFolderView * mainFolderView() const
+      { return mMainFolderView; }
+    KMail::FavoriteFolderView * favoriteFolderView() const
+      { return mFavoriteFolderView; }
+    KMail::FolderViewManager * folderViewManager() const
+      { return mFolderViewManager; }
+    KMail::MessageListView::Pane * messageListView() const
+      { return mMessageListView; }
+    /**
+     * Returns the currently selected folder in messageListView().
+     */
+    KMFolder * folder() const;
+
 
     static void cleanup();
 
@@ -136,6 +151,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *applyAllFiltersAction() const { return mApplyAllFiltersAction; }
     KAction *findInMessageAction() const { return mFindInMessageAction; }
     KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
+    KAction *exportToHtmlAction() const { return mExportToHtmlAction; }
+    KAction *viewFullThreadAction() const { return mViewFullThreadAction; }
     KAction *openAction() const { return mOpenAction; }
     KAction *viewSourceAction() const { return mViewSourceAction; }
     KMail::MessageActions *messageActions() const { return mMsgActions; }
@@ -148,7 +165,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KToggleAction *watchThreadAction() const { return mWatchThreadAction; }
     KToggleAction *ignoreThreadAction() const { return mIgnoreThreadAction; }
 
-    KMHeaders *headers() const { return mHeaders; }
+    /**
+     * Returns the currently active folder (may be 0 => root or searches active)
+     */
+    KMFolder *activeFolder() const;
+
     void toggleSystemTray();
 
     void updateListFilterAction();
@@ -166,14 +187,63 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     QList<QAction*> actionList();
 
-    void modifyFolder( KMFolderTreeItem *folderItem );
-
     QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
 
   public slots:
-    void slotMoveMsgToFolder( KMFolder *dest);
-    void slotTrashMsg();   // move to trash
+    // Moving messages around
+
+    /**
+     * This will ask for a destination folder and move the currently selected
+     * messages (in MessageListView) into it.
+     */
+    void slotMoveMsg();
+
+    /**
+     * This will move the currently selected
+     * messages (in MessageListView) into the specified folder.
+     */
+    void slotMoveMsgToFolder( KMFolder *dest );
+
+    /**
+     * This will move the currently selected
+     * messages (in MessageListView) into the folder specified
+     * by static_cast< KMFolder * >( act->data().value< void * >() ).
+     * Note that this function TRUSTS the returned folder to be valid.
+     * Useful for connecting popup menus.
+     */
+    void slotMoveSelectedMessagesToFolder( QAction * act );
+
+    // Copying messages around
+
+    /**
+     * This will ask for a destination folder and copy the currently selected
+     * messages (in MessageListView) into it.
+     */
+    void slotCopyMsg();
+
+    /**
+     * This will copy the currently selected
+     * messages (in MessageListView) into the specified folder.
+     */
+    void slotCopyMsgToFolder( KMFolder *dest );
+
+    /**
+     * This will copy the currently selected
+     * messages (in MessageListView) into the folder specified
+     * by static_cast< KMFolder * >( act->data().value< void * >() ).
+     * Note that this function TRUSTS the returned folder to be valid.
+     * Useful for connecting popup menus.
+     */
+    void slotCopySelectedMessagesToFolder( QAction * act );
+
+    /**
+     * Implements the "move to trash" action
+     */
+    void slotTrashMsg();
+
+    void slotExportSelectedMessagesToHtml();
+    void slotViewFullCurrentThread();
 
     void slotCheckMail();
 
@@ -181,20 +251,14 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       Select the given folder
       If the folder is 0 the intro is shown
     */
-    void folderSelected( KMFolder*, bool forceJumpToUnread = false );
+    void folderSelected( KMFolder*, bool forceJumpToUnread = false, bool preferNewTabForOpening = false );
 
     /**
       Reselect current folder
     */
     void folderSelected();
 
-    /**
-      Select the folder and jump to the next unread msg
-    */
-    void folderSelectedUnread( KMFolder* );
-
     void slotMsgSelected(KMMessage*);
-    void slotMsgChanged();
 
     /**
       Change the current folder, select a message in the current folder
@@ -222,9 +286,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Launch dialog for local (client side) subscription configuration */
     void slotLocalSubscriptionDialog();
-
-    /** The columns of the foldertree changed */
-    void slotFolderTreeColumnsChanged();
 
     /** Clear and create actions for marked filters */
     void clearFilterActions();
@@ -267,6 +328,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      *         by actionCollection().
      */
     QList<KActionCollection*> actionCollections() const;
+
+    /**
+     * Sets the list of copied/cutted messages.
+     * @param msgs A list of serial numbers.
+     * @param move if true, the messages were cutted
+     */
+    void setMessageClipboardContents( const QList< quint32 > &msgs, bool move );
 
   signals:
     void messagesTransfered( bool );
@@ -326,11 +394,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCompactAll();
     void slotOverrideHtml();
     void slotOverrideHtmlLoadExt();
-    void slotOverrideThread();
-    void slotToggleSubjectThreading();
     void slotMessageQueuedOrDrafted();
     void slotUseTemplate();
-    //void slotTrashMsg();   // move to trash
     void slotDeleteMsg( bool confirmDelete = true );  // completely delete message
     void slotTrashThread();
     void slotDeleteThread( bool confirmDelete = true );  // completely delete thread
@@ -340,16 +405,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotOpenMsg();
     void slotSaveAttachments();
     void slotJumpToFolder();
-    void slotMoveMsg();
-    //void slotMoveMsgToFolder( KMFolder *dest);
-    void slotCopyMsgToFolder( KMFolder *dest);
-    void slotCopyMsg();
     void slotResendMsg();
     void slotCheckVacation();
     void slotDebugSieve();
     void slotStartCertManager();
     void slotStartWatchGnuPG();
     void slotApplyFilters();
+    int slotFilterMsg(KMMessage *msg);
     void slotExpandThread();
     void slotExpandAllThreads();
     void slotCollapseThread();
@@ -362,9 +424,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSetThreadStatusToAct();
     void slotSetThreadStatusWatched();
     void slotSetThreadStatusIgnored();
-    void slotToggleUnread();
-    void slotToggleTotalColumn();
-    void slotToggleSizeColumn();
     void slotSendQueued();
     void slotSendQueuedVia( QAction* item );
     void slotOnlineStatus();
@@ -385,11 +444,17 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotAccountWizard();
 
     /** Message navigation */
-    void slotNextMessage();
-    void slotNextUnreadMessage();
+    void slotSelectNextMessage();
+    void slotExtendSelectionToNextMessage();
+    void slotSelectNextUnreadMessage();
+    void slotSelectPreviousMessage();
+    void slotExtendSelectionToPreviousMessage();
+    void slotSelectPreviousUnreadMessage();
+    void slotFocusOnNextMessage();
+    void slotFocusOnPrevMessage();
+    void slotSelectFocusedMessage();
+
     void slotNextUnreadFolder();
-    void slotPrevMessage();
-    void slotPrevUnreadMessage();
     void slotPrevUnreadFolder();
 
     /** etc. */
@@ -402,10 +467,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Update the undo action */
     void slotUpdateUndo();
 
-    /** Move selected messages to folder with corresponding to given qaction */
-    virtual void moveSelectedToFolder( QAction* );
-    /** Copy selected messages to folder with corresponding to given qaction */
-    virtual void copySelectedToFolder( QAction* );
     /** Update html and threaded messages preferences in Folder menu. */
     void updateFolderMenu();
     /**
@@ -420,8 +481,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEditNotifications();
     void slotEditKeys();
 
-    /** changes the caption and displays the foldername */
-    void slotChangeCaption(Q3ListViewItem*);
     void removeDuplicates();
 
     /** Slot to reply to a message */
@@ -438,6 +497,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotToFilter();
     void slotPrintMsg();
     void slotCreateTodo();
+    void slotCopyMessages();
+    void slotCutMessages();
+    void slotPasteMessages();
 
     void slotConfigChanged();
 
@@ -463,6 +525,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateVactionScriptStatus( bool active );
 
   private:
+    void updateCutCopyPasteActions();
+    void fillMessageClipboard();
+
     /** Get override character encoding. */
     QString overrideEncoding() const;
 
@@ -483,8 +548,80 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Update the custom template menus. */
     void updateCustomTemplateMenus();
 
+    /**
+     * Move the messages referenced by the specified set to trash.
+     * The set parameter must not be null and the ownership is passed
+     * to this function.
+     */
+    void trashMessageSet( KMail::MessageListView::MessageSet * set );
+
+    /**
+     * Move the messages referenced by the specified set to the specified destination folder.
+     * If folder is 0 then the messages are permanently deleted. If folder is 0 and
+     * confirmOnDeletion is true then a confirmation dialog is shown before deleting
+     * the messages. If folder is nonzero then the confirmOnDeletion value is ignored.
+     * The set parameter must not be null and the ownership is passed
+     * to this function.
+     */
+    void moveMessageSet(
+        KMail::MessageListView::MessageSet * set,
+        KMFolder * destination,
+        bool confirmOnDeletion = true
+      );
+
+    /**
+     * Copy the messages referenced by the specified set to the specified destination folder.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void copyMessageSet(
+        KMail::MessageListView::MessageSet * set,
+        KMFolder * destination
+      );
+
+    /**
+     * Set the status of the messages referenced by the specified set, eventually toggling it.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void setMessageSetStatus(
+        KMail::MessageListView::MessageSet * set,
+        const KPIM::MessageStatus &status,
+        bool toggle
+      );
+
+    /**
+     * This applies setMessageSetStatus() on the current thread.
+     */
+    void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
+
+    /**
+     * Toggles a tag for the messages referenced by the specified set.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void toggleMessageSetTag(
+        KMail::MessageListView::MessageSet * set,
+        const QString &taglabel
+      );
+
   private slots:
+    /**
+     * Called when a "move to trash" operation is completed
+     */
+    void slotTrashMessagesCompleted( KMCommand *command );
+
+    /**
+     * Called when a "move" operation is completed
+     */
+    void slotMoveMessagesCompleted( KMCommand *command );
+
+    /**
+     * Called when a "copy" operation is completed
+     */
+    void slotCopyMessagesCompleted( KMCommand *command );
+
     void slotRequestFullSearchFromQuickSearch();
+    void slotMessageListViewCurrentFolderChanged( KMFolder * fld );
+    void slotFolderViewManagerFolderActivated( KMFolder * fld, bool middleClick );
+    void slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus & clear );
 
   private:
     // Message actions
@@ -519,25 +656,19 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KToggleAction *mToggleThreadToActAction;
     KToggleAction *mToggleThreadFlagAction;
     KToggleAction* mSizeColumnToggle;
+    KAction *mExportToHtmlAction;
+    KAction *mViewFullThreadAction;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
-    /** we need to access those KToggleActions from the foldertree-popup */
-    KToggleAction* mUnreadColumnToggle;
-    KToggleAction* mUnreadTextToggle;
-    KToggleAction* mTotalColumnToggle;
-
-    KMail::HeaderListQuickSearch *mQuickSearchLine;
     KMail::FavoriteFolderView    *mFavoriteFolderView;
     QPointer<KMFolder> mFolder;
     QWidget      *mSearchAndTree;
-    K3ListViewSearchLine *mFolderQuickSearch;
-    KMFolderTree *mFolderTree;
+    KTreeWidgetSearchLine *mFolderQuickSearch;
+    KMail::MainFolderView *mMainFolderView;
+    KMail::FolderViewManager *mFolderViewManager;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
-    KMHeaders    *mHeaders;
-    KVBox        *mSearchAndHeaders;
-    QWidget      *mSearchToolBar;
     KMFolder     *mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
@@ -553,14 +684,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;
-    KMMenuToFolder mMenuToFolder;
     int copyId, moveId, htmlId, threadId;
     bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
-      mFolderHtmlPref, mFolderHtmlLoadExtPref, mFolderThreadPref,
-      mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
+      mFolderHtmlPref, mFolderHtmlLoadExtPref, 
+      mReaderWindowActive, mReaderWindowBelow;
     bool mEnableFavoriteFolderView;
     bool mEnableFolderQuickSearch;
-    bool mEnableQuickSearch;
 
     //  QPopupMenu *mMessageMenu;
     KMail::SearchWindow *mSearchWin;
@@ -570,8 +699,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mFolderShortCutCommandAction, *mTroubleshootFolderAction, *mRemoveDuplicatesAction,
       *mTroubleshootMaildirAction, *mPostToMailinglistAction;
-    KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction,
-      *mThreadMessagesAction, *mThreadBySubjectAction;
+    KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
     KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
 
     QTimer *menutimer;
@@ -601,11 +729,17 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KXMLGUIClient *mGUIClient;
 
     KMail::MessageActions *mMsgActions;
+    KMail::MessageListView::Pane *mMessageListView;
 
     bool mOpenedImapFolder;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;
     bool mVacationIndicatorActive;
+    bool mGoToFirstUnreadMessageInSelectedFolder;
+
+    // message clipboard
+    QList< quint32 > mMessageClipboard;
+    bool mMessageClipboardInCutMode;
 };
 
 #endif

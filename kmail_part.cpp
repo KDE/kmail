@@ -28,11 +28,11 @@
 
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kmfoldertree.h"
 #include "kmstartup.h"
 #include "aboutdata.h"
 #include "kmfolder.h"
 #include "accountmanager.h"
+#include "mainfolderview.h"
 #include <QPixmap>
 #include <QVBoxLayout>
 using KMail::AccountManager;
@@ -44,6 +44,7 @@ using KMail::AccountManager;
 #include <kdebug.h>
 #include <ksettings/dispatcher.h>
 #include <kmailpartadaptor.h>
+#include <kicon.h>
 
 #include <QLayout>
 #include <kglobal.h>
@@ -114,11 +115,11 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-  connect( mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
-  connect( mainWidget->folderTree(), SIGNAL(iconChanged(KMFolderTreeItem*)),
-           this, SLOT(slotIconChanged(KMFolderTreeItem*)) );
-  connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
-           this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
+  connect( mainWidget->folderViewManager(), SIGNAL(folderActivated(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
+  connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(KMail::FolderViewItem*)),
+           this, SLOT(slotIconChanged(KMail::FolderViewItem*)) );
+  connect( mainWidget->mainFolderView(), SIGNAL(nameChanged(KMail::FolderViewItem*)),
+           this, SLOT(slotNameChanged(KMail::FolderViewItem*)) );
 
   setXMLFile( "kmail_part.rc", true );
 #endif
@@ -150,21 +151,21 @@ bool KMailPart::openFile()
 
 void KMailPart::exportFolder( KMFolder *folder )
 {
-  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >( mainWidget->folderTree()->currentItem() );
+  KMail::FolderViewItem* fti = static_cast<KMail::FolderViewItem *>( mainWidget->mainFolderView()->currentItem() );
 
   if ( folder != 0 )
     emit textChanged( folder->label() );
 
   if ( fti )
-    emit iconChanged( fti->normalIcon( 22 ) );
+    emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
 }
 
-void KMailPart::slotIconChanged( KMFolderTreeItem *fti )
+void KMailPart::slotIconChanged( KMail::FolderViewItem *fti )
 {
-  emit iconChanged( fti->normalIcon( 22 ) );
+  emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
 }
 
-void KMailPart::slotNameChanged( KMFolderTreeItem *fti )
+void KMailPart::slotNameChanged( KMail::FolderViewItem *fti )
 {
   emit textChanged( fti->folder()->label() );
 }

@@ -7,7 +7,6 @@
 #include "globalsettings.h"
 #include "kmfolderindex.h"
 #include "kmfolder.h"
-#include "kmheaders.h"
 #include "kmmsgdict.h"
 #include "kmmessagetag.h"
 #include "messageproperty.h"
@@ -33,6 +32,8 @@ using KMail::MessageProperty;
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include <kmime/kmime_dateformatter.h> // kdepimlibs
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
@@ -308,7 +309,63 @@ const MessageStatus& KMMsgBase::messageStatus() const
 //-----------------------------------------------------------------------------
 void KMMsgBase::setDate(const QByteArray& aDateStr)
 {
-  setDate( KDateTime::fromString( aDateStr, KDateTime::RFCDate ).toTime_t() );
+  KDateTime extractedDate = KDateTime::fromString( aDateStr, KDateTime::RFCDate );
+  if ( extractedDate.isValid() || aDateStr.isEmpty() )
+  {
+    setDate( extractedDate.toTime_t() );
+    return;
+  }
+
+  // KDateTime doesn't handle slightly non-standard formats.
+  // Let's try to do better.
+
+  QString dateString = aDateStr.trimmed();
+
+  // Look for a very common non-standard RFC format
+
+  // Thu, 17 Jul 2008 14:03:39 +0200 (CEST)
+  // Wed, 9 Jul 2008 18:22:45 +0200 (MET DST)
+  // Thu, 17 Jul 2008 07:50:24 -0400 (EDT)
+  // Wed, 16 Jul 2008 16:04:37 -0700 (PDT)
+  // Thu, 17 Jul 2008 04:21:20 +0000 (UTC)
+  // Wed, 09 Jan 2008 18:50:36 +0900 (JST)
+  // Wed, 9 Jan 2008 03:17:37 +0000 (GMT)
+  // Mon, 23 Jun 2008 00:40:38 +0600 (YEKST)
+
+  if ( aDateStr[ aDateStr.length() - 1 ] == ')' )
+  {
+    // Might be RFC format followed by (TIMEZONE). Very common.
+    QRegExp regularExpression("^(.+)\\s+\\([A-Z]{3,5}(\\s[A-Z]{3})?\\)$");
+    if ( dateString.indexOf(regularExpression) == 0 )
+    {
+      QStringList parts = regularExpression.capturedTexts();
+
+      Q_ASSERT( parts.size() >= 2 ); // Must be at least 2 (as per Qt docs)
+
+      extractedDate = KDateTime::fromString( parts[1], KDateTime::RFCDate );
+      if ( extractedDate.isValid() )
+      {
+        setDate( extractedDate.toTime_t() );
+        return;
+      }
+    }
+  }
+
+  // Something that I've seen around and we don't handle yet is
+
+  // Sat, 21 Jun 2008 8:58:23 -0400
+
+  // which doesn't seem to have the leading 0 digit in front of the hour...
+  // Until now I've seen only it in spam stuff so let's ignore it (it's even good to catch spam).
+
+  // Another horror I've seen is
+
+  // Sun, 13 Apr 2008 14:05:54 +0100 (GMT+01:00)
+
+  // We again ignore it as it's very rare.
+
+  kDebug() << "Unrecognized date format [" << aDateStr.data() << "]: fix this function if you think it's correct :)";
+  setDate( extractedDate.toTime_t() );
 }
 
 
@@ -1219,7 +1276,16 @@ void KMMsgBase::setTagList( const KMMessageTagList &aTagList )
     *mTagList = aTagList;
   }
   mTagList->prioritySort();
+
   mDirty = true;
+
+  if (storage())
+  {
+    int idx = storage()->find( this );
+
+    if( mParent )
+      mParent->msgTagListChanged( idx );
+  }
 }
 
 //-----------------------------------------------------------------------------

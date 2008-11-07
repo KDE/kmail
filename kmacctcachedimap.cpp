@@ -32,7 +32,6 @@
 #include "kmacctcachedimap.h"
 using KMail::SieveConfig;
 
-#include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmfoldercachedimap.h"
@@ -170,6 +169,8 @@ void KMAcctCachedImap::cancelMailCheck()
   }
 }
 
+/*
+  This is never called from anywhere
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
 {
@@ -184,6 +185,7 @@ void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
     else ++it;
   }
 }
+*/
 
 // Reimplemented from ImapAccountBase because we only check one folder at a time
 void KMAcctCachedImap::slotCheckQueuedFolders()

@@ -27,7 +27,6 @@ using KMail::AccountManager;
 #include "kmversion.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
-#include "kmfoldertree.h"
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "kmmsgdict.h"
@@ -48,6 +47,7 @@ using KMail::MailServiceImpl;
 #include "jobscheduler.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
+#include "mainfolderview.h"
 
 #include <kmessagebox.h>
 #include <knotification.h>
@@ -2149,9 +2149,7 @@ void KMKernel::selectFolder( const QString &folderPath )
   if ( !widget )
     return;
 
-  KMFolderTree *tree = widget->folderTree();
-  tree->doFolderSelected( tree->indexOfFolder( folder ) );
-  tree->ensureItemVisible( tree->indexOfFolder( folder ) );
+  widget->mainFolderView()->setCurrentFolder( folder );
 }
 
 KMMainWidget *KMKernel::getKMMainWidget()
@@ -2318,8 +2316,8 @@ QList< QPointer<KMFolder> > KMKernel::allFolders()
 KMFolder *KMKernel::currentFolder() {
   KMMainWidget *widget = getKMMainWidget();
   KMFolder *folder = 0;
-  if ( widget && widget->folderTree() ) {
-    folder = widget->folderTree()->currentFolder();
+  if ( widget && widget->mainFolderView() ) {
+    folder = widget->mainFolderView()->currentFolder();
   }
   return folder;
 }

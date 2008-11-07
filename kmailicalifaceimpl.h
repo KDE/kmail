@@ -45,8 +45,8 @@
 
 #include <kurl.h>
 
-#include <kfoldertree.h>
-using KPIM::KFolderTreeItem;
+#include <libkdepim/foldertreewidget.h>
+
 #include "kmfoldertype.h"
 #include "groupware_types.h"
 
@@ -187,17 +187,17 @@ public:
    * Returns the resource folder type. Other is returned if resource
    * isn't enabled or it isn't a resource folder.
    */
-  KFolderTreeItem::Type folderType( KMFolder* folder ) const;
+  KPIM::FolderTreeWidgetItem::FolderType folderType( KMFolder* folder ) const;
 
   /**
    * Returns the name of the standard icon for a folder of given type or
    * QString() if the type is no groupware type.
    */
-  QString folderPixmap( KFolderTreeItem::Type type ) const;
+  QString folderPixmap( KPIM::FolderTreeWidgetItem::FolderType type ) const;
 
   /** Returns the localized name of a folder of given type.
    */
-  QString folderName( KFolderTreeItem::Type type, int language = -1 ) const;
+  QString folderName( KPIM::FolderTreeWidgetItem::FolderType type, int language = -1 ) const;
 
   /** Get the folder that holds *type* entries */
   KMFolder* folderFromType( const QString& type, const QString& folder );

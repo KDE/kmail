@@ -41,7 +41,6 @@ namespace KMail {
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
 
-typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
 
 class KMAIL_EXPORT KMCommand : public QObject
@@ -659,15 +658,13 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( KMFilter *filter, KMHeaders *headers,
-                             KMMainWidget *main );
+  KMMetaFilterActionCommand( KMFilter *filter, KMMainWidget *main );
 
 public slots:
   void start();
 
 private:
   KMFilter *mFilter;
-  KMHeaders *mHeaders;
   KMMainWidget *mMainWidget;
 };
 

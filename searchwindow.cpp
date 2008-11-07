@@ -47,11 +47,10 @@
 #include <kdeversion.h>
 
 #include "folderrequester.h"
+#include "mainfolderview.h"
 #include "kmcommands.h"
 #include "kmfoldermgr.h"
 #include "kmfoldersearch.h"
-#include "kmfoldertree.h"
-#include "kmheaders.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmsearchpatternedit.h"
@@ -59,6 +58,7 @@
 #include "messagecopyhelper.h"
 #include "regexplineedit.h"
 #include "textsource.h"
+#include "mainfolderview.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -152,7 +152,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mChkbxSpecificFolders->setChecked(true);
 
   mCbxFolders = new FolderRequester( searchWidget,
-      kmkernel->getKMMainWidget()->folderTree() );
+      kmkernel->getKMMainWidget()->mainFolderView() );
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
 
@@ -769,27 +769,29 @@ KMMessage* SearchWindow::message()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::moveSelectedToFolder( QAction* act )
+void SearchWindow::slotMoveSelectedMessagesToFolder( QAction* act )
 {
-    KMFolder *dest = mMenuToFolder[act];
-    if (!dest)
-        return;
+  KMFolder *dest = static_cast<KMFolder *>( act->data().value<void *>() );
+  if ( !dest )
+    return;
 
-    QList<KMMsgBase*> msgList = selectedMessages();
-    KMCommand *command = new KMMoveCommand( dest, msgList );
-    command->start();
+  // Fixme: isn't this already handled by KMHeaders ?
+  QList<KMMsgBase*> msgList = selectedMessages();
+  KMCommand *command = new KMMoveCommand( dest, msgList );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::copySelectedToFolder( QAction* act )
+void SearchWindow::slotCopySelectedMessagesToFolder( QAction* act )
 {
-    KMFolder *dest = mMenuToFolder[act];
-    if (!dest)
-        return;
+  KMFolder *dest = static_cast<KMFolder *>( act->data().value<void *>() );
+  if ( !dest )
+    return;
 
-    QList<KMMsgBase*> msgList = selectedMessages();
-    KMCommand *command = new KMCopyCommand( dest, msgList );
-    command->start();
+  // Fixme: isn't this already handled by KMHeaders ?
+  QList<KMMsgBase*> msgList = selectedMessages();
+  KMCommand *command = new KMCopyCommand( dest, msgList );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
@@ -821,13 +823,12 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
     QMenu *menu = new QMenu(this);
     updateContextMenuActions();
 
-    mMenuToFolder.clear();
     QMenu *msgMoveMenu = new QMenu(menu);
-    mKMMainWidget->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage,
-        this, &mMenuToFolder, msgMoveMenu );
+    mKMMainWidget->mainFolderView()->folderToPopupMenu( MainFolderView::MoveMessage,
+        this, msgMoveMenu );
     QMenu *msgCopyMenu = new QMenu(menu);
-    mKMMainWidget->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage,
-        this, &mMenuToFolder, msgCopyMenu );
+    mKMMainWidget->mainFolderView()->folderToPopupMenu( MainFolderView::CopyMessage,
+        this, msgCopyMenu );
 
     // show most used actions
     menu->addAction( mReplyAction );
@@ -923,13 +924,13 @@ void SearchWindow::slotPrintMsg()
 void SearchWindow::slotCopyMsgs()
 {
   QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
-  mKMMainWidget->headers()->setCopiedMessages( list, false );
+  mKMMainWidget->setMessageClipboardContents( list, false );
 }
 
 void SearchWindow::slotCutMsgs()
 {
   QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
-  mKMMainWidget->headers()->setCopiedMessages( list, true );
+  mKMMainWidget->setMessageClipboardContents( list, true );
 }
 
 

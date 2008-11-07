@@ -76,23 +76,24 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   setMainWidget( mlGroup );
 
   mHoldsMailingList = new QCheckBox( i18n("&Folder holds a mailing list"), mlGroup );
-  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-                    SLOT(slotHoldsML(bool)) );
+  connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+           SLOT(slotHoldsML(bool)) );
   groupLayout->addWidget( mHoldsMailingList, 0, 0, 1, 3 );
 
   groupLayout->addItem( new QSpacerItem( 0, 10 ), 1, 0 );
 
   mDetectButton = new QPushButton( i18n("Detect Automatically"), mlGroup );
   mDetectButton->setEnabled( false );
-  QObject::connect( mDetectButton, SIGNAL(pressed()), SLOT(slotDetectMailingList()) );
+  connect( mDetectButton, SIGNAL(pressed()),
+           SLOT(slotDetectMailingList()) );
   groupLayout->addWidget( mDetectButton, 2, 1 );
 
   groupLayout->addItem( new QSpacerItem( 0, 10 ), 3, 0 );
 
   label = new QLabel( i18n("Mailing list description:"), mlGroup );
   label->setEnabled( false );
-  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-                    label, SLOT(setEnabled(bool)) );
+  connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+           label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 4, 0 );
   mMLId = new QLabel( "", mlGroup );
   mMLId->setBuddy( label );
@@ -102,22 +103,22 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   //FIXME: add QWhatsThis
   label = new QLabel( i18n("Preferred handler:"), mlGroup );
   label->setEnabled(false);
-  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-                    label, SLOT(setEnabled(bool)) );
+  connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+           label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 5, 0 );
   mMLHandlerCombo = new KComboBox( mlGroup );
   mMLHandlerCombo->addItem( i18n("KMail"), MailingList::KMail );
   mMLHandlerCombo->addItem( i18n("Browser"), MailingList::Browser );
   mMLHandlerCombo->setEnabled( false );
   groupLayout->addWidget( mMLHandlerCombo, 5, 1, 1, 2 );
-  QObject::connect( mMLHandlerCombo, SIGNAL(activated(int)),
-                    SLOT(slotMLHandling(int)) );
+  connect( mMLHandlerCombo, SIGNAL(activated(int)),
+           SLOT(slotMLHandling(int)) );
   label->setBuddy( mMLHandlerCombo );
 
   label = new QLabel( i18n("&Address type:"), mlGroup );
   label->setEnabled(false);
-  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-                    label, SLOT(setEnabled(bool)) );
+  connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+           label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 6, 0 );
   mAddressCombo = new KComboBox( mlGroup );
   label->setBuddy( mAddressCombo );
@@ -131,10 +132,10 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   handleButton->setEnabled( false );
   if( mFolder)
   {
-    QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-                      handleButton, SLOT(setEnabled(bool)) );
-    QObject::connect( handleButton, SIGNAL(clicked()),
-                      SLOT(slotInvokeHandler()) );
+    connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+             handleButton, SLOT(setEnabled(bool)) );
+    connect( handleButton, SIGNAL(clicked()),
+             SLOT(slotInvokeHandler()) );
   }
   groupLayout->addWidget( handleButton, 6, 2 );
 
@@ -152,8 +153,8 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
      << i18n( "List Archives" )
      << i18n( "List Help" );
   mAddressCombo->addItems( el );
-  QObject::connect( mAddressCombo, SIGNAL(activated(int)),
-                    SLOT(slotAddressChanged(int)) );
+  connect( mAddressCombo, SIGNAL(activated(int)),
+           SLOT(slotAddressChanged(int)) );
 
   load();
   resize( QSize(295, 204).expandedTo(minimumSizeHint()) );

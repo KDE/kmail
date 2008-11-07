@@ -29,7 +29,7 @@
 
 #include "folderrequester.h"
 #include "kmfolder.h"
-#include "kmfoldertree.h"
+#include "mainfolderview.h"
 #include "folderselectiondialog.h"
 
 #include <kdebug.h>
@@ -45,7 +45,7 @@
 
 namespace KMail {
 
-FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
+FolderRequester::FolderRequester( QWidget *parent, MainFolderView *tree )
   : QWidget( parent ), mFolder( 0 ), mFolderTree( tree ),
     mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
 {

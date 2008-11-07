@@ -58,6 +58,13 @@ namespace KMail
      */
 namespace Util {
 
+    /**
+     * First disconnect then reconnect a sender/signal-receiver/slot pair.
+     * This improves readability of code a bit by reducing two (maybe long and complex) lines
+     * to one and often helps in avoiding a pair of brackets.
+     */
+    void reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot );
+
     // return true if we should proceed, false if we should abort
     bool checkOverwrite( const KUrl &url, QWidget *w );
 

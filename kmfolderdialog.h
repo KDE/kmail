@@ -46,13 +46,15 @@ class KMFolderDir;
 class KIconButton;
 namespace KPIMIdentities { class IdentityCombo; }
 class KMFolderDialog;
-class KMFolderTree;
 template <typename T> class QPointer;
 
 class TemplatesConfiguration;
 class KPushButton;
 
 namespace KMail {
+
+class MainFolderView;
+
 /**
  * This is the base class for tabs in the folder dialog.
  * It uses the API from ConfigModuleTab (basically: it's a widget that can load and save)
@@ -196,7 +198,7 @@ class KMFolderDialog : public KPageDialog
 
 public:
   KMFolderDialog( KMFolder *folder, KMFolderDir *aFolderDir,
-                  KMFolderTree* parent, const QString& caption,
+                  KMail::MainFolderView *parent, const QString& caption,
                   const QString& name = QString() );
 
   KMFolder* folder() const { return mFolder; }
@@ -209,8 +211,6 @@ public:
   typedef QList<QPointer<KMFolder> > FolderList;
 
   KMFolder* parentFolder() const { return mParentFolder; }
-
-  KMFolderTree* folderTree() const { return mFolderTree; }
 
 protected slots:
   void slotChanged( bool );
@@ -228,7 +228,6 @@ private:
   QPointer<KMFolder> mFolder;
   QPointer<KMFolderDir> mFolderDir;
   QPointer<KMFolder> mParentFolder;
-  KMFolderTree* mFolderTree;
 
   bool mIsNewFolder; // if true, save() did set mFolder.
 

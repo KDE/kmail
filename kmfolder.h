@@ -44,6 +44,9 @@ typedef QList<KMAccount*> AccountList;
 #include <sys/types.h>
 #include <stdio.h>
 
+#define KMFOLDER_CONFIG_GROUP_NAME_PREFIX "Folder-"
+#define KMFOLDER_CONFIG_GROUP_NAME_PREFIX_LEN 7
+
 class KMMessage;
 class KMFolderDir;
 class FolderStorage;
@@ -163,6 +166,21 @@ public:
       0 if no such directory exists */
   KMFolderDir* child() const
     { return mChild; }
+  
+  /**
+   * Returns true if the specified folder is a descendant of this folder
+   * (if fld is somewhere in this folder's children subtree).
+   * Returns false otherwise (or if fld is null).
+   * 
+   * This function assumes that fld, if not null, is a valid pointer to
+   * a folder that can be dereferenced.
+   */
+  bool hasDescendant( KMFolder *fld ) const;
+
+  /**
+   * Returns the parent folder, if any.
+   */
+  KMFolder * ownerFolder() const;
 
   /** Create a child folder directory and associates it with this folder */
   KMFolderDir* createChildFolder();
@@ -285,6 +303,9 @@ public:
   void msgStatusChanged( const MessageStatus& oldStatus,
                          const MessageStatus& newStatus,
                          int idx);
+
+  /** Called by KMMsgBase::setTagList(). Emits the msgHeaderChanged signal. */
+  void msgTagListChanged( int idx);
 
   /** Open folder for access.
     open() and close() use reference counting.
@@ -416,6 +437,12 @@ public:
 
   /** Returns a string that can be used to identify this folder */
   QString idString() const;
+
+  /**
+   * Returns the config group name for this folder
+   */
+  QString configGroupName() const
+    { return KMFOLDER_CONFIG_GROUP_NAME_PREFIX + idString(); }
 
   /**
    * Set whether this folder automatically expires messages.

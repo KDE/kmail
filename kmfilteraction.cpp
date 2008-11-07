@@ -17,6 +17,7 @@
 #include <mimelib/message.h>
 #include "kmfawidgets.h"
 #include "folderrequester.h"
+#include "mainfolderview.h"
 using KMail::FolderRequester;
 #include "kmmsgbase.h"
 #include "templateparser.h"
@@ -294,7 +295,7 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
   FolderRequester *req = new FolderRequester( parent,
-      kmkernel->getKMMainWidget()->folderTree() );
+      kmkernel->getKMMainWidget()->mainFolderView() );
   setParamWidgetValue( req );
   return req;
 }
@@ -1751,7 +1752,8 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   atmList.clear();
 
   PipeJob *job = new PipeJob(0, aMsg, commandLine, tempFileName);
-  QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
+  QObject::connect ( job, SIGNAL( done() ),
+                     handler, SLOT( actionMessage() ) );
   kmkernel->weaver()->enqueue(job);
 }
 

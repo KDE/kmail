@@ -34,7 +34,6 @@
 
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
-#include "kmfoldertree.h"
 #include "kmfolderdir.h"
 #include "kmgroupware.h"
 #include "kmfoldermgr.h"
@@ -81,19 +80,46 @@ static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
 
 // The index in this array is the KMail::FolderContentsType enum
-static const struct {
+typedef struct _FolderContentsDescriptor {
   const char* contentsTypeStr; // the string used in the D-Bus interface
   const char* mimetype;
-  KFolderTreeItem::Type treeItemType;
+  KPIM::FolderTreeWidgetItem::FolderType treeItemType;
   const char* annotation;
   const char* translatedName;
-} s_folderContentsType[] = {
-  { "Mail", "application/x-vnd.kolab.mail", KFolderTreeItem::Other, "mail", I18N_NOOP2( "type of folder content", "Mail" ) },
-  { "Calendar", "application/x-vnd.kolab.event", KFolderTreeItem::Calendar, "event", I18N_NOOP2( "type of folder content", "Calendar" ) },
-  { "Contact", "application/x-vnd.kolab.contact", KFolderTreeItem::Contacts, "contact", I18N_NOOP2( "type of folder content", "Contacts" ) },
-  { "Note", "application/x-vnd.kolab.note", KFolderTreeItem::Notes, "note", I18N_NOOP2( "type of folder content", "Notes" ) },
-  { "Task", "application/x-vnd.kolab.task", KFolderTreeItem::Tasks, "task", I18N_NOOP2( "type of folder content", "Tasks" ) },
-  { "Journal", "application/x-vnd.kolab.journal", KFolderTreeItem::Journals, "journal", I18N_NOOP2( "type of folder content", "Journal" ) }
+} FolderContentsDescriptor;
+
+static const FolderContentsDescriptor s_folderContentsType[] =
+{
+  {
+    "Mail", "application/x-vnd.kolab.mail",
+    KPIM::FolderTreeWidgetItem::Other,
+    "mail", I18N_NOOP2( "type of folder content", "Mail" )
+  },
+  {
+    "Calendar", "application/x-vnd.kolab.event", 
+    KPIM::FolderTreeWidgetItem::Calendar,
+    "event", I18N_NOOP2( "type of folder content", "Calendar" )
+  },
+  {
+    "Contact", "application/x-vnd.kolab.contact",
+    KPIM::FolderTreeWidgetItem::Contacts,
+    "contact", I18N_NOOP2( "type of folder content", "Contacts" )
+  },
+  {
+    "Note", "application/x-vnd.kolab.note",
+    KPIM::FolderTreeWidgetItem::Notes,
+    "note", I18N_NOOP2( "type of folder content", "Notes" )
+  },
+  {
+    "Task", "application/x-vnd.kolab.task",
+    KPIM::FolderTreeWidgetItem::Tasks,
+    "task", I18N_NOOP2( "type of folder content", "Tasks" )
+  },
+  {
+    "Journal", "application/x-vnd.kolab.journal",
+    KPIM::FolderTreeWidgetItem::Journals,
+    "journal", I18N_NOOP2( "type of folder content", "Journal" )
+  }
 };
 
 static QString folderContentsType( KMail::FolderContentsType type )
@@ -1264,7 +1290,7 @@ bool KMailICalIfaceImpl::hideResourceAccountRoot( KMFolder* folder ) const
 
 }
 
-KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
+KPIM::FolderTreeWidgetItem::FolderType KMailICalIfaceImpl::folderType( KMFolder* folder ) const
 {
   if( mUseResourceIMAP && folder ) {
     if( folder == mCalendar || folder == mContacts
@@ -1275,13 +1301,13 @@ KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
     }
   }
 
-  return KFolderTreeItem::Other;
+  return KPIM::FolderTreeWidgetItem::Other;
 }
 
 // Global tables of foldernames is different languages
 // For now: 0->English, 1->German, 2->French, 3->Dutch
-static QMap<KFolderTreeItem::Type,QString> folderNames[4];
-QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language ) const
+static QMap<KPIM::FolderTreeWidgetItem::FolderType,QString> folderNames[4];
+QString KMailICalIfaceImpl::folderName( KPIM::FolderTreeWidgetItem::FolderType type, int language ) const
 {
   // With the XML storage, folders are always (internally) named in English
   if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
@@ -1294,33 +1320,33 @@ QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language
        GroupwarePage in configuredialog.cpp */
 
     // English
-    folderNames[0][KFolderTreeItem::Calendar] = QString::fromLatin1("Calendar");
-    folderNames[0][KFolderTreeItem::Tasks] = QString::fromLatin1("Tasks");
-    folderNames[0][KFolderTreeItem::Journals] = QString::fromLatin1("Journal");
-    folderNames[0][KFolderTreeItem::Contacts] = QString::fromLatin1("Contacts");
-    folderNames[0][KFolderTreeItem::Notes] = QString::fromLatin1("Notes");
+    folderNames[0][KPIM::FolderTreeWidgetItem::Calendar] = QString::fromLatin1("Calendar");
+    folderNames[0][KPIM::FolderTreeWidgetItem::Tasks] = QString::fromLatin1("Tasks");
+    folderNames[0][KPIM::FolderTreeWidgetItem::Journals] = QString::fromLatin1("Journal");
+    folderNames[0][KPIM::FolderTreeWidgetItem::Contacts] = QString::fromLatin1("Contacts");
+    folderNames[0][KPIM::FolderTreeWidgetItem::Notes] = QString::fromLatin1("Notes");
 
     // German
-    folderNames[1][KFolderTreeItem::Calendar] = QString::fromLatin1("Kalender");
-    folderNames[1][KFolderTreeItem::Tasks] = QString::fromLatin1("Aufgaben");
-    folderNames[1][KFolderTreeItem::Journals] = QString::fromLatin1("Journal");
-    folderNames[1][KFolderTreeItem::Contacts] = QString::fromLatin1("Kontakte");
-    folderNames[1][KFolderTreeItem::Notes] = QString::fromLatin1("Notizen");
+    folderNames[1][KPIM::FolderTreeWidgetItem::Calendar] = QString::fromLatin1("Kalender");
+    folderNames[1][KPIM::FolderTreeWidgetItem::Tasks] = QString::fromLatin1("Aufgaben");
+    folderNames[1][KPIM::FolderTreeWidgetItem::Journals] = QString::fromLatin1("Journal");
+    folderNames[1][KPIM::FolderTreeWidgetItem::Contacts] = QString::fromLatin1("Kontakte");
+    folderNames[1][KPIM::FolderTreeWidgetItem::Notes] = QString::fromLatin1("Notizen");
 
     // French
-    folderNames[2][KFolderTreeItem::Calendar] = QString::fromLatin1("Calendrier");
+    folderNames[2][KPIM::FolderTreeWidgetItem::Calendar] = QString::fromLatin1("Calendrier");
     // Tasks = Tâches (â == 0xE2 in latin1)
-    folderNames[2][KFolderTreeItem::Tasks] = QString::fromLatin1("T\342ches");
-    folderNames[2][KFolderTreeItem::Journals] = QString::fromLatin1("Journal");
-    folderNames[2][KFolderTreeItem::Contacts] = QString::fromLatin1("Contacts");
-    folderNames[2][KFolderTreeItem::Notes] = QString::fromLatin1("Notes");
+    folderNames[2][KPIM::FolderTreeWidgetItem::Tasks] = QString::fromLatin1("T\342ches");
+    folderNames[2][KPIM::FolderTreeWidgetItem::Journals] = QString::fromLatin1("Journal");
+    folderNames[2][KPIM::FolderTreeWidgetItem::Contacts] = QString::fromLatin1("Contacts");
+    folderNames[2][KPIM::FolderTreeWidgetItem::Notes] = QString::fromLatin1("Notes");
 
     // Dutch
-    folderNames[3][KFolderTreeItem::Calendar] = QString::fromLatin1("Agenda");
-    folderNames[3][KFolderTreeItem::Tasks] = QString::fromLatin1("Taken");
-    folderNames[3][KFolderTreeItem::Journals] = QString::fromLatin1("Logboek");
-    folderNames[3][KFolderTreeItem::Contacts] = QString::fromLatin1("Contactpersonen");
-    folderNames[3][KFolderTreeItem::Notes] = QString::fromLatin1("Notities");
+    folderNames[3][KPIM::FolderTreeWidgetItem::Calendar] = QString::fromLatin1("Agenda");
+    folderNames[3][KPIM::FolderTreeWidgetItem::Tasks] = QString::fromLatin1("Taken");
+    folderNames[3][KPIM::FolderTreeWidgetItem::Journals] = QString::fromLatin1("Logboek");
+    folderNames[3][KPIM::FolderTreeWidgetItem::Contacts] = QString::fromLatin1("Contactpersonen");
+    folderNames[3][KPIM::FolderTreeWidgetItem::Notes] = QString::fromLatin1("Notities");
   }
 
   if( language < 0 || language > 3 ) {
@@ -1973,7 +1999,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   KMFolderType type = mFolderType;
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
 
-  KFolderTreeItem::Type itemType = s_folderContentsType[contentsType].treeItemType;
+  KPIM::FolderTreeWidgetItem::FolderType itemType = s_folderContentsType[contentsType].treeItemType;
   //kDebug() << folderName( itemType );
 
   // Find the folder
@@ -2133,20 +2159,20 @@ void KMailICalIfaceImpl::cleanup()
   mContacts = mCalendar = mNotes = mTasks = mJournals = 0;
 }
 
-QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
+QString KMailICalIfaceImpl::folderPixmap( KPIM::FolderTreeWidgetItem::FolderType type ) const
 {
   if( !mUseResourceIMAP )
     return QString();
 
-  if( type == KFolderTreeItem::Contacts )
+  if( type == KPIM::FolderTreeWidgetItem::Contacts )
     return QString::fromLatin1( "text-directory" );
-  else if( type == KFolderTreeItem::Calendar )
+  else if( type == KPIM::FolderTreeWidgetItem::Calendar )
     return QString::fromLatin1( "text-calendar" );
-  else if( type == KFolderTreeItem::Notes )
+  else if( type == KPIM::FolderTreeWidgetItem::Notes )
     return QString::fromLatin1( "view-pim-notes" );
-  else if( type == KFolderTreeItem::Tasks )
+  else if( type == KPIM::FolderTreeWidgetItem::Tasks )
     return QString::fromLatin1( "view-pim-tasks" );
-  else if( type == KFolderTreeItem::Journals )
+  else if( type == KPIM::FolderTreeWidgetItem::Journals )
     return QString::fromLatin1( "view-pim-journal" );
 
   return QString();
@@ -2233,7 +2259,7 @@ KMailICalIfaceImpl::StandardFolderSearchResult KMailICalIfaceImpl::findStandardR
   }
   else // icalvcard: look up standard resource folders by name
   {
-    KFolderTreeItem::Type itemType = s_folderContentsType[contentsType].treeItemType;
+    KPIM::FolderTreeWidgetItem::FolderType itemType = s_folderContentsType[contentsType].treeItemType;
     unsigned int folderLanguage = GlobalSettings::self()->theIMAPResourceFolderLanguage();
     if( folderLanguage > 3 ) folderLanguage = 0;
     KMFolderNode* node = folderParentDir->hasNamedFolder( folderName( itemType, folderLanguage ) );

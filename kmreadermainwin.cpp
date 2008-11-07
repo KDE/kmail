@@ -45,11 +45,11 @@
 #include "kmenu.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
-#include "kmfoldertree.h"
 #include "csshelper.h"
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "kmmsgdict.h"
+#include "mainfolderview.h"
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
@@ -371,12 +371,10 @@ void KMReaderMainWin::updateCustomTemplateMenus()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::updateMessageMenu()
 {
-  mMenuToFolder.clear();
-
   KMMainWidget* mainwin = kmkernel->getKMMainWidget();
   if ( mainwin )
-    mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
-                                              &mMenuToFolder, mCopyActionMenu->menu() );
+    mainwin->mainFolderView()->folderToPopupMenu( KMail::MainFolderView::CopyMessage, this,
+                                                  mCopyActionMenu->menu() );
 }
 
 
@@ -457,12 +455,13 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
   delete menu;
 }
 
-void KMReaderMainWin::copySelectedToFolder( QAction* act )
+void KMReaderMainWin::slotCopySelectedMessagesToFolder( QAction* act )
 {
-  if (!mMenuToFolder[act])
+  KMFolder * f = static_cast<KMFolder *>( act->data().value<void *>() );
+  if ( !f )
     return;
 
-  KMCommand *command = new KMCopyCommand( mMenuToFolder[act], mMsg );
+  KMCommand *command = new KMCopyCommand( f, mMsg );
   command->start();
 }
 

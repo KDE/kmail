@@ -43,9 +43,13 @@ class KMMainWidget;
 namespace KPIM { class StatusbarProgressWidget; }
 using KPIM::StatusbarProgressWidget;
 class KMFolder;
-class KMFolderTreeItem;
 
 class ActionManager;
+
+namespace KMail
+{
+  class FolderViewItem;
+}
 
 class KMailPart: public KParts::ReadOnlyPart
 {
@@ -63,8 +67,8 @@ class KMailPart: public KParts::ReadOnlyPart
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
     void exportFolder( KMFolder* folder );
-    void slotIconChanged( KMFolderTreeItem *fti );
-    void slotNameChanged( KMFolderTreeItem *fti );
+    void slotIconChanged( KMail::FolderViewItem *fti );
+    void slotNameChanged( KMail::FolderViewItem *fti );
 
   signals:
     void textChanged( const QString& );

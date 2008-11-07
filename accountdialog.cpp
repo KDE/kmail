@@ -28,6 +28,7 @@
 #include "kmfoldermgr.h"
 #include "protocols.h"
 #include "folderrequester.h"
+#include "mainfolderview.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
 #include <kpimidentities/identitymanager.h>
@@ -480,9 +481,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
     mImap.ui.listOnlyOpenCheck->hide();
   }
 
-
   mImap.trashCombo = new FolderRequester( page,
-                      kmkernel->getKMMainWidget()->folderTree() );
+                      kmkernel->getKMMainWidget()->mainFolderView() );
   mImap.trashCombo->setShowOutbox( false );
   mImap.ui.trashLabel->setBuddy( mImap.trashCombo );
   mImap.ui.trashLayout->addWidget( mImap.trashCombo, 1 );

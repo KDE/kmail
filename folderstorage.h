@@ -612,7 +612,11 @@ friend class KMMsgDict;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void truncateIndex() = 0;
 
-  virtual qint64 doFolderSize() const { return 0; };
+  /**
+   * Compute the size of the folder storage.
+   * Return -1 if the value is meaningless.
+   */
+  virtual qint64 doFolderSize() const { return -1; };
 
   /** Returns full path to .index, .index.ids or .index.sorted file (depending on @a suffix).
    The former path (in case of mmap-based implementation) is returned when @a suffix is empty. */

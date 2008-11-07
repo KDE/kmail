@@ -91,8 +91,6 @@ using KMail::ActionScheduler;
 #include "kmfoldermbox.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
-#include "kmheaders.h"
-#include "headeritem.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "messagesender.h"
@@ -141,6 +139,8 @@ using namespace KMime;
 #include <QDBusConnection>
 
 #include <memory>
+
+#include "messagelistview/pane.h"
 
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
 {
@@ -1743,10 +1743,9 @@ KMCommand::Result KMFilterActionCommand::execute()
 
 
 KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
-                                                      KMHeaders *headers,
                                                       KMMainWidget *main )
     : QObject( main ),
-      mFilter( filter ), mHeaders( headers ), mMainWidget( main )
+      mFilter( filter ), mMainWidget( main )
 {
 }
 
@@ -1757,26 +1756,20 @@ void KMMetaFilterActionCommand::start()
     KMFilterMgr::FilterSet set = KMFilterMgr::All;
     QList<KMFilter*> filters;
     filters.append( mFilter );
-    ActionScheduler *scheduler = new ActionScheduler( set, filters, mHeaders );
+    ActionScheduler *scheduler = new ActionScheduler( set, filters );
     scheduler->setAlwaysMatch( true );
     scheduler->setAutoDestruct( true );
 
-    int contentX, contentY;
-    HeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
-
-    QList<KMMsgBase*> msgList = *mHeaders->selectedMsgs(true);
-    mHeaders->finalizeMove( nextItem, contentX, contentY );
+    QList<KMMsgBase*> msgList = mMainWidget->messageListView()->selectionAsMsgBaseList();
 
     KMMsgBase *msg;
     foreach( msg, msgList )
       scheduler->execFilters( msg );
   } else {
-    KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
-        *mHeaders->selectedMsgs(), mFilter);
+    KMCommand *filterCommand = new KMFilterActionCommand(
+        mMainWidget, mMainWidget->messageListView()->selectionAsMsgBaseList(), mFilter
+      );
     filterCommand->start();
-    int contentX, contentY;
-    HeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );
-    mHeaders->finalizeMove( item, contentX, contentY );
   }
 }
 

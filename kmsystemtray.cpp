@@ -19,7 +19,6 @@
 
 #include "kmsystemtray.h"
 #include "kmfolder.h"
-#include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
@@ -27,6 +26,8 @@
 
 using KMail::AccountManager;
 #include "globalsettings.h"
+
+#include "mainfolderview.h"
 
 #include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
@@ -568,13 +569,10 @@ void KMSystemTray::selectedAccount(int id)
   /** Select folder */
   KMFolder * fldr = mPopupFolders.at(id);
   if(!fldr) return;
-  KMFolderTree * ft = mainWidget->folderTree();
-  if(!ft) return;
-  Q3ListViewItem * fldrIdx = ft->indexOfFolder(fldr);
-  if(!fldrIdx) return;
 
-  ft->setCurrentItem(fldrIdx);
-  ft->selectCurrentFolder();
+  KMail::MainFolderView * ftw = mainWidget->mainFolderView();
+  if ( !ftw ) return;
+  ftw->setCurrentFolder( fldr );
 }
 
 #include "kmsystemtray.moc"

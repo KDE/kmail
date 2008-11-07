@@ -405,10 +405,10 @@ void KMFolderSearch::setSearch( KMSearch *search )
     delete mSearch;
     mSearch = search; // take ownership
     if ( mSearch ) {
-      QObject::connect( search, SIGNAL( found( quint32 ) ),
-                        SLOT( addSerNum( quint32 ) ) );
-      QObject::connect( search, SIGNAL( finished( bool ) ),
-                        SLOT( searchFinished( bool ) ) );
+      connect( search, SIGNAL( found( quint32 ) ),
+               SLOT( addSerNum( quint32 ) ) );
+      connect( search, SIGNAL( finished( bool ) ),
+               SLOT( searchFinished( bool ) ) );
     }
   }
   if ( mSearch ) {
@@ -515,8 +515,10 @@ int KMFolderSearch::addMsg( KMMessage*, int* index_return )
 bool KMFolderSearch::readSearch()
 {
   mSearch = new KMSearch;
-  QObject::connect( mSearch, SIGNAL(found(quint32)), SLOT(addSerNum(quint32)) );
-  QObject::connect( mSearch, SIGNAL(finished(bool)), SLOT(searchFinished(bool)) );
+  connect( mSearch, SIGNAL(found(quint32)),
+           SLOT(addSerNum(quint32)) );
+  connect( mSearch, SIGNAL(finished(bool)),
+           SLOT(searchFinished(bool)) );
   return mSearch->read( location() );
 }
 
@@ -623,10 +625,10 @@ int KMFolderSearch::create()
   clearIndex();
   if ( !mSearch ) {
     mSearch = new KMSearch();
-    QObject::connect( mSearch, SIGNAL( found( quint32 ) ),
-                      SLOT( addSerNum( quint32 ) ) );
-    QObject::connect( mSearch, SIGNAL( finished( bool ) ),
-                      SLOT( searchFinished( bool ) ) );
+    connect( mSearch, SIGNAL( found( quint32 ) ),
+             SLOT( addSerNum( quint32 ) ) );
+    connect( mSearch, SIGNAL( finished( bool ) ),
+             SLOT( searchFinished( bool ) ) );
     }
   mSearch->write( location() );
   mOpenCount++;

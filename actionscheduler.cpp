@@ -38,7 +38,6 @@
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kmcommands.h"
-#include "kmheaders.h"
 #include "broadcaststatus.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
@@ -62,9 +61,8 @@ bool ActionScheduler::sEnabledChecked = false;
 
 ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
                                  QList<KMFilter*> filters,
-                                 KMHeaders *headers,
                                  KMFolder *srcFolder)
-  : mSet( set ), mHeaders( headers )
+  : mSet( set )
 {
   ++count;
   ++refCount;
@@ -768,9 +766,6 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   if (!mSrcFolder->count())
     mSrcFolder->expunge();
 
-  // in case the message stayed in the current folder TODO optimize
-  if ( mHeaders )
-    mHeaders->clearSelectableAndAboutToBeDeleted( mOriginalSerNum );
   KMMessage *msg = 0;
   ReturnCode mOldReturnCode = mResult;
   if (mOriginalSerNum) {

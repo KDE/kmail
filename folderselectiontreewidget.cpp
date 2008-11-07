@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * KMail Folder Selection Tree Widget
+ * ::KMail Folder Selection Tree Widget
  *
  * Copyright (c) 1997-1998 Stefan Taferner <taferner@kde.org>
  * Copyright (c) 2004-2005 Carsten Burghardt <burghardt@kde.org>
@@ -22,7 +22,7 @@
  *****************************************************************************/
 
 #include "folderselectiontreewidget.h"
-#include "kmfoldertree.h"
+#include "mainfolderview.h"
 #include "kmfolder.h"
 
 #include <kmenu.h>
@@ -34,11 +34,23 @@ namespace KMail {
 class FolderSelectionTreeWidgetItem : public KPIM::FolderTreeWidgetItem
 {
 public:
-  FolderSelectionTreeWidgetItem( KPIM::FolderTreeWidget * listView )
-    : KPIM::FolderTreeWidgetItem( listView ), mFolder( 0 ) {};
+  FolderSelectionTreeWidgetItem(
+      KPIM::FolderTreeWidget * listView,
+      const FolderViewItem * srcItem
+    )
+    : KPIM::FolderTreeWidgetItem(
+          listView, srcItem->labelText(),
+          srcItem->protocol(), srcItem->folderType()
+        ), mFolder( 0 ) {};
 
-  FolderSelectionTreeWidgetItem( KPIM::FolderTreeWidgetItem * listViewItem )
-    : KPIM::FolderTreeWidgetItem( listViewItem ), mFolder( 0 ) {};
+  FolderSelectionTreeWidgetItem(
+      KPIM::FolderTreeWidgetItem * listViewItem,
+      const FolderViewItem * srcItem
+    )
+    : KPIM::FolderTreeWidgetItem(
+          listViewItem, srcItem->labelText(),
+          srcItem->protocol(), srcItem->folderType()
+        ), mFolder( 0 ) {};
 
 public:
   void setFolder( KMFolder * folder )
@@ -53,7 +65,7 @@ private:
 };
 
 
-FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent, KMFolderTree * folderTree )
+FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent, ::KMail::MainFolderView * folderTree )
   : KPIM::FolderTreeWidget( parent ), mFolderTree( folderTree )
 {
   setSelectionMode( QTreeWidget::SingleSelection );
@@ -66,35 +78,33 @@ FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent, KMFolder
            this, SLOT( slotContextMenuRequested( const QPoint & ) ) );
 }
 
-void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSelectionTreeWidgetItem *parent )
+void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSelectionTreeWidgetItem *parent )
 {
   // search folders are never shown
-  if ( fti->protocol() == KFolderTreeItem::Search )
+  if ( fti->protocol() == KPIM::FolderTreeWidgetItem::Search )
     return;
 
   // imap folders?
-  if ( fti->protocol() == KFolderTreeItem::Imap && !mLastShowImapFolders )
+  if ( fti->protocol() == KPIM::FolderTreeWidgetItem::Imap && !mLastShowImapFolders )
     return;
 
   // the outbox?
-  if ( fti->type() == KFolderTreeItem::Outbox && !mLastShowOutbox )
+  if ( fti->folderType() == KPIM::FolderTreeWidgetItem::Outbox && !mLastShowOutbox )
     return;
 
   // top level
-  FolderSelectionTreeWidgetItem *item = parent ? new FolderSelectionTreeWidgetItem( parent )
-                                               : new FolderSelectionTreeWidgetItem( this );
+  FolderSelectionTreeWidgetItem *item = parent ? new FolderSelectionTreeWidgetItem( parent, fti )
+                                               : new FolderSelectionTreeWidgetItem( this, fti );
 
+  item->setText( mNameColumnIndex, fti->labelText() );
   // Build the path (ParentItemPath/CurrentItemName)
   QString path;
   if( parent )
     path = parent->text( mPathColumnIndex ) + '/';
-  path += fti->text( 0 );
+  path += fti->labelText();
 
-  item->setText( mNameColumnIndex, fti->text( 0 ) );
   item->setText( mPathColumnIndex, path );
-  item->setProtocol( static_cast<KPIM::FolderTreeWidgetItem::Protocol>( fti->protocol() ) );
-  item->setFolderType( static_cast<KPIM::FolderTreeWidgetItem::FolderType>( fti->type() ) );
-  QPixmap pix = fti->normalIcon( KIconLoader::SizeSmall );
+  QPixmap pix = fti->normalIcon();
   item->setIcon( mNameColumnIndex, pix.isNull() ? SmallIcon( "folder" ) : QIcon( pix ) );
 
   // Make items without folders and readonly items unselectable
@@ -102,16 +112,19 @@ void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSe
   if ( mLastMustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
     item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
   } else {
-    if ( fti->folder() )
-      item->setFolder( fti->folder() );
+    item->setFolder( fti->folder() );
   }
 
-  for (
-       KMFolderTreeItem * child = static_cast<KMFolderTreeItem *>( fti->firstChild() );
-       child;
-       child = static_cast<KMFolderTreeItem *>( child->nextSibling() )
-    )
+  int cc = fti->childCount();
+  int i = 0;
+
+  while ( i < cc )
+  {
+    FolderViewItem *child = dynamic_cast<FolderViewItem *>( ( ( QTreeWidgetItem * )fti)->child( i ) );
+    if ( child )
       recursiveReload( child, item );
+    i++;
+  }
 }
 
 void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
@@ -129,12 +142,23 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
 
   mFilter.clear();
 
-  for (
-         KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( mFolderTree->firstChild() ) ;
-         fti;
-         fti = static_cast<KMFolderTreeItem *>( fti->nextSibling() )
-     )
-     recursiveReload( fti, 0 );
+  int cc = mFolderTree->topLevelItemCount();
+
+  int i = 0;
+
+  // Calling setUpdatesEnabled() here causes weird effects (including crashes)
+  // in the folder requester (used by the filtering dialog).
+  // So disable it for now, this makes the folderselection dialog appear much
+  // slower though :(
+  //setUpdatesEnabled( false );
+
+  while ( i < cc )
+  {
+    FolderViewItem *child = dynamic_cast<FolderViewItem *>( mFolderTree->topLevelItem( i ) );
+    if ( child )
+      recursiveReload( child, 0 );
+    i++;
+  }
 
   // we do this here in one go after all items have been created, as that is
   // faster than expanding each item, which triggers a lot of updates

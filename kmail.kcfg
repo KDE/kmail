@@ -283,11 +283,6 @@
     </group>
 
     <group name="UserInterface">
-      <entry name="QuickSearchActive" type="Bool">
-        <label>Show quick search line edit</label>
-        <whatsthis>This option enables or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
-        <default>true</default>
-      </entry>
       <entry name="EnableFolderQuickSearch" type="Bool">
         <label>Show folder quick search line edit</label>
         <default>false</default>

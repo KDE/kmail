@@ -31,7 +31,6 @@
 #include "folderadaptor.h"
 
 #include "kmmainwin.h"
-#include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include <qdbusconnection.h>

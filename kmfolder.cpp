@@ -30,7 +30,6 @@
 #include <kpimidentities/identity.h>
 #include "expirejob.h"
 #include "compactionjob.h"
-#include "kmfoldertree.h"
 #include "kmailicalifaceimpl.h"
 #include "kmaccount.h"
 
@@ -160,6 +159,27 @@ KMFolder::~KMFolder()
   if ( mHasIndex ) mStorage->deregisterFromMessageDict();
   delete mStorage;
 }
+
+bool KMFolder::hasDescendant( KMFolder *fld ) const
+{
+  if ( !fld )
+    return false;
+  KMFolderDir * pdir = fld->parent();
+  if ( !pdir )
+    return false;
+  fld = pdir->owner();
+  if ( fld == this )
+    return true;
+  return hasDescendant( fld );
+}
+
+KMFolder * KMFolder::ownerFolder() const
+{
+  if ( !mParent )
+    return 0;
+  return mParent->owner();
+}
+
 
 void KMFolder::readConfig( KConfigGroup & configGroup )
 {
@@ -499,6 +519,12 @@ void KMFolder::msgStatusChanged( const MessageStatus& oldStatus,
 {
   mStorage->msgStatusChanged( oldStatus, newStatus, idx );
 }
+
+void KMFolder::msgTagListChanged( int idx )
+{
+  emit msgHeaderChanged( this, idx );
+}
+
 
 int KMFolder::open( const char *owner )
 {
@@ -898,7 +924,7 @@ void KMFolder::setShortcut( const KShortcut &sc )
 
 bool KMFolder::isMoveable() const
 {
-  return !isSystemFolder();
+  return !isSystemFolder() && mStorage->isMoveable();
 }
 
 void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )

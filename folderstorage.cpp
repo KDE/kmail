@@ -119,8 +119,8 @@ QString FolderStorage::dotEscape(const QString& aStr)
 
 void FolderStorage::addJob( FolderJob* job ) const
 {
-  QObject::connect( job, SIGNAL(destroyed(QObject*)),
-                    SLOT(removeJob(QObject*)) );
+  connect( job, SIGNAL(destroyed(QObject*)),
+           SLOT(removeJob(QObject*)) );
   mJobList.append( job );
 }
 
@@ -669,7 +669,7 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
   oldSortedLoc = sortedLocation();
   oldSubDirLoc = folder()->subdirLocation();
   oldIdsLoc =  KMMsgDict::instance()->getFolderIdsLocation( *this );
-  QString oldConfigString = "Folder-" + folder()->idString();
+  QString oldConfigString = folder()->configGroupName();
 
   close( "rename", true );
 
@@ -761,7 +761,7 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
   writeConfig();
 
   // delete the old entry as we get two entries with the same ID otherwise
-  if ( oldConfigString != "Folder-" + folder()->idString() )
+  if ( oldConfigString != folder()->configGroupName() )
     KMKernel::config()->deleteGroup( oldConfigString );
 
   emit locationChanged( oldLoc, newLoc );
@@ -794,7 +794,7 @@ void FolderStorage::remove()
 
   // Erase settings, otherwise they might interfere when recreating the folder
   KConfig *config = KMKernel::config();
-  config->deleteGroup( "Folder-" + folder()->idString() );
+  config->deleteGroup( folder()->configGroupName() );
 
   emit closed( folder() );
   emit removed( folder(), (rc ? false : true) );
@@ -948,7 +948,7 @@ void FolderStorage::readConfig()
 {
   //kDebug(5006)<<"#### READING CONFIG  ="<< name();
   KConfig* config = KMKernel::config();
-  KConfigGroup group(config, "Folder-" + folder()->idString());
+  KConfigGroup group(config, folder()->configGroupName());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = group.readEntry("UnreadMsgs", -1 );
   if (mTotalMsgs == -1)
@@ -968,7 +968,7 @@ void FolderStorage::readConfig()
 void FolderStorage::writeConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + folder()->idString() );
+  KConfigGroup group( config, folder()->configGroupName() );
   group.writeEntry( "UnreadMsgs",
                     mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);
   group.writeEntry( "TotalMsgs", mTotalMsgs );
@@ -1205,7 +1205,7 @@ int FolderStorage::addMessages( QList<KMMessage*>& msgList, QList<int>& index_re
 //-----------------------------------------------------------------------------
 bool FolderStorage::isMoveable() const
 {
-  return ( folder()->isSystemFolder() ) ? false : true;
+  return !folder()->isSystemFolder();
 }
 
 /*virtual*/

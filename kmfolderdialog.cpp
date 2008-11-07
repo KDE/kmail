@@ -38,14 +38,13 @@
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
-#include "kmheaders.h"
 #include "kmcommands.h"
-#include "kmfoldertree.h"
 #include "folderdialogacltab.h"
 #include "folderdialogquotatab.h"
 #include "kmailicalifaceimpl.h"
 #include "globalsettings.h"
 #include "folderrequester.h"
+#include "mainfolderview.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -79,13 +78,12 @@ static QString inCaseWeDecideToRenameTheTab( I18N_NOOP( "Permissions (ACL)" ) );
 
 //-----------------------------------------------------------------------------
 KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
-                                KMFolderTree* aParent, const QString& aCap,
+                                MainFolderView *aParent, const QString& aCap,
                                 const QString& aName):
   KPageDialog( aParent ),
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
-  mFolderTree( aParent ),
   mIsNewFolder( aFolder == 0 )
 {
   setFaceType( Tabbed );
@@ -100,8 +98,12 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
   QStringList folderNames;
   QList<QPointer<KMFolder> > folders;
   // get all folders but search and folders that can not have children
-  aParent->createFolderList(&folderNames, &folders, true, true,
-                            true, false, true, false);
+
+  aParent->createFolderList(
+      &folderNames, &folders,
+      MainFolderView::IncludeLocalFolders | MainFolderView::IncludeImapFolders |
+      MainFolderView::IncludeCachedImapFolders | MainFolderView::SkipFoldersWithNoChildren
+    );
 
   if( mFolderDir ) {
     // search the parent folder of the folder

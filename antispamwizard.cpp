@@ -36,7 +36,6 @@
 #include "kmfiltermgr.h"
 #include "kmkernel.h"
 #include "folderselectiontreewidget.h"
-#include "kmfoldertree.h"
 #include "kmmainwin.h"
 #include "networkaccount.h"
 #include "folderrequester.h"
@@ -55,6 +54,7 @@
 #include <qdom.h>
 #include <QLabel>
 #include <QLayout>
+#include <QTimer>
 
 
 //Added by qt3to4:
@@ -67,7 +67,7 @@
 using namespace KMail;
 
 AntiSpamWizard::AntiSpamWizard( WizardMode mode,
-                                QWidget* parent, KMFolderTree * mainFolderTree )
+                                QWidget* parent, MainFolderView * mainFolderTree )
   : KAssistantDialog( parent ),
     mInfoPage( 0 ),
     mSpamRulesPage( 0 ),
@@ -977,7 +977,7 @@ void ASWizInfoPage::processSelectionChange()
 
 //---------------------------------------------------------------------------
 ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
-                                        KMFolderTree * mainFolderTree )
+                                        MainFolderView * mainFolderTree )
   : ASWizPage( parent, name )
 {
   QVBoxLayout *layout = new QVBoxLayout();
@@ -1103,7 +1103,7 @@ void ASWizSpamRulesPage::allowUnsureFolderSelection( bool enabled )
 
 //---------------------------------------------------------------------------
 ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
-                                  KMFolderTree * mainFolderTree )
+                                  MainFolderView * mainFolderTree )
   : ASWizPage( parent, name )
 {
   QGridLayout *grid = new QGridLayout();

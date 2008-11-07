@@ -56,6 +56,7 @@ if(Nepomuk_FOUND)
   include_directories( ${NEPOMUK_INCLUDES} )
 endif(Nepomuk_FOUND)
 
+
 set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}" )
 
 ########### next target ###############
@@ -68,13 +69,11 @@ set(kmailprivate_LIB_SRCS
    identitylistview.cpp
    identitydialog.cpp
    kmfolderdialog.cpp
-   kmfoldertree.cpp
    kmfoldercombobox.cpp
-   foldertreebase.cpp
+   folderview.cpp
+   mainfolderview.cpp
    favoritefolderview.cpp
    kmaccount.cpp
-   kmheaders.cpp
-   headeritem.cpp
    listjob.cpp
    kmcomposewin.cpp
    snippetdlg.cpp
@@ -184,7 +183,6 @@ set(kmailprivate_LIB_SRCS
    globalsettings.cpp
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
-   headerlistquicksearch.cpp
    acljobs.cpp
    folderdialogacltab.cpp
    partnodebodypart.cpp
@@ -233,7 +231,38 @@ set(kmailprivate_LIB_SRCS
    statusbarlabel.cpp
    groupware_types.cpp
    kleojobexecutor.cpp
+   messagetree.cpp
+   commands/exporttohtml.cpp
+   messagelistview/messageset.cpp
+   messagelistview/pane.cpp
+   messagelistview/storagemodel.cpp
+   messagelistview/widget.cpp
+   messagelistview/core/aggregation.cpp
+   messagelistview/core/aggregationeditor.cpp
+   messagelistview/core/comboboxutils.cpp
+   messagelistview/core/configureaggregationsdialog.cpp
+   messagelistview/core/configureskinsdialog.cpp
+   messagelistview/core/delegate.cpp
+   messagelistview/core/filter.cpp
+   messagelistview/core/item.cpp
+   messagelistview/core/groupheaderitem.cpp
+   messagelistview/core/manager.cpp
+   messagelistview/core/messageitem.cpp
+   messagelistview/core/messageitemsetmanager.cpp
+   messagelistview/core/model.cpp
+   messagelistview/core/modelinvariantindex.cpp
+   messagelistview/core/modelinvariantrowmapper.cpp
+   messagelistview/core/optionset.cpp
+   messagelistview/core/optionseteditor.cpp
+   messagelistview/core/skin.cpp
+   messagelistview/core/skindelegate.cpp
+   messagelistview/core/skineditor.cpp
+   messagelistview/core/storagemodelbase.cpp
+   messagelistview/core/view.cpp
+   messagelistview/core/widgetbase.cpp
+#TODO   locale.c
 )
+
 
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )

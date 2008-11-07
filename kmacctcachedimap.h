@@ -38,7 +38,6 @@
 #include <QPointer>
 
 class KMFolderCachedImap;
-class KMFolderTreeItem;
 class KMFolder;
 namespace KMail {
     class ImapJob;
@@ -73,11 +72,6 @@ public:
    * Inherited methods.
    */
   virtual void processNewMail( bool interactive );
-
-  /**
-   * Kill all jobs related to the specified folder
-   */
-  void killJobsForItem(KMFolderTreeItem * fti);
 
   /**
    * Kill the slave if any jobs are active

@@ -27,7 +27,6 @@ using KMail::SieveConfig;
 #include "kmmessage.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
-#include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmmainwin.h"

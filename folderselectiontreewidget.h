@@ -27,11 +27,11 @@
 #include <libkdepim/foldertreewidget.h>
 
 class KMFolder;
-class KMFolderTree;
-class KMFolderTreeItem;
 
 namespace KMail {
 
+class MainFolderView;
+class FolderViewItem;
 class FolderSelectionTreeWidgetItem;
 
 /**
@@ -39,7 +39,7 @@ class FolderSelectionTreeWidgetItem;
  * 
  * This widget displays a two column tree of folders with the folder
  * name on the left and its full path on the right. The tree is filled
- * by fetching data from a KMFolderTree.
+ * by fetching data from a FolderTreeWiget.
  *
  * Items can be filtered by typing in a string to be matched in the
  * folder path.
@@ -48,13 +48,13 @@ class FolderSelectionTreeWidget : public KPIM::FolderTreeWidget
 {
   Q_OBJECT
 private:
-  int mNameColumnIndex;          ///< The index of the folder name column
-  int mPathColumnIndex;          ///< The index of the path column
-  KMFolderTree* mFolderTree;     ///< The KMFolderTree to fetch the data from
-  QString mFilter;               ///< The current folder path filter string
-  bool mLastMustBeReadWrite;     ///< Internal state for reload()
-  bool mLastShowOutbox;          ///< Internal state for reload()
-  bool mLastShowImapFolders;     ///< Internal state for reload()
+  int mNameColumnIndex;                 ///< The index of the folder name column
+  int mPathColumnIndex;                 ///< The index of the path column
+  KMail::MainFolderView* mFolderTree; ///< The MainFolderView to fetch the data from
+  QString mFilter;                      ///< The current folder path filter string
+  bool mLastMustBeReadWrite;            ///< Internal state for reload()
+  bool mLastShowOutbox;                 ///< Internal state for reload()
+  bool mLastShowImapFolders;            ///< Internal state for reload()
 
 public:
   /**
@@ -67,7 +67,7 @@ public:
    */
   FolderSelectionTreeWidget(
       QWidget *parent,
-      KMFolderTree *folderTree
+      ::KMail::MainFolderView *folderTree
    );
 
 public:
@@ -143,10 +143,10 @@ protected:
   virtual void keyPressEvent( QKeyEvent *e );
 
   /**
-   * Recursively fetches folder items from the KMFolderTree
+   * Recursively fetches folder items from the FolderTreeWiget
    * by starting at fti (as root). This is internal api: use reload() instead.
    */
-  void recursiveReload( KMFolderTreeItem *fti, FolderSelectionTreeWidgetItem *parent );
+  void recursiveReload( FolderViewItem *fti, FolderSelectionTreeWidgetItem *parent );
 
 };
 

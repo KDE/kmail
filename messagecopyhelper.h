@@ -68,6 +68,17 @@ class MessageCopyHelper : public QObject
     */
     static bool inReadOnlyFolder( const QList<quint32> &sernums );
 
+    /**
+     * Returns the source folder for the first serial number found
+     * in the sernums list. This can be used as a quick and dirty "guess"
+     * in dnd operations for finding if the drag comes from the
+     * same folder as destination. It will catch 90% of the cases.
+     * The real drop operation should obviously use a more detailed check.
+     * This function may return zero if the list is empty or contains
+     * some kind of garbage.
+     */
+    static KMFolder * firstSourceFolder( const QList<quint32> &sernums );
+
   private slots:
     void copyCompleted( KMCommand *cmd );
 

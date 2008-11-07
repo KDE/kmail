@@ -110,8 +110,8 @@ protected slots:
   void slotCurrentChanged(QTreeWidgetItem *);
   virtual void updateContextMenuActions();
   virtual void slotContextMenuRequested( QTreeWidgetItem* );
-  virtual void copySelectedToFolder( QAction* );
-  virtual void moveSelectedToFolder( QAction* );
+  void slotCopySelectedMessagesToFolder( QAction* );
+  void slotMoveSelectedMessagesToFolder( QAction* );
   virtual void slotFolderActivated();
   void slotClearSelection();
   void slotReplyToMsg();
@@ -162,7 +162,6 @@ protected:
   KPushButton *mSearchResultOpenBtn;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
-  QMap<QAction*,KMFolder*> mMenuToFolder;
   QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction, *mCopyAction, *mCutAction;

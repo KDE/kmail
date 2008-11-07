@@ -2,7 +2,7 @@
 #include "expirypropertiesdialog.h"
 #include "folderrequester.h"
 #include "kmfolder.h"
-#include "kmfoldertree.h"
+#include "mainfolderview.h"
 
 #include <QVariant>
 #include <QPushButton>
@@ -25,7 +25,7 @@ using namespace KMail;
  *  name 'name'.
  *
  */
-ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* folder )
+ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* folder )
     : KDialog( tree ),
       mFolder( folder )
 {

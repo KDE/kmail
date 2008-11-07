@@ -407,7 +407,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
     }
   }
   else
-    kWarning(5006) <<"Can not find parent folder";
+    kWarning(5006) << "Can not find parent folder for " << aFolder->label().toUtf8().data();
 
   if (aFolder == mRemoveOrig) {
     // call only if we're removing the original parent folder
