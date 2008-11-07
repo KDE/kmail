@@ -62,14 +62,16 @@ namespace KMail {
 
     { "Till Adam", I18N_NOOP("Core developer"),
       "adam@kde.org", 0 },
-    { "Carsten Burghardt", I18N_NOOP("Core developer"),
+    { "Volker Krause", I18N_NOOP("Core developer"),
+      "vkrause@kde.org", 0 },
+    { "Carsten Burghardt", I18N_NOOP("Former core developer"),
       "burghardt@kde.org", 0 },
-    { "Marc Mutz", I18N_NOOP("Core developer"),
+    { "Marc Mutz", I18N_NOOP("Former core developer"),
       "mutz@kde.org", 0 },
+    { "Zack Rusin", I18N_NOOP("Former core developer"),
+      "zack@kde.org", 0 },
     { "Daniel Naber", I18N_NOOP("Documentation"),
       "daniel.naber@t-online.de", 0 },
-    { "Zack Rusin", I18N_NOOP("Core developer"),
-      "zack@kde.org", 0 },
 
     { "Toyohiro Asukai", 0,
       "toyohiro@ksmplus.com", 0 },
@@ -182,7 +184,6 @@ namespace KMail {
     { "Christoph Kl\303\274nter", 0, 0, 0 }, // fix for bug:88216 (drag&drop from KAddressBook to the To: field)
     { "Martin Koller", 0, 0, 0 }, // optional columns in the message list
     { "Tobias K\303\266nig", 0, 0, 0 }, // edit recent addresses, store email<->OpenPGP key association in address book
-    { "Volker Krause", 0, 0, 0 }, // implemented KWallet support, fixed multiple bugs
     { "Francois Kritzinger", 0, 0, 0 }, // fix bug in configuration dialog
     { "Danny Kukawka", 0, 0, 0 }, // DCOP enhancements for better message importing
     { "Roger Larsson", 0, 0, 0 }, // add name of checked account to status bar message
