@@ -583,8 +583,13 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   }
   if ( mSharedSeenFlagsCheckBox ) {
     KMFolderCachedImap *dimap = static_cast<KMFolderCachedImap*>( folder->storage() );
+    ImapAccountBase *account = dynamic_cast<ImapAccountBase*>( dimap->account() );
     mSharedSeenFlagsCheckBox->setChecked( dimap->sharedSeenFlags() );
     mSharedSeenFlagsCheckBox->setDisabled( folder->isReadOnly() );
+    if ( account && account->hasCapability( "x-kmail-sharedseen" ) )
+      mSharedSeenFlagsCheckBox->show();
+    else
+      mSharedSeenFlagsCheckBox->hide();
   }
 }
 

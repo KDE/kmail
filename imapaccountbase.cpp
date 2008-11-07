@@ -198,6 +198,7 @@ namespace KMail {
     setOnlyLocallySubscribedFolders( config.readBoolEntry( "locally-subscribed-folders", false ) );
     setLoadOnDemand( config.readBoolEntry( "loadondemand", false ) );
     setListOnlyOpenFolders( config.readBoolEntry( "listOnlyOpenFolders", false ) );
+    mCapabilities = config.readListEntry( "capabilities", QStringList() );
     // read namespaces
     nsMap map;
     QStringList list = config.readListEntry( QString::number( PersonalNS ) );
@@ -237,6 +238,7 @@ namespace KMail {
     config.writeEntry( "locally-subscribed-folders", onlyLocallySubscribedFolders() );
     config.writeEntry( "loadondemand", loadOnDemand() );
     config.writeEntry( "listOnlyOpenFolders", listOnlyOpenFolders() );
+    config.writeEntry( "capabilities", mCapabilities );
     QString data;
     for ( nsMap::Iterator it = mNamespaces.begin(); it != mNamespaces.end(); ++it ) {
       if ( !it.data().isEmpty() ) {
