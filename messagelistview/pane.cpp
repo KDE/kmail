@@ -151,9 +151,9 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
     if ( fvi )
       icon = SmallIcon( fvi->normalIcon() );
     else
-      icon = SmallIcon( "empty" ); // FIXME: find a nicer empty icon
+      icon = QIcon(); // FIXME: find a nicer empty icon
   } else {
-    icon = SmallIcon( "empty" ); // FIXME: find a nicer empty icon
+    icon = QIcon(); // FIXME: find a nicer empty icon
   }
 
   w = preferEmptyTab ? messageListViewWidgetWithFolder( 0 ) : currentMessageListViewWidget();
