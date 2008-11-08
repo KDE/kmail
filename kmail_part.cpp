@@ -52,6 +52,8 @@ using KMail::AccountManager;
 K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
 K_EXPORT_PLUGIN( KMailFactory( KMail::AboutData() ) )
 
+using namespace KMail;
+
 KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &) :
   KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
@@ -116,10 +118,10 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   connect( mainWidget->folderViewManager(), SIGNAL(folderActivated(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
-  connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(KMail::FolderViewItem*)),
-           this, SLOT(slotIconChanged(KMail::FolderViewItem*)) );
-  connect( mainWidget->mainFolderView(), SIGNAL(nameChanged(KMail::FolderViewItem*)),
-           this, SLOT(slotNameChanged(KMail::FolderViewItem*)) );
+  connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(FolderViewItem*)),
+           this, SLOT(slotIconChanged(FolderViewItem*)) );
+  connect( mainWidget->mainFolderView(), SIGNAL(nameChanged(FolderViewItem*)),
+           this, SLOT(slotNameChanged(FolderViewItem*)) );
 
   setXMLFile( "kmail_part.rc", true );
 #endif
@@ -151,7 +153,7 @@ bool KMailPart::openFile()
 
 void KMailPart::exportFolder( KMFolder *folder )
 {
-  KMail::FolderViewItem* fti = static_cast<KMail::FolderViewItem *>( mainWidget->mainFolderView()->currentItem() );
+  FolderViewItem* fti = static_cast<FolderViewItem *>( mainWidget->mainFolderView()->currentItem() );
 
   if ( folder != 0 )
     emit textChanged( folder->label() );
@@ -160,12 +162,12 @@ void KMailPart::exportFolder( KMFolder *folder )
     emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
 }
 
-void KMailPart::slotIconChanged( KMail::FolderViewItem *fti )
+void KMailPart::slotIconChanged( FolderViewItem *fti )
 {
   emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
 }
 
-void KMailPart::slotNameChanged( KMail::FolderViewItem *fti )
+void KMailPart::slotNameChanged( FolderViewItem *fti )
 {
   emit textChanged( fti->folder()->label() );
 }

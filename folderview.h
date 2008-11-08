@@ -903,6 +903,7 @@ Q_SIGNALS:
    * The icon of one of our folders has changed
    */
   void iconChanged( FolderViewItem * );
+
   /**
    * The name of one of our folders has changed
    */

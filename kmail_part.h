@@ -51,6 +51,9 @@ namespace KMail
   class FolderViewItem;
 }
 
+using namespace KMail; // Needed because moc is unable to properly map namespaces
+                       // in signal/slot parameters. No one includes this file anyway.
+
 class KMailPart: public KParts::ReadOnlyPart
 {
   Q_OBJECT
@@ -67,8 +70,8 @@ class KMailPart: public KParts::ReadOnlyPart
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
     void exportFolder( KMFolder* folder );
-    void slotIconChanged( KMail::FolderViewItem *fti );
-    void slotNameChanged( KMail::FolderViewItem *fti );
+    void slotIconChanged( FolderViewItem *fti );
+    void slotNameChanged( FolderViewItem *fti );
 
   signals:
     void textChanged( const QString& );
