@@ -157,9 +157,22 @@ void Widget::viewMessageActivated( Core::MessageItem *msg )
   int row = msg->currentModelIndexRow();
   Q_ASSERT( row >= 0 );
 
-  KMMessage * message = static_cast< const StorageModel * >( storageModel() )->message( row );
+  // The assert below may fail when quickly opening and closing a non-selected thread.
+  // This will actually activate the item without selecting it...
+  //Q_ASSERT( mLastSelectedMessage == row );
 
-  Q_ASSERT( mLastSelectedMessage == row );
+  if ( mLastSelectedMessage != row )
+  {
+    // Very ugly. We are activating a non selected message.
+    // This is very likely a double click on the plus sign near a thread leader.
+    // Dealing with mLastSelectedMessage here would be expensive: it would involve releasing the last selected,
+    // emitting signals, handling recursion... ugly.
+    // We choose a very simple solution: double clicking on the plus sign near a thread leader does
+    // NOT activate the message (i.e open it in a toplevel window) if it isn't previously selected.
+    return;
+  }
+
+  KMMessage * message = static_cast< const StorageModel * >( storageModel() )->message( row );
 
   emit messageActivated( message ); // this MAY be null
 }
