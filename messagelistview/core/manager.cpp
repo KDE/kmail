@@ -700,9 +700,9 @@ void Manager::createDefaultSkins()
   c->setIsSenderOrReceiver( true );
   add_skin_simple_text_column( s, i18n( "Sender" ), Skin::ContentItem::Sender, false, Aggregation::SortMessagesBySender, false, false );
   add_skin_simple_text_column( s, i18n( "Receiver" ), Skin::ContentItem::Receiver, false, Aggregation::SortMessagesByReceiver, false, false );
-  add_skin_simple_text_column( s, i18n( "Date" ), Skin::ContentItem::Date, true, Aggregation::SortMessagesByDateTime, true, false );
-  add_skin_simple_text_column( s, i18n( "Most Recent Date" ), Skin::ContentItem::MostRecentDate, false, Aggregation::SortMessagesByDateTimeOfMostRecent, true, true );
-  add_skin_simple_text_column( s, i18n( "Size" ), Skin::ContentItem::Size, false, Aggregation::SortMessagesBySize, true, false );
+  add_skin_simple_text_column( s, i18n( "Date" ), Skin::ContentItem::Date, true, Aggregation::SortMessagesByDateTime, false, false );
+  add_skin_simple_text_column( s, i18n( "Most Recent Date" ), Skin::ContentItem::MostRecentDate, false, Aggregation::SortMessagesByDateTimeOfMostRecent, false, true );
+  add_skin_simple_text_column( s, i18n( "Size" ), Skin::ContentItem::Size, false, Aggregation::SortMessagesBySize, false, false );
   add_skin_simple_icon_column( s, i18n( "Attachment" ), Skin::ContentItem::AttachmentStateIcon, false, Aggregation::NoMessageSorting );
   add_skin_simple_icon_column( s, i18n( "New/Unread" ), Skin::ContentItem::ReadStateIcon, false, Aggregation::NoMessageSorting );
   add_skin_simple_icon_column( s, i18n( "Important" ), Skin::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
