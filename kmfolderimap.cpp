@@ -97,9 +97,9 @@ KMFolderImap::~KMFolderImap()
   }
   writeConfig();
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
-  mMetaDataMap.setAutoDelete( true );
+  qDeleteAll( mUidMetaDataMap );
+  qDeleteAll( mMetaDataMap );
   mMetaDataMap.clear();
-  mUidMetaDataMap.setAutoDelete( true );
   mUidMetaDataMap.clear();
 }
 
@@ -1181,6 +1181,7 @@ void KMFolderImap::slotCheckValidityResult( KJob *job )
       if ( !uidValidity().isEmpty() )
       {
         account()->ignoreJobsForFolder( folder() );
+        qDeleteAll( mUidMetaDataMap );
         mUidMetaDataMap.clear();
       }
       mLastUid = 0;
@@ -1606,7 +1607,7 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
       flags = msg->headerField( "X-Flags" ).toInt();
       ulong uid = msg->UID();
       KMMsgMetaData *md =  0;
-      if ( mUidMetaDataMap.find( uid ) ) {
+      if ( mUidMetaDataMap.contains( uid ) ) {
         md =  mUidMetaDataMap[uid];
       }
       ulong serNum = 0;
@@ -1638,15 +1639,14 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
           // see if we have cached the msgIdMD5 and get the status +
           // serial number from there
           QString id = msg->msgIdMD5();
-          if ( mMetaDataMap.find( id ) ) {
+          if ( mMetaDataMap.contains( id ) ) {
             md =  mMetaDataMap[id];
             msg->setStatus( md->messageStatus() );
             if ( md->serNum() != 0 && serNum == 0 ) {
               msg->setMsgSerNum( md->serNum() );
               serialNumberInCache = true;
             }
-            mMetaDataMap.remove( id );
-            delete md;
+            delete mMetaDataMap.take( id );
           }
         }
         KMFolderMbox::addMsg(msg, 0);
@@ -1864,8 +1864,11 @@ void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 //-----------------------------------------------------------------------------
 void KMFolderImap::deleteMessage(KMMessage * msg)
 {
-  mUidMetaDataMap.remove( msg->UID() );
-  mMetaDataMap.remove( msg->msgIdMD5() );
+  if ( mUidMetaDataMap.contains( msg->UID() ) )
+    delete mUidMetaDataMap.take( msg->UID() );
+  if ( mMetaDataMap.contains( msg->msgIdMD5() ) )
+    delete mMetaDataMap.take( msg->msgIdMD5() );
+
   KUrl url = account()->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->storage());
   ulong uid = msg->UID();
@@ -1889,36 +1892,8 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
 
 void KMFolderImap::deleteMessage(const QList<KMMessage*>& msgList)
 {
-  QList<KMMessage*>::const_iterator it;
-  KMMessage *msg;
-  for ( it = msgList.begin(); it != msgList.end(); ++it ) {
-    msg = (*it);
-    mUidMetaDataMap.remove( msg->UID() );
-    mMetaDataMap.remove( msg->msgIdMD5() );
-  }
-
-  QList<ulong> uids;
-  getUids(msgList, uids);
-  QStringList sets = makeSets(uids);
-
-  KUrl url = account()->getUrl();
-  KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msgList.first()->storage());
-  for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
-  {
-    QString uid = *it;
-    // Don't delete with no uid, that nukes the folder. Should not happen, but
-    // better safe than sorry.
-    if ( uid.isEmpty() ) continue;
-    url.setPath(msg_parent->imapPath() + ";UID=" + uid);
-    if ( account()->makeConnection() != ImapAccountBase::Connected )
-      return;
-    KIO::SimpleJob *job = KIO::file_delete(url, KIO::HideProgressInfo);
-    KIO::Scheduler::assignJobToSlave(account()->slave(), job);
-    ImapAccountBase::jobData jd( url.url(), 0 );
-    account()->insertJob(job, jd);
-    connect(job, SIGNAL(result(KJob *)),
-        account(), SLOT(slotSimpleResult(KJob *)));
-  }
+  foreach( KMMessage *msg, msgList )
+    deleteMessage( msg );
 }
 
 //-----------------------------------------------------------------------------
@@ -2441,7 +2416,7 @@ bool KMFolderImap::isMoveable() const
 //-----------------------------------------------------------------------------
 ulong KMFolderImap::serNumForUID( ulong uid )
 {
-  if ( mUidMetaDataMap.find( uid ) ) {
+  if ( mUidMetaDataMap.contains( uid ) ) {
     KMMsgMetaData *md = mUidMetaDataMap[uid];
     return md->serNum();
   } else {
@@ -2457,7 +2432,9 @@ void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
     uid = msg->UID();
   }
   ulong serNum = msg->getMsgSerNum();
-  mUidMetaDataMap.replace( uid, new KMMsgMetaData( msg->status(), serNum ) );
+  if ( mUidMetaDataMap.contains( uid ) )
+    delete mUidMetaDataMap.take( uid );
+  mUidMetaDataMap.insert( uid, new KMMsgMetaData( msg->status(), serNum ) );
 }
 
 //-----------------------------------------------------------------------------

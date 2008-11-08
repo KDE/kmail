@@ -34,8 +34,6 @@
 #include <kstandarddirs.h>
 
 #include <QList>
-#include <q3intdict.h>
-#include <q3dict.h>
 
 template< typename T> class QList;
 
@@ -525,9 +523,9 @@ private:
   // if we're checking validity currently
   bool        mCheckingValidity;
   // uid - metadata cache
-  Q3IntDict<KMMsgMetaData> mUidMetaDataMap;
+  QHash<int,KMMsgMetaData*> mUidMetaDataMap;
   // msgidMD5 - status map
-  Q3Dict<KMMsgMetaData> mMetaDataMap;
+  QHash<QString,KMMsgMetaData*> mMetaDataMap;
   // if the folder should be deleted without server roundtrip
   bool        mAlreadyRemoved;
   // the progress for mailchecks
