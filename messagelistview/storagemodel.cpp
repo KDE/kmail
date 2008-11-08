@@ -593,7 +593,8 @@ void StorageModel::slotMessageAdded( KMFolder *folder, quint32 sernum )
 
   KMMsgDict::instance()->getLocation( sernum, &retFolder, &idx );
 
-  Q_ASSERT( retFolder == folder );
+  // retFolder is 0 in case of search folders
+  Q_ASSERT( retFolder == folder || !retFolder );
   Q_ASSERT( idx != -1 );
 
   beginInsertRows( QModelIndex(), idx, idx );
