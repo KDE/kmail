@@ -1955,26 +1955,44 @@ void FolderView::slotSelectFocusedFolder()
 
 bool FolderView::selectNextUnreadFolder( bool confirm )
 {
-  QTreeWidgetItem *begin = currentItem();
-  if ( !begin )
-    begin = firstItem();
-  if ( !begin )
-    return false;
+  // first try from the current item (if any) to the end
 
-  for ( int pass = 1; pass <= 2; pass++ ) {
-    QTreeWidgetItemIterator it( begin, QTreeWidgetItemIterator::NotHidden );
-    while ( *it ) {
-      QTreeWidgetItem *curItem = *it;
-      bool folderSelected = selectFolderIfUnread( static_cast< FolderViewItem * >( curItem ),
+  QTreeWidgetItem * current = currentItem();
+
+  if ( current )
+  {
+    QTreeWidgetItemIterator it( current, QTreeWidgetItemIterator::NotHidden );
+    ++it; // skip current
+
+    while ( *it )
+    {
+      bool folderSelected = selectFolderIfUnread( static_cast< FolderViewItem * >( *it ),
                                                   confirm );
       if ( folderSelected )
         return true;
       ++it;
     }
+  }
 
-    // When the inner iterator loop is finished, try once again (pass 2) from the
-    // beginning instead of from the current item
-    begin = firstItem();
+  // didn't find a folder to select: try from the beginning up to current
+
+  QTreeWidgetItem * begin = firstItem();
+
+  if ( begin )
+  {
+    QTreeWidgetItemIterator it( begin, QTreeWidgetItemIterator::NotHidden );
+
+    while ( *it )
+    {
+      if ( *it == current )
+        return false; // reached current
+
+      bool folderSelected = selectFolderIfUnread( static_cast< FolderViewItem * >( *it ),
+                                                  confirm );
+      if ( folderSelected )
+        return true;
+      ++it;
+    }
   }
 
   // No folder selected when we reach here
@@ -1983,26 +2001,44 @@ bool FolderView::selectNextUnreadFolder( bool confirm )
 
 bool FolderView::selectPrevUnreadFolder()
 {
-  QTreeWidgetItem *begin = currentItem();
-  if ( !begin )
-    begin = firstItem();
-  if ( !begin )
-    return false;
+  // first try from the current item (if any) to the beginning
 
-  for ( int pass = 1; pass <= 2; pass++ ) {
-    QTreeWidgetItemIterator it( begin, QTreeWidgetItemIterator::NotHidden );
-    while ( *it ) {
-      QTreeWidgetItem *curItem = *it;
-      bool folderSelected = selectFolderIfUnread( static_cast< FolderViewItem * >( curItem ),
+  QTreeWidgetItem * current = currentItem();
+
+  if ( current )
+  {
+    QTreeWidgetItemIterator it( current, QTreeWidgetItemIterator::NotHidden );
+    --it; // skip current
+
+    while ( *it )
+    {
+      bool folderSelected = selectFolderIfUnread( static_cast< FolderViewItem * >( *it ),
                                                   false /* don't confirm*/ );
       if ( folderSelected )
         return true;
       --it;
     }
+  }
 
-    // When the inner iterator loop is finished, try once again (pass 2) from the
-    // end instead of from the current item
-    begin = lastItem();
+  // didn't find a folder to select: try from the end up to current
+
+  QTreeWidgetItem * end = lastItem();
+
+  if ( end )
+  {
+    QTreeWidgetItemIterator it( end, QTreeWidgetItemIterator::NotHidden );
+
+    while ( *it )
+    {
+      if ( *it == current )
+        return false; // reached current
+
+      bool folderSelected = selectFolderIfUnread( static_cast< FolderViewItem * >( *it ),
+                                                  false /* don't confirm*/ );
+      if ( folderSelected )
+        return true;
+      --it;
+    }
   }
 
   // No folder selected when we reach here
