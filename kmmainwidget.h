@@ -34,7 +34,6 @@
 
 #include <QList>
 #include <QVBoxLayout>
-#include <q3listview.h>
 #include <QMenu>
 #include <QHash>
 #include <QPointer>

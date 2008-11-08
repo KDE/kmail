@@ -70,6 +70,7 @@
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QScrollBar>
 #include <QTime>
 #include <QTimer>
 #include <QToolTip>
