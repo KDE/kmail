@@ -168,9 +168,6 @@ using KMail::TemplateParser;
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
-static const int defaultMinimumWidth = 400;
-static const int defaultMinimumHeight = 300;
-
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                             KActionCollection *actionCollection, KConfig *config ) :
@@ -226,8 +223,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   mMessageTagToolbarActionSeparator->setSeparator( true );
 
   theMainWidgetList->append( this );
-
-  setMinimumSize( defaultMinimumWidth, defaultMinimumHeight );
 
   readPreConfig();
   createWidgets();
