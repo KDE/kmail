@@ -728,6 +728,9 @@ void KMMainWidget::createWidgets()
   connect( mMessageListView, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
 
+  connect( mMessageListView, SIGNAL( messageActivated( KMMessage * ) ),
+           this, SLOT( slotMsgActivated( KMMessage * ) ) );
+           
   mPreviousMessageAction = new KAction( i18n( "Extend Selection to Previous Message" ), this );
   mPreviousMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
   actionCollection()->addAction( "previous_message", mPreviousMessageAction );
@@ -763,8 +766,6 @@ void KMMainWidget::createWidgets()
 
     connect( mMessageListView, SIGNAL( messageSelected( KMMessage * ) ),
              this, SLOT( slotMsgSelected( KMMessage * ) ) );
-    connect( mMessageListView, SIGNAL( messageActivated( KMMessage * ) ),
-             this, SLOT( slotMsgActivated( KMMessage * ) ) );
 
   }
 
