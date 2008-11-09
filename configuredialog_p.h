@@ -471,6 +471,7 @@ private: // methods
 
 private: // data
   QCheckBox    *mDisplayMessageToolTips;
+  QCheckBox    *mHideTabBarWithSingleTab;
   KButtonGroup *mDateDisplay;
   KLineEdit    *mCustomDateFormatEdit;
   QString       mCustomDateWhatsThis;

@@ -1755,11 +1755,19 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );
 
-  mDisplayMessageToolTips = new QCheckBox( i18n("Display Tooltips for Messages and Group Headers"), group );
+  mDisplayMessageToolTips = new QCheckBox( GlobalSettings::self()->displayMessageToolTipsItem()->label(), group );
   gvlay->addWidget( mDisplayMessageToolTips );
 
   connect( mDisplayMessageToolTips, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+
+  mHideTabBarWithSingleTab = new QCheckBox( GlobalSettings::self()->hideTabBarWithSingleTabItem()->label(), group );
+  gvlay->addWidget( mHideTabBarWithSingleTab );
+
+  connect( mHideTabBarWithSingleTab, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+
 
 /*
   
@@ -1891,7 +1899,8 @@ void AppearancePage::HeadersTab::doLoadOther() {
   mShowQuickSearch->setChecked( GlobalSettings::self()->quickSearchActive() );
 */
 
-  mDisplayMessageToolTips->setChecked( general.readEntry( "displayMessageToolTips", true ) );
+  mDisplayMessageToolTips->setChecked( GlobalSettings::self()->displayMessageToolTips() );
+  mHideTabBarWithSingleTab->setChecked( GlobalSettings::self()->hideTabBarWithSingleTab() );
 
   // "Date Display":
   setDateDisplay( general.readEntry( "dateFormat",
@@ -1944,7 +1953,8 @@ void AppearancePage::HeadersTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  general.writeEntry( "displayMessageToolTips", mDisplayMessageToolTips->isChecked() );
+  GlobalSettings::self()->setDisplayMessageToolTips( mDisplayMessageToolTips->isChecked() );
+  GlobalSettings::self()->setHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
 
 /*
   geometry.writeEntry( "nestingPolicy", mNestingPolicy->selected() );

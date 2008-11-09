@@ -143,7 +143,7 @@ namespace Core
  * after the messages have been moved in pass 1.
  *
  * That's why we in fact have Pass1Fill, Pass1Cleanup, Pass1Update, Pass2, Pass3, Pass4 and Pass5 below.
- * Pass1Fill, Pass1Cleanup and Pass1Update are exclusive and both proceed with Pass2 when finished.
+ * Pass1Fill, Pass1Cleanup and Pass1Update are exclusive and all of them proceed with Pass2 when finished.
  */
 class ViewItemJob
 {

@@ -67,7 +67,7 @@ class View;
  * The tree is exposed via a 'hacked' QAbstractItemModel interface to a QTreeView
  * subclass (which is MessageListView::View).
  *
- * The keypoint in this class is that it has to be non-blockin in manipulating the tree:
+ * The keypoint in this class is that it has to be non-blocking in manipulating the tree:
  * fill, cleanup and update operations are performed in timed chunks. Perfect non-blocking
  * behaviour is not possible since there are some small operations that basically can't be
  * splitted in chunks. However, these exceptions apply to a minority of tasks and

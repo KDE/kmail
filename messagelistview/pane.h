@@ -488,6 +488,12 @@ protected:
    */
   void widgetIconChangeRequest( Widget * w, const QIcon &icon );
 
+  /**
+   * Hides/shows the tab bar (if the proper global option is enabled).
+   * Enables or disables the "close tab" button.
+   */
+  void updateTabControls();
+
 private:
   void internalSetCurrentWidget( Widget * newCurrentWidget );
   void internalSetCurrentFolder( KMFolder * folder );

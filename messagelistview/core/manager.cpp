@@ -38,7 +38,8 @@
 #include <KApplication>
 #include <KLocale>
 
-#include "kmkernel.h"
+#include "kmkernel.h"       // These includes add a soft dependancy on stuff outside MessageListView::Core.
+#include "globalsettings.h" // It should be quite simple to remove it if we need this stuff to become a library.
 
 namespace KMail
 {
@@ -871,6 +872,7 @@ void Manager::reloadAllWidgets()
 
 void Manager::reloadGlobalConfiguration()
 {
+  // This is called when configuration changes (probably edited by the options dialog)
   int oldDateFormat = (int)mDateFormatter->format();
   QString oldDateCustomFormat = mDateFormatter->customFormat();
 
@@ -896,7 +898,7 @@ void Manager::loadGlobalConfiguration()
   mDateFormatter->setCustomFormat( config.readEntry( "customDateFormat", QString() ) );
   mDateFormatter->setFormat( t );  
 
-  mDisplayMessageToolTips = config.readEntry( "displayMessageToolTips", true );
+  mDisplayMessageToolTips = GlobalSettings::self()->displayMessageToolTips();
 }
 
 void Manager::loadConfiguration()

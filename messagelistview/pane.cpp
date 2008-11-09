@@ -36,6 +36,7 @@
 
 #include <libkdepim/messagestatus.h>
 
+#include "globalsettings.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmmainwidget.h"
@@ -287,7 +288,7 @@ void Pane::slotActionTabCloseRequest()
 
   delete w; // should call slotCurrentTabChanged() if the tab is current
 
-  mCloseTabButton->setEnabled( count() > 1 );
+  updateTabControls();
 }
 
 void Pane::slotActionTabCloseAllButThis()
@@ -324,7 +325,7 @@ void Pane::slotActionTabCloseAllButThis()
   for ( QList< Widget * >::Iterator it = widgets.begin(); it != widgets.end(); ++it )
     delete ( *it ); // should call slotCurrentTabChanged() if the current tab is closed
 
-  mCloseTabButton->setEnabled( false );
+  updateTabControls();
 }
 
 void Pane::slotCloseCurrentTab()
@@ -338,7 +339,19 @@ void Pane::slotCloseCurrentTab()
 
   delete w; // should call slotCurrentTabChanged()
 
-  mCloseTabButton->setEnabled( count() > 1 );
+  updateTabControls();
+}
+
+void Pane::updateTabControls()
+{
+  bool moreThanOneTab = count() > 1;
+
+  mCloseTabButton->setEnabled( moreThanOneTab );
+
+  if ( GlobalSettings::self()->hideTabBarWithSingleTab() )
+    setTabBarHidden( !moreThanOneTab );
+  else
+    setTabBarHidden( false );
 }
 
 void Pane::slotNewTab()
@@ -362,7 +375,7 @@ Widget * Pane::addNewWidget()
   connect( w, SIGNAL( fullSearchRequest() ),
            this, SIGNAL( fullSearchRequest() ) );
 
-  mCloseTabButton->setEnabled( count() > 1 );
+  updateTabControls();
   return w;
 }
 
@@ -749,6 +762,8 @@ void Pane::reloadGlobalConfiguration()
     return; // manager doesn't exist (yet or anymore)
 
   Core::Manager::instance()->reloadGlobalConfiguration();
+
+  updateTabControls();
 }
 
 void Pane::focusQuickSearch()
