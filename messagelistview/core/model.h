@@ -35,11 +35,6 @@
 class QTimer;
 class QTime;
 
-namespace KMime
-{
-  class DateFormatter;
-}
-
 namespace KMail
 {
 

@@ -31,7 +31,6 @@ class KMMessage;
 class KMMsgBase;
 class KMFolder;
 class KMMainWidget;
-class KMMessageList;
 
 class QTimer;
 

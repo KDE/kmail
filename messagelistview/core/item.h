@@ -38,7 +38,6 @@
   #define GCC_DONT_INLINE_THIS
 #endif
 
-class KMMsgBase;
 
 namespace KMail
 {
