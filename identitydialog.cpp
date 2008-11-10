@@ -40,7 +40,6 @@
 using KMail::FolderRequester;
 #include "kmfoldermgr.h"
 #include "mainfolderview.h"
-#include "dictionarycombobox.h"
 #include "kleo_util.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
@@ -73,6 +72,7 @@ using MailTransport::TransportManager;
 #include <kconfiggroup.h>
 #include <kcombobox.h>
 #include <ktabwidget.h>
+#include <sonnet/dictionarycombobox.h>
 
 // Qt headers:
 #include <QLabel>
@@ -362,7 +362,7 @@ namespace KMail {
 
     // "Dictionary" combo box and label:
     ++row;
-    mDictionaryCombo = new KPIM::DictionaryComboBox( tab );
+    mDictionaryCombo = new Sonnet::DictionaryComboBox( tab );
     glay->addWidget( mDictionaryCombo, row, 1 );
     label = new QLabel( i18n("D&ictionary:"), tab );
     label->setBuddy( mDictionaryCombo );

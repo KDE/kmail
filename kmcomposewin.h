@@ -76,6 +76,9 @@ class SnippetWidget;
 
 namespace KPIM {
   class KMStyleListSelectAction;
+}
+
+namespace Sonnet {
   class DictionaryComboBox;
 }
 
@@ -670,7 +673,7 @@ class KMComposeWin : public KMail::Composer
   private:
     QWidget   *mMainWidget;
     MailTransport::TransportComboBox *mTransport;
-    KPIM::DictionaryComboBox *mDictionaryCombo;
+    Sonnet::DictionaryComboBox *mDictionaryCombo;
     KPIMIdentities::IdentityCombo    *mIdentity;
     KMFolderComboBox *mFcc;
     KMLineEdit *mEdtFrom, *mEdtReplyTo;

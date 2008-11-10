@@ -51,7 +51,6 @@ using MailTransport::Transport;
 #include "attachmentcollector.h"
 #include "attachmentlistview.h"
 #include "chiasmuskeyselector.h"
-#include "dictionarycombobox.h"
 #include "editorwatcher.h"
 #include "kleo_util.h"
 #include "kmatmlistview.h"
@@ -72,7 +71,7 @@ using MailTransport::Transport;
 #include "stl_util.h"
 
 using KMail::AttachmentListView;
-using KPIM::DictionaryComboBox;
+using Sonnet::DictionaryComboBox;
 
 // KDELIBS includes
 #include <kactioncollection.h>
@@ -101,6 +100,7 @@ using KPIM::DictionaryComboBox;
 #include <ktoolinvocation.h>
 #include <kwindowsystem.h>
 #include <kzip.h>
+#include <sonnet/dictionarycombobox.h>
 
 #include <kdeversion.h>
 #if KDE_IS_VERSION( 4, 1 ,64 )
@@ -581,7 +581,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
-  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+  mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
   if ( mBtnTransport->isChecked() && !currentTransport.isEmpty() ) {
     Transport *transport =
@@ -1615,7 +1615,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     }
   }
 
-  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+  mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
   partNode *root = partNode::fromMessage( mMsg );
 
@@ -3908,8 +3908,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     }
   }
 
-  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
-  mEditor->setSpellCheckingLanguage( mDictionaryCombo->realDictionaryName() );
+  mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
+  mEditor->setSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
 
   if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
     setFcc( ident.fcc() );
@@ -4299,5 +4299,5 @@ void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
 
 void KMComposeWin::slotLanguageChanged( const QString &language )
 {
-  mDictionaryCombo->setCurrentByDictionaryCode( language );
+  mDictionaryCombo->setCurrentByDictionary( language );
 }

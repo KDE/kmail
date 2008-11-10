@@ -54,7 +54,7 @@ namespace KMail {
   class XFaceConfigurator;
   class FolderRequester;
 }
-namespace KPIM {
+namespace Sonnet {
   class DictionaryComboBox;
 }
 
@@ -102,7 +102,7 @@ namespace KMail {
     // "advanced" tab:
     KLineEdit                        *mReplyToEdit;
     KLineEdit                        *mBccEdit;
-    KPIM::DictionaryComboBox         *mDictionaryCombo;
+    Sonnet::DictionaryComboBox       *mDictionaryCombo;
     FolderRequester                  *mFccCombo;
     FolderRequester                  *mDraftsCombo;
     FolderRequester                  *mTemplatesCombo;
