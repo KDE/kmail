@@ -73,6 +73,12 @@ namespace Util {
 
 
     /**
+     * Delegates opening a URL to the Max OSX mechanisms for that.
+     * Returns false if it did nothing (such as on other platforms.
+     */
+    bool handleUrlOnMac( const KUrl& url );
+
+    /**
      * Convert "\n" line endings to "\r\n".
      * @param src The source string to convert.
      * @return The result string.
@@ -117,6 +123,7 @@ namespace Util {
       QObject *m_object;
       bool m_disabled;
     };
+
 }
 }
 
