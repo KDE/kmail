@@ -302,9 +302,8 @@ void Skin::Row::save( QDataStream &stream ) const
   stream << (int)mLeftItems.count();
 
   int cnt = mLeftItems.count();
-  int i;
 
-  for ( i = 0; i < cnt ; i++ )
+  for ( int i = 0; i < cnt ; ++i )
   {
     ContentItem * ci = mLeftItems.at( i );
     ci->save( stream );
@@ -314,7 +313,7 @@ void Skin::Row::save( QDataStream &stream ) const
 
   cnt = mRightItems.count();
 
-  for ( i = 0; i < cnt ; i++ )
+  for ( int i = 0; i < cnt ; ++i )
   {
     ContentItem * ci = mRightItems.at( i );
     ci->save( stream );
@@ -327,7 +326,6 @@ bool Skin::Row::load( QDataStream &stream )
   removeAllRightItems();
 
   int val;
-  int i;
 
   // left item count
 
@@ -336,7 +334,7 @@ bool Skin::Row::load( QDataStream &stream )
   if ( ( val < 0 ) || ( val > 50 ) )
     return false; // senseless
 
-  for ( i = 0; i < val ; i++ )
+  for ( int i = 0; i < val ; ++i )
   {
     ContentItem * ci = new ContentItem( ContentItem::Subject ); // dummy type
     if ( !ci->load( stream ) )
@@ -355,7 +353,7 @@ bool Skin::Row::load( QDataStream &stream )
   if ( ( val < 0 ) || ( val > 50 ) )
     return false; // senseless
 
-  for ( i = 0; i < val ; i++ )
+  for ( int i = 0; i < val ; ++i )
   {
     ContentItem * ci = new ContentItem( ContentItem::Subject ); // dummy type
     if ( !ci->load( stream ) )
@@ -468,9 +466,8 @@ void Skin::Column::save( QDataStream &stream ) const
   stream << (int)mGroupHeaderRows.count();
 
   int cnt = mGroupHeaderRows.count();
-  int i;
 
-  for ( i = 0; i < cnt ; i++ )
+  for ( int i = 0; i < cnt ; ++i )
   {
     Row * row = mGroupHeaderRows.at( i );
     row->save( stream );
@@ -480,7 +477,7 @@ void Skin::Column::save( QDataStream &stream ) const
 
   cnt = mMessageRows.count();
 
-  for ( i = 0; i < cnt ; i++ )
+  for ( int i = 0; i < cnt ; ++i )
   {
     Row * row = mMessageRows.at( i );
     row->save( stream );

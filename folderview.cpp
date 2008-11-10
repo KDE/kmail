@@ -406,7 +406,7 @@ void FolderView::cleanupConfigFile()
   // that are not present in the map above
   QStringList groupList = config->groupList();
 
-  for ( QStringList::Iterator grpIt = groupList.begin(); grpIt != groupList.end(); grpIt++)
+  for ( QStringList::Iterator grpIt = groupList.begin(); grpIt != groupList.end(); ++grpIt)
   {
     if ( !( *grpIt ).startsWith( KMFOLDER_CONFIG_GROUP_NAME_PREFIX ) )
       continue;
