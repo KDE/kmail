@@ -49,7 +49,7 @@ public:
   /**
    * Create a StorageModel wrapping the specified folder.
    */
-  StorageModel( KMFolder * folder, QObject * parent = 0 );
+  explicit StorageModel( KMFolder * folder, QObject * parent = 0 );
   ~StorageModel();
 
 protected:
