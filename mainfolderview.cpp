@@ -165,7 +165,7 @@ void MainFolderView::folderToPopupMenuInternal(
       continue;
 
     QString label = fvi->labelText();
-    label.replace( "&","&&" );
+    label.replace( '&',"&&" );
 
     if ( fvi->childCount() > 0 )
     {
