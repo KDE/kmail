@@ -55,7 +55,6 @@
 #include <kcolorscheme.h>
 #include <kconfig.h>
 #include <kiconloader.h>
-#include <kmfoldercachedimap.h>
 
 #include <QActionGroup>
 #include <QContextMenuEvent>

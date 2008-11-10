@@ -42,12 +42,11 @@
 #include <KPushButton>
 #include <KStandardAction>
 #include <KStandardGuiItem>
-#include <kstatusbar.h>
+#include <KStatusBar>
 #include <KWindowSystem>
 #include <kdeversion.h>
 
 #include "folderrequester.h"
-#include "mainfolderview.h"
 #include "kmcommands.h"
 #include "kmfoldermgr.h"
 #include "kmfoldersearch.h"
@@ -55,10 +54,10 @@
 #include "kmmsgdict.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
+#include "mainfolderview.h"
 #include "messagecopyhelper.h"
 #include "regexplineedit.h"
 #include "textsource.h"
-#include "mainfolderview.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;

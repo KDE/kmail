@@ -26,9 +26,6 @@
 
 #include <libkdepim/foldertreewidget.h>
 
-#include "kmail_export.h"
-
-
 #include <QList>
 #include <QPointer>
 #include <QStringList>

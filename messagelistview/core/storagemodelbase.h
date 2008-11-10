@@ -18,8 +18,8 @@
  *
  *******************************************************************************/
 
-#ifndef __KMAIL_MESSAGELISTVIEW_CORE_STORAGEMODEL_H__
-#define __KMAIL_MESSAGELISTVIEW_CORE_STORAGEMODEL_H__
+#ifndef __KMAIL_MESSAGELISTVIEW_CORE_STORAGEMODELBASE_H__
+#define __KMAIL_MESSAGELISTVIEW_CORE_STORAGEMODELBASE_H__
 
 #include <QAbstractItemModel>
 

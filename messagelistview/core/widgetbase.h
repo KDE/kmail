@@ -18,8 +18,8 @@
  *
  *******************************************************************************/
 
-#ifndef __KMAIL_MESSAGELISTVIEW_CORE_WIDGET_H__
-#define __KMAIL_MESSAGELISTVIEW_CORE_WIDGET_H__
+#ifndef __KMAIL_MESSAGELISTVIEW_CORE_WIDGETBASE_H__
+#define __KMAIL_MESSAGELISTVIEW_CORE_WIDGETBASE_H__
 
 #include <QWidget>
 #include <QString>

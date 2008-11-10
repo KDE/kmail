@@ -25,7 +25,6 @@
 #include <QPair>
 #include <QString>
 #include <QFont>
-#include <QString>
 #include <QFontMetrics>
 #include <QSize>
 #include <QColor>
