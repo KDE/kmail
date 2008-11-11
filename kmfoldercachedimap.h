@@ -214,8 +214,11 @@ public:
   void setSilentUpload( bool silent ) { mSilentUpload = silent; }
   bool silentUpload() { return mSilentUpload; }
 
-  virtual int createIndexFromContents()
-    { return KMFolderMaildir::createIndexFromContents(); }
+  virtual int createIndexFromContents() {
+    const int result = KMFolderMaildir::createIndexFromContents();
+    reloadUidMap();
+    return result;
+  }
 
   int createIndexFromContentsRecursive();
 
