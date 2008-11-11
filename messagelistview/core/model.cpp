@@ -2779,14 +2779,29 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
     // This MUST NOT be null (otherwise we have a bug somewhere in this file).
     Q_ASSERT( dyingMessage );
 
-    //kDebug() << "Cleanup pass for index " << curIndex << ", killing message " << dyingMessage << endl;
+    kDebug() << "Cleanup pass for index " << curIndex << ", killing message " << dyingMessage << endl;
 
     if ( dyingMessage->parent() )
     {
       // Handle saving the current selection: if this item was the current before the step
       // then zero it out. We have killed it and it's OK for the current item to change.
-      if ( dyingMessage == mCurrentItemBeforeViewItemJobStep )
-        mCurrentItemBeforeViewItemJobStep = 0;
+      if ( dyingMessage == mCurrentItemToRestoreAfterViewItemJobStep )
+      {
+        kDebug() << "The killed index was current, trying to find a substitute";
+        // Try to select the item below the removed one as it helps in doing a "readon" of emails:
+        // you read a message, decide to delete it and then go to the next.
+        // Qt tends to select the message above the removed one instead (this is a hardcoded logic in
+        // QItemSelectionModelPrivate::_q_rowsAboutToBeRemoved()).
+        mCurrentItemToRestoreAfterViewItemJobStep = dyingMessage->itemBelow();
+        if ( !mCurrentItemToRestoreAfterViewItemJobStep )
+        {
+          // There is no item below. Try the item above.
+          // We still do it better than qt which tends to find the *thread* above
+          // instead of the item above.
+          mCurrentItemToRestoreAfterViewItemJobStep = dyingMessage->itemAbove();
+        }
+        kDebug() << "The substitute is " << mCurrentItemToRestoreAfterViewItemJobStep;
+      }
 
       // If we were going to pre-select this message but we were interrupted
       // *before* it was actually made viewable, we just clear the pre-selection pointer
@@ -3454,18 +3469,22 @@ void Model::viewItemJobStep()
 
   // Save the current item in the view as our process may
   // cause items to be reparented (and QTreeView will forget the current item in the meantime).
+  // This machinery is also needed when we're about to remove items from the view in
+  // a cleanup job: we'll be trying to set as current the item after the one removed.
+
   QModelIndex currentIndexBeforeStep = mView->currentIndex();
   Item * currentItemBeforeStep = currentIndexBeforeStep.isValid() ?
       static_cast< Item * >( currentIndexBeforeStep.internalPointer() ) : 0;
-  // mCurrentItemBeforeViewItemJobStep will be zeroed out if it's killed
-  mCurrentItemBeforeViewItemJobStep = currentItemBeforeStep;
+
+  // mCurrentItemToRestoreAfterViewItemJobStep will be zeroed out if it's killed
+  mCurrentItemToRestoreAfterViewItemJobStep = currentItemBeforeStep;
 
   // Save the current item position in the viewport as QTreeView fails to keep
   // the current item in the sample place when items are added or removed...
   QRect rectBeforeViewItemJobStep;
 
   // This is generally SLOW AS HELL...
-  if ( mCurrentItemBeforeViewItemJobStep )
+  if ( mCurrentItemToRestoreAfterViewItemJobStep )
     rectBeforeViewItemJobStep = mView->visualRect( currentIndexBeforeStep );
 
   // FIXME: If the current item is NOT in the view, preserve the position
@@ -3474,6 +3493,7 @@ void Model::viewItemJobStep()
   // Insulate the View from (very likely spurious) "currentChanged()" signals.
   mView->ignoreCurrentChanges( true );
 
+  // And go to real work.
   switch( viewItemJobStepInternal() )
   {
     case ViewItemJobInterrupted:
@@ -3484,12 +3504,14 @@ void Model::viewItemJobStep()
         mView->modelJobBatchStarted();
       }
       mFillStepTimer->start( mViewItemJobStepIdleInterval ); // this is a single shot timer connected to viewItemJobStep()
+      // and go dealing with current/selection out of the switch.
     break;
     case ViewItemJobCompleted:
       // done :)
 
       Q_ASSERT( mModelForItemFunctions ); // UI must be no (longer) disconnected in this state
 
+      // Ask the view to remove the eventual busy indications
       if ( mInLengthyJobBatch )
       {
         mInLengthyJobBatch = false;
@@ -3525,15 +3547,17 @@ void Model::viewItemJobStep()
             bSelectionDone = false; // deal with selection below
           break;
           default:
-            kWarning() << "ERROR: Unrecognized selection mode " << (int)mPreSelectionMode;
+            kWarning() << "ERROR: Unrecognized pre-selection mode " << (int)mPreSelectionMode;
           break;
         }
         mUniqueIdOfLastSelectedMessageInFolder = 0;
         mLastSelectedMessageInFolder = 0;
         mPreSelectionMode = PreSelectNone;
+
         if ( bSelectionDone )
-          return;
+          return; // already taken care of current / selection
       }
+      // deal with current/selection out of the switch
 
     break;
     default:
@@ -3552,48 +3576,83 @@ void Model::viewItemJobStep()
     return;
   }
 
-  // Restore selection or scrollbar position
+  // Restore current/selection and/or scrollbar position
 
-  if ( mCurrentItemBeforeViewItemJobStep )
+  if ( mCurrentItemToRestoreAfterViewItemJobStep )
   {
-    if ( mCurrentItemBeforeViewItemJobStep->isViewable() )
+    bool stillIgnoringCurrentChanges = true;
+
+    // The assert below fails then the previously current item got detached
+    // and didn't get reattached in the step: this should never happen.
+    Q_ASSERT( mCurrentItemToRestoreAfterViewItemJobStep->isViewable() );
+
+    // Check if the current item changed
+    QModelIndex currentIndexAfterStep = mView->currentIndex();
+    Item * currentAfterStep = currentIndexAfterStep.isValid() ?
+        static_cast< Item * >( currentIndexAfterStep.internalPointer() ) : 0;
+
+    if ( mCurrentItemToRestoreAfterViewItemJobStep != currentAfterStep )
     {
-      // Check if the current item changed
-      QModelIndex currentIndexAfterStep = mView->currentIndex();
-      Item * currentAfterStep = currentIndexAfterStep.isValid() ?
-          static_cast< Item * >( currentIndexAfterStep.internalPointer() ) : 0;
-
-      if ( mCurrentItemBeforeViewItemJobStep != currentAfterStep )
+      // QTreeView lost the current item...
+      if ( mCurrentItemToRestoreAfterViewItemJobStep != currentItemBeforeStep )
       {
-        // QTreeView lost the current item...
-        kDebug() << "QTreeView lost it's current item: trying to fix..." << endl;
-        mView->setCurrentIndex( index( mCurrentItemBeforeViewItemJobStep, 0 ) );
+         // Some view job code expects us to actually *change* the current item.
+         // This is done by the cleanup step which removes items and tries
+         // to set as current the item *after* the removed one, if possible.
+         // We need the view to handle the change though.
+         stillIgnoringCurrentChanges = false;
+         mView->ignoreCurrentChanges( false );
+      } else {
+         // we just have to restore the old current item. The code
+         // outside shouldn't have noticed that we lost it (e.g. the message viewer
+         // still should have the old message opened). So we don't need to
+         // actually notify the view of the restored setting.
       }
-
-      QRect rectAfterViewItemJobStep = mView->visualRect( index( mCurrentItemBeforeViewItemJobStep, 0 ) );
-      if ( rectBeforeViewItemJobStep.y() != rectAfterViewItemJobStep.y() )
-      {
-        // QTreeView lost its position...
-        mView->verticalScrollBar()->setValue( mView->verticalScrollBar()->value() + rectAfterViewItemJobStep.y() - rectBeforeViewItemJobStep.y() );
-      }
-
+      // Restore it
+      mView->setCurrentIndex( index( mCurrentItemToRestoreAfterViewItemJobStep, 0 ) );
     } else {
-      // The item got detached and not reattached in the step: this should never happen
-      Q_ASSERT( false );
+      // The item we're expected to set as current is already current
+      if ( mCurrentItemToRestoreAfterViewItemJobStep != currentItemBeforeStep )
+      {
+        // But we have changed it in the job step.
+        // This means that: we have deleted the current item and choosen a
+        // new candidate as current but Qt also has choosen it as candidate
+        // and already made it current. The problem is that (as of Qt 4.4)
+        // it probably didn't select it.
+        if ( !mView->selectionModel()->hasSelection() )
+        {
+          stillIgnoringCurrentChanges = false;
+          mView->ignoreCurrentChanges( false );
+
+          QItemSelection selection;
+          selection.append( QItemSelectionRange( index( mCurrentItemToRestoreAfterViewItemJobStep, 0 ) ) );
+          mView->selectionModel()->select( selection, QItemSelectionModel::Select | QItemSelectionModel::Rows );
+        }
+      }
     }
 
-    // and kill the insulation
-    mView->ignoreCurrentChanges( false );
+    // FIXME: If it was selected before the change, then re-select it (it may happen that it's not)
+
+    QRect rectAfterViewItemJobStep = mView->visualRect( index( mCurrentItemToRestoreAfterViewItemJobStep, 0 ) );
+    if ( rectBeforeViewItemJobStep.y() != rectAfterViewItemJobStep.y() )
+    {
+      // QTreeView lost its position...
+      mView->verticalScrollBar()->setValue( mView->verticalScrollBar()->value() + rectAfterViewItemJobStep.y() - rectBeforeViewItemJobStep.y() );
+    }
+
+    // and kill the insulation, if not yet done
+    if ( stillIgnoringCurrentChanges )
+      mView->ignoreCurrentChanges( false );
 
     return;
   }
 
-  // Either there was no current item before, or it was lost in a cleanup step.
+  // Either there was no current item before, or it was lost in a cleanup step and another candidate for
+  // current item couldn't be found (possibly empty view)
   mView->ignoreCurrentChanges( false );
 
   if ( currentItemBeforeStep )
   {
-    //kDebug() << "Current item lost in a cleanup step... resetting" << endl;
     // lost in a cleanup..
     // tell the view that we have a new current, this time with no insulation
     mView->slotSelectionChanged( QItemSelection(), QItemSelection() );

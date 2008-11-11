@@ -119,8 +119,15 @@ private:
   QString mCachedTwoWeeksAgoLabel;
   QString mCachedThreeWeeksAgoLabel;
   QString mCachedFourWeeksAgoLabel;
-  Item * mCurrentItemBeforeViewItemJobStep;
   bool mInLengthyJobBatch;
+
+  /**
+   * We need to save the current item before each job step. This is because
+   * our job may cause items to be reparented (thus removed and readded with the current Qt API)
+   * and QTreeView will loose the current setting. We also use this to force the current
+   * to a specific item after a cleanup job.
+   */
+  Item * mCurrentItemToRestoreAfterViewItemJobStep; 
 
   /**
    * Set to true in the first large loading job.
