@@ -2779,15 +2779,12 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
     // This MUST NOT be null (otherwise we have a bug somewhere in this file).
     Q_ASSERT( dyingMessage );
 
-    kDebug() << "Cleanup pass for index " << curIndex << ", killing message " << dyingMessage << endl;
-
     if ( dyingMessage->parent() )
     {
       // Handle saving the current selection: if this item was the current before the step
       // then zero it out. We have killed it and it's OK for the current item to change.
       if ( dyingMessage == mCurrentItemToRestoreAfterViewItemJobStep )
       {
-        kDebug() << "The killed index was current, trying to find a substitute";
         // Try to select the item below the removed one as it helps in doing a "readon" of emails:
         // you read a message, decide to delete it and then go to the next.
         // Qt tends to select the message above the removed one instead (this is a hardcoded logic in
@@ -2800,7 +2797,6 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
           // instead of the item above.
           mCurrentItemToRestoreAfterViewItemJobStep = dyingMessage->itemAbove();
         }
-        kDebug() << "The substitute is " << mCurrentItemToRestoreAfterViewItemJobStep;
       }
 
       // If we were going to pre-select this message but we were interrupted
@@ -3582,7 +3578,7 @@ void Model::viewItemJobStep()
   {
     bool stillIgnoringCurrentChanges = true;
 
-    // The assert below fails then the previously current item got detached
+    // If the assert below fails then the previously current item got detached
     // and didn't get reattached in the step: this should never happen.
     Q_ASSERT( mCurrentItemToRestoreAfterViewItemJobStep->isViewable() );
 
