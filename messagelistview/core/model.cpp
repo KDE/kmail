@@ -2789,13 +2789,14 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
         // you read a message, decide to delete it and then go to the next.
         // Qt tends to select the message above the removed one instead (this is a hardcoded logic in
         // QItemSelectionModelPrivate::_q_rowsAboutToBeRemoved()).
-        mCurrentItemToRestoreAfterViewItemJobStep = dyingMessage->itemBelow();
+        mCurrentItemToRestoreAfterViewItemJobStep = mView->messageItemAfter( dyingMessage, false, false );
+
         if ( !mCurrentItemToRestoreAfterViewItemJobStep )
         {
           // There is no item below. Try the item above.
           // We still do it better than qt which tends to find the *thread* above
           // instead of the item above.
-          mCurrentItemToRestoreAfterViewItemJobStep = dyingMessage->itemAbove();
+          mCurrentItemToRestoreAfterViewItemJobStep = mView->messageItemBefore( dyingMessage, false, false );
         }
       }
 

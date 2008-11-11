@@ -3249,6 +3249,15 @@ void KMMainWidget::slotExtendSelectionToNextMessage()
 
 void KMMainWidget::slotSelectNextUnreadMessage()
 {
+  // The looping logic is: "Don't loop" just never loops, "Loop in current folder"
+  // loops just in current folder, "Loop in all folders" loops in the current folder
+  // first and then after confirmation jumps to the next folder.
+  // A bad point here is that if you answer "No, and don't ask me again" to the confirmation
+  // dialog then you have "Loop in current folder" and "Loop in all folders" that do
+  // the same thing and no way to get the old behaviour. However, after a consultation on #kontact,
+  // for bug-to-bug backward compatibility, the masters decided to keep it b0rken :D
+  // If nobody complains, it stays like it is: if you complain enough maybe the masters will
+  // decide to reconsider :)
   if ( !mMessageListView->selectNextMessageItem(
       true,  // unread
       false, // don't expand selection
