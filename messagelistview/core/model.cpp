@@ -3331,8 +3331,10 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
     if ( job->disconnectUI() )
     {
       mModelForItemFunctions = 0; // disconnect the UI for this job
-      Q_ASSERT( ( job->currentIndex() != job->startIndex() ) || ( mRootItem->childItemCount() == 0 ) );
+      Q_ASSERT( mLoading ); // this must be true in the first job
       // FIXME: Should assert yet more that this is the very first job for this StorageModel
+      //        Asserting only mLoading is not enough as we could be using a two-jobs loading strategy
+      //        or this could be a job enqueued before the first job has completed.
     }
 
     switch( viewItemJobStepInternalForJob( job, tStart ) )
