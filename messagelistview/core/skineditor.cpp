@@ -273,6 +273,7 @@ SkinPreviewWidget::SkinPreviewWidget( QWidget * parent )
 
   mGroupHeaderSampleItem = new QTreeWidgetItem( this );
   mGroupHeaderSampleItem->setText( 0, QString() );
+  mGroupHeaderSampleItem->setFlags( Qt::ItemIsEnabled );
 
   QTreeWidgetItem * m = new QTreeWidgetItem( mGroupHeaderSampleItem );
   m->setText( 0, QString() );
@@ -878,6 +879,10 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
         act->setChecked( mSelectedSkinContentItem->useCustomFont() );
         grp->addAction( act );
 
+        // We would like the group to be exclusive, but then the "Custom..." action
+        // will not be triggered if activated multiple times in a row... well, we'll have to live with checkboxes instead of radios.
+        grp->setExclusive( false );
+
         connect( childmenu, SIGNAL( triggered( QAction * ) ),
                  SLOT( slotFontMenuTriggered( QAction * ) ) );
 
@@ -901,6 +906,10 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
         act->setCheckable( true );
         act->setChecked( mSelectedSkinContentItem->useCustomColor() );
         grp->addAction( act );
+
+        // We would like the group to be exclusive, but then the "Custom..." action
+        // will not be triggered if activated multiple times in a row... well, we'll have to live with checkboxes instead of radios.
+        grp->setExclusive( false );
 
         connect( childmenu, SIGNAL( triggered( QAction * ) ),
                  SLOT( slotForegroundColorMenuTriggered( QAction * ) ) );
@@ -967,6 +976,10 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
         act->setCheckable( true );
         act->setChecked( mSkin->groupHeaderBackgroundMode() == Skin::CustomColor );
         grp->addAction( act );
+
+        // We would like the group to be exclusive, but then the "Custom..." action
+        // will not be triggered if activated multiple times in a row... well, we'll have to live with checkboxes instead of radios.
+        grp->setExclusive( false );
 
         connect( childmenu, SIGNAL( triggered( QAction * ) ),
                  SLOT( slotGroupHeaderBackgroundModeMenuTriggered( QAction * ) ) );
