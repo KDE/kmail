@@ -158,7 +158,10 @@ void ConfigureSkinsDialog::cleanup()
 
 void ConfigureSkinsDialog::selectSkinById( const QString &skinId )
 {
-  skinListCurrentItemChanged( findSkinItemById( skinId ), 0 );
+  SkinListWidgetItem * item = findSkinItemById( skinId );
+  if ( !item )
+    return;
+  mSkinList->setCurrentItem( item );
 }
 
 void ConfigureSkinsDialog::okButtonClicked()

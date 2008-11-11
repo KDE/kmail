@@ -158,7 +158,10 @@ void ConfigureAggregationsDialog::cleanup()
 
 void ConfigureAggregationsDialog::selectAggregationById( const QString &aggregationId )
 {
-  aggregationListCurrentItemChanged( findAggregationItemById( aggregationId ), 0 );
+  AggregationListWidgetItem * item = findAggregationItemById( aggregationId );
+  if ( !item )
+    return;
+  mAggregationList->setCurrentItem( item );
 }
 
 void ConfigureAggregationsDialog::okButtonClicked()
