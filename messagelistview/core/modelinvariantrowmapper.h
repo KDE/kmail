@@ -179,7 +179,7 @@ public:
    */
   void createModelInvariantIndex( int modelIndexRow, ModelInvariantIndex * invariantToFill )
   {
-    // The user is asking for the invariant of the item that is at the CURRENT modelIndexRow.
+    // The user is athemeg for the invariant of the item that is at the CURRENT modelIndexRow.
     Q_ASSERT( invariantToFill->rowMapper() == 0 );
 
     // Plain new invariant. Fill it and add to the current hash.

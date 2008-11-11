@@ -41,7 +41,7 @@ namespace Core
 {
 
 class Aggregation;
-class Skin;
+class Theme;
 class StorageModel;
 class Widget;
 
@@ -72,7 +72,7 @@ private:
   static Manager *mInstance;
   QList< Widget * > mWidgetList;
   QHash< QString, Aggregation * > mAggregations;
-  QHash< QString, Skin * > mSkins;
+  QHash< QString, Theme * > mThemes;
   KMime::DateFormatter * mDateFormatter;
   bool mDisplayMessageToolTips;
   QString mCachedLocalizedUnknownText;
@@ -221,29 +221,29 @@ public:
   void aggregationsConfigurationCompleted();
 
 
-  // skin sets management
-  const Skin * skinForStorageModel( const StorageModel *storageModel, bool *storageUsesPrivateSkin );
-  void saveSkinForStorageModel( const StorageModel *storageModel, const QString &id, bool storageUsesPrivateSkin );
-  const Skin * defaultSkin();
-  const Skin * skin( const QString &id );
+  // theme sets management
+  const Theme * themeForStorageModel( const StorageModel *storageModel, bool *storageUsesPrivateTheme );
+  void saveThemeForStorageModel( const StorageModel *storageModel, const QString &id, bool storageUsesPrivateTheme );
+  const Theme * defaultTheme();
+  const Theme * theme( const QString &id );
 
-  void addSkin( Skin *set );
-  void removeAllSkins();
+  void addTheme( Theme *set );
+  void removeAllThemes();
 
-  const QHash< QString, Skin * > & skins() const
-    { return mSkins; };
+  const QHash< QString, Theme * > & themes() const
+    { return mThemes; };
 
-  void showConfigureSkinsDialog( Widget *requester, const QString &preselectSkinId = QString() );
+  void showConfigureThemesDialog( Widget *requester, const QString &preselectThemeId = QString() );
 
   /**
-   * This is called by the skin configuration dialog
+   * This is called by the theme configuration dialog
    * once the sets have been changed.
    */
-  void skinsConfigurationCompleted();
+  void themesConfigurationCompleted();
 
   /**
    * Reloads the global configuration from the config files (so we assume it has changed)
-   * The settings private to MessageListView (like Skins or Aggregations) aren't reloaded.
+   * The settings private to MessageListView (like Themes or Aggregations) aren't reloaded.
    * If the global configuration has changed then all the views are reloaded.
    */
   void reloadGlobalConfiguration();
@@ -261,7 +261,7 @@ private:
 
   // internal option set management
   void createDefaultAggregations();
-  void createDefaultSkins();
+  void createDefaultThemes();
 };
 
 } // namespace Core

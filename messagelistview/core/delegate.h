@@ -21,7 +21,7 @@
 #ifndef __KMAIL_MESSAGELISTVIEW_CORE_DELEGATE_H__
 #define __KMAIL_MESSAGELISTVIEW_CORE_DELEGATE_H__
 
-#include "messagelistview/core/skindelegate.h"
+#include "messagelistview/core/themedelegate.h"
 
 namespace KMail
 {
@@ -34,7 +34,7 @@ namespace Core
 
 class View;
 
-class Delegate : public SkinDelegate
+class Delegate : public ThemeDelegate
 {
 public:
   Delegate( View *pParent );
@@ -42,7 +42,7 @@ public:
 
 protected:
   /**
-   * Returns the Item for the specified model index. Reimplemented from SkinDelegate.
+   * Returns the Item for the specified model index. Reimplemented from ThemeDelegate.
    */
   virtual Item * itemFromIndex( const QModelIndex &index ) const;
 };

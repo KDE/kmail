@@ -48,7 +48,7 @@ class Delegate;
 class Item;
 class MessageItem;
 class Model;
-class Skin;
+class Theme;
 class StorageModel;
 class Widget;
 
@@ -71,8 +71,8 @@ private:
   Delegate *mDelegate;
 
   const Aggregation *mAggregation;          ///< The Aggregation we're using now, shallow pointer
-  const Skin *mSkin;                        ///< The Skin we're using now, shallow pointer
-  bool mNeedToApplySkinColumns;             ///< Flag signaling a skin change, we need it in modelHasBeenReset().
+  const Theme *mTheme;                        ///< The Theme we're using now, shallow pointer
+  bool mNeedToApplyThemeColumns;             ///< Flag signaling a theme change, we need it in modelHasBeenReset().
   Item *mLastCurrentItem;
   QPoint mMousePressPosition;
   bool mFirstShow;
@@ -96,7 +96,7 @@ public:
   /**
    * Sets the StorageModel to be displayed in this view. The StorageModel may be 0 (so no content is displayed).
    * Setting the StorageModel will obviously trigger a view reload.
-   * Be sure to set the Aggregation and the Skin BEFORE calling this function.
+   * Be sure to set the Aggregation and the Theme BEFORE calling this function.
    *
    * Pre-selection is the action of automatically selecting a message just after the folder
    * has finished loading. See Model::setStorageModel() for more informations.
@@ -123,14 +123,14 @@ public:
   void setAggregation( const Aggregation * aggregation );
 
   /**
-   * Sets the specified skin for this view.
+   * Sets the specified theme for this view.
    * Does not trigger a reload of the view: you *MUST* trigger it manually.
    */
-  void setSkin( const Skin * skin );
+  void setTheme( const Theme * theme );
 
   /**
    * Triggers a reload of the view in order to re-display the current folder.
-   * Call this function after changing the Aggregation or the Skin.
+   * Call this function after changing the Aggregation or the Theme.
    */
   void reload();
 
@@ -317,7 +317,7 @@ protected:
   virtual void changeEvent( QEvent *e );
 
   /**
-   * Reimplemented in order to apply skin column widths on the first show
+   * Reimplemented in order to apply theme column widths on the first show
    */
   virtual void showEvent( QShowEvent *e );
 
@@ -357,16 +357,16 @@ protected:
   virtual void resizeEvent( QResizeEvent * e );
 
   /**
-   * Applies the skin columns to this view.
+   * Applies the theme columns to this view.
    * Columns visible by default are shown, the other are hidden.
    * Visible columns are assigned space inside the view by using the size hints and some heuristics.
    */
-  void applySkinColumns();
+  void applyThemeColumns();
 
   /**
    * This is called by the model from inside setFolder().
    * It's called just after the model has been reset but before
-   * any row has been inserted. This allows us to call updateSkinColumns() as needed.
+   * any row has been inserted. This allows us to call updateThemeColumns() as needed.
    */
   void modelHasBeenReset();
 

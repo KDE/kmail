@@ -50,7 +50,7 @@ class Filter;
 class GroupHeaderItem;
 class Manager;
 class MessageItem;
-class Skin;
+class Theme;
 class StorageModel;
 class View;
 
@@ -67,19 +67,19 @@ public:
 private:
   View *mView;
   QString mLastAggregationId;
-  QString mLastSkinId;
+  QString mLastThemeId;
   KLineEdit * mSearchEdit;
   QTimer * mSearchTimer;
   QToolButton * mStatusFilterButton;
   QToolButton * mSortOrderButton;
   QToolButton * mAggregationButton;
-  QToolButton * mSkinButton;
+  QToolButton * mThemeButton;
 
   StorageModel * mStorageModel;          ///< The currently displayed storage, an owned copy
   Aggregation * mAggregation;            ///< The currently set aggregation mode, an owned copy (eventually even modificable)
-  Skin * mSkin;                          ///< The currently set skin, an owned copy (eventually even modificable)
+  Theme * mTheme;                          ///< The currently set theme, an owned copy (eventually even modificable)
   Filter * mFilter;                      ///< The currently applied filter, an owned copy
-  bool mStorageUsesPrivateSkin;
+  bool mStorageUsesPrivateTheme;
   bool mStorageUsesPrivateAggregation;
 public:
   /**
@@ -128,7 +128,7 @@ protected:
   /**
    * This is called by Manager when the option sets stored within have changed.
    */
-  void skinsChanged();
+  void themesChanged();
 
   /**
    * This is called by View when a message is single-clicked (thus selected and made current)
@@ -199,11 +199,11 @@ signals:
 
 protected slots:
 
-  void skinMenuAboutToShow();
+  void themeMenuAboutToShow();
   void aggregationMenuAboutToShow();
-  void skinSelected( bool );
-  void configureSkins();
-  void setPrivateSkinForStorage();
+  void themeSelected( bool );
+  void configureThemes();
+  void setPrivateThemeForStorage();
   void setPrivateAggregationForStorage();
   void aggregationSelected( bool );
   void statusMenuAboutToShow();
@@ -224,7 +224,7 @@ protected slots:
 
 private:
   void setDefaultAggregationForStorageModel( const StorageModel * storageModel );
-  void setDefaultSkinForStorageModel( const StorageModel * storageModel );
+  void setDefaultThemeForStorageModel( const StorageModel * storageModel );
   void applyFilter();
 };
 

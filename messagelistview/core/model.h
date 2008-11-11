@@ -51,7 +51,7 @@ class Filter;
 class GroupHeaderItem;
 class Item;
 class MessageItem;
-class Skin;
+class Theme;
 class StorageModel;
 class ModelInvariantRowMapper;
 class MessageItemSetManager;
@@ -91,7 +91,7 @@ public:
 private:
   const StorageModel *mStorageModel;                          ///< The currently set storage model: shallow pointer
   const Aggregation * mAggregation;                           ///< The currently set aggregation mode: shallow pointer set by Widget
-  const Skin * mSkin;                                         ///< The currently used skin: shallow pointer
+  const Theme * mTheme;                                         ///< The currently used theme: shallow pointer
   const Filter *mFilter;                                      ///< The filter to apply on messages. Shallow. Never 0.
   QTimer *mFillStepTimer;                                     ///< The timer involved in breaking the "fill" operation in steps
   QHash< QString, GroupHeaderItem * > * mGroupHeaderItemHash; ///< Group Key (usually the label) -> GroupHeaderItem, used to quickly find groups, pointers are shallow copies
@@ -263,13 +263,13 @@ public:
   void setAggregation( const Aggregation * aggregation );
 
   /**
-   * Sets the Skin.
+   * Sets the Theme.
    * Does not reload the model in any way: you need to call setStorageModel( storageModel() ) for this to happen.
    * The pointer ownership remains of the caller which must ensure its validity until the next
-   * call to setSkin() or until this Model dies. The caller, in fact, is Widget which
-   * takes care of meeting the above conditions. The skin pointer must not be null.
+   * call to setTheme() or until this Model dies. The caller, in fact, is Widget which
+   * takes care of meeting the above conditions. The theme pointer must not be null.
    */
-  void setSkin( const Skin * skin );
+  void setTheme( const Theme * theme );
 
   /**
    * Sets the Filter to be applied on messages. filter may be null (no filter is applied).

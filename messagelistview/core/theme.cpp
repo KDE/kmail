@@ -18,7 +18,7 @@
  *
  *******************************************************************************/
 
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/theme.h"
 
 #include <QDataStream>
 
@@ -35,15 +35,15 @@ namespace MessageListView
 namespace Core
 {
 
-static const int gSkinCurrentVersion = 0x1013; // increase if you add new fields of change the meaning of some
+static const int gThemeCurrentVersion = 0x1013; // increase if you add new fields of change the meaning of some
 
 
-Skin::ContentItem::ContentItem( Type type )
+Theme::ContentItem::ContentItem( Type type )
   : mType( type ), mFlags( 0 ), mLastPaintDevice( 0 ), mFontMetrics( QFont() )
 {
 }
 
-Skin::ContentItem::ContentItem( const ContentItem &src )
+Theme::ContentItem::ContentItem( const ContentItem &src )
   : mType( src.mType ),
     mFlags( src.mFlags ),
     mFont( src.mFont ),
@@ -54,7 +54,7 @@ Skin::ContentItem::ContentItem( const ContentItem &src )
 {
 }
 
-QString Skin::ContentItem::description( Type type )
+QString Theme::ContentItem::description( Type type )
 {
   switch ( type )
   {
@@ -131,18 +131,18 @@ QString Skin::ContentItem::description( Type type )
 }
 
 
-bool Skin::ContentItem::applicableToMessageItems( Type type )
+bool Theme::ContentItem::applicableToMessageItems( Type type )
 {
   return ( static_cast< int >( type ) & ApplicableToMessageItems );
 }
 
-bool Skin::ContentItem::applicableToGroupHeaderItems( Type type )
+bool Theme::ContentItem::applicableToGroupHeaderItems( Type type )
 {
   return ( static_cast< int >( type ) & ApplicableToGroupHeaderItems );
 }
 
 
-void Skin::ContentItem::updateFontMetrics( QPaintDevice * device )
+void Theme::ContentItem::updateFontMetrics( QPaintDevice * device )
 {
   if ( !( mFlags & UseCustomFont ) )
     mFont = KGlobalSettings::generalFont();
@@ -151,18 +151,18 @@ void Skin::ContentItem::updateFontMetrics( QPaintDevice * device )
   mLineSpacing = mFontMetrics.lineSpacing();
 }
 
-void Skin::ContentItem::setFont( const QFont &font )
+void Theme::ContentItem::setFont( const QFont &font )
 {
   mFont = font;
   mLastPaintDevice = 0; // will force regeneration of font metrics
 }
 
-void Skin::ContentItem::resetCache()
+void Theme::ContentItem::resetCache()
 {
   mLastPaintDevice = 0; // will force regeneration of font metrics
 }
 
-void Skin::ContentItem::save( QDataStream &stream ) const
+void Theme::ContentItem::save( QDataStream &stream ) const
 {
   stream << (int)mType;
   stream << mFlags;
@@ -170,7 +170,7 @@ void Skin::ContentItem::save( QDataStream &stream ) const
   stream << mCustomColor;
 }
 
-bool Skin::ContentItem::load( QDataStream &stream )
+bool Theme::ContentItem::load( QDataStream &stream )
 {
   int val;
 
@@ -222,11 +222,11 @@ bool Skin::ContentItem::load( QDataStream &stream )
 
 
 
-Skin::Row::Row()
+Theme::Row::Row()
 {
 }
 
-Skin::Row::Row( const Row &src )
+Theme::Row::Row( const Row &src )
 {
   for ( QList< ContentItem * >::ConstIterator it = src.mLeftItems.begin(); it != src.mLeftItems.end() ; ++it )
     addLeftItem( new ContentItem( *( *it ) ) );
@@ -235,25 +235,25 @@ Skin::Row::Row( const Row &src )
 }
 
 
-Skin::Row::~Row()
+Theme::Row::~Row()
 {
   removeAllLeftItems();
   removeAllRightItems();
 }
 
-void Skin::Row::removeAllLeftItems()
+void Theme::Row::removeAllLeftItems()
 {
   while( !mLeftItems.isEmpty() )
     delete mLeftItems.takeFirst();
 }
 
-void Skin::Row::removeAllRightItems()
+void Theme::Row::removeAllRightItems()
 {
   while( !mRightItems.isEmpty() )
     delete mRightItems.takeFirst();
 }
 
-void Skin::Row::insertLeftItem( int idx, ContentItem * item )
+void Theme::Row::insertLeftItem( int idx, ContentItem * item )
 {
   if ( idx >= mLeftItems.count() )
   {
@@ -263,7 +263,7 @@ void Skin::Row::insertLeftItem( int idx, ContentItem * item )
   mLeftItems.insert( idx, item );
 }
 
-void Skin::Row::insertRightItem( int idx, ContentItem * item )
+void Theme::Row::insertRightItem( int idx, ContentItem * item )
 {
   if ( idx >= mRightItems.count() )
   {
@@ -273,7 +273,7 @@ void Skin::Row::insertRightItem( int idx, ContentItem * item )
   mRightItems.insert( idx, item );
 }
 
-void Skin::Row::resetCache()
+void Theme::Row::resetCache()
 {
   mSizeHint = QSize();
   for ( QList< ContentItem * >::ConstIterator it = mLeftItems.begin(); it != mLeftItems.end() ; ++it )
@@ -282,7 +282,7 @@ void Skin::Row::resetCache()
     ( *it )->resetCache();
 }
 
-bool Skin::Row::containsTextItems() const
+bool Theme::Row::containsTextItems() const
 {
   for ( QList< ContentItem * >::ConstIterator it = mLeftItems.begin(); it != mLeftItems.end() ; ++it )
   {
@@ -297,7 +297,7 @@ bool Skin::Row::containsTextItems() const
   return false;
 }
 
-void Skin::Row::save( QDataStream &stream ) const
+void Theme::Row::save( QDataStream &stream ) const
 {
   stream << (int)mLeftItems.count();
 
@@ -320,7 +320,7 @@ void Skin::Row::save( QDataStream &stream ) const
   }
 }
 
-bool Skin::Row::load( QDataStream &stream )
+bool Theme::Row::load( QDataStream &stream )
 {
   removeAllLeftItems();
   removeAllRightItems();
@@ -372,14 +372,14 @@ bool Skin::Row::load( QDataStream &stream )
 
 
 
-Skin::Column::Column()
+Theme::Column::Column()
   : mVisibleByDefault( true ),
     mIsSenderOrReceiver( false ),
     mMessageSorting( Aggregation::NoMessageSorting )
 {
 }
 
-Skin::Column::Column( const Column &src )
+Theme::Column::Column( const Column &src )
 {
   mLabel = src.mLabel;
   mVisibleByDefault = src.mVisibleByDefault;
@@ -392,25 +392,25 @@ Skin::Column::Column( const Column &src )
     addGroupHeaderRow( new Row( *( *it ) ) );
 }
 
-Skin::Column::~Column()
+Theme::Column::~Column()
 {
   removeAllMessageRows();
   removeAllGroupHeaderRows();
 }
 
-void Skin::Column::removeAllMessageRows()
+void Theme::Column::removeAllMessageRows()
 {
   while ( !mMessageRows.isEmpty() )
     delete mMessageRows.takeFirst();
 }
 
-void Skin::Column::removeAllGroupHeaderRows()
+void Theme::Column::removeAllGroupHeaderRows()
 {
   while ( !mGroupHeaderRows.isEmpty() )
     delete mGroupHeaderRows.takeFirst();
 }
 
-void Skin::Column::insertMessageRow( int idx, Row * row )
+void Theme::Column::insertMessageRow( int idx, Row * row )
 {
   if ( idx >= mMessageRows.count() )
   {
@@ -420,7 +420,7 @@ void Skin::Column::insertMessageRow( int idx, Row * row )
   mMessageRows.insert( idx, row );
 }
 
-void Skin::Column::insertGroupHeaderRow( int idx, Row * row )
+void Theme::Column::insertGroupHeaderRow( int idx, Row * row )
 {
   if ( idx >= mGroupHeaderRows.count() )
   {
@@ -430,7 +430,7 @@ void Skin::Column::insertGroupHeaderRow( int idx, Row * row )
   mGroupHeaderRows.insert( idx, row );
 }
 
-void Skin::Column::resetCache()
+void Theme::Column::resetCache()
 {
   mGroupHeaderSizeHint = QSize();
   mMessageSizeHint = QSize();
@@ -441,7 +441,7 @@ void Skin::Column::resetCache()
     ( *it )->resetCache();
 }
 
-bool Skin::Column::containsTextItems() const
+bool Theme::Column::containsTextItems() const
 {
   for ( QList< Row * >::ConstIterator it = mMessageRows.begin(); it != mMessageRows.end() ; ++it )
   {
@@ -456,7 +456,7 @@ bool Skin::Column::containsTextItems() const
   return false;
 }
 
-void Skin::Column::save( QDataStream &stream ) const
+void Theme::Column::save( QDataStream &stream ) const
 {
   stream << mLabel;
   stream << mVisibleByDefault;
@@ -484,7 +484,7 @@ void Skin::Column::save( QDataStream &stream ) const
   }
 }
 
-bool Skin::Column::load( QDataStream &stream )
+bool Theme::Column::load( QDataStream &stream )
 {
   removeAllGroupHeaderRows();
   removeAllMessageRows();
@@ -551,14 +551,14 @@ bool Skin::Column::load( QDataStream &stream )
 
 
 
-Skin::Skin()
+Theme::Theme()
   : OptionSet()
 {
   mGroupHeaderBackgroundMode = AutoColor;
   mViewHeaderPolicy = ShowHeaderAlways;
 }
 
-Skin::Skin( const QString &name, const QString &description )
+Theme::Theme( const QString &name, const QString &description )
   : OptionSet( name, description )
 {
   mGroupHeaderBackgroundMode = AutoColor;
@@ -567,7 +567,7 @@ Skin::Skin( const QString &name, const QString &description )
 }
 
 
-Skin::Skin( const Skin &src )
+Theme::Theme( const Theme &src )
   : OptionSet( src )
 {
   mGroupHeaderBackgroundMode = src.mGroupHeaderBackgroundMode;
@@ -579,18 +579,18 @@ Skin::Skin( const Skin &src )
     addColumn( new Column( *( *it ) ) );
 }
 
-Skin::~Skin()
+Theme::~Theme()
 {
   removeAllColumns();
 }
 
-void Skin::removeAllColumns()
+void Theme::removeAllColumns()
 {
   while ( !mColumns.isEmpty() )
     delete mColumns.takeFirst();
 }
 
-void Skin::insertColumn( int idx, Column * column )
+void Theme::insertColumn( int idx, Column * column )
 {
   if ( idx >= mColumns.count() )
   {
@@ -600,14 +600,14 @@ void Skin::insertColumn( int idx, Column * column )
   mColumns.insert( idx, column );
 }
 
-void Skin::setGroupHeaderBackgroundMode( GroupHeaderBackgroundMode bm )
+void Theme::setGroupHeaderBackgroundMode( GroupHeaderBackgroundMode bm )
 {
   mGroupHeaderBackgroundMode = bm;
   if ( ( bm == CustomColor ) && !mGroupHeaderBackgroundColor.isValid() )
     mGroupHeaderBackgroundColor = QColor( 127, 127, 127 ); // something neutral     
 }
 
-QList< QPair< QString, int > > Skin::enumerateViewHeaderPolicyOptions()
+QList< QPair< QString, int > > Theme::enumerateViewHeaderPolicyOptions()
 {
   QList< QPair< QString, int > > ret;
   ret.append( QPair< QString, int >( i18n( "Never Show" ), NeverShowHeader ) );
@@ -615,7 +615,7 @@ QList< QPair< QString, int > > Skin::enumerateViewHeaderPolicyOptions()
   return ret;
 }
 
-QList< QPair< QString, int > > Skin::enumerateGroupHeaderBackgroundStyles()
+QList< QPair< QString, int > > Theme::enumerateGroupHeaderBackgroundStyles()
 {
   QList< QPair< QString, int > > ret;
   ret.append( QPair< QString, int >( i18n( "Plain Rectangles" ), PlainRect ) );
@@ -631,22 +631,22 @@ QList< QPair< QString, int > > Skin::enumerateGroupHeaderBackgroundStyles()
 }
 
 
-void Skin::resetCache()
+void Theme::resetCache()
 {
   for ( QList< Column * >::ConstIterator it = mColumns.begin(); it != mColumns.end() ; ++it )
     ( *it )->resetCache();
 }
 
-bool Skin::load( QDataStream &stream )
+bool Theme::load( QDataStream &stream )
 {
   removeAllColumns();
 
   int val;
 
   stream >> val;
-  if ( val != gSkinCurrentVersion )
+  if ( val != gThemeCurrentVersion )
   {
-    kDebug() << "Invalid skin version";
+    kDebug() << "Invalid theme version";
     return false; // b0rken (invalid version)
   }
 
@@ -660,7 +660,7 @@ bool Skin::load( QDataStream &stream )
       // ok
     break;
     default:
-      kDebug() << "Invalid skin group header background mode";
+      kDebug() << "Invalid theme group header background mode";
       return false; // b0rken
     break;
   }
@@ -682,7 +682,7 @@ bool Skin::load( QDataStream &stream )
       // ok
     break;
     default:
-      kDebug() << "Invalid skin group header background style";
+      kDebug() << "Invalid theme group header background style";
       return false; // b0rken
     break;
   }
@@ -696,7 +696,7 @@ bool Skin::load( QDataStream &stream )
       // ok
     break;
     default:
-      kDebug() << "Invalid skin view header policy";
+      kDebug() << "Invalid theme view header policy";
       return false; // b0rken
     break;
   }
@@ -721,9 +721,9 @@ bool Skin::load( QDataStream &stream )
   return true;
 }
 
-void Skin::save( QDataStream &stream ) const
+void Theme::save( QDataStream &stream ) const
 {
-  stream << (int)gSkinCurrentVersion;
+  stream << (int)gThemeCurrentVersion;
 
   stream << (int)mGroupHeaderBackgroundMode;
   stream << mGroupHeaderBackgroundColor;

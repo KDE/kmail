@@ -40,7 +40,7 @@ namespace Core
 class MessageItem : public Item, public ModelInvariantIndex
 {
   friend class Model;
-  friend class SkinPreviewDelegate;
+  friend class ThemePreviewDelegate;
 
 public:
   class Tag

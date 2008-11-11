@@ -241,7 +241,7 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/aggregationeditor.cpp
    messagelistview/core/comboboxutils.cpp
    messagelistview/core/configureaggregationsdialog.cpp
-   messagelistview/core/configureskinsdialog.cpp
+   messagelistview/core/configurethemesdialog.cpp
    messagelistview/core/delegate.cpp
    messagelistview/core/filter.cpp
    messagelistview/core/item.cpp
@@ -254,9 +254,9 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/modelinvariantrowmapper.cpp
    messagelistview/core/optionset.cpp
    messagelistview/core/optionseteditor.cpp
-   messagelistview/core/skin.cpp
-   messagelistview/core/skindelegate.cpp
-   messagelistview/core/skineditor.cpp
+   messagelistview/core/theme.cpp
+   messagelistview/core/themedelegate.cpp
+   messagelistview/core/themeeditor.cpp
    messagelistview/core/storagemodelbase.cpp
    messagelistview/core/view.cpp
    messagelistview/core/widgetbase.cpp

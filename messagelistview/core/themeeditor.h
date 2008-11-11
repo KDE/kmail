@@ -22,8 +22,8 @@
 #define __KMAIL_MESSAGELISTVIEW_CORE_SKINEDITOR_H__
 
 #include "messagelistview/core/optionseteditor.h"
-#include "messagelistview/core/skindelegate.h"
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/themedelegate.h"
+#include "messagelistview/core/theme.h"
 
 #include <QTreeWidget>
 #include <QLabel>
@@ -49,14 +49,14 @@ class GroupHeaderItem;
 class MessageItem;
 class ModelInvariantRowMapper;
 
-class SkinColumnPropertiesDialog : public KDialog
+class ThemeColumnPropertiesDialog : public KDialog
 {
   Q_OBJECT
 public:
-  SkinColumnPropertiesDialog( QWidget * parent, Skin::Column * column, const QString &title );
+  ThemeColumnPropertiesDialog( QWidget * parent, Theme::Column * column, const QString &title );
 
 protected:
-  Skin::Column * mColumn;
+  Theme::Column * mColumn;
   QLineEdit * mNameEdit;
   QCheckBox * mVisibleByDefaultCheck;
   QCheckBox * mIsSenderOrReceiverCheck;
@@ -66,12 +66,12 @@ protected slots:
   void slotOkButtonClicked();
 };
 
-class SkinPreviewDelegate : public SkinDelegate
+class ThemePreviewDelegate : public ThemeDelegate
 {
   Q_OBJECT
 public:
-  SkinPreviewDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice );
-  ~SkinPreviewDelegate();
+  ThemePreviewDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice );
+  ~ThemePreviewDelegate();
 
 private:
   GroupHeaderItem * mSampleGroupHeaderItem;
@@ -81,12 +81,12 @@ public:
   virtual Item * itemFromIndex( const QModelIndex &index ) const;
 };
 
-class SkinPreviewWidget : public QTreeWidget
+class ThemePreviewWidget : public QTreeWidget
 {
   Q_OBJECT
 public:
-  SkinPreviewWidget( QWidget * parent );
-  ~SkinPreviewWidget();
+  ThemePreviewWidget( QWidget * parent );
+  ~ThemePreviewWidget();
 
 private:
   // DnD insert position stuff
@@ -115,13 +115,13 @@ private:
   };
 
 private:
-  SkinPreviewDelegate * mDelegate;
+  ThemePreviewDelegate * mDelegate;
   QTreeWidgetItem * mGroupHeaderSampleItem;
-  QRect mSkinSelectedContentItemRect;
-  Skin::ContentItem * mSelectedSkinContentItem;
-  Skin::Column * mSelectedSkinColumn;
+  QRect mThemeSelectedContentItemRect;
+  Theme::ContentItem * mSelectedThemeContentItem;
+  Theme::Column * mSelectedThemeColumn;
   QPoint mMouseDownPoint;
-  Skin * mSkin;
+  Theme * mTheme;
   RowInsertPosition mRowInsertPosition;
   ItemInsertPosition mItemInsertPosition;
   QPoint mDropIndicatorPoint1;
@@ -129,7 +129,7 @@ private:
   bool mFirstShow;
 public:
   QSize sizeHint() const;
-  void setSkin( Skin * skin );
+  void setTheme( Theme * theme );
 
 protected:
   virtual void dragMoveEvent( QDragMoveEvent * e );
@@ -150,9 +150,9 @@ private:
    * false otherwise. Sets mRowInsertPosition, mItemInsertPosition,
    * mDropIndicatorPoint1 ,mDropIndicatorPoint2.
    */
-  bool computeContentItemInsertPosition( const QPoint &pos, Skin::ContentItem::Type type );
+  bool computeContentItemInsertPosition( const QPoint &pos, Theme::ContentItem::Type type );
 
-  void applySkinColumnWidths();
+  void applyThemeColumnWidths();
 
 protected slots:
   void slotHeaderContextMenuRequested( const QPoint &pos );
@@ -167,17 +167,17 @@ protected slots:
   void slotGroupHeaderBackgroundStyleMenuTriggered( QAction * act );
 };
 
-class SkinContentItemSourceLabel : public QLabel
+class ThemeContentItemSourceLabel : public QLabel
 {
   Q_OBJECT
 public:
-  SkinContentItemSourceLabel( QWidget * parent, Skin::ContentItem::Type type );
-  ~SkinContentItemSourceLabel();
+  ThemeContentItemSourceLabel( QWidget * parent, Theme::ContentItem::Type type );
+  ~ThemeContentItemSourceLabel();
 private:
-  Skin::ContentItem::Type mType;
+  Theme::ContentItem::Type mType;
   QPoint mMousePressPoint;
 public:
-  Skin::ContentItem::Type type() const
+  Theme::ContentItem::Type type() const
     { return mType; };
   void startDrag();
 protected:
@@ -186,18 +186,18 @@ protected:
 };
 
 
-class SkinEditor : public OptionSetEditor
+class ThemeEditor : public OptionSetEditor
 {
   Q_OBJECT
 public:
-  SkinEditor( QWidget *parent );
-  ~SkinEditor();
+  ThemeEditor( QWidget *parent );
+  ~ThemeEditor();
 
 private:
-  Skin * mCurrentSkin; // shallow, may be null!
+  Theme * mCurrentTheme; // shallow, may be null!
 
   // Appearance tab
-  SkinPreviewWidget * mPreviewWidget;
+  ThemePreviewWidget * mPreviewWidget;
 
   // Advanced tab
   QComboBox * mViewHeaderPolicyCombo;
@@ -207,14 +207,14 @@ public:
    * Saves and forgets any previously option set that was being edited.
    * The set parameter may be 0: in this case the editor is simply disabled.
    */
-  void editSkin( Skin *set );
+  void editTheme( Theme *set );
 
-  Skin * editedSkin() const
-    { return mCurrentSkin; };
+  Theme * editedTheme() const
+    { return mCurrentTheme; };
 
   void commit();
 signals:
-  void skinNameChanged();
+  void themeNameChanged();
 
 private:
   void fillViewHeaderPolicyCombo();

@@ -25,7 +25,7 @@
 #include <QRect>
 #include <QColor>
 
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/theme.h"
 #include "messagelistview/core/item.h"
 
 class QAbstractItemView;
@@ -43,17 +43,17 @@ namespace Core
 class Item;
 
 /**
- * The SkinDelegate paints the message list view message and group items by
- * using the supplied Skin.
+ * The ThemeDelegate paints the message list view message and group items by
+ * using the supplied Theme.
  */
-class SkinDelegate : public QStyledItemDelegate
+class ThemeDelegate : public QStyledItemDelegate
 {
 public:
-  SkinDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice );
-  ~SkinDelegate();
+  ThemeDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice );
+  ~ThemeDelegate();
 
 private:
-  const Skin * mSkin; ///< Shallow pointer to the current skin
+  const Theme * mTheme; ///< Shallow pointer to the current theme
   QAbstractItemView * mItemView;
   QPaintDevice * mPaintDevice;
 
@@ -63,22 +63,22 @@ private:
   QModelIndex mHitIndex;
   Item * mHitItem;
   QRect mHitItemRect;
-  const Skin::Column * mHitColumn;
-  const Skin::Row * mHitRow;
+  const Theme::Column * mHitColumn;
+  const Theme::Row * mHitRow;
   int mHitRowIndex;
   bool mHitRowIsMessageRow;
   QRect mHitRowRect;
   bool mHitContentItemRight;
-  const Skin::ContentItem * mHitContentItem;
+  const Theme::ContentItem * mHitContentItem;
   QRect mHitContentItemRect;
 public:
-  const Skin * skin() const
-    { return mSkin; };
-  void setSkin( const Skin * skin );
+  const Theme * theme() const
+    { return mTheme; };
+  void setTheme( const Theme * theme );
 
   /**
    * Returns a heuristic sizeHint() for the specified item type and column.
-   * The hint is based on the contents of the skin (and not of any message or group header).
+   * The hint is based on the contents of the theme (and not of any message or group header).
    */
   QSize sizeHintForItemTypeAndColumn( Item::Type type, int column ) const;
 
@@ -120,15 +120,15 @@ public:
     { return mHitItemRect; };
 
   /**
-   * Returns the skin column that was reported as hit by the previous call to hitTest().
+   * Returns the theme column that was reported as hit by the previous call to hitTest().
    * The result of this function is valid only if hitTest() returned true and only
    * within the same calling function.
    */
-  const Skin::Column * hitColumn() const
+  const Theme::Column * hitColumn() const
     { return mHitColumn; };
 
   /**
-   * Returns the index of the skin column that was reported as hit by the previous call to hitTest().
+   * Returns the index of the theme column that was reported as hit by the previous call to hitTest().
    * The result of this function is valid only if hitTest() returned true and only
    * within the same calling function.
    * This is the same as hitIndex().column().
@@ -137,17 +137,17 @@ public:
     { return mHitIndex.column(); };
 
   /**
-   * Returns the skin row that was reported as hit by the previous call to hitTest().
+   * Returns the theme row that was reported as hit by the previous call to hitTest().
    * The result of this function is valid only if hitTest() returned true and only
    * within the same calling function. This function may also return a null row
    * when hitTest() returned true. This means that the item was globally hit
    * but no row was exactly hit (the user probably hit the margin instead).
    */
-  const Skin::Row * hitRow() const
+  const Theme::Row * hitRow() const
     { return mHitRow; };
 
   /**
-   * Returns the index of the skin row that was reported as hit by the previous call to hitTest().
+   * Returns the index of the theme row that was reported as hit by the previous call to hitTest().
    * The result of this function is valid only if hitRow() returns a non null value.
    */
   int hitRowIndex() const
@@ -170,17 +170,17 @@ public:
     { return mHitRowIsMessageRow; };
 
   /**
-   * Returns the skin content item that was reported as hit by the previous call to hitTest().
+   * Returns the theme content item that was reported as hit by the previous call to hitTest().
    * The result of this function is valid only if hitTest() returned true and only
    * within the same calling function. This function may also return a null content item
    * when hitTest() returned true. This means that the item was globally hit
    * but no content item was exactly hit (the user might have clicked inside a blank unused space instead).
    */
-  const Skin::ContentItem * hitContentItem() const
+  const Theme::ContentItem * hitContentItem() const
     { return mHitContentItem; };
 
   /**
-   * Returns true if the hit skin content item was a right item and false otherwise.
+   * Returns true if the hit theme content item was a right item and false otherwise.
    * The result of this function is valid only if hitContentItem() returns true.
    */
   bool hitContentItemRight() const

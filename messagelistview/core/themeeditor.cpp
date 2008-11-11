@@ -18,8 +18,8 @@
  *
  *******************************************************************************/
 
-#include "messagelistview/core/skineditor.h"
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/themeeditor.h"
+#include "messagelistview/core/theme.h"
 #include "messagelistview/core/groupheaderitem.h"
 #include "messagelistview/core/messageitem.h"
 #include "messagelistview/core/modelinvariantrowmapper.h"
@@ -64,13 +64,13 @@ namespace MessageListView
 namespace Core
 {
 
-static const char * gSkinContentItemTypeDndMimeDataFormat = "application/x-kmail-messagelistview-skin-contentitem-type";
+static const char * gThemeContentItemTypeDndMimeDataFormat = "application/x-kmail-messagelistview-theme-contentitem-type";
 
 
 
 
 
-SkinColumnPropertiesDialog::SkinColumnPropertiesDialog( QWidget * parent, Skin::Column * column, const QString &title )
+ThemeColumnPropertiesDialog::ThemeColumnPropertiesDialog( QWidget * parent, Theme::Column * column, const QString &title )
   : KDialog( parent ), mColumn( column )
 {
   //setAttribute( Qt::WA_DeleteOnClose );
@@ -100,7 +100,7 @@ SkinColumnPropertiesDialog::SkinColumnPropertiesDialog( QWidget * parent, Skin::
   g->addWidget( mMessageSortingCombo, 1, 1 );
 
   mVisibleByDefaultCheck = new QCheckBox( i18n( "Visible by Default" ), base );
-  mVisibleByDefaultCheck->setToolTip( i18n( "Check this if this column should be visible when the skin is selected." ) );
+  mVisibleByDefaultCheck->setToolTip( i18n( "Check this if this column should be visible when the theme is selected." ) );
   g->addWidget( mVisibleByDefaultCheck, 2, 1 );
 
   mIsSenderOrReceiverCheck = new QCheckBox( i18n( "Contains \"Sender or Receiver\" Field" ), base );
@@ -122,7 +122,7 @@ SkinColumnPropertiesDialog::SkinColumnPropertiesDialog( QWidget * parent, Skin::
 
 }
 
-void SkinColumnPropertiesDialog::slotOkButtonClicked()
+void ThemeColumnPropertiesDialog::slotOkButtonClicked()
 {
   QString text = mNameEdit->text();
   if ( text.isEmpty() )
@@ -144,23 +144,23 @@ void SkinColumnPropertiesDialog::slotOkButtonClicked()
 
 
 
-SkinContentItemSourceLabel::SkinContentItemSourceLabel( QWidget * parent, Skin::ContentItem::Type type )
+ThemeContentItemSourceLabel::ThemeContentItemSourceLabel( QWidget * parent, Theme::ContentItem::Type type )
   : QLabel( parent ), mType( type )
 {
   setFrameStyle( QFrame::StyledPanel | QFrame::Raised );
 }
 
-SkinContentItemSourceLabel::~SkinContentItemSourceLabel()
+ThemeContentItemSourceLabel::~ThemeContentItemSourceLabel()
 {
 }
 
-void SkinContentItemSourceLabel::mousePressEvent( QMouseEvent * e )
+void ThemeContentItemSourceLabel::mousePressEvent( QMouseEvent * e )
 {
   if ( e->button() == Qt::LeftButton )
     mMousePressPoint = e->pos();
 }
 
-void SkinContentItemSourceLabel::mouseMoveEvent( QMouseEvent * e )
+void ThemeContentItemSourceLabel::mouseMoveEvent( QMouseEvent * e )
 {
   if ( e->buttons() & Qt::LeftButton )
   {
@@ -170,7 +170,7 @@ void SkinContentItemSourceLabel::mouseMoveEvent( QMouseEvent * e )
   }
 }
 
-void SkinContentItemSourceLabel::startDrag()
+void ThemeContentItemSourceLabel::startDrag()
 {
   //QPixmap pix = QPixmap::grabWidget( this );
   //QPixmap alpha( pix.width(), pix.height() );
@@ -178,9 +178,9 @@ void SkinContentItemSourceLabel::startDrag()
   //pix.setAlphaChannel( alpha ); // <-- this crashes... no alpha for dragged pixmap :(
   QMimeData * data = new QMimeData();
   QByteArray arry;
-  arry.resize( sizeof( Skin::ContentItem::Type ) );
-  *( ( Skin::ContentItem::Type * ) arry.data() ) = mType;
-  data->setData( gSkinContentItemTypeDndMimeDataFormat, arry );
+  arry.resize( sizeof( Theme::ContentItem::Type ) );
+  *( ( Theme::ContentItem::Type * ) arry.data() ) = mType;
+  data->setData( gThemeContentItemTypeDndMimeDataFormat, arry );
   QDrag * drag = new QDrag( this );
   drag->setMimeData( data );
   //drag->setPixmap( pix );
@@ -188,8 +188,8 @@ void SkinContentItemSourceLabel::startDrag()
   drag->exec( Qt::CopyAction, Qt::CopyAction );
 }
 
-SkinPreviewDelegate::SkinPreviewDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice )
-  : SkinDelegate( parent, paintDevice )
+ThemePreviewDelegate::ThemePreviewDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice )
+  : ThemeDelegate( parent, paintDevice )
 {
   mRowMapper = new ModelInvariantRowMapper();
 
@@ -236,14 +236,14 @@ SkinPreviewDelegate::SkinPreviewDelegate( QAbstractItemView * parent, QPaintDevi
   mSampleMessageItem->setStatus( stat );
 }
 
-SkinPreviewDelegate::~SkinPreviewDelegate()
+ThemePreviewDelegate::~ThemePreviewDelegate()
 {
   delete mSampleGroupHeaderItem;
   //delete mSampleMessageItem; (deleted by the parent)
   delete mRowMapper;
 }
 
-Item * SkinPreviewDelegate::itemFromIndex( const QModelIndex &index ) const
+Item * ThemePreviewDelegate::itemFromIndex( const QModelIndex &index ) const
 {
   if ( index.parent().isValid() )
     return mSampleMessageItem;
@@ -255,14 +255,14 @@ Item * SkinPreviewDelegate::itemFromIndex( const QModelIndex &index ) const
 
 
 
-SkinPreviewWidget::SkinPreviewWidget( QWidget * parent )
+ThemePreviewWidget::ThemePreviewWidget( QWidget * parent )
   : QTreeWidget( parent )
 {
-  mSelectedSkinContentItem = 0;
-  mSelectedSkinColumn = 0;
+  mSelectedThemeContentItem = 0;
+  mSelectedThemeColumn = 0;
   mFirstShow = true;
 
-  mDelegate = new SkinPreviewDelegate( this, viewport() );
+  mDelegate = new ThemePreviewDelegate( this, viewport() );
   setItemDelegate( mDelegate );
   setRootIsDecorated( false );
   viewport()->setAcceptDrops( true );
@@ -281,21 +281,21 @@ SkinPreviewWidget::SkinPreviewWidget( QWidget * parent )
   mGroupHeaderSampleItem->setExpanded( true );
 }
 
-SkinPreviewWidget::~SkinPreviewWidget()
+ThemePreviewWidget::~ThemePreviewWidget()
 {
 }
 
-QSize SkinPreviewWidget::sizeHint() const
+QSize ThemePreviewWidget::sizeHint() const
 {
   return QSize( 350, 180 );
 }
 
-void SkinPreviewWidget::applySkinColumnWidths()
+void ThemePreviewWidget::applyThemeColumnWidths()
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return;
 
-  const QList< Skin::Column * > & columns = mSkin->columns();
+  const QList< Theme::Column * > & columns = mTheme->columns();
 
   if ( columns.count() < 1 )
   {
@@ -304,10 +304,10 @@ void SkinPreviewWidget::applySkinColumnWidths()
   }
 
   // Now we want to distribute the available width on all the columns.
-  // The algorithm used here is very similar to the one used in View::applySkinColumns().
+  // The algorithm used here is very similar to the one used in View::applyThemeColumns().
   // It just takes care of ALL the columns instead of the visible ones.
 
-  QList< Skin::Column * >::ConstIterator it;
+  QList< Theme::Column * >::ConstIterator it;
 
   // Gather size hints for all sections.
   int idx = 0;
@@ -389,7 +389,7 @@ void SkinPreviewWidget::applySkinColumnWidths()
   }
 
 #if 0
-  if( mSkin->viewHeaderPolicy() == Skin::NeverShowHeader )
+  if( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader )
     header()->hide();
   else
     header()->show();
@@ -397,22 +397,22 @@ void SkinPreviewWidget::applySkinColumnWidths()
 }
 
 
-void SkinPreviewWidget::setSkin( Skin * skin )
+void ThemePreviewWidget::setTheme( Theme * theme )
 {
-  bool skinChanged = skin != mSkin;
+  bool themeChanged = theme != mTheme;
 
-  mSelectedSkinContentItem = 0;
-  mSkin = skin;
-  mDelegate->setSkin( skin );
+  mSelectedThemeContentItem = 0;
+  mTheme = theme;
+  mDelegate->setTheme( theme );
   mGroupHeaderSampleItem->setExpanded( true );
 
-  const QList< Skin::Column * > & columns = mSkin->columns();
+  const QList< Theme::Column * > & columns = mTheme->columns();
 
   setColumnCount( columns.count() );
 
   QStringList headerLabels;
 
-  for( QList< Skin::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
+  for( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
   {
     QString label = ( *it )->label();
     if ( ( *it )->visibleByDefault() )
@@ -423,25 +423,25 @@ void SkinPreviewWidget::setSkin( Skin * skin )
 
   setHeaderLabels( headerLabels );
 
-  if ( skinChanged )
-    applySkinColumnWidths();
+  if ( themeChanged )
+    applyThemeColumnWidths();
 
   viewport()->update(); // trigger a repaint
 }
 
-void SkinPreviewWidget::internalHandleDragEnterEvent( QDragEnterEvent * e )
+void ThemePreviewWidget::internalHandleDragEnterEvent( QDragEnterEvent * e )
 {
   e->ignore();
 
   if ( !e->mimeData() )
     return;
-  if ( !e->mimeData()->hasFormat( gSkinContentItemTypeDndMimeDataFormat ) )
+  if ( !e->mimeData()->hasFormat( gThemeContentItemTypeDndMimeDataFormat ) )
     return;
 
   e->accept();
 }
 
-void SkinPreviewWidget::showEvent( QShowEvent * e )
+void ThemePreviewWidget::showEvent( QShowEvent * e )
 {
   QTreeWidget::showEvent( e );
 
@@ -450,35 +450,35 @@ void SkinPreviewWidget::showEvent( QShowEvent * e )
     // Make sure we re-apply column widths the first time we're shown.
     // The first "apply" call was made while the widget was still hidden and
     // almost surely had wrong sizes.
-    applySkinColumnWidths();
+    applyThemeColumnWidths();
     mFirstShow = false;
   }
 }
 
-void SkinPreviewWidget::dragEnterEvent( QDragEnterEvent * e )
+void ThemePreviewWidget::dragEnterEvent( QDragEnterEvent * e )
 {
   internalHandleDragEnterEvent( e );
 
-  mSkinSelectedContentItemRect = QRect();
+  mThemeSelectedContentItemRect = QRect();
 
   viewport()->update(); // trigger a repaint
 }
 
-void SkinPreviewWidget::internalHandleDragMoveEvent( QDragMoveEvent * e )
+void ThemePreviewWidget::internalHandleDragMoveEvent( QDragMoveEvent * e )
 {
   e->ignore();
 
   if ( !e->mimeData() )
     return;
-  if ( !e->mimeData()->hasFormat( gSkinContentItemTypeDndMimeDataFormat ) )
+  if ( !e->mimeData()->hasFormat( gThemeContentItemTypeDndMimeDataFormat ) )
     return;
 
-  QByteArray arry = e->mimeData()->data( gSkinContentItemTypeDndMimeDataFormat );
+  QByteArray arry = e->mimeData()->data( gThemeContentItemTypeDndMimeDataFormat );
 
-  if ( arry.size() != sizeof( Skin::ContentItem::Type ) )
+  if ( arry.size() != sizeof( Theme::ContentItem::Type ) )
     return; // ugh
 
-  Skin::ContentItem::Type type = *( ( Skin::ContentItem::Type * ) arry.data() );
+  Theme::ContentItem::Type type = *( ( Theme::ContentItem::Type * ) arry.data() );
 
   if ( !computeContentItemInsertPosition( e->pos(), type ) )
     return;
@@ -486,17 +486,17 @@ void SkinPreviewWidget::internalHandleDragMoveEvent( QDragMoveEvent * e )
   e->accept();
 }
 
-void SkinPreviewWidget::dragMoveEvent( QDragMoveEvent * e )
+void ThemePreviewWidget::dragMoveEvent( QDragMoveEvent * e )
 {
   internalHandleDragMoveEvent( e );
 
-  mSkinSelectedContentItemRect = QRect();
+  mThemeSelectedContentItemRect = QRect();
 
   viewport()->update(); // trigger a repaint  
 }
 
 
-void SkinPreviewWidget::dropEvent( QDropEvent * e )
+void ThemePreviewWidget::dropEvent( QDropEvent * e )
 {
   mDropIndicatorPoint1 = mDropIndicatorPoint2;
 
@@ -505,15 +505,15 @@ void SkinPreviewWidget::dropEvent( QDropEvent * e )
   if ( !e->mimeData() )
     return;
   
-  if ( !e->mimeData()->hasFormat( gSkinContentItemTypeDndMimeDataFormat ) )
+  if ( !e->mimeData()->hasFormat( gThemeContentItemTypeDndMimeDataFormat ) )
     return;
 
-  QByteArray arry = e->mimeData()->data( gSkinContentItemTypeDndMimeDataFormat );
+  QByteArray arry = e->mimeData()->data( gThemeContentItemTypeDndMimeDataFormat );
 
-  if ( arry.size() != sizeof( Skin::ContentItem::Type ) )
+  if ( arry.size() != sizeof( Theme::ContentItem::Type ) )
     return; // ugh
 
-  Skin::ContentItem::Type type = *( ( Skin::ContentItem::Type * ) arry.data() );
+  Theme::ContentItem::Type type = *( ( Theme::ContentItem::Type * ) arry.data() );
 
   if ( !computeContentItemInsertPosition( e->pos(), type ) )
   {
@@ -521,33 +521,33 @@ void SkinPreviewWidget::dropEvent( QDropEvent * e )
     return;
   }
 
-  Skin::Row * row = 0;
+  Theme::Row * row = 0;
 
   switch ( mRowInsertPosition )
   {
     case AboveRow:
-      row = new Skin::Row();
+      row = new Theme::Row();
       if ( mDelegate->hitItem()->type() == Item::Message )
-        const_cast< Skin::Column * >( mDelegate->hitColumn() )->insertMessageRow( mDelegate->hitRowIndex(), row );
+        const_cast< Theme::Column * >( mDelegate->hitColumn() )->insertMessageRow( mDelegate->hitRowIndex(), row );
       else
-        const_cast< Skin::Column * >( mDelegate->hitColumn() )->insertGroupHeaderRow( mDelegate->hitRowIndex(), row );
+        const_cast< Theme::Column * >( mDelegate->hitColumn() )->insertGroupHeaderRow( mDelegate->hitRowIndex(), row );
     break;
     case InsideRow:
-      row = const_cast< Skin::Row * >( mDelegate->hitRow() );
+      row = const_cast< Theme::Row * >( mDelegate->hitRow() );
     break;
     case BelowRow:
-      row = new Skin::Row();
+      row = new Theme::Row();
       if ( mDelegate->hitItem()->type() == Item::Message )
-        const_cast< Skin::Column * >( mDelegate->hitColumn() )->insertMessageRow( mDelegate->hitRowIndex()+1, row );
+        const_cast< Theme::Column * >( mDelegate->hitColumn() )->insertMessageRow( mDelegate->hitRowIndex()+1, row );
       else
-        const_cast< Skin::Column * >( mDelegate->hitColumn() )->insertGroupHeaderRow( mDelegate->hitRowIndex()+1, row );
+        const_cast< Theme::Column * >( mDelegate->hitColumn() )->insertGroupHeaderRow( mDelegate->hitRowIndex()+1, row );
     break;
   }
 
   if ( !row )
     return;
 
-  Skin::ContentItem * ci = new Skin::ContentItem( type );
+  Theme::ContentItem * ci = new Theme::ContentItem( type );
   if ( ci->canBeDisabled() )
   {
     if ( ci->isClickable() )
@@ -568,8 +568,8 @@ void SkinPreviewWidget::dropEvent( QDropEvent * e )
         return;
       }
       idx = mDelegate->hitContentItemRight() ? \
-              row->rightItems().indexOf( const_cast< Skin::ContentItem * >( mDelegate->hitContentItem() ) ) : \
-              row->leftItems().indexOf( const_cast< Skin::ContentItem * >( mDelegate->hitContentItem() ) );
+              row->rightItems().indexOf( const_cast< Theme::ContentItem * >( mDelegate->hitContentItem() ) ) : \
+              row->leftItems().indexOf( const_cast< Theme::ContentItem * >( mDelegate->hitContentItem() ) );
       if ( idx < 0 )
       {
         // bleah
@@ -589,8 +589,8 @@ void SkinPreviewWidget::dropEvent( QDropEvent * e )
         return;
       }
       idx = mDelegate->hitContentItemRight() ? \
-              row->rightItems().indexOf( const_cast< Skin::ContentItem * >( mDelegate->hitContentItem() ) ) : \
-              row->leftItems().indexOf( const_cast< Skin::ContentItem * >( mDelegate->hitContentItem() ) );
+              row->rightItems().indexOf( const_cast< Theme::ContentItem * >( mDelegate->hitContentItem() ) ) : \
+              row->leftItems().indexOf( const_cast< Theme::ContentItem * >( mDelegate->hitContentItem() ) );
       if ( idx < 0 )
       {
         // bleah
@@ -621,14 +621,14 @@ void SkinPreviewWidget::dropEvent( QDropEvent * e )
 
   e->acceptProposedAction();
 
-  mSkinSelectedContentItemRect = QRect();
+  mThemeSelectedContentItemRect = QRect();
   mDropIndicatorPoint1 = mDropIndicatorPoint2;
-  mSelectedSkinContentItem = 0;
+  mSelectedThemeContentItem = 0;
 
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update
 }
 
-bool SkinPreviewWidget::computeContentItemInsertPosition( const QPoint &pos, Skin::ContentItem::Type type )
+bool ThemePreviewWidget::computeContentItemInsertPosition( const QPoint &pos, Theme::ContentItem::Type type )
 {
   mDropIndicatorPoint1 = mDropIndicatorPoint2; // this marks the position as invalid
 
@@ -640,10 +640,10 @@ bool SkinPreviewWidget::computeContentItemInsertPosition( const QPoint &pos, Ski
 
   if ( mDelegate->hitRowIsMessageRow() )
   {
-    if ( !Skin::ContentItem::applicableToMessageItems( type ) )
+    if ( !Theme::ContentItem::applicableToMessageItems( type ) )
       return false;
   } else {
-    if ( !Skin::ContentItem::applicableToGroupHeaderItems( type ) )
+    if ( !Theme::ContentItem::applicableToGroupHeaderItems( type ) )
       return false;
   }
 
@@ -720,7 +720,7 @@ bool SkinPreviewWidget::computeContentItemInsertPosition( const QPoint &pos, Ski
         }
         return true;
       }
-      // either there were some right items (so the skin delegate knows that the reported item is the closest)
+      // either there were some right items (so the theme delegate knows that the reported item is the closest)
       // or there were no right items but the position is closest to the left item than the right row end
       mItemInsertPosition = OnRightOfItem;
       mDropIndicatorPoint1 = itemRect.topRight();
@@ -763,15 +763,15 @@ bool SkinPreviewWidget::computeContentItemInsertPosition( const QPoint &pos, Ski
   return true;
 }
 
-void SkinPreviewWidget::mouseMoveEvent( QMouseEvent * e )
+void ThemePreviewWidget::mouseMoveEvent( QMouseEvent * e )
 {
-  if ( ! ( mSelectedSkinContentItem && ( e->buttons() & Qt::LeftButton ) ) )
+  if ( ! ( mSelectedThemeContentItem && ( e->buttons() & Qt::LeftButton ) ) )
   {
     QTreeWidget::mouseMoveEvent( e );
     return;
   }
 
-  if ( mSelectedSkinContentItem != mDelegate->hitContentItem() )
+  if ( mSelectedThemeContentItem != mDelegate->hitContentItem() )
   {
     QTreeWidget::mouseMoveEvent( e );
     return; // ugh.. something weird happened
@@ -788,19 +788,19 @@ void SkinPreviewWidget::mouseMoveEvent( QMouseEvent * e )
   // startin a drag
   QMimeData * data = new QMimeData();
   QByteArray arry;
-  arry.resize( sizeof( Skin::ContentItem::Type ) );
-  *( ( Skin::ContentItem::Type * ) arry.data() ) = mSelectedSkinContentItem->type();
-  data->setData( gSkinContentItemTypeDndMimeDataFormat, arry );
+  arry.resize( sizeof( Theme::ContentItem::Type ) );
+  *( ( Theme::ContentItem::Type * ) arry.data() ) = mSelectedThemeContentItem->type();
+  data->setData( gThemeContentItemTypeDndMimeDataFormat, arry );
   QDrag * drag = new QDrag( this );
   drag->setMimeData( data );
 
-  // remove the Skin::ContentItem from the Skin
+  // remove the Theme::ContentItem from the Theme
   if ( mDelegate->hitContentItemRight() )
-    const_cast< Skin::Row * >( mDelegate->hitRow() )->removeRightItem( mSelectedSkinContentItem );
+    const_cast< Theme::Row * >( mDelegate->hitRow() )->removeRightItem( mSelectedThemeContentItem );
   else
-    const_cast< Skin::Row * >( mDelegate->hitRow() )->removeLeftItem( mSelectedSkinContentItem );
+    const_cast< Theme::Row * >( mDelegate->hitRow() )->removeLeftItem( mSelectedThemeContentItem );
 
-  delete mSelectedSkinContentItem;
+  delete mSelectedThemeContentItem;
 
   if ( mDelegate->hitRow()->rightItems().isEmpty() && mDelegate->hitRow()->leftItems().isEmpty() )
   {
@@ -808,39 +808,39 @@ void SkinPreviewWidget::mouseMoveEvent( QMouseEvent * e )
     {
       if ( mDelegate->hitColumn()->messageRows().count() > 1 )
       {
-        const_cast< Skin::Column * >( mDelegate->hitColumn() )->removeMessageRow( const_cast< Skin::Row * >( mDelegate->hitRow() ) );
+        const_cast< Theme::Column * >( mDelegate->hitColumn() )->removeMessageRow( const_cast< Theme::Row * >( mDelegate->hitRow() ) );
         delete mDelegate->hitRow();
       }
     } else {
       if ( mDelegate->hitColumn()->groupHeaderRows().count() > 1 )
       {
-        const_cast< Skin::Column * >( mDelegate->hitColumn() )->removeGroupHeaderRow( const_cast< Skin::Row * >( mDelegate->hitRow() ) );
+        const_cast< Theme::Column * >( mDelegate->hitColumn() )->removeGroupHeaderRow( const_cast< Theme::Row * >( mDelegate->hitRow() ) );
         delete mDelegate->hitRow();
       }
     }
   }
 
-  mSelectedSkinContentItem = 0;
-  mSkinSelectedContentItemRect = QRect();
+  mSelectedThemeContentItem = 0;
+  mThemeSelectedContentItemRect = QRect();
   mDropIndicatorPoint1 = mDropIndicatorPoint2;
 
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update
 
   // and do drag
   drag->exec( Qt::CopyAction, Qt::CopyAction );
 }
 
-void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
+void ThemePreviewWidget::mousePressEvent( QMouseEvent * e )
 {
   mMouseDownPoint = e->pos();
 
   if ( mDelegate->hitTest( mMouseDownPoint ) )
   {
-    mSelectedSkinContentItem = const_cast< Skin::ContentItem * >( mDelegate->hitContentItem() );
-    mSkinSelectedContentItemRect = mSelectedSkinContentItem ? mDelegate->hitContentItemRect() : QRect();
+    mSelectedThemeContentItem = const_cast< Theme::ContentItem * >( mDelegate->hitContentItem() );
+    mThemeSelectedContentItemRect = mSelectedThemeContentItem ? mDelegate->hitContentItemRect() : QRect();
   } else {
-    mSelectedSkinContentItem = 0;
-    mSkinSelectedContentItemRect = QRect();
+    mSelectedThemeContentItem = 0;
+    mThemeSelectedContentItemRect = QRect();
   }
 
   QTreeWidget::mousePressEvent( e );
@@ -850,17 +850,17 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
   {
     KMenu menu;  
 
-    if ( mSelectedSkinContentItem )
+    if ( mSelectedThemeContentItem )
     {
 
-      menu.addTitle( Skin::ContentItem::description( mSelectedSkinContentItem->type() ) );
+      menu.addTitle( Theme::ContentItem::description( mSelectedThemeContentItem->type() ) );
 
-      if ( mSelectedSkinContentItem->displaysText() )
+      if ( mSelectedThemeContentItem->displaysText() )
       {
         QAction * act;
         act = menu.addAction( i18n( "Soften" ) );
         act->setCheckable( true );
-        act->setChecked( mSelectedSkinContentItem->softenByBlending() );
+        act->setChecked( mSelectedThemeContentItem->softenByBlending() );
         connect( act, SIGNAL( triggered( bool ) ),
                  SLOT( slotSoftenActionTriggered( bool ) ) );
 
@@ -871,12 +871,12 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
         act = childmenu->addAction( i18n("Default") );
         act->setData( QVariant( static_cast< int >( 0 ) ) );
         act->setCheckable( true );
-        act->setChecked( !mSelectedSkinContentItem->useCustomFont() );
+        act->setChecked( !mSelectedThemeContentItem->useCustomFont() );
         grp->addAction( act );
         act = childmenu->addAction( i18n("Custom...") );
-        act->setData( QVariant( static_cast< int >( Skin::ContentItem::UseCustomFont ) ) );
+        act->setData( QVariant( static_cast< int >( Theme::ContentItem::UseCustomFont ) ) );
         act->setCheckable( true );
-        act->setChecked( mSelectedSkinContentItem->useCustomFont() );
+        act->setChecked( mSelectedThemeContentItem->useCustomFont() );
         grp->addAction( act );
 
         // We would like the group to be exclusive, but then the "Custom..." action
@@ -889,7 +889,7 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
         menu.addMenu( childmenu )->setText( i18n( "Font" ) );
       }
 
-      if ( mSelectedSkinContentItem->canUseCustomColor() )
+      if ( mSelectedThemeContentItem->canUseCustomColor() )
       {
         KMenu * childmenu = new KMenu( &menu );
 
@@ -899,12 +899,12 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
         act = childmenu->addAction( i18n("Default") );
         act->setData( QVariant( static_cast< int >( 0 ) ) );
         act->setCheckable( true );
-        act->setChecked( !mSelectedSkinContentItem->useCustomColor() );
+        act->setChecked( !mSelectedThemeContentItem->useCustomColor() );
         grp->addAction( act );
         act = childmenu->addAction( i18n("Custom...") );
-        act->setData( QVariant( static_cast< int >( Skin::ContentItem::UseCustomColor ) ) );
+        act->setData( QVariant( static_cast< int >( Theme::ContentItem::UseCustomColor ) ) );
         act->setCheckable( true );
-        act->setChecked( mSelectedSkinContentItem->useCustomColor() );
+        act->setChecked( mSelectedThemeContentItem->useCustomColor() );
         grp->addAction( act );
 
         // We would like the group to be exclusive, but then the "Custom..." action
@@ -918,7 +918,7 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
       }
 
 
-      if ( mSelectedSkinContentItem->canBeDisabled() )
+      if ( mSelectedThemeContentItem->canBeDisabled() )
       {
         KMenu * childmenu = new KMenu( &menu );
 
@@ -926,19 +926,19 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
 
         QAction * act;
         act = childmenu->addAction( i18n("Hide") );
-        act->setData( QVariant( static_cast< int >( Skin::ContentItem::HideWhenDisabled ) ) );
+        act->setData( QVariant( static_cast< int >( Theme::ContentItem::HideWhenDisabled ) ) );
         act->setCheckable( true );
-        act->setChecked( mSelectedSkinContentItem->hideWhenDisabled() );
+        act->setChecked( mSelectedThemeContentItem->hideWhenDisabled() );
         grp->addAction( act );
         act = childmenu->addAction( i18n("Keep Empty Space") );
         act->setData( QVariant( static_cast< int >( 0 ) ) );
         act->setCheckable( true );
-        act->setChecked( ! ( mSelectedSkinContentItem->softenByBlendingWhenDisabled() || mSelectedSkinContentItem->hideWhenDisabled() ) );
+        act->setChecked( ! ( mSelectedThemeContentItem->softenByBlendingWhenDisabled() || mSelectedThemeContentItem->hideWhenDisabled() ) );
         grp->addAction( act );
         act = childmenu->addAction( i18n("Keep Softened Icon") );
-        act->setData( QVariant( static_cast< int >( Skin::ContentItem::SoftenByBlendingWhenDisabled ) ) );
+        act->setData( QVariant( static_cast< int >( Theme::ContentItem::SoftenByBlendingWhenDisabled ) ) );
         act->setCheckable( true );
-        act->setChecked( mSelectedSkinContentItem->softenByBlendingWhenDisabled() );
+        act->setChecked( mSelectedThemeContentItem->softenByBlendingWhenDisabled() );
         grp->addAction( act );
 
         connect( childmenu, SIGNAL( triggered( QAction * ) ),
@@ -962,19 +962,19 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
 
         QAction * act;
         act = childmenu->addAction( i18n("None") );
-        act->setData( QVariant( static_cast< int >( Skin::Transparent ) ) );
+        act->setData( QVariant( static_cast< int >( Theme::Transparent ) ) );
         act->setCheckable( true );
-        act->setChecked( mSkin->groupHeaderBackgroundMode() == Skin::Transparent );
+        act->setChecked( mTheme->groupHeaderBackgroundMode() == Theme::Transparent );
         grp->addAction( act );
         act = childmenu->addAction( i18n("Automatic") );
-        act->setData( QVariant( static_cast< int >( Skin::AutoColor ) ) );
+        act->setData( QVariant( static_cast< int >( Theme::AutoColor ) ) );
         act->setCheckable( true );
-        act->setChecked( mSkin->groupHeaderBackgroundMode() == Skin::AutoColor );
+        act->setChecked( mTheme->groupHeaderBackgroundMode() == Theme::AutoColor );
         grp->addAction( act );
         act = childmenu->addAction( i18n("Custom...") );
-        act->setData( QVariant( static_cast< int >( Skin::CustomColor ) ) );
+        act->setData( QVariant( static_cast< int >( Theme::CustomColor ) ) );
         act->setCheckable( true );
-        act->setChecked( mSkin->groupHeaderBackgroundMode() == Skin::CustomColor );
+        act->setChecked( mTheme->groupHeaderBackgroundMode() == Theme::CustomColor );
         grp->addAction( act );
 
         // We would like the group to be exclusive, but then the "Custom..." action
@@ -991,14 +991,14 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
 
         grp = new QActionGroup( childmenu );
 
-        QList< QPair< QString, int > > styles = Skin::enumerateGroupHeaderBackgroundStyles();
+        QList< QPair< QString, int > > styles = Theme::enumerateGroupHeaderBackgroundStyles();
 
         for ( QList< QPair< QString, int > >::ConstIterator it = styles.begin(); it != styles.end(); ++it )
         {
           act = childmenu->addAction( ( *it ).first );
           act->setData( QVariant( ( *it ).second ) );
           act->setCheckable( true );
-          act->setChecked( mSkin->groupHeaderBackgroundStyle() == static_cast< Skin::GroupHeaderBackgroundStyle >( ( *it ).second ) );
+          act->setChecked( mTheme->groupHeaderBackgroundStyle() == static_cast< Theme::GroupHeaderBackgroundStyle >( ( *it ).second ) );
           grp->addAction( act );
         }
 
@@ -1007,7 +1007,7 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
 
         act = menu.addMenu( childmenu );
         act->setText( i18n( "Background Style" ) );
-        if ( mSkin->groupHeaderBackgroundMode() == Skin::Transparent )
+        if ( mTheme->groupHeaderBackgroundMode() == Theme::Transparent )
           act->setEnabled( false );
 
       }
@@ -1022,9 +1022,9 @@ void SkinPreviewWidget::mousePressEvent( QMouseEvent * e )
   }
 }
 
-void SkinPreviewWidget::slotDisabledFlagsMenuTriggered( QAction * act )
+void ThemePreviewWidget::slotDisabledFlagsMenuTriggered( QAction * act )
 {
-  if ( !mSelectedSkinContentItem )
+  if ( !mSelectedThemeContentItem )
     return;
 
   bool ok;
@@ -1032,15 +1032,15 @@ void SkinPreviewWidget::slotDisabledFlagsMenuTriggered( QAction * act )
   if ( !ok )
     return;
 
-  mSelectedSkinContentItem->setHideWhenDisabled( flags == Skin::ContentItem::HideWhenDisabled );
-  mSelectedSkinContentItem->setSoftenByBlendingWhenDisabled( flags == Skin::ContentItem::SoftenByBlendingWhenDisabled );
+  mSelectedThemeContentItem->setHideWhenDisabled( flags == Theme::ContentItem::HideWhenDisabled );
+  mSelectedThemeContentItem->setSoftenByBlendingWhenDisabled( flags == Theme::ContentItem::SoftenByBlendingWhenDisabled );
 
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update
 }
 
-void SkinPreviewWidget::slotForegroundColorMenuTriggered( QAction * act )
+void ThemePreviewWidget::slotForegroundColorMenuTriggered( QAction * act )
 {
-  if ( !mSelectedSkinContentItem )
+  if ( !mSelectedThemeContentItem )
     return;
 
   bool ok;
@@ -1050,33 +1050,33 @@ void SkinPreviewWidget::slotForegroundColorMenuTriggered( QAction * act )
 
   if ( flag == 0 )
   {
-    mSelectedSkinContentItem->setUseCustomColor( false );
-    setSkin( mSkin ); // this will reset skin cache and trigger a global update
+    mSelectedThemeContentItem->setUseCustomColor( false );
+    setTheme( mTheme ); // this will reset theme cache and trigger a global update
     return;
   }
 
-  QColor clr = QColorDialog::getColor( mSelectedSkinContentItem->customColor(), this );
+  QColor clr = QColorDialog::getColor( mSelectedThemeContentItem->customColor(), this );
   if ( !clr.isValid() )
     return;
 
-  mSelectedSkinContentItem->setCustomColor( clr );
-  mSelectedSkinContentItem->setUseCustomColor( true );
+  mSelectedThemeContentItem->setCustomColor( clr );
+  mSelectedThemeContentItem->setUseCustomColor( true );
 
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update
 }
 
-void SkinPreviewWidget::slotSoftenActionTriggered( bool )
+void ThemePreviewWidget::slotSoftenActionTriggered( bool )
 {
-  if ( !mSelectedSkinContentItem )
+  if ( !mSelectedThemeContentItem )
     return;
 
-  mSelectedSkinContentItem->setSoftenByBlending( !mSelectedSkinContentItem->softenByBlending() );
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update  
+  mSelectedThemeContentItem->setSoftenByBlending( !mSelectedThemeContentItem->softenByBlending() );
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update  
 }
 
-void SkinPreviewWidget::slotFontMenuTriggered( QAction * act )
+void ThemePreviewWidget::slotFontMenuTriggered( QAction * act )
 {
-  if ( !mSelectedSkinContentItem )
+  if ( !mSelectedThemeContentItem )
     return;
 
   bool ok;
@@ -1086,78 +1086,78 @@ void SkinPreviewWidget::slotFontMenuTriggered( QAction * act )
 
   if ( flag == 0 )
   {
-    mSelectedSkinContentItem->setUseCustomFont( false );
-    setSkin( mSkin ); // this will reset skin cache and trigger a global update
+    mSelectedThemeContentItem->setUseCustomFont( false );
+    setTheme( mTheme ); // this will reset theme cache and trigger a global update
     return;
   }
 
-  QFont f = mSelectedSkinContentItem->font();
+  QFont f = mSelectedThemeContentItem->font();
   if ( KFontDialog::getFont( f ) != KFontDialog::Accepted )
     return;
 
-  mSelectedSkinContentItem->setFont( f );
-  mSelectedSkinContentItem->setUseCustomFont( true );
+  mSelectedThemeContentItem->setFont( f );
+  mSelectedThemeContentItem->setUseCustomFont( true );
 
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update
 }
 
-void SkinPreviewWidget::slotGroupHeaderBackgroundModeMenuTriggered( QAction * act )
+void ThemePreviewWidget::slotGroupHeaderBackgroundModeMenuTriggered( QAction * act )
 {
   bool ok;
-  Skin::GroupHeaderBackgroundMode mode = static_cast< Skin::GroupHeaderBackgroundMode >( act->data().toInt( &ok ) );
+  Theme::GroupHeaderBackgroundMode mode = static_cast< Theme::GroupHeaderBackgroundMode >( act->data().toInt( &ok ) );
   if ( !ok )
     return;
 
   switch( mode )
   {
-    case Skin::Transparent:
-      mSkin->setGroupHeaderBackgroundMode( Skin::Transparent );
+    case Theme::Transparent:
+      mTheme->setGroupHeaderBackgroundMode( Theme::Transparent );
     break;
-    case Skin::AutoColor:
-      mSkin->setGroupHeaderBackgroundMode( Skin::AutoColor );
+    case Theme::AutoColor:
+      mTheme->setGroupHeaderBackgroundMode( Theme::AutoColor );
     break;
-    case Skin::CustomColor:
+    case Theme::CustomColor:
     {
-      QColor clr = QColorDialog::getColor( mSkin->groupHeaderBackgroundColor(), this );
+      QColor clr = QColorDialog::getColor( mTheme->groupHeaderBackgroundColor(), this );
       if ( !clr.isValid() )
         return;
-      mSkin->setGroupHeaderBackgroundMode( Skin::CustomColor );
-      mSkin->setGroupHeaderBackgroundColor( clr );
+      mTheme->setGroupHeaderBackgroundMode( Theme::CustomColor );
+      mTheme->setGroupHeaderBackgroundColor( clr );
     } 
     break;
   }
   
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update
 }
 
-void SkinPreviewWidget::slotGroupHeaderBackgroundStyleMenuTriggered( QAction * act )
+void ThemePreviewWidget::slotGroupHeaderBackgroundStyleMenuTriggered( QAction * act )
 {
   bool ok;
-  Skin::GroupHeaderBackgroundStyle mode = static_cast< Skin::GroupHeaderBackgroundStyle >( act->data().toInt( &ok ) );
+  Theme::GroupHeaderBackgroundStyle mode = static_cast< Theme::GroupHeaderBackgroundStyle >( act->data().toInt( &ok ) );
   if ( !ok )
     return;
 
-  mSkin->setGroupHeaderBackgroundStyle( mode );
+  mTheme->setGroupHeaderBackgroundStyle( mode );
   
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update
 }
 
 
-void SkinPreviewWidget::paintEvent( QPaintEvent * e )
+void ThemePreviewWidget::paintEvent( QPaintEvent * e )
 {
   QTreeWidget::paintEvent( e );
 
   if ( 
-       mSkinSelectedContentItemRect.isValid() ||
+       mThemeSelectedContentItemRect.isValid() ||
        ( mDropIndicatorPoint1 != mDropIndicatorPoint2 ) 
     )
   {
     QPainter painter( viewport() );
 
-    if ( mSkinSelectedContentItemRect.isValid() )
+    if ( mThemeSelectedContentItemRect.isValid() )
     {
       painter.setPen( QPen( Qt::black ) );
-      painter.drawRect( mSkinSelectedContentItemRect );
+      painter.drawRect( mThemeSelectedContentItemRect );
     }
     if ( mDropIndicatorPoint1 != mDropIndicatorPoint2 ) 
     {
@@ -1169,7 +1169,7 @@ void SkinPreviewWidget::paintEvent( QPaintEvent * e )
 
 
 
-void SkinPreviewWidget::slotHeaderContextMenuRequested( const QPoint &pos )
+void ThemePreviewWidget::slotHeaderContextMenuRequested( const QPoint &pos )
 {
   QTreeWidgetItem * hitem = headerItem();
   if ( !hitem )
@@ -1180,16 +1180,16 @@ void SkinPreviewWidget::slotHeaderContextMenuRequested( const QPoint &pos )
   if ( col < 0 )
     return;
 
-  if ( col >= mSkin->columns().count() )
+  if ( col >= mTheme->columns().count() )
     return;
 
-  mSelectedSkinColumn = mSkin->column( col );
-  if ( !mSelectedSkinColumn )
+  mSelectedThemeColumn = mTheme->column( col );
+  if ( !mSelectedThemeColumn )
     return;
 
   KMenu menu;
 
-  menu.addTitle( mSelectedSkinColumn->label() );
+  menu.addTitle( mSelectedThemeColumn->label() );
 
   QAction * act;
 
@@ -1209,94 +1209,94 @@ void SkinPreviewWidget::slotHeaderContextMenuRequested( const QPoint &pos )
   menu.exec( header()->mapToGlobal( pos ) );
 }
 
-void SkinPreviewWidget::slotAddColumn()
+void ThemePreviewWidget::slotAddColumn()
 {
-  int newColumnIndex = mSkin->columns().count();
+  int newColumnIndex = mTheme->columns().count();
 
-  if ( mSelectedSkinColumn )
+  if ( mSelectedThemeColumn )
   {
-    newColumnIndex = mSkin->columns().indexOf( mSelectedSkinColumn );
+    newColumnIndex = mTheme->columns().indexOf( mSelectedThemeColumn );
     if ( newColumnIndex < 0 )
-      newColumnIndex = mSkin->columns().count();
+      newColumnIndex = mTheme->columns().count();
     else
       newColumnIndex++;
   }
   
-  mSelectedSkinColumn = new Skin::Column();
-  mSelectedSkinColumn->setLabel( i18n( "New Column" ) );
-  mSelectedSkinColumn->setVisibleByDefault( true );
+  mSelectedThemeColumn = new Theme::Column();
+  mSelectedThemeColumn->setLabel( i18n( "New Column" ) );
+  mSelectedThemeColumn->setVisibleByDefault( true );
 
-  mSelectedSkinColumn->addMessageRow( new Skin::Row() );
-  mSelectedSkinColumn->addGroupHeaderRow( new Skin::Row() );
+  mSelectedThemeColumn->addMessageRow( new Theme::Row() );
+  mSelectedThemeColumn->addGroupHeaderRow( new Theme::Row() );
 
-  SkinColumnPropertiesDialog * dlg = new SkinColumnPropertiesDialog( this, mSelectedSkinColumn, i18n( "Add New Column" ) );
+  ThemeColumnPropertiesDialog * dlg = new ThemeColumnPropertiesDialog( this, mSelectedThemeColumn, i18n( "Add New Column" ) );
 
   if ( dlg->exec() == QDialog::Accepted )
   {
-    mSkin->insertColumn( newColumnIndex, mSelectedSkinColumn );
+    mTheme->insertColumn( newColumnIndex, mSelectedThemeColumn );
 
-    mSelectedSkinContentItem = 0;
-    mSkinSelectedContentItemRect = QRect();
+    mSelectedThemeContentItem = 0;
+    mThemeSelectedContentItemRect = QRect();
     mDropIndicatorPoint1 = mDropIndicatorPoint2;
 
-    setSkin( mSkin ); // this will reset skin cache and trigger a global update
+    setTheme( mTheme ); // this will reset theme cache and trigger a global update
 
   } else {
 
-    delete mSelectedSkinColumn;
-    mSelectedSkinColumn = 0;
+    delete mSelectedThemeColumn;
+    mSelectedThemeColumn = 0;
   }
 
   delete dlg;
 }
 
-void SkinPreviewWidget::slotColumnProperties()
+void ThemePreviewWidget::slotColumnProperties()
 {
-  if ( !mSelectedSkinColumn )
+  if ( !mSelectedThemeColumn )
     return;
 
-  SkinColumnPropertiesDialog * dlg = new SkinColumnPropertiesDialog( this, mSelectedSkinColumn, i18n( "Column Properties" ) );
+  ThemeColumnPropertiesDialog * dlg = new ThemeColumnPropertiesDialog( this, mSelectedThemeColumn, i18n( "Column Properties" ) );
 
   if ( dlg->exec() == QDialog::Accepted )
   {
-    mSelectedSkinContentItem = 0;
-    mSkinSelectedContentItemRect = QRect();
+    mSelectedThemeContentItem = 0;
+    mThemeSelectedContentItemRect = QRect();
     mDropIndicatorPoint1 = mDropIndicatorPoint2;
 
-    setSkin( mSkin ); // this will reset skin cache and trigger a global update
+    setTheme( mTheme ); // this will reset theme cache and trigger a global update
   }
 
   delete dlg;
 }
 
-void SkinPreviewWidget::slotDeleteColumn()
+void ThemePreviewWidget::slotDeleteColumn()
 {
-  if ( !mSelectedSkinColumn )
+  if ( !mSelectedThemeColumn )
     return;
 
-  int idx = mSkin->columns().indexOf( mSelectedSkinColumn );
+  int idx = mTheme->columns().indexOf( mSelectedThemeColumn );
   if ( idx < 1 ) // first column can't be deleted
     return;
 
-  mSkin->removeColumn( mSelectedSkinColumn );
-  delete mSelectedSkinColumn;
-  mSelectedSkinColumn = 0;
+  mTheme->removeColumn( mSelectedThemeColumn );
+  delete mSelectedThemeColumn;
+  mSelectedThemeColumn = 0;
 
-  mSelectedSkinContentItem = 0;
-  mSkinSelectedContentItemRect = QRect();
+  mSelectedThemeContentItem = 0;
+  mThemeSelectedContentItemRect = QRect();
   mDropIndicatorPoint1 = mDropIndicatorPoint2;
 
-  setSkin( mSkin ); // this will reset skin cache and trigger a global update  
+  setTheme( mTheme ); // this will reset theme cache and trigger a global update  
 }
 
 
 
 
 
-SkinEditor::SkinEditor( QWidget *parent )
+ThemeEditor::ThemeEditor( QWidget *parent )
   : OptionSetEditor( parent )
 {
-  mCurrentSkin = 0;
+  mCurrentTheme = 0;
 
   // Appearance tab
   QWidget * tab = new QWidget( this );
@@ -1309,134 +1309,134 @@ SkinEditor::SkinEditor( QWidget *parent )
 
   QGridLayout * gblayout = new QGridLayout( gb );
 
-  SkinContentItemSourceLabel * cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::Subject );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  ThemeContentItemSourceLabel * cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::Subject );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 0 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::Date );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::Date );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 1, 0 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::Size );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::Size );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 2, 0 );
 
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::Sender );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::Sender );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 1 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::Receiver );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::Receiver );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 1, 1 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::SenderOrReceiver );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::SenderOrReceiver );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 2, 1 );
 
 
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::MostRecentDate );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::MostRecentDate );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 2 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::TagList );
-  cil->setText( Skin::ContentItem::description( cil->type() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::TagList );
+  cil->setText( Theme::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 1, 2 );
 
 
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::CombinedReadRepliedStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::CombinedReadRepliedStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageRepliedAndForwarded() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 3 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::ReadStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::ReadStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageNew() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 1, 3 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::RepliedStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::RepliedStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageReplied() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 2, 3 );
 
 
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::AttachmentStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::AttachmentStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageAttachment() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 4 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::EncryptionStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::EncryptionStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageFullyEncrypted() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 1, 4 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::SignatureStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::SignatureStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageFullySigned() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 2, 4 );
 
 
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::ToDoStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::ToDoStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageToDo() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 5 );
 
 
 
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::ImportantStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::ImportantStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageImportant() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 6 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::SpamHamStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::SpamHamStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageSpam() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 1, 6 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::WatchedIgnoredStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::WatchedIgnoredStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapMessageWatched() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 2, 6 );
 
 
 
 
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::ExpandedStateIcon );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::ExpandedStateIcon );
   cil->setPixmap( *( Manager::instance()->pixmapShowMore() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 7 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::VerticalLine );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::VerticalLine );
   cil->setPixmap( *( Manager::instance()->pixmapVerticalLine() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 1, 7 );
 
-  cil = new SkinContentItemSourceLabel( gb, Skin::ContentItem::HorizontalSpacer );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::HorizontalSpacer );
   cil->setPixmap( *( Manager::instance()->pixmapHorizontalSpacer() ) );
-  cil->setToolTip( Skin::ContentItem::description( cil->type() ) );
+  cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 2, 7 );
 
 
 
-  mPreviewWidget = new SkinPreviewWidget( tab );
+  mPreviewWidget = new ThemePreviewWidget( tab );
   tabg->addWidget( mPreviewWidget, 1, 0 );
 
   QLabel * l = new QLabel( tab );
-  l->setText( i18n( "Right click on the header to add or modify columns. Drag the content items and drop them on the columns in order to compose your skin. Right click on the items inside the view for more options." ) );
+  l->setText( i18n( "Right click on the header to add or modify columns. Drag the content items and drop them on the columns in order to compose your theme. Right click on the items inside the view for more options." ) );
   l->setWordWrap( true );
   l->setAlignment( Qt::AlignCenter );
   tabg->addWidget( l, 2, 0 );
@@ -1460,15 +1460,15 @@ SkinEditor::SkinEditor( QWidget *parent )
 
 }
 
-SkinEditor::~SkinEditor()
+ThemeEditor::~ThemeEditor()
 {
 }
 
-void SkinEditor::editSkin( Skin *set )
+void ThemeEditor::editTheme( Theme *set )
 {
-  mCurrentSkin = set;
+  mCurrentTheme = set;
 
-  if ( !mCurrentSkin )
+  if ( !mCurrentTheme )
   {
     setEnabled( false );
     return;
@@ -1479,41 +1479,41 @@ void SkinEditor::editSkin( Skin *set )
   nameEdit()->setText( set->name() );
   descriptionEdit()->setPlainText( set->description() );
 
-  mPreviewWidget->setSkin( set );
+  mPreviewWidget->setTheme( set );
 
   fillViewHeaderPolicyCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mViewHeaderPolicyCombo, (int)mCurrentSkin->viewHeaderPolicy() );
+  ComboBoxUtils::setIntegerOptionComboValue( mViewHeaderPolicyCombo, (int)mCurrentTheme->viewHeaderPolicy() );
 
 }
 
-void SkinEditor::commit()
+void ThemeEditor::commit()
 {
-  if ( !mCurrentSkin )
+  if ( !mCurrentTheme )
     return;
 
-  mCurrentSkin->setName( nameEdit()->text() );
-  mCurrentSkin->setDescription( descriptionEdit()->toPlainText() );
+  mCurrentTheme->setName( nameEdit()->text() );
+  mCurrentTheme->setDescription( descriptionEdit()->toPlainText() );
 
-  mCurrentSkin->setViewHeaderPolicy(
-      (Skin::ViewHeaderPolicy)ComboBoxUtils::getIntegerOptionComboValue( mViewHeaderPolicyCombo, 0 )
+  mCurrentTheme->setViewHeaderPolicy(
+      (Theme::ViewHeaderPolicy)ComboBoxUtils::getIntegerOptionComboValue( mViewHeaderPolicyCombo, 0 )
     );
-  // other settings are already committed to this skin
+  // other settings are already committed to this theme
 }
 
-void SkinEditor::fillViewHeaderPolicyCombo()
+void ThemeEditor::fillViewHeaderPolicyCombo()
 {
   ComboBoxUtils::fillIntegerOptionCombo(
       mViewHeaderPolicyCombo,
-      Skin::enumerateViewHeaderPolicyOptions()
+      Theme::enumerateViewHeaderPolicyOptions()
     );
 }
 
-void SkinEditor::slotNameEditTextEdited( const QString &newName )
+void ThemeEditor::slotNameEditTextEdited( const QString &newName )
 {
-  if( !mCurrentSkin )
+  if( !mCurrentTheme )
     return;
-  mCurrentSkin->setName( newName );
-  emit skinNameChanged();
+  mCurrentTheme->setName( newName );
+  emit themeNameChanged();
 }
 
 } // namespace Core

@@ -37,7 +37,7 @@ namespace Core
 class GroupHeaderItem : public Item
 {
   friend class Model;
-  friend class SkinPreviewDelegate;
+  friend class ThemePreviewDelegate;
 
 protected:
   GroupHeaderItem( const QString &label );

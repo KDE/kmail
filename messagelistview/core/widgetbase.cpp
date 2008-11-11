@@ -21,7 +21,7 @@
 #include "messagelistview/core/widgetbase.h"
 
 #include "messagelistview/core/aggregation.h"
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/theme.h"
 #include "messagelistview/core/filter.h"
 #include "messagelistview/core/manager.h"
 #include "messagelistview/core/optionset.h"
@@ -59,10 +59,10 @@ Widget::Widget( QWidget *pParent )
   : QWidget( pParent )
 {
   mAggregation = 0;
-  mSkin = 0;
+  mTheme = 0;
   mFilter = 0;
   mStorageModel = 0;
-  mStorageUsesPrivateSkin = false;
+  mStorageUsesPrivateTheme = false;
   mStorageUsesPrivateAggregation = false;
 
   Manager::registerWidget( this );
@@ -142,20 +142,20 @@ Widget::Widget( QWidget *pParent )
   mAggregationButton->setPopupMode( QToolButton::InstantPopup );
   g->addWidget( mAggregationButton, 0, 4 );
 
-  // The Skin menu
-  mSkinButton = new QToolButton( this );
-  mSkinButton->setIcon( KIcon( "view-preview" ) );
-  mSkinButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
-  mSkinButton->setText( i18n( "Select View Appearance (Skin)" ) );
-  mSkinButton->setToolTip( mSkinButton->text() );
+  // The Theme menu
+  mThemeButton = new QToolButton( this );
+  mThemeButton->setIcon( KIcon( "view-preview" ) );
+  mThemeButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
+  mThemeButton->setText( i18n( "Select View Appearance (Theme)" ) );
+  mThemeButton->setToolTip( mThemeButton->text() );
   menu = new KMenu( this );
 
   connect( menu, SIGNAL( aboutToShow() ),
-           SLOT( skinMenuAboutToShow() ) );
+           SLOT( themeMenuAboutToShow() ) );
 
-  mSkinButton->setMenu( menu );
-  mSkinButton->setPopupMode( QToolButton::InstantPopup );
-  g->addWidget( mSkinButton, 0, 5 );
+  mThemeButton->setMenu( menu );
+  mThemeButton->setPopupMode( QToolButton::InstantPopup );
+  g->addWidget( mThemeButton, 0, 5 );
 
   mView = new View( this );
   g->addWidget( mView, 1, 0, 1, 6 );
@@ -168,7 +168,7 @@ Widget::Widget( QWidget *pParent )
 
   mSortOrderButton->setEnabled( false );
   mAggregationButton->setEnabled( false );
-  mSkinButton->setEnabled( false );
+  mThemeButton->setEnabled( false );
   mSearchEdit->setEnabled( false );
   mStatusFilterButton->setEnabled( false );
 
@@ -183,8 +183,8 @@ Widget::~Widget()
 
   if ( mSearchTimer )
     delete mSearchTimer;
-  if ( mSkin )
-    delete mSkin;
+  if ( mTheme )
+    delete mTheme;
   if ( mAggregation )
     delete mAggregation;
   if ( mFilter )
@@ -226,19 +226,19 @@ void Widget::setDefaultAggregationForStorageModel( const StorageModel * storageM
   mLastAggregationId = opt->id();
 }
 
-void Widget::setDefaultSkinForStorageModel( const StorageModel * storageModel )
+void Widget::setDefaultThemeForStorageModel( const StorageModel * storageModel )
 {
-  const Skin * opt = Manager::instance()->skinForStorageModel( storageModel, &mStorageUsesPrivateSkin );
+  const Theme * opt = Manager::instance()->themeForStorageModel( storageModel, &mStorageUsesPrivateTheme );
 
   Q_ASSERT( opt );
 
-  if ( mSkin )
-    delete mSkin;
-  mSkin = new Skin( *opt );
+  if ( mTheme )
+    delete mTheme;
+  mTheme = new Theme( *opt );
 
-  mView->setSkin( mSkin );
+  mView->setTheme( mTheme );
 
-  mLastSkinId = opt->id();
+  mLastThemeId = opt->id();
 }
 
 void Widget::setStorageModel( StorageModel * storageModel, PreSelectionMode preSelectionMode )
@@ -247,7 +247,7 @@ void Widget::setStorageModel( StorageModel * storageModel, PreSelectionMode preS
     return; // nuthin to do here
 
   setDefaultAggregationForStorageModel( storageModel );
-  setDefaultSkinForStorageModel( storageModel );
+  setDefaultThemeForStorageModel( storageModel );
 
   if ( mSearchTimer )
   {
@@ -280,11 +280,11 @@ void Widget::setStorageModel( StorageModel * storageModel, PreSelectionMode preS
   mStatusFilterButton->setEnabled( mStorageModel );
   mSortOrderButton->setEnabled( mStorageModel );
   mAggregationButton->setEnabled( mStorageModel );
-  mSkinButton->setEnabled( mStorageModel );
+  mThemeButton->setEnabled( mStorageModel );
   mSearchEdit->setEnabled( mStorageModel );
 }
 
-void Widget::skinMenuAboutToShow()
+void Widget::themeMenuAboutToShow()
 {
   if ( !mStorageModel )
     return;
@@ -295,81 +295,81 @@ void Widget::skinMenuAboutToShow()
 
   menu->clear();
 
-  menu->addTitle( i18n( "Skin" ) );
+  menu->addTitle( i18n( "Theme" ) );
 
   QActionGroup * grp = new QActionGroup( menu );
 
-  const QHash< QString, Skin * > & skins = Manager::instance()->skins();
+  const QHash< QString, Theme * > & themes = Manager::instance()->themes();
 
   QAction * act;
 
-  QList< const Skin * > sortedSkins;
+  QList< const Theme * > sortedThemes;
 
-  for ( QHash< QString, Skin * >::ConstIterator ci = skins.begin(); ci != skins.end(); ++ci )
+  for ( QHash< QString, Theme * >::ConstIterator ci = themes.begin(); ci != themes.end(); ++ci )
   {
     int idx = 0;
-    int cnt = sortedSkins.count();
+    int cnt = sortedThemes.count();
     while ( idx < cnt )
     {
-      if ( sortedSkins.at( idx )->name() > ( *ci )->name() )
+      if ( sortedThemes.at( idx )->name() > ( *ci )->name() )
       {
-        sortedSkins.insert( idx, *ci );
+        sortedThemes.insert( idx, *ci );
         break;
       }
       idx++;
     }
 
     if ( idx == cnt )
-      sortedSkins.append( *ci );
+      sortedThemes.append( *ci );
   }
 
-  for ( QList< const Skin * >::ConstIterator it = sortedSkins.begin(); it != sortedSkins.end(); ++it )
+  for ( QList< const Theme * >::ConstIterator it = sortedThemes.begin(); it != sortedThemes.end(); ++it )
   {
     act = menu->addAction( ( *it )->name() );
     act->setCheckable( true );
     grp->addAction( act );
-    act->setChecked( mLastSkinId == ( *it )->id() );
+    act->setChecked( mLastThemeId == ( *it )->id() );
     act->setData( QVariant( ( *it )->id() ) );
     connect( act, SIGNAL( triggered( bool ) ),
-             SLOT( skinSelected( bool ) ) );
+             SLOT( themeSelected( bool ) ) );
   }
 
   menu->addSeparator();
 
-  act = menu->addAction( i18n( "Folder Always Uses This Skin" ) );
+  act = menu->addAction( i18n( "Folder Always Uses This Theme" ) );
   act->setCheckable( true );
-  act->setChecked( mStorageUsesPrivateSkin );
+  act->setChecked( mStorageUsesPrivateTheme );
   connect( act, SIGNAL( triggered( bool ) ),
-           SLOT( setPrivateSkinForStorage() ) );
+           SLOT( setPrivateThemeForStorage() ) );
 
   menu->addSeparator();
 
   act = menu->addAction( i18n( "Configure..." ) );
-  //act->setStatusTip( i18n( "Add, Remove or Modify the Available Skins" ) ); <-- doesn't seem to work
-  //act->setToolTip( i18n( "Add, Remove or Modify the Available Skins" ) ); <-- doesn't seem to work
+  //act->setStatusTip( i18n( "Add, Remove or Modify the Available Themes" ) ); <-- doesn't seem to work
+  //act->setToolTip( i18n( "Add, Remove or Modify the Available Themes" ) ); <-- doesn't seem to work
   connect( act, SIGNAL( triggered( bool ) ),
-           SLOT( configureSkins() ) );
+           SLOT( configureThemes() ) );
 }
 
-void Widget::setPrivateSkinForStorage()
+void Widget::setPrivateThemeForStorage()
 {
   if ( !mStorageModel )
     return;
 
-  Q_ASSERT( mSkin );
+  Q_ASSERT( mTheme );
 
-  mStorageUsesPrivateSkin = !mStorageUsesPrivateSkin;
+  mStorageUsesPrivateTheme = !mStorageUsesPrivateTheme;
 
-  Manager::instance()->saveSkinForStorageModel( mStorageModel, mSkin->id(), mStorageUsesPrivateSkin );
+  Manager::instance()->saveThemeForStorageModel( mStorageModel, mTheme->id(), mStorageUsesPrivateTheme );
 }
 
-void Widget::configureSkins()
+void Widget::configureThemes()
 {
   // Show customization dialog
-  Manager::instance()->showConfigureSkinsDialog( this, mLastSkinId );
+  Manager::instance()->showConfigureThemesDialog( this, mLastThemeId );
 }
 
-void Widget::skinSelected( bool )
+void Widget::themeSelected( bool )
 {
   if ( !mStorageModel )
     return; // nuthin to do
@@ -384,19 +384,19 @@ void Widget::skinSelected( bool )
   if ( id.isEmpty() )
     return;
 
-  const Skin * opt = Manager::instance()->skin( id );
+  const Theme * opt = Manager::instance()->theme( id );
 
-  if ( mSkin )
-    delete mSkin;
-  mSkin = new Skin( *opt );
+  if ( mTheme )
+    delete mTheme;
+  mTheme = new Theme( *opt );
 
-  mView->setSkin( mSkin );
+  mView->setTheme( mTheme );
 
-  mLastSkinId = opt->id();
+  mLastThemeId = opt->id();
 
-  //mStorageUsesPrivateSkin = false;
+  //mStorageUsesPrivateTheme = false;
 
-  Manager::instance()->saveSkinForStorageModel( mStorageModel, opt->id(), mStorageUsesPrivateSkin );
+  Manager::instance()->saveThemeForStorageModel( mStorageModel, opt->id(), mStorageUsesPrivateTheme );
 
   mView->reload();
 
@@ -624,7 +624,7 @@ static void switchMessageSorting(
     Aggregation::MessageSorting messageSorting,
     Aggregation::SortDirection sortDirection,
     QHeaderView * header,
-    Skin * skin,
+    Theme * theme,
     int logicalHeaderColumnIndex
   )
 {
@@ -633,14 +633,14 @@ static void switchMessageSorting(
 
   // If the logicalHeaderColumnIndex was specified then we already know which
   // column we should set the sort indicator to. If it wasn't specified (it's -1)
-  // then we need to find it out in the skin.
+  // then we need to find it out in the theme.
 
   if ( logicalHeaderColumnIndex == -1 )
   {
-    // try to find the specified message sorting in the skin columns
-    const QList< Skin::Column * > & columns = skin->columns();
+    // try to find the specified message sorting in the theme columns
+    const QList< Theme::Column * > & columns = theme->columns();
     int idx = 0;
-    for ( QList< Skin::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
+    for ( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
     {
       if ( !header->isSectionHidden( idx ) )
       {
@@ -682,7 +682,7 @@ void Widget::messageSortingSelected( QAction *action )
   if ( !ok )
     return;
 
-  switchMessageSorting( mAggregation, ord, mAggregation->messageSortDirection(), mView->header(), mSkin, -1 );
+  switchMessageSorting( mAggregation, ord, mAggregation->messageSortDirection(), mView->header(), mTheme, -1 );
 
   mView->reload();
 
@@ -701,7 +701,7 @@ void Widget::messageSortDirectionSelected( QAction *action )
   if ( !ok )
     return;
 
-  switchMessageSorting( mAggregation, mAggregation->messageSorting(), ord, mView->header(), mSkin, -1 );
+  switchMessageSorting( mAggregation, mAggregation->messageSorting(), ord, mView->header(), mTheme, -1 );
 
   mView->reload();
 
@@ -747,16 +747,16 @@ void Widget::groupSortDirectionSelected( QAction *action )
 
 void Widget::slotViewHeaderSectionClicked( int logicalIndex )
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return;
 
   if ( !mAggregation )
     return;
 
-  if ( logicalIndex >= mSkin->columns().count() )
+  if ( logicalIndex >= mTheme->columns().count() )
     return;
 
-  const Skin::Column * column = mSkin->column( logicalIndex );
+  const Theme::Column * column = mTheme->column( logicalIndex );
   if ( !column )
     return; // should never happen...
 
@@ -768,21 +768,21 @@ void Widget::slotViewHeaderSectionClicked( int logicalIndex )
   {
     // switch sort direction
     if ( mAggregation->messageSortDirection() == Aggregation::Ascending )
-      switchMessageSorting( mAggregation, mAggregation->messageSorting(), Aggregation::Descending, mView->header(), mSkin, logicalIndex );
+      switchMessageSorting( mAggregation, mAggregation->messageSorting(), Aggregation::Descending, mView->header(), mTheme, logicalIndex );
     else
-      switchMessageSorting( mAggregation, mAggregation->messageSorting(), Aggregation::Ascending, mView->header(), mSkin, logicalIndex );
+      switchMessageSorting( mAggregation, mAggregation->messageSorting(), Aggregation::Ascending, mView->header(), mTheme, logicalIndex );
   } else {
     // keep sort direction but switch sort order
-    switchMessageSorting( mAggregation, column->messageSorting(), mAggregation->messageSortDirection(), mView->header(), mSkin, logicalIndex );
+    switchMessageSorting( mAggregation, column->messageSorting(), mAggregation->messageSortDirection(), mView->header(), mTheme, logicalIndex );
   }
 
   mView->reload();
  
 }
 
-void Widget::skinsChanged()
+void Widget::themesChanged()
 {
-  setDefaultSkinForStorageModel( mStorageModel );
+  setDefaultThemeForStorageModel( mStorageModel );
 
   mView->reload();
 }

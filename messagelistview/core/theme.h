@@ -44,10 +44,10 @@ namespace Core
 {
 
 /**
- * The Skin class defines the visual appearance of the MessageListView.
+ * The Theme class defines the visual appearance of the MessageListView.
  *
- * The core structure of the skin is made up of Column objects which
- * are mapped to View (QTreeView) columns. Each skin must provide at least one column.
+ * The core structure of the theme is made up of Column objects which
+ * are mapped to View (QTreeView) columns. Each theme must provide at least one column.
  *
  * Each column contains a set of Row objects dedicated to message items
  * and a set of Row objects dedicated to group header items. There must be at least
@@ -56,16 +56,16 @@ namespace Core
  * 
  * Each Row contains a set of left aligned and a set of right aligned ContentItem objects.
  * The right aligned items are painted from right to left while the left aligned
- * ones are painted from left to right. In Right-To-Left mode the SkinDelegate
+ * ones are painted from left to right. In Right-To-Left mode the ThemeDelegate
  * follows the exact opposite convention.
  *
  * Each ContentItem object specifies a visual element to be displayed in a View
  * row. The visual elements may be pieces of text (Subject, Date) or icons.
  *
- * The Skin is designed to strictly interoperate with the SkinDelegate class
+ * The Theme is designed to strictly interoperate with the ThemeDelegate class
  * which takes care of rendering the contents when attached to an QAbstractItemView.
  */
-class Skin : public OptionSet
+class Theme : public OptionSet
 {
 public:
   /**
@@ -245,12 +245,12 @@ public:
   public:
     /**
      * Creates a ContentItem with the specified type.
-     * A content item must be added to a skin Row.
+     * A content item must be added to a theme Row.
      */
     ContentItem( Type type );
     /**
      * Creates a ContentItem that is a copy of the content item src.
-     * A content item must be added to a skin Row.
+     * A content item must be added to a theme Row.
      */
     ContentItem( const ContentItem &src );
 
@@ -432,13 +432,13 @@ public:
     void setCustomColor( const QColor &clr )
       { mCustomColor = clr; };
 
-    // Stuff used by SkinDelegate. This section should be protected but some gcc
+    // Stuff used by ThemeDelegate. This section should be protected but some gcc
     // versions seem to get confused with nested class and friend declarations
     // so for portability we're using a public interface also here.
 
     /**
      * The last QPaintDevice that made use of this item.
-     * This function is used by SkinDelegate for QFontMetrics caching purposes.
+     * This function is used by ThemeDelegate for QFontMetrics caching purposes.
      */
     const QPaintDevice * lastPaintDevice() const
       { return mLastPaintDevice; };
@@ -448,7 +448,7 @@ public:
      * for the currently set font and the specified QPaintDevice.
      * This function will also reset the font to the KGlobalSettings::generalFont()
      * if you haven't called setUseCustomFont().
-     * This function is used by SkinDelegate, you usually don't need to care.
+     * This function is used by ThemeDelegate, you usually don't need to care.
      */
     void updateFontMetrics( QPaintDevice * device );
 
@@ -456,7 +456,7 @@ public:
      * Returns the cached font metrics attacched to this content item.
      * The font metrics must be kept up-to-date by the means of the updateFontMetrics()
      * function whenever the QPaintDevice that this ContentItem is painted
-     * on is different than lastPaintDevice(). This is done by SkinDelegate
+     * on is different than lastPaintDevice(). This is done by ThemeDelegate
      * and in fact you shouldn't care.
      */
     const QFontMetrics & fontMetrics() const
@@ -464,7 +464,7 @@ public:
 
     /**
      * Returns the cached font metrics line spacing for this content item.
-     * The line spacing is used really often in SkinDelegate so this
+     * The line spacing is used really often in ThemeDelegate so this
      * inlineable getter will help the compiler in optimizing stuff.
      */
     int lineSpacing() const
@@ -472,17 +472,17 @@ public:
 
     /**
      * Resets the cache of this content item.
-     * This is called by the Skin::Row resetCache() method.
+     * This is called by the Theme::Row resetCache() method.
      */
     void resetCache();
 
     /**
-     * Handles content item saving (used by Skin::Row::save())
+     * Handles content item saving (used by Theme::Row::save())
      */
     void save( QDataStream &stream ) const;
 
     /**
-     * Handles content item loading (used by Skin::Row::load())
+     * Handles content item loading (used by Theme::Row::load())
      */
     bool load( QDataStream &stream );
 
@@ -594,19 +594,19 @@ public:
     void resetCache();
 
     /**
-     * Handles row saving (used by Skin::Column::save())
+     * Handles row saving (used by Theme::Column::save())
      */
     void save( QDataStream &stream ) const;
 
     /**
-     * Handles row loading (used by Skin::Column::load())
+     * Handles row loading (used by Theme::Column::load())
      */
     bool load( QDataStream &stream );
 
   };
 
   /**
-   * The Column class defines a view column available inside this skin.
+   * The Column class defines a view column available inside this theme.
    * Each Column has a list of Row items that define the visible rows.
    */
   class Column
@@ -692,14 +692,14 @@ public:
     void removeAllMessageRows();
 
     /**
-     * Appends a message row to this skin column. The Skin takes
+     * Appends a message row to this theme column. The Theme takes
      * the ownership of the Row pointer.
      */
     void addMessageRow( Row * row )
       { mMessageRows.append( row ); };
 
     /**
-     * Inserts a message row to this skin column in the specified position. The Skin takes
+     * Inserts a message row to this theme column in the specified position. The Theme takes
      * the ownership of the Row pointer.
      */
     void insertMessageRow( int idx, Row * row );
@@ -722,14 +722,14 @@ public:
     void removeAllGroupHeaderRows();
 
     /**
-     * Appends a group header row to this skin. The Skin takes
+     * Appends a group header row to this theme. The Theme takes
      * the ownership of the Row pointer.
      */
     void addGroupHeaderRow( Row * row )
       { mGroupHeaderRows.append( row ); };
 
     /**
-     * Inserts a group header row to this skin column in the specified position. The Skin takes
+     * Inserts a group header row to this theme column in the specified position. The Theme takes
      * the ownership of the Row pointer.
      */
     void insertGroupHeaderRow( int idx, Row * row );
@@ -748,7 +748,7 @@ public:
     bool containsTextItems() const;
 
     /**
-     * This is called by the Skin when it's resetCache() method is called.
+     * This is called by the Theme when it's resetCache() method is called.
      * You shouldn't need to care about this.
      */
     void resetCache();
@@ -780,22 +780,22 @@ public:
       { mMessageSizeHint = sh; };
 
     /**
-     * Handles column saving (used by Skin::save())
+     * Handles column saving (used by Theme::save())
      */
     void save( QDataStream &stream ) const;
 
     /**
-     * Handles column loading (used by Skin::load())
+     * Handles column loading (used by Theme::load())
      */
     bool load( QDataStream &stream );
 
   };
 
 public:
-  Skin();
-  Skin( const QString &name, const QString &description );
-  Skin( const Skin &src );
-  ~Skin();
+  Theme();
+  Theme( const QString &name, const QString &description );
+  Theme( const Theme &src );
+  ~Theme();
 
 public:
   /**
@@ -834,7 +834,7 @@ public:
   };
 
 private:
-  QList< Column * > mColumns;                             ///< The list of columns available in this skin
+  QList< Column * > mColumns;                             ///< The list of columns available in this theme
 
   GroupHeaderBackgroundMode mGroupHeaderBackgroundMode;   ///< How do we paint group header background ?
   QColor mGroupHeaderBackgroundColor;                     ///< The background color of the message group, used only if CustomColor
@@ -842,7 +842,7 @@ private:
   ViewHeaderPolicy mViewHeaderPolicy;
 public:
   /**
-   * Returns the list of columns available in this skin
+   * Returns the list of columns available in this theme
    */
   const QList< Column * > & columns() const
     { return mColumns; };
@@ -854,18 +854,18 @@ public:
     { return mColumns.count() > idx ? mColumns.at( idx ) : 0; };
 
   /**
-   * Removes all columns from this skin
+   * Removes all columns from this theme
    */
   void removeAllColumns();
 
   /**
-   * Appends a column to this skin
+   * Appends a column to this theme
    */
   void addColumn( Column * column )
     { mColumns.append( column ); };
 
   /**
-   * Inserts a column to this skin at the specified position.
+   * Inserts a column to this theme at the specified position.
    */
   void insertColumn( int idx, Column * column );
 
@@ -876,33 +876,33 @@ public:
     { mColumns.removeAll( col ); };
 
   /**
-   * Returns the group header background mode for this skin.
+   * Returns the group header background mode for this theme.
    */
   GroupHeaderBackgroundMode groupHeaderBackgroundMode() const
     { return mGroupHeaderBackgroundMode; };
 
   /**
-   * Sets the group header background mode for this skin.
+   * Sets the group header background mode for this theme.
    * If you set it to CustomColor then please also setGroupHeaderBackgroundColor()
    */
   void setGroupHeaderBackgroundMode( GroupHeaderBackgroundMode bm );
 
   /**
-   * Returns the group header background color for this skin.
+   * Returns the group header background color for this theme.
    * This color is used only if groupHeaderBackgroundMode() is set to CustomColor.
    */
   const QColor & groupHeaderBackgroundColor() const
     { return mGroupHeaderBackgroundColor; };
 
   /**
-   * Sets the group header background color for this skin.
+   * Sets the group header background color for this theme.
    * This color is used only if groupHeaderBackgroundMode() is set to CustomColor.
    */
   void setGroupHeaderBackgroundColor( const QColor &clr )
     { mGroupHeaderBackgroundColor = clr; };
 
   /**
-   * Returns the group header background style for this skin.
+   * Returns the group header background style for this theme.
    * The group header background style makes sense only if groupHeaderBackgroundMode() is
    * set to something different than Transparent.
    */
@@ -910,7 +910,7 @@ public:
     { return mGroupHeaderBackgroundStyle; };
 
   /**
-   * Sets the group header background style for this skin.
+   * Sets the group header background style for this theme.
    * The group header background style makes sense only if groupHeaderBackgroundMode() is
    * set to something different than Transparent.
    */
@@ -931,7 +931,7 @@ public:
     { return mViewHeaderPolicy; };
 
   /**
-   * Sets the ViewHeaderPolicy for this skin
+   * Sets the ViewHeaderPolicy for this theme
    */
   void setViewHeaderPolicy( ViewHeaderPolicy vhp )
     { mViewHeaderPolicy = vhp; };
@@ -944,9 +944,9 @@ public:
   static QList< QPair< QString, int > > enumerateViewHeaderPolicyOptions();
 
   /**
-   * Resets the cache for this skin. This is called by the SkinDelegate
-   * when the skin is applied and must be called before any changes to this
-   * skin are going to be painted (that is, apply a chunk of changes, call
+   * Resets the cache for this theme. This is called by the ThemeDelegate
+   * when the theme is applied and must be called before any changes to this
+   * theme are going to be painted (that is, apply a chunk of changes, call
    * resetCache() then repaint.
    */
   void resetCache();

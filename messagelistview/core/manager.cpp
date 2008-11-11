@@ -22,9 +22,9 @@
 
 #include "messagelistview/core/aggregation.h"
 #include "messagelistview/core/configureaggregationsdialog.h"
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/theme.h"
 #include "messagelistview/core/view.h"
-#include "messagelistview/core/configureskinsdialog.h"
+#include "messagelistview/core/configurethemesdialog.h"
 #include "messagelistview/core/widgetbase.h"
 #include "messagelistview/core/storagemodelbase.h"
 
@@ -136,7 +136,7 @@ Manager::~Manager()
   delete mDateFormatter;
 
   ConfigureAggregationsDialog::cleanup(); // make sure it's dead
-  ConfigureSkinsDialog::cleanup(); // make sure it's dead
+  ConfigureThemesDialog::cleanup(); // make sure it's dead
 
 
   mInstance = 0;
@@ -147,9 +147,9 @@ void Manager::showConfigureAggregationsDialog( Widget *requester, const QString 
   ConfigureAggregationsDialog::display( requester ? requester->window() : 0, preselectAggregationId );
 }
 
-void Manager::showConfigureSkinsDialog( Widget *requester, const QString &preselectSkinId )
+void Manager::showConfigureThemesDialog( Widget *requester, const QString &preselectThemeId )
 {
-  ConfigureSkinsDialog::display( requester ? requester->window() : 0, preselectSkinId );
+  ConfigureThemesDialog::display( requester ? requester->window() : 0, preselectThemeId );
 }
 
 
@@ -495,77 +495,77 @@ void Manager::aggregationsConfigurationCompleted()
 }
 
 
-const Skin * Manager::skin( const QString &id )
+const Theme * Manager::theme( const QString &id )
 {
-  Skin * opt = mSkins.value( id );
+  Theme * opt = mThemes.value( id );
   if ( opt )
     return opt;
     
-  return defaultSkin();
+  return defaultTheme();
 }
 
-const Skin * Manager::defaultSkin()
+const Theme * Manager::defaultTheme()
 {
-  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelSkins" );
+  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelThemes" );
 
-  QString skinId = conf.readEntry( QString( "DefaultSet" ), "" );
+  QString themeId = conf.readEntry( QString( "DefaultSet" ), "" );
    
-  Skin * opt = 0;
+  Theme * opt = 0;
 
-  if ( !skinId.isEmpty() )
-    opt = mSkins.value( skinId );
+  if ( !themeId.isEmpty() )
+    opt = mThemes.value( themeId );
 
   if ( opt )
     return opt;
 
   // try just the first one
-  QHash< QString, Skin * >::Iterator it = mSkins.begin();
-  if ( it != mSkins.end() )
+  QHash< QString, Theme * >::Iterator it = mThemes.begin();
+  if ( it != mThemes.end() )
     return *it;
 
   // aargh
-  createDefaultSkins();
+  createDefaultThemes();
 
-  it = mSkins.begin();
+  it = mThemes.begin();
 
-  Q_ASSERT( it != mSkins.end() );
+  Q_ASSERT( it != mThemes.end() );
 
   return *it;
 }
 
-void Manager::saveSkinForStorageModel( const StorageModel *storageModel, const QString &id, bool storageUsesPrivateSkin )
+void Manager::saveThemeForStorageModel( const StorageModel *storageModel, const QString &id, bool storageUsesPrivateTheme )
 {
-  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelSkins" );
+  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelThemes" );
 
-  if ( storageUsesPrivateSkin )
+  if ( storageUsesPrivateTheme )
     conf.writeEntry( QString( "SetForStorageModel%1" ).arg( storageModel->id() ), id );
   else
     conf.deleteEntry( QString( "SetForStorageModel%1" ).arg( storageModel->id() ) );
 
-  // This always becomes the "current" default skin
+  // This always becomes the "current" default theme
   conf.writeEntry( QString( "DefaultSet" ), id );
 }
 
 
-const Skin * Manager::skinForStorageModel( const StorageModel *storageModel, bool *storageUsesPrivateSkin )
+const Theme * Manager::themeForStorageModel( const StorageModel *storageModel, bool *storageUsesPrivateTheme )
 {
-  Q_ASSERT( storageUsesPrivateSkin );
+  Q_ASSERT( storageUsesPrivateTheme );
 
-  *storageUsesPrivateSkin = false; // this is by default
+  *storageUsesPrivateTheme = false; // this is by default
 
   if ( !storageModel )
-    return defaultSkin();
+    return defaultTheme();
 
-  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelSkins" );
-  QString skinId = conf.readEntry( QString( "SetForStorageModel%1" ).arg( storageModel->id() ), "" );
+  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelThemes" );
+  QString themeId = conf.readEntry( QString( "SetForStorageModel%1" ).arg( storageModel->id() ), "" );
 
-  Skin * opt = 0;
+  Theme * opt = 0;
 
-  if ( !skinId.isEmpty() )
+  if ( !themeId.isEmpty() )
   {
-    // a private skin was stored
-    opt = mSkins.value( skinId );
-    *storageUsesPrivateSkin = (opt != 0);
+    // a private theme was stored
+    opt = mThemes.value( themeId );
+    *storageUsesPrivateTheme = (opt != 0);
   }
 
   if ( opt )
@@ -574,29 +574,29 @@ const Skin * Manager::skinForStorageModel( const StorageModel *storageModel, boo
   // FIXME: If the storageModel is a mailing list, maybe suggest a mailing-list like preset...
   //        We could even try to guess if the storageModel is a mailing list
 
-  // FIXME: Prefer right-to-left skins when application layout is RTL.
+  // FIXME: Prefer right-to-left themes when application layout is RTL.
 
-  return defaultSkin();
+  return defaultTheme();
 }
 
-void Manager::addSkin( Skin *set )
+void Manager::addTheme( Theme *set )
 {
-  Skin * old = mSkins.value( set->id() );
+  Theme * old = mThemes.value( set->id() );
   if ( old )
     delete old;
-  mSkins.insert( set->id(), set );
+  mThemes.insert( set->id(), set );
 }
 
-static Skin::Column * add_skin_simple_text_column( Skin * s, const QString &name, Skin::ContentItem::Type type, bool visibleByDefault, Aggregation::MessageSorting messageSorting, bool alignRight, bool addGroupHeaderItem )
+static Theme::Column * add_theme_simple_text_column( Theme * s, const QString &name, Theme::ContentItem::Type type, bool visibleByDefault, Aggregation::MessageSorting messageSorting, bool alignRight, bool addGroupHeaderItem )
 {
-  Skin::Column * c = new Skin::Column();
+  Theme::Column * c = new Theme::Column();
   c->setLabel( name );
   c->setVisibleByDefault( visibleByDefault );
   c->setMessageSorting( messageSorting );
 
-  Skin::Row * r = new Skin::Row();
+  Theme::Row * r = new Theme::Row();
 
-  Skin::ContentItem * i = new Skin::ContentItem( type );
+  Theme::ContentItem * i = new Theme::ContentItem( type );
   i->setFont( KGlobalSettings::generalFont() );
 
   if ( alignRight )
@@ -608,9 +608,9 @@ static Skin::Column * add_skin_simple_text_column( Skin * s, const QString &name
 
   if ( addGroupHeaderItem )
   {
-    Skin::Row * r = new Skin::Row();
+    Theme::Row * r = new Theme::Row();
 
-    Skin::ContentItem * i = new Skin::ContentItem( type );
+    Theme::ContentItem * i = new Theme::ContentItem( type );
     i->setFont( KGlobalSettings::generalFont() );
 
     if ( alignRight )
@@ -627,16 +627,16 @@ static Skin::Column * add_skin_simple_text_column( Skin * s, const QString &name
   return c;
 }
 
-static Skin::Column * add_skin_simple_icon_column( Skin * s, const QString &name, Skin::ContentItem::Type type, bool visibleByDefault, Aggregation::MessageSorting messageSorting )
+static Theme::Column * add_theme_simple_icon_column( Theme * s, const QString &name, Theme::ContentItem::Type type, bool visibleByDefault, Aggregation::MessageSorting messageSorting )
 {
-  Skin::Column * c = new Skin::Column();
+  Theme::Column * c = new Theme::Column();
   c->setLabel( name );
   c->setVisibleByDefault( visibleByDefault );
   c->setMessageSorting( messageSorting );
 
-  Skin::Row * r = new Skin::Row();
+  Theme::Row * r = new Theme::Row();
 
-  Skin::ContentItem * i = new Skin::ContentItem( type );
+  Theme::ContentItem * i = new Theme::ContentItem( type );
   i->setSoftenByBlendingWhenDisabled( true );
 
   r->addLeftItem( i );
@@ -649,28 +649,28 @@ static Skin::Column * add_skin_simple_icon_column( Skin * s, const QString &name
 }
 
 
-void Manager::createDefaultSkins()
+void Manager::createDefaultThemes()
 {
-  Skin * s;
-  Skin::Column * c;
-  Skin::Row * r;
-  Skin::ContentItem * i;
+  Theme * s;
+  Theme::Column * c;
+  Theme::Row * r;
+  Theme::ContentItem * i;
 
-  // The "Classic" backward compatible skin
+  // The "Classic" backward compatible theme
 
-  s = new Skin(
+  s = new Theme(
       i18n( "Classic" ),
-      i18n( "A simple, backward compatible, single row skin" )
+      i18n( "A simple, backward compatible, single row theme" )
     );
 
-    c = new Skin::Column();
+    c = new Theme::Column();
     c->setLabel( i18n( "Subject" ) );
     c->setMessageSorting( Aggregation::SortMessagesBySubject );
 
-      r = new Skin::Row();
-        i = new Skin::ContentItem( Skin::ContentItem::ExpandedStateIcon );
+      r = new Theme::Row();
+        i = new Theme::ContentItem( Theme::ContentItem::ExpandedStateIcon );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::GroupHeaderLabel );
+        i = new Theme::ContentItem( Theme::ContentItem::GroupHeaderLabel );
         QFont bigFont = KGlobalSettings::generalFont();
         //bigFont.setPointSize( 16 );
         bigFont.setBold( true );
@@ -679,58 +679,58 @@ void Manager::createDefaultSkins()
       r->addLeftItem( i );
     c->addGroupHeaderRow( r );
 
-      r = new Skin::Row();
-        i = new Skin::ContentItem( Skin::ContentItem::CombinedReadRepliedStateIcon );
+      r = new Theme::Row();
+        i = new Theme::ContentItem( Theme::ContentItem::CombinedReadRepliedStateIcon );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::AttachmentStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::AttachmentStateIcon );
         i->setHideWhenDisabled( true );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::SignatureStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::SignatureStateIcon );
         i->setHideWhenDisabled( true );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::EncryptionStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::EncryptionStateIcon );
         i->setHideWhenDisabled( true );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::Subject );
+        i = new Theme::ContentItem( Theme::ContentItem::Subject );
       r->addLeftItem( i );
     c->addMessageRow( r );
 
   s->addColumn( c );
 
-  c = add_skin_simple_text_column( s, i18n( "Sender/Receiver" ), Skin::ContentItem::SenderOrReceiver, true, Aggregation::SortMessagesBySenderOrReceiver, false, false);
+  c = add_theme_simple_text_column( s, i18n( "Sender/Receiver" ), Theme::ContentItem::SenderOrReceiver, true, Aggregation::SortMessagesBySenderOrReceiver, false, false);
   c->setIsSenderOrReceiver( true );
-  add_skin_simple_text_column( s, i18n( "Sender" ), Skin::ContentItem::Sender, false, Aggregation::SortMessagesBySender, false, false );
-  add_skin_simple_text_column( s, i18n( "Receiver" ), Skin::ContentItem::Receiver, false, Aggregation::SortMessagesByReceiver, false, false );
-  add_skin_simple_text_column( s, i18n( "Date" ), Skin::ContentItem::Date, true, Aggregation::SortMessagesByDateTime, false, false );
-  add_skin_simple_text_column( s, i18n( "Most Recent Date" ), Skin::ContentItem::MostRecentDate, false, Aggregation::SortMessagesByDateTimeOfMostRecent, false, true );
-  add_skin_simple_text_column( s, i18n( "Size" ), Skin::ContentItem::Size, false, Aggregation::SortMessagesBySize, false, false );
-  add_skin_simple_icon_column( s, i18n( "Attachment" ), Skin::ContentItem::AttachmentStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "New/Unread" ), Skin::ContentItem::ReadStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "Important" ), Skin::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "To Do" ), Skin::ContentItem::ToDoStateIcon, false, Aggregation::SortMessagesByToDoStatus );
-  add_skin_simple_icon_column( s, i18n( "Replied" ), Skin::ContentItem::RepliedStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "Spam/Ham" ), Skin::ContentItem::SpamHamStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "Watched/Ignored" ), Skin::ContentItem::WatchedIgnoredStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "Encryption" ), Skin::ContentItem::EncryptionStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "Signature" ), Skin::ContentItem::SignatureStateIcon, false, Aggregation::NoMessageSorting );
-  add_skin_simple_icon_column( s, i18n( "Tag List" ), Skin::ContentItem::TagList, false, Aggregation::NoMessageSorting );
+  add_theme_simple_text_column( s, i18n( "Sender" ), Theme::ContentItem::Sender, false, Aggregation::SortMessagesBySender, false, false );
+  add_theme_simple_text_column( s, i18n( "Receiver" ), Theme::ContentItem::Receiver, false, Aggregation::SortMessagesByReceiver, false, false );
+  add_theme_simple_text_column( s, i18n( "Date" ), Theme::ContentItem::Date, true, Aggregation::SortMessagesByDateTime, false, false );
+  add_theme_simple_text_column( s, i18n( "Most Recent Date" ), Theme::ContentItem::MostRecentDate, false, Aggregation::SortMessagesByDateTimeOfMostRecent, false, true );
+  add_theme_simple_text_column( s, i18n( "Size" ), Theme::ContentItem::Size, false, Aggregation::SortMessagesBySize, false, false );
+  add_theme_simple_icon_column( s, i18n( "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Important" ), Theme::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "To Do" ), Theme::ContentItem::ToDoStateIcon, false, Aggregation::SortMessagesByToDoStatus );
+  add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), Theme::ContentItem::SpamHamStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Watched/Ignored" ), Theme::ContentItem::WatchedIgnoredStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Encryption" ), Theme::ContentItem::EncryptionStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Signature" ), Theme::ContentItem::SignatureStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Tag List" ), Theme::ContentItem::TagList, false, Aggregation::NoMessageSorting );
 
-  addSkin( s );
+  addTheme( s );
 
-  // The Fancy skin
+  // The Fancy theme
 
-  s = new Skin(
+  s = new Theme(
       i18n( "Fancy" ),
-      i18n( "A fancy multiline and multi item skin" )
+      i18n( "A fancy multiline and multi item theme" )
     );
 
-    c = new Skin::Column();
+    c = new Theme::Column();
     c->setLabel( i18n( "Message" ) );
 
-      r = new Skin::Row();
-        i = new Skin::ContentItem( Skin::ContentItem::ExpandedStateIcon );
+      r = new Theme::Row();
+        i = new Theme::ContentItem( Theme::ContentItem::ExpandedStateIcon );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::GroupHeaderLabel );
+        i = new Theme::ContentItem( Theme::ContentItem::GroupHeaderLabel );
         QFont aBigFont = KGlobalSettings::generalFont();
         aBigFont.setPointSize( 16 );
         aBigFont.setBold( true );
@@ -739,39 +739,39 @@ void Manager::createDefaultSkins()
       r->addLeftItem( i );
     c->addGroupHeaderRow( r );
 
-      r = new Skin::Row();
-        i = new Skin::ContentItem( Skin::ContentItem::Subject );
+      r = new Theme::Row();
+        i = new Theme::ContentItem( Theme::ContentItem::Subject );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::ReadStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::ReadStateIcon );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::RepliedStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::RepliedStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::AttachmentStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::AttachmentStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::EncryptionStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::EncryptionStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::SignatureStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::SignatureStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::TagList );
+        i = new Theme::ContentItem( Theme::ContentItem::TagList );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
     c->addMessageRow( r );
 
-  Skin::Row * firstFancyRow = r; // save it so we can continue adding stuff below (after cloning the skin)
+  Theme::Row * firstFancyRow = r; // save it so we can continue adding stuff below (after cloning the theme)
 
-      r = new Skin::Row();
-        i = new Skin::ContentItem( Skin::ContentItem::SenderOrReceiver );
+      r = new Theme::Row();
+        i = new Theme::ContentItem( Theme::ContentItem::SenderOrReceiver );
         i->setSoftenByBlending( true );
         QFont aItalicFont = KGlobalSettings::generalFont();
         aItalicFont.setItalic( true );
         i->setFont( aItalicFont );
         i->setUseCustomFont( true );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::Date );
+        i = new Theme::ContentItem( Theme::ContentItem::Date );
         i->setSoftenByBlending( true );
         i->setFont( aItalicFont );
         i->setUseCustomFont( true );
@@ -780,83 +780,83 @@ void Manager::createDefaultSkins()
 
   s->addColumn( c );
 
-  // clone the "Fancy skin" here so we'll use it as starting point for the "Fancy with clickable status"
-  Skin * fancyWithClickableStatus = new Skin( *s );
+  // clone the "Fancy theme" here so we'll use it as starting point for the "Fancy with clickable status"
+  Theme * fancyWithClickableStatus = new Theme( *s );
   fancyWithClickableStatus->generateUniqueId();
 
   // and continue the "Fancy" specific settings
   r = firstFancyRow;
 
-        i = new Skin::ContentItem( Skin::ContentItem::ToDoStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::ToDoStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::ImportantStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::ImportantStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::SpamHamStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::SpamHamStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::WatchedIgnoredStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::WatchedIgnoredStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
 
-  s->setViewHeaderPolicy( Skin::NeverShowHeader );
+  s->setViewHeaderPolicy( Theme::NeverShowHeader );
 
-  addSkin( s );
+  addTheme( s );
 
 
-  // The "Fancy with Clickable Status" skin
+  // The "Fancy with Clickable Status" theme
 
   s = fancyWithClickableStatus;
 
   s->setName( i18n( "Fancy with Clickable Status" ) );
-  s->setDescription( i18n( "A fancy multiline and multi item skin with a clickable status column" ) );
+  s->setDescription( i18n( "A fancy multiline and multi item theme with a clickable status column" ) );
 
-    c = new Skin::Column();
+    c = new Theme::Column();
     c->setLabel( i18n( "Status" ) );
     c->setVisibleByDefault( true );
 
-      r = new Skin::Row();
-        i = new Skin::ContentItem( Skin::ContentItem::ToDoStateIcon );
+      r = new Theme::Row();
+        i = new Theme::ContentItem( Theme::ContentItem::ToDoStateIcon );
         i->setSoftenByBlendingWhenDisabled( true );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::ImportantStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::ImportantStateIcon );
         i->setSoftenByBlendingWhenDisabled( true );
       r->addLeftItem( i );
     c->addMessageRow( r );
 
-      r = new Skin::Row();
-        i = new Skin::ContentItem( Skin::ContentItem::SpamHamStateIcon );
+      r = new Theme::Row();
+        i = new Theme::ContentItem( Theme::ContentItem::SpamHamStateIcon );
         i->setSoftenByBlendingWhenDisabled( true );
       r->addLeftItem( i );
-        i = new Skin::ContentItem( Skin::ContentItem::WatchedIgnoredStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::WatchedIgnoredStateIcon );
         i->setSoftenByBlendingWhenDisabled( true );
       r->addLeftItem( i );
     c->addMessageRow( r );
 
   s->addColumn( c );
 
-  addSkin( s );
+  addTheme( s );
 }
 
-void Manager::removeAllSkins()
+void Manager::removeAllThemes()
 {
-  for( QHash< QString, Skin * >::Iterator it = mSkins.begin(); it != mSkins.end(); ++it )
+  for( QHash< QString, Theme * >::Iterator it = mThemes.begin(); it != mThemes.end(); ++it )
     delete ( *it );
 
-  mSkins.clear();
+  mThemes.clear();
 }
 
-void Manager::skinsConfigurationCompleted()
+void Manager::themesConfigurationCompleted()
 {
-  if ( mSkins.count() < 1 )
-    createDefaultSkins(); // panic
+  if ( mThemes.count() < 1 )
+    createDefaultThemes(); // panic
 
   saveConfiguration(); // just to be sure :)
 
   // notify all the widgets that they should reload the option set combos
   for( QList< Widget * >::Iterator it = mWidgetList.begin(); it != mWidgetList.end(); ++it )
-    ( *it )->skinsChanged();
+    ( *it )->themesChanged();
 }
 
 void Manager::reloadAllWidgets()
@@ -941,11 +941,11 @@ void Manager::loadConfiguration()
   }
 
   {
-    // load Skins
+    // load Themes
 
-    KConfigGroup conf( KMKernel::config(), "MessageListView::Skins" );
+    KConfigGroup conf( KMKernel::config(), "MessageListView::Themes" );
 
-    mSkins.clear();
+    mThemes.clear();
 
     int cnt = conf.readEntry( "Count", (int)0 );
 
@@ -955,24 +955,24 @@ void Manager::loadConfiguration()
       QString data = conf.readEntry( QString( "Set%1" ).arg( idx ), QString() );
       if ( !data.isEmpty() )
       {
-        Skin * set = new Skin();
+        Theme * set = new Theme();
         if ( set->loadFromString( data ) )
         {
-          if ( Skin * old = mSkins.value( set->id() ) )
+          if ( Theme * old = mThemes.value( set->id() ) )
             delete old;
-          mSkins.insert( set->id(), set );
+          mThemes.insert( set->id(), set );
         } else {
-          kWarning() << "Saved skin loading failed";
+          kWarning() << "Saved theme loading failed";
           delete set; // b0rken
         }
       }
       idx++;
     }
 
-    if ( mSkins.count() == 0 )
+    if ( mThemes.count() == 0 )
     {
       // don't allow zero configuration, create some presets
-      createDefaultSkins();
+      createDefaultThemes();
     }
   }
 
@@ -997,15 +997,15 @@ void Manager::saveConfiguration()
   }
 
   {
-    // store skins
+    // store themes
 
-    KConfigGroup conf( KMKernel::config(), "MessageListView::Skins" );
+    KConfigGroup conf( KMKernel::config(), "MessageListView::Themes" );
     //conf.clear();
 
-    conf.writeEntry( "Count", mSkins.count() );
+    conf.writeEntry( "Count", mThemes.count() );
 
     int idx = 0;
-    for( QHash< QString, Skin * >::Iterator it = mSkins.begin(); it != mSkins.end(); ++it )
+    for( QHash< QString, Theme * >::Iterator it = mThemes.begin(); it != mThemes.end(); ++it )
     {
       conf.writeEntry( QString( "Set%1" ).arg( idx ), ( *it )->saveToString() );
       idx++;

@@ -45,7 +45,7 @@
 #include "messagelistview/core/messageitem.h"
 #include "messagelistview/core/modelinvariantrowmapper.h"
 #include "messagelistview/core/storagemodelbase.h"
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/theme.h"
 #include "messagelistview/core/manager.h"
 #include "messagelistview/core/messageitemsetmanager.h"
 
@@ -255,7 +255,7 @@ Model::Model( View *pParent )
     mStorageModel( 0 ), mView( pParent )
 {
   mAggregation = 0;
-  mSkin = 0;
+  mTheme = 0;
   mFilter = 0;
   mPersistentSetManager = 0;
   mInLengthyJobBatch = false;
@@ -324,9 +324,9 @@ void Model::setAggregation( const Aggregation * aggregation )
   mView->setRootIsDecorated( mAggregation->grouping() == Aggregation::NoGrouping );
 }
 
-void Model::setSkin( const Skin * skin )
+void Model::setTheme( const Theme * theme )
 {
-  mSkin = skin;
+  mTheme = theme;
 }
 
 void Model::setFilter( const Filter *filter )
@@ -431,11 +431,11 @@ bool Model::applyFilterToItem( Item * item, const QModelIndex &parentIndex )
 
 int Model::columnCount( const QModelIndex & parent ) const
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return 0;
   if ( parent.column() > 0 )
     return 0;
-  return mSkin->columns().count();
+  return mTheme->columns().count();
 }
 
 QVariant Model::data( const QModelIndex &, int ) const
@@ -446,10 +446,10 @@ QVariant Model::data( const QModelIndex &, int ) const
 
 QVariant Model::headerData(int section, Qt::Orientation, int role) const
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return QVariant();
 
-  Skin::Column * column = mSkin->column( section );
+  Theme::Column * column = mTheme->column( section );
   if ( !column )
     return QVariant();
 

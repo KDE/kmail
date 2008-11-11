@@ -27,7 +27,7 @@
 #include "messagelistview/core/manager.h"
 #include "messagelistview/core/messageitem.h"
 #include "messagelistview/core/model.h"
-#include "messagelistview/core/skin.h"
+#include "messagelistview/core/theme.h"
 #include "messagelistview/core/storagemodelbase.h"
 #include "messagelistview/core/widgetbase.h"
 
@@ -55,7 +55,7 @@ namespace Core
 View::View( Widget *pParent )
   : QTreeView( pParent ), mWidget( pParent )
 {
-  mSkin = 0;
+  mTheme = 0;
   mAggregation = 0;
   mDelegate = new Delegate( this );
   mLastCurrentItem = 0;
@@ -120,13 +120,13 @@ void View::setAggregation( const Aggregation * aggregation )
     return;
 }
 
-void View::setSkin( const Skin * skin )
+void View::setTheme( const Theme * theme )
 {
-  mNeedToApplySkinColumns = (mSkin != skin);
-  mSkin = skin;
-  mDelegate->setSkin( skin );
-  mModel->setSkin( skin );
-  mNeedToApplySkinColumns = true;
+  mNeedToApplyThemeColumns = (mTheme != theme);
+  mTheme = theme;
+  mDelegate->setTheme( theme );
+  mModel->setTheme( theme );
+  mNeedToApplyThemeColumns = true;
 }
 
 void View::reload()
@@ -155,19 +155,19 @@ void View::modelJobBatchTerminated()
 void View::modelHasBeenReset()
 {
   // This is called by Model when it has been reset.
-  if ( mNeedToApplySkinColumns )
-    applySkinColumns();
+  if ( mNeedToApplyThemeColumns )
+    applyThemeColumns();
 }
 
-void View::applySkinColumns()
+void View::applyThemeColumns()
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return;
 
-  const QList< Skin::Column * > & columns = mSkin->columns();
+  const QList< Theme::Column * > & columns = mTheme->columns();
 
   if ( columns.count() < 1 )
-    return; // bad skin
+    return; // bad theme
 
   // Now we want to distribute the available width on all the visible columns.
   //
@@ -180,7 +180,7 @@ void View::applySkinColumns()
 
   // Note that the first column is always shown (it can't be hidden at all)
 
-  QList< Skin::Column * >::ConstIterator it;
+  QList< Theme::Column * >::ConstIterator it;
 
   // Gather size hints for visible sections.
   int idx = 0;
@@ -264,12 +264,12 @@ void View::applySkinColumns()
     idx++;
   }
 
-  if( mSkin->viewHeaderPolicy() == Skin::NeverShowHeader )
+  if( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader )
     header()->hide();
   else
     header()->show();
 
-  mNeedToApplySkinColumns = false;
+  mNeedToApplyThemeColumns = false;
 }
 
 void View::resizeEvent( QResizeEvent * e )
@@ -305,12 +305,12 @@ void View::showEvent( QShowEvent *e )
   if ( mFirstShow )
   {
     //
-    // If we're shown for the first time and the skin has been already set
-    // then we need to reapply the skin column widths since the previous
+    // If we're shown for the first time and the theme has been already set
+    // then we need to reapply the theme column widths since the previous
     // application probably used invalid widths.
     //
-    if ( mSkin )
-      applySkinColumns();
+    if ( mTheme )
+      applyThemeColumns();
     mFirstShow = false;
   }
 }
@@ -318,13 +318,13 @@ void View::showEvent( QShowEvent *e )
 
 void View::slotHeaderContextMenuRequested( const QPoint &pnt )
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return;
 
-  const QList< Skin::Column * > & columns = mSkin->columns();
+  const QList< Theme::Column * > & columns = mTheme->columns();
 
   if ( columns.count() < 1 )
-    return; // bad skin
+    return; // bad theme
 
   // the menu for the columns
   KMenu menu;
@@ -334,7 +334,7 @@ void View::slotHeaderContextMenuRequested( const QPoint &pnt )
   int idx = 0;
   QAction * act;
 
-  for ( QList< Skin::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
+  for ( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
   {
     act = menu.addAction( ( *it )->label() );
     act->setCheckable( true );
@@ -372,14 +372,14 @@ void View::slotHeaderContextMenuTriggered( QAction * act )
   if ( columnIdx < 0 )
   {
     // "Show Default Columns" selected
-    applySkinColumns();
+    applyThemeColumns();
     return;
   }
 
   if ( columnIdx == 0 )
     return; // can never be hidden
 
-  if ( columnIdx >= mSkin->columns().count() )
+  if ( columnIdx >= mTheme->columns().count() )
     return;
 
   header()->setSectionHidden( columnIdx, !header()->isSectionHidden( columnIdx ) );
@@ -1190,7 +1190,7 @@ void View::mousePressEvent( QMouseEvent * e )
           {
             switch ( mDelegate->hitContentItem()->type() )
             {
-              case Skin::ContentItem::ToDoStateIcon:
+              case Theme::ContentItem::ToDoStateIcon:
                 changeMessageStatus(
                     static_cast< MessageItem * >( it ),
                     it->status().isToAct() ? KPIM::MessageStatus() : KPIM::MessageStatus::statusToAct(),
@@ -1198,7 +1198,7 @@ void View::mousePressEvent( QMouseEvent * e )
                   );
                 return; // don't select the item  
               break;
-              case Skin::ContentItem::ImportantStateIcon:
+              case Theme::ContentItem::ImportantStateIcon:
                 changeMessageStatus(
                     static_cast< MessageItem * >( it ),
                     it->status().isImportant() ? KPIM::MessageStatus() : KPIM::MessageStatus::statusImportant(),
@@ -1206,7 +1206,7 @@ void View::mousePressEvent( QMouseEvent * e )
                   );
                 return; // don't select the item  
               break;
-              case Skin::ContentItem::SpamHamStateIcon:
+              case Theme::ContentItem::SpamHamStateIcon:
                 changeMessageStatus(
                     static_cast< MessageItem * >( it ),
                     it->status().isSpam() ? KPIM::MessageStatus() : ( it->status().isHam() ? KPIM::MessageStatus::statusSpam() : KPIM::MessageStatus::statusHam() ),
@@ -1214,7 +1214,7 @@ void View::mousePressEvent( QMouseEvent * e )
                   );
                 return; // don't select the item  
               break;
-              case Skin::ContentItem::WatchedIgnoredStateIcon:
+              case Theme::ContentItem::WatchedIgnoredStateIcon:
                 changeMessageStatus(
                     static_cast< MessageItem * >( it ),
                     it->status().isIgnored() ? KPIM::MessageStatus() : ( it->status().isWatched() ? KPIM::MessageStatus::statusIgnored() : KPIM::MessageStatus::statusWatched() ),
@@ -1255,7 +1255,7 @@ void View::mousePressEvent( QMouseEvent * e )
           if ( !mDelegate->hitContentItem() )
             return;
 
-          if ( mDelegate->hitContentItem()->type() == Skin::ContentItem::ExpandedStateIcon )
+          if ( mDelegate->hitContentItem()->type() == Theme::ContentItem::ExpandedStateIcon )
           {
             if ( groupHeaderItem->childItemCount() > 0 )
             {
@@ -1323,8 +1323,8 @@ void View::changeEvent( QEvent *e )
     case QEvent::LayoutDirectionChange:
     case QEvent::LocaleChange:
     case QEvent::LanguageChange:
-      // All of these affect the skin's internal cache.
-      setSkin( mSkin );
+      // All of these affect the theme's internal cache.
+      setTheme( mTheme );
       // A layoutChanged() event will screw up the view state a bit.
       // Since this is a rare event we just reload the view.
       reload();

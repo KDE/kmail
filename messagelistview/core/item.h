@@ -461,7 +461,7 @@ public:
 
   /**
    * Appends a child item without inserting it via the model.
-   * This is useful in SkinEditor which doesn't use a custom model for the items.
+   * This is useful in ThemeEditor which doesn't use a custom model for the items.
    * You shouldn't need to use this function...
    */
   void rawAppendChildItem( Item * child );

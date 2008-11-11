@@ -37,15 +37,15 @@ namespace Core
 {
 
 class Manager;
-class SkinEditor;
-class Skin;
-class SkinListWidgetItem;
+class ThemeEditor;
+class Theme;
+class ThemeListWidgetItem;
 
-class SkinListWidget : public QListWidget
+class ThemeListWidget : public QListWidget
 {
   Q_OBJECT
 public:
-  SkinListWidget( QWidget * parent )
+  ThemeListWidget( QWidget * parent )
     : QListWidget( parent )
     {};
 public:
@@ -54,46 +54,46 @@ public:
     { return QSize( 450, 128 ); };
 };
 
-class ConfigureSkinsDialog : public KDialog
+class ConfigureThemesDialog : public KDialog
 {
   friend class Manager;
 
   Q_OBJECT
 protected:
-  ConfigureSkinsDialog( QWidget *parent = 0 );
-  ~ConfigureSkinsDialog();
+  ConfigureThemesDialog( QWidget *parent = 0 );
+  ~ConfigureThemesDialog();
 
 private:
-  static ConfigureSkinsDialog * mInstance;
-  SkinListWidget *mSkinList;
-  SkinEditor *mEditor;
-  QPushButton *mNewSkinButton;
-  QPushButton *mCloneSkinButton;
-  QPushButton *mDeleteSkinButton;
+  static ConfigureThemesDialog * mInstance;
+  ThemeListWidget *mThemeList;
+  ThemeEditor *mEditor;
+  QPushButton *mNewThemeButton;
+  QPushButton *mCloneThemeButton;
+  QPushButton *mDeleteThemeButton;
 
 protected:
-  static void display( QWidget * parent, const QString &preselectSkinId = QString() );
+  static void display( QWidget * parent, const QString &preselectThemeId = QString() );
   static void cleanup();
 
 public:
-  static ConfigureSkinsDialog * instance()
+  static ConfigureThemesDialog * instance()
     { return mInstance; };
 
 private:
-  void fillSkinList();
-  QString uniqueNameForSkin( QString baseName, Skin * skipSkin = 0 );
-  SkinListWidgetItem * findSkinItemByName( const QString &name, Skin * skipSkin = 0 );
-  SkinListWidgetItem * findSkinItemBySkin( Skin * set );
-  SkinListWidgetItem * findSkinItemById( const QString &skinId );
-  void selectSkinById( const QString &skinId );
+  void fillThemeList();
+  QString uniqueNameForTheme( QString baseName, Theme * skipTheme = 0 );
+  ThemeListWidgetItem * findThemeItemByName( const QString &name, Theme * skipTheme = 0 );
+  ThemeListWidgetItem * findThemeItemByTheme( Theme * set );
+  ThemeListWidgetItem * findThemeItemById( const QString &themeId );
+  void selectThemeById( const QString &themeId );
   void commitEditor();
 
 private slots:
-  void skinListCurrentItemChanged( QListWidgetItem * cur, QListWidgetItem * prev );
-  void newSkinButtonClicked();
-  void cloneSkinButtonClicked();
-  void deleteSkinButtonClicked();
-  void editedSkinNameChanged();
+  void themeListCurrentItemChanged( QListWidgetItem * cur, QListWidgetItem * prev );
+  void newThemeButtonClicked();
+  void cloneThemeButtonClicked();
+  void deleteThemeButtonClicked();
+  void editedThemeNameChanged();
   void okButtonClicked();
 };
 

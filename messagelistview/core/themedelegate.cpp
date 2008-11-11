@@ -18,7 +18,7 @@
  *
  *******************************************************************************/
 
-#include "messagelistview/core/skindelegate.h"
+#include "messagelistview/core/themedelegate.h"
 #include "messagelistview/core/messageitem.h"
 #include "messagelistview/core/groupheaderitem.h"
 #include "messagelistview/core/manager.h"
@@ -50,37 +50,37 @@ static const int gMessageHorizontalMargin = 2;
 static const int gHorizontalItemSpacing = 2;
 
 
-SkinDelegate::SkinDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice )
+ThemeDelegate::ThemeDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice )
   : QStyledItemDelegate( parent )
 {
   mItemView = parent;
   mPaintDevice = paintDevice;
-  mSkin = 0;
+  mTheme = 0;
 }
 
-SkinDelegate::~SkinDelegate()
+ThemeDelegate::~ThemeDelegate()
 {
 }
 
-void SkinDelegate::setSkin( const Skin * skin )
+void ThemeDelegate::setTheme( const Theme * theme )
 {
-  mSkin = skin;
+  mTheme = theme;
   // yep..we're violating const here
   // But most of the QStyledItemDelegate virtual methods are const and expect
   // const behaviour. So we need the const pointer to avoid compiler complains
   // but on the other side we're NOT really const... well...
-  const_cast< Skin * >( mSkin )->resetCache();
+  const_cast< Theme * >( mTheme )->resetCache();
 
   // Rebuild the group header background color cache
-  switch( mSkin->groupHeaderBackgroundMode() )
+  switch( mTheme->groupHeaderBackgroundMode() )
   {
-    case Skin::Transparent:
+    case Theme::Transparent:
       mGroupHeaderBackgroundColor = QColor(); // invalid
     break;
-    case Skin::CustomColor:
-      mGroupHeaderBackgroundColor = mSkin->groupHeaderBackgroundColor();
+    case Theme::CustomColor:
+      mGroupHeaderBackgroundColor = mTheme->groupHeaderBackgroundColor();
     break;
-    case Skin::AutoColor:
+    case Theme::AutoColor:
     {
       QPalette pal = mItemView->palette();
       QColor txt = pal.color( QPalette::Normal, QPalette::Text );
@@ -100,7 +100,7 @@ void SkinDelegate::setSkin( const Skin * skin )
 //        about function growth limit reached. Consider using macros
 //        or just convert to member functions.
 
-static inline void paint_right_aligned_elided_text( const QString &text, QPaintDevice * pd, Skin::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir )
+static inline void paint_right_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir )
 {
   if ( ci->lastPaintDevice() != pd )
     ci->updateFontMetrics( pd );
@@ -125,7 +125,7 @@ static inline void paint_right_aligned_elided_text( const QString &text, QPaintD
     left += outRct.width() + gHorizontalItemSpacing;
 }
 
-static inline void compute_bounding_rect_for_right_aligned_elided_text( const QString &text, QPaintDevice * pd, Skin::ContentItem * ci, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir )
+static inline void compute_bounding_rect_for_right_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir )
 {
   if ( ci->lastPaintDevice() != pd )
     ci->updateFontMetrics( pd );
@@ -141,7 +141,7 @@ static inline void compute_bounding_rect_for_right_aligned_elided_text( const QS
 }
 
 
-static inline void paint_left_aligned_elided_text( const QString &text, QPaintDevice * pd, Skin::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir )
+static inline void paint_left_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir )
 {
   if ( ci->lastPaintDevice() != pd )
     ci->updateFontMetrics( pd );
@@ -165,7 +165,7 @@ static inline void paint_left_aligned_elided_text( const QString &text, QPaintDe
     right -= outRct.width() + gHorizontalItemSpacing;
 }
 
-static inline void compute_bounding_rect_for_left_aligned_elided_text( const QString &text, QPaintDevice * pd, Skin::ContentItem * ci, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir )
+static inline void compute_bounding_rect_for_left_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir )
 {
   if ( ci->lastPaintDevice() != pd )
     ci->updateFontMetrics( pd );
@@ -360,7 +360,7 @@ static inline void compute_bounding_rect_for_horizontal_spacer( int &left, int t
   }
 }
 
-static inline void paint_permanent_icon( const QPixmap * pix, Skin::ContentItem *, QPainter * painter, int &left, int top, int &right, bool alignOnRight )
+static inline void paint_permanent_icon( const QPixmap * pix, Theme::ContentItem *, QPainter * painter, int &left, int top, int &right, bool alignOnRight )
 {
   if ( alignOnRight )
   {
@@ -377,7 +377,7 @@ static inline void paint_permanent_icon( const QPixmap * pix, Skin::ContentItem 
   }
 }
 
-static inline void compute_bounding_rect_for_permanent_icon( Skin::ContentItem *, int &left, int top, int &right, QRect &outRect, bool alignOnRight )
+static inline void compute_bounding_rect_for_permanent_icon( Theme::ContentItem *, int &left, int top, int &right, QRect &outRect, bool alignOnRight )
 {
   if ( alignOnRight )
   {
@@ -390,7 +390,7 @@ static inline void compute_bounding_rect_for_permanent_icon( Skin::ContentItem *
   }
 }
 
-static inline void paint_boolean_state_icon( bool enabled, const QPixmap * pix, Skin::ContentItem * ci, QPainter * painter, int &left, int top, int &right, bool alignOnRight )
+static inline void paint_boolean_state_icon( bool enabled, const QPixmap * pix, Theme::ContentItem * ci, QPainter * painter, int &left, int top, int &right, bool alignOnRight )
 {
   if ( enabled )
   {
@@ -419,7 +419,7 @@ static inline void paint_boolean_state_icon( bool enabled, const QPixmap * pix, 
     left += 16 + gHorizontalItemSpacing;
 }
 
-static inline void compute_bounding_rect_for_boolean_state_icon( bool enabled, Skin::ContentItem * ci, int &left, int top, int &right, QRect &outRect, bool alignOnRight )
+static inline void compute_bounding_rect_for_boolean_state_icon( bool enabled, Theme::ContentItem * ci, int &left, int top, int &right, QRect &outRect, bool alignOnRight )
 {
   if ( ( !enabled ) && ci->hideWhenDisabled() )
   {
@@ -466,7 +466,7 @@ static inline void compute_bounding_rect_for_tag_list( QList< MessageItem::Tag *
   }
 }
 
-static inline void compute_size_hint_for_item( Skin::ContentItem * ci, QPaintDevice * pd, int &maxh, int &totalw )
+static inline void compute_size_hint_for_item( Theme::ContentItem * ci, QPaintDevice * pd, int &maxh, int &totalw )
 {
   if ( ci->displaysText() )
   {
@@ -500,28 +500,28 @@ static inline void compute_size_hint_for_item( Skin::ContentItem * ci, QPaintDev
   totalw += gHorizontalItemSpacing;
 }
 
-static inline void compute_size_hint_for_row( const Skin::Row * r, QPaintDevice * pd )
+static inline void compute_size_hint_for_row( const Theme::Row * r, QPaintDevice * pd )
 {
   int maxh = 16; // at least 16 pixels for a pixmap
   int totalw = 0;
 
   // right aligned stuff first
-  const QList< Skin::ContentItem * > * items = &( r->rightItems() );
-  QList< Skin::ContentItem * >::ConstIterator itemit;
+  const QList< Theme::ContentItem * > * items = &( r->rightItems() );
+  QList< Theme::ContentItem * >::ConstIterator itemit;
 
   for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
-    compute_size_hint_for_item( const_cast< Skin::ContentItem * >( *itemit ), pd, maxh, totalw );
+    compute_size_hint_for_item( const_cast< Theme::ContentItem * >( *itemit ), pd, maxh, totalw );
 
   // then left aligned stuff
   items = &( r->leftItems() );
 
   for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
-    compute_size_hint_for_item( const_cast< Skin::ContentItem * >( *itemit ), pd, maxh, totalw );
+    compute_size_hint_for_item( const_cast< Theme::ContentItem * >( *itemit ), pd, maxh, totalw );
 
-  const_cast< Skin::Row * >( r )->setSizeHint( QSize( totalw, maxh ) );
+  const_cast< Theme::Row * >( r )->setSizeHint( QSize( totalw, maxh ) );
 }
 
-void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
 {
   if ( !index.isValid() )
     return; // bleah
@@ -538,14 +538,14 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
   QStyle * style = mItemView->style();
   style->drawControl( QStyle::CE_ItemViewItem, &opt, painter, mItemView );
 
-  if ( !mSkin )
+  if ( !mTheme )
     return; // hm hm...
 
-  const Skin::Column * skcolumn = mSkin->column( index.column() );
+  const Theme::Column * skcolumn = mTheme->column( index.column() );
   if ( !skcolumn )
     return; // bleah
 
-  const QList< Skin::Row * > * rows; // I'd like to have it as reference, but gcc complains...
+  const QList< Theme::Row * > * rows; // I'd like to have it as reference, but gcc complains...
 
   MessageItem * messageItem = 0;
   GroupHeaderItem * groupHeaderItem = 0;
@@ -622,17 +622,17 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
       right -= gGroupHeaderOuterHorizontalMargin;
       left += gGroupHeaderOuterHorizontalMargin;
 
-      switch ( mSkin->groupHeaderBackgroundMode() )
+      switch ( mTheme->groupHeaderBackgroundMode() )
       {
-        case Skin::Transparent:
+        case Theme::Transparent:
           cr = ( opt.state & QStyle::State_Selected ) ? QPalette::HighlightedText : QPalette::Text;
           defaultPen = QPen( opt.palette.brush( cg, cr ), 0 );
         break;
-        case Skin::AutoColor:
-        case Skin::CustomColor:
-          switch ( mSkin->groupHeaderBackgroundStyle() )
+        case Theme::AutoColor:
+        case Theme::CustomColor:
+          switch ( mTheme->groupHeaderBackgroundStyle() )
           {
-            case Skin::PlainRect:
+            case Theme::PlainRect:
             {
               painter->fillRect(
                   QRect( left, top, right - left, opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 )  ),
@@ -640,7 +640,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
                 );
             }
             break;
-            case Skin::PlainJoinedRect:
+            case Theme::PlainJoinedRect:
             {
               int rleft = ( opt.viewItemPosition == QStyleOptionViewItemV4::Beginning ) || ( opt.viewItemPosition == QStyleOptionViewItemV4::OnlyOne ) ? left : opt.rect.left();
               int rright = ( opt.viewItemPosition == QStyleOptionViewItemV4::End ) || ( opt.viewItemPosition == QStyleOptionViewItemV4::OnlyOne ) ? right : opt.rect.left() + opt.rect.width();
@@ -650,7 +650,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
                 );
             }
             break;
-            case Skin::RoundedJoinedRect:
+            case Theme::RoundedJoinedRect:
             {
               if ( opt.viewItemPosition == QStyleOptionViewItemV4::Middle )
               {
@@ -675,7 +675,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
               }
               // fall through anyway
             }
-            case Skin::RoundedRect:
+            case Theme::RoundedRect:
             {
               painter->setPen( Qt::NoPen );
               bool hadAntialiasing = painter->renderHints() & QPainter::Antialiasing;
@@ -692,7 +692,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
               painter->setBackgroundMode( Qt::TransparentMode );
             }
             break;
-            case Skin::GradientJoinedRect:
+            case Theme::GradientJoinedRect:
             {
               // FIXME: Could cache this brush
               QLinearGradient gradient( 0, top, 0, top + opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 ) );
@@ -721,7 +721,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
               }
               // fall through anyway
             }
-            case Skin::GradientRect:
+            case Theme::GradientRect:
             {
               // FIXME: Could cache this brush
               QLinearGradient gradient( 0, top, 0, top + opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 ) );
@@ -742,7 +742,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
               painter->setBackgroundMode( Qt::TransparentMode );
             }
             break;
-            case Skin::StyledRect:
+            case Theme::StyledRect:
             {
               // oxygen, for instance, has a nice graphics for selected items
               opt.rect = QRect( left, top, right - left, opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 ) );
@@ -752,7 +752,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
               style->drawControl( QStyle::CE_ItemViewItem, &opt, painter, mItemView );
             }
             break;
-            case Skin::StyledJoinedRect:
+            case Theme::StyledJoinedRect:
             {
               int rleft = ( opt.viewItemPosition == QStyleOptionViewItemV4::Beginning ) || ( opt.viewItemPosition == QStyleOptionViewItemV4::OnlyOne ) ? left : opt.rect.left();
               int rright = ( opt.viewItemPosition == QStyleOptionViewItemV4::End ) || ( opt.viewItemPosition == QStyleOptionViewItemV4::OnlyOne ) ? right : opt.rect.left() + opt.rect.width();
@@ -780,7 +780,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
 
   Qt::LayoutDirection layoutDir = mItemView->layoutDirection();
 
-  for ( QList< Skin::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
+  for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
     QSize rowSizeHint = ( *rowit )->sizeHint();
     if ( !rowSizeHint.isValid() )
@@ -792,15 +792,15 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
     int bottom = top + rowSizeHint.height();
 
     // paint right aligned stuff first
-    const QList< Skin::ContentItem * > * items = &( ( *rowit )->rightItems() );
-    QList< Skin::ContentItem * >::ConstIterator itemit;
+    const QList< Theme::ContentItem * > * items = &( ( *rowit )->rightItems() );
+    QList< Theme::ContentItem * >::ConstIterator itemit;
 
     int r = right;
     int l = left;
 
     for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
     {
-      Skin::ContentItem * ci = const_cast< Skin::ContentItem * >( *itemit );
+      Theme::ContentItem * ci = const_cast< Theme::ContentItem * >( *itemit );
 
       if ( ci->canUseCustomColor() )
       {
@@ -826,52 +826,52 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
 
       switch ( ci->type() )
       {
-        case Skin::ContentItem::Subject:
+        case Theme::ContentItem::Subject:
           paint_right_aligned_elided_text( item->subject(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::SenderOrReceiver:
+        case Theme::ContentItem::SenderOrReceiver:
           paint_right_aligned_elided_text( item->senderOrReceiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Receiver:
+        case Theme::ContentItem::Receiver:
           paint_right_aligned_elided_text( item->receiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Sender:
+        case Theme::ContentItem::Sender:
           paint_right_aligned_elided_text( item->sender(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Date:
+        case Theme::ContentItem::Date:
           paint_right_aligned_elided_text( item->formattedDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::MostRecentDate:
+        case Theme::ContentItem::MostRecentDate:
           paint_right_aligned_elided_text( item->formattedMaxDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Size:
+        case Theme::ContentItem::Size:
           paint_right_aligned_elided_text( item->formattedSize(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::GroupHeaderLabel:
+        case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
             paint_right_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::ReadStateIcon:
+        case Theme::ContentItem::ReadStateIcon:
             paint_permanent_icon( get_read_state_icon( item ), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::CombinedReadRepliedStateIcon:
+        case Theme::ContentItem::CombinedReadRepliedStateIcon:
           if ( messageItem )
             paint_permanent_icon( get_combined_read_replied_state_icon( messageItem ), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ExpandedStateIcon:
+        case Theme::ContentItem::ExpandedStateIcon:
         {
           const QPixmap * pix = item->childItemCount() > 0 ? ((option.state & QStyle::State_Open) ? Manager::instance()->pixmapShowLess() : Manager::instance()->pixmapShowMore()) : 0;
           paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapShowMore(), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
         }
         break;
-        case Skin::ContentItem::RepliedStateIcon:
+        case Theme::ContentItem::RepliedStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_replied_state_icon( messageItem );
             paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapMessageReplied(), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::EncryptionStateIcon:
+        case Theme::ContentItem::EncryptionStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -879,7 +879,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
             paint_boolean_state_icon( enabled, pix, ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SignatureStateIcon:
+        case Theme::ContentItem::SignatureStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -887,39 +887,39 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
             paint_boolean_state_icon( enabled, pix, ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SpamHamStateIcon:
+        case Theme::ContentItem::SpamHamStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_spam_ham_state_icon( messageItem );
             paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapMessageSpam(), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::WatchedIgnoredStateIcon:
+        case Theme::ContentItem::WatchedIgnoredStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_watched_ignored_state_icon( messageItem );
             paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapMessageWatched(),ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::AttachmentStateIcon:
+        case Theme::ContentItem::AttachmentStateIcon:
           if ( messageItem )
             paint_boolean_state_icon( messageItem->status().hasAttachment(), Manager::instance()->pixmapMessageAttachment(), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ToDoStateIcon:
+        case Theme::ContentItem::ToDoStateIcon:
           if ( messageItem )
             paint_boolean_state_icon( messageItem->status().isToAct(), Manager::instance()->pixmapMessageToDo(), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ImportantStateIcon:
+        case Theme::ContentItem::ImportantStateIcon:
           if ( messageItem )
             paint_boolean_state_icon( messageItem->status().isImportant(), Manager::instance()->pixmapMessageImportant(), ci, painter, l, top, r, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::VerticalLine:
+        case Theme::ContentItem::VerticalLine:
             paint_vertical_line( painter, l, top, r, bottom, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::HorizontalSpacer:
+        case Theme::ContentItem::HorizontalSpacer:
             paint_horizontal_spacer( l, top, r, bottom, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::TagList:
+        case Theme::ContentItem::TagList:
           if ( messageItem )
           {
             QList< MessageItem::Tag * > * tagList = messageItem->tagList();
@@ -935,7 +935,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
 
     for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
     {
-      Skin::ContentItem * ci = const_cast< Skin::ContentItem * >( *itemit );
+      Theme::ContentItem * ci = const_cast< Theme::ContentItem * >( *itemit );
 
       if ( ci->canUseCustomColor() )
       {
@@ -962,52 +962,52 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
 
       switch ( ci->type() )
       {
-        case Skin::ContentItem::Subject:
+        case Theme::ContentItem::Subject:
           paint_left_aligned_elided_text( item->subject(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::SenderOrReceiver:
+        case Theme::ContentItem::SenderOrReceiver:
           paint_left_aligned_elided_text( item->senderOrReceiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Receiver:
+        case Theme::ContentItem::Receiver:
           paint_left_aligned_elided_text( item->receiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Sender:
+        case Theme::ContentItem::Sender:
           paint_left_aligned_elided_text( item->sender(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Date:
+        case Theme::ContentItem::Date:
           paint_left_aligned_elided_text( item->formattedDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::MostRecentDate:
+        case Theme::ContentItem::MostRecentDate:
           paint_left_aligned_elided_text( item->formattedMaxDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::Size:
+        case Theme::ContentItem::Size:
           paint_left_aligned_elided_text( item->formattedSize(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::GroupHeaderLabel:
+        case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
             paint_left_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, painter, l, top, r, layoutDir );
         break;
-        case Skin::ContentItem::ReadStateIcon:
+        case Theme::ContentItem::ReadStateIcon:
             paint_permanent_icon( get_read_state_icon( item ), ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::CombinedReadRepliedStateIcon:
+        case Theme::ContentItem::CombinedReadRepliedStateIcon:
           if ( messageItem )
             paint_permanent_icon( get_combined_read_replied_state_icon( messageItem ), ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ExpandedStateIcon:
+        case Theme::ContentItem::ExpandedStateIcon:
         {
           const QPixmap * pix = item->childItemCount() > 0 ? ((option.state & QStyle::State_Open) ? Manager::instance()->pixmapShowLess() : Manager::instance()->pixmapShowMore()) : 0;
           paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapShowMore(), ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
         }
         break;
-        case Skin::ContentItem::RepliedStateIcon:
+        case Theme::ContentItem::RepliedStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_replied_state_icon( messageItem );
             paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapMessageReplied(),ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::EncryptionStateIcon:
+        case Theme::ContentItem::EncryptionStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -1015,7 +1015,7 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
             paint_boolean_state_icon( enabled, pix, ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SignatureStateIcon:
+        case Theme::ContentItem::SignatureStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -1023,39 +1023,39 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
             paint_boolean_state_icon( enabled, pix, ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SpamHamStateIcon:
+        case Theme::ContentItem::SpamHamStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_spam_ham_state_icon( messageItem );
             paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapMessageSpam(),ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::WatchedIgnoredStateIcon:
+        case Theme::ContentItem::WatchedIgnoredStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_watched_ignored_state_icon( messageItem );
             paint_boolean_state_icon( pix != 0, pix ? pix : Manager::instance()->pixmapMessageWatched(),ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::AttachmentStateIcon:
+        case Theme::ContentItem::AttachmentStateIcon:
           if ( messageItem )
             paint_boolean_state_icon( messageItem->status().hasAttachment(), Manager::instance()->pixmapMessageAttachment(), ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ToDoStateIcon:
+        case Theme::ContentItem::ToDoStateIcon:
           if ( messageItem )
             paint_boolean_state_icon( messageItem->status().isToAct(), Manager::instance()->pixmapMessageToDo(), ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ImportantStateIcon:
+        case Theme::ContentItem::ImportantStateIcon:
           if ( messageItem )
             paint_boolean_state_icon( messageItem->status().isImportant(), Manager::instance()->pixmapMessageImportant(), ci, painter, l, top, r, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::VerticalLine:
+        case Theme::ContentItem::VerticalLine:
             paint_vertical_line( painter, l, top, r, bottom, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::HorizontalSpacer:
+        case Theme::ContentItem::HorizontalSpacer:
             paint_horizontal_spacer( l, top, r, bottom, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::TagList:
+        case Theme::ContentItem::TagList:
           if ( messageItem )
           {
             QList< MessageItem::Tag * > * tagList = messageItem->tagList();
@@ -1074,9 +1074,9 @@ void SkinDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
   painter->setOpacity( oldOpacity );
 }
 
-bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
+bool ThemeDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return false; // hm hm...
 
   mHitIndex = mItemView->indexAt( viewportPoint );
@@ -1090,11 +1090,11 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 
   mHitItemRect = mItemView->visualRect( mHitIndex );
 
-  mHitColumn = mSkin->column( mHitIndex.column() );
+  mHitColumn = mTheme->column( mHitIndex.column() );
   if ( !mHitColumn )
     return false; // bleah
 
-  const QList< Skin::Row * > * rows; // I'd like to have it as reference, but gcc complains...
+  const QList< Theme::Row * > * rows; // I'd like to have it as reference, but gcc complains...
 
   MessageItem * messageItem = 0;
   GroupHeaderItem * groupHeaderItem = 0;
@@ -1137,11 +1137,11 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
   int bestInexactDistance = 0xffffff;
   bool bestInexactItemRight = false;
   QRect bestInexactRect;
-  const Skin::ContentItem * bestInexactContentItem = 0;
+  const Theme::ContentItem * bestInexactContentItem = 0;
 
   Qt::LayoutDirection layoutDir = mItemView->layoutDirection();
 
-  for ( QList< Skin::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
+  for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
     QSize rowSizeHint = ( *rowit )->sizeHint();
     if ( !rowSizeHint.isValid() )
@@ -1172,8 +1172,8 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
     mHitRowRect = QRect( left, top, right - left, bottom - top );
 
     // check right aligned stuff first
-    const QList< Skin::ContentItem * > * items = &( mHitRow->rightItems() );
-    QList< Skin::ContentItem * >::ConstIterator itemit;
+    const QList< Theme::ContentItem * > * items = &( mHitRow->rightItems() );
+    QList< Theme::ContentItem * >::ConstIterator itemit;
 
     mHitContentItemRight = true;
 
@@ -1182,54 +1182,54 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 
     for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
     {
-      Skin::ContentItem * ci = const_cast< Skin::ContentItem * >( *itemit );
+      Theme::ContentItem * ci = const_cast< Theme::ContentItem * >( *itemit );
 
       mHitContentItemRect = QRect();
 
       switch ( ci->type() )
       {
-        case Skin::ContentItem::Subject:
+        case Theme::ContentItem::Subject:
           compute_bounding_rect_for_right_aligned_elided_text( mHitItem->subject(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::SenderOrReceiver:
+        case Theme::ContentItem::SenderOrReceiver:
           compute_bounding_rect_for_right_aligned_elided_text( mHitItem->senderOrReceiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Receiver:
+        case Theme::ContentItem::Receiver:
           compute_bounding_rect_for_right_aligned_elided_text( mHitItem->receiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Sender:
+        case Theme::ContentItem::Sender:
           compute_bounding_rect_for_right_aligned_elided_text( mHitItem->sender(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Date:
+        case Theme::ContentItem::Date:
           compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::MostRecentDate:
+        case Theme::ContentItem::MostRecentDate:
           compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedMaxDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Size:
+        case Theme::ContentItem::Size:
           compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedSize(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::GroupHeaderLabel:
+        case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
             compute_bounding_rect_for_right_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::ReadStateIcon:
+        case Theme::ContentItem::ReadStateIcon:
           compute_bounding_rect_for_permanent_icon( ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::CombinedReadRepliedStateIcon:
+        case Theme::ContentItem::CombinedReadRepliedStateIcon:
           compute_bounding_rect_for_permanent_icon( ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ExpandedStateIcon:
+        case Theme::ContentItem::ExpandedStateIcon:
           compute_bounding_rect_for_boolean_state_icon( mHitItem->childItemCount() > 0, ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::RepliedStateIcon:
+        case Theme::ContentItem::RepliedStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_replied_state_icon( messageItem );
             compute_bounding_rect_for_boolean_state_icon( pix != 0, ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::EncryptionStateIcon:
+        case Theme::ContentItem::EncryptionStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -1237,7 +1237,7 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
             compute_bounding_rect_for_boolean_state_icon( enabled, ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SignatureStateIcon:
+        case Theme::ContentItem::SignatureStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -1245,39 +1245,39 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
             compute_bounding_rect_for_boolean_state_icon( enabled, ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SpamHamStateIcon:
+        case Theme::ContentItem::SpamHamStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_spam_ham_state_icon( messageItem );
             compute_bounding_rect_for_boolean_state_icon( pix != 0, ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::WatchedIgnoredStateIcon:
+        case Theme::ContentItem::WatchedIgnoredStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_watched_ignored_state_icon( messageItem );
             compute_bounding_rect_for_boolean_state_icon( pix != 0, ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::AttachmentStateIcon:
+        case Theme::ContentItem::AttachmentStateIcon:
           if ( messageItem )
             compute_bounding_rect_for_boolean_state_icon( messageItem->status().hasAttachment(), ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ToDoStateIcon:
+        case Theme::ContentItem::ToDoStateIcon:
           if ( messageItem )
             compute_bounding_rect_for_boolean_state_icon( messageItem->status().isToAct(), ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ImportantStateIcon:
+        case Theme::ContentItem::ImportantStateIcon:
           if ( messageItem )
             compute_bounding_rect_for_boolean_state_icon( messageItem->status().isImportant(), ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::VerticalLine:
+        case Theme::ContentItem::VerticalLine:
           compute_bounding_rect_for_vertical_line( l, top, r, bottom, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::HorizontalSpacer:
+        case Theme::ContentItem::HorizontalSpacer:
           compute_bounding_rect_for_horizontal_spacer( l, top, r, bottom, mHitContentItemRect, layoutDir == Qt::LeftToRight );
         break;
-        case Skin::ContentItem::TagList:
+        case Theme::ContentItem::TagList:
           if ( messageItem )
           {
             QList< MessageItem::Tag * > * tagList = messageItem->tagList();
@@ -1323,54 +1323,54 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 
     for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
     {
-      Skin::ContentItem * ci = const_cast< Skin::ContentItem * >( *itemit );
+      Theme::ContentItem * ci = const_cast< Theme::ContentItem * >( *itemit );
 
       mHitContentItemRect = QRect();
 
       switch ( ci->type() )
       {
-        case Skin::ContentItem::Subject:
+        case Theme::ContentItem::Subject:
           compute_bounding_rect_for_left_aligned_elided_text( mHitItem->subject(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::SenderOrReceiver:
+        case Theme::ContentItem::SenderOrReceiver:
           compute_bounding_rect_for_left_aligned_elided_text( mHitItem->senderOrReceiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Receiver:
+        case Theme::ContentItem::Receiver:
           compute_bounding_rect_for_left_aligned_elided_text( mHitItem->receiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Sender:
+        case Theme::ContentItem::Sender:
           compute_bounding_rect_for_left_aligned_elided_text( mHitItem->sender(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Date:
+        case Theme::ContentItem::Date:
           compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::MostRecentDate:
+        case Theme::ContentItem::MostRecentDate:
           compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedMaxDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::Size:
+        case Theme::ContentItem::Size:
           compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedSize(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::GroupHeaderLabel:
+        case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
             compute_bounding_rect_for_left_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
         break;
-        case Skin::ContentItem::ReadStateIcon:
+        case Theme::ContentItem::ReadStateIcon:
           compute_bounding_rect_for_permanent_icon( ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::CombinedReadRepliedStateIcon:
+        case Theme::ContentItem::CombinedReadRepliedStateIcon:
           compute_bounding_rect_for_permanent_icon( ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ExpandedStateIcon:
+        case Theme::ContentItem::ExpandedStateIcon:
           compute_bounding_rect_for_boolean_state_icon( mHitItem->childItemCount() > 0, ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::RepliedStateIcon:
+        case Theme::ContentItem::RepliedStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_replied_state_icon( messageItem );
             compute_bounding_rect_for_boolean_state_icon( pix != 0, ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::EncryptionStateIcon:
+        case Theme::ContentItem::EncryptionStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -1378,7 +1378,7 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
             compute_bounding_rect_for_boolean_state_icon( enabled, ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SignatureStateIcon:
+        case Theme::ContentItem::SignatureStateIcon:
           if ( messageItem )
           {
             bool enabled;
@@ -1386,39 +1386,39 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
             compute_bounding_rect_for_boolean_state_icon( enabled, ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::SpamHamStateIcon:
+        case Theme::ContentItem::SpamHamStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_spam_ham_state_icon( messageItem );
             compute_bounding_rect_for_boolean_state_icon( pix != 0, ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::WatchedIgnoredStateIcon:
+        case Theme::ContentItem::WatchedIgnoredStateIcon:
           if ( messageItem )
           {
             const QPixmap * pix = get_watched_ignored_state_icon( messageItem );
             compute_bounding_rect_for_boolean_state_icon( pix != 0, ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
           }
         break;
-        case Skin::ContentItem::AttachmentStateIcon:
+        case Theme::ContentItem::AttachmentStateIcon:
           if ( messageItem )
             compute_bounding_rect_for_boolean_state_icon( messageItem->status().hasAttachment(), ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ToDoStateIcon:
+        case Theme::ContentItem::ToDoStateIcon:
           if ( messageItem )
             compute_bounding_rect_for_boolean_state_icon( messageItem->status().isToAct(), ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::ImportantStateIcon:
+        case Theme::ContentItem::ImportantStateIcon:
           if ( messageItem )
             compute_bounding_rect_for_boolean_state_icon( messageItem->status().isImportant(), ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::VerticalLine:
+        case Theme::ContentItem::VerticalLine:
           compute_bounding_rect_for_vertical_line( l, top, r, bottom, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::HorizontalSpacer:
+        case Theme::ContentItem::HorizontalSpacer:
           compute_bounding_rect_for_horizontal_spacer( l, top, r, bottom, mHitContentItemRect, layoutDir != Qt::LeftToRight );
         break;
-        case Skin::ContentItem::TagList:
+        case Theme::ContentItem::TagList:
           if ( messageItem )
           {
             QList< MessageItem::Tag * > * tagList = messageItem->tagList();
@@ -1467,16 +1467,16 @@ bool SkinDelegate::hitTest( const QPoint &viewportPoint, bool exact )
   return true;
 }
 
-QSize SkinDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column ) const
+QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column ) const
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return QSize( 16, 16 ); // bleah
 
-  const Skin::Column * skcolumn = mSkin->column( column );
+  const Theme::Column * skcolumn = mTheme->column( column );
   if ( !skcolumn )
     return QSize( 16, 16 ); // bleah
 
-  const QList< Skin::Row * > * rows; // I'd like to have it as reference, but gcc complains...
+  const QList< Theme::Row * > * rows; // I'd like to have it as reference, but gcc complains...
 
   // The sizeHint() is layout direction independent.
 
@@ -1515,7 +1515,7 @@ QSize SkinDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column ) 
   int totalh = 0;
   int maxw = 0;
 
-  for ( QList< Skin::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
+  for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
     compute_size_hint_for_row( *rowit, mPaintDevice );
 
@@ -1531,10 +1531,10 @@ QSize SkinDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column ) 
   switch ( type )
   {
     case Item::Message:
-      const_cast< Skin::Column * >( skcolumn )->setMessageSizeHint( ret );
+      const_cast< Theme::Column * >( skcolumn )->setMessageSizeHint( ret );
     break;
     case Item::GroupHeader:
-      const_cast< Skin::Column * >( skcolumn )->setGroupHeaderSizeHint( ret );
+      const_cast< Theme::Column * >( skcolumn )->setGroupHeaderSizeHint( ret );
     break;
     default:
       // make gcc happy
@@ -1545,9 +1545,9 @@ QSize SkinDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column ) 
 }
 
 
-QSize SkinDelegate::sizeHint( const QStyleOptionViewItem &, const QModelIndex & index ) const
+QSize ThemeDelegate::sizeHint( const QStyleOptionViewItem &, const QModelIndex & index ) const
 {
-  if ( !mSkin )
+  if ( !mTheme )
     return QSize( 16, 16 ); // hm hm...
 
   if ( !index.isValid() )
