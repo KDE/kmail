@@ -111,8 +111,8 @@ private:
   // Private implementation
 
   void fillAggregationList();
-  QString uniqueNameForMode( QString baseName, Aggregation * skipMode = 0 );
-  AggregationListWidgetItem * findAggregationItemByName( const QString &name, Aggregation * skipMode = 0 );
+  QString uniqueNameForAggregation( QString baseName, Aggregation * skipAggregation = 0 );
+  AggregationListWidgetItem * findAggregationItemByName( const QString &name, Aggregation * skipAggregation = 0 );
   AggregationListWidgetItem * findAggregationItemByAggregation( Aggregation * set );
   AggregationListWidgetItem * findAggregationItemById( const QString &aggregationId );
   void commitEditor();

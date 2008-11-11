@@ -656,10 +656,10 @@ void Manager::createDefaultSkins()
   Skin::Row * r;
   Skin::ContentItem * i;
 
-  // The "Simple" backward compatible skin
+  // The "Classic" backward compatible skin
 
   s = new Skin(
-      i18n( "Simple" ),
+      i18n( "Classic" ),
       i18n( "A simple, backward compatible, single row skin" )
     );
 
