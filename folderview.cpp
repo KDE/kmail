@@ -1183,11 +1183,11 @@ bool FolderView::event( QEvent *e )
     */
   }
 
-  int icon_sizes[] = { 128, 64, 48, 32, 22 };
+  int icon_sizes[] = { /* 128, 64, 48, */ 32, 22 };
 
   QString iconPath;
 
-  for ( int i = 0; i < 4; i++ )
+  for ( int i = 0; i < 2; i++ )
   {
     iconPath = KIconLoader::global()->iconPath( fvi->normalIcon(), -icon_sizes[ i ], true );
     if ( !iconPath.isEmpty() )
@@ -1195,12 +1195,12 @@ bool FolderView::event( QEvent *e )
   }
 
   if ( iconPath.isEmpty() )
-    iconPath = KIconLoader::global()->iconPath( "folder", -128, false );
+    iconPath = KIconLoader::global()->iconPath( "folder", -32, false );
 
   tip += QString::fromLatin1(
           "</td>" \
           "<td align=\"right\" valign=\"top\">" \
-            "<table border=\"0\"><tr><td width=\"128\" height=\"128\" align=\"center\" valign=\"middle\">" 
+            "<table border=\"0\"><tr><td width=\"32\" height=\"32\" align=\"center\" valign=\"middle\">" 
               "<img src=\"%1\">" \
             "</td></tr></table>" \
           "</td>" \
