@@ -3253,7 +3253,8 @@ void KMMainWidget::slotSelectNextUnreadMessage()
       true,  // unread
       false, // don't expand selection
       true,  // center item
-      GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder
+      /*GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder*/
+      GlobalSettings::self()->loopOnGotoUnread() != GlobalSettings::EnumLoopOnGotoUnread::DontLoop
     ) )
   {
     // no next unread message was found in the current folder
