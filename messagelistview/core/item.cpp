@@ -148,41 +148,41 @@ QString Item::statusDescription() const
 {
   QString ret;
   if( status().isNew() )
-    append_string( ret, i18n( "New" ) );
+    append_string( ret, i18nc( "Status of an item", "New" ) );
   else if( status().isUnread() )
-    append_string( ret, i18n( "Unread" ) );
+    append_string( ret, i18nc( "Status of an item", "Unread" ) );
   else
-    append_string( ret, i18n( "Read" ) );
+    append_string( ret, i18nc( "Status of an item", "Read" ) );
 
   if( status().hasAttachment() )
-    append_string( ret, i18n( "Has Attachment" ) );
+    append_string( ret, i18nc( "Status of an item", "Has Attachment" ) );
 
   if( status().isReplied() )
-    append_string( ret, i18n( "Replied" ) );
+    append_string( ret, i18nc( "Status of an item", "Replied" ) );
 
   if( status().isForwarded() )
-    append_string( ret, i18n( "Forwarded" ) );
+    append_string( ret, i18nc( "Status of an item", "Forwarded" ) );
 
   if( status().isSent() )
-    append_string( ret, i18n( "Sent" ) );
+    append_string( ret, i18nc( "Status of an item", "Sent" ) );
 
   if( status().isImportant() )
-    append_string( ret, i18n( "Important" ) );
+    append_string( ret, i18nc( "Status of an item", "Important" ) );
 
   if( status().isToAct() )
-    append_string( ret, i18n( "ToDo" ) );
+    append_string( ret, i18nc( "Status of an item", "ToDo" ) );
 
   if( status().isSpam() )
-    append_string( ret, i18n( "Spam" ) );
+    append_string( ret, i18nc( "Status of an item", "Spam" ) );
 
   if( status().isHam() )
-    append_string( ret, i18n( "Ham" ) );
+    append_string( ret, i18nc( "Status of an item", "Ham" ) );
 
   if( status().isWatched() )
-    append_string( ret, i18n( "Watched" ) );
+    append_string( ret, i18nc( "Status of an item", "Watched" ) );
 
   if( status().isIgnored() )
-    append_string( ret, i18n( "Ignored" ) );
+    append_string( ret, i18nc( "Status of an item", "Ignored" ) );
 
   return ret;
 }

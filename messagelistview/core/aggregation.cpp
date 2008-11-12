@@ -296,7 +296,7 @@ void Aggregation::save( QDataStream &stream ) const
 QList< QPair< QString, int > > Aggregation::enumerateGroupingOptions()
 {
   QList< QPair< QString, int > > ret;
-  ret.append( QPair< QString, int >( i18n( "None" ), NoGrouping ) );
+  ret.append( QPair< QString, int >( i18nc( "No grouping of messages", "None" ), NoGrouping ) );
   ret.append( QPair< QString, int >( i18n( "by Exact Date (of Thread Leaders)" ), GroupByDate ) );
   ret.append( QPair< QString, int >( i18n( "by Smart Date Ranges (of Thread Leaders)" ), GroupByDateRange ) );
   ret.append( QPair< QString, int >( i18n( "by Smart Sender/Receiver" ), GroupBySenderOrReceiver ) );
@@ -336,8 +336,8 @@ QList< QPair< QString, int > > Aggregation::enumerateGroupSortDirectionOptions( 
     ret.append( QPair< QString, int >( i18n( "Most Recent on Top" ), Descending ) );
     return ret;
   }
-  ret.append( QPair< QString, int >( i18n( "Ascending" ), Ascending ) );
-  ret.append( QPair< QString, int >( i18n( "Descending" ), Descending ) );
+  ret.append( QPair< QString, int >( i18nc( "Sort order for mail groups", "Ascending" ), Ascending ) );
+  ret.append( QPair< QString, int >( i18nc( "Sort order for mail groups", "Descending" ), Descending ) );
   return ret;
 }
 
@@ -356,7 +356,7 @@ QList< QPair< QString, int > > Aggregation::enumerateGroupExpandPolicyOptions( G
 QList< QPair< QString, int > > Aggregation::enumerateThreadingOptions()
 {
   QList< QPair< QString, int > > ret;
-  ret.append( QPair< QString, int >( i18n( "None" ), NoThreading ) );
+  ret.append( QPair< QString, int >( i18nc( "No threading of messages", "None" ), NoThreading ) );
   ret.append( QPair< QString, int >( i18n( "Perfect Only" ), PerfectOnly ) );
   ret.append( QPair< QString, int >( i18n( "Perfect and by References" ), PerfectAndReferences ) );
   ret.append( QPair< QString, int >( i18n( "Perfect, by References and by Subject" ), PerfectReferencesAndSubject ) );
@@ -419,8 +419,8 @@ QList< QPair< QString, int > > Aggregation::enumerateMessageSortDirectionOptions
     return ret;
   }
 
-  ret.append( QPair< QString, int >( i18n( "Ascending" ), Ascending ) );
-  ret.append( QPair< QString, int >( i18n( "Descending" ), Descending ) );
+  ret.append( QPair< QString, int >( i18nc( "Sort order for messages", "Ascending" ), Ascending ) );
+  ret.append( QPair< QString, int >( i18nc( "Sort order for messages", "Descending" ), Descending ) );
   return ret;
 }
 

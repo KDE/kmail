@@ -43,11 +43,11 @@ OptionSetEditor::OptionSetEditor( QWidget *parent )
 {
   // General tab
   QWidget * tab = new QWidget( this );
-  addTab( tab, i18n( "General" ) );
+  addTab( tab, i18nc( "@title:tab General options of a view mode", "General" ) );
 
   QGridLayout * tabg = new QGridLayout( tab );
 
-  QLabel * l = new QLabel( i18n( "Name:" ), tab );
+  QLabel * l = new QLabel( i18nc( "@label:textbox Name of the option", "Name:" ), tab );
   tabg->addWidget( l, 0, 0 );
 
   mNameEdit = new QLineEdit( tab );
@@ -56,7 +56,7 @@ OptionSetEditor::OptionSetEditor( QWidget *parent )
   connect( mNameEdit, SIGNAL( textEdited( const QString & ) ),
            SLOT( slotNameEditTextEdited( const QString & ) ) );
 
-  l = new QLabel( i18n( "Description:" ), tab );
+  l = new QLabel( i18nc( "@label:textbox Description of the option", "Description:" ), tab );
   tabg->addWidget( l, 1, 0 );
 
   mDescriptionEdit = new QTextEdit( tab );

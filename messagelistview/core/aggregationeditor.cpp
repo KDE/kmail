@@ -107,7 +107,7 @@ AggregationEditor::AggregationEditor( QWidget *parent )
 
   // Advanced tab
   tab = new QWidget( this );
-  addTab( tab, i18n( "Advanced" ) );
+  addTab( tab, i18nc( "@title:tab Advanced settings tab for aggregation mode", "Advanced" ) );
 
   tabg = new QGridLayout( tab );
 

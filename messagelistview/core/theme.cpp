@@ -59,22 +59,22 @@ QString Theme::ContentItem::description( Type type )
   switch ( type )
   {
     case Subject:
-      return i18n( "Subject" );
+      return i18nc( "Description of Type Subject", "Subject" );
     break;
     case Date:
-      return i18n( "Date" );
+      return i18nc( "Description of Type Date", "Date" );
     break;
     case SenderOrReceiver:
       return i18n( "Sender/Receiver" );
     break;
     case Sender:
-      return i18n( "Sender" );
+      return i18nc( "Description of Type Sender", "Sender" );
     break;
     case Receiver:
-      return i18n( "Receiver" );
+      return i18nc( "Description of Type Receiver", "Receiver" );
     break;
     case Size:
-      return i18n( "Size" );
+      return i18nc( "Description of Type Size", "Size" );
     break;
     case ReadStateIcon:
       return i18n( "New/Unread/Read Icon" );
@@ -125,7 +125,7 @@ QString Theme::ContentItem::description( Type type )
       return i18n( "Message Tags" );
     break;
     default:
-      return i18n( "Unknown" );
+      return i18nc( "Description for an Unknown Type", "Unknown" );
     break;
   }
 }

@@ -85,7 +85,7 @@ ThemeColumnPropertiesDialog::ThemeColumnPropertiesDialog( QWidget * parent, Them
 
   QLabel * l;
 
-  l = new QLabel( i18n( "Name:" ), base );
+  l = new QLabel( i18nc( "@label:textbox Property name", "Name:" ), base );
   g->addWidget( l, 0, 0 );
 
   mNameEdit = new QLineEdit( base );
@@ -416,7 +416,7 @@ void ThemePreviewWidget::setTheme( Theme * theme )
   {
     QString label = ( *it )->label();
     if ( ( *it )->visibleByDefault() )
-      label += QString( " (%1)" ).arg( i18n( "Visible") );
+      label += QString( " (%1)" ).arg( i18nc( "Indicates whether or not a header label is visible", "Visible") );
 
     headerLabels.append( label );
   }
@@ -858,7 +858,7 @@ void ThemePreviewWidget::mousePressEvent( QMouseEvent * e )
       if ( mSelectedThemeContentItem->displaysText() )
       {
         QAction * act;
-        act = menu.addAction( i18n( "Soften" ) );
+        act = menu.addAction( i18nc( "@action:inmenu soften the text color", "Soften" ) );
         act->setCheckable( true );
         act->setChecked( mSelectedThemeContentItem->softenByBlending() );
         connect( act, SIGNAL( triggered( bool ) ),
@@ -868,12 +868,12 @@ void ThemePreviewWidget::mousePressEvent( QMouseEvent * e )
 
         QActionGroup * grp = new QActionGroup( childmenu );
 
-        act = childmenu->addAction( i18n("Default") );
+        act = childmenu->addAction( i18nc("@action:inmenu Font setting", "Default") );
         act->setData( QVariant( static_cast< int >( 0 ) ) );
         act->setCheckable( true );
         act->setChecked( !mSelectedThemeContentItem->useCustomFont() );
         grp->addAction( act );
-        act = childmenu->addAction( i18n("Custom...") );
+        act = childmenu->addAction( i18nc("@action:inmenu Font setting", "Custom...") );
         act->setData( QVariant( static_cast< int >( Theme::ContentItem::UseCustomFont ) ) );
         act->setCheckable( true );
         act->setChecked( mSelectedThemeContentItem->useCustomFont() );
@@ -896,12 +896,12 @@ void ThemePreviewWidget::mousePressEvent( QMouseEvent * e )
         QActionGroup * grp = new QActionGroup( childmenu );
 
         QAction * act;
-        act = childmenu->addAction( i18n("Default") );
+        act = childmenu->addAction( i18nc("@action:inmenu Foreground color setting", "Default") );
         act->setData( QVariant( static_cast< int >( 0 ) ) );
         act->setCheckable( true );
         act->setChecked( !mSelectedThemeContentItem->useCustomColor() );
         grp->addAction( act );
-        act = childmenu->addAction( i18n("Custom...") );
+        act = childmenu->addAction( i18nc("@action:inmenu Foreground color setting", "Custom...") );
         act->setData( QVariant( static_cast< int >( Theme::ContentItem::UseCustomColor ) ) );
         act->setCheckable( true );
         act->setChecked( mSelectedThemeContentItem->useCustomColor() );
@@ -961,17 +961,17 @@ void ThemePreviewWidget::mousePressEvent( QMouseEvent * e )
         QActionGroup * grp = new QActionGroup( childmenu );
 
         QAction * act;
-        act = childmenu->addAction( i18n("None") );
+        act = childmenu->addAction( i18nc("@action:inmenu Group header background color setting", "None") );
         act->setData( QVariant( static_cast< int >( Theme::Transparent ) ) );
         act->setCheckable( true );
         act->setChecked( mTheme->groupHeaderBackgroundMode() == Theme::Transparent );
         grp->addAction( act );
-        act = childmenu->addAction( i18n("Automatic") );
+        act = childmenu->addAction( i18nc("@action:inmenu Group header background color setting", "Automatic") );
         act->setData( QVariant( static_cast< int >( Theme::AutoColor ) ) );
         act->setCheckable( true );
         act->setChecked( mTheme->groupHeaderBackgroundMode() == Theme::AutoColor );
         grp->addAction( act );
-        act = childmenu->addAction( i18n("Custom...") );
+        act = childmenu->addAction( i18nc("@action:inmenu Group header background color setting", "Custom...") );
         act->setData( QVariant( static_cast< int >( Theme::CustomColor ) ) );
         act->setCheckable( true );
         act->setChecked( mTheme->groupHeaderBackgroundMode() == Theme::CustomColor );
@@ -1445,7 +1445,7 @@ ThemeEditor::ThemeEditor( QWidget *parent )
 
   // Advanced tab
   tab = new QWidget( this );
-  addTab( tab, i18n( "Advanced" ) );
+  addTab( tab, i18nc( "@title:tab Advanced theme settings", "Advanced" ) );
 
   tabg = new QGridLayout( tab );
 

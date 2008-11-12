@@ -1247,14 +1247,14 @@ bool FolderView::fillHeaderContextMenu( KMenu * menu, const QPoint &clickPoint )
 
   grp = new QActionGroup( menu );
 
-  act = menu->addAction( i18n("Always") );
+  act = menu->addAction( i18nc("@action:inmenu Always display tooltips", "Always") );
   act->setCheckable( true );
   grp->addAction( act );
   act->setChecked( mToolTipDisplayPolicy == DisplayAlways );
   act->setData( QVariant( (int)DisplayAlways ) );
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
-  act = menu->addAction( i18n("When Text Obscured") );
+  act = menu->addAction( i18nc("@action:inmenu", "When Text Obscured") );
   act->setCheckable( true );
   grp->addAction( act );
   act->setChecked( mToolTipDisplayPolicy == DisplayWhenTextElided );
@@ -1262,7 +1262,7 @@ bool FolderView::fillHeaderContextMenu( KMenu * menu, const QPoint &clickPoint )
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
 
-  act = menu->addAction( i18n("Never") );
+  act = menu->addAction( i18nc("@action:inmenu Never display tooltips.", "Never") );
   act->setCheckable( true );
   grp->addAction( act );
   act->setChecked( mToolTipDisplayPolicy == DisplayNever );
@@ -1270,11 +1270,11 @@ bool FolderView::fillHeaderContextMenu( KMenu * menu, const QPoint &clickPoint )
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
 
-  menu->addTitle( i18n( "Sort Items" ) );
+  menu->addTitle( i18nc("@action:inmenu", "Sort Items" ) );
 
   grp = new QActionGroup( menu );
 
-  act = menu->addAction( i18n("Automatically, by Current Column") );
+  act = menu->addAction( i18nc("@action:inmenu", "Automatically, by Current Column") );
   act->setCheckable( true );
   grp->addAction( act );
   act->setChecked( mSortingPolicy == SortByCurrentColumn );
@@ -1282,7 +1282,7 @@ bool FolderView::fillHeaderContextMenu( KMenu * menu, const QPoint &clickPoint )
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeSortingPolicy( bool ) ) );
 
-  act = menu->addAction( i18n("Manually, by Drag And Drop") );
+  act = menu->addAction( i18nc("@action:inmenu", "Manually, by Drag And Drop") );
   act->setCheckable( true );
   grp->addAction( act );
   act->setChecked( mSortingPolicy == SortByDragAndDropKey );

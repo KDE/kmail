@@ -57,13 +57,13 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
   mNewTabButton = new QToolButton( this );
   mNewTabButton->setIcon( KIcon( "tab-new" ) );
   mNewTabButton->adjustSize();
-  mNewTabButton->setToolTip( i18n("Open a new tab"));
+  mNewTabButton->setToolTip( i18nc("@info:tooltip", "Open a new tab"));
   setCornerWidget( mNewTabButton, Qt::TopLeftCorner );
 
   mCloseTabButton = new QToolButton( this );
   mCloseTabButton->setIcon( KIcon( "tab-close" ) );
   mCloseTabButton->adjustSize();
-  mCloseTabButton->setToolTip( i18n("Close the current tab"));
+  mCloseTabButton->setToolTip( i18nc("@info:tooltip", "Close the current tab"));
   setCornerWidget( mCloseTabButton, Qt::TopRightCorner );
 
   setTabReorderingEnabled( true ); // this works with middle button (not really intuitive, found it by reading sources)
@@ -171,7 +171,7 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
     if ( fld )
       setTabText( indexOf( w ), fld->label() );
     else
-      setTabText( indexOf( w ), i18n( "Empty" ) );
+      setTabText( indexOf( w ), i18nc( "@title:tab Empty messagelist", "Empty" ) );
     // is already current
     internalSetCurrentFolder( fld );
   }
@@ -245,7 +245,7 @@ void Pane::slotTabContextMenuRequest( QWidget * tab, const QPoint &pos )
 
   QAction * act;
 
-  act = menu.addAction( i18n( "Close Tab" ) );
+  act = menu.addAction( i18nc( "@action:inmenu", "Close Tab" ) );
   act->setData( data );
   act->setEnabled( count() > 1 );
   act->setIcon( SmallIcon( "tab-close" ) );
@@ -254,7 +254,7 @@ void Pane::slotTabContextMenuRequest( QWidget * tab, const QPoint &pos )
       SLOT( slotActionTabCloseRequest() )
     );
 
-  act = menu.addAction( i18n( "Close All Other Tabs" ) );
+  act = menu.addAction( i18nc("@action:inmenu", "Close All Other Tabs" ) );
   act->setData( data );
   act->setEnabled( count() > 1 );
   act->setIcon( SmallIcon( "tab-close-other" ) );
@@ -362,7 +362,7 @@ void Pane::slotNewTab()
 Widget * Pane::addNewWidget()
 {
   Widget * w = new Widget( mMainWidget, this );
-  addTab( w, i18n( "Empty" ) );
+  addTab( w, i18nc( "@title:tab Empty messagelist", "Empty" ) );
 
   connect( w, SIGNAL( messageSelected( KMMessage * ) ),
            this, SLOT( slotMessageSelected( KMMessage * ) ) );

@@ -814,28 +814,28 @@ void Widget::statusMenuAboutToShow()
 
   // FIXME: Use cached icons from manager ?
 
-  act = menu->addAction( i18n( "New" ) );
+  act = menu->addAction( i18nc( "@action:inmenu Status of a message", "New" ) );
   act->setIcon( SmallIcon("mail-unread-new") );
   act->setCheckable( true );
   act->setChecked( stat.isNew() );
   act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusNew().toQInt32() ) ) );
   grp->addAction( act );
 
-  act = menu->addAction( i18n( "Unread" ) );
+  act = menu->addAction( i18nc( "@action:inmenu Status of a message", "Unread" ) );
   act->setIcon( SmallIcon("mail-unread") );
   act->setCheckable( true );
   act->setChecked( stat.isUnread() );
   act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusUnread().toQInt32() ) ) );
   grp->addAction( act );
 
-  act = menu->addAction( i18n( "Replied" ) );
+  act = menu->addAction( i18nc( "@action:inmenu Status of a message", "Replied" ) );
   act->setIcon( SmallIcon("mail-replied") );
   act->setCheckable( true );
   act->setChecked( stat.isReplied() );
   act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusReplied().toQInt32() ) ) );
   grp->addAction( act );
 
-  act = menu->addAction( i18n( "Forwarded" ) );
+  act = menu->addAction( i18nc( "@action:inmenu Status of a message", "Forwarded" ) );
   act->setIcon( SmallIcon("mail-forwarded") );
   act->setCheckable( true );
   act->setChecked( stat.isForwarded() );

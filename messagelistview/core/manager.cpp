@@ -659,12 +659,12 @@ void Manager::createDefaultThemes()
   // The "Classic" backward compatible theme
 
   s = new Theme(
-      i18n( "Classic" ),
+      i18nc( "Default theme name", "Classic" ),
       i18n( "A simple, backward compatible, single row theme" )
     );
 
     c = new Theme::Column();
-    c->setLabel( i18n( "Subject" ) );
+    c->setLabel( i18nc( "@title:column Subject of messages", "Subject" ) );
     c->setMessageSorting( Aggregation::SortMessagesBySubject );
 
       r = new Theme::Row();
@@ -699,14 +699,14 @@ void Manager::createDefaultThemes()
 
   c = add_theme_simple_text_column( s, i18n( "Sender/Receiver" ), Theme::ContentItem::SenderOrReceiver, true, Aggregation::SortMessagesBySenderOrReceiver, false, false);
   c->setIsSenderOrReceiver( true );
-  add_theme_simple_text_column( s, i18n( "Sender" ), Theme::ContentItem::Sender, false, Aggregation::SortMessagesBySender, false, false );
-  add_theme_simple_text_column( s, i18n( "Receiver" ), Theme::ContentItem::Receiver, false, Aggregation::SortMessagesByReceiver, false, false );
-  add_theme_simple_text_column( s, i18n( "Date" ), Theme::ContentItem::Date, true, Aggregation::SortMessagesByDateTime, false, false );
+  add_theme_simple_text_column( s, i18nc( "Sender of a message", "Sender" ), Theme::ContentItem::Sender, false, Aggregation::SortMessagesBySender, false, false );
+  add_theme_simple_text_column( s, i18nc( "Receiver of a message", "Receiver" ), Theme::ContentItem::Receiver, false, Aggregation::SortMessagesByReceiver, false, false );
+  add_theme_simple_text_column( s, i18nc( "Date of a message", "Date" ), Theme::ContentItem::Date, true, Aggregation::SortMessagesByDateTime, false, false );
   add_theme_simple_text_column( s, i18n( "Most Recent Date" ), Theme::ContentItem::MostRecentDate, false, Aggregation::SortMessagesByDateTimeOfMostRecent, false, true );
-  add_theme_simple_text_column( s, i18n( "Size" ), Theme::ContentItem::Size, false, Aggregation::SortMessagesBySize, false, false );
-  add_theme_simple_icon_column( s, i18n( "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_text_column( s, i18nc( "Size of a message", "Size" ), Theme::ContentItem::Size, false, Aggregation::SortMessagesBySize, false, false );
+  add_theme_simple_icon_column( s, i18nc( "Attachement indication", "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Important" ), Theme::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), Theme::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "To Do" ), Theme::ContentItem::ToDoStateIcon, false, Aggregation::SortMessagesByToDoStatus );
   add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), Theme::ContentItem::SpamHamStateIcon, false, Aggregation::NoMessageSorting );

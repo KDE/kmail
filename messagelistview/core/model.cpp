@@ -3443,7 +3443,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
 
   // no more jobs
 
-  KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Ready" ) );
+  KPIM::BroadcastStatus::instance()->setStatusMsg( i18nc( "@info:status Finished view fill", "Ready" ) );
 
   return ViewItemJobCompleted;
 }

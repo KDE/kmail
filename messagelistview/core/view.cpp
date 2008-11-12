@@ -1429,7 +1429,7 @@ bool View::event( QEvent *e )
                  "%2" \
               "</td>" \
             "</tr>"
-        ).arg( i18n( "To" ) ).arg( mi->receiver() );
+        ).arg( i18nc( "Receiver of the emial", "To" ) ).arg( mi->receiver() );
 
       tip += QString::fromLatin1(
            "<tr>" \
@@ -1815,12 +1815,13 @@ void KMHeaders::setFolderInfoStatus ()
   QString str;
   const int unread = mFolder->countUnread();
   if ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
-    str = unread ? i18np( "1 unsent", "%1 unsent", unread ) : i18n( "0 unsent" );
+    str = unread ? i18ncp( "Number of unsent messages", "1 unsent", "%1 unsent", unread ) : i18n( "0 unsent" );
   else
-    str = unread ? i18np( "1 unread", "%1 unread", unread ) : i18n( "0 unread" );
+    str = unread ? i18ncp( "Number of unread messages", "1 unread", "%1 unread", unread )
+      : i18nc( "No unread messages", "0 unread" );
   const int count = mFolder->count();
-  str = count ? i18np( "1 message, %2.", "%1 messages, %2.", count, str )
-              : i18n( "0 messages" ); // no need for "0 unread" to be added here
+  str = count ? i18ncp( "Number of unread messages", "1 message, %2.", "%1 messages, %2.", count, str )
+              : i18nc( "No unread messages", "0 messages" ); // no need for "0 unread" to be added here
   if ( mFolder->isReadOnly() )
     str = i18nc("%1 = n messages, m unread.", "%1 Folder is read-only.", str );
   BroadcastStatus::instance()->setStatusMsg(str);
