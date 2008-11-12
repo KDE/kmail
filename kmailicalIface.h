@@ -131,6 +131,7 @@ k_dcop:
    * Causes all resource folders of the given type to be synced with the server.
    */
   virtual bool triggerSync( const QString & ) = 0;
+  virtual void changeResourceUIName( const QString &folderPath, const QString &newName ) = 0;
 
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,

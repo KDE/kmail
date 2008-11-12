@@ -76,6 +76,8 @@ using KMail::AccountManager;
 
 using namespace KMail;
 
+QMap<QString, QString> *KMailICalIfaceImpl::mSubResourceUINamesMap = new QMap<QString, QString>;
+
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
@@ -655,8 +657,13 @@ static int dimapAccountCount()
 
 static QString subresourceLabelForPresentation( const KMFolder * folder )
 {
+    if( KMailICalIfaceImpl::getResourceMap()->contains( folder->location() ) ) {
+        return folder->label();
+    }
+
     QString label = folder->prettyURL();
     QStringList parts = QStringList::split( QString::fromLatin1("/"), label );
+
     // In the common special case of some other user's folder shared with us
     // the url looks like "Server Name/user/$USERNAME/Folder/Name". Make
     // those a bit nicer.
@@ -1579,7 +1586,6 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
 
     subresourceAdded( contentsTypeStr, location, subresourceLabelForPresentation( folder ),
                       !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
-
   }
 }
 
@@ -1628,6 +1634,18 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 
   // No luck at all
   return 0;
+}
+
+void KMailICalIfaceImpl::changeResourceUIName( const QString &folderPath, const QString &newName )
+{
+  kdDebug() << "Folder path " << folderPath << endl;
+  KMFolder *f = findResourceFolder( folderPath );
+  if ( f ) {
+    KMailICalIfaceImpl::getResourceMap()->insert( folderPath, newName );
+    kmkernel->folderMgr()->renameFolder( f, newName );
+    KConfigGroup configGroup( kmkernel->config(), "Resource UINames" );
+    configGroup.writeEntry( folderPath, newName );
+  }
 }
 
 /****************************
@@ -1902,6 +1920,10 @@ void KMailICalIfaceImpl::readConfig()
     subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
     subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
   }
+
+  KConfig *config = kmkernel->config();
+  config->setGroup("Resource UINames");
+  *KMailICalIfaceImpl::mSubResourceUINamesMap =  config->entryMap( "Resource UINames" );
 
   reloadFolderTree();
 }
