@@ -18,8 +18,8 @@
  *
  *******************************************************************************/
 
-#ifndef __KMAIL_MESSAGELISTVIEW_CORE_SKIN_H__
-#define __KMAIL_MESSAGELISTVIEW_CORE_SKIN_H__
+#ifndef __KMAIL_MESSAGELISTVIEW_CORE_THEME_H__
+#define __KMAIL_MESSAGELISTVIEW_CORE_THEME_H__
 
 #include <QList>
 #include <QPair>

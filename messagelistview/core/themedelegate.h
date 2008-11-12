@@ -18,8 +18,8 @@
  *
  *******************************************************************************/
 
-#ifndef __KMAIL_MESSAGELISTVIEW_CORE_SKINDELEGATE_H__
-#define __KMAIL_MESSAGELISTVIEW_CORE_SKINDELEGATE_H__
+#ifndef __KMAIL_MESSAGELISTVIEW_CORE_THEMEDELEGATE_H__
+#define __KMAIL_MESSAGELISTVIEW_CORE_THEMEDELEGATE_H__
 
 #include <QStyledItemDelegate>
 #include <QRect>

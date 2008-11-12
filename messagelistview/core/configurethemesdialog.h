@@ -18,8 +18,8 @@
  *
  *******************************************************************************/
 
-#ifndef __KMAIL_MESSAGELISTVIEW_CORE_CONFIGURESKINSDIALOG_H__
-#define __KMAIL_MESSAGELISTVIEW_CORE_CONFIGURESKINSDIALOG_H__
+#ifndef __KMAIL_MESSAGELISTVIEW_CORE_CONFIGURETHEMESDIALOG_H__
+#define __KMAIL_MESSAGELISTVIEW_CORE_CONFIGURETHEMESDIALOG_H__
 
 #include <KDialog>
 

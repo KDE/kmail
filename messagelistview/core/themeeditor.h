@@ -18,8 +18,8 @@
  *
  *******************************************************************************/
 
-#ifndef __KMAIL_MESSAGELISTVIEW_CORE_SKINEDITOR_H__
-#define __KMAIL_MESSAGELISTVIEW_CORE_SKINEDITOR_H__
+#ifndef __KMAIL_MESSAGELISTVIEW_CORE_THEMEEDITOR_H__
+#define __KMAIL_MESSAGELISTVIEW_CORE_THEMEEDITOR_H__
 
 #include "messagelistview/core/optionseteditor.h"
 #include "messagelistview/core/themedelegate.h"
