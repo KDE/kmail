@@ -379,7 +379,7 @@ void FavoriteFolderView::renameFolder()
 
   // We would REALLY like to use the nice Qt item renaming method but we can't
   // since KMMainWidget assigns the return key to a QAction default shortcut.
-  // We never get the return key and thus never can end editing succesfully.
+  // We never get the return key and thus never can end editing succesfuly.
   // An action-disabling workaround requires too much code to be implemented.
 
   bool ok;

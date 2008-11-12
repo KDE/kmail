@@ -114,7 +114,7 @@ public:
    * and ask Pane to set it as tab icon.
    *
    * Pre-selection is the action of automatically selecting a message just after the folder
-   * has finished loading. See Model::setStorageModel() for more informations.
+   * has finished loading. See Model::setStorageModel() for more information.
    */
   void setFolder( KMFolder *fld, const QIcon &icon, Core::PreSelectionMode preSelectionMode = Core::PreSelectLastSelected );
 

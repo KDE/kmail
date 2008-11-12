@@ -21,7 +21,7 @@
 //
 // This class is a rather huge monster. It's something that resembles a QAbstractItemModel
 // (because it has to provide the interface for a QTreeView) but isn't entirely one
-// (for optimisation reasons). It basically manages a tree of items of two types:
+// (for optimization reasons). It basically manages a tree of items of two types:
 // GroupHeaderItem and MessageItem. Be sure to read the docs for ViewItemJob.
 //
 // A huge credit here goes to Till Adam which seems to have written most
@@ -670,7 +670,7 @@ void Model::setStorageModel( const StorageModel *storageModel, PreSelectionMode 
   //   adjusted by the second job. For instance, in my kernel mailing list folder this "smart" approach
   //   generates about 150 additional imperfectly threaded children... but the "today"
   //   messages show up almost immediately. The two-chunk job also makes computing
-  //   the percentage user feedback a little harder and might break some optimisation
+  //   the percentage user feedback a little harder and might break some optimization
   //   in the insertions (we're able to optimize appends and prepends but a chunked
   //   job is likely to split our work at a boundary where messages are always inserted
   //   in the middle of the list).
@@ -701,7 +701,7 @@ void Model::setStorageModel( const StorageModel *storageModel, PreSelectionMode 
   //   completion times high.
   //
 
-  // If we have no filter it seems that we can apply a huge optimisation.
+  // If we have no filter it seems that we can apply a huge optimization.
   // We disconnect the UI for the first huge filling job. This allows us
   // to save the extremely expensive beginInsertRows()/endInsertRows() calls
   // and call a single layoutChanged() at the end. This slows down a lot item
@@ -1467,7 +1467,7 @@ void Model::addMessageToSubjectBasedThreadingCache( MessageItem * mi )
 {
   // Unfortunately the entries in the cache can't be sorted by date. This is
   // because the date may be updated (and it would cause our lists to become unsorted).
-  // Also "unknown" dates often popup so the "appending" optimisation is voided anyway.
+  // Also "unknown" dates often popup so the "appending" optimization is voided anyway.
   // We use plain pointer comparison then.
 
   QList< MessageItem * > * messagesWithTheSameStrippedSubject = mThreadingCacheMessageSubjectMD5ToMessageItem->value( mi->strippedSubjectMD5(), 0 );
@@ -3614,8 +3614,8 @@ void Model::viewItemJobStep()
       if ( mCurrentItemToRestoreAfterViewItemJobStep != currentItemBeforeStep )
       {
         // But we have changed it in the job step.
-        // This means that: we have deleted the current item and choosen a
-        // new candidate as current but Qt also has choosen it as candidate
+        // This means that: we have deleted the current item and chosen a
+        // new candidate as current but Qt also has chosen it as candidate
         // and already made it current. The problem is that (as of Qt 4.4)
         // it probably didn't select it.
         if ( !mView->selectionModel()->hasSelection() )
@@ -3704,7 +3704,7 @@ void Model::slotStorageModelRowsInserted( const QModelIndex &parent, int from, i
 
       if ( from > job->endIndex() )
       {
-        // The change is completly above the job, the job is not affected
+        // The change is completely above the job, the job is not affected
       } else if( from > job->currentIndex() ) // and from <= job->endIndex()
       {
         // The change starts in the middle of the job in a way that it must be splitted in two.
@@ -3822,7 +3822,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
 
       if ( from > job->endIndex() )
       {
-        // The change is completly above the job, the job is not affected
+        // The change is completely above the job, the job is not affected
       } else if( from > job->currentIndex() ) // and from <= job->endIndex()
       {
         // The change starts in the middle of the job and ends in the middle or after the job.
@@ -3847,12 +3847,12 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
           idx++; // we can skip this job in the loop, it's already ok
           jobCount++; // and our range increases by one.
           mViewItemJobs->insert( idx, newJob );
-        } // else the change includes completly the end of the job and no other part of it can be completed.
+        } // else the change includes completely the end of the job and no other part of it can be completed.
       } else {
         // The change starts below (or exactly on the beginning of) the job. ( from <= job->currentIndex() )
         if ( to >= job->endIndex() )
         {
-          // The change completly covers the job: kill it
+          // The change completely covers the job: kill it
           delete job;
           mViewItemJobs->removeAt( idx );
           idx--;
@@ -3868,7 +3868,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
           
           Q_ASSERT( job->currentIndex() <= job->endIndex() );
         } else {
-          // The change is completly below the job: it must be shifted down.
+          // The change is completely below the job: it must be shifted down.
           job->setCurrentIndex( job->currentIndex() - count );
           job->setEndIndex( job->endIndex() - count );
         }

@@ -252,7 +252,7 @@ public:
    * If jumpToFirstUnread is set to true then the first unread message is pre-selected.
    *
    * Pre-selection is the action of automatically selecting a message just after the folder
-   * has finished loading. See Model::setStorageModel() for more informations.
+   * has finished loading. See Model::setStorageModel() for more information.
    */
   void setCurrentFolder(
       KMFolder *fld,

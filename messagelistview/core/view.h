@@ -99,7 +99,7 @@ public:
    * Be sure to set the Aggregation and the Theme BEFORE calling this function.
    *
    * Pre-selection is the action of automatically selecting a message just after the folder
-   * has finished loading. See Model::setStorageModel() for more informations.
+   * has finished loading. See Model::setStorageModel() for more information.
    */
   void setStorageModel( const StorageModel * storageModel, PreSelectionMode preSelectionMode = PreSelectLastSelected );
 
@@ -107,7 +107,7 @@ public:
    * Applies the specified pre-selection to the view.
    * This is used to apply the pre-selection to a folder that was in fact already opened.
    *
-   * See Model::applyMessagePreSelection() for more informations.
+   * See Model::applyMessagePreSelection() for more information.
    */
   void applyMessagePreSelection( PreSelectionMode preSelectionMode );
 

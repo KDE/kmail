@@ -86,7 +86,7 @@ public:
    * Sets the storage model for this Widget.
    *
    * Pre-selection is the action of automatically selecting a message just after the folder
-   * has finished loading. See Model::setStorageModel() for more informations.
+   * has finished loading. See Model::setStorageModel() for more information.
    */
   void setStorageModel( StorageModel * storageModel, PreSelectionMode preSelectionMode = PreSelectLastSelected );
 

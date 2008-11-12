@@ -126,7 +126,7 @@ Q_SIGNALS:
    * Also emitted when a KMFolder is activated in one of the FolderView widgets
    * managed by this instance. fld may be 0 if an item without a folder
    * is activated: this will usually mean "local root" or "searches".
-   * This signal also provides informations about the button being pressed.
+   * This signal also provides information about the button being pressed.
    */
   void folderActivated( KMFolder *fld, bool middleButton );
 
@@ -246,7 +246,7 @@ public: // enums
    * in the constructor.
    * In fact KPIM::FolderTreeWidget has a runtime interface for these
    * indexes but in this widget we KNOW that the indexes are constant
-   * and we use this knowledge as an optimisation.
+   * and we use this knowledge as an optimization.
    */
   enum ColumnLogicalIndex
   {
@@ -582,7 +582,7 @@ protected:
 
   /**
    * Internal helper for moveOrCopyFolders needed to manage DND correctly.
-   * Returns true if the operation can be succesfully initiated and false otherwise.
+   * Returns true if the operation can be succesfuly initiated and false otherwise.
    */
   bool moveOrCopyFoldersInternal( const QList<QPointer<KMFolder> > &sources, KMFolder* destination, bool move );
 
@@ -695,7 +695,7 @@ protected:
    * We're not using the pressed() since it may be triggered also before
    * a dnd action. We're not using currentItemChanged() since it may
    * be triggered during a reload. We're not using clicked() since
-   * it doesn't contain mouse button informations...
+   * it doesn't contain mouse button information...
    */
   virtual void mouseReleaseEvent( QMouseEvent *e );
 

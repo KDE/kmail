@@ -86,7 +86,7 @@ public:
    * Performs a hit test on the specified viewport point.
    * Returns true if the point hit something and false otherwise.
    * When the hit test is succesfull then the hitIndex(), hitItem(), hitColumn(), hitRow(), and hitContentItem()
-   * function will return informations about the item that was effectively hit.
+   * function will return information about the item that was effectively hit.
    * If exact is set to true then hitTest() will return true only if the viewportPoint
    * is exactly over an item. If exact is set to false then the hitTest() function
    * will do its best to find the closest object to be actually "hit": this is useful,

@@ -600,7 +600,7 @@ void FolderView::reload( bool openFoldersForUpdate )
   // in the createItem() method which is a pure virtual and
   // must be overridden by the child classes.
 
-  // createItem() is passed the informations about the folder
+  // createItem() is passed the information about the folder
   // we want to create a view item for and it's position in
   // the hierarchy. The child view is then allowed to mess
   // up a bit by either skipping the item creation (favorite folder
@@ -2674,7 +2674,7 @@ QString FolderViewItem::normalIcon() const
       icon = "folder-grey";
   }
 
-  // allow icon customisation by the folder itself
+  // allow icon customization by the folder itself
   if ( fld && fld->useCustomIcons() )
     icon = fld->normalIconPath();
 

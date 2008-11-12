@@ -184,13 +184,13 @@ public:
 
   /**
    * Returns the item that is visually below the specified child if this item.
-   * Note that the returned item may belong to a completly different subtree.
+   * Note that the returned item may belong to a completely different subtree.
    */
   Item * itemBelowChild( Item * child );
 
   /**
    * Returns the item that is visually above the specified child if this item.
-   * Note that the returned item may belong to a completly different subtree.
+   * Note that the returned item may belong to a completely different subtree.
    */
   Item * itemAboveChild( Item * child );
 
@@ -201,13 +201,13 @@ public:
 
   /**
    * Returns the item that is visually below this item in the tree.
-   * Note that the returned item may belong to a completly different subtree.
+   * Note that the returned item may belong to a completely different subtree.
    */
   Item * itemBelow();
 
   /**
    * Returns the item that is visually above this item in the tree.
-   * Note that the returned item may belong to a completly different subtree.
+   * Note that the returned item may belong to a completely different subtree.
    */
   Item * itemAbove();
 
@@ -271,14 +271,14 @@ public:
 
   /**
    * Updates the cached guess for the index of this item in the parent's child list.
-   * See indexGuess() for more informations.
+   * See indexGuess() for more information.
    */
   void setIndexGuess( int index )
     { mThisItemIndexGuess = index; };
 
   /**
    * Returns true if the specified Item is a position idx in the list of children.
-   * See indexGuess() for more informations.
+   * See indexGuess() for more information.
    */
   bool childItemHasIndex( const Item *item, int idx ) const
     { return mChildItems ? ( ( mChildItems->count() > idx ) ? ( mChildItems->at( idx ) == item ) : false ) : false; };
@@ -480,7 +480,7 @@ public:
    *
    * The insertion function *IS* our very bottleneck on flat views
    * (when there are items with a lot of children). This is somewhat pathological...
-   * beside the binary search based insertion sort we actually can only do "statement level" optimisation.
+   * beside the binary search based insertion sort we actually can only do "statement level" optimization.
    * I've found no better algorithms so far. If someone has a clever idea, please write to pragma
    * at kvirc dot net :)
    *

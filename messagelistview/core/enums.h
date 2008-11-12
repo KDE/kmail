@@ -39,7 +39,7 @@ namespace Core
    * starts navigating the view before the pre-selection could actually be made
    * and pre-selecting would confuse him). This member holds the option.
    *
-   * See Model::setStorageModel() for more informations.
+   * See Model::setStorageModel() for more information.
    */
   enum PreSelectionMode
   {

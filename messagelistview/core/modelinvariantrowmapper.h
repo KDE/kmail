@@ -101,7 +101,7 @@ private:
   QList< RowShift * > * mRowShiftList;  ///< The ordered list of RowShifts, most recent at the end
   QHash< int, ModelInvariantIndex * > * mCurrentInvariantHash; ///< The up-to-date invariants
   uint mCurrentShiftSerial;             ///< Current model change serial: FIXME: it explodes at 2^32 :D
-  uint mRemovedShiftCount;              ///< The number of shifts that we have completly processed
+  uint mRemovedShiftCount;              ///< The number of shifts that we have completely processed
   int mLazyUpdateChunkInterval;         ///< Msecs: how much time we spend inside a lazy update chunk
   int mLazyUpdateIdleInterval;          ///< Msecs: how much time we idle between lazy update chunks
   QTimer * mUpdateTimer;                ///< Background lazy update timer

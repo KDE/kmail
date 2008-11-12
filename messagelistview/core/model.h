@@ -151,7 +151,7 @@ private:
 
   /**
    * The Unique Id of the message item to pre-select when mPreSelectionMode
-   * is PreSelectLastSelected. This message is "catched" when it "pops up" during
+   * is PreSelectLastSelected. This message is "caught" when it "pops up" during
    * the loading process. This unique id is stored by MessageListView::Manager.
    *
    * See also setStorageModel() and abortMessagePreSelection()
@@ -356,7 +356,7 @@ private:
   /**
    * Sync the expanded state of the subtree with the specified root.
    * This will cause the items that are marked with Item::ExpandNeeded to be
-   * expanded also in the view. For optimisation purposes the specified root
+   * expanded also in the view. For optimization purposes the specified root
    * is assumed to be marked as Item::ExpandNeeded so be sure to check it
    * before calling this function.
    */
@@ -364,7 +364,7 @@ private:
   /**
    * Save the expanded state of the subtree with the specified root.
    * The state will be saved in the initialExpandStatus() variable.
-   * For optimisation purposes the specified root is assumed to be expanded
+   * For optimization purposes the specified root is assumed to be expanded
    * and viewable.
    */
   void saveExpandedStateOfSubtree( Item *root );
@@ -394,7 +394,7 @@ private:
    * This one checks if the parent of item requires an update due to the
    * properties of item (that might have been changed or the item might
    * have been simply added to the parent). The properties
-   * are propagated up to the root item. As optimisation we ASSUME that
+   * are propagated up to the root item. As optimization we ASSUME that
    * the item->parent() exists (is non 0) and is NOT the root item.
    * Be sure to check it before calling this function (it will assert in debug mode anyway).
    * ... ah... and don't be afraid: this is NOT (directly) recursive :)

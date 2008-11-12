@@ -370,7 +370,7 @@ bool StorageModel::initializeMessageItem( Core::MessageItem * mi, int row, bool 
 void StorageModel::updateMessageItemData( Core::MessageItem * mi, int row ) const
 {
   KMMsgBase * msg = mFolder->getMsgBase( row );
-  Q_ASSERT( msg ); // We ASSUME that initializeMessageItem has been called succesfully...
+  Q_ASSERT( msg ); // We ASSUME that initializeMessageItem has been called succesfuly...
 
   bool dateDiffers = mi->date() != msg->date();
 
@@ -473,7 +473,7 @@ void StorageModel::updateMessageItemData( Core::MessageItem * mi, int row ) cons
 void StorageModel::fillMessageItemThreadingData( Core::MessageItem * mi, int row, ThreadingDataSubset subset ) const
 {
   KMMsgBase * msg = mFolder->getMsgBase( row );
-  Q_ASSERT( msg ); // We ASSUME that initializeMessageItem has been called succesfully...
+  Q_ASSERT( msg ); // We ASSUME that initializeMessageItem has been called succesfuly...
 
   switch ( subset )
   {

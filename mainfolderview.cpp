@@ -100,7 +100,7 @@ void MainFolderView::fillContextMenuTreeStructureRelatedActions( KMenu *menu, Fo
   {
     // These two will work also for multiple folders
 
-    if( item->folderType() != FolderViewItem::Root ) // disable copy/move for root folders since the underlying copy/move code screws up completly on this
+    if( item->folderType() != FolderViewItem::Root ) // disable copy/move for root folders since the underlying copy/move code screws up completely on this
     {
       // copy folder
       QMenu *copyMenu = menu->addMenu( KIcon("edit-copy"),
