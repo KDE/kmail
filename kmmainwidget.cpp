@@ -725,7 +725,7 @@ void KMMainWidget::createWidgets()
 
   connect( mMessageListView, SIGNAL( messageActivated( KMMessage * ) ),
            this, SLOT( slotMsgActivated( KMMessage * ) ) );
-           
+
   mPreviousMessageAction = new KAction( i18n( "Extend Selection to Previous Message" ), this );
   mPreviousMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
   actionCollection()->addAction( "previous_message", mPreviousMessageAction );
@@ -1067,14 +1067,16 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
   const bool sendOnManual =
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
-  if( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual && sendOnCheck ) ) )
+  if ( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual && sendOnCheck ) ) ) {
     slotSendQueued();
+  }
 
-  if ( !newMail || newInFolder.isEmpty() )
+  if ( !newMail || newInFolder.isEmpty() ) {
     return;
+  }
 
   QDBusMessage message =
-      QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
+    QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
   QDBusConnection::sessionBus().send( message );
 
   // build summary for new mail message
@@ -1082,11 +1084,8 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   QString summary;
   QStringList keys( newInFolder.keys() );
   keys.sort();
-  for ( QStringList::const_iterator it = keys.begin();
-        it != keys.end();
-        ++it ) {
-    kDebug(5006) << newInFolder.find( *it ).value() << "new message(s) in"
-                  << *it;
+  for ( QStringList::const_iterator it=keys.begin(); it!=keys.end(); ++it ) {
+//    kDebug(5006) << newInFolder.find( *it ).value() << "new message(s) in" << *it;
 
     KMFolder *folder = kmkernel->findFolderById( *it );
 
@@ -1094,9 +1093,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br>" + i18np( "1 new message in %2",
-                                  "%1 new messages in %2",
-                                  newInFolder.find( *it ).value(),
-                              folder->prettyUrl() );
+                                   "%1 new messages in %2",
+                                   newInFolder.find( *it ).value(),
+                                   folder->prettyUrl() );
       }
     }
   }
@@ -1105,31 +1104,34 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   // and we can enable "empty trash/move all to trash" action etc.
   updateFolderMenu();
 
-  if ( !showNotification )
+  if ( !showNotification ) {
     return;
+  }
 
   if ( GlobalSettings::self()->verboseNewMailNotification() ) {
     summary = i18nc( "%1 is a list of the number of new messages per folder",
-                    "<b>New mail arrived</b><br />%1",
-                summary );
-  }
-  else {
+                     "<b>New mail arrived</b><br />%1",
+                     summary );
+  } else {
     summary = i18n( "New mail arrived" );
   }
 
-  if(kmkernel->xmlGuiInstance().isValid()) {
+  if( kmkernel->xmlGuiInstance().isValid() ) {
     KNotification::event( "new-mail-arrived",
-                          summary,QPixmap(),topLevelWidget(),
+                          summary,
+                          QPixmap(),
+                          topLevelWidget(),
                           KNotification::CloseOnTimeout,
                           kmkernel->xmlGuiInstance() );
+  } else {
+    KNotification::event( "new-mail-arrived",
+                          summary,
+                          QPixmap(),
+                          topLevelWidget(),
+                          KNotification::CloseOnTimeout );
   }
-  else
-    KNotification::event( "new-mail-arrived",
-                          summary,QPixmap(),topLevelWidget(),
-                          KNotification::CloseOnTimeout,
-                          kmkernel->xmlGuiInstance() );
 
-  if (mBeepOnNew) {
+  if ( mBeepOnNew ) {
     KNotification::beep();
   }
 }
