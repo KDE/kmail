@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * ::KMail Folder Selection Tree Widget
+ * KMail Folder Selection Tree Widget
  *
  * Copyright (c) 1997-1998 Stefan Taferner <taferner@kde.org>
  * Copyright (c) 2004-2005 Carsten Burghardt <burghardt@kde.org>
@@ -24,10 +24,14 @@
 #include "folderselectiontreewidget.h"
 #include "mainfolderview.h"
 #include "kmfolder.h"
+#include "kmfoldermgr.h"
+#include "util.h"
 
 #include <kmenu.h>
 #include <kiconloader.h>
 #include <kconfiggroup.h>
+
+using namespace KMail::Util;
 
 namespace KMail {
 
@@ -202,9 +206,13 @@ void FolderSelectionTreeWidget::addChildFolder()
 {
   const KMFolder *fld = folder();
   if ( fld ) {
+    reconnectSignalSlotPair( kmkernel->folderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+             this, SLOT( slotFolderAdded(KMFolder*) ) );
+    reconnectSignalSlotPair( kmkernel->imapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+             this, SLOT( slotFolderAdded(KMFolder*) ) );
+    reconnectSignalSlotPair( kmkernel->dimapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+             this, SLOT( slotFolderAdded(KMFolder*) ) );
     mFolderTree->addChildFolder( (KMFolder *) fld, parentWidget() );
-    reload( mLastMustBeReadWrite, mLastShowOutbox, mLastShowImapFolders );
-    setFolder( (KMFolder *) fld );
   }
 }
 
@@ -232,6 +240,18 @@ void FolderSelectionTreeWidget::slotContextMenuRequested( const QPoint &p )
   kmkernel->setContextMenuShown( false );
   delete folderMenu;
   folderMenu = 0;
+}
+
+void FolderSelectionTreeWidget::slotFolderAdded( KMFolder *addedFolder )
+{
+  reload( mLastMustBeReadWrite, mLastShowOutbox, mLastShowImapFolders );
+  setFolder( addedFolder );
+  disconnect( kmkernel->folderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+             this, SLOT( slotFolderAdded(KMFolder*) ) );
+  disconnect( kmkernel->imapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+             this, SLOT( slotFolderAdded(KMFolder*) ) );
+  disconnect( kmkernel->dimapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+             this, SLOT( slotFolderAdded(KMFolder*) ) );
 }
 
 void FolderSelectionTreeWidget::applyFilter( const QString& filter )
