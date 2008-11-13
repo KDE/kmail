@@ -2339,7 +2339,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         return Canceled;
     }
     if ( !KMail::Util::handleUrlOnMac( mUrl.pathOrUrl() ) )
-        (void) new KRun( mUrl, mMainWidget );
+      (void) new KRun( mUrl, mMainWidget );
   }
   else
     return Failed;
