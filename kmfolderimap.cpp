@@ -1620,8 +1620,10 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
         md =  mUidMetaDataMap[uid];
       }
       ulong serNum = 0;
+      bool serialNumberInCache = false;
       if ( md ) {
         serNum = md->serNum();
+        serialNumberInCache = true;
       }
       bool ok = true;
       if ( uid <= lastUid() && serNum > 0 ) {
@@ -1651,6 +1653,7 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
             msg->setStatus( md->messageStatus() );
             if ( md->serNum() != 0 && serNum == 0 ) {
               msg->setMsgSerNum( md->serNum() );
+              serialNumberInCache = true;
             }
             mMetaDataMap.remove( id );
             delete md;
@@ -1667,8 +1670,20 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
         }
         // Filter messages that have arrived in the inbox folder
         if ( folder()->isSystemFolder() && imapPath() == "/INBOX/"
-            && kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( account()->id() ) )
+            && kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( account()->id() ) ) {
+
+          // If the message was already in one of the maps (mMetaDataMap or
+          // mUidMetaDataMap, depending on whether UIDPLUS is supported by the
+          // server), don't filter this message, since it means that the message
+          // was likely uploaded by ourselves.
+          //
+          // This fixes a bug when an already filtered message was filtered again,
+          // because after uploading the filtered message, KMail thought that message
+          // was new and filtered it again.
+          if ( !serialNumberInCache ) {
             account()->execFilters( msg->getMsgSerNum() );
+          }
+        }
 
         if ( count() > 1 ) {
           unGetMsg(count() - 1);
