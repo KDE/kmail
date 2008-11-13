@@ -2329,7 +2329,8 @@ KMCommand::Result KMUrlClickedCommand::execute()
           mUrl.pathOrUrl() ), QString(), KGuiItem(i18n("Execute")), KStandardGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
-    (void) new KRun( mUrl, mMainWidget );
+    if ( !KMail::Util::handleUrlOnMac( mUrl.pathOrUrl() ) )
+        (void) new KRun( mUrl, mMainWidget );
   }
   else
     return Failed;

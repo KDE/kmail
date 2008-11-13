@@ -2338,6 +2338,10 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     return;
   }
 
+  // special case treatment on mac
+  if ( KMail::Util::handleUrlOnMac( mAtmCurrentName ) )
+      return;
+
   // determine the MIME type of the attachment
   KMimeType::Ptr mimetype;
   // prefer the value of the Content-Type header
