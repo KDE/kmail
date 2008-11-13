@@ -136,6 +136,13 @@ protected slots:
    */
   void slotContextMenuRequested( const QPoint & );
 
+  /**
+   * Selects the folder that was added. Connected to the folderAdded signal
+   * when creating a new subfolder.
+   */
+  void slotFolderAdded( KMFolder *addedFolder );
+
+
 protected:
   /**
    * Handles key presses for the purpose of filtering.
