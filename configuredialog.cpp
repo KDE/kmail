@@ -830,7 +830,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountList = new ListView( this );
   mAccountList->setObjectName( "accountList" );
   mAccountList->setHeaderLabels( QStringList() << "Name" << "Type" << "Folder" );
-  mAccountList->setSortingEnabled( false );
+  mAccountList->setSortingEnabled( true );
+  mAccountList->sortByColumn( 0, Qt::AscendingOrder );
 
   connect( mAccountList->selectionModel(),
            SIGNAL(
