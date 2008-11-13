@@ -32,7 +32,6 @@
 #include "filterlog.h"
 
 #include <kdebug.h>
-#include <kdeversion.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>

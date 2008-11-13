@@ -36,7 +36,6 @@ using namespace MailTransport;
 #include <kio/passworddialog.h>
 #include <kio/scheduler.h>
 #include <kmessagebox.h>
-#include <kdeversion.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>

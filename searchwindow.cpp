@@ -44,7 +44,6 @@
 #include <KStandardGuiItem>
 #include <KStatusBar>
 #include <KWindowSystem>
-#include <kdeversion.h>
 
 #include "folderrequester.h"
 #include "kmcommands.h"

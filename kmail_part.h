@@ -26,7 +26,6 @@
 #define KMail_PART_H
 
 #include "kmail_export.h"
-#include <kdeversion.h>
 #include <kparts/browserextension.h>
 #include <kparts/statusbarextension.h>
 #include <kparts/factory.h>

@@ -22,7 +22,6 @@
 
 #include <QStringList>
 
-#include <kdeversion.h>
 #include <kabc/addressee.h>
 
 

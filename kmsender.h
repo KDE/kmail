@@ -31,7 +31,6 @@
 #include <QStringList>
 #include <QMap>
 #include <QObject>
-#include <kdeversion.h>
 
 class KMMessage;
 class KMFolder;

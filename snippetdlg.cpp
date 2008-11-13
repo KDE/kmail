@@ -13,7 +13,6 @@
 
 #include "snippetdlg.h"
 
-#include <kdeversion.h>
 #include <kdialog.h>
 #include <klocale.h>
 

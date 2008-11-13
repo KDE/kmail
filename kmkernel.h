@@ -12,7 +12,6 @@
 #include <threadweaver/ThreadWeaver.h>
 
 #include <kconfig.h>
-#include <kdeversion.h>
 #include <kurl.h>
 
 #include "kmail_export.h"
