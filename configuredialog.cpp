@@ -663,6 +663,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   vlay->addWidget( new QLabel( i18n("Outgoing accounts (add at least one):"), this ) );
 
   TransportManagementWidget *tmw = new TransportManagementWidget( this );
+  tmw->layout()->setContentsMargins( 0, 0, 0, 0 );
   vlay->addWidget( tmw );
 
   // "Common options" groupbox:
