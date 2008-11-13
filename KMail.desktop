@@ -79,4 +79,5 @@ Terminal=false
 X-KDE-StartupNotify=true
 X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.kde.kmail
+X-KDE-ServiceTypes=DBUS/ResourceBackend/IMAP,DBUS/Mailer
 Categories=Qt;KDE;Network;
