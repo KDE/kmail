@@ -3755,9 +3755,9 @@ void KMMainWidget::initializeMessageTagActions()
     tagAction->setIconText( iconText );
     actionCollection()->addAction(it.value()->label().toLocal8Bit(), tagAction);
     connect(tagAction, SIGNAL(triggered(bool)), mMessageTagToggleMapper, SLOT(map()));
-    //The shortcut configuration is done in the config dialog.
-    //Setting the below to true decouples action objects shortcut
-    //from that of the tag description
+    // The shortcut configuration is done in the config dialog.
+    // The shortcut set in the shortcut dialog would not be saved back to
+    // the tag descriptions correctly.
     tagAction->setShortcutConfigurable( false );
     mMessageTagToggleMapper->setMapping( tagAction, it.value()->label() );
     MessageTagPtrPair ptr_pair( it.value(), tagAction );
@@ -3903,30 +3903,33 @@ void KMMainWidget::initializeFolderShortcutActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
 {
-  QString filterName, normalizedName;
-  KMMetaFilterActionCommand *filterCommand;
-  QAction *filterAction = 0;
-
   clearFilterActions();
   mApplyFilterActionsMenu->menu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
+
   QList<KMFilter*>::const_iterator it = kmkernel->filterMgr()->filters().begin();
   for ( ;it != kmkernel->filterMgr()->filters().end(); ++it ) {
     if ( !(*it)->isEmpty() && (*it)->configureShortcut() ) {
-      filterName = QString( "Filter %1").arg( (*it)->name() );
-      normalizedName = filterName.replace(" ", "_");
+      QString filterName = QString( "Filter %1").arg( (*it)->name() );
+      QString normalizedName = filterName.replace(' ', '_');
       if ( action( normalizedName.toUtf8() ) ) {
         continue;
       }
-      filterCommand = new KMMetaFilterActionCommand( *it, mHeaders, this );
+      KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand( *it, mHeaders, this );
       mFilterCommands.append( filterCommand );
-      QString as = i18n( "Filter %1", (*it)->name() );
+      QString displayText = i18n( "Filter %1", (*it)->name() );
       QString icon = (*it)->icon();
       if ( icon.isEmpty() ) {
         icon = "system-run";
       }
-      filterAction = new KAction( KIcon( icon ), as, actionCollection() );
+      KAction *filterAction = new KAction( KIcon( icon ), displayText, actionCollection() );
       filterAction->setIconText( (*it)->toolbarName() );
+
+      // The shortcut configuration is done in the filter dialog.
+      // The shortcut set in the shortcut dialog would not be saved back to
+      // the filter settings correctly.
+      filterAction->setShortcutConfigurable( false );
+
       actionCollection()->addAction( normalizedName.toLocal8Bit(),
                                      filterAction );
       connect( filterAction, SIGNAL(triggered(bool) ),
@@ -4012,7 +4015,12 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
   QString actionname = i18n( "Folder Shortcut %1", folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
-  QAction * action = actionCollection()->addAction( normalizedName );
+  KAction *action = actionCollection()->addAction( normalizedName );
+  // The folder shortcut is set in the folder shortcut dialog.
+  // The shortcut set in the shortcut dialog would not be saved back to
+  // the folder settings correctly.
+  action->setShortcutConfigurable( false );
+
   mFolderTree->addAction( action );
   action->setText( actionlabel );
   connect( action, SIGNAL( triggered(bool) ), c, SLOT( start() ) );
