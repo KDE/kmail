@@ -27,10 +27,6 @@
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-#include <libkdepim/distributionlist.h>
-#endif
-
 #include <KLocale>
 #include <KDebug>
 #include <KLineEdit>
@@ -199,39 +195,13 @@ void DistributionListDialog::slotUser1()
       return;
   }
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-  if ( !KPIM::DistributionList::findByName( ab, name ).isEmpty() ) {
-#else
   if ( ab->findDistributionListByName( name ) ) {
-#endif
     KMessageBox::information( this,
       i18nc( "@info", "<para>Distribution list with the given name <resource>%1</resource> "
         "already exists. Please select a different name.</para>", name ) );
     return;
   }
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-  KPIM::DistributionList dlist;
-  dlist.setName( name );
-
-  for (int i = 0; i < mRecipientsList->topLevelItemCount(); ++i) {
-    DistributionListItem *item = static_cast<DistributionListItem *>(
-        mRecipientsList->topLevelItem( i ));
-    if ( item && item->checkState( 0 ) == Qt::Checked ) {
-      kDebug() << item->addressee().fullEmail() << item->addressee().uid();
-      if ( item->isTransient() ) {
-        ab->insertAddressee( item->addressee() );
-      }
-      if ( item->email() == item->addressee().preferredEmail() ) {
-        dlist.insertEntry( item->addressee() );
-      } else {
-        dlist.insertEntry( item->addressee(), item->email() );
-      }
-    }
-  }
-
-  ab->insertAddressee( dlist );
-#else
   KABC::DistributionList *dlist = ab->createDistributionList( name );
 
   for (int i = 0; i < mRecipientsList->topLevelItemCount(); ++i) {
@@ -249,7 +219,6 @@ void DistributionListDialog::slotUser1()
       }
     }
   }
-#endif
 
   // FIXME: Ask the user which resource to save to instead of the default
   bool saveError = true;

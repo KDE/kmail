@@ -28,11 +28,7 @@
 
 #include <kpimutils/email.h>
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-#include <libkdepim/distributionlist.h>
-#else
 #include <kabc/distributionlist.h>
-#endif
 
 #include <klocale.h>
 #include <kabc/resource.h>
@@ -55,36 +51,11 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-RecipientItem::RecipientItem( KABC::AddressBook *ab )
-  : mAddressBook( ab )
-{
-}
-#else
 RecipientItem::RecipientItem()
   : mDistributionList( 0 )
 {
 }
-#endif
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-void RecipientItem::setDistributionList( const KPIM::DistributionList &list )
-{
-  mDistributionList = list;
-
-  mIcon = KIconLoader::global()->loadIcon( "x-mail-distribution-list", KIconLoader::Small );
-
-  mName = list.name();
-  mKey = list.name();
-
-  int count = list.entries( mAddressBook ).count();
-  mEmail = i18np( "1 email address", "%1 email addresses", count );
-
-  mRecipient = mName;
-
-  mTooltip = createTooltip( list );
-}
-#else
 void RecipientItem::setDistributionList( KABC::DistributionList *list )
 {
   mDistributionList = list;
@@ -101,7 +72,6 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 
   mTooltip = createTooltip( list );
 }
-#endif
 
 void RecipientItem::setAddressee( const KABC::Addressee &a,
   const QString &email )
@@ -151,40 +121,10 @@ QString RecipientItem::tooltip() const
   return mTooltip;
 }
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-KPIM::DistributionList& RecipientItem::distributionList() const {
-  return mDistributionList;
-}
-#else
 KABC::DistributionList * RecipientItem::distributionList() const {
   return mDistributionList;
 }
-#endif
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-QString RecipientItem::createTooltip( KPIM::DistributionList &distributionList ) const
-{
-  QString txt = "<qt>";
-
-  txt += "<b>" + i18n( "Distribution List %1", distributionList.name() ) + "</b>";
-  txt += "<ul>";
-  KPIM::DistributionList::Entry::List entries = distributionList.entries( mAddressBook );
-  KPIM::DistributionList::Entry::List::ConstIterator it;
-  for( it = entries.begin(); it != entries.end(); ++it ) {
-    txt += "<li>";
-    txt += (*it).addressee.realName() + ' ';
-    txt += "<em>";
-    if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
-    else txt += (*it).email;
-    txt += "</em>";
-    txt += "<li/>";
-  }
-  txt += "</ul>";
-  txt += "</qt>";
-
-  return txt;
-}
-#else
 QString RecipientItem::createTooltip( KABC::DistributionList *distributionList ) const
 {
   QString txt = "<qt>";
@@ -207,7 +147,6 @@ QString RecipientItem::createTooltip( KABC::DistributionList *distributionList )
 
   return txt;
 }
-#endif
 
 void RecipientItem::setRecipientType( const QString &type )
 {
@@ -476,11 +415,7 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
     QStringList emails = (*it).emails();
     QStringList::ConstIterator it3;
     for( it3 = emails.begin(); it3 != emails.end(); ++it3 ) {
-#ifdef KDEPIM_NEW_DISTRLISTS
-      RecipientItem *item = new RecipientItem( mAddressBook );
-#else
       RecipientItem *item = new RecipientItem;
-#endif
       item->setAddressee( *it, *it3 );
 
       QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator collIt;
@@ -528,21 +463,12 @@ void RecipientsPicker::insertDistributionLists()
 {
   mDistributionLists->deleteAll();
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-  QList<KPIM::DistributionList> lists = KPIM::DistributionList::allDistributionLists( mAddressBook );
-  for ( int i = 0; i < lists.count(); ++i ) {
-    RecipientItem *item = new RecipientItem( mAddressBook );
-    item->setDistributionList( lists[ i ] );
-    mDistributionLists->addItem( item );
-  }
-#else
   QList<KABC::DistributionList*> lists = mAddressBook->allDistributionLists();
   foreach ( KABC::DistributionList *list, lists ) {
     RecipientItem *item = new RecipientItem;
     item->setDistributionList( list );
     mDistributionLists->addItem( item );
   }
-#endif
 }
 
 void RecipientsPicker::insertRecentAddresses()
@@ -555,11 +481,7 @@ void RecipientsPicker::insertRecentAddresses()
 
   KABC::Addressee::List::ConstIterator it;
   for( it = recents.begin(); it != recents.end(); ++it ) {
-#ifdef KDEPIM_NEW_DISTRLISTS
-    RecipientItem *item = new RecipientItem( mAddressBook );
-#else
     RecipientItem *item = new RecipientItem;
-#endif
     item->setAddressee( *it, (*it).preferredEmail() );
     collection->addItem( item );
   }
@@ -609,21 +531,12 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
     // a detached copy.
     RecipientItem::List items = mDistributionLists->items();
     RecipientItem::List::ConstIterator distIt;
-#ifdef KDEPIM_NEW_DISTRLISTS
-    for ( distIt = items.begin(); distIt != items.end(); ++distIt ) {
-      if ( (*it).email() == (*distIt)->name() ) {
-        item = new RecipientItem( mAddressBook );
-        item->setDistributionList( (*distIt)->distributionList() );
-      }
-    }
-#else
     for ( distIt = items.begin(); distIt != items.end(); ++distIt ) {
       if ( (*it).email() == (*distIt)->name() ) {
         item = new RecipientItem();
         item->setDistributionList( (*distIt)->distributionList() );
       }
     }
-#endif
 
     if ( !item ) {
       KABC::Addressee a;
@@ -634,11 +547,7 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
       a.setNameFromString( name );
       a.insertEmail( email );
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-      item = new RecipientItem( mAddressBook );
-#else
       item = new RecipientItem;
-#endif
       item->setAddressee( a, a.preferredEmail() );
     }
 
@@ -829,11 +738,8 @@ void RecipientsPicker::ldapSearchResult()
     KABC::Addressee ad;
     ad.setNameFromString( name );
     ad.insertEmail( email );
-#ifdef KDEPIM_NEW_DISTRLISTS
-    RecipientItem *item = new RecipientItem( mAddressBook );
-#else
+    
     RecipientItem *item = new RecipientItem;
-#endif
     item->setAddressee( ad, ad.preferredEmail() );
     emit pickedRecipient( Recipient( item->recipient(), Recipient::Undefined ) );
   }
