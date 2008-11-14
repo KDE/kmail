@@ -358,6 +358,11 @@ protected:
   virtual void resizeEvent( QResizeEvent * e );
 
   /**
+   * Reimplemented in order to kill the QTreeView column auto-resizing
+   */
+  virtual int sizeHintForColumn( int colIdx ) const;
+
+  /**
    * Applies the theme columns to this view.
    * Columns visible by default are shown, the other are hidden.
    * Visible columns are assigned space inside the view by using the size hints and some heuristics.

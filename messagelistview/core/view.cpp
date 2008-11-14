@@ -276,10 +276,7 @@ void View::applyThemeColumns()
     idx++;
   }
 
-  if( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader )
-    header()->hide();
-  else
-    header()->show();
+  setHeaderHidden( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader );
 
   mSaveThemeStateOnSectionResize = true;
   mNeedToApplyThemeColumns = false;
@@ -334,8 +331,6 @@ void View::resizeEvent( QResizeEvent * e )
   mSaveThemeStateOnSectionResize = true;
 
   QTreeView::resizeEvent( e );
-
-  // else we still need to apply theme columns, don't save current
 }
 
 void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidth )
@@ -343,8 +338,15 @@ void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidt
   Q_UNUSED( logicalIndex );
   Q_UNUSED( oldWidth );
   Q_UNUSED( newWidth );
+
   if ( mSaveThemeStateOnSectionResize )
     saveThemeColumnState();
+}
+
+int View::sizeHintForColumn( int colIdx ) const
+{
+  Q_UNUSED( colIdx );
+  return 10; // please leave my column widths alone
 }
 
 

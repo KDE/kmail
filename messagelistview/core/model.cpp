@@ -1387,6 +1387,7 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
          )
       {
         kWarning() << "Circular In-Reply-To reference loop detected in the message tree" << endl;
+        kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (3) " << mi;
         mi->setThreadingStatus( MessageItem::NonThreadable );
         return 0; // broken message: throw it away
       }
@@ -1400,6 +1401,8 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
 
   if ( mAggregation->threading() == Aggregation::PerfectOnly )
   {
+    if ( !bMessageWasThreadable )
+      kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (4) " << mi;
     mi->setThreadingStatus( bMessageWasThreadable ? MessageItem::ParentMissing : MessageItem::NonThreadable );
     return 0; // we're doing only perfect parent matches
   }
@@ -1432,6 +1435,7 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
          )
       {
         kWarning() << "Circular reference loop detected in the message tree" << endl;
+        kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (5) " << mi;
         mi->setThreadingStatus( MessageItem::NonThreadable );
         return 0; // broken message: throw it away
       }
@@ -1445,6 +1449,8 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
 
   if ( mAggregation->threading() == Aggregation::PerfectAndReferences )
   {
+    if ( !bMessageWasThreadable )
+      kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (6) " << mi;
     mi->setThreadingStatus( bMessageWasThreadable ? MessageItem::ParentMissing : MessageItem::NonThreadable );
     return 0; // we're doing only perfect parent matches
   }
@@ -1457,7 +1463,9 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
   // We first try the perfect and references based threading on all the messages
   // and then run subject based threading only on the remaining ones.
 
-  mi->setThreadingStatus( mi->subjectIsPrefixed() ? MessageItem::ParentMissing : MessageItem::NonThreadable );
+  if ( ! ( mi->subjectIsPrefixed() || bMessageWasThreadable ) )
+    kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (7) " << mi;
+  mi->setThreadingStatus( ( bMessageWasThreadable || mi->subjectIsPrefixed() ) ? MessageItem::ParentMissing : MessageItem::NonThreadable );
   return 0;
 }
 
@@ -1957,6 +1965,7 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
       break;
       case MessageItem::NonThreadable: // this also happens when we do no threading at all
         // make gcc happy
+        Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem->contains( mi->inReplyToIdMD5(), mi ) );
       break;
     }
   }
@@ -2330,30 +2339,41 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass3( ViewItemJob 
     MessageItem * mi = (*mUnassignedMessageListForPass3)[curIndex];
     if ( ( !mi->parent() ) || ( mi->threadingStatus() == MessageItem::ParentMissing ) )
     {
-      MessageItem * mparent = guessMessageParent( mi );
-
-      if ( mparent )
+      // Parent is missing (either "physically" with the item being not attacched or "logically"
+      // with the item being attacched to a group or directly to the root.
+      if ( mi->subjectIsPrefixed() )
       {
-        // imperfect parent found
-        if ( mi->isViewable() )
+        // We can try to guess it
+        MessageItem * mparent = guessMessageParent( mi );
+
+        if ( mparent )
         {
-          // mi was already viewable, we're just trying to re-parent it better...
-          attachMessageToParent( mparent, mi );
-          if ( !mparent->isViewable() )
+          // imperfect parent found
+          if ( mi->isViewable() )
           {
-            // re-attach it immediately (so current item is not lost)
-            MessageItem * topmost = mparent->topmostMessage();
-            Q_ASSERT( !topmost->parent() ); // groups are always viewable!
-            topmost->setThreadingStatus( MessageItem::ParentMissing );
-            attachMessageToGroupHeader( topmost );
+            // mi was already viewable, we're just trying to re-parent it better...
+            attachMessageToParent( mparent, mi );
+            if ( !mparent->isViewable() )
+            {
+              // re-attach it immediately (so current item is not lost)
+              MessageItem * topmost = mparent->topmostMessage();
+              Q_ASSERT( !topmost->parent() ); // groups are always viewable!
+              topmost->setThreadingStatus( MessageItem::ParentMissing );
+              attachMessageToGroupHeader( topmost );
+            }
+          } else {
+            // mi wasn't viewable yet.. no need to attach parent
+            attachMessageToParent( mparent, mi );
           }
+          // and we're done for now
         } else {
-          // mi wasn't viewable yet.. no need to attach parent
-          attachMessageToParent( mparent, mi );
+          // so parent not found, (threadingStatus() is either MessageItem::ParentMissing or MessageItem::NonThreadable)
+          Q_ASSERT( ( mi->threadingStatus() == MessageItem::ParentMissing ) || ( mi->threadingStatus() == MessageItem::NonThreadable ) );
+          mUnassignedMessageListForPass4->append( mi ); // this is ~O(1)
+          // and wait for Pass4
         }
-        // and we're done for now
       } else {
-        // so parent not found, (threadingStatus() is either MessageItem::ParentMissing or MessageItem::NonThreadable)
+        // can't guess the parent as the subject isn't prefixed
         Q_ASSERT( ( mi->threadingStatus() == MessageItem::ParentMissing ) || ( mi->threadingStatus() == MessageItem::NonThreadable ) );
         mUnassignedMessageListForPass4->append( mi ); // this is ~O(1)
         // and wait for Pass4
@@ -2590,15 +2610,20 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
         QList< MessageItem * > lImperfectlyThreaded = mThreadingCacheMessageInReplyToIdMD5ToMessageItem->values( mi->messageIdMD5() );
         if ( !lImperfectlyThreaded.isEmpty() )
         {
-          //kDebug( 5006 ) << "MATCHED " << lImperfectlyThreaded.count() << " IMPERFECTLY THREADED ITEMS (out of " << mThreadingCacheMessageInReplyToIdMD5ToMessageItem->count() << " total)";
           // must move all of the items in the perfect parent
           for ( QList< MessageItem * >::Iterator it = lImperfectlyThreaded.begin(); it != lImperfectlyThreaded.end(); ++it )
           {
-            //qDebug("FIXING IMPERFECTLY PARENTED ITEM %x WHICH HAS PARENT %x", *it, ( *it )->parent() );
             Q_ASSERT( ( *it )->parent() );
             Q_ASSERT( ( *it )->parent() != mi );
+#if 0
             Q_ASSERT( ( ( *it )->threadingStatus() == MessageItem::ImperfectParentFound ) || ( ( *it )->threadingStatus() == MessageItem::ParentMissing ) );
-
+#else
+            if(!(( ( *it )->threadingStatus() == MessageItem::ImperfectParentFound ) || ( ( *it )->threadingStatus() == MessageItem::ParentMissing )))
+            {
+              kDebug() << "GOT A MESSAGE " << ( *it ) << " WITH THREADING STATUS " << ( *it )->threadingStatus();
+              Q_ASSERT( false );
+            }
+#endif
             // If the item was already attached to the view then
             // re-attach it immediately. This will avoid a message
             // being displayed for a short while in the view and then
@@ -2608,7 +2633,6 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
 
             ( *it )->setThreadingStatus( MessageItem::PerfectParentFound );
             attachMessageToParent( mi, *it );
-            //kDebug( 5006 ) << "MI HAS NOW " << mi->childItemCount() << " CHILDREN (needsImmediateReAttach is " << needsImmediateReAttach << ")" << endl;
           }
         }
       }
@@ -2691,6 +2715,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
           {
             // We're done with this message: it will be surely either toplevel (no grouping in effect)
             // or a thread leader with a well defined group. Do it :)
+            kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (1) " << mi;
             mi->setThreadingStatus( MessageItem::NonThreadable );
             // Locate the parent group for this item
             attachMessageToGroupHeader( mi );
@@ -2716,6 +2741,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
     } else {
       // else no threading requested: we don't even need Pass2
       // set not threadable status (even if it might be not true, but in this mode we don't care)
+      kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (2) " << mi;
       mi->setThreadingStatus( MessageItem::NonThreadable );
       // locate the parent group for this item
       if ( mAggregation->grouping() == Aggregation::NoGrouping )
@@ -2867,6 +2893,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
             mThreadingCacheMessageInReplyToIdMD5ToMessageItem->remove( dyingMessage->inReplyToIdMD5() );
         break;
         default:
+          Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem->contains( dyingMessage->inReplyToIdMD5(), dyingMessage ) );
           // make gcc happy
         break;
       }
