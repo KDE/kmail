@@ -690,7 +690,7 @@ void KMReaderWin::createActions()
 
   // copy Email address to clipboard
   mCopyURLAction = new KAction( KIcon( "edit-copy" ),
-                                i18n( "Copy Email Address" ), this );
+                                i18n( "Copy Link Address" ), this );
   ac->addAction( "copy_url", mCopyURLAction );
   connect( mCopyURLAction, SIGNAL(triggered(bool)), SLOT(slotUrlCopy()) );
 
