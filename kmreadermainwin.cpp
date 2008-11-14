@@ -51,6 +51,9 @@
 #include "kmmsgdict.h"
 #include "mainfolderview.h"
 
+#include <kabc/stdaddressbook.h>
+#include <kpimutils/email.h>
+
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
@@ -379,16 +382,15 @@ void KMReaderMainWin::updateMessageMenu()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint)
+void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPoint &aPoint )
 {
-  KMenu * menu = new KMenu;
+  KMenu *menu = new KMenu;
   mUrl = aUrl;
   mMsg = &aMsg;
-  bool urlMenuAdded=false;
+  bool urlMenuAdded = false;
 
-  if (!aUrl.isEmpty())
-  {
-    if (aUrl.protocol() == "mailto") {
+  if ( !aUrl.isEmpty() ) {
+    if ( aUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
       if ( mMsg ) {
@@ -396,8 +398,15 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
       }
-      menu->addAction( mReaderWin->addAddrBookAction() );
-      menu->addAction( mReaderWin->openAddrBookAction() );
+      QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+      KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
+      KABC::Addressee::List addresseeList = addressBook->findByEmail( email );
+
+      if ( addresseeList.count() == 0 ) {
+        menu->addAction( mReaderWin->addAddrBookAction() );
+      } else {
+        menu->addAction( mReaderWin->openAddrBookAction() );
+      }
       menu->addAction( mReaderWin->copyAction() );
     } else {
       // popup on a not-mailto URL
@@ -406,22 +415,22 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
       menu->addAction( mReaderWin->urlSaveAsAction() );
       menu->addAction( mReaderWin->copyURLAction() );
     }
-    urlMenuAdded=true;
+    urlMenuAdded = true;
   }
-  if(!mReaderWin->copyText().isEmpty()) {
-    if ( urlMenuAdded )
+  if ( !mReaderWin->copyText().isEmpty() ) {
+    if ( urlMenuAdded ) {
       menu->addSeparator();
+    }
     menu->addAction( mMsgActions->replyMenu() );
     menu->addSeparator();
 
     menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );
-  } else if ( !urlMenuAdded )
-  {
+  } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
 
-    if (!mMsg) // no message
-    {
+    if (!mMsg) {
+      // no message
       delete menu;
       return;
     }
@@ -451,7 +460,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     menu->addAction( mSaveAtmAction );
     menu->addAction( mMsgActions->createTodoAction() );
   }
-  menu->exec(aPoint, 0);
+  menu->exec( aPoint, 0 );
   delete menu;
 }
 

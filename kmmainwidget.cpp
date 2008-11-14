@@ -158,6 +158,9 @@ using KMail::TemplateParser;
 #include "commands/exporttohtml.h"
 #include "messagetree.h"
 
+#include <kabc/stdaddressbook.h>
+#include <kpimutils/email.h>
+
 #ifdef Nepomuk_FOUND
   #include <nepomuk/tag.h>
 #endif
@@ -3371,7 +3374,7 @@ void KMMainWidget::slotMarkAll()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint& aPoint)
+void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint &aPoint )
 {
   mMessageListView->activateMessage( &msg ); // make sure that this message is the active one
 
@@ -3382,23 +3385,29 @@ void KMMainWidget::slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint& 
 
   updateMessageMenu();
 
-  KMenu * menu = new KMenu;
+  KMenu *menu = new KMenu;
   mUrlCurrent = aUrl;
 
   bool urlMenuAdded = false;
 
-  if (!aUrl.isEmpty())
-  {
-    if (aUrl.protocol() == "mailto")
-    {
+  if ( !aUrl.isEmpty() ) {
+    if ( aUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mMsgView->mailToComposeAction() );
       menu->addAction( mMsgView->mailToReplyAction() );
       menu->addAction( mMsgView->mailToForwardAction() );
 
       menu->addSeparator();
-      menu->addAction( mMsgView->addAddrBookAction() );
-      menu->addAction( mMsgView->openAddrBookAction() );
+
+      QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+      KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
+      KABC::Addressee::List addresseeList = addressBook->findByEmail( email );
+
+      if ( addresseeList.count() == 0 ) {
+        menu->addAction( mMsgView->addAddrBookAction() );
+      } else {
+        menu->addAction( mMsgView->openAddrBookAction() );
+      }
       menu->addAction( mMsgView->copyURLAction() );
     } else {
       // popup on a not-mailto URL
@@ -3408,25 +3417,24 @@ void KMMainWidget::slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint& 
       menu->addAction( mMsgView->copyURLAction() );
     }
 
-    urlMenuAdded=true;
-    kDebug( 0 ) <<" URL is:" << aUrl;
+    urlMenuAdded = true;
+    kDebug() <<" URL is:" << aUrl;
   }
 
-
-  if(mMsgView && !mMsgView->copyText().isEmpty()) {
-    if ( urlMenuAdded )
+  if ( mMsgView && !mMsgView->copyText().isEmpty() ) {
+    if ( urlMenuAdded ) {
       menu->addSeparator();
+    }
     menu->addAction( mMsgActions->replyMenu() );
     menu->addSeparator();
 
     menu->addAction( mMsgView->copyAction() );
     menu->addAction( mMsgView->selectAllAction() );
-  } else  if ( !urlMenuAdded )
-  {
+  } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
 
-    if (!mMessageListView->currentMessage()) // no messages
-    {
+    if (!mMessageListView->currentMessage()) {
+      // no messages
       delete menu;
       return;
     }
@@ -3435,8 +3443,9 @@ void KMMainWidget::slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint& 
       menu->addAction( mUseAction );
     } else {
 
-      if ( !mFolder->isSent() )
+      if ( !mFolder->isSent() ) {
         menu->addAction( mMsgActions->replyMenu() );
+      }
       menu->addAction( mForwardActionMenu );
     }
     menu->addAction(editAction());
@@ -3451,7 +3460,7 @@ void KMMainWidget::slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint& 
     menu->addSeparator();
 
     menu->addAction( viewSourceAction() );
-    if(mMsgView) {
+    if ( mMsgView ) {
       menu->addAction( mMsgView->toggleFixFontAction() );
     }
     menu->addSeparator();
@@ -3461,16 +3470,17 @@ void KMMainWidget::slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint& 
     menu->addAction( mExportToHtmlAction );
 
     menu->addSeparator();
-    if( mFolder->isTrash() )
+    if ( mFolder->isTrash() ) {
       menu->addAction( mDeleteAction );
-    else
+    } else {
       menu->addAction( mTrashAction );
+    }
 
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
   }
   KAcceleratorManager::manage(menu);
-  menu->exec(aPoint, 0);
+  menu->exec( aPoint, 0 );
   delete menu;
 }
 
