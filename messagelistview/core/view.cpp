@@ -74,6 +74,10 @@ View::View( Widget *pParent )
   header()->setContextMenuPolicy( Qt::CustomContextMenu );
   connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
            SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
+  connect( header(), SIGNAL( sectionResized( int, int, int ) ),
+           SLOT( slotHeaderSectionResized( int, int ,int ) ) );
+
+  mSaveThemeStateOnSectionResize = true;
 
   header()->setClickable( true );
 
@@ -120,7 +124,7 @@ void View::setAggregation( const Aggregation * aggregation )
     return;
 }
 
-void View::setTheme( const Theme * theme )
+void View::setTheme( Theme * theme )
 {
   mNeedToApplyThemeColumns = (mTheme != theme);
   mTheme = theme;
@@ -173,6 +177,7 @@ void View::applyThemeColumns()
   //
   // The rules:
   // - The visible columns will span the width of the view, if possible.
+  // - The columns with a saved width should take that width.
   // - The columns on the left should take more space, if possible.
   // - The columns with no text take just slightly more than their size hint.
   //   while the columns with text take possibly a lot more.
@@ -188,8 +193,11 @@ void View::applyThemeColumns()
 
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
-    if ( ( *it )->visibleByDefault() || ( idx == 0 ) )
-      totalVisibleWidthHint += mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
+    if ( ( *it )->currentlyVisible() || ( idx == 0 ) )
+    {
+      int savedWidth = ( *it )->currentWidth();
+      totalVisibleWidthHint += savedWidth > 0 ? savedWidth : mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
+    }
     idx++;
   }
 
@@ -205,21 +213,22 @@ void View::applyThemeColumns()
 
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
-    int hintWidth = mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
+    int savedWidth = ( *it )->currentWidth();
+    int hintWidth = savedWidth > 0 ? savedWidth : mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
     int realWidth;
     if ( ( *it )->containsTextItems() )
     {
-       // the column contains text items, it should get more space
-       realWidth = ( ( hintWidth * viewport()->width() ) / totalVisibleWidthHint ) - 2; // -2 is heuristic
-       if ( realWidth < ( hintWidth + 2 ) )
-         realWidth = hintWidth + 2; // can't be less
+       // the column contains text items, it should get more space (if possible)
+       realWidth = ( ( hintWidth * viewport()->width() ) / totalVisibleWidthHint );
+       //if ( realWidth < ( hintWidth + 2 ) )
+       //  realWidth = hintWidth + 2; // can't be less
     } else {
-       // the column contains no text items, it should get just a little bit more than its sizeHint().
-       realWidth = hintWidth + 2;
+       // the column contains no text items, it should get exactly its size hint.
+       realWidth = hintWidth;
     }
 
     realWidths.append( realWidth );
-    if ( ( *it )->visibleByDefault() || ( idx == 0 ) )
+    if ( ( *it )->currentlyVisible() || ( idx == 0 ) )
       totalVisibleWidth += realWidth;
 
     idx++;
@@ -237,7 +246,7 @@ void View::applyThemeColumns()
 
     for ( it = columns.begin(); it != columns.end(); ++it )
     {
-      if ( ( ( *it )->visibleByDefault() || ( idx == 0 ) ) && ( *it )->containsTextItems() )
+      if ( ( ( *it )->currentlyVisible() || ( idx == 0 ) ) && ( *it )->containsTextItems() )
       {
         // give more space to this column
         available >>= 1; // eat half of the available space
@@ -255,12 +264,14 @@ void View::applyThemeColumns()
 
   idx = 0;
 
+  mSaveThemeStateOnSectionResize = false;
+
   // We're ready.
   // Assign widths. Hide the sections that are not visible by default, show the other ones.
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
     header()->resizeSection( idx, realWidths[ idx ] );
-    header()->setSectionHidden( idx, ( idx > 0 ) && ( !( *it )->visibleByDefault() ) );
+    header()->setSectionHidden( idx, ( idx > 0 ) && ( !( *it )->currentlyVisible() ) );
     idx++;
   }
 
@@ -269,7 +280,28 @@ void View::applyThemeColumns()
   else
     header()->show();
 
+  mSaveThemeStateOnSectionResize = true;
   mNeedToApplyThemeColumns = false;
+}
+
+void View::saveThemeColumnState()
+{
+  if ( !mTheme )
+    return;
+
+  const QList< Theme::Column * > & columns = mTheme->columns();
+
+  if ( columns.count() < 1 )
+    return; // bad theme
+
+  int idx = 0;
+
+  for ( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
+  {
+    ( *it )->setCurrentlyVisible( !header()->isSectionHidden( idx ) );
+    ( *it )->setCurrentWidth( header()->sectionSize( idx ) );
+    idx++;
+  }
 }
 
 void View::resizeEvent( QResizeEvent * e )
@@ -279,6 +311,8 @@ void View::resizeEvent( QResizeEvent * e )
     QTreeView::resizeEvent( e );
     return;
   }
+
+  mSaveThemeStateOnSectionResize = false;
 
   // header invisible
   if ( ( header()->count() - header()->hiddenSectionCount() ) < 2 )
@@ -296,8 +330,23 @@ void View::resizeEvent( QResizeEvent * e )
       header()->resizeSection( visibleIndex, viewport()->width() - 4 );
   }
 
+  mSaveThemeStateOnSectionResize = true;
+
   QTreeView::resizeEvent( e );
+
+  saveThemeColumnState();
 }
+
+void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidth )
+{
+  Q_UNUSED( logicalIndex );
+  Q_UNUSED( oldWidth );
+  Q_UNUSED( newWidth );
+
+  if ( mSaveThemeStateOnSectionResize )
+    saveThemeColumnState();
+}
+
 
 void View::showEvent( QShowEvent *e )
 {
@@ -360,6 +409,9 @@ void View::slotHeaderContextMenuRequested( const QPoint &pnt )
 
 void View::slotHeaderContextMenuTriggered( QAction * act )
 {
+  if ( !mTheme )
+    return; // oops
+
   if ( !act )
     return;
 
@@ -372,17 +424,27 @@ void View::slotHeaderContextMenuTriggered( QAction * act )
   if ( columnIdx < 0 )
   {
     // "Show Default Columns" selected
+    mTheme->resetColumnState();
     applyThemeColumns();
+    saveThemeColumnState();
     return;
   }
 
+  // Single column show or hide action
   if ( columnIdx == 0 )
     return; // can never be hidden
 
   if ( columnIdx >= mTheme->columns().count() )
     return;
 
+  mSaveThemeStateOnSectionResize = false;
+
   header()->setSectionHidden( columnIdx, !header()->isSectionHidden( columnIdx ) );
+
+  mSaveThemeStateOnSectionResize = true;
+
+  saveThemeColumnState(); // first save column state
+  applyThemeColumns(); // then apply theme columns to re-compute proportional widths (so we hopefully stay in the view)
 }
 
 MessageItem * View::currentMessageItem( bool selectIfNeeded ) const

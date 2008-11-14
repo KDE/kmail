@@ -782,6 +782,7 @@ void Manager::createDefaultThemes()
 
   // clone the "Fancy theme" here so we'll use it as starting point for the "Fancy with clickable status"
   Theme * fancyWithClickableStatus = new Theme( *s );
+  fancyWithClickableStatus->detach();
   fancyWithClickableStatus->generateUniqueId();
 
   // and continue the "Fancy" specific settings

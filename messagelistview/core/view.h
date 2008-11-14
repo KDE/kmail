@@ -71,11 +71,12 @@ private:
   Delegate *mDelegate;
 
   const Aggregation *mAggregation;          ///< The Aggregation we're using now, shallow pointer
-  const Theme *mTheme;                        ///< The Theme we're using now, shallow pointer
-  bool mNeedToApplyThemeColumns;             ///< Flag signaling a theme change, we need it in modelHasBeenReset().
+  Theme *mTheme;                            ///< The Theme we're using now, shallow pointer
+  bool mNeedToApplyThemeColumns;            ///< Flag signaling a theme change, we need it in modelHasBeenReset().
   Item *mLastCurrentItem;
   QPoint mMousePressPosition;
   bool mFirstShow;
+  bool mSaveThemeStateOnSectionResize;      ///< This is used to filter out programmatic column resizes in slotSectionResized().
 
 public:
 
@@ -126,7 +127,7 @@ public:
    * Sets the specified theme for this view.
    * Does not trigger a reload of the view: you *MUST* trigger it manually.
    */
-  void setTheme( const Theme * theme );
+  void setTheme( Theme * theme );
 
   /**
    * Triggers a reload of the view in order to re-display the current folder.
@@ -364,6 +365,11 @@ protected:
   void applyThemeColumns();
 
   /**
+   * Saves the state of the columns (width and visility) to the currently selected theme object.
+   */
+  void saveThemeColumnState();
+
+  /**
    * This is called by the model from inside setFolder().
    * It's called just after the model has been reset but before
    * any row has been inserted. This allows us to call updateThemeColumns() as needed.
@@ -498,6 +504,11 @@ protected slots:
    * the header columns.
    */
   void slotHeaderContextMenuTriggered( QAction * act );
+
+  /**
+   * Handles section resizes in order to save the column widths
+   */
+  void slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidth );
 
   /**
    * Handles selection item management

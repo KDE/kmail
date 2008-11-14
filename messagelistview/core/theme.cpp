@@ -35,7 +35,21 @@ namespace MessageListView
 namespace Core
 {
 
-static const int gThemeCurrentVersion = 0x1013; // increase if you add new fields of change the meaning of some
+//
+// Theme versioning
+//
+// The themes simply have a DWORD version number attacched.
+// The earliest version we're able to load is 0x1013.
+// 
+// Theme revision history:
+//
+//  Version Date introduced Description
+// --------------------------------------------------------------------------------------------------------------
+//  0x1013  08.11.2008      Initial theme version, introduced when this piece of code has been moved into trunk.
+//  0x1014  12.11.2008      Added runtime column data: width and column visibility
+
+static const int gThemeCurrentVersion = 0x1014; // increase if you add new fields of change the meaning of some
+
 
 
 Theme::ContentItem::ContentItem( Type type )
@@ -170,7 +184,7 @@ void Theme::ContentItem::save( QDataStream &stream ) const
   stream << mCustomColor;
 }
 
-bool Theme::ContentItem::load( QDataStream &stream )
+bool Theme::ContentItem::load( QDataStream &stream, int /*themeVersion*/ )
 {
   int val;
 
@@ -320,7 +334,7 @@ void Theme::Row::save( QDataStream &stream ) const
   }
 }
 
-bool Theme::Row::load( QDataStream &stream )
+bool Theme::Row::load( QDataStream &stream, int themeVersion )
 {
   removeAllLeftItems();
   removeAllRightItems();
@@ -337,7 +351,7 @@ bool Theme::Row::load( QDataStream &stream )
   for ( int i = 0; i < val ; ++i )
   {
     ContentItem * ci = new ContentItem( ContentItem::Subject ); // dummy type
-    if ( !ci->load( stream ) )
+    if ( !ci->load( stream, themeVersion ) )
     {
       kDebug() << "Left content item loading failed";
       delete ci;
@@ -356,7 +370,7 @@ bool Theme::Row::load( QDataStream &stream )
   for ( int i = 0; i < val ; ++i )
   {
     ContentItem * ci = new ContentItem( ContentItem::Subject ); // dummy type
-    if ( !ci->load( stream ) )
+    if ( !ci->load( stream, themeVersion ) )
     {
       kDebug() << "Right content item loading failed";
       delete ci;
@@ -369,7 +383,41 @@ bool Theme::Row::load( QDataStream &stream )
 }
 
 
+Theme::Column::SharedRuntimeData::SharedRuntimeData( bool currentlyVisible, int currentWidth )
+  : mReferences( 0 ), mCurrentlyVisible( currentlyVisible ), mCurrentWidth( currentWidth )
+{
+}
 
+Theme::Column::SharedRuntimeData::~SharedRuntimeData()
+{
+}
+
+void Theme::Column::SharedRuntimeData::addReference()
+{
+  mReferences++;
+}
+
+bool Theme::Column::SharedRuntimeData::deleteReference()
+{
+  mReferences--;
+  Q_ASSERT( mReferences >= 0 );
+  return mReferences > 0;
+}
+
+void Theme::Column::SharedRuntimeData::save( QDataStream &stream ) const
+{
+  stream << mCurrentlyVisible;
+  stream << mCurrentWidth;
+}
+
+bool Theme::Column::SharedRuntimeData::load( QDataStream &stream, int /* themeVersion */ )
+{
+  stream >> mCurrentlyVisible;
+  stream >> mCurrentWidth;
+  if ( mCurrentWidth > 10000 )
+    mCurrentWidth = 100; // avoid really insane values
+  return (mCurrentWidth >= -1);
+}
 
 
 Theme::Column::Column()
@@ -377,6 +425,8 @@ Theme::Column::Column()
     mIsSenderOrReceiver( false ),
     mMessageSorting( Aggregation::NoMessageSorting )
 {
+  mSharedRuntimeData = new SharedRuntimeData( true, -1 );
+  mSharedRuntimeData->addReference();
 }
 
 Theme::Column::Column( const Column &src )
@@ -385,6 +435,9 @@ Theme::Column::Column( const Column &src )
   mVisibleByDefault = src.mVisibleByDefault;
   mIsSenderOrReceiver = src.mIsSenderOrReceiver;
   mMessageSorting = src.mMessageSorting;
+
+  mSharedRuntimeData = src.mSharedRuntimeData;
+  mSharedRuntimeData->addReference();
 
   for ( QList< Row * >::ConstIterator it = src.mMessageRows.begin(); it != src.mMessageRows.end() ; ++it )
     addMessageRow( new Row( *( *it ) ) );
@@ -396,6 +449,19 @@ Theme::Column::~Column()
 {
   removeAllMessageRows();
   removeAllGroupHeaderRows();
+  if( !( mSharedRuntimeData->deleteReference() ) )
+    delete mSharedRuntimeData;
+}
+
+void Theme::Column::detach()
+{
+  if( mSharedRuntimeData->referenceCount() < 2 )
+    return; // nothing to detach
+  mSharedRuntimeData->deleteReference();
+
+  mSharedRuntimeData = new SharedRuntimeData( mVisibleByDefault, -1 );
+  mSharedRuntimeData->addReference();
+    
 }
 
 void Theme::Column::removeAllMessageRows()
@@ -482,9 +548,13 @@ void Theme::Column::save( QDataStream &stream ) const
     Row * row = mMessageRows.at( i );
     row->save( stream );
   }
+
+  // added in version 0x1014
+  mSharedRuntimeData->save( stream );
+
 }
 
-bool Theme::Column::load( QDataStream &stream )
+bool Theme::Column::load( QDataStream &stream, int themeVersion )
 {
   removeAllGroupHeaderRows();
   removeAllMessageRows();
@@ -515,7 +585,7 @@ bool Theme::Column::load( QDataStream &stream )
   for ( int i = 0; i < val ; i++ )
   {
     Row * row = new Row();
-    if ( !row->load( stream ) )
+    if ( !row->load( stream, themeVersion ) )
     {
       kDebug() << "Group header row loading failed";
       delete row;
@@ -536,13 +606,27 @@ bool Theme::Column::load( QDataStream &stream )
   for ( int i = 0; i < val ; i++ )
   {
     Row * row = new Row();
-    if ( !row->load( stream ) )
+    if ( !row->load( stream, themeVersion ) )
     {
       kDebug() << "Message row loading failed";
       delete row;
       return false;
     }
     addMessageRow( row );
+  }
+
+  if ( themeVersion >= 0x1014 )
+  {
+    // starting with version 0x1014 we have runtime data too
+    if( !mSharedRuntimeData->load( stream, themeVersion ) )
+    {
+      kDebug() << "Shared runtime data loading failed";
+      return false;
+    }
+  } else {
+    // assume default shared data
+    mSharedRuntimeData->setCurrentlyVisible( mVisibleByDefault );
+    mSharedRuntimeData->setCurrentWidth( -1 );
   }
 
   return true;
@@ -582,6 +666,21 @@ Theme::Theme( const Theme &src )
 Theme::~Theme()
 {
   removeAllColumns();
+}
+
+void Theme::detach()
+{
+  for ( QList< Column * >::Iterator it = mColumns.begin(); it != mColumns.end() ; ++it )
+    ( *it )->detach();
+}
+
+void Theme::resetColumnState()
+{
+  for ( QList< Column * >::Iterator it = mColumns.begin(); it != mColumns.end() ; ++it )
+  {
+    ( *it )->setCurrentlyVisible( ( *it )->visibleByDefault() );
+    ( *it )->setCurrentWidth( -1 );
+  }
 }
 
 void Theme::removeAllColumns()
@@ -641,14 +740,22 @@ bool Theme::load( QDataStream &stream )
 {
   removeAllColumns();
 
-  int val;
+  int themeVersion;
 
-  stream >> val;
-  if ( val != gThemeCurrentVersion )
+  stream >> themeVersion;
+
+  // We support themes starting at version 0x1013
+
+  if (
+       ( themeVersion > gThemeCurrentVersion ) ||
+       ( themeVersion < 0x1013 )
+     )
   {
     kDebug() << "Invalid theme version";
     return false; // b0rken (invalid version)
   }
+
+  int val;
 
   stream >> val;
   mGroupHeaderBackgroundMode = (GroupHeaderBackgroundMode)val;
@@ -709,7 +816,7 @@ bool Theme::load( QDataStream &stream )
   for ( int i = 0; i < val ; i++ )
   {
     Column * col = new Column();
-    if ( !col->load( stream ) )
+    if ( !col->load( stream, themeVersion ) )
     {
       kDebug() << "Column loading failed";
       delete col;

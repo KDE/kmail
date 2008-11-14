@@ -484,7 +484,7 @@ public:
     /**
      * Handles content item loading (used by Theme::Row::load())
      */
-    bool load( QDataStream &stream );
+    bool load( QDataStream &stream, int themeVersion );
 
   };
 
@@ -601,7 +601,7 @@ public:
     /**
      * Handles row loading (used by Theme::Column::load())
      */
-    bool load( QDataStream &stream );
+    bool load( QDataStream &stream, int themeVersion );
 
   };
 
@@ -612,8 +612,97 @@ public:
   class Column
   {
   public:
+    /**
+     * A set of shared runtime data. This is used to store a set of "override" settings
+     * at runtime. For instance, the width of the visible columns of a skin are stored here.
+     */
+    class SharedRuntimeData
+    {
+      private:
+        int mReferences;          ///< The number of external references to this shared data object
+
+        int mCurrentlyVisible;    ///< Is this column currently visible ? always valid (eventually set from default)
+        int mCurrentWidth;        ///< The current width of this column, -1 if not valid (never set)
+      public:
+        /**
+         * Create a shared runtime data object
+         */
+        SharedRuntimeData( bool currentlyVisible, int currentWidth );
+
+        /**
+         * Destroy a shared runtime data object
+         */
+        ~SharedRuntimeData();
+      public:
+        /**
+         * Increments the reference count for this shared runtime data object.
+         */
+        void addReference();
+
+        /**
+         * Decrements the reference count for this shared runtime data object.
+         * Returns true if there are other references and false otherwise (so the data can be safely deleted)
+         */
+        bool deleteReference();
+
+        /**
+         * Returns the current number of reference counts, that is, the number of
+         * Theme::Column objects that use this SharedRuntimeData instance.
+         */
+        int referenceCount()
+          { return mReferences; };
+
+        /**
+         * Returns the current visibility state
+         */
+        bool currentlyVisible() const
+          { return mCurrentlyVisible; };
+
+        /**
+         * Sets the current visibility state
+         */
+        void setCurrentlyVisible( bool visible )
+          { mCurrentlyVisible = visible; };
+
+        /**
+         * Returns the current width or -1 if the width is unspecified/invalid
+         */
+        int currentWidth() const
+          { return mCurrentWidth; };
+
+        /**
+         * Sets the current width of the column
+         */
+        void setCurrentWidth( int currentWidth )
+          { mCurrentWidth = currentWidth; };
+
+        /**
+         * Saves this runtime data to the specified stream
+         */
+        void save( QDataStream &stream ) const;
+
+        /**
+         * Loads the shared runtime data from the specified stream
+         * assuming that it uses the specified theme version.
+         * Returns true on success and false if the data can't be loaded.
+         */
+        bool load( QDataStream &stream, int themeVersion );
+    };
+  public:
+    /**
+     * Create an empty column with default settings
+     */
     Column();
+    /**
+     * Create an exact copy of the column src.
+     * The shared runtime data is not copied (only a reference is added).
+     * If you need to create an independent clone then please use detach()
+     * after the construction.
+     */
     Column( const Column &src );
+    /**
+     * Kill a column object
+     */
     ~Column();
 
   private:
@@ -626,7 +715,7 @@ public:
     // cache
     QSize mGroupHeaderSizeHint;                       ///< The cached size hint for group header rows: invalid if not computed yet
     QSize mMessageSizeHint;                           ///< The cached size hint for message rows: invalid if not computed yet
-
+    SharedRuntimeData * mSharedRuntimeData;           ///< A pointer to the shared runtime data: shared between all instances of a theme with the same id
   public:
     /**
      * Returns the label set for this column
@@ -667,6 +756,12 @@ public:
       { mVisibleByDefault = vbd; };
 
     /**
+     * Detaches the shared runtime data object and makes this object
+     * totally independent. The shared runtime data is initialized to default values.
+     */
+    void detach();
+
+    /**
      * Returns the sort order for messages that we should switch to
      * when clicking on this column's header (if visible at all).
      */
@@ -679,6 +774,35 @@ public:
      */
     void setMessageSorting( Aggregation::MessageSorting ms )
       { mMessageSorting = ms; };
+
+    /**
+     * Returns the current shared visibility state for this column.
+     * This state is shared between all the instances of this theme.
+     */
+    bool currentlyVisible() const
+      { return mSharedRuntimeData->currentlyVisible(); };
+
+    /**
+     * Sets the current shared visibility state for this column.
+     * This state is shared between all the instances of this theme.
+     */
+    void setCurrentlyVisible( bool currentlyVisible )
+      { mSharedRuntimeData->setCurrentlyVisible( currentlyVisible ); };
+
+    /**
+     * Returns the current shared width setting for this column
+     * or -1 if the width is not specified and should be auto-determined.
+     * This state is shared between all the instances of this theme.
+     */
+    int currentWidth() const
+      { return mSharedRuntimeData->currentWidth(); };
+
+    /**
+     * Sets the current shared width setting for this column.
+     * This state is shared between all the instances of this theme.
+     */
+    void setCurrentWidth( int currentWidth )
+      { mSharedRuntimeData->setCurrentWidth( currentWidth ); };
 
     /**
      * Returns the list of rows visible in this column for a MessageItem
@@ -787,14 +911,31 @@ public:
     /**
      * Handles column loading (used by Theme::load())
      */
-    bool load( QDataStream &stream );
+    bool load( QDataStream &stream, int themeVersion );
 
   };
 
 public:
+  /**
+   * Creates a totally uninitialized theme object.
+   */
   Theme();
+
+  /**
+   * Creates a theme object with the specified name and description.
+   */
   Theme( const QString &name, const QString &description );
+
+  /**
+   * Creates an exact copy of the theme sharing the same runtime data.
+   * If you need an exact clone please use detach() and generateUniqueId() just
+   * after creation.
+   */
   Theme( const Theme &src );
+
+  /**
+   * Destroys this theme object.
+   */
   ~Theme();
 
 public:
@@ -841,6 +982,16 @@ private:
   GroupHeaderBackgroundStyle mGroupHeaderBackgroundStyle; ///< How do we paint group header background ?
   ViewHeaderPolicy mViewHeaderPolicy;
 public:
+  /**
+   * Detaches this object from the shared runtime data for columns.
+   */
+  void detach();
+
+  /**
+   * Resets the column state (visibility and width) to their default values (the "visible by default" ones).
+   */
+  void resetColumnState();
+
   /**
    * Returns the list of columns available in this theme
    */

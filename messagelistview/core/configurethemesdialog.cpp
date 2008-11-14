@@ -335,6 +335,7 @@ void ConfigureThemesDialog::cloneThemeButtonClicked()
     return;
 
   Theme copyTheme( *( item->theme() ) );
+  copyTheme.detach(); // detach shared data
   copyTheme.generateUniqueId(); // regenerate id so it becomes different
   copyTheme.setName( uniqueNameForTheme( item->theme()->name() ) );
   item = new ThemeListWidgetItem( mThemeList, copyTheme );
