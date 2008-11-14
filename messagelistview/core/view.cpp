@@ -126,11 +126,10 @@ void View::setAggregation( const Aggregation * aggregation )
 
 void View::setTheme( Theme * theme )
 {
-  mNeedToApplyThemeColumns = (mTheme != theme);
+  mNeedToApplyThemeColumns = true;
   mTheme = theme;
   mDelegate->setTheme( theme );
   mModel->setTheme( theme );
-  mNeedToApplyThemeColumns = true;
 }
 
 void View::reload()
@@ -141,7 +140,9 @@ void View::reload()
 void View::setStorageModel( const StorageModel * storageModel, PreSelectionMode preSelectionMode )
 {
   // This will cause the model to be reset.
+  mSaveThemeStateOnSectionResize = false;
   mModel->setStorageModel( storageModel, preSelectionMode );
+  mSaveThemeStateOnSectionResize = true;
 }
 
 void View::modelJobBatchStarted()
@@ -334,7 +335,7 @@ void View::resizeEvent( QResizeEvent * e )
 
   QTreeView::resizeEvent( e );
 
-  saveThemeColumnState();
+  // else we still need to apply theme columns, don't save current
 }
 
 void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidth )
@@ -342,7 +343,6 @@ void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidt
   Q_UNUSED( logicalIndex );
   Q_UNUSED( oldWidth );
   Q_UNUSED( newWidth );
-
   if ( mSaveThemeStateOnSectionResize )
     saveThemeColumnState();
 }
