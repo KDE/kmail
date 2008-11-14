@@ -431,35 +431,38 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::formatString(const QString& aStr) const
+QString KMMessage::formatString( const QString &aStr ) const
 {
   QString result;
 
-  if (aStr.isEmpty())
+  if ( aStr.isEmpty() ) {
     return aStr;
+  }
 
-  unsigned int strLength(aStr.length());
-  for (uint i=0; i<strLength;) {
+  unsigned int strLength( aStr.length() );
+  for ( uint i=0; i<strLength; ) {
     QChar ch = aStr[i++];
-    if (ch == '%') {
+    if ( ch == '%' && i<strLength ) {
       ch = aStr[i++];
-      switch (ch.toLatin1()) {
+      switch ( ch.toLatin1() ) {
       case 'f': // sender's initals
       {
         QString str = fromStrip();
 
         uint j = 0;
-        for (; str[j]>' '; j++)
+        for ( ; str[j]>' '; j++ )
           ;
-        unsigned int strLength(str.length());
-        for (; j < strLength && str[j] <= ' '; j++)
+        unsigned int strLength( str.length() );
+        for ( ; j < strLength && str[j] <= ' '; j++ )
           ;
         result += str[0];
-        if (str[j]>' ')
+        if ( str[j] > ' ' ) {
           result += str[j];
-        else
-          if (str[1]>' ')
+        } else {
+          if ( str[1] > ' ' ) {
             result += str[1];
+          }
+        }
       }
       break;
       case '_':
@@ -473,8 +476,9 @@ QString KMMessage::formatString(const QString& aStr) const
         result += ch;
         break;
       }
-    } else
+    } else {
       result += ch;
+    }
   }
   return result;
 }
