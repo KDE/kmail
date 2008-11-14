@@ -70,7 +70,6 @@
 #include <kmime/kmime_util.h>
 #include <kmime/kmime_codecs.h>
 
-#include <libkpgp/kpgpblock.h>
 #include <kconfiggroup.h>
 #include <kmessagebox.h>
 #include <klocale.h>
