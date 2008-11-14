@@ -503,7 +503,8 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // KProcess doesn't support a QProcess::launch() equivalent, so
   // we must use a temp file :-(
   KTemporaryFile * inFile = new KTemporaryFile;
-  inFile->open();
+  if ( !inFile->open() )
+    return ErrorButGoOn;
 
   QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
@@ -526,8 +527,12 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   // write message to file
   QString tempFileName = inFile->fileName();
-  KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
-                  false, false, false );
+  if ( !KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
+                                     false, false, false ) ) {
+    qDeleteAll( atmList );
+    atmList.clear();
+    return CriticalError;
+  }
   inFile->close();
 
   KProcess shProc;
@@ -1720,14 +1725,19 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
   KTemporaryFile *inFile = new KTemporaryFile;
   inFile->setAutoRemove(false);
-  inFile->open();
+  if ( !inFile->open() ) {
+    handler->actionMessage( ErrorButGoOn );
+    return;
+  }
 
   QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
-  if ( commandLine.isEmpty() )
+  if ( commandLine.isEmpty() ) {
     handler->actionMessage( ErrorButGoOn );
+    return;
+  }
 
   // The parentheses force the creation of a subshell
   // in which the user-specified command is executed.
@@ -1740,8 +1750,13 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
 
   // write message to file
   QString tempFileName = inFile->fileName();
-  KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
-      false, false, false );
+  if ( !KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
+      false, false, false ) ) {
+    handler->actionMessage( CriticalError );
+    qDeleteAll( atmList );
+    atmList.clear();
+    return;
+  }
 
   inFile->close();
   qDeleteAll( atmList );
