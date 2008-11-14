@@ -2615,7 +2615,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
           {
             Q_ASSERT( ( *it )->parent() );
             Q_ASSERT( ( *it )->parent() != mi );
-#if 0
+#if 1
             Q_ASSERT( ( ( *it )->threadingStatus() == MessageItem::ImperfectParentFound ) || ( ( *it )->threadingStatus() == MessageItem::ParentMissing ) );
 #else
             if(!(( ( *it )->threadingStatus() == MessageItem::ImperfectParentFound ) || ( ( *it )->threadingStatus() == MessageItem::ParentMissing )))
@@ -2715,7 +2715,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
           {
             // We're done with this message: it will be surely either toplevel (no grouping in effect)
             // or a thread leader with a well defined group. Do it :)
-            kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (1) " << mi;
+            //kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (1) " << mi;
             mi->setThreadingStatus( MessageItem::NonThreadable );
             // Locate the parent group for this item
             attachMessageToGroupHeader( mi );
@@ -2741,7 +2741,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
     } else {
       // else no threading requested: we don't even need Pass2
       // set not threadable status (even if it might be not true, but in this mode we don't care)
-      kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (2) " << mi;
+      //kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (2) " << mi;
       mi->setThreadingStatus( MessageItem::NonThreadable );
       // locate the parent group for this item
       if ( mAggregation->grouping() == Aggregation::NoGrouping )
