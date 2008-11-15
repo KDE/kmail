@@ -14,9 +14,9 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
     In addition, as a special exception, the copyright holders give
     permission to link the code of this program with any edition of
@@ -251,11 +251,10 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
       if ( childCount( functionStack, w->objectName() ) < 2 ) {
         // there wasn't already a widget with this name, so add this widget
         functionStack->addWidget( w );
-      }
-      else {
+      } else {
         // there was already a widget with this name, so discard this widget
-        kDebug(5006) << w->objectName() << "already exists in functionStack";
-        delete w; w = 0;
+        delete w;
+        w = 0;
       }
     }
     for ( int i = 0;
@@ -264,11 +263,10 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
       if ( childCount( valueStack, w->objectName() ) < 2 ) {
         // there wasn't already a widget with this name, so add this widget
         valueStack->addWidget( w );
-      }
-      else {
+      } else {
         // there was already a widget with this name, so discard this widget
-        kDebug(5006) << w->objectName() << "already exists in valueStack";
-        delete w; w = 0;
+        delete w;
+        w = 0;
       }
     }
   }
@@ -335,11 +333,10 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
                                               QStackedWidget *functionStack,
                                               QStackedWidget *valueStack ) const
 {
-  //kDebug(5006) << "( \"" << field
-  //              << "\", ... )";
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
-    if ( (*it)->update( field, functionStack, valueStack ) )
+    if ( (*it)->update( field, functionStack, valueStack ) ) {
       return;
+    }
   }
 }
 
@@ -447,12 +444,11 @@ namespace {
   {
     const KComboBox *funcCombo =
       functionStack->findChild<KComboBox*>( QString( "textRuleFuncCombo" ) );
-    
+
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return TextFunctions[funcCombo->currentIndex()].id;
     }
-    else
-      kDebug(5006) << "textRuleFuncCombo not found.";
+
     return KMSearchRule::FuncNone;
   }
 
@@ -473,24 +469,20 @@ namespace {
     if ( func  == KMSearchRule::FuncIsInCategory ||
          func  == KMSearchRule::FuncIsNotInCategory ) {
       const KComboBox *combo = valueStack->findChild<KComboBox*>( "categoryCombo" );
-      
+
       if ( combo ) {
         return combo->currentText();
-      }
-      else {
-        kDebug(5006) << "categoryCombo not found.";
+      } else {
         return QString();
       }
     }
 
     //in other cases of func it is a lineedit
-    const RegExpLineEdit *lineEdit = valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );    
-    
+    const RegExpLineEdit *lineEdit = valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+
     if ( lineEdit ) {
       return lineEdit->text();
-      }
-    else
-      kDebug(5006) << "regExpLineEdit not found.";
+    }
 
     // or anything else, like addressbook
     return QString();
@@ -592,10 +584,9 @@ namespace {
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      if ( i < TextFunctionCount )
+      if ( i < TextFunctionCount ) {
         funcCombo->setCurrentIndex( i );
-      else {
-        kDebug(5006) << "(" << rule->asString() << "): unhandled function";
+      } else {
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
@@ -754,12 +745,11 @@ namespace {
   KMSearchRule::Function MessageRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "messageRuleFuncCombo" );
-    
+
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return MessageFunctions[funcCombo->currentIndex()].id;
     }
-    else
-      kDebug(5006) << "messageRuleFuncCombo not found.";
+
     return KMSearchRule::FuncNone;
   }
 
@@ -781,12 +771,10 @@ namespace {
   {
     const RegExpLineEdit *lineEdit
               = valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
-    
+
     if ( lineEdit ) {
       return lineEdit->text();
     }
-    else
-      kDebug(5006) << "regExpLineEdit not found.";
 
     return QString();
   }
@@ -883,10 +871,9 @@ namespace {
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      if ( i < MessageFunctionCount )
+      if ( i < MessageFunctionCount ) {
         funcCombo->setCurrentIndex( i );
-      else {
-        kDebug(5006) << "(" << rule->asString() << "): unhandled function";
+      } else {
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
@@ -1019,12 +1006,11 @@ namespace {
   KMSearchRule::Function StatusRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "statusRuleFuncCombo" );
-    
+
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return StatusFunctions[funcCombo->currentIndex()].id;
     }
-    else
-      kDebug(5006) << "statusRuleFuncCombo not found.";
+
     return KMSearchRule::FuncNone;
   }
 
@@ -1044,12 +1030,11 @@ namespace {
   int StatusRuleWidgetHandler::currentStatusValue( const QStackedWidget *valueStack ) const
   {
     const KComboBox *statusCombo = valueStack->findChild<KComboBox*>( "statusRuleValueCombo" );
-    
+
     if ( statusCombo ) {
       return statusCombo->currentIndex();
     }
-    else
-      kDebug(5006) << "statusRuleValueCombo not found.";
+
     return -1;
   }
 
@@ -1140,10 +1125,9 @@ namespace {
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      if ( funcIndex < StatusFunctionCount )
+      if ( funcIndex < StatusFunctionCount ) {
         funcCombo->setCurrentIndex( funcIndex );
-      else {
-        kDebug(5006) << "(" << rule->asString() << "): unhandled function";
+      } else {
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
@@ -1162,10 +1146,9 @@ namespace {
 
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
-      if ( valueIndex < KMail::StatusValueCountWithoutHidden )
+      if ( valueIndex < KMail::StatusValueCountWithoutHidden ) {
         statusCombo->setCurrentIndex( valueIndex );
-      else {
-        kDebug(5006) << "(" << rule->asString() << "): unhandled value";
+      } else {
         statusCombo->setCurrentIndex( 0 );
       }
       statusCombo->blockSignals( false );
@@ -1261,12 +1244,11 @@ namespace {
   KMSearchRule::Function NumericRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "numericRuleFuncCombo" );
-    
+
     if ( funcCombo && funcCombo->currentIndex() >= 0 ) {
       return NumericFunctions[funcCombo->currentIndex()].id;
     }
-    else
-      kDebug(5006) << "numericRuleFuncCombo not found.";
+
     return KMSearchRule::FuncNone;
   }
 
@@ -1286,12 +1268,11 @@ namespace {
   QString NumericRuleWidgetHandler::currentValue( const QStackedWidget *valueStack ) const
   {
     const KIntNumInput *numInput = valueStack->findChild<KIntNumInput*>( "KIntNumInput" );
-    
+
     if ( numInput ) {
       return QString::number( numInput->value() );
     }
-    else
-      kDebug(5006) << "KIntNumInput not found.";
+
     return QString();
   }
 
@@ -1390,10 +1371,9 @@ namespace {
 
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      if ( funcIndex < NumericFunctionCount )
+      if ( funcIndex < NumericFunctionCount ) {
         funcCombo->setCurrentIndex( funcIndex );
-      else {
-        kDebug(5006) << "(" << rule->asString() << "): unhandled function";
+      } else {
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
