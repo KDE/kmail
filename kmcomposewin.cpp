@@ -2299,8 +2299,13 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     KEncodingProber prober;
     prober.feed( (*it).data );
     kDebug() << "Autodetected charset: " << prober.encodingName() << " confidence: " << prober.confidence();
-    if ( prober.confidence() > 0.6 )
-      partCharset = prober.encodingName();
+
+    // The prober detects binary attachments as UTF-16LE with confidence 99%, which
+    // obviously is wrong, so work around this here (most mail clients don't understand
+    // UTF-16LE).
+    QString detectedEncoding = prober.encodingName();
+    if ( prober.confidence() > 0.6 && !detectedEncoding.toLower().contains( "utf-16" ) )
+      partCharset = detectedEncoding.toAscii();
     if ( partCharset.isEmpty() )
       partCharset = mCharset;
   }
