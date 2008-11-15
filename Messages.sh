@@ -1,4 +1,4 @@
 #! /bin/sh
 $PREPARETIPS > tips.cpp
-$XGETTEXT -ktranslate *.cpp *.h -o $podir/kmail.pot
+$XGETTEXT -ktranslate `find -name '*.cpp' -o -name '*.h'` -o $podir/kmail.pot
 rm -f tips.cpp
