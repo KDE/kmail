@@ -913,28 +913,32 @@ namespace KMail {
     const QString str = QString::fromLatin1( curNode->msgPart().bodyDecoded() );
 
     //###
-    const QLatin1String delim1( "--__--__--\n\nMessage:");
-    const QLatin1String delim2( "--__--__--\r\n\r\nMessage:");
-    const QLatin1String delimZ2("--__--__--\n\n_____________");
-    const QLatin1String delimZ1("--__--__--\r\n\r\n_____________");
+    const QLatin1String delim1( "--__--__--\n\nMessage:" );
+    const QLatin1String delim2( "--__--__--\r\n\r\nMessage:" );
+    const QLatin1String delimZ2( "--__--__--\n\n_____________" );
+    const QLatin1String delimZ1( "--__--__--\r\n\r\n_____________" );
     QString partStr, digestHeaderStr;
-    int thisDelim = str.indexOf(delim1, Qt::CaseInsensitive );
-    if ( thisDelim == -1 )
-      thisDelim = str.indexOf(delim2, Qt::CaseInsensitive );
+    int thisDelim = str.indexOf( delim1, Qt::CaseInsensitive );
     if ( thisDelim == -1 ) {
-      kDebug() << "        Sorry: Old style Mailman message but no delimiter found.";
+      thisDelim = str.indexOf( delim2, Qt::CaseInsensitive );
+    }
+    if ( thisDelim == -1 ) {
       return false;
     }
 
     int nextDelim = str.indexOf( delim1, thisDelim+1, Qt::CaseInsensitive );
-    if ( -1 == nextDelim )
+    if ( -1 == nextDelim ) {
       nextDelim = str.indexOf( delim2, thisDelim+1, Qt::CaseInsensitive );
-    if ( -1 == nextDelim )
+    }
+    if ( -1 == nextDelim ) {
       nextDelim = str.indexOf( delimZ1, thisDelim+1, Qt::CaseInsensitive );
-    if ( -1 == nextDelim )
+    }
+    if ( -1 == nextDelim ) {
       nextDelim = str.indexOf( delimZ2, thisDelim+1, Qt::CaseInsensitive );
-    if ( nextDelim < 0)
+    }
+    if ( nextDelim < 0) {
       return false;
+    }
 
     kDebug() << "        processing old style Mailman digest";
     //if ( curNode->mRoot )
@@ -2928,7 +2932,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
         case '\t':
         case '\r':
           break;
-        default: 
+        default:
           found = true;
           break;
       }
@@ -2937,7 +2941,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     if ( !found ) {
       // next line is essentially empty, it seems -- empty lines are
       // para separators
-      return true; 
+      return true;
     }
     //Find end of first word.
     //Note: flowText (in kmmessage.cpp) separates words for wrap by
