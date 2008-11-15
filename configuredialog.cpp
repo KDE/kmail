@@ -717,7 +717,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // "default domain" input field:
   mDefaultDomainEdit = new KLineEdit( group );
-  glay->addWidget( mDefaultDomainEdit, 4, 1, 1, 2 );
+  glay->addWidget( mDefaultDomainEdit, 4, 1 );
   connect( mDefaultDomainEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -1772,7 +1772,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 
 
 /*
-  
+
 
   mShowQuickSearch = new QCheckBox( i18n("Show Quick Search"), group );
   gvlay->addWidget( mShowQuickSearch );
@@ -2363,7 +2363,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QLabel *namelabel = new QLabel( i18nc("@label:listbox Name of the tag", "Name:")
     , mTagSettingGroupBox );
   namelabel->setBuddy( mTagNameLineEdit );
-  settings->addWidget( namelabel , 1 , 0 );
+  settings->addWidget( namelabel, 1, 0 );
 
   connect( mTagNameLineEdit, SIGNAL( textChanged( const QString& ) ),
             this, SLOT( slotEmitChangeCheck( void ) ) );
@@ -2428,7 +2428,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   //Sixth for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
                                    mTagSettingGroupBox );
-  settings->addWidget( mInToolbarCheck, 7, 0, 1, 2 );
+  settings->addWidget( mInToolbarCheck, 7, 0 );
   connect( mInToolbarCheck, SIGNAL( stateChanged( int ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
@@ -4893,7 +4893,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ), mBox );
   mHideGroupwareFolders->setObjectName( "HideGroupwareFoldersBox" );
-  grid->addWidget( mHideGroupwareFolders, 3, 0, 1, 1 );
+  grid->addWidget( mHideGroupwareFolders, 3, 0 );
   mHideGroupwareFolders->setToolTip(
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );
@@ -4907,7 +4907,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mOnlyShowGroupwareFolders = new QCheckBox( i18n( "&Only show groupware folders for this account" ), mBox );
   mOnlyShowGroupwareFolders->setObjectName( "OnlyGroupwareFoldersBox" );
-  grid->addWidget( mOnlyShowGroupwareFolders, 3, 1, 1, 1 );
+  grid->addWidget( mOnlyShowGroupwareFolders, 4, 0 );
   mOnlyShowGroupwareFolders->setToolTip(
                  i18n( "When this is checked, you will not see normal  "
                        "mail folders in the folder tree for the account "
@@ -4920,7 +4920,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mSyncImmediately = new QCheckBox( i18n( "Synchronize groupware changes immediately" ), mBox );
   mSyncImmediately->setToolTip( i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
   connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  grid->addWidget( mSyncImmediately, 4, 0, 0, 1 );
+  grid->addWidget( mSyncImmediately, 5, 0 );
 
   mDeleteInvitations = new QCheckBox(
              i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ), mBox );
@@ -4928,7 +4928,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
              ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
   connect( mDeleteInvitations, SIGNAL( toggled(bool) ),
            SLOT( slotEmitChanged() ) );
-  grid->addWidget( mDeleteInvitations, 5, 0, 1, 2 );
+  grid->addWidget( mDeleteInvitations, 6, 0 );
 
   // Groupware functionality compatibility setup
   b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
