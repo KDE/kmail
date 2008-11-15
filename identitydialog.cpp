@@ -672,7 +672,7 @@ namespace KMail {
     mTransportCombo->setEnabled( transport != 0 );
     if ( transport )
       mTransportCombo->setCurrentTransport( transport->id() );
-    mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+    mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
     if ( ident.fcc().isEmpty() ||
          !checkFolderExists( ident.fcc(),
