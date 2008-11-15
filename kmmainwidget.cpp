@@ -1758,9 +1758,9 @@ void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
   if ( command->result() != KMCommand::OK )
   {
     if ( moveWasReallyADelete )
-      BroadcastStatus::instance()->setStatusMsg( i18n( "Messages deleted succesfuly." ) );
+      BroadcastStatus::instance()->setStatusMsg( i18n( "Messages deleted succesfully." ) );
     else
-      BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved succesfuly." ) );
+      BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved succesfully." ) );
   } else {
     if ( moveWasReallyADelete )
     {
@@ -1909,7 +1909,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
   if ( command->result() != KMCommand::OK )
   {
-    BroadcastStatus::instance()->setStatusMsg( i18n( "Messages copied succesfuly." ) );
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Messages copied succesfully." ) );
   } else {
     if ( command->result() == KMCommand::Failed )
       BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages failed." ) );
@@ -2040,7 +2040,7 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
 
   if ( command->result() != KMCommand::OK )
   {
-    BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved to trash succesfuly." ) );
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved to trash succesfully." ) );
   } else {
     if ( command->result() == KMCommand::Failed )
       BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash failed." ) );
