@@ -737,7 +737,7 @@ namespace KMail {
     ident.setBcc( mBccEdit->text() );
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                           mTransportCombo->currentText() : QString() );
-    ident.setDictionary( mDictionaryCombo->currentDictionary() );
+    ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
     ident.setFcc( mFccCombo->folder() ?
                   mFccCombo->folder()->idString() : QString() );
     ident.setDrafts( mDraftsCombo->folder() ?
