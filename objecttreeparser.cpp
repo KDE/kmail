@@ -940,7 +940,6 @@ namespace KMail {
       return false;
     }
 
-    kDebug() << "        processing old style Mailman digest";
     //if ( curNode->mRoot )
     //  curNode = curNode->mRoot;
 
