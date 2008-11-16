@@ -424,12 +424,16 @@ void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidt
     saveThemeColumnState();
 }
 
-int View::sizeHintForColumn( int colIdx ) const
+int View::sizeHintForColumn( int logicalColumnIndex ) const
 {
-  Q_UNUSED( colIdx );
-  return 10; // please leave my column widths alone
+  // QTreeView: please don't touch my column widths...
+  int w = header()->sectionSize( logicalColumnIndex );
+  if ( w > 0 )
+    return w;
+  if ( !mDelegate )
+    return 32; // dummy
+  return mDelegate->sizeHintForItemTypeAndColumn( Item::Message, logicalColumnIndex ).width();
 }
-
 
 void View::showEvent( QShowEvent *e )
 {

@@ -453,7 +453,7 @@ QVariant Model::headerData(int section, Qt::Orientation, int role) const
   if ( !column )
     return QVariant();
 
-  if ( role != Qt::DisplayRole )
+ if ( role != Qt::DisplayRole )
     return QVariant();
 
   if ( mStorageModel && column->isSenderOrReceiver() )
@@ -1387,7 +1387,6 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
          )
       {
         kWarning() << "Circular In-Reply-To reference loop detected in the message tree" << endl;
-        kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (3) " << mi;
         mi->setThreadingStatus( MessageItem::NonThreadable );
         return 0; // broken message: throw it away
       }
@@ -1401,8 +1400,6 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
 
   if ( mAggregation->threading() == Aggregation::PerfectOnly )
   {
-    if ( !bMessageWasThreadable )
-      kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (4) " << mi;
     mi->setThreadingStatus( bMessageWasThreadable ? MessageItem::ParentMissing : MessageItem::NonThreadable );
     return 0; // we're doing only perfect parent matches
   }
@@ -1435,7 +1432,6 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
          )
       {
         kWarning() << "Circular reference loop detected in the message tree" << endl;
-        kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (5) " << mi;
         mi->setThreadingStatus( MessageItem::NonThreadable );
         return 0; // broken message: throw it away
       }
@@ -1449,8 +1445,6 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
 
   if ( mAggregation->threading() == Aggregation::PerfectAndReferences )
   {
-    if ( !bMessageWasThreadable )
-      kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (6) " << mi;
     mi->setThreadingStatus( bMessageWasThreadable ? MessageItem::ParentMissing : MessageItem::NonThreadable );
     return 0; // we're doing only perfect parent matches
   }
@@ -1463,8 +1457,6 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
   // We first try the perfect and references based threading on all the messages
   // and then run subject based threading only on the remaining ones.
 
-  if ( ! ( mi->subjectIsPrefixed() || bMessageWasThreadable ) )
-    kDebug() << "Setting message status from " << mi->threadingStatus() << " to non threadable (7) " << mi;
   mi->setThreadingStatus( ( bMessageWasThreadable || mi->subjectIsPrefixed() ) ? MessageItem::ParentMissing : MessageItem::NonThreadable );
   return 0;
 }

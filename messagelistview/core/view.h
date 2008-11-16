@@ -360,7 +360,7 @@ protected:
   /**
    * Reimplemented in order to kill the QTreeView column auto-resizing
    */
-  virtual int sizeHintForColumn( int colIdx ) const;
+  virtual int sizeHintForColumn( int logicalColumnIndex ) const;
 
   /**
    * Applies the theme columns to this view.
