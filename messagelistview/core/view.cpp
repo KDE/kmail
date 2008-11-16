@@ -189,7 +189,7 @@ void View::applyThemeColumns()
 
   // Note that the first column is always shown (it can't be hidden at all)
 
-  // The alogithm below is a sort of compromise between:
+  // The algorithm below is a sort of compromise between:
   // - Saving the user preferences for widths
   // - Using exactly the available view space
   //
@@ -1268,12 +1268,14 @@ void View::mouseDoubleClickEvent( QMouseEvent * e )
       {
         case Qt::LeftButton:
 
+          if ( mDelegate->hitContentItem() )
+          {
+            // Double clikcking on clickable icons does NOT activate the message
+            if ( mDelegate->hitContentItem()->isIcon() && mDelegate->hitContentItem()->isClickable() )
+              return;
+          }
+
           mWidget->viewMessageActivated( static_cast< MessageItem * >( it ) );
-
-          if ( !mDelegate->hitContentItem() )
-            return;
-
-          // FIXME: Handle icon clicks
         break;
         default:
           // make gcc happy

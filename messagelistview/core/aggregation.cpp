@@ -232,6 +232,7 @@ bool Aggregation::load( QDataStream &stream )
     case NeverExpandThreads:
     case ExpandThreadsWithNewMessages:
     case ExpandThreadsWithUnreadMessages:
+    case ExpandThreadsWithUnreadOrImportantMessages:
     case AlwaysExpandThreads:
       // ok
     break;
@@ -383,6 +384,7 @@ QList< QPair< QString, int > > Aggregation::enumerateThreadExpandPolicyOptions( 
   ret.append( QPair< QString, int >( i18n( "Never Expand Threads" ), NeverExpandThreads ) );
   ret.append( QPair< QString, int >( i18n( "Expand Threads With New Messages" ), ExpandThreadsWithNewMessages ) );
   ret.append( QPair< QString, int >( i18n( "Expand Threads With Unread Messages" ), ExpandThreadsWithUnreadMessages ) );
+  ret.append( QPair< QString, int >( i18n( "Expand Threads With Unread or Important Messages" ), ExpandThreadsWithUnreadOrImportantMessages ) );
   ret.append( QPair< QString, int >( i18n( "Always Expand Threads" ), AlwaysExpandThreads ) );
   return ret;
 }

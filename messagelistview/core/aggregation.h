@@ -60,6 +60,7 @@ public:
     GroupBySenderOrReceiver,             ///< Group by sender (incoming) or receiver (outgoing) field
     GroupBySender,                       ///< Group by sender, always
     GroupByReceiver                      ///< Group by receiver, always
+    // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
     // TODO: Group by message status: "Important messages", "Urgent messages", "To reply", "To do" etc...
     // TODO: Group by message unread status: "Unread messages", "Read messages" (maybe "New" ?)
   };
@@ -77,6 +78,7 @@ public:
     SortGroupsBySenderOrReceiver,        ///< Sort groups by sender or receiver (makes sense only with GroupBySenderOrReceiver)
     SortGroupsBySender,                  ///< Sort groups by sender (makes sense only with GroupBySender)
     SortGroupsByReceiver                 ///< Sort groups by receiver (makes sense only with GroupByReceiver)
+    // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 
   /**
@@ -100,6 +102,7 @@ public:
     NeverExpandGroups,                   ///< Never expand groups during a view fill algorithm
     ExpandRecentGroups,                  ///< Makes sense only with GroupByDate or GroupByDateRange
     AlwaysExpandGroups                   ///< All groups are expanded as they are inserted
+    // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 
   /**
@@ -113,6 +116,7 @@ public:
     PerfectOnly,                         ///< Thread by "In-Reply-To" field only
     PerfectAndReferences,                ///< Thread by "In-Reply-To" and "References" fields
     PerfectReferencesAndSubject          ///< Thread by all of the above and try to match subjects too
+    // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 
   /**
@@ -124,6 +128,7 @@ public:
   {
     TopmostMessage,                      ///< The thread grouping is computed from the topmost message (very similar to least recent, but might be different if timezones or machine clocks are screwed)
     MostRecentMessage                    ///< The thread grouping is computed from the most recent message
+    // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 
   /**
@@ -133,10 +138,12 @@ public:
    */
   enum ThreadExpandPolicy
   {
-    NeverExpandThreads,                  ///< Never expand any thread, this is fast
-    ExpandThreadsWithNewMessages,        ///< Expand threads with new messages only
-    ExpandThreadsWithUnreadMessages,     ///< Expand threads with unread messages (this includes new)
-    AlwaysExpandThreads                  ///< Expand all threads (this might be very slow)
+    NeverExpandThreads,                                ///< Never expand any thread, this is fast
+    ExpandThreadsWithNewMessages,                      ///< Expand threads with new messages only
+    ExpandThreadsWithUnreadMessages,                   ///< Expand threads with unread messages (this includes new)
+    AlwaysExpandThreads,                               ///< Expand all threads (this might be very slow)
+    ExpandThreadsWithUnreadOrImportantMessages         ///< Expand threads with "hot" messages (this includes new, unread, important, todo)
+    // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 
   /**
@@ -155,6 +162,7 @@ public:
     SortMessagesBySubject,               ///< Sort the messages by subject
     SortMessagesBySize,                  ///< Sort the messages by size
     SortMessagesByToDoStatus             ///< Sort the messages by the TODO flag of status
+    // Warning: Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 
   /**
@@ -167,6 +175,7 @@ public:
     FavorInteractivity,                  ///< Do small chunks of work, small intervals between chunks to allow for UI event processing
     FavorSpeed,                          ///< Do larger chunks of work, zero intervals between chunks
     BatchNoInteractivity                 ///< Do one large chunk, no interactivity at all
+    // Warning: Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 
 private:

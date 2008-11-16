@@ -2060,8 +2060,14 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
           pParent->setInitialExpandStatus( Item::ExpandNeeded );
       break;
       case Aggregation::ExpandThreadsWithUnreadMessages:
-        // expand only if unread (or it has children marked for expansion)
+        // expand only if unread or new (or it has children marked for expansion)
         if ( childNeedsExpanding || mi->status().isUnread() || mi->status().isNew() )
+          pParent->setInitialExpandStatus( Item::ExpandNeeded );
+      break;
+      case Aggregation::ExpandThreadsWithUnreadOrImportantMessages:
+        // expand only if unread, new, important or todo (or it has children marked for expansion)
+        // FIXME: Wouldn't it be nice to be able to test for bitmasks in MessageStatus ?
+        if ( childNeedsExpanding || mi->status().isUnread() || mi->status().isNew() || mi->status().isImportant() || mi->status().isToAct() )
           pParent->setInitialExpandStatus( Item::ExpandNeeded );
       break;
       case Aggregation::AlwaysExpandThreads:

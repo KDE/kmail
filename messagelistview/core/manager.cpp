@@ -308,7 +308,7 @@ void Manager::createDefaultAggregations()
           Aggregation::ExpandRecentGroups,
           Aggregation::PerfectReferencesAndSubject,
           Aggregation::MostRecentMessage,
-          Aggregation::ExpandThreadsWithUnreadMessages,
+          Aggregation::ExpandThreadsWithUnreadOrImportantMessages,
           Aggregation::SortMessagesByDateTime,
           Aggregation::Descending,
           Aggregation::FavorInteractivity
@@ -350,7 +350,7 @@ void Manager::createDefaultAggregations()
           Aggregation::ExpandRecentGroups,
           Aggregation::PerfectReferencesAndSubject,
           Aggregation::MostRecentMessage,
-          Aggregation::ExpandThreadsWithUnreadMessages,
+          Aggregation::ExpandThreadsWithUnreadOrImportantMessages,
           Aggregation::SortMessagesByDateTime,
           Aggregation::Descending,
           Aggregation::FavorInteractivity
@@ -389,7 +389,7 @@ void Manager::createDefaultAggregations()
           Aggregation::NeverExpandGroups,
           Aggregation::PerfectReferencesAndSubject,
           Aggregation::TopmostMessage,
-          Aggregation::ExpandThreadsWithUnreadMessages,
+          Aggregation::ExpandThreadsWithUnreadOrImportantMessages,
           Aggregation::SortMessagesByDateTime,
           Aggregation::Ascending,
           Aggregation::FavorInteractivity
@@ -706,9 +706,9 @@ void Manager::createDefaultThemes()
   add_theme_simple_text_column( s, i18nc( "Size of a message", "Size" ), Theme::ContentItem::Size, false, Aggregation::SortMessagesBySize, false, false );
   add_theme_simple_icon_column( s, i18nc( "Attachement indication", "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, Aggregation::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), Theme::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "To Do" ), Theme::ContentItem::ToDoStateIcon, false, Aggregation::SortMessagesByToDoStatus );
-  add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), Theme::ContentItem::SpamHamStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Watched/Ignored" ), Theme::ContentItem::WatchedIgnoredStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Encryption" ), Theme::ContentItem::EncryptionStateIcon, false, Aggregation::NoMessageSorting );
