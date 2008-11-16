@@ -4665,11 +4665,11 @@ void KMMainWidget::removeDuplicates()
   QMap< QString, QList<int> > idMD5s;
   QList<int> redundantIds;
   QList<int>::Iterator kt;
-  mFolder->open( "removedups" );
-  for ( int i = mFolder->count() - 1; i >= 0; --i ) {
-    QString id = (*mFolder)[i]->msgIdMD5();
+  oFolder->open( "removedups" );
+  for ( int i = oFolder->count() - 1; i >= 0; --i ) {
+    QString id = (*oFolder)[i]->msgIdMD5();
     if ( !id.isEmpty() ) {
-      QString subjMD5 = (*mFolder)[i]->strippedSubjectMD5();
+      QString subjMD5 = (*oFolder)[i]->strippedSubjectMD5();
       int other = -1;
       if ( idMD5s.contains(id) ) {
         other = idMD5s[id].first();
@@ -4677,7 +4677,7 @@ void KMMainWidget::removeDuplicates()
         idMD5s[id].append( i );
       }
       if ( other != -1 ) {
-        QString otherSubjMD5 = (*mFolder)[other]->strippedSubjectMD5();
+        QString otherSubjMD5 = (*oFolder)[other]->strippedSubjectMD5();
         if ( otherSubjMD5 == subjMD5 ) {
           idMD5s[id].append( i );
         }
@@ -4690,7 +4690,7 @@ void KMMainWidget::removeDuplicates()
     QList<int>::Iterator jt;
     bool finished = false;
     for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
-      if (!((*mFolder)[*jt]->status().isUnread())) {
+      if (!((*oFolder)[*jt]->status().isUnread())) {
         (*it).erase( jt );
         (*it).prepend( *jt );
         finished = true;
@@ -4702,12 +4702,12 @@ void KMMainWidget::removeDuplicates()
   kt = redundantIds.end();
   int numDuplicates = 0;
   if (kt != redundantIds.begin()) do {
-    mFolder->removeMsg( *(--kt) );
+    oFolder->removeMsg( *(--kt) );
     ++numDuplicates;
   }
   while (kt != redundantIds.begin());
 
-  mFolder->close( "removedups" );
+  oFolder->close( "removedups" );
   mMessageListView->setCurrentFolder( oFolder );
   QString msg;
   if ( numDuplicates )
