@@ -136,7 +136,7 @@ namespace KMail {
       "aseigo@olympusproject.org", 0 },
     { "George Staikos", 0,
       "staikos@kde.org", 0 },
-    { "Szymon Stefanek", I18N_NOOP( "Summer of Code student<br/>New message list and new folder tree" ),
+    { "Szymon Stefanek", I18N_NOOP( "New message list and new folder tree" ),
       "pragma@kvirc.net", 0 },
     { "Jason Stephenson", 0,
       "panda@mis.net", 0 },

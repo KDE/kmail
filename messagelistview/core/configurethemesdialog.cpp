@@ -199,6 +199,11 @@ void ConfigureThemesDialog::commitEditor()
   ThemeListWidgetItem * editedItem = findThemeItemByTheme( editedTheme );
   if ( editedItem )
     return;
+
+  // We must reset the runtime column state as the columns might have
+  // totally changed in the editor
+  editedTheme->resetColumnState();
+
   QString goodName = uniqueNameForTheme( editedTheme->name(), editedTheme );
   editedTheme->setName( goodName );
   editedItem->setText( goodName );

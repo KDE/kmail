@@ -993,6 +993,11 @@ public:
   void resetColumnState();
 
   /**
+   * Resets the column sizes to "default" (subset of resetColumnState() above).
+   */
+  void resetColumnSizes();
+
+  /**
    * Returns the list of columns available in this theme
    */
   const QList< Column * > & columns() const

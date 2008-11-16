@@ -80,6 +80,8 @@ View::View( Widget *pParent )
   mSaveThemeStateOnSectionResize = true;
 
   header()->setClickable( true );
+  header()->setMinimumSectionSize( 2 ); // QTreeView overrides our sections sizes if we set them smaller than this value
+  header()->setDefaultSectionSize( 2 ); // QTreeView overrides our sections sizes if we set them smaller than this value
 
   mModel = new Model( this );
   setModel( mModel );
@@ -164,6 +166,7 @@ void View::modelHasBeenReset()
     applyThemeColumns();
 }
 
+
 void View::applyThemeColumns()
 {
   if ( !mTheme )
@@ -186,18 +189,39 @@ void View::applyThemeColumns()
 
   // Note that the first column is always shown (it can't be hidden at all)
 
-  QList< Theme::Column * >::ConstIterator it;
+  // The alogithm below is a sort of compromise between:
+  // - Saving the user preferences for widths
+  // - Using exactly the available view space
+  //
+  // It "tends to work" in all cases:
+  // - When there are no user preferences saved and the column widths must be
+  //   automatically computed to make best use of available space
+  // - When there are user preferences for only some of the columns
+  //   and that should be somewhat preserved while still using all the
+  //   available space.
+  // - When all the columns have well defined saved widths
 
-  // Gather size hints for visible sections.
+  QList< Theme::Column * >::ConstIterator it;
   int idx = 0;
+
+  // Gather total size "hint" for visible sections: if the widths of the columns wers
+  // all saved then the total hint is equal to the total saved width.
+
   int totalVisibleWidthHint = 0;
+  QList< int > lColumnSizeHints;
 
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
     if ( ( *it )->currentlyVisible() || ( idx == 0 ) )
     {
+      // Column visible
       int savedWidth = ( *it )->currentWidth();
-      totalVisibleWidthHint += savedWidth > 0 ? savedWidth : mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
+      int hintWidth = mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
+      totalVisibleWidthHint += savedWidth > 0 ? savedWidth : hintWidth;
+      lColumnSizeHints.append( hintWidth );
+    } else {
+      // The column is not visible
+      lColumnSizeHints.append( -1 ); // dummy
     }
     idx++;
   }
@@ -205,74 +229,124 @@ void View::applyThemeColumns()
   if ( totalVisibleWidthHint < 16 )
     totalVisibleWidthHint = 16; // be reasonable
 
-  // Now we can compute proportional widths.
-
+  // Now compute somewhat "proportional" widths.
   idx = 0;
 
-  QList< int > realWidths;
+  QList< int > lColumnWidths;
   int totalVisibleWidth = 0;
 
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
     int savedWidth = ( *it )->currentWidth();
-    int hintWidth = savedWidth > 0 ? savedWidth : mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
+    int hintWidth = savedWidth > 0 ? savedWidth : lColumnSizeHints[ idx ];
     int realWidth;
     if ( ( *it )->containsTextItems() )
     {
        // the column contains text items, it should get more space (if possible)
        realWidth = ( ( hintWidth * viewport()->width() ) / totalVisibleWidthHint );
-       //if ( realWidth < ( hintWidth + 2 ) )
-       //  realWidth = hintWidth + 2; // can't be less
     } else {
-       // the column contains no text items, it should get exactly its size hint.
+       // the column contains no text items, it should get exactly its hint/saved width.
        realWidth = hintWidth;
     }
 
-    realWidths.append( realWidth );
+    lColumnWidths.append( realWidth );
     if ( ( *it )->currentlyVisible() || ( idx == 0 ) )
       totalVisibleWidth += realWidth;
 
     idx++;
   }
 
+  // Now the algorithm above may be wrong for several reasons...
+  // - We're using fixed widths for certain columns and proportional
+  //   for others...
+  // - The user might have changed the width of the view from the
+  //   time in that the widths have been saved
+  // - There are some (not well identified) issues with the QTreeView
+  //   scrollbar that make our view appear larger or shorter by 2-3 pixels
+  //   sometimes.
+  // - ...
+  // So we correct the previous estimates by trying to use exactly
+  // the available space.
+
   idx = 0;
 
-  totalVisibleWidth += 4; // account for some view's border
-
-  if ( totalVisibleWidth < viewport()->width() )
+  if ( totalVisibleWidth != viewport()->width() )
   {
-    // give the additional space to the text columns
-    // also give more space to the first ones and less space to the last ones
-    int available = viewport()->width() - totalVisibleWidth;
-
-    for ( it = columns.begin(); it != columns.end(); ++it )
+    // The estimated widths were not using exactly the available space.
+    if ( totalVisibleWidth < viewport()->width() )
     {
-      if ( ( ( *it )->currentlyVisible() || ( idx == 0 ) ) && ( *it )->containsTextItems() )
+      // We were using less space than available.
+
+      // Give the additional space to the text columns
+      // also give more space to the first ones and less space to the last ones
+      int available = viewport()->width() - totalVisibleWidth;
+
+      for ( it = columns.begin(); it != columns.end(); ++it )
       {
-        // give more space to this column
-        available >>= 1; // eat half of the available space
-        realWidths[ idx ] += available; // and give it to this column
+        if ( ( ( *it )->currentlyVisible() || ( idx == 0 ) ) && ( *it )->containsTextItems() )
+        {
+          // give more space to this column
+          available >>= 1; // eat half of the available space
+          lColumnWidths[ idx ] += available; // and give it to this column
+          if ( available < 1 )
+            break; // no more space to give away
+        }
+
+        idx++;
       }
 
-      idx++;
-    }
+      // if any space is still available, give it to the first column
+      if ( available )
+        lColumnWidths[ 0 ] += available;
+    } else {
+      // We were using more space than available
 
-    // if any space is still available, give it to the first column
-    if ( available )
-      realWidths[ 0 ] += available;
+      // If the columns span just a little bit more than the view then
+      // try to squeeze them in order to make them fit
+      if ( totalVisibleWidth < ( viewport()->width() + 100 ) )
+      {
+        int missing = totalVisibleWidth - viewport()->width();
+        int count = lColumnWidths.count();
+
+        if ( missing > 0 )
+        {
+          idx = count - 1;
+
+          while ( idx >= 0 )
+          {
+            if ( columns.at( idx )->currentlyVisible() || ( idx == 0 ) )
+            {
+              int chop = lColumnWidths[ idx ] - lColumnSizeHints[ idx ];
+              if ( chop > 0 )
+              {
+                if ( chop > missing )
+                  chop = missing;
+                lColumnWidths[ idx ] -= chop;
+                missing -= chop;
+                if ( missing < 1 )
+                  break; // no more space to recover
+              }
+            } // else it's invisible
+            idx--;
+          }
+        }
+      }
+    }
   }
 
+  // We're ready.
+  // Assign widths. Hide the sections that are not visible by default, show the other ones.
 
   idx = 0;
 
   mSaveThemeStateOnSectionResize = false;
 
-  // We're ready.
-  // Assign widths. Hide the sections that are not visible by default, show the other ones.
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
-    header()->resizeSection( idx, realWidths[ idx ] );
-    header()->setSectionHidden( idx, ( idx > 0 ) && ( !( *it )->currentlyVisible() ) );
+    bool hidden = ( idx > 0 ) && ( !( *it )->currentlyVisible() );
+    header()->setSectionHidden( idx, hidden );
+    if ( !hidden )
+      header()->resizeSection( idx, lColumnWidths[ idx ] );
     idx++;
   }
 
@@ -281,6 +355,7 @@ void View::applyThemeColumns()
   mSaveThemeStateOnSectionResize = true;
   mNeedToApplyThemeColumns = false;
 }
+
 
 void View::saveThemeColumnState()
 {
@@ -296,8 +371,14 @@ void View::saveThemeColumnState()
 
   for ( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
   {
-    ( *it )->setCurrentlyVisible( !header()->isSectionHidden( idx ) );
-    ( *it )->setCurrentWidth( header()->sectionSize( idx ) );
+    if ( header()->isSectionHidden( idx ) )
+    {
+      ( *it )->setCurrentlyVisible( false );
+      ( *it )->setCurrentWidth( -1 ); // reset (hmmm... we could use the "don't touch" policy here too...)
+    } else {
+      ( *it )->setCurrentlyVisible( true );
+      ( *it )->setCurrentWidth( header()->sectionSize( idx ) );
+    }
     idx++;
   }
 }
@@ -366,6 +447,8 @@ void View::showEvent( QShowEvent *e )
   }
 }
 
+const int gHeaderContextMenuAdjustColumnSizesId = -1;
+const int gHeaderContextMenuShowDefaultColumnsId = -2;
 
 void View::slotHeaderContextMenuRequested( const QPoint &pnt )
 {
@@ -398,13 +481,18 @@ void View::slotHeaderContextMenuRequested( const QPoint &pnt )
   }
 
   menu.addSeparator();
+  act = menu.addAction( i18n( "Adjust Column Sizes" ) );
+  act->setData( QVariant( static_cast< int >( gHeaderContextMenuAdjustColumnSizesId ) ) );
+
   act = menu.addAction( i18n( "Show Default Columns" ) );
-  act->setData( QVariant( static_cast< int >( -1 ) ) );
+  act->setData( QVariant( static_cast< int >( gHeaderContextMenuShowDefaultColumnsId ) ) );
 
   QObject::connect(
       &menu, SIGNAL( triggered( QAction * ) ),
       this, SLOT( slotHeaderContextMenuTriggered( QAction *  ) )
     );
+
+
 
   menu.exec( header()->mapToGlobal( pnt ) );
 }
@@ -425,10 +513,19 @@ void View::slotHeaderContextMenuTriggered( QAction * act )
 
   if ( columnIdx < 0 )
   {
-    // "Show Default Columns" selected
-    mTheme->resetColumnState();
-    applyThemeColumns();
-    saveThemeColumnState();
+    if ( columnIdx == gHeaderContextMenuAdjustColumnSizesId )
+    {
+      // "Adjust Column Sizes"
+      mTheme->resetColumnSizes();
+      applyThemeColumns();
+      saveThemeColumnState();
+    } else if ( columnIdx == gHeaderContextMenuShowDefaultColumnsId )
+    {
+      // "Show Default Columns"
+      mTheme->resetColumnState();
+      applyThemeColumns();
+      saveThemeColumnState();
+    }
     return;
   }
 
@@ -441,12 +538,23 @@ void View::slotHeaderContextMenuTriggered( QAction * act )
 
   mSaveThemeStateOnSectionResize = false;
 
-  header()->setSectionHidden( columnIdx, !header()->isSectionHidden( columnIdx ) );
+  bool showIt = header()->isSectionHidden( columnIdx );
+
+  header()->setSectionHidden( columnIdx, !showIt );
 
   mSaveThemeStateOnSectionResize = true;
 
-  saveThemeColumnState(); // first save column state
-  applyThemeColumns(); // then apply theme columns to re-compute proportional widths (so we hopefully stay in the view)
+  // first save column state
+  saveThemeColumnState();
+  // if a section has just been shown, invalidate its width in the skin
+  // since QTreeView assigned it a (possibly insane) default width.
+  if ( showIt )
+  {
+    kDebug() << "Column " << columnIdx << " has just been shown: invalidating width";
+    mTheme->columns().at( columnIdx )->setCurrentWidth( -1 );
+  }
+  // then apply theme columns to re-compute proportional widths (so we hopefully stay in the view)
+  applyThemeColumns();
 }
 
 MessageItem * View::currentMessageItem( bool selectIfNeeded ) const

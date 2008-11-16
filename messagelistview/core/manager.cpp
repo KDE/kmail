@@ -715,6 +715,8 @@ void Manager::createDefaultThemes()
   add_theme_simple_icon_column( s, i18n( "Signature" ), Theme::ContentItem::SignatureStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Tag List" ), Theme::ContentItem::TagList, false, Aggregation::NoMessageSorting );
 
+  s->resetColumnState(); // so it's initially set from defaults
+
   addTheme( s );
 
   // The Fancy theme
@@ -803,6 +805,8 @@ void Manager::createDefaultThemes()
 
   s->setViewHeaderPolicy( Theme::NeverShowHeader );
 
+  s->resetColumnState(); // so it's initially set from defaults
+
   addTheme( s );
 
 
@@ -836,6 +840,8 @@ void Manager::createDefaultThemes()
     c->addMessageRow( r );
 
   s->addColumn( c );
+
+  s->resetColumnState(); // so it's initially set from defaults
 
   addTheme( s );
 }

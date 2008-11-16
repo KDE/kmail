@@ -683,10 +683,12 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
                 painter->setRenderHint( QPainter::Antialiasing, true );
               painter->setBrush( QBrush( mGroupHeaderBackgroundColor ) );
               painter->setBackgroundMode( Qt::OpaqueMode );
-              painter->drawRoundedRect(
-                  QRect( left, top, right - left, opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 )  ),
-                  4.0, 4.0
-                );
+              int w = right - left;
+              if ( w > 0 )
+                painter->drawRoundedRect(
+                    QRect( left, top, w, opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 )  ),
+                    4.0, 4.0
+                  );
               if ( !hadAntialiasing )
                 painter->setRenderHint( QPainter::Antialiasing, false );
               painter->setBackgroundMode( Qt::TransparentMode );
@@ -733,10 +735,12 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
                 painter->setRenderHint( QPainter::Antialiasing, true );
               painter->setBrush( QBrush( gradient ) );
               painter->setBackgroundMode( Qt::OpaqueMode );
-              painter->drawRoundedRect(
-                  QRect( left, top, right - left, opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 )  ),
-                  4.0, 4.0
-                );
+              int w = right - left;
+              if ( w > 0 )
+                painter->drawRoundedRect(
+                    QRect( left, top, w, opt.rect.height() - ( gGroupHeaderInnerVerticalMargin * 2 )  ),
+                    4.0, 4.0
+                  );
               if ( !hadAntialiasing )
                 painter->setRenderHint( QPainter::Antialiasing, false );
               painter->setBackgroundMode( Qt::TransparentMode );

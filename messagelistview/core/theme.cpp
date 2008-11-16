@@ -415,7 +415,10 @@ bool Theme::Column::SharedRuntimeData::load( QDataStream &stream, int /* themeVe
   stream >> mCurrentlyVisible;
   stream >> mCurrentWidth;
   if ( mCurrentWidth > 10000 )
+  {
+    kDebug() << "Theme has insane column width " << mCurrentWidth << " chopping to 100";
     mCurrentWidth = 100; // avoid really insane values
+  }
   return (mCurrentWidth >= -1);
 }
 
@@ -682,6 +685,13 @@ void Theme::resetColumnState()
     ( *it )->setCurrentWidth( -1 );
   }
 }
+
+void Theme::resetColumnSizes()
+{
+  for ( QList< Column * >::Iterator it = mColumns.begin(); it != mColumns.end() ; ++it )
+    ( *it )->setCurrentWidth( -1 );
+}
+
 
 void Theme::removeAllColumns()
 {
