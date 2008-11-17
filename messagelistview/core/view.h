@@ -72,7 +72,7 @@ private:
 
   const Aggregation *mAggregation;          ///< The Aggregation we're using now, shallow pointer
   Theme *mTheme;                            ///< The Theme we're using now, shallow pointer
-  bool mNeedToApplyThemeColumns;            ///< Flag signaling a theme change, we need it in modelHasBeenReset().
+  bool mNeedToApplyThemeColumns;            ///< Flag signaling a pending application of theme columns
   Item *mLastCurrentItem;
   QPoint mMousePressPosition;
   bool mFirstShow;

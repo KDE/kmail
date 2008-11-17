@@ -177,6 +177,12 @@ void View::applyThemeColumns()
   if ( columns.count() < 1 )
     return; // bad theme
 
+  if ( !viewport()->isVisible() )
+    return; // invisible
+
+  if ( viewport()->width() < 1 )
+    return; // insane width
+
   // Now we want to distribute the available width on all the visible columns.
   //
   // The rules:
@@ -248,6 +254,10 @@ void View::applyThemeColumns()
        // the column contains no text items, it should get exactly its hint/saved width.
        realWidth = hintWidth;
     }
+    if ( realWidth < 2 )
+      realWidth = 2; // don't allow very insane values 
+
+   kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " choosen " << realWidth;
 
     lColumnWidths.append( realWidth );
     if ( ( *it )->currentlyVisible() || ( idx == 0 ) )
@@ -346,7 +356,10 @@ void View::applyThemeColumns()
     bool hidden = ( idx > 0 ) && ( !( *it )->currentlyVisible() );
     header()->setSectionHidden( idx, hidden );
     if ( !hidden )
+    {
+      kDebug() << "Resize section " << idx << " to " << lColumnWidths[ idx ];
       header()->resizeSection( idx, lColumnWidths[ idx ] );
+    }
     idx++;
   }
 
@@ -369,6 +382,9 @@ void View::saveThemeColumnState()
 
   int idx = 0;
 
+  kDebug() << "Saving column sate...";
+
+
   for ( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
   {
     if ( header()->isSectionHidden( idx ) )
@@ -381,15 +397,19 @@ void View::saveThemeColumnState()
     }
     idx++;
   }
+
+  kDebug() << "Saved column sate";
 }
 
 void View::resizeEvent( QResizeEvent * e )
 {
+  QTreeView::resizeEvent( e );
+
+  if ( mNeedToApplyThemeColumns )
+    applyThemeColumns();
+
   if ( header()->isVisible() )
-  {
-    QTreeView::resizeEvent( e );
     return;
-  }
 
   mSaveThemeStateOnSectionResize = false;
 
@@ -410,8 +430,6 @@ void View::resizeEvent( QResizeEvent * e )
   }
 
   mSaveThemeStateOnSectionResize = true;
-
-  QTreeView::resizeEvent( e );
 }
 
 void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidth )
@@ -419,6 +437,8 @@ void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidt
   Q_UNUSED( logicalIndex );
   Q_UNUSED( oldWidth );
   Q_UNUSED( newWidth );
+
+  kDebug() << "Header section " << logicalIndex << " resized from " << oldWidth << " to " << newWidth;
 
   if ( mSaveThemeStateOnSectionResize )
     saveThemeColumnState();
