@@ -256,7 +256,7 @@ void KMCommand::slotStart()
   }
 
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); it != mMsgList.end(); ++it )
+  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
     if ( !( (*it)->parent() ) ) {
       emit messagesTransfered( Failed );
       return;
@@ -314,7 +314,7 @@ void KMCommand::transferSelectedMsgs()
     mProgressDialog->setMinimumDuration(1000);
   }
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); it != mMsgList.end(); ++it )
+  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
   {
     KMMsgBase *mb = (*it);
     // check if all messages are complete
@@ -815,7 +815,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   // change, or become invalid when changing the current message, switching
   // folders, etc.
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = msgList.begin(); it != msgList.end(); ++it ) {
+  for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
     mMsgList.append( (*it)->getMsgSerNum() );
     mTotalSize += (*it)->msgSize();
     if ( (*it)->parent() != 0 ) {
@@ -1304,7 +1304,7 @@ KMCommand::Result KMForwardCommand::execute()
       uint id = 0;
       QList<KMMessage*> linklist;
       QList<KMMessage*>::const_iterator it;
-      for ( it = msgList.begin(); it != msgList.end(); ++it ) {
+      for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
         // set the identity
         if (id == 0)
           id = (*it)->headerField("X-KMail-Identity").trimmed().toUInt();
@@ -1522,7 +1522,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     uint id = 0;
     // QCString msgText = "";
     QList<KMMessage*> linklist;
-    for ( QList<KMMessage*>::const_iterator it = msgList.begin(); it != msgList.end(); ++it )
+    for ( QList<KMMessage*>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     {
       KMMessage *msg = *it;
       // set the identity
@@ -1539,7 +1539,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     fwdMsg->setCharset( "utf-8" );
     // fwdMsg->setBody( msgText );
 
-    for ( QList<KMMessage*>::const_iterator it = linklist.begin(); it != linklist.end(); ++it )
+    for ( QList<KMMessage*>::const_iterator it = linklist.constBegin(); it != linklist.constEnd(); ++it )
     {
       KMMessage *msg = *it;
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
@@ -1699,7 +1699,7 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = msgList.begin(); it != msgList.end(); ++it )
+  for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     serNumList.append( (*it)->getMsgSerNum() );
 }
 
@@ -1716,7 +1716,7 @@ KMCommand::Result KMFilterActionCommand::execute()
   progressItem->setTotalItems( msgCountToFilter );
 
   QList<quint32>::const_iterator it;
-  for ( it = serNumList.begin(); it != serNumList.end(); ++it ) {
+  for ( it = serNumList.constBegin(); it != serNumList.constEnd(); ++it ) {
     quint32 serNum = *it;
     int diff = msgCountToFilter - ++msgCount;
     if ( diff < 10 || !( msgCount % 10 ) || msgCount <= 10 ) {
@@ -1851,7 +1851,7 @@ KMCommand::Result KMCopyCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
 
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); it != mMsgList.end(); ++it ) {
+  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it ) {
     msgBase = (*it);
     KMFolder *srcFolder = msgBase->parent();
     isMessage = msgBase->isMessage();
@@ -2364,7 +2364,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
   if ( mImplicitAttachments ) {
     QList<KMMessage*> msgList = retrievedMsgs();
     QList<KMMessage*>::const_iterator it;
-    for ( it = msgList.begin(); it != msgList.end(); ++it ) {
+    for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
       KMMessage *msg = (*it);
       partNode *rootNode = partNode::fromMessage( msg );
       for ( partNode *child = rootNode; child;
@@ -2457,8 +2457,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   Result globalResult = OK;
   int unnamedAtmCount = 0;
   bool overwriteAll = false;
-  for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.begin();
-        it != mAttachmentMap.end();
+  for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.constBegin();
+        it != mAttachmentMap.constEnd();
         ++it ) {
     KUrl curUrl;
     if ( !dirUrl.isEmpty() ) {
@@ -2688,8 +2688,8 @@ KMLoadPartsCommand::KMLoadPartsCommand( PartNodeMessageMap& partMap )
 
 void KMLoadPartsCommand::slotStart()
 {
-  for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
-        it != mPartMap.end();
+  for ( PartNodeMessageMap::const_iterator it = mPartMap.constBegin();
+        it != mPartMap.constEnd();
         ++it ) {
     if ( !it.key()->msgPart().isComplete() &&
          !it.key()->msgPart().partSpecifier().isEmpty() ) {
@@ -2719,8 +2719,8 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
     msg->findDwBodyPart( msg->getFirstDwBodyPart(), partSpecifier );
   if ( part ) {
     // update the DwBodyPart in the partNode
-    for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
-          it != mPartMap.end();
+    for ( PartNodeMessageMap::const_iterator it = mPartMap.constBegin();
+          it != mPartMap.constEnd();
           ++it ) {
       if ( it.key()->dwPart()->partId() == part->partId() )
         it.key()->setDwPart( part );
