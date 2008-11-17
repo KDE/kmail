@@ -445,7 +445,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset( "", true );
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
-  for ( KUrl::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
+  for ( KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != attachURLs.constEnd() ; ++it )
     cWin->addAttach( (*it) );
   if ( !hidden ) {
     cWin->show();
@@ -1664,7 +1664,7 @@ void KMKernel::cleanup(void)
   the_folderMgr->createFolderList(&strList, &folders);
 
   QList<QPointer<KMFolder> >::const_iterator it;
-  for ( it = folders.begin(); it != folders.end(); ++it ) {
+  for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
     folder = *it;
     if ( !folder || folder->isDir() ) {
       continue;
@@ -1674,7 +1674,7 @@ void KMKernel::cleanup(void)
   strList.clear();
   folders.clear();
   the_searchFolderMgr->createFolderList(&strList, &folders);
-  for ( it = folders.begin(); it != folders.end(); ++it ) {
+  for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
     folder = *it;
     if ( !folder || folder->isDir() ) {
       continue;

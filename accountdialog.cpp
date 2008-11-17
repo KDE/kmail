@@ -271,7 +271,7 @@ ProcmailRCParser::expandVars(const QString &s)
 
   QString expS = s;
 
-  for ( QHash<QByteArray, QString>::const_iterator it = mVars.begin(); it != mVars.end(); ++it ) {
+  for ( QHash<QByteArray, QString>::const_iterator it = mVars.constBegin(); it != mVars.constEnd(); ++it ) {
     expS.replace( QString::fromLatin1("$") + it.key(), it.value() );
   }
 

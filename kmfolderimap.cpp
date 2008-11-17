@@ -362,7 +362,7 @@ void KMFolderImap::addMsgQuiet(QList<KMMessage*> msgList)
   int undoId = -1;
   bool uidplus = account()->hasCapability("uidplus");
   QList<KMMessage*>::const_iterator it;
-  for ( it = msgList.begin(); it != msgList.end(); ++it )
+  for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
   {
     KMMessage* msg = (*it);
     if ( undoId == -1 )
@@ -413,14 +413,14 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
       {
         // make sure the messages won't be deleted while we work with them
         QList<KMMessage*>::const_iterator it;
-        for ( it = msgList.begin(); it != msgList.end(); ++it )
+        for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
           (*it)->setTransferInProgress(true);
 
         if (folder() == msgParent)
         {
           // transfer the whole message, e.g. a draft-message is canceled and re-added to the drafts-folder
           QList<KMMessage*>::const_iterator it;
-          for ( it = msgList.begin(); it != msgList.end(); ++it )
+          for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
           {
             KMMessage* msg = (*it);
             if (!msg->isComplete())

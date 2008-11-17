@@ -342,14 +342,14 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
     mEdit->append( i18n( "Sieve capabilities:\n" ) );
-    QStringList caps = job->sieveCapabilities();
+    const QStringList caps = job->sieveCapabilities();
     if ( caps.isEmpty() )
     {
         mEdit->append( i18n( "(No special capabilities available)" ) );
     }
     else
     {
-        for ( QStringList::const_iterator it = caps.begin(); it != caps.end(); ++it )
+        for ( QStringList::const_iterator it = caps.constBegin(); it != caps.constEnd(); ++it )
             mEdit->append( "* " + *it + '\n' );
         mEdit->append( "\n" );
     }

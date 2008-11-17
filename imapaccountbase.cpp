@@ -259,8 +259,8 @@ void ImapAccountBase::writeConfig( KConfigGroup &config )
     }
   }
   QString key;
-  for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
-        it != mNamespaceToDelimiter.end(); ++it ) {
+  for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.constBegin();
+        it != mNamespaceToDelimiter.constEnd(); ++it ) {
     key = "Namespace:" + it.key();
     config.writeEntry( key, it.value() );
   }
@@ -758,7 +758,7 @@ void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap &map
     namespaceDelim ns = map[ section ];
     namespaceDelim::ConstIterator it;
     QStringList list;
-    for ( it = ns.begin(); it != ns.end(); ++it ) {
+    for ( it = ns.constBegin(); it != ns.constEnd(); ++it ) {
       list += it.key();
       mNamespaceToDelimiter[ it.key() ] = it.value();
     }
@@ -877,8 +877,8 @@ QString ImapAccountBase::delimiterForNamespace( const QString &prefix )
 
   // then try if the prefix is part of a namespace
   // exclude empty namespace
-  for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
-        it != mNamespaceToDelimiter.end(); ++it ) {
+  for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.constBegin();
+        it != mNamespaceToDelimiter.constEnd(); ++it ) {
     // the namespace definition sometimes contains the delimiter
     // make sure we also match this version
     QString stripped = it.key().left( it.key().length() - 1 );
@@ -1186,7 +1186,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   QList<KMMessagePart*>::const_iterator it;
   int partsToLoad = 0;
   // check how many parts we have to load
-  for ( it = parts.begin(); it != parts.end(); ++it ) {
+  for ( it = parts.constBegin(); it != parts.constEnd(); ++it ) {
     if ( (*it) && (*it)->loadPart() ) {
       ++partsToLoad;
     }
@@ -1207,7 +1207,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
     job->start();
     return;
   }
-  for ( it = parts.begin(); it != parts.end(); ++it ) {
+  for ( it = parts.constBegin(); it != parts.constEnd(); ++it ) {
     KMMessagePart *part = (*it);
     //kDebug(5006) << "Load" << part->partSpecifier()
     //             << "(" << part->originalContentTypeStr() << ")";

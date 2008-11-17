@@ -1231,8 +1231,8 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
   // load the actions into the widgets
   QList<KMFilterAction*>::const_iterator aIt;
   QList<QWidget*>::ConstIterator wIt = mWidgetList.constBegin();
-  for ( aIt = mActionList->begin();
-        ( aIt != mActionList->end() && wIt != mWidgetList.constEnd() );
+  for ( aIt = mActionList->constBegin();
+        ( aIt != mActionList->constEnd() && wIt != mWidgetList.constEnd() );
         ++aIt, ++wIt )
     static_cast<KMFilterActionWidget*>( *wIt )->setAction( ( *aIt ) );
 }

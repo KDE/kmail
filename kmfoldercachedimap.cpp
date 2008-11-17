@@ -1210,8 +1210,8 @@ void KMFolderCachedImap::serverSyncInternal()
     if ( !noContent() && mAccount->hasACLSupport() &&
         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
       bool hasChangedACLs = false;
-      ACLList::ConstIterator it = mACLList.begin();
-      for ( ; it != mACLList.end() && !hasChangedACLs; ++it ) {
+      ACLList::ConstIterator it = mACLList.constBegin();
+      for ( ; it != mACLList.constEnd() && !hasChangedACLs; ++it ) {
         hasChangedACLs = (*it).changed;
       }
       if ( hasChangedACLs ) {
@@ -1267,8 +1267,8 @@ void KMFolderCachedImap::serverSyncInternal()
     mCurrentSubfolder = 0;
     if ( folder() && folder()->child() ) {
       QList<KMFolderNode*>::const_iterator it;
-      for ( it = folder()->child()->begin();
-            it != folder()->child()->end(); ++it )
+      for ( it = folder()->child()->constBegin();
+            it != folder()->child()->constEnd(); ++it )
       {
         KMFolderNode *node = *it;
         if ( !node->isDir() ) {
@@ -1554,7 +1554,7 @@ QList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
   QList<KMFolderCachedImap*> newFolders;
   if ( folder() && folder()->child() ) {
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+    for ( it = folder()->child()->constBegin(); it != folder()->child()->constEnd(); ++it ) {
       KMFolderNode *node = *it;
       if ( !node->isDir() ) {
         if ( static_cast<KMFolder*>(node)->folderType() != KMFolderTypeCachedImap ) {
@@ -1925,7 +1925,7 @@ void KMFolderCachedImap::setAccount( KMAcctCachedImap *aAccount )
   }
 
   QList<KMFolderNode*>::const_iterator it;
-  for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+  for ( it = folder()->child()->constBegin(); it != folder()->child()->constEnd(); ++it ) {
     KMFolderNode *node = *it;
     if ( !node->isDir() ) {
       static_cast<KMFolderCachedImap*>(
@@ -2017,7 +2017,7 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList &subfolderNames,
   folder()->createChildFolder();
   QList<KMFolderNode*>::const_iterator it;
   KMFolderNode *node = 0;
-  for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+  for ( it = folder()->child()->constBegin(); it != folder()->child()->constEnd(); ++it ) {
     if ( !(*it)->isDir() && (*it)->name() == name ) {
       node = *it;
       break;
@@ -2104,7 +2104,7 @@ void KMFolderCachedImap::slotListResult( const QStringList &folderNames,
   bool emptyList = ( root && mSubfolderNames.empty() );
   if ( !emptyList ) {
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+    for ( it = folder()->child()->constBegin(); it != folder()->child()->constEnd(); ++it ) {
       KMFolderNode *node = *it;
       if (!node->isDir() ) {
         KMFolderCachedImap *f =
@@ -2167,8 +2167,8 @@ void KMFolderCachedImap::listDirectory2()
     KMFolderNode *node = 0;
     //kDebug(5006) << "check INBOX";
     // create the INBOX
-    QList<KMFolderNode*>::const_iterator it = folder()->child()->begin();
-    for ( ; it != folder()->child()->end(); ++it ) {
+    QList<KMFolderNode*>::const_iterator it = folder()->child()->constBegin();
+    for ( ; it != folder()->child()->constEnd(); ++it ) {
       if ( !(*it)->isDir() && (*it)->name() == "INBOX" ) {
         node = *it;
         break;
@@ -2214,8 +2214,8 @@ void KMFolderCachedImap::listDirectory2()
     // Find the subdir, if already present
     KMFolderCachedImap *f = 0;
     KMFolderNode *node = 0;
-    for ( QList<KMFolderNode*>::ConstIterator it = folder()->child()->begin();
-          it != folder()->child()->end(); ++it )
+    for ( QList<KMFolderNode*>::ConstIterator it = folder()->child()->constBegin();
+          it != folder()->child()->constEnd(); ++it )
       if ( !(*it)->isDir() && (*it)->name() == mSubfolderNames[i] ) {
         node = *it;
         break;
@@ -2348,7 +2348,7 @@ KMFolderCachedImap *KMFolderCachedImap::findParent( const QString &path,
     if ( parent != label() ) {
       // look for a better parent
       QList<KMFolderNode*>::const_iterator it;
-      for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+      for ( it = folder()->child()->constBegin(); it != folder()->child()->constEnd(); ++it ) {
         KMFolderNode *node = *it;
         if ( node->name() == parent ) {
           KMFolder *fld = static_cast<KMFolder*>( node );
@@ -2590,7 +2590,7 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
   if ( state == imapNoInformation && folder()->child() ) {
     // pass through to children
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+    for ( it = folder()->child()->constBegin(); it != folder()->child()->constEnd(); ++it ) {
       KMFolderNode *node = *it;
       if ( node->isDir() ) {
         continue;

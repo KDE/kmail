@@ -161,9 +161,9 @@ namespace KMail {
     parseAddressList( s, text.end(), al );
 
     AddrSpecList asl;
-    for ( AddressList::const_iterator it = al.begin() ; it != al.end() ; ++it ) {
+    for ( AddressList::const_iterator it = al.constBegin() ; it != al.constEnd() ; ++it ) {
       const MailboxList & mbl = (*it).mailboxList;
-      for ( MailboxList::const_iterator jt = mbl.begin() ; jt != mbl.end() ; ++jt )
+      for ( MailboxList::const_iterator jt = mbl.constBegin() ; jt != mbl.constEnd() ; ++jt )
         asl.push_back( (*jt).addrSpec() );
     }
     return asl;
@@ -171,7 +171,7 @@ namespace KMail {
 
   void VacationDialog::setMailAliases( const AddrSpecList & aliases ) {
     QStringList sl;
-    for ( AddrSpecList::const_iterator it = aliases.begin() ; it != aliases.end() ; ++it )
+    for ( AddrSpecList::const_iterator it = aliases.constBegin() ; it != aliases.constEnd() ; ++it )
       sl.push_back( (*it).asString() );
     mMailAliasesEdit->setText( sl.join(", ") );
   }

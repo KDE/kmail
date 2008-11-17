@@ -120,8 +120,8 @@ QStringList KabcBridge::categories()
   for ( KABC::Addressee::List::Iterator it = addresses.begin();
         it != addresses.end(); ++it ) {
     aux = ( *it ).categories();
-    for ( QStringList::ConstIterator itAux = aux.begin();
-          itAux != aux.end(); ++itAux ) {
+    for ( QStringList::ConstIterator itAux = aux.constBegin();
+          itAux != aux.constEnd(); ++itAux ) {
       // don't have duplicates in allcategories
       if ( !allcategories.contains( *itAux )  )
         allcategories += *itAux;

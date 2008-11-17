@@ -447,10 +447,10 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
   case FuncIsInAddressbook: {
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
-    QStringList addressList =
+    const QStringList addressList =
       KPIMUtils::splitAddressList( msgContents.toLower() );
-    for( QStringList::ConstIterator it = addressList.begin();
-         ( it != addressList.end() );
+    for( QStringList::ConstIterator it = addressList.constBegin();
+         ( it != addressList.constEnd() );
          ++it ) {
       if ( !stdAb->findByEmail( KPIMUtils::extractEmailAddress( *it ) ).isEmpty() )
         return true;
@@ -460,10 +460,10 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
   case FuncIsNotInAddressbook: {
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
-    QStringList addressList =
+    const QStringList addressList =
       KPIMUtils::splitAddressList( msgContents.toLower() );
-    for( QStringList::ConstIterator it = addressList.begin();
-         ( it != addressList.end() );
+    for( QStringList::ConstIterator it = addressList.constBegin();
+         ( it != addressList.constEnd() );
          ++it ) {
       if ( stdAb->findByEmail( KPIMUtils::extractEmailAddress( *it ) ).isEmpty() )
         return true;
@@ -473,11 +473,11 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
   case FuncIsInCategory: {
     QString category = contents();
-    QStringList addressList =  KPIMUtils::splitAddressList( msgContents.toLower() );
+    const QStringList addressList =  KPIMUtils::splitAddressList( msgContents.toLower() );
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
 
-    for( QStringList::ConstIterator it = addressList.begin();
-      it != addressList.end(); ++it ) {
+    for( QStringList::ConstIterator it = addressList.constBegin();
+      it != addressList.constEnd(); ++it ) {
         KABC::Addressee::List addresses = stdAb->findByEmail( KPIMUtils::extractEmailAddress( *it ) );
 
           for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )
@@ -490,11 +490,11 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
     case FuncIsNotInCategory: {
       QString category = contents();
-      QStringList addressList =  KPIMUtils::splitAddressList( msgContents.toLower() );
+      const QStringList addressList =  KPIMUtils::splitAddressList( msgContents.toLower() );
       KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
 
-      for( QStringList::ConstIterator it = addressList.begin();
-        it != addressList.end(); ++it ) {
+      for( QStringList::ConstIterator it = addressList.constBegin();
+        it != addressList.constEnd(); ++it ) {
           KABC::Addressee::List addresses = stdAb->findByEmail( KPIMUtils::extractEmailAddress( *it ) );
 
             for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )

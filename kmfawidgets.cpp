@@ -62,7 +62,7 @@ void KMFilterActionWithAddressWidget::slotAddrBook()
 
   QStringList addrList;
 
-  for( KABC::Addressee::List::const_iterator it = lst.begin(); it != lst.end(); ++it )
+  for( KABC::Addressee::List::const_iterator it = lst.constBegin(); it != lst.constEnd(); ++it )
     addrList << (*it).fullEmail();
 
   QString txt = mLineEdit->text().trimmed();
@@ -122,14 +122,14 @@ void KMSoundTestWidget::openSoundDialog( KUrlRequester * )
             << "audio/x-adpcm";
     fileDialog->setMimeFilter( filters );
 
-   QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
+   const QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
 
     if ( !soundDirs.isEmpty() ) {
         KUrl soundURL;
         QDir dir;
         dir.setFilter( QDir::Files | QDir::Readable );
-        QStringList::ConstIterator it = soundDirs.begin();
-        while ( it != soundDirs.end() ) {
+        QStringList::ConstIterator it = soundDirs.constBegin();
+        while ( it != soundDirs.constEnd() ) {
             dir = *it;
             if ( dir.isReadable() && dir.count() > 2 ) {
                 soundURL.setPath( *it );

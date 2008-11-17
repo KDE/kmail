@@ -2278,8 +2278,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                             // extract the mail addresses (without '<''>')
                             // before including it into our string:
                             bool bStart = true;
-                            for(QStringList::ConstIterator it = blockAddrs.begin();
-                                it != blockAddrs.end(); ++it ){
+                            for(QStringList::ConstIterator it = blockAddrs.constBegin();
+                                it != blockAddrs.constEnd(); ++it ){
                                 if( !bStart )
                                     greenCaseWarning.append(", <br />&nbsp; &nbsp;");
                                 bStart = false;

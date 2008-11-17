@@ -69,8 +69,8 @@ int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
 void UndoStack::addMsgToAction( int undoId, ulong serNum )
 {
   if ( !mCachedInfo || mCachedInfo->id != undoId ) {
-    QList<UndoInfo*>::const_iterator itr = mStack.begin();
-    while ( itr != mStack.end() ) {
+    QList<UndoInfo*>::const_iterator itr = mStack.constBegin();
+    while ( itr != mStack.constEnd() ) {
       if ( (*itr)->id == undoId ) {
         mCachedInfo = (*itr);
         break;

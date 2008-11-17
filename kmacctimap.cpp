@@ -69,11 +69,11 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
   QString serNumUri = KStandardDirs::locateLocal( "data", "kmail/unfiltered." +
                                             QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
-  QStringList serNums =
+  const QStringList serNums =
       config.group("<default>").readEntry( "unfiltered", QStringList() );
 
-  for ( QStringList::ConstIterator it = serNums.begin();
-	it != serNums.end(); ++it ) {
+  for ( QStringList::ConstIterator it = serNums.constBegin();
+	it != serNums.constEnd(); ++it ) {
       mFilterSerNums.append( (*it).toUInt() );
       mFilterSerNumsToSave.insert( *it, 1 );
     }
@@ -223,7 +223,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 {
   QList<ImapJob*>::const_iterator it;
-  for ( it = mImapJobList.begin(); (*it) && it != mImapJobList.constEnd(); ++it )
+  for ( it = mImapJobList.constBegin(); (*it) && it != mImapJobList.constEnd(); ++it )
   {
     ImapJob *job = (*it);
     if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder )

@@ -492,8 +492,8 @@ void PopAccount::slotJobFinished() {
 
     //check if filter on server
     if (mFilterOnServer == true) {
-      for ( QMap<QByteArray, int>::const_iterator hids = mMsgsPendingDownload.begin();
-            hids != mMsgsPendingDownload.end(); ++hids ) {
+      for ( QMap<QByteArray, int>::const_iterator hids = mMsgsPendingDownload.constBegin();
+            hids != mMsgsPendingDownload.constEnd(); ++hids ) {
           kDebug(5006) <<"Length:" << hids.value();
           //check for mails bigger mFilterOnServerCheckSize
           if ( (unsigned int)hids.value() >= mFilterOnServerCheckSize ) {
@@ -541,8 +541,8 @@ void PopAccount::slotJobFinished() {
       idsOfMsgs.clear();
       QByteArray ids;
       if ( numMsgs > 0 ) {
-        for ( QMap<QByteArray, int>::const_iterator it = mMsgsPendingDownload.begin();
-              it != mMsgsPendingDownload.end(); ++it ) {
+        for ( QMap<QByteArray, int>::const_iterator it = mMsgsPendingDownload.constBegin();
+              it != mMsgsPendingDownload.constEnd(); ++it ) {
           numBytesToRead += it.value();
           ids += it.key() + ',';
           idsOfMsgs.append( it.key() );
@@ -651,8 +651,8 @@ void PopAccount::slotJobFinished() {
       idsOfMsgs.clear();
       QByteArray ids;
       if ( numMsgs > 0 ) {
-        for ( QMap<QByteArray, int>::const_iterator it = mMsgsPendingDownload.begin();
-              it != mMsgsPendingDownload.end(); ++it ) {
+        for ( QMap<QByteArray, int>::const_iterator it = mMsgsPendingDownload.constBegin();
+              it != mMsgsPendingDownload.constEnd(); ++it ) {
           numBytesToRead += it.value();
           ids += it.key() + ',';
           idsOfMsgs.append( it.key() );
@@ -704,8 +704,8 @@ void PopAccount::slotJobFinished() {
       // the list of messages to keep
       if ( mLeaveOnServerDays > 0 && !mTimeOfNextSeenMsgsMap.isEmpty() ) {
         time_t timeLimit = time(0) - (86400 * mLeaveOnServerDays);
-        for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
-              it != idsOfMsgsToDelete.end(); ++it ) {
+        for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.constBegin();
+              it != idsOfMsgsToDelete.constEnd(); ++it ) {
           time_t msgTime = mTimeOfNextSeenMsgsMap[ mUidForIdMap[*it] ];
           if ( msgTime >= timeLimit || msgTime == 0 ) {
             QPair<time_t, QByteArray> pair( msgTime, *it );
@@ -782,10 +782,10 @@ void PopAccount::slotJobFinished() {
               "Fetched %1 messages from %2. Deleting messages from server...",
               numMsgs,
           mHost ) );
-      QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
+      QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.constBegin();
       QByteArray ids = *it;
       ++it;
-      for ( ; it != idsOfMsgsToDelete.end(); ++it ) {
+      for ( ; it != idsOfMsgsToDelete.constEnd(); ++it ) {
         ids += ',';
         ids += *it;
       }
@@ -805,8 +805,8 @@ void PopAccount::slotJobFinished() {
   else if (stage == Dele) {
     kDebug(5006) <<"stage == Dele";
     // remove the uids of all messages which have been deleted
-    for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
-          it != idsOfMsgsToDelete.end(); ++it ) {
+    for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.constBegin();
+          it != idsOfMsgsToDelete.constEnd(); ++it ) {
       mUidsOfNextSeenMsgsDict.remove( mUidForIdMap[*it] );
     }
     idsOfMsgsToDelete.clear();
@@ -868,8 +868,8 @@ void PopAccount::saveUidList()
 
   QStringList uidsOfNextSeenMsgs;
   QList<int> seenUidTimeList;
-  for ( QHash<QByteArray,int>::const_iterator it = mUidsOfNextSeenMsgsDict.begin();
-       it != mUidsOfNextSeenMsgsDict.end(); ++it ) {
+  for ( QHash<QByteArray,int>::const_iterator it = mUidsOfNextSeenMsgsDict.constBegin();
+       it != mUidsOfNextSeenMsgsDict.constEnd(); ++it ) {
     uidsOfNextSeenMsgs.append( it.key() );
     seenUidTimeList.append( mTimeOfNextSeenMsgsMap[ it.key() ] );
   }

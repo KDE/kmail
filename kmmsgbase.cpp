@@ -789,8 +789,8 @@ QByteArray KMMsgBase::autoDetectCharset(const QByteArray &_encoding, const QStri
        charsets.prepend(currentCharset);
     }
 
-    QStringList::ConstIterator it = charsets.begin();
-    for (; it != charsets.end(); ++it)
+    QStringList::ConstIterator it = charsets.constBegin();
+    for (; it != charsets.constEnd(); ++it)
     {
        QByteArray encoding = (*it).toLatin1();
        if (encoding == "locale")

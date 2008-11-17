@@ -143,8 +143,8 @@ namespace KMail {
       DOM::HTMLImageElement image( node );
       KUrl url( image.src().string() );
       if ( url.protocol() == "cid" ) {
-        EmbeddedPartMap::const_iterator it = mEmbeddedPartMap.find( url.path() );
-        if ( it != mEmbeddedPartMap.end() ) {
+        EmbeddedPartMap::const_iterator it = mEmbeddedPartMap.constFind( url.path() );
+        if ( it != mEmbeddedPartMap.constEnd() ) {
           kDebug(5006) <<"Replacing" << url.prettyUrl() <<" by" << it.value();
           image.setSrc( it.value() );
         }
