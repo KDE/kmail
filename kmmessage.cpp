@@ -910,8 +910,8 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       recipients += KPIMUtils::splitAddressList( replyToStr );
       // strip all possible mailing list addresses from the list of Reply-To
       // addresses
-      for ( QStringList::const_iterator it = mailingListAddresses.begin();
-            it != mailingListAddresses.end();
+      for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
+            it != mailingListAddresses.constEnd();
             ++it ) {
         recipients = stripAddressFromAddressList( *it, recipients );
       }
@@ -982,8 +982,8 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       QStringList recipients = KPIMUtils::splitAddressList( replyToStr );
       // strip the mailing list post address from the list of Reply-To
       // addresses since we want to reply in private
-      for ( QStringList::const_iterator it = mailingListAddresses.begin();
-            it != mailingListAddresses.end();
+      for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
+            it != mailingListAddresses.constEnd();
             ++it ) {
         recipients = stripAddressFromAddressList( *it, recipients );
       }
@@ -2190,8 +2190,8 @@ AddressList KMMessage::headerAddrField( const QByteArray & aName ) const {
 AddrSpecList KMMessage::extractAddrSpecs( const QByteArray & header ) const {
   AddressList al = headerAddrField( header );
   AddrSpecList result;
-  for ( AddressList::const_iterator ait = al.begin() ; ait != al.end() ; ++ait )
-    for ( MailboxList::const_iterator mit = (*ait).mailboxList.begin() ; mit != (*ait).mailboxList.end() ; ++mit )
+  for ( AddressList::const_iterator ait = al.constBegin() ; ait != al.constEnd() ; ++ait )
+    for ( MailboxList::const_iterator mit = (*ait).mailboxList.constBegin() ; mit != (*ait).mailboxList.constEnd() ; ++mit )
       result.push_back( (*mit).addrSpec() );
   return result;
 }
@@ -3660,12 +3660,12 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const
   if( aEmail.isEmpty() )
     return aEmail;
 
-  QStringList addressList = KPIMUtils::splitAddressList( aEmail );
+  const QStringList addressList = KPIMUtils::splitAddressList( aEmail );
 
   QString result;
 
-  for( QStringList::ConstIterator it = addressList.begin();
-       ( it != addressList.end() );
+  for( QStringList::ConstIterator it = addressList.constBegin();
+       ( it != addressList.constEnd() );
        ++it ) {
     if( !(*it).isEmpty() ) {
       QString address = *it;

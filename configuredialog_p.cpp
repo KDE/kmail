@@ -253,8 +253,8 @@ void ProfileDialog::setup() {
 
   // build the list and populate the list view:
   QTreeWidgetItem * listItem = 0;
-  for ( QStringList::const_iterator it = mProfileList.begin() ;
-        it != mProfileList.end() ; ++it ) {
+  for ( QStringList::const_iterator it = mProfileList.constBegin() ;
+        it != mProfileList.constEnd() ; ++it ) {
     KConfig _profile( *it, KConfig::NoGlobals  );
     KConfigGroup profile(&_profile, "KMail Profile");
     QString name = profile.readEntry( "Name" );

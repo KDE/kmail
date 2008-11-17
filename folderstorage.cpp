@@ -1191,8 +1191,8 @@ int FolderStorage::addMessages( QList<KMMessage*>& msgList, QList<int>& index_re
 {
   int ret = 0;
   int index;
-  for ( QList<KMMessage*>::const_iterator it = msgList.begin();
-        it != msgList.end(); ++it )
+  for ( QList<KMMessage*>::const_iterator it = msgList.constBegin();
+        it != msgList.constEnd(); ++it )
   {
     int aret = addMsg( *it, &index );
     index_ret << index;

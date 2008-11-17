@@ -2137,8 +2137,8 @@ void KMComposeWin::msgPartToItem( const KMMessagePart *msgPart,
 //-----------------------------------------------------------------------------
 void KMComposeWin::removeAttach( const QString &aUrl )
 {
-  QList<KMMessagePart*>::const_iterator it = mAtmList.begin();
-  for( int idx = 0; it != mAtmList.end(); ++it, idx++) {
+  QList<KMMessagePart*>::const_iterator it = mAtmList.constBegin();
+  for( int idx = 0; it != mAtmList.constEnd(); ++it, idx++) {
     if ( (*it)->name() == aUrl ) {
       removeAttach( idx );
       return;
@@ -2387,8 +2387,8 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     const KCursorSaver saver( Qt::ArrowCursor );
     KMMsgPartDialogCompat dlg;
     int encodings = 0;
-    for ( QList<int>::ConstIterator it = allowedCTEs.begin() ;
-          it != allowedCTEs.end() ; ++it )
+    for ( QList<int>::ConstIterator it = allowedCTEs.constBegin() ;
+          it != allowedCTEs.constEnd() ; ++it )
       switch ( *it ) {
       case DwMime::kCteBase64: encodings |= KMMsgPartDialog::Base64; break;
       case DwMime::kCteQp: encodings |= KMMsgPartDialog::QuotedPrintable; break;

@@ -386,7 +386,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
 
   KMFolderDir* fdir = aFolder->parent();
   QList<KMFolderNode*>::const_iterator it;
-  for ( it = fdir->begin(); it != fdir->end(); ++it ) {
+  for ( it = fdir->constBegin(); it != fdir->constEnd(); ++it ) {
     KMFolderNode* fN = *it;
     if (fN->isDir() && (fN->name() == '.' + aFolder->fileName() + ".directory")) {
       removeDirAux(static_cast<KMFolderDir*>(fN));

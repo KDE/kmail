@@ -230,8 +230,8 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
 
   if (!beginFiltering( msg ))
     return 1;
-  for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
-        !stopIt && it != mFilters.end() ; ++it ) {
+  for ( QList<KMFilter*>::const_iterator it = mFilters.constBegin();
+        !stopIt && it != mFilters.constEnd() ; ++it ) {
 
     if ( ( ( (set&Inbound) && (*it)->applyOnInbound() ) &&
          ( !account ||
@@ -304,8 +304,8 @@ bool KMFilterMgr::isMatching( quint32 serNum, const KMFilter * filter )
 
 bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 {
-  QList<KMFilter*>::const_iterator it = mFilters.begin();
-  for ( ; it != mFilters.end() ; ++it ) {
+  QList<KMFilter*>::const_iterator it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
     if ( (*it)->applyOnAccount( accountID ) ) {
       return true;
     }
@@ -315,8 +315,8 @@ bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 
 bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const
 {
-  QList<KMFilter*>::const_iterator it = mFilters.begin();
-  for ( ; it != mFilters.end() ; ++it ) {
+  QList<KMFilter*>::const_iterator it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
     if ( (*it)->applyOnInbound() && (*it)->applyOnAccount( accountID ) ) {
       return true;
     }
@@ -331,11 +331,11 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
 
   mDirtyBufferedFolderTarget = false;
 
-  QList<KMFilter*>::const_iterator it = mFilters.begin();
-  for ( ; it != mFilters.end() ; ++it ) {
+  QList<KMFilter*>::const_iterator it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
     KMFilter *filter = *it;
-    QList<KMFilterAction*>::const_iterator jt = filter->actions()->begin();
-    const QList<KMFilterAction*>::const_iterator jtend = filter->actions()->end();
+    QList<KMFilterAction*>::const_iterator jt = filter->actions()->constBegin();
+    const QList<KMFilterAction*>::const_iterator jtend = filter->actions()->constEnd();
     for ( ; jt != jtend ; ++jt ) {
       KMFilterActionWithFolder *f = dynamic_cast<KMFilterActionWithFolder*>(*jt);
       if (!f)
@@ -371,7 +371,7 @@ void KMFilterMgr::deref( bool force )
     return;
   }
   QVector< KMFolder *>::const_iterator it;
-  for ( it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it ) {
+  for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it ) {
     (*it)->close( "filtermgr" );
   }
   mOpenFolders.clear();
@@ -426,8 +426,8 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
 
   while ( found ) {
     found = false;
-    for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
-          it != mFilters.end(); ++it ) {
+    for ( QList<KMFilter*>::const_iterator it = mFilters.constBegin();
+          it != mFilters.constEnd(); ++it ) {
       if ( !( (*it)->name().compare( uniqueName ) ) ) {
         found = true;
         ++counter;
@@ -449,8 +449,8 @@ void KMFilterMgr::appendFilters( const QList<KMFilter*> &filters,
   mDirtyBufferedFolderTarget = true;
   beginUpdate();
   if ( replaceIfNameExists ) {
-    QList<KMFilter*>::const_iterator it1 = filters.begin();
-    for ( ; it1 != filters.end() ; ++it1 ) {
+    QList<KMFilter*>::const_iterator it1 = filters.constBegin();
+    for ( ; it1 != filters.constEnd() ; ++it1 ) {
       for ( int i = 0; i < mFilters.count(); i++ ) {
         KMFilter *filter = mFilters[i];
         if ( (*it1)->name() == filter->name() ) {
@@ -484,8 +484,8 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 {
   mDirtyBufferedFolderTarget = true;
   bool rem = false;
-  QList<KMFilter*>::const_iterator it = mFilters.begin();
-  for ( ; it != mFilters.end() ; ++it )
+  QList<KMFilter*>::const_iterator it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it )
     if ( (*it)->folderRemoved(aFolder, aNewFolder) )
       rem = true;
 
@@ -497,8 +497,8 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 #ifndef NDEBUG
 void KMFilterMgr::dump(void) const
 {
-  QList<KMFilter*>::const_iterator it = mFilters.begin();
-  for ( ; it != mFilters.end() ; ++it ) {
+  QList<KMFilter*>::const_iterator it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
     kDebug(5006) << (*it)->asString();
   }
 }

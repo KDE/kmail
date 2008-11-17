@@ -230,7 +230,7 @@ void ActionScheduler::tempCloseFolders()
 {
   // close temp opened folders
   QList<QPointer<KMFolder> >::ConstIterator it;
-  for ( it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it ) {
+  for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it ) {
     KMFolder *folder = *it;
     if ( folder ) {
       folder->close( "actionsched" );
@@ -241,8 +241,8 @@ void ActionScheduler::tempCloseFolders()
 
 void ActionScheduler::execFilters( const QList<quint32> serNums )
 {
-  QList<quint32>::ConstIterator it;
-  for ( it = serNums.begin(); it != serNums.end(); ++it ) {
+  QList<quint32>::const_iterator it;
+  for ( it = serNums.constBegin(); it != serNums.constEnd(); ++it ) {
     execFilters( *it );
   }
 }

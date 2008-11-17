@@ -109,7 +109,7 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
     // search the parent folder of the folder
     FolderList::ConstIterator it;
     int i = 1;
-    for( it = folders.begin(); it != folders.end(); ++it, ++i ) {
+    for( it = folders.constBegin(); it != folders.constEnd(); ++it, ++i ) {
       if( (*it)->child() == mFolderDir ) {
         mParentFolder = *it;
         break;
