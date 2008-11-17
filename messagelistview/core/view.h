@@ -381,6 +381,9 @@ protected:
    */
   void modelHasBeenReset();
 
+  void modelAboutToEmitLayoutChanged();
+  void modelEmittedLayoutChanged();
+
   /**
    * Recursive helper for currentThreadAsMessageItemList()
    */

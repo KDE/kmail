@@ -1690,10 +1690,10 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
               attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
           } // else max date changed, but it doesn't match sorting order: no need to re-sort
         break;
-        case Aggregation::SortMessagesByToDoStatus:
-          if ( propertyChangeMask & ToDoStatusChanged ) // todo status changed
+        case Aggregation::SortMessagesByActionItemStatus:
+          if ( propertyChangeMask & ActionItemStatusChanged ) // todo status changed
           {
-            if ( messageItemNeedsReSorting< ItemToDoStatusComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+            if ( messageItemNeedsReSorting< ItemActionItemStatusComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
               attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
           } // else to do status changed, but it doesn't match sorting order: no need to re-sort
         break;
@@ -1758,10 +1758,10 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
           attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
       } // else max date changed, but it doesn't match sorting order: no need to re-sort
     break;
-    case Aggregation::SortMessagesByToDoStatus:
-      if ( propertyChangeMask & ToDoStatusChanged ) // todo status changed
+    case Aggregation::SortMessagesByActionItemStatus:
+      if ( propertyChangeMask & ActionItemStatusChanged ) // todo status changed
       {
-        if ( messageItemNeedsReSorting< ItemToDoStatusComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+        if ( messageItemNeedsReSorting< ItemActionItemStatusComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
           attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
       } // else to do status changed, but it doesn't match sorting order: no need to re-sort
     break;
@@ -2023,8 +2023,8 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
     case Aggregation::SortMessagesBySubject:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemSubjectComparator )
     break;
-    case Aggregation::SortMessagesByToDoStatus:
-      INSERT_MESSAGE_WITH_COMPARATOR( ItemToDoStatusComparator )
+    case Aggregation::SortMessagesByActionItemStatus:
+      INSERT_MESSAGE_WITH_COMPARATOR( ItemActionItemStatusComparator )
     break;
     case Aggregation::NoMessageSorting:
       pParent->appendChildItem( mModelForItemFunctions, mi );
@@ -3045,7 +3045,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
     if ( prevMaxDate != message->maxDate() )
        propertyChangeMask |= MaxDateChanged;
     if ( toDoStatus != message->status().isToAct() )
-       propertyChangeMask |= ToDoStatusChanged;
+       propertyChangeMask |= ActionItemStatusChanged;
 
     if ( propertyChangeMask )
     {
@@ -3414,7 +3414,11 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
           // This call would destroy the expanded state of items.
           // This is why when mModelForItemFunctions was 0 we didn't actually expand them
           // but we just set a "ExpandNeeded" mark...
+          kDebug() << "Emitting layoutChanged()";
+          mView->modelAboutToEmitLayoutChanged();
           emit layoutChanged();
+          mView->modelEmittedLayoutChanged();
+          kDebug() << "Emitted layoutChanged()";
 
 #ifdef WANT_FILL_VIEW_STATS
           // BEGIN STATS (REMOVE FOR RELEASE)

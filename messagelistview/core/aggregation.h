@@ -161,7 +161,7 @@ public:
     SortMessagesByReceiver,              ///< Sort the messages by receiver
     SortMessagesBySubject,               ///< Sort the messages by subject
     SortMessagesBySize,                  ///< Sort the messages by size
-    SortMessagesByToDoStatus             ///< Sort the messages by the TODO flag of status
+    SortMessagesByActionItemStatus       ///< Sort the messages by the "Action Item" flag of status
     // Warning: Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
   };
 

@@ -86,7 +86,7 @@ private:
   QPixmap * mPixmapMessageReplied;
   QPixmap * mPixmapMessageRepliedAndForwarded;
   QPixmap * mPixmapMessageQueued;
-  QPixmap * mPixmapMessageToDo;
+  QPixmap * mPixmapMessageActionItem;
   QPixmap * mPixmapMessageSent;
   QPixmap * mPixmapMessageForwarded;
   QPixmap * mPixmapMessageImportant; // "flag"
@@ -135,8 +135,8 @@ public:
     { return mPixmapMessageRepliedAndForwarded; };
   const QPixmap * pixmapMessageQueued() const
     { return mPixmapMessageQueued; };
-  const QPixmap * pixmapMessageToDo() const
-    { return mPixmapMessageToDo; };
+  const QPixmap * pixmapMessageActionItem() const
+    { return mPixmapMessageActionItem; };
   const QPixmap * pixmapMessageSent() const
     { return mPixmapMessageSent; };
   const QPixmap * pixmapMessageForwarded() const

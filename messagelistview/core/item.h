@@ -797,7 +797,7 @@ public:
  * A helper class used with MessageListView::Item::childItemNeedsReSorting() and
  * MessageListView::Item::insertChildItem().
  */
-class ItemToDoStatusComparator
+class ItemActionItemStatusComparator
 {
 public:
   static inline bool firstGreaterOrEqual( Item * first, Item * second )

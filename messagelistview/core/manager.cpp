@@ -67,7 +67,7 @@ Manager::Manager()
   mPixmapMessageReplied = new QPixmap( SmallIcon( "mail-replied" ) );
   mPixmapMessageRepliedAndForwarded = new QPixmap( SmallIcon( "mail-forwarded-replied" ) );
   mPixmapMessageQueued = new QPixmap( SmallIcon( "mail-queued" ) ); // mail-queue ?
-  mPixmapMessageToDo = new QPixmap( SmallIcon( "mail-task" ) );
+  mPixmapMessageActionItem = new QPixmap( SmallIcon( "mail-task" ) );
   mPixmapMessageSent = new QPixmap( SmallIcon( "mail-sent" ) );
   mPixmapMessageForwarded = new QPixmap( SmallIcon( "mail-forwarded" ) );
   mPixmapMessageImportant = new QPixmap( SmallIcon( "emblem-important" ) ); // "flag"
@@ -111,7 +111,7 @@ Manager::~Manager()
   delete mPixmapMessageReplied;
   delete mPixmapMessageRepliedAndForwarded;
   delete mPixmapMessageQueued;
-  delete mPixmapMessageToDo;
+  delete mPixmapMessageActionItem;
   delete mPixmapMessageSent;
   delete mPixmapMessageForwarded;
   delete mPixmapMessageImportant; // "flag"
@@ -708,7 +708,7 @@ void Manager::createDefaultThemes()
   add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), Theme::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "To Do" ), Theme::ContentItem::ToDoStateIcon, false, Aggregation::SortMessagesByToDoStatus );
+  add_theme_simple_icon_column( s, i18n( "Action Item" ), Theme::ContentItem::ActionItemStateIcon, false, Aggregation::SortMessagesByActionItemStatus );
   add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), Theme::ContentItem::SpamHamStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Watched/Ignored" ), Theme::ContentItem::WatchedIgnoredStateIcon, false, Aggregation::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Encryption" ), Theme::ContentItem::EncryptionStateIcon, false, Aggregation::NoMessageSorting );
@@ -790,7 +790,7 @@ void Manager::createDefaultThemes()
   // and continue the "Fancy" specific settings
   r = firstFancyRow;
 
-        i = new Theme::ContentItem( Theme::ContentItem::ToDoStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::ActionItemStateIcon );
         i->setHideWhenDisabled( true );
       r->addRightItem( i );
         i = new Theme::ContentItem( Theme::ContentItem::ImportantStateIcon );
@@ -822,7 +822,7 @@ void Manager::createDefaultThemes()
     c->setVisibleByDefault( true );
 
       r = new Theme::Row();
-        i = new Theme::ContentItem( Theme::ContentItem::ToDoStateIcon );
+        i = new Theme::ContentItem( Theme::ContentItem::ActionItemStateIcon );
         i->setSoftenByBlendingWhenDisabled( true );
       r->addLeftItem( i );
         i = new Theme::ContentItem( Theme::ContentItem::ImportantStateIcon );

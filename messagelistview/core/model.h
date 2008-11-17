@@ -373,7 +373,7 @@ private:
   {
     DateChanged = 1,
     MaxDateChanged = (1 << 1),
-    ToDoStatusChanged = (1 << 2)
+    ActionItemStatusChanged = (1 << 2)
   };
 
   /**

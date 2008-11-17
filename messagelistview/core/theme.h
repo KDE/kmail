@@ -168,9 +168,9 @@ public:
        */
       GroupHeaderLabel             = 10 | DisplaysText | CanUseCustomColor | ApplicableToGroupHeaderItems,
       /**
-       * The ToDo state icon. May be disabled. Clickable (cycles todo->nothing)
+       * The ActionItem state icon. May be disabled. Clickable (cycles todo->nothing)
        */
-      ToDoStateIcon                = 11 | CanBeDisabled | ApplicableToMessageItems | IsIcon | IsClickable,
+      ActionItemStateIcon          = 11 | CanBeDisabled | ApplicableToMessageItems | IsIcon | IsClickable,
       /**
        * The Important tag icon. May be disabled. Clickable (cycles important->nothing)
        */

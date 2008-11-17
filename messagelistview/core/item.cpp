@@ -170,7 +170,7 @@ QString Item::statusDescription() const
     append_string( ret, i18nc( "Status of an item", "Important" ) );
 
   if( status().isToAct() )
-    append_string( ret, i18nc( "Status of an item", "ToDo" ) );
+    append_string( ret, i18nc( "Status of an item", "Action Item" ) );
 
   if( status().isSpam() )
     append_string( ret, i18nc( "Status of an item", "Spam" ) );

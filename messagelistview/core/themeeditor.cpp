@@ -1388,8 +1388,8 @@ ThemeEditor::ThemeEditor( QWidget *parent )
 
 
 
-  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::ToDoStateIcon );
-  cil->setPixmap( *( Manager::instance()->pixmapMessageToDo() ) );
+  cil = new ThemeContentItemSourceLabel( gb, Theme::ContentItem::ActionItemStateIcon );
+  cil->setPixmap( *( Manager::instance()->pixmapMessageActionItem() ) );
   cil->setToolTip( Theme::ContentItem::description( cil->type() ) );
   gblayout->addWidget( cil, 0, 5 );
 

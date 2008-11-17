@@ -80,6 +80,7 @@ View::View( Widget *pParent )
   mSaveThemeStateOnSectionResize = true;
 
   header()->setClickable( true );
+  header()->setResizeMode( QHeaderView::Interactive );
   header()->setMinimumSectionSize( 2 ); // QTreeView overrides our sections sizes if we set them smaller than this value
   header()->setDefaultSectionSize( 2 ); // QTreeView overrides our sections sizes if we set them smaller than this value
 
@@ -349,6 +350,7 @@ void View::applyThemeColumns()
 
   idx = 0;
 
+  bool oldSave = mSaveThemeStateOnSectionResize;
   mSaveThemeStateOnSectionResize = false;
 
   for ( it = columns.begin(); it != columns.end(); ++it )
@@ -365,7 +367,7 @@ void View::applyThemeColumns()
 
   setHeaderHidden( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader );
 
-  mSaveThemeStateOnSectionResize = true;
+  mSaveThemeStateOnSectionResize = oldSave;
   mNeedToApplyThemeColumns = false;
 }
 
@@ -392,6 +394,7 @@ void View::saveThemeColumnState()
       ( *it )->setCurrentlyVisible( false );
       ( *it )->setCurrentWidth( -1 ); // reset (hmmm... we could use the "don't touch" policy here too...)
     } else {
+      kDebug() << "!! Saving size for section " << idx << ": " << header()->sectionSize( idx );
       ( *it )->setCurrentlyVisible( true );
       ( *it )->setCurrentWidth( header()->sectionSize( idx ) );
     }
@@ -405,12 +408,15 @@ void View::resizeEvent( QResizeEvent * e )
 {
   QTreeView::resizeEvent( e );
 
-  if ( mNeedToApplyThemeColumns )
+  kDebug() << ">> Resize event";
+
+  if ( (!mFirstShow) && mNeedToApplyThemeColumns )
     applyThemeColumns();
 
   if ( header()->isVisible() )
     return;
 
+  bool oldSave = mSaveThemeStateOnSectionResize;
   mSaveThemeStateOnSectionResize = false;
 
   // header invisible
@@ -429,7 +435,22 @@ void View::resizeEvent( QResizeEvent * e )
       header()->resizeSection( visibleIndex, viewport()->width() - 4 );
   }
 
+  mSaveThemeStateOnSectionResize = oldSave;
+
+  kDebug() << "<< Resize event";
+
+}
+
+void View::modelAboutToEmitLayoutChanged()
+{
+  // QHeaderView goes totally NUTS with a layoutChanged() call
+  mSaveThemeStateOnSectionResize = false;
+}
+
+void View::modelEmittedLayoutChanged()
+{
   mSaveThemeStateOnSectionResize = true;
+  applyThemeColumns();
 }
 
 void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidth )
@@ -438,10 +459,13 @@ void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidt
   Q_UNUSED( oldWidth );
   Q_UNUSED( newWidth );
 
-  kDebug() << "Header section " << logicalIndex << " resized from " << oldWidth << " to " << newWidth;
-
   if ( mSaveThemeStateOnSectionResize )
+  {
+    kDebug() << "Handling: Header section " << logicalIndex << " resized from " << oldWidth << " to " << newWidth;
     saveThemeColumnState();
+  } else {
+    kDebug() << "Ignored: Header section " << logicalIndex << " resized from " << oldWidth << " to " << newWidth;
+  }
 }
 
 int View::sizeHintForColumn( int logicalColumnIndex ) const
@@ -449,10 +473,15 @@ int View::sizeHintForColumn( int logicalColumnIndex ) const
   // QTreeView: please don't touch my column widths...
   int w = header()->sectionSize( logicalColumnIndex );
   if ( w > 0 )
+  {
+    kDebug() << "Size hint for column " << logicalColumnIndex << " returning " << w;
     return w;
+  }
   if ( !mDelegate )
     return 32; // dummy
-  return mDelegate->sizeHintForItemTypeAndColumn( Item::Message, logicalColumnIndex ).width();
+  w = mDelegate->sizeHintForItemTypeAndColumn( Item::Message, logicalColumnIndex ).width();
+  kDebug() << "Size hint for column " << logicalColumnIndex << " returning " << w;
+  return w;
 }
 
 void View::showEvent( QShowEvent *e )
@@ -1388,7 +1417,7 @@ void View::mousePressEvent( QMouseEvent * e )
           {
             switch ( mDelegate->hitContentItem()->type() )
             {
-              case Theme::ContentItem::ToDoStateIcon:
+              case Theme::ContentItem::ActionItemStateIcon:
                 changeMessageStatus(
                     static_cast< MessageItem * >( it ),
                     it->status().isToAct() ? KPIM::MessageStatus() : KPIM::MessageStatus::statusToAct(),

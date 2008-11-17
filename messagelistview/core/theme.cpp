@@ -102,8 +102,8 @@ QString Theme::ContentItem::description( Type type )
     case CombinedReadRepliedStateIcon:
       return i18n( "Combined New/Unread/Read/Replied/Forwarded Icon" );
     break;
-    case ToDoStateIcon:
-      return i18n( "To Do Icon" );
+    case ActionItemStateIcon:
+      return i18n( "Action Item Icon" );
     break;
     case ImportantStateIcon:
       return i18n( "Important Icon" );
@@ -202,7 +202,7 @@ bool Theme::ContentItem::load( QDataStream &stream, int /*themeVersion*/ )
     case AttachmentStateIcon:
     case RepliedStateIcon:
     case GroupHeaderLabel:
-    case ToDoStateIcon:
+    case ActionItemStateIcon:
     case ImportantStateIcon:
     case SpamHamStateIcon:
     case WatchedIgnoredStateIcon:

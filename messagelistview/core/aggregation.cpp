@@ -108,7 +108,7 @@ bool Aggregation::isValidMessageSorting( MessageSorting ms )
     case SortMessagesByReceiver:
     case SortMessagesBySubject:
     case SortMessagesBySize:
-    case SortMessagesByToDoStatus:
+    case SortMessagesByActionItemStatus:
       // ok
     break;
     default:
@@ -401,7 +401,7 @@ QList< QPair< QString, int > > Aggregation::enumerateMessageSortingOptions( Thre
   ret.append( QPair< QString, int >( i18n( "by Smart Sender/Receiver" ), SortMessagesBySenderOrReceiver ) );
   ret.append( QPair< QString, int >( i18n( "by Subject" ), SortMessagesBySubject ) );
   ret.append( QPair< QString, int >( i18n( "by Size" ), SortMessagesBySize ) );
-  ret.append( QPair< QString, int >( i18n( "by To Do Status" ), SortMessagesByToDoStatus ) );
+  ret.append( QPair< QString, int >( i18n( "by Action Item Status" ), SortMessagesByActionItemStatus ) );
   return ret;
 }
 

@@ -814,6 +814,15 @@ void Widget::statusMenuAboutToShow()
 
   // FIXME: Use cached icons from manager ?
 
+  act = menu->addAction( i18n( "Any Status" ) );
+  act->setIcon( SmallIcon("system-run") );
+  act->setCheckable( true );
+  act->setChecked( statusMask == 0 );
+  act->setData( QVariant( static_cast< int >( 0 ) ) );
+  grp->addAction( act );
+
+  menu->addSeparator();
+
   act = menu->addAction( i18nc( "@action:inmenu Status of a message", "New" ) );
   act->setIcon( SmallIcon("mail-unread-new") );
   act->setCheckable( true );
@@ -889,15 +898,6 @@ void Widget::statusMenuAboutToShow()
   act->setCheckable( true );
   act->setChecked( stat.isHam() );
   act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusHam().toQInt32() ) ) );
-  grp->addAction( act );
-
-  menu->addSeparator();
-
-  act = menu->addAction( i18n( "Any Status" ) );
-  act->setIcon( SmallIcon("system-run") );
-  act->setCheckable( true );
-  act->setChecked( statusMask == 0 );
-  act->setData( QVariant( static_cast< int >( 0 ) ) );
   grp->addAction( act );
 
   // make sure we have a connection
