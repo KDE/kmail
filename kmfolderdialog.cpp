@@ -399,6 +399,11 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     topLayout->addItem( nml );
     nml->setSpacing( KDialog::spacingHint() );
     mNewMailCheckBox = new QCheckBox( i18n("Include this folder in mail checks"), this );
+    mNewMailCheckBox->setWhatsThis(
+        i18n("<qt><p>If this option is enabled this folder will be included "
+              "while checking new emails.</p>"
+              "<p>Uncheck this option if you want to skip this folder "
+              "while checking new emails.</p></qt>") );
     // default is on
     mNewMailCheckBox->setChecked(true);
     nml->addWidget( mNewMailCheckBox );
