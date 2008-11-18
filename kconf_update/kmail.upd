@@ -169,7 +169,11 @@ Options=overwrite
 File=kmailrc
 Script=kmail-3.5-trigger-flag-migration.pl,perl
 
-# Misc settings for KMail in KDE 4
+# Misc settings for KMail in KDE 4.0
+Id=4.0-misc
+File=kmailrc
+Script=kmail-4.0-misc.pl,perl
+
 ########## W A R N I N G #### W A R N I N G #### W A R N I N G #######
 # collection of small adjustments. Since updates will be added to this
 # script during the pre-4.0 development, trunk users should regularly
@@ -177,10 +181,7 @@ Script=kmail-3.5-trigger-flag-migration.pl,perl
 # For this to work, the script MUST be idempotent, ie. be robust
 # against being run multiple times.
 ######################################################################
-Id=4.0-misc
-File=kmailrc
-Script=kmail-4.0-misc.pl,perl
-
+# Misc settings for KMail in KDE 4.2
 Id=4.2
 File=kmailrc
 Group=General
