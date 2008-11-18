@@ -5068,6 +5068,12 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
   KMSearchPattern pattern;
   pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mMessageListView->currentFilterSearchString() ) );
   MessageStatus status = mMessageListView->currentFilterStatus();
+  if ( status.hasAttachment() )
+  {
+    pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncHasAttachment ) );
+    status.setHasAttachment( false );
+  }
+
   if ( !status.isOfUnknownStatus() ) {
     pattern.append( new KMSearchRuleStatus( status ) );
   }
