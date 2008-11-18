@@ -79,6 +79,23 @@ void KMComposerEditor::setQuotePrefixName( const QString &quotePrefix )
   m_quotePrefix = quotePrefix;
 }
 
+void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
+{
+  QTextCursor cursor( document() );
+  cursor.beginEditBlock();
+  while ( !cursor.atEnd() ) {
+    cursor.movePosition( QTextCursor::NextCharacter, QTextCursor::KeepAnchor );
+    QChar cur = cursor.selectedText().at( 0 );
+    if ( !codec->canEncode( cur ) ) {
+      cursor.insertText( "?" );
+    }
+    else {
+      cursor.clearSelection();
+    }
+  }
+  cursor.endEditBlock();
+}
+
 void KMComposerEditor::dropEvent( QDropEvent *e )
 {
   const QMimeData *md = e->mimeData();
