@@ -556,7 +556,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     mSharedSeenFlagsCheckBox = new QCheckBox( this );
     mSharedSeenFlagsCheckBox->setText( i18n( "Share unread state with all users" ) );
     ++row;
-    gl->addMultiCellWidget( mSharedSeenFlagsCheckBox, row, row, 0, 1 );
+    gl->addWidget( mSharedSeenFlagsCheckBox, row, 0, 1, 1 );
     mSharedSeenFlagsCheckBox->setWhatsThis( i18n( "If enabled, the unread state of messages in this folder will be the same "
         "for all users having access to this folders. If disabled (the default), every user with access to this folder has her "
         "own unread state." ) );
