@@ -2301,8 +2301,7 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
       const QTextCodec *currentCodec = KMMsgBase::codecForName( mCharset );
       if ( currentCodec ) {
         QString editorText = mEditor->toPlainText();
-        QByteArray encodedText = currentCodec->fromUnicode( editorText );
-        if ( currentCodec->toUnicode( encodedText ) != editorText ) {
+        if ( !currentCodec->canEncode( editorText ) ) {
           kDebug() << "Current encoding" << mCharset << "can't encode content, changing to auto.";
           mEncodingAction->setCurrentItem( 0 );
           slotSetCharset();
