@@ -1,12 +1,12 @@
 <ui version="4.0" >
  <class>SnippetDlgBase</class>
- <widget class="QDialog" name="SnippetDlgBase" >
+ <widget class="KDialog" name="SnippetDlgBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>379</height>
+    <width>349</width>
+    <height>382</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -32,7 +32,7 @@
    <item row="1" column="0" >
     <widget class="QLabel" name="textLabelGroup" >
      <property name="text" >
-      <string comment="Group to which the snippet belongs.">Group:</string>
+      <string comment="Group to which the snippet belongs." >Group:</string>
      </property>
      <property name="wordWrap" >
       <bool>false</bool>
@@ -76,7 +76,7 @@
      <property name="sizeType" >
       <enum>QSizePolicy::Expanding</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0" >
       <size>
        <width>48</width>
        <height>181</height>
@@ -110,7 +110,7 @@
        <property name="sizeType" >
         <enum>QSizePolicy::Expanding</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>40</width>
          <height>20</height>
@@ -145,6 +145,12 @@
    <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
+   <class>KDialog</class>
+   <extends>QDialog</extends>
+   <header>kdialog.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>KKeySequenceWidget</class>
    <extends>QWidget</extends>
    <header>kkeysequencewidget.h</header>
@@ -169,6 +175,7 @@
   <tabstop>snippetName</tabstop>
   <tabstop>cbGroup</tabstop>
   <tabstop>snippetText</tabstop>
+  <tabstop>keyWidget</tabstop>
   <tabstop>btnAdd</tabstop>
   <tabstop>btnCancel</tabstop>
  </tabstops>

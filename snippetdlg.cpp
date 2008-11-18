@@ -31,18 +31,15 @@
  */
 SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
                         Qt::WindowFlags f )
-  : QDialog( parent, f ),
+  : KDialog( parent, f ),
     actionCollection( ac )
 {
     setupUi( this );
     setModal( modal );
 
+    setButtons( KDialog::None );
+    
     keyWidget->setCheckActionCollections( QList<KActionCollection*>() << ac );
-
-    //TODO tab order in designer!
-    setTabOrder( snippetText, keyWidget );
-    setTabOrder( keyWidget, btnAdd );
-    setTabOrder( btnAdd, btnCancel );
 }
 
 /*

@@ -131,7 +131,7 @@ void SnippetWidget::slotAdd()
   }
   dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( group->getName() ) );
 
-  if (dlg.exec() == QDialog::Accepted) {
+  if (dlg.exec() == KDialog::Accepted) {
       group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
       _list.append( makeItem( group, dlg.snippetName->text(),
                               dlg.snippetText->toPlainText(),
@@ -169,7 +169,7 @@ void SnippetWidget::slotAddGroup()
   dlg.setGroupMode( true );
   dlg.setWindowTitle( i18n("Add Group") );
 
-  if (dlg.exec() == QDialog::Accepted) {
+  if (dlg.exec() == KDialog::Accepted) {
     _list.append( new SnippetGroup(this, dlg.snippetName->text(), SnippetGroup::getMaxId() ) );
   }
 }
@@ -242,7 +242,7 @@ void SnippetWidget::slotEdit( QTreeWidgetItem* item )
       SnippetItem::findGroupById( pSnippet->getParent(), _list )->getName();
   dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( parentGroupText ) );
 
-  if (dlg.exec() == QDialog::Accepted) {
+  if (dlg.exec() == KDialog::Accepted) {
     //update the QListView and the SnippetItem
     item->setText( 0, dlg.snippetName->text() );
     pSnippet->setName( dlg.snippetName->text() );
@@ -283,7 +283,7 @@ void SnippetWidget::slotEditGroup()
   dlg.btnAdd->setText(i18n("&Apply"));
   dlg.setWindowTitle(i18n("Edit Group"));
 
-  if (dlg.exec() == QDialog::Accepted) {
+  if (dlg.exec() == KDialog::Accepted) {
     //update the QListView and the SnippetGroup
     item->setText( 0, dlg.snippetName->text() );
     pGroup->setName( dlg.snippetName->text() );
@@ -553,7 +553,7 @@ QString SnippetWidget::parseText( const QString &text )
 QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QString> *mapSave )
 {
   // --BEGIN-- building a dynamic dialog
-  QDialog dlg(this);
+  KDialog dlg(this);
   dlg.setWindowTitle(i18n("Enter Values for Variables"));
 
   QGridLayout * layout = new QGridLayout( &dlg );
@@ -618,13 +618,13 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   te->setFocus();
   // --END-- building a dynamic dialog
 
-  //connect the buttons to the QDialog default slots
+  //connect the buttons to the KDialog default slots
   connect(btn1, SIGNAL(clicked()), &dlg, SLOT(reject()) );
   connect(btn2, SIGNAL(clicked()), &dlg, SLOT(accept()) );
 
   //execute the dialog
   QString strReturn = "";
-  if ( dlg.exec() == QDialog::Accepted ) {
+  if ( dlg.exec() == KDialog::Accepted ) {
     if (cb->isChecked())     //if the checkbox is on; save the values for later
       (*mapSave)[var] = te->toPlainText();
     else
@@ -723,7 +723,7 @@ void SnippetWidget::dropEvent( QDropEvent * event )
   }
   dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( parent->getName() ) );
 
-  if ( dlg.exec() == QDialog::Accepted ) {
+  if ( dlg.exec() == KDialog::Accepted ) {
     /* get the group that the user selected with the combobox */
     group = dynamic_cast<SnippetGroup*>(
              SnippetItem::findItemByName( dlg.cbGroup->currentText(), _list ) );
