@@ -925,17 +925,17 @@ void ThemePreviewWidget::mousePressEvent( QMouseEvent * e )
         QActionGroup * grp = new QActionGroup( childmenu );
 
         QAction * act;
-        act = childmenu->addAction( i18n("Hide") );
+        act = childmenu->addAction( i18nc("Hide a mark if the mail does not have the attribute, e.g. Important mark on a non important mail", "Hide") );
         act->setData( QVariant( static_cast< int >( Theme::ContentItem::HideWhenDisabled ) ) );
         act->setCheckable( true );
         act->setChecked( mSelectedThemeContentItem->hideWhenDisabled() );
         grp->addAction( act );
-        act = childmenu->addAction( i18n("Keep Empty Space") );
+        act = childmenu->addAction( i18nc("Keep a empty space in the list if the mail does not have the attribute, e.g. Important mark on a non important mail", "Keep Empty Space") );
         act->setData( QVariant( static_cast< int >( 0 ) ) );
         act->setCheckable( true );
         act->setChecked( ! ( mSelectedThemeContentItem->softenByBlendingWhenDisabled() || mSelectedThemeContentItem->hideWhenDisabled() ) );
         grp->addAction( act );
-        act = childmenu->addAction( i18n("Keep Softened Icon") );
+        act = childmenu->addAction( i18nc("Show the icon softened in the list if the mail does not have the attribute, e.g. Important mark on a non important mail", "Keep Softened Icon") );
         act->setData( QVariant( static_cast< int >( Theme::ContentItem::SoftenByBlendingWhenDisabled ) ) );
         act->setCheckable( true );
         act->setChecked( mSelectedThemeContentItem->softenByBlendingWhenDisabled() );
