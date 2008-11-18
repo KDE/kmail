@@ -121,6 +121,7 @@ FolderViewItem * FavoriteFolderView::createItem(
   }
 
   FolderViewItem *item = new FolderViewItem( this, name, folder, proto, type );
+  item->setAlwaysDisplayCounts( true );
   return item;
 }
 
