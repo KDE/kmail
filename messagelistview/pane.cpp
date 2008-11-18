@@ -87,6 +87,42 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
 
 
   addNewWidget();
+
+  // This is a dumping ground for strings that we'll need when finishing the message
+  // list. We have to add the dummy i18n calls to reserve them before the string
+  // freeze.
+
+  // We need this to have a global sort order (just like global theme and aggregation)
+  i18n( "Folder Always Uses This Sort Order" );
+
+  // the current tab title is "empty", so loading is better
+  i18nc( "tab title when loading an IMAP folder", "Loading..." );
+
+  // Eventually we want to be able to disable the quick search again, so we'll need
+  // a checkbox for that.
+  i18n( "Show Quick Search" );
+
+  // We want to open a new tab with the context menu"
+  i18nc( "shown in the context menu when right-clicking on a folder", "Open in New Tab" );
+
+  // We need more shortcuts!
+  i18nc( "shortcut for expanding the header of a group in the message list", "Expand Group Header" );
+  i18nc( "shortcut for collapsing the header of a group in the message list", "Collapse Group Header" );
+  i18nc( "shortcut", "Activate Next Tab" );
+  i18nc( "shortcut", "Activate Previous Tab" );
+
+  // We want to disable column names for status columns (there is not enough place)
+  i18n( "Hide Column Name in Header" );
+
+  // We want to show "No Subject" and "Unknown sender/date/etc" again, otherwise a saved
+  // empty draft message looks weird.
+  i18nc( "displayed as subject when the subject of a mail is empty", "No Subject" );
+  i18nc( "displayed when a mail has unknown sender, receiver or date", "Unknown" );
+
+  // We probably want to have a combobox in the config dialog to select the defailts
+  i18n( "Default Theme" );
+  i18n( "Default Aggregation" );
+  i18n( "Default Sort Order" );
 }
 
 Pane::~Pane()
