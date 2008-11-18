@@ -232,6 +232,7 @@ set(kmailprivate_LIB_SRCS
    groupware_types.cpp
    kleojobexecutor.cpp
    messagetree.cpp
+   procmailparser.cpp
    commands/exporttohtml.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp
@@ -260,7 +261,6 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/storagemodelbase.cpp
    messagelistview/core/view.cpp
    messagelistview/core/widgetbase.cpp
-#TODO   locale.c
 )
 
 
