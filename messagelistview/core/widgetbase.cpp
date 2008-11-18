@@ -826,7 +826,7 @@ void Widget::statusMenuAboutToShow()
   act = menu->addAction( i18nc( "@action:inmenu Status of a message", "New" ) );
   act->setIcon( SmallIcon("mail-unread-new") );
   act->setCheckable( true );
-  act->setChecked( stat.isNew() );
+  act->setChecked( stat.isNew() && ( !stat.isUnread() ) );
   act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusNew().toQInt32() ) ) );
   grp->addAction( act );
 
@@ -834,7 +834,7 @@ void Widget::statusMenuAboutToShow()
   act->setIcon( SmallIcon("mail-unread") );
   act->setCheckable( true );
   act->setChecked( stat.isUnread() );
-  act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusUnread().toQInt32() ) ) );
+  act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusUnread().toQInt32() | KPIM::MessageStatus::statusNew().toQInt32() ) ) );
   grp->addAction( act );
 
   act = menu->addAction( i18nc( "@action:inmenu Status of a message", "Replied" ) );
