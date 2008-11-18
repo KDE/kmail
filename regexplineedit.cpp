@@ -42,7 +42,6 @@
 #include <QLayout>
 #include <QString>
 #include <QPushButton>
-#include <QDialog>
 //Added by qt3to4:
 #include <QHBoxLayout>
 
@@ -120,13 +119,13 @@ namespace KMail {
   void RegExpLineEdit::slotEditRegExp()
   {
     if ( !mRegExpEditDialog )
-      mRegExpEditDialog = KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
+      mRegExpEditDialog = KServiceTypeTrader::createInstanceFromQuery<KDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
 
     KRegExpEditorInterface *iface =
      qobject_cast<KRegExpEditorInterface *>( mRegExpEditDialog );
     if( iface ) {
       iface->setRegExp( mLineEdit->text() );
-      if( mRegExpEditDialog->exec() == QDialog::Accepted )
+      if( mRegExpEditDialog->exec() == KDialog::Accepted )
         mLineEdit->setText( iface->regExp() );
     }
   }

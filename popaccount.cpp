@@ -147,7 +147,7 @@ void PopAccount::processNewMail(bool _interactive)
       if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
         i18n("You need to supply a username and a password to access this "
         "mailbox."), false, QString(), mName, i18n("Account:"))
-        != QDialog::Accepted)
+        != KDialog::Accepted)
       {
         checkDone( false, CheckAborted );
         return;
@@ -620,7 +620,7 @@ void PopAccount::slotJobFinished() {
     // set the actions), mark the messages for deletion, download or for keeping
     // them. Then advance to the next stage, the download stage.
     if ( !dlgPopup ||
-         mPopFilterConfirmationDialog->result() == QDialog::Accepted ) {
+         mPopFilterConfirmationDialog->result() == KDialog::Accepted ) {
 
       for ( int i = 0; i < mHeadersOnServer.count(); ++i ) {
         const KMPopHeaders *header = mHeadersOnServer[i];

@@ -40,7 +40,7 @@ class KLineEdit;
 
 class QString;
 class QPushButton;
-class QDialog;
+class KDialog;
 
 namespace KMail {
 
@@ -70,7 +70,7 @@ namespace KMail {
 
     KLineEdit * mLineEdit;
     QPushButton * mRegExpEditButton;
-    QDialog * mRegExpEditDialog;
+    KDialog * mRegExpEditDialog;
   };
 
 } // namespace KMail

@@ -44,13 +44,9 @@ using KPIM::RecentAddresses;
 #include <kmessagebox.h>
 #include <kvbox.h>
 
-
-
-
 #include <QLabel>
 #include <QPushButton>
 #include <QStringList>
-
 #include <QFrame>
 
 using namespace KMail;
@@ -139,7 +135,7 @@ void RedirectDialog::slotAddrBook()
   dlg.setShowCC( false );
   dlg.setShowBCC( false );
 
-  if (dlg.exec()==QDialog::Rejected) return;
+  if (dlg.exec()==KDialog::Rejected) return;
 
   mEditTo->setText( dlg.to().join(", ") );
   mEditTo->setModified( true );
