@@ -2236,7 +2236,7 @@ void KMComposeWin::slotAttachFile()
   fdlg.setCaption( i18n("Attach File") );
   fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
   fdlg.setMode( KFile::Files );
-  if ( fdlg.exec() != QDialog::Accepted )
+  if ( fdlg.exec() != KDialog::Accepted )
     return;
 
   const KUrl::List files = fdlg.selectedUrls();
@@ -2604,7 +2604,7 @@ void KMComposeWin::slotInsertPublicKey()
                                 false /* no remember choice box */,
                                 this, "attach public key selection dialog" );
 
-  if ( dlg.exec() != QDialog::Accepted ) {
+  if ( dlg.exec() != KDialog::Accepted ) {
     return;
   }
 
@@ -4233,7 +4233,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
                                    keys, GlobalSettings::chiasmusKey(),
                                    GlobalSettings::chiasmusOptions() );
 
-  if ( selectorDlg.exec() != QDialog::Accepted ) {
+  if ( selectorDlg.exec() != KDialog::Accepted ) {
     return;
   }
 
