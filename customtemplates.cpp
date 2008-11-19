@@ -167,7 +167,7 @@ void CustomTemplates::slotTextChanged()
 void CustomTemplates::load()
 {
   QStringList list = GlobalSettings::self()->customTemplates();
-  for ( QStringList::const_iterator it = list.begin(); it != list.end(); ++it ) {
+  for ( QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it ) {
     CTemplates t(*it);
     // QString typeStr = indexToType( t.type() );
     QString typeStr;
@@ -209,8 +209,8 @@ void CustomTemplates::save()
     ++lit;
   }
 
-  for ( CustomTemplateItemList::const_iterator it = mItemList.begin();
-        it != mItemList.end(); ++it)
+  for ( CustomTemplateItemList::const_iterator it = mItemList.constBegin();
+        it != mItemList.constEnd(); ++it)
   {
     const CustomTemplateItem *ti = it.value();
     CTemplates t( ti->mName );

@@ -54,8 +54,8 @@ void AccountComboBox::slotRefreshAccounts()
   // configuration dialog or not...)
   QStringList accountNames;
   QList<KMAccount *> lst = applicableAccounts();
-  QList<KMAccount *>::ConstIterator it = lst.begin();
-  for ( ; it != lst.end() ; ++it )
+  QList<KMAccount *>::ConstIterator it = lst.constBegin();
+  for ( ; it != lst.constEnd() ; ++it )
     accountNames.append( (*it)->name() );
   kDebug(5006) << accountNames;
   addItems( accountNames );
@@ -68,8 +68,8 @@ void AccountComboBox::setCurrentAccount( KMAccount* account )
 {
   int i = 0;
   QList<KMAccount *> lst = applicableAccounts();
-  QList<KMAccount *>::ConstIterator it = lst.begin();
-  for ( ; it != lst.end() ; ++it, ++i ) {
+  QList<KMAccount *>::ConstIterator it = lst.constBegin();
+  for ( ; it != lst.constEnd() ; ++it, ++i ) {
     if ( (*it) == account ) {
       setCurrentIndex( i );
       return;
@@ -81,12 +81,12 @@ KMAccount* AccountComboBox::currentAccount() const
 {
   int i = 0;
   QList<KMAccount *> lst = applicableAccounts();
-  QList<KMAccount *>::ConstIterator it = lst.begin();
-  while ( it != lst.end() && i < currentIndex() ) {
+  QList<KMAccount *>::ConstIterator it = lst.constBegin();
+  while ( it != lst.constEnd() && i < currentIndex() ) {
     ++it;
     ++i;
   }
-  if ( it != lst.end() )
+  if ( it != lst.constEnd() )
     return *it;
   return 0;
 }

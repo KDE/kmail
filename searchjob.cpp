@@ -447,8 +447,8 @@ void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
 bool SearchJob::needsDownload()
 {
   QList<KMSearchRule*>::const_iterator it;
-  for ( it = mLocalSearchPattern->begin() ;
-        it != mLocalSearchPattern->end() ; ++it ) {
+  for ( it = mLocalSearchPattern->constBegin() ;
+        it != mLocalSearchPattern->constEnd() ; ++it ) {
     if ( (*it)->field() != "<status>" ) {
       return true;
     }

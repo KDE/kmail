@@ -267,8 +267,8 @@ void MailingListFolderPropertiesDialog::fillMLFromWidgets()
   bool changed = false;
   QStringList oldList = mEditList->items();
   QStringList newList; // the correct string list
-  for ( QStringList::ConstIterator it = oldList.begin();
-        it != oldList.end(); ++it ) {
+  for ( QStringList::ConstIterator it = oldList.constBegin();
+        it != oldList.constEnd(); ++it ) {
     if ( !(*it).startsWith("http:") && !(*it).startsWith("https:") &&
          !(*it).startsWith("mailto:") && ( (*it).contains('@') ) ) {
       changed = true;

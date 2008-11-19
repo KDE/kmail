@@ -224,7 +224,7 @@ bool Item::recomputeMaxDate()
 
   if ( mChildItems )
   {
-    for ( QList< Item * >::ConstIterator it = mChildItems->begin(); it != mChildItems->end(); ++it )
+    for ( QList< Item * >::ConstIterator it = mChildItems->constBegin(); it != mChildItems->constEnd(); ++it )
     {
       if ( ( *it )->mMaxDate > newMaxDate )
         newMaxDate = ( *it )->mMaxDate;

@@ -242,9 +242,9 @@ Theme::Row::Row()
 
 Theme::Row::Row( const Row &src )
 {
-  for ( QList< ContentItem * >::ConstIterator it = src.mLeftItems.begin(); it != src.mLeftItems.end() ; ++it )
+  for ( QList< ContentItem * >::ConstIterator it = src.mLeftItems.constBegin(); it != src.mLeftItems.constEnd() ; ++it )
     addLeftItem( new ContentItem( *( *it ) ) );
-  for ( QList< ContentItem * >::ConstIterator it = src.mRightItems.begin(); it != src.mRightItems.end() ; ++it )
+  for ( QList< ContentItem * >::ConstIterator it = src.mRightItems.constBegin(); it != src.mRightItems.constEnd() ; ++it )
     addRightItem( new ContentItem( *( *it ) ) );
 }
 
@@ -290,20 +290,20 @@ void Theme::Row::insertRightItem( int idx, ContentItem * item )
 void Theme::Row::resetCache()
 {
   mSizeHint = QSize();
-  for ( QList< ContentItem * >::ConstIterator it = mLeftItems.begin(); it != mLeftItems.end() ; ++it )
+  for ( QList< ContentItem * >::ConstIterator it = mLeftItems.constBegin(); it != mLeftItems.constEnd() ; ++it )
     ( *it )->resetCache();
-  for ( QList< ContentItem * >::ConstIterator it = mRightItems.begin(); it != mRightItems.end() ; ++it )
+  for ( QList< ContentItem * >::ConstIterator it = mRightItems.constBegin(); it != mRightItems.constEnd() ; ++it )
     ( *it )->resetCache();
 }
 
 bool Theme::Row::containsTextItems() const
 {
-  for ( QList< ContentItem * >::ConstIterator it = mLeftItems.begin(); it != mLeftItems.end() ; ++it )
+  for ( QList< ContentItem * >::ConstIterator it = mLeftItems.constBegin(); it != mLeftItems.constEnd() ; ++it )
   {
     if ( ( *it )->displaysText() )
       return true;
   }
-  for ( QList< ContentItem * >::ConstIterator it = mRightItems.begin(); it != mRightItems.end() ; ++it )
+  for ( QList< ContentItem * >::ConstIterator it = mRightItems.constBegin(); it != mRightItems.constEnd() ; ++it )
   {
     if ( ( *it )->displaysText() )
       return true;
@@ -442,9 +442,9 @@ Theme::Column::Column( const Column &src )
   mSharedRuntimeData = src.mSharedRuntimeData;
   mSharedRuntimeData->addReference();
 
-  for ( QList< Row * >::ConstIterator it = src.mMessageRows.begin(); it != src.mMessageRows.end() ; ++it )
+  for ( QList< Row * >::ConstIterator it = src.mMessageRows.constBegin(); it != src.mMessageRows.constEnd() ; ++it )
     addMessageRow( new Row( *( *it ) ) );
-  for ( QList< Row * >::ConstIterator it = src.mGroupHeaderRows.begin(); it != src.mGroupHeaderRows.end() ; ++it )
+  for ( QList< Row * >::ConstIterator it = src.mGroupHeaderRows.constBegin(); it != src.mGroupHeaderRows.constEnd() ; ++it )
     addGroupHeaderRow( new Row( *( *it ) ) );
 }
 
@@ -504,20 +504,20 @@ void Theme::Column::resetCache()
   mGroupHeaderSizeHint = QSize();
   mMessageSizeHint = QSize();
 
-  for ( QList< Row * >::ConstIterator it = mMessageRows.begin(); it != mMessageRows.end() ; ++it )
+  for ( QList< Row * >::ConstIterator it = mMessageRows.constBegin(); it != mMessageRows.constEnd() ; ++it )
     ( *it )->resetCache();
-  for ( QList< Row * >::ConstIterator it = mGroupHeaderRows.begin(); it != mGroupHeaderRows.end() ; ++it )
+  for ( QList< Row * >::ConstIterator it = mGroupHeaderRows.constBegin(); it != mGroupHeaderRows.constEnd() ; ++it )
     ( *it )->resetCache();
 }
 
 bool Theme::Column::containsTextItems() const
 {
-  for ( QList< Row * >::ConstIterator it = mMessageRows.begin(); it != mMessageRows.end() ; ++it )
+  for ( QList< Row * >::ConstIterator it = mMessageRows.constBegin(); it != mMessageRows.constEnd() ; ++it )
   {
     if ( ( *it )->containsTextItems() )
       return true;
   }
-  for ( QList< Row * >::ConstIterator it = mGroupHeaderRows.begin(); it != mGroupHeaderRows.end() ; ++it )
+  for ( QList< Row * >::ConstIterator it = mGroupHeaderRows.constBegin(); it != mGroupHeaderRows.constEnd() ; ++it )
   {
     if ( ( *it )->containsTextItems() )
       return true;
@@ -662,7 +662,7 @@ Theme::Theme( const Theme &src )
   mGroupHeaderBackgroundStyle = src.mGroupHeaderBackgroundStyle;
   mViewHeaderPolicy = src.mViewHeaderPolicy;
 
-  for ( QList< Column * >::ConstIterator it = src.mColumns.begin(); it != src.mColumns.end() ; ++it )
+  for ( QList< Column * >::ConstIterator it = src.mColumns.constBegin(); it != src.mColumns.constEnd() ; ++it )
     addColumn( new Column( *( *it ) ) );
 }
 
@@ -742,7 +742,7 @@ QList< QPair< QString, int > > Theme::enumerateGroupHeaderBackgroundStyles()
 
 void Theme::resetCache()
 {
-  for ( QList< Column * >::ConstIterator it = mColumns.begin(); it != mColumns.end() ; ++it )
+  for ( QList< Column * >::ConstIterator it = mColumns.constBegin(); it != mColumns.constEnd() ; ++it )
     ( *it )->resetCache();
 }
 

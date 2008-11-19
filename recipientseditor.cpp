@@ -803,7 +803,7 @@ void SideWidget::updateTotalToolTip()
 
   Recipient::List recipients = mView->recipients();
   Recipient::List::ConstIterator it;
-  for( it = recipients.begin(); it != recipients.end(); ++it ) {
+  for( it = recipients.constBegin(); it != recipients.constEnd(); ++it ) {
     QString emailLine = "&nbsp;&nbsp;" + Qt::escape( (*it).email() ) + "<br/>";
     switch( (*it).type() ) {
       case Recipient::To:
@@ -917,7 +917,7 @@ void RecipientsEditor::setRecipientString( const QString &str,
 
   QStringList r = KPIMUtils::splitAddressList( str );
   QStringList::ConstIterator it;
-  for( it = r.begin(); it != r.end(); ++it ) {
+  for( it = r.constBegin(); it != r.constEnd(); ++it ) {
     if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
         i18nc("@info:status", "Truncating recipients list to %1 of %2 entries.",
@@ -935,7 +935,7 @@ QString RecipientsEditor::recipientString( Recipient::Type type )
 
   Recipient::List recipients = mRecipientsView->recipients();
   Recipient::List::ConstIterator it;
-  for( it = recipients.begin(); it != recipients.end(); ++it ) {
+  for( it = recipients.constBegin(); it != recipients.constEnd(); ++it ) {
     if ( (*it).type() == type ) {
       if ( !str.isEmpty() ) str += ", ";
       str.append( (*it).email() );

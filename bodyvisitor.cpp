@@ -93,7 +93,7 @@ QList<KMMessagePart*> BodyVisitor::partsToLoad()
   QList<KMMessagePart*>::const_iterator it;
   QList<KMMessagePart*> selected;
   bool headerCheck = false;
-  for ( it = mParts.begin(); it != mParts.end(); ++it ) {
+  for ( it = mParts.constBegin(); it != mParts.constEnd(); ++it ) {
     KMMessagePart *part = (*it);
     // skip this part if the parent part is already loading
     if ( part->parent() &&

@@ -133,10 +133,10 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
 void DistributionListDialog::setRecipients( const Recipient::List &recipients )
 {
   Recipient::List::ConstIterator it;
-  for( it = recipients.begin(); it != recipients.end(); ++it ) {
+  for( it = recipients.constBegin(); it != recipients.constEnd(); ++it ) {
     QStringList emails = KPIMUtils::splitAddressList( (*it).email() );
     QStringList::ConstIterator it2;
-    for( it2 = emails.begin(); it2 != emails.end(); ++it2 ) {
+    for( it2 = emails.constBegin(); it2 != emails.constEnd(); ++it2 ) {
       QString name;
       QString email;
       KABC::Addressee::parseEmailAddress( *it2, name, email );
@@ -152,9 +152,9 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
           item->setCheckState( 0, Qt::Checked );
         } else {
           KABC::Addressee::List::ConstIterator it3;
-          for( it3 = addressees.begin(); it3 != addressees.end(); ++it3 ) {
+          for( it3 = addressees.constBegin(); it3 != addressees.constEnd(); ++it3 ) {
             item->setAddressee( *it3, email );
-            if ( it3 == addressees.begin() ) item->setCheckState( 0, Qt::Checked );
+            if ( it3 == addressees.constBegin() ) item->setCheckState( 0, Qt::Checked );
           }
         }
       }

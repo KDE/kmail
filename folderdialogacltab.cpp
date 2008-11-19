@@ -159,7 +159,7 @@ void KMail::ACLEntryDialog::slotSelectAddresses()
   QString txt = distrLists.join( ", " );
   const KABC::Addressee::List lst = dlg.toAddresses();
   if ( !lst.isEmpty() ) {
-    for( QList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+    for( QList<KABC::Addressee>::ConstIterator it = lst.constBegin(); it != lst.constEnd(); ++it ) {
       if ( !txt.isEmpty() )
         txt += ", ";
       txt += addresseeToUserId( *it, mUserIdFormat );
@@ -282,7 +282,7 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
     Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
     KABC::DistributionList::Entry::List entryList = list->entries();
     KABC::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
-    for( it = entryList.begin(); it != entryList.end(); ++it ) {
+    for( it = entryList.constBegin(); it != entryList.constEnd(); ++it ) {
       QString email = (*it).email();
       if ( email.isEmpty() )
         email = addresseeToUserId( (*it).addressee(), userIdFormat );
@@ -519,7 +519,7 @@ void KMail::FolderDialogACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job
 void KMail::FolderDialogACLTab::loadListView( const ACLList& aclList )
 {
   mListView->clear();
-  for( ACLList::const_iterator it = aclList.begin(); it != aclList.end(); ++it ) {
+  for( ACLList::const_iterator it = aclList.constBegin(); it != aclList.constEnd(); ++it ) {
     // -1 means deleted (for cachedimap), don't show those
     if ( (*it).permissions > -1 ) {
       ListViewItem* item = new ListViewItem( mListView );
@@ -576,7 +576,7 @@ void KMail::FolderDialogACLTab::slotEditACL()
 
 void KMail::FolderDialogACLTab::addACLs( const QStringList& userIds, unsigned int permissions )
 {
-  for( QStringList::const_iterator it = userIds.begin(); it != userIds.end(); ++it ) {
+  for( QStringList::const_iterator it = userIds.constBegin(); it != userIds.constEnd(); ++it ) {
     ListViewItem* ACLitem = new ListViewItem( mListView );
     ACLitem->setUserId( *it );
     ACLitem->setPermissions( permissions );
@@ -678,16 +678,16 @@ bool KMail::FolderDialogACLTab::save()
 
   // Now compare with the initial ACLList, because if the user renamed a userid
   // we have to add the old userid to the "to be deleted" list.
-  for ( ACLList::ConstIterator init = mInitialACLList.begin(); init != mInitialACLList.end(); ++init ) {
+  for ( ACLList::ConstIterator init = mInitialACLList.constBegin(); init != mInitialACLList.constEnd(); ++init ) {
     bool isInNewList = false;
     QString uid = (*init).userId;
-    for ( ACLList::ConstIterator it = aclList.begin(); it != aclList.end() && !isInNewList; ++it )
+    for ( ACLList::ConstIterator it = aclList.constBegin(); it != aclList.constEnd() && !isInNewList; ++it )
       isInNewList = uid == (*it).userId;
     if ( !isInNewList && !mRemovedACLs.contains(uid) )
       mRemovedACLs.append( uid );
   }
 
-  for ( QStringList::ConstIterator rit = mRemovedACLs.begin(); rit != mRemovedACLs.end(); ++rit ) {
+  for ( QStringList::ConstIterator rit = mRemovedACLs.constBegin(); rit != mRemovedACLs.constEnd(); ++rit ) {
     // We use permissions == -1 to signify deleting. At least on cyrus, setacl(0) or deleteacl are the same,
     // but I'm not sure if that's true for all servers.
     ACLListEntry entry( *rit, QString(), -1 );

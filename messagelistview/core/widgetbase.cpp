@@ -305,7 +305,7 @@ void Widget::themeMenuAboutToShow()
 
   QList< const Theme * > sortedThemes;
 
-  for ( QHash< QString, Theme * >::ConstIterator ci = themes.begin(); ci != themes.end(); ++ci )
+  for ( QHash< QString, Theme * >::ConstIterator ci = themes.constBegin(); ci != themes.constEnd(); ++ci )
   {
     int idx = 0;
     int cnt = sortedThemes.count();
@@ -323,7 +323,7 @@ void Widget::themeMenuAboutToShow()
       sortedThemes.append( *ci );
   }
 
-  for ( QList< const Theme * >::ConstIterator it = sortedThemes.begin(); it != sortedThemes.end(); ++it )
+  for ( QList< const Theme * >::ConstIterator it = sortedThemes.constBegin(); it != sortedThemes.constEnd(); ++it )
   {
     act = menu->addAction( ( *it )->name() );
     act->setCheckable( true );
@@ -420,7 +420,7 @@ void Widget::aggregationMenuAboutToShow()
 
   QList< const Aggregation * > sortedAggregations;
 
-  for ( QHash< QString, Aggregation * >::ConstIterator ci = aggregations.begin(); ci != aggregations.end(); ++ci )
+  for ( QHash< QString, Aggregation * >::ConstIterator ci = aggregations.constBegin(); ci != aggregations.constEnd(); ++ci )
   {
     int idx = 0;
     int cnt = sortedAggregations.count();
@@ -438,7 +438,7 @@ void Widget::aggregationMenuAboutToShow()
       sortedAggregations.append( *ci );
   }
 
-  for ( QList< const Aggregation * >::ConstIterator it = sortedAggregations.begin(); it != sortedAggregations.end(); ++it )
+  for ( QList< const Aggregation * >::ConstIterator it = sortedAggregations.constBegin(); it != sortedAggregations.constEnd(); ++it )
   {
     act = menu->addAction( ( *it )->name() );
     act->setCheckable( true );
@@ -538,7 +538,7 @@ void Widget::sortOrderMenuAboutToShow()
 
   options = Aggregation::enumerateMessageSortingOptions( mAggregation->threading() );
 
-  for ( it = options.begin(); it != options.end(); ++it )
+  for ( it = options.constBegin(); it != options.constEnd(); ++it )
   {
     act = menu->addAction( ( *it ).first );
     act->setCheckable( true );
@@ -559,7 +559,7 @@ void Widget::sortOrderMenuAboutToShow()
 
     grp = new QActionGroup( menu );
 
-    for ( it = options.begin(); it != options.end(); ++it )
+    for ( it = options.constBegin(); it != options.constEnd(); ++it )
     {
       act = menu->addAction( ( *it ).first );
       act->setCheckable( true );
@@ -580,7 +580,7 @@ void Widget::sortOrderMenuAboutToShow()
 
     grp = new QActionGroup( menu );
 
-    for ( it = options.begin(); it != options.end(); ++it )
+    for ( it = options.constBegin(); it != options.constEnd(); ++it )
     {
       act = menu->addAction( ( *it ).first );
       act->setCheckable( true );
@@ -601,7 +601,7 @@ void Widget::sortOrderMenuAboutToShow()
 
     grp = new QActionGroup( menu );
 
-    for ( it = options.begin(); it != options.end(); ++it )
+    for ( it = options.constBegin(); it != options.constEnd(); ++it )
     {
       act = menu->addAction( ( *it ).first );
       act->setCheckable( true );
@@ -640,7 +640,7 @@ static void switchMessageSorting(
     // try to find the specified message sorting in the theme columns
     const QList< Theme::Column * > & columns = theme->columns();
     int idx = 0;
-    for ( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
+    for ( QList< Theme::Column * >::ConstIterator it = columns.constBegin(); it != columns.constEnd(); ++it )
     {
       if ( !header->isSectionHidden( idx ) )
       {

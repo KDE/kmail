@@ -993,7 +993,7 @@ void ThemePreviewWidget::mousePressEvent( QMouseEvent * e )
 
         QList< QPair< QString, int > > styles = Theme::enumerateGroupHeaderBackgroundStyles();
 
-        for ( QList< QPair< QString, int > >::ConstIterator it = styles.begin(); it != styles.end(); ++it )
+        for ( QList< QPair< QString, int > >::ConstIterator it = styles.constBegin(); it != styles.constEnd(); ++it )
         {
           act = childmenu->addAction( ( *it ).first );
           act->setData( QVariant( ( *it ).second ) );

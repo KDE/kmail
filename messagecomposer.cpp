@@ -1440,8 +1440,8 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   // test whether there ARE attachments that can be included into the body
   if ( mEarlyAddAttachments ) {
     bool someOk = false;
-    for ( QVector<Attachment>::const_iterator it = mAttachments.begin();
-          it != mAttachments.end(); ++it ) {
+    for ( QVector<Attachment>::const_iterator it = mAttachments.constBegin();
+          it != mAttachments.constEnd(); ++it ) {
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody ) {
         someOk = true;
       } else {
@@ -1526,8 +1526,8 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   }
 
   // Prepare attachments that will be signed/encrypted
-  for ( QVector<Attachment>::const_iterator it = mAttachments.begin();
-        it != mAttachments.end(); ++it ) {
+  for ( QVector<Attachment>::const_iterator it = mAttachments.constBegin();
+        it != mAttachments.constEnd(); ++it ) {
     // signed/encrypted body parts must be either QP or base64 encoded
     // Why not 7 bit? Because the LF->CRLF canonicalization would render
     // e.g. 7 bit encoded shell scripts unusable because of the CRs.

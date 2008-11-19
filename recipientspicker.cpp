@@ -133,7 +133,7 @@ QString RecipientItem::createTooltip( KABC::DistributionList *distributionList )
   txt += "<ul>";
   KABC::DistributionList::Entry::List entries = distributionList->entries();
   KABC::DistributionList::Entry::List::ConstIterator it;
-  for( it = entries.begin(); it != entries.end(); ++it ) {
+  for( it = entries.constBegin(); it != entries.constEnd(); ++it ) {
     txt += "<li>";
     txt += (*it).addressee().realName() + ' ';
     txt += "<em>";
@@ -217,14 +217,14 @@ RecipientItem::List RecipientsCollection::items() const
 
 bool RecipientsCollection::hasEquivalentItem( RecipientItem *item ) const
 {
-  return mKeyMap.find( item->key() ) != mKeyMap.end();
+  return mKeyMap.find( item->key() ) != mKeyMap.constEnd();
 }
 
 RecipientItem * RecipientsCollection::getEquivalentItem( RecipientItem *item) const
 {
   QMap<QString, RecipientItem *>::ConstIterator it;
   it = mKeyMap.find( item->key() );
-  if ( it == mKeyMap.end() )
+  if ( it == mKeyMap.constEnd() )
     return 0;
   return (*it);
 }
@@ -238,7 +238,7 @@ void RecipientsCollection::deleteAll()
 {
   if ( !isReferenceContainer() ) {
     QMap<QString, RecipientItem *>::ConstIterator it;
-    for( it = mKeyMap.begin(); it != mKeyMap.end(); ++it ) {
+    for( it = mKeyMap.constBegin(); it != mKeyMap.constEnd(); ++it ) {
       delete *it;
     }
   }
@@ -375,7 +375,7 @@ RecipientsPicker::~RecipientsPicker()
   writeConfig();
 
   QMap<int,RecipientsCollection *>::ConstIterator it;
-  for( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
+  for( it = mCollectionMap.constBegin(); it != mCollectionMap.constEnd(); ++it ) {
     delete *it;
   }
 }
@@ -414,13 +414,13 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
   for( it = addressbook->begin(); it != addressbook->end(); ++it ) {
     QStringList emails = (*it).emails();
     QStringList::ConstIterator it3;
-    for( it3 = emails.begin(); it3 != emails.end(); ++it3 ) {
+    for( it3 = emails.constBegin(); it3 != emails.constEnd(); ++it3 ) {
       RecipientItem *item = new RecipientItem;
       item->setAddressee( *it, *it3 );
 
       QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator collIt;
-      collIt = collectionMap.find( (*it).resource() );
-      if ( collIt != collectionMap.end() ) {
+      collIt = collectionMap.constFind( (*it).resource() );
+      if ( collIt != collectionMap.constEnd() ) {
         (*collIt)->addItem( item );
       } else {
         kDebug(5006) << "Collection for resource not found. shouldn't happen";
@@ -428,11 +428,11 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
 
       QStringList categories = (*it).categories();
       QStringList::ConstIterator catIt;
-      for( catIt = categories.begin(); catIt != categories.end(); ++catIt ) {
+      for( catIt = categories.constBegin(); catIt != categories.constEnd(); ++catIt ) {
         QMap<QString, RecipientsCollection *>::ConstIterator catMapIt;
-        catMapIt = categoryMap.find( *catIt );
+        catMapIt = categoryMap.constFind( *catIt );
         RecipientsCollection *collection;
-        if ( catMapIt == categoryMap.end() ) {
+        if ( catMapIt == categoryMap.constEnd() ) {
           collection = new RecipientsCollection( *catIt );
           collection->setReferenceContainer( true );
           categoryMap.insert( *catIt, collection );
@@ -445,12 +445,12 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
   }
 
   QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator it2;
-  for( it2 = collectionMap.begin(); it2 != collectionMap.end(); ++it2 ) {
+  for( it2 = collectionMap.constBegin(); it2 != collectionMap.constEnd(); ++it2 ) {
     insertCollection( *it2 );
   }
 
   QMap<QString, RecipientsCollection *>::ConstIterator it3;
-  for( it3 = categoryMap.begin(); it3 != categoryMap.end(); ++it3 ) {
+  for( it3 = categoryMap.constBegin(); it3 != categoryMap.constEnd(); ++it3 ) {
     insertCollection( *it3 );
   }
 
@@ -480,7 +480,7 @@ void RecipientsPicker::insertRecentAddresses()
     KPIM::RecentAddresses::self( &config )->kabcAddresses();
 
   KABC::Addressee::List::ConstIterator it;
-  for( it = recents.begin(); it != recents.end(); ++it ) {
+  for( it = recents.constBegin(); it != recents.constEnd(); ++it ) {
     RecipientItem *item = new RecipientItem;
     item->setAddressee( *it, (*it).preferredEmail() );
     collection->addItem( item );
@@ -493,7 +493,7 @@ void RecipientsPicker::insertCollection( RecipientsCollection *coll )
 {
   int index = 0;
   QMap<int,RecipientsCollection *>::ConstIterator it;
-  for ( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
+  for ( it = mCollectionMap.constBegin(); it != mCollectionMap.constEnd(); ++it ) {
     if ( (*it)->id() == coll->id() ) {
       delete *it;
       mCollectionMap.remove( index );
@@ -511,7 +511,7 @@ void RecipientsPicker::updateRecipient( const Recipient &recipient )
 {
   RecipientItem::List allRecipients = mAllRecipients->items();
   RecipientItem::List::ConstIterator itAll;
-  for( itAll = allRecipients.begin(); itAll != allRecipients.end(); ++itAll ) {
+  for( itAll = allRecipients.constBegin(); itAll != allRecipients.constEnd(); ++itAll ) {
     if ( (*itAll)->recipient() == recipient.email() ) {
       (*itAll)->setRecipientType( recipient.typeLabel() );
     }
@@ -524,14 +524,14 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
   mSelectedRecipients->deleteAll();
 
   Recipient::List::ConstIterator it;
-  for( it = recipients.begin(); it != recipients.end(); ++it ) {
+  for( it = recipients.constBegin(); it != recipients.constEnd(); ++it ) {
     RecipientItem *item = 0;
 
     // if recipient is a distribution list, create
     // a detached copy.
     RecipientItem::List items = mDistributionLists->items();
     RecipientItem::List::ConstIterator distIt;
-    for ( distIt = items.begin(); distIt != items.end(); ++distIt ) {
+    for ( distIt = items.constBegin(); distIt != items.constEnd(); ++distIt ) {
       if ( (*it).email() == (*distIt)->name() ) {
         item = new RecipientItem();
         item->setDistributionList( (*distIt)->distributionList() );
@@ -576,7 +576,7 @@ void RecipientsPicker::rebuildAllRecipientsList()
   mAllRecipients->clear();
 
   QMap<int,RecipientsCollection *>::ConstIterator it;
-  for( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
+  for( it = mCollectionMap.constBegin(); it != mCollectionMap.constEnd(); ++it ) {
     // skip self
     if ( (*it) == mAllRecipients )
       continue;
@@ -586,7 +586,7 @@ void RecipientsPicker::rebuildAllRecipientsList()
     RecipientItem::List coll = (*it)->items();
 
     RecipientItem::List::ConstIterator rcptIt;
-    for ( rcptIt = coll.begin(); rcptIt != coll.end(); ++rcptIt ) {
+    for ( rcptIt = coll.constBegin(); rcptIt != coll.constEnd(); ++rcptIt ) {
       mAllRecipients->addItem( *rcptIt );
     }
   }
@@ -600,7 +600,7 @@ void RecipientsPicker::updateList()
 
   RecipientItem::List items = coll->items();
   RecipientItem::List::ConstIterator it;
-  for( it = items.begin(); it != items.end(); ++it ) {
+  for( it = items.constBegin(); it != items.constEnd(); ++it ) {
     if ( coll != mSelectedRecipients ) {
       RecipientItem *selItem = mSelectedRecipients->getEquivalentItem( *it );
       if ( selItem ) {

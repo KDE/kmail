@@ -113,7 +113,7 @@ void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
     // transfers the complete message to the server
     QList<KMMessage*>::const_iterator it;
     KMMessage* curMsg = 0;
-    for ( it = msgList.begin(); it != msgList.end(); ++it )
+    for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     {
       curMsg = (*it);
       if ( mSrcFolder && !curMsg->isMessage() )
@@ -249,7 +249,7 @@ ImapJob::~ImapJob()
           }
           if ( !(*it).msgList.isEmpty() ) {
             QList<KMMessage*>::const_iterator it2;
-            for ( it2 = (*it).msgList.begin(); it2 != (*it).msgList.end(); ++it2 )
+            for ( it2 = (*it).msgList.constBegin(); it2 != (*it).msgList.constEnd(); ++it2 )
               (*it2)->setTransferInProgress( false );
           }
         }
@@ -274,7 +274,7 @@ ImapJob::~ImapJob()
             }
             if ( !(*it).msgList.isEmpty() ) {
               QList<KMMessage*>::const_iterator it2;
-              for ( it2 = (*it).msgList.begin(); it2 != (*it).msgList.end(); ++it2 )
+              for ( it2 = (*it).msgList.constBegin(); it2 != (*it).msgList.constEnd(); ++it2 )
                 (*it2)->setTransferInProgress( false );
             }
           }

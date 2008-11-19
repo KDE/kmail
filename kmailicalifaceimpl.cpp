@@ -474,12 +474,12 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   Q_ASSERT( attachmentMimetypes.count() == attachmentURLs.count() );
   Q_ASSERT( attachmentNames.count() == attachmentURLs.count() );
   // Add all attachments by reading them from their temp. files
-  QStringList::ConstIterator itmime = attachmentMimetypes.begin();
-  QStringList::ConstIterator iturl = attachmentURLs.begin();
-  for( QStringList::ConstIterator itname = attachmentNames.begin();
-       itname != attachmentNames.end()
-       && itmime != attachmentMimetypes.end()
-       && iturl != attachmentURLs.end();
+  QStringList::ConstIterator itmime = attachmentMimetypes.constBegin();
+  QStringList::ConstIterator iturl = attachmentURLs.constBegin();
+  for( QStringList::ConstIterator itname = attachmentNames.constBegin();
+       itname != attachmentNames.constEnd()
+       && itmime != attachmentMimetypes.constEnd()
+       && iturl != attachmentURLs.constEnd();
        ++itname, ++iturl, ++itmime ){
     bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
     if( !updateAttachment( *msg, *iturl, *itname, *itmime, byname ) ){
@@ -761,8 +761,8 @@ bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
 {
   kDebug() ;
   QList<SubResource> folderList = subresourcesKolab( contentsType );
-  for ( QList<SubResource>::const_iterator it( folderList.begin() ),
-                                                                    end( folderList.end() );
+  for ( QList<SubResource>::const_iterator it( folderList.constBegin() ),
+                                                                    end( folderList.constEnd() );
         it != end ; ++it ) {
     KMFolder * const f = findResourceFolder( (*it).location );
     if ( !f ) continue;
@@ -866,8 +866,8 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
     // Note that plainTextBody isn't used in this branch. We assume it's still valid from when the mail was created.
 
     // Delete some attachments according to list
-    for( QStringList::ConstIterator it = deletedAttachments.begin();
-         it != deletedAttachments.end();
+    for( QStringList::ConstIterator it = deletedAttachments.constBegin();
+         it != deletedAttachments.constEnd();
          ++it ){
       if( !deleteAttachment( *newMsg, *it ) ){
         // Note: It is _not_ an error if an attachment was already deleted.
@@ -894,13 +894,13 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
       }
       //kDebug() << " StorageFormatXML";
       // Add all attachments by reading them from their temp. files
-      QStringList::ConstIterator iturl = attachmentURLs.begin();
-      QStringList::ConstIterator itmime = attachmentMimetypes.begin();
-      QStringList::ConstIterator itname = attachmentNames.begin();
+      QStringList::ConstIterator iturl = attachmentURLs.constBegin();
+      QStringList::ConstIterator itmime = attachmentMimetypes.constBegin();
+      QStringList::ConstIterator itname = attachmentNames.constBegin();
       for( ;
-          iturl != attachmentURLs.end()
-          && itmime != attachmentMimetypes.end()
-          && itname != attachmentNames.end();
+          iturl != attachmentURLs.constEnd()
+          && itmime != attachmentMimetypes.constEnd()
+          && itname != attachmentNames.constEnd();
           ++iturl, ++itname, ++itmime ){
         bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
         if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, byname ) ){
@@ -1489,7 +1489,7 @@ KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
 StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* folder ) const
 {
   FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
-  if ( it != mFolderInfoMap.end() )
+  if ( it != mFolderInfoMap.constEnd() )
     return (*it).mStorageFormat;
   return globalStorageFormat();
 }
@@ -2008,7 +2008,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   // deal with multiple default groupware folders
   if ( result.folders.count() > 1 && result.found == StandardFolderSearchResult::FoundAndStandard ) {
     QStringList labels;
-    for ( QList<KMFolder*>::ConstIterator it = result.folders.begin(); it != result.folders.end(); ++it )
+    for ( QList<KMFolder*>::ConstIterator it = result.folders.constBegin(); it != result.folders.constEnd(); ++it )
       labels << (*it)->prettyUrl();
     const QString selected = KInputDialog::getItem( i18n("Default folder"),
         i18nc( "%1 is one of the messages with context 'type of folder content'",
@@ -2221,7 +2221,7 @@ static QList<KMFolder*> findFolderByAnnotation( KMFolderDir* folderParentDir, co
 {
   QList<KMFolder*> rv;
   QList<KMFolderNode*>::const_iterator it;
-  for ( it = folderParentDir->begin(); it != folderParentDir->end(); ++it ) {
+  for ( it = folderParentDir->constBegin(); it != folderParentDir->constEnd(); ++it ) {
     if ( !(*it)->isDir() ) {
       KMFolder* folder = static_cast<KMFolder *>( *it );
       if ( folder->folderType() == KMFolderTypeCachedImap ) {
