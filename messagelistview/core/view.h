@@ -27,6 +27,8 @@
 
 #include "messagelistview/core/enums.h"
 
+class QTimer;
+
 namespace KPIM
 {
   class MessageStatus;
@@ -76,8 +78,8 @@ private:
   Item *mLastCurrentItem;
   QPoint mMousePressPosition;
   bool mFirstShow;
-  bool mSaveThemeStateOnSectionResize;      ///< This is used to filter out programmatic column resizes in slotSectionResized().
-
+  bool mSaveThemeColumnStateOnSectionResize;      ///< This is used to filter out programmatic column resizes in slotSectionResized().
+  QTimer * mSaveThemeColumnStateTimer;            ///< Used to trigger a delayed "save theme state"
 public:
 
   /**
@@ -370,11 +372,6 @@ protected:
   void applyThemeColumns();
 
   /**
-   * Saves the state of the columns (width and visility) to the currently selected theme object.
-   */
-  void saveThemeColumnState();
-
-  /**
    * This is called by the model from inside setFolder().
    * It's called just after the model has been reset but before
    * any row has been inserted. This allows us to call updateThemeColumns() as needed.
@@ -489,6 +486,13 @@ protected:
    */
   void changeMessageStatus( MessageItem * it, const KPIM::MessageStatus &set, const KPIM::MessageStatus &unset );
 
+  /**
+   * Starts a short-delay timer connected to saveThemeColumnState().
+   * Used to accumulate consecutive changes and break out of the call stack
+   * up to the main event loop (since in the call stack the column state might be left undefined).
+   */
+  void triggerDelayedSaveThemeColumnState();
+
 public slots:
   /**
    * Collapses all the group headers (if present in the current Aggregation)
@@ -522,6 +526,11 @@ protected slots:
    * Handles selection item management
    */
   void slotSelectionChanged( const QItemSelection &current, const QItemSelection & );
+
+  /**
+   * Saves the state of the columns (width and visility) to the currently selected theme object.
+   */
+  void saveThemeColumnState();
 
 }; // class View
 
