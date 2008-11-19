@@ -18,6 +18,7 @@
 #define _KMAIL_PARTMETADATA_H_
 
 #include <gpgmepp/verificationresult.h>
+#include <gpgmepp/context.h>
 
 #include <kpgp.h>
 #include <qstring.h>
@@ -50,6 +51,7 @@ namespace KMail {
     QDateTime creationTime;
     QString decryptionError;
     QString auditLog;
+    GpgME::Error auditLogError;
     bool isSigned : 1;
     bool isGoodSignature : 1;
     bool isEncrypted : 1;
