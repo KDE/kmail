@@ -158,7 +158,7 @@ class MessageComposer : public QObject {
      * mCharset will be set to the detected character set, and the charset of
      * the composer window will be set as well.
      *
-     * @return true if the detection was successfull, false if no suitable
+     * @return true if the detection was successful, false if no suitable
      *         charset was found.
      */
     bool autoDetectCharset();

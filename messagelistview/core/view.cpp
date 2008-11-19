@@ -296,7 +296,7 @@ void View::applyThemeColumns()
       if ( realWidth < 2 )
         realWidth = 2; // don't allow very insane values 
 
-      kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " choosen " << realWidth;
+      kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " chosen " << realWidth;
       totalVisibleWidth += realWidth;
     } else {
       // Column not visible
