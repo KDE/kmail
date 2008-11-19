@@ -2182,6 +2182,7 @@ void MessageComposer::pgpSignedMsg( const QByteArray& cText, Kleo::CryptoMessage
   }
 
   if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      if ( Kleo::MessageBox::showAuditLogButton( job.get() ) )
       Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Signing Operation") );
 
   mSignature = signature;
@@ -2230,6 +2231,7 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
   }
 
   if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      if ( Kleo::MessageBox::showAuditLogButton( job.get() ) )
       Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Encryption Operation") );
 
   return Kpgp::Ok;
@@ -2275,6 +2277,7 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBo
   }
 
   if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      if ( Kleo::MessageBox::showAuditLogButton( job.get() ) )
       Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Encryption Operation") );
 
   return Kpgp::Ok;
