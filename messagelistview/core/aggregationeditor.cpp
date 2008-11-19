@@ -26,12 +26,12 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QGridLayout>
-#include <QComboBox>
 #include <QTreeWidget>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QCheckBox>
 
+#include <KComboBox>
 #include <KLocale>
 
 namespace KMail
@@ -55,51 +55,51 @@ AggregationEditor::AggregationEditor( QWidget *parent )
   QGridLayout * tabg = new QGridLayout( tab );
 
   tabg->addWidget( new QLabel( i18n( "Grouping:" ), tab ), 0, 0 );
-  mGroupingCombo = new QComboBox( tab );
+  mGroupingCombo = new KComboBox( tab );
   tabg->addWidget( mGroupingCombo, 0, 1 );
 
   connect( mGroupingCombo, SIGNAL( activated( int ) ),
            SLOT( groupingComboActivated( int ) ) );
 
   tabg->addWidget( new QLabel( i18n( "Group Sorting:" ), tab ), 1, 0 );
-  mGroupSortingCombo = new QComboBox( tab );
+  mGroupSortingCombo = new KComboBox( tab );
   tabg->addWidget( mGroupSortingCombo, 1, 1 );
 
   connect( mGroupSortingCombo, SIGNAL( activated( int ) ),
            SLOT( groupSortingComboActivated( int ) ) );
 
   tabg->addWidget( new QLabel( i18n( "Group Sort Direction:" ), tab ), 2, 0 );
-  mGroupSortDirectionCombo = new QComboBox( tab );
+  mGroupSortDirectionCombo = new KComboBox( tab );
   tabg->addWidget( mGroupSortDirectionCombo, 2, 1 );
 
   tabg->addWidget( new QLabel( i18n( "Group Expand Policy:" ), tab ), 3, 0 );
-  mGroupExpandPolicyCombo = new QComboBox( tab );
+  mGroupExpandPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mGroupExpandPolicyCombo, 3, 1 );
 
   tabg->addWidget( new QLabel( i18n( "Threading:" ), tab ), 4, 0 );
-  mThreadingCombo = new QComboBox( tab );
+  mThreadingCombo = new KComboBox( tab );
   tabg->addWidget( mThreadingCombo, 4, 1 );
 
   connect( mThreadingCombo, SIGNAL( activated( int ) ),
            SLOT( threadingComboActivated( int ) ) );
 
   tabg->addWidget( new QLabel( i18n( "Thread Leader:" ), tab ), 5, 0 );
-  mThreadLeaderCombo = new QComboBox( tab );
+  mThreadLeaderCombo = new KComboBox( tab );
   tabg->addWidget( mThreadLeaderCombo, 5, 1 );
 
   tabg->addWidget( new QLabel( i18n( "Thread Expand Policy:" ), tab ), 6, 0 );
-  mThreadExpandPolicyCombo = new QComboBox( tab );
+  mThreadExpandPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mThreadExpandPolicyCombo, 6, 1 );
 
   tabg->addWidget( new QLabel( i18n( "Message Sorting:" ), tab ), 7, 0 );
-  mMessageSortingCombo = new QComboBox( tab );
+  mMessageSortingCombo = new KComboBox( tab );
   tabg->addWidget( mMessageSortingCombo, 7, 1 );
 
   connect( mMessageSortingCombo, SIGNAL( activated( int ) ),
            SLOT( messageSortingComboActivated( int ) ) );
 
   tabg->addWidget( new QLabel( i18n( "Message Sort Direction:" ), tab ), 8, 0 );
-  mMessageSortDirectionCombo = new QComboBox( tab );
+  mMessageSortDirectionCombo = new KComboBox( tab );
   tabg->addWidget( mMessageSortDirectionCombo, 8, 1 );
 
   tabg->setColumnStretch( 1, 1 );
@@ -112,7 +112,7 @@ AggregationEditor::AggregationEditor( QWidget *parent )
   tabg = new QGridLayout( tab );
 
   tabg->addWidget( new QLabel( i18n( "Fill View Strategy:" ), tab ), 0, 0 );
-  mFillViewStrategyCombo = new QComboBox( tab );
+  mFillViewStrategyCombo = new KComboBox( tab );
   tabg->addWidget( mFillViewStrategyCombo, 0, 1 );
 
   tabg->setColumnStretch( 1, 1 );

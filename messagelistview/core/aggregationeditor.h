@@ -25,7 +25,7 @@
 
 #include <QTreeWidget>
 
-class QComboBox;
+class KComboBox;
 
 namespace KMail
 {
@@ -55,17 +55,17 @@ private:
   Aggregation * mCurrentAggregation; // shallow, may be null!
 
   // Grouping, Threading and Sorting tab
-  QComboBox * mGroupingCombo;
-  QComboBox * mGroupSortingCombo;
-  QComboBox * mGroupSortDirectionCombo;
-  QComboBox * mGroupExpandPolicyCombo;
-  QComboBox * mThreadingCombo;
-  QComboBox * mThreadLeaderCombo;
-  QComboBox * mThreadExpandPolicyCombo;
-  QComboBox * mMessageSortingCombo;
-  QComboBox * mMessageSortDirectionCombo;
+  KComboBox * mGroupingCombo;
+  KComboBox * mGroupSortingCombo;
+  KComboBox * mGroupSortDirectionCombo;
+  KComboBox * mGroupExpandPolicyCombo;
+  KComboBox * mThreadingCombo;
+  KComboBox * mThreadLeaderCombo;
+  KComboBox * mThreadExpandPolicyCombo;
+  KComboBox * mMessageSortingCombo;
+  KComboBox * mMessageSortDirectionCombo;
   // Advanced tab
-  QComboBox * mFillViewStrategyCombo;
+  KComboBox * mFillViewStrategyCombo;
 
 public:
   /**
