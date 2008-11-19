@@ -31,9 +31,11 @@
 
 #include <KDialog>
 
-class KComboBox;
 class QPaintDevice;
 class QCheckBox;
+
+class KComboBox;
+class KLineEdit;
 
 namespace KMail
 {
@@ -57,7 +59,7 @@ public:
 
 protected:
   Theme::Column * mColumn;
-  QLineEdit * mNameEdit;
+  KLineEdit * mNameEdit;
   QCheckBox * mVisibleByDefaultCheck;
   QCheckBox * mIsSenderOrReceiverCheck;
   KComboBox * mMessageSortingCombo;

@@ -30,14 +30,12 @@
 
 #include <QActionGroup>
 #include <QCheckBox>
-#include <QColorDialog>
 #include <QCursor>
 #include <QDrag>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QHeaderView>
 #include <QLabel>
-#include <QLineEdit>
 #include <QMouseEvent>
 #include <QTextEdit>
 #include <QTreeWidget>
@@ -47,7 +45,9 @@
 #include <QPushButton>
 #include <QStringList>
 
+#include <KColorDialog>
 #include <KComboBox>
+#include <KLineEdit>
 #include <KLocale>
 #include <KFontDialog>
 #include <KMenu>
@@ -88,7 +88,7 @@ ThemeColumnPropertiesDialog::ThemeColumnPropertiesDialog( QWidget * parent, Them
   l = new QLabel( i18nc( "@label:textbox Property name", "Name:" ), base );
   g->addWidget( l, 0, 0 );
 
-  mNameEdit = new QLineEdit( base );
+  mNameEdit = new KLineEdit( base );
   mNameEdit->setToolTip( i18n( "The label that will be displayed in the column header." ) );
   g->addWidget( mNameEdit, 0, 1 );
 
@@ -1055,8 +1055,9 @@ void ThemePreviewWidget::slotForegroundColorMenuTriggered( QAction * act )
     return;
   }
 
-  QColor clr = QColorDialog::getColor( mSelectedThemeContentItem->customColor(), this );
-  if ( !clr.isValid() )
+  QColor clr;
+  int result = KColorDialog::getColor( clr, mSelectedThemeContentItem->customColor(), this );
+  if ( result != KColorDialog::Accepted )
     return;
 
   mSelectedThemeContentItem->setCustomColor( clr );
@@ -1118,9 +1119,11 @@ void ThemePreviewWidget::slotGroupHeaderBackgroundModeMenuTriggered( QAction * a
     break;
     case Theme::CustomColor:
     {
-      QColor clr = QColorDialog::getColor( mTheme->groupHeaderBackgroundColor(), this );
-      if ( !clr.isValid() )
+      QColor clr;
+      int result = KColorDialog::getColor( clr, mTheme->groupHeaderBackgroundColor(), this );
+      if ( result != KColorDialog::Accepted )
         return;
+
       mTheme->setGroupHeaderBackgroundMode( Theme::CustomColor );
       mTheme->setGroupHeaderBackgroundColor( clr );
     } 
