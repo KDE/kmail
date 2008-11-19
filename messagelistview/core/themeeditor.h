@@ -31,7 +31,7 @@
 
 #include <KDialog>
 
-class QComboBox;
+class KComboBox;
 class QPaintDevice;
 class QCheckBox;
 
@@ -60,7 +60,7 @@ protected:
   QLineEdit * mNameEdit;
   QCheckBox * mVisibleByDefaultCheck;
   QCheckBox * mIsSenderOrReceiverCheck;
-  QComboBox * mMessageSortingCombo;
+  KComboBox * mMessageSortingCombo;
 
 protected slots:
   void slotOkButtonClicked();
@@ -200,7 +200,7 @@ private:
   ThemePreviewWidget * mPreviewWidget;
 
   // Advanced tab
-  QComboBox * mViewHeaderPolicyCombo;
+  KComboBox * mViewHeaderPolicyCombo;
 public:
   /**
    * Sets the option set to be edited.

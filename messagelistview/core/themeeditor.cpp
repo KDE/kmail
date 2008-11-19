@@ -31,7 +31,6 @@
 #include <QActionGroup>
 #include <QCheckBox>
 #include <QColorDialog>
-#include <QComboBox>
 #include <QCursor>
 #include <QDrag>
 #include <QGridLayout>
@@ -48,6 +47,7 @@
 #include <QPushButton>
 #include <QStringList>
 
+#include <KComboBox>
 #include <KLocale>
 #include <KFontDialog>
 #include <KMenu>
@@ -95,7 +95,7 @@ ThemeColumnPropertiesDialog::ThemeColumnPropertiesDialog( QWidget * parent, Them
   l = new QLabel( i18n( "Header Click Sorts Messages" ), base );
   g->addWidget( l, 1, 0 );
 
-  mMessageSortingCombo = new QComboBox( base );
+  mMessageSortingCombo = new KComboBox( base );
   mMessageSortingCombo->setToolTip( i18n( "The sorting order that cliking on this column header will switch to." ) );
   g->addWidget( mMessageSortingCombo, 1, 1 );
 
@@ -1452,7 +1452,7 @@ ThemeEditor::ThemeEditor( QWidget *parent )
   l = new QLabel( i18n( "Header:" ), tab );
   tabg->addWidget( l, 0, 0 );
 
-  mViewHeaderPolicyCombo = new QComboBox( tab );
+  mViewHeaderPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mViewHeaderPolicyCombo, 0, 1 );
 
   tabg->setColumnStretch( 1, 1 );

@@ -20,8 +20,9 @@
 
 #include "messagelistview/core/comboboxutils.h"
 
-#include <QComboBox>
 #include <QVariant>
+
+#include <KComboBox>
 
 namespace KMail
 {
@@ -35,7 +36,7 @@ namespace Core
 namespace ComboBoxUtils
 {
 
-void fillIntegerOptionCombo( QComboBox *combo, const QList< QPair< QString, int > > &optionDescriptors )
+void fillIntegerOptionCombo( KComboBox *combo, const QList< QPair< QString, int > > &optionDescriptors )
 {
   int val = getIntegerOptionComboValue( combo, -1 );
   combo->clear();
@@ -62,7 +63,7 @@ void fillIntegerOptionCombo( QComboBox *combo, const QList< QPair< QString, int 
   }
 }
 
-void setIntegerOptionComboValue( QComboBox *combo, int value )
+void setIntegerOptionComboValue( KComboBox *combo, int value )
 {
   if ( !combo->isEnabled() )
     return;
@@ -88,7 +89,7 @@ void setIntegerOptionComboValue( QComboBox *combo, int value )
   combo->setCurrentIndex( 0 ); // default
 }
 
-int getIntegerOptionComboValue( QComboBox *combo, int defaultValue )
+int getIntegerOptionComboValue( KComboBox *combo, int defaultValue )
 {
   int idx = combo->currentIndex();
   if ( idx < 0 )
