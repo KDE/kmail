@@ -200,15 +200,15 @@
         </choices>
         <default>AskForAllButAcceptance</default>
       </entry>
-      
+
       <entry name="DeleteInvitationEmailsAfterSendingReply" type="Bool">
         <label>Delete invitation emails after the reply to them has been sent</label>
         <whatsthis>When this is checked, received invitation emails that have been replied to will be moved to the Trash folder, once the reply has been successfully sent.</whatsthis>
         <default>true</default>
       </entry>
-      
 
-    </group> 
+
+    </group>
 
     <group name="IMAP Resource">
       <entry name="TheIMAPResourceEnabled" type="Bool">
@@ -253,10 +253,6 @@
         <default>0</default>
       </entry>
 
-      <entry name="FilterOnlyDIMAPInbox" type="Bool">
-        <default>true</default>
-        <label>Only filter mails received in disconnected IMAP inbox.</label>
-      </entry>
       <entry name="FilterGroupwareFolders" type="Bool">
         <default>false</default>
         <label>Also filter new mails received in groupware folders.</label>
