@@ -4743,27 +4743,40 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
       identityManager()->
       identityForUoidOrDefault( mMsg->headerField( "X-KMail-Identity" ).
                                 stripWhiteSpace().toUInt() );
-    mOldSigText = id.signatureText();
+    mOldSigText = GlobalSettings::self()->prependSignature() ? id.signature().rawText() : id.signatureText();
   }
 
-  // try to truncate the old sig
-  // First remove any trailing whitespace
-  while ( !edtText.isEmpty() && edtText[edtText.length()-1].isSpace() )
-    edtText.truncate( edtText.length() - 1 );
-  // From the sig too, just in case
-  while ( !mOldSigText.isEmpty() && mOldSigText[mOldSigText.length()-1].isSpace() )
-    mOldSigText.truncate( mOldSigText.length() - 1 );
 
-  if( edtText.endsWith( mOldSigText ) )
-    edtText.truncate( edtText.length() - mOldSigText.length() );
+  if ( !GlobalSettings::prependSignature() ) {
+    // try to truncate the old sig
+    // First remove any trailing whitespace
+    while ( !edtText.isEmpty() && edtText[edtText.length()-1].isSpace() )
+      edtText.truncate( edtText.length() - 1 );
+    // From the sig too, just in case
+    while ( !mOldSigText.isEmpty() && mOldSigText[mOldSigText.length()-1].isSpace() )
+      mOldSigText.truncate( mOldSigText.length() - 1 );
 
-  // now append the new sig
-  mOldSigText = ident.signatureText();
-  if( ( !mOldSigText.isEmpty() ) &&
-      ( GlobalSettings::self()->autoTextSignature() == "auto" ) ) {
-    edtText.append( mOldSigText );
+    if ( edtText.endsWith( mOldSigText ) )
+      edtText.truncate( edtText.length() - mOldSigText.length() );
+
+    // now append the new sig
+    mOldSigText = ident.signatureText();
+    if( ( !mOldSigText.isEmpty() ) &&
+        ( GlobalSettings::self()->autoTextSignature() == "auto" ) ) {
+      edtText.append( mOldSigText );
+    }
+    mEditor->setText( edtText );
+  } else {
+    const int pos = edtText.find( mOldSigText );
+    if ( pos >= 0 && !mOldSigText.isEmpty() ) {
+      const int oldLength = mOldSigText.length();
+      mOldSigText = "\n\n"+ ident.signature().rawText() + "\n"; // see insertSignature()
+      edtText = edtText.replace( pos, oldLength, mOldSigText );
+      mEditor->setText( edtText );
+    } else {
+      insertSignature( false );
+    }
   }
-  mEditor->setText( edtText );
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
