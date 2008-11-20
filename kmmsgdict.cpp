@@ -452,7 +452,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
   KMMsgDictREntry *rentry = new KMMsgDictREntry(count);
 
   for (unsigned int index = 0; index < count; index++) {
-    unsigned long msn;
+    quint32 msn;
 
     bool readOk = fread(&msn, sizeof(msn), 1, fp);
     if (swapByteOrder)
