@@ -1353,9 +1353,9 @@ bool View::isThreaded() const
 
 void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & )
 {
+  kDebug() << "Selection changed handler entering";
   // We assume that when selection changes, current item also changes.
   QModelIndex current = currentIndex();
-  kDebug() << "Selection changed";
 
   // Abort any pending message pre-selection as the user is probably
   // already navigating the view (so pre-selection would make his view jump
@@ -1376,11 +1376,18 @@ void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & 
 
   if ( !selectionModel()->isSelected( current ) )
   {
-    // It may happen after row removals: Model calls this slot on currentIndex()
-    // that actually might have changed "silently", without being selected.
-    QItemSelection selection;
-    selection.append( QItemSelectionRange( current ) );
-    selectionModel()->select( selection, QItemSelectionModel::Select | QItemSelectionModel::Rows );
+    if ( selectedIndexes().count() < 1 )
+    {
+      // It may happen after row removals: Model calls this slot on currentIndex()
+      // that actually might have changed "silently", without being selected.
+      QItemSelection selection;
+      selection.append( QItemSelectionRange( current ) );
+      selectionModel()->select( selection, QItemSelectionModel::Select | QItemSelectionModel::Rows );
+    } else {
+      // something is still selected anyway
+      // This is probably a result of CTRL+Click which unselected current: leave it as it is.
+      return;
+    }
   }
 
   Item * it = static_cast< Item * >( current.internalPointer() );
@@ -1410,8 +1417,10 @@ void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & 
       Q_ASSERT( false );
     break;
   }
+  kDebug() << "About to call selection changed on widget";
 
   mWidget->viewSelectionChanged();
+  kDebug() << "Selection changed handler terminating";
 }
 
 void View::mouseDoubleClickEvent( QMouseEvent * e )
@@ -1531,6 +1540,8 @@ void View::mousePressEvent( QMouseEvent * e )
           // the content item is quite unclear.
           if ( mDelegate->hitContentItem() && ( selectedIndexes().count() > 1 ) )
           {
+            kDebug() << "Left hit with selectedIndexes().count() == " << selectedIndexes().count();
+
             switch ( mDelegate->hitContentItem()->type() )
             {
               case Theme::ContentItem::ActionItemStateIcon:
@@ -1571,8 +1582,10 @@ void View::mousePressEvent( QMouseEvent * e )
             }
           }
 
+          kDebug() << "Left click about to";
           // Let QTreeView handle the selection and emit the appropriate signals (slotSelectionChanged() may be called)
           QTreeView::mousePressEvent( e );
+          kDebug() << "Left click done";
 
         break;
         case Qt::RightButton:
