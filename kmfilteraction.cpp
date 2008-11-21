@@ -1536,7 +1536,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
+  if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendDefault ) ) {
     kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
