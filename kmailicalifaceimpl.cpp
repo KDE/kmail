@@ -76,6 +76,8 @@ using KMail::AccountManager;
 
 using namespace KMail;
 
+QMap<QString, QString> *KMailICalIfaceImpl::mSubResourceUINamesMap = new QMap<QString, QString>;
+
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
@@ -665,6 +667,10 @@ static int dimapAccountCount()
 
 static QString subresourceLabelForPresentation( const KMFolder * folder )
 {
+  if( KMailICalIfaceImpl::getResourceMap()->contains( folder->location() ) ) {
+    return folder->label();
+  }
+
   QString label = folder->prettyUrl();
   QStringList parts = label.split( QChar('/') );
   // In the common special case of some other user's folder shared with us
@@ -1636,6 +1642,18 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
   return 0;
 }
 
+void KMailICalIfaceImpl::changeResourceUIName( const QString &folderPath, const QString &newName )
+{
+  kDebug() << "Folder path " << folderPath << endl;
+  KMFolder *f = findResourceFolder( folderPath );
+  if ( f ) {
+    KMailICalIfaceImpl::getResourceMap()->insert( folderPath, newName );
+    kmkernel->folderMgr()->renameFolder( f, newName );
+    KConfigGroup configGroup( kmkernel->config(), "Resource UINames" );
+    configGroup.writeEntry( folderPath, newName );
+  }
+}
+
 /****************************
  * The config stuff
  */
@@ -1934,6 +1952,10 @@ void KMailICalIfaceImpl::readConfig()
     emit subresourceAdded( folderContentsType( KMail::ContentsTypeNote ),
                            mNotes->location(), mNotes->label(), true, false );
   }
+
+  KConfig *config = kmkernel->config();
+  KConfigGroup cf = config->group("Resource UINames");
+  *KMailICalIfaceImpl::mSubResourceUINamesMap =  cf.entryMap();
 
   reloadFolderTree();
 
