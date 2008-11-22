@@ -55,6 +55,7 @@
 #include <kmessagebox.h>
 
 #include <QStringList>
+#include <QTextDocument>
 #include <time.h>
 
 #include <algorithm>
@@ -1440,10 +1441,11 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
           ? i18nc("if in your language something like "
               "'key(s)' is not possible please "
               "use the plural in the translation",
-              "No valid and trusted encryption key was "
-              "found for \"%1\".\n\n"
+              "<qt>No valid and trusted encryption key was "
+              "found for \"%1\".<br/><br/>"
               "Select the key(s) which should "
-              "be used for this recipient.", person)
+              "be used for this recipient. If there is no suitable key in the list "
+              "you can also <a href=\"externalSearch\">search for external keys</a>.</qt>", Qt::escape(person) )
           : i18nc("if in your language something like "
               "'key(s)' is not possible please "
               "use the plural in the translation",
