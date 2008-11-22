@@ -250,8 +250,7 @@ void SieveDebugDialog::slotDiagNextAccount()
                 // Translate IMAP LOGIN to PLAIN:
                 mUrl.setQuery( "x-mech=" + ( mAccountBase->auth() == "*" ? "PLAIN" : mAccountBase->auth() ) );
             } else {
-                sieve.alternateURL();
-                mUrl.setFileName( sieve.vacationFileName() );
+                mUrl = sieve.alternateURL();
             }
 
             mSieveJob = SieveJob::list( mUrl );
@@ -297,7 +296,7 @@ void SieveDebugDialog::slotDiagNextScript()
         mUrl.setQuery( "x-mech=" + ( mAccountBase->auth() == "*" ? "PLAIN" : mAccountBase->auth() ) );
         mUrl.setFileName( scriptFile );
     } else {
-        sieve.alternateURL();
+        mUrl = sieve.alternateURL();
         mUrl.setFileName( scriptFile );
     }
 
