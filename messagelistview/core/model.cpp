@@ -2459,8 +2459,14 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass2( ViewItemJob 
         switch( mi->threadingStatus() )
         {
           case MessageItem::ParentMissing:
-            // parent missing but still can be found in Pass3
-            mUnassignedMessageListForPass3->append( mi ); // this is ~O(1)
+            if ( mAggregation->threading() == Aggregation::PerfectReferencesAndSubject )
+            {
+              // parent missing but still can be found in Pass3
+              mUnassignedMessageListForPass3->append( mi ); // this is ~O(1)
+            } else {
+              // We're not doing subject based threading: will never be threaded, go straight to Pass4
+              mUnassignedMessageListForPass4->append( mi ); // this is ~O(1)
+            }
           break;
           case MessageItem::NonThreadable:
             // will never be threaded, go straight to Pass4
