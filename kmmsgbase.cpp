@@ -741,7 +741,7 @@ QByteArray KMMsgBase::extractRFC2231HeaderField( const QByteArray &aStr,
         return str;
       assert( startPart < aStr.length() );
       // Quoted values end at the ending quote
-      if ( aStr[startPart] == '"' ) {
+      if ( startPart < aStr.size() && aStr[startPart] == '"' ) {
         startPart++; // the double quote isn't part of the filename
         endPart = aStr.indexOf( '"', startPart ) - 1;
       } else {
