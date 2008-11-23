@@ -2140,7 +2140,6 @@ void KMKernel::selectFolder( const QString &folderPath )
     folder = kmkernel->imapFolderMgr()->getFolderByURL( folderPath );
   if ( !folder )
     folder = kmkernel->dimapFolderMgr()->getFolderByURL( folderPath );
-  Q_ASSERT( folder );
 
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
