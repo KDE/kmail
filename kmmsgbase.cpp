@@ -457,17 +457,23 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
 }
 
 //-----------------------------------------------------------------------------
+QString KMMsgBase::fixEncoding( const QString &encoding )
+{
+  QString returnEncoding = encoding;
+  // According to http://www.iana.org/assignments/character-sets, uppercase is
+  // preferred in MIME headers
+  if ( returnEncoding.toUpper().contains( "ISO " ) ) {
+    returnEncoding = returnEncoding.toUpper();
+    returnEncoding.replace( "ISO ", "ISO-" );
+  }
+  return returnEncoding;
+}
+
+//-----------------------------------------------------------------------------
 QString KMMsgBase::encodingForName( const QString &descriptiveName )
 {
   QString encoding = KGlobal::charsets()->encodingForName( descriptiveName );
-
-  // According to http://www.iana.org/assignments/character-sets, uppercase is
-  // preferred in MIME headers
-  if ( encoding.toUpper().contains( "ISO " ) ) {
-    encoding = encoding.toUpper();
-    encoding.replace( "ISO ", "ISO-" );
-  }
-  return encoding;
+  return KMMsgBase::fixEncoding( encoding );
 }
 
 //-----------------------------------------------------------------------------
