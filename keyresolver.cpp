@@ -1445,7 +1445,8 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
               "found for \"%1\".<br/><br/>"
               "Select the key(s) which should "
               "be used for this recipient. If there is no suitable key in the list "
-              "you can also <a href=\"externalSearch\">search for external keys</a>.</qt>", Qt::escape(person) )
+              "you can also <a href=\"%2\">search for external keys</a>.</qt>",
+              Qt::escape(person), KUrl::encode_string( KPIMUtils::extractEmailAddress(person) ) )
           : i18nc("if in your language something like "
               "'key(s)' is not possible please "
               "use the plural in the translation",
