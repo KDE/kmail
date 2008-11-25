@@ -523,7 +523,6 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
   const GpgME::Subkey subkey = key.subkey(0);
   if ( d->alreadyWarnedFingerprints.count( subkey.fingerprint() ) )
     return Kpgp::Ok; // already warned about this one (and so about it's issuers)
-  d->alreadyWarnedFingerprints.insert( subkey.fingerprint() );
 
   if ( subkey.neverExpires() )
     return Kpgp::Ok;
@@ -617,6 +616,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
                          "<p>expired %n days ago.</p>",
                          daysSinceExpiry ) ).arg( Kleo::DN( key.userID(0).id() ).prettyDN(),
                                                  key.issuerSerial() ) );
+      d->alreadyWarnedFingerprints.insert( subkey.fingerprint() );
       if ( KMessageBox::warningContinueCancel( 0, msg,
                                                key.protocol() == GpgME::Context::OpenPGP
                                                ? i18n("OpenPGP Key Expired" )
@@ -724,6 +724,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 		     "<p>expires in less than %n days.</p>",
 		     daysTillExpiry ) ).arg( Kleo::DN( key.userID(0).id() ).prettyDN(),
 					     key.issuerSerial() ) );
+    d->alreadyWarnedFingerprints.insert( subkey.fingerprint() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     key.protocol() == GpgME::Context::OpenPGP
 					     ? i18n("OpenPGP Key Expires Soon" )
