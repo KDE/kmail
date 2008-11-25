@@ -241,6 +241,14 @@ FolderView::FolderView( KMMainWidget *mainWidget, FolderViewManager *manager, QW
 
   connect( this, SIGNAL( itemClicked ( QTreeWidgetItem *, int ) ),
            SLOT( slotItemClicked ( QTreeWidgetItem *, int ) ) );
+
+
+  // At the moment of writing (25.11.2008) there is a bug in Qt
+  // which causes an assertion failure in animated views when
+  // the animated item is deleted. The bug notification has been
+  // sent to qt-bugs. For the moment we keep animations explicitly disabled.
+  // FIXME: Re-enable animations once the qt bug is fixed.
+  setAnimated( false );
 }
 
 FolderView::~FolderView()
@@ -2578,6 +2586,21 @@ void FolderView::resetFolderList( FolderViewItem *item, bool startList )
 void FolderView::slotResetFolderList()
 {
   resetFolderList( 0, false );
+}
+
+void FolderView::changeEvent( QEvent *e )
+{
+  KPIM::FolderTreeWidget::changeEvent( e );
+
+  if ( e->type() == QEvent::StyleChange )
+  {
+    // At the moment of writing (25.11.2008) there is a bug in Qt
+    // which causes an assertion failure in animated views when
+    // the animated item is deleted. The bug notification has been
+    // sent to qt-bugs. For the moment we keep animations explicitly disabled.
+    // FIXME: Re-enable animations once the qt bug is fixed.
+    setAnimated( false );
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
