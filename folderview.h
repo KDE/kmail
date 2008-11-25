@@ -740,12 +740,6 @@ protected:
   virtual void paintEvent( QPaintEvent *e);
 
   /**
-   * Reimplemented in order to catch style change events
-   * and explicitly disable animations.
-   */
-  virtual void changeEvent( QEvent *e );
-
-  /**
    * Internal helper for drop our custom drop indicator
    */
   void setDropIndicatorData(
