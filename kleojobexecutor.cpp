@@ -109,6 +109,7 @@ void KleoJobExecutor::verificationResult(const GpgME::VerificationResult & resul
   Kleo::Job * job = dynamic_cast<Kleo::Job*>( sender() );
   assert(job);
   mVerificationResult = result;
+  mAuditLogError = job->auditLogError();
   mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
 }
@@ -120,6 +121,7 @@ void KleoJobExecutor::verificationResult(const GpgME::VerificationResult & resul
   assert(job);
   mVerificationResult = result;
   mData = plainText;
+  mAuditLogError = job->auditLogError();
   mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
 }
@@ -135,6 +137,7 @@ void KleoJobExecutor::decryptResult(
   mVerificationResult = verificationresult;
   mDecryptResult = decryptionresult;
   mData = plainText;
+  mAuditLogError = job->auditLogError();
   mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
 }
@@ -144,6 +147,7 @@ void KleoJobExecutor::importResult(const GpgME::ImportResult & result)
   Kleo::Job * job = dynamic_cast<Kleo::Job*>( sender() );
   assert(job);
   mImportResult = result;
+  mAuditLogError = job->auditLogError();
   mAuditLog = job->auditLogAsHtml();
   mEventLoop->quit();
 }
