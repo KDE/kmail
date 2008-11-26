@@ -20,7 +20,7 @@
 #ifndef _kmfawidgets_h_
 #define _kmfawidgets_h_
 
-#include <klineedit.h>
+#include <KLineEdit>
 
 #include <QString>
 
@@ -46,7 +46,7 @@ protected slots:
 
 private:
   QPushButton* mBtn;
-  QLineEdit*   mLineEdit;
+  KLineEdit*   mLineEdit;
 };
 
 class KMSoundTestWidget : public QWidget

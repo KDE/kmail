@@ -32,9 +32,9 @@
 #ifndef MAILSOURCEVIEWER_H
 #define MAILSOURCEVIEWER_H
 
-#include <ktextbrowser.h>
 #include <QSyntaxHighlighter>
 
+#include <KTextBrowser>
 
 /**
  * A tiny little class to use for displaying raw messages, textual
@@ -49,8 +49,8 @@ namespace KMail {
 class MailSourceHighlighter : public QSyntaxHighlighter
 {
 public:
-  MailSourceHighlighter( QTextEdit* edit )
-    : QSyntaxHighlighter( edit )
+  MailSourceHighlighter( KTextBrowser* browser )
+    : QSyntaxHighlighter( browser )
   {}
 protected:
   virtual void highlightBlock ( const QString & text );

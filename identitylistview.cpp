@@ -147,7 +147,7 @@ namespace KMail {
     if ( selectedItems().size() > 0 ) {
       IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( selectedItems()[0] );
 
-      QLineEdit *edit = dynamic_cast<QLineEdit*>( editor );
+      QLineEdit *edit = dynamic_cast<QLineEdit*>( editor ); // krazy:exclude=qclasses
       if ( edit ) {
         QString text = edit->text();
         emit rename( item, text );

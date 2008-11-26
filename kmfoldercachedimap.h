@@ -49,9 +49,9 @@
 
 using KMail::FolderJob;
 using KMail::QuotaInfo;
+class KComboBox;
 class KMCommand;
 
-class QComboBox;
 class QRadioButton;
 
 namespace KMail {
@@ -82,7 +82,7 @@ class DImapTroubleShootDialog : public KDialog
 
   private:
     QRadioButton *mIndexButton, *mCacheButton;
-    QComboBox *mIndexScope;
+    KComboBox *mIndexScope;
     int rc;
 };
 
