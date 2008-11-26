@@ -21,10 +21,10 @@
 #ifndef __KMAIL_MESSAGELISTVIEW_CORE_OPTIONSETEDITOR_H__
 #define __KMAIL_MESSAGELISTVIEW_CORE_OPTIONSETEDITOR_H__
 
-#include <QTabWidget>
+#include <KTabWidget>
 
-class QLineEdit;
-class QTextEdit;
+class KLineEdit;
+class KTextEdit;
 
 namespace KMail
 {
@@ -40,7 +40,7 @@ class OptionSet;
 /**
  * The base class for the OptionSet editors. Provides common functionality.
  */
-class OptionSetEditor : public QTabWidget
+class OptionSetEditor : public KTabWidget
 {
   Q_OBJECT
 
@@ -49,8 +49,8 @@ public:
   ~OptionSetEditor();
 
 private:
-  QLineEdit * mNameEdit;                       ///< The editor for the OptionSet name
-  QTextEdit * mDescriptionEdit;                ///< The editor for the OptionSet description
+  KLineEdit * mNameEdit;                       ///< The editor for the OptionSet name
+  KTextEdit * mDescriptionEdit;                ///< The editor for the OptionSet description
 
 protected:
 
@@ -58,14 +58,14 @@ protected:
    * Returns the editor for the name of the OptionSet.
    * Derived classes are responsable of filling this UI element and reading back data from it.
    */
-  QLineEdit * nameEdit() const
+  KLineEdit * nameEdit() const
     { return mNameEdit; };
 
   /**
    * Returns the editor for the description of the OptionSet.
    * Derived classes are responsable of filling this UI element and reading back data from it.
    */
-  QTextEdit * descriptionEdit() const
+  KTextEdit * descriptionEdit() const
     { return mDescriptionEdit; };
 
 protected slots:

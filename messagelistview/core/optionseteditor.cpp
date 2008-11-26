@@ -21,13 +21,13 @@
 #include "messagelistview/core/optionseteditor.h"
 #include "messagelistview/core/optionset.h"
 
-#include <QLineEdit>
-#include <QTextEdit>
 #include <QLabel>
 #include <QGridLayout>
 #include <QComboBox>
 
+#include <KLineEdit>
 #include <KLocale>
+#include <KTextEdit>
 
 namespace KMail
 {
@@ -39,7 +39,7 @@ namespace Core
 {
 
 OptionSetEditor::OptionSetEditor( QWidget *parent )
-  : QTabWidget( parent )
+  : KTabWidget( parent )
 {
   // General tab
   QWidget * tab = new QWidget( this );
@@ -50,7 +50,7 @@ OptionSetEditor::OptionSetEditor( QWidget *parent )
   QLabel * l = new QLabel( i18nc( "@label:textbox Name of the option", "Name:" ), tab );
   tabg->addWidget( l, 0, 0 );
 
-  mNameEdit = new QLineEdit( tab );
+  mNameEdit = new KLineEdit( tab );
   tabg->addWidget( mNameEdit, 0, 1 );
 
   connect( mNameEdit, SIGNAL( textEdited( const QString & ) ),
@@ -59,7 +59,7 @@ OptionSetEditor::OptionSetEditor( QWidget *parent )
   l = new QLabel( i18nc( "@label:textbox Description of the option", "Description:" ), tab );
   tabg->addWidget( l, 1, 0 );
 
-  mDescriptionEdit = new QTextEdit( tab );
+  mDescriptionEdit = new KTextEdit( tab );
   tabg->addWidget( mDescriptionEdit, 1, 1, 2, 1 );
 
   tabg->setColumnStretch( 1, 1 );

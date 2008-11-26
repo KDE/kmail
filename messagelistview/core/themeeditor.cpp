@@ -37,7 +37,6 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QMouseEvent>
-#include <QTextEdit>
 #include <QTreeWidget>
 #include <QPainter>
 #include <QPaintEvent>
@@ -52,6 +51,7 @@
 #include <KFontDialog>
 #include <KMenu>
 #include <KIconLoader>
+#include <KTextEdit>
 
 #include <time.h> // for time_t
 

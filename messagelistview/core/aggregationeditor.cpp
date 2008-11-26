@@ -22,8 +22,6 @@
 #include "messagelistview/core/aggregation.h"
 #include "messagelistview/core/comboboxutils.h"
 
-#include <QLineEdit>
-#include <QTextEdit>
 #include <QLabel>
 #include <QGridLayout>
 #include <QTreeWidget>
@@ -32,7 +30,9 @@
 #include <QCheckBox>
 
 #include <KComboBox>
+#include <KLineEdit>
 #include <KLocale>
+#include <KTextEdit>
 
 namespace KMail
 {
