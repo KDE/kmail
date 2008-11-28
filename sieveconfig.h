@@ -20,7 +20,7 @@
 #include <kurl.h>
 
 class QCheckBox;
-class QLineEdit;
+class KLineEdit;
 class KIntSpinBox;
 class KConfigGroup;
 
@@ -120,7 +120,7 @@ namespace KMail {
     QCheckBox * mManagesieveCheck;
     QCheckBox * mSameConfigCheck;
     KIntSpinBox * mPortSpin;
-    QLineEdit * mAlternateURLEdit;
+    KLineEdit * mAlternateURLEdit;
     QString mVacationFileName;
   };
 

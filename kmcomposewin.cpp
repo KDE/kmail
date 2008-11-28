@@ -955,7 +955,7 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, QComboBox *aCbx,
+                                      QLabel *aLbl, QComboBox *aCbx, // krazy:exclude=qclasses
                                       QCheckBox *aChk )
 {
   if ( aValue & aMask ) {

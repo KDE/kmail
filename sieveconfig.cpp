@@ -16,6 +16,7 @@
 
 #include <knuminput.h>
 #include <klocale.h>
+#include <klineedit.h>
 #include <kdialog.h>
 #include <kconfigbase.h>
 
@@ -24,7 +25,6 @@
 #include <QLabel>
 //Added by qt3to4:
 #include <QGridLayout>
-#include <klineedit.h>
 
 
 namespace KMail {

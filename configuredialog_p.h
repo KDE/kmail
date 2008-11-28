@@ -33,7 +33,6 @@ class QPushButton;
 class QLabel;
 class QCheckBox;
 class QFont;
-class QTabWidget;
 class QRegExpValidator;
 class QPoint;
 class QGroupBox;
@@ -44,6 +43,7 @@ class KLineEdit;
 class KButtonGroup;
 class KUrlRequester;
 class KFontChooser;
+class KTabWidget;
 class KVBox;
 class KMAccount;
 class ListView;
@@ -229,7 +229,7 @@ protected:
   void addTab( ConfigModuleTab* tab, const QString & title );
 
 private:
-  QTabWidget *mTabWidget;
+  KTabWidget *mTabWidget;
 
 };
 

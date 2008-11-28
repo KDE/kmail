@@ -506,7 +506,7 @@ class KMComposeWin : public KMail::Composer
                             QPushButton *aBtn = 0 );
 
     void rethinkHeaderLine( int value, int mask, int &row,
-                            QLabel *lbl, QComboBox *cbx, QCheckBox *chk );
+                            QLabel *lbl, QComboBox *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
 
     /**
      * Initialization methods
