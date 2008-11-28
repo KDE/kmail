@@ -147,7 +147,7 @@ class MessageComposer : public QObject {
      * then encoded with the correct codec.
      * The user is warned if the codec can't encode all characters.
      *
-     * @return false if any error occured, for example if the text of the body
+     * @return false if any error occurred, for example if the text of the body
      *         couldn't be encoded.
      */
     bool breakLinesAndApplyCodec();
