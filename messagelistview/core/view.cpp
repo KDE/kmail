@@ -1764,9 +1764,9 @@ bool View::event( QEvent *e )
       tip += QString::fromLatin1(
            "<tr>" \
               "<td align=\"right\" valign=\"top\" width=\"45\">" \
-                "<div style=\"font-weight: bold;\">" \
+                "<div style=\"font-weight: bold;\"><nobr>" \
                  "%1:" \
-                "</div>" \
+                "</nobr></div>" \
               "</td>" \
               "<td align=\"left\" valign=\"top\">" \
                  "%2" \
@@ -1777,9 +1777,9 @@ bool View::event( QEvent *e )
       tip += QString::fromLatin1(
            "<tr>" \
               "<td align=\"right\" valign=\"top\" width=\"45\">" \
-                "<div style=\"font-weight: bold;\">" \
+                "<div style=\"font-weight: bold;\"><nobr>" \
                  "%1:" \
-                "</div>" \
+                "</nobr></div>" \
               "</td>" \
               "<td align=\"left\" valign=\"top\">" \
                  "%2" \
@@ -1790,9 +1790,9 @@ bool View::event( QEvent *e )
       tip += QString::fromLatin1(
            "<tr>" \
               "<td align=\"right\" valign=\"top\" width=\"45\">" \
-                "<div style=\"font-weight: bold;\">" \
+                "<div style=\"font-weight: bold;\"><nobr>" \
                  "%1:" \
-                "</div>" \
+                "</nobr></div>" \
               "</td>" \
               "<td align=\"left\" valign=\"top\">" \
                  "%2" \
@@ -1803,9 +1803,9 @@ bool View::event( QEvent *e )
       tip += QString::fromLatin1(
            "<tr>" \
               "<td align=\"right\" valign=\"top\" width=\"45\">" \
-                "<div style=\"font-weight: bold;\">" \
+                "<div style=\"font-weight: bold;\"><nobr>" \
                  "%1:" \
-                "</div>" \
+                "</nobr></div>" \
               "</td>" \
               "<td align=\"left\" valign=\"top\">" \
                  "%2" \
@@ -1816,9 +1816,9 @@ bool View::event( QEvent *e )
       tip += QString::fromLatin1(
            "<tr>" \
               "<td align=\"right\" valign=\"top\" width=\"45\">" \
-                "<div style=\"font-weight: bold;\">" \
+                "<div style=\"font-weight: bold;\"><nobr>" \
                  "%1:" \
-                "</div>" \
+                "</nobr></div>" \
               "</td>" \
               "<td align=\"left\" valign=\"top\">" \
                  "%2" \
