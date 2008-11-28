@@ -76,7 +76,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>KTextEdit::NoWrap</enum>
+          <enum>QTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
@@ -124,7 +124,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>KTextEdit::NoWrap</enum>
+          <enum>QTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
@@ -172,7 +172,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>KTextEdit::NoWrap</enum>
+          <enum>QTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
@@ -220,7 +220,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>KTextEdit::NoWrap</enum>
+          <enum>QTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
