@@ -148,12 +148,7 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
 
 void KMMessagePart::setCharset( const QByteArray & c ) {
   if ( type() != DwMime::kTypeText )
-    kWarning(5006)
-      << "KMMessagePart::setCharset(): trying to set a charset for a non-textual mimetype." << endl
-      << "Fix this caller:" << endl
-      << "====================================================================" << endl
-      << kBacktrace( 5 ) << endl
-      << "====================================================================";
+    kWarning() << "Trying to set a charset for a non-textual mimetype.";
   mCharset = c;
 }
 
