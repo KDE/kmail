@@ -113,7 +113,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTextEdit" name="mEdit" >
+        <widget class="KTextEdit" name="mEdit" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
            <horstretch>3</horstretch>
@@ -121,7 +121,7 @@
           </sizepolicy>
          </property>
          <property name="lineWrapMode" >
-          <enum>QTextEdit::NoWrap</enum>
+          <enum>KTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
@@ -137,7 +137,7 @@
           <number>6</number>
          </property>
          <item row="1" column="2" >
-          <widget class="QComboBox" name="mType" >
+          <widget class="KComboBox" name="mType" >
            <item>
             <property name="text" >
              <string comment="Universal custom template type.">Universal</string>
@@ -209,6 +209,12 @@
  <layoutdefault spacing="6" margin="11" />
  <customwidgets>
   <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>KKeySequenceWidget</class>
    <extends>QWidget</extends>
    <header>kkeysequencewidget.h</header>
@@ -224,6 +230,11 @@
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>ktextedit.h</header>
   </customwidget>
   <customwidget>
    <class>TemplatesInsertCommand</class>

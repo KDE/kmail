@@ -265,7 +265,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_quote" >
+      <widget class="KLineEdit" name="lineEdit_quote" >
        <property name="whatsThis" >
            <string>
              &lt;qt&gt;The following placeholders are supported in the quote indicator:
@@ -284,6 +284,11 @@
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
   <customwidget>
    <class>KTextEdit</class>
    <extends>QTextEdit</extends>

@@ -330,7 +330,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   // TODO (marc/bo): Test this
   mSieveConfigEditor = new SieveConfigEditor( mImap.ui.tabWidget );
   mSieveConfigEditor->layout()->setMargin( KDialog::marginHint() );
-  mImap.ui.tabWidget->addTab( mSieveConfigEditor, i18n("&Filtering") );
+  mImap.ui.tabWidget->addTab( mSieveConfigEditor, i18n("Filtering") );
 
   connect( KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()) );
 }

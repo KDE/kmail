@@ -27,7 +27,7 @@
     <widget class="KSeparator" name="kseparator" />
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget" >
+    <widget class="KTabWidget" name="tabWidget" >
      <property name="font" >
       <font>
        <weight>50</weight>
@@ -39,7 +39,7 @@
      </property>
      <widget class="QWidget" name="generalTab" >
       <attribute name="title" >
-       <string>&amp;General</string>
+       <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout" >
        <item row="0" column="0" >
@@ -223,7 +223,7 @@ However, if KWallet is not available, the password will be stored in KMail's con
      </widget>
      <widget class="QWidget" name="optionsTab" >
       <attribute name="title" >
-       <string>&amp;Advanced</string>
+       <string>Advanced</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7" >
        <item>
@@ -482,7 +482,7 @@ Namespaces allow KMail for example to display your personal folders and shared f
      </widget>
      <widget class="QWidget" name="securityTab" >
       <attribute name="title" >
-       <string>S&amp;ecurity</string>
+       <string>Security</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout" >
        <item>
@@ -674,6 +674,11 @@ Namespaces allow KMail for example to display your personal folders and shared f
    <extends>QFrame</extends>
    <header>kseparator.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>ktabwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

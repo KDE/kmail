@@ -27,7 +27,7 @@
     <widget class="KSeparator" name="kseparator" />
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget" >
+    <widget class="KTabWidget" name="tabWidget" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
        <horstretch>0</horstretch>
@@ -39,7 +39,7 @@
      </property>
      <widget class="QWidget" name="page1" >
       <attribute name="title" >
-       <string>Gene&amp;ral</string>
+       <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3" >
        <item row="0" column="0" >
@@ -179,7 +179,7 @@
      </widget>
      <widget class="QWidget" name="page2" >
       <attribute name="title" >
-       <string>&amp;Advanced</string>
+       <string>Advanced</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2" >
        <property name="horizontalSpacing" >
@@ -369,7 +369,7 @@
      </widget>
      <widget class="QWidget" name="page3" >
       <attribute name="title" >
-       <string>S&amp;ecurity</string>
+       <string>Security</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4" >
        <item>
@@ -550,6 +550,11 @@
    <class>KComboBox</class>
    <extends>QComboBox</extends>
    <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>ktabwidget.h</header>
   </customwidget>
   <customwidget>
    <class>KIntNumInput</class>
