@@ -971,7 +971,7 @@ void Model::clearOrphanChildrenHash()
 {
   for ( QHash< MessageItem *, MessageItem * >::Iterator it = mOrphanChildrenHash->begin(); it != mOrphanChildrenHash->end(); ++it )
   {
-    Q_ASSERT( !( *it )->parent() );
+    //Q_ASSERT( !( *it )->parent() ); <-- this assert can actually fail for items that get a temporary parent assigned (to preserve the selection).
     delete ( *it );
   }
   mOrphanChildrenHash->clear();
@@ -2430,6 +2430,9 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass2( ViewItemJob 
   {
     // If we're here, then threading is requested for sure.
     MessageItem * mi = (*mUnassignedMessageListForPass2)[curIndex];
+    // The item may or may not have a parent.
+    // If it has no parent or it has a temporary one (mi->parent() && mi->threadingStatus() == MessageItem::ParentMissing)
+    // then we attempt to (re-)thread it. Otherwise we just do nothing (the job has already been done by the previous steps).
     if ( ( !mi->parent() ) || ( mi->threadingStatus() == MessageItem::ParentMissing ) )
     {
       MessageItem * mparent = findMessageParent( mi );
@@ -2809,12 +2812,34 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
     // This MUST NOT be null (otherwise we have a bug somewhere in this file).
     Q_ASSERT( dyingMessage );
 
-    if ( dyingMessage->parent() )
+    // If we were going to pre-select this message but we were interrupted
+    // *before* it was actually made viewable, we just clear the pre-selection pointer
+    // and unique id (abort pre-selection).
+    if ( dyingMessage == mLastSelectedMessageInFolder )
     {
+      mLastSelectedMessageInFolder = 0;
+      mUniqueIdOfLastSelectedMessageInFolder = 0;
+    }
+
+    // remove the message from any pending user job
+    if ( mPersistentSetManager )
+    {
+      mPersistentSetManager->removeMessageItemFromAllSets( dyingMessage );
+      if ( mPersistentSetManager->setCount() < 1 )
+      {
+        delete mPersistentSetManager;
+        mPersistentSetManager = 0;
+      }
+    }
+
+    if ( dyingMessage->parent() )
+    {      
       // Handle saving the current selection: if this item was the current before the step
       // then zero it out. We have killed it and it's OK for the current item to change.
+
       if ( dyingMessage == mCurrentItemToRestoreAfterViewItemJobStep )
       {
+        Q_ASSERT( dyingMessage->isViewable() );
         // Try to select the item below the removed one as it helps in doing a "readon" of emails:
         // you read a message, decide to delete it and then go to the next.
         // Qt tends to select the message above the removed one instead (this is a hardcoded logic in
@@ -2828,18 +2853,12 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
           // instead of the item above.
           mCurrentItemToRestoreAfterViewItemJobStep = mView->messageItemBefore( dyingMessage, false, false );
         }
-      }
 
-      // If we were going to pre-select this message but we were interrupted
-      // *before* it was actually made viewable, we just clear the pre-selection pointer
-      // and unique id (abort pre-selection).
-      if ( dyingMessage == mLastSelectedMessageInFolder )
-      {
-        mLastSelectedMessageInFolder = 0;
-        mUniqueIdOfLastSelectedMessageInFolder = 0;
+        Q_ASSERT( (!mCurrentItemToRestoreAfterViewItemJobStep) || mCurrentItemToRestoreAfterViewItemJobStep->isViewable() );
       }
 
       if (
+           dyingMessage->isViewable() && 
            ( ( dyingMessage )->childItemCount() > 0 ) && // has children
            mView->isExpanded( index( dyingMessage, 0 ) ) // is actually expanded
          )
@@ -2855,26 +2874,19 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       if ( oldParent != mRootItem )
         messageDetachedUpdateParentProperties( oldParent, dyingMessage );
 
-      // remove the message from any pending user job
-      if ( mPersistentSetManager )
-      {
-        mPersistentSetManager->removeMessageItemFromAllSets( dyingMessage );
-        if ( mPersistentSetManager->setCount() < 1 )
-        {
-          delete mPersistentSetManager;
-          mPersistentSetManager = 0;
-        }
-      }
-
       // We might have already removed its parent from the view, so it
       // might already be in the orphan child hash...
       if ( dyingMessage->threadingStatus() == MessageItem::ParentMissing )
-        mOrphanChildrenHash->remove( dyingMessage );
+        mOrphanChildrenHash->remove( dyingMessage ); // this can turn to a no-op (dyingMessage not present in fact)
 
     } else {
+      // The dying message had no parent: this should happen only if it's already an orphan
 
-      // hum.. the dying message had no parent: this should never happen
-      Q_ASSERT( false );
+      Q_ASSERT( dyingMessage->threadingStatus() == MessageItem::ParentMissing );
+      Q_ASSERT( mOrphanChildrenHash->contains( dyingMessage ) );
+      Q_ASSERT( dyingMessage != mCurrentItemToRestoreAfterViewItemJobStep );
+
+      mOrphanChildrenHash->remove( dyingMessage );
     }
 
     if ( mAggregation->threading() != Aggregation::NoThreading )
@@ -2924,12 +2936,20 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
         }
       }
 
-      // The children must be re-shown immediately in order to preserve selection...
-      // Attach to a temporary group.
+      // Parent is gone
       childMessage->setThreadingStatus( MessageItem::ParentMissing );
-      attachMessageToGroupHeader( childMessage );
 
-      Q_ASSERT( childMessage->isViewable() );
+      // If the child is going to be selected, we must immediately
+      // reattach it to a temporary group in order for the selection
+      // to be preserved across multiple steps. Otherwise we could end
+      // with the child-to-be-selected being non viewable at the end
+      // of the view job step. Attach to a temporary group.
+      if ( childMessage == mCurrentItemToRestoreAfterViewItemJobStep )
+      {
+        attachMessageToGroupHeader( childMessage );
+
+        Q_ASSERT( childMessage->isViewable() );
+      }
      
       mOrphanChildrenHash->insert( childMessage, childMessage );
     }
