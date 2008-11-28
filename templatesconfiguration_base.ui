@@ -76,7 +76,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>QTextEdit::NoWrap</enum>
+          <enum>KTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
@@ -105,7 +105,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTextEdit" name="textEdit_reply" >
+        <widget class="KTextEdit" name="textEdit_reply" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
            <horstretch>0</horstretch>
@@ -124,7 +124,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>QTextEdit::NoWrap</enum>
+          <enum>KTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
@@ -153,7 +153,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTextEdit" name="textEdit_reply_all" >
+        <widget class="KTextEdit" name="textEdit_reply_all" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
            <horstretch>0</horstretch>
@@ -172,7 +172,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>QTextEdit::NoWrap</enum>
+          <enum>KTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>
@@ -201,7 +201,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTextEdit" name="textEdit_forward" >
+        <widget class="KTextEdit" name="textEdit_forward" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
            <horstretch>0</horstretch>
@@ -220,7 +220,7 @@
           </font>
          </property>
          <property name="lineWrapMode" >
-          <enum>QTextEdit::NoWrap</enum>
+          <enum>KTextEdit::NoWrap</enum>
          </property>
          <property name="acceptRichText" >
           <bool>false</bool>

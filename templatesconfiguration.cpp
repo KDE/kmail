@@ -430,7 +430,7 @@ QString TemplatesConfiguration::convertPhrases( const QString &str )
 
 void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCursor )
 {
-  QTextEdit* edit;
+  KTextEdit* edit;
 
   if( toolBox1->widget( toolBox1->currentIndex() ) == page_new ) {
     edit = textEdit_new;
