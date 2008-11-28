@@ -212,23 +212,16 @@ namespace KMail {
     newNode->buildObjectTree( false );
 
     if ( startNode.mimePartTreeItem() ) {
-      kDebug() << "\n     ----->  Inserting items into MimePartTree";
       newNode->fillMimePartTree( startNode.mimePartTreeItem(), 0,
                                  QString(), QString(), QString(), 0,
                                  append );
-      kDebug() << "\n     <-----  Finished inserting items into MimePartTree";
-    } else {
-      kDebug() << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
-               << "\n                    we cannot insert new lines into MimePartTree. :-(\n";
     }
-    kDebug() << "\n     ----->  Now parsing the MimePartTree";
     ObjectTreeParser otp( mReader, cryptoProtocol() );
     otp.parseObjectTree( newNode );
     mRawReplyString += otp.rawReplyString();
     mTextualContent += otp.textualContent();
     if ( !otp.textualContentCharset().isEmpty() )
       mTextualContentCharset = otp.textualContentCharset();
-    kDebug() << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()";
   }
 
 
@@ -1233,13 +1226,10 @@ namespace KMail {
     CryptoProtocolSaver cpws( this, useThisCryptProto );
 
     if ( partNode * dataChild = data->firstChild() ) {
-      kDebug() << "\n----->  Calling parseObjectTree( curNode->mChild )";
       stdChildHandling( dataChild );
-      kDebug() << "\n----->  Returning from parseObjectTree( curNode->mChild )";
       return true;
     }
 
-    kDebug() << "\n----->  Initially processing encrypted data";
     PartMetaData messagePart;
     node->setEncryptionState( KMMsgFullyEncrypted );
     QByteArray decryptedData;
@@ -1317,17 +1307,14 @@ namespace KMail {
       return false;
 
     if ( partNode * child = node->firstChild() ) {
-      kDebug() << "\n----->  Calling parseObjectTree( curNode->mChild )";
       ObjectTreeParser otp( mReader, cryptoProtocol() );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
         mTextualContentCharset = otp.textualContentCharset();
-      kDebug() << "\n<-----  Returning from parseObjectTree( curNode->mChild )";
       return true;
     }
-    kDebug() << "\n----->  Initially processing data of embedded RfC 822 message";
     // paint the frame
     PartMetaData messagePart;
     if ( mReader ) {
@@ -1349,7 +1336,6 @@ namespace KMail {
     rfc822DwMessage->Parse();
     KMMessage rfc822message( rfc822DwMessage );
     node->setFromAddress( rfc822message.from() );
-    kDebug() << "\n----->  Store RfC 822 message header \"From:" << rfc822message.from() <<"\"";
     if ( mReader )
       htmlWriter()->queue( mReader->writeMsgHeader( &rfc822message ) );
       //mReader->parseMsgHeader( &rfc822message );
@@ -1365,14 +1351,12 @@ namespace KMail {
 
   bool ObjectTreeParser::processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result ) {
     if ( partNode * child = node->firstChild() ) {
-      kDebug() << "\n----->  Calling parseObjectTree( curNode->mChild )";
       ObjectTreeParser otp( mReader, cryptoProtocol() );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
         mTextualContentCharset = otp.textualContentCharset();
-      kDebug() << "\n<-----  Returning from parseObjectTree( curNode->mChild )";
       return true;
     }
 
@@ -1380,7 +1364,6 @@ namespace KMail {
     if (    node->parentNode()
             && DwMime::kTypeMultipart    == node->parentNode()->type()
             && DwMime::kSubtypeEncrypted == node->parentNode()->subType() ) {
-      kDebug() << "\n----->  Initially processing encrypted data";
       node->setEncryptionState( KMMsgFullyEncrypted );
       if ( keepEncryptions() ) {
         const QByteArray cstr = node->msgPart().bodyDecoded();
@@ -1445,18 +1428,15 @@ namespace KMail {
 
   bool ObjectTreeParser::processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result ) {
     if ( partNode * child = node->firstChild() ) {
-      kDebug() << "\n----->  Calling parseObjectTree( curNode->mChild )";
       ObjectTreeParser otp( mReader, cryptoProtocol() );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
         mTextualContentCharset = otp.textualContentCharset();
-      kDebug() << "\n<-----  Returning from parseObjectTree( curNode->mChild )";
       return true;
     }
 
-    kDebug() << "\n----->  Initially processing signed and/or encrypted data";
     if ( !node->dwPart() || !node->dwPart()->hasHeaders() )
       return false;
 
