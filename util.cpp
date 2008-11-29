@@ -136,10 +136,12 @@ bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
 bool KMail::Util::handleUrlOnMac( const KUrl& url )
 {
 #ifdef Q_WS_MACX
-    QDesktopServices::openUrl(url);
-    return true;
+  QDesktopServices::openUrl( url );
+  return true;
+#else
+  Q_UNUSED( url );
+  return false;
 #endif
-    return false;
 }
 
 
