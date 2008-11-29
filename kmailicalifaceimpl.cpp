@@ -1644,7 +1644,7 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 
 void KMailICalIfaceImpl::changeResourceUIName( const QString &folderPath, const QString &newName )
 {
-  kDebug() << "Folder path " << folderPath << endl;
+  kDebug() << "Folder path" << folderPath;
   KMFolder *f = findResourceFolder( folderPath );
   if ( f ) {
     KMailICalIfaceImpl::getResourceMap()->insert( folderPath, newName );
@@ -1954,8 +1954,8 @@ void KMailICalIfaceImpl::readConfig()
   }
 
   KConfig *config = kmkernel->config();
-  KConfigGroup cf = config->group("Resource UINames");
-  *KMailICalIfaceImpl::mSubResourceUINamesMap =  cf.entryMap();
+  KConfigGroup cf = config->group( "Resource UINames" );
+  *KMailICalIfaceImpl::mSubResourceUINamesMap = cf.entryMap();
 
   reloadFolderTree();
 
