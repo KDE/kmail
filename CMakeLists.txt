@@ -282,7 +282,13 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningco
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc templatesconfiguration_kfg.kcfgc customtemplates_kfg.kcfgc )
 
+set(KMAIL_SQLITE_INDEX false CACHE BOOL "Use sqlite instead of mmap backend for KMail's folder indexes")
+mark_as_advanced(KMAIL_SQLITE_INDEX)
 if(WIN32)
+  set(KMAIL_SQLITE_INDEX true CACHE BOOL "Use sqlite instead of mmap backend for KMail's folder indexes" FORCE)
+endif(WIN32)
+
+if(KMAIL_SQLITE_INDEX)
   find_package(Sqlite)
   macro_log_feature(SQLITE_FOUND "SQLite" "A C library that implements an SQL database engine" "http://www.sqlite.org" TRUE "version 3" "Required for KMail indexing [Windows ONLY].")
   if (NOT SQLITE_FOUND)
@@ -290,13 +296,13 @@ if(WIN32)
   endif(NOT SQLITE_FOUND)
   add_definitions(-DKMAIL_SQLITE_INDEX) # to alter declaration of KMFolderIndex
   include_directories(${SQLITE_INCLUDE_DIR})
-endif(WIN32)
+endif(KMAIL_SQLITE_INDEX)
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 kdepim4_link_unique_libraries(kmailprivate ${KDE4_KHTML_LIBRARY} ${KDE4_THREADWEAVER_LIBRARY} ${KDE4_KMIME_LIBRARY} ${KDE4_KPIMIDENTITIES_LIBRARY} ${KDE4_PHONON_LIBRARY} ${KDE4_KNOTIFYCONFIG_LIBRARY} ${KDE4_KTNEF_LIBRARY} ${KDE4_KUTILS_LIBS} ${KDE4_MAILTRANSPORT_LIBRARY} ${KDE4_KIMAP_LIBRARY} ${KDE4_KPARTS_LIBRARY} kleo ${QGPGME_LIBRARIES} mimelib ksieve kpgp kdepim ${QT_QT3SUPPORT_LIBRARY} ${KDE4_KIO_LIBS} ${KDE4_KABC_LIBS} ${KDE4_KPIMUTILS_LIBS} ${KDE4_KDE3SUPPORT_LIBS})
-if(WIN32)
+if(KMAIL_SQLITE_INDEX)
   kdepim4_link_unique_libraries(kmailprivate ${SQLITE_LIBRARIES})
-endif(WIN32)
+endif(KMAIL_SQLITE_INDEX)
 
 if(Nepomuk_FOUND)
    kdepim4_link_unique_libraries(kmailprivate ${NEPOMUK_LIBRARIES} )
