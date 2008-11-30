@@ -2337,23 +2337,6 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
         mEditor->textCursor().insertText( QString::fromLocal8Bit( loadData.data.data() ) );
     }
 
-    // If the user has set a custom encoding, check if that encoding can still encode
-    // the whole text. If not, change the encoding back to automatic.
-    if ( !mAutoCharset ) {
-      const QTextCodec *currentCodec = KMMsgBase::codecForName( mCharset );
-      if ( currentCodec ) {
-        QString editorText = mEditor->toPlainText();
-        QByteArray encodedText = currentCodec->fromUnicode( editorText );
-        if ( currentCodec->toUnicode( encodedText ) != editorText ) {
-          kDebug() << "Current encoding" << mCharset << "can't encode content, changing to auto.";
-          mEncodingAction->setCurrentItem( 0 );
-          slotSetCharset();
-        }
-      }
-      else
-        kWarning() << "No codec found for current encoding. How can this happen!?";
-    }
-
     mMapAtmLoadData.erase( it );
     if ( attachURLfound ) {
       emit attachmentAdded( attachUrl, true );
@@ -2480,15 +2463,17 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
 void KMComposeWin::slotInsertFile()
 {
   QString encodingStr;
-  KUrl u = mEditor->insertFile(KMMsgBase::supportedEncodings(false),encodingStr );
-  if( u.isEmpty()) return;
+  KUrl u = mEditor->insertFile( KMMsgBase::supportedEncodings( false ),
+                                encodingStr );
+  if ( u.isEmpty() )
+    return;
 
   mRecentAction->addUrl(u);
   // Prevent race condition updating list when multiple composers are open
   {
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QString encoding = KMMsgBase::encodingForName(encodingStr).toLatin1();
+    QString encoding = KMMsgBase::encodingForName( encodingStr ).toLatin1();
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
     // Prevent config file from growing without bound
