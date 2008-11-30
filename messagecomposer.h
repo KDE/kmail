@@ -133,12 +133,35 @@ class MessageComposer : public QObject {
                                       bool doSign, bool doEncrypt );
 
     /**
+     * Reads the plain text version and the HTML code from the edit widget,
+     * applies linebreaks and encodes those with the current charset.
+     *
+     * @return false if not all chars could be encoded with the current charset.
+     */
+    bool getSourceText( QString &plainText, QString &htmlSource,
+                        QByteArray &plainTextEncoded, QByteArray &htmlSourceEncoded ) const;
+
+    /**
      * This sets the member variables mHtmlSource and mPlainText and mBodyText.
      * The text is taken from the composer (with proper wordwrapping) and
      * then encoded with the correct codec.
      * The user is warned if the codec can't encode all characters.
+     *
+     * @return false if any error occured, for example if the text of the body
+     *         couldn't be encoded.
      */
-    void breakLinesAndApplyCodec();
+    bool breakLinesAndApplyCodec();
+
+    /**
+     * This will automatically detect the charset needed to encode the text of
+     * the composer.
+     * mCharset will be set to the detected character set, and the charset of
+     * the composer window will be set as well.
+     *
+     * @return true if the detection was successfull, false if no suitable
+     *         charset was found.
+     */
+    bool autoDetectCharset();
 
     /*
       Gets the signature for a message (into mMessage).
