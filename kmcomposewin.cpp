@@ -2291,10 +2291,13 @@ void KMComposeWin::slotAttachFileData( KIO::Job *job, const QByteArray &data )
 {
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find( job );
   assert( it != mMapAtmLoadData.end() );
-  QBuffer buff( &(*it).data );
-  buff.open( QIODevice::WriteOnly | QIODevice::Append );
-  buff.write( data.data(), data.size() );
-  buff.close();
+
+  if ( data.size() > 0 ) {
+    QBuffer buff( &(*it).data );
+    buff.open( QIODevice::WriteOnly | QIODevice::Append );
+    buff.write( data.data(), data.size() );
+    buff.close();
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2320,28 +2323,55 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     return;
   }
 
-  if ( (*it).insert ) {
-    (*it).data.resize((*it).data.size() + 1);
-    (*it).data[(*it).data.size() - 1] = '\0';
-    if ( const QTextCodec *codec = KGlobal::charsets()->codecForName((*it).encoding) ) {
-        mEditor->textCursor().insertText( codec->toUnicode( (*it).data ) );
+  atmLoadData &loadData = *it;
+
+  // If we only want to insert this file into the composer and not attach it,
+  // do that now and return
+  if ( loadData.insert ) {
+
+    // Actually insert the file as text
+    const QTextCodec *fileCodec = KGlobal::charsets()->codecForName( loadData.encoding );
+    if ( fileCodec ) {
+        mEditor->textCursor().insertText( fileCodec->toUnicode( loadData.data.data() ) );
     } else {
-        mEditor->textCursor().insertText( QString::fromLocal8Bit( (*it).data ) );
+        mEditor->textCursor().insertText( QString::fromLocal8Bit( loadData.data.data() ) );
     }
-    mMapAtmLoadData.erase(it);
+
+    // If the user has set a custom encoding, check if that encoding can still encode
+    // the whole text. If not, change the encoding back to automatic.
+    if ( !mAutoCharset ) {
+      const QTextCodec *currentCodec = KMMsgBase::codecForName( mCharset );
+      if ( currentCodec ) {
+        QString editorText = mEditor->toPlainText();
+        QByteArray encodedText = currentCodec->fromUnicode( editorText );
+        if ( currentCodec->toUnicode( encodedText ) != editorText ) {
+          kDebug() << "Current encoding" << mCharset << "can't encode content, changing to auto.";
+          mEncodingAction->setCurrentItem( 0 );
+          slotSetCharset();
+        }
+      }
+      else
+        kWarning() << "No codec found for current encoding. How can this happen!?";
+    }
+
+    mMapAtmLoadData.erase( it );
     if ( attachURLfound ) {
       emit attachmentAdded( attachUrl, true );
     }
     return;
   }
-  const QByteArray partCharset = (*it).url.fileEncoding().isEmpty()
-    ? mCharset
-    : QByteArray((*it).url.fileEncoding().toLatin1());
+
+  QByteArray partCharset;
+  if ( !loadData.url.fileEncoding().isEmpty() ) {
+    partCharset = loadData.url.fileEncoding().toLatin1();
+  } else {
+    partCharset = mCharset;
+  }
 
   KMMessagePart* msgPart;
 
   KCursorSaver busy( KBusyPtr::busy() );
-  QString name( (*it).url.fileName() );
+  QString name( loadData.url.fileName() );
   // ask the job for the mime type of the file
   QString mimeType = static_cast<KIO::TransferJob*>(job)->mimetype();
 
@@ -2389,11 +2419,11 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
   msgPart->setName( name );
   QList<int> allowedCTEs;
   if ( mimeType == "message/rfc822" ) {
-    msgPart->setMessageBody( (*it).data );
+    msgPart->setMessageBody( loadData.data );
     allowedCTEs << DwMime::kCte7bit;
     allowedCTEs << DwMime::kCte8bit;
   } else {
-    msgPart->setBodyAndGuessCte( (*it).data, allowedCTEs,
+    msgPart->setBodyAndGuessCte( loadData.data, allowedCTEs,
                                  !kmkernel->msgSender()->sendQuotedPrintable() );
     kDebug(5006) <<"autodetected cte:" << msgPart->cteStr();
   }
@@ -2435,10 +2465,11 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     }
   }
   mAtmModified = true;
-  if (msgPart->typeStr().toLower() != "text") msgPart->setCharset(QByteArray());
+  if ( msgPart->typeStr().toLower() != "text" )
+    msgPart->setCharset( QByteArray() );
 
   // add the new attachment to the list
-  addAttach(msgPart);
+  addAttach( msgPart );
 
   if ( attachURLfound ) {
     emit attachmentAdded( attachUrl, true );
