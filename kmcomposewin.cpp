@@ -83,7 +83,7 @@ using KPIM::DictionaryComboBox;
 #include <kcursorsaver.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
-#include <kfiledialog.h>
+#include <kencodingfiledialog.h>
 #include <kinputdialog.h>
 #include <kmenu.h>
 #include <kmimetypetrader.h>
@@ -2096,7 +2096,7 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach( KMMessagePart *msgPart )
 {
-  mAtmList.append( (KMMessagePart*) msgPart );
+  mAtmList.append( msgPart );
 
   // show the attachment listbox if it does not up to now
   if ( mAtmList.count() == 1 ) {
@@ -2143,11 +2143,15 @@ QString KMComposeWin::prettyMimeType( const QString &type )
   const KMimeType::Ptr st = KMimeType::mimeType( t );
 
   if ( !st ) {
-    kWarning(5006) <<"unknown mimetype" << t;
-    return QString();
+    kWarning() <<"unknown mimetype" << t;
+    return t;
   }
 
-  return !st->isDefault() ? st->comment() : t;
+  QString pretty = !st->isDefault() ? st->comment() : t;
+  if ( pretty.isEmpty() )
+    return type;
+  else
+    return pretty;
 }
 
 void KMComposeWin::msgPartToItem( const KMMessagePart *msgPart,
@@ -2272,8 +2276,8 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KUrl url;
-  KFileDialog fdlg( url, QString(), this );
+  KEncodingFileDialog fdlg( QString(), QString(), QString(), QString(),
+                            KFileDialog::Opening, this );
   fdlg.setOperationMode( KFileDialog::Other );
   fdlg.setCaption( i18n("Attach File") );
   fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
@@ -2282,8 +2286,11 @@ void KMComposeWin::slotAttachFile()
     return;
 
   const KUrl::List files = fdlg.selectedUrls();
-  foreach ( const KUrl& url, files )
-    addAttach( url );
+  foreach ( const KUrl& url, files ) {
+    KUrl urlWithEncoding = url;
+    urlWithEncoding.setFileEncoding( fdlg.selectedEncoding() );
+    addAttach( urlWithEncoding );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2344,19 +2351,36 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     return;
   }
 
+  // Determine the mime type of the attachment
+  QString mimeType = static_cast<KIO::TransferJob*>(job)->mimetype();
+  kDebug() << "Mimetype is" << mimeType;
+  int slash = mimeType.indexOf( '/' );
+  if( slash == -1 )
+    slash = mimeType.length();
+  QString type = mimeType.left( slash );
+  QString subType = mimeType.mid( slash + 1 );
+  bool isTextualType = ( type.toLower() == "text" );
+
+  //
+  // If the attachment is a textual mimetype, try to determine the charset.
+  //
   QByteArray partCharset;
-  if ( !loadData.url.fileEncoding().isEmpty() ) {
-    partCharset = loadData.url.fileEncoding().toLatin1();
-  } else {
-    partCharset = mCharset;
+  if ( isTextualType ) {
+    if ( !loadData.url.fileEncoding().isEmpty() ) {
+      partCharset = KMMsgBase::fixEncoding( loadData.url.fileEncoding() ).toLatin1();
+      kDebug() << "Got charset from job:" << partCharset;
+    } else {
+      kWarning() << "No charset found, using UTF-8!";
+      partCharset = "utf-8";
+    }
   }
 
-  KMMessagePart* msgPart;
-
   KCursorSaver busy( KBusyPtr::busy() );
+
+  //
+  // Try to determine the filename and the correct encoding for that filename.
+  //
   QString name( loadData.url.fileName() );
-  // ask the job for the mime type of the file
-  QString mimeType = static_cast<KIO::TransferJob*>(job)->mimetype();
 
   if ( name.isEmpty() ) {
     // URL ends with '/' (e.g. http://www.kde.org/)
@@ -2375,30 +2399,35 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
         else if( i > 0 )
           ext = ext.mid( i );
       }
-      name = QString("unknown") += ext;
+      name = QString( "unknown" ) + ext;
     }
   }
 
   name.truncate( 256 ); // is this needed?
 
-  QByteArray encoding = KMMsgBase::autoDetectCharset(partCharset,
-                                                     KMMessage::preferredCharsets(), name);
-  if (encoding.isEmpty()) encoding = "utf-8";
+  // For the encoding of the name, prefer the current charset of the composer first,
+  // then try every other available encoding.
+  QByteArray nameEncoding =
+      KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), name );
+  if ( nameEncoding.isEmpty() )
+    nameEncoding = "utf-8";
 
-  QByteArray encName;
+  QByteArray encodedName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
-    encName = KMMsgBase::encodeRFC2047String( name, encoding );
+    encodedName = KMMsgBase::encodeRFC2047String( name, nameEncoding );
   } else {
-    encName = KMMsgBase::encodeRFC2231String( name, encoding );
+    encodedName = KMMsgBase::encodeRFC2231String( name, nameEncoding );
   }
 
   bool RFC2231encoded = false;
   if ( !GlobalSettings::self()->outlookCompatibleAttachments() ) {
-    RFC2231encoded = name != QString( encName );
+    RFC2231encoded = name != QString( encodedName );
   }
 
-  // create message part
-  msgPart = new KMMessagePart;
+  //
+  // Create message part
+  //
+  KMMessagePart *msgPart = new KMMessagePart;
   msgPart->setName( name );
   QList<int> allowedCTEs;
   if ( mimeType == "message/rfc822" ) {
@@ -2408,21 +2437,20 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
   } else {
     msgPart->setBodyAndGuessCte( loadData.data, allowedCTEs,
                                  !kmkernel->msgSender()->sendQuotedPrintable() );
-    kDebug(5006) <<"autodetected cte:" << msgPart->cteStr();
+    kDebug() << "Autodetected CTE:" << msgPart->cteStr();
   }
-  int slash = mimeType.indexOf( '/' );
-  if( slash == -1 )
-    slash = mimeType.length();
-  msgPart->setTypeStr( mimeType.left( slash ).toLatin1() );
-  msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).toLatin1() );
-  msgPart->setContentDisposition(QByteArray("attachment;\n\tfilename")
-                                 + ( RFC2231encoded ? "*=" + encName : "=\"" + encName + '"' ) );
+  msgPart->setTypeStr( type.toLatin1() );
+  msgPart->setSubtypeStr( subType.toLatin1() );
+  msgPart->setContentDisposition( QByteArray( "attachment;\n\tfilename" )
+                                 + ( RFC2231encoded ? "*=" + encodedName : "=\"" + encodedName + '"' ) );
+  if ( isTextualType )
+    msgPart->setCharset( partCharset );
 
-  mMapAtmLoadData.erase(it);
+  mMapAtmLoadData.erase( it );
 
-  msgPart->setCharset( partCharset );
-
-  // show message part dialog, if not configured away (default):
+  //
+  // Show message part dialog, if not configured away (default):
+  //
   if ( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
     const KCursorSaver saver( Qt::ArrowCursor );
     KMMsgPartDialogCompat dlg;
@@ -2438,7 +2466,7 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
       }
     dlg.setShownEncodings( encodings );
     dlg.setMsgPart(msgPart);
-    if (!dlg.exec()) {
+    if ( !dlg.exec() ) {
       delete msgPart;
       msgPart = 0;
       if ( attachURLfound ) {
@@ -2447,9 +2475,9 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
       return;
     }
   }
+
+
   mAtmModified = true;
-  if ( msgPart->typeStr().toLower() != "text" )
-    msgPart->setCharset( QByteArray() );
 
   // add the new attachment to the list
   addAttach( msgPart );
@@ -2462,29 +2490,27 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  QString encodingStr;
-  KUrl u = mEditor->insertFile( KMMsgBase::supportedEncodings( false ),
-                                encodingStr );
+  KUrl u = mEditor->insertFile();
   if ( u.isEmpty() )
     return;
 
-  mRecentAction->addUrl(u);
+  mRecentAction->addUrl( u );
   // Prevent race condition updating list when multiple composers are open
   {
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QString encoding = KMMsgBase::encodingForName( encodingStr ).toLatin1();
+    QString encoding = KMMsgBase::encodingForName( u.fileEncoding() ).toLatin1();
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
     // Prevent config file from growing without bound
     // Would be nicer to get this constant from KRecentFilesAction
-    uint mMaxRecentFiles = 30;
-    while ((uint)urls.count() > mMaxRecentFiles)
+    int mMaxRecentFiles = 30;
+    while ( urls.count() > mMaxRecentFiles )
       urls.removeLast();
-    while ((uint)encodings.count() > mMaxRecentFiles)
+    while ( encodings.count() > mMaxRecentFiles )
       encodings.removeLast();
     // sanity check
-    if (urls.count() != encodings.count()) {
+    if ( urls.count() != encodings.count() ) {
       urls.clear();
       encodings.clear();
     }
@@ -2494,7 +2520,7 @@ void KMComposeWin::slotInsertFile()
     group.writeEntry( "recent-encodings", encodings );
     mRecentAction->saveEntries( config->group( QString() ) );
   }
-  slotInsertRecentFile(u);
+  slotInsertRecentFile( u );
 }
 
 //-----------------------------------------------------------------------------

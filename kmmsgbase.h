@@ -256,8 +256,18 @@ public:
     * where ascii, *ok will be set to false otherwise */
   static QByteArray toUsAscii(const QString& _str, bool *ok=0);
 
-  /** Return a list of the supported encodings */
-  static QStringList supportedEncodings(bool usAscii);
+  /**
+   * Return a list of the supported encodings
+   * @param usAscii if true, US-Ascii encoding will be prepended to the list.
+   */
+  static QStringList supportedEncodings( bool usAscii );
+
+  /**
+   * Fixes an encoding received by a KDE function and returns the proper,
+   * MIME-compilant encoding name instead.
+   * @see encodingForName
+   */
+  static QString fixEncoding( const QString &encoding );
 
   /**
    * Drop-in replacement for KCharsets::encodingForName(). The problem with
