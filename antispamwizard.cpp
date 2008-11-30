@@ -782,8 +782,8 @@ AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
                         "SpamAssassin", "spamassassin -V",
                         "http://spamassassin.org", "SpamAssassin Check",
                         "spamassassin -L",
-                        "sa-learn -L --spam --no-rebuild --single",
-                        "sa-learn -L --ham --no-rebuild --single",
+                        "sa-learn -L --spam --no-sync --single",
+                        "sa-learn -L --ham --no-sync --single",
                         "spamassassin -d",
                         "X-Spam-Flag", "yes", "", "",
                         false, false, true, false, AntiSpam );

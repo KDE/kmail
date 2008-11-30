@@ -88,8 +88,8 @@ namespace KMail {
     URL=http://spamassassin.org
     PipeFilterName=SpamAssassin Check
     PipeCmdDetect=spamassassin -L
-    ExecCmdSpam=sa-learn --spam --no-rebuild --single
-    ExecCmdHam=sa-learn --ham --no-rebuild --single
+    ExecCmdSpam=sa-learn --spam --no-sync --single
+    ExecCmdHam=sa-learn --ham --no-sync --single
     PipeCmdNoSpam=spamassassin -d
     DetectionHeader=X-Spam-Flag
     DetectionPattern=yes
