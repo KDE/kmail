@@ -56,7 +56,6 @@ using KMail::TemplateParser;
 #include <kapplication.h>
 #include <ksystemtrayicon.h>
 #include <kconfiggroup.h>
-#include <libkpgp/kpgp.h>
 #include <kdebug.h>
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
@@ -137,7 +136,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   mXmlGuiInstance = KComponentData();
 
-  new Kpgp::Module();
 
   netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
 

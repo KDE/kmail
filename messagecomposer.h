@@ -41,7 +41,6 @@
 
 #include <mimelib/mediatyp.h>
 #include "kleo/cryptobackend.h"
-#include <libkpgp/kpgp.h>
 
 #include <vector>
 
