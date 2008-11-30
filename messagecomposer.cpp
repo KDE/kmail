@@ -467,20 +467,11 @@ void MessageComposer::readFromComposeWin()
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
   if ( mAutoCharset ) {
-    QByteArray charset =
-      KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(),
-                                    mComposeWin->mEditor->textOrHtml() );
-    if ( charset.isEmpty() ) {
-      KMessageBox::sorry( mComposeWin,
-                          i18n( "No suitable encoding could be found for "
-                                "your message.\nPlease set an encoding "
-                                "using the 'Options' menu." ) );
+    bool charsetFound = autoDetectCharset();
+    if ( !charsetFound ) {
       mRc = false;
       return;
     }
-    mCharset = charset;
-    // Also apply this to the composer window
-    mComposeWin->mCharset = charset;
   }
   mReferenceMessage->setCharset(mCharset);
 
@@ -559,7 +550,10 @@ void MessageComposer::readFromComposeWin()
 
   mIsRichText = ( mComposeWin->mEditor->textMode() == KMeditor::Rich );
   mIdentityUid = mComposeWin->identityUid();
-  breakLinesAndApplyCodec();
+  if ( !breakLinesAndApplyCodec() ) {
+    mRc = false;
+    return;
+  }
 }
 
 static QByteArray escape_quoted_string( const QByteArray &str ) {
@@ -2126,7 +2120,25 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 }
 
 //-----------------------------------------------------------------------------
-void MessageComposer::breakLinesAndApplyCodec()
+bool MessageComposer::autoDetectCharset()
+{
+  QByteArray charset =
+      KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(),
+                                    mComposeWin->mEditor->textOrHtml() );
+  if ( charset.isEmpty() ) {
+    KMessageBox::sorry( mComposeWin,
+                        i18n( "No suitable encoding could be found for "
+                              "your message.\nPlease set an encoding "
+                              "using the 'Options' menu." ) );
+    return false;
+  }
+  mCharset = charset;
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+bool MessageComposer::getSourceText( QString &plainText, QString &htmlSource,
+                                     QByteArray &plainTextEncoded, QByteArray &htmlSourceEncoded ) const
 {
   // Get the HTML source and the plain text, with proper breaking
   //
@@ -2137,7 +2149,6 @@ void MessageComposer::breakLinesAndApplyCodec()
   //
   // Therefore, we now read the plain text version directly from the composer,
   // which returns the correct result.
-  QString plainText, htmlSource;
   htmlSource = mComposeWin->mEditor->toHtml();
   if ( mDisableBreaking || !GlobalSettings::self()->wordWrap() )
     plainText = mComposeWin->mEditor->toPlainText();
@@ -2145,7 +2156,6 @@ void MessageComposer::breakLinesAndApplyCodec()
     plainText = mComposeWin->mEditor->toWrappedPlainText();
 
   // Now, convert the string to a bytearray with the right codec
-  QByteArray plainTextEncoded, htmlSourceEncoded;
   QString newPlainText;
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
   if ( mCharset == "us-ascii" ) {
@@ -2166,24 +2176,53 @@ void MessageComposer::breakLinesAndApplyCodec()
   // Check if we didn't loose any characters during encoding.
   // This can be checked by decoding the encoded text and comparing it with the
   // original, it should be the same.
-  if ( !plainText.isEmpty() && ( newPlainText != plainText ) ) {
-    // FIXME the whole thing here is completely broken, see
-    //       bug 149309 and 145163.
-    //       Furthermore, there is no reason the set the text to the editor,
-    //       it will just break rich text formatting anyway. text() and
-    //       setText() are evil.
-    QString oldText = mComposeWin->mEditor->text();
-    mComposeWin->mEditor->setText( newPlainText );
+  if ( !plainText.isEmpty() && ( newPlainText != plainText ) )
+    return false;
+  else
+    return true;
+}
+
+//-----------------------------------------------------------------------------
+bool MessageComposer::breakLinesAndApplyCodec()
+{
+  // Get the encoded text and HTML
+  QString plainText, htmlSource;
+  QByteArray plainTextEncoded, htmlSourceEncoded;
+  bool ok = getSourceText( plainText, htmlSource, plainTextEncoded, htmlSourceEncoded );
+
+  // Not all chars fit into the current charset, ask the user what to do about it.
+  if ( !ok ) {
     KCursorSaver idle( KBusyPtr::idle() );
-    bool anyway = ( KMessageBox::warningYesNo(
-                      mComposeWin,
-                      i18n("<qt>Not all characters fit into the chosen"
-                           " encoding.<br /><br />Send the message anyway?</qt>"),
-                      i18n("Some Characters Will Be Lost"),
-                      KGuiItem ( i18n("Lose Characters") ),
-                      KGuiItem( i18n("Change Encoding") ) ) == KMessageBox::Yes );
-    if ( !anyway ) {
-      mComposeWin->mEditor->setText( oldText );
+    bool loseChars = ( KMessageBox::warningYesNo(
+                       mComposeWin,
+                       i18n("<qt>Not all characters fit into the chosen"
+                            " encoding.<br /><br />Send the message anyway?</qt>"),
+                       i18n("Some Characters Will Be Lost"),
+                       KGuiItem ( i18n("Lose Characters") ),
+                       KGuiItem( i18n("Change Encoding") ) ) == KMessageBox::Yes );
+    if ( loseChars ) {
+      const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+      mComposeWin->mEditor->replaceUnknownChars( codec );
+    }
+    else {
+      // The user wants to change the encoding, so auto-detect a correct one.
+      bool charsetFound = autoDetectCharset();
+      if ( charsetFound ) {
+        // Read the values again, this time they should be correct, since we just
+        // set the correct charset.
+        bool ok = getSourceText( plainText, htmlSource, plainTextEncoded, htmlSourceEncoded );
+        if ( !ok ) {
+          kWarning() << "The autodetected charset is still wrong!";
+        }
+
+        // Now, set the charset of the composer, since we just changed it.
+        // Useful when this questionbox was brought up by autosave.
+        mComposeWin->setCharset( mCharset );
+      }
+      else { // no charset could be autodetected
+        mRc = false;
+        return false;
+      }
     }
   }
 
@@ -2213,6 +2252,8 @@ void MessageComposer::breakLinesAndApplyCodec()
     mBodyText = mHtmlSource;
   else
     mBodyText = mPlainText;
+
+  return true;
 }
 
 //-----------------------------------------------------------------------------

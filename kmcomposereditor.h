@@ -40,6 +40,12 @@ class KMComposerEditor : public KMeditor
     ~KMComposerEditor();
 
     virtual QString quotePrefixName() const;
+    /**
+     * This replaces all characters not known to the specified codec with
+     * questionmarks. HTML formatting is preserved.
+     */
+    void replaceUnknownChars( const QTextCodec *codec );
+
     virtual QString smartQuote( const QString & msg );
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
