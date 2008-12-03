@@ -1166,7 +1166,7 @@ void KMMainWidget::slotCompose()
 
 KMFolder * KMMainWidget::folder() const
 {
-  Q_ASSERT( mFolder == messageListView()->currentFolder() );
+  Q_ASSERT( mFolder == messageListView()->currentFolder() || mFolder == 0 );
   return mFolder;
 }
 
