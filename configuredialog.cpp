@@ -829,7 +829,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   // account list: left widget in hlay; stretch 1
   mAccountList = new ListView( this );
   mAccountList->setObjectName( "accountList" );
-  mAccountList->setHeaderLabels( QStringList() << "Name" << "Type" << "Folder" );
+  mAccountList->setHeaderLabels( QStringList() << i18n("Name") << i18n("Type") << i18n("Folder") );
   mAccountList->setSortingEnabled( true );
   mAccountList->sortByColumn( 0, Qt::AscendingOrder );
 
