@@ -813,19 +813,16 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   // account list: left widget in hlay; stretch 1
   mAccountList = new ListView( this );
   mAccountList->setObjectName( "accountList" );
-  mAccountList->setHeaderLabels( QStringList() << "Name" << "Type" << "Folder" );
+  mAccountList->setHeaderLabels( QStringList() <<
+                                 i18n( "Name" ) << i18n( "Type" ) << i18n( "Folder" ) );
   mAccountList->setSortingEnabled( true );
   mAccountList->sortByColumn( 0, Qt::AscendingOrder );
 
   connect( mAccountList->selectionModel(),
-           SIGNAL(
-             selectionChanged( const QItemSelection &, const QItemSelection &)
-           ),
-           this,
-           SLOT( slotAccountSelected() )
-         );
-  connect( mAccountList, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           this, SLOT( slotModifySelectedAccount() ) );
+           SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection &)),
+           this, SLOT(slotAccountSelected()) );
+  connect( mAccountList, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
+           this, SLOT(slotModifySelectedAccount()) );
   hlay->addWidget( mAccountList, 1 );
 
   // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
