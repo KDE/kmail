@@ -249,7 +249,6 @@ public:
    * If preferEmptyTab is set to false then the (new) folder is loaded
    * in the current tab. If preferEmptyTab is set to true then the (new) folder is
    * loaded in the first empty tab (or a new one if there are no empty ones).
-   * If jumpToFirstUnread is set to true then the first unread message is pre-selected.
    *
    * Pre-selection is the action of automatically selecting a message just after the folder
    * has finished loading. See Model::setStorageModel() for more information.
@@ -298,46 +297,54 @@ public:
   void setAllThreadsExpanded( bool expand );
 
   /**
-   * Selects the next message item in the view. If unread is true
-   * then selects the next unread message item. If expandSelection is
-   * true then the previous selection is retained, otherwise it's cleared.
+   * Selects the next message item in the view.
+   *
+   * messageTypeFilter can be used to restrict the selection to only certain message types.
+   *
+   * If expandSelection is true then the previous selection is retained, otherwise it's cleared.
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "next" algorithm will restart from the beginning
    * of the list if the end is reached, otherwise it will just stop returning false.
    */
-  bool selectNextMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop );
+  bool selectNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
 
   /**
-   * Selects the previous message item in the view. If unread is true
-   * then selects the previous unread message item. If expandSelection is
+   * Selects the previous message item in the view. If expandSelection is
    * true then the previous selection is retained, otherwise it's cleared.
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
+   *
+   * messageTypeFilter can be used to restrict the selection to only certain message types.
+   *
    * If loop is true then the "previous" algorithm will restart from the end
    * of the list if the beginning is reached, otherwise it will just stop returning false.
    */
-  bool selectPreviousMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop );
+  bool selectPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
 
   /**
    * Focuses the next message item in the view without actually selecting it.
-   * If unread is true then focuses the next unread message item.
+   *
+   * messageTypeFilter can be used to restrict the selection to only certain message types.
+   *
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "next" algorithm will restart from the beginning
    * of the list if the end is reached, otherwise it will just stop returning false.
    */
-  bool focusNextMessageItem( bool unread, bool centerItem, bool loop );
+  bool focusNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
 
   /**
    * Focuses the previous message item in the view without actually selecting it.
-   * If unread is true then focuses the previous unread message item.
+   *
+   * messageTypeFilter can be used to restrict the selection to only certain message types.
+   *
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "previous" algorithm will restart from the end
    * of the list if the beginning is reached, otherwise it will just stop returning false.
    */
-  bool focusPreviousMessageItem( bool unread, bool centerItem, bool loop );
+  bool focusPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
 
   /**
    * Selects the currently focused message item. May do nothing if the
@@ -348,7 +355,7 @@ public:
   void selectFocusedMessageItem( bool centerItem );
 
   /**
-   * Selects the first unread message item in the view.
+   * Selects the first message item in the view that matches the specified Core::MessageTypeFilter.
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    *
@@ -357,10 +364,12 @@ public:
    * If the current view is still loading then the selection of the first
    * message will be scheduled to be executed when loading terminates.
    *
-   * So this function doesn't actually guarantee that an unread message
+   * So this function doesn't actually guarantee that an unread or new message
    * was selected when the call returns. Take care :)
+   *
+   * The function returns true if a message was selected and false otherwise.
    */
-  void selectFirstUnreadMessage( bool centerItem );
+  bool selectFirstMessage( Core::MessageTypeFilter messageTypeFilter, bool centerItem );
 
   /**
    * Selects all the items in the current folder.

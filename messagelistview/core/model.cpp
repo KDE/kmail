@@ -815,10 +815,22 @@ void Model::applyMessagePreSelection( PreSelectionMode preSelectionMode )
   switch( preSelectionMode )
   {
     case PreSelectFirstUnread:
-      mView->selectFirstUnreadMessageItem( false ); // don't center
+      mView->selectFirstMessageItem( MessageTypeUnreadOnly, false ); // don't center
     break;
     case PreSelectFirstUnreadCentered:
-      mView->selectFirstUnreadMessageItem( true ); // center
+      mView->selectFirstMessageItem( MessageTypeUnreadOnly, true ); // center
+    break;
+    case PreSelectFirstNew:
+      mView->selectFirstMessageItem( MessageTypeNewOnly, false ); // don't center
+    break;
+    case PreSelectFirstNewCentered:
+      mView->selectFirstMessageItem( MessageTypeNewOnly, true ); // center
+    break;
+    case PreSelectFirstNewOrUnread:
+      mView->selectFirstMessageItem( MessageTypeNewOrUnreadOnly, false ); // don't center
+    break;
+    case PreSelectFirstNewOrUnreadCentered:
+      mView->selectFirstMessageItem( MessageTypeNewOrUnreadOnly, true ); // center
     break;
     case PreSelectLastSelected:
       // has no meaning in this state
@@ -2844,14 +2856,14 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
         // you read a message, decide to delete it and then go to the next.
         // Qt tends to select the message above the removed one instead (this is a hardcoded logic in
         // QItemSelectionModelPrivate::_q_rowsAboutToBeRemoved()).
-        mCurrentItemToRestoreAfterViewItemJobStep = mView->messageItemAfter( dyingMessage, false, false );
+        mCurrentItemToRestoreAfterViewItemJobStep = mView->messageItemAfter( dyingMessage, MessageTypeAny, false );
 
         if ( !mCurrentItemToRestoreAfterViewItemJobStep )
         {
           // There is no item below. Try the item above.
           // We still do it better than qt which tends to find the *thread* above
           // instead of the item above.
-          mCurrentItemToRestoreAfterViewItemJobStep = mView->messageItemBefore( dyingMessage, false, false );
+          mCurrentItemToRestoreAfterViewItemJobStep = mView->messageItemBefore( dyingMessage, MessageTypeAny, false );
         }
 
         Q_ASSERT( (!mCurrentItemToRestoreAfterViewItemJobStep) || mCurrentItemToRestoreAfterViewItemJobStep->isViewable() );
@@ -3592,10 +3604,22 @@ void Model::viewItemJobStep()
               bSelectionDone = false; // we're not done: deal with selection below
           break;
           case PreSelectFirstUnread:
-            mView->selectFirstUnreadMessageItem( false ); // don't center
+            bSelectionDone = mView->selectFirstMessageItem( MessageTypeUnreadOnly, false ); // don't center
           break;
           case PreSelectFirstUnreadCentered:
-            mView->selectFirstUnreadMessageItem( true ); // center
+            bSelectionDone = mView->selectFirstMessageItem( MessageTypeUnreadOnly, true ); // center
+          break;
+          case PreSelectFirstNew:
+            bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOnly, false ); // don't center
+          break;
+          case PreSelectFirstNewCentered:
+            bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOnly, true ); // center
+          break;
+          case PreSelectFirstNewOrUnread:
+            bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOrUnreadOnly, false ); // don't center
+          break;
+          case PreSelectFirstNewOrUnreadCentered:
+            bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOrUnreadOnly, true ); // center
           break;
           case PreSelectNone:
             bSelectionDone = false; // deal with selection below

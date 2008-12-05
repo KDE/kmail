@@ -296,7 +296,7 @@ void View::applyThemeColumns()
       if ( realWidth < 2 )
         realWidth = 2; // don't allow very insane values 
 
-      kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " chosen " << realWidth;
+      // kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " chosen " << realWidth;
       totalVisibleWidth += realWidth;
     } else {
       // Column not visible
@@ -308,7 +308,7 @@ void View::applyThemeColumns()
     idx++;
   }
 
-  kDebug() << "Total visible width before fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
+  // kDebug() << "Total visible width before fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
   // Now the algorithm above may be wrong for several reasons...
   // - We're using fixed widths for certain columns and proportional
@@ -326,7 +326,6 @@ void View::applyThemeColumns()
 
   if ( totalVisibleWidth != viewport()->width() )
   {
-    kDebug() << "Trying to adjust sizes...";
     // The estimated widths were not using exactly the available space.
     if ( totalVisibleWidth < viewport()->width() )
     {
@@ -360,7 +359,6 @@ void View::applyThemeColumns()
       // try to squeeze them in order to make them fit
       if ( totalVisibleWidth < ( viewport()->width() + 100 ) )
       {
-        kDebug() << "Trying to squeeze columns...";
         int missing = totalVisibleWidth - viewport()->width();
         int count = lColumnWidths.count();
 
@@ -425,7 +423,7 @@ void View::applyThemeColumns()
   {
     if ( ( *it )->currentlyVisible() )
     {
-      kDebug() << "Resize section " << idx << " to " << lColumnWidths[ idx ];
+      // kDebug() << "Resize section " << idx << " to " << lColumnWidths[ idx ];
       ( *it )->setCurrentWidth( lColumnWidths[ idx ] );
       header()->resizeSection( idx, lColumnWidths[ idx ] );
       totalVisibleWidth += lColumnWidths[ idx ];
@@ -435,7 +433,7 @@ void View::applyThemeColumns()
     idx++;
   }
 
-  kDebug() << "Total visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
+  // kDebug() << "Total visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
   totalVisibleWidth = 0;
   idx = 0;
@@ -446,22 +444,20 @@ void View::applyThemeColumns()
   {
     if ( !header()->isSectionHidden( idx ) )
     {
-      kDebug() << "!! Final size for column " << idx << " is " << header()->sectionSize( idx );
+      // kDebug() << "!! Final size for column " << idx << " is " << header()->sectionSize( idx );
       if ( !( *it )->currentlyVisible() )
       {
         bTriggeredQtBug = true;
-        kDebug() << "!! ERROR: Qt screwed up: I've set column " << idx << " to hidden but it's shown";
+        // kDebug() << "!! ERROR: Qt screwed up: I've set column " << idx << " to hidden but it's shown";
       }
       totalVisibleWidth += header()->sectionSize( idx );
     }
     idx++;
   }
   
-  kDebug() << "Total real visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
+  // kDebug() << "Total real visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
-  kDebug() << "Setting header hidden/shown...";
   setHeaderHidden( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader );
-  kDebug() << "Set header hidden/show";
 
   mSaveThemeColumnStateOnSectionResize = oldSave;
   mNeedToApplyThemeColumns = false;
@@ -471,7 +467,7 @@ void View::applyThemeColumns()
   if (bTriggeredQtBug && bAllowRecursion)
   {
     bAllowRecursion = false;
-    kDebug() << "I've triggered the QHeaderView bug: trying to fix by calling myself again";
+    // kDebug() << "I've triggered the QHeaderView bug: trying to fix by calling myself again";
     applyThemeColumns();
     bAllowRecursion = true;
   }
@@ -493,8 +489,6 @@ void View::saveThemeColumnState()
 
   int idx = 0;
 
-  kDebug() << "Saving column sate...";
-
 
   for ( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
   {
@@ -503,14 +497,11 @@ void View::saveThemeColumnState()
       ( *it )->setCurrentlyVisible( false );
       ( *it )->setCurrentWidth( -1 ); // reset (hmmm... we could use the "don't touch" policy here too...)
     } else {
-      kDebug() << "!! Saving size for section " << idx << ": " << header()->sectionSize( idx );
       ( *it )->setCurrentlyVisible( true );
       ( *it )->setCurrentWidth( header()->sectionSize( idx ) );
     }
     idx++;
   }
-
-  kDebug() << "Saved column sate";
 }
 
 void View::triggerDelayedSaveThemeColumnState()
@@ -526,16 +517,11 @@ void View::resizeEvent( QResizeEvent * e )
 {
   QTreeView::resizeEvent( e );
 
-  kDebug() << ">> Resize event (viewport width is now " << viewport()->width() << ")";
-
   if ( (!mFirstShow) && mNeedToApplyThemeColumns )
     applyThemeColumns();
 
   if ( header()->isVisible() )
-  {
-    kDebug() << "<< Resize event: header is visible, no need to auto-resize columns";
     return;
-  }
 
   bool oldSave = mSaveThemeColumnStateOnSectionResize;
   mSaveThemeColumnStateOnSectionResize = false;
@@ -557,9 +543,6 @@ void View::resizeEvent( QResizeEvent * e )
   }
 
   mSaveThemeColumnStateOnSectionResize = oldSave;
-
-  kDebug() << "<< Resize event";
-
 }
 
 void View::modelAboutToEmitLayoutChanged()
@@ -582,12 +565,7 @@ void View::slotHeaderSectionResized( int logicalIndex, int oldWidth, int newWidt
   Q_UNUSED( newWidth );
 
   if ( mSaveThemeColumnStateOnSectionResize )
-  {
-    kDebug() << "Handling: Header section " << logicalIndex << " resized from " << oldWidth << " to " << newWidth;
     triggerDelayedSaveThemeColumnState();
-  } else {
-    kDebug() << "Ignored: Header section " << logicalIndex << " resized from " << oldWidth << " to " << newWidth;
-  }
 }
 
 int View::sizeHintForColumn( int logicalColumnIndex ) const
@@ -595,14 +573,10 @@ int View::sizeHintForColumn( int logicalColumnIndex ) const
   // QTreeView: please don't touch my column widths...
   int w = header()->sectionSize( logicalColumnIndex );
   if ( w > 0 )
-  {
-    kDebug() << "Size hint for column " << logicalColumnIndex << " returning " << w;
     return w;
-  }
   if ( !mDelegate )
     return 32; // dummy
   w = mDelegate->sizeHintForItemTypeAndColumn( Item::Message, logicalColumnIndex ).width();
-  kDebug() << "Size hint for column " << logicalColumnIndex << " returning " << w;
   return w;
 }
 
@@ -894,7 +868,33 @@ void View::selectMessageItems( const QList< MessageItem * > &list )
     selectionModel()->select( selection, QItemSelectionModel::Select | QItemSelectionModel::Rows );
 }
 
-Item * View::messageItemAfter( Item * referenceItem, bool unread, bool loop )
+static inline bool message_type_matches( Item * item, MessageTypeFilter messageTypeFilter )
+{
+  switch( messageTypeFilter )
+  {
+    case MessageTypeAny:
+      return true;
+    break;
+    case MessageTypeNewOnly:
+      return item->status().isNew();
+    break;
+    case MessageTypeUnreadOnly:
+      return item->status().isUnread();
+    break;
+    case MessageTypeNewOrUnreadOnly:
+      return item->status().isNew() || item->status().isUnread();
+    break;
+    default:
+      // nuthin here
+    break;
+  }
+
+  // never reached
+  Q_ASSERT( false );
+  return false;
+}
+
+Item * View::messageItemAfter( Item * referenceItem, MessageTypeFilter messageTypeFilter, bool loop )
 {
   if ( !storageModel() )
     return 0; // no folder
@@ -905,9 +905,17 @@ Item * View::messageItemAfter( Item * referenceItem, bool unread, bool loop )
   if ( referenceItem )
   {
     // there was a current item: we start just below it
-    if ( ( referenceItem->childItemCount() > 0 ) && ( unread || isExpanded( mModel->index( referenceItem, 0 ) ) ) )
+    if (
+         ( referenceItem->childItemCount() > 0 )
+         &&
+         (
+           ( messageTypeFilter != MessageTypeAny )
+           ||
+           isExpanded( mModel->index( referenceItem, 0 ) )
+         )
+       )
     {
-      // the current item had children: either expanded or we want unread messages (and so we'll expand it if it isn't)
+      // the current item had children: either expanded or we want unread/new messages (and so we'll expand it if it isn't)
       below = referenceItem->itemBelow();
     } else {
       // the current item had no children: ask the parent to find the item below
@@ -946,18 +954,14 @@ Item * View::messageItemAfter( Item * referenceItem, bool unread, bool loop )
   while (
           // is not a message (we want messages, don't we ?)
           ( below->type() != Item::Message ) ||
-          (
-            // want unread
-            ( unread ) &&
-            // but is not unread or new
-            ( ! ( below->status().isUnread() || below->status().isNew() ) )
-          ) ||
+          // message filter doesn't match
+          ( !message_type_matches( below, messageTypeFilter ) ) ||
           // is hidden (and we don't want hidden items as they arent "officially" in the view)
           isRowHidden( below->parent()->indexOfChildItem( below ), mModel->index( below->parent(), 0 ) )
     )
   {
     // find the next one
-    if ( ( below->childItemCount() > 0 ) && ( unread || isExpanded( mModel->index( below, 0 ) ) ) )
+    if ( ( below->childItemCount() > 0 ) && ( ( messageTypeFilter != MessageTypeAny ) || isExpanded( mModel->index( below, 0 ) ) ) )
     {
       // the current item had children: either expanded or we want unread messages (and so we'll expand it if it isn't)
       below = below->itemBelow();
@@ -992,12 +996,12 @@ Item * View::messageItemAfter( Item * referenceItem, bool unread, bool loop )
   return below;
 }
 
-Item * View::nextMessageItem( bool unread, bool loop )
+Item * View::nextMessageItem( MessageTypeFilter messageTypeFilter, bool loop )
 {
-  return messageItemAfter( currentMessageItem( false ), unread, loop );
+  return messageItemAfter( currentMessageItem( false ), messageTypeFilter, loop );
 }
 
-Item * View::messageItemBefore( Item * referenceItem, bool unread, bool loop )
+Item * View::messageItemBefore( Item * referenceItem, MessageTypeFilter messageTypeFilter, bool loop )
 {
   if ( !storageModel() )
     return 0; // no folder
@@ -1041,17 +1045,12 @@ Item * View::messageItemBefore( Item * referenceItem, bool unread, bool loop )
   while (
           // is not a message (we want messages, don't we ?)
           ( above->type() != Item::Message ) ||
-          // we want unread and the message is not unread
+          // message filter doesn't match
+          ( !message_type_matches( above, messageTypeFilter ) ) ||
+          // we don't expand items but the item has parents unexpanded (so should be skipped)
           (
-            // want unread
-            ( unread ) &&
-            // is not unread or new
-            ( ! ( above->status().isUnread() || above->status().isNew() ) )
-          ) ||
-          // we don't want unread (so we don't expand items) but the item has parents unexpanded (so should be skipped)
-          (
-            // !want unread
-            ( ! unread ) &&
+            // !expand items
+            ( messageTypeFilter == MessageTypeAny ) &&
             // has unexpanded parents or is itself hidden
             ( ! isCurrentlyViewable( above ) )
           ) ||
@@ -1087,14 +1086,14 @@ Item * View::messageItemBefore( Item * referenceItem, bool unread, bool loop )
   return above;
 }
 
-Item * View::previousMessageItem( bool unread, bool loop )
+Item * View::previousMessageItem( MessageTypeFilter messageTypeFilter, bool loop )
 {
-  return messageItemBefore( currentMessageItem( false ), unread, loop );
+  return messageItemBefore( currentMessageItem( false ), messageTypeFilter, loop );
 }
 
-bool View::selectNextMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop )
+bool View::selectNextMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
 {
-  Item * it = nextMessageItem( unread, loop );
+  Item * it = nextMessageItem( messageTypeFilter, loop );
   if ( !it )
     return false;
 
@@ -1121,9 +1120,9 @@ bool View::selectNextMessageItem( bool unread, bool expandSelection, bool center
   return true;
 }
 
-bool View::selectPreviousMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop )
+bool View::selectPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
 {
-  Item * it = previousMessageItem( unread, loop );
+  Item * it = previousMessageItem( messageTypeFilter, loop );
   if ( !it )
     return false;
 
@@ -1150,9 +1149,9 @@ bool View::selectPreviousMessageItem( bool unread, bool expandSelection, bool ce
   return true;
 }
 
-bool View::focusNextMessageItem( bool unread, bool centerItem, bool loop )
+bool View::focusNextMessageItem( MessageTypeFilter messageTypeFilter, bool centerItem, bool loop )
 {
-  Item * it = nextMessageItem( unread, loop );
+  Item * it = nextMessageItem( messageTypeFilter, loop );
   if ( !it )
     return false;
 
@@ -1173,9 +1172,9 @@ bool View::focusNextMessageItem( bool unread, bool centerItem, bool loop )
   return true;
 }
 
-bool View::focusPreviousMessageItem( bool unread, bool centerItem, bool loop )
+bool View::focusPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool centerItem, bool loop )
 {
-  Item * it = previousMessageItem( unread, loop );
+  Item * it = previousMessageItem( messageTypeFilter, loop );
   if ( !it )
     return false;
 
@@ -1219,14 +1218,14 @@ void View::applyMessagePreSelection( PreSelectionMode preSelectionMode )
 }
 
 
-void View::selectFirstUnreadMessageItem( bool centerItem )
+bool View::selectFirstMessageItem( MessageTypeFilter messageTypeFilter, bool centerItem )
 {
   if ( !storageModel() )
-    return; // nothing to do
+    return false; // nothing to do
 
-  Item * it = firstMessageItem( true );
+  Item * it = firstMessageItem( messageTypeFilter );
   if ( !it )
-    return;
+    return false;
 
   Q_ASSERT( it != mModel->rootItem() ); // must never happen (obviously)
 
@@ -1241,6 +1240,8 @@ void View::selectFirstUnreadMessageItem( bool centerItem )
 
   if ( centerItem )
     scrollTo( idx, QAbstractItemView::PositionAtCenter );
+
+  return true;
 }
 
 void View::modelFinishedLoading()
@@ -1417,10 +1418,8 @@ void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & 
       Q_ASSERT( false );
     break;
   }
-  kDebug() << "About to call selection changed on widget";
 
   mWidget->viewSelectionChanged();
-  kDebug() << "Selection changed handler terminating";
 }
 
 void View::mouseDoubleClickEvent( QMouseEvent * e )
@@ -1582,10 +1581,8 @@ void View::mousePressEvent( QMouseEvent * e )
             }
           }
 
-          kDebug() << "Left click about to";
           // Let QTreeView handle the selection and emit the appropriate signals (slotSelectionChanged() may be called)
           QTreeView::mousePressEvent( e );
-          kDebug() << "Left click done";
 
         break;
         case Qt::RightButton:

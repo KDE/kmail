@@ -616,49 +616,49 @@ void Pane::setAllThreadsExpanded( bool expand )
   return w->view()->setAllThreadsExpanded( expand );
 }
 
-bool Pane::selectNextMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop )
+bool Pane::selectNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
 
-  return w->view()->selectNextMessageItem( unread, expandSelection, centerItem, loop );
+  return w->view()->selectNextMessageItem( messageTypeFilter, expandSelection, centerItem, loop );
 }
 
-void Pane::selectFirstUnreadMessage( bool centerItem )
-{
-  Widget * w = currentMessageListViewWidget();
-  if ( !w )
-    return;
-
-  return w->view()->selectFirstUnreadMessageItem( centerItem );
-}
-
-bool Pane::selectPreviousMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop )
+bool Pane::selectFirstMessage( Core::MessageTypeFilter messageTypeFilter, bool centerItem )
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
 
-  return w->view()->selectPreviousMessageItem( unread, expandSelection, centerItem, loop );
+  return w->view()->selectFirstMessageItem( messageTypeFilter, centerItem );
 }
 
-bool Pane::focusNextMessageItem( bool unread, bool centerItem, bool loop )
+bool Pane::selectPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
 
-  return w->view()->focusNextMessageItem( unread, centerItem, loop );
+  return w->view()->selectPreviousMessageItem( messageTypeFilter, expandSelection, centerItem, loop );
 }
 
-bool Pane::focusPreviousMessageItem( bool unread, bool centerItem, bool loop )
+bool Pane::focusNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop )
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
 
-  return w->view()->focusPreviousMessageItem( unread, centerItem, loop );
+  return w->view()->focusNextMessageItem( messageTypeFilter, centerItem, loop );
+}
+
+bool Pane::focusPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop )
+{
+  Widget * w = currentMessageListViewWidget();
+  if ( !w )
+    return false;
+
+  return w->view()->focusPreviousMessageItem( messageTypeFilter, centerItem, loop );
 }
 
 void Pane::selectFocusedMessageItem( bool centerItem )

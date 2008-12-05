@@ -252,36 +252,45 @@ public:
   void setAllThreadsExpanded( bool expand );
 
   /**
-   * Selects the next message item in the view. If unread is true
-   * then selects the next unread message item. If expandSelection is
-   * true then the previous selection is retained, otherwise it's cleared.
+   * Selects the next message item in the view.
+   *
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
+   *
+   * If expandSelection is true then the previous selection is retained, otherwise it's cleared.
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "next" algorithm will restart from the beginning
    * of the list if the end is reached, otherwise it will just stop returning false.
    */
-  bool selectNextMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop );
+  bool selectNextMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
 
   /**
-   * Selects the previous message item in the view. If unread is true
-   * then selects the previous unread message item. If expandSelection is
-   * true then the previous selection is retained, otherwise it's cleared.
+   * Selects the previous message item in the view.*
+   *
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
+   *
+   * If expandSelection is true then the previous selection is retained, otherwise it's cleared.
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "previous" algorithm will restart from the end
    * of the list if the beginning is reached, otherwise it will just stop returning false.
    */
-  bool selectPreviousMessageItem( bool unread, bool expandSelection, bool centerItem, bool loop );
+  bool selectPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
 
   /**
    * Focuses the next message item in the view without actually selecting it.
-   * If unread is true then focuses the next unread message item.
+   *
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
+   *
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "next" algorithm will restart from the beginning
    * of the list if the end is reached, otherwise it will just stop returning false.
    */
-  bool focusNextMessageItem( bool unread, bool centerItem, bool loop );
+  bool focusNextMessageItem( MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
 
   /**
    * Focuses the previous message item in the view without actually selecting it.
@@ -291,7 +300,7 @@ public:
    * If loop is true then the "previous" algorithm will restart from the end
    * of the list if the beginning is reached, otherwise it will just stop returning false.
    */
-  bool focusPreviousMessageItem( bool unread, bool centerItem, bool loop );
+  bool focusPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
 
   /**
    * Selects the currently focused message item. If the currently focused
@@ -302,11 +311,11 @@ public:
   void selectFocusedMessageItem( bool centerItem );
 
   /**
-   * Selects the first unread message item in the view.
+   * Selects the first message item in the view that matches messageTypeFilter.
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    */
-  void selectFirstUnreadMessageItem( bool centerItem );
+  bool selectFirstMessageItem( MessageTypeFilter messageTypeFilter, bool centerItem );
 
 protected:
   /**
@@ -402,64 +411,70 @@ protected:
    * If there is no current item then the search starts from the beginning.
    * Returns 0 if no next message could be found.
    *
-   * If unread is true finds the next unread message.
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
    * If loop is true then restarts from the beginning if end is
    * reached, otherwise it just returns 0 in this case.
    */
-  Item * nextMessageItem( bool unread, bool loop );
+  Item * nextMessageItem( MessageTypeFilter messageTypeFilter, bool loop );
 
   /**
    * Finds message item that comes "after" the reference item.
    * If reference item is 0 then the search starts from the beginning.
    * Returns 0 if no next message could be found.
    *
-   * If unread is true finds the next unread message.
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
    * If loop is true then restarts from the beginning if end is
    * reached, otherwise it just returns 0 in this case.
    */
-  Item * messageItemAfter( Item * referenceItem, bool unread, bool loop );
+  Item * messageItemAfter( Item * referenceItem, MessageTypeFilter messageTypeFilter, bool loop );
 
   /**
    * Finds the first message item in the view.
-   * If unread is true then the first unread message item is found,
-   * otherwise just any message item will be returned.
+   *
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
    *
    * Returns 0 if the view is empty.
    */
-  Item * firstMessageItem( bool unread )
-    { return messageItemAfter( 0, unread, false ); };
+  Item * firstMessageItem( MessageTypeFilter messageTypeFilter )
+    { return messageItemAfter( 0, messageTypeFilter, false ); };
 
   /**
    * Finds the previous message item with respect to the current item.
    * If there is no current item then the search starts from the end.
    * Returns 0 if no previous message could be found.
    *
-   * If unread is true finds the previous unread message.
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
    * If loop is true then restarts from the end if beginning is
    * reached, otherwise it just return 0 in this case.
    */
-  Item * previousMessageItem( bool unread, bool loop );
+  Item * previousMessageItem( MessageTypeFilter messageTypeFilter, bool loop );
 
   /**
    * Finds message item that comes "before" the reference item.
    * If reference item is 0 then the search starts from the end.
    * Returns 0 if no next message could be found.
    *
-   * If unread is true finds the next unread message.
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
    * If loop is true then restarts from the beginning if end is
    * reached, otherwise it just returns 0 in this case.
    */
-  Item * messageItemBefore( Item * referenceItem, bool unread, bool loop );
+  Item * messageItemBefore( Item * referenceItem, MessageTypeFilter messageTypeFilter, bool loop );
 
   /**
    * Finds the last message item in the view.
-   * If unread is true then the last unread message item is found,
-   * otherwise just any message item will be returned.
+   *
+   * messageTypeFilter can be used to limit the selection to
+   * a certain category of messages.
    *
    * Returns 0 if the view is empty.
    */
-  Item * lastMessageItem( bool unread )
-    { return messageItemBefore( 0, unread, false ); };
+  Item * lastMessageItem( MessageTypeFilter messageTypeFilter )
+    { return messageItemBefore( 0, messageTypeFilter, false ); };
 
   /**
    * This is called by Model to signal a start of a lengthy job batch.

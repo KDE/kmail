@@ -43,10 +43,25 @@ namespace Core
    */
   enum PreSelectionMode
   {
-    PreSelectNone,                // no pre-selection at all
-    PreSelectLastSelected,        // pre-select the last message that was selected in this folder (default)
-    PreSelectFirstUnread,         // pre-select the first unread message
-    PreSelectFirstUnreadCentered  // pre-select the first unread message and center it
+    PreSelectNone,                     //< no pre-selection at all
+    PreSelectLastSelected,             //< pre-select the last message that was selected in this folder (default)
+    PreSelectFirstUnread,              //< pre-select the first unread message
+    PreSelectFirstUnreadCentered,      //< pre-select the first unread message and center it
+    PreSelectFirstNew,                 //< pre-select the first new message
+    PreSelectFirstNewCentered,         //< pre-select the first new message and center it
+    PreSelectFirstNewOrUnread,         //< pre-select the first new or the first unread message
+    PreSelectFirstNewOrUnreadCentered, //< pre-select the first new or the first unread message and center it
+  };
+
+  /**
+   * This enum is used in the view message selection functions (for instance View::nextMessageItem()).
+   */
+  enum MessageTypeFilter
+  {
+    MessageTypeAny,                    //< Select any message
+    MessageTypeNewOnly,                //< Select only new messages
+    MessageTypeNewOrUnreadOnly,        //< Select only new or unread messages
+    MessageTypeUnreadOnly              //< Select only unread messages
   };
 
 }
