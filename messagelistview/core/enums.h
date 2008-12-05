@@ -50,7 +50,7 @@ namespace Core
     PreSelectFirstNew,                 //< pre-select the first new message
     PreSelectFirstNewCentered,         //< pre-select the first new message and center it
     PreSelectFirstNewOrUnread,         //< pre-select the first new or the first unread message
-    PreSelectFirstNewOrUnreadCentered, //< pre-select the first new or the first unread message and center it
+    PreSelectFirstNewOrUnreadCentered  //< pre-select the first new or the first unread message and center it
   };
 
   /**
