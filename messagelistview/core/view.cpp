@@ -1108,8 +1108,8 @@ bool View::selectNextMessageItem( MessageTypeFilter messageTypeFilter, bool expa
 
   if ( expandSelection )
   {
-    selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
     selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
+    selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
   } else {
     setCurrentIndex( idx );
   }
@@ -1137,8 +1137,8 @@ bool View::selectPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool 
 
   if ( expandSelection )
   {
-    selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
     selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
+    selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
   } else {
     setCurrentIndex( idx );
   }
@@ -1354,7 +1354,6 @@ bool View::isThreaded() const
 
 void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & )
 {
-  kDebug() << "Selection changed handler entering";
   // We assume that when selection changes, current item also changes.
   QModelIndex current = currentIndex();
 
@@ -1398,9 +1397,9 @@ void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & 
   {
     case Item::Message:
     {
-      kDebug() << "Message selected [" << it->subject().toUtf8().data() << "]" << endl;
       if ( mLastCurrentItem != it )
       {
+        kDebug() << "Message selected [" << it->subject().toUtf8().data() << "]" << endl;
         mWidget->viewMessageSelected( static_cast< MessageItem * >( it ) );
         mLastCurrentItem = 0;
       }
