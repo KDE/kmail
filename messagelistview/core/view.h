@@ -257,27 +257,47 @@ public:
    * messageTypeFilter can be used to limit the selection to
    * a certain category of messages.
    *
-   * If expandSelection is true then the previous selection is retained, otherwise it's cleared.
+   * existingSelectionBehaviour specifies how the existing selection
+   * is manipulated. It may be cleared, expanded or grown/shrinked.
+   *
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "next" algorithm will restart from the beginning
    * of the list if the end is reached, otherwise it will just stop returning false.
+   *
+   * \sa MessageListView::Core::MessageTypeFilter
+   * \sa MessageListView::Core::ExistingSelectionBehaviour
    */
-  bool selectNextMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
+  bool selectNextMessageItem(
+      MessageTypeFilter messageTypeFilter,
+      ExistingSelectionBehaviour existingSelectionBehaviour,
+      bool centerItem,
+      bool loop
+    );
 
   /**
-   * Selects the previous message item in the view.*
+   * Selects the previous message item in the view.
    *
    * messageTypeFilter can be used to limit the selection to
    * a certain category of messages.
    *
-   * If expandSelection is true then the previous selection is retained, otherwise it's cleared.
+   * existingSelectionBehaviour specifies how the existing selection
+   * is manipulated. It may be cleared, expanded or grown/shrinked.
+   *
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "previous" algorithm will restart from the end
    * of the list if the beginning is reached, otherwise it will just stop returning false.
+   *
+   * \sa MessageListView::Core::MessageTypeFilter
+   * \sa MessageListView::Core::ExistingSelectionBehaviour
    */
-  bool selectPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
+  bool selectPreviousMessageItem(
+      MessageTypeFilter messageTypeFilter,
+      ExistingSelectionBehaviour existingSelectionBehaviour,
+      bool centerItem,
+      bool loop
+    );
 
   /**
    * Focuses the next message item in the view without actually selecting it.
@@ -507,6 +527,16 @@ protected:
    * up to the main event loop (since in the call stack the column state might be left undefined).
    */
   void triggerDelayedSaveThemeColumnState();
+
+  /**
+   * This is used by the selection functions to grow/shrink the existing selection
+   * according to the newly selected item passed as parameter.
+   * If movingUp is true then: if the newly selected item is above the current selection top
+   * then the selection is expanded, otherwise it's shrunk. If movingUp is false then: if the
+   * newly selected item is below the current selection bottom then the selection is expanded
+   * otherwise it's shrunk.
+   */
+  void growOrShrinkExistingSelection( const QModelIndex &newSelectedIndex, bool movingUp );
 
 public slots:
   /**

@@ -301,26 +301,40 @@ public:
    *
    * messageTypeFilter can be used to restrict the selection to only certain message types.
    *
-   * If expandSelection is true then the previous selection is retained, otherwise it's cleared.
+   * existingSelectionBehaviour specifies how the existing selection
+   * is manipulated. It may be cleared, expanded or grown/shrinked.
+   *
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    * If loop is true then the "next" algorithm will restart from the beginning
    * of the list if the end is reached, otherwise it will just stop returning false.
    */
-  bool selectNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
+  bool selectNextMessageItem(
+      Core::MessageTypeFilter messageTypeFilter,
+      Core::ExistingSelectionBehaviour existingSelectionBehaviour,
+      bool centerItem,
+      bool loop
+    );
 
   /**
-   * Selects the previous message item in the view. If expandSelection is
-   * true then the previous selection is retained, otherwise it's cleared.
+   * Selects the previous message item in the view.
    * If centerItem is true then the specified item will be positioned
    * at the center of the view, if possible.
    *
    * messageTypeFilter can be used to restrict the selection to only certain message types.
    *
+   * existingSelectionBehaviour specifies how the existing selection
+   * is manipulated. It may be cleared, expanded or grown/shrinked.
+   *
    * If loop is true then the "previous" algorithm will restart from the end
    * of the list if the beginning is reached, otherwise it will just stop returning false.
    */
-  bool selectPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop );
+  bool selectPreviousMessageItem(
+      Core::MessageTypeFilter messageTypeFilter,
+      Core::ExistingSelectionBehaviour existingSelectionBehaviour,
+      bool centerItem,
+      bool loop
+    );
 
   /**
    * Focuses the next message item in the view without actually selecting it.

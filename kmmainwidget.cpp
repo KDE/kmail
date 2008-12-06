@@ -3260,7 +3260,7 @@ void KMMainWidget::slotSelectNextMessage()
 {
   mMessageListView->selectNextMessageItem(
       KMail::MessageListView::Core::MessageTypeAny,
-      false, // don't expand selection
+      KMail::MessageListView::Core::ClearExistingSelection,
       true,  // center item
       false  // don't loop in folder
     );
@@ -3270,7 +3270,7 @@ void KMMainWidget::slotExtendSelectionToNextMessage()
 {
   mMessageListView->selectNextMessageItem(
       KMail::MessageListView::Core::MessageTypeAny,
-      true,  // expand selection
+      KMail::MessageListView::Core::GrowOrShrinkExistingSelection,
       true,  // center item
       false  // don't loop in folder
     );
@@ -3289,7 +3289,7 @@ void KMMainWidget::slotSelectNextUnreadMessage()
   // decide to reconsider :)
   if ( !mMessageListView->selectNextMessageItem(
       KMail::MessageListView::Core::MessageTypeNewOrUnreadOnly,
-      false, // don't expand selection
+      KMail::MessageListView::Core::ClearExistingSelection,
       true,  // center item
       /*GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder*/
       GlobalSettings::self()->loopOnGotoUnread() != GlobalSettings::EnumLoopOnGotoUnread::DontLoop
@@ -3312,7 +3312,7 @@ void KMMainWidget::slotSelectPreviousMessage()
 {
   mMessageListView->selectPreviousMessageItem(
       KMail::MessageListView::Core::MessageTypeAny,
-      false, // don't expand selection
+      KMail::MessageListView::Core::ClearExistingSelection,
       true,  // center item
       false  // don't loop in folder
     );
@@ -3322,7 +3322,7 @@ void KMMainWidget::slotExtendSelectionToPreviousMessage()
 {
   mMessageListView->selectPreviousMessageItem(
       KMail::MessageListView::Core::MessageTypeAny,
-      true,  // expand selection
+      KMail::MessageListView::Core::GrowOrShrinkExistingSelection,
       true,  // center item
       false  // don't loop in folder
     );
@@ -3332,7 +3332,7 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
 {
   if ( !mMessageListView->selectPreviousMessageItem(
       KMail::MessageListView::Core::MessageTypeNewOrUnreadOnly,
-      false, // don't expand selection
+      KMail::MessageListView::Core::ClearExistingSelection,
       true,  // center item
       GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder
     ) )

@@ -616,13 +616,18 @@ void Pane::setAllThreadsExpanded( bool expand )
   return w->view()->setAllThreadsExpanded( expand );
 }
 
-bool Pane::selectNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
+bool Pane::selectNextMessageItem(
+    Core::MessageTypeFilter messageTypeFilter,
+    Core::ExistingSelectionBehaviour existingSelectionBehaviour,
+    bool centerItem,
+    bool loop
+  )
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
 
-  return w->view()->selectNextMessageItem( messageTypeFilter, expandSelection, centerItem, loop );
+  return w->view()->selectNextMessageItem( messageTypeFilter, existingSelectionBehaviour, centerItem, loop );
 }
 
 bool Pane::selectFirstMessage( Core::MessageTypeFilter messageTypeFilter, bool centerItem )
@@ -634,13 +639,18 @@ bool Pane::selectFirstMessage( Core::MessageTypeFilter messageTypeFilter, bool c
   return w->view()->selectFirstMessageItem( messageTypeFilter, centerItem );
 }
 
-bool Pane::selectPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
+bool Pane::selectPreviousMessageItem(
+    Core::MessageTypeFilter messageTypeFilter,
+    Core::ExistingSelectionBehaviour existingSelectionBehaviour,
+    bool centerItem,
+    bool loop
+  )
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
 
-  return w->view()->selectPreviousMessageItem( messageTypeFilter, expandSelection, centerItem, loop );
+  return w->view()->selectPreviousMessageItem( messageTypeFilter, existingSelectionBehaviour, centerItem, loop );
 }
 
 bool Pane::focusNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop )

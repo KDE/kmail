@@ -64,6 +64,16 @@ namespace Core
     MessageTypeUnreadOnly              //< Select only unread messages
   };
 
+  /**
+   * This enum is used in the view message selection functions (for instance View::selectNextMessage())
+   */
+  enum ExistingSelectionBehaviour
+  {
+    ClearExistingSelection,            //< Clear the existing selection before selecting the new item
+    ExpandExistingSelection,           //< Preserve the existing selection (grow only)
+    GrowOrShrinkExistingSelection      //< Grow or shrink the existing selection depending on what item is actually being selected
+  };
+
 }
 
 }

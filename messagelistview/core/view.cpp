@@ -1091,7 +1091,100 @@ Item * View::previousMessageItem( MessageTypeFilter messageTypeFilter, bool loop
   return messageItemBefore( currentMessageItem( false ), messageTypeFilter, loop );
 }
 
-bool View::selectNextMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
+void View::growOrShrinkExistingSelection( const QModelIndex &newSelectedIndex, bool movingUp )
+{
+  // Qt: why visualIndex() is private? ...I'd really need it here...
+
+  int selectedVisualCoordinate = visualRect( newSelectedIndex ).top();
+
+  int topVisualCoordinate = 0xfffffff; // huuuuuge number
+  int bottomVisualCoordinate = -(0xfffffff);
+
+  int candidate;
+
+  QModelIndex bottomIndex;
+  QModelIndex topIndex;
+
+  // find out the actual selection range
+  const QItemSelection selection = selectionModel()->selection();
+
+  foreach ( QItemSelectionRange range, selection )
+  {
+    // We're asking the model for the index as range.topLeft() and range.bottomRight()
+    // can return indexes in invisible columns which have a null visualRect().
+    // Column 0, instead, is always visible.
+
+    QModelIndex top = mModel->index( range.top(), 0, range.parent() );
+    QModelIndex bottom = mModel->index( range.bottom(), 0, range.parent() );
+
+    if ( top.isValid() )
+    {
+      if ( !bottom.isValid() )
+        bottom = top;
+    } else {
+      if ( !top.isValid() )
+        top = bottom;
+    }
+    candidate = visualRect( bottom ).bottom();
+    if ( candidate > bottomVisualCoordinate )
+    {
+      bottomVisualCoordinate = candidate;
+      bottomIndex = range.bottomRight();
+    }
+
+    candidate = visualRect( top ).top();
+    if ( candidate < topVisualCoordinate )
+    {
+      topVisualCoordinate = candidate;
+      topIndex = range.topLeft();
+    }
+  }
+
+
+  if ( topIndex.isValid() && bottomIndex.isValid() )
+  {
+    if ( movingUp )
+    {
+      if ( selectedVisualCoordinate < topVisualCoordinate )
+      {
+        // selecting something above the top: grow selection
+        selectionModel()->select( newSelectedIndex, QItemSelectionModel::Rows | QItemSelectionModel::Select );
+      } else {
+        // selecting something below the top: shrink selection
+        QModelIndexList selectedIndexes = selection.indexes();
+        foreach ( QModelIndex idx, selectedIndexes )
+        {
+          if ( ( idx.column() == 0 ) && ( visualRect( idx ).top() > selectedVisualCoordinate ) )
+            selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Deselect );
+        }
+      }
+    } else {
+      if ( selectedVisualCoordinate > bottomVisualCoordinate )
+      {
+        // selecting something below bottom: grow selection
+        selectionModel()->select( newSelectedIndex, QItemSelectionModel::Rows | QItemSelectionModel::Select );
+      } else {
+        // selecting something above bottom: shrink selection
+        QModelIndexList selectedIndexes = selection.indexes();
+        foreach ( QModelIndex idx, selectedIndexes )
+        {
+          if ( ( idx.column() == 0 ) && ( visualRect( idx ).top() < selectedVisualCoordinate ) )
+            selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Deselect );
+        }
+      }
+    }
+  } else {
+    // no existing selection, just grow
+    selectionModel()->select( newSelectedIndex, QItemSelectionModel::Rows | QItemSelectionModel::Select );
+  }
+}
+
+bool View::selectNextMessageItem(
+    MessageTypeFilter messageTypeFilter,
+    ExistingSelectionBehaviour existingSelectionBehaviour,
+    bool centerItem,
+    bool loop
+  )
 {
   Item * it = nextMessageItem( messageTypeFilter, loop );
   if ( !it )
@@ -1106,12 +1199,20 @@ bool View::selectNextMessageItem( MessageTypeFilter messageTypeFilter, bool expa
 
   Q_ASSERT( idx.isValid() );
 
-  if ( expandSelection )
+  switch ( existingSelectionBehaviour )
   {
-    selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
-    selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
-  } else {
-    setCurrentIndex( idx );
+    case ExpandExistingSelection:
+      selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
+      selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
+    break;
+    case GrowOrShrinkExistingSelection:
+      selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
+      growOrShrinkExistingSelection( idx, false );
+    break;
+    default:
+    //case ClearExistingSelection:
+      setCurrentIndex( idx );
+    break;
   }
 
   if ( centerItem )
@@ -1120,7 +1221,12 @@ bool View::selectNextMessageItem( MessageTypeFilter messageTypeFilter, bool expa
   return true;
 }
 
-bool View::selectPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool expandSelection, bool centerItem, bool loop )
+bool View::selectPreviousMessageItem(
+    MessageTypeFilter messageTypeFilter,
+    ExistingSelectionBehaviour existingSelectionBehaviour,
+    bool centerItem,
+    bool loop
+  )
 {
   Item * it = previousMessageItem( messageTypeFilter, loop );
   if ( !it )
@@ -1135,12 +1241,20 @@ bool View::selectPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool 
 
   Q_ASSERT( idx.isValid() );
 
-  if ( expandSelection )
+  switch ( existingSelectionBehaviour )
   {
-    selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
-    selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
-  } else {
-    setCurrentIndex( idx );
+    case ExpandExistingSelection:
+      selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
+      selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Select );
+    break;
+    case GrowOrShrinkExistingSelection:
+      selectionModel()->setCurrentIndex( idx, QItemSelectionModel::NoUpdate );
+      growOrShrinkExistingSelection( idx, true );
+    break;
+    default:
+    //case ClearExistingSelection:
+      setCurrentIndex( idx );
+    break;
   }
 
   if ( centerItem )
