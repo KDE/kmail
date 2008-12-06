@@ -30,6 +30,8 @@
 class KLineEdit;
 class QTimer;
 class QToolButton;
+class QActionGroup;
+class KMenu;
 
 namespace KPIM
 {
@@ -119,6 +121,11 @@ public:
    */
   QString currentFilterSearchString() const;
 
+  /**
+   * Returns the id of the MessageItem::Tag currently set in the quicksearch field.
+   */
+  QString currentFilterTagId() const;
+
 protected:
   /**
    * This is called by Manager when the option sets stored within have changed.
@@ -129,6 +136,16 @@ protected:
    * This is called by Manager when the option sets stored within have changed.
    */
   void themesChanged();
+
+  /**
+   * Called when the "Message Status/Tag" filter menu is opened by the user.
+   * You may override this function in order to add some "custom tag" entries
+   * to the menu. The entries should be placed in a QActionGroup which should be returned
+   * to the caller. The QAction objects associated to the entries should have
+   * the string id of the tag set as data() and the tag icon set as icon().
+   * The default implementation does nothing.
+   */
+  virtual QActionGroup * fillMessageTagMenu( KMenu * menu );
 
   /**
    * This is called by View when a message is single-clicked (thus selected and made current)
@@ -208,6 +225,7 @@ protected slots:
   void aggregationSelected( bool );
   void statusMenuAboutToShow();
   void statusSelected( QAction *action );
+  void tagIdSelected( QAction *action );
   void searchEditTextEdited( const QString &text );
   void searchTimerFired();
   void searchEditClearButtonClicked();

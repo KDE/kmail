@@ -57,6 +57,20 @@ void MessageItem::setTagList( QList< Tag * > * list )
   mTagList = list;
 }
 
+MessageItem::Tag * MessageItem::findTagInternal( const QString &szTagId ) const
+{
+  if ( !mTagList )
+    return 0;
+
+  for ( QList< Tag * >::Iterator it = mTagList->begin(); it != mTagList->end(); ++it )
+  {
+    if ( ( *it )->id() == szTagId )
+      return *it;
+  }
+
+ return 0;
+}
+
 MessageItem * MessageItem::topmostMessage()
 {
   if ( !parent() )

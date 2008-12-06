@@ -287,18 +287,25 @@ bool StorageModel::initializeMessageItem( Core::MessageItem * mi, int row, bool 
 
   QColor clr;
 
+  // FIXME: Tags should be sorted by priority!
+
   if ( msg->tagList() )
   {
     if ( !msg->tagList()->isEmpty() )
     {
+      int bestPriority = -0xfffff;
+
       QList< Core::MessageItem::Tag * > * tagList = new QList< Core::MessageItem::Tag * >();
       for ( KMMessageTagList::Iterator it = msg->tagList()->begin(); it != msg->tagList()->end(); ++it )
       {
         const KMMessageTagDescription * description = kmkernel->msgTagMgr()->find( *it );
         if ( description )
         {
-          if ( !clr.isValid() )
+          if ( ( bestPriority < description->priority() ) || ( !clr.isValid() ) )
+          {
             clr = description->textColor();
+            bestPriority = description->priority();
+          }
 
           Core::MessageItem::Tag * tag;
           if ( description->toolbarIconName().isEmpty() )
@@ -426,14 +433,19 @@ void StorageModel::updateMessageItemData( Core::MessageItem * mi, int row ) cons
   {
     if ( !msg->tagList()->isEmpty() )
     {
+      int bestPriority = -0xfffff;
+
       tagList = new QList< Core::MessageItem::Tag * >();
       for ( KMMessageTagList::Iterator it = msg->tagList()->begin(); it != msg->tagList()->end(); ++it )
       {
         const KMMessageTagDescription * description = kmkernel->msgTagMgr()->find( *it );
         if ( description )
         {
-          if ( !clr.isValid() )
+          if ( ( bestPriority < description->priority() ) || ( !clr.isValid() ) )
+          {
             clr = description->textColor();
+            bestPriority = description->priority();
+          }
 
           Core::MessageItem::Tag * tag;
           if ( description->toolbarIconName().isEmpty() )

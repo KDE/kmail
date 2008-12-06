@@ -104,11 +104,26 @@ private:
   unsigned long mUniqueId;          ///< The unique id of this message (serial number of KMMsgBase at the moment of writing)
   
   bool mAboutToBeRemoved;           ///< Set to true when this item is going to be deleted and shouldn't be selectable
+protected:
+  /**
+   * Linear search in the list of tags. The lists of tags
+   * associated to a message are supposed to be very short (c'mon.. you won't add more than a couple of tags to a single msg).
+   * so a linear search is better than a hash lookup in most cases.
+   */
+  Tag * findTagInternal( const QString &szTagId ) const;
+
 public:
   QList< Tag * > * tagList() const
     { return mTagList; };
 
   void setTagList( QList< Tag * > * list );
+
+  /**
+   * Returns Tag associated to this message that has the specified id or 0
+   * if no such tag exists. mTagList will be 0 in 99% of the cases.
+   */
+  Tag * findTag( const QString &szTagId ) const
+    { return mTagList ? findTagInternal( szTagId ) : 0; };
 
   const QColor & textColor() const
     { return mTextColor; };

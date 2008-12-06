@@ -416,7 +416,7 @@ bool Model::applyFilterToItem( Item * item, const QModelIndex &parentIndex )
 
   if ( item->type() == Item::Message )
   {
-    if ( mFilter->match( item->subject(), item->sender(), item->receiver(), item->status().toQInt32() ) )
+    if ( mFilter->match( ( MessageItem * )item ) )
     {
       mView->setRowHidden( thisIndex.row(), parentIndex, false );
       return true;

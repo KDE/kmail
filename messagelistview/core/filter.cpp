@@ -19,6 +19,7 @@
  *******************************************************************************/
 
 #include "messagelistview/core/filter.h"
+#include "messagelistview/core/messageitem.h"
 
 namespace KMail
 {
@@ -34,25 +35,28 @@ Filter::Filter()
 {
 }
 
-bool Filter::match( const QString &subject, const QString &sender, const QString &receiver, qint32 status ) const
+bool Filter::match( const MessageItem * item ) const
 {
   if ( mStatusMask != 0 )
   {
-    if ( ! ( mStatusMask & status ) )
+    if ( ! ( mStatusMask & item->status().toQInt32() ) )
       return false;
   }
 
   if ( !mSearchString.isEmpty() )
   {
-    if ( subject.indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
+    if ( item->subject().indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
       return true;
-    if ( sender.indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
+    if ( item->sender().indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
       return true;
-    if ( receiver.indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
+    if ( item->receiver().indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
       return true;
 
     return false;
   }
+
+  if ( !mTagId.isEmpty() )
+    return item->findTag( mTagId ) != 0;
 
   return true;
 }
@@ -65,8 +69,19 @@ bool Filter::isEmpty() const
   if ( !mSearchString.isEmpty() )
     return false;
 
+  if ( !mTagId.isEmpty() )
+    return false;
+
   return true;
 }
+
+void Filter::clear()
+{
+  mStatusMask = 0;
+  mSearchString = QString();
+  mTagId = QString();
+}
+
 
 } // namespace Core
 

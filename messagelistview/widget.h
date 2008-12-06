@@ -31,6 +31,8 @@ class KMMessage;
 class KMMsgBase;
 class KMFolder;
 class KMMainWidget;
+class KMenu;
+class QActionGroup;
 
 class QTimer;
 
@@ -343,6 +345,11 @@ signals:
   void messageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus &clear );
 
 protected:
+  /**
+   * Reimplemented from MessageListView::Core::Widget in order to fill the menu with (KMail dependant) custom tags.
+   */
+  virtual QActionGroup * fillMessageTagMenu( KMenu * menu );
+
   /**
    * Reimplemented from MessageListView::Core::Widget
    */

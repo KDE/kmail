@@ -211,6 +211,14 @@ QString Widget::currentFilterSearchString() const
   return mFilter->searchString();
 }
 
+QString Widget::currentFilterTagId() const
+{
+  if ( !mFilter )
+    return QString();
+
+  return mFilter->tagId();
+}
+
 void Widget::setDefaultAggregationForStorageModel( const StorageModel * storageModel )
 {
   const Aggregation * opt = Manager::instance()->aggregationForStorageModel( storageModel, &mStorageUsesPrivateAggregation );
@@ -817,7 +825,7 @@ void Widget::statusMenuAboutToShow()
   act = menu->addAction( i18n( "Any Status" ) );
   act->setIcon( SmallIcon("system-run") );
   act->setCheckable( true );
-  act->setChecked( statusMask == 0 );
+  act->setChecked( ( statusMask == 0 ) && currentFilterTagId().isEmpty() );
   act->setData( QVariant( static_cast< int >( 0 ) ) );
   grp->addAction( act );
 
@@ -900,12 +908,51 @@ void Widget::statusMenuAboutToShow()
   act->setData( QVariant( static_cast< int >( KPIM::MessageStatus::statusHam().toQInt32() ) ) );
   grp->addAction( act );
 
-  // make sure we have a connection
-  disconnect( menu, SIGNAL( triggered( QAction * ) ),
-              this, SLOT( statusSelected( QAction * ) ) );
-
-  connect( menu, SIGNAL( triggered( QAction * ) ),
+  connect( grp, SIGNAL( triggered( QAction * ) ),
            SLOT( statusSelected( QAction * ) ) );
+
+  grp = fillMessageTagMenu( menu );
+
+  if ( grp )
+    connect( grp, SIGNAL( triggered( QAction * ) ),
+             SLOT( tagIdSelected( QAction * ) ) );
+}
+
+QActionGroup * Widget::fillMessageTagMenu( KMenu * menu )
+{
+  // nothing here: must be overridden in derived classes
+  return 0;
+}
+
+void Widget::tagIdSelected( QAction *action )
+{
+  QString tagId = action->data().toString();
+
+  // Here we arbitrairly set the status to 0, though we *could* allow filtering
+  // by status AND tag...
+
+  if ( mFilter )
+    mFilter->setStatusMask( 0 );
+
+  if ( tagId.isEmpty() )
+  {
+    if ( mFilter )
+    {
+      if ( mFilter->isEmpty() )
+      {
+        delete mFilter;
+        mFilter = 0;
+      }
+    }
+  } else {
+    if ( !mFilter )
+      mFilter = new Filter();
+    mFilter->setTagId( tagId );
+  }
+
+  mStatusFilterButton->setIcon( action->icon() );
+
+  mView->model()->setFilter( mFilter );
 }
 
 void Widget::statusSelected( QAction *action )
@@ -920,6 +967,11 @@ void Widget::statusSelected( QAction *action )
   // are telling me that this way it's more usable. Two are more than me
   // so here we go :)
   qint32 statusMask = 0; //mFilter ? mFilter->statusMask() : 0; <-- this would "or" with the existing mask instead
+
+  // We also arbitrairly set tagId to an empty string, though we *could* allow filtering
+  // by status AND tag...
+  if ( mFilter )
+    mFilter->setTagId( QString() );
 
   if ( additionalStatusMask == 0)
   {

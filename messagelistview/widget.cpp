@@ -28,6 +28,7 @@
 #include "kmmessage.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
+#include "kmmessagetag.h"
 #include "kmkernel.h"
 #include "mainfolderview.h"
 #include "messagecopyhelper.h"
@@ -38,6 +39,8 @@
 #include <QDrag>
 #include <QPixmap>
 #include <QTimer>
+#include <QAction>
+#include <QActionGroup>
 
 #include <KAcceleratorManager>
 #include <KActionMenu>
@@ -877,6 +880,48 @@ void Widget::viewJobBatchTerminated()
   mIconAnimationTimer->stop();
   mPane->widgetIconChangeRequest( this, mFolderIconBase );
 }
+
+QActionGroup * Widget::fillMessageTagMenu( KMenu * menu )
+{
+  // Used for sorting, go through this routine so that mMsgTagList is properly ordered
+  KMMessageTagList sortedTags;
+
+  QHashIterator<QString,KMMessageTagDescription*> it( *( kmkernel->msgTagMgr()->msgTagDict() ) );
+
+  while (it.hasNext())
+  {
+    it.next();
+    sortedTags.append( it.value()->label() );
+  }
+
+  if ( sortedTags.isEmpty() )
+    return 0;
+
+  sortedTags.prioritySort();
+
+  QActionGroup * grp = new QActionGroup( menu );
+
+  QAction * act;
+
+  QString currentTagId = currentFilterTagId();
+
+  for ( KMMessageTagList::Iterator itl = sortedTags.begin(); itl != sortedTags.end(); ++itl )
+  {
+    const KMMessageTagDescription *description = kmkernel->msgTagMgr()->find( *itl );
+    if ( description )
+    {
+      act = menu->addAction( description->name() );
+      act->setIcon( SmallIcon( description->toolbarIconName() ) );
+      act->setCheckable( true );
+      act->setChecked( description->label() == currentTagId );
+      act->setData( QVariant( description->label() ) );
+      grp->addAction( act );
+    }
+  }
+
+  return grp;
+}
+
 
 } // namespace MessageListView
 
