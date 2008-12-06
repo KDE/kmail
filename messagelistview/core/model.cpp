@@ -1134,6 +1134,30 @@ void Model::syncExpandedStateOfSubtree( Item *root )
   }
 }
 
+static inline QString get_capitalized_long_day_name( int dayOfWeek )
+{
+  // The day name should be capitalized in the group labels
+  // This fixes some complaints from translators that have mapped
+  // their standard day names to lowercase versions for general
+  // use but still want them to be capitalized in the headers...
+  QString name = QDate::longDayName( dayOfWeek );
+  if ( name.length() > 0 )
+    name[ 0 ] = name[ 0 ].toUpper();
+  return name;
+}
+
+static inline QString get_capitalized_month_name( int month )
+{
+  // The month name should be capitalized in the group labels
+  // This fixes some complaints from translators that have mapped
+  // their standard month names to lowercase versions for general
+  // use but still want them to be capitalized in the headers...
+  QString name = QDate::longMonthName( month );
+  if ( name.length() > 0 )
+    name[ 0 ] = name[ 0 ].toUpper();
+  return name;
+}
+
 void Model::attachMessageToGroupHeader( MessageItem *mi )
 {
   QString groupLabel;
@@ -1171,9 +1195,11 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
           ( dDate.year() == mTodayDate.year() )
         )
       {
+        // today
         groupLabel = mCachedTodayLabel;
       } else if ( dDate.daysTo( mTodayDate ) == 1 )
       {
+        // yesterday
         groupLabel = mCachedYesterdayLabel;
       } else if(
           ( dDate.month() == mTodayDate.month() ) &&
@@ -1186,11 +1212,23 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
         if ( dateWeekNumber == todayWeekNumber )
         {
           // within this week
-          groupLabel = QDate::longDayName( dDate.dayOfWeek() );
+          groupLabel = get_capitalized_long_day_name( dDate.dayOfWeek() );
         } else {
+          // not this week
+          // FIXME: After 4.2 think about a configurable date format.
+          //        At the moment KMime::DateFormatter doesn't support date-only formatting.
+          //        KDateTime is not better than QDate in this case.
+          //        A configurable date-only format should be probably tweaked into KMime::DateFormatter
+          //        but this can't be done with the string freeze in effect.
           groupLabel = dDate.toString( Qt::ISODate );
         }
       } else {
+        // not within this month
+        // FIXME: After 4.2 think about a configurable date format.
+        //        At the moment KMime::DateFormatter doesn't support date-only formatting.
+        //        KDateTime is not better than QDate in this case.
+        //        A configurable date-only format should be probably tweaked into KMime::DateFormatter
+        //        but this can't be done with the string freeze in effect.
         groupLabel = dDate.toString( Qt::ISODate );
       }
 
@@ -1226,9 +1264,11 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
           ( dDate.year() == mTodayDate.year() )
         )
       {
+        // today
         groupLabel = mCachedTodayLabel;
       } else if ( dDate.daysTo( mTodayDate ) == 1 )
       {
+        // yesterday
         groupLabel = mCachedYesterdayLabel;
       } else if(
           ( dDate.month() == mTodayDate.month() ) &&
@@ -1241,7 +1281,7 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
         if ( dateWeekNumber == todayWeekNumber )
         {
           // within this week
-          groupLabel = QDate::longDayName( dDate.dayOfWeek() );
+          groupLabel = get_capitalized_long_day_name( dDate.dayOfWeek() );
         } else {
           // previous weeks
           int weekDiff = todayWeekNumber - dateWeekNumber;
@@ -1269,11 +1309,11 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
           ( dDate.year() == mTodayDate.year() )
         )
         {
-          // group by months
-          groupLabel = QDate::longMonthName( dDate.month() );
+          // group by months, this year (so no year appended)
+          groupLabel = get_capitalized_month_name( dDate.month() );
         } else {
           // group by months
-          groupLabel = QString( "%1 %2" ).arg( QDate::longMonthName( dDate.month() ) ).arg( dDate.year() );
+          groupLabel = QString( "%1 %2" ).arg( get_capitalized_month_name( dDate.month() ) ).arg( dDate.year() );
         }
       }
     }
