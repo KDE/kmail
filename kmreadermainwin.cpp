@@ -277,7 +277,7 @@ void KMReaderMainWin::setupAccel()
   connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin, SLOT(slotSaveAttachments()) );
 
   mTrashAction = new KAction( KIcon( "user-trash" ), i18n("&Move to Trash"), this );
-  mTrashAction->setIconText( i18n( "Trash" ) );
+  mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
   mTrashAction->setToolTip( i18n( "Move message to trashcan" ) );
   mTrashAction->setShortcut( QKeySequence( Qt::Key_Delete ) );
   actionCollection()->addAction( "move_to_trash", mTrashAction );

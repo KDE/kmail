@@ -3713,7 +3713,7 @@ void KMMainWidget::setupActions()
   mTrashAction = new KAction(i18n("&Move to Trash"), this);
   actionCollection()->addAction("move_to_trash", mTrashAction );
   mTrashAction->setIcon(KIcon("user-trash"));
-  mTrashAction->setIconText( i18n( "Trash" ) );
+  mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
   mTrashAction->setShortcut(QKeySequence(Qt::Key_Delete));
   mTrashAction->setToolTip(i18n("Move message to trashcan"));
   connect(mTrashAction, SIGNAL(triggered(bool)), SLOT(slotTrashMsg()));
