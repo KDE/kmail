@@ -918,7 +918,7 @@ void Widget::statusMenuAboutToShow()
              SLOT( tagIdSelected( QAction * ) ) );
 }
 
-QActionGroup * Widget::fillMessageTagMenu( KMenu * menu )
+QActionGroup * Widget::fillMessageTagMenu( KMenu * /*menu*/ )
 {
   // nothing here: must be overridden in derived classes
   return 0;

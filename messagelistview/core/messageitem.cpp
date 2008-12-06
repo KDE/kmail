@@ -71,6 +71,24 @@ MessageItem::Tag * MessageItem::findTagInternal( const QString &szTagId ) const
  return 0;
 }
 
+QString MessageItem::tagListDescription() const
+{
+  if ( !mTagList )
+    return QString();
+
+  QString ret;
+
+  for ( QList< Tag * >::Iterator it = mTagList->begin(); it != mTagList->end(); ++it )
+  {
+    if ( !ret.isEmpty() )
+      ret += ", ";
+    ret += ( *it )->name();
+  }
+
+  return ret;
+}
+
+
 MessageItem * MessageItem::topmostMessage()
 {
   if ( !parent() )

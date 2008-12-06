@@ -1945,6 +1945,15 @@ bool View::event( QEvent *e )
             "</tr>"
         ).arg( i18n( "Date" ) ).arg( mi->formattedDate() );
 
+      QString status = mi->statusDescription();
+      QString tags = mi->tagListDescription();
+      if ( !tags.isEmpty () )
+      {
+        if ( !status.isEmpty() )
+          status += ", ";
+        status += tags;
+      }
+
       tip += QString::fromLatin1(
            "<tr>" \
               "<td align=\"right\" valign=\"top\" width=\"45\">" \
@@ -1956,7 +1965,7 @@ bool View::event( QEvent *e )
                  "%2" \
               "</td>" \
             "</tr>"
-        ).arg( i18n( "Status" ) ).arg( mi->statusDescription() );
+        ).arg( i18n( "Status" ) ).arg( status );
 
       tip += QString::fromLatin1(
            "<tr>" \

@@ -125,6 +125,8 @@ public:
   Tag * findTag( const QString &szTagId ) const
     { return mTagList ? findTagInternal( szTagId ) : 0; };
 
+  QString tagListDescription() const;
+
   const QColor & textColor() const
     { return mTextColor; };
 
