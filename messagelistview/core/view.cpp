@@ -107,6 +107,13 @@ View::~View()
   if ( mSaveThemeColumnStateTimer->isActive() )
     mSaveThemeColumnStateTimer->stop();
   delete mSaveThemeColumnStateTimer;
+  if ( mApplyThemeColumnsTimer->isActive() )
+    mApplyThemeColumnsTimer->stop();
+  delete mApplyThemeColumnsTimer;
+
+  // Zero out the theme and aggregation, so Model will not cause accesses to them in its destruction process
+  mTheme = 0;
+  mAggregation = 0;
 }
 
 void View::ignoreCurrentChanges( bool ignore )

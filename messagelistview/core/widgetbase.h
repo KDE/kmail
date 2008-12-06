@@ -77,7 +77,7 @@ private:
 
   StorageModel * mStorageModel;          ///< The currently displayed storage, an owned copy
   Aggregation * mAggregation;            ///< The currently set aggregation mode, an owned copy (eventually even modificable)
-  Theme * mTheme;                          ///< The currently set theme, an owned copy (eventually even modificable)
+  Theme * mTheme;                        ///< The currently set theme, an owned copy (eventually even modificable)
   Filter * mFilter;                      ///< The currently applied filter, an owned copy
   bool mStorageUsesPrivateTheme;
   bool mStorageUsesPrivateAggregation;
