@@ -1220,7 +1220,7 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
           //        KDateTime is not better than QDate in this case.
           //        A configurable date-only format should be probably tweaked into KMime::DateFormatter
           //        but this can't be done with the string freeze in effect.
-          groupLabel = dDate.toString( Qt::ISODate );
+          groupLabel = dDate.toString( Qt::DefaultLocaleShortDate );
         }
       } else {
         // not within this month
@@ -1229,7 +1229,7 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
         //        KDateTime is not better than QDate in this case.
         //        A configurable date-only format should be probably tweaked into KMime::DateFormatter
         //        but this can't be done with the string freeze in effect.
-        groupLabel = dDate.toString( Qt::ISODate );
+        groupLabel = dDate.toString( Qt::DefaultLocaleShortDate );
       }
 
     }
