@@ -80,6 +80,7 @@ private:
   bool mFirstShow;
   bool mSaveThemeColumnStateOnSectionResize;      ///< This is used to filter out programmatic column resizes in slotSectionResized().
   QTimer * mSaveThemeColumnStateTimer;            ///< Used to trigger a delayed "save theme state"
+  QTimer * mApplyThemeColumnsTimer;               ///< Used to trigger a delayed "apply theme columns"
 public:
 
   /**
@@ -394,13 +395,6 @@ protected:
   virtual int sizeHintForColumn( int logicalColumnIndex ) const;
 
   /**
-   * Applies the theme columns to this view.
-   * Columns visible by default are shown, the other are hidden.
-   * Visible columns are assigned space inside the view by using the size hints and some heuristics.
-   */
-  void applyThemeColumns();
-
-  /**
    * This is called by the model from inside setFolder().
    * It's called just after the model has been reset but before
    * any row has been inserted. This allows us to call updateThemeColumns() as needed.
@@ -529,6 +523,13 @@ protected:
   void triggerDelayedSaveThemeColumnState();
 
   /**
+   * Starts a short-delay timer connected to applyThemeColumns().
+   * Used to accumulate consecutive changes and break out of the call stack
+   * up to the main event loop (since multiple resize events tend to be sent by Qt at startup).
+   */
+  void triggerDelayedApplyThemeColumns();
+
+  /**
    * This is used by the selection functions to grow/shrink the existing selection
    * according to the newly selected item passed as parameter.
    * If movingUp is true then: if the newly selected item is above the current selection top
@@ -576,6 +577,13 @@ protected slots:
    * Saves the state of the columns (width and visility) to the currently selected theme object.
    */
   void saveThemeColumnState();
+
+  /**
+   * Applies the theme columns to this view.
+   * Columns visible by default are shown, the other are hidden.
+   * Visible columns are assigned space inside the view by using the size hints and some heuristics.
+   */
+  void applyThemeColumns();
 
 }; // class View
 

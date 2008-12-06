@@ -65,6 +65,9 @@ View::View( Widget *pParent )
   mSaveThemeColumnStateTimer = new QTimer();
   connect( mSaveThemeColumnStateTimer, SIGNAL( timeout() ), this, SLOT( saveThemeColumnState() ) );
 
+  mApplyThemeColumnsTimer = new QTimer();
+  connect( mApplyThemeColumnsTimer, SIGNAL( timeout() ), this, SLOT( applyThemeColumns() ) );
+
   setItemDelegate( mDelegate );
   setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
   setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
@@ -204,6 +207,11 @@ void View::modelHasBeenReset()
 
 void View::applyThemeColumns()
 {
+  if ( mApplyThemeColumnsTimer->isActive() )
+    mApplyThemeColumnsTimer->stop();
+ 
+  kDebug() << "Apply theme columns (VISIBLE:" << isVisible() << ")";
+
   if ( !mTheme )
     return;
 
@@ -244,6 +252,9 @@ void View::applyThemeColumns()
 
   QList< Theme::Column * >::ConstIterator it;
   int idx = 0;
+
+  kDebug() << "Going to really apply columns";
+
 
   // Gather total size "hint" for visible sections: if the widths of the columns wers
   // all saved then the total hint is equal to the total saved width.
@@ -296,7 +307,7 @@ void View::applyThemeColumns()
       if ( realWidth < 2 )
         realWidth = 2; // don't allow very insane values 
 
-      // kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " chosen " << realWidth;
+      kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " chosen " << realWidth;
       totalVisibleWidth += realWidth;
     } else {
       // Column not visible
@@ -308,7 +319,7 @@ void View::applyThemeColumns()
     idx++;
   }
 
-  // kDebug() << "Total visible width before fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
+  kDebug() << "Total visible width before fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
   // Now the algorithm above may be wrong for several reasons...
   // - We're using fixed widths for certain columns and proportional
@@ -390,8 +401,6 @@ void View::applyThemeColumns()
 
   // We're ready to assign widths.
 
-
-
   bool oldSave = mSaveThemeColumnStateOnSectionResize;
   mSaveThemeColumnStateOnSectionResize = false;
 
@@ -433,7 +442,7 @@ void View::applyThemeColumns()
     idx++;
   }
 
-  // kDebug() << "Total visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
+  kDebug() << "Total visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
   totalVisibleWidth = 0;
   idx = 0;
@@ -444,18 +453,18 @@ void View::applyThemeColumns()
   {
     if ( !header()->isSectionHidden( idx ) )
     {
-      // kDebug() << "!! Final size for column " << idx << " is " << header()->sectionSize( idx );
+      kDebug() << "!! Final size for column " << idx << " is " << header()->sectionSize( idx );
       if ( !( *it )->currentlyVisible() )
       {
         bTriggeredQtBug = true;
-        // kDebug() << "!! ERROR: Qt screwed up: I've set column " << idx << " to hidden but it's shown";
+        kDebug() << "!! ERROR: Qt screwed up: I've set column " << idx << " to hidden but it's shown";
       }
       totalVisibleWidth += header()->sectionSize( idx );
     }
     idx++;
   }
   
-  // kDebug() << "Total real visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
+  kDebug() << "Total real visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
   setHeaderHidden( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader );
 
@@ -467,15 +476,24 @@ void View::applyThemeColumns()
   if (bTriggeredQtBug && bAllowRecursion)
   {
     bAllowRecursion = false;
-    // kDebug() << "I've triggered the QHeaderView bug: trying to fix by calling myself again";
+    kDebug() << "I've triggered the QHeaderView bug: trying to fix by calling myself again";
     applyThemeColumns();
     bAllowRecursion = true;
   }
 }
 
+void View::triggerDelayedApplyThemeColumns()
+{
+  if ( mApplyThemeColumnsTimer->isActive() )
+    mApplyThemeColumnsTimer->stop();
+  mApplyThemeColumnsTimer->setSingleShot( true );
+  mApplyThemeColumnsTimer->start( 100 );
+}
 
 void View::saveThemeColumnState()
 {
+  kDebug() << "Save theme column state";
+
   if ( mSaveThemeColumnStateTimer->isActive() )
     mSaveThemeColumnStateTimer->stop();
 
@@ -512,21 +530,26 @@ void View::triggerDelayedSaveThemeColumnState()
   mSaveThemeColumnStateTimer->start( 200 );
 }
 
-
 void View::resizeEvent( QResizeEvent * e )
 {
+  kDebug() << "Resize event enter (viewport width is " << viewport()->width() << ")";
+
   QTreeView::resizeEvent( e );
 
+  if ( !isVisible() )
+    return; // don't play with 
+
   if ( (!mFirstShow) && mNeedToApplyThemeColumns )
-    applyThemeColumns();
+    triggerDelayedApplyThemeColumns();
 
   if ( header()->isVisible() )
     return;
 
+  // header invisible
+
   bool oldSave = mSaveThemeColumnStateOnSectionResize;
   mSaveThemeColumnStateOnSectionResize = false;
 
-  // header invisible
   if ( ( header()->count() - header()->hiddenSectionCount() ) < 2 )
   {
     // a single column visible: resize it
@@ -537,12 +560,13 @@ void View::resizeEvent( QResizeEvent * e )
       if ( !header()->isSectionHidden( visibleIndex ) )
         break;
     }
-
     if ( visibleIndex < count )
       header()->resizeSection( visibleIndex, viewport()->width() - 4 );
   }
 
   mSaveThemeColumnStateOnSectionResize = oldSave;
+
+  triggerDelayedSaveThemeColumnState();
 }
 
 void View::modelAboutToEmitLayoutChanged()
@@ -582,18 +606,22 @@ int View::sizeHintForColumn( int logicalColumnIndex ) const
 
 void View::showEvent( QShowEvent *e )
 {
+  kDebug() << "Show event enter";
+
   QTreeView::showEvent( e );
   if ( mFirstShow )
   {
+    kDebug() << "First show";
     //
     // If we're shown for the first time and the theme has been already set
     // then we need to reapply the theme column widths since the previous
     // application probably used invalid widths.
     //
     if ( mTheme )
-      applyThemeColumns();
+      triggerDelayedApplyThemeColumns();
     mFirstShow = false;
   }
+  kDebug() << "Show event exit";
 }
 
 const int gHeaderContextMenuAdjustColumnSizesId = -1;
