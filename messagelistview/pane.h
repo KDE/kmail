@@ -246,17 +246,23 @@ public:
    * then that tab is made current (and no reloading happens).
    * If the specified folder is not open yet then behaviour
    * depends on the preferEmptyTab value as follows.
+   *
    * If preferEmptyTab is set to false then the (new) folder is loaded
    * in the current tab. If preferEmptyTab is set to true then the (new) folder is
    * loaded in the first empty tab (or a new one if there are no empty ones).
    *
    * Pre-selection is the action of automatically selecting a message just after the folder
    * has finished loading. See Model::setStorageModel() for more information.
+   *
+   * If overrideLabel is not empty then it's used as the tab text for the
+   * specified folder. This is useful to signal a particular folder state
+   * like "loading..."
    */
   void setCurrentFolder(
       KMFolder *fld,
       bool preferEmptyTab = false,
-      Core::PreSelectionMode preSelectionMode = Core::PreSelectLastSelected
+      Core::PreSelectionMode preSelectionMode = Core::PreSelectLastSelected,
+      const QString &overrideLabel = QString()
     );
 
   /**

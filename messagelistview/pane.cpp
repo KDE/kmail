@@ -157,11 +157,8 @@ bool Pane::isFolderOpen( KMFolder * fld ) const
   return messageListViewWidgetWithFolder( fld ) != 0;
 }
 
-void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelectionMode preSelectionMode )
+void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelectionMode preSelectionMode, const QString &overrideLabel )
 {
-  if ( mCurrentFolder == fld )
-    return;
-
   Widget * w = messageListViewWidgetWithFolder( fld );
 
   if ( w )
@@ -169,7 +166,9 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
     // Already open, just activate it
     if ( w != mCurrentWidget )
       setCurrentWidget( w ); // will call internalSetCurrentWidget -> internalSetCurrentFolder
-    w->view()->applyMessagePreSelection( preSelectionMode );
+    if ( !overrideLabel.isEmpty() )
+      setTabText( indexOf( w ), overrideLabel );
+    //w->view()->applyMessagePreSelection( preSelectionMode );
     return;
   }
 
@@ -199,12 +198,16 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
   {
     w = addNewWidget();
     w->setFolder( fld, icon, preSelectionMode );
-    if ( fld )
+    if ( !overrideLabel.isEmpty() )
+      setTabText( indexOf( w ), overrideLabel );
+    else if ( fld )
       setTabText( indexOf( w ), fld->label() );
     setCurrentWidget( w ); // will call internalSetCurrentWidget -> internalSetCurrentFolder
   } else {
     w->setFolder( fld, icon, preSelectionMode );
-    if ( fld )
+    if ( !overrideLabel.isEmpty() )
+      setTabText( indexOf( w ), overrideLabel );
+    else if ( fld )
       setTabText( indexOf( w ), fld->label() );
     else
       setTabText( indexOf( w ), i18nc( "@title:tab Empty messagelist", "Empty" ) );

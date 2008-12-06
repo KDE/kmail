@@ -3034,12 +3034,14 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
 
       imap->getAndCheckFolder();
 
-      // FIXME: Handle this issue in MainFolderView instead ?
-      //        Set the folder, but mark it as "load in progress" in some way
-      //        This will avoid showing "Empty" for a while...
-
       mFolder = 0;          // will make us ignore the "folderChanged" signal from KMail::MessageListView (prevent circular loops)
-      mMessageListView->setCurrentFolder( 0, preferNewTabForOpening );
+      mMessageListView->setCurrentFolder(
+          0,
+          preferNewTabForOpening,
+          KMail::MessageListView::Core::PreSelectNone,
+          i18nc( "tab title when loading an IMAP folder", "Loading..." )
+        );
+
       mFolder = aFolder;    // re-enable the signals from KMail::MessageListView
 
       updateFolderMenu();
