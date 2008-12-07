@@ -667,7 +667,7 @@ private:
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
   KIntSpinBox   *mAutoSave;
-  QCheckBox     *mExternalEditorCheck;
+  QGroupBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
 };
 

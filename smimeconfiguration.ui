@@ -104,21 +104,14 @@
    <item row="7" column="0" >
     <layout class="QHBoxLayout" name="horizontalLayout" >
      <item>
-      <widget class="QGroupBox" name="groupBox_2" >
+      <widget class="QGroupBox" name="enableHTTPCB" >
        <property name="title" >
-        <string>HTTP Requests</string>
+        <string>Allow performing HTTP requests</string>
+       </property>
+       <property name="checkable" >
+        <bool>true</bool>
        </property>
        <layout class="QVBoxLayout" name="vbLayout" >
-        <item>
-         <widget class="QCheckBox" name="disableHTTPCB" >
-          <property name="whatsThis" >
-           <string>Entirely disables the use of HTTP for S/MIME.</string>
-          </property>
-          <property name="text" >
-           <string>Do not perform any HTTP requests</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QCheckBox" name="ignoreHTTPDPCB" >
           <property name="whatsThis" >
@@ -131,6 +124,9 @@
         </item>
         <item>
          <layout class="QHBoxLayout" >
+          <property name="spacing" >
+           <number>2</number>
+          </property>
           <item>
            <layout class="QVBoxLayout" >
             <item>
@@ -154,6 +150,9 @@
           </item>
           <item>
            <layout class="QVBoxLayout" >
+            <property name="spacing" >
+             <number>0</number>
+            </property>
             <item>
              <widget class="QLabel" name="systemHTTPProxy" >
               <property name="text" >
@@ -195,7 +194,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox" >
+      <widget class="QGroupBox" name="enableLDAPCB" >
        <property name="minimumSize" >
         <size>
          <width>0</width>
@@ -203,19 +202,12 @@
         </size>
        </property>
        <property name="title" >
-        <string>LDAP Requests</string>
+        <string>Allow performing LDAP requests</string>
+       </property>
+       <property name="checkable" >
+        <bool>true</bool>
        </property>
        <layout class="QVBoxLayout" >
-        <item>
-         <widget class="QCheckBox" name="disableLDAPCB" >
-          <property name="whatsThis" >
-           <string>Entirely disables the use of LDAP for S/MIME.</string>
-          </property>
-          <property name="text" >
-           <string>Do not perform any LDAP requests</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QCheckBox" name="ignoreLDAPDPCB" >
           <property name="whatsThis" >
@@ -299,6 +291,9 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
      </item>
      <item>
       <widget class="QCheckBox" name="neverConsultCB" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
        <property name="whatsThis" >
         <string>If this option is checked, Certificate Revocation Lists are never used to validate S/MIME certificates.</string>
        </property>
@@ -341,8 +336,8 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
      <y>20</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>24</x>
+     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -353,12 +348,12 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>25</x>
+     <y>51</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>24</x>
+     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -369,12 +364,12 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>36</x>
+     <y>360</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>251</x>
+     <y>355</y>
     </hint>
    </hints>
   </connection>
@@ -385,12 +380,76 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>36</x>
+     <y>338</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>251</x>
+     <y>355</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OCSPRB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>neverConsultCB</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>134</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>417</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enableLDAPCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>customLDAPProxy</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>555</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>595</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enableLDAPCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>customLDAPLabel</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>555</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>458</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enableLDAPCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ignoreLDAPDPCB</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>555</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>510</x>
+     <y>300</y>
     </hint>
    </hints>
   </connection>

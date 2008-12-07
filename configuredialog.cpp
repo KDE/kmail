@@ -2918,25 +2918,26 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay->addItem( new QSpacerItem(0, 0) );
 
   // The "external editor" group:
-  group = new QGroupBox( i18n("External Editor"), this );
-  QLayout *layout = new QVBoxLayout( group );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-
-  mExternalEditorCheck = new QCheckBox(
-           GlobalSettings::self()->useExternalEditorItem()->label(), group);
+  group = new QGroupBox( GlobalSettings::self()->useExternalEditorItem()->label(), this );
+  mExternalEditorCheck = group;
+  mExternalEditorCheck->setCheckable(true);
   mExternalEditorCheck->setObjectName( "kcfg_UseExternalEditor" );
-  connect( mExternalEditorCheck, SIGNAL( toggled( bool ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mExternalEditorCheck, SIGNAL( toggled(bool) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  QLayout *layout = new QVBoxLayout( group );
+  layout->setSpacing( KDialog::spacingHint() );
+
 
   hbox = new KHBox( group );
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
   mEditorRequester = new KUrlRequester( hbox );
   mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
-  connect( mEditorRequester, SIGNAL( urlSelected(const KUrl&) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  connect( mEditorRequester, SIGNAL( textChanged(const QString&) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mEditorRequester, SIGNAL( urlSelected(KUrl) ),
+           this, SLOT( slotEmitChanged() ) );
+  connect( mEditorRequester, SIGNAL( textChanged(QString) ),
+           this, SLOT( slotEmitChanged() ) );
 
   hbox->setStretchFactor( mEditorRequester, 1 );
   label->setBuddy( mEditorRequester );
@@ -2957,7 +2958,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
            label, SLOT(setEnabled(bool)) );
-  layout->addWidget( mExternalEditorCheck );
   layout->addWidget( hbox );
   layout->addWidget( label );
 
@@ -2967,7 +2967,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
 void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   // various check boxes:
-
   mAutoAppSignFileCheck->setChecked(
            GlobalSettings::self()->autoTextSignature()=="auto" );
   mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
@@ -3112,18 +3111,18 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // tmp. vars:
-  QVBoxLayout *vlay;
+  QHBoxLayout *vlay;
   QGroupBox   *group;
   QLabel      *label;
 
 
-  vlay = new QVBoxLayout( this );
+  vlay = new QHBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
 
   group = new QGroupBox( i18n("Repl&y Subject Prefixes"), this );
   QLayout *layout = new QVBoxLayout( group );
-  group->layout()->setSpacing( KDialog::spacingHint() );
+  layout->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
   label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
@@ -3788,14 +3787,31 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   vboxlayout->addWidget( label );
   vlay->addWidget( group );
 
+  QHBoxLayout* hlay=new QHBoxLayout();
+  vlay->addLayout( hlay );
   // encrypted messages group
   group = new QGroupBox( i18n("Encrypted Messages"), this );
   vboxlayout = new QVBoxLayout( group );
+//   vboxlayout->setContentsMargins( KDialog::marginHint(), 0, 0, 0);
   mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
   connect( mAlwaysDecrypt, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged() ) );
   vboxlayout->addWidget( mAlwaysDecrypt );
-  vlay->addWidget( group );
+  hlay->addWidget( group );
+
+
+  // "Attached keys" group box:
+  group = new QGroupBox(i18n( "Certificate && Key Bundle Attachments" ), this );
+  vboxlayout = new QVBoxLayout(group);
+//   vboxlayout->setContentsMargins( KDialog::marginHint(), 0, 0, 0);
+  mAutomaticallyImportAttachedKeysCheck = new QCheckBox(
+          i18n("Automatically import keys and certificates"), group );
+  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
+           SLOT(slotEmitChanged()) );
+  vboxlayout->addWidget( mAutomaticallyImportAttachedKeysCheck );
+
+  hlay->addWidget( group );
+
 
   // "Message Disposition Notification" groupbox:
   group = new QGroupBox( i18n("Message Disposition Notifications"), this );
@@ -3871,16 +3887,6 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
   vlay->addWidget( group );
 
-  // "Attached keys" group box:
-  group = new QGroupBox(i18n( "Certificate && Key Bundle Attachments" ), this );
-  vboxlayout = new QVBoxLayout(group);
-  mAutomaticallyImportAttachedKeysCheck = new QCheckBox(
-          i18n("Automatically import keys and certificates"), group );
-  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
-           SLOT(slotEmitChanged()) );
-  vboxlayout->addWidget( mAutomaticallyImportAttachedKeysCheck );
-
-  vlay->addWidget( group );
   vlay->addStretch( 10 ); // spacer
 }
 
@@ -4244,15 +4250,15 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
 
   connect( mWidget->ignoreServiceURLCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->ignoreHTTPDPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
-  connect( mWidget->disableHTTPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->enableHTTPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->honorHTTPProxyRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->useCustomHTTPProxyRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->customHTTPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->ignoreLDAPDPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
-  connect( mWidget->disableLDAPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->enableLDAPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->customLDAPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
 
-  connect( mWidget->disableHTTPCB, SIGNAL( toggled( bool ) ),
+  connect( mWidget->enableHTTPCB, SIGNAL( toggled( bool ) ),
            this, SLOT( slotUpdateHTTPActions() ) );
   connect( mWidget->ignoreHTTPDPCB, SIGNAL( toggled( bool ) ),
            this, SLOT( slotUpdateHTTPActions() ) );
@@ -4374,9 +4380,10 @@ void SecurityPage::SMimeTab::doLoadOther() {
   // dirmngr-0.9.0 options
   initializeDirmngrCheckbox( mWidget->ignoreServiceURLCB, e.mIgnoreServiceURLEntry );
   initializeDirmngrCheckbox( mWidget->ignoreHTTPDPCB, e.mIgnoreHTTPDPEntry );
-  initializeDirmngrCheckbox( mWidget->disableHTTPCB, e.mDisableHTTPEntry );
+  if (e.mDisableHTTPEntry) mWidget->enableHTTPCB->setChecked( !e.mDisableHTTPEntry->boolValue() );
   initializeDirmngrCheckbox( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
-  initializeDirmngrCheckbox( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
+  if (e.mDisableLDAPEntry) mWidget->enableLDAPCB->setChecked( !e.mDisableLDAPEntry->boolValue() );
+
   if ( e.mCustomHTTPProxy ) {
     QString systemProxy = QString::fromLocal8Bit( qgetenv( "http_proxy" ) );
     if ( systemProxy.isEmpty() )
@@ -4402,10 +4409,10 @@ void SecurityPage::SMimeTab::doLoadOther() {
 }
 
 void SecurityPage::SMimeTab::slotUpdateHTTPActions() {
-  mWidget->ignoreHTTPDPCB->setEnabled( !mWidget->disableHTTPCB->isChecked() );
+  mWidget->ignoreHTTPDPCB->setEnabled( mWidget->enableHTTPCB->isChecked() );
 
   // The proxy settings only make sense when "Ignore HTTP CRL DPs of certificate" is checked.
-  bool enableProxySettings = !mWidget->disableHTTPCB->isChecked()
+  bool enableProxySettings = mWidget->enableHTTPCB->isChecked()
                           && mWidget->ignoreHTTPDPCB->isChecked();
   mWidget->systemHTTPProxy->setEnabled( enableProxySettings );
   mWidget->useCustomHTTPProxyRB->setEnabled( enableProxySettings );
@@ -4458,9 +4465,11 @@ void SecurityPage::SMimeTab::save() {
   //dirmngr-0.9.0 options
   saveCheckBoxToKleoEntry( mWidget->ignoreServiceURLCB, e.mIgnoreServiceURLEntry );
   saveCheckBoxToKleoEntry( mWidget->ignoreHTTPDPCB, e.mIgnoreHTTPDPEntry );
-  saveCheckBoxToKleoEntry( mWidget->disableHTTPCB, e.mDisableHTTPEntry );
+  if ( e.mDisableHTTPEntry && e.mDisableHTTPEntry->boolValue() == mWidget->enableHTTPCB->isChecked() )
+    e.mDisableHTTPEntry->setBoolValue( !mWidget->enableHTTPCB->isChecked() );
   saveCheckBoxToKleoEntry( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
-  saveCheckBoxToKleoEntry( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
+  if ( e.mDisableLDAPEntry && e.mDisableLDAPEntry->boolValue() == mWidget->enableLDAPCB->isChecked() )
+    e.mDisableLDAPEntry->setBoolValue( !mWidget->enableLDAPCB->isChecked() );
   if ( e.mCustomHTTPProxy ) {
     const bool honor = mWidget->honorHTTPProxyRB->isChecked();
     if ( e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue() != honor )
