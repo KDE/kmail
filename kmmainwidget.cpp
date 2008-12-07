@@ -1369,11 +1369,13 @@ void KMMainWidget::slotRemoveFolder()
   if ( mFolder->isReadOnly() ) return;
 
   QString title;
+  QString buttonLabel;
   if ( mFolder->folderType() == KMFolderTypeSearch ) {
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
                 "Any messages it shows will still be available in their original folder.</qt>",
              Qt::escape( mFolder->label() ) );
+    buttonLabel = i18nc("@action:button Delete search", "&Delete");
   } else {
     title = i18n("Delete Folder");
     if ( mFolder->count() == 0 ) {
@@ -1406,10 +1408,11 @@ void KMMainWidget::slotRemoveFolder()
               Qt::escape( mFolder->label() ) );
       }
     }
+    buttonLabel = i18nc("@action:button Delete folder", "&Delete");
   }
 
   if ( KMessageBox::warningContinueCancel( this, str, title,
-                                           KGuiItem( i18n("&Delete"), "edit-delete" ),
+                                           KGuiItem( buttonLabel, "edit-delete" ),
                                            KStandardGuiItem::cancel(), "",
                                            KMessageBox::Notify | KMessageBox::Dangerous )
       == KMessageBox::Continue )
@@ -3724,7 +3727,7 @@ void KMMainWidget::setupActions()
    * sure it is plugged into the KAccel now, since that won't happen on
    * XMLGui construction or manual ->plug(). This is only a problem when run
    * as a part, though. */
-  mDeleteAction = new KAction(KIcon("edit-delete"), i18n("&Delete"), this);
+  mDeleteAction = new KAction(KIcon("edit-delete"), i18nc("@action Hard delete, bypassing trash", "&Delete"), this);
   actionCollection()->addAction("delete", mDeleteAction );
   connect(mDeleteAction, SIGNAL(triggered(bool)), SLOT(slotDeleteMsg()));
   mDeleteAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_Delete));
