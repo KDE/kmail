@@ -107,20 +107,19 @@ using MailTransport::TransportManagementWidget;
 #include <KColorScheme>
 
 // Qt headers:
-#include <QBoxLayout>
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLayout>
 #include <QHideEvent>
 #include <QLabel>
-#include <QLayout>
 #include <QList>
 #include <QRadioButton>
 #include <QGroupBox>
 #include <QToolTip>
 #include <QListWidget>
 #include <QValidator>
-#include <QVBoxLayout>
 #include <QWhatsThis>
 #include <QDBusConnection>
 #include <QHostInfo>
@@ -175,19 +174,19 @@ namespace {
     }
   }
 
-  void populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation, const EnumConfigEntry & e ) {
+  void populateButtonGroup( QGroupBox * box, QButtonGroup * group, /*int orientation, */const EnumConfigEntry & e ) {
+//     const QBoxLayout::Direction orientation2direction[]={QBoxLayout::LeftToRight,QBoxLayout::TopToBottom};
     box->setTitle( i18n(e.desc) );
-    if (orientation == Qt::Horizontal) {
-      box->setLayout( new QHBoxLayout() );
-    } else {
-      box->setLayout( new QVBoxLayout() );
-    }
-    box->layout()->setSpacing( KDialog::spacingHint() );
+//     QBoxLayout* lay=new QBoxLayout(orientation2direction[orientation],box);
+    QBoxLayout* lay=new QVBoxLayout(box);
+    box->setLayout(lay);
+    lay->setSpacing( KDialog::spacingHint() );
     for (int i = 0; i < e.numItems; ++i) {
       QRadioButton *button = new QRadioButton( i18n(e.items[i].desc), box );
       group->addButton( button, i );
-      box->layout()->addWidget( button );
+      lay->addWidget( button );
     }
+    lay->addStretch( 1 );
   }
 
   void populateCheckBox( QCheckBox * b, const BoolConfigEntry & e ) {
@@ -1640,46 +1639,45 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // tmp. vars:
-  QVBoxLayout * vlay;
+  QGridLayout * vlay;
 
-  vlay = new QVBoxLayout( this );
+  vlay = new QGridLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
 
   // "folder list" radio buttons:
-  populateButtonGroup( mFolderListGroupBox = new QGroupBox(this), mFolderListGroup = new QButtonGroup(this), Qt::Horizontal, folderListMode );
-  vlay->addWidget( mFolderListGroupBox );
+  populateButtonGroup( mFolderListGroupBox = new QGroupBox(this), mFolderListGroup = new QButtonGroup(this), /*Qt::Vertical,*/ folderListMode);
+  vlay->addWidget( mFolderListGroupBox, 0,0 );
   connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
   connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  vlay->addWidget( mFavoriteFolderViewCB );
+  mFolderListGroupBox->layout()->addWidget( mFavoriteFolderViewCB );
 
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  vlay->addWidget( mFolderQuickSearchCB );
-  vlay->addSpacing( KDialog::spacingHint() );		// space before next box
+  mFolderListGroupBox->layout()->addWidget( mFolderQuickSearchCB );
 
   // "show reader window" radio buttons:
-  populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
-  vlay->addWidget( mReaderWindowModeGroupBox );
+  populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), /*Qt::Vertical,*/ readerWindowMode );
+  vlay->addWidget( mReaderWindowModeGroupBox, 0,1 );
   connect( mReaderWindowModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
-  populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), Qt::Vertical, mimeTreeMode );
-  vlay->addWidget( mMIMETreeModeGroupBox );
+  populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), /*Qt::Vertical,*/ mimeTreeMode );
+  vlay->addWidget( mMIMETreeModeGroupBox, 1,0 );
   connect( mMIMETreeModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
-  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), Qt::Horizontal, mimeTreeLocation );
-  vlay->addWidget( mMIMETreeLocationGroupBox );
+  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), /*Qt::Vertical, */mimeTreeLocation );
+  vlay->addWidget( mMIMETreeLocationGroupBox, 1,1 );
   connect( mMIMETreeLocationGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  vlay->addStretch( 10 ); // spacer
+  vlay->setRowStretch(2, 100 ); // spacer
 }
 
 void AppearancePage::LayoutTab::doLoadOther() {
@@ -1809,30 +1807,34 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
     const char *label = dateDisplayConfig[i].displayName;
     QString buttonLabel;
-    if ( QString(label).contains("%1") )
+    if ( dateDisplayConfig[i].dateDisplay != DateFormatter::Custom ) {
       buttonLabel = i18n( label, DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
-    else
+      radio = new QRadioButton( buttonLabel, mDateDisplay );
+      gvlay->addWidget( radio );
+    }
+    else {
       buttonLabel = i18n( label );
-    radio = new QRadioButton( buttonLabel, mDateDisplay );
-    gvlay->addWidget( radio );
+      radio = new QRadioButton( buttonLabel, mDateDisplay );
 
-    if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
-      KHBox *hbox = new KHBox( mDateDisplay );
-      hbox->setSpacing( KDialog::spacingHint() );
+      QHBoxLayout* clay = new QHBoxLayout();
+      gvlay->addLayout( clay );
+      clay->setSpacing( KDialog::spacingHint() );      
+      clay->addWidget( radio );
 
-      mCustomDateFormatEdit = new KLineEdit( hbox );
+      mCustomDateFormatEdit = new KLineEdit( mDateDisplay );
       mCustomDateFormatEdit->setEnabled( false );
-      hbox->setStretchFactor( mCustomDateFormatEdit, 1 );
+      clay->addWidget( mCustomDateFormatEdit );
 
       connect( radio, SIGNAL(toggled(bool)),
                mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
-      connect( mCustomDateFormatEdit, SIGNAL(textChanged(const QString&)),
+      connect( mCustomDateFormatEdit, SIGNAL(textChanged(QString)),
                this, SLOT(slotEmitChanged(void)) );
 
       QLabel *formatHelp = new QLabel(
-        i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox );
-      connect( formatHelp, SIGNAL(linkActivated(const QString &)),
-               SLOT(slotLinkClicked(const QString &)) );
+        i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), mDateDisplay );
+      connect( formatHelp, SIGNAL(linkActivated(QString)),
+               SLOT(slotLinkClicked(QString)) );
+      clay->addWidget( formatHelp );
 
       mCustomDateWhatsThis =
         i18n("<qt><p><strong>These expressions may be used for the date:"
@@ -1868,7 +1870,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
              "</strong></p></qt>");
       mCustomDateFormatEdit->setWhatsThis( mCustomDateWhatsThis );
       radio->setWhatsThis( mCustomDateWhatsThis );
-      gvlay->addWidget( hbox );
     }
   } // end for loop populating mDateDisplay
 
@@ -2061,6 +2062,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   connect( mShowExpandQuotesMark, SIGNAL( toggled( bool ) ),
       mCollapseQuoteLevelSpin, SLOT( setEnabled( bool ) ) );
 
+  //TODO add autodetecting, like in Kate and Konqueror
   // Fallback Character Encoding
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
@@ -5184,3 +5186,5 @@ void AccountUpdater::namespacesFetched()
 
 //----------------------------
 #include "configuredialog.moc"
+
+// kate: space-indent on; indent-width 2; replace-tabs on;
