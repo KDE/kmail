@@ -1928,6 +1928,9 @@ bool KMComposeWin::userForgotAttachment()
   }
 
   QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
+  if ( attachWordsList.isEmpty() ) {
+    return false;
+  }
 
   if ( attachWordsList.isEmpty() ) {
     // default value (FIXME: this is duplicated in configuredialog.cpp)
@@ -1949,8 +1952,7 @@ bool KMComposeWin::userForgotAttachment()
   // check whether the subject contains one of the attachment key words
   // unless the message is a reply or a forwarded message
   QString subj = subject();
-  gotMatch = ( KMMessage::stripOffPrefixes( subj ) == subj )
-    && ( rx.indexIn( subj ) >= 0 );
+  gotMatch = ( KMMessage::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
 
   if ( !gotMatch ) {
     // check whether the non-quoted text contains one of the attachment key
