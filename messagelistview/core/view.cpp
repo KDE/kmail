@@ -103,7 +103,7 @@ View::View( Widget *pParent )
 }
 
 View::~View()
-{
+{ 
   if ( mSaveThemeColumnStateTimer->isActive() )
     mSaveThemeColumnStateTimer->stop();
   delete mSaveThemeColumnStateTimer;
@@ -111,7 +111,9 @@ View::~View()
     mApplyThemeColumnsTimer->stop();
   delete mApplyThemeColumnsTimer;
 
-  // Zero out the theme and aggregation, so Model will not cause accesses to them in its destruction process
+  // Zero out the theme, aggregation and ApplyThemeColumnsTimer so Model will not cause accesses to them in its destruction process
+  mApplyThemeColumnsTimer = 0;
+  
   mTheme = 0;
   mAggregation = 0;
 }
@@ -214,6 +216,10 @@ void View::modelHasBeenReset()
 
 void View::applyThemeColumns()
 {
+  if ( !mApplyThemeColumnsTimer ) {
+    return;
+  }
+
   if ( mApplyThemeColumnsTimer->isActive() )
     mApplyThemeColumnsTimer->stop();
  
