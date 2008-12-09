@@ -1678,6 +1678,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   vlay->setColumnStretch(0, 2 );
+  vlay->setColumnStretch(1, 2 );
   vlay->setRowStretch(2, 100 ); // spacer
 }
 
