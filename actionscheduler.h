@@ -39,6 +39,7 @@
 
 #include <QList>
 #include <QTime>
+#include <QPointer>
 
 namespace KMail {
 
@@ -187,7 +188,7 @@ private:
   QTimer *timeOutTimer, *fetchTimeOutTimer;
   QTime timeOutTime, fetchTimeOutTime;
   KMCommand *lastCommand;
-  FolderJob *lastJob;
+  QPointer<FolderJob> lastJob;
 };
 
 }

@@ -832,7 +832,8 @@ void ActionScheduler::timeOut()
 void ActionScheduler::fetchTimeOut()
 {
   // Note: This is a good place for a debug statement
-  assert( lastJob );
+  if( !lastJob )
+    return;
   // sometimes imap jobs seem to just stall so give up and move on
   disconnect( lastJob, SIGNAL(messageRetrieved( KMMessage* )),
               this, SLOT(messageFetched( KMMessage* )) );
