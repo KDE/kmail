@@ -181,6 +181,7 @@ namespace {
     QBoxLayout* lay=new QVBoxLayout(box);
     box->setLayout(lay);
     lay->setSpacing( KDialog::spacingHint() );
+    lay->setMargin( KDialog::marginHint() );
     for (int i = 0; i < e.numItems; ++i) {
       QRadioButton *button = new QRadioButton( i18n(e.items[i].desc), box );
       group->addButton( button, i );
@@ -266,8 +267,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   // the largest one. This way at least after the first showing of
   // the largest kcm the size is kept.
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  int width = geometry.readEntry( "ConfigureDialogWidth", 0 );
-  int height = geometry.readEntry( "ConfigureDialogHeight", 0 );
+  int width = geometry.readEntry( "ConfigureDialogWidth112008", 0 );
+  int height = geometry.readEntry( "ConfigureDialogHeight112008", 0 );
   if ( width != 0 && height != 0 ) {
      setMinimumSize( width, height );
   }
@@ -276,8 +277,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
 
 void ConfigureDialog::hideEvent( QHideEvent *ev ) {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  geometry.writeEntry( "ConfigureDialogWidth", width() );
-  geometry.writeEntry( "ConfigureDialogHeight",height() );
+  geometry.writeEntry( "ConfigureDialogWidth112008", width() );
+  geometry.writeEntry( "ConfigureDialogHeight112008",height() );
   KDialog::hideEvent( ev );
 }
 
@@ -1639,15 +1640,14 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // tmp. vars:
-  QGridLayout * vlay;
-
-  vlay = new QGridLayout( this );
+  
+  QGridLayout* vlay = new QGridLayout(this);
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
 
   // "folder list" radio buttons:
   populateButtonGroup( mFolderListGroupBox = new QGroupBox(this), mFolderListGroup = new QButtonGroup(this), /*Qt::Vertical,*/ folderListMode);
-  vlay->addWidget( mFolderListGroupBox, 0,0 );
+  vlay->addWidget( mFolderListGroupBox, 0, 0 );
   connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
@@ -1661,22 +1661,23 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
 
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), /*Qt::Vertical,*/ readerWindowMode );
-  vlay->addWidget( mReaderWindowModeGroupBox, 0,1 );
+  vlay->addWidget( mReaderWindowModeGroupBox, 0, 1 );
   connect( mReaderWindowModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
   populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), /*Qt::Vertical,*/ mimeTreeMode );
-  vlay->addWidget( mMIMETreeModeGroupBox, 1,0 );
+  vlay->addWidget( mMIMETreeModeGroupBox, 1, 0 );
   connect( mMIMETreeModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
   populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), /*Qt::Vertical, */mimeTreeLocation );
-  vlay->addWidget( mMIMETreeLocationGroupBox, 1,1 );
+  vlay->addWidget( mMIMETreeLocationGroupBox, 1, 1);
   connect( mMIMETreeLocationGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  vlay->setColumnStretch(0, 2 );
   vlay->setRowStretch(2, 100 ); // spacer
 }
 
@@ -4805,11 +4806,11 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // IMAP resource setup
-  QGroupBox * b1 = new QGroupBox( i18n("&IMAP Resource Folder Options"), this );
+  QGroupBox * b1 = new QGroupBox( i18n("&Enable IMAP resource functionality") /*i18n("&IMAP Resource Folder Options")*/, this );
   QLayout *layout = new QVBoxLayout( b1 );
 
-  mEnableImapResCB =
-    new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
+  b1->setCheckable(true);
+  mEnableImapResCB = b1;
   mEnableImapResCB->setToolTip(  i18n( "This enables the IMAP storage for "
                                           "the Kontact applications" ) );
   mEnableImapResCB->setWhatsThis(
@@ -4909,7 +4910,6 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            ->hideGroupwareFoldersItem()->whatsThis().toUtf8() ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
-  layout->addWidget( mEnableImapResCB );
   layout->addWidget( mBox );
   vlay->addWidget( b1 );
 
@@ -4942,7 +4942,6 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
   layout = new QVBoxLayout( b1 );
 
-  gBox = new KVBox( b1 );
 #if 0
   // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
@@ -4953,13 +4952,16 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            this, SLOT( slotEmitChanged( void ) ) );
 #endif
   mEnableGwCB = 0;
-  mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), gBox );
+  mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), b1 );
+  layout->addWidget(mLegacyMangleFromTo);
   mLegacyMangleFromTo->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyMangleFromToHeadersItem()->whatsThis().toUtf8() ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), gBox );
+
+  mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), b1 );
+  layout->addWidget(mLegacyBodyInvites);
   mLegacyBodyInvites->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyBodyInvitesItem()->whatsThis().toUtf8() ) );
@@ -4968,7 +4970,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
+  mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), b1);
+  layout->addWidget(mExchangeCompatibleInvitations);
   mExchangeCompatibleInvitations->setToolTip(
     i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server,<br/>"
           "has a problem understanding standards-compliant groupware e-mail.<br/>"
@@ -4978,13 +4981,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
+  mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), b1);
+  layout->addWidget(mAutomaticSending);
   mAutomaticSending->setToolTip( i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
   mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
            automaticSendingItem()->whatsThis().toUtf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  layout->addWidget( gBox );
   vlay->addWidget( b1 );
   vlay->addStretch( 10 ); // spacer
 }

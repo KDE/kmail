@@ -1018,7 +1018,7 @@ private:
 
 private:
   QCheckBox* mEnableGwCB;
-  QCheckBox* mEnableImapResCB;
+  QGroupBox* mEnableImapResCB;
 
   QWidget* mBox;
   KVBox* gBox;
