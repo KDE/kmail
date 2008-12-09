@@ -39,6 +39,7 @@
 
 #include <QList>
 #include <QTime>
+#include <QPointer>
 
 class KMHeaders;
 
@@ -190,7 +191,7 @@ private:
   QTimer *timeOutTimer, *fetchTimeOutTimer;
   QTime timeOutTime, fetchTimeOutTime;
   KMCommand *lastCommand;
-  FolderJob *lastJob;
+  QPointer<FolderJob> lastJob;
 };
 
 }
