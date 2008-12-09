@@ -667,7 +667,7 @@ private:
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
   KIntSpinBox   *mAutoSave;
-  QGroupBox     *mExternalEditorCheck;
+  QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
 };
 
@@ -1018,7 +1018,7 @@ private:
 
 private:
   QCheckBox* mEnableGwCB;
-  QGroupBox* mEnableImapResCB;
+  QCheckBox* mEnableImapResCB;
 
   QWidget* mBox;
   KVBox* gBox;

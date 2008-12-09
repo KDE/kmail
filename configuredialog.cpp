@@ -107,19 +107,20 @@ using MailTransport::TransportManagementWidget;
 #include <KColorScheme>
 
 // Qt headers:
+#include <QBoxLayout>
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLayout>
 #include <QHideEvent>
 #include <QLabel>
+#include <QLayout>
 #include <QList>
 #include <QRadioButton>
 #include <QGroupBox>
 #include <QToolTip>
 #include <QListWidget>
 #include <QValidator>
+#include <QVBoxLayout>
 #include <QWhatsThis>
 #include <QDBusConnection>
 #include <QHostInfo>
@@ -174,20 +175,19 @@ namespace {
     }
   }
 
-  void populateButtonGroup( QGroupBox * box, QButtonGroup * group, /*int orientation, */const EnumConfigEntry & e ) {
-//     const QBoxLayout::Direction orientation2direction[]={QBoxLayout::LeftToRight,QBoxLayout::TopToBottom};
+  void populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation, const EnumConfigEntry & e ) {
     box->setTitle( i18n(e.desc) );
-//     QBoxLayout* lay=new QBoxLayout(orientation2direction[orientation],box);
-    QBoxLayout* lay=new QVBoxLayout(box);
-    box->setLayout(lay);
-    lay->setSpacing( KDialog::spacingHint() );
-    lay->setMargin( KDialog::marginHint() );
+    if (orientation == Qt::Horizontal) {
+      box->setLayout( new QHBoxLayout() );
+    } else {
+      box->setLayout( new QVBoxLayout() );
+    }
+    box->layout()->setSpacing( KDialog::spacingHint() );
     for (int i = 0; i < e.numItems; ++i) {
       QRadioButton *button = new QRadioButton( i18n(e.items[i].desc), box );
       group->addButton( button, i );
-      lay->addWidget( button );
+      box->layout()->addWidget( button );
     }
-    lay->addStretch( 1 );
   }
 
   void populateCheckBox( QCheckBox * b, const BoolConfigEntry & e ) {
@@ -267,8 +267,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   // the largest one. This way at least after the first showing of
   // the largest kcm the size is kept.
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  int width = geometry.readEntry( "ConfigureDialogWidth112008", 0 );
-  int height = geometry.readEntry( "ConfigureDialogHeight112008", 0 );
+  int width = geometry.readEntry( "ConfigureDialogWidth", 0 );
+  int height = geometry.readEntry( "ConfigureDialogHeight", 0 );
   if ( width != 0 && height != 0 ) {
      setMinimumSize( width, height );
   }
@@ -277,8 +277,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
 
 void ConfigureDialog::hideEvent( QHideEvent *ev ) {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  geometry.writeEntry( "ConfigureDialogWidth112008", width() );
-  geometry.writeEntry( "ConfigureDialogHeight112008",height() );
+  geometry.writeEntry( "ConfigureDialogWidth", width() );
+  geometry.writeEntry( "ConfigureDialogHeight",height() );
   KDialog::hideEvent( ev );
 }
 
@@ -1640,46 +1640,46 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // tmp. vars:
-  
-  QGridLayout* vlay = new QGridLayout(this);
+  QVBoxLayout * vlay;
+
+  vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
 
   // "folder list" radio buttons:
-  populateButtonGroup( mFolderListGroupBox = new QGroupBox(this), mFolderListGroup = new QButtonGroup(this), /*Qt::Vertical,*/ folderListMode);
-  vlay->addWidget( mFolderListGroupBox, 0, 0 );
+  populateButtonGroup( mFolderListGroupBox = new QGroupBox(this), mFolderListGroup = new QButtonGroup(this), Qt::Horizontal, folderListMode );
+  vlay->addWidget( mFolderListGroupBox );
   connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
   connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  mFolderListGroupBox->layout()->addWidget( mFavoriteFolderViewCB );
+  vlay->addWidget( mFavoriteFolderViewCB );
 
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  mFolderListGroupBox->layout()->addWidget( mFolderQuickSearchCB );
+  vlay->addWidget( mFolderQuickSearchCB );
+  vlay->addSpacing( KDialog::spacingHint() );		// space before next box
 
   // "show reader window" radio buttons:
-  populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), /*Qt::Vertical,*/ readerWindowMode );
-  vlay->addWidget( mReaderWindowModeGroupBox, 0, 1 );
+  populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
+  vlay->addWidget( mReaderWindowModeGroupBox );
   connect( mReaderWindowModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
-  populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), /*Qt::Vertical,*/ mimeTreeMode );
-  vlay->addWidget( mMIMETreeModeGroupBox, 1, 0 );
+  populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), Qt::Vertical, mimeTreeMode );
+  vlay->addWidget( mMIMETreeModeGroupBox );
   connect( mMIMETreeModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
-  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), /*Qt::Vertical, */mimeTreeLocation );
-  vlay->addWidget( mMIMETreeLocationGroupBox, 1, 1);
+  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), Qt::Horizontal, mimeTreeLocation );
+  vlay->addWidget( mMIMETreeLocationGroupBox );
   connect( mMIMETreeLocationGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  vlay->setColumnStretch(0, 2 );
-  vlay->setColumnStretch(1, 2 );
-  vlay->setRowStretch(2, 100 ); // spacer
+  vlay->addStretch( 10 ); // spacer
 }
 
 void AppearancePage::LayoutTab::doLoadOther() {
@@ -1809,34 +1809,30 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
     const char *label = dateDisplayConfig[i].displayName;
     QString buttonLabel;
-    if ( dateDisplayConfig[i].dateDisplay != DateFormatter::Custom ) {
+    if ( QString(label).contains("%1") )
       buttonLabel = i18n( label, DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
-      radio = new QRadioButton( buttonLabel, mDateDisplay );
-      gvlay->addWidget( radio );
-    }
-    else {
+    else
       buttonLabel = i18n( label );
-      radio = new QRadioButton( buttonLabel, mDateDisplay );
+    radio = new QRadioButton( buttonLabel, mDateDisplay );
+    gvlay->addWidget( radio );
 
-      QHBoxLayout* clay = new QHBoxLayout();
-      gvlay->addLayout( clay );
-      clay->setSpacing( KDialog::spacingHint() );      
-      clay->addWidget( radio );
+    if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
+      KHBox *hbox = new KHBox( mDateDisplay );
+      hbox->setSpacing( KDialog::spacingHint() );
 
-      mCustomDateFormatEdit = new KLineEdit( mDateDisplay );
+      mCustomDateFormatEdit = new KLineEdit( hbox );
       mCustomDateFormatEdit->setEnabled( false );
-      clay->addWidget( mCustomDateFormatEdit );
+      hbox->setStretchFactor( mCustomDateFormatEdit, 1 );
 
       connect( radio, SIGNAL(toggled(bool)),
                mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
-      connect( mCustomDateFormatEdit, SIGNAL(textChanged(QString)),
+      connect( mCustomDateFormatEdit, SIGNAL(textChanged(const QString&)),
                this, SLOT(slotEmitChanged(void)) );
 
       QLabel *formatHelp = new QLabel(
-        i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), mDateDisplay );
-      connect( formatHelp, SIGNAL(linkActivated(QString)),
-               SLOT(slotLinkClicked(QString)) );
-      clay->addWidget( formatHelp );
+        i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox );
+      connect( formatHelp, SIGNAL(linkActivated(const QString &)),
+               SLOT(slotLinkClicked(const QString &)) );
 
       mCustomDateWhatsThis =
         i18n("<qt><p><strong>These expressions may be used for the date:"
@@ -1872,6 +1868,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
              "</strong></p></qt>");
       mCustomDateFormatEdit->setWhatsThis( mCustomDateWhatsThis );
       radio->setWhatsThis( mCustomDateWhatsThis );
+      gvlay->addWidget( hbox );
     }
   } // end for loop populating mDateDisplay
 
@@ -2064,7 +2061,6 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   connect( mShowExpandQuotesMark, SIGNAL( toggled( bool ) ),
       mCollapseQuoteLevelSpin, SLOT( setEnabled( bool ) ) );
 
-  //TODO add autodetecting, like in Kate and Konqueror
   // Fallback Character Encoding
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
@@ -2920,26 +2916,25 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay->addItem( new QSpacerItem(0, 0) );
 
   // The "external editor" group:
-  group = new QGroupBox( GlobalSettings::self()->useExternalEditorItem()->label(), this );
-  mExternalEditorCheck = group;
-  mExternalEditorCheck->setCheckable(true);
-  mExternalEditorCheck->setObjectName( "kcfg_UseExternalEditor" );
-  connect( mExternalEditorCheck, SIGNAL( toggled(bool) ),
-           this, SLOT( slotEmitChanged() ) );
-
+  group = new QGroupBox( i18n("External Editor"), this );
   QLayout *layout = new QVBoxLayout( group );
-  layout->setSpacing( KDialog::spacingHint() );
+  group->layout()->setSpacing( KDialog::spacingHint() );
 
+  mExternalEditorCheck = new QCheckBox(
+           GlobalSettings::self()->useExternalEditorItem()->label(), group);
+  mExternalEditorCheck->setObjectName( "kcfg_UseExternalEditor" );
+  connect( mExternalEditorCheck, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   hbox = new KHBox( group );
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
   mEditorRequester = new KUrlRequester( hbox );
   mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
-  connect( mEditorRequester, SIGNAL( urlSelected(KUrl) ),
-           this, SLOT( slotEmitChanged() ) );
-  connect( mEditorRequester, SIGNAL( textChanged(QString) ),
-           this, SLOT( slotEmitChanged() ) );
+  connect( mEditorRequester, SIGNAL( urlSelected(const KUrl&) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mEditorRequester, SIGNAL( textChanged(const QString&) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   hbox->setStretchFactor( mEditorRequester, 1 );
   label->setBuddy( mEditorRequester );
@@ -2960,6 +2955,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
            label, SLOT(setEnabled(bool)) );
+  layout->addWidget( mExternalEditorCheck );
   layout->addWidget( hbox );
   layout->addWidget( label );
 
@@ -2969,6 +2965,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
 void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   // various check boxes:
+
   mAutoAppSignFileCheck->setChecked(
            GlobalSettings::self()->autoTextSignature()=="auto" );
   mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
@@ -3113,18 +3110,18 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // tmp. vars:
-  QHBoxLayout *vlay;
+  QVBoxLayout *vlay;
   QGroupBox   *group;
   QLabel      *label;
 
 
-  vlay = new QHBoxLayout( this );
+  vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
 
   group = new QGroupBox( i18n("Repl&y Subject Prefixes"), this );
   QLayout *layout = new QVBoxLayout( group );
-  layout->setSpacing( KDialog::spacingHint() );
+  group->layout()->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
   label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
@@ -3789,31 +3786,14 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   vboxlayout->addWidget( label );
   vlay->addWidget( group );
 
-  QHBoxLayout* hlay=new QHBoxLayout();
-  vlay->addLayout( hlay );
   // encrypted messages group
   group = new QGroupBox( i18n("Encrypted Messages"), this );
   vboxlayout = new QVBoxLayout( group );
-//   vboxlayout->setContentsMargins( KDialog::marginHint(), 0, 0, 0);
   mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
   connect( mAlwaysDecrypt, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged() ) );
   vboxlayout->addWidget( mAlwaysDecrypt );
-  hlay->addWidget( group );
-
-
-  // "Attached keys" group box:
-  group = new QGroupBox(i18n( "Certificate && Key Bundle Attachments" ), this );
-  vboxlayout = new QVBoxLayout(group);
-//   vboxlayout->setContentsMargins( KDialog::marginHint(), 0, 0, 0);
-  mAutomaticallyImportAttachedKeysCheck = new QCheckBox(
-          i18n("Automatically import keys and certificates"), group );
-  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
-           SLOT(slotEmitChanged()) );
-  vboxlayout->addWidget( mAutomaticallyImportAttachedKeysCheck );
-
-  hlay->addWidget( group );
-
+  vlay->addWidget( group );
 
   // "Message Disposition Notification" groupbox:
   group = new QGroupBox( i18n("Message Disposition Notifications"), this );
@@ -3889,6 +3869,16 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
   vlay->addWidget( group );
 
+  // "Attached keys" group box:
+  group = new QGroupBox(i18n( "Certificate && Key Bundle Attachments" ), this );
+  vboxlayout = new QVBoxLayout(group);
+  mAutomaticallyImportAttachedKeysCheck = new QCheckBox(
+          i18n("Automatically import keys and certificates"), group );
+  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
+           SLOT(slotEmitChanged()) );
+  vboxlayout->addWidget( mAutomaticallyImportAttachedKeysCheck );
+
+  vlay->addWidget( group );
   vlay->addStretch( 10 ); // spacer
 }
 
@@ -4252,15 +4242,15 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
 
   connect( mWidget->ignoreServiceURLCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->ignoreHTTPDPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
-  connect( mWidget->enableHTTPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->disableHTTPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->honorHTTPProxyRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->useCustomHTTPProxyRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->customHTTPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->ignoreLDAPDPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
-  connect( mWidget->enableLDAPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->disableLDAPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->customLDAPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
 
-  connect( mWidget->enableHTTPCB, SIGNAL( toggled( bool ) ),
+  connect( mWidget->disableHTTPCB, SIGNAL( toggled( bool ) ),
            this, SLOT( slotUpdateHTTPActions() ) );
   connect( mWidget->ignoreHTTPDPCB, SIGNAL( toggled( bool ) ),
            this, SLOT( slotUpdateHTTPActions() ) );
@@ -4382,10 +4372,9 @@ void SecurityPage::SMimeTab::doLoadOther() {
   // dirmngr-0.9.0 options
   initializeDirmngrCheckbox( mWidget->ignoreServiceURLCB, e.mIgnoreServiceURLEntry );
   initializeDirmngrCheckbox( mWidget->ignoreHTTPDPCB, e.mIgnoreHTTPDPEntry );
-  if (e.mDisableHTTPEntry) mWidget->enableHTTPCB->setChecked( !e.mDisableHTTPEntry->boolValue() );
+  initializeDirmngrCheckbox( mWidget->disableHTTPCB, e.mDisableHTTPEntry );
   initializeDirmngrCheckbox( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
-  if (e.mDisableLDAPEntry) mWidget->enableLDAPCB->setChecked( !e.mDisableLDAPEntry->boolValue() );
-
+  initializeDirmngrCheckbox( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
   if ( e.mCustomHTTPProxy ) {
     QString systemProxy = QString::fromLocal8Bit( qgetenv( "http_proxy" ) );
     if ( systemProxy.isEmpty() )
@@ -4411,10 +4400,10 @@ void SecurityPage::SMimeTab::doLoadOther() {
 }
 
 void SecurityPage::SMimeTab::slotUpdateHTTPActions() {
-  mWidget->ignoreHTTPDPCB->setEnabled( mWidget->enableHTTPCB->isChecked() );
+  mWidget->ignoreHTTPDPCB->setEnabled( !mWidget->disableHTTPCB->isChecked() );
 
   // The proxy settings only make sense when "Ignore HTTP CRL DPs of certificate" is checked.
-  bool enableProxySettings = mWidget->enableHTTPCB->isChecked()
+  bool enableProxySettings = !mWidget->disableHTTPCB->isChecked()
                           && mWidget->ignoreHTTPDPCB->isChecked();
   mWidget->systemHTTPProxy->setEnabled( enableProxySettings );
   mWidget->useCustomHTTPProxyRB->setEnabled( enableProxySettings );
@@ -4467,11 +4456,9 @@ void SecurityPage::SMimeTab::save() {
   //dirmngr-0.9.0 options
   saveCheckBoxToKleoEntry( mWidget->ignoreServiceURLCB, e.mIgnoreServiceURLEntry );
   saveCheckBoxToKleoEntry( mWidget->ignoreHTTPDPCB, e.mIgnoreHTTPDPEntry );
-  if ( e.mDisableHTTPEntry && e.mDisableHTTPEntry->boolValue() == mWidget->enableHTTPCB->isChecked() )
-    e.mDisableHTTPEntry->setBoolValue( !mWidget->enableHTTPCB->isChecked() );
+  saveCheckBoxToKleoEntry( mWidget->disableHTTPCB, e.mDisableHTTPEntry );
   saveCheckBoxToKleoEntry( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
-  if ( e.mDisableLDAPEntry && e.mDisableLDAPEntry->boolValue() == mWidget->enableLDAPCB->isChecked() )
-    e.mDisableLDAPEntry->setBoolValue( !mWidget->enableLDAPCB->isChecked() );
+  saveCheckBoxToKleoEntry( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
   if ( e.mCustomHTTPProxy ) {
     const bool honor = mWidget->honorHTTPProxyRB->isChecked();
     if ( e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue() != honor )
@@ -4807,11 +4794,11 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // IMAP resource setup
-  QGroupBox * b1 = new QGroupBox( i18n("&Enable IMAP resource functionality") /*i18n("&IMAP Resource Folder Options")*/, this );
+  QGroupBox * b1 = new QGroupBox( i18n("&IMAP Resource Folder Options"), this );
   QLayout *layout = new QVBoxLayout( b1 );
 
-  b1->setCheckable(true);
-  mEnableImapResCB = b1;
+  mEnableImapResCB =
+    new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
   mEnableImapResCB->setToolTip(  i18n( "This enables the IMAP storage for "
                                           "the Kontact applications" ) );
   mEnableImapResCB->setWhatsThis(
@@ -4911,6 +4898,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            ->hideGroupwareFoldersItem()->whatsThis().toUtf8() ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
+  layout->addWidget( mEnableImapResCB );
   layout->addWidget( mBox );
   vlay->addWidget( b1 );
 
@@ -4943,6 +4931,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
   layout = new QVBoxLayout( b1 );
 
+  gBox = new KVBox( b1 );
 #if 0
   // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
@@ -4953,16 +4942,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            this, SLOT( slotEmitChanged( void ) ) );
 #endif
   mEnableGwCB = 0;
-  mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), b1 );
-  layout->addWidget(mLegacyMangleFromTo);
+  mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), gBox );
   mLegacyMangleFromTo->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyMangleFromToHeadersItem()->whatsThis().toUtf8() ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-
-  mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), b1 );
-  layout->addWidget(mLegacyBodyInvites);
+  mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), gBox );
   mLegacyBodyInvites->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyBodyInvitesItem()->whatsThis().toUtf8() ) );
@@ -4971,8 +4957,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), b1);
-  layout->addWidget(mExchangeCompatibleInvitations);
+  mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
   mExchangeCompatibleInvitations->setToolTip(
     i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server,<br/>"
           "has a problem understanding standards-compliant groupware e-mail.<br/>"
@@ -4982,13 +4967,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), b1);
-  layout->addWidget(mAutomaticSending);
+  mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
   mAutomaticSending->setToolTip( i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
   mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
            automaticSendingItem()->whatsThis().toUtf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  layout->addWidget( gBox );
   vlay->addWidget( b1 );
   vlay->addStretch( 10 ); // spacer
 }
@@ -5199,5 +5184,3 @@ void AccountUpdater::namespacesFetched()
 
 //----------------------------
 #include "configuredialog.moc"
-
-// kate: space-indent on; indent-width 2; replace-tabs on;
