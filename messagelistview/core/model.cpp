@@ -829,10 +829,12 @@ void Model::applyMessagePreSelection( PreSelectionMode preSelectionMode )
       mView->selectFirstMessageItem( MessageTypeUnreadOnly, true ); // center
     break;
     case PreSelectFirstNew:
-      mView->selectFirstMessageItem( MessageTypeNewOnly, false ); // don't center
+      if ( !mView->selectFirstMessageItem( MessageTypeNewOnly, false ) ) // don't center
+        mView->selectFirstMessageItem( MessageTypeUnreadOnly, false ); // try to fallback to unread
     break;
     case PreSelectFirstNewCentered:
-      mView->selectFirstMessageItem( MessageTypeNewOnly, true ); // center
+      if ( !mView->selectFirstMessageItem( MessageTypeNewOnly, true ) ) // center
+        mView->selectFirstMessageItem( MessageTypeUnreadOnly, true ); // try to fallback to unread
     break;
     case PreSelectFirstNewOrUnread:
       mView->selectFirstMessageItem( MessageTypeNewOrUnreadOnly, false ); // don't center
@@ -3691,14 +3693,13 @@ void Model::viewItemJobStep()
       if ( mPreSelectionMode != PreSelectNone )
       {
         mView->ignoreCurrentChanges( false );
-        bool bSelectionDone = true;
+
+        bool bSelectionDone = false;
+
         switch( mPreSelectionMode )
         {
           case PreSelectLastSelected:
-            if ( mLastSelectedMessageInFolder ) // we found it in the loading process: select and jump out
-              mView->setCurrentMessageItem( mLastSelectedMessageInFolder );
-            else
-              bSelectionDone = false; // we're not done: deal with selection below
+            // fall down
           break;
           case PreSelectFirstUnread:
             bSelectionDone = mView->selectFirstMessageItem( MessageTypeUnreadOnly, false ); // don't center
@@ -3708,9 +3709,13 @@ void Model::viewItemJobStep()
           break;
           case PreSelectFirstNew:
             bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOnly, false ); // don't center
+            if ( !bSelectionDone ) // try to fallback to unread
+              bSelectionDone = mView->selectFirstMessageItem( MessageTypeUnreadOnly, false ); // don't center
           break;
           case PreSelectFirstNewCentered:
             bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOnly, true ); // center
+            if ( !bSelectionDone ) // try to fallback to unread
+              bSelectionDone = mView->selectFirstMessageItem( MessageTypeUnreadOnly, true ); // center
           break;
           case PreSelectFirstNewOrUnread:
             bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOrUnreadOnly, false ); // don't center
@@ -3719,12 +3724,23 @@ void Model::viewItemJobStep()
             bSelectionDone = mView->selectFirstMessageItem( MessageTypeNewOrUnreadOnly, true ); // center
           break;
           case PreSelectNone:
-            bSelectionDone = false; // deal with selection below
+            // deal with selection below
           break;
           default:
             kWarning() << "ERROR: Unrecognized pre-selection mode " << (int)mPreSelectionMode;
           break;
         }
+
+        if ( ( !bSelectionDone ) && ( mPreSelectionMode != PreSelectNone ) )
+        {
+          // fallback to last selected, if possible
+          if ( mLastSelectedMessageInFolder ) // we found it in the loading process: select and jump out
+          {
+            mView->setCurrentMessageItem( mLastSelectedMessageInFolder );
+            bSelectionDone = true;
+          }
+        }
+
         mUniqueIdOfLastSelectedMessageInFolder = 0;
         mLastSelectedMessageInFolder = 0;
         mPreSelectionMode = PreSelectNone;

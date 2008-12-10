@@ -39,6 +39,9 @@ namespace Core
    * starts navigating the view before the pre-selection could actually be made
    * and pre-selecting would confuse him). This member holds the option.
    *
+   * All the modes except PreSelectNone try to fallback to "PreSelectLastSelected" when the
+   * specified item isn't found.
+   *
    * See Model::setStorageModel() for more information.
    */
   enum PreSelectionMode
@@ -47,8 +50,8 @@ namespace Core
     PreSelectLastSelected,             //< pre-select the last message that was selected in this folder (default)
     PreSelectFirstUnread,              //< pre-select the first unread message
     PreSelectFirstUnreadCentered,      //< pre-select the first unread message and center it
-    PreSelectFirstNew,                 //< pre-select the first new message
-    PreSelectFirstNewCentered,         //< pre-select the first new message and center it
+    PreSelectFirstNew,                 //< pre-select the first new message, fallback to unread if not found
+    PreSelectFirstNewCentered,         //< pre-select the first new message and center it, fallback to unread if not found
     PreSelectFirstNewOrUnread,         //< pre-select the first new or the first unread message
     PreSelectFirstNewOrUnreadCentered  //< pre-select the first new or the first unread message and center it
   };
