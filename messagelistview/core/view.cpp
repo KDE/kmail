@@ -133,7 +133,7 @@ void View::ignoreCurrentChanges( bool ignore )
 }
 
 
-const StorageModel * View::storageModel() const
+StorageModel * View::storageModel() const
 {
   return mModel->storageModel();
 }
@@ -160,7 +160,7 @@ void View::reload()
   setStorageModel( storageModel() );
 }
 
-void View::setStorageModel( const StorageModel * storageModel, PreSelectionMode preSelectionMode )
+void View::setStorageModel( StorageModel * storageModel, PreSelectionMode preSelectionMode )
 {
   // This will cause the model to be reset.
   mSaveThemeColumnStateOnSectionResize = false;

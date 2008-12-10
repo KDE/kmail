@@ -23,6 +23,11 @@
 
 #include <QAbstractItemModel>
 
+namespace KPIM
+{
+	class MessageStatus;
+}
+
 namespace KMail
 {
 
@@ -98,6 +103,13 @@ public:
    * for the specified MessageItem from the underlying storage slot at the specified row index. 
    */
   virtual void updateMessageItemData( MessageItem * mi, int row ) const = 0;
+
+  /**
+   * This method should use the inner model implementation to associate the new status
+   * to the specified message item. The new status should be stored (but doesn't need
+   * to be set as mi->status() itself as the caller is responsable for this).
+   */
+  virtual void setMessageItemStatus( MessageItem * mi, const KPIM::MessageStatus &status ) = 0;
 
 };
 

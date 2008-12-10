@@ -29,6 +29,11 @@ class KMMsgBase;
 
 #include <QColor>
 
+namespace KPIM
+{
+	class MessageStatus;
+}
+
 namespace KMail
 {
 
@@ -141,12 +146,19 @@ public:
    */
   virtual void fillMessageItemThreadingData( Core::MessageItem * mi, int row, ThreadingDataSubset subset ) const;
 
- /**
+  /**
    * This method uses the inner KMFolder to re-fill the date, the status,
    * the encryption state, the signature state and eventually updates the min/max dates
    * for the specified MessageItem from the underlying storage slot at the specified row index. 
    */
   virtual void updateMessageItemData( Core::MessageItem * mi, int row ) const;
+
+  /**
+   * This method uses the inner model implementation to associate the new status
+   * to the specified message item. The new status is be stored in the folder but isn't
+   * set as mi->status() itself as the caller is responsable for this.
+   */
+  virtual void setMessageItemStatus( Core::MessageItem * mi, const KPIM::MessageStatus &status );
 
   // When porting to Akonadi the stuff below should be already implemented by MessageModel
 

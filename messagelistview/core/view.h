@@ -105,7 +105,7 @@ public:
    * Pre-selection is the action of automatically selecting a message just after the folder
    * has finished loading. See Model::setStorageModel() for more information.
    */
-  void setStorageModel( const StorageModel * storageModel, PreSelectionMode preSelectionMode = PreSelectLastSelected );
+  void setStorageModel( StorageModel * storageModel, PreSelectionMode preSelectionMode = PreSelectLastSelected );
 
   /**
    * Applies the specified pre-selection to the view.
@@ -118,7 +118,7 @@ public:
   /**
    * Returns the currently displayed StorageModel. May be 0.
    */
-  const StorageModel * storageModel() const;
+  StorageModel * storageModel() const;
 
   /**
    * Sets the aggregation for this view.

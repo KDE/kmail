@@ -511,6 +511,16 @@ void StorageModel::fillMessageItemThreadingData( Core::MessageItem * mi, int row
   };  
 }
 
+void StorageModel::setMessageItemStatus( Core::MessageItem * mi, const KPIM::MessageStatus &status )
+{
+  KMMsgBase * msg = msgBase( mi );
+  if ( !msg )
+    return; // This can be called at a really later stage (with respect to the initial fill).
+            // Assume that something wrong may be happened to the folder in the meantime...
+
+  msg->setStatus( status );
+}
+
 QVariant StorageModel::data( const QModelIndex &index, int role ) const
 {
   // We don't provide an implementation for data() in No-Akonadi-KMail.

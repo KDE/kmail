@@ -291,6 +291,9 @@ Model::Model( View *pParent )
   mCachedTwoWeeksAgoLabel = i18n( "Two Weeks Ago" );
   mCachedThreeWeeksAgoLabel = i18n( "Three Weeks Ago" );
   mCachedFourWeeksAgoLabel = i18n( "Four Weeks Ago" );
+
+  mCachedWatchedOrIgnoredStatusBits = KPIM::MessageStatus::statusIgnored().toQInt32() | KPIM::MessageStatus::statusWatched().toQInt32();
+  mCachedNewStatusBits = KPIM::MessageStatus::statusNew().toQInt32();
 }
 
 Model::~Model()
@@ -564,7 +567,7 @@ int Model::rowCount( const QModelIndex &parent ) const
 }
 
 
-void Model::setStorageModel( const StorageModel *storageModel, PreSelectionMode preSelectionMode )
+void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSelectionMode )
 {
   if( mFillStepTimer->isActive() )
     mFillStepTimer->stop();
@@ -1931,6 +1934,9 @@ void Model::propagateItemPropertiesToParent( Item * item )
 
 void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
 {
+  Q_ASSERT( pParent );
+  Q_ASSERT( mi );
+
   // This function may be called to do a simple "re-sort" of the item inside the parent.
   // In that case mi->parent() is equal to pParent.
   bool oldParentWasTheSame;
@@ -2026,13 +2032,23 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
   // Set the new parent
   mi->setParent( pParent );
 
-#if 0
-  // FIXME
-  if (mFolder->getMsgBase(parent->id())->status().isWatched())
-    mFolder->getMsgBase(id)->setStatus( MessageStatus::statusWatched() );
-  else if (parent && mFolder->getMsgBase(parent->id())->status().isIgnored())
-    mFolder->getMsgBase(id)->setStatus( MessageStatus::statusIgnored() );
-#endif
+  // Propagate watched and ignored status
+  if (
+       ( pParent->status().toQInt32() & mCachedWatchedOrIgnoredStatusBits ) && // unlikely
+       ( pParent->type() == Item::Message ) // likely
+     )
+  {
+    // the parent is either watched or ignored: propagate to the child
+    if ( pParent->status().isWatched() )
+    {
+      mi->setStatus( KPIM::MessageStatus::statusWatched() );
+      mStorageModel->setMessageItemStatus( mi, KPIM::MessageStatus::statusWatched() );
+    } else if ( pParent->status().isIgnored() )
+    {
+      mi->setStatus( KPIM::MessageStatus::statusIgnored() );
+      mStorageModel->setMessageItemStatus( mi, KPIM::MessageStatus::statusIgnored() );
+    }
+  }
 
   // And insert into its child list
 
@@ -3182,7 +3198,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
       // set to "new messages only". This is because simply clicking
       // on the message would then remove the "new" status and the message
       // would disappear from the list. This is not what we want :)
-      if ( ! (mFilter->statusMask() & KPIM::MessageStatus::statusNew().toQInt32() ) )
+      if ( ! (mFilter->statusMask() & mCachedNewStatusBits ) )
       {
         // In all the other cases we (re-)apply the filter to the topmost subtree that this message is in.
         Item * pTopMostNonRoot = message->topmostNonRoot();

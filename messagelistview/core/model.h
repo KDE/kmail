@@ -78,6 +78,7 @@ class Model : public QAbstractItemModel
 
   Q_OBJECT
 public:
+
   /**
    * Creates the mighty Model attached to the specified View.
    */
@@ -89,36 +90,181 @@ public:
   ~Model();
 
 private:
-  const StorageModel *mStorageModel;                          ///< The currently set storage model: shallow pointer
-  const Aggregation * mAggregation;                           ///< The currently set aggregation mode: shallow pointer set by Widget
-  const Theme * mTheme;                                         ///< The currently used theme: shallow pointer
-  const Filter *mFilter;                                      ///< The filter to apply on messages. Shallow. Never 0.
-  QTimer *mFillStepTimer;                                     ///< The timer involved in breaking the "fill" operation in steps
-  QHash< QString, GroupHeaderItem * > * mGroupHeaderItemHash; ///< Group Key (usually the label) -> GroupHeaderItem, used to quickly find groups, pointers are shallow copies
-  QHash< QString, MessageItem * > * mThreadingCacheMessageIdMD5ToMessageItem;   ///< MessageIdMD5 -> MessageItem, used to handle threading, pointers are shallow copies
+
+  /**
+   * The currently set storage model: shallow pointer.
+   */
+  StorageModel *mStorageModel;
+
+  /**
+   * The currently set aggregation mode: shallow pointer set by Widget
+   */
+  const Aggregation * mAggregation;
+
+  /**
+   * The currently used theme: shallow pointer
+   */
+  const Theme * mTheme;
+
+  /**
+   * The filter to apply on messages. Shallow. Never 0.
+   */
+  const Filter *mFilter;
+
+  /**
+   * The timer involved in breaking the "fill" operation in steps
+   */
+  QTimer *mFillStepTimer;
+
+  /**
+   * Group Key (usually the label) -> GroupHeaderItem, used to quickly find groups, pointers are shallow copies
+   */
+  QHash< QString, GroupHeaderItem * > * mGroupHeaderItemHash;
+
+  /**
+   * Threading cache.
+   * MessageIdMD5 -> MessageItem, pointers are shallow copies
+   */
+  QHash< QString, MessageItem * > * mThreadingCacheMessageIdMD5ToMessageItem;
+
+  /**
+   * Threading cache.
+   * MessageInReplyToIdMD5 -> MessageItem, pointers are shallow copies
+   */
   QMultiHash< QString, MessageItem * > * mThreadingCacheMessageInReplyToIdMD5ToMessageItem;
+
+  /**
+   * Threading cache.
+   * SubjectMD5 -> MessageItem, pointers are shallow copies
+   */
   QHash< QString, QList< MessageItem * > * > * mThreadingCacheMessageSubjectMD5ToMessageItem;
-  QHash< GroupHeaderItem *, GroupHeaderItem * > * mGroupHeadersThatNeedUpdate; ///< List of group headers that either need to be re-sorted or must be removed because empty
-  QList< MessageItem * > * mUnassignedMessageListForPass2;            ///< List of unassigned messages, used to handle threading in two passes, pointers are owned!
-  QList< MessageItem * > * mUnassignedMessageListForPass3;            ///< List of unassigned messages, used to handle threading in two passes, pointers are owned!
-  QList< MessageItem * > * mUnassignedMessageListForPass4;            ///< List of unassigned messages, used to handle threading in two passes, pointers are owned!
-  QHash< MessageItem *, MessageItem * > * mOrphanChildrenHash; ///< Hash of orphan children used in Pass1Cleanup.
-  QList< ViewItemJob * > * mViewItemJobs;                     ///< Pending fill view jobs, pointers are owned
+
+  /**
+   * List of group headers that either need to be re-sorted or must be removed because empty
+   */
+  QHash< GroupHeaderItem *, GroupHeaderItem * > * mGroupHeadersThatNeedUpdate;
+
+  /**
+   * List of unassigned messages, used to handle threading in two passes, pointers are owned!
+   */
+  QList< MessageItem * > * mUnassignedMessageListForPass2;
+
+  /**
+   * List of unassigned messages, used to handle threading in two passes, pointers are owned!
+   */
+  QList< MessageItem * > * mUnassignedMessageListForPass3;
+
+  /**
+   * List of unassigned messages, used to handle threading in two passes, pointers are owned!
+   */
+  QList< MessageItem * > * mUnassignedMessageListForPass4;
+
+  /**
+   * Hash of orphan children used in Pass1Cleanup.
+   */
+  QHash< MessageItem *, MessageItem * > * mOrphanChildrenHash;
+
+  /**
+   * Pending fill view jobs, pointers are owned
+   */
+  QList< ViewItemJob * > * mViewItemJobs;
+
+  /**
+   * The today's date. Set when the StorageModel is set and thus grouping is performed.
+   * This is used to put the today's messages in the "Today" group, for instance.
+   */
   QDate mTodayDate;
-  time_t mViewItemJobStepStartTime;
-  Item *mRootItem;                                            ///< Owned invisible root item, useful to implement algorithms that not need to handle the special case of parentless items
+
+  /**
+   * Owned invisible root item, useful to implement algorithms that not need
+   * to handle the special case of parentless items
+   */
+  Item *mRootItem;
+
+  /**
+   * The view we're attacched to. Shallow pointer (the View owns us).
+   */
   View *mView;
+
+  /**
+   * The time at the current ViewItemJob step started. Used to compute the time we
+   * spent inside this step and eventually jump out on timeout.
+   */
+  time_t mViewItemJobStepStartTime;
+
+  /**
+   * The timeout for a single ViewItemJob step
+   */
   int mViewItemJobStepChunkTimeout;
+
+  /**
+   * The idle time between two ViewItemJob steps
+   */
   int mViewItemJobStepIdleInterval;
+
+  /**
+   * The number of messages we process at once in a ViewItemJob step without
+   * checking the timeouts above.
+   */
   int mViewItemJobStepMessageCheckCount;
+
+  /**
+   * Our mighty ModelInvariantRowMapper: used to workaround an
+   * issue related to the Model/View architecture.
+   *
+   * \sa ModelInvariantRowMapper
+   */
   ModelInvariantRowMapper * mInvariantRowMapper;
+
+  /**
+   * The label for the "Today" group item, cached, so we don't translate it multiple times.
+   */
   QString mCachedTodayLabel;
+
+  /**
+   * The label for the "Yesterday" group item, cached, so we don't translate it multiple times.
+   */
   QString mCachedYesterdayLabel;
+
+  /**
+   * The label for the "Unknown" group item, cached, so we don't translate it multiple times.
+   */
   QString mCachedUnknownLabel;
+
+  /**
+   * The label for the "Last Week" group item, cached, so we don't translate it multiple times.
+   */
   QString mCachedLastWeekLabel;
+
+  /**
+   * The label for the "Two Weeks Ago" group item, cached, so we don't translate it multiple times.
+   */
   QString mCachedTwoWeeksAgoLabel;
+
+  /**
+   * The label for the "Three Weeks Ago" group item, cached, so we don't translate it multiple times.
+   */
   QString mCachedThreeWeeksAgoLabel;
+
+  /**
+   * The label for the "Four Weeks Ago" group item, cached, so we don't translate it multiple times.
+   */
   QString mCachedFourWeeksAgoLabel;
+
+  /**
+   * Cached bits that we use for fast status checks
+   */
+  qint32 mCachedWatchedOrIgnoredStatusBits;
+
+  /**
+   * Cached bits that we use for fast status checks
+   */
+  qint32 mCachedNewStatusBits;
+
+  /**
+   * Flag signaling a possibly long job batch. This is checked by other
+   * classes and used to display some kind of "please wait" feedback to the user.
+   */
   bool mInLengthyJobBatch;
 
   /**
@@ -186,12 +332,13 @@ private:
    * When we work with disconnected UI this pointer becomes 0.
    */
   Model * mModelForItemFunctions;
+
 public:
 
   /**
    * Returns the StorageModel currently set.
    */
-  const StorageModel * storageModel() const
+  StorageModel * storageModel() const
     { return mStorageModel; };
 
   /**
@@ -209,7 +356,7 @@ public:
    * and pre-selecting would confuse him). The pre-selection is applied once
    * loading is complete.
    */
-  void setStorageModel( const StorageModel *storageModel, PreSelectionMode preSelectionMode = PreSelectLastSelected );
+  void setStorageModel( StorageModel *storageModel, PreSelectionMode preSelectionMode = PreSelectLastSelected );
 
   /**
    * Aborts any pending message pre-selection. This may be done if the user
