@@ -129,7 +129,7 @@ namespace KMail {
     { "Mark Roberts", 0,
       "mark@taurine.demon.co.uk", 0 },
     { "Wolfgang Rohdewald", 0,
-      "wrohdewald@dplanet.ch", 0 },
+      "wolfgang@rohdewald.de", 0 },
     { "Espen Sand", 0,
       "espen@kde.org", 0 },
     { "Aaron J. Seigo", 0,
