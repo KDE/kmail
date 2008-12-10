@@ -3178,25 +3178,31 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
     // (re-)apply the filter, if needed
     if ( mFilter && message->isViewable() )
     {
-      Item * pTopMostNonRoot = message->topmostNonRoot();
+      // We explicitly avoid handling one particular case: the filter
+      // set to "new messages only". This is because simply clicking
+      // on the message would then remove the "new" status and the message
+      // would disappear from the list. This is not what we want :)
+      if ( ! (mFilter->statusMask() & KPIM::MessageStatus::statusNew().toQInt32() ) )
+      {
+        // In all the other cases we (re-)apply the filter to the topmost subtree that this message is in.
+        Item * pTopMostNonRoot = message->topmostNonRoot();
 
-      Q_ASSERT( pTopMostNonRoot );
-      Q_ASSERT( pTopMostNonRoot != mRootItem );
-      Q_ASSERT( pTopMostNonRoot->parent() == mRootItem );
+        Q_ASSERT( pTopMostNonRoot );
+        Q_ASSERT( pTopMostNonRoot != mRootItem );
+        Q_ASSERT( pTopMostNonRoot->parent() == mRootItem );
 
-      // FIXME: The call below works, but it's expensive when we are updating
-      //        a lot of items with filtering enabled. This is because the updated
-      //        items are likely to be in the same subtree which we then filter multiple times.
-      //        A point for us is that when filtering there shouldn't be really many
-      //        items in the view so the user isn't going to update a lot of them at once...
-      //        Well... anyway, the alternative would be to write yet another
-      //        specialized routine that would update only the "message" item
-      //        above and climb up eventually hiding parents (without descending the sibling subtrees again).
-      //        If people complain about performance in this particular case I'll consider that solution.
+        // FIXME: The call below works, but it's expensive when we are updating
+        //        a lot of items with filtering enabled. This is because the updated
+        //        items are likely to be in the same subtree which we then filter multiple times.
+        //        A point for us is that when filtering there shouldn't be really many
+        //        items in the view so the user isn't going to update a lot of them at once...
+        //        Well... anyway, the alternative would be to write yet another
+        //        specialized routine that would update only the "message" item
+        //        above and climb up eventually hiding parents (without descending the sibling subtrees again).
+        //        If people complain about performance in this particular case I'll consider that solution.
 
-      // apply the filter to the topmost subtree that this message is in
-      applyFilterToSubtree( pTopMostNonRoot, QModelIndex() );
-
+        applyFilterToSubtree( pTopMostNonRoot, QModelIndex() );
+      }
     } // otherwise there is no filter or the item isn't viewable: very likely
       // left detached while propagating property changes. Will filter it
       // on reattach.
