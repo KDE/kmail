@@ -410,7 +410,7 @@ private:
    *
    * Assumes that the specified item is viewable.
    */
-  bool applyFilterToItem( Item * item, const QModelIndex &parentIndex );
+  bool applyFilterToSubtree( Item * item, const QModelIndex &parentIndex );
 
 public:
 

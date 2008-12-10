@@ -137,6 +137,20 @@ Item * Item::itemAbove()
   return mParent->itemAboveChild( this );
 }
 
+Item * Item::topmostNonRoot()
+{
+  Q_ASSERT( mType != InvisibleRoot );
+
+  if ( !mParent )
+    return this;
+
+  if ( mParent->type() == InvisibleRoot )
+    return this;
+
+  return mParent->topmostNonRoot();
+}
+
+
 static inline void append_string( QString &buffer, const QString &append )
 {
   if ( !buffer.isEmpty() )

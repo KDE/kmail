@@ -299,6 +299,11 @@ public:
     { mParent = pParent; };
 
   /**
+   * Returns the topmost parent item that is not a Root item (that is, is a Message or GroupHeader).
+   */
+  Item * topmostNonRoot();
+
+  /**
    * Returns the status associated to this Item.
    */
   const KPIM::MessageStatus & status() const

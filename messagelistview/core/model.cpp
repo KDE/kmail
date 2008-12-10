@@ -342,14 +342,19 @@ void Model::setFilter( const Filter *filter )
   KCursorSaver busy( KBusyPtr::busy() );
 
   for ( QList< Item * >::Iterator it = childList->begin(); it != childList->end(); ++it )
-    applyFilterToItem( *it, idx );
+    applyFilterToSubtree( *it, idx );
 }
 
-bool Model::applyFilterToItem( Item * item, const QModelIndex &parentIndex )
+bool Model::applyFilterToSubtree( Item * item, const QModelIndex &parentIndex )
 {
-  Q_ASSERT( mModelForItemFunctions );
-  Q_ASSERT( item );
-  Q_ASSERT( item->isViewable() );
+  // This function applies the current filter (eventually empty)
+  // to a message tree starting at "item".
+
+  Q_ASSERT( mModelForItemFunctions );  // The UI must be not disconnected
+  Q_ASSERT( item );                    // the item must obviously be valid
+  Q_ASSERT( item->isViewable() );      // the item must be viewable
+
+  // Apply to children first
 
   QList< Item * > * childList = item->childItems();
 
@@ -361,7 +366,7 @@ bool Model::applyFilterToItem( Item * item, const QModelIndex &parentIndex )
   {
     for ( QList< Item * >::Iterator it = childList->begin(); it != childList->end(); ++it )
     {
-      if ( applyFilterToItem( *it, thisIndex ) )
+      if ( applyFilterToSubtree( *it, thisIndex ) )
         childrenMatch = true;
     }
   }
@@ -1079,7 +1084,7 @@ void Model::attachGroup( GroupHeaderItem *ghi )
   {
     Q_ASSERT( mModelForItemFunctions ); // UI must be NOT disconnected
     // apply the filter to subtree
-    applyFilterToItem( ghi, QModelIndex() );
+    applyFilterToSubtree( ghi, QModelIndex() );
   }
 }
 
@@ -1690,6 +1695,10 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
   //     message of the thread might need re-grouping.
   //   - If the groups are sorted by min/max date then the group might need re-sorting too.
   //
+  // This function explicitly doesn't re-apply the filter when ActionItemStatus changes.
+  // This is because filters must be re-applied due to a broader range of status variations:
+  // this is done in viewItemJobStepInternalForJobPass1Update() instead (which is the only
+  // place in that ActionItemStatus may be set).
 
   if( parent->type() == Item::InvisibleRoot )
   {
@@ -2176,7 +2185,7 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
       Q_ASSERT( mModelForItemFunctions ); // the UI must be NOT disconnected here
 
       // apply the filter to subtree
-      if ( applyFilterToItem( mi, index( pParent, 0 ) ) )
+      if ( applyFilterToSubtree( mi, index( pParent, 0 ) ) )
       {
         // mi matched, expand parents (unconditionally)
         mView->ensureCurrentlyViewable( mi );
@@ -2199,7 +2208,7 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
     return;
 
   // FIXME: OPTIMIZE THIS: First propagate changes THEN syncExpandedStateOfSubtree()
-  //        and applyFilterToItem... (needs some thinking though).
+  //        and applyFilterToSubtree... (needs some thinking though).
 
   // Time to propagate up.
   propagateItemPropertiesToParent( mi );
@@ -3165,6 +3174,32 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
         }
       } // else there is no parent so the item isn't attached to the view: re-grouping/re-sorting not needed.
     } // else message data didn't change an there is nothing interesting to do
+
+    // (re-)apply the filter, if needed
+    if ( mFilter && message->isViewable() )
+    {
+      Item * pTopMostNonRoot = message->topmostNonRoot();
+
+      Q_ASSERT( pTopMostNonRoot );
+      Q_ASSERT( pTopMostNonRoot != mRootItem );
+      Q_ASSERT( pTopMostNonRoot->parent() == mRootItem );
+
+      // FIXME: The call below works, but it's expensive when we are updating
+      //        a lot of items with filtering enabled. This is because the updated
+      //        items are likely to be in the same subtree which we then filter multiple times.
+      //        A point for us is that when filtering there shouldn't be really many
+      //        items in the view so the user isn't going to update a lot of them at once...
+      //        Well... anyway, the alternative would be to write yet another
+      //        specialized routine that would update only the "message" item
+      //        above and climb up eventually hiding parents (without descending the sibling subtrees again).
+      //        If people complain about performance in this particular case I'll consider that solution.
+
+      // apply the filter to the topmost subtree that this message is in
+      applyFilterToSubtree( pTopMostNonRoot, QModelIndex() );
+
+    } // otherwise there is no filter or the item isn't viewable: very likely
+      // left detached while propagating property changes. Will filter it
+      // on reattach.
 
     // Done updating this message
 
