@@ -318,7 +318,7 @@ if(Nepomuk_FOUND)
 endif(Nepomuk_FOUND)
 
 set_target_properties(kmailprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
-install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 
 
 ########### next target ###############
