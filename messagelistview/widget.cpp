@@ -122,8 +122,24 @@ KMFolder * Widget::folder() const
 
 void Widget::viewMessageSelected( Core::MessageItem *msg )
 {
-  if ( ( mLastSelectedMessage >= 0 ) && mReleaseMessageAfterCurrentChange && storageModel() )
-    static_cast< StorageModel * >( storageModel() )->releaseMessage( mLastSelectedMessage );
+  int row = -1;
+  if ( msg )
+    row = msg->currentModelIndexRow();
+
+  if ( mLastSelectedMessage >= 0 && mReleaseMessageAfterCurrentChange &&
+       storageModel() ) {
+    bool selectedStaysSame = row != -1 && mLastSelectedMessage == row &&
+                             msg && msg->isValid();
+
+    // No need to release the last selected message if it is the new selected
+    // message is going to be the same.
+    // This fixes a crash in KMMainWidget::slotMsgPopup(), which can activate
+    // an already active message in certain cirumstances. Releasing that message
+    // would make all the message pointers invalid.
+    if ( !selectedStaysSame ) {
+      static_cast< StorageModel * >( storageModel() )->releaseMessage( mLastSelectedMessage );
+    }
+  }
 
   if ( !msg || !storageModel() )
   {
@@ -139,7 +155,6 @@ void Widget::viewMessageSelected( Core::MessageItem *msg )
     return;
   }
 
-  int row = msg->currentModelIndexRow();
   Q_ASSERT( row >= 0 );
 
   KMMessage * message = static_cast< const StorageModel * >( storageModel() )->message( row );
