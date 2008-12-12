@@ -103,7 +103,7 @@ static inline bool WithRespectToKeyID( const GpgME::Key & left, const GpgME::Key
   return qstrcmp( left.keyID(), right.keyID() ) == 0 ;
 }
 
-static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
+static bool ValidOpenPGPEncryptionKey( const GpgME::Key & key ) {
   if ( key.protocol() != GpgME::Context::OpenPGP ) {
     return false;
   }
@@ -119,9 +119,15 @@ static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
 #endif
   if ( key.isRevoked() || key.isExpired() || key.isDisabled() || !key.canEncrypt() )
     return false;
+  return true;
+}
+
+static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
+    if ( !ValidOpenPGPEncryptionKey( key ) )
+        return false;
   const std::vector<GpgME::UserID> uids = key.userIDs();
   for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
-    if ( !it->isRevoked() && it->validity() != GpgME::UserID::Marginal )
+    if ( !it->isRevoked() && it->validity() > GpgME::UserID::Marginal )
       return true;
 #if 0
     else
@@ -134,10 +140,16 @@ static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
   return false;
 }
 
-static bool ValidTrustedSMIMEEncryptionKey( const GpgME::Key & key ) {
+static bool ValidSMIMEEncryptionKey( const GpgME::Key & key ) {
   if ( key.protocol() != GpgME::Context::CMS )
     return false;
   if ( key.isRevoked() || key.isExpired() || key.isDisabled() || !key.canEncrypt() )
+    return false;
+  return true;
+}
+
+static bool ValidTrustedSMIMEEncryptionKey( const GpgME::Key & key ) {
+  if ( !ValidSMIMEEncryptionKey( key ) )
     return false;
   return true;
 }
@@ -151,6 +163,17 @@ static inline bool ValidTrustedEncryptionKey( const GpgME::Key & key ) {
   default:
     return false;
   }
+}
+
+static inline bool ValidEncryptionKey( const GpgME::Key & key ) {
+    switch ( key.protocol() ) {
+    case GpgME::Context::OpenPGP:
+        return ValidOpenPGPEncryptionKey( key );
+    case GpgME::Context::CMS:
+        return ValidSMIMEEncryptionKey( key );
+    default:
+        return false;
+    }
 }
 
 static inline bool ValidSigningKey( const GpgME::Key & key ) {
@@ -171,12 +194,24 @@ static inline bool NotValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key )
   return !ValidTrustedOpenPGPEncryptionKey( key );
 }
 
+static inline bool NotValidOpenPGPEncryptionKey( const GpgME::Key & key ) {
+  return !ValidOpenPGPEncryptionKey( key );
+}
+
 static inline bool NotValidTrustedSMIMEEncryptionKey( const GpgME::Key & key ) {
   return !ValidTrustedSMIMEEncryptionKey( key );
 }
 
+static inline bool NotValidSMIMEEncryptionKey( const GpgME::Key & key ) {
+  return !ValidSMIMEEncryptionKey( key );
+}
+
 static inline bool NotValidTrustedEncryptionKey( const GpgME::Key & key ) {
   return !ValidTrustedEncryptionKey( key );
+}
+
+static inline bool NotValidEncryptionKey( const GpgME::Key & key ) {
+  return !ValidEncryptionKey( key );
 }
 
 static inline bool NotValidSigningKey( const GpgME::Key & key ) {
@@ -213,7 +248,7 @@ static inline std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgM
   const std::vector<GpgME::Key>::const_iterator end = keys.end();
   for ( ; it != end ; it++ ) {
     const GpgME::Key key = *it;
-    assert( ValidTrustedEncryptionKey( key ) );
+    assert( ValidEncryptionKey( key ) );
     const std::vector<GpgME::UserID> uids = key.userIDs();
     for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
       if ( !it->isRevoked()  && it->validity() == GpgME::UserID::Marginal ) {
@@ -427,13 +462,13 @@ namespace {
   void EncryptionFormatPreferenceCounter::operator()( const Kleo::KeyResolver::Item & item ) {
     if ( item.format & (Kleo::InlineOpenPGPFormat|Kleo::OpenPGPMIMEFormat) &&
 	 std::find_if( item.keys.begin(), item.keys.end(),
-		       ValidTrustedOpenPGPEncryptionKey ) != item.keys.end() ) {
+		       ValidTrustedOpenPGPEncryptionKey ) != item.keys.end() ) {  // -= trusted?
       CASE(OpenPGPMIME);
       CASE(InlineOpenPGP);
     }
     if ( item.format & (Kleo::SMIMEFormat|Kleo::SMIMEOpaqueFormat) &&
 	 std::find_if( item.keys.begin(), item.keys.end(),
-		       ValidTrustedSMIMEEncryptionKey ) != item.keys.end() ) {
+		       ValidTrustedSMIMEEncryptionKey ) != item.keys.end() ) {    // -= trusted?
       CASE(SMIME);
       CASE(SMIMEOpaque);
     }
@@ -754,10 +789,10 @@ Kpgp::Result Kleo::KeyResolver::setEncryptToSelfKeys( const QStringList & finger
   std::vector<GpgME::Key> keys = lookup( fingerprints );
   std::remove_copy_if( keys.begin(), keys.end(),
 		       std::back_inserter( d->mOpenPGPEncryptToSelfKeys ),
-		       NotValidTrustedOpenPGPEncryptionKey );
+		       NotValidTrustedOpenPGPEncryptionKey ); // -= trusted?
   std::remove_copy_if( keys.begin(), keys.end(),
 		       std::back_inserter( d->mSMIMEEncryptToSelfKeys ),
-		       NotValidTrustedSMIMEEncryptionKey );
+		       NotValidTrustedSMIMEEncryptionKey );   // -= trusted?
 
   if ( d->mOpenPGPEncryptToSelfKeys.size() + d->mSMIMEEncryptToSelfKeys.size()
        < keys.size() ) {
@@ -1431,10 +1466,10 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
 
   std::remove_copy_if( senderKeys.begin(), senderKeys.end(),
 		       std::back_inserter( d->mOpenPGPEncryptToSelfKeys ),
-		       NotValidTrustedOpenPGPEncryptionKey );
+		       NotValidTrustedOpenPGPEncryptionKey ); // -= trusted (see above, too)?
   std::remove_copy_if( senderKeys.begin(), senderKeys.end(),
 		       std::back_inserter( d->mSMIMEEncryptToSelfKeys ),
-		       NotValidTrustedSMIMEEncryptionKey );
+		       NotValidTrustedSMIMEEncryptionKey );   // -= trusted (see above, too)?
 
   return Kpgp::Ok;
 }
@@ -1470,7 +1505,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::selectKeys( const QString & person, c
     return std::vector<GpgME::Key>();
   std::vector<GpgME::Key> keys = dlg.selectedKeys();
   keys.erase( std::remove_if( keys.begin(), keys.end(),
-                                      NotValidTrustedEncryptionKey ),
+                              NotValidTrustedEncryptionKey ), // -= trusted?
                               keys.end() );
   if ( !keys.empty() && dlg.rememberSelection() )
     setKeysForAddress( person, dlg.pgpKeyFingerprints(), dlg.smimeFingerprints() );
@@ -1493,7 +1528,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
     if ( !keys.empty() ) {
       // Check if all of the keys are trusted and valid encryption keys
       if ( std::find_if( keys.begin(), keys.end(),
-                         NotValidTrustedEncryptionKey ) != keys.end() ) {
+                         NotValidTrustedEncryptionKey ) != keys.end() ) { // -= trusted?
 
         // not ok, let the user select: this is not conditional on !quiet,
         // since it's a bug in the configuration and the user should be
@@ -1512,21 +1547,21 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
 
       if ( !keys.empty() )
         return keys;
-      // hmmm, should we not return the keys in any case here?
+      // keys.empty() is considered cancel by callers, so go on
     }
   }
 
   // Now search all public keys for matching keys
   std::vector<GpgME::Key> matchingKeys = lookup( person );
   matchingKeys.erase( std::remove_if( matchingKeys.begin(), matchingKeys.end(),
-				      NotValidTrustedEncryptionKey ),
+				      NotValidEncryptionKey ),
 		      matchingKeys.end() );
   // if no keys match the complete address look for keys which match
   // the canonical mail address
   if ( matchingKeys.empty() ) {
     matchingKeys = lookup( address );
     matchingKeys.erase( std::remove_if( matchingKeys.begin(), matchingKeys.end(),
-					NotValidTrustedEncryptionKey ),
+					NotValidEncryptionKey ),
 			matchingKeys.end() );
   }
 
