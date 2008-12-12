@@ -82,9 +82,18 @@ public:
   static void setSerialCache( const KMMsgBase*, quint32 );
   static quint32 serialCache( const KMMsgBase* );
 
-  /* Set the transferInProgress for a message
-     This property becomes invalid when the message is destructed or
-     assigned a new value */
+  /**
+   * Set the transferInProgress for a message.
+   *
+   * The number of calls to setTransferInProgress() with transfer = true is counted,
+   * e.g. if you call setTransferInProgress() with transfer = true two times, and
+   * then setTransferInProgress() with transfer = false once, transferInProgres()
+   * will return true. transferInProgress() only returns false after an additional
+   * call to setTransferInProgress() with transfer = false.
+   *
+   * This property becomes invalid when the message is destructed or
+   * assigned a new value.
+   */
   static void setTransferInProgress( const KMMsgBase*, bool, bool = false );
   static bool transferInProgress( const KMMsgBase* );
   static void setTransferInProgress( quint32, bool, bool = false );
