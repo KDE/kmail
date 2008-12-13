@@ -124,6 +124,9 @@
                     <property name="text">
                         <string>Group:</string>
                     </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>cbGroup</cstring>
+                    </property>
                 </widget>
                 <widget class="KComboBox" row="1" column="1">
                     <property name="name">

@@ -1,6 +1,6 @@
 /***************************************************************************
  *   snippet feature from kdevelop/plugins/snippet/                        *
- *                                                                         * 
+ *                                                                         *
  *   Copyright (C) 2007 by Robert Gruber                                   *
  *   rgruber@users.sourceforge.net                                         *
  *                                                                         *
@@ -86,7 +86,7 @@ void SnippetItem::resetParent()
 
 
 KAction* SnippetItem::getAction()
-{   
+{
     return action;
 }
 
@@ -128,7 +128,7 @@ Deklaration for class SnippetGroup
 int SnippetGroup::iMaxId = 1;
 
 SnippetGroup::SnippetGroup(QListView * parent, QString name, int id)
- : SnippetItem(parent, name, "GROUP")
+ : SnippetItem(parent, name, i18n("GROUP"))
 {
     if (id > 0) {
       iId = id;
@@ -146,7 +146,7 @@ SnippetGroup::~SnippetGroup()
 
 void SnippetGroup::setId(int id)
 {
-    iId = id; 
+    iId = id;
     if (iId >= iMaxId)
         iMaxId = iId+1;
 }
