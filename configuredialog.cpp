@@ -4932,6 +4932,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   layout = new QVBoxLayout( b1 );
 
   gBox = new KVBox( b1 );
+  gBox->setSpacing( KDialog::spacingHint() );
+  gBox->setMargin( 0 );
 #if 0
   // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
