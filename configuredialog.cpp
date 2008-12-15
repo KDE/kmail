@@ -4710,6 +4710,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   mQuotaCmbBox->setEditable( false );
   label = new QLabel( i18n("Quota units: "), this );
   label->setBuddy( mQuotaCmbBox );
+  //TODO: 4.3 Change these strings into something better.
   mQuotaCmbBox->insertItems( 0, QStringList()
                    << i18n("KB")
                    << i18n("MB")
