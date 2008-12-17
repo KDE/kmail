@@ -1969,9 +1969,10 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
   menu->insertItem(SmallIcon("editcopy"), i18n("Copy"), 9 );
-  if ( GlobalSettings::self()->allowAttachmentEditing() )
+  const bool canChange = message()->parent() ? !message()->parent()->isReadOnly() : false;
+  if ( GlobalSettings::self()->allowAttachmentEditing() && canChange )
     menu->insertItem(SmallIcon("edit"), i18n("Edit Attachment"), 8 );
-  if ( GlobalSettings::self()->allowAttachmentDeletion() )
+  if ( GlobalSettings::self()->allowAttachmentDeletion() && canChange )
     menu->insertItem(SmallIcon("editdelete"), i18n("Delete Attachment"), 7 );
   if ( name.endsWith( ".xia", false ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
@@ -2692,7 +2693,7 @@ void KMReaderWin::injectAttachments()
     }
 
     assert( injectionPoint.tagName() == "div" );
-    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );  
+    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
 }
 
 static QColor nextColor( const QColor & c )
