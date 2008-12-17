@@ -107,7 +107,7 @@ void TreeBase::slotContextMenuRequested( QListViewItem *lvi,  const QPoint &p )
 void TreeBase::recolorRows()
 {
      kdDebug(5006) << k_funcinfo << endl;
- 
+
        // Iterate through the list to set the alternate row flags.
        int alt = 0;
        QListViewItemIterator it ( this );
@@ -137,6 +137,7 @@ void TreeBase::recolorRows()
 void TreeBase::reload( bool mustBeReadWrite, bool showOutbox, bool showImapFolders,
                    const QString& preSelection )
 {
+      clear();
 
       mLastMustBeReadWrite = mustBeReadWrite;
       mLastShowOutbox = showOutbox;
@@ -146,7 +147,7 @@ void TreeBase::reload( bool mustBeReadWrite, bool showOutbox, bool showImapFolde
       QListViewItem * lastTopItem = 0;
       QListViewItem * selectedItem = 0;
       int lastDepth = 0;
-  
+
       mFilter = "";
       QString path;
 
@@ -207,7 +208,7 @@ void TreeBase::reload( bool mustBeReadWrite, bool showOutbox, bool showImapFolde
 
 
         item->setText( mFolderColumn, fti->text( 0 ) );
-        item->setText( mPathColumn, path );  
+        item->setText( mPathColumn, path );
         // Make items without folders and top level items unselectable
         // (i.e. root item Local Folders and IMAP accounts)
         if ( !fti->folder() || depth == 0 || ( mustBeReadWrite && fti->folder()->isReadOnly() ) ) {
