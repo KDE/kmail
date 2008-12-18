@@ -30,12 +30,15 @@ using KMail::AccountManager;
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "kmmsgdict.h"
-#include <kpimidentities/identity.h>
-#include <kpimidentities/identitymanager.h>
+
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 
+// kdepimlibs includes
+#include <akonadi/control.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
 
@@ -1363,11 +1366,89 @@ void KMKernel::initFolders(KConfig* cfg)
   the_templatesFolder->open( "kmkernel" );
 }
 
+/**
+ * This checks if the addressbook (kabc from kdepimlibs) already uses at least
+ * one Akonadi resource.
+ */
+static bool doesAddressbookUseAkonadi()
+{
+  // We check if there is at least one Akonadi resource by manually inspecting
+  // the kresource config file at $KDEHOM/share/config/kresources/contact/stdrc.
+  // A snippet of that config file is given below.
+  //
+  // Using KRES::Manager to iterate over the resources would be much more elegant,
+  // but the manager itself starts Akonadi, which we want to avoid here.
+  //
+  // Example layout of the KRES config file:
+  //
+  // [General]
+  // PassiveResourceKeys=GGqwZHEbfA,1lBPacjbOG,ok3MvDmaXR
+  // ResourceKeys=6NgdlCaLBb
+  // Standard=ok3MvDmaXR
+  //
+  // [Resource_1lBPacjbOG]
+  // ...
+  // ResourceName=LDAP Address Book
+  // ResourceType=ldapkio
+  //
+  // [Resource_GGqwZHEbfA]
+  // ...
+  // ResourceName=Akonadi Compatibility Resource
+  // ResourceType=akonadi
+
+  // Config file path code stolen from ManagerImpl::createStandardConfig() of
+  // kresouces
+  KConfig kresConfig( KStandardDirs::locateLocal( "config",
+                      QString( "kresources/contact/stdrc" ) ) );
+
+  if ( !kresConfig.hasGroup( "General" ) ) {
+    kWarning() << "No KResources config file for contacts found!";
+    return false;
+  }
+
+  KConfigGroup general = kresConfig.group( "General" );
+  QString passiveKeys = general.readEntry( "PassiveResourceKeys" );
+  QString keys = general.readEntry( "ResourceKeys" );
+
+  QStringList resourceKeys;
+  resourceKeys += passiveKeys.split( ",", QString::SkipEmptyParts );
+  resourceKeys += keys.split( ",", QString::SkipEmptyParts );
+
+  foreach ( const QString &key, resourceKeys ) {
+    QString groupName = QString( "Resource_%1" ).arg( key );
+    if ( !kresConfig.hasGroup( groupName ) ) {
+      kWarning() << "Resource group" << groupName << "not found in KRES config!";
+      continue;
+    }
+
+    KConfigGroup resourceGroup = kresConfig.group( groupName );
+    QString resourceType = resourceGroup.readEntry( "ResourceType" );
+    if ( resourceType.toLower() == "akonadi" )
+      return true;
+  }
+
+  return false;
+}
 
 void KMKernel::init()
 {
   the_shuttingDown = false;
   the_server_is_ready = false;
+
+  // If KABC is using Akonadi, start it now. Otherwise, it gets started when the
+  // addressbook is first used, which causes all kind of problems because
+  // Akonadi::Control::start() uses a subeventloop.
+  // Since the KMail main loop is not yet started when invoking init(), it should
+  // be safe here.
+  //
+  // For example, if not doing this, Akonadi can be started when downloading POP3
+  // mails and the "is in addressbook" filter criteria is used. In some cirumstances,
+  // the subeventloop would destroy logic in PopAccount, leading to duplicate mails
+  // because mails weren't correctly deleted on the server.
+  if ( doesAddressbookUseAkonadi() ) {
+    kDebug() << "The addressbook is using Akonadi, starting Akonadi now...";
+    Akonadi::Control::start();
+  }
 
   KConfig* cfg = KMKernel::config();
 
