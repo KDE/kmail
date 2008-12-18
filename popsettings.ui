@@ -318,6 +318,9 @@
            <property name="text" >
             <string>Des&amp;tination folder:</string>
            </property>
+           <property name="buddy" >
+            <cstring>folderCombo</cstring>
+           </property>
           </widget>
          </item>
          <item row="1" column="0" >
