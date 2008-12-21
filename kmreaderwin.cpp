@@ -2038,15 +2038,19 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Copy );
 
+  const bool canChange = message()->parent() ? !message()->parent()->isReadOnly() : false;
+
   if ( GlobalSettings::self()->allowAttachmentEditing() ) {
     action = menu->addAction(SmallIcon("document-properties"), i18n("Edit Attachment") );
     connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
     attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Edit );
+    action->setEnabled( canChange );
   }
   if ( GlobalSettings::self()->allowAttachmentDeletion() ) {
     action = menu->addAction(SmallIcon("edit-delete"), i18n("Delete Attachment") );
     connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
     attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Delete );
+    action->setEnabled( canChange );
   }
   if ( name.endsWith( ".xia", Qt::CaseInsensitive ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
