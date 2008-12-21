@@ -858,6 +858,18 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
     msg_body.append( body.toUtf8() );
     mMsg->setBody( msg_body );
   } else {
+
+    // FIXME: We set the processed template to the first plain text part fo the
+    //        message. This will probably break in the following cases:
+    //        1. HTML-only message with attachment (simple multipart/mixed)
+    //        2. Messages with multiple text/plain parts. We only replace the
+    //           first part with the processed templates, the other parts stay
+    //           the same.
+    //           The composer then uses an ObjectTreeParser to get the plain text
+    //           of the complete message, which will likely include the other
+    //           parts twice.
+    //           Possible solution: Set a dummy zero length body for all other
+    //           plaintext parts.
     DwEntity *entityToChange = 0;
     if ( mMsg->typeStr().toLower() == "multipart" ) {
       entityToChange = mMsg->findDwBodyPart( "text", "plain" );
