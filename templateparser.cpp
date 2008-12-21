@@ -207,7 +207,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
   bool dnl = false;
   for ( int i = 0; i < tmpl_len; ++i ) {
     QChar c = tmpl[i];
-    // kDebugug() << "Next char: " << c;
+    // kDebug() << "Next char: " << c;
     if ( c == '%' ) {
       QString cmd = tmpl.mid( i + 1 );
 
@@ -837,8 +837,9 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
 
     } else if ( dnl && ( c == '\n' || c == '\r') ) {
       // skip
-      if ( ( c == '\n' && tmpl[i + 1] == '\r' ) ||
-           ( c == '\r' && tmpl[i + 1] == '\n' ) ) {
+      if ( ( tmpl.size() > i+1 ) &&
+           ( ( c == '\n' && tmpl[i + 1] == '\r' ) ||
+             ( c == '\r' && tmpl[i + 1] == '\n' ) ) ) {
         // skip one more
         i += 1;
       }
