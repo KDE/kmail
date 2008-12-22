@@ -2333,10 +2333,13 @@ QByteArray KMMessage::typeStr() const
 
 
 //-----------------------------------------------------------------------------
-int KMMessage::type() const
+int KMMessage::type( DwEntity *entity ) const
 {
-  DwHeaders& header = mMsg->Headers();
-  if (header.HasContentType()) return header.ContentType().Type();
+  if ( !entity )
+    entity = mMsg;
+  DwHeaders& header = entity->Headers();
+  if ( header.HasContentType() )
+    return header.ContentType().Type();
   else return DwMime::kTypeNull;
 }
 
@@ -3899,7 +3902,7 @@ QByteArray KMMessage::charset() const
 //-----------------------------------------------------------------------------
 void KMMessage::setCharset( const QByteArray &charset, DwEntity *entity )
 {
-  kWarning( type() != DwMime::kTypeText )
+  kWarning( type( entity ) != DwMime::kTypeText )
     << "Trying to set a charset for a non-textual mimetype." << endl
     << "Fix this caller:" << endl
     << "====================================================================" << endl

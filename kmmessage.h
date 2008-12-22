@@ -461,7 +461,7 @@ public:
       The member functions that involve enumerated types (ints)
       will work only for well-known types or subtypes. */
   QByteArray typeStr() const;
-  int type() const;
+  int type( DwEntity *entity = 0 ) const;
   void setTypeStr(const QByteArray& aStr);
   void setType(int aType);
   /** Subtype */
