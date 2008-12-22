@@ -28,6 +28,8 @@
 #include "globalsettings_base.h"
 #include "kmkernel.h"
 
+#include <mimelib/bodypart.h>
+
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
@@ -849,14 +851,22 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
     }
   }
 
-  // kDebug(5006) <<"Message body:" << body;
+  // kDebug(5006) << "Message body:" << body;
 
   if ( mAppend ) {
     QByteArray msg_body = mMsg->body();
     msg_body.append( body.toUtf8() );
     mMsg->setBody( msg_body );
   } else {
-    mMsg->setBodyFromUnicode( body );
+    DwEntity *entityToChange = 0;
+    if ( mMsg->typeStr().toLower() == "multipart" ) {
+      entityToChange = mMsg->findDwBodyPart( "text", "plain" );
+      if ( !entityToChange )
+        kWarning() << "No text/plain part found in this multipart message, "
+                      "template parser can not set the text!";
+    }
+
+    mMsg->setBodyFromUnicode( body, entityToChange );
   }
 }
 
