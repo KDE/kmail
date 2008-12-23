@@ -49,6 +49,7 @@ namespace KMail {
   class HeaderStrategy;
 }
 
+class DwEntity;
 class DwBodyPart;
 class DwMediaType;
 class DwHeaders;
@@ -503,25 +504,40 @@ public:
        the header via headers() function) */
   void setNeedsAssembly();
 
-  /** Get or set the 'Content-Transfer-Encoding' header field
-      The member functions that involve enumerated types (ints)
-      will work only for well-known encodings. */
+  /**
+   * Get or set the 'Content-Transfer-Encoding' header field
+   * The member functions that involve enumerated types (ints)
+   * will work only for well-known encodings.
+   * Some functions take a DwEntity as second parameter, which
+   * specifies the body part or message of which the CTE will be changed or
+   * returned. If this is zero, the toplevel message will be taken.
+   */
   QCString contentTransferEncodingStr() const;
-  int  contentTransferEncoding() const;
-  void setContentTransferEncodingStr(const QCString& aStr);
-  void setContentTransferEncoding(int aCte);
+  int contentTransferEncoding( DwEntity *entity = 0 ) const;
+  void setContentTransferEncodingStr( const QCString& cteString, DwEntity *entity = 0 );
+  void setContentTransferEncoding( int cte, DwEntity *entity = 0 );
 
-  /** Cte is short for ContentTransferEncoding.
-      These functions are an alternative to the ones with longer names. */
+  /**
+   * Cte is short for ContentTransferEncoding.
+   * These functions are an alternative to the ones with longer names.
+   */
   QCString cteStr() const { return contentTransferEncodingStr(); }
-  int cte() const { return contentTransferEncoding(); }
-  void setCteStr(const QCString& aStr) { setContentTransferEncodingStr(aStr); }
-  void setCte(int aCte) { setContentTransferEncoding(aCte); }
+  int cte( DwEntity *entity = 0 ) const { return contentTransferEncoding( entity ); }
+  void setCteStr( const QCString& aStr, DwEntity *entity = 0 ) {
+    setContentTransferEncodingStr( aStr, entity );
+  }
+  void setCte( int aCte, DwEntity *entity = 0 ) {
+    setContentTransferEncoding( aCte, entity );
+  }
 
-  /** Sets this body part's content to @p str. @p str is subject to
-      automatic charset and CTE detection.
-   **/
-  void setBodyFromUnicode( const QString & str );
+  /**
+   * Sets this body's content to @p str. @p str is subject to
+   * automatic charset and CTE detection.
+   *
+   * @param entity The body of this entity will be changed. If entity is 0,
+   *               the body of the whole message will be changed.
+   */
+  void setBodyFromUnicode( const QString & str, DwEntity *entity = 0 );
 
   /** Returns the body part decoded to unicode.
    **/
@@ -538,11 +554,17 @@ public:
   /** Hack to enable structured body parts to be set as flat text... */
   void setMultiPartBody( const QCString & aStr );
 
-  /** Set the message body, encoding it according to the current content
-      transfer encoding. The first method for null terminated strings,
-      the second for binary data */
-  void setBodyEncoded(const QCString& aStr);
-  void setBodyEncodedBinary(const QByteArray& aStr);
+  /**
+   * Set the message body, encoding it according to the current content
+   * transfer encoding. The first method for null terminated strings,
+   * the second for binary data.
+   *
+   * @param entity Specifies the body part or message of which the body will be
+   *               set. If this is 0, the body of the toplevel message will be
+   *               set.
+   */
+  void setBodyEncoded( const QCString& aStr, DwEntity *entity = 0 );
+  void setBodyEncodedBinary( const QByteArray& aStr, DwEntity *entity = 0 );
 
   /** Returns a list of content-transfer-encodings that can be used with
       the given result of the character frequency analysis of a message or
@@ -551,23 +573,29 @@ public:
                                                bool allow8Bit,
                                                bool willBeSigned );
 
-  /** Sets body, encoded in the best fitting
-    content-transfer-encoding, which is determined by character
-    frequency count.
+  /**
+   * Sets body, encoded in the best fitting
+   * content-transfer-encoding, which is determined by character
+   * frequency count.
+   *
+   * @param aBuf         input buffer
+   * @param allowedCte   return: list of allowed cte's
+   * @param allow8Bit    whether "8bit" is allowed as cte.
+   * @param willBeSigned whether "7bit"/"8bit" is allowed as cte according to RFC 3156
+   * @param entity       The body of this message or body part will get changed.
+   *                     If this is 0, the body of the toplevel message will be
+   *                     set.
+   */
+  void setBodyAndGuessCte( const QByteArray& aBuf, QValueList<int>& allowedCte,
+                           bool allow8Bit = false,
+                           bool willBeSigned = false,
+                           DwEntity *entity = 0 );
 
-    @param aBuf       input buffer
-    @param allowedCte return: list of allowed cte's
-    @param allow8Bit  whether "8bit" is allowed as cte.
-    @param willBeSigned whether "7bit"/"8bit" is allowed as cte according to RFC 3156
-  */
-  void setBodyAndGuessCte( const QByteArray& aBuf,
-                                   QValueList<int>& allowedCte,
-                                   bool allow8Bit = false,
-                                   bool willBeSigned = false );
   void setBodyAndGuessCte( const QCString& aBuf,
-                                   QValueList<int>& allowedCte,
-                                   bool allow8Bit = false,
-                                   bool willBeSigned = false );
+                           QValueList<int>& allowedCte,
+                           bool allow8Bit = false,
+                           bool willBeSigned = false, 
+                           DwEntity *entity = 0 );
 
   /** Returns a decoded version of the body from the current content transfer
       encoding. The first method returns a null terminated string, the second
@@ -725,8 +753,15 @@ public:
   /** Get the message charset.*/
   QCString charset() const;
 
-  /** Set the message charset. */
-  void setCharset(const QCString& aStr);
+  /**
+   * Sets the charset of the message or a subpart of the message.
+   * Only call this when the message or the subpart has a textual mimetype.
+   *
+   * @param aStr the MIME-compliant charset name, like 'ISO-88519-15'.
+   * @param entity the body part or message of which the charset should be changed.
+   *               If this is 0, the charset of the toplevel message will be changed.
+   */
+  void setCharset( const QCString& charset, DwEntity *entity = 0 );
 
   /** Get a QTextCodec suitable for this message part */
   const QTextCodec * codec() const;

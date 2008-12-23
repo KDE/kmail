@@ -1256,7 +1256,6 @@ KMCommand::Result KMForwardInlineCommand::execute()
     {
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->setCharset( fwdMsg->codec()->mimeName(), true );
-      win->setBody( fwdMsg->bodyToUnicode() );
       win->show();
     }
   }

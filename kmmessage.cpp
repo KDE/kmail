@@ -2487,28 +2487,38 @@ QCString KMMessage::contentTransferEncodingStr() const
 
 
 //-----------------------------------------------------------------------------
-int KMMessage::contentTransferEncoding() const
+int KMMessage::contentTransferEncoding( DwEntity *entity ) const
 {
-  DwHeaders& header = mMsg->Headers();
-  if (header.HasContentTransferEncoding())
+  if ( !entity )
+    entity = mMsg;
+
+  DwHeaders& header = entity->Headers();
+  if ( header.HasContentTransferEncoding() )
     return header.ContentTransferEncoding().AsEnum();
   else return DwMime::kCteNull;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setContentTransferEncodingStr(const QCString& aStr)
+void KMMessage::setContentTransferEncodingStr( const QCString& cteString,
+                                               DwEntity *entity )
 {
-  mMsg->Headers().ContentTransferEncoding().FromString(aStr);
-  mMsg->Headers().ContentTransferEncoding().Parse();
+  if ( !entity )
+    entity = mMsg;
+
+  entity->Headers().ContentTransferEncoding().FromString( cteString );
+  entity->Headers().ContentTransferEncoding().Parse();
   mNeedsAssembly = true;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setContentTransferEncoding(int aCte)
+void KMMessage::setContentTransferEncoding( int cte, DwEntity *entity )
 {
-  mMsg->Headers().ContentTransferEncoding().FromEnum(aCte);
+  if ( !entity )
+    entity = mMsg;
+
+  entity->Headers().ContentTransferEncoding().FromEnum( cte );
   mNeedsAssembly = true;
 }
 
@@ -2646,22 +2656,16 @@ QValueList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
 void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
                                     QValueList<int> & allowedCte,
                                     bool allow8Bit,
-                                    bool willBeSigned )
+                                    bool willBeSigned,
+                                    DwEntity *entity )
 {
+  if ( !entity )
+    entity = mMsg;
+
   CharFreq cf( aBuf ); // it's safe to pass null arrays
-
   allowedCte = determineAllowedCtes( cf, allow8Bit, willBeSigned );
-
-#ifndef NDEBUG
-  DwString dwCte;
-  DwCteEnumToStr(allowedCte[0], dwCte);
-  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
-                << cf.printableRatio() << " and I chose "
-                << dwCte.c_str() << endl;
-#endif
-
-  setCte( allowedCte[0] ); // choose best fitting
-  setBodyEncodedBinary( aBuf );
+  setCte( allowedCte[0], entity ); // choose best fitting
+  setBodyEncodedBinary( aBuf, entity );
 }
 
 
@@ -2669,32 +2673,29 @@ void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
 void KMMessage::setBodyAndGuessCte( const QCString& aBuf,
                                     QValueList<int> & allowedCte,
                                     bool allow8Bit,
-                                    bool willBeSigned )
+                                    bool willBeSigned,
+                                    DwEntity *entity )
 {
+  if ( !entity )
+    entity = mMsg;
+
   CharFreq cf( aBuf.data(), aBuf.size()-1 ); // it's safe to pass null strings
-
   allowedCte = determineAllowedCtes( cf, allow8Bit, willBeSigned );
-
-#ifndef NDEBUG
-  DwString dwCte;
-  DwCteEnumToStr(allowedCte[0], dwCte);
-  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
-                << cf.printableRatio() << " and I chose "
-                << dwCte.c_str() << endl;
-#endif
-
-  setCte( allowedCte[0] ); // choose best fitting
-  setBodyEncoded( aBuf );
+  setCte( allowedCte[0], entity ); // choose best fitting
+  setBodyEncoded( aBuf, entity );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBodyEncoded(const QCString& aStr)
+void KMMessage::setBodyEncoded(const QCString& aStr, DwEntity *entity )
 {
+  if ( !entity )
+    entity = mMsg;
+
   DwString dwSrc(aStr.data(), aStr.size()-1 /* not the trailing NUL */);
   DwString dwResult;
 
-  switch (cte())
+  switch (cte( entity ))
   {
   case DwMime::kCteBase64:
     DwEncodeBase64(dwSrc, dwResult);
@@ -2707,30 +2708,33 @@ void KMMessage::setBodyEncoded(const QCString& aStr)
     break;
   }
 
-  mMsg->Body().FromString(dwResult);
+  entity->Body().FromString(dwResult);
   mNeedsAssembly = true;
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
+void KMMessage::setBodyEncodedBinary( const QByteArray& aStr, DwEntity *entity )
 {
+  if ( !entity )
+    entity = mMsg;
+
   DwString dwSrc(aStr.data(), aStr.size());
   DwString dwResult;
 
-  switch (cte())
+  switch ( cte( entity ) )
   {
   case DwMime::kCteBase64:
-    DwEncodeBase64(dwSrc, dwResult);
+    DwEncodeBase64( dwSrc, dwResult );
     break;
   case DwMime::kCteQuotedPrintable:
-    DwEncodeQuotedPrintable(dwSrc, dwResult);
+    DwEncodeQuotedPrintable( dwSrc, dwResult );
     break;
   default:
     dwResult = dwSrc;
     break;
   }
 
-  mMsg->Body().FromString(dwResult);
+  entity->Body().FromString( dwResult );
   mNeedsAssembly = true;
 }
 
@@ -2752,6 +2756,7 @@ void KMMessage::setBody(const char* aStr)
   mNeedsAssembly = true;
 }
 
+//-----------------------------------------------------------------------------
 void KMMessage::setMultiPartBody( const QCString & aStr ) {
   setBody( aStr );
   mMsg->Body().Parse();
@@ -4023,7 +4028,7 @@ QCString KMMessage::charset() const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setCharset(const QCString& bStr)
+void KMMessage::setCharset( const QCString &charset, DwEntity *entity )
 {
   kdWarning( type() != DwMime::kTypeText )
     << "KMMessage::setCharset(): trying to set a charset for a non-textual mimetype." << endl
@@ -4031,23 +4036,32 @@ void KMMessage::setCharset(const QCString& bStr)
     << "====================================================================" << endl
     << kdBacktrace( 5 ) << endl
     << "====================================================================" << endl;
-  QCString aStr = bStr;
-  KPIM::kAsciiToLower( aStr.data() );
-  DwMediaType &mType = dwContentType();
+
+  if ( !entity )
+    entity = mMsg;
+
+  DwMediaType &mType = entity->Headers().ContentType();
   mType.Parse();
-  DwParameter *param=mType.FirstParameter();
-  while(param)
+  DwParameter *param = mType.FirstParameter();
+  while( param ) {
+
     // FIXME use the mimelib functions here for comparison.
-    if (!kasciistricmp(param->Attribute().c_str(), "charset")) break;
-    else param=param->Next();
-  if (!param){
-    param=new DwParameter;
-    param->SetAttribute("charset");
-    mType.AddParameter(param);
+    if ( !kasciistricmp( param->Attribute().c_str(), "charset" ) )
+      break;
+
+    param = param->Next();
+  }
+  if ( !param ) {
+    param = new DwParameter;
+    param->SetAttribute( "charset" );
+    mType.AddParameter( param );
   }
   else
     mType.SetModified();
-  param->SetValue(DwString(aStr));
+
+  QCString lowerCharset = charset;
+  KPIM::kAsciiToLower( lowerCharset.data() );
+  param->SetValue( DwString( lowerCharset ) );
   mType.Assemble();
 }
 
@@ -4312,15 +4326,17 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
     setStatus( KMMsgStatusHasNoAttach );
 }
 
-void KMMessage::setBodyFromUnicode( const QString & str ) {
+void KMMessage::setBodyFromUnicode( const QString &str, DwEntity *entity )
+{
   QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
   const QTextCodec * codec = KMMsgBase::codecForName( encoding );
   assert( codec );
   QValueList<int> dummy;
-  setCharset( encoding );
-  setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
+  setCharset( encoding, entity );
+  setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */,
+                      false, entity );
 }
 
 const QTextCodec * KMMessage::codec() const {

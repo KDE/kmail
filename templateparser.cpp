@@ -45,6 +45,7 @@
 #include <libkpimidentities/identitymanager.h>
 
 #include "templateparser.h"
+#include <mimelib/bodypart.h>
 
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
                                 const QString aselection,
@@ -829,14 +830,22 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
     }
   }
 
-  // kdDebug() << "Message body: " << body << endl;
+  // kdDebug(5006) << "Message body: " << body << endl;
 
   if ( mAppend ) {
     QCString msg_body = mMsg->body();
     msg_body.append( body.utf8() );
     mMsg->setBody( msg_body );
   } else {
-    mMsg->setBodyFromUnicode( body );
+    DwEntity *entityToChange = 0;
+    if ( mMsg->typeStr().lower() == "multipart" ) {
+      entityToChange = mMsg->findDwBodyPart( "text", "plain" );
+      if ( !entityToChange )
+        kdWarning() << "No text/plain part found in this multipart message, "
+                       "template parser can not set the text!" << endl;
+    }
+
+    mMsg->setBodyFromUnicode( body, entityToChange );
   }
 }
 
