@@ -288,7 +288,8 @@ void KMMessage::setTransferInProgress(bool value, bool force)
 
 bool KMMessage::isUrgent() const {
   return headerField( "Priority" ).contains( "urgent", Qt::CaseSensitive )
-    || headerField( "X-Priority" ).startsWith( '2' );
+    || headerField( "X-Priority" ).startsWith( '2' )
+    || headerField( "X-Priority" ).startsWith( '1' );
 }
 
 //-----------------------------------------------------------------------------
