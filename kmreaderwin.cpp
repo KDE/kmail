@@ -631,6 +631,7 @@ void KMReaderWin::createActions()
 
   // Set Encoding submenu
   mSelectEncodingAction  = new KSelectAction(KIcon("character-set"), i18n("&Set Encoding"), this);
+  mSelectEncodingAction->setToolBarMode(KSelectAction::MenuMode);
   ac->addAction("encoding", mSelectEncodingAction );
   connect(mSelectEncodingAction,SIGNAL( triggered(int)),
           SLOT( slotSetEncoding() ));
