@@ -2783,7 +2783,7 @@ void FolderViewItem::slotNoContentChanged()
   // reload the folder tree if the no content state changed, needed because
   // we hide no-content folders if their child nodes are hidden
   QTimer::singleShot( 0, static_cast<FolderView*>( treeWidget() ),
-                      SLOT( slotRreload() ) );
+                      SLOT( slotReload() ) );
 }
 
 void FolderViewItem::slotFolderCountsChanged( KMFolder * )
