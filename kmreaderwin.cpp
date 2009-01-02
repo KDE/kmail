@@ -448,8 +448,9 @@ void KMReaderWin::createWidgets() {
   // CTRL-SHIFT-A in kmail and clashes with kmails CTRL-A action.
   KAction *selectAll = qobject_cast<KAction*>(
           mViewer->actionCollection()->action(
-                  KStandardAction::name(KStandardAction::SelectAll)));
-  selectAll->setShortcut(KShortcut());
+                  KStandardAction::name( KStandardAction::SelectAll) ) );
+  if ( selectAll )
+    selectAll->setShortcut( KShortcut() );
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
@@ -631,7 +632,7 @@ void KMReaderWin::createActions()
 
   // Set Encoding submenu
   mSelectEncodingAction  = new KSelectAction(KIcon("character-set"), i18n("&Set Encoding"), this);
-  mSelectEncodingAction->setToolBarMode(KSelectAction::MenuMode);
+  mSelectEncodingAction->setToolBarMode( KSelectAction::MenuMode );
   ac->addAction("encoding", mSelectEncodingAction );
   connect(mSelectEncodingAction,SIGNAL( triggered(int)),
           SLOT( slotSetEncoding() ));
