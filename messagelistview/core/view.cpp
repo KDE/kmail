@@ -54,7 +54,9 @@ namespace Core
 {
 
 View::View( Widget *pParent )
-  : QTreeView( pParent ), mWidget( pParent )
+  : QTreeView( pParent ),
+    mWidget( pParent ),
+    mNeedToApplyThemeColumns( false )
 {
   mTheme = 0;
   mAggregation = 0;
