@@ -1472,7 +1472,19 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int sup
       continue;
     }
     if ( ((flags & imapFlagMap[i].imapFlag) > 0) != (oldStatus & imapFlagMap[i].kmFlag) ) {
+
+      // The call to toggleStatus() emits a signal that the header has changed,
+      // which causes search folders to update. If the search folder has a rule
+      // that needs the complete body, it will unget() the message and invalidate
+      // out msg pointer. Therefore, save the index of the message before calling
+      // toggleStatus(), and get a valid msg pointer afterwards.
+      KMFolderIndex *storage = msg->storage();
+      int oldIndex = -1;
+      if ( storage )
+        oldIndex = storage->find( msg );
       msg->toggleStatus( imapFlagMap[i].kmFlag );
+      if ( storage )
+        msg = storage->getMsg( oldIndex );
     }
   }
 
