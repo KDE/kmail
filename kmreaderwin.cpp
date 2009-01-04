@@ -447,8 +447,7 @@ void KMReaderWin::createWidgets() {
   // Remove the shortcut for the selectAll action from khtml part. It's redefined to
   // CTRL-SHIFT-A in kmail and clashes with kmails CTRL-A action.
   KAction *selectAll = qobject_cast<KAction*>(
-          mViewer->actionCollection()->action(
-                  KStandardAction::name( KStandardAction::SelectAll) ) );
+          mViewer->actionCollection()->action( "selectAll" ) );
   if ( selectAll ) {
     selectAll->setShortcut( KShortcut() );
   } else {
