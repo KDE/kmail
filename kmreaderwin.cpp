@@ -451,7 +451,7 @@ void KMReaderWin::createWidgets() {
   if ( selectAll ) {
     selectAll->setShortcut( KShortcut() );
   } else {
-      kDebug() << "Failed to find khtml's selectAll action to remove it's shortcut";
+    kDebug() << "Failed to find khtml's selectAll action to remove it's shortcut";
   }
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
