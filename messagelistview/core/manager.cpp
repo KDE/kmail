@@ -672,7 +672,6 @@ void Manager::createDefaultThemes()
       r->addLeftItem( i );
         i = new Theme::ContentItem( Theme::ContentItem::GroupHeaderLabel );
         QFont bigFont = KGlobalSettings::generalFont();
-        //bigFont.setPointSize( 16 );
         bigFont.setBold( true );
         i->setFont( bigFont );
         i->setUseCustomFont( true );
@@ -734,7 +733,6 @@ void Manager::createDefaultThemes()
       r->addLeftItem( i );
         i = new Theme::ContentItem( Theme::ContentItem::GroupHeaderLabel );
         QFont aBigFont = KGlobalSettings::generalFont();
-        aBigFont.setPointSize( 16 );
         aBigFont.setBold( true );
         i->setFont( aBigFont );
         i->setUseCustomFont( true );
