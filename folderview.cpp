@@ -2945,38 +2945,7 @@ bool FolderViewItem::operator < ( const QTreeWidgetItem &other ) const
   if ( w->sortingPolicy() == FolderView::SortByDragAndDropKey )
     return mDnDSortingKey < oitem->dndSortingKey();
 
-  int sortCol = w->sortColumn();
-  if ( sortCol < 0 )
-     return true; // just "yes" :D
-
-  if ( sortCol == FolderView::UnreadColumn )
-    return unreadCount() < oitem->unreadCount();
-  if ( sortCol == FolderView::TotalColumn )
-    return totalCount() < oitem->totalCount();
-  if ( sortCol == FolderView::DataSizeColumn )
-    return dataSize() < oitem->dataSize();
-  if ( sortCol == FolderView::LabelColumn )
-  {
-    // Special sorting based on the item type
-    int thisProto = ( int ) protocol();
-    int thatProto = ( int ) oitem->protocol();
-    if ( thisProto < thatProto )
-      return true;
-    if ( thisProto > thatProto )
-      return false;
-
-    int thisType = ( int ) folderType();
-    int thatType = ( int ) oitem->folderType();
-    if ( thisType < thatType )
-      return true;
-    if ( thisType > thatType )
-      return false;
-
-    // and finally compare by name
-    return labelText() < oitem->labelText();
-  }
-
-  return text(sortCol) < other.text(sortCol);
+  return FolderTreeWidgetItem::operator < ( other );
 }
 
 
