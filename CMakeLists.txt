@@ -1,65 +1,71 @@
 project(kmail)
 
-INCLUDE(CheckIncludeFiles)
+include(CheckIncludeFiles)
 check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
 check_include_files(paths.h HAVE_PATHS_H)
+check_include_files(sys/inotify.h SYS_INOTIFY_H_FOUND)
 check_function_exists(mmap HAVE_MMAP)
+macro_bool_to_01(SYS_INOTIFY_H_FOUND HAVE_SYS_INOTIFY_H)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
-check_include_files(sys/inotify.h SYS_INOTIFY_H_FOUND)
-macro_bool_to_01(SYS_INOTIFY_H_FOUND HAVE_SYS_INOTIFY_H)
-
+# Support for the SVN revision number in version-kmail.h
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
-  if ( NOT KdeSubversion_FOUND )
-    find_package( KdeSubversion )
-  endif ( NOT KdeSubversion_FOUND )
-  if ( KdeSubversion_FOUND )
-    KdeSubversion_WC_INFO( ${PROJECT_SOURCE_DIR} KMail )
-    string( SUBSTRING "${KMail_WC_LAST_CHANGED_DATE}" 0 10 KMail_WC_LAST_CHANGED_DATE )
-    set( kmail_svn_revision "svn-${KMail_WC_REVISION}" )
-    set( kmail_svn_last_change "${KMail_WC_LAST_CHANGED_DATE}" )
-  endif ( KdeSubversion_FOUND )
+  if (NOT KdeSubversion_FOUND)
+    find_package(KdeSubversion)
+  endif (NOT KdeSubversion_FOUND)
+  if (KdeSubversion_FOUND)
+    KdeSubversion_WC_INFO(${PROJECT_SOURCE_DIR} KMail)
+    string(SUBSTRING "${KMail_WC_LAST_CHANGED_DATE}" 0 10 KMail_WC_LAST_CHANGED_DATE)
+    set(kmail_svn_revision "svn-${KMail_WC_REVISION}")
+    set(kmail_svn_last_change "${KMail_WC_LAST_CHANGED_DATE}")
+  endif (KdeSubversion_FOUND)
 endif (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
-configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
-configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h )
 
-add_definitions ( -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS )
-add_definitions ( -DKDE_DEFAULT_DEBUG_AREA=5006 )
-add_definitions ( -DStorageDebug=5120 )
+configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
+configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h)
 
-qt4_generate_dbus_interface( kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a )
-qt4_generate_dbus_interface( kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a )
+add_definitions(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
+add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5006)
+add_definitions(-DStorageDebug=5120)
+
+qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
+qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
-                  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
-                  COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it." )
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
+          ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
+  COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
+)
 
-add_subdirectory( interfaces )
-add_subdirectory( about )
-add_subdirectory( pics )
-add_subdirectory( icons )
-add_subdirectory( profiles )
-add_subdirectory( avscripts )
-add_subdirectory( tests )
-add_subdirectory( kconf_update )
+add_subdirectory(interfaces)
+add_subdirectory(about)
+add_subdirectory(pics)
+add_subdirectory(icons)
+add_subdirectory(profiles)
+add_subdirectory(avscripts)
+add_subdirectory(tests)
+add_subdirectory(kconf_update)
+
 include_directories(
-  ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_BINARY_DIR}/libkdepim
+  ${CMAKE_SOURCE_DIR}/libkdepim
+  ${CMAKE_BINARY_DIR}/libkdepim
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/mimelib
   ${CMAKE_SOURCE_DIR}/libkleo
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
-   )
+ )
 if(Nepomuk_FOUND)
   include_directories( ${NEPOMUK_INCLUDES} )
 endif(Nepomuk_FOUND)
 
 
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}" )
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 
-########### next target ###############
+########### kmailprivate ###############
+
 set(kmailprivate_LIB_SRCS
    kmmessage.cpp
    kmmainwin.cpp
@@ -263,10 +269,19 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/widgetbase.cpp
 )
 
-
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl )
+qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
+)
+qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
+)
+qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl
+)
+qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
+  KMail::MailServiceImpl
+)
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
@@ -274,20 +289,33 @@ qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
   ${CMAKE_SOURCE_DIR}/korganizer/org.kde.Korganizer.Calendar.xml
 )
 
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)
+kde4_add_ui_files(kmailprivate_LIB_SRCS
+  composercryptoconfiguration.ui
+  warningconfiguration.ui
+  smimeconfiguration.ui
+  templatesconfiguration_base.ui
+  customtemplates_base.ui
+  snippetdlgbase.ui
+  imapsettings.ui
+  localsettings.ui
+  maildirsettings.ui
+  popsettings.ui
+)
 
+kde4_add_kcfg_files(kmailprivate_LIB_SRCS
+  globalsettings_base.kcfgc
+  replyphrases.kcfgc
+  custommimeheader.kcfgc
+  templatesconfiguration_kfg.kcfgc
+  customtemplates_kfg.kcfgc
+)
 
-
-kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui snippetdlgbase.ui imapsettings.ui localsettings.ui maildirsettings.ui popsettings.ui)
-
-kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc templatesconfiguration_kfg.kcfgc customtemplates_kfg.kcfgc )
-
+# SQLITE folder index support
 set(KMAIL_SQLITE_INDEX false CACHE BOOL "Use sqlite instead of mmap backend for KMail's folder indexes")
 mark_as_advanced(KMAIL_SQLITE_INDEX)
 if(WIN32)
   set(KMAIL_SQLITE_INDEX true CACHE BOOL "Use sqlite instead of mmap backend for KMail's folder indexes" FORCE)
 endif(WIN32)
-
 if(KMAIL_SQLITE_INDEX)
   find_package(Sqlite)
   macro_log_feature(SQLITE_FOUND "SQLite" "A C library that implements an SQL database engine" "http://www.sqlite.org" TRUE "version 3" "Required for KMail indexing [Windows ONLY].")
@@ -331,86 +359,105 @@ if(KMAIL_SQLITE_INDEX)
 endif(KMAIL_SQLITE_INDEX)
 
 if(Nepomuk_FOUND)
-   kdepim4_link_unique_libraries(kmailprivate ${NEPOMUK_LIBRARIES} )
+   kdepim4_link_unique_libraries(kmailprivate ${NEPOMUK_LIBRARIES})
 endif(Nepomuk_FOUND)
 
-set_target_properties(kmailprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
-install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
+set_target_properties(kmailprivate
+  PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION}
+)
 
-
-########### next target ###############
+########### kcm_kmail ###############
 
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
-
-
 kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
-
-
-
 kdepim4_link_unique_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
-install(TARGETS kcm_kmail  DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### next target ###############
+########### kmailpart ###############
 
 set(kmailpart_PART_SRCS kmail_part.cpp )
-
-qt4_generate_dbus_interface( kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a )
-qt4_add_dbus_adaptor( kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart )
-qt4_add_dbus_interfaces( kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml )
-
+qt4_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
+qt4_add_dbus_adaptor(kmailpart_PART_SRCS
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
+)
+qt4_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml)
 kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
+kdepim4_link_unique_libraries(kmailpart
+  ${KDE4_KDECORE_LIBS}
+  kmailprivate
+  ${KDE4_KDE3SUPPORT_LIBS}
+  ${KDE4_KPARTS_LIBS}
+  ${KDE4_KUTILS_LIBS}
+)
 
-kdepim4_link_unique_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} )
 
-install(TARGETS kmailpart  DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### next target ###############
+########### bodypartformatter_application_octetstream ###############
 
 set(kmail_bodypartformatter_application_octetstream_PART_SRCS app_octetstream.cpp )
+kde4_add_plugin(kmail_bodypartformatter_application_octetstream
+  ${kmail_bodypartformatter_application_octetstream_PART_SRCS}
+)
+kdepim4_link_unique_libraries(kmail_bodypartformatter_application_octetstream ${KDE4_KDECORE_LIBS})
 
 
-kde4_add_plugin(kmail_bodypartformatter_application_octetstream ${kmail_bodypartformatter_application_octetstream_PART_SRCS})
+########### KMail executable ###############
 
-
-
-kdepim4_link_unique_libraries(kmail_bodypartformatter_application_octetstream  ${KDE4_KDECORE_LIBS} )
-
-install(TARGETS kmail_bodypartformatter_application_octetstream  DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### next target ###############
-
-set(kmail_SRCS main.cpp )
-
+set(kmail_SRCS main.cpp)
 kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
-
 kde4_add_executable(kmail ${kmail_SRCS})
-
-kdepim4_link_unique_libraries(kmail  ${KDE4_KDEUI_LIBS} ${KDE4_KDECORE_LIBS} kmailprivate kdepim)
-
-install(TARGETS kmail  ${INSTALL_TARGETS_DEFAULT_ARGS} )
-
-
+kdepim4_link_unique_libraries(kmail
+  ${KDE4_KDEUI_LIBS}
+  ${KDE4_KDECORE_LIBS}
+  kmailprivate
+  kdepim
+)
 
 ########### install files ###############
 
-install( FILES KMail.desktop kmail_view.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
-install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg customtemplates_kfg.kcfg templatesconfiguration_kfg.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install( FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
-install( FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
-install( FILES kmail_config_misc.desktop kmail_config_appearance.desktop     kmail_config_identity.desktop kmail_config_accounts.desktop kmail_config_composer.desktop     kmail_config_security.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
-install( FILES kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc kmail.notifyrc kmail_part.rc  DESTINATION ${DATA_INSTALL_DIR}/kmail)
-install( FILES dbusmail.desktop dbusimap.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
-install( FILES application_octetstream.desktop  DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter)
-
-# Install the D-Bus interface XML files
-install( FILES
-         ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
-         ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
-         ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
-         DESTINATION
-         ${KDE4_DBUS_INTERFACES_DIR} )
+install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
+install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES KMail.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES
+  kmail.kcfg
+  replyphrases.kcfg
+  custommimeheader.kcfg
+  customtemplates_kfg.kcfg
+  templatesconfiguration_kfg.kcfg
+  DESTINATION ${KCFG_INSTALL_DIR}
+)
+install(FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
+install(FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
+install(FILES
+  kmail_config_misc.desktop
+  kmail_config_appearance.desktop
+  kmail_config_identity.desktop
+  kmail_config_accounts.desktop
+  kmail_config_composer.desktop
+  kmail_config_security.desktop
+  DESTINATION ${SERVICES_INSTALL_DIR}
+)
+install(FILES
+  kmcomposerui.rc
+  kmmainwin.rc
+  kmreadermainwin.rc
+  kmail.notifyrc
+  kmail_part.rc
+  DESTINATION ${DATA_INSTALL_DIR}/kmail
+)
+install(FILES dbusmail.desktop dbusimap.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install(FILES
+  application_octetstream.desktop
+  DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter
+)
+install(TARGETS
+  kmailpart
+  kmail_bodypartformatter_application_octetstream
+  kcm_kmail
+  DESTINATION ${PLUGIN_INSTALL_DIR}
+)
+install(FILES
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
+  DESTINATION ${KDE4_DBUS_INTERFACES_DIR}
+)
 
