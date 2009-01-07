@@ -552,13 +552,105 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
   const GpgME::Subkey subkey = key.subkey(0);
   if ( d->alreadyWarnedFingerprints.count( subkey.fingerprint() ) )
     return Kpgp::Ok; // already warned about this one (and so about it's issuers)
-  d->alreadyWarnedFingerprints.insert( subkey.fingerprint() );
 
   if ( subkey.neverExpires() )
     return Kpgp::Ok;
   static const double secsPerDay = 24 * 60 * 60;
-  const int daysTillExpiry =
-    1 + int( ::difftime( subkey.expirationTime(), time(0) ) / secsPerDay );
+  const double secsTillExpiry = ::difftime( subkey.expirationTime(), time(0) );
+  if ( secsTillExpiry <= 0 ) {
+      const int daysSinceExpiry = 1 + int( -secsTillExpiry / secsPerDay );
+      kDebug(5006) << "Key 0x" << key.shortKeyID() << " expired less than "
+                   << daysSinceExpiry << " days ago";
+      const QString msg =
+          key.protocol() == GpgME::OpenPGP
+          ? ( mine ? sign
+              ? ki18np("<p>Your OpenPGP signing key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+                       "<p>expired less than a day ago.</p>",
+                       "<p>Your OpenPGP signing key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+                       "<p>expired %1 days ago.</p>")
+              : ki18np("<p>Your OpenPGP encryption key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+                       "<p>expired less than a day ago.</p>",
+                       "<p>Your OpenPGP encryption key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+                       "<p>expired %1 days ago.</p>")
+              : ki18np("<p>The OpenPGP key for</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+                       "<p>expired less than a day ago.</p>",
+                       "<p>The OpenPGP key for</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
+                       "<p>expired %1 days ago.</p>") )
+		  .subs( daysSinceExpiry )
+		  .subs( QString::fromUtf8( key.userID(0).id() ) )
+		  .subs( key.shortKeyID() )
+		  .toString()
+          : ( ca
+              ? ( key.isRoot()
+                  ? ( mine ? sign
+                      ? ki18np("<p>The root certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired less than a day ago.</p>",
+                               "<p>The root certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired %1 days ago.</p>")
+                      : ki18np("<p>The root certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired less than a day ago.</p>",
+                               "<p>The root certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired %1 days ago.</p>")
+                      : ki18np("<p>The root certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired less than a day ago.</p>",
+                               "<p>The root certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired %1 days ago.</p>") )
+                  : ( mine ? sign
+                      ? ki18np("<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired less than a day ago.</p>",
+                               "<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired %1 days ago.</p>")
+                      : ki18np("<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired less than a day ago.</p>",
+                               "<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired %1 days ago.</p>")
+                      : ki18np("<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired less than a day ago.</p>",
+                               "<p>The intermediate CA certificate</p><p align=center><b>%4</b></p>"
+                               "<p>for S/MIME certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                               "<p>expired %1 days ago.</p>") ) )
+			   .subs( daysSinceExpiry )
+			   .subs( Kleo::DN( orig.userID(0).id() ).prettyDN() )
+			   .subs( orig.issuerSerial() )
+			   .subs( Kleo::DN( key.userID(0).id() ).prettyDN() )
+			   .toString()
+              : ( mine ? sign
+                  ? ki18np("<p>Your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                           "<p>expired less than a day ago.</p>",
+                           "<p>Your S/MIME signing certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                           "<p>expired %1 days ago.</p>")
+                  : ki18np("<p>Your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                           "<p>expired less than a day ago.</p>",
+                           "<p>Your S/MIME encryption certificate</p><p align=center><b>%2</b> (serial number %3)</p>"
+                           "<p>expired %1 days ago.</p>")
+                  : ki18np("<p>The S/MIME certificate for</p><p align=center><b>%2</b> (serial number %3)</p>"
+                           "<p>expired less than a day ago.</p>",
+                           "<p>The S/MIME certificate for</p><p align=center><b>%2</b> (serial number %3)</p>"
+                           "<p>expired %1 days ago.</p>" ) )
+		       .subs( daysSinceExpiry )
+		       .subs( Kleo::DN( key.userID(0).id() ).prettyDN() )
+		       .subs( key.issuerSerial() )
+		       .toString() );
+      d->alreadyWarnedFingerprints.insert( subkey.fingerprint() );
+      if ( KMessageBox::warningContinueCancel( 0, msg,
+                                               key.protocol() == GpgME::OpenPGP
+                                               ? i18n("OpenPGP Key Expired" )
+                                               : i18n("S/MIME Certificate Expired" ),
+                                               KStandardGuiItem::cont(), KStandardGuiItem::cancel(), dontAskAgainName ) == KMessageBox::Cancel )
+          return Kpgp::Canceled;
+  } else {
+  const int daysTillExpiry = 1 + int( secsTillExpiry / secsPerDay );
   kDebug(5006) <<"Key 0x" << key.shortKeyID() <<"expires in less than"
 	           << daysTillExpiry << "days";
   const int threshold =
@@ -655,6 +747,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 		       .subs( Kleo::DN( key.userID(0).id() ).prettyDN() )
 		       .subs( key.issuerSerial() )
 		       .toString() );
+    d->alreadyWarnedFingerprints.insert( subkey.fingerprint() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     key.protocol() == GpgME::OpenPGP
 					     ? i18n("OpenPGP Key Expires Soon" )
@@ -663,6 +756,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 					     dontAskAgainName )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
+  }
   }
   if ( key.isRoot() )
     return Kpgp::Ok;
