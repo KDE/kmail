@@ -1151,9 +1151,11 @@ static inline QString get_capitalized_long_day_name( int dayOfWeek )
   // their standard day names to lowercase versions for general
   // use but still want them to be capitalized in the headers...
   QString name = QDate::longDayName( dayOfWeek );
-  if ( name.length() > 0 )
-    name[ 0 ] = name[ 0 ].toUpper();
-  return name;
+  if ( name.isEmpty() )
+      return name;
+  QString copy = name;
+  copy[ 0 ] = name.at( 0 ).toUpper();
+  return copy;
 }
 
 static inline QString get_capitalized_month_name( int month )
@@ -1163,9 +1165,11 @@ static inline QString get_capitalized_month_name( int month )
   // their standard month names to lowercase versions for general
   // use but still want them to be capitalized in the headers...
   QString name = QDate::longMonthName( month );
-  if ( name.length() > 0 )
-    name[ 0 ] = name[ 0 ].toUpper();
-  return name;
+  if ( name.isEmpty() )
+      return name;
+  QString copy = name;
+  copy[ 0 ] = name.at( 0 ).toUpper();
+  return copy;
 }
 
 void Model::attachMessageToGroupHeader( MessageItem *mi )
