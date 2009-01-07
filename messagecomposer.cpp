@@ -2264,11 +2264,10 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
 
   const std::vector<GpgME::Key> signingKeys = mKeyResolver->signingKeys( format );
   if ( signingKeys.empty() ) {
-    KMessageBox::sorry( mComposeWin,
-			i18n("This message could not be signed, "
-			     "since no valid signing keys have been found; "
-			     "this should actually never happen, "
-			     "please report this bug.") );
+    KMessageBox::sorry( mComposeWin, i18n("This message could not be signed, "
+                                          "since no valid signing keys have been found; "
+                                          "this should actually never happen, "
+                                          "please report this bug.") );
     return;
   }
 
