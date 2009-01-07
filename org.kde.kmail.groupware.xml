@@ -110,5 +110,9 @@
       <arg type="b" direction="out"/>
       <arg name="resource" type="s" direction="in"/>
     </method>
+    <method name="changeResourceUIName">
+      <arg name="folderPath" type="s" direction="in"/>
+      <arg name="newName" type="s" direction="in"/>
+    </method>
   </interface>
 </node>

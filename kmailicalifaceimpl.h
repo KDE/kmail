@@ -236,6 +236,7 @@ public:
   // See CachedImapJob::slotPutMessageResult
   bool isResourceQuiet() const;
   void setResourceQuiet(bool q);
+  static QMap<QString, QString>* getResourceMap() { return mSubResourceUINamesMap; }
 
 public slots:
   /* (Re-)Read configuration file */
@@ -249,6 +250,7 @@ public slots:
   // Called when a folder is made readonly or readwrite, or renamed,
   // or any other similar change that affects the resources
   void slotFolderPropertiesChanged( KMFolder* folder );
+  void changeResourceUIName( const QString &folderPath, const QString &newName );
 
 private slots:
   void slotRefreshFolder( KMFolder* );
@@ -370,7 +372,7 @@ private:
   QMap<quint32, bool> mTheUnGetMes;
   QMap<QString, QString> mPendingUpdates;
   QMap<QString, bool> mInTransit;
-
+  static QMap<QString, QString> *mSubResourceUINamesMap;
 };
 
 #endif // KMAILICALIFACEIMPL_H
