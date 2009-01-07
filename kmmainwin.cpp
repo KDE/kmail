@@ -53,6 +53,11 @@ KMMainWin::KMMainWin(QWidget *)
                                 actionCollection() );
 
   KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
+#ifdef Q_WS_MACX
+ // ### This quits the application prematurely, for example when the composer window
+ // ### is closed while the main application is minimized to the systray
+  connect( qApp, SIGNAL(lastWindowClosed()), qApp, SLOT(quit()));
+#endif
   createGUI( "kmmainwin.rc" );
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
