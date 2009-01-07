@@ -208,6 +208,7 @@ void ImapAccountBase::readConfig( KConfigGroup &config )
   setOnlyLocallySubscribedFolders( config.readEntry( "locally-subscribed-folders", false ) );
   setLoadOnDemand( config.readEntry( "loadondemand", false ) );
   setListOnlyOpenFolders( config.readEntry( "listOnlyOpenFolders", false ) );
+  mCapabilities = config.readEntry( "capabilities", QStringList() );
   // read namespaces
   nsMap map;
   QStringList list = config.readEntry( QString::number( PersonalNS), QStringList() );
@@ -251,6 +252,7 @@ void ImapAccountBase::writeConfig( KConfigGroup &config )
   config.writeEntry( "locally-subscribed-folders", onlyLocallySubscribedFolders() );
   config.writeEntry( "loadondemand", loadOnDemand() );
   config.writeEntry( "listOnlyOpenFolders", listOnlyOpenFolders() );
+  config.writeEntry( "capabilities", mCapabilities );
   QString data;
   for ( nsMap::Iterator it = mNamespaces.begin(); it != mNamespaces.end(); ++it ) {
     if ( !it.value().isEmpty() ) {

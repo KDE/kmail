@@ -265,7 +265,9 @@ static void addLine( QWidget *parent, QVBoxLayout* layout )
 KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
                                                  const QString& aName,
                                                  QWidget* parent, const char* name )
-  : FolderDialogTab( parent, name ), mDlg( dlg )
+  : FolderDialogTab( parent, name ),
+  mSharedSeenFlagsCheckBox( 0 ),
+  mDlg( dlg )
 {
 
 
@@ -557,6 +559,15 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     mIncidencesForComboBox = 0;
   }
 
+  if ( mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
+    mSharedSeenFlagsCheckBox = new QCheckBox( this );
+    mSharedSeenFlagsCheckBox->setText( i18n( "Share unread state with all users" ) );
+    ++row;
+    gl->addWidget( mSharedSeenFlagsCheckBox, row, 0, 1, 1 );
+    mSharedSeenFlagsCheckBox->setWhatsThis( i18n( "If enabled, the unread state of messages in this folder will be the same "
+        "for all users having access to this folders. If disabled (the default), every user with access to this folder has her "
+        "own unread state." ) );
+  }
   topLayout->addStretch( 100 ); // eat all superfluous space
 
   initializeWithValuesFromFolder( mDlg->folder() );
@@ -612,6 +623,16 @@ void FolderDialogGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) 
   if ( mAlarmsBlockedCheckBox ) {
     KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
     mAlarmsBlockedCheckBox->setChecked( dimap->alarmsBlocked() );
+  }
+  if ( mSharedSeenFlagsCheckBox ) {
+    KMFolderCachedImap *dimap = static_cast<KMFolderCachedImap*>( folder->storage() );
+    ImapAccountBase *account = dynamic_cast<ImapAccountBase*>( dimap->account() );
+    mSharedSeenFlagsCheckBox->setChecked( dimap->sharedSeenFlags() );
+    mSharedSeenFlagsCheckBox->setDisabled( folder->isReadOnly() );
+    if ( account && account->hasCapability( "x-kmail-sharedseen" ) )
+      mSharedSeenFlagsCheckBox->show();
+    else
+      mSharedSeenFlagsCheckBox->hide();
   }
 }
 
@@ -720,6 +741,10 @@ bool FolderDialogGeneralTab::save()
       }
       if ( mAlarmsBlockedCheckBox && mAlarmsBlockedCheckBox->isChecked() != dimap->alarmsBlocked() ) {
         dimap->setAlarmsBlocked( mAlarmsBlockedCheckBox->isChecked() );
+        dimap->writeConfig();
+      }
+      if ( mSharedSeenFlagsCheckBox && mSharedSeenFlagsCheckBox->isChecked() != dimap->sharedSeenFlags() ) {
+        dimap->setSharedSeenFlags( mSharedSeenFlagsCheckBox->isChecked() );
         dimap->writeConfig();
       }
     }

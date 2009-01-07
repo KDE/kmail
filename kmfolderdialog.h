@@ -137,6 +137,7 @@ private:
   KComboBox *mContentsComboBox;
   KComboBox *mIncidencesForComboBox;
   QCheckBox *mAlarmsBlockedCheckBox;
+  QCheckBox *mSharedSeenFlagsCheckBox;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;
   QLabel      *mUnreadIconLabel;

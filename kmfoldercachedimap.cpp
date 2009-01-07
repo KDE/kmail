@@ -194,6 +194,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ),
     mIncidencesFor( IncForAdmins ),
+    mSharedSeenFlags( false ),
     mIsSelected( false ),
     mCheckFlags( true ), mReadOnly( false ), mAccount( 0 ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
@@ -203,7 +204,9 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
     mFolderRemoved( false ),
     mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
-    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
+    mIncidencesForChanged( false ),
+    mSharedSeenFlagsChanged( false ),
+    mPersonalNamespacesCheckDone( true ),
     mQuotaInfo(), mAlarmsBlocked( false ),
     mRescueCommandCount( 0 ),
     mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
@@ -281,6 +284,7 @@ void KMFolderCachedImap::readConfig()
   mAlarmsBlocked = group.readEntry( "AlarmsBlocked", false );
 //  kDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //               << " readConfig: mIncidencesFor=" << mIncidencesFor;
+  mSharedSeenFlags = group.readEntry( "SharedSeenFlags", false );
 
   mUserRights = group.readEntry( "UserRights", 0 ); // default is we don't know
   mOldUserRights = mUserRights;
@@ -305,6 +309,7 @@ void KMFolderCachedImap::readConfig()
   mStatusChangedLocally = group.readEntry( "StatusChangedLocally", false );
   mAnnotationFolderTypeChanged = group.readEntry( "AnnotationFolderTypeChanged", false );
   mIncidencesForChanged = group.readEntry( "IncidencesForChanged", false );
+  mSharedSeenFlagsChanged = group.readEntry( "SharedSeenFlagsChanged", false );
   if ( mImapPath.isEmpty() ) {
     mImapPathCreation = group.readEntry("ImapPathCreation");
   }
@@ -365,6 +370,8 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
     configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
     configGroup.writeEntry( "AlarmsBlocked", mAlarmsBlocked );
+    configGroup.writeEntry( "SharedSeenFlags", mSharedSeenFlags );
+    configGroup.writeEntry( "SharedSeenFlagsChanged", mSharedSeenFlagsChanged );
     configGroup.writeEntry( "UserRights", mUserRights );
 
     configGroup.deleteEntry( "StorageQuotaUsage");
@@ -1120,6 +1127,7 @@ void KMFolderCachedImap::serverSyncInternal()
   {
 #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
 #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
+#define KOLAB_SHAREDSEEN "/vendor/cmu/cyrus-imapd/sharedseen"
 //#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
     mSyncState = SYNC_STATE_SET_ANNOTATIONS;
 
@@ -1146,6 +1154,8 @@ void KMFolderCachedImap::serverSyncInternal()
         annotations << KOLAB_FOLDERTYPE;
       if ( !mIncidencesForChanged )
         annotations << KOLAB_INCIDENCESFOR;
+      if ( !mSharedSeenFlagsChanged )
+        annotations << KOLAB_SHAREDSEEN;
       if ( !annotations.isEmpty() ) {
         newState( mProgress, i18n("Retrieving annotations"));
         KUrl url = mAccount->getUrl();
@@ -1187,6 +1197,12 @@ void KMFolderCachedImap::serverSyncInternal()
         annotations.append( attr );
         kDebug(5006) <<"Setting incidences-for annotation for" << label()
                      << "to" << val;
+      }
+      if ( mSharedSeenFlagsChanged ) {
+        const QString val = mSharedSeenFlags ? "true" : "false";
+        KMail::AnnotationAttribute attr( KOLAB_SHAREDSEEN, "value.shared", val );
+        annotations.append( attr );
+        kDebug(5006) << "Setting sharedseen annotation for " << label() << " to " << val;
       }
       if ( !annotations.isEmpty() ) {
         KIO::Job *job =
@@ -2651,6 +2667,14 @@ void KMFolderCachedImap::setIncidencesFor( IncidencesFor incfor )
   }
 }
 
+void KMFolderCachedImap::setSharedSeenFlags(bool b)
+{
+  if ( mSharedSeenFlags != b ) {
+    mSharedSeenFlags = b;
+    mSharedSeenFlagsChanged = true;
+  }
+}
+
 void KMFolderCachedImap::slotAnnotationResult( const QString &entry,
                                                const QString &value,
                                                bool found )
@@ -2725,6 +2749,10 @@ void KMFolderCachedImap::slotAnnotationResult( const QString &entry,
     if ( found ) {
       mIncidencesFor = incidencesForFromString( value );
       Q_ASSERT( mIncidencesForChanged == false );
+    }
+  } else if ( entry == KOLAB_SHAREDSEEN ) {
+    if ( found ) {
+      mSharedSeenFlags = value == "true";
     }
   }
 }
@@ -2882,6 +2910,8 @@ void KMFolderCachedImap::slotAnnotationChanged( const QString &entry,
      * HACK: in theory we would need a new enum value for this.
      */
     kmkernel->iCalIface().addFolderChange( folder(), ACLChanged );
+  } else if ( entry == KOLAB_SHAREDSEEN ) {
+    mSharedSeenFlagsChanged = false;
   }
 }
 
