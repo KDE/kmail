@@ -1152,7 +1152,7 @@ static inline QString get_capitalized_long_day_name( int dayOfWeek )
   // use but still want them to be capitalized in the headers...
   QString name = QDate::longDayName( dayOfWeek );
   if ( name.isEmpty() )
-      return name;
+    return name;
   QString copy = name;
   copy[ 0 ] = name.at( 0 ).toUpper();
   return copy;
@@ -1166,7 +1166,7 @@ static inline QString get_capitalized_month_name( int month )
   // use but still want them to be capitalized in the headers...
   QString name = QDate::longMonthName( month );
   if ( name.isEmpty() )
-      return name;
+    return name;
   QString copy = name;
   copy[ 0 ] = name.at( 0 ).toUpper();
   return copy;
