@@ -351,7 +351,6 @@ kdepim4_link_unique_libraries(kmailprivate
   ${KDE4_KABC_LIBS}
   ${KDE4_KPIMUTILS_LIBS}
   ${KDE4_KDE3SUPPORT_LIBS}
-  ${KDE4_AKONADI_LIBS}
 )
 
 if(KMAIL_SQLITE_INDEX)
