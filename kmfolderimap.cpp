@@ -1481,11 +1481,18 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int sup
       // toggleStatus(), and get a valid msg pointer afterwards.
       KMFolderIndex *storage = msg->storage();
       int oldIndex = -1;
+      const bool msgIsKMMessage = msg->isMessage();
       if ( storage )
         oldIndex = storage->find( msg );
       msg->toggleStatus( imapFlagMap[i].kmFlag );
-      if ( storage )
-        msg = storage->getMsg( oldIndex );
+      if ( storage ) {
+        if ( msgIsKMMessage ) {
+          msg = storage->getMsg( oldIndex );
+        }
+        else {
+          msg = storage->getMsgBase( oldIndex );
+        }
+      }
     }
   }
 
