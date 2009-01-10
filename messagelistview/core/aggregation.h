@@ -41,7 +41,7 @@ namespace Core
 /**
  * A set of aggregation options that can be applied to the MessageListView::Model in a single shot.
  * The set defines the behaviours related to the population of the model, threading
- * of messages, grouping and sorting.
+ * of messages and grouping.
  */
 class Aggregation : public OptionSet
 {
@@ -63,33 +63,6 @@ public:
     // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
     // TODO: Group by message status: "Important messages", "Urgent messages", "To reply", "To do" etc...
     // TODO: Group by message unread status: "Unread messages", "Read messages" (maybe "New" ?)
-  };
-
-  /**
-   * How to sort the groups
-   * If you add values here please look at the implementations of the enumerate* functions
-   * and add appropriate descriptors.
-   */
-  enum GroupSorting
-  {
-    NoGroupSorting,                      ///< Don't sort the groups at all, add them as they come in
-    SortGroupsByDateTime,                ///< Sort groups by date/time of the group
-    SortGroupsByDateTimeOfMostRecent,    ///< Sort groups by date/time of the most recent message
-    SortGroupsBySenderOrReceiver,        ///< Sort groups by sender or receiver (makes sense only with GroupBySenderOrReceiver)
-    SortGroupsBySender,                  ///< Sort groups by sender (makes sense only with GroupBySender)
-    SortGroupsByReceiver                 ///< Sort groups by receiver (makes sense only with GroupByReceiver)
-    // Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
-  };
-
-  /**
-   * The "generic" sort direction: used for groups and for messages
-   * If you add values here please look at the implementations of the enumerate* functions
-   * and add appropriate descriptors.
-   */
-  enum SortDirection
-  {
-    Ascending,
-    Descending
   };
 
   /**
@@ -147,25 +120,6 @@ public:
   };
 
   /**
-   * The available message sorting options.
-   * If you add values here please look at the implementations of the enumerate* functions
-   * and add appropriate descriptors.
-   */
-  enum MessageSorting
-  {
-    NoMessageSorting,                    ///< Don't sort the messages at all
-    SortMessagesByDateTime,              ///< Sort the messages by date and time
-    SortMessagesByDateTimeOfMostRecent,  ///< Sort the messages by date and time of the most recent message in subtree
-    SortMessagesBySenderOrReceiver,      ///< Sort the messages by sender or receiver
-    SortMessagesBySender,                ///< Sort the messages by sender
-    SortMessagesByReceiver,              ///< Sort the messages by receiver
-    SortMessagesBySubject,               ///< Sort the messages by subject
-    SortMessagesBySize,                  ///< Sort the messages by size
-    SortMessagesByActionItemStatus       ///< Sort the messages by the "Action Item" flag of status
-    // Warning: Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
-  };
-
-  /**
    * The available fill view strategies.
    * If you add values here please look at the implementations of the enumerate* functions
    * and add appropriate descriptors.
@@ -180,14 +134,10 @@ public:
 
 private:
   Grouping mGrouping;
-  GroupSorting mGroupSorting;
-  SortDirection mGroupSortDirection;
   GroupExpandPolicy mGroupExpandPolicy;
   Threading mThreading;
   ThreadLeader mThreadLeader;
   ThreadExpandPolicy mThreadExpandPolicy;
-  MessageSorting mMessageSorting;
-  SortDirection mMessageSortDirection;
   FillViewStrategy mFillViewStrategy;
 
 public:
@@ -197,14 +147,10 @@ public:
       const QString &name,
       const QString &description,
       Grouping grouping,
-      GroupSorting groupSorting,
-      SortDirection groupSortDirection,
       GroupExpandPolicy groupExpandPolicy,
       Threading threading,
       ThreadLeader threadLeader,
       ThreadExpandPolicy threadExpandPolicy,
-      MessageSorting messageSorting,
-      SortDirection messageSortDirection,
       FillViewStrategy fillViewStrategy
     );
 
@@ -229,56 +175,13 @@ public:
   static QList< QPair< QString, int > > enumerateGroupingOptions();
 
   /**
-   * Returns the GroupSorting currently set
-   */
-  GroupSorting groupSorting() const
-    { return mGroupSorting; };
-
-  /**
-   * Sets the GroupSorting option.
-   * Please note that when Grouping is set to NoGrouping then
-   * this option has no meaning (and by policy should be set to NoGroupSorting).
-   */
-  void setGroupSorting( GroupSorting gs )
-    { mGroupSorting = gs; };
-
-  /**
-   * Enumerates the group sorting options compatible with the specified Grouping.
-   * The returned descriptors are pairs in that the first item is the localized description
-   * of the option value and the second item is the integer option value itself.
-   * If the returned list is empty then the value of the option is meaningless in the current context.
-   */
-  static QList< QPair< QString, int > > enumerateGroupSortingOptions( Grouping g );
-
-  /**
-   * Returns the current group SortDirection.
-   */
-  SortDirection groupSortDirection() const
-    { return mGroupSortDirection; };
-
-  /**
-   * Sets the SortDirection for the groups.
-   * Note that this option has no meaning if group sorting is set to NoGroupSorting.
-   */
-  void setGroupSortDirection( SortDirection groupSortDirection )
-    { mGroupSortDirection = groupSortDirection; };
-
-  /**
-   * Enumerates the group sort direction options compatible with the specified Grouping and GroupSorting.
-   * The returned descriptors are pairs in that the first item is the localized description
-   * of the option value and the second item is the integer option value itself.
-   * If the returned list is empty then the value of the option is meaningless in the current context.
-   */
-  static QList< QPair< QString, int > > enumerateGroupSortDirectionOptions( Grouping g, GroupSorting gs );
-
-  /**
    * Returns the current GroupExpandPolicy.
    */
   GroupExpandPolicy groupExpandPolicy() const
     { return mGroupExpandPolicy; };
 
   /**
-   * Sets the SortDirection for the groups.
+   * Sets the GroupExpandPolicy for the groups.
    * Note that this option has no meaning if grouping is set to NoGrouping.
    */
   void setGroupExpandPolicy( GroupExpandPolicy groupExpandPolicy )
@@ -355,51 +258,6 @@ public:
    * If the returned list is empty then the value of the option is meaningless in the current context.
    */
   static QList< QPair< QString, int > > enumerateThreadExpandPolicyOptions( Threading t );
-
-  /**
-   * Returns the current message sorting option
-   */  
-  MessageSorting messageSorting() const
-    { return mMessageSorting; };
-
-  /**
-   * Sets the current message sorting option
-   */  
-  void setMessageSorting( MessageSorting ms )
-    { mMessageSorting = ms; };
-
-  /**
-   * Enumerates the message sorting options compatible with the specified Threading setting.
-   * The returned descriptors are pairs in that the first item is the localized description
-   * of the option value and the second item is the integer option value itself.
-   */
-  static QList< QPair< QString, int > > enumerateMessageSortingOptions( Threading t );
-
-  /**
-   * Returns true if the ms parameter specifies a valid MessageSorting option.
-   */
-  static bool isValidMessageSorting( MessageSorting ms );
-
-  /**
-   * Returns the current message SortDirection.
-   */
-  SortDirection messageSortDirection() const
-    { return mMessageSortDirection; };
-
-  /**
-   * Sets the SortDirection for the message.
-   * Note that this option has no meaning if message sorting is set to NoMessageSorting.
-   */
-  void setMessageSortDirection( SortDirection messageSortDirection )
-    { mMessageSortDirection = messageSortDirection; };
-
-  /**
-   * Enumerates the available message sorting directions for the specified MessageSorting option.
-   * The returned descriptors are pairs in that the first item is the localized description
-   * of the option value and the second item is the integer option value itself.
-   * If the returned list is empty then the value of the option is meaningless in the current context.
-   */
-  static QList< QPair< QString, int > > enumerateMessageSortDirectionOptions( MessageSorting ms );
 
   /**
    * Returns the current fill view strategy.

@@ -265,6 +265,7 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/themedelegate.cpp
    messagelistview/core/themeeditor.cpp
    messagelistview/core/storagemodelbase.cpp
+   messagelistview/core/sortorder.cpp
    messagelistview/core/view.cpp
    messagelistview/core/widgetbase.cpp
 )

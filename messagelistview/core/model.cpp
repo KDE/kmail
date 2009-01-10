@@ -256,6 +256,7 @@ Model::Model( View *pParent )
 {
   mAggregation = 0;
   mTheme = 0;
+  mSortOrder = 0;
   mFilter = 0;
   mPersistentSetManager = 0;
   mInLengthyJobBatch = false;
@@ -330,6 +331,11 @@ void Model::setAggregation( const Aggregation * aggregation )
 void Model::setTheme( const Theme * theme )
 {
   mTheme = theme;
+}
+
+void Model::setSortOrder( const SortOrder * sortOrder )
+{
+  mSortOrder = sortOrder;
 }
 
 void Model::setFilter( const Filter *filter )
@@ -728,7 +734,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
   // Larger works need a bigger condition: few messages must be expanded in the end.
   bool canDoJobWithDisconnectedUI =
           // we have no filter
-          !mFilter &&                                               
+          !mFilter &&
           (
             // we do no threading at all
             ( mAggregation->threading() == Aggregation::NoThreading ) ||                 
@@ -1041,12 +1047,12 @@ void Model::attachGroup( GroupHeaderItem *ghi )
   // I'm NOT using a helper function since gcc will refuse to inline some of
   // the calls because they make this function grow too much.
 #define INSERT_GROUP_WITH_COMPARATOR( _ItemComparator ) \
-      switch( mAggregation->groupSortDirection() ) \
+      switch( mSortOrder->groupSortDirection() ) \
       { \
-        case Aggregation::Ascending: \
+        case SortOrder::Ascending: \
           mRootItem->insertChildItem< _ItemComparator, true >( mModelForItemFunctions, ghi ); \
         break; \
-        case Aggregation::Descending: \
+        case SortOrder::Descending: \
           mRootItem->insertChildItem< _ItemComparator, false >( mModelForItemFunctions, ghi ); \
         break; \
         default: /* should never happen... */ \
@@ -1054,24 +1060,24 @@ void Model::attachGroup( GroupHeaderItem *ghi )
         break; \
       }
 
-  switch( mAggregation->groupSorting() )
+  switch( mSortOrder->groupSorting() )
   {
-    case Aggregation::SortGroupsByDateTime:
+    case SortOrder::SortGroupsByDateTime:
       INSERT_GROUP_WITH_COMPARATOR( ItemDateComparator )
     break;
-    case Aggregation::SortGroupsByDateTimeOfMostRecent:
+    case SortOrder::SortGroupsByDateTimeOfMostRecent:
       INSERT_GROUP_WITH_COMPARATOR( ItemMaxDateComparator )
     break;
-    case Aggregation::SortGroupsBySenderOrReceiver:
+    case SortOrder::SortGroupsBySenderOrReceiver:
       INSERT_GROUP_WITH_COMPARATOR( ItemSenderOrReceiverComparator )
     break;
-    case Aggregation::SortGroupsBySender:
+    case SortOrder::SortGroupsBySender:
       INSERT_GROUP_WITH_COMPARATOR( ItemSenderComparator )
     break;
-    case Aggregation::SortGroupsByReceiver:
+    case SortOrder::SortGroupsByReceiver:
       INSERT_GROUP_WITH_COMPARATOR( ItemReceiverComparator )
     break;
-    case Aggregation::NoGroupSorting:
+    case SortOrder::NoGroupSorting:
       mRootItem->appendChildItem( mModelForItemFunctions, ghi );
     break;
     default: // should never happen
@@ -1687,9 +1693,10 @@ MessageItem * Model::guessMessageParent( MessageItem * mi )
 // Checking if a message needs re-sorting instead of just re-sorting it
 // is very useful since re-sorting is an expensive operation.
 //
-template< class ItemComparator > bool messageItemNeedsReSorting( Aggregation::SortDirection messageSortDirection, Item * parent, MessageItem *messageItem )
+template< class ItemComparator > bool messageItemNeedsReSorting(
+            SortOrder::SortDirection messageSortDirection, Item * parent, MessageItem *messageItem )
 {
-  if ( messageSortDirection == Aggregation::Ascending )
+  if ( messageSortDirection == SortOrder::Ascending )
     return parent->childItemNeedsReSorting< ItemComparator, true >( messageItem );
   return parent->childItemNeedsReSorting< ItemComparator, false >( messageItem );
 }
@@ -1721,12 +1728,12 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
              // max date changed
              ( propertyChangeMask & MaxDateChanged ) &&
              // groups sorted by max date
-             ( mAggregation->groupSorting() == Aggregation::SortGroupsByDateTimeOfMostRecent )
+             ( mSortOrder->groupSorting() == SortOrder::SortGroupsByDateTimeOfMostRecent )
            ) || (
              // date changed
              ( propertyChangeMask & DateChanged ) &&
              // groups sorted by date
-             ( mAggregation->groupSorting() == Aggregation::SortGroupsByDateTime )
+             ( mSortOrder->groupSorting() == SortOrder::SortGroupsByDateTime )
            )
          )
       {
@@ -1744,26 +1751,26 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
       // Re-sorting will actually not change min/max dates at all and
       // will not climb up the parent's ancestor tree.
 
-      switch ( mAggregation->messageSorting() )
+      switch ( mSortOrder->messageSorting() )
       {
-        case Aggregation::SortMessagesByDateTime:
+        case SortOrder::SortMessagesByDateTime:
           if ( propertyChangeMask & DateChanged ) // date changed
           {
-            if ( messageItemNeedsReSorting< ItemDateComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+            if ( messageItemNeedsReSorting< ItemDateComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
               attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
           } // else date changed, but it doesn't match sorting order: no need to re-sort
         break;
-        case Aggregation::SortMessagesByDateTimeOfMostRecent:
+        case SortOrder::SortMessagesByDateTimeOfMostRecent:
           if ( propertyChangeMask & MaxDateChanged ) // max date changed
           {
-            if ( messageItemNeedsReSorting< ItemMaxDateComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+            if ( messageItemNeedsReSorting< ItemMaxDateComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
               attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
           } // else max date changed, but it doesn't match sorting order: no need to re-sort
         break;
-        case Aggregation::SortMessagesByActionItemStatus:
+        case SortOrder::SortMessagesByActionItemStatus:
           if ( propertyChangeMask & ActionItemStatusChanged ) // todo status changed
           {
-            if ( messageItemNeedsReSorting< ItemActionItemStatusComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+            if ( messageItemNeedsReSorting< ItemActionItemStatusComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
               attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
           } // else to do status changed, but it doesn't match sorting order: no need to re-sort
         break;
@@ -1812,26 +1819,26 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
 
   // Check if message needs re-sorting.
 
-  switch ( mAggregation->messageSorting() )
+  switch ( mSortOrder->messageSorting() )
   {
-    case Aggregation::SortMessagesByDateTime:
+    case SortOrder::SortMessagesByDateTime:
       if ( propertyChangeMask & DateChanged ) // date changed
       {
-        if ( messageItemNeedsReSorting< ItemDateComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+        if ( messageItemNeedsReSorting< ItemDateComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
           attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
       } // else date changed, but it doesn't match sorting order: no need to re-sort
     break;
-    case Aggregation::SortMessagesByDateTimeOfMostRecent:
+    case SortOrder::SortMessagesByDateTimeOfMostRecent:
       if ( propertyChangeMask & MaxDateChanged ) // max date changed
       {
-        if ( messageItemNeedsReSorting< ItemMaxDateComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+        if ( messageItemNeedsReSorting< ItemMaxDateComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
           attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
       } // else max date changed, but it doesn't match sorting order: no need to re-sort
     break;
-    case Aggregation::SortMessagesByActionItemStatus:
+    case SortOrder::SortMessagesByActionItemStatus:
       if ( propertyChangeMask & ActionItemStatusChanged ) // todo status changed
       {
-        if ( messageItemNeedsReSorting< ItemActionItemStatusComparator >( mAggregation->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+        if ( messageItemNeedsReSorting< ItemActionItemStatusComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
           attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
       } // else to do status changed, but it doesn't match sorting order: no need to re-sort
     break;
@@ -2067,12 +2074,12 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
   // I'm NOT using a helper function since gcc will refuse to inline some of
   // the calls because they make this function grow too much.
 #define INSERT_MESSAGE_WITH_COMPARATOR( _ItemComparator ) \
-      switch( mAggregation->messageSortDirection() ) \
+      switch( mSortOrder->messageSortDirection() ) \
       { \
-        case Aggregation::Ascending: \
+        case SortOrder::Ascending: \
           pParent->insertChildItem< _ItemComparator, true >( mModelForItemFunctions, mi ); \
         break; \
-        case Aggregation::Descending: \
+        case SortOrder::Descending: \
           pParent->insertChildItem< _ItemComparator, false >( mModelForItemFunctions, mi ); \
         break; \
         default: /* should never happen... */ \
@@ -2083,33 +2090,33 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
 
   // If pParent is viewable then the insertion call will also set the child state to viewable.
   // Since mi MAY have children, then this call may make them viewable.
-  switch( mAggregation->messageSorting() )
+  switch( mSortOrder->messageSorting() )
   {
-    case Aggregation::SortMessagesByDateTime:
+    case SortOrder::SortMessagesByDateTime:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemDateComparator )
     break;
-    case Aggregation::SortMessagesByDateTimeOfMostRecent:
+    case SortOrder::SortMessagesByDateTimeOfMostRecent:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemMaxDateComparator )
     break;
-    case Aggregation::SortMessagesBySize:
+    case SortOrder::SortMessagesBySize:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemSizeComparator )
     break;
-    case Aggregation::SortMessagesBySenderOrReceiver:
+    case SortOrder::SortMessagesBySenderOrReceiver:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemSenderOrReceiverComparator )
     break;
-    case Aggregation::SortMessagesBySender:
+    case SortOrder::SortMessagesBySender:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemSenderComparator )
     break;
-    case Aggregation::SortMessagesByReceiver:
+    case SortOrder::SortMessagesByReceiver:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemReceiverComparator )
     break;
-    case Aggregation::SortMessagesBySubject:
+    case SortOrder::SortMessagesBySubject:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemSubjectComparator )
     break;
-    case Aggregation::SortMessagesByActionItemStatus:
+    case SortOrder::SortMessagesByActionItemStatus:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemActionItemStatusComparator )
     break;
-    case Aggregation::NoMessageSorting:
+    case SortOrder::NoMessageSorting:
       pParent->appendChildItem( mModelForItemFunctions, mi );
     break;
     default: // should never happen
@@ -2276,12 +2283,12 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob 
 
       // A macro really improves readability here.
 #define CHECK_IF_GROUP_NEEDS_RESORTING( _ItemDateComparator ) \
-          switch ( mAggregation->groupSortDirection() ) \
+          switch ( mSortOrder->groupSortDirection() ) \
           { \
-            case Aggregation::Ascending: \
+            case SortOrder::Ascending: \
               needsReSorting = ( *it )->parent()->childItemNeedsReSorting< _ItemDateComparator, true >( *it ); \
             break; \
-            case Aggregation::Descending: \
+            case SortOrder::Descending: \
               needsReSorting = ( *it )->parent()->childItemNeedsReSorting< _ItemDateComparator, false >( *it ); \
             break; \
             default: /* should never happen */ \
@@ -2289,24 +2296,24 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob 
             break; \
           }
 
-      switch ( mAggregation->groupSorting() )
+      switch ( mSortOrder->groupSorting() )
       {
-        case Aggregation::SortGroupsByDateTime:
+        case SortOrder::SortGroupsByDateTime:
           CHECK_IF_GROUP_NEEDS_RESORTING( ItemDateComparator )
         break;
-        case Aggregation::SortGroupsByDateTimeOfMostRecent:
+        case SortOrder::SortGroupsByDateTimeOfMostRecent:
           CHECK_IF_GROUP_NEEDS_RESORTING( ItemMaxDateComparator )
         break;
-        case Aggregation::SortGroupsBySenderOrReceiver:
+        case SortOrder::SortGroupsBySenderOrReceiver:
           CHECK_IF_GROUP_NEEDS_RESORTING( ItemSenderOrReceiverComparator )
         break;
-        case Aggregation::SortGroupsBySender:
+        case SortOrder::SortGroupsBySender:
           CHECK_IF_GROUP_NEEDS_RESORTING( ItemSenderComparator )
         break;
-        case Aggregation::SortGroupsByReceiver:
+        case SortOrder::SortGroupsByReceiver:
           CHECK_IF_GROUP_NEEDS_RESORTING( ItemReceiverComparator )
         break;
-        case Aggregation::NoGrouping:
+        case SortOrder::NoGroupSorting:
           needsReSorting = false;
         break;
         default:

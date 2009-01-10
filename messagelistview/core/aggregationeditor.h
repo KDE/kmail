@@ -56,14 +56,10 @@ private:
 
   // Grouping, Threading and Sorting tab
   KComboBox * mGroupingCombo;
-  KComboBox * mGroupSortingCombo;
-  KComboBox * mGroupSortDirectionCombo;
   KComboBox * mGroupExpandPolicyCombo;
   KComboBox * mThreadingCombo;
   KComboBox * mThreadLeaderCombo;
   KComboBox * mThreadExpandPolicyCombo;
-  KComboBox * mMessageSortingCombo;
-  KComboBox * mMessageSortDirectionCombo;
   // Advanced tab
   KComboBox * mFillViewStrategyCombo;
 
@@ -100,14 +96,10 @@ private:
   // Helpers for filling the various editing elements
 
   void fillGroupingCombo();
-  void fillGroupSortingCombo();
-  void fillGroupSortDirectionCombo();
   void fillGroupExpandPolicyCombo();
   void fillThreadingCombo();
   void fillThreadLeaderCombo();
   void fillThreadExpandPolicyCombo();
-  void fillMessageSortingCombo();
-  void fillMessageSortDirectionCombo();
   void fillFillViewStrategyCombo();
 
 private slots:
@@ -115,9 +107,7 @@ private slots:
   // Internal handlers for editing element interaction
 
   void groupingComboActivated( int idx );
-  void groupSortingComboActivated( int idx );
   void threadingComboActivated( int idx );
-  void messageSortingComboActivated( int idx );
   virtual void slotNameEditTextEdited( const QString &newName );
 
 };

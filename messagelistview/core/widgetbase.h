@@ -26,11 +26,13 @@
 #include <QList>
 
 #include "messagelistview/core/enums.h"
+#include "messagelistview/core/sortorder.h"
 
 class KLineEdit;
 class QTimer;
 class QToolButton;
 class QActionGroup;
+class QHeaderView;
 class KMenu;
 
 namespace KPIM
@@ -56,6 +58,10 @@ class Theme;
 class StorageModel;
 class View;
 
+/**
+ * Provides a widget which has the messagelist and the most important helper widgets,
+ * like the search line and the comboboxes for changing status filtering, aggregation etc.
+ */
 class Widget : public QWidget
 {
   friend class View;
@@ -77,12 +83,15 @@ private:
   QToolButton * mAggregationButton;
   QToolButton * mThemeButton;
 
-  StorageModel * mStorageModel;          ///< The currently displayed storage, an owned copy
-  Aggregation * mAggregation;            ///< The currently set aggregation mode, an owned copy (eventually even modificable)
-  Theme * mTheme;                        ///< The currently set theme, an owned copy (eventually even modificable)
-  Filter * mFilter;                      ///< The currently applied filter, an owned copy
-  bool mStorageUsesPrivateTheme;
-  bool mStorageUsesPrivateAggregation;
+  StorageModel * mStorageModel;          ///< The currently displayed storage. The storage itself
+                                         ///  is owned by MessageListView::Widget.
+  Aggregation * mAggregation;            ///< The currently set aggregation mode, a deep copy
+  Theme * mTheme;                        ///< The currently set theme, a deep copy
+  SortOrder mSortOrder;                  ///< The currently set sort order
+  Filter * mFilter;                      ///< The currently applied filter, owned by us.
+  bool mStorageUsesPrivateTheme;         ///< true if the corrent folder does not use the global theme
+  bool mStorageUsesPrivateAggregation;   ///< true if the corrent folder does not use the global aggregation
+  bool mStorageUsesPrivateSortOrder;     ///< true if the corrent folder does not use the global sort order
 public:
   /**
    * Sets the storage model for this Widget.
@@ -222,6 +231,7 @@ protected slots:
   void configureThemes();
   void setPrivateThemeForStorage();
   void setPrivateAggregationForStorage();
+  void setPrivateSortOrderForStorage();
   void aggregationSelected( bool );
   void statusMenuAboutToShow();
   void statusSelected( QAction *action );
@@ -241,8 +251,28 @@ protected slots:
   void slotViewHeaderSectionClicked( int logicalIndex );
 
 private:
+
+  /**
+   * Small helper for switching SortOrder::MessageSorting and SortOrder::SortDirection
+   * on the fly.
+   * After doing this, the sort indicator in the header is updated.
+   */
+  void switchMessageSorting( SortOrder::MessageSorting messageSorting,
+                             SortOrder::SortDirection sortDirection,
+                             int logicalHeaderColumnIndex );
+
+  /**
+   * Check if our sort order can still be used with this aggregation.
+   * This can happen if the global aggregation changed, for example we can now
+   * have "most recent in subtree" sorting with an aggregation without threading.
+   * If this happens, reset to the default sort order and don't use the global sort
+   * order.
+   */
+  void checkSortOrder( const StorageModel *storageModel );
+
   void setDefaultAggregationForStorageModel( const StorageModel * storageModel );
   void setDefaultThemeForStorageModel( const StorageModel * storageModel );
+  void setDefaultSortOrderForStorageModel( const StorageModel * storageModel );
   void applyFilter();
 };
 

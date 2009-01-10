@@ -29,6 +29,7 @@
 
 #include "messagelistview/core/aggregation.h"
 #include "messagelistview/core/enums.h"
+#include "messagelistview/core/sortorder.h"
 
 #include <time.h> // time_t
 
@@ -105,6 +106,11 @@ private:
    * The currently used theme: shallow pointer
    */
   const Theme * mTheme;
+
+  /**
+   * The currently used sort order. Pointer not owned by us, but by the Widget.
+   */
+  const SortOrder * mSortOrder;
 
   /**
    * The filter to apply on messages. Shallow. Never 0.
@@ -417,6 +423,12 @@ public:
    * takes care of meeting the above conditions. The theme pointer must not be null.
    */
   void setTheme( const Theme * theme );
+
+  /**
+   * Sets the sort order. As with setTheme() and setAggregation(), this does not reload the
+   * model in any way.
+   */
+  void setSortOrder( const SortOrder * sortOrder );
 
   /**
    * Sets the Filter to be applied on messages. filter may be null (no filter is applied).

@@ -426,7 +426,7 @@ bool Theme::Column::SharedRuntimeData::load( QDataStream &stream, int /* themeVe
 Theme::Column::Column()
   : mVisibleByDefault( true ),
     mIsSenderOrReceiver( false ),
-    mMessageSorting( Aggregation::NoMessageSorting )
+    mMessageSorting( SortOrder::NoMessageSorting )
 {
   mSharedRuntimeData = new SharedRuntimeData( true, -1 );
   mSharedRuntimeData->addReference();
@@ -569,8 +569,8 @@ bool Theme::Column::load( QDataStream &stream, int themeVersion )
   int val;
 
   stream >> val;
-  mMessageSorting = static_cast< Aggregation::MessageSorting >( val );
-  if ( !Aggregation::isValidMessageSorting( mMessageSorting ) )
+  mMessageSorting = static_cast< SortOrder::MessageSorting >( val );
+  if ( !SortOrder::isValidMessageSorting( mMessageSorting ) )
   {
     kDebug() << "Invalid message sorting";
     return false;
