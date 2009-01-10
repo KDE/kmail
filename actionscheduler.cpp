@@ -484,6 +484,8 @@ void ActionScheduler::messageFetched( KMMessage *msg )
     newMsg->setHeaderField( "X-KMail-Filtered", serNumS );
     mSrcFolder->addMsg( newMsg );
   } else {
+    // msg was already filtered (by another instance of KMail)
+    emit filtered( msg->getMsgSerNum() );
     fetchMessageTimer->start( 0 );
   }
   if (mFetchUnget && msg->parent())
