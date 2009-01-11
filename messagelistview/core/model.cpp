@@ -1689,8 +1689,11 @@ MessageItem * Model::guessMessageParent( MessageItem * mi )
 //
 template< class ItemComparator > bool messageItemNeedsReSorting( Aggregation::SortDirection messageSortDirection, Item * parent, MessageItem *messageItem )
 {
-  if ( messageSortDirection == Aggregation::Ascending )
+  if ( ( messageSortDirection == Aggregation::Ascending )
+    || ( parent->type() == Item::Message ) )
+  {
     return parent->childItemNeedsReSorting< ItemComparator, true >( messageItem );
+  }
   return parent->childItemNeedsReSorting< ItemComparator, false >( messageItem );
 }
 
@@ -2067,19 +2070,15 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
   // I'm NOT using a helper function since gcc will refuse to inline some of
   // the calls because they make this function grow too much.
 #define INSERT_MESSAGE_WITH_COMPARATOR( _ItemComparator ) \
-      switch( mAggregation->messageSortDirection() ) \
-      { \
-        case Aggregation::Ascending: \
-          pParent->insertChildItem< _ItemComparator, true >( mModelForItemFunctions, mi ); \
-        break; \
-        case Aggregation::Descending: \
-          pParent->insertChildItem< _ItemComparator, false >( mModelForItemFunctions, mi ); \
-        break; \
-        default: /* should never happen... */ \
-          pParent->appendChildItem( mModelForItemFunctions, mi ); \
-        break; \
-      }
-
+  if ( ( mAggregation->messageSortDirection() == Aggregation::Ascending ) \
+    || ( pParent->type() == Item::Message ) ) \
+  { \
+    pParent->insertChildItem< _ItemComparator, true >( mModelForItemFunctions, mi ); \
+  } \
+  else \
+  { \
+    pParent->insertChildItem< _ItemComparator, false >( mModelForItemFunctions, mi ); \
+  }
 
   // If pParent is viewable then the insertion call will also set the child state to viewable.
   // Since mi MAY have children, then this call may make them viewable.
