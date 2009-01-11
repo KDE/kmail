@@ -649,7 +649,7 @@ Theme::Theme( const QString &name, const QString &description )
   : OptionSet( name, description )
 {
   mGroupHeaderBackgroundMode = AutoColor;
-  mGroupHeaderBackgroundStyle = GradientRect;
+  mGroupHeaderBackgroundStyle = StyledJoinedRect;
   mViewHeaderPolicy = ShowHeaderAlways;
 }
 
