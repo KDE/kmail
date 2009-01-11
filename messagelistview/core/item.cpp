@@ -123,7 +123,7 @@ Item * Item::itemAboveChild( Item * child )
     idx--;
 
     if ( idx >= 0 )
-      return mChildItems->at( idx )->deepestItem();
+      return mChildItems->at( idx );
   }
 
   return this;
