@@ -19,7 +19,6 @@
  *******************************************************************************/
 #include "messagelistview/core/sortorder.h"
 
-#include <KDebug>
 #include <KLocale>
 
 #include <QMetaEnum>
@@ -146,7 +145,6 @@ bool SortOrder::validForAggregation( const Aggregation *aggregation ) const
                                              SortOrder().groupSorting() );
   bool groupSortDirectionOk = optionListHasOption( groupSortDirections, mGroupSortDirection,
                                                    SortOrder().groupSortDirection() );
-  kDebug() << messageSortingOk << messageSortDirectionOk << groupSortingOk << groupSortDirectionOk;
   return messageSortingOk && messageSortDirectionOk &&
          groupSortingOk && groupSortDirectionOk;
 }
@@ -177,10 +175,6 @@ void SortOrder::readConfig( KConfigGroup &conf, const QString &storageId,
   else
     *this = globalSortOrder;
 
-  kDebug() << nameForMessageSorting( mMessageSorting );
-  kDebug() << nameForSortDirection( mMessageSortDirection );
-  kDebug() << nameForGroupSorting( mGroupSorting );
-  kDebug() << nameForSortDirection( mGroupSortDirection );
 }
 
 void SortOrder::writeConfig( KConfigGroup &conf, const QString &storageId,
@@ -195,11 +189,6 @@ void SortOrder::writeConfig( KConfigGroup &conf, const QString &storageId,
     conf.deleteEntry( storageId + QString( "GroupSortDirection" ) );
   }
 
-   kDebug() << "Writing sort order for" << storageId << ", using ID" << id;
-   kDebug() << nameForMessageSorting( mMessageSorting );
-   kDebug() << nameForSortDirection( mMessageSortDirection );
-   kDebug() << nameForGroupSorting( mGroupSorting );
-   kDebug() << nameForSortDirection( mGroupSortDirection );
    conf.writeEntry( id + QString( "MessageSorting" ),
                     nameForMessageSorting( mMessageSorting ) );
    conf.writeEntry( id + QString( "MessageSortDirection" ),
