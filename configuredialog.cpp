@@ -320,7 +320,7 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
     mIdentityDialog( 0 )
 {
   mIPage = new Ui_IdentityPage();
-  mIPage->setupUi(this);
+  mIPage->setupUi( this );
 
   connect( mIPage->mIdentityList, SIGNAL( itemSelectionChanged() ),
            SLOT( slotIdentitySelectionChanged() ) );
@@ -3655,7 +3655,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   mSGTab = new Ui_SecurityPageGeneralTab();
-  mSGTab->setupUi(this);
+  mSGTab->setupUi( this );
 
   connect( mSGTab->mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -3685,8 +3685,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   mOrigQuoteGroup->addButton( mSGTab->radioHeaders, 2 );
 
   connect( mSGTab->mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  connect(mSGTab->labelWarning, SIGNAL(linkActivated ( const QString& )),
-          SLOT(slotLinkClicked( const QString& )));
+  connect( mSGTab->labelWarning, SIGNAL(linkActivated ( const QString& ) ),
+           SLOT(slotLinkClicked( const QString& )) );
 
   connect( mSGTab->mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
            SLOT(slotEmitChanged()) );
@@ -4362,46 +4362,40 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   mMMTab = new Ui_MiscMainTab();
-  mMMTab->setupUi(this);
+  mMMTab->setupUi( this );
   mMMTab->gridLayout->setSpacing( KDialog::spacingHint() );
   mMMTab->gridLayout->setMargin( KDialog::marginHint() );
-
-  connect( mMMTab->mEmptyFolderConfirmCheck, SIGNAL( stateChanged( int ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
-  mMMTab->mExcludeImportantFromExpiry->setWhatsThis(
-  i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
-  connect( mMMTab->mExcludeImportantFromExpiry, SIGNAL( stateChanged( int ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
-
-  connect( mMMTab->mLoopOnGotoUnread, SIGNAL( activated( int ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
-
-  connect( mMMTab->mActionEnterFolder, SIGNAL( activated( int ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
-
-  connect( mMMTab->mDelayedMarkTime, SIGNAL( valueChanged( int ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
-  connect( mMMTab->mDelayedMarkAsRead, SIGNAL(toggled(bool)),
-          mMMTab->mDelayedMarkTime, SLOT(setEnabled(bool)));
-  connect( mMMTab->mDelayedMarkAsRead, SIGNAL(toggled(bool)),
-          this , SLOT(slotEmitChanged( void )));
-
-  connect( mMMTab->mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
-
-  connect( mMMTab->mMailboxPrefCombo, SIGNAL( activated( int ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
-
   mMMTab->mOnStartupOpenFolder->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
   mMMTab->mStartUpFolderLabel->setBuddy( mMMTab->mOnStartupOpenFolder );
-  connect( mMMTab->mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),
-          this, SLOT( slotEmitChanged( void ) ) );
+  mMMTab->mExcludeImportantFromExpiry->setWhatsThis(
+      i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
 
-  connect( mMMTab->mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
+  connect( mMMTab->mEmptyFolderConfirmCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mExcludeImportantFromExpiry, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mLoopOnGotoUnread, SIGNAL( activated( int ) ),
           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mActionEnterFolder, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mDelayedMarkTime, SIGNAL( valueChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mDelayedMarkAsRead, SIGNAL(toggled(bool)),
+           mMMTab->mDelayedMarkTime, SLOT(setEnabled(bool)));
+  connect( mMMTab->mDelayedMarkAsRead, SIGNAL(toggled(bool)),
+           this , SLOT(slotEmitChanged( void )) );
+  connect( mMMTab->mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mMailboxPrefCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   //TODO: 4.3 Change the strings in mQuotaCmbBox into something better.
-  connect( mMMTab->mQuotaCmbBox, SIGNAL( activated( int )  ), this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mQuotaCmbBox, SIGNAL( activated( int )  ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
 }
 
@@ -4458,7 +4452,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {
   mMGTab = new Ui_MiscGroupTab();
-  mMGTab->setupUi(this);
+  mMGTab->setupUi( this );
   mMGTab->gridLayout->setSpacing( KDialog::spacingHint() );
   mMGTab->gridLayout->setMargin( KDialog::marginHint() );
   
@@ -4518,17 +4512,6 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mMGTab->mDeleteInvitations, SIGNAL( toggled(bool) ),
            SLOT( slotEmitChanged() ) );
 
-  // Groupware functionality compatibility setup
-#if 0
-  // Currently believed to be disused.
-  mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
-  gBox->setSpacing( KDialog::spacingHint() );
-  connect( mEnableGwCB, SIGNAL( toggled(bool) ),
-           gBox, SLOT( setEnabled(bool) ) );
-  connect( mEnableGwCB, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-#endif
-  mEnableGwCB = 0;
   mMGTab->mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyMangleFromToHeadersItem()->whatsThis().toUtf8() ) );
   connect( mMGTab->mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
@@ -4572,14 +4555,8 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
   mMGTab->mAutomaticSending->setEnabled( !mMGTab->mLegacyBodyInvites->isChecked() );
 }
 
-void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
-#if 0
-  // Currently believed to be disused.
-  if ( mEnableGwCB ) {
-    mEnableGwCB->setChecked( GlobalSettings::self()->groupwareEnabled() );
-    gBox->setEnabled( mEnableGwCB->isChecked() );
-  }
-#endif
+void MiscPage::GroupwareTab::doLoadFromGlobalSettings()
+{
   mMGTab->mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
   mMGTab->mExchangeCompatibleInvitations->setChecked( GlobalSettings::self()->exchangeCompatibleInvitations() );
 
@@ -4653,9 +4630,6 @@ void MiscPage::GroupwareTab::save()
   KConfigGroup groupware( KMKernel::config(), "Groupware" );
 
   // Write the groupware config
-  if ( mEnableGwCB ) {
-    GlobalSettings::self()->setGroupwareEnabled( mEnableGwCB->isChecked() );
-  }
   GlobalSettings::self()->setLegacyMangleFromToHeaders( mMGTab->mLegacyMangleFromTo->isChecked() );
   GlobalSettings::self()->setLegacyBodyInvites( mMGTab->mLegacyBodyInvites->isChecked() );
   GlobalSettings::self()->setExchangeCompatibleInvitations( mMGTab->mExchangeCompatibleInvitations->isChecked() );

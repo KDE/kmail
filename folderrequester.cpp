@@ -70,17 +70,14 @@ FolderRequester::FolderRequester( QWidget *parent )
 
 void FolderRequester::setFolderTree( MainFolderView *tree )
 {
-    mFolderTree = tree;
+  mFolderTree = tree;
 }
 
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
-  if (mFolderTree == 0)
-  {
-    kWarning() << "mFolderTree in not set, forgot to call setFolderTree?";
-    return;
-  }
+  Q_ASSERT( mFolderTree );
+
   FolderSelectionDialog dlg( this, mFolderTree, i18n("Select Folder"),
       mMustBeReadWrite, false );
   dlg.setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );

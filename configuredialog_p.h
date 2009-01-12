@@ -1001,7 +1001,6 @@ private:
 
 private:
   Ui_MiscGroupTab *mMGTab;
-  QCheckBox* mEnableGwCB;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
