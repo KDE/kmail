@@ -146,10 +146,11 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   QHBoxLayout *hbl = new QHBoxLayout();
   hbl->setObjectName( "kmfs_hbl" );
 
-  mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), searchWidget );
+  mChkbxSpecificFolders = new QRadioButton( i18n("Search &only in:"), searchWidget );
   mChkbxSpecificFolders->setChecked(true);
 
-  mCbxFolders->setFolderTree(kmkernel->getKMMainWidget()->mainFolderView());
+  mCbxFolders = new FolderRequester( searchWidget );
+  mCbxFolders->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
 
