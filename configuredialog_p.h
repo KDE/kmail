@@ -276,7 +276,7 @@ private: // data members
   KMail::IdentityDialog   *mIdentityDialog;
   int                      mOldNumberOfIdentities;
 
-  Ui_IdentityPage *mIPage;
+  Ui_IdentityPage mIPage;
 };
 
 
@@ -846,7 +846,7 @@ private:
 private:
   QButtonGroup *mMDNGroup;
   QButtonGroup *mOrigQuoteGroup;
-  Ui_SecurityPageGeneralTab *mSGTab;
+  Ui_SecurityPageGeneralTab mSGTab;
 
 private slots:
     void slotLinkClicked( const QString & link );
@@ -982,7 +982,7 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  Ui_MiscMainTab *mMMTab;
+  Ui_MiscMainTab mMMTab;
 };
 
 class MiscPageGroupwareTab : public ConfigModuleTab  {
@@ -1000,7 +1000,7 @@ private:
   virtual void doLoadFromGlobalSettings();
 
 private:
-  Ui_MiscGroupTab *mMGTab;
+  Ui_MiscGroupTab mMGTab;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
