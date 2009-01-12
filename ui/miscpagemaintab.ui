@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>332</height>
+    <width>579</width>
+    <height>348</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -32,7 +32,7 @@
      <item row="2" column="0" >
       <widget class="QLabel" name="mLoopLabel" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+        <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -47,6 +47,12 @@
      </item>
      <item row="2" column="1" >
       <widget class="KComboBox" name="mLoopOnGotoUnread" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="whatsThis" >
         <string comment="what's this help" >&lt;qt>&lt;p>When jumping to the next unread message, it may occur that no more unread messages are below the current message.&lt;/p>
 &lt;p>&lt;b>Do not loop:&lt;/b> The search will stop at the last message in the current folder.&lt;/p>
