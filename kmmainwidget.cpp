@@ -154,8 +154,6 @@ using KMail::TemplateParser;
 #include "mainfolderview.h"
 #include "messagelistview/pane.h"
 #include "messagelistview/messageset.h"
-
-#include "commands/exporttohtml.h"
 #include "messagetree.h"
 
 #include <kabc/stdaddressbook.h>
@@ -2075,31 +2073,6 @@ void KMMainWidget::slotTrashThread()
 }
 
 //-----------------------------------------------------------------------------
-// Exportation to HTML
-
-void KMMainWidget::slotExportSelectedMessagesToHtml()
-{
-  KMail::MessageTreeCollection * collection = mMessageListView->selectionAsMessageTreeCollection( true );
-  if ( !collection )
-    return; // nothing to export
-
-  KMail::Commands::ExportToHtml * cmd = new KMail::Commands::ExportToHtml( this, collection );
-
-  cmd->start(); // will delete itself
-}
-
-void KMMainWidget::slotViewFullCurrentThread()
-{
-  KMail::MessageTreeCollection * collection = mMessageListView->currentThreadAsMessageTreeCollection();
-  if ( !collection )
-    return; // nothing to export
-
-  KMail::Commands::ExportToHtml * cmd = new KMail::Commands::ExportToHtml( this, collection, true );
-
-  cmd->start(); // will delete itself
-}
-
-//-----------------------------------------------------------------------------
 // Message tag setting for messages
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
@@ -3496,7 +3469,6 @@ void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint 
     menu->addAction( mPrintAction );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAttachmentsAction );
-    menu->addAction( mExportToHtmlAction );
 
     menu->addSeparator();
     if ( mFolder->isTrash() ) {
@@ -3952,16 +3924,6 @@ void KMMainWidget::setupActions()
   connect(mUseAction, SIGNAL(triggered(bool) ), SLOT(slotUseTemplate()));
   mUseAction->setShortcut(QKeySequence(Qt::Key_N));
 
-  mExportToHtmlAction = new KAction( KIcon("document-export"), i18n( "Export to HTML..." ), this );
-  actionCollection()->addAction( "export_to_html", mExportToHtmlAction );
-  connect( mExportToHtmlAction, SIGNAL( triggered( bool ) ), SLOT( slotExportSelectedMessagesToHtml() ) );
-  mExportToHtmlAction->setToolTip( i18n( "Export the selected messages to a HTML file" ) );
-
-  mViewFullThreadAction = new KAction( i18n( "View Thread in Browser" ), this );
-  actionCollection()->addAction( "view_full_thread", mViewFullThreadAction );
-  connect( mViewFullThreadAction, SIGNAL( triggered( bool ) ), SLOT( slotViewFullCurrentThread() ) );
-  mViewFullThreadAction->setToolTip( i18n( "View the current thread in the default browser" ) );
-
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
   actionCollection()->addAction("thread_status", mThreadStatusMenu );
@@ -4383,8 +4345,6 @@ void KMMainWidget::updateMessageActions()
   mForwardAction->setEnabled( mass_actions );
   mForwardActionMenu->setEnabled( mass_actions );
   mForwardAttachedAction->setEnabled( mass_actions );
-  mExportToHtmlAction->setEnabled( mass_actions );
-  mViewFullThreadAction->setEnabled( mass_actions );
 
   forwardMenu()->setEnabled( mass_actions );
 
