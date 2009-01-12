@@ -290,16 +290,16 @@ qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
 )
 
 kde4_add_ui_files(kmailprivate_LIB_SRCS
-  composercryptoconfiguration.ui
-  warningconfiguration.ui
-  smimeconfiguration.ui
-  templatesconfiguration_base.ui
-  customtemplates_base.ui
-  snippetdlgbase.ui
-  imapsettings.ui
-  localsettings.ui
-  maildirsettings.ui
-  popsettings.ui
+  ui/composercryptoconfiguration.ui
+  ui/warningconfiguration.ui
+  ui/smimeconfiguration.ui
+  ui/templatesconfiguration_base.ui
+  ui/customtemplates_base.ui
+  ui/snippetdlgbase.ui
+  ui/imapsettings.ui
+  ui/localsettings.ui
+  ui/maildirsettings.ui
+  ui/popsettings.ui
   ui/miscpagemaintab.ui
   ui/miscpagegroupwaretab.ui
   ui/securitypagegeneraltab.ui
