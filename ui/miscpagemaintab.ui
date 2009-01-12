@@ -18,7 +18,7 @@
      <item row="0" column="0" colspan="2" >
       <widget class="QCheckBox" name="mEmptyFolderConfirmCheck" >
        <property name="text" >
-        <string>Ask for co&amp;nfirmation before moving all messages to trash</string>
+        <string comment="Corresponds to Folder->Move All Messages to Trash" >Ask for co&amp;nfirmation before moving all messages to trash</string>
        </property>
       </widget>
      </item>
@@ -38,7 +38,7 @@
         </sizepolicy>
        </property>
        <property name="text" >
-        <string>&amp;When trying to find unread messages:</string>
+        <string comment="to be continued with &quot;do not loop&quot;, &quot;loop in current folder&quot;, and &quot;loop in all folders&quot;" >&amp;When trying to find unread messages:</string>
        </property>
        <property name="buddy" >
         <cstring>mLoopOnGotoUnread</cstring>
@@ -48,7 +48,7 @@
      <item row="2" column="1" >
       <widget class="KComboBox" name="mLoopOnGotoUnread" >
        <property name="whatsThis" >
-        <string>&lt;qt>&lt;p>When jumping to the next unread message, it may occur that no more unread messages are below the current message.&lt;/p>
+        <string comment="what's this help" >&lt;qt>&lt;p>When jumping to the next unread message, it may occur that no more unread messages are below the current message.&lt;/p>
 &lt;p>&lt;b>Do not loop:&lt;/b> The search will stop at the last message in the current folder.&lt;/p>
 &lt;p>&lt;b>Loop in current folder:&lt;/b> The search will continue at the top of the message list, but not go to another folder.&lt;/p>
 &lt;p>&lt;b>Loop in all folders:&lt;/b> The search will continue at the top of the message list. If no unread messages are found it will then continue to the next folder.&lt;/p>
@@ -81,7 +81,7 @@
         </sizepolicy>
        </property>
        <property name="text" >
-        <string>When ente&amp;ring a folder:</string>
+        <string comment="to be continued with &quot;jump to first new message&quot;, &quot;jump to first unread or new message&quot;, and &quot;jump to last selected message&quot;" >When ente&amp;ring a folder:</string>
        </property>
        <property name="buddy" >
         <cstring>mActionEnterFolder</cstring>
@@ -149,7 +149,7 @@
         </sizepolicy>
        </property>
        <property name="text" >
-        <string>By default, &amp;message folders on disk are:</string>
+        <string comment="to be continued with &quot;flat files&quot; and &quot;directories&quot;, resp." >By default, &amp;message folders on disk are:</string>
        </property>
        <property name="buddy" >
         <cstring>mMailboxPrefCombo</cstring>
@@ -159,7 +159,7 @@
      <item row="6" column="1" >
       <widget class="KComboBox" name="mMailboxPrefCombo" >
        <property name="whatsThis" >
-        <string>&lt;qt>&lt;p>This selects which mailbox format will be  the default for local folders:&lt;/p>
+        <string comment="what's this help" >&lt;qt>&lt;p>This selects which mailbox format will be  the default for local folders:&lt;/p>
 &lt;p>&lt;b>mbox:&lt;/b> KMail's mail folders are represented by a single file each. Individual messages are separated from each other by a                      line starting with "From ". This saves space on disk, but may be less robust, e.g. when moving messages between folders.&lt;/p>
 &lt;p>&lt;b>maildir:&lt;/b> KMail's mail folders are represented by real folders on disk. Individual messages are separate files. This may waste a bit of space on disk, but should be more robust, e.g. when moving messages between folders.&lt;/p>&lt;/qt></string>
        </property>
