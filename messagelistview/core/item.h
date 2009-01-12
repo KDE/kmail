@@ -341,7 +341,7 @@ public:
   /**
    * Returns the date of this item
    */
-  const time_t date() const
+  time_t date() const
     { return mDate; };
 
   /**
