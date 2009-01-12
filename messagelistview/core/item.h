@@ -360,7 +360,7 @@ public:
    * Returns the maximum date in the subtree originating from this item.
    * This is kept up-to-date by MessageListView::Model.
    */
-  const time_t maxDate() const
+  time_t maxDate() const
     { return mMaxDate; };
 
   /**
