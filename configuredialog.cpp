@@ -319,58 +319,31 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   : ConfigModule( instance, parent ),
     mIdentityDialog( 0 )
 {
-  QHBoxLayout *hlay = new QHBoxLayout( this );
-  hlay->setSpacing( KDialog::spacingHint() );
-  hlay->setMargin( 0 );
+  mIPage = new Ui_IdentityPage();
+  mIPage->setupUi(this);
 
-  mIdentityList = new IdentityListView( this );
-  connect( mIdentityList, SIGNAL( itemSelectionChanged() ),
+  connect( mIPage->mIdentityList, SIGNAL( itemSelectionChanged() ),
            SLOT( slotIdentitySelectionChanged() ) );
   connect( this, SIGNAL( changed(bool) ),
            SLOT( slotIdentitySelectionChanged() ) );
-  connect( mIdentityList, SIGNAL( rename( KMail::IdentityListViewItem *, const QString & ) ),
+  connect( mIPage->mIdentityList, SIGNAL( rename( KMail::IdentityListViewItem *, const QString & ) ),
            SLOT( slotRenameIdentity(KMail::IdentityListViewItem *, const QString & ) ) );
-  connect( mIdentityList, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
+  connect( mIPage->mIdentityList, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
            SLOT( slotModifyIdentity() ) );
-  connect( mIdentityList, SIGNAL( contextMenu( KMail::IdentityListViewItem *, const QPoint & ) ),
+  connect( mIPage->mIdentityList, SIGNAL( contextMenu( KMail::IdentityListViewItem *, const QPoint & ) ),
            SLOT( slotContextMenu( KMail::IdentityListViewItem *, const QPoint & ) ) );
   // ### connect dragged(...), ...
 
-  hlay->addWidget( mIdentityList, 1 );
-
-  QVBoxLayout *vlay = new QVBoxLayout(); // inherits spacing
-  hlay->addLayout( vlay );
-
-  QPushButton *button = new QPushButton( i18n( "&Add..." ), this );
-  mModifyButton = new QPushButton( i18n( "&Modify..." ), this );
-  mRenameButton = new QPushButton( i18n( "&Rename" ), this );
-  mRemoveButton = new QPushButton( i18n( "Remo&ve" ), this );
-  mSetAsDefaultButton = new QPushButton( i18n( "Set as &Default" ), this );
-  button->setAutoDefault( false );
-  mModifyButton->setAutoDefault( false );
-  mModifyButton->setEnabled( false );
-  mRenameButton->setAutoDefault( false );
-  mRenameButton->setEnabled( false );
-  mRemoveButton->setAutoDefault( false );
-  mRemoveButton->setEnabled( false );
-  mSetAsDefaultButton->setAutoDefault( false );
-  mSetAsDefaultButton->setEnabled( false );
-  connect( button, SIGNAL( clicked() ),
+  connect( mIPage->mButtonAdd, SIGNAL( clicked() ),
            this, SLOT( slotNewIdentity() ) );
-  connect( mModifyButton, SIGNAL( clicked() ),
+  connect( mIPage->mModifyButton, SIGNAL( clicked() ),
            this, SLOT( slotModifyIdentity() ) );
-  connect( mRenameButton, SIGNAL( clicked() ),
+  connect( mIPage->mRenameButton, SIGNAL( clicked() ),
            this, SLOT( slotRenameIdentity() ) );
-  connect( mRemoveButton, SIGNAL( clicked() ),
+  connect( mIPage->mRemoveButton, SIGNAL( clicked() ),
            this, SLOT( slotRemoveIdentity() ) );
-  connect( mSetAsDefaultButton, SIGNAL( clicked() ),
+  connect( mIPage->mSetAsDefaultButton, SIGNAL( clicked() ),
            this, SLOT( slotSetAsDefault() ) );
-  vlay->addWidget( button );
-  vlay->addWidget( mModifyButton );
-  vlay->addWidget( mRenameButton );
-  vlay->addWidget( mRemoveButton );
-  vlay->addWidget( mSetAsDefaultButton );
-  vlay->addStretch( 1 );
 }
 
 void IdentityPage::load()
@@ -378,13 +351,13 @@ void IdentityPage::load()
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
-  mIdentityList->clear();
+  mIPage->mIdentityList->clear();
   QTreeWidgetItem *item = 0;
   for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
-    item = new IdentityListViewItem( mIdentityList, item, *it );
+    item = new IdentityListViewItem( mIPage->mIdentityList, item, *it );
   }
-  if ( mIdentityList->currentItem() ) {
-    mIdentityList->currentItem()->setSelected( true );
+  if ( mIPage->mIdentityList->currentItem() ) {
+    mIPage->mIdentityList->currentItem()->setSelected( true );
   }
 }
 
@@ -395,7 +368,7 @@ void IdentityPage::save()
   kmkernel->identityManager()->sort();
   kmkernel->identityManager()->commit();
 
-  if( mOldNumberOfIdentities < 2 && mIdentityList->topLevelItemCount() > 1 ) {
+  if( mOldNumberOfIdentities < 2 && mIPage->mIdentityList->topLevelItemCount() > 1 ) {
     // have more than one identity, so better show the combo in the
     // composer now:
     KConfigGroup composer( KMKernel::config(), "Composer" );
@@ -404,7 +377,7 @@ void IdentityPage::save()
     composer.writeEntry( "headers", showHeaders );
   }
   // and now the reverse
-  if( mOldNumberOfIdentities > 1 && mIdentityList->topLevelItemCount() < 2 ) {
+  if( mOldNumberOfIdentities > 1 && mIPage->mIdentityList->topLevelItemCount() < 2 ) {
     // have only one identity, so remove the combo in the composer:
     KConfigGroup composer( KMKernel::config(), "Composer" );
     int showHeaders = composer.readEntry( "headers", HDR_STANDARD );
@@ -448,18 +421,18 @@ void IdentityPage::slotNewIdentity()
     //
     KPIMIdentities::Identity &newIdent = im->modifyIdentityForName( identityName );
     QTreeWidgetItem *item = 0;
-    if ( mIdentityList->selectedItems().size() > 0 ) {
-      item = mIdentityList->selectedItems()[0];
+    if ( mIPage->mIdentityList->selectedItems().size() > 0 ) {
+      item = mIPage->mIdentityList->selectedItems()[0];
     }
 
     QTreeWidgetItem * newItem = 0;
     if ( item ) {
-      newItem = new IdentityListViewItem( mIdentityList, mIdentityList->itemAbove( item ), newIdent );
+      newItem = new IdentityListViewItem( mIPage->mIdentityList, mIPage->mIdentityList->itemAbove( item ), newIdent );
     } else {
-      newItem = new IdentityListViewItem( mIdentityList, newIdent );
+      newItem = new IdentityListViewItem( mIPage->mIdentityList, newIdent );
     }
 
-    mIdentityList->selectionModel()->clearSelection();
+    mIPage->mIdentityList->selectionModel()->clearSelection();
     if ( newItem ) {
       newItem->setSelected( true );
     }
@@ -473,8 +446,8 @@ void IdentityPage::slotModifyIdentity()
   Q_ASSERT( !mIdentityDialog );
 
   IdentityListViewItem *item = 0;
-  if ( mIdentityList->selectedItems().size() > 0 ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  if ( mIPage->mIdentityList->selectedItems().size() > 0 ) {
+    item = dynamic_cast<IdentityListViewItem*>( mIPage->mIdentityList->selectedItems()[0] );
   }
   if ( !item ) {
     return;
@@ -503,8 +476,8 @@ void IdentityPage::slotRemoveIdentity()
     << "Attempted to remove the last identity!";
 
   IdentityListViewItem *item = 0;
-  if ( mIdentityList->selectedItems().size() > 0 ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  if ( mIPage->mIdentityList->selectedItems().size() > 0 ) {
+    item = dynamic_cast<IdentityListViewItem*>( mIPage->mIdentityList->selectedItems()[0] );
   }
   if ( !item ) {
     return;
@@ -518,8 +491,8 @@ void IdentityPage::slotRemoveIdentity()
       == KMessageBox::Continue ) {
     if ( im->removeIdentity( item->identity().identityName() ) ) {
       delete item;
-      if ( mIdentityList->currentItem() ) {
-        mIdentityList->currentItem()->setSelected( true );
+      if ( mIPage->mIdentityList->currentItem() ) {
+        mIPage->mIdentityList->currentItem()->setSelected( true );
       }
       refreshList();
     }
@@ -532,12 +505,12 @@ void IdentityPage::slotRenameIdentity()
 
   QTreeWidgetItem *item = 0;
 
-  if ( mIdentityList->selectedItems().size() > 0 ) {
-    item = mIdentityList->selectedItems()[0];
+  if ( mIPage->mIdentityList->selectedItems().size() > 0 ) {
+    item = mIPage->mIdentityList->selectedItems()[0];
   }
   if ( !item ) return;
 
-  mIdentityList->editItem( item );
+  mIPage->mIdentityList->editItem( item );
 }
 
 void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const QString &text )
@@ -560,7 +533,7 @@ void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint &po
   menu->addAction( i18n( "Add..." ), this, SLOT( slotNewIdentity() ) );
   if ( item ) {
     menu->addAction( i18n( "Modify..." ), this, SLOT( slotModifyIdentity() ) );
-    if ( mIdentityList->topLevelItemCount() > 1 ) {
+    if ( mIPage->mIdentityList->topLevelItemCount() > 1 ) {
       menu->addAction( i18n( "Remove" ), this, SLOT( slotRemoveIdentity() ) );
     }
     if ( !item->identity().isDefault() ) {
@@ -577,8 +550,8 @@ void IdentityPage::slotSetAsDefault()
   Q_ASSERT( !mIdentityDialog );
 
   IdentityListViewItem *item = 0;
-  if ( mIdentityList->selectedItems().size() > 0 ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  if ( mIPage->mIdentityList->selectedItems().size() > 0 ) {
+    item = dynamic_cast<IdentityListViewItem*>( mIPage->mIdentityList->selectedItems()[0] );
   }
   if ( !item ) {
     return;
@@ -591,8 +564,8 @@ void IdentityPage::slotSetAsDefault()
 
 void IdentityPage::refreshList()
 {
-  for ( int i = 0; i < mIdentityList->topLevelItemCount(); ++i ) {
-    IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( mIdentityList->topLevelItem( i ) );
+  for ( int i = 0; i < mIPage->mIdentityList->topLevelItemCount(); ++i ) {
+    IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( mIPage->mIdentityList->topLevelItem( i ) );
     if ( item ) {
       item->redisplay();
     }
@@ -603,14 +576,14 @@ void IdentityPage::refreshList()
 void IdentityPage::slotIdentitySelectionChanged()
 {
   IdentityListViewItem *item = 0;
-  if ( mIdentityList->selectedItems().size() >  0 ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  if ( mIPage->mIdentityList->selectedItems().size() >  0 ) {
+    item = dynamic_cast<IdentityListViewItem*>( mIPage->mIdentityList->selectedItems()[0] );
   }
 
-  mRemoveButton->setEnabled( item && mIdentityList->topLevelItemCount() > 1 );
-  mModifyButton->setEnabled( item );
-  mRenameButton->setEnabled( item );
-  mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
+  mIPage->mRemoveButton->setEnabled( item && mIPage->mIdentityList->topLevelItemCount() > 1 );
+  mIPage->mModifyButton->setEnabled( item );
+  mIPage->mRenameButton->setEnabled( item );
+  mIPage->mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
 }
 
 // *************************************************************
@@ -3681,226 +3654,63 @@ QString SecurityPage::GeneralTab::helpAnchor() const {
 SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  // tmp. vars:
-  QVBoxLayout  *vlay;
-  QGroupBox    *group;
-  QVBoxLayout  *vboxlayout;
-  QRadioButton *radio;
-  QLabel       *label;
-  QString       msg;
+  mSGTab = new Ui_SecurityPageGeneralTab();
+  mSGTab->setupUi(this);
 
-  vlay = new QVBoxLayout( this );
-  vlay->setSpacing( KDialog::spacingHint() );
-  vlay->setMargin( KDialog::marginHint() );
-
-  // QWhat'sThis texts
-  mHtmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
-              "This option controls whether you want the HTML part or the plain "
-              "text part to be displayed.</p>"
-              "<p>Displaying the HTML part makes the message look better, "
-              "but at the same time increases the risk of security holes "
-              "being exploited.</p>"
-              "<p>Displaying the plain text part loses much of the message's "
-              "formatting, but makes it almost <em>impossible</em> "
-              "to exploit security holes in the HTML renderer (Konqueror).</p>"
-              "<p>The option below guards against one common misuse of HTML "
-              "messages, but it cannot guard against security issues that were "
-              "not known at the time this version of KMail was written.</p>"
-              "<p>It is therefore advisable to <em>not</em> prefer HTML to "
-              "plain text.</p>"
-              "<p><b>Note:</b> You can set this option on a per-folder basis "
-              "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
-  mExternalWhatsThis = i18n( "<qt><p>Some mail advertisements are in HTML "
-              "and contain references to, for example, images that the advertisers"
-              " employ to find out that you have read their message "
-              "(&quot;web bugs&quot;).</p>"
-              "<p>There is no valid reason to load images off the Internet like "
-              "this, since the sender can always attach the required images "
-              "directly to the message.</p>"
-              "<p>To guard from such a misuse of the HTML displaying feature "
-              "of KMail, this option is <em>disabled</em> by default.</p>"
-              "<p>However, if you wish to, for example, view images in HTML "
-              "messages that were not attached to it, you can enable this "
-              "option, but you should be aware of the possible problem.</p></qt>" );
-  mReceiptWhatsThis = i18n( "<qt><h3>Message Disposition Notification Policy</h3>"
-              "<p>MDNs are a generalization of what is commonly called <b>read "
-              "receipt</b>. The message author requests a disposition "
-              "notification to be sent and the receiver's mail program "
-              "generates a reply from which the author can learn what "
-              "happened to his message. Common disposition types include "
-              "<b>displayed</b> (i.e. read), <b>deleted</b> and <b>dispatched</b> "
-              "(e.g. forwarded).</p>"
-              "<p>The following options are available to control KMail's "
-              "sending of MDNs:</p>"
-              "<ul>"
-              "<li><em>Ignore</em>: Ignores any request for disposition "
-              "notifications. No MDN will ever be sent automatically "
-              "(recommended).</li>"
-              "<li><em>Ask</em>: Answers requests only after asking the user "
-              "for permission. This way, you can send MDNs for selected "
-              "messages while denying or ignoring them for others.</li>"
-              "<li><em>Deny</em>: Always sends a <b>denied</b> notification. This "
-              "is only <em>slightly</em> better than always sending MDNs. "
-              "The author will still know that the messages has been acted "
-              "upon, he just cannot tell whether it was deleted or read etc.</li>"
-              "<li><em>Always send</em>: Always sends the requested "
-              "disposition notification. That means that the author of the "
-              "message gets to know when the message was acted upon and, "
-              "in addition, what happened to it (displayed, deleted, "
-              "etc.). This option is strongly discouraged, but since it "
-              "makes much sense e.g. for customer relationship management, "
-              "it has been made available.</li>"
-              "</ul></qt>" );
-
-  // "HTML Messages" group box:
-  group = new QGroupBox( i18n("HTML Messages"), this );
-  vboxlayout = new QVBoxLayout( group );
-
-  mHtmlMailCheck = new QCheckBox( i18n("Prefer HTML to plain text"), group );
-  mHtmlMailCheck->setWhatsThis( mHtmlWhatsThis );
-  connect( mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
+  connect( mSGTab->mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  vboxlayout->addWidget( mHtmlMailCheck );
-
-  mExternalReferences = new QCheckBox( i18n("Allow messages to load external "
-                                            "references from the Internet" ), group );
-  mExternalReferences->setWhatsThis( mExternalWhatsThis );
-
-  connect( mExternalReferences, SIGNAL( stateChanged( int ) ),
+  connect( mSGTab->mExternalReferences, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  vboxlayout->addWidget( mExternalReferences );
-
-  label = new QLabel( i18n("<b>WARNING:</b> Allowing HTML in email may "
-                           "increase the risk that your system will be "
-                           "compromised by present and anticipated security "
-                           "exploits. <a href=\"whatsthis1\">More about "
-                           "HTML mails...</a> <a href=\"whatsthis2\">More "
-                           "about external references...</a>"),
-                           group );
-  connect(label, SIGNAL(linkActivated ( const QString& )),
+  connect(mSGTab->labelWarnHTML, SIGNAL(linkActivated ( const QString& )),
           SLOT(slotLinkClicked( const QString& )));
 
-  label->setWordWrap( true );
-  label->setTextInteractionFlags( Qt::LinksAccessibleByMouse |
-          Qt::LinksAccessibleByKeyboard);
-  vboxlayout->addWidget( label );
-  vlay->addWidget( group );
-
-  // encrypted messages group
-  group = new QGroupBox( i18n("Encrypted Messages"), this );
-  vboxlayout = new QVBoxLayout( group );
-  mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
-  connect( mAlwaysDecrypt, SIGNAL( stateChanged(int) ),
+  connect( mSGTab->mAlwaysDecrypt, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged() ) );
-  vboxlayout->addWidget( mAlwaysDecrypt );
-  vlay->addWidget( group );
-
-  // "Message Disposition Notification" groupbox:
-  group = new QGroupBox( i18n("Message Disposition Notifications"), this );
-
-  QGridLayout *grlayout = new QGridLayout( group );
-  grlayout->setSpacing( KDialog::spacingHint() );
 
   // "ignore", "ask", "deny", "always send" radiobutton line:
-  mMDNGroup = new QButtonGroup( group );
+  mMDNGroup = new QButtonGroup( mSGTab->groupMessageDisp );
   connect( mMDNGroup, SIGNAL( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-
-  grlayout->addWidget( new QLabel( i18n("Send policy:"), group ), 0, 0 );
-
-  radio = new QRadioButton( i18n("Ignore"), group );
-  radio->setWhatsThis( mReceiptWhatsThis );
-  grlayout->addWidget( radio, 0, 1, Qt::AlignLeft );
-  mMDNGroup->addButton( radio, 0 );
-
-  radio = new QRadioButton( i18n("Ask"), group );
-  radio->setWhatsThis( mReceiptWhatsThis );
-  grlayout->addWidget( radio, 0, 2, Qt::AlignLeft );
-  mMDNGroup->addButton( radio, 1 );
-
-  radio = new QRadioButton( i18n("Deny"), group );
-  radio->setWhatsThis( mReceiptWhatsThis );
-  grlayout->addWidget( radio, 0, 3, Qt::AlignLeft );
-  mMDNGroup->addButton( radio, 2 );
-
-  radio = new QRadioButton( i18n("Always send"), group );
-  radio->setWhatsThis( mReceiptWhatsThis );
-  grlayout->addWidget( radio, 0, 4, Qt::AlignLeft );
-  mMDNGroup->addButton( radio, 3 );
+  mMDNGroup->addButton( mSGTab->radioIgnore, 0 );
+  mMDNGroup->addButton( mSGTab->radioAsk, 1 );
+  mMDNGroup->addButton( mSGTab->radioDeny, 2 );
+  mMDNGroup->addButton( mSGTab->radioAlways, 3 );
 
   // "Original Message quote" radiobutton line:
-  mOrigQuoteGroup = new QButtonGroup( group );
+  mOrigQuoteGroup = new QButtonGroup( mSGTab->groupMessageDisp );
   connect( mOrigQuoteGroup, SIGNAL( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  mOrigQuoteGroup->addButton( mSGTab->radioNothing, 0 );
+  mOrigQuoteGroup->addButton( mSGTab->radioFull, 1 );
+  mOrigQuoteGroup->addButton( mSGTab->radioHeaders, 2 );
 
-  grlayout->addWidget( new QLabel( i18n("Quote original message:"), group ), 1, 0 );
-
-  radio = new QRadioButton( i18n("Nothing"), group );
-  radio->setWhatsThis( mReceiptWhatsThis );
-  grlayout->addWidget( radio, 1, 1, Qt::AlignLeft );
-  mOrigQuoteGroup->addButton( radio, 0 );
-
-  radio = new QRadioButton( i18n("Full message"), group );
-  radio->setWhatsThis( mReceiptWhatsThis );
-  grlayout->addWidget( radio, 1, 2, Qt::AlignLeft );
-  mOrigQuoteGroup->addButton( radio, 1 );
-
-  radio = new QRadioButton( i18n("Only headers"), group );
-  radio->setWhatsThis( mReceiptWhatsThis );
-  grlayout->addWidget( radio, 1, 3, Qt::AlignLeft );
-  mOrigQuoteGroup->addButton( radio, 2 );
-
-  mNoMDNsWhenEncryptedCheck = new QCheckBox(
-          i18n("Do not send MDNs in response to encrypted messages"), this );
-  connect( mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  grlayout->addWidget( mNoMDNsWhenEncryptedCheck, 2, 0, 1, -1 );
-
-  // Warning label:
-  label = new QLabel( i18n("<b>WARNING:</b> Unconditionally returning "
-                           "confirmations undermines your privacy. "
-                           "<a href=\"whatsthis3\">More about MDNs...</a>"),
-                           this );
-  connect(label, SIGNAL(linkActivated ( const QString& )),
+  connect( mSGTab->mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  connect(mSGTab->labelWarning, SIGNAL(linkActivated ( const QString& )),
           SLOT(slotLinkClicked( const QString& )));
-  label->setWordWrap(true);
-  label->setTextInteractionFlags( Qt::LinksAccessibleByMouse |
-          Qt::LinksAccessibleByKeyboard);
-  grlayout->addWidget( label, 3, 0, 1, -1 );
 
-  vlay->addWidget( group );
-
-  // "Attached keys" group box:
-  group = new QGroupBox(i18n( "Certificate && Key Bundle Attachments" ), this );
-  vboxlayout = new QVBoxLayout(group);
-  mAutomaticallyImportAttachedKeysCheck = new QCheckBox(
-          i18n("Automatically import keys and certificates"), group );
-  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
+  connect( mSGTab->mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
            SLOT(slotEmitChanged()) );
-  vboxlayout->addWidget( mAutomaticallyImportAttachedKeysCheck );
-
-  vlay->addWidget( group );
-  vlay->addStretch( 10 ); // spacer
 }
 
 void SecurityPageGeneralTab::slotLinkClicked( const QString & link ) {
     if ( link == "whatsthis1" )
-        QWhatsThis::showText( QCursor::pos(), mHtmlWhatsThis );
+        QWhatsThis::showText( QCursor::pos(), mSGTab->mHtmlMailCheck->whatsThis() );
     else if (link == "whatsthis2")
-        QWhatsThis::showText( QCursor::pos(), mExternalWhatsThis );
+        QWhatsThis::showText( QCursor::pos(), mSGTab->mExternalReferences->whatsThis() );
     else if ( link == "whatsthis3" )
-        QWhatsThis::showText( QCursor::pos(), mReceiptWhatsThis );
+        QWhatsThis::showText( QCursor::pos(), mSGTab->radioIgnore->whatsThis() );
 }
 
 void SecurityPage::GeneralTab::doLoadOther() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
 
-  mHtmlMailCheck->setChecked( reader.readEntry( "htmlMail", false ) );
-  mExternalReferences->setChecked(
+  mSGTab->mHtmlMailCheck->setChecked( reader.readEntry( "htmlMail", false ) );
+  mSGTab->mExternalReferences->setChecked(
       reader.readEntry( "htmlLoadExternal", false ) );
-  mAutomaticallyImportAttachedKeysCheck->setChecked(
+  mSGTab->mAutomaticallyImportAttachedKeysCheck->setChecked(
       reader.readEntry( "AutoImportKeys", false ) );
 
-  mAlwaysDecrypt->setChecked( GlobalSettings::self()->alwaysDecrypt() );
+  mSGTab->mAlwaysDecrypt->setChecked( GlobalSettings::self()->alwaysDecrypt() );
 
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
@@ -3910,7 +3720,7 @@ void SecurityPage::GeneralTab::doLoadOther() {
   num = mdn.readEntry( "quote-message", 0 );
   if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
   mOrigQuoteGroup->button(num)->setChecked(true);
-  mNoMDNsWhenEncryptedCheck->setChecked(
+  mSGTab->mNoMDNsWhenEncryptedCheck->setChecked(
       mdn.readEntry( "not-send-when-encrypted", true ) );
 }
 
@@ -3919,13 +3729,13 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
   const KConfigGroup mdn( profile, "MDN" );
 
   if ( reader.hasKey( "htmlMail" ) )
-    mHtmlMailCheck->setChecked(
+    mSGTab->mHtmlMailCheck->setChecked(
         reader.readEntry( "htmlMail", false ) );
   if ( reader.hasKey( "htmlLoadExternal" ) )
-    mExternalReferences->setChecked(
+    mSGTab->mExternalReferences->setChecked(
         reader.readEntry( "htmlLoadExternal", false ) );
   if ( reader.hasKey( "AutoImportKeys" ) )
-    mAutomaticallyImportAttachedKeysCheck->setChecked(
+    mSGTab->mAutomaticallyImportAttachedKeysCheck->setChecked(
         reader.readEntry( "AutoImportKeys", false ) );
 
   if ( mdn.hasKey( "default-policy" ) ) {
@@ -3939,7 +3749,7 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
       mOrigQuoteGroup->button(num)->setChecked(true);
   }
   if ( mdn.hasKey( "not-send-when-encrypted" ) )
-      mNoMDNsWhenEncryptedCheck->setChecked(
+      mSGTab->mNoMDNsWhenEncryptedCheck->setChecked(
           mdn.readEntry( "not-send-when-encrypted", false ) );
 }
 
@@ -3947,13 +3757,13 @@ void SecurityPage::GeneralTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup mdn( KMKernel::config(), "MDN" );
 
-  if (reader.readEntry( "htmlMail", false ) != mHtmlMailCheck->isChecked())
+  if (reader.readEntry( "htmlMail", false ) != mSGTab->mHtmlMailCheck->isChecked())
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
       "HTML setting will override all folder specific values."), QString(),
       KStandardGuiItem::cont(), KStandardGuiItem::cancel(), "htmlMailOverride") == KMessageBox::Continue)
     {
-      reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
+      reader.writeEntry( "htmlMail", mSGTab->mHtmlMailCheck->isChecked() );
       QStringList names;
       QList<QPointer<KMFolder> > folders;
       kmkernel->folderMgr()->createFolderList(&names, &folders);
@@ -3971,12 +3781,12 @@ void SecurityPage::GeneralTab::save() {
       }
     }
   }
-  reader.writeEntry( "htmlLoadExternal", mExternalReferences->isChecked() );
-  reader.writeEntry( "AutoImportKeys", mAutomaticallyImportAttachedKeysCheck->isChecked() );
+  reader.writeEntry( "htmlLoadExternal", mSGTab->mExternalReferences->isChecked() );
+  reader.writeEntry( "AutoImportKeys", mSGTab->mAutomaticallyImportAttachedKeysCheck->isChecked() );
   mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
-  mdn.writeEntry( "not-send-when-encrypted", mNoMDNsWhenEncryptedCheck->isChecked() );
-  GlobalSettings::self()->setAlwaysDecrypt( mAlwaysDecrypt->isChecked() );
+  mdn.writeEntry( "not-send-when-encrypted", mSGTab->mNoMDNsWhenEncryptedCheck->isChecked() );
+  GlobalSettings::self()->setAlwaysDecrypt( mSGTab->mAlwaysDecrypt->isChecked() );
 }
 
 
@@ -4551,236 +4361,93 @@ QString MiscPage::FolderTab::helpAnchor() const {
 MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  // temp. vars:
-  QVBoxLayout *vlay;
-  QHBoxLayout *hlay;
-  QLabel      *label;
+  mMMTab = new Ui_MiscMainTab();
+  mMMTab->setupUi(this);
+  mMMTab->gridLayout->setSpacing( KDialog::spacingHint() );
+  mMMTab->gridLayout->setMargin( KDialog::marginHint() );
 
-  vlay = new QVBoxLayout( this );
-  vlay->setSpacing( KDialog::spacingHint() );
-  vlay->setMargin( KDialog::marginHint() );
+  connect( mMMTab->mEmptyFolderConfirmCheck, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
+  mMMTab->mExcludeImportantFromExpiry->setWhatsThis(
+  i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
+  connect( mMMTab->mExcludeImportantFromExpiry, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
 
-  // "confirm before emptying folder" check box: stretch 0
-  mEmptyFolderConfirmCheck =
-    new QCheckBox( i18nc("Corresponds to Folder->Move All Messages to Trash",
-                        "Ask for co&nfirmation before moving all messages to "
-                        "trash"),
-                   this );
-  vlay->addWidget( mEmptyFolderConfirmCheck );
-  connect( mEmptyFolderConfirmCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  mExcludeImportantFromExpiry =
-    new QCheckBox( i18n("E&xclude important messages from expiry"), this );
-  mExcludeImportantFromExpiry->setWhatsThis(
-    i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
-  vlay->addWidget( mExcludeImportantFromExpiry );
-  connect( mExcludeImportantFromExpiry, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mLoopOnGotoUnread, SIGNAL( activated( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
 
-  // "when trying to find unread messages" combo + label: stretch 0
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mLoopOnGotoUnread = new KComboBox( this );
-  mLoopOnGotoUnread->setEditable( false );
-  label = new QLabel(
-           i18nc("to be continued with \"do not loop\", \"loop in current folder\", "
-                "and \"loop in all folders\".",
-                "When trying to find unread messages:"), this );
-  label->setBuddy( mLoopOnGotoUnread );
-  mLoopOnGotoUnread->addItems( QStringList()
-      << i18nc("continuation of \"When trying to find unread messages:\"",
-              "Do not Loop")
-      << i18nc("continuation of \"When trying to find unread messages:\"",
-              "Loop in Current Folder")
-      << i18nc("continuation of \"When trying to find unread messages:\"",
-              "Loop in All Folders"));
-  hlay->addWidget( label );
-  hlay->addWidget( mLoopOnGotoUnread, 1 );
-  connect( mLoopOnGotoUnread, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mActionEnterFolder, SIGNAL( activated( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
 
-  // when entering a folder
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mActionEnterFolder = new KComboBox( this );
-  mActionEnterFolder->setEditable( false );
-  label = new QLabel(
-           i18nc("to be continued with \"jump to first new message\", "
-                "\"jump to first unread or new message\","
-                "and \"jump to last selected message\".",
-                "When entering a folder:"), this );
-  label->setBuddy( mActionEnterFolder );
-  mActionEnterFolder->addItems( QStringList()
-      << i18nc("continuation of \"When entering a folder:\"",
-              "Jump to First New Message")
-      << i18nc("continuation of \"When entering a folder:\"",
-              "Jump to First Unread or New Message")
-      << i18nc("continuation of \"When entering a folder:\"",
-              "Jump to Last Selected Message"));
-  hlay->addWidget( label );
-  hlay->addWidget( mActionEnterFolder, 1 );
-  connect( mActionEnterFolder, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mDelayedMarkTime, SIGNAL( valueChanged( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mDelayedMarkAsRead, SIGNAL(toggled(bool)),
+          mMMTab->mDelayedMarkTime, SLOT(setEnabled(bool)));
+  connect( mMMTab->mDelayedMarkAsRead, SIGNAL(toggled(bool)),
+          this , SLOT(slotEmitChanged( void )));
 
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
-  hlay->addWidget( mDelayedMarkAsRead );
-  mDelayedMarkTime = new KIntSpinBox( 0 /*min*/, 60 /*max*/, 1/*step*/,
-                                      0 /*init*/, this);
-  mDelayedMarkTime->setSuffix( i18n(" sec") );
-  mDelayedMarkTime->setEnabled( false ); // since mDelayedMarkAsREad is off
-  hlay->addWidget( mDelayedMarkTime );
-  hlay->addStretch( 1 );
-  connect( mDelayedMarkTime, SIGNAL( valueChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)),
-           mDelayedMarkTime, SLOT(setEnabled(bool)));
-  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)),
-           this , SLOT(slotEmitChanged( void )));
+  connect( mMMTab->mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
 
-  // "show popup after Drag'n'Drop" checkbox: stretch 0
-  mShowPopupAfterDnD =
-    new QCheckBox( i18n("Ask for action after &dragging messages to another folder"), this );
-  vlay->addWidget( mShowPopupAfterDnD );
-  connect( mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mMailboxPrefCombo, SIGNAL( activated( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
 
-  // "default mailbox format" combo + label: stretch 0
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mMailboxPrefCombo = new KComboBox( this );
-  mMailboxPrefCombo->setEditable( false );
-  label = new QLabel(i18nc("to be continued with \"flat files\" and "
-                           "\"directories\", resp.",
-                           "By default, &message folders on disk are:"), this );
-  label->setBuddy( mMailboxPrefCombo );
-  mMailboxPrefCombo->addItems( QStringList()
-          << i18nc("continuation of \"By default, &message folders on disk are\"",
-                  "Flat Files (\"mbox\" format)")
-          << i18nc("continuation of \"By default, &message folders on disk are\"",
-                  "Directories (\"maildir\" format)") );
-  // and now: add QWhatsThis:
-  QString msg = i18nc( "what's this help",
-                      "<qt><p>This selects which mailbox format will be "
-                      "the default for local folders:</p>"
-                      "<p><b>mbox:</b> KMail's mail "
-                      "folders are represented by a single file each. "
-                      "Individual messages are separated from each other by a "
-                      "line starting with \"From \". This saves space on "
-                      "disk, but may be less robust, e.g. when moving messages "
-                      "between folders.</p>"
-                      "<p><b>maildir:</b> KMail's mail folders are "
-                      "represented by real folders on disk. Individual messages "
-                      "are separate files. This may waste a bit of space on "
-                      "disk, but should be more robust, e.g. when moving "
-                      "messages between folders.</p></qt>");
-  mMailboxPrefCombo->setWhatsThis( msg );
-  label->setWhatsThis( msg );
-  hlay->addWidget( label );
-  hlay->addWidget( mMailboxPrefCombo, 1 );
-  connect( mMailboxPrefCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  mMMTab->mOnStartupOpenFolder->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
+  mMMTab->mStartUpFolderLabel->setBuddy( mMMTab->mOnStartupOpenFolder );
+  connect( mMMTab->mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
 
-  // "On startup..." option:
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mOnStartupOpenFolder = new FolderRequester( this,
-      kmkernel->getKMMainWidget()->mainFolderView() );
-  label = new QLabel( i18n("Open this folder on startup:"), this );
-  label->setBuddy( mOnStartupOpenFolder );
-  hlay->addWidget( label );
-  hlay->addWidget( mOnStartupOpenFolder, 1 );
-  connect( mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mMMTab->mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChanged( void ) ) );
 
-  // "Empty &trash on program exit" option:
-  hlay = new QHBoxLayout();
-  vlay->addLayout( hlay );
-  mEmptyTrashCheck = new QCheckBox( i18n("Empty local &trash folder on program exit"),
-                                    this );
-  hlay->addWidget( mEmptyTrashCheck );
-  connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  //TODO: 4.3 Change the strings in mQuotaCmbBox into something better.
+  connect( mMMTab->mQuotaCmbBox, SIGNAL( activated( int )  ), this, SLOT( slotEmitChanged( void ) ) );
 
-  // "Quota Units"
-  hlay = new QHBoxLayout();
-  vlay->addLayout( hlay );
-  mQuotaCmbBox = new KComboBox( this );
-  mQuotaCmbBox->setEditable( false );
-  label = new QLabel( i18n("Quota units: "), this );
-  label->setBuddy( mQuotaCmbBox );
-  //TODO: 4.3 Change these strings into something better.
-  mQuotaCmbBox->insertItems( 0, QStringList()
-                   << i18n("KB")
-                   << i18n("MB")
-                   << i18n("GB") );
-  hlay->addWidget( label );
-  hlay->addWidget( mQuotaCmbBox, 1 );
-  connect( mQuotaCmbBox, SIGNAL( activated( int )  ), this, SLOT( slotEmitChanged( void ) ) );
-
-  vlay->addStretch( 1 );
-
-  // @TODO: Till, move into .kcgc file
-  msg = i18nc( "what's this help",
-            "<qt><p>When jumping to the next unread message, it may occur "
-            "that no more unread messages are below the current message.</p>"
-            "<p><b>Do not loop:</b> The search will stop at the last message in "
-            "the current folder.</p>"
-            "<p><b>Loop in current folder:</b> The search will continue at the "
-            "top of the message list, but not go to another folder.</p>"
-            "<p><b>Loop in all folders:</b> The search will continue at the top of "
-            "the message list. If no unread messages are found it will then continue "
-            "to the next folder.</p>"
-            "<p>Similarly, when searching for the previous unread message, "
-            "the search will start from the bottom of the message list and continue to "
-            "the previous folder depending on which option is selected.</p></qt>" );
-  mLoopOnGotoUnread->setWhatsThis( msg );
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings() {
-  mExcludeImportantFromExpiry->setChecked( GlobalSettings::self()->excludeImportantMailFromExpiry() );
+  mMMTab->mExcludeImportantFromExpiry->setChecked( GlobalSettings::self()->excludeImportantMailFromExpiry() );
   // default = "Loop in current folder"
-  mLoopOnGotoUnread->setCurrentIndex( GlobalSettings::self()->loopOnGotoUnread() );
-  mActionEnterFolder->setCurrentIndex( GlobalSettings::self()->actionEnterFolder() );
-  mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
-  mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
-  mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
-  mQuotaCmbBox->setCurrentIndex( GlobalSettings::self()->quotaUnit() );
+  mMMTab->mLoopOnGotoUnread->setCurrentIndex( GlobalSettings::self()->loopOnGotoUnread() );
+  mMMTab->mActionEnterFolder->setCurrentIndex( GlobalSettings::self()->actionEnterFolder() );
+  mMMTab->mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
+  mMMTab->mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
+  mMMTab->mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
+  mMMTab->mQuotaCmbBox->setCurrentIndex( GlobalSettings::self()->quotaUnit() );
 }
 
 void MiscPage::FolderTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
 
-  mEmptyTrashCheck->setChecked(
+  mMMTab->mEmptyTrashCheck->setChecked(
       general.readEntry( "empty-trash-on-exit", false ) );
-  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
+  mMMTab->mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
       kmkernel->inboxFolder()->idString() ) );
-  mEmptyFolderConfirmCheck->setChecked(
+  mMMTab->mEmptyFolderConfirmCheck->setChecked(
       general.readEntry( "confirm-before-empty", true ) );
 
   int num = general.readEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
-  mMailboxPrefCombo->setCurrentIndex( num );
+  mMMTab->mMailboxPrefCombo->setCurrentIndex( num );
 }
 
 void MiscPage::FolderTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
 
-  general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
-  general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
-  general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentIndex() );
-  general.writeEntry( "startupFolder", mOnStartupOpenFolder->folder() ?
-                                  mOnStartupOpenFolder->folder()->idString() : QString() );
+  general.writeEntry( "empty-trash-on-exit", mMMTab->mEmptyTrashCheck->isChecked() );
+  general.writeEntry( "confirm-before-empty", mMMTab->mEmptyFolderConfirmCheck->isChecked() );
+  general.writeEntry( "default-mailbox-format", mMMTab->mMailboxPrefCombo->currentIndex() );
+  general.writeEntry( "startupFolder", mMMTab->mOnStartupOpenFolder->folder() ?
+                                  mMMTab->mOnStartupOpenFolder->folder()->idString() : QString() );
 
-  GlobalSettings::self()->setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
-  GlobalSettings::self()->setDelayedMarkTime( mDelayedMarkTime->value() );
-  GlobalSettings::self()->setActionEnterFolder( mActionEnterFolder->currentIndex() );
-  GlobalSettings::self()->setLoopOnGotoUnread( mLoopOnGotoUnread->currentIndex() );
-  GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
+  GlobalSettings::self()->setDelayedMarkAsRead( mMMTab->mDelayedMarkAsRead->isChecked() );
+  GlobalSettings::self()->setDelayedMarkTime( mMMTab->mDelayedMarkTime->value() );
+  GlobalSettings::self()->setActionEnterFolder( mMMTab->mActionEnterFolder->currentIndex() );
+  GlobalSettings::self()->setLoopOnGotoUnread( mMMTab->mLoopOnGotoUnread->currentIndex() );
+  GlobalSettings::self()->setShowPopupAfterDnD( mMMTab->mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
-        mExcludeImportantFromExpiry->isChecked() );
-  GlobalSettings::self()->setQuotaUnit( mQuotaCmbBox->currentIndex() );
+        mMMTab->mExcludeImportantFromExpiry->isChecked() );
+  GlobalSettings::self()->setQuotaUnit( mMMTab->mQuotaCmbBox->currentIndex() );
 }
 
 QString MiscPage::GroupwareTab::helpAnchor() const {
@@ -4790,151 +4457,68 @@ QString MiscPage::GroupwareTab::helpAnchor() const {
 MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {
-  QBoxLayout* vlay = new QVBoxLayout( this );
-  vlay->setSpacing( KDialog::spacingHint() );
-  vlay->setMargin( KDialog::marginHint() );
-
+  mMGTab = new Ui_MiscGroupTab();
+  mMGTab->setupUi(this);
+  mMGTab->gridLayout->setSpacing( KDialog::spacingHint() );
+  mMGTab->gridLayout->setMargin( KDialog::marginHint() );
+  
   // IMAP resource setup
-  QGroupBox * b1 = new QGroupBox( i18n("&IMAP Resource Folder Options"), this );
-  QLayout *layout = new QVBoxLayout( b1 );
-
-  mEnableImapResCB =
-    new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
-  mEnableImapResCB->setToolTip(  i18n( "This enables the IMAP storage for "
-                                          "the Kontact applications" ) );
-  mEnableImapResCB->setWhatsThis(
+  mMGTab->mEnableImapResCB->setWhatsThis(
         i18n( GlobalSettings::self()->theIMAPResourceEnabledItem()->whatsThis().toUtf8() ) );
-  connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
+  connect( mMGTab->mEnableImapResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mBox = new QWidget( b1 );
-  QGridLayout* grid = new QGridLayout( mBox );
-  grid->setSpacing( KDialog::spacingHint() );
-  grid->setMargin( 0 );
-  grid->setColumnStretch( 1, 1 );
-  connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
-           mBox, SLOT( setEnabled(bool) ) );
+  mMGTab->grid->setSpacing( KDialog::spacingHint() );
+  connect( mMGTab->mEnableImapResCB, SIGNAL( toggled(bool) ),
+           mMGTab->mBox, SLOT( setEnabled(bool) ) );
 
-  QLabel* storageFormatLA = new QLabel( i18n("&Format used for the groupware folders:"),
-                                        mBox );
-  QString toolTip = i18n( "Choose the format to use to store the contents of the groupware folders." );
-  QString whatsThis = i18n( GlobalSettings::self()
-        ->theIMAPResourceStorageFormatItem()->whatsThis().toUtf8() );
-  grid->addWidget( storageFormatLA, 0, 0 );
-  storageFormatLA->setToolTip( toolTip );
-  storageFormatLA->setWhatsThis( whatsThis );
-  mStorageFormatCombo = new KComboBox( mBox );
-  mStorageFormatCombo->setEditable( false );
-  storageFormatLA->setBuddy( mStorageFormatCombo );
-  QStringList formatLst;
-  formatLst << i18n("Deprecated Kolab1 (iCal/vCard)") << i18n("Kolab2 (XML)");
-  mStorageFormatCombo->addItems( formatLst );
-  grid->addWidget( mStorageFormatCombo, 0, 1 );
-  mStorageFormatCombo->setToolTip( toolTip );
-  mStorageFormatCombo->setWhatsThis( whatsThis );
-  connect( mStorageFormatCombo, SIGNAL( activated( int ) ),
+  QString whatsThis = i18n( GlobalSettings::self()->theIMAPResourceStorageFormatItem()->whatsThis().toUtf8() );
+  mMGTab->storageFormatLA->setWhatsThis( whatsThis );
+  mMGTab->mStorageFormatCombo->setWhatsThis( whatsThis );
+  connect( mMGTab->mStorageFormatCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotStorageFormatChanged( int ) ) );
 
-  QLabel* languageLA = new QLabel( i18n("&Language of the groupware folders:"),
-                                   mBox );
-
-  toolTip = i18n( "Set the language of the folder names" );
   whatsThis = i18n( GlobalSettings::self()
         ->theIMAPResourceFolderLanguageItem()->whatsThis().toUtf8() );
-  grid->addWidget( languageLA, 1, 0 );
-  languageLA->setToolTip( toolTip );
-  languageLA->setWhatsThis( whatsThis );
-  mLanguageCombo = new KComboBox( mBox );
-  mLanguageCombo->setEditable( false );
-  languageLA->setBuddy( mLanguageCombo );
-  QStringList lst;
-  lst << i18nc("@item:inlistbox Englis language.", "English")
-    << i18nc("@item:inlistbox German language", "German")
-    << i18nc("@item:inlistbox French language", "French")
-    << i18nc("@item:inlistbox Dutch language", "Dutch");
-  mLanguageCombo->addItems( lst );
-  grid->addWidget( mLanguageCombo, 1, 1 );
-  mLanguageCombo->setToolTip( toolTip );
-  mLanguageCombo->setWhatsThis( whatsThis );
-  connect( mLanguageCombo, SIGNAL( activated( int ) ),
+  mMGTab->mLanguageCombo->setWhatsThis( whatsThis );
+  connect( mMGTab->mLanguageCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mFolderComboLabel = new QLabel( mBox ); // text depends on storage format
-  toolTip = i18n( "Set the parent of the resource folders" );
+  QString toolTip = i18n( "Set the parent of the resource folders" );
   whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().toUtf8() );
-  mFolderComboLabel->setToolTip( toolTip );
-  mFolderComboLabel->setWhatsThis( whatsThis );
-  grid->addWidget( mFolderComboLabel, 2, 0 );
+  mMGTab->mFolderComboLabel->setWhatsThis( whatsThis );
 
-  mFolderComboStack = new QStackedWidget( mBox );
-  grid->addWidget( mFolderComboStack, 2, 1 );
-
-  // First possibility in the widgetstack: a combo showing the list of all folders
-  // This is used with the ical/vcard storage
-  mFolderCombo = new FolderRequester( mBox,
-      kmkernel->getKMMainWidget()->mainFolderView() );
-  mFolderComboStack->insertWidget( 0,mFolderCombo );
-  mFolderCombo->setToolTip( toolTip );
-  mFolderCombo->setWhatsThis( whatsThis );
-  connect( mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
+  mMGTab->mFolderCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
+  mMGTab->mFolderCombo->setToolTip( toolTip );
+  mMGTab->mFolderCombo->setWhatsThis( whatsThis );
+  connect( mMGTab->mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  // Second possibility in the widgetstack: a combo showing the list of accounts
-  // This is used with the kolab xml storage since the groupware folders
-  // are always under the inbox.
-  mAccountCombo = new KMail::AccountComboBox( mBox );
-  mFolderComboStack->insertWidget( 1, mAccountCombo );
-  mAccountCombo->setToolTip( toolTip );
-  mAccountCombo->setWhatsThis( whatsThis );
-  connect( mAccountCombo, SIGNAL( activated( int ) ),
+  mMGTab->mAccountCombo->setToolTip( toolTip );
+  mMGTab->mAccountCombo->setWhatsThis( whatsThis );
+  connect( mMGTab->mAccountCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ), mBox );
-  mHideGroupwareFolders->setObjectName( "HideGroupwareFoldersBox" );
-  grid->addWidget( mHideGroupwareFolders, 3, 0 );
-  mHideGroupwareFolders->setToolTip(
-                 i18n( "When this is checked, you will not see the IMAP "
-                       "resource folders in the folder tree." ) );
-  mHideGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
+  mMGTab->mHideGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
            ->hideGroupwareFoldersItem()->whatsThis().toUtf8() ) );
-  connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
+  connect( mMGTab->mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
-  layout->addWidget( mEnableImapResCB );
-  layout->addWidget( mBox );
-  vlay->addWidget( b1 );
 
-  mOnlyShowGroupwareFolders = new QCheckBox( i18n( "&Only show groupware folders for this account" ), mBox );
-  mOnlyShowGroupwareFolders->setObjectName( "OnlyGroupwareFoldersBox" );
-  grid->addWidget( mOnlyShowGroupwareFolders, 4, 0 );
-  mOnlyShowGroupwareFolders->setToolTip(
-                 i18n( "When this is checked, you will not see normal  "
-                       "mail folders in the folder tree for the account "
-                       "configured for groupware." ) );
-  mOnlyShowGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
+  mMGTab->mOnlyShowGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
            ->showOnlyGroupwareFoldersForGroupwareAccountItem()->whatsThis().toUtf8() ) );
-  connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
+  connect( mMGTab->mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  mSyncImmediately = new QCheckBox( i18n( "Synchronize groupware changes immediately" ), mBox );
-  mSyncImmediately->setToolTip( i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
-  connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  grid->addWidget( mSyncImmediately, 5, 0 );
+  connect( mMGTab->mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
 
-  mDeleteInvitations = new QCheckBox(
-             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ), mBox );
-  mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
+  mMGTab->mDeleteInvitations->setText(
+             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ) );
+  mMGTab->mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
              ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
-  connect( mDeleteInvitations, SIGNAL( toggled(bool) ),
+  connect( mMGTab->mDeleteInvitations, SIGNAL( toggled(bool) ),
            SLOT( slotEmitChanged() ) );
-  grid->addWidget( mDeleteInvitations, 6, 0 );
 
   // Groupware functionality compatibility setup
-  b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
-  layout = new QVBoxLayout( b1 );
-
-  gBox = new KVBox( b1 );
-  gBox->setSpacing( KDialog::spacingHint() );
-  gBox->setMargin( 0 );
 #if 0
   // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
@@ -4945,40 +4529,26 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            this, SLOT( slotEmitChanged( void ) ) );
 #endif
   mEnableGwCB = 0;
-  mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), gBox );
-  mLegacyMangleFromTo->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
-  mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
+  mMGTab->mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyMangleFromToHeadersItem()->whatsThis().toUtf8() ) );
-  connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
+  connect( mMGTab->mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), gBox );
-  mLegacyBodyInvites->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
-  mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
+  mMGTab->mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyBodyInvitesItem()->whatsThis().toUtf8() ) );
-  connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
+  connect( mMGTab->mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
            this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
-  connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
+  connect( mMGTab->mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
-  mExchangeCompatibleInvitations->setToolTip(
-    i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server,<br/>"
-          "has a problem understanding standards-compliant groupware e-mail.<br/>"
-          "Turn this option on to send groupware invitations in a way that Microsoft Exchange understands." ) );
-  mExchangeCompatibleInvitations->setWhatsThis( i18n( GlobalSettings::self()->
+  mMGTab->mExchangeCompatibleInvitations->setWhatsThis( i18n( GlobalSettings::self()->
            exchangeCompatibleInvitationsItem()->whatsThis().toUtf8() ) );
-  connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
+  connect( mMGTab->mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
-  mAutomaticSending->setToolTip( i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
-  mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
+  mMGTab->mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
            automaticSendingItem()->whatsThis().toUtf8() ) );
-  connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
+  connect( mMGTab->mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  layout->addWidget( gBox );
-  vlay->addWidget( b1 );
-  vlay->addStretch( 10 ); // spacer
 }
 
 void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
@@ -4999,46 +4569,48 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
   }
   // Invitations in the body are autosent in any case (no point in editing raw ICAL)
   // So the autosend option is only available if invitations are sent as attachment.
-  mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
+  mMGTab->mAutomaticSending->setEnabled( !mMGTab->mLegacyBodyInvites->isChecked() );
 }
 
 void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
+#if 0
+  // Currently believed to be disused.
   if ( mEnableGwCB ) {
     mEnableGwCB->setChecked( GlobalSettings::self()->groupwareEnabled() );
     gBox->setEnabled( mEnableGwCB->isChecked() );
   }
+#endif
+  mMGTab->mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
+  mMGTab->mExchangeCompatibleInvitations->setChecked( GlobalSettings::self()->exchangeCompatibleInvitations() );
 
-  mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
-  mExchangeCompatibleInvitations->setChecked( GlobalSettings::self()->exchangeCompatibleInvitations() );
+  mMGTab->mLegacyBodyInvites->blockSignals( true );
+  mMGTab->mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
+  mMGTab->mLegacyBodyInvites->blockSignals( false );
 
-  mLegacyBodyInvites->blockSignals( true );
-  mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
-  mLegacyBodyInvites->blockSignals( false );
-
-  mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
-  mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
+  mMGTab->mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
+  mMGTab->mAutomaticSending->setEnabled( !mMGTab->mLegacyBodyInvites->isChecked() );
 
   // Read the IMAP resource config
-  mEnableImapResCB->setChecked( GlobalSettings::self()->theIMAPResourceEnabled() );
-  mBox->setEnabled( mEnableImapResCB->isChecked() );
+  mMGTab->mEnableImapResCB->setChecked( GlobalSettings::self()->theIMAPResourceEnabled() );
+  mMGTab->mBox->setEnabled( mMGTab->mEnableImapResCB->isChecked() );
 
-  mHideGroupwareFolders->setChecked( GlobalSettings::self()->hideGroupwareFolders() );
+  mMGTab->mHideGroupwareFolders->setChecked( GlobalSettings::self()->hideGroupwareFolders() );
   int i = GlobalSettings::self()->theIMAPResourceFolderLanguage();
-  mLanguageCombo->setCurrentIndex(i);
+  mMGTab->mLanguageCombo->setCurrentIndex(i);
   i = GlobalSettings::self()->theIMAPResourceStorageFormat();
-  mStorageFormatCombo->setCurrentIndex(i);
+  mMGTab->mStorageFormatCombo->setCurrentIndex(i);
   slotStorageFormatChanged( i );
-  mOnlyShowGroupwareFolders->setChecked(
+  mMGTab->mOnlyShowGroupwareFolders->setChecked(
     GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
-  mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
-  mDeleteInvitations->setChecked( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() );
+  mMGTab->mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
+  mMGTab->mDeleteInvitations->setChecked( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
-    mFolderCombo->setFolder( folderId );
+    mMGTab->mFolderCombo->setFolder( folderId );
   } else {
     // Folder was deleted, we have to choose a new one
-    mFolderCombo->setFolder( i18n( "<Choose a Folder>" ) );
+    mMGTab->mFolderCombo->setFolder( i18n( "<Choose a Folder>" ) );
   }
 
   KMAccount* selectedAccount = 0;
@@ -5071,7 +4643,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
     }
   }
   if ( selectedAccount )
-    mAccountCombo->setCurrentAccount( selectedAccount );
+    mMGTab->mAccountCombo->setCurrentAccount( selectedAccount );
   else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 )
     kDebug(5006) <<"Folder" << folderId <<" not found as an account's inbox";
 }
@@ -5084,25 +4656,25 @@ void MiscPage::GroupwareTab::save()
   if ( mEnableGwCB ) {
     GlobalSettings::self()->setGroupwareEnabled( mEnableGwCB->isChecked() );
   }
-  GlobalSettings::self()->setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
-  GlobalSettings::self()->setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
-  GlobalSettings::self()->setExchangeCompatibleInvitations( mExchangeCompatibleInvitations->isChecked() );
-  GlobalSettings::self()->setAutomaticSending( mAutomaticSending->isChecked() );
+  GlobalSettings::self()->setLegacyMangleFromToHeaders( mMGTab->mLegacyMangleFromTo->isChecked() );
+  GlobalSettings::self()->setLegacyBodyInvites( mMGTab->mLegacyBodyInvites->isChecked() );
+  GlobalSettings::self()->setExchangeCompatibleInvitations( mMGTab->mExchangeCompatibleInvitations->isChecked() );
+  GlobalSettings::self()->setAutomaticSending( mMGTab->mAutomaticSending->isChecked() );
 
-  int format = mStorageFormatCombo->currentIndex();
+  int format = mMGTab->mStorageFormatCombo->currentIndex();
   GlobalSettings::self()->setTheIMAPResourceStorageFormat( format );
 
   // Write the IMAP resource config
-  GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
-  GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
-  GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mSyncImmediately->isChecked() );
-  GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mDeleteInvitations->isChecked() );
+  GlobalSettings::self()->setHideGroupwareFolders( mMGTab->mHideGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mMGTab->mOnlyShowGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mMGTab->mSyncImmediately->isChecked() );
+  GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mMGTab->mDeleteInvitations->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled
   QString folderId;
   if (  format == 0 ) {
-    KMFolder* folder = mFolderCombo->folder();
+    KMFolder* folder = mMGTab->mFolderCombo->folder();
     if ( folder )
       folderId = folder->idString();
 
@@ -5130,29 +4702,29 @@ void MiscPage::GroupwareTab::save()
                                                        foundAccount->id() : 0 );
   } else {
     // Inbox folder of the selected account
-    KMAccount* acct = mAccountCombo->currentAccount();
+    KMAccount* acct = mMGTab->mAccountCombo->currentAccount();
     if (  acct ) {
       folderId = QString( ".%1.directory/INBOX" ).arg( acct->id() );
       GlobalSettings::self()->setTheIMAPResourceAccount( acct->id() );
     }
   }
 
-  bool enabled = mEnableImapResCB->isChecked() && !folderId.isEmpty();
+  bool enabled = mMGTab->mEnableImapResCB->isChecked() && !folderId.isEmpty();
   GlobalSettings::self()->setTheIMAPResourceEnabled( enabled );
-  GlobalSettings::self()->setTheIMAPResourceFolderLanguage( mLanguageCombo->currentIndex() );
+  GlobalSettings::self()->setTheIMAPResourceFolderLanguage( mMGTab->mLanguageCombo->currentIndex() );
   GlobalSettings::self()->setTheIMAPResourceFolderParent( folderId );
 }
 
 void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
 {
-  mLanguageCombo->setEnabled( format == 0 ); // only ical/vcard needs the language hack
-  mFolderComboStack->setCurrentIndex( format );
+  mMGTab->mLanguageCombo->setEnabled( format == 0 ); // only ical/vcard needs the language hack
+  mMGTab->mFolderComboStack->setCurrentIndex( format );
   if ( format == 0 ) {
-    mFolderComboLabel->setText( i18n("&Resource folders are subfolders of:") );
-    mFolderComboLabel->setBuddy( mFolderCombo );
+    mMGTab->mFolderComboLabel->setText( i18n("&Resource folders are subfolders of:") );
+    mMGTab->mFolderComboLabel->setBuddy( mMGTab->mFolderCombo );
   } else {
-    mFolderComboLabel->setText( i18n("&Resource folders are in account:") );
-    mFolderComboLabel->setBuddy( mAccountCombo );
+    mMGTab->mFolderComboLabel->setText( i18n("&Resource folders are in account:") );
+    mMGTab->mFolderComboLabel->setBuddy( mMGTab->mAccountCombo );
   }
   slotEmitChanged();
 }

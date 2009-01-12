@@ -370,8 +370,8 @@ namespace KMail {
 
     // "Sent-mail Folder" combo box and label:
     ++row;
-    mFccCombo = new FolderRequester( tab,
-        kmkernel->getKMMainWidget()->mainFolderView() );
+    mFccCombo = new FolderRequester( tab );
+    mFccCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
     mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
     label = new QLabel( i18n("Sent-mail &folder:"), tab );
@@ -380,8 +380,8 @@ namespace KMail {
 
     // "Drafts Folder" combo box and label:
     ++row;
-    mDraftsCombo = new FolderRequester( tab,
-        kmkernel->getKMMainWidget()->mainFolderView() );
+    mDraftsCombo = new FolderRequester( tab );
+    mDraftsCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
     mDraftsCombo->setShowOutbox( false );
     glay->addWidget( mDraftsCombo, row, 1 );
     label = new QLabel( i18n("&Drafts folder:"), tab );
@@ -390,8 +390,8 @@ namespace KMail {
 
     // "Templates Folder" combo box and label:
     ++row;
-    mTemplatesCombo = new FolderRequester( tab,
-        kmkernel->getKMMainWidget()->mainFolderView() );
+    mTemplatesCombo = new FolderRequester( tab );
+    mTemplatesCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
     mTemplatesCombo->setShowOutbox( false );
     glay->addWidget( mTemplatesCombo, row, 1 );
     label = new QLabel( i18n("&Templates folder:"), tab );

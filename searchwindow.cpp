@@ -149,8 +149,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), searchWidget );
   mChkbxSpecificFolders->setChecked(true);
 
-  mCbxFolders = new FolderRequester( searchWidget,
-      kmkernel->getKMMainWidget()->mainFolderView() );
+  mCbxFolders->setFolderTree(kmkernel->getKMMainWidget()->mainFolderView());
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
 

@@ -45,8 +45,8 @@
 
 namespace KMail {
 
-FolderRequester::FolderRequester( QWidget *parent, MainFolderView *tree )
-  : QWidget( parent ), mFolder( 0 ), mFolderTree( tree ),
+FolderRequester::FolderRequester( QWidget *parent )
+  : QWidget( parent ), mFolder( 0 ), mFolderTree( 0 ),
     mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this );
@@ -68,9 +68,19 @@ FolderRequester::FolderRequester( QWidget *parent, MainFolderView *tree )
   setFocusPolicy( Qt::StrongFocus );
 }
 
+void FolderRequester::setFolderTree( MainFolderView *tree )
+{
+    mFolderTree = tree;
+}
+
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
+  if (mFolderTree == 0)
+  {
+    kWarning() << "mFolderTree in not set, forgot to call setFolderTree?";
+    return;
+  }
   FolderSelectionDialog dlg( this, mFolderTree, i18n("Select Folder"),
       mMustBeReadWrite, false );
   dlg.setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
@@ -129,7 +139,6 @@ void FolderRequester::keyPressEvent( QKeyEvent * e )
   else
     e->ignore();
 }
-
 } // namespace KMail
 
 #include "folderrequester.moc"

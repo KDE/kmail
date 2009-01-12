@@ -100,7 +100,8 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* 
   connect( moveToRB, SIGNAL( toggled( bool ) ), this, SLOT( slotUpdateControls() ) );
   moveToHBox->addWidget( moveToRB );
 
-  folderSelector = new KMail::FolderRequester( privateLayoutWidget, tree );
+  folderSelector = new KMail::FolderRequester( privateLayoutWidget );
+  folderSelector->setFolderTree(tree);
   folderSelector->setMustBeReadWrite( true );
   moveToHBox->addWidget( folderSelector );
   globalVBox->addLayout( moveToHBox );

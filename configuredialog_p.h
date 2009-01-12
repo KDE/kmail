@@ -28,6 +28,10 @@
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
 #include "ui_customtemplates_base.h"
+#include "ui_miscpagemaintab.h"
+#include "ui_miscpagegroupwaretab.h"
+#include "ui_securitypagegeneraltab.h"
+#include "ui_identitypage.h"
 
 class QPushButton;
 class QLabel;
@@ -272,11 +276,7 @@ private: // data members
   KMail::IdentityDialog   *mIdentityDialog;
   int                      mOldNumberOfIdentities;
 
-  KMail::IdentityListView *mIdentityList;
-  QPushButton             *mModifyButton;
-  QPushButton             *mRenameButton;
-  QPushButton             *mRemoveButton;
-  QPushButton             *mSetAsDefaultButton;
+  Ui_IdentityPage *mIPage;
 };
 
 
@@ -844,16 +844,9 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  QCheckBox    *mExternalReferences;
-  QCheckBox    *mHtmlMailCheck;
-  QCheckBox    *mNoMDNsWhenEncryptedCheck;
   QButtonGroup *mMDNGroup;
   QButtonGroup *mOrigQuoteGroup;
-  QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
-  QCheckBox    *mAlwaysDecrypt;
-  QString       mHtmlWhatsThis;
-  QString       mExternalWhatsThis;
-  QString       mReceiptWhatsThis;
+  Ui_SecurityPageGeneralTab *mSGTab;
 
 private slots:
     void slotLinkClicked( const QString & link );
@@ -989,17 +982,7 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  QCheckBox    *mEmptyFolderConfirmCheck;
-  QCheckBox    *mExcludeImportantFromExpiry;
-  KComboBox    *mLoopOnGotoUnread;
-  KComboBox    *mMailboxPrefCombo;
-  KComboBox    *mActionEnterFolder;
-  QCheckBox    *mEmptyTrashCheck;
-  QCheckBox    *mDelayedMarkAsRead;
-  KIntSpinBox  *mDelayedMarkTime;
-  QCheckBox    *mShowPopupAfterDnD;
-  KMail::FolderRequester *mOnStartupOpenFolder;
-  KComboBox    *mQuotaCmbBox;
+  Ui_MiscMainTab *mMMTab;
 };
 
 class MiscPageGroupwareTab : public ConfigModuleTab  {
@@ -1017,29 +1000,8 @@ private:
   virtual void doLoadFromGlobalSettings();
 
 private:
+  Ui_MiscGroupTab *mMGTab;
   QCheckBox* mEnableGwCB;
-  QCheckBox* mEnableImapResCB;
-
-  QWidget* mBox;
-  KVBox* gBox;
-
-  KComboBox* mStorageFormatCombo;
-  KComboBox* mLanguageCombo;
-
-  QLabel* mFolderComboLabel;
-  QStackedWidget* mFolderComboStack;
-  KMail::FolderRequester* mFolderCombo; // in the widgetstack
-  KMail::AccountComboBox* mAccountCombo; // in the widgetstack
-
-  QCheckBox* mHideGroupwareFolders;
-  QCheckBox* mOnlyShowGroupwareFolders;
-  QCheckBox* mSyncImmediately;
-  QCheckBox* mDeleteInvitations;
-
-  QCheckBox* mLegacyMangleFromTo;
-  QCheckBox* mLegacyBodyInvites;
-  QCheckBox* mExchangeCompatibleInvitations;
-  QCheckBox* mAutomaticSending;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {

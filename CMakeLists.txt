@@ -301,6 +301,10 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   localsettings.ui
   maildirsettings.ui
   popsettings.ui
+  ui/miscpagemaintab.ui
+  ui/miscpagegroupwaretab.ui
+  ui/securitypagegeneraltab.ui
+  ui/identitypage.ui
 )
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS

@@ -287,8 +287,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
     mImap.ui.listOnlyOpenCheck->hide();
   }
 
-  mImap.trashCombo = new FolderRequester( page,
-                      kmkernel->getKMMainWidget()->mainFolderView() );
+  mImap.trashCombo = new FolderRequester( page );
+  mImap.trashCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
   mImap.trashCombo->setShowOutbox( false );
   mImap.ui.trashLabel->setBuddy( mImap.trashCombo );
   mImap.ui.trashLayout->addWidget( mImap.trashCombo, 1 );

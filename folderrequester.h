@@ -29,7 +29,7 @@
 #ifndef folderrequester_h
 #define folderrequester_h
 
-#include <QWidget>
+#include <QtGui/QWidget>
 //Added by qt3to4:
 #include <QKeyEvent>
 #include <klineedit.h>
@@ -56,8 +56,11 @@ namespace KMail {
        * @param parent the parent widget
        * @param tree the KMFolderTree to get the folders
        */
-      FolderRequester( QWidget *parent, MainFolderView* tree );
+      FolderRequester( QWidget *parent );
       virtual ~FolderRequester();
+
+      /** Sets the root folder to tree */
+      void setFolderTree( MainFolderView *tree );
 
       /** Returns selected folder */
       KMFolder* folder( void ) const;

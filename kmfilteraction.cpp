@@ -294,8 +294,8 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
-  FolderRequester *req = new FolderRequester( parent,
-      kmkernel->getKMMainWidget()->mainFolderView() );
+  FolderRequester *req = new FolderRequester( parent );
+  req->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
   setParamWidgetValue( req );
   return req;
 }
