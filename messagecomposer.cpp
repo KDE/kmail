@@ -84,6 +84,7 @@
 #include <QTimer>
 #include <QList>
 #include <QByteArray>
+#include <QBuffer>
 
 #include <algorithm>
 #include <memory>
@@ -436,6 +437,92 @@ void MessageComposer::slotDoNextJob()
   }
 }
 
+void removeImages(QTextDocument *doc)
+{
+   bool imageremoved;
+   QTextBlock currentBlock = doc->begin();
+   while ( currentBlock.isValid() ) {
+     imageremoved = false;
+     QTextBlock::iterator it;
+     for (it = currentBlock.begin(); !(it.atEnd()); ++it) {
+       QTextFragment fragment = it.fragment();
+       if ( fragment.isValid() ) {
+         QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
+         if ( imageFormat.isValid() ) {
+           int pos = fragment.position();
+           QTextCursor cursor( doc );
+           cursor.setPosition( pos );
+           cursor.setPosition( pos + 1, QTextCursor::KeepAnchor);
+           cursor.removeSelectedText();
+           imageremoved = true;
+           break; // and start all over again
+         }
+       }
+     }
+     if ( imageremoved )
+       currentBlock = doc->begin();
+     else
+       currentBlock = currentBlock.next();
+   }
+}
+
+void MessageComposer::convertImageTags()
+{
+  // TODO : imagetags have to be converted on mBodyText, or the tags should be converted in an earlier stage
+  QTextBlock currentBlock = mComposeWin->mEditor->document()->begin();
+  while ( currentBlock.isValid() ) {
+    QTextBlock::iterator it;
+    for (it = currentBlock.begin(); !it.atEnd(); ++it) {
+      QTextFragment fragment = it.fragment();
+      if ( fragment.isValid() ) {
+        QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
+        if ( imageFormat.isValid() ) {
+          // image found, now set content-id
+          int pos = fragment.position();
+          QString oldimgname = imageFormat.name();
+          QTextCursor cursor( mComposeWin->mEditor->document() );
+          cursor.setPosition( pos );
+          cursor.setPosition( pos + 1, QTextCursor::KeepAnchor);
+          cursor.removeSelectedText();
+          cursor.insertImage( "cid:" + mContentIDs.at( mImageNames.indexOf( oldimgname ) ).toLocal8Bit() );
+        }
+      }
+    }
+    currentBlock = currentBlock.next();
+  }
+}
+
+void MessageComposer::loadImages()
+{
+  QTextDocument *qtd = mComposeWin->mEditor->document();
+  QString imgname;
+  QByteArray qba;
+
+  QTextBlock currentBlock = mComposeWin->mEditor->document()->begin();
+  while ( currentBlock.isValid() ) {
+    QTextBlock::iterator it;
+    for (it = currentBlock.begin(); !it.atEnd(); ++it) {
+      QTextFragment fragment = it.fragment();
+      if ( fragment.isValid() ) {
+        QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
+        if ( imageFormat.isValid()  && ! mImageNames.contains( imageFormat.name() ) ) {
+          QVariant data = qtd->resource( QTextDocument::ImageResource, QUrl( imageFormat.name() ) );
+          QImage qimage = qvariant_cast<QImage>( data );
+          QBuffer buffer( &qba );
+          buffer.open( IO_WriteOnly );
+          qimage.save( &buffer, "PNG" ); // writes image into buffer in PNG format
+          mImages << KMime::Codec::codecForName( "base64" )->encode( buffer.buffer() );
+          mImageNames << imageFormat.name();
+          qsrand( QDateTime::currentDateTime().toTime_t()+fragment.position()*100 );
+          mContentIDs << QString( "%1" ).arg( qrand() );
+        }
+      }
+    }
+    currentBlock = currentBlock.next();
+ } 
+              
+}
+
 void MessageComposer::readFromComposeWin()
 {
   // Copy necessary attributes over
@@ -445,6 +532,8 @@ void MessageComposer::readFromComposeWin()
   mSigningRequested = mSignBody; // for now; will be adjusted depending on attachments
   mEncryptBody = mComposeWin->mEncryptAction->isChecked();
   mEncryptionRequested = mEncryptBody; // for now; will be adjusted depending on attachments
+
+  loadImages(); // encode all images to base64 and put them in a list
 
   mAutoCharset = mComposeWin->mAutoCharset;
   mCharset = mComposeWin->mCharset;
@@ -1457,16 +1546,15 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
                << "mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody;
 
   // if an html message is to be generated, make a text/plain and text/html part
-  if ( mIsRichText ) {
+  if ( mIsRichText || mEarlyAddAttachments ) {
     mOldBodyPart.setTypeStr( "multipart");
-    mOldBodyPart.setSubtypeStr( mEarlyAddAttachments ? "mixed" : "alternative" );
-  } else if ( mEarlyAddAttachments ) {
-    mOldBodyPart.setTypeStr( "multipart" );
-    mOldBodyPart.setSubtypeStr( "mixed" );
+    if ( mImages.size() > 0 ) // do we have embedded images ?
+      mOldBodyPart.setSubtypeStr( mEarlyAddAttachments ? "mixed" : "related" );
+    else
+      mOldBodyPart.setSubtypeStr( mEarlyAddAttachments ? "mixed" : "alternative" );
   } else {
     mOldBodyPart.setOriginalContentTypeStr( oldContentType.toUtf8() );
   }
-
   mOldBodyPart.setContentDisposition( "inline" );
 
   if ( mIsRichText ) { // create a multipart body
@@ -1474,7 +1562,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     QByteArray boundaryCStr;  // storing boundary string data
     QByteArray newbody;
     DwMediaType tmpCT;
-    tmpCT.CreateBoundary( mPreviousBoundaryLevel++ ); // was 0
+    tmpCT.CreateBoundary( ++mPreviousBoundaryLevel ); // was 0
     boundaryCStr = tmpCT.Boundary().c_str();
     QList<int> allowedCTEs;
 
@@ -1501,6 +1589,21 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     htmlBodyPart.setTypeStr( "text" );
     htmlBodyPart.setSubtypeStr( "html" );
     QByteArray htmlbody = mHtmlSource;
+
+    // if embedded images are present, then substitute to cid:content-id
+    // TODO : convertImageTags();
+
+    if (mImages.size() > 0 )  {
+      QString imgname;
+      QString newimgname;
+      for ( int i=0; i < mImages.size(); i++ ) {
+        newimgname = "cid:" + mContentIDs.at(i).toLocal8Bit();
+        htmlbody.replace(QByteArray( "\"" + mImageNames.at(i).toLocal8Bit() + "\"" ),
+                        QByteArray( "\"" + newimgname.toLocal8Bit() ) + "\"" );
+      }
+    }
+
+
     // the signed body must not be 8bit encoded
     htmlBodyPart.setBodyAndGuessCte(
       htmlbody, allowedCTEs,
@@ -1510,19 +1613,29 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     DwBodyPart *htmlDwPart = theMessage.createDWBodyPart( &htmlBodyPart );
     htmlDwPart->Assemble();
     newbody += "\n--";
-    newbody +=     boundaryCStr;
-    newbody +=                 '\n';
+    newbody +=      boundaryCStr;
+    newbody +=                  '\n';
     newbody += htmlDwPart->AsString().c_str();
     delete htmlDwPart;
     htmlDwPart = 0;
 
     newbody += "--";
-    newbody +=     boundaryCStr;
-    newbody +=                 "--\n";
+    newbody +=    boundaryCStr;
+    newbody +=                "--\n";
+
     body = newbody;
     mOldBodyPart.setBodyEncoded( newbody );
 
+    //  we'll need this boundary for the header when there are no embedded images, and no attachments
     mSaveBoundary = tmpCT.Boundary();
+  }
+
+  if ( mImages.size() > 0 ) // do we have embedded images ?
+  {
+     assembleInnerBodypart( theMessage, doSign, body );
+     // add the image(s) for multipart/related
+     addEmbeddedImages( theMessage, body );
+     mOldBodyPart.setBodyEncoded( body );
   }
 
   // Prepare attachments that will be signed/encrypted
@@ -1550,65 +1663,63 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
 
   QByteArray boundaryCStr;
   if ( mEarlyAddAttachments ) {
-    // calculate a boundary string
+    // make a multipart/related if there are embedded images or
+    // make a multipart/alternative when none
+
     ++mPreviousBoundaryLevel;
     DwMediaType tmpCT;
     tmpCT.CreateBoundary( mPreviousBoundaryLevel );
-    boundaryCStr = tmpCT.Boundary().c_str();
-    // add the normal body text
-    KMMessagePart innerBodyPart;
-    if ( mIsRichText ) {
-      innerBodyPart.setTypeStr( "multipart" );//text" );
-      innerBodyPart.setSubtypeStr( "alternative" );//html");
-    } else {
-      innerBodyPart.setOriginalContentTypeStr( oldContentType.toUtf8() );
+    boundaryCStr = tmpCT.Boundary().c_str(); // the multipart/mixed boundar
+
+    if ( mImages.size() == 0 ) {
+      assembleInnerBodypart( theMessage, doSign, body, oldContentType );
+      boundaryCStr = mSaveBoundary.c_str();
     }
-    innerBodyPart.setContentDisposition( "inline" );
-    QList<int> allowedCTEs;
-    // the signed body must not be 8bit encoded
-    innerBodyPart.setBodyAndGuessCte( body, allowedCTEs,
-                                      !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
-                                      doSign );
-    if ( !mIsRichText ) {
-      innerBodyPart.setCharset( mCharset );
-    }
-    innerBodyPart.setBodyEncoded( body );
-    DwBodyPart *innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
-    innerDwPart->Assemble();
-    if ( mIsRichText ) { // and add our mp/a boundary
-      QByteArray tmpbody = innerDwPart->AsString().c_str();
-      int boundPos = tmpbody.indexOf( '\n' );
-      if ( -1 < boundPos ) {
-        QByteArray bStr( ";\n  boundary=\"" );
-        bStr += mSaveBoundary.c_str();
-        bStr += "\"";
-        body = innerDwPart->AsString().c_str();
-        body.insert( boundPos, bStr );
-        body = "--" + boundaryCStr + '\n' + body;
-      }
-    } else {
+
+    if ( mImages.size() > 0 ) {
+
+      // make a multipart/related
+      QList<int> allowedCTEs;
+      KMMessagePart innerBodyPart;
+      innerBodyPart.setTypeStr( "multipart" );
+      innerBodyPart.setSubtypeStr( "related" );
+      innerBodyPart.setContentDisposition( "inline" );
+      innerBodyPart.setBodyEncoded( body );
+      DwBodyPart *innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
+
+      DwHeaders &headers = innerDwPart->Headers();
+      DwMediaType &ct = headers.ContentType();
+      ct.SetBoundary( mSaveBoundary ); // mSaveBoundary from addEmbeddedImages()
+
+      innerDwPart->Assemble();
       body = "--" + boundaryCStr + '\n' + innerDwPart->AsString().c_str();
     }
-    delete innerDwPart;
-    innerDwPart = 0;
+  
     // add all matching Attachments
     // NOTE: This code will be changed when KMime is complete.
+    DwBodyPart *innerDwPart;
     for ( QVector<Attachment>::iterator it = mAttachments.begin();
           it != mAttachments.end(); ++it ) {
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody ) {
         innerDwPart = theMessage.createDWBodyPart( it->part );
         innerDwPart->Assemble();
-        body += "\n--" + boundaryCStr + '\n' + innerDwPart->AsString().c_str();
+        body += "\n--";
+        body += boundaryCStr; // the multipart/mixed boundary
+        body += '\n' + innerDwPart->AsString().c_str();
         delete innerDwPart;
         innerDwPart = 0;
       }
     }
-    body += "\n--" + boundaryCStr + "--\n";
+    body += "\n--";
+    body += boundaryCStr; // the multipart/mixed
+    body += "--\n";
   } else { // !earlyAddAttachments
     QList<int> allowedCTEs;
-    // the signed body must not be 8bit encoded
-    mOldBodyPart.setBodyAndGuessCte(
-      body, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign, doSign );
+    if ( mImages.size() == 0 ) // if setBodyAndGuessCte executed with embedded images,
+                              // then the body get encoded again, resulting in an invalid body
+      // the signed body must not be 8bit encoded
+      mOldBodyPart.setBodyAndGuessCte(
+        body, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign, doSign );
     if ( !mIsRichText ) {
       mOldBodyPart.setCharset( mCharset );
     }
@@ -1620,20 +1731,16 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     // get string representation of body part (including the attachments)
 
     DwBodyPart *dwPart;
+    dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
     if ( mIsRichText && !mEarlyAddAttachments ) {
       // if we are using richtext and not already have a mp/a body
       // make the body a mp/a body
-      dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
       DwHeaders &headers = dwPart->Headers();
       DwMediaType &ct = headers.ContentType();
       ct.SetBoundary( mSaveBoundary );
-      dwPart->Assemble();
-      mEncodedBody = dwPart->AsString().c_str();
-    } else {
-      dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
-      dwPart->Assemble();
-      mEncodedBody = dwPart->AsString().c_str();
     }
+    dwPart->Assemble();
+    mEncodedBody = dwPart->AsString().c_str();
     delete dwPart;
     dwPart = 0;
 
@@ -1691,6 +1798,79 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   }
 
   continueComposeMessage( theMessage, doSign, doEncrypt, format );
+}
+
+void MessageComposer::assembleInnerBodypart( KMMessage &theMessage, bool doSign, QByteArray &body, QString oldContentType )
+{
+  QByteArray boundaryCStr;
+    // calculate a boundary string
+    DwMediaType tmpCT;
+    tmpCT.CreateBoundary( ++mPreviousBoundaryLevel );
+    boundaryCStr = tmpCT.Boundary().c_str();
+
+    KMMessagePart innerBodyPart;
+    if ( mIsRichText ) {
+      innerBodyPart.setTypeStr( "multipart" );
+      innerBodyPart.setSubtypeStr( "alternative" );
+    } else {
+      innerBodyPart.setOriginalContentTypeStr( oldContentType.toUtf8() );
+    }
+    innerBodyPart.setContentDisposition( "inline" );
+    QList<int> allowedCTEs;
+    // the signed body must not be 8bit encoded
+    innerBodyPart.setBodyAndGuessCte( body, allowedCTEs,
+                                      !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
+                                      doSign );
+    if ( !mIsRichText ) {
+      innerBodyPart.setCharset( mCharset );
+    }
+    innerBodyPart.setBodyEncoded( body );
+    DwBodyPart *innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
+    if ( mIsRichText ) { // add the boundary in the MPA header
+      DwHeaders &headers = innerDwPart->Headers();
+      DwMediaType &ct = headers.ContentType();
+      ct.SetBoundary( mSaveBoundary );
+    }
+    innerDwPart->Assemble();
+    body = "--" + boundaryCStr + '\n' + innerDwPart->AsString().c_str();
+    delete innerDwPart;
+    innerDwPart = 0;
+
+    // boundary in the header becomes this one
+   mSaveBoundary = tmpCT.Boundary(); 
+}
+
+void MessageComposer::addEmbeddedImages( KMMessage &theMessage, QByteArray &body )
+{
+  QByteArray boundaryCStr;
+  boundaryCStr = mSaveBoundary.c_str();
+   // create image part and add it at the botton of the multipart/alternative part
+  QString imgname, contentid;
+  QByteArray imgbody;
+  for (int i = 0; i < mImages.size(); ++i)
+  {
+    KMMessagePart imagebodypart;
+    imagebodypart.setName( mImageNames.at( i ).toLocal8Bit() );
+    QList<int> dummy;
+    imagebodypart.setBodyEncodedBinary( mImages.at( i ) );
+    imagebodypart.setContentTransferEncodingStr( "base64" );
+    imagebodypart.setTypeStr( "image" );
+    imagebodypart.setSubtypeStr( "png" );
+    contentid = "<" + mContentIDs.at( i ) + ">";
+    imagebodypart.setContentId( QByteArray( contentid.toLocal8Bit() ) );
+
+    DwBodyPart *imgDwPart = theMessage.createDWBodyPart( &imagebodypart );
+    imgDwPart->Assemble();
+    body += "\n--";
+    body +=     boundaryCStr;
+    body +=                 '\n';
+    body += imgDwPart->AsString().c_str();
+    delete imgDwPart;
+    imgDwPart = 0;
+   }
+   body += "\n--";
+   body +=     boundaryCStr;
+   body +=                 "--\n";
 }
 
 // Do the encryption stuff
@@ -2149,35 +2329,47 @@ bool MessageComposer::getSourceText( QString &plainText, QString &htmlSource,
   //
   // Therefore, we now read the plain text version directly from the composer,
   // which returns the correct result.
+  QString clone_originalText, clone_newPlainText;
   htmlSource = mComposeWin->mEditor->toCleanHtml();
+
+  // Within the cloned doc, embedded images are removed and then the text is converted.
+  // Images have to be removed because they leave some characters in the encoded text
+  QTextDocument *clonedDoc = mComposeWin->mEditor->document()->clone();
+
+  if ( mIsRichText )
+    removeImages( clonedDoc );
 
   if ( mDisableBreaking || !GlobalSettings::self()->wordWrap() )
     plainText = mComposeWin->mEditor->toPlainText();
   else
     plainText = mComposeWin->mEditor->toWrappedPlainText();
+  clone_originalText = clonedDoc->toPlainText();
 
   // Now, convert the string to a bytearray with the right codec
-  QString newPlainText;
+  QByteArray cloneEncoded;
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
   if ( mCharset == "us-ascii" ) {
     plainTextEncoded = KMMsgBase::toUsAscii( plainText );
+    cloneEncoded = KMMsgBase::toUsAscii( clone_originalText );
     htmlSourceEncoded = KMMsgBase::toUsAscii( htmlSource );
-    newPlainText = QString::fromLatin1( plainTextEncoded );
+    clone_newPlainText = QString::fromLatin1( cloneEncoded );
   } else if ( codec == 0 ) {
     kDebug() << "Something is wrong and I can not get a codec.";
     plainTextEncoded = plainText.toLocal8Bit();
+    cloneEncoded = clone_originalText.toLocal8Bit();
     htmlSourceEncoded = htmlSource.toLocal8Bit();
-    newPlainText = QString::fromLocal8Bit( plainTextEncoded );
+    clone_newPlainText = QString::fromLocal8Bit( cloneEncoded );
   } else {
     plainTextEncoded = codec->fromUnicode( plainText );
+    cloneEncoded = codec->fromUnicode( clone_originalText );
     htmlSourceEncoded = codec->fromUnicode( htmlSource );
-    newPlainText = codec->toUnicode( plainTextEncoded );
+    clone_newPlainText = codec->toUnicode( cloneEncoded );
   }
 
   // Check if we didn't loose any characters during encoding.
   // This can be checked by decoding the encoded text and comparing it with the
   // original, it should be the same.
-  if ( !plainText.isEmpty() && ( newPlainText != plainText ) )
+  if ( !clone_originalText.isEmpty() && ( clone_newPlainText != clone_originalText ) )
     return false;
   else
     return true;

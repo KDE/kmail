@@ -61,9 +61,24 @@ class KMComposerEditor : public KMeditor
     virtual QString smartQuote( const QString & msg );
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
+    /**
+     * Adds an image
+     */
+     void addImage( const KUrl &url );
+     void addImage( QString &imagename, QImage &image );
+
+  public slots:
+     void paste();
+
   private:
      KMComposeWin *m_composerWin;
      QString m_quotePrefix;
+
+     /**
+      * The names of embedded images.
+      * Used to easily obtain the names of the images. New images are compared to the the list and not added as resource if already present.
+      */
+     QStringList mImageNames;
 
   protected:
      void dropEvent( QDropEvent *e );
@@ -73,6 +88,7 @@ class KMComposerEditor : public KMeditor
   signals:
      void attachPNGImageData( const QByteArray &image );
      void insertSnippet();
+
 };
 
 #endif

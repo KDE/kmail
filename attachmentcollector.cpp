@@ -60,7 +60,11 @@ static bool isInExclusionList( const partNode * node ) {
 
 
 void KMail::AttachmentCollector::collectAttachmentsFrom( partNode * node ) {
+  partNode *parent;
+
   while ( node ) {
+    parent = node->parentNode();
+
     if ( node->isFirstTextPart() ) {
       node = node->next();
       continue;
@@ -71,6 +75,12 @@ void KMail::AttachmentCollector::collectAttachmentsFrom( partNode * node ) {
     }
     if ( isInExclusionList( node ) ) {
       node = node->next();
+      continue;
+    }
+
+    if ( parent && parent->hasType( DwMime::kTypeMultipart ) &&
+         parent->hasSubType( DwMime::kSubtypeRelated ) ) {
+      node = node->next(); // skip embedded images
       continue;
     }
 

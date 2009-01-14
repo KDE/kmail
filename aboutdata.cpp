@@ -194,7 +194,7 @@ namespace KMail {
     { "Simon Perreault", 0, 0, 0 }, // make the composer remember its "Use Fixed Font" setting (bug 49481)
     { "Bernhard Reiter", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "bernhard@intevation.de", 0 },
-    { "Edwin Schepers", 0, "yez@home.nl", 0 }, // composition of HTML messages
+    { "Edwin Schepers", 0, "yez@familieschepers.nl", 0 }, // composition of HTML messages
     { "Jakob Schr\303\266ter", 0, 0, 0 }, // implemented wish 28319 (X-Face support)
     { "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"),
       "jan@simonson.pp.se", 0 },

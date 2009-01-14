@@ -73,6 +73,7 @@ class RecipientsEditor;
 class KMLineEdit;
 class KMAtmListViewItem;
 class SnippetWidget;
+class partNode;
 
 namespace KPIM {
   class KMStyleListSelectAction;
@@ -314,6 +315,7 @@ class KMComposeWin : public KMail::Composer
     void slotAttachPNGImageData( const QByteArray &image );
     void slotFormatReset();
     void slotMarkAll();
+    void slotAddImage();
 
     void slotFolderRemoved( KMFolder * );
     void slotEditDone( KMail::EditorWatcher* watcher );
@@ -574,6 +576,12 @@ class KMComposeWin : public KMail::Composer
     void msgPartToItem( const KMMessagePart *msgPart, KMAtmListViewItem *lvi,
                         bool loadDefaults = true );
 
+
+    /**
+     * Searches for embedded images and adds them to the editor
+     */
+    void collectImages( partNode *n );
+
   private:
     /**
      * Turn encryption on/off. If setByUser is true then a message box is shown
@@ -737,6 +745,7 @@ class KMComposeWin : public KMail::Composer
 
     KToggleAction *markupAction;
     KAction *actionFormatReset;
+    KAction *actionAddImage;
 
     KSelectAction *mEncodingAction;
     KSelectAction *mCryptoModuleAction;

@@ -3055,6 +3055,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   QByteArray cte      = aPart->cteStr();
   QByteArray contDesc = aPart->contentDescriptionEncoded();
   QByteArray contDisp = aPart->contentDisposition();
+  QByteArray contID   = aPart->contentId();
   QByteArray encoding = autoDetectCharset(charset, s->prefCharsets, aPart->name());
   if (encoding.isEmpty()) encoding = "utf-8";
   QByteArray name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
@@ -3156,10 +3157,13 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
     headers.Cte().FromString(cte);
 
   if (!contDesc.isEmpty())
-    headers.ContentDescription().FromString(contDesc);
+    headers.ContentDescription().FromString( contDesc );
 
   if (!contDisp.isEmpty())
-    headers.ContentDisposition().FromString(contDisp);
+    headers.ContentDisposition().FromString( contDisp );
+
+  if ( !contID.isEmpty() )
+    headers.ContentId().FromString( contID );
 
   if (!aPart->body().isNull())
     part->Body().FromString(aPart->body());

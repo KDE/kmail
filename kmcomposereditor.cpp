@@ -29,8 +29,13 @@
 
 #include <klocale.h>
 #include <kmenu.h>
+#include <kdebug.h>
+#include <kdeversion.h>
+#include <kmessagebox.h>
 
 #include <QBuffer>
+#include <QClipboard>
+#include <QFileInfo>
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
  :KMeditor(parent),m_composerWin(win)
@@ -157,9 +162,18 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
   }
 }
 
+void KMComposerEditor::paste()
+{
+  const QMimeData *md = QApplication::clipboard()->mimeData();
+  if ( md && canInsertFromMimeData( md ) )
+    insertFromMimeData( md );
+}
+
 bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
+    return true;
+  if ( textMode() == KRichTextEdit::Rich && source->hasImage() )
     return true;
   return KMeditor::canInsertFromMimeData( source );
 }
@@ -168,7 +182,49 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 {
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
     emit insertSnippet();
+  if ( textMode() == KRichTextEdit::Rich && source->hasImage() )
+  {
+     QImage image = qvariant_cast<QImage>( source->imageData() );
+     QFileInfo fi( source->text() );
+     QString imagename = fi.baseName().isEmpty()? "image" : fi.baseName();
+     addImage( imagename, image );
+     return;
+  }
   KMeditor::insertFromMimeData( source );
 }
 
+void KMComposerEditor::addImage( const KUrl &url )
+{
+  QImage image;
+  if ( ! image.load( url.path() ) ) {
+    KMessageBox::error( 0, url.path() + i18n( " is not a valid image" ) );
+    return;
+  }
+  QFileInfo fi( url.path() );
+  QString imagename = fi.baseName().isEmpty()? "image" : fi.baseName();
+  addImage( imagename, image );
+}
+
+void KMComposerEditor::addImage( QString &imagename, QImage &image )
+{
+  QTextCursor cursor = this->textCursor();
+  QTextDocument *document = this->document();
+
+  // determine the imagename
+  int i = 1;
+  while ( mImageNames.contains( imagename ) )  {
+    QVariant qv = document->resource( QTextDocument::ImageResource, QUrl( imagename ) );
+    if ( qv == image ) {
+      // use the same name
+      break;
+    }
+    imagename = imagename + QString::number(i++);
+  }
+
+  if ( ! mImageNames.contains( imagename ) ) {
+    document->addResource( QTextDocument::ImageResource, QUrl( imagename ) , image );
+    mImageNames << imagename;
+  }
+  cursor.insertImage( imagename );
+}
 #include "kmcomposereditor.moc"

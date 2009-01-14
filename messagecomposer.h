@@ -235,10 +235,36 @@ class MessageComposer : public QObject {
     void markAllAttachmentsForSigning( bool sign );
     void markAllAttachmentsForEncryption( bool enc );
 
+    /**
+     * Loads the embedded images of the composer in a list
+     */
+    void loadImages();
+
+    /**
+     * Converts the img tags to tags with content-id's
+     */
+    void convertImageTags();
+
+    /**
+     * Prepares the body for multipart/related and adds the embedded images
+     */
+    void addEmbeddedImages( KMMessage &theMessage, QByteArray &body );
+
+    /**
+     * Prepares the body for adding attachments or embedded images
+     *  An inner bodypart is needed when we have embedded images, or non-signed/non-encryped attachments
+     *  An MPA body is assembled when using html. The body ends with a new boundary.
+     *
+     */
+    void assembleInnerBodypart( KMMessage &theMessage, bool doSign, QByteArray &body, QString oldContentType="" );
+
     KMComposeWin *mComposeWin;
     MessageComposerJob *mCurrentJob;
     KMMessage *mReferenceMessage;
     QVector<KMMessage*> mMessageList;
+    QList<QByteArray> mImages; // list with base64 encoded images
+    QStringList mContentIDs; // content id's of the embedded images
+    QStringList mImageNames; // names of the images as they are available as resource in the editor
 
     Kleo::KeyResolver *mKeyResolver;
 
@@ -284,11 +310,12 @@ class MessageComposer : public QObject {
     QByteArray mSignature;
 
     QByteArray mEncodedBody; // Only needed if signing and/or encrypting
-    bool mEarlyAddAttachments, mAllAttachmentsAreInBody;
+    bool mEarlyAddAttachments; // Can attachments be added to the messagebody before signing/encrypting?
+    bool  mAllAttachmentsAreInBody;
     KMMessagePart mOldBodyPart;
     int mPreviousBoundaryLevel;
 
-    // The boundary is saved for later addition into mp/a body
+    // The boundary is saved for later addition in the header
     DwString  mSaveBoundary;
 
     QList<MessageComposerJob*> mJobs;

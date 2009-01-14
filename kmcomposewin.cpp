@@ -43,6 +43,7 @@ using KPIM::RecentAddresses;
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
+#include <kmime/kmime_codecs.h>
 
 using MailTransport::TransportManager;
 using MailTransport::Transport;
@@ -1338,6 +1339,11 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
 
+  actionAddImage = new KAction( KIcon( "insert-image" ), i18n("Add image"), this );
+  actionAddImage->setIconText( i18n("Add Image") );
+  actionCollection()->addAction( "add_image", actionAddImage );
+  connect( actionAddImage, SIGNAL(triggered(bool) ), SLOT( slotAddImage() ) );
+
   mEditor->setRichTextSupport( KRichTextWidget::FullTextFormattingSupport |
                                KRichTextWidget::FullListSupport |
                                KRichTextWidget::SupportAlignment |
@@ -1657,6 +1663,8 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     }
   }
 
+  collectImages( root ); // when using html, check for embedded images
+
   if ( mCharset.isEmpty() ) {
     mCharset = mMsg->charset();
   }
@@ -1801,6 +1809,49 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !newMsg->fcc().isEmpty() && ident.fcc() != newMsg->fcc() );
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::collectImages( partNode *root )
+{
+  if ( partNode * n = root->findType( DwMime::kTypeMultipart, DwMime::kSubtypeAlternative ) ) {
+    partNode *parentnode = n->parentNode();
+    if ( parentnode &&
+         parentnode->hasType( DwMime::kTypeMultipart ) &&
+         parentnode->hasSubType( DwMime::kSubtypeRelated ) ) {
+      partNode *node = n->nextSibling();
+      while ( node ) {
+        if ( node->hasType( DwMime::kTypeImage ) ) {
+          kDebug() << "found image in multipart/related : " << node->msgPart().name();
+          QImage img;
+          img.loadFromData( KMime::Codec::codecForName( "base64" )->decode( node->msgPart().body() )); // create image from the base64 encoded one
+          QTextBlock currentBlock = mEditor->document()->begin();
+          QTextBlock::iterator it;
+          while ( currentBlock.isValid() ) {
+            for (it = currentBlock.begin(); !(it.atEnd()); ++it) {
+              QTextFragment fragment = it.fragment();
+              if ( fragment.isValid() ) {
+                QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
+                if ( imageFormat.isValid() &&
+                     imageFormat.name() == "cid:" + node->msgPart().contentId() ) {
+                  kDebug() << "newImageFormat.Name="<< imageFormat.name();
+                  int pos = fragment.position();
+                  QTextCursor cursor( mEditor->document() );
+                  cursor.setPosition( pos );
+                  cursor.setPosition( pos + 1, QTextCursor::KeepAnchor );
+                  cursor.removeSelectedText();
+                  mEditor->document()->addResource( QTextDocument::ImageResource, QUrl( node->msgPart().name() ), QVariant( img ) );
+                  cursor.insertImage( node->msgPart().name() );
+                }
+              }
+            }
+            currentBlock = currentBlock.next();
+          }
+        }
+        node = node->nextSibling();
+      }
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3170,8 +3221,9 @@ void KMComposeWin::slotPaste()
 
   const QMimeData *mimeData = QApplication::clipboard()->mimeData();
   const KUrl::List urlList = KUrl::List::fromMimeData( mimeData );
-  if ( mimeData->hasFormat( "image/png" ) )  {
-    slotAttachPNGImageData( mimeData->data( "image/png" ) );
+  if ( mEditor->textMode() == KRichTextEdit::Rich &&
+      mimeData->hasFormat( "image/png" ) )  {
+    mEditor->paste();
   } else if ( !urlList.isEmpty() ) {
     const QString asText = i18n("Add as Text");
     const QString asAttachment = i18n("Add as Attachment");
@@ -4163,6 +4215,25 @@ void KMComposeWin::slotFormatReset()
 {
   mEditor->setTextForegroundColor( palette().text().color() );
   mEditor->setFont( mSaveFont );
+}
+
+void KMComposeWin::slotAddImage()
+{
+  KEncodingFileDialog fdlg( QString(), QString(), QString(), QString(),
+                            KFileDialog::Opening, this );
+  fdlg.setOperationMode( KFileDialog::Other );
+  fdlg.setCaption( i18n("Add Image") );
+  fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Add"), "document-open") );
+  fdlg.setMode( KFile::Files );
+  if ( fdlg.exec() != KDialog::Accepted )
+    return;
+
+  const KUrl::List files = fdlg.selectedUrls();
+  foreach ( const KUrl& url, files ) {
+    KUrl urlWithEncoding = url;
+    urlWithEncoding.setFileEncoding( fdlg.selectedEncoding() );
+    mEditor->addImage( url );
+  }
 }
 
 void KMComposeWin::slotCursorPositionChanged()

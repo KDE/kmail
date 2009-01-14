@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="410" name="kmcomposer" >
+<kpartgui version="411" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -117,5 +117,6 @@
   <Action name="format_list_indent_more"/>
   <Action name="format_list_indent_less"/>
   <Action name="manage_link" />
+  <Action name="add_image" />
  </ToolBar>
 </kpartgui>
