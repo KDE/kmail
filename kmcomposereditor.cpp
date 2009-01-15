@@ -29,8 +29,6 @@
 
 #include <klocale.h>
 #include <kmenu.h>
-#include <kdebug.h>
-#include <kdeversion.h>
 #include <kmessagebox.h>
 
 #include <QBuffer>
