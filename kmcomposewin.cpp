@@ -1339,8 +1339,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
 
-  actionAddImage = new KAction( KIcon( "insert-image" ), i18n("Add image"), this );
-  actionAddImage->setIconText( i18n("Add Image") );
+  actionAddImage = new KAction( KIcon( "insert-image" ), i18n("Add Image"), this );
   actionCollection()->addAction( "add_image", actionAddImage );
   connect( actionAddImage, SIGNAL(triggered(bool) ), SLOT( slotAddImage() ) );
 
