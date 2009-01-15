@@ -4218,8 +4218,7 @@ void KMComposeWin::slotFormatReset()
 
 void KMComposeWin::slotAddImage()
 {
-  KEncodingFileDialog fdlg( QString(), QString(), QString(), QString(),
-                            KFileDialog::Opening, this );
+  KFileDialog fdlg( QString(), QString(), this );
   fdlg.setOperationMode( KFileDialog::Other );
   fdlg.setCaption( i18n("Add Image") );
   fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Add"), "document-open") );
@@ -4229,8 +4228,6 @@ void KMComposeWin::slotAddImage()
 
   const KUrl::List files = fdlg.selectedUrls();
   foreach ( const KUrl& url, files ) {
-    KUrl urlWithEncoding = url;
-    urlWithEncoding.setFileEncoding( fdlg.selectedEncoding() );
     mEditor->addImage( url );
   }
 }
