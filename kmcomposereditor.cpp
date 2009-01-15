@@ -226,4 +226,5 @@ void KMComposerEditor::addImageHelper( const QString &imageName, const QImage &i
   }
   textCursor().insertImage( imageNameToAdd );
 }
+
 #include "kmcomposereditor.moc"

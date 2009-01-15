@@ -437,35 +437,6 @@ void MessageComposer::slotDoNextJob()
   }
 }
 
-void removeImages(QTextDocument *doc)
-{
-   bool imageremoved;
-   QTextBlock currentBlock = doc->begin();
-   while ( currentBlock.isValid() ) {
-     imageremoved = false;
-     QTextBlock::iterator it;
-     for (it = currentBlock.begin(); !(it.atEnd()); ++it) {
-       QTextFragment fragment = it.fragment();
-       if ( fragment.isValid() ) {
-         QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
-         if ( imageFormat.isValid() ) {
-           int pos = fragment.position();
-           QTextCursor cursor( doc );
-           cursor.setPosition( pos );
-           cursor.setPosition( pos + 1, QTextCursor::KeepAnchor);
-           cursor.removeSelectedText();
-           imageremoved = true;
-           break; // and start all over again
-         }
-       }
-     }
-     if ( imageremoved )
-       currentBlock = doc->begin();
-     else
-       currentBlock = currentBlock.next();
-   }
-}
-
 void MessageComposer::convertImageTags()
 {
   // TODO : imagetags have to be converted on mBodyText, or the tags should be converted in an earlier stage
@@ -2328,48 +2299,35 @@ bool MessageComposer::getSourceText( QByteArray &plainTextEncoded, QByteArray &h
   //
   // Therefore, we now read the plain text version directly from the composer,
   // which returns the correct result.
-  QString clone_originalText, clone_newPlainText;
-  QString htmlSource, plainText;
+  QString htmlSource, plainText, newPlainText;
   htmlSource = mComposeWin->mEditor->toCleanHtml();
 
-  // Within the cloned doc, embedded images are removed and then the text is converted.
-  // Images have to be removed because they leave some characters in the encoded text
-  QTextDocument *clonedDoc = mComposeWin->mEditor->document()->clone();
-
-  if ( mIsRichText )
-    removeImages( clonedDoc );
-
   if ( mDisableBreaking || !GlobalSettings::self()->wordWrap() )
-    plainText = mComposeWin->mEditor->toPlainText();
+    plainText = mComposeWin->mEditor->toCleanPlainText();
   else
     plainText = mComposeWin->mEditor->toWrappedPlainText();
-  clone_originalText = clonedDoc->toPlainText();
 
   // Now, convert the string to a bytearray with the right codec.
-  QByteArray cloneEncoded;
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
   if ( mCharset == "us-ascii" ) {
     plainTextEncoded = KMMsgBase::toUsAscii( plainText );
-    cloneEncoded = KMMsgBase::toUsAscii( clone_originalText );
     htmlSourceEncoded = KMMsgBase::toUsAscii( htmlSource );
-    clone_newPlainText = QString::fromLatin1( cloneEncoded );
+    newPlainText = QString::fromLatin1( plainTextEncoded );
   } else if ( codec == 0 ) {
     kDebug() << "Something is wrong and I can not get a codec.";
     plainTextEncoded = plainText.toLocal8Bit();
-    cloneEncoded = clone_originalText.toLocal8Bit();
     htmlSourceEncoded = htmlSource.toLocal8Bit();
-    clone_newPlainText = QString::fromLocal8Bit( cloneEncoded );
+    newPlainText = QString::fromLocal8Bit( plainTextEncoded );
   } else {
     plainTextEncoded = codec->fromUnicode( plainText );
-    cloneEncoded = codec->fromUnicode( clone_originalText );
     htmlSourceEncoded = codec->fromUnicode( htmlSource );
-    clone_newPlainText = codec->toUnicode( cloneEncoded );
+    newPlainText = codec->toUnicode( plainTextEncoded );
   }
 
   // Check if we didn't loose any characters during encoding.
   // This can be checked by decoding the encoded text and comparing it with the
   // original, it should be the same.
-  if ( !clone_originalText.isEmpty() && ( clone_newPlainText != clone_originalText ) )
+  if ( !newPlainText.isEmpty() && ( newPlainText != plainText ) )
     return false;
   else
     return true;
