@@ -62,12 +62,31 @@ class KMComposerEditor : public KMeditor
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
     /**
-     * Adds an image
+     * Adds an image. The image is loaded from file and then pasted to the current
+     * cursor position.
+     *
+     * @param url The URL of the file which contains the image
      */
      void addImage( const KUrl &url );
-     void addImage( QString &imagename, QImage &image );
+
+  protected:
+
+    /**
+     * Helper function for addImage(), which does the actual work of adding the QImage as a
+     * resource to the document, pasting it and adding it to the image name list.
+     *
+     * @param imageName the desired image name. If it is already taken, a number will
+     *                  be appended to it
+     * @param image the actual image to add
+     */
+    void addImageHelper( const QString &imageName, const QImage &image );
 
   public slots:
+
+    /**
+     * Pastes the content of the clipboard into the editor, if the
+     * mime type of the clipboard's contents in supported.
+     */
      void paste();
 
   private:
@@ -76,7 +95,8 @@ class KMComposerEditor : public KMeditor
 
      /**
       * The names of embedded images.
-      * Used to easily obtain the names of the images. New images are compared to the the list and not added as resource if already present.
+      * Used to easily obtain the names of the images.
+      * New images are compared to the the list and not added as resource if already present.
       */
      QStringList mImageNames;
 

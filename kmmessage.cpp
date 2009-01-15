@@ -708,9 +708,8 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
     otp.parseObjectTree( root );
   }
   partNode * curNode = root->findType( DwMime::kTypeText,
-                               DwMime::kSubtypeUnknown,
-                               true,
-                               false );
+                                       DwMime::kSubtypeUnknown,
+                                       true, false );
   kDebug(5006) << ( curNode ? "text part found!\n" : "sorry, no text node!\n" );
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->subType();

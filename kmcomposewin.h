@@ -578,9 +578,10 @@ class KMComposeWin : public KMail::Composer
 
 
     /**
-     * Searches for embedded images and adds them to the editor
+     * Searches the mime tree, where root is the root node, for embedded images,
+     * extracts them froom the body and adds them to the editor.
      */
-    void collectImages( partNode *n );
+    void collectImages( partNode *root );
 
   private:
     /**

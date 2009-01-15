@@ -184,8 +184,8 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
   {
      QImage image = qvariant_cast<QImage>( source->imageData() );
      QFileInfo fi( source->text() );
-     QString imagename = fi.baseName().isEmpty()? "image" : fi.baseName();
-     addImage( imagename, image );
+     QString imageName = fi.baseName().isEmpty() ? "image" : fi.baseName();
+     addImageHelper( imageName, image );
      return;
   }
   KMeditor::insertFromMimeData( source );
@@ -194,35 +194,36 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 void KMComposerEditor::addImage( const KUrl &url )
 {
   QImage image;
-  if ( ! image.load( url.path() ) ) {
-    KMessageBox::error( 0, url.path() + i18n( " is not a valid image" ) );
+  if ( !image.load( url.path() ) ) {
+    KMessageBox::error( this,
+                i18nc( "@info", "Unable to load image <filename>%1</filename>.", url.path() ) );
     return;
   }
   QFileInfo fi( url.path() );
-  QString imagename = fi.baseName().isEmpty()? "image" : fi.baseName();
-  addImage( imagename, image );
+  QString imageName = fi.baseName().isEmpty() ? "image" : fi.baseName();
+  addImageHelper( imageName, image );
 }
 
-void KMComposerEditor::addImage( QString &imagename, QImage &image )
+void KMComposerEditor::addImageHelper( const QString &imageName, const QImage &image )
 {
-  QTextCursor cursor = this->textCursor();
+  QString imageNameToAdd = imageName;
   QTextDocument *document = this->document();
 
-  // determine the imagename
-  int i = 1;
-  while ( mImageNames.contains( imagename ) )  {
-    QVariant qv = document->resource( QTextDocument::ImageResource, QUrl( imagename ) );
+  // determine the imageNameToAdd
+  int imageNumber = 1;
+  while ( mImageNames.contains( imageNameToAdd ) ) {
+    QVariant qv = document->resource( QTextDocument::ImageResource, QUrl( imageNameToAdd ) );
     if ( qv == image ) {
       // use the same name
       break;
     }
-    imagename = imagename + QString::number(i++);
+    imageNameToAdd = imageName + QString::number( imageNumber++ );
   }
 
-  if ( ! mImageNames.contains( imagename ) ) {
-    document->addResource( QTextDocument::ImageResource, QUrl( imagename ) , image );
-    mImageNames << imagename;
+  if ( !mImageNames.contains( imageNameToAdd ) ) {
+    document->addResource( QTextDocument::ImageResource, QUrl( imageNameToAdd ), image );
+    mImageNames << imageNameToAdd;
   }
-  cursor.insertImage( imagename );
+  textCursor().insertImage( imageNameToAdd );
 }
 #include "kmcomposereditor.moc"
