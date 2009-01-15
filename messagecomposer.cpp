@@ -2317,8 +2317,7 @@ bool MessageComposer::autoDetectCharset()
 }
 
 //-----------------------------------------------------------------------------
-bool MessageComposer::getSourceText( QString &plainText, QString &htmlSource,
-                                     QByteArray &plainTextEncoded, QByteArray &htmlSourceEncoded ) const
+bool MessageComposer::getSourceText( QByteArray &plainTextEncoded, QByteArray &htmlSourceEncoded ) const
 {
   // Get the HTML source and the plain text, with proper breaking
   //
@@ -2330,6 +2329,7 @@ bool MessageComposer::getSourceText( QString &plainText, QString &htmlSource,
   // Therefore, we now read the plain text version directly from the composer,
   // which returns the correct result.
   QString clone_originalText, clone_newPlainText;
+  QString htmlSource, plainText;
   htmlSource = mComposeWin->mEditor->toCleanHtml();
 
   // Within the cloned doc, embedded images are removed and then the text is converted.
@@ -2345,7 +2345,7 @@ bool MessageComposer::getSourceText( QString &plainText, QString &htmlSource,
     plainText = mComposeWin->mEditor->toWrappedPlainText();
   clone_originalText = clonedDoc->toPlainText();
 
-  // Now, convert the string to a bytearray with the right codec
+  // Now, convert the string to a bytearray with the right codec.
   QByteArray cloneEncoded;
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
   if ( mCharset == "us-ascii" ) {
@@ -2379,9 +2379,8 @@ bool MessageComposer::getSourceText( QString &plainText, QString &htmlSource,
 bool MessageComposer::breakLinesAndApplyCodec()
 {
   // Get the encoded text and HTML
-  QString plainText, htmlSource;
   QByteArray plainTextEncoded, htmlSourceEncoded;
-  bool ok = getSourceText( plainText, htmlSource, plainTextEncoded, htmlSourceEncoded );
+  bool ok = getSourceText( plainTextEncoded, htmlSourceEncoded );
 
   // Not all chars fit into the current charset, ask the user what to do about it.
   if ( !ok ) {
@@ -2403,7 +2402,7 @@ bool MessageComposer::breakLinesAndApplyCodec()
       if ( charsetFound ) {
         // Read the values again, this time they should be correct, since we just
         // set the correct charset.
-        bool ok = getSourceText( plainText, htmlSource, plainTextEncoded, htmlSourceEncoded );
+        bool ok = getSourceText( plainTextEncoded, htmlSourceEncoded );
         if ( !ok ) {
           kWarning() << "The autodetected charset is still wrong!";
         }

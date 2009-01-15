@@ -138,8 +138,7 @@ class MessageComposer : public QObject {
      *
      * @return false if not all chars could be encoded with the current charset.
      */
-    bool getSourceText( QString &plainText, QString &htmlSource,
-                        QByteArray &plainTextEncoded, QByteArray &htmlSourceEncoded ) const;
+    bool getSourceText( QByteArray &plainTextEncoded, QByteArray &htmlSourceEncoded ) const;
 
     /**
      * This sets the member variables mHtmlSource and mPlainText and mBodyText.
