@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
 X-KDE-ServiceType=DBUS/ResourceBackend/IMAP
-Comment=Mail program with a DBUS interface
+Comment=Mail program with a D-Bus interface
 Comment[be]=Паштовая праграма з D-Bus інтэрфэйсам
 Comment[bg]=Клиент на електронна поща за KDE
 Comment[ca]=Un programa de correu amb una interfície DBUS
