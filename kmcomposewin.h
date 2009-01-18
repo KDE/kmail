@@ -314,7 +314,6 @@ class KMComposeWin : public KMail::Composer
     void slotPasteAsAttachment();
     void slotFormatReset();
     void slotMarkAll();
-    void slotAddImage();
 
     void slotFolderRemoved( KMFolder * );
     void slotEditDone( KMail::EditorWatcher* watcher );
@@ -745,7 +744,6 @@ class KMComposeWin : public KMail::Composer
 
     KToggleAction *markupAction;
     KAction *actionFormatReset;
-    KAction *actionAddImage;
 
     KSelectAction *mEncodingAction;
     KSelectAction *mCryptoModuleAction;

@@ -29,9 +29,13 @@
 
 #include <kmime/kmime_codecs.h>
 
+#include <KAction>
+#include <KActionCollection>
+#include <KFileDialog>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
+#include <KPushButton>
 
 #include <QBuffer>
 #include <QClipboard>
@@ -44,6 +48,15 @@ KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
 
 KMComposerEditor::~KMComposerEditor()
 {
+}
+
+void KMComposerEditor::createActions( KActionCollection *actionCollection )
+{
+  KMeditor::createActions( actionCollection );
+
+  actionAddImage = new KAction( KIcon( "insert-image" ), i18n("Add Image"), this );
+  actionCollection->addAction( "add_image", actionAddImage );
+  connect( actionAddImage, SIGNAL(triggered(bool) ), SLOT( slotAddImage() ) );
 }
 
 void KMComposerEditor::changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter)
@@ -280,6 +293,22 @@ QList<QTextImageFormat> KMComposerEditor::embeddedImageFormats() const
     currentBlock = currentBlock.next();
   }
   return retList;
+}
+
+void KMComposerEditor::slotAddImage()
+{
+  KFileDialog fdlg( QString(), QString(), this );
+  fdlg.setOperationMode( KFileDialog::Other );
+  fdlg.setCaption( i18n("Add Image") );
+  fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Add"), "document-open") );
+  fdlg.setMode( KFile::Files );
+  if ( fdlg.exec() != KDialog::Accepted )
+    return;
+
+  const KUrl::List files = fdlg.selectedUrls();
+  foreach ( const KUrl& url, files ) {
+    addImage( url );
+  }
 }
 
 #include "kmcomposereditor.moc"

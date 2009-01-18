@@ -25,6 +25,7 @@
 #include <kmeditor.h>
 using namespace KPIM;
 
+class KAction;
 class KMComposeWin;
 
 namespace KMail {
@@ -56,6 +57,16 @@ class KMComposerEditor : public KMeditor
     ~KMComposerEditor();
 
     /**
+     * Reimplemented from KMEditor, to support more actions.
+     *
+     * The additional action XML names are:
+     * - add_image
+     */
+    virtual void createActions( KActionCollection *actionCollection );
+
+    /**
+     * Reimplemented from KMEditor.
+     *
      * @return the quote prefix set before with setQuotePrefixName(), or an empty
      *         string if that was never called.
      */
@@ -74,7 +85,14 @@ class KMComposerEditor : public KMeditor
      */
     void replaceUnknownChars( const QTextCodec *codec );
 
+    /**
+     * Reimplemented from KMEditor.
+     */
     virtual QString smartQuote( const QString & msg );
+
+    /**
+     * Reimplemented from KMEditor.
+     */
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
     /**
@@ -123,8 +141,10 @@ class KMComposerEditor : public KMeditor
      void paste();
 
   private:
+
      KMComposeWin *m_composerWin;
      QString m_quotePrefix;
+     KAction *actionAddImage;
 
      /**
       * The names of embedded images.
@@ -137,6 +157,10 @@ class KMComposerEditor : public KMeditor
      void dropEvent( QDropEvent *e );
      bool canInsertFromMimeData( const QMimeData *source ) const;
      void insertFromMimeData( const QMimeData *source );
+
+  protected slots:
+
+    void slotAddImage();
 
   signals:
      void insertSnippet();
