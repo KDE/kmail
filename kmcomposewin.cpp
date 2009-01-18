@@ -1104,21 +1104,9 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( KStandardAction::Spelling, "spellcheck",
                                  mEditor, SLOT( checkSpelling() ) );
 
-  mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
-  actionCollection()->addAction("paste_quoted", mPasteQuotation );
-  connect( mPasteQuotation, SIGNAL(triggered(bool) ), mEditor, SLOT( slotPasteAsQuotation()) );
-
   action = new KAction( i18n("Paste as Attac&hment"), this );
   actionCollection()->addAction( "paste_att", action );
   connect( action, SIGNAL(triggered(bool) ), SLOT( slotPasteAsAttachment()) );
-
-  mAddQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
-  actionCollection()->addAction( "tools_quote", mAddQuoteChars );
-  connect( mAddQuoteChars, SIGNAL(triggered(bool) ), mEditor, SLOT(slotAddQuotes()) );
-
-  mRemQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
-  actionCollection()->addAction( "tools_unquote", mRemQuoteChars );
-  connect (mRemQuoteChars, SIGNAL(triggered(bool) ),mEditor, SLOT(slotRemoveQuotes()) );
 
   mCleanSpace = new KAction( i18n("Cl&ean Spaces"), this );
   actionCollection()->addAction( "clean_spaces", mCleanSpace );

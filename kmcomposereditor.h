@@ -61,6 +61,9 @@ class KMComposerEditor : public KMeditor
      *
      * The additional action XML names are:
      * - add_image
+     * - paste_quoted
+     * - tools_quote
+     * - tools_unquote
      */
     virtual void createActions( KActionCollection *actionCollection );
 
@@ -144,7 +147,7 @@ class KMComposerEditor : public KMeditor
 
      KMComposeWin *m_composerWin;
      QString m_quotePrefix;
-     KAction *actionAddImage;
+     KAction *actionAddImage, *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
 
      /**
       * The names of embedded images.

@@ -711,8 +711,8 @@ class KMComposeWin : public KMail::Composer
     QList<KMAtmListViewItem*> mAtmItemList;
     QList<KMMessagePart*> mAtmList;
     QMenu *mAttachMenu;
-    QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId, *mEditAction, *mEditWithAction;
-    QAction *mCleanSpace;
+    QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId,
+            *mEditAction, *mEditWithAction;
     bool mAutoDeleteMsg;
     bool mSigningAndEncryptionExplicitlyDisabled;
     bool mLastSignActionState, mLastEncryptActionState;
@@ -729,9 +729,8 @@ class KMComposeWin : public KMail::Composer
     QPalette mPalette;
     uint mId;
 
-    KAction *mAttachPK, *mAttachMPK,
-      *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction,
-      *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
+    KAction *mAttachPK, *mAttachMPK, *mAttachRemoveAction, *mAttachSaveAction,
+            *mAttachPropertiesAction, *mCleanSpace;
     KRecentFilesAction *mRecentAction;
 
     KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;

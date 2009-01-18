@@ -57,6 +57,18 @@ void KMComposerEditor::createActions( KActionCollection *actionCollection )
   actionAddImage = new KAction( KIcon( "insert-image" ), i18n("Add Image"), this );
   actionCollection->addAction( "add_image", actionAddImage );
   connect( actionAddImage, SIGNAL(triggered(bool) ), SLOT( slotAddImage() ) );
+
+  mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
+  actionCollection->addAction("paste_quoted", mPasteQuotation );
+  connect( mPasteQuotation, SIGNAL(triggered(bool) ), this, SLOT( slotPasteAsQuotation()) );
+
+  mAddQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
+  actionCollection->addAction( "tools_quote", mAddQuoteChars );
+  connect( mAddQuoteChars, SIGNAL(triggered(bool) ), this, SLOT(slotAddQuotes()) );
+
+  mRemQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
+  actionCollection->addAction( "tools_unquote", mRemQuoteChars );
+  connect (mRemQuoteChars, SIGNAL(triggered(bool) ), this, SLOT(slotRemoveQuotes()) );
 }
 
 void KMComposerEditor::changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter)
