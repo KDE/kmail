@@ -83,10 +83,12 @@ QList< QPair< QString, int > > SortOrder::enumerateGroupSortingOptions( Aggregat
   QList< QPair< QString, int > > ret;
   if ( g == Aggregation::NoGrouping )
     return ret;
-  ret.append( QPair< QString, int >( i18n( "None (Storage Order)" ), SortOrder::NoGroupSorting ) );
   if ( ( g == Aggregation::GroupByDate ) || ( g == Aggregation::GroupByDateRange ) )
     ret.append( QPair< QString, int >( i18n( "by Date/Time" ), SortOrder::SortGroupsByDateTime ) );
-  ret.append( QPair< QString, int >( i18n( "by Date/Time of Most Recent Message in Group" ), SortOrder::SortGroupsByDateTimeOfMostRecent ) );
+  else {
+    ret.append( QPair< QString, int >( i18n( "None (Storage Order)" ), SortOrder::NoGroupSorting ) );
+    ret.append( QPair< QString, int >( i18n( "by Date/Time of Most Recent Message in Group" ), SortOrder::SortGroupsByDateTimeOfMostRecent ) );    
+  }
   if ( g == Aggregation::GroupBySenderOrReceiver )
     ret.append( QPair< QString, int >( i18n( "by Sender/Receiver" ), SortOrder::SortGroupsBySenderOrReceiver ) );
   if ( g == Aggregation::GroupBySender )
@@ -118,14 +120,14 @@ QList< QPair< QString, int > > SortOrder::enumerateGroupSortDirectionOptions( Ag
 typedef QPair< QString, int > Pair;
 typedef QList< Pair > OptionList;
 static bool optionListHasOption( const OptionList &optionList, int optionValue,
-                                 int defaultOptionValue )
+                                 int defaultOptionValue, bool allowDefault = true )
 {
   foreach( const Pair &pair, optionList ) {
     if ( pair.second == optionValue ) {
       return true;
     }
   }
-  if ( optionValue != defaultOptionValue )
+  if ( optionValue != defaultOptionValue || !allowDefault )
     return false;
   else return true;
 }
@@ -141,12 +143,52 @@ bool SortOrder::validForAggregation( const Aggregation *aggregation ) const
                                                mMessageSorting, SortOrder().messageSorting() );
   bool messageSortDirectionOk = optionListHasOption( messageSortDirections, mMessageSortDirection,
                                                      SortOrder().messageSortDirection() );
+
+  // Special hack for aggregations by date: We don't want to allow the default group sort order
+  // there, which is storage order, since it only makes sense to group the date group by date.
+  Aggregation::Grouping grouping = aggregation->grouping();
+  bool allowDefaultGroupSorting = grouping != Aggregation::GroupByDate &&
+                                  grouping != Aggregation::GroupByDateRange;
+
   bool groupSortingOk = optionListHasOption( groupSortings, mGroupSorting,
-                                             SortOrder().groupSorting() );
+                                             SortOrder().groupSorting(), allowDefaultGroupSorting );
   bool groupSortDirectionOk = optionListHasOption( groupSortDirections, mGroupSortDirection,
                                                    SortOrder().groupSortDirection() );
   return messageSortingOk && messageSortDirectionOk &&
          groupSortingOk && groupSortDirectionOk;
+}
+
+SortOrder SortOrder::defaultForAggregation( const Aggregation *aggregation )
+{
+  Aggregation::Grouping grouping = aggregation->grouping();
+  if ( grouping == Aggregation::GroupByDate ||
+       grouping == Aggregation::GroupByDateRange ) {
+    SortOrder order;
+    order.setGroupSortDirection( Descending );
+    order.setGroupSorting( SortGroupsByDateTime );
+    order.setMessageSortDirection( Descending );
+    order.setMessageSorting( SortMessagesByDateTime );
+    return order;
+  }
+  else if ( grouping == Aggregation::GroupByReceiver || grouping == Aggregation::GroupBySender ||
+            grouping == Aggregation::GroupBySenderOrReceiver ) {
+    SortOrder order;
+    order.setGroupSortDirection( Descending );
+    order.setMessageSortDirection( Descending );
+    order.setMessageSorting( SortMessagesByDateTime );
+    switch ( grouping ) {
+      case Aggregation::GroupByReceiver:
+        order.setGroupSorting( SortGroupsByReceiver ); break;
+      case Aggregation::GroupBySender:
+        order.setGroupSorting( SortGroupsBySender ); break;
+      case Aggregation::GroupBySenderOrReceiver:
+        order.setGroupSorting( SortGroupsBySenderOrReceiver ); break;
+      default: break;
+    }
+    return order;
+  }
+  else
+    return SortOrder();
 }
 
 bool SortOrder::readConfigHelper( KConfigGroup &conf, const QString &id )

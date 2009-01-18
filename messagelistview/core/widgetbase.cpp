@@ -254,8 +254,12 @@ void Widget::checkSortOrder( const StorageModel *storageModel )
 {
   if ( mAggregation && !mSortOrder.validForAggregation( mAggregation ) ) {
     kDebug() << "Could not restore sort order for folder" << storageModel->id();
-    mSortOrder = SortOrder();
-    mStorageUsesPrivateSortOrder = true;
+    mSortOrder = SortOrder::defaultForAggregation( mAggregation );
+
+    // Change the global sort order if the sort order didn't fit the global aggregation.
+    // Otherwise, if it is a per-folder aggregation, make the sort order per-folder too.
+    if ( mStorageUsesPrivateAggregation )
+      mStorageUsesPrivateSortOrder = true;
     if ( mStorageModel ) {
       Manager::instance()->saveSortOrderForStorageModel( storageModel, mSortOrder,
                                                          mStorageUsesPrivateSortOrder );
@@ -556,6 +560,9 @@ void Widget::aggregationSelected( bool )
 
   Manager::instance()->saveAggregationForStorageModel( mStorageModel, opt->id(), mStorageUsesPrivateAggregation );
 
+  // The sort order might not be valid anymore for this aggregation
+  checkSortOrder( mStorageModel );
+
   mView->reload();
 
 }
@@ -596,7 +603,7 @@ void Widget::sortOrderMenuAboutToShow()
 
   options = SortOrder::enumerateMessageSortDirectionOptions( mSortOrder.messageSorting() );
 
-  if ( !options.isEmpty() )
+  if ( options.size() >= 2 )
   {
     menu->addTitle( i18n( "Message Sort Direction" ) );
 
@@ -617,7 +624,7 @@ void Widget::sortOrderMenuAboutToShow()
 
   options = SortOrder::enumerateGroupSortingOptions( mAggregation->grouping() );
 
-  if ( !options.isEmpty() )
+  if ( options.size() >= 2 )
   {
     menu->addTitle( i18n( "Group Sort Order" ) );
 
@@ -639,7 +646,7 @@ void Widget::sortOrderMenuAboutToShow()
   options = SortOrder::enumerateGroupSortDirectionOptions( mAggregation->grouping(),
                                                            mSortOrder.groupSorting() );
 
-  if ( !options.isEmpty() )
+  if ( options.size() >= 2 )
   {
     menu->addTitle( i18n( "Group Sort Direction" ) );
 

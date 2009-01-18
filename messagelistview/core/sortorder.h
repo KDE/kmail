@@ -186,6 +186,11 @@ class SortOrder
     bool validForAggregation( const Aggregation *aggregation ) const;
 
     /**
+     * Returns the default sort order for the given aggregation.
+     */
+    static SortOrder defaultForAggregation( const Aggregation *aggregation );
+
+    /**
     * Returns true if the ms parameter specifies a valid MessageSorting option.
     */
     static bool isValidMessageSorting( SortOrder::MessageSorting ms );
