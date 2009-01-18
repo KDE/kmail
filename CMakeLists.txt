@@ -331,7 +331,7 @@ if(KMAIL_SQLITE_INDEX)
 endif(KMAIL_SQLITE_INDEX)
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
-kdepim4_link_unique_libraries(kmailprivate
+target_link_libraries(kmailprivate
   ${KDE4_KHTML_LIBRARY}
   ${KDE4_THREADWEAVER_LIBRARY}
   ${KDE4_KMIME_LIBRARY}
@@ -358,11 +358,11 @@ kdepim4_link_unique_libraries(kmailprivate
 )
 
 if(KMAIL_SQLITE_INDEX)
-  kdepim4_link_unique_libraries(kmailprivate ${SQLITE_LIBRARIES})
+  target_link_libraries(kmailprivate ${SQLITE_LIBRARIES})
 endif(KMAIL_SQLITE_INDEX)
 
 if(Nepomuk_FOUND)
-   kdepim4_link_unique_libraries(kmailprivate ${NEPOMUK_LIBRARIES})
+  target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES})
 endif(Nepomuk_FOUND)
 
 set_target_properties(kmailprivate
@@ -373,7 +373,7 @@ set_target_properties(kmailprivate
 
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
 kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
-kdepim4_link_unique_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
+target_link_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
 ########### kmailpart ###############
 
@@ -384,7 +384,7 @@ qt4_add_dbus_adaptor(kmailpart_PART_SRCS
 )
 qt4_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml)
 kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
-kdepim4_link_unique_libraries(kmailpart
+target_link_libraries(kmailpart
   ${KDE4_KDECORE_LIBS}
   kmailprivate
   ${KDE4_KDE3SUPPORT_LIBS}
@@ -399,7 +399,7 @@ set(kmail_bodypartformatter_application_octetstream_PART_SRCS app_octetstream.cp
 kde4_add_plugin(kmail_bodypartformatter_application_octetstream
   ${kmail_bodypartformatter_application_octetstream_PART_SRCS}
 )
-kdepim4_link_unique_libraries(kmail_bodypartformatter_application_octetstream ${KDE4_KDECORE_LIBS})
+target_link_libraries(kmail_bodypartformatter_application_octetstream ${KDE4_KDECORE_LIBS})
 
 
 ########### KMail executable ###############
@@ -407,7 +407,7 @@ kdepim4_link_unique_libraries(kmail_bodypartformatter_application_octetstream ${
 set(kmail_SRCS main.cpp)
 kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
 kde4_add_executable(kmail ${kmail_SRCS})
-kdepim4_link_unique_libraries(kmail
+target_link_libraries(kmail
   ${KDE4_KDEUI_LIBS}
   ${KDE4_KDECORE_LIBS}
   kmailprivate
