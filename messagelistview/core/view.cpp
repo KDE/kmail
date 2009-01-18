@@ -1025,17 +1025,46 @@ Item * View::nextMessageItem( MessageTypeFilter messageTypeFilter, bool loop )
   return messageItemAfter( currentMessageItem( false ), messageTypeFilter, loop );
 }
 
+Item * View::deepestExpandedChild( Item * referenceItem ) const
+{
+  int children = referenceItem->childItemCount();
+  if ( children > 0 &&
+       isExpanded(mModel->index( referenceItem, 0 ) ) ) {
+    return deepestExpandedChild( referenceItem->childItem( children -1 ) );
+  }
+  else
+    return referenceItem;
+}
+
 Item * View::messageItemBefore( Item * referenceItem, MessageTypeFilter messageTypeFilter, bool loop )
 {
   if ( !storageModel() )
     return 0; // no folder
- 
+
+  // find the item to start with
   Item * above;
 
   if ( referenceItem )
   {
-    // There was a current item, we start just above it
-    above = referenceItem->itemAbove();
+    Item *parent = referenceItem->parent();
+    Item *siblingAbove = parent ?
+                         parent->itemAboveChild( referenceItem ) : 0;
+    // there was a current item: we start just above it
+    if ( ( siblingAbove && siblingAbove != referenceItem && siblingAbove != parent ) &&
+         ( siblingAbove->childItemCount() > 0 ) &&
+         (
+           ( messageTypeFilter != MessageTypeAny ) ||
+           ( isExpanded( mModel->index( siblingAbove, 0 ) ) )
+         )
+       )
+    {
+      // the current item had children: either expanded or we want unread/new messages (and so we'll expand it if it isn't)
+      above = deepestExpandedChild( siblingAbove );
+    } else {
+      // the current item had no children: ask the parent to find the item above
+      Q_ASSERT( referenceItem->parent() );
+      above = referenceItem->parent()->itemAboveChild( referenceItem );
+    }
 
     if ( ( !above ) || ( above == mModel->rootItem() ) )
     {

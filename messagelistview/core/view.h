@@ -475,6 +475,12 @@ protected:
   Item * previousMessageItem( MessageTypeFilter messageTypeFilter, bool loop );
 
   /**
+   * Returns the deepest child that is visible (i.e. not in a collapsed tree) of
+   * the specified reference item.
+   */
+  Item * deepestExpandedChild( Item * referenceItem ) const;
+
+  /**
    * Finds message item that comes "before" the reference item.
    * If reference item is 0 then the search starts from the end.
    * Returns 0 if no next message could be found.

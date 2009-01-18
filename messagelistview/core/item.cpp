@@ -134,6 +134,13 @@ Item * Item::itemAbove()
   if ( !mParent )
     return 0;
 
+  Item *siblingAbove = mParent->itemAboveChild( this );
+  if ( siblingAbove && siblingAbove != this && siblingAbove != mParent &&
+       siblingAbove->childItemCount() > 0 )
+  {
+    return siblingAbove->deepestItem();
+  }
+
   return mParent->itemAboveChild( this );
 }
 
