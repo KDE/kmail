@@ -1844,7 +1844,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
 
     QString iconName;
     QByteArray contentId = msgPart->contentId();
-    bool embeddImage = !contentId.isEmpty();
+    bool embeddImage = !contentId.isEmpty() && mReader->htmlMail();
     if ( inlineImage && !embeddImage ) {
       iconName = href;
     }
