@@ -50,6 +50,7 @@ class KMComposeWin;
 class MessageComposerJob;
 class EncryptMessageJob;
 class SetLastMessageAsUnencryptedVersionOfLastButOne;
+class DwBodyPart;
 
 namespace Kleo {
   class KeyResolver;
@@ -63,6 +64,9 @@ namespace KPIM {
   class Identity;
 }
 
+/**
+ * The MessageComposer actually creates and composes the message(s).
+ */
 class MessageComposer : public QObject {
   Q_OBJECT
   friend class ::MessageComposerJob;
@@ -96,8 +100,20 @@ class MessageComposer : public QObject {
     void done( bool );
 
   private:
+
+    /**
+     * This reads information which we need from the composer window and saves it into
+     * member variables.
+     * These include the composer text, the attachments, subject, to, cc, the reference message,
+     * the charset, the embedded images and so on.
+     */
     void readFromComposeWin();
 
+    /**
+     * This adjusts the signing/encryption policy for the message text and the attachments,
+     * based on various factors.
+     * It is called before composing the message with composeMessage().
+     */
     void adjustCryptFlags();
 
     bool encryptWithChiasmus( const Kleo::CryptoBackend::Protocol *chiasmus,
@@ -107,21 +123,32 @@ class MessageComposer : public QObject {
     void composeChiasmusMessage( KMMessage &theMessage,
                                  Kleo::CryptoMessageFormat format );
 
-    // This is the composeMessage method
+    /**
+     * This calls the other composeMessage() for each message that should be created.
+     * There can be multiple messages created, for example if we sent the encrypted version
+     * but save the unencrypted version.
+     */
     void composeMessage();
+
     // And these two are the parts that should be run after job completions
     void createUnencryptedMessageVersion();
 
-    /*
-      Internal helper function called from applyChanges(void) to allow
-      processing several messages (encrypted or unencrypted) based on
-      the same composer content.
-      That's useful for storing decrypted versions of messages which
-      were sent in encrypted form.                  (khz, 2002/06/24)
-    */
+    /**
+     * This is the main composing function. It creates the main body part and
+     * signs it, then calls continueComposeMessage().
+     *
+     * It is called from the other composeMessage() and can be called multiple times from there,
+     * to allow composing several messages (encrypted and unencrypted) based on the
+     * same composer content. That's useful for storing decrypted versions of messages which
+     * were sent in encrypted form.
+     */
     void composeMessage( KMMessage &theMessage,
                          bool doSign, bool doEncrypt,
                          Kleo::CryptoMessageFormat format );
+
+    /**
+     * This creates the EncryptMessageJobs for the message and adds them to the job queue.
+     */
     void continueComposeMessage( KMMessage &theMessage, bool doSign,
                                  bool doEncrypt,
                                  Kleo::CryptoMessageFormat format );
@@ -187,17 +214,17 @@ class MessageComposer : public QObject {
                                            const std::vector<GpgME::Key> &encryptionKeys,
                                            Kleo::CryptoMessageFormat f ) const;
 
-    /*
-      Builds a MIME object (or a flat text resp.) based upon structuring
-      information returned by a crypto plugin that was called via
-      pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
-
-      NOTE: The c string representation of the MIME object (or the
-            flat text, resp.) is returned in resultingPart, so just
-            use this string as body text of the surrounding MIME object.
-            This string *is* encoded according to contentTEncClear
-            and thus should be ready for being sent via SMTP.
-    */
+    /**
+     * Builds a MIME object (or a flat text resp.) based upon structuring
+     * information returned by a crypto plugin that was called via
+     * pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
+     *
+     * @return: The string representation of the MIME object (or the
+     *          flat text, resp.) is returned in resultingPart, so just
+     *          use this string as body text of the surrounding MIME object.
+     *          This string *is* encoded according to contentTEncClear
+     *          and thus should be ready for being sent via SMTP.
+     */
     bool processStructuringInfo( const QString bugURL,
                                  const QString contentDescriptionClear,
                                  const QByteArray contentTypeClear,
@@ -216,6 +243,12 @@ class MessageComposer : public QObject {
                          KMMessagePart newBodyPart,
                          Kleo::CryptoMessageFormat format );
 
+    /**
+     * This function creates the final message.
+     * If there are late attachments, they are added to the message, including signing/encryption.
+     * This actually adds the body parts we have created before to the main message (@p msg).
+     * After this, the message is complete and can be sent or saved.
+     */
     void addBodyAndAttachments( KMMessage *msg,
                                 const Kleo::KeyResolver::SplitInfo &si,
                                 bool doSign, bool doEncrypt,
@@ -235,40 +268,86 @@ class MessageComposer : public QObject {
     void markAllAttachmentsForEncryption( bool enc );
 
     /**
-     * Loads the embedded images of the composer in a list
+     * Loads the embedded images of the composer in a list.
+     * The images are read from the QTextDocument, then saved base64-encoded
+     * in mImages.
+     * The content ID and the image names are saved in mContentIDs and mImageNames.
+     *
+     * TODO: Add that to kmcomposereditor, and make merge the three lists into one.
      */
     void loadImages();
 
     /**
-     * Converts the img tags to tags with content-id's
-     */
-    void convertImageTags();
-
-    /**
-     * Prepares the body for multipart/related and adds the embedded images
-     */
-    void addEmbeddedImages( KMMessage &theMessage, QByteArray &body );
-
-    /**
-     * Prepares the body for adding attachments or embedded images
-     *  An inner bodypart is needed when we have embedded images, or non-signed/non-encryped attachments
-     *  An MPA body is assembled when using html. The body ends with a new boundary.
+     * Returns the inner body part.
      *
+     * The inner body part is either multipart/alternative or text/plain, depending on whether
+     * the message is a HTML message.
+     *
+     * The boundary of the multipart/alternative is saved to mSaveBoundary.
+     *
+     * @param oldContentType If this is not empty and the message is not HTML, the body part will
+     *                       be of this content type, and not text/plain
+     * @return the complete inner body part
      */
-    void assembleInnerBodypart( KMMessage &theMessage, bool doSign, QByteArray &body, QString oldContentType="" );
+    DwBodyPart* innerBodypart( KMMessage &theMessage, bool doSign, QString oldContentType = QString() );
 
+    /**
+     * Helper function for innerBodypart(). This creates and returns the body of the inner body
+     * part, which contains the text/plain and the text/html parts (with boundaries), or only
+     * the text/plain part, depending on whether the message is HTML.
+     *
+     * The boundary seperating the text/plain and text/html parts is saved in mSaveBoundary.
+     */
+    QByteArray innerBodypartBody( KMMessage &theMessage, bool doSign );
+
+    /**
+     * Returns the image body part.
+     *
+     * If the message has embedded HTML images, this is a multipart/related body part which
+     * contains the inner body part and all related images.
+     * If the message has no embedded HTML images, this is the same as innerBodyPart.
+     *
+     * The boundary of the multipart/related is saved to mSaveBoundary.
+     *
+     * @param innerBodyPart the inner body part created so far
+     * @return the complete image body part
+     */
+    DwBodyPart* imageBodyPart( KMMessage &theMessage, DwBodyPart *innerBodyPart );
+
+    /**
+     * Returns the mixed body part
+     *
+     * This is a multipart/mixed body part which contains all early attachements,
+     * and the imageBodyPart.
+     * If there are no early attachments, this is the same as imageBodyPart.
+     *
+     * The boundary of the multipart/mixed is saved to mSaveBoundary.
+     *
+     * @param imageBodyPart the image body part created so far
+     * @return the complete mixed body part
+     */
+    DwBodyPart* mixedBodyPart( KMMessage &theMessage, DwBodyPart *iamgeBodyPart,
+                               bool doSignBody, bool doEncryptBody );
+
+    // The composer window. Mainly used in readFromComposeWin() to read the information from it.
     KMComposeWin *mComposeWin;
+
     MessageComposerJob *mCurrentJob;
     KMMessage *mReferenceMessage;
+
+    // This is the list of messages we composed. Each completed message is added to this list, and
+    // the composer window uses the messages from this list for sending and saving them.
     QVector<KMMessage*> mMessageList;
-    QList<QByteArray> mImages; // list with base64 encoded images
-    QStringList mContentIDs; // content id's of the embedded images
-    QStringList mImageNames; // names of the images as they are available as resource in the editor
+
+    QList<QByteArray> mImages;  // list with base64 encoded images
+    QStringList mContentIDs;    // content id's of the embedded images
+    QStringList mImageNames;    // names of the images as they are available as resource in the editor
 
     Kleo::KeyResolver *mKeyResolver;
 
     QByteArray mSignCertFingerprint;
 
+    // The list of all attachements, including signing/encryption policy
     struct Attachment {
       Attachment( KMMessagePart *p=0, bool s=false, bool e=false )
         : part( p ), sign( s ), encrypt( e ) {}
@@ -289,12 +368,27 @@ class MessageComposer : public QObject {
     QString mBcc;
     QStringList mTo, mCc, mBccList;
     bool mDebugComposerCrypto;
+
+    // If true, we automatically determine the charset of the text part instead of taking
+    // the charset that is set in the composer window (mCharset).
     bool mAutoCharset;
+
+    // The charset which will be used for the text part. It is read from the composer window.
     QByteArray mCharset;
+
+    // True if this message is a HTML message. In this case, a multipart/alternative part will
+    // be created, with both HTML and plain text subparts.
     bool mIsRichText;
+
+    // The identity UID of the sender, as read from the composer window. Used, for example,
+    // for key retrival.
     uint mIdentityUid;
-    bool mRc; // Set this to false, if something fails during the processes
-    bool mHoldJobs; // Don't run the next job yet
+
+    // Set this to false if something fails during the processes.
+    bool mRc;
+
+    // Don't run the next job yet
+    bool mHoldJobs;
 
     // The HTML source and the plain text version of the composer's text, encoded
     QByteArray mHtmlSource;
@@ -304,20 +398,43 @@ class MessageComposer : public QObject {
     // depending on the HTML mode
     QByteArray mBodyText; 
 
-    // These are the variables of the big composeMessage(X,Y,Z) message
+    // The old body part contains the main body part, i.e. the body part before doing
+    // signing/encryption and before adding late attachments.
+    // (Note that I don't know if that also applies for inline OpenPGP and Chiasmus)
+    KMMessagePart mOldBodyPart;
+
+    // The new body part, which contains the body part that has all the signing/encryption stuff
+    // and late attachments in it.
+    // This is the final body part which is set as the body of the final message.
     KMMessagePart *mNewBodyPart;
+
     QByteArray mSignature;
 
-    QByteArray mEncodedBody; // Only needed if signing and/or encrypting
-    bool mEarlyAddAttachments; // Can attachments be added to the messagebody before signing/encrypting?
-    bool  mAllAttachmentsAreInBody;
-    KMMessagePart mOldBodyPart;
+    // This is the main body part, in the encoded version.
+    // It is only used for signing and encrypting and created in composeMessage(), after the main
+    // body part has been created.
+    QByteArray mEncodedBody;
+
+    // True if at least one attachment will be added to the main body part, i.e. added before
+    // signing/encrypting. Opposed to this, there are 'late' attachments, which are added after
+    // signing/encrypting, in addBodyAndAttachments().
+    bool mEarlyAddAttachments;
+
+    // True if all attachments are added early, see above.
+    bool mAllAttachmentsAreInBody;
+
     int mPreviousBoundaryLevel;
 
-    // The boundary is saved for later addition in the header
-    DwString  mSaveBoundary;
+    // The boundary of the body part body which we created in the last step.
+    // When creating body part bodies, for example with innerBodypartBody(), we
+    // add a boundary seperating the child body parts. However, this boundary needs
+    // to appear in the content-type header of the body part header, so we need to remember
+    // the boundary and add it to the content-type header when later creating the body part.
+    DwString mSaveBoundary;
 
+    // A list of all jobs which are pending execution
     QList<MessageComposerJob*> mJobs;
+
     bool mEncryptWithChiasmus;
     bool mPerformingSignOperation;
 };
