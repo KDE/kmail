@@ -120,14 +120,14 @@ QList< QPair< QString, int > > SortOrder::enumerateGroupSortDirectionOptions( Ag
 typedef QPair< QString, int > Pair;
 typedef QList< Pair > OptionList;
 static bool optionListHasOption( const OptionList &optionList, int optionValue,
-                                 int defaultOptionValue, bool allowDefault = true )
+                                 int defaultOptionValue )
 {
   foreach( const Pair &pair, optionList ) {
     if ( pair.second == optionValue ) {
       return true;
     }
   }
-  if ( optionValue != defaultOptionValue || !allowDefault )
+  if ( optionValue != defaultOptionValue )
     return false;
   else return true;
 }
@@ -139,21 +139,16 @@ bool SortOrder::validForAggregation( const Aggregation *aggregation ) const
   OptionList groupSortings = enumerateGroupSortingOptions( aggregation->grouping() );
   OptionList groupSortDirections = enumerateGroupSortDirectionOptions( aggregation->grouping(),
                                                                        mGroupSorting );
+  SortOrder defaultSortOrder = defaultForAggregation( aggregation );
   bool messageSortingOk = optionListHasOption( messageSortings,
-                                               mMessageSorting, SortOrder().messageSorting() );
+                                               mMessageSorting, defaultSortOrder.messageSorting() );
   bool messageSortDirectionOk = optionListHasOption( messageSortDirections, mMessageSortDirection,
-                                                     SortOrder().messageSortDirection() );
-
-  // Special hack for aggregations by date: We don't want to allow the default group sort order
-  // there, which is storage order, since it only makes sense to group the date group by date.
-  Aggregation::Grouping grouping = aggregation->grouping();
-  bool allowDefaultGroupSorting = grouping != Aggregation::GroupByDate &&
-                                  grouping != Aggregation::GroupByDateRange;
+                                                     defaultSortOrder.messageSortDirection() );
 
   bool groupSortingOk = optionListHasOption( groupSortings, mGroupSorting,
-                                             SortOrder().groupSorting(), allowDefaultGroupSorting );
+                                             defaultSortOrder.groupSorting() );
   bool groupSortDirectionOk = optionListHasOption( groupSortDirections, mGroupSortDirection,
-                                                   SortOrder().groupSortDirection() );
+                                                   defaultSortOrder.groupSortDirection() );
   return messageSortingOk && messageSortDirectionOk &&
          groupSortingOk && groupSortDirectionOk;
 }
