@@ -27,6 +27,8 @@
 #include "kmfolder.h"
 #include "maillistdrag.h"
 
+#include <kmime/kmime_codecs.h>
+
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -102,6 +104,10 @@ void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 void KMComposerEditor::dropEvent( QDropEvent *e )
 {
   const QMimeData *md = e->mimeData();
+  if ( !md )
+    return;
+
+  // If this is a list of mails, attach those mails as forwards.
   if ( KPIM::MailList::canDecode( md ) ) {
     e->accept();
     // Decode the list of serial numbers stored as the drag data
@@ -129,35 +135,36 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
     KMCommand *command = new KMForwardAttachedCommand( m_composerWin, messageList,
                                                        identity, m_composerWin );
     command->start();
-  } else if ( md->hasFormat( "image/png" ) ) {
-    emit attachPNGImageData( e->encodedData( "image/png" ) );
-  } else {
-    KUrl::List urlList = KUrl::List::fromMimeData( md );
-    if ( !urlList.isEmpty() ) {
-      e->accept();
-      KMenu p;
-      const QAction *addAsTextAction = p.addAction( i18n("Add as Text") );
-      const QAction *addAsAtmAction = p.addAction( i18n("Add as Attachment") );
-      const QAction *selectedAction = p.exec( mapToGlobal( e->pos() ) );
-      if ( selectedAction == addAsTextAction ) {
-        for ( KUrl::List::Iterator it = urlList.begin();
-              it != urlList.end(); ++it ) {
-          textCursor().insertText( (*it).url() );
-        }
-      } else if ( selectedAction == addAsAtmAction ) {
-        for ( KUrl::List::Iterator it = urlList.begin();
-              it != urlList.end(); ++it ) {
-          m_composerWin->addAttach( *it );
-        }
-      }
-    } else if ( md->hasText() ) {
-      textCursor().insertText( md->text() );
-      e->accept();
-    } else {
-      kDebug(5006) << "Unable to add dropped object";
-      return KMeditor::dropEvent( e );
+    return;
+  }
+
+  // If this is a PNG image, paste it.
+  if ( md->hasFormat( "image/png" ) ) {
+    if ( canInsertFromMimeData( md ) ) {
+      insertFromMimeData( md );
+      return;
     }
   }
+
+  // If this is a URL list, add those files as attachments
+  KUrl::List urlList = KUrl::List::fromMimeData( md );
+  if ( !urlList.isEmpty() ) {
+    e->accept();
+    foreach( const KUrl &url, urlList ) {
+       m_composerWin->addAttach( url );
+    }
+    return;
+  }
+
+  // If this is normal text, paste the text
+  if ( md->hasText() ) {
+    textCursor().insertText( md->text() );
+    e->accept();
+    return;
+  }
+
+  kDebug() << "Unable to add dropped object";
+  return KMeditor::dropEvent( e );
 }
 
 void KMComposerEditor::paste()
@@ -225,6 +232,54 @@ void KMComposerEditor::addImageHelper( const QString &imageName, const QImage &i
     mImageNames << imageNameToAdd;
   }
   textCursor().insertImage( imageNameToAdd );
+  enableRichTextMode();
+}
+
+QList<KMail::EmbeddedImage*> KMComposerEditor::embeddedImages() const
+{
+  QList<KMail::EmbeddedImage*> retImages;
+  QStringList seenImageNames;
+  QList<QTextImageFormat> imageFormats = embeddedImageFormats();
+  foreach( const QTextImageFormat &imageFormat, imageFormats ) {
+    if ( !seenImageNames.contains( imageFormat.name() ) ) {
+      QVariant data = document()->resource( QTextDocument::ImageResource, QUrl( imageFormat.name() ) );
+      QImage image = qvariant_cast<QImage>( data );
+      QBuffer buffer;
+      buffer.open( IO_WriteOnly );
+      image.save( &buffer, "PNG" );
+
+      qsrand( QDateTime::currentDateTime().toTime_t() + qHash( imageFormat.name() ) );
+      KMail::EmbeddedImage *embeddedImage = new KMail::EmbeddedImage();
+      retImages.append( embeddedImage );
+      embeddedImage->image = KMime::Codec::codecForName( "base64" )->encode( buffer.buffer() );
+      embeddedImage->imageName = imageFormat.name();
+      embeddedImage->contentID = QString( "%1" ).arg( qrand() );
+      seenImageNames.append( imageFormat.name() );
+    }
+  }
+  return retImages;
+}
+
+QList<QTextImageFormat> KMComposerEditor::embeddedImageFormats() const
+{
+  QTextDocument *doc = document();
+  QList<QTextImageFormat> retList;
+
+  QTextBlock currentBlock = doc->begin();
+  while ( currentBlock.isValid() ) {
+    QTextBlock::iterator it;
+    for ( it = currentBlock.begin(); !it.atEnd(); ++it ) {
+      QTextFragment fragment = it.fragment();
+      if ( fragment.isValid() ) {
+        QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
+        if ( imageFormat.isValid() ) {
+          retList.append( imageFormat );
+        }
+      }
+    }
+    currentBlock = currentBlock.next();
+  }
+  return retList;
 }
 
 #include "kmcomposereditor.moc"

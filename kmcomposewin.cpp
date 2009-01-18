@@ -353,9 +353,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
-  connect( mEditor, SIGNAL( attachPNGImageData(const QByteArray &) ),
-           this, SLOT( slotAttachPNGImageData(const QByteArray &) ) );
-
   mMainWidget->resize( 480, 510 );
   setCentralWidget( mMainWidget );
 
@@ -505,21 +502,6 @@ void KMComposeWin::addAttachment( const QString &name,
     msgPart->setContentDisposition( contDisp );
     addAttach( msgPart );
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachPNGImageData( const QByteArray &image )
-{
-  bool ok;
-
-  QString attName =
-    KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
-  if ( !ok ) {
-    return;
-  }
-
-  addAttachment( attName, "base64", image, "image", "png", QByteArray(),
-                 QString(), QByteArray() );
 }
 
 //-----------------------------------------------------------------------------
@@ -3115,6 +3097,7 @@ QString KMComposeWin::smartQuote( const QString & msg )
 
 void KMComposeWin::slotPasteAsAttachment()
 {
+  // If the clipboard contains a list of URL, attach each file.
   if ( KUrl::List::canDecode( QApplication::clipboard()->mimeData() ) )
   {
     QStringList data = QApplication::clipboard()->text().split('\n', QString::SkipEmptyParts);
@@ -3126,12 +3109,11 @@ void KMComposeWin::slotPasteAsAttachment()
   }
 
   const QMimeData *mimeData = QApplication::clipboard()->mimeData();
-  if ( mimeData->hasImage() ) {
-    slotAttachPNGImageData( mimeData->data( "image/png" ) );
-  } else {
+  if ( mimeData->hasText() ) {
     bool ok;
-    QString attName =
-      KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
+    QString attName = KInputDialog::getText( i18n( "Insert clipboard text as attachment" ),
+                                             i18n("Name of the attachment:"),
+                                             QString(), &ok, this );
     if ( !ok ) {
       return;
     }
@@ -3224,27 +3206,8 @@ void KMComposeWin::slotPaste()
       mimeData->hasFormat( "image/png" ) )  {
     mEditor->paste();
   } else if ( !urlList.isEmpty() ) {
-    const QString asText = i18n("Add as Text");
-    const QString asAttachment = i18n("Add as Attachment");
-    const QString text = i18n("Please select whether you want to insert the content as text into the editor, "
-        "or append the referenced file as an attachment.");
-    const QString caption = i18n("Paste as text or attachment?");
-    int id = KMessageBox::questionYesNoCancel( this, text, caption,
-        KGuiItem( asText ),
-        KGuiItem( asAttachment) );
-    switch ( id) {
-      case KMessageBox::Yes:
-        for ( KUrl::List::ConstIterator it = urlList.begin();
-            it != urlList.end(); ++it ) {
-          mEditor->textCursor().insertText( (*it).url() );
-        }
-        break;
-      case KMessageBox::No:
-        for ( KUrl::List::ConstIterator it = urlList.begin();
-            it != urlList.end(); ++it ) {
-          addAttach( *it );
-        }
-        break;
+    foreach( const KUrl &url, urlList ) {
+      addAttach( url );
     }
   } else if ( mimeData->hasHtml() && mEditor->textMode() == KMeditor::Rich ) {
     mEditor->textCursor().insertHtml( mimeData->html() );

@@ -27,11 +27,27 @@ using namespace KPIM;
 
 class KMComposeWin;
 
+namespace KMail {
+
+/**
+  * Holds information about an embedded HTML image.
+  * A list with all images can be retrieved with KMComposerEditor::embeddedImages().
+  */
+struct EmbeddedImage
+{
+  QByteArray image;   ///< The image, encoded as PNG with base64 encoding
+  QString contentID;  ///< The content id of the embedded image
+  QString imageName;  ///< Name of the image as it is available as a resource in the editor
+};
+
+}
+
 class KMComposerEditor : public KMeditor
 {
   Q_OBJECT
 
   public:
+
     /**
      * Constructs a KMComposerEditor object.
      */
@@ -69,6 +85,18 @@ class KMComposerEditor : public KMeditor
      */
      void addImage( const KUrl &url );
 
+     /**
+      * Get a list with all embedded HTML images.
+      * If the same image is contained twice or more in the editor, it will have only
+      * one entry in this list.
+      *
+      * The ownership of the EmbeddedImage pointers is transferred to the caller, the
+      * caller is responsible for deleting them again.
+      *
+      * @return a list of embedded HTML images of the editor.
+      */
+     QList<KMail::EmbeddedImage*> embeddedImages() const;
+
   protected:
 
     /**
@@ -80,6 +108,11 @@ class KMComposerEditor : public KMeditor
      * @param image the actual image to add
      */
     void addImageHelper( const QString &imageName, const QImage &image );
+
+    /**
+     * Helper function to get the list of all QTextImageFormats in the document.
+     */
+    QList<QTextImageFormat> embeddedImageFormats() const;
 
   public slots:
 
@@ -106,7 +139,6 @@ class KMComposerEditor : public KMeditor
      void insertFromMimeData( const QMimeData *source );
 
   signals:
-     void attachPNGImageData( const QByteArray &image );
      void insertSnippet();
 
 };

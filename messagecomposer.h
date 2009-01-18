@@ -64,6 +64,10 @@ namespace KPIM {
   class Identity;
 }
 
+namespace KMail {
+  class EmbeddedImage;
+}
+
 /**
  * The MessageComposer actually creates and composes the message(s).
  */
@@ -268,16 +272,6 @@ class MessageComposer : public QObject {
     void markAllAttachmentsForEncryption( bool enc );
 
     /**
-     * Loads the embedded images of the composer in a list.
-     * The images are read from the QTextDocument, then saved base64-encoded
-     * in mImages.
-     * The content ID and the image names are saved in mContentIDs and mImageNames.
-     *
-     * TODO: Add that to kmcomposereditor, and make merge the three lists into one.
-     */
-    void loadImages();
-
-    /**
      * Returns the inner body part.
      *
      * The inner body part is either multipart/alternative or text/plain, depending on whether
@@ -339,10 +333,6 @@ class MessageComposer : public QObject {
     // the composer window uses the messages from this list for sending and saving them.
     QVector<KMMessage*> mMessageList;
 
-    QList<QByteArray> mImages;  // list with base64 encoded images
-    QStringList mContentIDs;    // content id's of the embedded images
-    QStringList mImageNames;    // names of the images as they are available as resource in the editor
-
     Kleo::KeyResolver *mKeyResolver;
 
     QByteArray mSignCertFingerprint;
@@ -356,6 +346,9 @@ class MessageComposer : public QObject {
       bool encrypt;
     };
     QVector<Attachment> mAttachments;
+
+    // The list of embedded HTML images of the editor
+    QList<KMail::EmbeddedImage*> mEmbeddedImages;
 
     QString mPGPSigningKey, mSMIMESigningKey;
     bool mUseOpportunisticEncryption;

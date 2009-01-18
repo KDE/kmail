@@ -312,7 +312,6 @@ class KMComposeWin : public KMail::Composer
     void slotCopy();
     void slotPaste();
     void slotPasteAsAttachment();
-    void slotAttachPNGImageData( const QByteArray &image );
     void slotFormatReset();
     void slotMarkAll();
     void slotAddImage();

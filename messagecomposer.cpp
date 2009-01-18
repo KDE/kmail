@@ -84,7 +84,6 @@
 #include <QTimer>
 #include <QList>
 #include <QByteArray>
-#include <QBuffer>
 
 #include <algorithm>
 #include <memory>
@@ -340,6 +339,8 @@ MessageComposer::MessageComposer( KMComposeWin *win )
 
 MessageComposer::~MessageComposer()
 {
+  qDeleteAll( mEmbeddedImages );
+  mEmbeddedImages.clear();
   delete mKeyResolver;
   mKeyResolver = 0;
 }
@@ -437,36 +438,6 @@ void MessageComposer::slotDoNextJob()
   }
 }
 
-void MessageComposer::loadImages()
-{
-  QTextDocument *qtd = mComposeWin->mEditor->document();
-  QString imgname;
-  QByteArray qba;
-
-  QTextBlock currentBlock = mComposeWin->mEditor->document()->begin();
-  while ( currentBlock.isValid() ) {
-    QTextBlock::iterator it;
-    for (it = currentBlock.begin(); !it.atEnd(); ++it) {
-      QTextFragment fragment = it.fragment();
-      if ( fragment.isValid() ) {
-        QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
-        if ( imageFormat.isValid()  && ! mImageNames.contains( imageFormat.name() ) ) {
-          QVariant data = qtd->resource( QTextDocument::ImageResource, QUrl( imageFormat.name() ) );
-          QImage qimage = qvariant_cast<QImage>( data );
-          QBuffer buffer( &qba );
-          buffer.open( IO_WriteOnly );
-          qimage.save( &buffer, "PNG" ); // writes image into buffer in PNG format
-          mImages << KMime::Codec::codecForName( "base64" )->encode( buffer.buffer() );
-          mImageNames << imageFormat.name();
-          qsrand( QDateTime::currentDateTime().toTime_t()+fragment.position()*100 );
-          mContentIDs << QString( "%1" ).arg( qrand() );
-        }
-      }
-    }
-    currentBlock = currentBlock.next();
- }
-}
-
 void MessageComposer::readFromComposeWin()
 {
   // Copy necessary attributes over
@@ -476,8 +447,6 @@ void MessageComposer::readFromComposeWin()
   mSigningRequested = mSignBody; // for now; will be adjusted depending on attachments
   mEncryptBody = mComposeWin->mEncryptAction->isChecked();
   mEncryptionRequested = mEncryptBody; // for now; will be adjusted depending on attachments
-
-  loadImages(); // encode all images to base64 and put them in a list
 
   mAutoCharset = mComposeWin->mAutoCharset;
   mCharset = mComposeWin->mCharset;
@@ -498,6 +467,7 @@ void MessageComposer::readFromComposeWin()
   }
   mUseOpportunisticEncryption = GlobalSettings::self()->pgpAutoEncrypt();
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
+  mEncryptWithChiasmus = mComposeWin->mEncryptWithChiasmus;
 
   if ( mAutoCharset ) {
     bool charsetFound = autoDetectCharset();
@@ -506,7 +476,7 @@ void MessageComposer::readFromComposeWin()
       return;
     }
   }
-  mReferenceMessage->setCharset(mCharset);
+  mReferenceMessage->setCharset( mCharset );
 
   mReferenceMessage->setTo(mComposeWin->to());
   mReferenceMessage->setFrom(mComposeWin->from());
@@ -579,7 +549,7 @@ void MessageComposer::readFromComposeWin()
                                         mComposeWin->signFlagOfAttachment( i ),
                                         mComposeWin->encryptFlagOfAttachment( i ) ) );
 
-  mEncryptWithChiasmus = mComposeWin->mEncryptWithChiasmus;
+  mEmbeddedImages = mComposeWin->mEditor->embeddedImages();
 
   mIsRichText = ( mComposeWin->mEditor->textMode() == KMeditor::Rich );
   mIdentityUid = mComposeWin->identityUid();
@@ -1695,10 +1665,10 @@ QByteArray MessageComposer::innerBodypartBody( KMMessage &theMessage, bool doSig
 
     // For all embedded images, replace the image name in the <img> tag with cid:content-id,
     // so that the HTML references the image body parts, see RFC 2557.
-    if ( mImages.size() > 0 ) {
-      for ( int i = 0; i < mImages.size(); i++ ) {
-        QString newImageName = "cid:" + mContentIDs.at(i).toLocal8Bit();
-        htmlbody.replace( QByteArray( "\"" + mImageNames.at(i).toLocal8Bit() + "\"" ),
+    if ( mEmbeddedImages.size() > 0 ) {
+      foreach( const KMail::EmbeddedImage *image, mEmbeddedImages ) {
+        QString newImageName = "cid:" + image->contentID.toLocal8Bit();
+        htmlbody.replace( QByteArray( "\"" + image->imageName.toLocal8Bit() + "\"" ),
                           QByteArray( "\"" + newImageName.toLocal8Bit() ) + "\"" );
       }
     }
@@ -1772,7 +1742,7 @@ DwBodyPart* MessageComposer::innerBodypart( KMMessage &theMessage, bool doSign,
 
 DwBodyPart* MessageComposer::imageBodyPart( KMMessage &theMessage, DwBodyPart *innerBodyPart )
 {
-  if ( mImages.size() == 0 )
+  if ( mEmbeddedImages.size() == 0 )
     return innerBodyPart;
 
   // Get a boundary string
@@ -1794,16 +1764,16 @@ DwBodyPart* MessageComposer::imageBodyPart( KMMessage &theMessage, DwBodyPart *i
   imageBodyPartBody +=     multipartRelatedBoundary;
   imageBodyPartBody +=                            '\n';
   imageBodyPartBody += innerBodyPart->AsString().c_str();
-  for ( int i = 0; i < mImages.size(); i++ )
+  foreach ( const KMail::EmbeddedImage *image, mEmbeddedImages )
   {
     // Create the KMMessagePart and add the encoded image to it.
     KMMessagePart singleImageBodyPart;
-    singleImageBodyPart.setName( mImageNames.at( i ).toLocal8Bit() );
-    singleImageBodyPart.setBodyEncodedBinary( mImages.at( i ) );
+    singleImageBodyPart.setName( image->imageName.toLocal8Bit() );
+    singleImageBodyPart.setBodyEncodedBinary( image->image );
     singleImageBodyPart.setContentTransferEncodingStr( "base64" );
     singleImageBodyPart.setTypeStr( "image" );
     singleImageBodyPart.setSubtypeStr( "png" );
-    QString contentId = "<" + mContentIDs.at( i ) + ">";
+    QString contentId = "<" + image->contentID + ">";
     singleImageBodyPart.setContentId( QByteArray( contentId.toLocal8Bit() ) );
 
     // Create a DwBodyPart out of the KMMessagePart, get its string representation, and add
