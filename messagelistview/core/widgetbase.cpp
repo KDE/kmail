@@ -252,7 +252,7 @@ void Widget::setDefaultThemeForStorageModel( const StorageModel * storageModel )
 
 void Widget::checkSortOrder( const StorageModel *storageModel )
 {
-  if ( mAggregation && !mSortOrder.validForAggregation( mAggregation ) ) {
+  if ( storageModel && mAggregation && !mSortOrder.validForAggregation( mAggregation ) ) {
     kDebug() << "Could not restore sort order for folder" << storageModel->id();
     mSortOrder = SortOrder::defaultForAggregation( mAggregation );
 
