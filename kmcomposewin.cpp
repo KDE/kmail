@@ -609,7 +609,8 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
   GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
-  GlobalSettings::self()->setUseHtmlMarkup( mEditor->textMode() == KMeditor::Rich );
+  if ( !mForceDisableHtml )
+    GlobalSettings::self()->setUseHtmlMarkup( mEditor->textMode() == KMeditor::Rich );
   GlobalSettings::self()->setComposerSize( size() );
   GlobalSettings::self()->setShowSnippetManager( mSnippetAction->isChecked() );
 
