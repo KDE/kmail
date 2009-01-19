@@ -65,7 +65,7 @@ namespace KPIM {
 }
 
 namespace KMail {
-  class EmbeddedImage;
+  struct EmbeddedImage;
 }
 
 /**
