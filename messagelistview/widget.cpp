@@ -656,7 +656,6 @@ void Widget::viewMessageListContextPopupRequest( const QList< Core::MessageItem 
   menu.addAction( mMainWidget->printAction() );
   menu.addAction( mMainWidget->saveAsAction() );
   menu.addAction( mMainWidget->saveAttachmentsAction() );
-  menu.addAction( mMainWidget->exportToHtmlAction() );
 
   menu.addSeparator();
 
@@ -670,9 +669,6 @@ void Widget::viewMessageListContextPopupRequest( const QList< Core::MessageItem 
     if ( mMainWidget->trashThreadAction()->isEnabled() )
       menu.addAction( mMainWidget->trashThreadAction() );
   }
-
-  menu.addSeparator();
-  menu.addAction( mMainWidget->viewFullThreadAction() );
 
   menu.addSeparator();
 

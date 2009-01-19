@@ -150,8 +150,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *applyAllFiltersAction() const { return mApplyAllFiltersAction; }
     KAction *findInMessageAction() const { return mFindInMessageAction; }
     KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
-    KAction *exportToHtmlAction() const { return mExportToHtmlAction; }
-    KAction *viewFullThreadAction() const { return mViewFullThreadAction; }
     KAction *openAction() const { return mOpenAction; }
     KAction *viewSourceAction() const { return mViewSourceAction; }
     KMail::MessageActions *messageActions() const { return mMsgActions; }
@@ -240,9 +238,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * Implements the "move to trash" action
      */
     void slotTrashMsg();
-
-    void slotExportSelectedMessagesToHtml();
-    void slotViewFullCurrentThread();
 
     void slotCheckMail();
 
@@ -655,8 +650,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KToggleAction *mToggleThreadToActAction;
     KToggleAction *mToggleThreadFlagAction;
     KToggleAction* mSizeColumnToggle;
-    KAction *mExportToHtmlAction;
-    KAction *mViewFullThreadAction;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
