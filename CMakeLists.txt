@@ -373,7 +373,7 @@ set_target_properties(kmailprivate
 
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
 kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
-target_link_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
+target_link_libraries(kcm_kmail  ${KDE4_KDEUI_LIBS} kmailprivate )
 
 ########### kmailpart ###############
 
