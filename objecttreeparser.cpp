@@ -1822,28 +1822,32 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     result.setInlineEncryptionState( inlineEncryptionState );
   }
 
-  void ObjectTreeParser::writePartIcon( KMMessagePart * msgPart, int partNum, bool inlineImage ) {
+  void ObjectTreeParser::writePartIcon( KMMessagePart * msgPart, int partNum, bool inlineImage )
+  {
     if ( !mReader || !msgPart )
       return;
 
     QString label = msgPart->fileName();
-    if( label.isEmpty() )
+    if ( label.isEmpty() )
       label = msgPart->name();
-    if( label.isEmpty() )
-      label = "unnamed";
+    if ( label.isEmpty() )
+      label = i18n( "Unnamed" );
     label = KMMessage::quoteHtmlChars( label, true );
 
     QString comment = msgPart->contentDescription();
     comment = KMMessage::quoteHtmlChars( comment, true );
-    if ( label == comment ) comment.clear();
+    if ( label == comment )
+      comment.clear();
 
     QString fileName = mReader->writeMessagePartToTempFile( msgPart, partNum );
-
     QString href = "file:" + KUrl::toPercentEncoding( fileName ) ;
 
     QString iconName;
-    if( inlineImage )
+    QByteArray contentId = msgPart->contentId();
+    bool embeddImage = !contentId.isEmpty() && mReader->htmlMail();
+    if ( inlineImage && !embeddImage ) {
       iconName = href;
+    }
     else {
       iconName = msgPart->iconName();
       if( iconName.right( 14 ) == "mime_empty.png" ) {
@@ -1852,12 +1856,11 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
       }
     }
 
-    QByteArray contentId = msgPart->contentId();
-    if ( !contentId.isEmpty() ) {
+    if ( embeddImage ) {
       htmlWriter()->embedPart( contentId, href );
     }
 
-    if( inlineImage )
+    if ( inlineImage ) {
       // show the filename of the image below the embedded image
       htmlWriter()->queue( "<div><a href=\"" + href + "\">"
                            "<img src=\"" + iconName + "\" border=\"0\" style=\"max-width: 100%\"></a>"
@@ -1865,12 +1868,14 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
                            "<div><a href=\"" + href + "\">" + label + "</a>"
                            "</div>"
                            "<div>" + comment + "</div><br>" );
-    else
+    }
+    else {
       // show the filename next to the image
       htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
                            iconName + "\" border=\"0\" style=\"max-width: 100%\">" + label +
                            "</a></div>"
                            "<div>" + comment + "</div><br>" );
+    }
   }
 
 #define SIG_FRAME_COL_UNDEF  99

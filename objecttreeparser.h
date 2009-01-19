@@ -232,7 +232,7 @@ namespace KMail {
                           const QTextCodec * codec,
                           ProcessResult & result, bool decorate );
 
-    void writePartIcon( KMMessagePart * msgPart, int partNumber, bool inlineImage=false );
+    void writePartIcon( KMMessagePart * msgPart, int partNumber, bool inlineImage = false );
 
     QString sigStatusToString( const Kleo::CryptoBackend::Protocol * cryptProto,
                                int status_code,
