@@ -208,7 +208,7 @@ const Aggregation * Manager::aggregation( const QString &id )
   Aggregation * opt = mAggregations.value( id );
   if ( opt )
     return opt;
-    
+
   return defaultAggregation();
 }
 
@@ -217,7 +217,7 @@ const Aggregation * Manager::defaultAggregation()
   KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelAggregations" );
 
   QString aggregationId = conf.readEntry( QString( "DefaultSet" ), "" );
-   
+
   Aggregation * opt = 0;
 
   if ( !aggregationId.isEmpty() )
@@ -247,8 +247,8 @@ void Manager::saveAggregationForStorageModel( const StorageModel *storageModel, 
   else
     conf.deleteEntry( QString( "SetForStorageModel%1" ).arg( storageModel->id() ) );
 
-  // This always becomes the "current" default aggregation
-  conf.writeEntry( QString( "DefaultSet" ), id );
+  if ( !storageUsesPrivateAggregation )
+    conf.writeEntry( QString( "DefaultSet" ), id );
 }
 
 
@@ -301,16 +301,12 @@ void Manager::createDefaultAggregations()
                 "The group for a thread is selected by the most recent message in it. " \
                 "So for example, in \"Today\" you will find all the messages arrived today " \
                 "and all the threads that have been active today."
-            ),
+             ),
           Aggregation::GroupByDateRange,
-          Aggregation::SortGroupsByDateTime,
-          Aggregation::Descending,
           Aggregation::ExpandRecentGroups,
           Aggregation::PerfectReferencesAndSubject,
           Aggregation::MostRecentMessage,
           Aggregation::ExpandThreadsWithUnreadOrImportantMessages,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Descending,
           Aggregation::FavorInteractivity
        )
     );
@@ -323,14 +319,10 @@ void Manager::createDefaultAggregations()
                 "So for example, in \"Today\" you will simply find all the messages arrived today."
             ),
           Aggregation::GroupByDateRange,
-          Aggregation::SortGroupsByDateTime,
-          Aggregation::Descending,
           Aggregation::ExpandRecentGroups,
           Aggregation::NoThreading,
           Aggregation::MostRecentMessage,
           Aggregation::NeverExpandThreads,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Descending,
           Aggregation::FavorInteractivity
        )
     );
@@ -345,14 +337,10 @@ void Manager::createDefaultAggregations()
                 "and all the threads that have been active today."
             ),
           Aggregation::GroupByDate,
-          Aggregation::SortGroupsByDateTime,
-          Aggregation::Descending,
           Aggregation::ExpandRecentGroups,
           Aggregation::PerfectReferencesAndSubject,
           Aggregation::MostRecentMessage,
           Aggregation::ExpandThreadsWithUnreadOrImportantMessages,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Descending,
           Aggregation::FavorInteractivity
        )
     );
@@ -365,14 +353,10 @@ void Manager::createDefaultAggregations()
                 "So for example, in \"Today\" you will simply find all the messages arrived today."
             ),
           Aggregation::GroupByDate,
-          Aggregation::SortGroupsByDateTime,
-          Aggregation::Descending,
           Aggregation::ExpandRecentGroups,
           Aggregation::NoThreading,
           Aggregation::MostRecentMessage,
           Aggregation::NeverExpandThreads,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Descending,
           Aggregation::FavorInteractivity
        )
     );
@@ -384,14 +368,10 @@ void Manager::createDefaultAggregations()
                 "messages displayed with the most recent on bottom"
             ),
           Aggregation::NoGrouping,
-          Aggregation::SortGroupsByDateTimeOfMostRecent,
-          Aggregation::Ascending,
           Aggregation::NeverExpandGroups,
           Aggregation::PerfectReferencesAndSubject,
           Aggregation::TopmostMessage,
           Aggregation::ExpandThreadsWithUnreadOrImportantMessages,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Ascending,
           Aggregation::FavorInteractivity
        )
     );
@@ -403,14 +383,10 @@ void Manager::createDefaultAggregations()
                 "and messages displayed with the most recent on top by default"
             ),
           Aggregation::NoGrouping,
-          Aggregation::SortGroupsByDateTimeOfMostRecent,
-          Aggregation::Ascending,
           Aggregation::NeverExpandGroups,
           Aggregation::NoThreading,
           Aggregation::TopmostMessage,
           Aggregation::NeverExpandThreads,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Descending,
           Aggregation::FavorInteractivity
         )
     );
@@ -423,14 +399,10 @@ void Manager::createDefaultAggregations()
                 "Messages are not threaded and the most recent message is displayed on bottom."
             ),
           Aggregation::GroupBySenderOrReceiver,
-          Aggregation::SortGroupsBySenderOrReceiver,
-          Aggregation::Ascending,
           Aggregation::NeverExpandGroups,
           Aggregation::NoThreading,
           Aggregation::TopmostMessage,
           Aggregation::NeverExpandThreads,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Ascending,
           Aggregation::FavorSpeed
         )
     );
@@ -442,14 +414,10 @@ void Manager::createDefaultAggregations()
                 "Groups are sorted by the user name or e-mail. "
             ),
           Aggregation::GroupBySenderOrReceiver,
-          Aggregation::SortGroupsBySenderOrReceiver,
-          Aggregation::Ascending,
           Aggregation::NeverExpandGroups,
           Aggregation::PerfectReferencesAndSubject,
           Aggregation::TopmostMessage,
           Aggregation::NeverExpandThreads,
-          Aggregation::SortMessagesByDateTime,
-          Aggregation::Ascending,
           Aggregation::FavorSpeed
         )
     );
@@ -494,13 +462,34 @@ void Manager::aggregationsConfigurationCompleted()
     ( *it )->aggregationsChanged();
 }
 
+const SortOrder Manager::sortOrderForStorageModel( const StorageModel *storageModel, bool *storageUsesPrivateSortOrder )
+{
+  Q_ASSERT( storageUsesPrivateSortOrder );
+
+  *storageUsesPrivateSortOrder = false; // this is by default
+
+  if ( !storageModel )
+    return SortOrder();
+
+  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelSortOrder" );
+  SortOrder ret;
+  ret.readConfig( conf, storageModel->id(), storageUsesPrivateSortOrder );
+  return ret;
+}
+
+void Manager::saveSortOrderForStorageModel( const StorageModel *storageModel,
+                                            const SortOrder& order, bool storageUsesPrivateSortOrder )
+{
+  KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelSortOrder" );
+  order.writeConfig( conf, storageModel->id(), storageUsesPrivateSortOrder );
+}
 
 const Theme * Manager::theme( const QString &id )
 {
   Theme * opt = mThemes.value( id );
   if ( opt )
     return opt;
-    
+
   return defaultTheme();
 }
 
@@ -509,7 +498,7 @@ const Theme * Manager::defaultTheme()
   KConfigGroup conf( KMKernel::config(), "MessageListView::StorageModelThemes" );
 
   QString themeId = conf.readEntry( QString( "DefaultSet" ), "" );
-   
+
   Theme * opt = 0;
 
   if ( !themeId.isEmpty() )
@@ -542,8 +531,8 @@ void Manager::saveThemeForStorageModel( const StorageModel *storageModel, const 
   else
     conf.deleteEntry( QString( "SetForStorageModel%1" ).arg( storageModel->id() ) );
 
-  // This always becomes the "current" default theme
-  conf.writeEntry( QString( "DefaultSet" ), id );
+  if ( !storageUsesPrivateTheme )
+    conf.writeEntry( QString( "DefaultSet" ), id );
 }
 
 
@@ -587,7 +576,7 @@ void Manager::addTheme( Theme *set )
   mThemes.insert( set->id(), set );
 }
 
-static Theme::Column * add_theme_simple_text_column( Theme * s, const QString &name, Theme::ContentItem::Type type, bool visibleByDefault, Aggregation::MessageSorting messageSorting, bool alignRight, bool addGroupHeaderItem )
+static Theme::Column * add_theme_simple_text_column( Theme * s, const QString &name, Theme::ContentItem::Type type, bool visibleByDefault, SortOrder::MessageSorting messageSorting, bool alignRight, bool addGroupHeaderItem )
 {
   Theme::Column * c = new Theme::Column();
   c->setLabel( name );
@@ -627,7 +616,7 @@ static Theme::Column * add_theme_simple_text_column( Theme * s, const QString &n
   return c;
 }
 
-static Theme::Column * add_theme_simple_icon_column( Theme * s, const QString &name, Theme::ContentItem::Type type, bool visibleByDefault, Aggregation::MessageSorting messageSorting )
+static Theme::Column * add_theme_simple_icon_column( Theme * s, const QString &name, Theme::ContentItem::Type type, bool visibleByDefault, SortOrder::MessageSorting messageSorting )
 {
   Theme::Column * c = new Theme::Column();
   c->setLabel( name );
@@ -665,7 +654,7 @@ void Manager::createDefaultThemes()
 
     c = new Theme::Column();
     c->setLabel( i18nc( "@title:column Subject of messages", "Subject" ) );
-    c->setMessageSorting( Aggregation::SortMessagesBySubject );
+    c->setMessageSorting( SortOrder::SortMessagesBySubject );
 
       r = new Theme::Row();
         i = new Theme::ContentItem( Theme::ContentItem::ExpandedStateIcon );
@@ -696,23 +685,23 @@ void Manager::createDefaultThemes()
 
   s->addColumn( c );
 
-  c = add_theme_simple_text_column( s, i18n( "Sender/Receiver" ), Theme::ContentItem::SenderOrReceiver, true, Aggregation::SortMessagesBySenderOrReceiver, false, false);
+  c = add_theme_simple_text_column( s, i18n( "Sender/Receiver" ), Theme::ContentItem::SenderOrReceiver, true, SortOrder::SortMessagesBySenderOrReceiver, false, false);
   c->setIsSenderOrReceiver( true );
-  add_theme_simple_text_column( s, i18nc( "Sender of a message", "Sender" ), Theme::ContentItem::Sender, false, Aggregation::SortMessagesBySender, false, false );
-  add_theme_simple_text_column( s, i18nc( "Receiver of a message", "Receiver" ), Theme::ContentItem::Receiver, false, Aggregation::SortMessagesByReceiver, false, false );
-  add_theme_simple_text_column( s, i18nc( "Date of a message", "Date" ), Theme::ContentItem::Date, true, Aggregation::SortMessagesByDateTime, false, false );
-  add_theme_simple_text_column( s, i18n( "Most Recent Date" ), Theme::ContentItem::MostRecentDate, false, Aggregation::SortMessagesByDateTimeOfMostRecent, false, true );
-  add_theme_simple_text_column( s, i18nc( "Size of a message", "Size" ), Theme::ContentItem::Size, false, Aggregation::SortMessagesBySize, false, false );
-  add_theme_simple_icon_column( s, i18nc( "Attachement indication", "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), Theme::ContentItem::ImportantStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Action Item" ), Theme::ContentItem::ActionItemStateIcon, false, Aggregation::SortMessagesByActionItemStatus );
-  add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), Theme::ContentItem::SpamHamStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Watched/Ignored" ), Theme::ContentItem::WatchedIgnoredStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Encryption" ), Theme::ContentItem::EncryptionStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Signature" ), Theme::ContentItem::SignatureStateIcon, false, Aggregation::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Tag List" ), Theme::ContentItem::TagList, false, Aggregation::NoMessageSorting );
+  add_theme_simple_text_column( s, i18nc( "Sender of a message", "Sender" ), Theme::ContentItem::Sender, false, SortOrder::SortMessagesBySender, false, false );
+  add_theme_simple_text_column( s, i18nc( "Receiver of a message", "Receiver" ), Theme::ContentItem::Receiver, false, SortOrder::SortMessagesByReceiver, false, false );
+  add_theme_simple_text_column( s, i18nc( "Date of a message", "Date" ), Theme::ContentItem::Date, true, SortOrder::SortMessagesByDateTime, false, false );
+  add_theme_simple_text_column( s, i18n( "Most Recent Date" ), Theme::ContentItem::MostRecentDate, false, SortOrder::SortMessagesByDateTimeOfMostRecent, false, true );
+  add_theme_simple_text_column( s, i18nc( "Size of a message", "Size" ), Theme::ContentItem::Size, false, SortOrder::SortMessagesBySize, false, false );
+  add_theme_simple_icon_column( s, i18nc( "Attachement indication", "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), Theme::ContentItem::ImportantStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Action Item" ), Theme::ContentItem::ActionItemStateIcon, false, SortOrder::SortMessagesByActionItemStatus );
+  add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), Theme::ContentItem::SpamHamStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Watched/Ignored" ), Theme::ContentItem::WatchedIgnoredStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Encryption" ), Theme::ContentItem::EncryptionStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Signature" ), Theme::ContentItem::SignatureStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Tag List" ), Theme::ContentItem::TagList, false, SortOrder::NoMessageSorting );
 
   s->resetColumnState(); // so it's initially set from defaults
 

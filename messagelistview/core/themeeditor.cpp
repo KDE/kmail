@@ -117,7 +117,7 @@ ThemeColumnPropertiesDialog::ThemeColumnPropertiesDialog( QWidget * parent, Them
   mNameEdit->setText( mColumn->label() );
   mVisibleByDefaultCheck->setChecked( mColumn->visibleByDefault() );
   mIsSenderOrReceiverCheck->setChecked( mColumn->isSenderOrReceiver() );
-  ComboBoxUtils::fillIntegerOptionCombo( mMessageSortingCombo, Aggregation::enumerateMessageSortingOptions( Aggregation::PerfectReferencesAndSubject ) );
+  ComboBoxUtils::fillIntegerOptionCombo( mMessageSortingCombo, SortOrder::enumerateMessageSortingOptions( Aggregation::PerfectReferencesAndSubject ) );
   ComboBoxUtils::setIntegerOptionComboValue( mMessageSortingCombo, mColumn->messageSorting() );
 
 }
@@ -131,8 +131,8 @@ void ThemeColumnPropertiesDialog::slotOkButtonClicked()
   mColumn->setVisibleByDefault( mVisibleByDefaultCheck->isChecked() );
   mColumn->setIsSenderOrReceiver( mIsSenderOrReceiverCheck->isChecked() );
   mColumn->setMessageSorting(
-      static_cast< Aggregation::MessageSorting >(
-          ComboBoxUtils::getIntegerOptionComboValue( mMessageSortingCombo, Aggregation::NoMessageSorting )
+      static_cast< SortOrder::MessageSorting >(
+          ComboBoxUtils::getIntegerOptionComboValue( mMessageSortingCombo, SortOrder::NoMessageSorting )
         )
     );
 

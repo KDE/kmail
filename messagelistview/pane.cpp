@@ -92,9 +92,6 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
   // list. We have to add the dummy i18n calls to reserve them before the string
   // freeze.
 
-  // We need this to have a global sort order (just like global theme and aggregation)
-  i18n( "Folder Always Uses This Sort Order" );
-
   // the current tab title is "empty", so loading is better
   i18nc( "tab title when loading an IMAP folder", "Loading..." );
 

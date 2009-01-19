@@ -30,7 +30,7 @@
 #include <QColor>
 
 #include "messagelistview/core/optionset.h"
-#include "messagelistview/core/aggregation.h" // for Aggregation::MessageSorting
+#include "messagelistview/core/sortorder.h"
 
 class QPaintDevice;
 
@@ -709,7 +709,7 @@ public:
     QString mLabel;                                   ///< The label visible in the column header
     bool mVisibleByDefault;                           ///< Is this column visible by default ?
     bool mIsSenderOrReceiver;                         ///< If this column displays the sender/receiver field then we will update its label on the fly
-    Aggregation::MessageSorting mMessageSorting;      ///< The message sort order we switch to when clicking on this column
+    SortOrder::MessageSorting mMessageSorting;        ///< The message sort order we switch to when clicking on this column
     QList< Row * > mGroupHeaderRows;                  ///< The list of rows we display in this column for a GroupHeaderItem
     QList< Row * > mMessageRows;                      ///< The list of rows we display in this column for a MessageItem
     // cache
@@ -765,14 +765,14 @@ public:
      * Returns the sort order for messages that we should switch to
      * when clicking on this column's header (if visible at all).
      */
-    Aggregation::MessageSorting messageSorting() const
+    SortOrder::MessageSorting messageSorting() const
       { return mMessageSorting; };
 
     /**
      * Sets the sort order for messages that we should switch to
      * when clicking on this column's header (if visible at all).
      */
-    void setMessageSorting( Aggregation::MessageSorting ms )
+    void setMessageSorting( SortOrder::MessageSorting ms )
       { mMessageSorting = ms; };
 
     /**

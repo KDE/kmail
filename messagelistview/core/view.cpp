@@ -144,9 +144,6 @@ void View::setAggregation( const Aggregation * aggregation )
 {
   mAggregation = aggregation;
   mModel->setAggregation( aggregation );
-
-  if ( !mAggregation )
-    return;
 }
 
 void View::setTheme( Theme * theme )
@@ -155,6 +152,11 @@ void View::setTheme( Theme * theme )
   mTheme = theme;
   mDelegate->setTheme( theme );
   mModel->setTheme( theme );
+}
+
+void View::setSortOrder( const SortOrder * sortOrder )
+{
+  mModel->setSortOrder( sortOrder );
 }
 
 void View::reload()
@@ -224,8 +226,6 @@ void View::applyThemeColumns()
 
   if ( mApplyThemeColumnsTimer->isActive() )
     mApplyThemeColumnsTimer->stop();
- 
-  kDebug() << "Apply theme columns (VISIBLE:" << isVisible() << ")";
 
   if ( !mTheme )
     return;
@@ -267,9 +267,6 @@ void View::applyThemeColumns()
 
   QList< Theme::Column * >::ConstIterator it;
   int idx = 0;
-
-  kDebug() << "Going to really apply columns";
-
 
   // Gather total size "hint" for visible sections: if the widths of the columns wers
   // all saved then the total hint is equal to the total saved width.
@@ -322,7 +319,6 @@ void View::applyThemeColumns()
       if ( realWidth < 2 )
         realWidth = 2; // don't allow very insane values 
 
-      kDebug() << "Column " << idx << " saved " << savedWidth << " hint " << hintWidth << " chosen " << realWidth;
       totalVisibleWidth += realWidth;
     } else {
       // Column not visible
@@ -333,8 +329,6 @@ void View::applyThemeColumns()
 
     idx++;
   }
-
-  kDebug() << "Total visible width before fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
   // Now the algorithm above may be wrong for several reasons...
   // - We're using fixed widths for certain columns and proportional
@@ -457,8 +451,6 @@ void View::applyThemeColumns()
     idx++;
   }
 
-  kDebug() << "Total visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
-
   totalVisibleWidth = 0;
   idx = 0;
 
@@ -468,18 +460,14 @@ void View::applyThemeColumns()
   {
     if ( !header()->isSectionHidden( idx ) )
     {
-      kDebug() << "!! Final size for column " << idx << " is " << header()->sectionSize( idx );
       if ( !( *it )->currentlyVisible() )
       {
         bTriggeredQtBug = true;
-        kDebug() << "!! ERROR: Qt screwed up: I've set column " << idx << " to hidden but it's shown";
       }
       totalVisibleWidth += header()->sectionSize( idx );
     }
     idx++;
   }
-  
-  kDebug() << "Total real visible width after fixing is " << totalVisibleWidth << ", viewport width is " << viewport()->width();
 
   setHeaderHidden( mTheme->viewHeaderPolicy() == Theme::NeverShowHeader );
 
@@ -507,8 +495,6 @@ void View::triggerDelayedApplyThemeColumns()
 
 void View::saveThemeColumnState()
 {
-  kDebug() << "Save theme column state";
-
   if ( mSaveThemeColumnStateTimer->isActive() )
     mSaveThemeColumnStateTimer->stop();
 
@@ -621,13 +607,9 @@ int View::sizeHintForColumn( int logicalColumnIndex ) const
 
 void View::showEvent( QShowEvent *e )
 {
-  kDebug() << "Show event enter";
-
   QTreeView::showEvent( e );
   if ( mFirstShow )
   {
-    kDebug() << "First show";
-    //
     // If we're shown for the first time and the theme has been already set
     // then we need to reapply the theme column widths since the previous
     // application probably used invalid widths.
@@ -636,7 +618,6 @@ void View::showEvent( QShowEvent *e )
       triggerDelayedApplyThemeColumns();
     mFirstShow = false;
   }
-  kDebug() << "Show event exit";
 }
 
 const int gHeaderContextMenuAdjustColumnSizesId = -1;

@@ -21,6 +21,7 @@
 #ifndef __KMAIL_MESSAGELISTVIEW_CORE_MANAGER_H__
 #define __KMAIL_MESSAGELISTVIEW_CORE_MANAGER_H__
 
+#include "messagelistview/core/sortorder.h"
 #include <QList>
 #include <QHash>
 
@@ -220,6 +221,10 @@ public:
    */
   void aggregationsConfigurationCompleted();
 
+  // sort order management
+  const SortOrder sortOrderForStorageModel( const StorageModel *storageModel, bool *storageUsesPrivateSortOrder );
+  void saveSortOrderForStorageModel( const StorageModel *storageModel,
+                                     const SortOrder& order, bool storageUsesPrivateSortOrder );
 
   // theme sets management
   const Theme * themeForStorageModel( const StorageModel *storageModel, bool *storageUsesPrivateTheme );

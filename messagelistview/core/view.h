@@ -51,6 +51,7 @@ class Item;
 class MessageItem;
 class Model;
 class Theme;
+class SortOrder;
 class StorageModel;
 class Widget;
 
@@ -131,6 +132,12 @@ public:
    * Does not trigger a reload of the view: you *MUST* trigger it manually.
    */
   void setTheme( Theme * theme );
+
+  /**
+   * Sets the specified sort order.
+   * Does not trigger a reload of the view: you *MUST* trigger it manually.
+   */
+  void setSortOrder( const SortOrder * sortOrder );
 
   /**
    * Triggers a reload of the view in order to re-display the current folder.

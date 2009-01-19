@@ -48,7 +48,7 @@ AggregationEditor::AggregationEditor( QWidget *parent )
 {
   mCurrentAggregation = 0;
 
-  // Grouping, Threading and Sorting tab
+  // Grouping and Threading tab
   QWidget * tab = new QWidget( this );
   addTab( tab, i18n( "Groups, Threads and Sorting" ) );
 
@@ -60,17 +60,6 @@ AggregationEditor::AggregationEditor( QWidget *parent )
 
   connect( mGroupingCombo, SIGNAL( activated( int ) ),
            SLOT( groupingComboActivated( int ) ) );
-
-  tabg->addWidget( new QLabel( i18n( "Group Sorting:" ), tab ), 1, 0 );
-  mGroupSortingCombo = new KComboBox( tab );
-  tabg->addWidget( mGroupSortingCombo, 1, 1 );
-
-  connect( mGroupSortingCombo, SIGNAL( activated( int ) ),
-           SLOT( groupSortingComboActivated( int ) ) );
-
-  tabg->addWidget( new QLabel( i18n( "Group Sort Direction:" ), tab ), 2, 0 );
-  mGroupSortDirectionCombo = new KComboBox( tab );
-  tabg->addWidget( mGroupSortDirectionCombo, 2, 1 );
 
   tabg->addWidget( new QLabel( i18n( "Group Expand Policy:" ), tab ), 3, 0 );
   mGroupExpandPolicyCombo = new KComboBox( tab );
@@ -90,17 +79,6 @@ AggregationEditor::AggregationEditor( QWidget *parent )
   tabg->addWidget( new QLabel( i18n( "Thread Expand Policy:" ), tab ), 6, 0 );
   mThreadExpandPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mThreadExpandPolicyCombo, 6, 1 );
-
-  tabg->addWidget( new QLabel( i18n( "Message Sorting:" ), tab ), 7, 0 );
-  mMessageSortingCombo = new KComboBox( tab );
-  tabg->addWidget( mMessageSortingCombo, 7, 1 );
-
-  connect( mMessageSortingCombo, SIGNAL( activated( int ) ),
-           SLOT( messageSortingComboActivated( int ) ) );
-
-  tabg->addWidget( new QLabel( i18n( "Message Sort Direction:" ), tab ), 8, 0 );
-  mMessageSortDirectionCombo = new KComboBox( tab );
-  tabg->addWidget( mMessageSortDirectionCombo, 8, 1 );
 
   tabg->setColumnStretch( 1, 1 );
   tabg->setRowStretch( 9, 1 );
@@ -140,24 +118,21 @@ void AggregationEditor::editAggregation( Aggregation *set )
 
   fillGroupingCombo();
   ComboBoxUtils::setIntegerOptionComboValue( mGroupingCombo, (int)mCurrentAggregation->grouping() );
-  fillGroupSortingCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mGroupSortingCombo, (int)mCurrentAggregation->groupSorting() );
-  fillGroupSortDirectionCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mGroupSortDirectionCombo, (int)mCurrentAggregation->groupSortDirection() );
   fillGroupExpandPolicyCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mGroupExpandPolicyCombo, (int)mCurrentAggregation->groupExpandPolicy() );
+  ComboBoxUtils::setIntegerOptionComboValue( mGroupExpandPolicyCombo,
+                                             (int)mCurrentAggregation->groupExpandPolicy() );
   fillThreadingCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mThreadingCombo, (int)mCurrentAggregation->threading() );
+  ComboBoxUtils::setIntegerOptionComboValue( mThreadingCombo,
+                                             (int)mCurrentAggregation->threading() );
   fillThreadLeaderCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mThreadLeaderCombo, (int)mCurrentAggregation->threadLeader() );
+  ComboBoxUtils::setIntegerOptionComboValue( mThreadLeaderCombo,
+                                             (int)mCurrentAggregation->threadLeader() );
   fillThreadExpandPolicyCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mThreadExpandPolicyCombo, (int)mCurrentAggregation->threadExpandPolicy() );
-  fillMessageSortingCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mMessageSortingCombo, (int)mCurrentAggregation->messageSorting() );
-  fillMessageSortDirectionCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mMessageSortDirectionCombo, (int)mCurrentAggregation->messageSortDirection() );
+  ComboBoxUtils::setIntegerOptionComboValue( mThreadExpandPolicyCombo,
+                                             (int)mCurrentAggregation->threadExpandPolicy() );
   fillFillViewStrategyCombo();
-  ComboBoxUtils::setIntegerOptionComboValue( mFillViewStrategyCombo, (int)mCurrentAggregation->fillViewStrategy() );
+  ComboBoxUtils::setIntegerOptionComboValue( mFillViewStrategyCombo,
+                                             (int)mCurrentAggregation->fillViewStrategy() );
 }
 
 void AggregationEditor::commit()
@@ -168,14 +143,6 @@ void AggregationEditor::commit()
 
   mCurrentAggregation->setGrouping(
       (Aggregation::Grouping)ComboBoxUtils::getIntegerOptionComboValue( mGroupingCombo, 0 )
-    );
-
-  mCurrentAggregation->setGroupSorting(
-      (Aggregation::GroupSorting)ComboBoxUtils::getIntegerOptionComboValue( mGroupSortingCombo, 0 )
-    );
-
-  mCurrentAggregation->setGroupSortDirection(
-      (Aggregation::SortDirection)ComboBoxUtils::getIntegerOptionComboValue( mGroupSortDirectionCombo, 0 )
     );
 
   mCurrentAggregation->setGroupExpandPolicy(
@@ -192,14 +159,6 @@ void AggregationEditor::commit()
 
   mCurrentAggregation->setThreadExpandPolicy(
       (Aggregation::ThreadExpandPolicy)ComboBoxUtils::getIntegerOptionComboValue( mThreadExpandPolicyCombo, 0 )
-    );
-
-  mCurrentAggregation->setMessageSorting(
-      (Aggregation::MessageSorting)ComboBoxUtils::getIntegerOptionComboValue( mMessageSortingCombo, 0 )
-    );
-
-  mCurrentAggregation->setMessageSortDirection(
-      (Aggregation::SortDirection)ComboBoxUtils::getIntegerOptionComboValue( mMessageSortDirectionCombo, 0 )
     );
 
   mCurrentAggregation->setFillViewStrategy(
@@ -225,37 +184,8 @@ void AggregationEditor::fillGroupingCombo()
 
 void AggregationEditor::groupingComboActivated( int )
 {
-  fillGroupSortingCombo();
-  fillGroupSortDirectionCombo();
   fillGroupExpandPolicyCombo();
   fillThreadLeaderCombo();
-}
-
-void AggregationEditor::fillGroupSortingCombo()
-{
-  ComboBoxUtils::fillIntegerOptionCombo(
-      mGroupSortingCombo,
-      Aggregation::enumerateGroupSortingOptions(
-          (Aggregation::Grouping) ComboBoxUtils::getIntegerOptionComboValue( mGroupingCombo, Aggregation::NoGrouping )
-        )
-    );
-}
-
-void AggregationEditor::groupSortingComboActivated( int )
-{
-  fillGroupSortDirectionCombo();
-  fillGroupExpandPolicyCombo();
-}
-
-void AggregationEditor::fillGroupSortDirectionCombo()
-{
-  ComboBoxUtils::fillIntegerOptionCombo(
-      mGroupSortDirectionCombo,
-      Aggregation::enumerateGroupSortDirectionOptions(
-          (Aggregation::Grouping) ComboBoxUtils::getIntegerOptionComboValue( mGroupingCombo, Aggregation::NoGrouping ),
-          (Aggregation::GroupSorting) ComboBoxUtils::getIntegerOptionComboValue( mGroupSortingCombo, Aggregation::NoGroupSorting )
-        )
-    );
 }
 
 void AggregationEditor::fillGroupExpandPolicyCombo()
@@ -280,8 +210,6 @@ void AggregationEditor::threadingComboActivated( int )
 {
   fillThreadLeaderCombo();
   fillThreadExpandPolicyCombo();
-  fillMessageSortingCombo();
-  fillMessageSortDirectionCombo();
 }
 
 void AggregationEditor::fillThreadLeaderCombo()
@@ -301,31 +229,6 @@ void AggregationEditor::fillThreadExpandPolicyCombo()
       mThreadExpandPolicyCombo,
       Aggregation::enumerateThreadExpandPolicyOptions(
           (Aggregation::Threading) ComboBoxUtils::getIntegerOptionComboValue( mThreadingCombo, Aggregation::NoThreading )
-        )
-    );
-}
-
-void AggregationEditor::fillMessageSortingCombo()
-{
-  ComboBoxUtils::fillIntegerOptionCombo(
-      mMessageSortingCombo,
-      Aggregation::enumerateMessageSortingOptions(
-          (Aggregation::Threading) ComboBoxUtils::getIntegerOptionComboValue( mThreadingCombo, Aggregation::NoThreading )
-        )
-    );
-}
-
-void AggregationEditor::messageSortingComboActivated( int )
-{
-  fillMessageSortDirectionCombo();
-}
-
-void AggregationEditor::fillMessageSortDirectionCombo()
-{
-  ComboBoxUtils::fillIntegerOptionCombo(
-      mMessageSortDirectionCombo,
-      Aggregation::enumerateMessageSortDirectionOptions(
-          (Aggregation::MessageSorting) ComboBoxUtils::getIntegerOptionComboValue( mMessageSortingCombo, Aggregation::NoMessageSorting )
         )
     );
 }
