@@ -152,6 +152,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mAttachMenu( 0 ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
     mFolder( 0 ),
+    mForceDisableHtml( false ),
     mId( id ),
     mAttachPK( 0 ), mAttachMPK( 0 ),
     mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
@@ -3413,11 +3414,18 @@ void KMComposeWin::slotWordWrapToggled( bool on )
     mEditor->disableWordWrap();
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::disableWordWrap()
 {
   mEditor->setWordWrapMode( QTextOption::NoWrap );
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::forceDisableHtml()
+{
+  mForceDisableHtml = true;
+  disableHtml();
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
@@ -3589,7 +3597,8 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     }
   }
 
-  kDebug(5006) << "Calling applyChanges()";
+  if ( mForceDisableHtml )
+    disableHtml();
 
   if ( neverEncrypt && saveIn != KMComposeWin::None ) {
       // we can't use the state of the mail itself, to remember the
@@ -3603,6 +3612,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     mMsg->removeHeaderField( "X-KMail-CryptoMessageFormat" );
   }
 
+  kDebug() << "Calling applyChanges()";
   applyChanges( neverEncrypt );
 }
 

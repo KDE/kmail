@@ -547,12 +547,14 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && GlobalSettings::self()->legacyBodyInvites() );
   cWin->setAutoDelete( true );
-  if( noWordWrap )
+  if ( noWordWrap )
     cWin->disableWordWrap();
   else
-    cWin->setCharset( "", true );
+    cWin->setCharset( "" /* default charset */, true /* force default charset */ );
   if ( msgPart )
-    cWin->addAttach(msgPart);
+    cWin->addAttach( msgPart );
+  if ( isICalInvitation )
+    cWin->forceDisableHtml();
 
   if ( !hidden && !iCalAutoSend ) {
     cWin->show();
@@ -562,6 +564,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
 #endif
   } else {
+
+    // Always disable word wrap when we don't show the composer, since otherwise QTextEdit
+    // gets the widget size wrong and wraps much too early.
+    cWin->disableWordWrap();
     cWin->slotSendNow();
   }
 

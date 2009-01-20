@@ -180,8 +180,18 @@ class KMComposeWin : public KMail::Composer
      /**
       * Disables word wrap completely. No wrapping at all will occur, not even
       * at the right end of the editor.
+      * This is useful when sending invitations.
       */
      void disableWordWrap();
+
+     /**
+      * Disables HTML completely. It disables HTML at the point of calling this and disables it
+      * again when sending the message, to be sure. Useful when sending invitations.
+      * This will <b>not</b> remove the actions for activating HTML mode again, it is only
+      * meant for automatic invitation sending.
+      * Also calls @sa disableHtml() internally.
+      */
+     void forceDisableHtml();
 
      /**
       * Returns @c true while the message composing is in progress.
@@ -722,7 +732,9 @@ class KMComposeWin : public KMail::Composer
     KMFolder *mFolder;
     long mShowHeaders;
     bool mConfirmSend;
-    bool mDisableBreaking; // Move
+    bool mDisableBreaking;
+    bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
+                                // mail body.
     int mNumHeaders;
     QFont mBodyFont, mFixedFont;
     QList<KTemporaryFile*> mAtmTempList;

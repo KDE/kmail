@@ -146,6 +146,8 @@ class Composer : public KMail::SecondaryWindow
 
     virtual void disableWordWrap() = 0;
 
+    virtual void forceDisableHtml() = 0;
+
   public: // kmcommand
     /**
      * Add an attachment to the list.
