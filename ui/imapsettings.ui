@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
+    <width>403</width>
     <height>530</height>
    </rect>
   </property>
@@ -279,7 +279,7 @@ However, if KWallet is not available, the password will be stored in KMail's con
          <item>
           <widget class="QLabel" name="trashLabel" >
            <property name="text" >
-            <string>&amp;Trash folder:</string>
+            <string>Trash folder:</string>
            </property>
           </widget>
          </item>
@@ -394,7 +394,7 @@ Namespaces allow KMail for example to display your personal folders and shared f
                   <string>Personal namespaces include your personal folders.</string>
                  </property>
                  <property name="text" >
-                  <string comment="Personal namespaces for imap account.">Personal</string>
+                  <string comment="Personal namespaces for imap account." >Personal</string>
                  </property>
                  <property name="buddy" >
                   <cstring>personalNS</cstring>
@@ -679,6 +679,7 @@ Namespaces allow KMail for example to display your personal folders and shared f
    <class>KTabWidget</class>
    <extends>QTabWidget</extends>
    <header>ktabwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
