@@ -2072,9 +2072,11 @@ KMainWindow* KMKernel::mainWin()
   // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
   // case we are running inside Kontact) because we anyway only need
   // it for modal message boxes and for KNotify events.
-  kmWin = KMainWindow::memberList().first();
-  if ( kmWin )
-    return kmWin;
+  if ( !KMainWindow::memberList().isEmpty() ) {
+    kmWin = KMainWindow::memberList().first();
+    if ( kmWin )
+      return kmWin;
+  }
 
   // There's not a single KMainWindow. Create a KMMainWin.
   // This could happen if we want to pop up an error message
