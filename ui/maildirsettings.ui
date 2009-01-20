@@ -42,7 +42,7 @@
    <item row="3" column="0" >
     <widget class="QLabel" name="label_3" >
      <property name="text" >
-      <string>Folder &amp;location:</string>
+      <string>Folder location:</string>
      </property>
     </widget>
    </item>
