@@ -42,7 +42,7 @@
    <item row="3" column="0" >
     <widget class="QLabel" name="label_3" >
      <property name="text" >
-      <string>File &amp;location:</string>
+      <string>File location:</string>
      </property>
     </widget>
    </item>
@@ -134,7 +134,7 @@
    <item row="9" column="0" >
     <widget class="QLabel" name="label_5" >
      <property name="text" >
-      <string>&amp;Destination folder:</string>
+      <string>Destination folder:</string>
      </property>
     </widget>
    </item>
