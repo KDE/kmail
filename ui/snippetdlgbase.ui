@@ -1,6 +1,6 @@
 <ui version="4.0" >
  <class>SnippetDlgBase</class>
- <widget class="KDialog" name="SnippetDlgBase" >
+ <widget class="QDialog" name="SnippetDlgBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
