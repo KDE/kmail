@@ -3425,6 +3425,8 @@ void KMComposeWin::forceDisableHtml()
 {
   mForceDisableHtml = true;
   disableHtml();
+  markupAction->setEnabled( false );
+  // FIXME: Remove the toggle toolbar action somehow
 }
 
 //-----------------------------------------------------------------------------
@@ -3857,6 +3859,11 @@ void KMComposeWin::slotCleanSpace()
 //-----------------------------------------------------------------------------
 void KMComposeWin::enableHtml()
 {
+  if ( mForceDisableHtml ) {
+    disableHtml();;
+    return;
+  }
+
   mEditor->enableRichTextMode();
   if ( !toolBar( "htmlToolBar" )->isVisible() )
     toolBar( "htmlToolBar" )->show();
