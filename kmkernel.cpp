@@ -1492,8 +1492,7 @@ void KMKernel::cleanupImapFolders()
   {
     KMFolderNode *node = *it;
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
-                          && ( acct->type() == KAccount::Imap ))
-                      || !the_acctMgr->isEnabled( node->id() ))
+                          && ( acct->type() == KAccount::Imap )))
     {
       ++it;
     } else {
