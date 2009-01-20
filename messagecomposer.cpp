@@ -1552,14 +1552,13 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     DwBodyPart *dwPart;
     dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
 
-    // Make sure to set the boundary of the body part, that is the only thing not done
-    // by createDWBodyPart().
-    if ( !mSaveBoundary.empty() ) {
-      DwHeaders &headers = dwPart->Headers();
-      DwMediaType &ct = headers.ContentType();
-      ct.SetBoundary( mSaveBoundary );
-    }
+    // Make sure to set the boundary and content-type of the body part,
+    // that is the only thing not done in createDWBodyPart()
+    DwHeaders &headers = dwPart->Headers();
+    headers.ContentType().FromString( mOldBodyPart.originalContentTypeStr() );
+    headers.ContentType().Parse();
     dwPart->Assemble();
+
     mEncodedBody = dwPart->AsString().c_str();
     delete dwPart;
     dwPart = 0;
