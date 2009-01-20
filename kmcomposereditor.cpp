@@ -232,7 +232,7 @@ void KMComposerEditor::addImage( const KUrl &url )
     return;
   }
   QFileInfo fi( url.path() );
-  QString imageName = fi.baseName().isEmpty() ? "image" : fi.baseName();
+  QString imageName = fi.baseName().isEmpty() ? "image.png" : fi.baseName() + ".png";
   addImageHelper( imageName, image );
 }
 
