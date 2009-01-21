@@ -1523,6 +1523,11 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   DwBodyPart * theMixedBodyPart = mixedBodyPart( theMessage, theImageBodyPart,
                                                  doSignBody, doEncryptBody );
 
+  // Set the saved boundary, so that the header will have the same boundary information in the
+  // content-type header like in the body.
+  theMixedBodyPart->Headers().ContentType().SetBoundary( mSaveBoundary );
+  theMixedBodyPart->Assemble();
+
   //
   // Ok, we finished creating our main body part here, now actually set it as the body text
   // of mOldBodyPart.
