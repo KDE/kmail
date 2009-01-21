@@ -11,7 +11,7 @@ using Ui::SnippetDlgBase;
 class KActionCollection;
 class KShortcut;
 
-class SnippetDlg : public KDialog, public SnippetDlgBase
+class SnippetDlg : public QDialog, public SnippetDlgBase
 {
     Q_OBJECT
 

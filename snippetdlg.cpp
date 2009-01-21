@@ -29,16 +29,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal dialog.
  */
+//Laurent: don't use a KDialog here not necessary and create a layout warning
 SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
                         Qt::WindowFlags f )
-  : KDialog( parent, f ),
+  : QDialog( parent, f ),
     actionCollection( ac )
 {
     setupUi( this );
     setModal( modal );
 
-    setButtons( KDialog::None );
-    
     keyWidget->setCheckActionCollections( QList<KActionCollection*>() << ac );
 }
 
