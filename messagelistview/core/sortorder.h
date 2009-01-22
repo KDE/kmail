@@ -187,8 +187,12 @@ class SortOrder
 
     /**
      * Returns the default sort order for the given aggregation.
+     * @param oldSortOrder the previously used sort order. If possible, the new sort order
+     *                     will be based on that old sort order, i.e. the message sorting and
+     *                     message sort direction is adopted.
      */
-    static SortOrder defaultForAggregation( const Aggregation *aggregation );
+    static SortOrder defaultForAggregation( const Aggregation *aggregation,
+                                            const SortOrder &oldSortOrder );
 
     /**
     * Returns true if the ms parameter specifies a valid MessageSorting option.
