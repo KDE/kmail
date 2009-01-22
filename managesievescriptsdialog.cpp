@@ -94,12 +94,12 @@ static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
     // Translate IMAP LOGIN to PLAIN:
     u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() );
     if ( !a->useSSL() && !a->useTLS() )
-        u.addQueryItem( "x-allow-unencrypted", "true" );
+      u.addQueryItem( "x-allow-unencrypted", "true" );
     return u;
   } else {
     KUrl u = sieve.alternateURL();
     if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
-        u.addQueryItem( "x-allow-unencrypted", "true" );
+      u.addQueryItem( "x-allow-unencrypted", "true" );
     return u;
   }
 }
