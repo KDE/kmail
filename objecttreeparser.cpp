@@ -2659,7 +2659,7 @@ void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *a
 
               htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
 
-              if ( couldDecrypt ) {
+              if ( couldDecrypt || !isEncrypted ) {
                 htmlStr += quotedHTML( aCodec->toUnicode( block.text() ), decorate );
               }
               else {
