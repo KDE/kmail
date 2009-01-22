@@ -83,10 +83,15 @@ static KURL findUrlForAccount( const KMail::ImapAccountBase * a ) {
     u.setPass( a->passwd() );
     u.setPort( sieve.port() );
     // Translate IMAP LOGIN to PLAIN:
-    u.setQuery( "x-mech=" + ( a->auth() == "*" ? "PLAIN" : a->auth() ) );
+    u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() );
+    if ( !a->useSSL() && !a->useTLS() )
+        u.addQueryItem( "x-allow-unencrypted", "true" );
     return u;
   } else {
-    return sieve.alternateURL();
+    KURL u = sieve.alternateURL();
+    if ( u.protocol().lower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
+        u.addQueryItem( "x-allow-unencrypted", "true" );
+    return u;
   }
 }
 

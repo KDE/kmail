@@ -500,11 +500,15 @@ namespace KMail {
       u.setUser( a->login() );
       u.setPass( a->passwd() );
       u.setPort( sieve.port() );
-      u.setQuery( "x-mech=" + (a->auth() == "*" ? "PLAIN" : a->auth()) ); //translate IMAP LOGIN to PLAIN
+      u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() ); //translate IMAP LOGIN to PLAIN
+      if ( !a->useSSL() && !a->useTLS() )
+          u.addQueryItem( "x-allow-unencrypted", "true" );
       u.setFileName( sieve.vacationFileName() );
       return u;
     } else {
       KURL u = sieve.alternateURL();
+      if ( u.protocol().lower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
+          u.addQueryItem( "x-allow-unencrypted", "true" );
       u.setFileName( sieve.vacationFileName() );
       return u;
     }

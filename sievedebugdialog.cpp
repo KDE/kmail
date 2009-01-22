@@ -219,6 +219,32 @@ SieveDebugDialog::~SieveDebugDialog()
     kdDebug( 5006 ) << k_funcinfo << endl;
 }
 
+static KURL urlFromAccount( const KMail::ImapAccountBase * a ) {
+    const SieveConfig sieve = a->sieveConfig();
+    if ( !sieve.managesieveSupported() )
+        return KURL();
+
+    KURL u;
+    if ( sieve.reuseConfig() ) {
+        // assemble Sieve url from the settings of the account:
+        u.setProtocol( "sieve" );
+        u.setHost( a->host() );
+        u.setUser( a->login() );
+        u.setPass( a->passwd() );
+        u.setPort( sieve.port() );
+
+        // Translate IMAP LOGIN to PLAIN:
+        u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() );
+        if ( !a->useSSL() && !a->useTLS() )
+            u.addQueryItem( "x-allow-unencrypted", "true" );
+    } else {
+        u = sieve.alternateURL();
+        if ( u.protocol().lower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
+            u.addQueryItem( "x-allow-unencrypted", "true" );
+    }
+    return u;
+}
+
 void SieveDebugDialog::slotDiagNextAccount()
 {
     if ( mAccountList.isEmpty() )
@@ -233,25 +259,12 @@ void SieveDebugDialog::slotDiagNextAccount()
     if ( mAccountBase )
     {
         // Detect URL for this IMAP account
-        SieveConfig sieve = mAccountBase->sieveConfig();
-        if ( !sieve.managesieveSupported() )
+        const KURL url = urlFromAccount( mAccountBase );
+        if ( !url.isValid() )
         {
             mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
         } else {
-            if ( sieve.reuseConfig() )
-            {
-                // assemble Sieve url from the settings of the account:
-                mUrl.setProtocol( "sieve" );
-                mUrl.setHost( mAccountBase->host() );
-                mUrl.setUser( mAccountBase->login() );
-                mUrl.setPass( mAccountBase->passwd() );
-                mUrl.setPort( sieve.port() );
-
-                // Translate IMAP LOGIN to PLAIN:
-                mUrl.setQuery( "x-mech=" + ( mAccountBase->auth() == "*" ? "PLAIN" : mAccountBase->auth() ) );
-            } else {
-                mUrl = sieve.alternateURL();
-            }
+            mUrl = url;
 
             mSieveJob = SieveJob::list( mUrl );
 
@@ -283,22 +296,9 @@ void SieveDebugDialog::slotDiagNextScript()
     mScriptList.pop_front();
 
     mEdit->append( i18n( "Contents of script '%1':\n" ).arg( scriptFile ) );
-    SieveConfig sieve = mAccountBase->sieveConfig();
-    if ( sieve.reuseConfig() )
-    {
-        // assemble Sieve url from the settings of the account:
-        mUrl.setProtocol( "sieve" );
-        mUrl.setHost( mAccountBase->host() );
-        mUrl.setUser( mAccountBase->login() );
-        mUrl.setPass( mAccountBase->passwd() );
-        mUrl.setPort( sieve.port() );
-        // Translate IMAP LOGIN to PLAIN
-        mUrl.setQuery( "x-mech=" + ( mAccountBase->auth() == "*" ? "PLAIN" : mAccountBase->auth() ) );
-        mUrl.setFileName( scriptFile );
-    } else {
-        mUrl = sieve.alternateURL();
-        mUrl.setFileName( scriptFile );
-    }
+
+    mUrl = urlFromAccount( mAccountBase );
+    mUrl.setFileName( scriptFile );
 
     mSieveJob = SieveJob::get( mUrl );
 
