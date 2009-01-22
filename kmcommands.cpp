@@ -835,12 +835,8 @@ KUrl KMSaveMsgCommand::url()
 KMCommand::Result KMSaveMsgCommand::execute()
 {
   mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  mJob->slotTotalSize( mTotalSize );
+  mJob->setTotalSize( mTotalSize );
   mJob->setAsyncDataEnabled( true );
-  mJob->setReportDataSent( true );
   connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
     SLOT(slotSaveDataReq()));
   connect(mJob, SIGNAL(result(KJob*)),
@@ -957,12 +953,8 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
         mOffset = 0;
 
         mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, KIO::Overwrite );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//        mJob->slotTotalSize( mTotalSize );
+        mJob->setTotalSize( mTotalSize );
         mJob->setAsyncDataEnabled( true );
-        mJob->setReportDataSent( true );
         connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
             SLOT(slotSaveDataReq()));
         connect(mJob, SIGNAL(result(KJob*)),
@@ -1006,7 +998,6 @@ KMCommand::Result KMOpenMsgCommand::execute()
     return Canceled;
   }
   mJob = KIO::get( mUrl, KIO::NoReload, KIO::HideProgressInfo );
-  mJob->setReportDataSent( true );
   connect( mJob, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
            this, SLOT( slotDataArrived( KIO::Job*, const QByteArray & ) ) );
   connect( mJob, SIGNAL( result( KJob * ) ),
