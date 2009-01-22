@@ -2696,7 +2696,13 @@ void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *a
 
               htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
 
-              htmlStr += quotedHTML( aCodec->toUnicode( block.text() ), decorate );
+              if ( couldDecrypt ) {
+                htmlStr += quotedHTML( aCodec->toUnicode( block.text() ), decorate );
+              }
+              else {
+                htmlStr += QString( "<div align=\"center\">%1</div>" )
+                           .arg( i18n( "The message could not be decrypted.") );
+              }
               htmlStr += writeSigstatFooter( messagePart );
           }
           else // block is neither message block nor clearsigned block
