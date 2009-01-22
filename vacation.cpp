@@ -504,13 +504,13 @@ namespace KMail {
       u.setPort( sieve.port() );
       u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() ); //translate IMAP LOGIN to PLAIN
       if ( !a->useSSL() && !a->useTLS() )
-          u.addQueryItem( "x-allow-unencrypted", "true" );
+        u.addQueryItem( "x-allow-unencrypted", "true" );
       u.setFileName( sieve.vacationFileName() );
       return u;
     } else {
       KUrl u = sieve.alternateURL();
-      if ( u.protocol().lower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
-          u.addQueryItem( "x-allow-unencrypted", "true" );
+      if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
+        u.addQueryItem( "x-allow-unencrypted", "true" );
       u.setFileName( sieve.vacationFileName() );
       return u;
     }
