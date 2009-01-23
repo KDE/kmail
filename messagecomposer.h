@@ -42,6 +42,7 @@
 #include <mimelib/mediatyp.h>
 #include "kleo/cryptobackend.h"
 
+#include <boost/shared_ptr.hpp>
 #include <vector>
 
 class KMMessage;
@@ -283,7 +284,8 @@ class MessageComposer : public QObject {
      *                       be of this content type, and not text/plain
      * @return the complete inner body part
      */
-    DwBodyPart* innerBodypart( KMMessage &theMessage, bool doSign, QString oldContentType = QString() );
+    boost::shared_ptr<DwBodyPart> innerBodypart( KMMessage &theMessage,
+                                                 bool doSign, QString oldContentType = QString() );
 
     /**
      * Helper function for innerBodypart(). This creates and returns the body of the inner body
@@ -306,7 +308,8 @@ class MessageComposer : public QObject {
      * @param innerBodyPart the inner body part created so far
      * @return the complete image body part
      */
-    DwBodyPart* imageBodyPart( KMMessage &theMessage, DwBodyPart *innerBodyPart );
+    boost::shared_ptr<DwBodyPart> imageBodyPart( KMMessage &theMessage,
+                                                 boost::shared_ptr<DwBodyPart> innerBodyPart );
 
     /**
      * Returns the mixed body part
@@ -320,8 +323,9 @@ class MessageComposer : public QObject {
      * @param imageBodyPart the image body part created so far
      * @return the complete mixed body part
      */
-    DwBodyPart* mixedBodyPart( KMMessage &theMessage, DwBodyPart *iamgeBodyPart,
-                               bool doSignBody, bool doEncryptBody );
+    boost::shared_ptr<DwBodyPart> mixedBodyPart( KMMessage &theMessage,
+                                                 boost::shared_ptr<DwBodyPart> imageBodyPart,
+                                                 bool doSignBody, bool doEncryptBody );
 
     // The composer window. Mainly used in readFromComposeWin() to read the information from it.
     KMComposeWin *mComposeWin;

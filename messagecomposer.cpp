@@ -88,6 +88,8 @@
 #include <algorithm>
 #include <memory>
 
+using namespace boost;
+
 #undef MessageBox // Windows: avoid clash between MessageBox define and Kleo::MessageBox
 
 // ## keep default values in sync with configuredialog.cpp, Security::CryptoTab::setup()
@@ -1518,35 +1520,31 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   //
   // Now, create the core body part by calling all helper functions.
   //
-  DwBodyPart * theInnerBodyPart = innerBodypart( theMessage, doSign, oldContentType );
-  DwBodyPart * theImageBodyPart = imageBodyPart( theMessage, theInnerBodyPart );
-  DwBodyPart * theMixedBodyPart = mixedBodyPart( theMessage, theImageBodyPart,
-                                                 doSignBody, doEncryptBody );
+  {
+    shared_ptr<DwBodyPart> theInnerBodyPart = innerBodypart( theMessage, doSign, oldContentType );
+    shared_ptr<DwBodyPart> theImageBodyPart = imageBodyPart( theMessage, theInnerBodyPart );
+    shared_ptr<DwBodyPart> theMixedBodyPart = mixedBodyPart( theMessage, theImageBodyPart,
+                                                             doSignBody, doEncryptBody );
 
-  // Set the saved boundary, so that the header will have the same boundary information in the
-  // content-type header like in the body.
-  if ( mSaveBoundary.length() > 0 ) {
-    theMixedBodyPart->Headers().ContentType().SetBoundary( mSaveBoundary );
-    theMixedBodyPart->Assemble();
+    // Set the saved boundary, so that the header will have the same boundary information in the
+    // content-type header like in the body.
+    if ( mSaveBoundary.length() > 0 ) {
+      theMixedBodyPart->Headers().ContentType().SetBoundary( mSaveBoundary );
+      theMixedBodyPart->Assemble();
+    }
+
+    //
+    // Ok, we finished creating our main body part here, now actually set it as the body text
+    // of mOldBodyPart.
+    // Everything after here deals with signing/encrypting and late attachments.
+    //
+    mOldBodyPart.setTypeStr( theMixedBodyPart->Headers().ContentType().TypeStr().c_str() );
+    mOldBodyPart.setSubtypeStr( theMixedBodyPart->Headers().ContentType().SubtypeStr().c_str() );
+    mOldBodyPart.setOriginalContentTypeStr( theMixedBodyPart->Headers().ContentType().AsString().c_str() );
+    mOldBodyPart.setContentTransferEncodingStr( theMixedBodyPart->Headers().ContentTransferEncoding().AsString().c_str() );
+    mOldBodyPart.setContentDescription( theMixedBodyPart->Headers().ContentDescription().AsString().c_str() );
+    mOldBodyPart.setBody( theMixedBodyPart->Body().AsString().c_str() );
   }
-
-  //
-  // Ok, we finished creating our main body part here, now actually set it as the body text
-  // of mOldBodyPart.
-  // Everything after here deals with signing/encrypting and late attachments.
-  //
-  mOldBodyPart.setTypeStr( theMixedBodyPart->Headers().ContentType().TypeStr().c_str() );
-  mOldBodyPart.setSubtypeStr( theMixedBodyPart->Headers().ContentType().SubtypeStr().c_str() );
-  mOldBodyPart.setOriginalContentTypeStr( theMixedBodyPart->Headers().ContentType().AsString().c_str() );
-  mOldBodyPart.setContentTransferEncodingStr( theMixedBodyPart->Headers().ContentTransferEncoding().AsString().c_str() );
-  mOldBodyPart.setContentDescription( theMixedBodyPart->Headers().ContentDescription().AsString().c_str() );
-  mOldBodyPart.setBody( theMixedBodyPart->Body().AsString().c_str() );
-
-  delete theInnerBodyPart;
-  if ( theInnerBodyPart != theImageBodyPart )
-    delete theImageBodyPart;
-  if ( theMixedBodyPart != theImageBodyPart && theMixedBodyPart != theInnerBodyPart )
-    delete theMixedBodyPart;
 
   // This will be our *final* body part, which contains the main body part (mOldBodyPart) plus
   // signing, encryption and late attachments.
@@ -1705,8 +1703,8 @@ QByteArray MessageComposer::innerBodypartBody( KMMessage &theMessage, bool doSig
   return body;
 }
 
-DwBodyPart* MessageComposer::innerBodypart( KMMessage &theMessage, bool doSign,
-                                            QString oldContentType )
+boost::shared_ptr<DwBodyPart> MessageComposer::innerBodypart( KMMessage &theMessage, bool doSign,
+                                                              QString oldContentType )
 {
   KMMessagePart innerBodyPart;
   if ( mIsRichText ) {
@@ -1727,7 +1725,7 @@ DwBodyPart* MessageComposer::innerBodypart( KMMessage &theMessage, bool doSign,
   }
 
   // Now, create a DwBodyPart of the KMMessagePart and return its string representation.
-  DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
+  shared_ptr<DwBodyPart> innerDwPart( theMessage.createDWBodyPart( &innerBodyPart ) );
   DwHeaders &headers = innerDwPart->Headers();
   DwMediaType &ct = headers.ContentType();
 
@@ -1746,7 +1744,8 @@ DwBodyPart* MessageComposer::innerBodypart( KMMessage &theMessage, bool doSign,
   return innerDwPart;
 }
 
-DwBodyPart* MessageComposer::imageBodyPart( KMMessage &theMessage, DwBodyPart *innerBodyPart )
+shared_ptr<DwBodyPart> MessageComposer::imageBodyPart( KMMessage &theMessage,
+                                                       shared_ptr<DwBodyPart> innerBodyPart )
 {
   if ( mEmbeddedImages.size() == 0 )
     return innerBodyPart;
@@ -1801,7 +1800,7 @@ DwBodyPart* MessageComposer::imageBodyPart( KMMessage &theMessage, DwBodyPart *i
   imageBodyPart.setBodyEncoded( imageBodyPartBody );
 
   // Now, create a DwBodyPart of the KMMessagePart and return its string representation.
-  DwBodyPart* imageDwPart = theMessage.createDWBodyPart( &imageBodyPart );
+  shared_ptr<DwBodyPart> imageDwPart( theMessage.createDWBodyPart( &imageBodyPart ) );
   DwHeaders &headers = imageDwPart->Headers();
   DwMediaType &ct = headers.ContentType();
   ct.SetBoundary( tmpCT.Boundary() );
@@ -1811,8 +1810,9 @@ DwBodyPart* MessageComposer::imageBodyPart( KMMessage &theMessage, DwBodyPart *i
   return imageDwPart;
 }
 
-DwBodyPart* MessageComposer::mixedBodyPart( KMMessage &theMessage, DwBodyPart *imageBodyPart,
-                                            bool doSignBody, bool doEncryptBody )
+shared_ptr<DwBodyPart> MessageComposer::mixedBodyPart( KMMessage &theMessage,
+                                                       shared_ptr<DwBodyPart> imageBodyPart,
+                                                       bool doSignBody, bool doEncryptBody )
 {
   if ( !mEarlyAddAttachments )
     return imageBodyPart;
@@ -1856,7 +1856,7 @@ DwBodyPart* MessageComposer::mixedBodyPart( KMMessage &theMessage, DwBodyPart *i
   mixedBodyPart.setBodyEncoded( mixedBodyPartBody );
 
   // Now, create a DwBodyPart of the KMMessagePart and return its string representation.
-  DwBodyPart* mixedDwPart = theMessage.createDWBodyPart( &mixedBodyPart );
+  shared_ptr<DwBodyPart> mixedDwPart( theMessage.createDWBodyPart( &mixedBodyPart ) );
   DwHeaders &headers = mixedDwPart->Headers();
   DwMediaType &ct = headers.ContentType();
   ct.SetBoundary( tmpCT.Boundary() );
