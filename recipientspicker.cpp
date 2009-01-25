@@ -280,20 +280,18 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   setWindowTitle( i18n("Select Recipient") );
   setButtons( None );
 
-  QWidget *mainWidget = new QWidget( parent );
-  setMainWidget( mainWidget );
-  QVBoxLayout *topLayout = new QVBoxLayout( mainWidget );
+  QVBoxLayout *topLayout = new QVBoxLayout( mainWidget() );
   topLayout->setSpacing( 0 );
   topLayout->setMargin( 0 );
 
   QFormLayout *resLayout = new QFormLayout();
   topLayout->addLayout( resLayout );
 
-  mCollectionCombo = new KComboBox( mainWidget );
+  mCollectionCombo = new KComboBox( mainWidget() );
   connect( mCollectionCombo, SIGNAL( activated( int ) ), SLOT( updateList() ) );
   resLayout->addRow( i18n("Address book:"), mCollectionCombo );
 
-  mRecipientList = new RecipientsTreeWidget( mainWidget );
+  mRecipientList = new RecipientsTreeWidget( mainWidget() );
   mRecipientList->setSelectionMode( QAbstractItemView::ExtendedSelection );
   mRecipientList->setAllColumnsShowFocus( true );
   mRecipientList->setIndentation( 0 );
@@ -334,19 +332,19 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   buttonLayout->addStretch( 1 );			// right align buttons
 
-  mToButton = new QPushButton( i18n("Add as &To"), mainWidget );
+  mToButton = new QPushButton( i18n("Add as &To"), mainWidget() );
   buttonLayout->addWidget( mToButton );
   connect( mToButton, SIGNAL( clicked() ), SLOT( slotToClicked() ) );
 
-  mCcButton = new QPushButton( i18n("Add as CC"), mainWidget );
+  mCcButton = new QPushButton( i18n("Add as CC"), mainWidget() );
   buttonLayout->addWidget( mCcButton );
   connect( mCcButton, SIGNAL( clicked() ), SLOT( slotCcClicked() ) );
 
-  mBccButton = new QPushButton( i18n("Add as &BCC"), mainWidget );
+  mBccButton = new QPushButton( i18n("Add as &BCC"), mainWidget() );
   buttonLayout->addWidget( mBccButton );
   connect( mBccButton, SIGNAL( clicked() ), SLOT( slotBccClicked() ) );
 
-  QPushButton *closeButton = new QPushButton( i18n("&Cancel"), mainWidget );
+  QPushButton *closeButton = new QPushButton( i18n("&Cancel"), mainWidget() );
   buttonLayout->addWidget( closeButton );
   connect( closeButton, SIGNAL( clicked() ), SLOT( close() ) );
 
