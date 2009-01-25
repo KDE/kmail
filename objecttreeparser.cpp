@@ -297,6 +297,16 @@ namespace KMail {
     // ### bodypartformatters.
     if ( !mReader )
       return;
+
+    // always show images in multipart/related when showing in html, not with an additional icon
+    if ( result.isImage() &&
+         node->parentNode()->subType() == DwMime::kSubtypeRelated && mReader->htmlMail() ) {
+      QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
+      QString href = "file:" + KUrl::toPercentEncoding( fileName );
+      htmlWriter()->embedPart( node->msgPart().contentId(), href);
+      return;
+   }
+
     if ( attachmentStrategy() == AttachmentStrategy::hidden() &&
          !showOnlyOneMimePart() &&
          node->parentNode() /* message is not an attachment */ )
@@ -311,13 +321,16 @@ namespace KMail {
     else if ( !result.neverDisplayInline() )
       if ( const AttachmentStrategy * as = attachmentStrategy() )
         asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
+ 
     // neither image nor text -> show as icon
     if ( !result.isImage()
          && node->type() != DwMime::kTypeText )
       asIcon = true;
+
     // if the image is not complete do not try to show it inline
     if ( result.isImage() && !node->msgPart().isComplete() )
       asIcon = true;
+
     if ( asIcon ) {
       if ( attachmentStrategy() != AttachmentStrategy::hidden()
            || showOnlyOneMimePart() )
@@ -1844,8 +1857,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
 
     QString iconName;
     QByteArray contentId = msgPart->contentId();
-    bool embeddImage = !contentId.isEmpty() && mReader->htmlMail();
-    if ( inlineImage && !embeddImage ) {
+    if ( inlineImage ) {
       iconName = href;
     }
     else {
@@ -1854,10 +1866,6 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
         msgPart->magicSetType();
         iconName = msgPart->iconName();
       }
-    }
-
-    if ( embeddImage ) {
-      htmlWriter()->embedPart( contentId, href );
     }
 
     if ( inlineImage ) {

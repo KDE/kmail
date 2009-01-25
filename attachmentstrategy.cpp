@@ -59,7 +59,14 @@ namespace KMail {
     const AttachmentStrategy * prev() const { return hidden(); }
 
     bool inlineNestedMessages() const { return false; }
-    Display defaultDisplay( const partNode * ) const { return AsIcon; }
+    Display defaultDisplay( const partNode * node ) const {
+      if ( node->type() == DwMime::kTypeText &&
+        node->msgPart().fileName().trimmed().isEmpty() &&
+        node->msgPart().name().trimmed().isEmpty() )
+        // text/* w/o filename parameter:
+        return Inline;
+      return AsIcon;
+    }
   };
 
   //
@@ -134,7 +141,19 @@ namespace KMail {
     const AttachmentStrategy * prev() const { return inlined(); }
 
     bool inlineNestedMessages() const { return false; }
-    Display defaultDisplay( const partNode * ) const { return None; }
+    Display defaultDisplay( const partNode * node ) const {
+      if ( node->type() == DwMime::kTypeText &&
+        node->msgPart().fileName().trimmed().isEmpty() &&
+        node->msgPart().name().trimmed().isEmpty() )
+        // text/* w/o filename parameter:
+        return Inline;
+
+      if ( node->parentNode()->type() == DwMime::kTypeMultipart &&
+           node->parentNode()->subType() == DwMime::kSubtypeRelated )
+        return Inline;
+
+      return None;
+    }
   };
 
 
