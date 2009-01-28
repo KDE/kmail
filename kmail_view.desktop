@@ -1,10 +1,14 @@
 [Desktop Entry]
 Name=KMail view
 Name[ca]=Vista del KMail
+Name[cs]=KMail pohled
 Name[da]=KMail-visning
+Name[de]=KMail-Ansicht
 Name[el]=Προβολή KMail
+Name[es]=Vista KMail
 Name[et]=KMaili vaade
 Name[gl]=Vista KMail 
+Name[it]=Vista KMail
 Name[ja]=KMail ビュー
 Name[km]=ទិដ្ឋភាព KMail
 Name[ko]=KMail 보기
@@ -13,9 +17,11 @@ Name[nb]=KMail-visning
 Name[nds]=KMail-Ansicht
 Name[nl]=KMail-weergave
 Name[nn]=KMail-vising
+Name[pa]=ਕੇ-ਮੇਲ ਝਲਕ
 Name[pl]=Widok KMail
 Name[pt]=Janela do KMail
 Name[pt_BR]=Exibição do KMail
+Name[sl]=KMailov prikaz
 Name[sv]=Kmail-vy
 Name[tr]=KMail görünümü
 Name[uk]=Перегляд KMail
