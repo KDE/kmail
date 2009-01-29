@@ -254,7 +254,7 @@ void Widget::checkSortOrder( const StorageModel *storageModel )
 {
   if ( storageModel && mAggregation && !mSortOrder.validForAggregation( mAggregation ) ) {
     kDebug() << "Could not restore sort order for folder" << storageModel->id();
-    mSortOrder = SortOrder::defaultForAggregation( mAggregation );
+    mSortOrder = SortOrder::defaultForAggregation( mAggregation, mSortOrder );
 
     // Change the global sort order if the sort order didn't fit the global aggregation.
     // Otherwise, if it is a per-folder aggregation, make the sort order per-folder too.

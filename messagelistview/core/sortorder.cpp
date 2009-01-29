@@ -140,7 +140,7 @@ bool SortOrder::validForAggregation( const Aggregation *aggregation ) const
   OptionList groupSortings = enumerateGroupSortingOptions( aggregation->grouping() );
   OptionList groupSortDirections = enumerateGroupSortDirectionOptions( aggregation->grouping(),
                                                                        mGroupSorting );
-  SortOrder defaultSortOrder = defaultForAggregation( aggregation );
+  SortOrder defaultSortOrder = defaultForAggregation( aggregation, SortOrder() );
   bool messageSortingOk = optionListHasOption( messageSortings,
                                                mMessageSorting, defaultSortOrder.messageSorting() );
   bool messageSortDirectionOk = optionListHasOption( messageSortDirections, mMessageSortDirection,
@@ -155,37 +155,65 @@ bool SortOrder::validForAggregation( const Aggregation *aggregation ) const
          groupSortingOk && groupSortDirectionOk;
 }
 
-SortOrder SortOrder::defaultForAggregation( const Aggregation *aggregation )
+SortOrder SortOrder::defaultForAggregation( const Aggregation *aggregation,
+                                            const SortOrder &oldSortOrder )
 {
+  SortOrder newSortOrder;
+
+  //
+  // First check if we can adopt the message sorting and the message sort direction from
+  // the old sort order. This is mostly true, except, for example, when the old message sorting
+  // was "by most recent in subtree", and the aggregation doesn't use threading.
+  //
+  OptionList messageSortings = enumerateMessageSortingOptions( aggregation->threading() );
+  bool messageSortingOk = optionListHasOption( messageSortings,
+                                               oldSortOrder.messageSorting(),
+                                               SortOrder().messageSorting() );
+  bool messageSortDirectionOk = false;
+  if ( messageSortingOk ) {
+    OptionList messageSortDirections = enumerateMessageSortDirectionOptions(
+                                              oldSortOrder.messageSorting() );
+    messageSortDirectionOk = optionListHasOption( messageSortDirections, oldSortOrder.messageSortDirection(),
+                                                  SortOrder().messageSortDirection() );
+  }
+
+  //
+  // Ok, if we can partly adopt the old sort order, set the values now.
+  //
+  if ( messageSortingOk )
+    newSortOrder.setMessageSorting( oldSortOrder.messageSorting() );
+  else
+    newSortOrder.setMessageSorting( SortMessagesByDateTime );
+  if ( messageSortDirectionOk )
+    newSortOrder.setMessageSortDirection( oldSortOrder.messageSortDirection() );
+  else
+    newSortOrder.setMessageSortDirection( Descending );
+
+  //
+  // Now set the group sorting and group sort direction, depending on the aggregation.
+  //
   Aggregation::Grouping grouping = aggregation->grouping();
   if ( grouping == Aggregation::GroupByDate ||
        grouping == Aggregation::GroupByDateRange ) {
-    SortOrder order;
-    order.setGroupSortDirection( Descending );
-    order.setGroupSorting( SortGroupsByDateTime );
-    order.setMessageSortDirection( Descending );
-    order.setMessageSorting( SortMessagesByDateTime );
-    return order;
+    newSortOrder.setGroupSortDirection( Descending );
+    newSortOrder.setGroupSorting( SortGroupsByDateTime );
+
   }
   else if ( grouping == Aggregation::GroupByReceiver || grouping == Aggregation::GroupBySender ||
             grouping == Aggregation::GroupBySenderOrReceiver ) {
-    SortOrder order;
-    order.setGroupSortDirection( Descending );
-    order.setMessageSortDirection( Descending );
-    order.setMessageSorting( SortMessagesByDateTime );
+    newSortOrder.setGroupSortDirection( Descending );
     switch ( grouping ) {
       case Aggregation::GroupByReceiver:
-        order.setGroupSorting( SortGroupsByReceiver ); break;
+        newSortOrder.setGroupSorting( SortGroupsByReceiver ); break;
       case Aggregation::GroupBySender:
-        order.setGroupSorting( SortGroupsBySender ); break;
+        newSortOrder.setGroupSorting( SortGroupsBySender ); break;
       case Aggregation::GroupBySenderOrReceiver:
-        order.setGroupSorting( SortGroupsBySenderOrReceiver ); break;
+        newSortOrder.setGroupSorting( SortGroupsBySenderOrReceiver ); break;
       default: break;
     }
-    return order;
   }
-  else
-    return SortOrder();
+
+  return newSortOrder;
 }
 
 bool SortOrder::readConfigHelper( KConfigGroup &conf, const QString &id )
