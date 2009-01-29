@@ -205,16 +205,16 @@ namespace KMail {
 
       //If the password should be written to the wallet, do that
       if ( !mStorePasswdInConfig ) {
-        Wallet *wallet = kmkernel->wallet();
 
         //If the password is dirty, try to store it in the wallet
         if ( mPasswdDirty ) {
+          Wallet *wallet = kmkernel->wallet();
           if ( wallet && wallet->writePassword( "account-" + QString::number(mId), passwd() ) == 0 )
             passwdStored = true;
         }
 
         //If the password isn't dirty, it is already stored in the wallet.
-        else if ( wallet )
+        else
           passwdStored = true;
 
         //If the password is stored in the wallet, it isn't dirty or stored in the config
