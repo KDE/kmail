@@ -87,7 +87,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
   mEditTo->setFocus();
 
   setButtonGuiItem( User1, KGuiItem( i18n("&Send Now"), "mail-send" ) );
-  setButtonGuiItem( User2, KGuiItem( i18n("Send &Later"), "queue" ) );
+  setButtonGuiItem( User2, KGuiItem( i18n("Send &Later"), "mail-queue" ) );
   connect(this,SIGNAL(user1Clicked()),this, SLOT(slotUser1()));
   connect(this,SIGNAL(user2Clicked()),this, SLOT(slotUser2()));
 }
