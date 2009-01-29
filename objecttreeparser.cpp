@@ -473,6 +473,8 @@ namespace KMail {
       }
       signatures = result.signatures();
     }
+    else
+      messagePart.auditLogError = GpgME::Error( GPG_ERR_NOT_IMPLEMENTED );
 
     if ( doCheck )
       kDebug() << "returned from CRYPTPLUG";
@@ -2681,6 +2683,7 @@ void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *a
               messagePart.signer = signer;
               messagePart.keyId = keyId;
               messagePart.keyTrust = keyTrust;
+              messagePart.auditLogError = GpgME::Error( GPG_ERR_NOT_IMPLEMENTED );
 
               htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
 
