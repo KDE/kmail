@@ -2290,25 +2290,16 @@ KMCommand::Result KMUrlClickedCommand::execute()
     msg->initHeader(mIdentity);
     msg->setCharset("utf-8");
     msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
-    QString query=mUrl.query();
-    while (!query.isEmpty()) {
-      QString queryPart;
-      int secondQuery = query.indexOf('?',1);
-      if (secondQuery != -1)
-        queryPart = query.left(secondQuery);
-      else
-        queryPart = query;
-      query = query.mid(queryPart.length());
 
-      if (queryPart.left(9) == "?subject=")
-        msg->setSubject( KUrl::fromPercentEncoding(queryPart.mid(9).toLatin1()) );
-      else if (queryPart.left(6) == "?body=")
-        // It is correct to convert to toLatin1() as URL should not contain
-        // anything except ascii.
-        msg->setBody( KUrl::fromPercentEncoding(queryPart.mid(6).toLatin1()).toLatin1() );
-      else if (queryPart.left(4) == "?cc=")
-        msg->setCc( KUrl::fromPercentEncoding(queryPart.mid(4).toLatin1()) );
-    }
+    QString body = mUrl.queryItem( "body" );
+    QString subject = mUrl.queryItem( "subject" );
+    QString cc = mUrl.queryItem( "cc" );
+    if ( !subject.isEmpty() )
+      msg->setSubject( subject );
+    if ( !body.isEmpty() )
+      msg->setBodyFromUnicode( body );
+    if ( !cc.isEmpty() )
+      msg->setCc( cc );
 
     KMail::Composer * win = KMail::makeComposer( msg, mIdentity );
     win->setCharset("", true);
