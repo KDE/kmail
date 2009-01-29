@@ -598,7 +598,7 @@ QByteArray KMMsgBase::encodeRFC2231String( const QString& _str,
 
   QByteArray result = cset + "''";
   for ( l = latin.data(); *l; ++l ) {
-    bool needsQuoting = ( *l & 0x80 );
+    bool needsQuoting = ( *l & 0x80 ) || ( *l == '%' );
     if( !needsQuoting ) {
       int len = especials.length();
       for ( int i = 0; i < len; i++ )
