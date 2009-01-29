@@ -456,6 +456,7 @@ namespace KMail {
         if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
+          messagePart.auditLogError = executor.auditLogError();
           messagePart.auditLog = executor.auditLogAsHtml();
         } else {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
@@ -464,6 +465,7 @@ namespace KMail {
         if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
+          messagePart.auditLogError = executor.auditLogError();
           messagePart.auditLog = executor.auditLogAsHtml();
         } else {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
@@ -644,10 +646,12 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       bool& passphraseError,
                                       bool& actuallyEncrypted,
                                       QString& aErrorText,
+                                      GpgME::Error & auditLogError,
                                       QString& auditLog )
 {
   passphraseError = false;
   aErrorText.clear();
+  auditLogError = GpgME::Error();
   auditLog.clear();
   bool bDecryptionOk = false;
   enum { NO_PLUGIN, NOT_INITIALIZED, CANT_DECRYPT }
@@ -719,6 +723,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         || decryptResult.error().code() == GPG_ERR_NO_SECKEY;
       actuallyEncrypted = decryptResult.error().code() != GPG_ERR_NO_DATA;
       aErrorText = QString::fromLocal8Bit( decryptResult.error().asString() );
+      auditLogError = executor.auditLogError();
       auditLog = executor.auditLogAsHtml();
 
       kDebug() << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
@@ -1259,6 +1264,7 @@ namespace KMail {
                                      passphraseError,
                                      actuallyEncrypted,
                                      messagePart.errorText,
+                                     messagePart.auditLogError,
                                      messagePart.auditLog );
 
     // paint the frame
@@ -1404,6 +1410,7 @@ namespace KMail {
                                          passphraseError,
                                          actuallyEncrypted,
                                          messagePart.errorText,
+                                         messagePart.auditLogError,
                                          messagePart.auditLog );
 
         // paint the frame
@@ -1564,6 +1571,7 @@ namespace KMail {
                           passphraseError,
                           actuallyEncrypted,
                           messagePart.errorText,
+                          messagePart.auditLogError,
                           messagePart.auditLog ) ) {
         kDebug() << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !";
         isEncrypted = true;
@@ -2096,9 +2104,18 @@ static QString beginVerboseSigstatHeader()
   return "<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td rowspan=\"2\">";
 }
 
-static QString makeShowAuditLogLink( const QString & auditLog ) {
-  if ( auditLog.isEmpty() )
-    return i18n("No Audit Log available");
+static QString makeShowAuditLogLink( const GpgME::Error & err, const QString & auditLog ) {
+  if ( const unsigned int code = err.code() ) {
+    if ( code == GPG_ERR_NOT_IMPLEMENTED ) {
+      kDebug(5006) << "makeShowAuditLogLink: not showing link (not implemented)";
+      return QString();
+    } else if ( code == GPG_ERR_NO_DATA ) {
+      kDebug(5006) << "makeShowAuditLogLink: not showing link (not available)";
+      return i18n("No Audit Log available");
+    } else {
+      return i18n("Error Retrieving Audit Log: %1", QString::fromLocal8Bit( err.asString() ) );
+    }
+  }
 
   KUrl url;
   url.setProtocol( "kmail" );
@@ -2116,7 +2133,7 @@ static QString endVerboseSigstatHeader( const PartMetaData & pmd )
   html += i18n( "Hide Details" );
   html += "</a></td></tr>";
   html += "<tr><td align=\"right\" valign=\"bottom\" nowrap=\"nowrap\">";
-  html += makeShowAuditLogLink( pmd.auditLog );
+  html += makeShowAuditLogLink( pmd.auditLogError, pmd.auditLog );
   html += "</td></tr></table>";
   return html;
 }

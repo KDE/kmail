@@ -43,6 +43,10 @@ class KMMessagePart;
 class QString;
 class partNode;
 
+namespace GpgME {
+  class Error;
+}
+
 namespace KMail {
 
   class AttachmentStrategy;
@@ -196,6 +200,7 @@ namespace KMail {
                         bool& passphraseError,
                         bool& actuallyEncrypted,
                         QString& aErrorText,
+                        GpgME::Error & auditLogError,
                         QString& auditLog );
 
     bool processMailmanMessage( partNode * node );
