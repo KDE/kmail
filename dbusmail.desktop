@@ -2,4 +2,7 @@
 Type=ServiceType
 X-KDE-ServiceType=DBUS/Mailer
 Comment=Mail program with a D-Bus interface
+Comment[pt]=Um programa de correio electrónico com uma interface D-Bus
 Comment[pt_BR]=Programa de e-mail com interface D-Bus
+Comment[sv]=E-postprogram med D-Bus gränssnitt
+Comment[uk]=Програма ел. пошти з інтерфейсом D-Bus
