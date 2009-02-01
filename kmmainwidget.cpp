@@ -3692,7 +3692,7 @@ void KMMainWidget::setupActions()
   mTrashAction->setIcon(KIcon("user-trash"));
   mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
   mTrashAction->setShortcut(QKeySequence(Qt::Key_Delete));
-  mTrashAction->setToolTip(i18n("Move message to trashcan"));
+  mTrashAction->setHelpText(i18n("Move message to trashcan"));
   connect(mTrashAction, SIGNAL(triggered(bool)), SLOT(slotTrashMsg()));
 
   /* The delete action is nowhere in the gui, by default, so we need to make
@@ -3708,7 +3708,7 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("move_thread_to_trash", mTrashThreadAction );
   mTrashThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Delete));
   mTrashThreadAction->setIcon(KIcon("user-trash"));
-  mTrashThreadAction->setToolTip(i18n("Move thread to trashcan") );
+  mTrashThreadAction->setHelpText(i18n("Move thread to trashcan") );
   connect(mTrashThreadAction, SIGNAL(triggered(bool)), SLOT(slotTrashThread()));
 
   mDeleteThreadAction = new KAction(KIcon("edit-delete"), i18n("Delete T&hread"), this);
@@ -3931,19 +3931,19 @@ void KMMainWidget::setupActions()
   mMarkThreadAsReadAction = new KAction(KIcon("mail-mark-read"), i18n("Mark Thread as &Read"), this);
   actionCollection()->addAction("thread_read", mMarkThreadAsReadAction );
   connect(mMarkThreadAsReadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusRead()));
-  mMarkThreadAsReadAction->setToolTip(i18n("Mark all messages in the selected thread as read"));
+  mMarkThreadAsReadAction->setHelpText(i18n("Mark all messages in the selected thread as read"));
   mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
   mMarkThreadAsNewAction = new KAction(KIcon("mail-mark-unread-new"), i18n("Mark Thread as &New"), this);
   actionCollection()->addAction("thread_new", mMarkThreadAsNewAction );
   connect(mMarkThreadAsNewAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusNew()));
-  mMarkThreadAsNewAction->setToolTip( i18n("Mark all messages in the selected thread as new"));
+  mMarkThreadAsNewAction->setHelpText( i18n("Mark all messages in the selected thread as new"));
   mThreadStatusMenu->addAction( mMarkThreadAsNewAction );
 
   mMarkThreadAsUnreadAction = new KAction(KIcon("mail-mark-unread"), i18n("Mark Thread as &Unread"), this);
   actionCollection()->addAction("thread_unread", mMarkThreadAsUnreadAction );
   connect(mMarkThreadAsUnreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusUnread()));
-  mMarkThreadAsUnreadAction->setToolTip(i18n("Mark all messages in the selected thread as unread"));
+  mMarkThreadAsUnreadAction->setHelpText(i18n("Mark all messages in the selected thread as unread"));
   mThreadStatusMenu->addAction( mMarkThreadAsUnreadAction );
 
   mThreadStatusMenu->addSeparator();
@@ -4000,28 +4000,28 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(i18nc("View->","&Expand Thread"), this);
     actionCollection()->addAction("expand_thread", action );
     action->setShortcut(QKeySequence(Qt::Key_Period));
-    action->setToolTip(i18n("Expand the current thread"));
+    action->setHelpText(i18n("Expand the current thread"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpandThread()));
   }
   {
     KAction *action = new KAction(i18nc("View->","&Collapse Thread"), this);
     actionCollection()->addAction("collapse_thread", action );
     action->setShortcut(QKeySequence(Qt::Key_Comma));
-    action->setToolTip( i18n("Collapse the current thread"));
+    action->setHelpText( i18n("Collapse the current thread"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCollapseThread()));
   }
   {
     KAction *action = new KAction(i18nc("View->","Ex&pand All Threads"), this);
     actionCollection()->addAction("expand_all_threads", action );
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Period));
-    action->setToolTip( i18n("Expand all threads in the current folder"));
+    action->setHelpText( i18n("Expand all threads in the current folder"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpandAllThreads()));
   }
   {
     KAction *action = new KAction(i18nc("View->","C&ollapse All Threads"), this);
     actionCollection()->addAction("collapse_all_threads", action );
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Comma));
-    action->setToolTip( i18n("Collapse all threads in the current folder"));
+    action->setHelpText( i18n("Collapse all threads in the current folder"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCollapseAllThreads()));
   }
 
@@ -4040,7 +4040,7 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(i18n("&Next Message"), this);
     actionCollection()->addAction("go_next_message", action );
     action->setShortcuts(KShortcut( "N; Right" ));
-    action->setToolTip(i18n("Go to the next message"));
+    action->setHelpText(i18n("Go to the next message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotSelectNextMessage()));
   }
   {
@@ -4053,13 +4053,13 @@ void KMMainWidget::setupActions()
       action->setIcon( KIcon( "go-next" ) );
     }
     action->setIconText( i18nc( "@action:inmenu Goto next unread message", "Next" ) );
-    action->setToolTip(i18n("Go to the next unread message"));
+    action->setHelpText(i18n("Go to the next unread message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotSelectNextUnreadMessage()));
   }
   {
     KAction *action = new KAction(i18n("&Previous Message"), this);
     actionCollection()->addAction("go_prev_message", action );
-    action->setToolTip(i18n("Go to the previous message"));
+    action->setHelpText(i18n("Go to the previous message"));
     action->setShortcuts(KShortcut( "P; Left" ));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotSelectPreviousMessage()));
   }
@@ -4073,7 +4073,7 @@ void KMMainWidget::setupActions()
       action->setIcon( KIcon( "go-previous" ) );
     }
     action->setIconText( i18nc( "@action:inmenu Goto previous unread message.","Previous" ) );
-    action->setToolTip(i18n("Go to the previous unread message"));
+    action->setHelpText(i18n("Go to the previous unread message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotSelectPreviousUnreadMessage()));
   }
   {
@@ -4081,7 +4081,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("go_next_unread_folder", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextUnreadFolder()));
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Plus));
-    action->setToolTip(i18n("Go to the next folder with unread messages"));
+    action->setHelpText(i18n("Go to the next folder with unread messages"));
     KShortcut shortcut = KShortcut(action->shortcuts());
     shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Plus ) );
     action->setShortcuts( shortcut );
@@ -4090,7 +4090,7 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(i18n("Previous Unread F&older"), this);
     actionCollection()->addAction("go_prev_unread_folder", action );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Minus));
-    action->setToolTip(i18n("Go to the previous folder with unread messages"));
+    action->setHelpText(i18n("Go to the previous folder with unread messages"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadFolder()));
     KShortcut shortcut = KShortcut(action->shortcuts());
     shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Minus ) );
@@ -4100,7 +4100,7 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(i18nc("Go->","Next Unread &Text"), this);
     actionCollection()->addAction("go_next_unread_text", action );
     action->setShortcut(QKeySequence(Qt::Key_Space));
-    action->setToolTip(i18n("Go to the next unread text"));
+    action->setHelpText(i18n("Go to the next unread text"));
     action->setWhatsThis( i18n("Scroll down current message. "
                                "If at end of current message, "
                                "go to next unread message."));
@@ -4128,7 +4128,7 @@ void KMMainWidget::setupActions()
   {
     KAction *action = new KAction(KIcon("kmail"), i18n("KMail &Introduction"), this);
     actionCollection()->addAction("help_kmail_welcomepage", action );
-    action->setToolTip( i18n("Display KMail's Welcome Page") );
+    action->setHelpText( i18n("Display KMail's Welcome Page") );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotIntro()));
   }
 

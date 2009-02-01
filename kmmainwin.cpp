@@ -105,9 +105,10 @@ KMMainWin::~KMMainWin()
   }
 }
 
-void KMMainWin::displayStatusMsg(const QString& aText)
+void KMMainWin::displayStatusMsg( const QString& aText )
 {
-  if ( !statusBar() || !mLittleProgress) return;
+  if ( !statusBar() || !mLittleProgress )
+    return;
   int statusWidth = statusBar()->width() - mLittleProgress->width()
                     - fontMetrics().maxWidth();
 
@@ -121,7 +122,7 @@ void KMMainWin::displayStatusMsg(const QString& aText)
 //  text.replace("<", "&lt;");
 //  text.replace(">", "&gt;");
 
-  statusBar()->changeItem(text, mMessageStatusId);
+  statusBar()->changeItem( text, mMessageStatusId );
 }
 
 //-----------------------------------------------------------------------------

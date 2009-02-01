@@ -382,8 +382,6 @@ void Widget::themeMenuAboutToShow()
   menu->addSeparator();
 
   act = menu->addAction( i18n( "Configure..." ) );
-  //act->setStatusTip( i18n( "Add, Remove or Modify the Available Themes" ) ); <-- doesn't seem to work
-  //act->setToolTip( i18n( "Add, Remove or Modify the Available Themes" ) ); <-- doesn't seem to work
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( configureThemes() ) );
 }

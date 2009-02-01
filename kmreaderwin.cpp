@@ -548,7 +548,7 @@ void KMReaderWin::createActions()
   // header style
   KActionMenu *headerMenu  = new KActionMenu(i18nc("View->", "&Headers"), this);
   ac->addAction("view_headers", headerMenu );
-  headerMenu->setToolTip( i18n("Choose display style of message headers") );
+  headerMenu->setHelpText( i18n("Choose display style of message headers") );
 
   connect( headerMenu, SIGNAL(activated()),
            this, SLOT(slotCycleHeaderStyles()) );
@@ -557,49 +557,49 @@ void KMReaderWin::createActions()
   raction = new KToggleAction( i18nc("View->headers->", "&Enterprise Headers"), this);
   ac->addAction( "view_headers_enterprise", raction );
   connect( raction, SIGNAL(triggered(bool)), SLOT(slotEnterpriseHeaders()) );
-  raction->setToolTip( i18n("Show the list of headers in Enterprise style") );
+  raction->setHelpText( i18n("Show the list of headers in Enterprise style") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->headers->", "&Fancy Headers"), this);
   ac->addAction("view_headers_fancy", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotFancyHeaders()));
-  raction->setToolTip( i18n("Show the list of headers in a fancy format") );
+  raction->setHelpText( i18n("Show the list of headers in a fancy format") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->headers->", "&Brief Headers"), this);
   ac->addAction("view_headers_brief", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotBriefHeaders()));
-  raction->setToolTip( i18n("Show brief list of message headers") );
+  raction->setHelpText( i18n("Show brief list of message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->headers->", "&Standard Headers"), this);
   ac->addAction("view_headers_standard", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotStandardHeaders()));
-  raction->setToolTip( i18n("Show standard list of message headers") );
+  raction->setHelpText( i18n("Show standard list of message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->headers->", "&Long Headers"), this);
   ac->addAction("view_headers_long", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotLongHeaders()));
-  raction->setToolTip( i18n("Show long list of message headers") );
+  raction->setHelpText( i18n("Show long list of message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->headers->", "&All Headers"), this);
   ac->addAction("view_headers_all", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotAllHeaders()));
-  raction->setToolTip( i18n("Show all message headers") );
+  raction->setHelpText( i18n("Show all message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
   // attachment style
   KActionMenu *attachmentMenu  = new KActionMenu(i18nc("View->", "&Attachments"), this);
   ac->addAction("view_attachments", attachmentMenu );
-  attachmentMenu->setToolTip( i18n("Choose display style of attachments") );
+  attachmentMenu->setHelpText( i18n("Choose display style of attachments") );
   connect( attachmentMenu, SIGNAL(activated()),
            this, SLOT(slotCycleAttachmentStrategy()) );
 
@@ -607,28 +607,28 @@ void KMReaderWin::createActions()
   raction  = new KToggleAction(i18nc("View->attachments->", "&As Icons"), this);
   ac->addAction("view_attachments_as_icons", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotIconicAttachments()));
-  raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
+  raction->setHelpText( i18n("Show all attachments as icons. Click to see them.") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->attachments->", "&Smart"), this);
   ac->addAction("view_attachments_smart", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotSmartAttachments()));
-  raction->setToolTip( i18n("Show attachments as suggested by sender.") );
+  raction->setHelpText( i18n("Show attachments as suggested by sender.") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->attachments->", "&Inline"), this);
   ac->addAction("view_attachments_inline", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotInlineAttachments()));
-  raction->setToolTip( i18n("Show all attachments inline (if possible)") );
+  raction->setHelpText( i18n("Show all attachments inline (if possible)") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 
   raction  = new KToggleAction(i18nc("View->attachments->", "&Hide"), this);
   ac->addAction("view_attachments_hide", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotHideAttachments()));
-  raction->setToolTip( i18n("Do not show attachments in the message viewer") );
+  raction->setHelpText( i18n("Do not show attachments in the message viewer") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 

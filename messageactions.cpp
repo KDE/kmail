@@ -83,7 +83,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   mCreateTodoAction = new KAction( KIcon( "task-new" ), i18n( "Create To-do/Reminder..." ), this );
   mCreateTodoAction->setIconText( i18n( "Create To-do" ) );
-  mCreateTodoAction->setToolTip( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
+  mCreateTodoAction->setHelpText( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
   mCreateTodoAction->setWhatsThis( i18n( "This option starts the KOrganizer to-do editor with initial values taken from the currently selected message. Then you can edit the to-do to your liking before saving it to your calendar." ) );
   mActionCollection->addAction( "create_todo", mCreateTodoAction );
   connect( mCreateTodoAction, SIGNAL(activated()),
@@ -96,21 +96,21 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
   KAction *action;
 
   action = new KAction( KIcon("mail-mark-read"), i18n("Mark Message as &Read"), this );
-  action->setToolTip( i18n("Mark selected messages as read") );
+  action->setHelpText( i18n("Mark selected messages as read") );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusRead()) );
   mActionCollection->addAction( "status_read", action );
   mStatusMenu->addAction( action );
 
   action = new KAction( KIcon("mail-mark-unread-new"), i18n("Mark Message as &New"), this );
-  action->setToolTip( i18n("Mark selected messages as new") );
+  action->setHelpText( i18n("Mark selected messages as new") );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusNew()) );
   mActionCollection->addAction( "status_new", action );
   mStatusMenu->addAction( action );
 
   action = new KAction( KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this );
-  action->setToolTip( i18n("Mark selected messages as unread") );
+  action->setHelpText( i18n("Mark selected messages as unread") );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusUnread()) );
   mActionCollection->addAction( "status_unread", action );
