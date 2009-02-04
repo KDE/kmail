@@ -3474,7 +3474,10 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   mTempFile.file()->writeBlock( part.bodyDecodedBinary() );
   mTempFile.file()->flush();
 
-  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KURL(mTempFile.file()->name()), part.typeStr() + "/" + part.subtypeStr(), false, this );
+  KMail::EditorWatcher *watcher =
+          new KMail::EditorWatcher( KURL( mTempFile.file()->name() ),
+                                    part.typeStr() + "/" + part.subtypeStr(),
+                                    false, this, parentWidget() );
   connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
   if ( !watcher->start() )
     return Failed;
