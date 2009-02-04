@@ -430,6 +430,13 @@ private:
    */
   QString findCurrentImapPath();
 
+  /**
+   * This function adds or updates the actions of the forward action menu, taking the
+   * preference whether to forward inline or as attachment by default into account.
+   * This has to be called when that preference config has been changed.
+   */
+  void setupForwardActions();
+
   void setupFolderView();
 
 private slots:

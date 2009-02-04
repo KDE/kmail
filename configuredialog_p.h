@@ -58,6 +58,7 @@ class KFontRequester;
 class KIconButton;
 class KKeyButton;
 class QSpinBox;
+class KComboBox;
 
 namespace Kpgp {
   class Config;
@@ -616,6 +617,7 @@ private:
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KURLRequester *mEditorRequester;
+  KComboBox     *mForwardTypeCombo;
 };
 
 class ComposerPagePhrasesTab : public ConfigModuleTab {

@@ -99,6 +99,7 @@ using KMime::DateFormatter;
 #include <kconfig.h>
 #include <kactivelabel.h>
 #include <kcmultidialog.h>
+#include <kcombobox.h>
 
 // Qt headers:
 #include <qvalidator.h>
@@ -2646,6 +2647,20 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
            this, SLOT( slotEmitChanged( void ) ) );
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mForwardTypeCombo = new KComboBox( false, this );
+  label = new QLabel( mForwardTypeCombo,
+                      i18n( "Default Forwarding Type:" ),
+                      this );
+  mForwardTypeCombo->insertStringList( QStringList()
+                                       << i18n( "Inline" )
+                                       << i18n( "As Attachment" ) );
+  hlay->addWidget( label );
+  hlay->addWidget( mForwardTypeCombo );
+  hlay->addStretch( 1 );
+  connect( mForwardTypeCombo, SIGNAL(activated(int)),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
   QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order" ), this );
   connect( completionOrderBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureCompletionOrder() ) );
@@ -2714,6 +2729,10 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
 
   mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
   mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
+  if ( GlobalSettings::self()->forwardingInlineByDefault() )
+    mForwardTypeCombo->setCurrentItem( 0 );
+  else
+    mForwardTypeCombo->setCurrentItem( 1 );
 
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
@@ -2758,6 +2777,7 @@ void ComposerPage::GeneralTab::save() {
 
   GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
   GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
+  GlobalSettings::self()->setForwardingInlineByDefault( mForwardTypeCombo->currentItem() == 0 );
 
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
@@ -4794,8 +4814,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
                  i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
   connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   grid->addMultiCellWidget( mSyncImmediately, 4, 4, 0, 1 );
-  
-  mDeleteInvitations = new QCheckBox( 
+
+  mDeleteInvitations = new QCheckBox(
              i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().utf8() ), mBox );
   QWhatsThis::add( mDeleteInvitations, i18n( GlobalSettings::self()
              ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().utf8() ) );

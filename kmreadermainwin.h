@@ -74,6 +74,11 @@ private:
   void initKMReaderMainWin();
   void setupAccel();
 
+  /**
+   * @see the KMMainWidget function with the same name.
+   */
+  void setupForwardActions();
+
   KMReaderWin *mReaderWin;
   KMMessage *mMsg;
   KURL mUrl;

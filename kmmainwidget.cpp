@@ -1825,9 +1825,36 @@ void KMMainWidget::slotPrintMsg()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::setupForwardActions()
+{
+  disconnect( mForwardActionMenu, SIGNAL( activated() ), 0, 0 );
+  mForwardActionMenu->remove( mForwardInlineAction );
+  mForwardActionMenu->remove( mForwardAttachedAction );
+
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+    mForwardActionMenu->insert( mForwardInlineAction, 0 );
+    mForwardActionMenu->insert( mForwardAttachedAction, 1 );
+    mForwardInlineAction->setShortcut( Key_F );
+    mForwardAttachedAction->setShortcut( SHIFT+Key_F );
+    connect( mForwardActionMenu, SIGNAL(activated()), this,
+            SLOT(slotForwardInlineMsg()) );
+
+  } else {
+    mForwardActionMenu->insert( mForwardAttachedAction, 0 );
+    mForwardActionMenu->insert( mForwardInlineAction, 1 );
+    mForwardInlineAction->setShortcut( SHIFT+Key_F );
+    mForwardAttachedAction->setShortcut( Key_F );
+    connect( mForwardActionMenu, SIGNAL(activated()), this,
+            SLOT(slotForwardAttachedMsg()) );
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotConfigChanged()
 {
   readConfig();
+  setupForwardActions();
+  setupForwardingActionsList();
 }
 
 //-----------------------------------------------------------------------------
@@ -2847,22 +2874,7 @@ void KMMainWidget::setupActions()
                                  "message_forward_redirect" );
 
 
-      if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
-          mForwardActionMenu->insert( mForwardInlineAction );
-          mForwardActionMenu->insert( mForwardAttachedAction );
-          mForwardInlineAction->setShortcut( Key_F );
-          mForwardAttachedAction->setShortcut( SHIFT+Key_F );
-          connect( mForwardActionMenu, SIGNAL(activated()), this,
-                   SLOT(slotForwardInlineMsg()) );
-
-      } else {
-          mForwardActionMenu->insert( mForwardAttachedAction );
-          mForwardActionMenu->insert( mForwardInlineAction );
-          mForwardInlineAction->setShortcut( SHIFT+Key_F );
-          mForwardAttachedAction->setShortcut( Key_F );
-          connect( mForwardActionMenu, SIGNAL(activated()), this,
-                   SLOT(slotForwardAttachedMsg()) );
-      }
+      setupForwardActions();
 
       mForwardActionMenu->insert( mForwardDigestAction );
       mForwardActionMenu->insert( mRedirectAction );
