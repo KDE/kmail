@@ -472,7 +472,9 @@ namespace {
     if ( !url.hasRef() )
       return false;
     QString displayName, libName, keyId;
-    if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
+    if ( !foundSMIMEData( url.path() + '#' +
+                          QUrl::fromPercentEncoding( url.ref().toLatin1() ),
+                          displayName, libName, keyId ) )
       return false;
     QStringList lst;
     lst << "-query" << keyId;
@@ -485,7 +487,9 @@ namespace {
 
   QString SMimeURLHandler::statusBarMessage( const KUrl & url, KMReaderWin * ) const {
     QString displayName, libName, keyId;
-    if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
+    if ( !foundSMIMEData( url.path() + '#' +
+                          QUrl::fromPercentEncoding( url.ref().toLatin1() ),
+                          displayName, libName, keyId ) )
       return QString();
     return i18n("Show certificate 0x%1", keyId );
   }
