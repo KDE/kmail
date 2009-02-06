@@ -61,8 +61,8 @@ namespace KMail {
     bool inlineNestedMessages() const { return false; }
     Display defaultDisplay( const partNode * node ) const {
       if ( node->type() == DwMime::kTypeText &&
-        node->msgPart().fileName().trimmed().isEmpty() &&
-        node->msgPart().name().trimmed().isEmpty() )
+           node->msgPart().fileName().trimmed().isEmpty() &&
+           node->msgPart().name().trimmed().isEmpty() )
         // text/* w/o filename parameter:
         return Inline;
       return AsIcon;
@@ -114,7 +114,7 @@ namespace KMail {
   protected:
     InlinedAttachmentStrategy() : AttachmentStrategy() {}
     virtual ~InlinedAttachmentStrategy() {}
-    
+
   public:
     const char * name() const { return "inlined"; }
     const AttachmentStrategy * next() const { return hidden(); }
@@ -134,7 +134,7 @@ namespace KMail {
   protected:
     HiddenAttachmentStrategy() : AttachmentStrategy() {}
     virtual ~HiddenAttachmentStrategy() {}
-    
+
   public:
     const char * name() const { return "hidden"; }
     const AttachmentStrategy * next() const { return iconic(); }
@@ -143,8 +143,8 @@ namespace KMail {
     bool inlineNestedMessages() const { return false; }
     Display defaultDisplay( const partNode * node ) const {
       if ( node->type() == DwMime::kTypeText &&
-        node->msgPart().fileName().trimmed().isEmpty() &&
-        node->msgPart().name().trimmed().isEmpty() )
+           node->msgPart().fileName().trimmed().isEmpty() &&
+           node->msgPart().name().trimmed().isEmpty() )
         // text/* w/o filename parameter:
         return Inline;
 
