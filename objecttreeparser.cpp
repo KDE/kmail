@@ -1177,15 +1177,22 @@ namespace KMail {
       return true;
     }
 
-    // FIXME(marc) check here that the protocol parameter matches the
-    // mimetype of "signature" (not required by the RFC, but practised
-    // by all implementaions of security multiparts
+    QString protocolContentType = node->contentTypeParameter( "protocol" ).toLower();
+    const QString signatureContentType =
+        QString( "%1/%2" ).arg( QString( signature->typeString() ).toLower() )
+                          .arg( QString( signature->subTypeString() ).toLower() );
+    if ( protocolContentType.isEmpty() ) {
+      kWarning() << "Message doesn't set the protocol for the multipart/signed content-type, "
+                    "using content-type of the signature:" << signatureContentType;
+      protocolContentType = signatureContentType;
+    }
 
-    const QString contentType = node->contentTypeParameter( "protocol" ).toLower();
     const Kleo::CryptoBackend::Protocol *protocol = 0;
-    if ( contentType == "application/pkcs7-signature" || contentType == "application/x-pkcs7-signature" )
+    if ( protocolContentType == "application/pkcs7-signature" ||
+         protocolContentType == "application/x-pkcs7-signature" )
       protocol = Kleo::CryptoBackendFactory::instance()->smime();
-    else if ( contentType == "application/pgp-signature" || contentType == "application/x-pgp-signature" )
+    else if ( protocolContentType == "application/pgp-signature" ||
+              protocolContentType == "application/x-pgp-signature" )
       protocol = Kleo::CryptoBackendFactory::instance()->openpgp();
 
     if ( !protocol ) {
