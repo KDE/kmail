@@ -18,7 +18,7 @@
      <item row="0" column="0" colspan="2" >
       <widget class="QCheckBox" name="mEmptyFolderConfirmCheck" >
        <property name="text" >
-        <string comment="Corresponds to Folder->Move All Messages to Trash" >Ask for co&amp;nfirmation before moving all messages to trash</string>
+        <string comment="Corresponds to Folder-&gt;Move All Messages to Trash" >Ask for co&amp;nfirmation before moving all messages to trash</string>
        </property>
       </widget>
      </item>
