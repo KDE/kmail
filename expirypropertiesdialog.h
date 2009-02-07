@@ -25,6 +25,7 @@ public:
 protected slots:
     void accept();
     void slotUpdateControls();
+    void updateSpinBoxSuffix();
 
 private:
     KMFolder *mFolder;

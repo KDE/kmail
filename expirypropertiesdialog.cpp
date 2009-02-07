@@ -60,11 +60,6 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* 
   expireReadMailSB->setValue( 30 );
   daysBox->addWidget( expireReadMailSB, 0, 1 );
 
-  QLabel *labelDays = new QLabel;
-  labelDays->setObjectName( "labelDays" );
-  labelDays->setText( i18nc( "Unit label of the expiry time.", "days" ) );
-  daysBox->addWidget( labelDays, 0, 2, Qt::AlignLeft );
-
   expireUnreadMailCB = new QCheckBox;
   expireUnreadMailCB->setObjectName( "expireUnreadMailCB" );
   expireUnreadMailCB->setText( i18n( "Expire unread messages after" ) );
@@ -76,12 +71,13 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* 
   expireUnreadMailSB->setObjectName( "expireUnreadMailSB" );
   expireUnreadMailSB->setMaximum( 99999 );
   expireUnreadMailSB->setValue( 30 );
+  updateSpinBoxSuffix();
+  connect ( expireReadMailSB, SIGNAL( valueChanged( int )),
+           this, SLOT( updateSpinBoxSuffix() ) );
+  connect ( expireUnreadMailSB, SIGNAL( valueChanged( int )),
+           this, SLOT( updateSpinBoxSuffix() ) );
   daysBox->addWidget( expireUnreadMailSB, 1, 1 );
 
-  QLabel *labelDays2 = new QLabel;
-  labelDays2->setObjectName( "labelDays2" );
-  labelDays2->setText( i18nc( "Unit label of the expiry time.", "days" ) );
-  daysBox->addWidget( labelDays2, 1, 2, Qt::AlignLeft );
   daysBox->setColumnStretch( 3, 1 );
   globalVBox->addLayout( daysBox );
 
@@ -203,6 +199,12 @@ void ExpiryPropertiesDialog::slotUpdateControls()
 
   expireReadMailSB->setEnabled( expireReadMailCB->isChecked() );
   expireUnreadMailSB->setEnabled( expireUnreadMailCB->isChecked() );
+}
+
+void ExpiryPropertiesDialog::updateSpinBoxSuffix()
+{
+  expireReadMailSB->setSuffix( QString(" ") + i18np("day", "days", expireReadMailSB->value() ) );
+  expireUnreadMailSB->setSuffix( QString(" ") + i18np("day", "days", expireUnreadMailSB->value() ) );
 }
 
 
