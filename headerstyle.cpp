@@ -703,7 +703,7 @@ namespace KMail {
       subjectDir = directionOf( i18n("No Subject") );
     }
 
-    // colors depend on if its encapsulated or not
+    // colors depend on if it is encapsulated or not
     QColor fontColor( Qt::white );
     QString linkColor = "class =\"white\"";
     const QColor activeColor = KColorScheme( QPalette::Active, KColorScheme::Selection ).
