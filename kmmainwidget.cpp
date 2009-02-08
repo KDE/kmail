@@ -3604,7 +3604,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
   }
   {
-    KAction *action = new KAction( i18n("Onlinestatus (unknown)"), this );
+    KAction *action = new KAction( i18n("Online status (unknown)"), this );
     actionCollection()->addAction( "online_status", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()) );
   }
