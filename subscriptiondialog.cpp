@@ -38,6 +38,8 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+#include <Qt3Support/Q3PtrList>
+
 namespace KMail {
 
 SubscriptionDialogBase::SubscriptionDialogBase( QWidget *parent, const QString &caption,
