@@ -3371,7 +3371,8 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   KMail::EditorWatcher *watcher =
       new KMail::EditorWatcher( KUrl( mTempFile.fileName() ),
                                 part.typeStr() + '/' + part.subtypeStr(),
-                                false, this );
+                                false, this, parentWidget() );
+
   connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
   if ( !watcher->start() )
     return Failed;
