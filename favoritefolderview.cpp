@@ -329,12 +329,6 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
   mContextMenuItem = fti;
   KMenu contextMenu;
   if ( fti && fti->folder() ) {
-    contextMenu.addAction( SmallIcon( "edit-delete" ), i18n( "Remove From Favorites" ),
-                           this, SLOT( removeFolder() ) );
-    contextMenu.addAction( SmallIcon( "edit-rename" ), i18n( "Rename Favorite..." ),
-                           this, SLOT( renameFolder() ) );
-    contextMenu.addSeparator();
-
     contextMenu.addAction( mainWidget()->action( "mark_all_as_read" ) );
     if ( fti->folder()->folderType() == KMFolderTypeImap
          || fti->folder()->folderType() == KMFolderTypeCachedImap ) {
@@ -343,11 +337,22 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
 
     if ( fti->folder()->isMailingListEnabled() )
       contextMenu.addAction( mainWidget()->action( "post_message" ) );
+    contextMenu.addAction( mainWidget()->action( "search_messages" ) );
+    if ( fti->folder()->canDeleteMessages() && ( fti->folder()->count() > 0 ) )
+       contextMenu.addAction( mainWidget()->action( "empty" ) );
+    contextMenu.addSeparator();
 
     contextMenu.addAction( SmallIcon( "configure-shortcuts" ), i18n( "&Assign Shortcut..." ),
                            fti, SLOT( assignShortcut() ) );
     contextMenu.addAction( i18n( "Expire..." ), fti, SLOT(slotShowExpiryProperties()) );
     contextMenu.addAction( mainWidget()->action( "modify" ) );
+    contextMenu.addSeparator();
+
+    contextMenu.addAction( SmallIcon( "edit-delete" ), i18n( "Remove From Favorites" ),
+                           this, SLOT( removeFolder() ) );
+    contextMenu.addAction( SmallIcon( "edit-rename" ), i18n( "Rename Favorite..." ),
+                           this, SLOT( renameFolder() ) );
+
   } else {
     contextMenu.addAction( SmallIcon( "bookmark-new" ), i18n( "Add Favorite Folder..." ),
                            this, SLOT( addFolder() ) );
