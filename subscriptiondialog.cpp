@@ -38,8 +38,6 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-#include <Qt3Support/Q3PtrList>
-
 namespace KMail {
 
 SubscriptionDialogBase::SubscriptionDialogBase( QWidget *parent, const QString &caption,
@@ -84,24 +82,28 @@ void SubscriptionDialogBase::moveChildrenToNewParent( GroupItem *oldItem, GroupI
 {
   if ( !oldItem || !item ) return;
 
-  Q3PtrList<Q3ListViewItem> itemsToMove;
-  Q3ListViewItem * myChild = oldItem->firstChild();
-  while (myChild)
-  {
-    itemsToMove.append(myChild);
-    myChild = myChild->nextSibling();
+  QList<QTreeWidgetItem*> itemsToMove;
+  int childIndex = 0;
+  while ( QTreeWidgetItem* curItem = oldItem->QTreeWidgetItem::child( childIndex++ ) ) {
+    itemsToMove.append( curItem );
+    }
+
+  foreach( QTreeWidgetItem *cur, itemsToMove ) {
+    QTreeWidgetItem *taken = oldItem->takeChild( oldItem->indexOfChild( cur ) );
+    Q_ASSERT( taken );
+    item->QTreeWidgetItem::insertChild( 0, taken );
+    if ( taken->isSelected() ) // we have new parents so open them
+      folderTree()->scrollToItem( taken );
   }
-  Q3PtrListIterator<Q3ListViewItem> it( itemsToMove );
-  Q3ListViewItem *cur;
-  while ((cur = it.current()))
-  {
-    oldItem->takeItem(cur);
-    item->insertItem(cur);
-    if ( cur->isSelected() ) // we have new parents so open them
-      folderTree()->ensureItemVisible( cur );
-    ++it;
+
+  // Delete the old item
+  QTreeWidgetItem *oldItemParent = oldItem->QTreeWidgetItem::parent();
+  if ( oldItemParent )
+    delete oldItemParent->takeChild( oldItemParent->indexOfChild( oldItem ) );
+  else {
+    QTreeWidget *treeWidget = oldItem->treeWidget();
+    delete treeWidget->takeTopLevelItem( treeWidget->indexOfTopLevelItem( oldItem ) );
   }
-  delete oldItem;
   itemsToMove.clear();
 }
 
@@ -188,7 +190,7 @@ void SubscriptionDialogBase::createListViewItem( int i )
   if ( mFolderPaths[i] == mStartPath )
   {
     item->setSelected( true );
-    folderTree()->ensureItemVisible( item );
+    folderTree()->scrollToItem( item );
   }
 }
 
@@ -234,7 +236,6 @@ void SubscriptionDialogBase::slotLoadFolders()
   } else if ( ai->makeConnection() == ImapAccountBase::Connecting )
   {
     // We'll wait for the connectionResult signal from the account.
-    kDebug(5006) <<"SubscriptionDialog - waiting for connection";
     connect( ai, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotConnectionResult(int, const QString&) ) );
     return;
@@ -285,7 +286,6 @@ void SubscriptionDialogBase::processNext()
     completeListing = false;
   }
 
-//  kDebug(5006) <<"process" << mCurrentNamespace <<",subscribed=" << mSubscribed;
   ListJob* job = new ListJob( ai, type, 0, ai->addPathToNamespace( mCurrentNamespace ), completeListing );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
@@ -363,7 +363,6 @@ void SubscriptionDialogBase::checkIfSubscriptionsEnabled()
     return;
   if( account->onlySubscribedFolders() )
     return;
-  kDebug(5006) <<"Not subscribed!!!";
   int result = KMessageBox::questionYesNoCancel( this,
     i18nc("@info", "Currently subscriptions are not used for server <resource>%1</resource>.<nl/>"
       "\nDo you want to enable subscriptions?", account->name() ),
@@ -399,19 +398,19 @@ void SubscriptionDialog::doSave()
   checkIfSubscriptionsEnabled();
 
   // subscribe
-  Q3ListViewItemIterator it(subView);
-  for ( ; it.current(); ++it)
+  QTreeWidgetItemIterator it(subView);
+  for ( ; *it; ++it)
   {
     static_cast<ImapAccountBase*>(account())->changeSubscription(true,
-        static_cast<GroupItem*>(it.current())->info().path);
+        static_cast<GroupItem*>(*it)->info().path);
   }
 
   // unsubscribe
-  Q3ListViewItemIterator it2(unsubView);
-  for ( ; it2.current(); ++it2)
+  QTreeWidgetItemIterator it2(unsubView);
+  for ( ; *it2; ++it2)
   {
     static_cast<ImapAccountBase*>(account())->changeSubscription(false,
-        static_cast<GroupItem*>(it2.current())->info().path);
+        static_cast<GroupItem*>(*it2)->info().path);
   }
 
   if ( mForceSubscriptionEnable ) {

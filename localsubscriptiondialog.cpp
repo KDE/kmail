@@ -105,16 +105,16 @@ void LocalSubscriptionDialog::doSave()
 {
   bool somethingHappened = false;
   // subscribe
-  Q3ListViewItemIterator it(subView);
-  for ( ; it.current(); ++it) {
+  QTreeWidgetItemIterator it(subView);
+  for ( ; *it; ++it) {
     static_cast<ImapAccountBase*>(account())->changeLocalSubscription(
-        static_cast<GroupItem*>(it.current())->info().path, true );
+        static_cast<GroupItem*>(*it)->info().path, true );
     somethingHappened = true;
   }
 
   // unsubscribe
-  Q3ListViewItemIterator it2(unsubView);
-  if ( unsubView->childCount() > 0 ) {
+  QTreeWidgetItemIterator it2(unsubView);
+  if ( unsubView->topLevelItemCount() > 0 ) {
     const QString message = i18n("Locally unsubscribing from folders will remove all "
         "information that is present locally about those folders. The folders will "
         "not be changed on the server. Press cancel now if you want to make sure "
@@ -123,9 +123,9 @@ void LocalSubscriptionDialog::doSave()
     if ( KMessageBox::warningContinueCancel( this, message, caption )
         != KMessageBox::Cancel ) {
       somethingHappened = true;
-      for ( ; it2.current(); ++it2) {
+      for ( ; *it2; ++it2) {
         static_cast<ImapAccountBase*>(account())->changeLocalSubscription(
-            static_cast<GroupItem*>(it2.current())->info().path, false );
+            static_cast<GroupItem*>(*it2)->info().path, false );
       }
 
     }
