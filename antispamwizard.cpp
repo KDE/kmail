@@ -55,9 +55,6 @@
 #include <QLabel>
 #include <QLayout>
 #include <QTimer>
-
-
-//Added by qt3to4:
 #include <QPixmap>
 #include <QGridLayout>
 #include <QHBoxLayout>

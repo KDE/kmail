@@ -1,5 +1,3 @@
-//Added by qt3to4:
-#include <QList>
 /*
     sievedebugdialog.h
 
@@ -23,6 +21,8 @@
 
 #include <kdialog.h>
 #include <kurl.h>
+
+#include <QList>
 
 class KTextEdit;
 

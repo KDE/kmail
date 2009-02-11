@@ -4,7 +4,6 @@
 #include "kmfoldermbox.h"
 #include "kmacctfolder.h"
 #include "broadcaststatus.h"
-//Added by qt3to4:
 using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 using KPIM::ProgressManager;

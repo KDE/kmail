@@ -35,10 +35,9 @@
 
 #include "kmsearchpattern.h"
 
-
-//Added by qt3to4:
 #include <QByteArray>
 #include <QVector>
+
 class QObject;
 class QByteArray;
 class QString;

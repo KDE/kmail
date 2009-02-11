@@ -3,8 +3,8 @@
 #define MAILINGLIST_MAGIC_H
 
 #include <kurl.h>
+
 #include <QString>
-//Added by qt3to4:
 #include <QByteArray>
 
 class KMMessage;

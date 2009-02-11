@@ -17,8 +17,6 @@
 
 #include "vacationdialog.h"
 #include "sievejob.h"
-//Added by qt3to4:
-#include <QByteArray>
 using KMail::SieveJob;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
@@ -42,6 +40,7 @@ using KMime::Types::AddrSpecList;
 #include <kmessagebox.h>
 #include <kdebug.h>
 
+#include <QByteArray>
 #include <QDateTime>
 
 #include <cassert>

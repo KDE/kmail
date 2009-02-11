@@ -28,10 +28,9 @@
 #ifndef KMAIL_ACCOUNTCOMBOBOX_H
 #define KMAIL_ACCOUNTCOMBOBOX_H
 
-//Added by qt3to4:
-#include <QList>
-
 #include <KComboBox>
+
+#include <QList>
 
 class KMAccount;
 

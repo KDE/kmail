@@ -49,17 +49,7 @@
 #include <mimelib/mimepp.h>
 #include <mimelib/string.h>
 
-//Added by qt3to4:
-#include <QMenu>
-#include <QByteArray>
 #include <kprogressdialog.h>
-
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QList>
-#include <QTextCodec>
-#include <QProgressBar>
-
 #include <kpimutils/email.h>
 #include <kdbusservicestarter.h>
 #include <kdebug.h>
@@ -137,6 +127,13 @@ using namespace KMime;
 #include <QClipboard>
 #include <QDBusMessage>
 #include <QDBusConnection>
+#include <QMenu>
+#include <QByteArray>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QList>
+#include <QTextCodec>
+#include <QProgressBar>
 
 #include <memory>
 

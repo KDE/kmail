@@ -43,7 +43,6 @@
 
 #include <QColor>
 #include <QString>
-//Added by qt3to4:
 #include <QLabel>
 
 KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, Qt::WFlags f )

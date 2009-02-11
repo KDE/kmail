@@ -4,6 +4,7 @@
 #include <kdialog.h>
 #include <ktextedit.h>
 
+#include <QContextMenuEvent>
 #include <QRadioButton>
 #include <QTreeWidget>
 

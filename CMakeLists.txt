@@ -26,7 +26,6 @@ endif (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h)
 
-add_definitions(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5006)
 add_definitions(-DStorageDebug=5120)
 
@@ -350,11 +349,10 @@ target_link_libraries(kmailprivate
   ksieve
   kpgp
   kdepim
-  ${QT_QT3SUPPORT_LIBRARY}
   ${KDE4_KIO_LIBS}
   ${KDE4_KABC_LIBS}
   ${KDE4_KPIMUTILS_LIBS}
-  ${KDE4_KDE3SUPPORT_LIBS}
+  ${QT_QT3SUPPORT_LIBRARY}
 )
 
 if(KMAIL_SQLITE_INDEX)
@@ -387,7 +385,6 @@ kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
 target_link_libraries(kmailpart
   ${KDE4_KDECORE_LIBS}
   kmailprivate
-  ${KDE4_KDE3SUPPORT_LIBS}
   ${KDE4_KPARTS_LIBS}
   ${KDE4_KUTILS_LIBS}
 )

@@ -28,10 +28,10 @@
 #ifndef SEARCHJOB_H
 #define SEARCHJOB_H
 
-#include <QStringList>
-//Added by qt3to4:
-#include <QList>
 #include "folderjob.h"
+
+#include <QStringList>
+#include <QList>
 
 class KMFolderImap;
 class KMSearchPattern;

@@ -42,7 +42,6 @@
 #include <QLayout>
 #include <QString>
 #include <QPushButton>
-//Added by qt3to4:
 #include <QHBoxLayout>
 
 namespace KMail {

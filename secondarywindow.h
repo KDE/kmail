@@ -32,8 +32,6 @@
 #define __KMAIL_SECONDARYWINDOW_H__
 
 #include <kxmlguiwindow.h>
-//Added by qt3to4:
-#include <QCloseEvent>
 
 class QCloseEvent;
 

@@ -34,9 +34,6 @@
 // other KMail headers:
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
-//Added by qt3to4:
-#include <QVBoxLayout>
-#include <QGridLayout>
 using KMail::FolderRequester;
 #include "kmfoldermgr.h"
 #include "mainfolderview.h"
@@ -79,6 +76,8 @@ using MailTransport::TransportManager;
 #include <QLayout>
 #include <QPushButton>
 #include <QCheckBox>
+#include <QVBoxLayout>
+#include <QGridLayout>
 
 // other headers:
 #include <gpgme++/key.h>

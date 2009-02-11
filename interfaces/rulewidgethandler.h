@@ -34,7 +34,7 @@
 #define __KMAIL_INTERFACES_RULEWIDGETHANDLER_H__
 
 #include "../kmsearchpattern.h"
-//Added by qt3to4:
+
 #include <QByteArray>
 
 class QWidget;

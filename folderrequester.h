@@ -29,10 +29,10 @@
 #ifndef folderrequester_h
 #define folderrequester_h
 
-#include <QtGui/QWidget>
-//Added by qt3to4:
-#include <QKeyEvent>
 #include <klineedit.h>
+
+#include <QtGui/QWidget>
+#include <QKeyEvent>
 
 class KMFolder;
 

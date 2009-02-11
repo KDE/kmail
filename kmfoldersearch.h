@@ -27,16 +27,6 @@
 #include <QPointer>
 #include <QStack>
 #include <QMap>
-//Added by qt3to4:
-
-/** A search folder is a folder that shows the result of evaluating a
-    search expression. This folder is dynamically updated as the
-    search expression is applied to new mail (from a pop or imap server
-    or from a local account).
-
-    The index for a search folder consists of a cache of serial
-    numbers of all messages that currently match the search.
-**/
 
 typedef QList<quint32> SerNumList;
 class KMSearchPattern;
@@ -50,6 +40,14 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
+/** A search folder is a folder that shows the result of evaluating a
+    search expression. This folder is dynamically updated as the
+    search expression is applied to new mail (from a pop or imap server
+    or from a local account).
+
+    The index for a search folder consists of a cache of serial
+    numbers of all messages that currently match the search.
+**/
 class KMSearch: public QObject
 {
   Q_OBJECT

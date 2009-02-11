@@ -22,10 +22,10 @@
 #ifndef _CONFIGURE_DIALOG_H_
 #define _CONFIGURE_DIALOG_H_
 
-#include <QPointer>
-//Added by qt3to4:
-#include <QHideEvent>
 #include <kcmultidialog.h>
+
+#include <QPointer>
+#include <QHideEvent>
 
 class KConfig;
 class ProfileDialog;

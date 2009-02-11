@@ -39,6 +39,7 @@
 
 #include <QBuffer>
 #include <QClipboard>
+#include <QDropEvent>
 #include <QFileInfo>
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)

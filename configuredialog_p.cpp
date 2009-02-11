@@ -28,7 +28,6 @@
 // Qt headers:
 #include <QRadioButton>
 #include <QLabel>
-//Added by qt3to4:
 #include <QHBoxLayout>
 #include <QShowEvent>
 #include <QVBoxLayout>

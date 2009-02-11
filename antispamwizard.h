@@ -35,9 +35,7 @@
 
 #include <QCheckBox>
 #include <QLayout>
-//Added by qt3to4:
 #include <QPixmap>
-#include <QLabel>
 #include <QList>
 #include <QListWidget>
 #include <QBoxLayout>

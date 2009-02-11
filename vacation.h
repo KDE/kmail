@@ -15,11 +15,9 @@
 #ifndef __KMAIL_VACATION_H__
 #define __KMAIL_VACATION_H__
 
-#include <QObject>
-//Added by qt3to4:
-#include <QList>
-
 #include <kurl.h>
+
+#include <QObject>
 
 class QString;
 class QStringList;
