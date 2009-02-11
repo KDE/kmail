@@ -61,6 +61,8 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
 
   mEditFrame->setEnabled( false );
 
+  connect( mName, SIGNAL( textChanged ( const QString &) ),
+           this, SLOT( slotNameChanged( const QString & ) ) );
   connect( mEdit, SIGNAL( textChanged() ),
            this, SLOT( slotTextChanged( void ) ) );
 
@@ -105,6 +107,7 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
             "You cannot bind keyboard shortcut to <i>Universal</i> templates.</p>"
             "</qt>" );
   mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>" ).arg( help ) );
+  slotNameChanged( mName->text() );
 }
 
 CustomTemplates::~CustomTemplates()
@@ -116,6 +119,11 @@ CustomTemplates::~CustomTemplates()
       delete vitem;
     }
   }
+}
+
+void CustomTemplates::slotNameChanged( const QString& text )
+{
+  mAdd->setEnabled( !text.isEmpty() );
 }
 
 QString CustomTemplates::indexToType( int index )

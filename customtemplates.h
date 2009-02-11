@@ -59,7 +59,7 @@ class CustomTemplates : public CustomTemplatesBase
     void slotListSelectionChanged();
     void slotTypeActivated( int index );
     void slotShortcutCaptured( const KShortcut &shortcut );
-
+  void slotNameChanged( const QString& );
   signals:
 
     void changed();
