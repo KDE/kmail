@@ -260,14 +260,14 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
       encryptedColor = reader.readEntry( "PGPMessageEncr", defaultEncryptedColor );
     }
 
-    p.setColor( QColorGroup::Window, signedColor );
+    p.setColor( QPalette::Window, signedColor );
     mSignatureStateIndicator->setPalette( p );
     mSignatureStateIndicator->setAutoFillBackground( true );
 
     mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
     mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mEncryptionStateIndicator );
-    p.setColor( QColorGroup::Window, encryptedColor);
+    p.setColor( QPalette::Window, encryptedColor);
     mEncryptionStateIndicator->setPalette( p );
     mEncryptionStateIndicator->setAutoFillBackground( true );
   }

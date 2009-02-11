@@ -38,7 +38,7 @@ QuotaJobs::GetQuotarootJob* QuotaJobs::getQuotaroot(
     KIO::Slave* slave, const KUrl& url )
 {
   QByteArray packedArgs;
-  QDataStream stream( &packedArgs, IO_WriteOnly );
+  QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int)'Q' << (int)'R' << url;
 
   GetQuotarootJob* job = new GetQuotarootJob( url, packedArgs);
@@ -101,7 +101,7 @@ QuotaJobs::GetStorageQuotaJob::GetStorageQuotaJob( KIO::Slave* slave, const KUrl
   : KIO::Job()
 {
     QByteArray packedArgs;
-    QDataStream stream( &packedArgs, IO_WriteOnly );
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly );
     stream << (int)'Q' << (int)'R' << url;
 
     QuotaJobs::GetQuotarootJob *job =

@@ -270,7 +270,7 @@ QList<KMail::EmbeddedImage*> KMComposerEditor::embeddedImages() const
       QVariant data = document()->resource( QTextDocument::ImageResource, QUrl( imageFormat.name() ) );
       QImage image = qvariant_cast<QImage>( data );
       QBuffer buffer;
-      buffer.open( IO_WriteOnly );
+      buffer.open( QIODevice::WriteOnly );
       image.save( &buffer, "PNG" );
 
       qsrand( QDateTime::currentDateTime().toTime_t() + qHash( imageFormat.name() ) );

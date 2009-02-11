@@ -229,8 +229,8 @@ public:
    * collapsed items are also included in the stats
    */
   bool getSelectionStats(
-      QList< Q_UINT32 > &selectedSernums,
-      QList< Q_UINT32 > &selectedVisibleSernums,
+      QList< quint32 > &selectedSernums,
+      QList< quint32 > &selectedVisibleSernums,
       bool * allSelectedBelongToSameThread,
       bool includeCollapsedChildren = true
     ) const;

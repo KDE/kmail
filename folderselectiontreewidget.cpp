@@ -31,6 +31,8 @@
 #include <kiconloader.h>
 #include <kconfiggroup.h>
 
+#include <QKeyEvent>
+
 using namespace KMail::Util;
 
 namespace KMail {

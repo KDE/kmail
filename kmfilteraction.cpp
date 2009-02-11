@@ -983,7 +983,7 @@ QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
 {
   KComboBox *cb = new KComboBox( parent );
   cb->setEditable( true );
-  cb->setInsertPolicy( KComboBox::AtBottom );
+  cb->setInsertPolicy( QComboBox::InsertAtBottom );
   setParamWidgetValue( cb );
   return cb;
 }
@@ -1070,7 +1070,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   KComboBox *cb = new KComboBox( w );
   cb->setObjectName( "combo" );
   cb->setEditable( true );
-  cb->setInsertPolicy( KComboBox::AtBottom );
+  cb->setInsertPolicy( QComboBox::InsertAtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
   QLabel *l = new QLabel( i18n("With value:"), w );
   l->setFixedWidth( l->sizeHint().width() );
@@ -1220,7 +1220,7 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   KComboBox *cb = new KComboBox( w );
   cb->setEditable( true );
   cb->setObjectName( "combo" );
-  cb->setInsertPolicy( KComboBox::AtBottom );
+  cb->setInsertPolicy( QComboBox::InsertAtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
 
   QLabel *l = new QLabel( i18n("Replace:"), w );

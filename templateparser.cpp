@@ -76,7 +76,7 @@ int TemplateParser::parseQuotes( const QString &prefix, const QString &str,
   quoteChars.append( '"' );
   quoteChars.append( 0x201C );
 
-  QChar prev = QChar::null;
+  QChar prev( QChar::Null );
 
   pos++;
   len = pos;
@@ -89,7 +89,7 @@ int TemplateParser::parseQuotes( const QString &prefix, const QString &str,
 
     if ( !prev.isNull() ) {
       quote.append( c );
-      prev = QChar::null;
+      prev = QChar::Null;
     } else {
       if ( c == '\\' ) {
         prev = c;
@@ -240,7 +240,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           path += q;
         }
         QFile file( path );
-        if ( file.open( IO_ReadOnly ) ) {
+        if ( file.open( QIODevice::ReadOnly ) ) {
           QByteArray content = file.readAll();
           QString str = QString::fromLocal8Bit( content, content.size() );
           body.append( str );
@@ -274,7 +274,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           path += q;
         }
         QFile file( path );
-        if ( file.open( IO_ReadOnly ) ) {
+        if ( file.open( QIODevice::ReadOnly ) ) {
           QByteArray content = file.readAll();
           body.append( QString::fromLocal8Bit( content, content.size() ) );
         } else if ( mDebug ) {

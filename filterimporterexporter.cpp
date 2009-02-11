@@ -176,7 +176,7 @@ QList<KMFilter *> FilterImporterExporter::importFilters()
 
     { // scoping
         QFile f( fileName );
-        if ( !f.open( IO_ReadOnly ) ) {
+        if ( !f.open( QIODevice::ReadOnly ) ) {
             KMessageBox::error( mParent,
                                 i18n("The selected file is not readable. "
                                      "Your file access permissions might be insufficient.") );

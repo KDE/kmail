@@ -44,8 +44,8 @@ class MessageActions : public QObject
     void setMessageView( KMReaderWin *msgView );
 
     void setCurrentMessage( KMMessage *msg );
-    void setSelectedSernums( const QList<Q_UINT32> &sernums );
-    void setSelectedVisibleSernums( const QList<Q_UINT32> &sernums );
+    void setSelectedSernums( const QList<quint32> &sernums );
+    void setSelectedVisibleSernums( const QList<quint32> &sernums );
 
     KActionMenu* replyMenu() const { return mReplyActionMenu; }
     KAction* replyListAction() const { return mReplyListAction; }
@@ -87,8 +87,8 @@ class MessageActions : public QObject
     QWidget *mParent;
     KActionCollection *mActionCollection;
     KMMessage* mCurrentMessage;
-    QList<Q_UINT32> mSelectedSernums;
-    QList<Q_UINT32> mVisibleSernums;
+    QList<quint32> mSelectedSernums;
+    QList<quint32> mVisibleSernums;
     KMReaderWin *mMessageView;
 
     KActionMenu *mReplyActionMenu;

@@ -714,9 +714,9 @@ void Widget::switchMessageSorting( SortOrder::MessageSorting messageSorting,
 
   mView->header()->setSortIndicatorShown( true );
   if ( sortDirection == SortOrder::Ascending )
-    mView->header()->setSortIndicator( logicalHeaderColumnIndex, Qt::Ascending );
+    mView->header()->setSortIndicator( logicalHeaderColumnIndex, Qt::AscendingOrder );
   else
-    mView->header()->setSortIndicator( logicalHeaderColumnIndex, Qt::Descending );
+    mView->header()->setSortIndicator( logicalHeaderColumnIndex, Qt::DescendingOrder );
 }
 
 void Widget::messageSortingSelected( QAction *action )

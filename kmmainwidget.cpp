@@ -4279,8 +4279,8 @@ void KMMainWidget::updateMessageActions()
 
   updateCutCopyPasteActions();
 
-  QList< Q_UINT32 > selectedSernums;
-  QList< Q_UINT32 > selectedVisibleSernums;
+  QList< quint32 > selectedSernums;
+  QList< quint32 > selectedVisibleSernums;
   bool allSelectedBelongToSameThread = false;
 
   KMMessage * currentMessage;

@@ -464,7 +464,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
-  : QWidget(aParent, aFlags | Qt::WDestructiveClose),
+  : QWidget(aParent, aFlags ),
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),

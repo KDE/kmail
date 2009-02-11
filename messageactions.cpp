@@ -154,13 +154,13 @@ void MessageActions::setCurrentMessage(KMMessage * msg)
   updateActions();
 }
 
-void MessageActions::setSelectedSernums(const QList< Q_UINT32 > & sernums)
+void MessageActions::setSelectedSernums(const QList< quint32 > & sernums)
 {
   mSelectedSernums = sernums;
   updateActions();
 }
 
-void MessageActions::setSelectedVisibleSernums(const QList< Q_UINT32 > & sernums)
+void MessageActions::setSelectedVisibleSernums(const QList< quint32 > & sernums)
 {
   mVisibleSernums = sernums;
   updateActions();
@@ -262,7 +262,7 @@ void MessageActions::slotSetMsgStatusToAct()
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
-  QList<Q_UINT32> serNums = mVisibleSernums;
+  QList<quint32> serNums = mVisibleSernums;
   if ( serNums.isEmpty() && mCurrentMessage )
     serNums.append( mCurrentMessage->getMsgSerNum() );
   if ( serNums.empty() )

@@ -154,7 +154,7 @@ void CachedImapJob::execute()
   if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareScalix ) {
     if ( !mAccount->sentCustomLoginCommand() ) {
       QByteArray packedArgs;
-      QDataStream stream( &packedArgs, IO_WriteOnly );
+      QDataStream stream( &packedArgs, QIODevice::WriteOnly );
 
       const QString command = QString( "X-SCALIX-ID " );
       const QString argument = QString( "(\"name\" \"Evolution\" \"version\" \"2.10.0\")" );
@@ -592,7 +592,7 @@ void CachedImapJob::slotAddNextSubfolder( KJob * job )
              this, SLOT(slotAddNextSubfolder(KJob *)) );
   } else {
     QByteArray packedArgs;
-    QDataStream stream( &packedArgs, IO_WriteOnly );
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly );
 
     const QString command = QString( "X-CREATE-SPECIAL" );
     const QString argument = QString( "%1 %2" ).arg( Scalix::Utils::contentsTypeToScalixId( folder->contentsType() ) )
