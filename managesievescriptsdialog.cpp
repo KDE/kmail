@@ -16,24 +16,18 @@
 #include <kmessagebox.h>
 
 #include <QLayout>
-#include <q3listview.h>
 #include <QMenu>
-//Added by qt3to4:
+#include <QTreeWidget>
 #include <QVBoxLayout>
 
 #include <cassert>
 
-inline Q3CheckListItem * qcli_cast( Q3ListViewItem * lvi ) {
-  return lvi && lvi->rtti() == 1 ? static_cast<Q3CheckListItem*>( lvi ) : 0 ;
-}
-inline const Q3CheckListItem * qcli_cast( const Q3ListViewItem * lvi ) {
-  return lvi && lvi->rtti() == 1 ? static_cast<const Q3CheckListItem*>( lvi ) : 0 ;
-}
+bool KMail::ItemRadioButton::mTreeWidgetIsBeingCleared = false;
 
 KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, const char * name )
   : KDialog( parent ),
-    mSieveEditor( 0 ),
     mContextMenuItem( 0 ),
+    mSieveEditor( 0 ),
     mWasActive( false )
 {
   setCaption( i18n( "Manage Sieve Scripts" ) );
@@ -50,17 +44,15 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
   vlay->setSpacing( 0 );
   vlay->setMargin( 0 );
 
-  mListView = new Q3ListView( frame);
-  mListView->addColumn( i18n( "Available Scripts" ) );
-  mListView->setResizeMode( Q3ListView::LastColumn );
+  mListView = new TreeWidgetWithContextMenu( frame);
+  mListView->setHeaderLabel( i18n( "Available Scripts" ) );
   mListView->setRootIsDecorated( true );
-  mListView->setSelectionMode( Q3ListView::Single );
-  connect( mListView, SIGNAL(contextMenuRequested(Q3ListViewItem*,const QPoint&,int)),
-           this, SLOT(slotContextMenuRequested(Q3ListViewItem*, const QPoint&)) );
-  connect( mListView, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)),
-           this, SLOT(slotDoubleClicked(Q3ListViewItem*)) );
-  connect( mListView, SIGNAL(selectionChanged(Q3ListViewItem*)),
-           this, SLOT(slotSelectionChanged(Q3ListViewItem*)) );
+  mListView->setAlternatingRowColors( true );
+  mListView->setSelectionMode( QAbstractItemView::SingleSelection );
+  connect( mListView, SIGNAL( contextMenuRequested( QTreeWidgetItem*, QPoint ) ),
+           this, SLOT( slotContextMenuRequested( QTreeWidgetItem*, QPoint ) ) );
+  connect( mListView, SIGNAL( itemDoubleClicked ( QTreeWidgetItem *, int ) ),
+           this, SLOT( slotDoubleClicked( QTreeWidgetItem* ) ) );
   vlay->addWidget( mListView );
 
   resize( 2 * sizeHint().width(), sizeHint().height() );
@@ -70,10 +62,12 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
 
 KMail::ManageSieveScriptsDialog::~ManageSieveScriptsDialog() {
   killAllJobs();
+  qDeleteAll( mButtonGroups );
 }
 
 void KMail::ManageSieveScriptsDialog::killAllJobs() {
-  for ( QMap<SieveJob*,Q3CheckListItem*>::const_iterator it = mJobs.constBegin(), end = mJobs.constEnd() ; it != end ; ++it )
+  for ( QMap<SieveJob*,QTreeWidgetItem*>::const_iterator it = mJobs.constBegin(),
+        end = mJobs.constEnd() ; it != end ; ++it )
     it.key()->kill();
   mJobs.clear();
 }
@@ -105,13 +99,20 @@ static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
 }
 
 void KMail::ManageSieveScriptsDialog::slotRefresh() {
+
+  // Clear everything
   killAllJobs();
+  mSelectedItems.clear();
+  qDeleteAll( mButtonGroups );
+  mButtonGroups.clear();
   mUrls.clear();
+  ItemRadioButton::setTreeWidgetIsBeingCleared( true );
   mListView->clear();
+  ItemRadioButton::setTreeWidgetIsBeingCleared( false );
 
   KMail::AccountManager * am = kmkernel->acctMgr();
   assert( am );
-  Q3CheckListItem * last = 0;
+  QTreeWidgetItem *last = 0;
   QList<KMAccount*>::iterator accountIt = am->begin();
   while ( accountIt != am->end() ) {
     KMAccount *a = *accountIt;
@@ -122,12 +123,18 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
          a->type() != KAccount::DImap )
       continue;
 
-    last = new Q3CheckListItem( mListView, last, a->name(), Q3CheckListItem::Controller );
-    last->setPixmap( 0, SmallIcon( "network-server" ) );
+    last = new QTreeWidgetItem( mListView, last );
+    last->setText( 0, a->name() );
+    last->setIcon( 0, SmallIcon( "network-server" ) );
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
       const KUrl u = ::findUrlForAccount( iab );
-      if ( u.isEmpty() )
+      if ( u.isEmpty() ) {
+         QTreeWidgetItem *item = new QTreeWidgetItem( last );
+        item->setText( 0, i18n( "No Sieve URL configured" ) );
+        item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
+        mListView->expandItem( last );
         continue;
+      }
       SieveJob * job = SieveJob::list( u );
       connect( job, SIGNAL(item(KMail::SieveJob*,const QString&,bool)),
                this, SLOT(slotItem(KMail::SieveJob*,const QString&,bool)) );
@@ -135,54 +142,52 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
                this, SLOT(slotResult(KMail::SieveJob*,bool,const QString&,bool)) );
       mJobs.insert( job, last );
       mUrls.insert( last, u );
-    } else {
-      Q3ListViewItem * item = new Q3ListViewItem( last, i18n( "No Sieve URL configured" ) );
-      item->setEnabled( false );
-      last->setOpen( true );
     }
   }
 }
 
 void KMail::ManageSieveScriptsDialog::slotResult( KMail::SieveJob * job, bool success, const QString &, bool ) {
-  Q3CheckListItem * parent = mJobs[job];
+  QTreeWidgetItem * parent = mJobs[job];
   if ( !parent )
     return;
 
   mJobs.remove( job );
 
-  parent->setOpen( true );
+  mListView->expandItem( parent );
 
   if ( success )
     return;
 
-  Q3ListViewItem * item = new Q3ListViewItem( parent, i18n( "Failed to fetch the list of scripts" ) );
-  item->setEnabled( false );
+  QTreeWidgetItem * item =
+      new QTreeWidgetItem( parent );
+  item->setText( 0, i18n( "Failed to fetch the list of scripts" ) );
+  item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
 }
 
 void KMail::ManageSieveScriptsDialog::slotItem( KMail::SieveJob * job, const QString & filename, bool isActive ) {
-  Q3CheckListItem * parent = mJobs[job];
+  QTreeWidgetItem * parent = mJobs[job];
   if ( !parent )
     return;
-  Q3CheckListItem * item = new Q3CheckListItem( parent, filename, Q3CheckListItem::RadioButton );
+  QTreeWidgetItem* item = new QTreeWidgetItem( parent );
+  addRadioButton( item, filename );
   if ( isActive ) {
-    item->setOn( true );
+    setRadioButtonState( item, true );
     mSelectedItems[parent] = item;
   }
 }
 
-void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( Q3ListViewItem * i, const QPoint & p ) {
-  Q3CheckListItem * item = qcli_cast( i );
+void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QTreeWidgetItem *item, QPoint p ) {
   if ( !item )
     return;
-  if ( !item->depth() && !mUrls.count( item ) )
+  if ( !item->parent() && !mUrls.count( item ) )
     return;
   QMenu menu;
   mContextMenuItem = item;
-  if ( item->depth() ) {
+  if ( isFileNameItem( item ) ) {
     // script items:
     menu.addAction( i18n( "Delete Script" ), this, SLOT(slotDeleteScript()) );
     menu.addAction( i18n( "Edit Script..." ), this, SLOT(slotEditScript()) );
-  } else {
+  } else if ( !item->parent() ) {
     // top-levels:
     menu.addAction( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
   }
@@ -190,20 +195,18 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( Q3ListViewItem *
   mContextMenuItem = 0;
 }
 
-void KMail::ManageSieveScriptsDialog::slotSelectionChanged( Q3ListViewItem * i ) {
-  Q3CheckListItem * item = qcli_cast( i );
-  if ( !item )
+void KMail::ManageSieveScriptsDialog::slotSelectionChanged() {
+  QTreeWidgetItem * item = mListView->currentItem();
+  if ( !isFileNameItem( item ) )
     return;
-  Q3CheckListItem * parent = qcli_cast( item->parent() );
-  if ( !parent )
-    return;
-  if ( item->isOn() && mSelectedItems[parent] != item ) {
+  QTreeWidgetItem *parent = item->parent();
+  if ( isRadioButtonChecked( item ) && mSelectedItems[parent] != item ) {
     mSelectedItems[parent] = item;
     changeActiveScript( parent );
   }
 }
 
-void KMail::ManageSieveScriptsDialog::changeActiveScript( Q3CheckListItem * item ) {
+void KMail::ManageSieveScriptsDialog::changeActiveScript( QTreeWidgetItem * item ) {
   if ( !item )
     return;
   if ( !mUrls.count( item ) )
@@ -213,34 +216,91 @@ void KMail::ManageSieveScriptsDialog::changeActiveScript( Q3CheckListItem * item
   KUrl u = mUrls[item];
   if ( u.isEmpty() )
     return;
-  Q3CheckListItem * selected = mSelectedItems[item];
+  QTreeWidgetItem* selected = mSelectedItems[item];
   if ( !selected )
     return;
-  u.setFileName( selected->text( 0 ) );
+  u.setFileName( itemText( selected ) );
 
   SieveJob * job = SieveJob::activate( u );
   connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotRefresh()) );
 }
 
-void KMail::ManageSieveScriptsDialog::slotDoubleClicked( Q3ListViewItem * i ) {
-  Q3CheckListItem * item = qcli_cast( i );
-  if ( !item )
+void KMail::ManageSieveScriptsDialog::addRadioButton( QTreeWidgetItem *item, const QString &text )
+{
+  Q_ASSERT( item && item->parent() );
+  Q_ASSERT( !mListView->itemWidget( item, 0 ) );
+
+  // Create the radio button and set it as item widget
+  ItemRadioButton *radioButton = new ItemRadioButton( item );
+  radioButton->setAutoExclusive( false );
+  radioButton->setText( text );
+  mListView->setItemWidget( item, 0, radioButton );
+  connect( radioButton, SIGNAL( toggled ( bool ) ),
+           this, SLOT( slotSelectionChanged() ) );
+
+  // Add the radio button to the button group
+  QTreeWidgetItem *parent = item->parent();
+  QButtonGroup *buttonGroup = mButtonGroups.value( parent );
+  if ( !buttonGroup ) {
+    buttonGroup = new QButtonGroup();
+    mButtonGroups.insert( parent, buttonGroup );
+  }
+  buttonGroup->addButton( radioButton );
+}
+
+void KMail::ManageSieveScriptsDialog::setRadioButtonState( QTreeWidgetItem *item, bool checked )
+{
+  Q_ASSERT( item && item->parent() );
+
+  ItemRadioButton *radioButton = dynamic_cast<ItemRadioButton*>( mListView->itemWidget( item, 0 ) );
+  Q_ASSERT( radioButton );
+  radioButton->setChecked( checked );
+}
+
+
+bool KMail::ManageSieveScriptsDialog::isRadioButtonChecked( QTreeWidgetItem *item ) const
+{
+  Q_ASSERT( item && item->parent() );
+
+  ItemRadioButton *radioButton = dynamic_cast<ItemRadioButton*>( mListView->itemWidget( item, 0 ) );
+  Q_ASSERT( radioButton );
+  return radioButton->isChecked();
+}
+
+QString KMail::ManageSieveScriptsDialog::itemText( QTreeWidgetItem *item ) const
+{
+  Q_ASSERT( item && item->parent() );
+
+  ItemRadioButton *radioButton = dynamic_cast<ItemRadioButton*>( mListView->itemWidget( item, 0 ) );
+  Q_ASSERT( radioButton );
+  return radioButton->text().remove( '&' );
+}
+
+bool KMail::ManageSieveScriptsDialog::isFileNameItem( QTreeWidgetItem *item ) const
+{
+   if ( !item || !item->parent() )
+     return false;
+
+  ItemRadioButton *radioButton = dynamic_cast<ItemRadioButton*>( mListView->itemWidget( item, 0 ) );
+  return ( radioButton != 0 );
+ 
+}
+
+void KMail::ManageSieveScriptsDialog::slotDoubleClicked( QTreeWidgetItem * item ) {
+  if ( !isFileNameItem( item ) )
     return;
-  if ( !item->depth() )
-    return;
+
   mContextMenuItem = item;
   slotEditScript();
   mContextMenuItem = 0;
 }
 
 void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
-  if ( !mContextMenuItem )
-    return;
-  if ( !mContextMenuItem->depth() )
+  if ( !isFileNameItem( mContextMenuItem ) )
     return;
 
-  Q3CheckListItem * parent = qcli_cast( mContextMenuItem->parent() );
+  QTreeWidgetItem *parent = mContextMenuItem->parent();
   if ( !parent )
     return;
 
@@ -251,7 +311,7 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
   if ( u.isEmpty() )
     return;
 
-  u.setFileName( mContextMenuItem->text( 0 ) );
+  u.setFileName( itemText( mContextMenuItem ) );
 
   if ( KMessageBox::warningContinueCancel( this, i18n( "Really delete script \"%1\" from the server?", u.fileName() ),
                                    i18n( "Delete Sieve Script Confirmation" ),
@@ -265,17 +325,15 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
 }
 
 void KMail::ManageSieveScriptsDialog::slotEditScript() {
-  if ( !mContextMenuItem )
+  if ( !isFileNameItem( mContextMenuItem ) )
     return;
-  if ( !mContextMenuItem->depth() )
-    return;
-  Q3CheckListItem * parent = qcli_cast( mContextMenuItem->parent() );
+  QTreeWidgetItem* parent = mContextMenuItem->parent();
   if ( !mUrls.count( parent ) )
     return;
   KUrl url = mUrls[parent];
   if ( url.isEmpty() )
     return;
-  url.setFileName( mContextMenuItem->text( 0 ) );
+  url.setFileName( itemText( mContextMenuItem ) );
   mCurrentURL = url;
   SieveJob * job = SieveJob::get( url );
   connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
@@ -285,8 +343,8 @@ void KMail::ManageSieveScriptsDialog::slotEditScript() {
 void KMail::ManageSieveScriptsDialog::slotNewScript() {
   if ( !mContextMenuItem )
     return;
-  if ( mContextMenuItem->depth() )
-    mContextMenuItem = qcli_cast( mContextMenuItem->parent() );
+  if ( mContextMenuItem->parent() )
+    mContextMenuItem = mContextMenuItem->parent();
   if ( !mContextMenuItem )
     return;
 
@@ -306,7 +364,9 @@ void KMail::ManageSieveScriptsDialog::slotNewScript() {
 
   u.setFileName( name );
 
-  (void) new Q3CheckListItem( mContextMenuItem, name, Q3CheckListItem::RadioButton );
+  QTreeWidgetItem *newItem =
+      new QTreeWidgetItem( mContextMenuItem );
+  addRadioButton( newItem, name );
 
   mCurrentURL = u;
   slotGetResult( 0, true, QString(), false );
