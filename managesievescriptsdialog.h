@@ -67,6 +67,11 @@ private:
    */
   bool isFileNameItem( QTreeWidgetItem *item ) const;
 
+  /**
+   * Remove everything from the tree widget and clear all caches.
+   */
+  void clear();
+
 private:
   TreeWidgetWithContextMenu* mListView;
   QTreeWidgetItem *mContextMenuItem;

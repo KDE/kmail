@@ -61,8 +61,7 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
 }
 
 KMail::ManageSieveScriptsDialog::~ManageSieveScriptsDialog() {
-  killAllJobs();
-  qDeleteAll( mButtonGroups );
+  clear();
 }
 
 void KMail::ManageSieveScriptsDialog::killAllJobs() {
@@ -100,15 +99,7 @@ static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
 
 void KMail::ManageSieveScriptsDialog::slotRefresh() {
 
-  // Clear everything
-  killAllJobs();
-  mSelectedItems.clear();
-  qDeleteAll( mButtonGroups );
-  mButtonGroups.clear();
-  mUrls.clear();
-  ItemRadioButton::setTreeWidgetIsBeingCleared( true );
-  mListView->clear();
-  ItemRadioButton::setTreeWidgetIsBeingCleared( false );
+  clear();
 
   KMail::AccountManager * am = kmkernel->acctMgr();
   assert( am );
@@ -284,7 +275,18 @@ bool KMail::ManageSieveScriptsDialog::isFileNameItem( QTreeWidgetItem *item ) co
 
   ItemRadioButton *radioButton = dynamic_cast<ItemRadioButton*>( mListView->itemWidget( item, 0 ) );
   return ( radioButton != 0 );
- 
+}
+
+void KMail::ManageSieveScriptsDialog::clear()
+{
+  killAllJobs();
+  mSelectedItems.clear();
+  qDeleteAll( mButtonGroups );
+  mButtonGroups.clear();
+  mUrls.clear();
+  ItemRadioButton::setTreeWidgetIsBeingCleared( true );
+  mListView->clear();
+  ItemRadioButton::setTreeWidgetIsBeingCleared( false );
 }
 
 void KMail::ManageSieveScriptsDialog::slotDoubleClicked( QTreeWidgetItem * item ) {
