@@ -105,11 +105,13 @@ Before you commit (or send a patch)
 
 Patches should always be against the current SVN trunk (see below for a list of branches).
 
-If you don't have commit access, send the patch (output of svn diff) to the KDE PIM mailinglist,
+If you don't have commit access, add the patch (output of svn diff) to reviewboard.kde.org, to
+the KDEPIM group.
+You might also be interested in joining the KDE PIM mailinglist,
 see http://mail.kde.org/mailman/listinfo/kde-pim.
 If you send mail to the list and are not subscribed, please tell that in the mail so we can CC you.
 
-Larger changes, for example new features, should be reviewed on the mailing list first.
+Larger changes, for example new features, should be reviewed first, even if you have commit access.
 
 Try to backport bugfixes to the stable branch. Crash fixes should be always backported.
 
