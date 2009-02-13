@@ -419,6 +419,10 @@ namespace {
         return i18n("Show signature details.");
       if ( url.path() == "hideSignatureDetails" )
         return i18n("Hide signature details.");
+      if ( url.path() == "showAttachmentQuicklist" )
+        return i18n( "Show attachment list." );
+      if ( url.path() == "hideAttachmentQuicklist" )
+        return i18n( "Hide attachment list." );
     }
     return QString() ;
   }
