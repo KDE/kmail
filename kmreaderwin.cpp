@@ -2781,7 +2781,8 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
                      || node->msgPart().subtypeStr() == "pgp-signature"
                      || node->msgPart().subtypeStr() == "pkcs7-mime"
-                     || node->msgPart().subtypeStr() == "pkcs7-signature";
+                     || node->msgPart().subtypeStr() == "pkcs7-signature"
+                     || node->msgPart().subtypeStr() == "x-pkcs7-signature";
     }
     typeBlacklisted = typeBlacklisted || node == mRootNode;
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
