@@ -322,7 +322,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("search_message_forward", mForwardActionMenu );
-  connect( mForwardActionMenu, SIGNAL(activated()), this,
+  connect( mForwardActionMenu, SIGNAL(triggered(bool)), this,
            SLOT(slotForwardMsg()) );
   mForwardAction  = new KAction(KIcon("mail-forward")
     , i18nc("@action:inmenu Forward message inline.", "&Inline..."), this);
