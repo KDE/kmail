@@ -3008,12 +3008,13 @@ void KMComposeWin::editAttach(int index, bool openWith)
   atmTempFile->write( msgPart->bodyDecodedBinary() );
   atmTempFile->flush();
 
-
   KMail::EditorWatcher *watcher =
-      new KMail::EditorWatcher( KUrl( atmTempFile->fileName() ),
-                                contentTypeStr, openWith, this );
-  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)),
-           SLOT(slotEditDone(KMail::EditorWatcher*)) );
+          new KMail::EditorWatcher( KUrl( atmTempFile->fileName() ),
+                                    contentTypeStr, openWith,
+                                    this, this );
+  connect( watcher, SIGNAL( editDone(KMail::EditorWatcher*) ),
+           SLOT( slotEditDone(KMail::EditorWatcher*) ) );
+
   if ( watcher->start() ) {
     mEditorMap.insert( watcher, msgPart );
     mEditorTempFiles.insert( watcher, atmTempFile );
