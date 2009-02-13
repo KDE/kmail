@@ -2782,7 +2782,9 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
                      || node->msgPart().subtypeStr() == "pgp-signature"
                      || node->msgPart().subtypeStr() == "pkcs7-mime"
                      || node->msgPart().subtypeStr() == "pkcs7-signature"
-                     || node->msgPart().subtypeStr() == "x-pkcs7-signature";
+                     || node->msgPart().subtypeStr() == "x-pkcs7-signature"
+                     || ( node->msgPart().subtypeStr() == "octet-stream" &&
+                          node->msgPart().fileName() == "msg.asc" );
     }
     typeBlacklisted = typeBlacklisted || node == mRootNode;
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
