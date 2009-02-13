@@ -3,6 +3,6 @@
 #ifndef kmversion_h
 #define kmversion_h
 
-#define KMAIL_VERSION "1.10.1 (enterprise4 0.20090206.922266)"
+#define KMAIL_VERSION "1.10.1 (enterprise4 0.20090213.925491)"
 
 #endif /*kmversion_h*/
