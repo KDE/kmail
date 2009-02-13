@@ -114,6 +114,12 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
   assert( am );
   Q3CheckListItem * last = 0;
   for ( KMAccount * a = am->first() ; a ; a = am->next() ) {
+
+    // Don't show POP3 accounts in the sieve list
+    if ( a->type() != KAccount::Imap &&
+         a->type() != KAccount::DImap )
+      continue;
+
     last = new Q3CheckListItem( mListView, last, a->name(), Q3CheckListItem::Controller );
     last->setPixmap( 0, SmallIcon( "network-server" ) );
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
