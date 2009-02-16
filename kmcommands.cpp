@@ -2940,14 +2940,16 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
   const QString contentTypeStr =
     ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).toLower();
 
-  if ( contentTypeStr == "text/x-vcard" || contentTypeStr == "text/directory" ) {
-    atmView();
-    return KService::Ptr( 0 );
-  }
   // determine the MIME type of the attachment
   KMimeType::Ptr mimetype;
   // prefer the value of the Content-Type header
   mimetype = KMimeType::mimeType( contentTypeStr, KMimeType::ResolveAliases );
+
+  if ( !mimetype.isNull() && mimetype->is( KABC::Addressee::mimeType() ) ) {
+    atmView();
+    return KService::Ptr( 0 );
+  }
+
   if ( mimetype.isNull() ) {
     // consider the filename if mimetype can not be found by content-type
     mimetype = KMimeType::findByPath( mAtmName, 0, true /* no disk access */ );

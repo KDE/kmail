@@ -2340,8 +2340,11 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   QByteArray contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
   kAsciiToLower( contentTypeStr.data() );
 
-  if ( ( qstrcmp( contentTypeStr, "text/directory" ) == 0 ) ||
-       ( qstrcmp( contentTypeStr, "text/x-vcard" ) == 0 ) ) {
+  // determine the MIME type of the attachment
+  KMimeType::Ptr mimetype;
+  // prefer the value of the Content-Type header
+  mimetype = KMimeType::mimeType( QString::fromLatin1( contentTypeStr ), KMimeType::ResolveAliases );
+  if ( !mimetype.isNull() && mimetype->is( KABC::Addressee::mimeType() ) ) {
     showVCard( &msgPart );
     return;
   }
@@ -2350,10 +2353,6 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   if ( KMail::Util::handleUrlOnMac( mAtmCurrentName ) )
     return;
 
-  // determine the MIME type of the attachment
-  KMimeType::Ptr mimetype;
-  // prefer the value of the Content-Type header
-  mimetype = KMimeType::mimeType( QString::fromLatin1( contentTypeStr ), KMimeType::ResolveAliases );
   if ( mimetype.isNull() ) {
     // consider the filename if mimetype can not be found by content-type
     mimetype = KMimeType::findByPath( name, 0, true /* no disk access */ );
