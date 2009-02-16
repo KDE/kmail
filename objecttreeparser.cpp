@@ -1861,7 +1861,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     if ( label.isEmpty() )
       label = msgPart->name();
     if ( label.isEmpty() )
-      label = i18n( "Unnamed" );
+      label = i18nc( "display name for an unnamed attachment", "Unnamed" );
     label = KMMessage::quoteHtmlChars( label, true );
 
     QString comment = msgPart->contentDescription();
