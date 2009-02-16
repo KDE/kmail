@@ -2320,8 +2320,10 @@ KMCommand::Result KMUrlClickedCommand::execute()
           mUrl.pathOrUrl() ), QString(), KGuiItem(i18n("Execute")), KStandardGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
-    if ( !KMail::Util::handleUrlOnMac( mUrl.pathOrUrl() ) )
-      (void) new KRun( mUrl, mMainWidget );
+    if ( !KMail::Util::handleUrlOnMac( mUrl.pathOrUrl() ) ) {
+      KRun *runner = new KRun( mUrl, mMainWidget ); // will delete itself
+      runner->setRunExecutables( false );
+    }
   }
   else
     return Failed;
