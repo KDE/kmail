@@ -43,41 +43,41 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
   mActionCollection->addAction( "message_reply_menu", mReplyActionMenu );
-  connect( mReplyActionMenu, SIGNAL(activated()),
+  connect( mReplyActionMenu, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyToMsg()) );
 
   mReplyAction = new KAction( KIcon("mail-reply-sender"), i18n("&Reply..."), this );
   mActionCollection->addAction( "reply", mReplyAction );
   mReplyAction->setShortcut(Qt::Key_R);
-  connect( mReplyAction, SIGNAL(activated()),
+  connect( mReplyAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyToMsg()) );
   mReplyActionMenu->addAction( mReplyAction );
 
   mReplyAuthorAction = new KAction( KIcon("mail-reply-sender"), i18n("Reply to A&uthor..."), this );
   mActionCollection->addAction( "reply_author", mReplyAuthorAction );
   mReplyAuthorAction->setShortcut(Qt::SHIFT+Qt::Key_A);
-  connect( mReplyAuthorAction, SIGNAL(activated()),
+  connect( mReplyAuthorAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyAuthorToMsg()) );
   mReplyActionMenu->addAction( mReplyAuthorAction );
 
   mReplyAllAction = new KAction( KIcon("mail-reply-all"), i18n("Reply to &All..."), this );
   mActionCollection->addAction( "reply_all", mReplyAllAction );
   mReplyAllAction->setShortcut( Qt::Key_A );
-  connect( mReplyAllAction, SIGNAL(activated()),
+  connect( mReplyAllAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyAllToMsg()) );
   mReplyActionMenu->addAction( mReplyAllAction );
 
   mReplyListAction = new KAction( KIcon("mail-reply-list"), i18n("Reply to Mailing-&List..."), this );
   mActionCollection->addAction( "reply_list", mReplyListAction );
   mReplyListAction->setShortcut( Qt::Key_L );
-  connect( mReplyListAction, SIGNAL(activated()),
+  connect( mReplyListAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyListToMsg()) );
   mReplyActionMenu->addAction( mReplyListAction );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), this );
   mActionCollection->addAction( "noquotereply", mNoQuoteReplyAction );
   mNoQuoteReplyAction->setShortcut( Qt::SHIFT+Qt::Key_R );
-  connect( mNoQuoteReplyAction, SIGNAL(activated()),
+  connect( mNoQuoteReplyAction, SIGNAL(triggered(bool)),
            this, SLOT(slotNoQuoteReplyToMsg()) );
 
 
@@ -86,7 +86,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
   mCreateTodoAction->setToolTip( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
   mCreateTodoAction->setWhatsThis( i18n( "This option starts the KOrganizer to-do editor with initial values taken from the currently selected message. Then you can edit the to-do to your liking before saving it to your calendar." ) );
   mActionCollection->addAction( "create_todo", mCreateTodoAction );
-  connect( mCreateTodoAction, SIGNAL(activated()),
+  connect( mCreateTodoAction, SIGNAL(triggered(bool)),
            this, SLOT(slotCreateTodo()) );
 
 
@@ -97,21 +97,21 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   action = new KAction( KIcon("mail-mark-read"), i18n("Mark Message as &Read"), this );
   action->setToolTip( i18n("Mark selected messages as read") );
-  connect( action, SIGNAL(activated()),
+  connect( action, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusRead()) );
   mActionCollection->addAction( "status_read", action );
   mStatusMenu->addAction( action );
 
   action = new KAction( KIcon("mail-mark-unread-new"), i18n("Mark Message as &New"), this );
   action->setToolTip( i18n("Mark selected messages as new") );
-  connect( action, SIGNAL(activated()),
+  connect( action, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusNew()) );
   mActionCollection->addAction( "status_new", action );
   mStatusMenu->addAction( action );
 
   action = new KAction( KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this );
   action->setToolTip( i18n("Mark selected messages as unread") );
-  connect( action, SIGNAL(activated()),
+  connect( action, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusUnread()) );
   mActionCollection->addAction( "status_unread", action );
   action->setShortcut( Qt::CTRL+Qt::Key_U );
@@ -121,7 +121,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   mToggleFlagAction = new KToggleAction( KIcon("mail-mark-important"),
                                          i18n("Mark Message as &Important"), this );
-  connect( mToggleFlagAction, SIGNAL(activated()),
+  connect( mToggleFlagAction, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusFlag()) );
   mToggleFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Message Mark")) );
   mActionCollection->addAction( "status_flag", mToggleFlagAction );
@@ -129,7 +129,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   mToggleToActAction = new KToggleAction( KIcon("mail-mark-task"),
                                           i18n("Mark Message as &Action Item"), this );
-  connect( mToggleToActAction, SIGNAL(activated()),
+  connect( mToggleToActAction, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusToAct()) );
   mToggleToActAction->setCheckedState( KGuiItem(i18n("Remove &Action Item Message Mark")) );
   mActionCollection->addAction( "status_toact", mToggleToActAction );
@@ -137,7 +137,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   mEditAction = new KAction( KIcon("accessories-text-editor"), i18n("&Edit Message"), this );
   mActionCollection->addAction( "edit", mEditAction );
-  connect( mEditAction, SIGNAL(activated()),
+  connect( mEditAction, SIGNAL(triggered(bool)),
            this, SLOT(editCurrentMessage()) );
   mEditAction->setShortcut( Qt::Key_T );
 

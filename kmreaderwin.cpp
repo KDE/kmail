@@ -550,7 +550,7 @@ void KMReaderWin::createActions()
   ac->addAction("view_headers", headerMenu );
   headerMenu->setToolTip( i18n("Choose display style of message headers") );
 
-  connect( headerMenu, SIGNAL(activated()),
+  connect( headerMenu, SIGNAL(triggered(bool)),
            this, SLOT(slotCycleHeaderStyles()) );
 
   QActionGroup *group = new QActionGroup( this );
@@ -600,7 +600,7 @@ void KMReaderWin::createActions()
   KActionMenu *attachmentMenu  = new KActionMenu(i18nc("View->", "&Attachments"), this);
   ac->addAction("view_attachments", attachmentMenu );
   attachmentMenu->setToolTip( i18n("Choose display style of attachments") );
-  connect( attachmentMenu, SIGNAL(activated()),
+  connect( attachmentMenu, SIGNAL(triggered(bool)),
            this, SLOT(slotCycleAttachmentStrategy()) );
 
   group = new QActionGroup( this );

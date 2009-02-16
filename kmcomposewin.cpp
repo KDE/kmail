@@ -1046,9 +1046,9 @@ void KMComposeWin::setupActions( void )
   actActionNowMenu->setDelayed( true );
   actActionLaterMenu->setDelayed( true );
 
-  connect( actActionNowMenu, SIGNAL(activated()), this,
+  connect( actActionNowMenu, SIGNAL(triggered(bool)), this,
            SLOT(slotSendNow()) );
-  connect( actActionLaterMenu, SIGNAL(activated()), this,
+  connect( actActionLaterMenu, SIGNAL(triggered(bool)), this,
            SLOT(slotSendLater()) );
 
   mActNowMenu = actActionNowMenu->menu();
