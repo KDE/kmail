@@ -2146,7 +2146,9 @@ void KMReaderWin::slotToggleFixedFont()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotCopySelectedText()
 {
-  QApplication::clipboard()->setText( mViewer->selectedText() );
+  QString selection = mViewer->selectedText();
+  selection.replace( QChar::Nbsp, ' ' );
+  QApplication::clipboard()->setText( selection );
 }
 
 
