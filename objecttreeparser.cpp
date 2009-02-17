@@ -453,7 +453,8 @@ namespace KMail {
     if ( doCheck && cryptProto ) {
       GpgME::VerificationResult result;
       if ( data ) { // detached
-        if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
+        const STD_NAMESPACE_PREFIX auto_ptr<Kleo::VerifyDetachedJob> job( cryptProto->verifyDetachedJob() );
+        if ( job.get() ) {
           QByteArray plainData = cleartext;
           plainData.resize( cleartext.size() - 1 );
           result = job->exec( signaturetext, plainData );
@@ -463,7 +464,8 @@ namespace KMail {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       } else { // opaque
-        if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
+        const STD_NAMESPACE_PREFIX auto_ptr<Kleo::VerifyOpaqueJob> job( cryptProto->verifyOpaqueJob() );
+        if ( job.get() ) {
           QByteArray plainData;
           result = job->exec( signaturetext, plainData );
           cleartext = QCString( plainData.data(), plainData.size() + 1 );
@@ -496,7 +498,7 @@ namespace KMail {
         messagePart.isGoodSignature = true;
 
       // get key for this signature
-      Kleo::KeyListJob *job = cryptProto->keyListJob();
+      const STD_NAMESPACE_PREFIX auto_ptr<Kleo::KeyListJob> job( cryptProto->keyListJob() );
       std::vector<GpgME::Key> keys;
       GpgME::KeyListResult keyListRes = job->exec( QString::fromLatin1( signature.fingerprint() ), false, keys );
       GpgME::Key key;
@@ -707,8 +709,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     if ( mReader )
       emit mReader->noDrag(); // in case pineentry pops up, don't let kmheaders start a drag afterwards
 
-    Kleo::DecryptVerifyJob* job = cryptProto->decryptVerifyJob();
-    if ( !job ) {
+    const STD_NAMESPACE_PREFIX auto_ptr<Kleo::DecryptVerifyJob> job( cryptProto->decryptVerifyJob() );
+    if ( !job.get() ) {
       cryptPlugError = CANT_DECRYPT;
       cryptProto = 0;
     } else {
@@ -1452,7 +1454,7 @@ namespace KMail {
 
       const QByteArray certData = node->msgPart().bodyDecodedBinary();
 
-      Kleo::ImportJob *import = smimeCrypto->importJob();
+      const STD_NAMESPACE_PREFIX auto_ptr<Kleo::ImportJob> import( smimeCrypto->importJob() );
       const GpgME::ImportResult res = import->exec( certData );
       if ( res.error() ) {
         htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br>"
@@ -1674,8 +1676,8 @@ bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& body
   GlobalSettings::setChiasmusDecryptionKey( selectorDlg.key() );
   assert( !GlobalSettings::chiasmusDecryptionKey().isEmpty() );
 
-  Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );
-  if ( !job ) {
+  const STD_NAMESPACE_PREFIX auto_ptr<Kleo::SpecialJob> job( chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() ) );
+  if ( !job.get() ) {
     errorText = i18n( "Chiasmus backend does not offer the "
                       "\"x-decrypt\" function. Please report this bug." );
     return false;
