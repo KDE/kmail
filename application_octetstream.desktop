@@ -1,5 +1,11 @@
 [Misc]
 Name=Application Octet Stream
+Name[nds]=Application/Octet-Stream
+Name[pt]=Aplicação Sequência Binária
+Name[pt_BR]=Aplicação Sequência Binária
+Name[sv]=Program-oktettström
+Name[uk]=Вісімковий потік програми
+Name[zh_TW]=Application/Octet-Stream
 Comment=A bodypart formatter plugin for application/octet-stream
 Comment[af]='n Inprop module wat die lyf gedeelte vir 'application/octet-stream' formateer
 Comment[bg]=Приставка за форматиране на двоични данни
@@ -45,6 +51,7 @@ Comment[tr]=application/octet-stream için bir gövde biçimleyici eklentisi
 Comment[uk]=Втулок для форматування application/octet-stream
 Comment[x-test]=xxA bodypart formatter plugin for application/octet-streamxx
 Comment[zh_CN]=application/octet-stream 的正文格式化插件
+Comment[zh_TW]=Application/octet-stream 使用的部件格式化外掛程式
 
 [Plugin]
 Type=application/octet-stream
