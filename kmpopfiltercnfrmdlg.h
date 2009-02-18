@@ -55,12 +55,12 @@ public:
   explicit KMPopHeadersView( QWidget *parent, KMPopFilterCnfrmDlg *dialog );
   ~KMPopHeadersView();
 
-  static const KMPopFilterAction mapToAction( int column ) {
-    return (KMPopFilterAction)column;
+  static KMPopFilterAction mapToAction( int column ) {
+    return static_cast<KMPopFilterAction>( column );
   }
 
-  static const int mapToColumn( KMPopFilterAction action ) {
-    return (int)action;
+  static int mapToColumn( KMPopFilterAction action ) {
+    return static_cast<int>( action );
   }
 
 protected:
