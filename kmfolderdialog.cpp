@@ -713,10 +713,12 @@ bool FolderDialogGeneralTab::save()
       }
     }
     if ( folder->useCustomIcons() &&
-        (( mNormalIconButton->icon() != folder->normalIconPath() ) &&
-         ( !mNormalIconButton->icon().isEmpty())) ||
-        (( mUnreadIconButton->icon() != folder->unreadIconPath() ) &&
-         ( !mUnreadIconButton->icon().isEmpty())) ) {
+         ( ( mNormalIconButton->icon() != folder->normalIconPath() &&
+             !mNormalIconButton->icon().isEmpty() ) ||
+           ( mUnreadIconButton->icon() != folder->unreadIconPath() &&
+             !mUnreadIconButton->icon().isEmpty() )
+         )
+       ) {
       folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
     }
 

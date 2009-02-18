@@ -722,7 +722,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
     }
 
     // Is this a long header line?
-    if (inHeader && line[0] == '\t' || line[0] == ' ')
+    if ( inHeader && ( line[0] == '\t' || line[0] == ' ') )
     {
       int i = 0;
       while (line[i] == '\t' || line[i] == ' ')
@@ -736,7 +736,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
     else
       lastStr = 0;
 
-    if (inHeader && (line[0] == '\n' || line[0] == '\r'))
+    if (inHeader && ( line[0] == '\n' || line[0] == '\r') )
       inHeader = false;
     if (!inHeader)
       continue;

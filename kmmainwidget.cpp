@@ -4366,8 +4366,8 @@ void KMMainWidget::updateMessageActions()
 
   mSendAgainAction->setEnabled(
       single_actions &&
-      ( currentMessage && currentMessage->status().isSent() ) ||
-      ( currentMessage && kmkernel->folderIsSentMailFolder( mFolder ) )
+      ( ( currentMessage && currentMessage->status().isSent() ) ||
+        ( currentMessage && kmkernel->folderIsSentMailFolder( mFolder ) ) )
     );
 
   mSaveAsAction->setEnabled( mass_actions );

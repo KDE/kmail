@@ -316,7 +316,11 @@ ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
                        "access this mailbox.");
     mPasswordDialogIsActive = true;
 
-    PasswordDialog dlg( msg, log, true /* store pw */, true, KMKernel::self()->mainWin() );
+    KPasswordDialog dlg( KMKernel::self()->mainWin(),
+                         KPasswordDialog::ShowUsernameLine | KPasswordDialog::ShowKeepPassword );
+    dlg.setPrompt( msg );
+    dlg.setUsername( log );
+    dlg.setModal( true );
     dlg.setPlainCaption( i18n("Authorization Dialog") );
     dlg.addCommentLine( i18n("Account:"), name() );
     int ret = dlg.exec();
