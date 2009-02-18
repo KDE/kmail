@@ -60,6 +60,8 @@
 #include <QLayout>
 #include <QRegExp>
 #include <QLabel>
+#include <QFileInfo>
+#include <QFormLayout>
 #include <QGridLayout>
 #include <QFrame>
 #include <QHBoxLayout>
@@ -79,12 +81,16 @@ static QString inCaseWeDecideToRenameTheTab( I18N_NOOP( "Permissions (ACL)" ) );
 //-----------------------------------------------------------------------------
 KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
                                 MainFolderView *aParent, const QString& aCap,
-                                const QString& aName):
+                                const QString& aName) :
   KPageDialog( aParent ),
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
-  mIsNewFolder( aFolder == 0 )
+  mIsNewFolder( aFolder == 0 ),
+  mShortcutTab( 0 ),					// for possible future expansion
+  mExpiryTab( 0 ),
+  mMaillistTab( 0 )
+
 {
   setFaceType( Tabbed );
   setCaption( aCap );
@@ -155,11 +161,17 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
     }
   }
 
+  box = new KVBox( this );				// this tab last of all
+  mMaintenanceTab = addPage( box, i18n("Maintenance") );
+  tab = new FolderDialogMaintenanceTab( this, box );
+  addTab( tab );
+
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->load();
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   connect( this, SIGNAL( applyClicked() ), SLOT( slotApply() ) ); 
 }
+
 
 void KMFolderDialog::addTab( FolderDialogTab* tab )
 {
@@ -171,6 +183,29 @@ void KMFolderDialog::addTab( FolderDialogTab* tab )
   //         this, SLOT(slotChanged( bool )) );
   mTabs.append( tab );
 }
+
+
+bool KMFolderDialog::setPage( KMMainWidget::PropsPage whichPage )
+{
+  switch ( whichPage )
+  {
+case KMMainWidget::PropsGeneral:      break;		// the default page
+
+case KMMainWidget::PropsShortcut:     if ( !mShortcutTab ) return ( false );
+                                      setCurrentPage( mShortcutTab );
+                                      break;
+
+case KMMainWidget::PropsMailingList:  if ( !mMaillistTab ) return ( false );
+                                      setCurrentPage( mMaillistTab );
+                                      break;
+
+case KMMainWidget::PropsExpire:       if ( !mExpiryTab ) return ( false );
+                                      setCurrentPage( mExpiryTab );
+                                      break;
+  }
+  return ( true );
+}
+
 
 // Not used yet (no button), but ready to be used :)
 void KMFolderDialog::slotApply()
@@ -262,15 +297,43 @@ static void addLine( QWidget *parent, QVBoxLayout* layout )
 }
 
 //----------------------------------------------------------------------------
+// Used by the "General" and "Maintenance" tabs
+static QString folderContentDesc( KMail::FolderContentsType type )
+{
+  switch ( type )
+  {
+case ContentsTypeMail:     return ( i18nc( "type of folder content", "Mail" ) );
+case ContentsTypeCalendar: return ( i18nc( "type of folder content", "Calendar" ) );
+case ContentsTypeContact:  return ( i18nc( "type of folder content", "Contacts" ) );
+case ContentsTypeNote:     return ( i18nc( "type of folder content", "Notes" ) );
+case ContentsTypeTask:     return ( i18nc( "type of folder content", "Tasks" ) );
+case ContentsTypeJournal:  return ( i18nc( "type of folder content", "Journal" ) );
+default:                   return ( i18nc( "type of folder content", "Unknown" ) );
+  }
+}
+
+// Used by the "Maintenance" tab
+// Not every description we need here is supported by KAccount::displayNameForType()
+static QString folderTypeDesc( KMFolderType type )
+{
+  switch ( type )
+  {
+case KMFolderTypeMbox:       return ( i18nc( "type of folder storage", "Mailbox" ) );
+case KMFolderTypeMaildir:    return ( i18nc( "type of folder storage", "Maildir" ) );
+case KMFolderTypeCachedImap: return ( i18nc( "type of folder storage", "Disconnected IMAP" ) );
+case KMFolderTypeImap:       return ( i18nc( "type of folder storage", "IMAP" ) );
+case KMFolderTypeSearch:     return ( i18nc( "type of folder storage", "Search" ) );
+default:                     return ( i18nc( "type of folder storage", "Unknown" ) );
+  }
+}
+
+//----------------------------------------------------------------------------
 KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
                                                  const QString& aName,
                                                  QWidget* parent, const char* name )
-  : FolderDialogTab( parent, name ),
-  mSharedSeenFlagsCheckBox( 0 ),
-  mDlg( dlg )
+  : FolderDialogTab( dlg, parent, name ),
+    mSharedSeenFlagsCheckBox( 0 )
 {
-
-
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
        mDlg->folder()->folderType() != KMFolderTypeImap &&
        mDlg->folder()->folderType() != KMFolderTypeCachedImap;
@@ -487,12 +550,12 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     label->setBuddy( mContentsComboBox );
     gl->addWidget( mContentsComboBox, row, 1 );
 
-    mContentsComboBox->addItem( i18nc( "type of folder content", "Mail" ) );
-    mContentsComboBox->addItem( i18nc( "type of folder content", "Calendar" ) );
-    mContentsComboBox->addItem( i18nc( "type of folder content", "Contacts" ) );
-    mContentsComboBox->addItem( i18nc( "type of folder content", "Notes" ) );
-    mContentsComboBox->addItem( i18nc( "type of folder content", "Tasks" ) );
-    mContentsComboBox->addItem( i18nc( "type of folder content", "Journal" ) );
+    mContentsComboBox->addItem( folderContentDesc( ContentsTypeMail ) );
+    mContentsComboBox->addItem( folderContentDesc( ContentsTypeCalendar ) );
+    mContentsComboBox->addItem( folderContentDesc( ContentsTypeContact ) );
+    mContentsComboBox->addItem( folderContentDesc( ContentsTypeNote ) );
+    mContentsComboBox->addItem( folderContentDesc( ContentsTypeTask ) );
+    mContentsComboBox->addItem( folderContentDesc( ContentsTypeJournal ) );
     if ( mDlg->folder() )
       mContentsComboBox->setCurrentIndex( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
@@ -782,7 +845,7 @@ void FolderDialogGeneralTab::slotChangeIcon( const QString &icon )
 //----------------------------------------------------------------------------
 KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
                                                      QWidget *parent )
-  : FolderDialogTab( parent, 0 ), mDlg( dlg )
+  : FolderDialogTab( dlg, parent, 0 )
 {
 
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
@@ -796,7 +859,7 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
   QHBoxLayout *topItems = new QHBoxLayout( this );
   topLayout->addLayout( topItems );
 
-  mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
+  mCustom = new QCheckBox( i18n("&Use custom message templates in this folder"), this );
   topItems->addWidget( mCustom, Qt::AlignLeft );
 
   mWidget = new TemplatesConfiguration( this, "folder-templates" );
@@ -832,7 +895,6 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
 
 void FolderDialogTemplatesTab::load()
 {
-
 }
 
 void FolderDialogTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
@@ -880,5 +942,229 @@ void FolderDialogTemplatesTab::slotCopyGlobal() {
     mWidget->loadFromGlobal();
   }
 }
+
+
+//----------------------------------------------------------------------------
+KMail::FolderDialogMaintenanceTab::FolderDialogMaintenanceTab( KMFolderDialog *dlg,
+                                                               QWidget *parent )
+  : FolderDialogTab( dlg, parent ),
+    mRebuildIndexButton( 0 ),
+    mRebuildImapButton( 0 ),
+    mCompactStatusLabel( 0 ),
+    mCompactNowButton( 0 )
+{
+  QVBoxLayout *topLayout = new QVBoxLayout( this );
+  topLayout->setMargin( 0 );
+  topLayout->setSpacing( KDialog::spacingHint() );
+
+  mFolder = dlg->folder();
+  //kDebug() << "        folder:" << mFolder->name();
+  //kDebug() << "          type:" << mFolder->folderType();
+  //kDebug() << "   storagetype:" << mFolder->storage()->folderType();
+  //kDebug() << "  contentstype:" << mFolder->storage()->contentsType();
+  //kDebug() << "      filename:" << mFolder->fileName();
+  //kDebug() << "      location:" << mFolder->location();
+  //kDebug() << "      indexloc:" << mFolder->indexLocation() ;
+  //kDebug() << "     subdirloc:" << mFolder->subdirLocation();
+  //kDebug() << "         count:" << mFolder->count();
+  //kDebug() << "        unread:" << mFolder->countUnread();
+  //kDebug() << "  needscompact:" << mFolder->needsCompacting();
+  //kDebug() << "   compactable:" << mFolder->storage()->compactable();
+
+  QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
+  QFormLayout *box = new QFormLayout( filesGroup );
+  box->setSpacing( KDialog::spacingHint() );
+
+  QString contentsDesc = folderContentDesc( mFolder->storage()->contentsType() );
+  QLabel *label = new QLabel( contentsDesc, filesGroup );
+  // Passing a QLabel rather than QString to addRow(), so that it doesn't
+  // get a buddy set (except in the cases where we do want one).
+  box->addRow( new QLabel( i18n("Contents:"), filesGroup ), label );
+
+  KMFolderType folderType = mFolder->folderType();
+  QString folderDesc = folderTypeDesc( folderType );
+  label = new QLabel( folderDesc, filesGroup );
+  box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
+
+  QLineEdit *label2 = new KLineEdit( mFolder->location(), filesGroup );
+  label2->setReadOnly( true );
+  box->addRow( i18n("Location:"), label2 );
+
+  mFolderSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
+  box->addRow( new QLabel( i18n("Size:"), filesGroup ), mFolderSizeLabel );
+  connect( mFolder, SIGNAL(folderSizeChanged( KMFolder * )),SLOT(updateFolderIndexSizes()) );
+
+  label2 = new KLineEdit( mFolder->indexLocation(), filesGroup );
+  label2->setReadOnly( true );
+  box->addRow( i18n("Index:"), label2 );
+
+  mIndexSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
+  box->addRow( new QLabel( i18n("Size:"), filesGroup ), mIndexSizeLabel );
+
+  if ( folderType == KMFolderTypeMaildir )	// see KMMainWidget::slotTroubleshootMaildir()
+  {
+    mRebuildIndexButton = new KPushButton( i18n("Recreate Index"), filesGroup );
+    QObject::connect( mRebuildIndexButton, SIGNAL(clicked()), SLOT(slotRebuildIndex()) );
+
+    QHBoxLayout *hbl = new QHBoxLayout();	// to get an unstretched, right aligned button
+    hbl->addStretch( 1 );
+    hbl->addWidget( mRebuildIndexButton );
+    box->addRow( QString(), hbl );
+  }
+
+  if ( folderType == KMFolderTypeCachedImap )
+  {
+    mRebuildImapButton = new KPushButton( i18n("Rebuild Local IMAP Cache"), filesGroup );
+    QObject::connect( mRebuildImapButton, SIGNAL(clicked()), SLOT(slotRebuildImap()) );
+
+    QHBoxLayout *hbl = new QHBoxLayout();
+    hbl->addStretch( 1 );
+    hbl->addWidget( mRebuildImapButton );
+    box->addRow( QString(), hbl );
+  }
+
+  topLayout->addWidget( filesGroup );
+
+  QGroupBox *messagesGroup = new QGroupBox( i18n("Messages"), this);
+  box = new QFormLayout( messagesGroup );
+  box->setSpacing( KDialog::spacingHint() );
+
+  label = new QLabel( QString::number( mFolder->count() ), messagesGroup );
+  box->addRow( new QLabel( i18n("Total messages:"), messagesGroup ), label );
+
+  label = new QLabel( QString::number( mFolder->countUnread() ), messagesGroup );
+  box->addRow( new QLabel( i18n("Unread messages:"), messagesGroup ), label );
+
+  // Compaction is only sensible and currently supported for mbox folders.
+  //
+  // FIXME: should "compaction supported" be an attribute of the folder
+  // storage type (mFolder->storage()->isCompactionSupported() or something
+  // like that)?
+  if ( folderType == KMFolderTypeMbox )			// compaction only sensible for this
+  {
+    mCompactStatusLabel = new QLabel( i18nc( "compaction status", "Unknown" ), messagesGroup );
+    box->addRow( new QLabel( i18n("Compaction:"), messagesGroup ), mCompactStatusLabel );
+
+    mCompactNowButton = new KPushButton( i18n("Compact Now"), messagesGroup );
+    mCompactNowButton->setEnabled( false );
+    connect( mCompactNowButton, SIGNAL(clicked()), SLOT(slotCompactNow()) );
+
+    QHBoxLayout *hbl = new QHBoxLayout();
+    hbl->addStretch( 1 );
+    hbl->addWidget( mCompactNowButton );
+    box->addRow( QString(), hbl );
+  }
+
+  topLayout->addWidget( messagesGroup );
+
+  topLayout->addStretch( 100 );
+}
+
+
+// What happened to KIO::convertSizeWithBytes? - that would be really useful here
+static QString convertSizeWithBytes( qint64 size )
+{
+  QString s1 = KIO::convertSize( size );
+  QString s2 = i18nc( "File size in bytes", "%1 B", size );
+  return ( s1 == s2 ) ? s1 : i18n( "%1 (%2)", s1, s2 );
+}
+
+
+void FolderDialogMaintenanceTab::load()
+{
+  updateControls();
+  updateFolderIndexSizes();
+}
+
+
+bool FolderDialogMaintenanceTab::save()
+{
+  return true;
+}
+
+
+void FolderDialogMaintenanceTab::updateControls()
+{
+  if ( mCompactStatusLabel )
+  {
+    QString s;
+    if ( mFolder->needsCompacting() )
+    {
+      if ( mFolder->storage()->compactable() ) s = i18nc( "compaction status", "Possible");
+      else s = i18nc( "compaction status", "Possible, but unsafe");
+    }
+    else s = i18nc( "compaction status", "Not required");
+    mCompactStatusLabel->setText( s );
+  }
+
+  if ( mCompactNowButton )
+    mCompactNowButton->setEnabled( mFolder->needsCompacting() );
+}
+
+
+void FolderDialogMaintenanceTab::updateFolderIndexSizes()
+{
+  qint64 folderSize = mFolder->storage()->folderSize();
+  if ( folderSize != -1 )
+  {
+    mFolderSizeLabel->setText( convertSizeWithBytes( folderSize ) );
+  }
+
+  KUrl u;
+  u.setPath( mFolder->indexLocation() );
+  if ( u.isValid() && u.isLocalFile() )
+  {
+    // the index should always be a file
+    QFileInfo fi( u.path() );
+    mIndexSizeLabel->setText( convertSizeWithBytes( fi.size() ) );
+  }
+}
+
+
+void FolderDialogMaintenanceTab::slotCompactNow()
+{
+  if ( !mFolder->needsCompacting() ) return;
+
+  if ( !mFolder->storage()->compactable() )
+  {
+    if ( KMessageBox::warningContinueCancel( this,
+                                             i18nc( "@info",
+      "Compacting folder <resource>%1</resource> may not be safe.<nl/>"
+      "<warning>This may result in index or mailbox corruption.</warning><nl/>"
+      "Ensure that you have a recent backup of the mailbox and messages.", mFolder->label() ),
+                                             i18nc( "@title", "Really compact folder?" ),
+                                             KGuiItem( i18nc( "@action:button", "Compact Folder" ) ),
+                                             KStandardGuiItem::cancel(), QString(),
+                                             KMessageBox::Notify | KMessageBox::Dangerous )
+                                             != KMessageBox::Continue ) return;
+    mFolder->storage()->enableCompaction();
+  }
+
+  // finding and activating the action, because
+  // KMMainWidget::slotCompactFolder() and similar actions are protected
+  QAction *act = kmkernel->getKMMainWidget()->action( "compact" );
+  if ( act ) act->activate( QAction::Trigger );
+
+  updateControls();
+  updateFolderIndexSizes();
+}
+
+
+void FolderDialogMaintenanceTab::slotRebuildIndex()
+{
+  QAction *act = kmkernel->getKMMainWidget()->action( "troubleshoot_maildir" );
+  if ( !act ) return;
+
+  act->activate( QAction::Trigger );
+  updateFolderIndexSizes();
+}
+
+
+void FolderDialogMaintenanceTab::slotRebuildImap()
+{
+  QAction *act = kmkernel->getKMMainWidget()->action( "troubleshoot_folder" );
+  if ( act ) act->activate( QAction::Trigger );
+}
+
 
 #include "kmfolderdialog.moc"

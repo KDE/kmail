@@ -51,9 +51,8 @@
 using namespace KMail;
 
 KMail::FolderDialogQuotaTab::FolderDialogQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
-  : FolderDialogTab( parent, name ),
-    mImapAccount( 0 ),
-    mDlg( dlg )
+  : FolderDialogTab( dlg, parent, name ),
+    mImapAccount( 0 )
 {
   QVBoxLayout* topLayout = new QVBoxLayout( this );
   // We need a widget stack to show either a label ("no qutoa support", "please wait"...)

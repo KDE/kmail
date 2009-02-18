@@ -35,6 +35,8 @@
 #include <kpagedialog.h>
 #include "configuredialog_p.h"
 
+#include "kmmainwidget.h"
+
 #include <QList>
 
 class QCheckBox;
@@ -69,8 +71,14 @@ class FolderDialogTab : public QWidget
 {
   Q_OBJECT
 public:
-   explicit FolderDialogTab( QWidget *parent=0, const char* name=0 )
-     : QWidget( parent ) { setObjectName( name ); }
+   explicit FolderDialogTab( KMFolderDialog *dlg,
+                             QWidget *parent = 0,
+                             const char *name = 0 )
+     : QWidget( parent ),
+       mDlg( dlg )
+   {
+     setObjectName( name );
+   }
 
   virtual void load() = 0;
 
@@ -100,6 +108,9 @@ signals:
 
   /// Called when this module was changed [not really used yet]
   void changed(bool);
+
+protected:
+  KMFolderDialog *mDlg;
 };
 
 /**
@@ -150,9 +161,44 @@ private:
 
   KPIMIdentities::IdentityCombo *mIdentityComboBox;
 
-  KMFolderDialog* mDlg;
   bool mIsLocalSystemFolder;
 };
+
+
+ /**
+ * "Maintenance" tab in the folder dialog
+ * Internal class, only used by KMFolderDialog
+ */
+class FolderDialogMaintenanceTab : public FolderDialogTab
+{
+  Q_OBJECT
+
+public:
+  FolderDialogMaintenanceTab( KMFolderDialog *dlg, QWidget *parent );
+
+  virtual void load();
+  virtual bool save();
+
+private slots:
+  void slotCompactNow();
+  void slotRebuildIndex();
+  void slotRebuildImap();
+  void updateFolderIndexSizes();
+
+private:
+  void updateControls();
+
+private:
+  KMFolder* mFolder;
+
+  QLabel *mFolderSizeLabel;
+  QLabel *mIndexSizeLabel;
+  QPushButton *mRebuildIndexButton;
+  QPushButton *mRebuildImapButton;
+  QLabel *mCompactStatusLabel;
+  QPushButton *mCompactNowButton;
+};
+
 
 /**
  * "Templates" tab in the folder dialog
@@ -183,7 +229,6 @@ private:
   KMFolder* mFolder;
   uint mIdentity;
 
-  KMFolderDialog* mDlg;
   bool mIsLocalSystemFolder;
 };
 
@@ -212,6 +257,8 @@ public:
 
   KMFolder* parentFolder() const { return mParentFolder; }
 
+  bool setPage( KMMainWidget::PropsPage whichPage );
+
 protected slots:
   void slotChanged( bool );
   virtual void slotOk();
@@ -230,6 +277,11 @@ private:
   QPointer<KMFolder> mParentFolder;
 
   bool mIsNewFolder; // if true, save() did set mFolder.
+
+  KPageWidgetItem *mShortcutTab;
+  KPageWidgetItem *mExpiryTab;
+  KPageWidgetItem *mMaillistTab;
+  KPageWidgetItem *mMaintenanceTab;
 
   QVector<KMail::FolderDialogTab*> mTabs;
   int mDelayedSavingTabs; // this should go into a base class one day

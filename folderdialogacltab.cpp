@@ -303,10 +303,9 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
 ////
 
 KMail::FolderDialogACLTab::FolderDialogACLTab( KMFolderDialog* dlg, QWidget* parent )
-  : FolderDialogTab( parent ),
+  : FolderDialogTab( dlg, parent ),
     mImapAccount( 0 ),
     mUserRights( 0 ),
-    mDlg( dlg ),
     mChanged( false ), mAccepting( false ), mSaving( false )
 {
   QVBoxLayout* topLayout = new QVBoxLayout( this );

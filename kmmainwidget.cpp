@@ -1247,6 +1247,7 @@ void KMMainWidget::slotFolderMailingListProperties()
     return;
 
   ( new KMail::MailingListFolderPropertiesDialog( this, folder ) )->show();
+  //slotModifyFolder( KMMainWidget::PropsMailingList );
 }
 
 //-----------------------------------------------------------------------------
@@ -1260,11 +1261,12 @@ void KMMainWidget::slotFolderShortcutCommand()
     return;
 
   ( new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mMainFolderView ) )->exec();
+  //slotModifyFolder( KMMainWidget::PropsShortcut );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotModifyFolder()
+void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
 {
   if (!mMainFolderView)
     return;
@@ -1273,9 +1275,10 @@ void KMMainWidget::slotModifyFolder()
   if ( !folder )
     return;
 
-
   KMFolderDialog props( folder, folder->parent(), mMainFolderView,
                         i18n("Properties of Folder %1", folder->label() ) );
+  if ( whichPage != KMMainWidget::PropsGeneral )
+    props.setPage( whichPage );
   props.exec();
   updateFolderMenu();
 }
@@ -2509,13 +2512,12 @@ void KMMainWidget::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
-  KMail::FolderSelectionDialog dlg( this, i18n("Jump to Folder"), true );
-  KMFolder* dest;
+  // can jump to anywhere, need not be read/write
+  KMail::FolderSelectionDialog dlg( this, i18n("Jump to Folder"), false );
 
   if (!dlg.exec()) return;
-  if (!(dest = dlg.folder())) return;
-
-  slotSelectFolder( dest );
+  // safe to accept folder==0 (means "Local Folders" root) here
+  slotSelectFolder( dlg.folder() );
 }
 
 
@@ -3752,16 +3754,23 @@ void KMMainWidget::setupActions()
   connect(mFolderMailingListPropertiesAction, SIGNAL(triggered(bool)), SLOT( slotFolderMailingListProperties()));
   // mFolderMailingListPropertiesAction->setIcon(KIcon("document-properties-mailing-list"));
 
-  // FIXME: A very similar action is set up also by the folder views... (???)
   mFolderShortCutCommandAction = new KAction(KIcon("configure-shortcuts"), i18n("&Assign Shortcut..."), this);
   actionCollection()->addAction("folder_shortcut_command", mFolderShortCutCommandAction );
   connect(mFolderShortCutCommandAction, SIGNAL(triggered(bool) ), SLOT( slotFolderShortcutCommand() ));
-
 
   mMarkAllAsReadAction = new KAction(KIcon("mail-mark-read"), i18n("Mark All Messages as &Read"), this);
   actionCollection()->addAction("mark_all_as_read", mMarkAllAsReadAction );
   connect(mMarkAllAsReadAction, SIGNAL(triggered(bool)), SLOT(slotMarkAllAsRead()));
 
+  // FIXME: this action is not currently enabled in the rc file, but even if
+  // it were there is inconsistency between the action name and action.
+  // "Expiration Settings" implies that this will lead to a settings dialogue
+  // and it should be followed by a "...", but slotExpireFolder() performs
+  // an immediate expiry.
+  //
+  // Leaving the action here for the moment, it and the "Expire" option in the
+  // folder popup menu should be combined or at least made consistent.  Same for
+  // slotExpireFolder() and FolderViewItem::slotShowExpiryProperties().
   mExpireFolderAction = new KAction(i18n("&Expiration Settings"), this);
   actionCollection()->addAction("expire", mExpireFolderAction );
   connect(mExpireFolderAction, SIGNAL(triggered(bool) ), SLOT(slotExpireFolder()));
@@ -4414,7 +4423,8 @@ void KMMainWidget::updateFolderMenu()
 
   mPostToMailinglistAction->setEnabled( mailingList );
   mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
-  mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder );
+  mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
+                                                  !mFolder->isSystemFolder() );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
 
   // This is the refresh-folder action in the menu. See kmfoldertree for the one in the RMB...

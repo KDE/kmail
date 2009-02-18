@@ -1103,12 +1103,6 @@ public Q_SLOTS:
    */
   void slotShowExpiryProperties();
 
-  /**
-   * Shows a dialog for manipulation of the shortcut assignment for the KMFolder
-   * contained in this item. If folder() is null then this function turns to a no-op.
-   */
-  void slotAssignShortcut();
-
 protected:
   /**
    * Sets the folder associated to this item.

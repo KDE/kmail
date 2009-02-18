@@ -1412,10 +1412,10 @@ void FolderView::fillContextMenuMessageRelatedActions( KMenu *menu, FolderViewIt
 
   if ( !folder->noContent() )
   {
-    // search messages
-    menu->addAction( mMainWidget->action( "search_messages" ) );
     // mark all messages as read
     menu->addAction( mMainWidget->action( "mark_all_as_read" ) );
+    // search messages
+    menu->addAction( mMainWidget->action( "search_messages" ) );
     // move all messages to trash
     menu->addAction( mMainWidget->action( "empty" ) );
   }
@@ -1459,29 +1459,14 @@ void FolderView::fillContextMenuFolderServiceRelatedActions( KMenu *menu, Folder
         );
   }
 
-  if ( !folder->noContent() )
+  // compaction is only supported for mbox folders
+  // see FolderDialogMaintenanceTab::FolderDialogMaintenanceTab()
+  if ( folder->folderType() == KMFolderTypeMbox )
     menu->addAction( mMainWidget->action( "compact" ) );
-
-  if ( folder->folderType() == KMFolderTypeMaildir )
-    menu->addAction( mMainWidget->action( "troubleshoot_maildir" ) ); // rebuild index
-
-  if ( folder->folderType() == KMFolderTypeCachedImap )
-  {
-    KMFolderCachedImap * ifolder = static_cast<KMFolderCachedImap*>( folder->storage() );
-    menu->addAction(
-        KIcon( "plasmagik" ), i18n( "&Troubleshoot IMAP Cache..." ),
-        ifolder, SLOT( slotTroubleshoot() )
-      );
-  }
 
   if ( item->folderType() != FolderViewItem::Root ) // non account level folder
   {
-    // FIXME: A very similar action is also used by KMMainWidget (mFolderShortCutCommandAction)
-    menu->addAction(
-        KIcon("configure-shortcuts"), i18n("&Assign Shortcut..."),
-        item, SLOT( slotAssignShortcut() )
-      );
-
+    menu->addAction( mMainWidget->action( "folder_shortcut_command" ) );
     if ( !folder->noContent() )
       menu->addAction( i18n("Expire..."), item, SLOT( slotShowExpiryProperties() ) );
 
@@ -2926,15 +2911,7 @@ void FolderViewItem::slotShowExpiryProperties()
 
   KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( mfv, folder() );
   dlg->show();
-}
-
-void FolderViewItem::slotAssignShortcut()
-{
-  if ( !folder() )
-    return;
-
-  KMail::FolderShortcutDialog *dlg = new KMail::FolderShortcutDialog( folder(), kmkernel->getKMMainWidget(), treeWidget() );
-  dlg->exec();
+  //fv->mainWidget()->slotModifyFolder( KMMainWidget::PropsExpire );
 }
 
 bool FolderViewItem::operator < ( const QTreeWidgetItem &other ) const

@@ -983,6 +983,16 @@ void FolderStorage::writeConfig()
 }
 
 //-----------------------------------------------------------------------------
+void FolderStorage::enableCompaction()
+{
+  if ( mCompactable ) return;
+
+  kDebug() << "#### Enabling compaction for folder" << folder()->idString();
+  mCompactable = true;
+  writeConfig();
+}
+
+//-----------------------------------------------------------------------------
 void FolderStorage::correctUnreadMsgsCount()
 {
   open( "countunreadmsg" );

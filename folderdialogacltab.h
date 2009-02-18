@@ -147,7 +147,6 @@ private:
 
   QLabel* mLabel;
   QStackedWidget* mStack;
-  KMFolderDialog* mDlg;
 
   bool mChanged;
   bool mAccepting; // i.e. close when done

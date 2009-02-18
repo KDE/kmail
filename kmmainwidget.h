@@ -92,6 +92,14 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   public:
     typedef QList<KMMainWidget*> PtrList;
 
+    enum PropsPage
+    {
+      PropsGeneral,
+      PropsShortcut,
+      PropsMailingList,
+      PropsExpire
+    };
+
     KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
                  KActionCollection *actionCollection,
                  KConfig *config = KMKernel::config() );
@@ -330,6 +338,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
     void setMessageClipboardContents( const QList< quint32 > &msgs, bool move );
 
+    /**
+     * Open the "Folder Properties" dialogue.
+     * @param whichPage The page (tab) of the dialogue to initially show.
+     */
+    void slotModifyFolder( KMMainWidget::PropsPage whichPage = KMMainWidget::PropsGeneral );
+
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );
@@ -372,7 +386,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotImport();
     void slotCompose();
     void slotPostToML();
-    void slotModifyFolder();
     void slotFolderMailingListProperties();
     void slotFolderShortcutCommand();
     void slotExpireFolder();

@@ -407,6 +407,12 @@ public:
   /** false if index file is out of sync with mbox file */
   bool compactable() const { return mCompactable; }
 
+  /**
+   * Enable compaction, even if it appears to be unsafe (see above).
+   * Use at your own risk!!
+   */
+  void enableCompaction();
+
   /// Set the type of contents held in this folder (mail, calendar, etc.)
   // If quiet is true, the KMailIcalIface is not informed of the changed.
   // That's useful for folder that are being copied around, should retain

@@ -421,7 +421,7 @@ namespace KMail {
     QHBoxLayout *tlay = new QHBoxLayout();
     vlay->addLayout( tlay );
 
-    mCustom = new QCheckBox( i18n("&Use custom message templates"), tab );
+    mCustom = new QCheckBox( i18n("&Use custom message templates for this identity"), tab );
     tlay->addWidget( mCustom, Qt::AlignLeft );
 
     mWidget = new TemplatesConfiguration( tab, "identity-templates" );

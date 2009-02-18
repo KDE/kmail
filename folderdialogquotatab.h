@@ -78,7 +78,6 @@ private:
   QStackedWidget* mStack;
   ImapAccountBase* mImapAccount;
   QString mImapPath;
-  KMFolderDialog* mDlg;
 
   QuotaInfo mQuotaInfo;
   KMFolderType mFolderType;
