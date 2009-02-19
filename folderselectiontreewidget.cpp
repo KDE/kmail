@@ -109,6 +109,7 @@ void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSele
                                                : new FolderSelectionTreeWidgetItem( this, fti );
 
   item->setText( mNameColumnIndex, fti->labelText() );
+  item->setIcon( 0, fti->icon( 0 ) );
   // Build the path (ParentItemPath/CurrentItemName)
   QString path;
   if( parent )
@@ -116,8 +117,6 @@ void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSele
   path += fti->labelText();
 
   item->setText( mPathColumnIndex, path );
-  QPixmap pix = fti->normalIcon();
-  item->setIcon( mNameColumnIndex, pix.isNull() ? SmallIcon( "folder" ) : QIcon( pix ) );
 
   // Make readonly items unselectable, if we're told so
   if ( mLastMustBeReadWrite && ( fti->folder() && fti->folder()->isReadOnly() ) ) {
