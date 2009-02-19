@@ -297,7 +297,7 @@ void KMReaderMainWin::setupAccel()
   //----- Message Menu
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("message_forward", mForwardActionMenu );
-  connect( mForwardActionMenu, SIGNAL( activated() ), this,
+  connect( mForwardActionMenu, SIGNAL(triggered(bool)), this,
            SLOT( slotForwardMsg() ) );
 
   mForwardAttachedAction  = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);

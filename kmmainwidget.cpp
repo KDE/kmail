@@ -359,7 +359,7 @@ void KMMainWidget::layoutSplitters()
   // For some reason, this is necessary here so that the copy action still
   // works after changing the folder layout.
   if ( mMsgView )
-    disconnect( mMsgView->copyAction(), SIGNAL( activated() ),
+    disconnect( mMsgView->copyAction(), SIGNAL(triggered(bool) ),
                 mMsgView, SLOT( slotCopySelectedText() ) );
 
   // If long folder list is enabled, the splitters are:
@@ -519,7 +519,7 @@ void KMMainWidget::layoutSplitters()
 
   // Make the copy action work, see disconnect comment above
   if ( mMsgView )
-    connect( mMsgView->copyAction(), SIGNAL( activated() ),
+    connect( mMsgView->copyAction(), SIGNAL( triggered(bool) ),
              mMsgView, SLOT( slotCopySelectedText() ) );
 }
 
@@ -818,7 +818,7 @@ void KMMainWidget::createWidgets()
     mFavoriteFolderView = new KMail::FavoriteFolderView( this, this );
 
     if ( mFavoritesCheckMailAction )
-      connect( mFavoritesCheckMailAction, SIGNAL( activated() ),
+      connect( mFavoritesCheckMailAction, SIGNAL(triggered(bool)),
                mFavoriteFolderView, SLOT( checkMail() ) );
 
     connect( mFolderTree, SIGNAL( folderSelected(KMFolder*) ),
@@ -2678,14 +2678,14 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction( "favorite_check_mail", mFavoritesCheckMailAction );
   mFavoritesCheckMailAction->setShortcut( QKeySequence( Qt::CTRL+Qt::SHIFT+Qt::Key_L ) );
   if ( mFavoriteFolderView ) {
-    connect( mFavoritesCheckMailAction, SIGNAL(activated()),
+    connect( mFavoritesCheckMailAction, SIGNAL(triggered(bool)),
              mFavoriteFolderView, SLOT(checkMail()) );
   }
 
   KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-receive"), i18n("Check Ma&il"), this);
   actionCollection()->addAction("check_mail_in", actActionMenu );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
-  connect(actActionMenu, SIGNAL(activated()), this, SLOT(slotCheckMail()));
+  connect(actActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotCheckMail()));
   mActMenu = actActionMenu->menu();
   connect(mActMenu, SIGNAL(triggered(QAction*)),
           SLOT(slotCheckOneAccount(QAction*)));
@@ -2961,7 +2961,7 @@ void KMMainWidget::setupActions()
 
   mForwardActionMenu = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("message_forward", mForwardActionMenu );
-  connect( mForwardActionMenu, SIGNAL(activated()), this,
+  connect( mForwardActionMenu, SIGNAL(triggered(bool)), this,
            SLOT(slotForwardMsg()) );
 
   mForwardAttachedAction = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
@@ -2989,7 +2989,7 @@ void KMMainWidget::setupActions()
   //----- Create filter actions
   mFilterMenu = new KActionMenu(KIcon("view-filter"), i18n("&Create Filter"), this);
   actionCollection()->addAction("create_filter", mFilterMenu );
-  connect( mFilterMenu, SIGNAL(activated()), this,
+  connect( mFilterMenu, SIGNAL(triggered(bool)), this,
            SLOT(slotFilter()) );
   mSubjectFilterAction = new KAction(i18n("Filter on &Subject..."), this);
   actionCollection()->addAction("subject_filter", mSubjectFilterAction );
