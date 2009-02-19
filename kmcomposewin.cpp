@@ -1136,7 +1136,7 @@ void KMComposeWin::setupActions( void )
   mSnippetAction = new KToggleAction( i18n("&Snippets"), this );
   actionCollection()->addAction( "snippets", mSnippetAction );
   connect( mSnippetAction, SIGNAL( toggled(bool) ),
-           mSnippetWidget, SLOT( setShown(bool) ) );
+           mSnippetWidget, SLOT( setVisible(bool) ) );
   mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
   mAutoSpellCheckingAction = new KToggleAction( KIcon( "tools-check-spelling" ),
