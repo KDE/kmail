@@ -71,8 +71,8 @@ void FolderSelectionDialog::init( MainFolderView *tree, bool mustBeReadWrite )
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
            this, SLOT( slotSelect() ) );
-  connect( mTreeView, SIGNAL( itemSelectionChanged() ),
-           this, SLOT( slotUpdateBtnStatus() ) );
+  connect( mTreeView, SIGNAL( actionsAllowed( bool, bool ) ),
+           this, SLOT( slotUpdateBtnStatus( bool, bool ) ) );
   connect(this, SIGNAL( user1Clicked() ), mTreeView, SLOT( addChildFolder() ) );
   readConfig();
   mTreeView->resizeColumnToContents(0);
@@ -106,10 +106,10 @@ void FolderSelectionDialog::slotSelect()
   accept();
 }
 
-void FolderSelectionDialog::slotUpdateBtnStatus()
+void FolderSelectionDialog::slotUpdateBtnStatus( bool allowOk, bool allowCreate )
 {
-  enableButton( User1, folder() &&
-                ( !folder()->noContent() && !folder()->noChildren() ) );
+  enableButton( Ok, allowOk );
+  enableButton( User1, allowCreate );
 }
 
 void FolderSelectionDialog::setFlags( bool mustBeReadWrite, bool showOutbox,

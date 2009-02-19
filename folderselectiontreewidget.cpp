@@ -27,6 +27,7 @@
 #include "kmfoldermgr.h"
 #include "util.h"
 
+#include <kaction.h>
 #include <kmenu.h>
 #include <kiconloader.h>
 #include <kconfiggroup.h>
@@ -80,6 +81,13 @@ FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent, ::KMail:
   setContextMenuPolicy( Qt::CustomContextMenu );
   connect( this, SIGNAL( customContextMenuRequested( const QPoint & ) ),
            this, SLOT( slotContextMenuRequested( const QPoint & ) ) );
+  connect( this, SIGNAL( itemSelectionChanged() ),
+           this, SLOT( slotItemSelectionChanged() ) );
+
+  mCreateFolderAction = new KAction( KIcon( "folder-new" ),
+                                     i18n("&New Subfolder..."), this );
+  connect( mCreateFolderAction, SIGNAL( triggered() ),
+           this, SLOT( addChildFolder() ) );
 }
 
 void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSelectionTreeWidgetItem *parent )
@@ -111,9 +119,8 @@ void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSele
   QPixmap pix = fti->normalIcon();
   item->setIcon( mNameColumnIndex, pix.isNull() ? SmallIcon( "folder" ) : QIcon( pix ) );
 
-  // Make items without folders and readonly items unselectable
-  // if we're told so
-  if ( mLastMustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
+  // Make readonly items unselectable, if we're told so
+  if ( mLastMustBeReadWrite && ( fti->folder() && fti->folder()->isReadOnly() ) ) {
     item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
   } else {
     item->setFolder( fti->folder() );
@@ -204,16 +211,13 @@ void FolderSelectionTreeWidget::setFolder( const QString& idString )
 
 void FolderSelectionTreeWidget::addChildFolder()
 {
-  const KMFolder *fld = folder();
-  if ( fld ) {
-    reconnectSignalSlotPair( kmkernel->folderMgr(), SIGNAL( folderAdded(KMFolder*) ),
-             this, SLOT( slotFolderAdded(KMFolder*) ) );
-    reconnectSignalSlotPair( kmkernel->imapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
-             this, SLOT( slotFolderAdded(KMFolder*) ) );
-    reconnectSignalSlotPair( kmkernel->dimapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
-             this, SLOT( slotFolderAdded(KMFolder*) ) );
-    mFolderTree->addChildFolder( (KMFolder *) fld, parentWidget() );
-  }
+  reconnectSignalSlotPair( kmkernel->folderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+           this, SLOT( slotFolderAdded(KMFolder*) ) );
+  reconnectSignalSlotPair( kmkernel->imapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+           this, SLOT( slotFolderAdded(KMFolder*) ) );
+  reconnectSignalSlotPair( kmkernel->dimapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
+           this, SLOT( slotFolderAdded(KMFolder*) ) );
+  mFolderTree->addChildFolder( folder(), parentWidget() );
 }
 
 void FolderSelectionTreeWidget::slotContextMenuRequested( const QPoint &p )
@@ -225,16 +229,10 @@ void FolderSelectionTreeWidget::slotContextMenuRequested( const QPoint &p )
   setCurrentItem( lvi );
   lvi->setSelected( true );
 
-  const KMFolder * folder = static_cast<FolderSelectionTreeWidgetItem *>( lvi )->folder();
-  if ( !folder || folder->noContent() || folder->noChildren() )
-    return;
-
   KMenu *folderMenu = new KMenu;
-  folderMenu->addTitle( folder->label() );
-  folderMenu->addSeparator();
-  folderMenu->addAction( KIcon("folder-new"),
-                         i18n("&New Subfolder..."), this,
-                         SLOT(addChildFolder()) );
+  folderMenu->addTitle( static_cast<FolderSelectionTreeWidgetItem *>( lvi )->labelText() );
+  folderMenu->addAction( mCreateFolderAction );
+
   kmkernel->setContextMenuShown( true );
   folderMenu->exec ( viewport()->mapToGlobal( p ), 0);
   kmkernel->setContextMenuShown( false );
@@ -252,6 +250,31 @@ void FolderSelectionTreeWidget::slotFolderAdded( KMFolder *addedFolder )
              this, SLOT( slotFolderAdded(KMFolder*) ) );
   disconnect( kmkernel->dimapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
              this, SLOT( slotFolderAdded(KMFolder*) ) );
+}
+
+void FolderSelectionTreeWidget::slotItemSelectionChanged()
+{
+  bool allowOk = true;
+  bool allowCreate = true;
+
+  const QList<QTreeWidgetItem *> selItems = selectedItems();
+  if ( selItems.isEmpty() )				// no selection
+    allowOk = allowCreate = false;
+  else
+  {
+    const KMFolder *fld = static_cast<FolderSelectionTreeWidgetItem *>( selectedItems().first() )->folder();
+    if ( !fld )						// "Local Folders" root
+      allowOk = !mLastMustBeReadWrite;
+    else						// any other folder
+    {
+      allowCreate = !fld->noChildren() && !fld->isReadOnly();
+      if ( mLastMustBeReadWrite )
+          allowOk = !fld->noContent() && !fld->isReadOnly();
+    }
+  }
+
+  mCreateFolderAction->setEnabled( allowCreate );
+  emit actionsAllowed( allowOk, allowCreate );
 }
 
 void FolderSelectionTreeWidget::applyFilter( const QString& filter )

@@ -101,7 +101,7 @@ protected slots:
    * Called when selection in the tree view changes in order
    * to update the enabled/disabled state of the dialog buttons.
    */
-  void slotUpdateBtnStatus();
+  void slotUpdateBtnStatus( bool allowOk, bool allowCreate );
 
 protected:
   /**

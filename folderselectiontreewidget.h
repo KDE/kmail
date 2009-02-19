@@ -27,6 +27,7 @@
 #include <libkdepim/foldertreewidget.h>
 
 class KMFolder;
+class KAction;
 
 namespace KMail {
 
@@ -47,14 +48,6 @@ class FolderSelectionTreeWidgetItem;
 class FolderSelectionTreeWidget : public KPIM::FolderTreeWidget
 {
   Q_OBJECT
-private:
-  int mNameColumnIndex;                 ///< The index of the folder name column
-  int mPathColumnIndex;                 ///< The index of the path column
-  KMail::MainFolderView* mFolderTree; ///< The MainFolderView to fetch the data from
-  QString mFilter;                      ///< The current folder path filter string
-  bool mLastMustBeReadWrite;            ///< Internal state for reload()
-  bool mLastShowOutbox;                 ///< Internal state for reload()
-  bool mLastShowImapFolders;            ///< Internal state for reload()
 
 public:
   /**
@@ -142,6 +135,11 @@ protected slots:
    */
   void slotFolderAdded( KMFolder *addedFolder );
 
+  /**
+   * Called when the selection changes.
+   * See documentation for QTreeWidget::itemSelectionChanged()
+   */
+  void slotItemSelectionChanged();
 
 protected:
   /**
@@ -155,6 +153,27 @@ protected:
    */
   void recursiveReload( FolderViewItem *fti, FolderSelectionTreeWidgetItem *parent );
 
+signals:
+  /**
+   * Emitted when the tree widget selection changes, to inform the parent dialogue
+   * of the actions that are allowed for the selected folder.
+   *
+   * @param allowOk if true, the OK action (accepting the selected folder) is allowed.
+   * @param allowCreate if true, the "New Subfolder" action is allowed.
+   */
+  void actionsAllowed( bool allowOk, bool allowCreate );
+
+private:
+  int mNameColumnIndex;                 ///< The index of the folder name column
+  int mPathColumnIndex;                 ///< The index of the path column
+  KMail::MainFolderView* mFolderTree;   ///< The MainFolderView to fetch the data from
+  QString mFilter;                      ///< The current folder path filter string
+
+  bool mLastMustBeReadWrite;            ///< Internal state for reload()
+  bool mLastShowOutbox;                 ///< Internal state for reload()
+  bool mLastShowImapFolders;            ///< Internal state for reload()
+
+  KAction *mCreateFolderAction;         ///< "New Subfolder" action for popup menu
 };
 
 } // namespace KMail
