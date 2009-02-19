@@ -2238,11 +2238,12 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                       cryptProto->name(),
                       QString::fromLatin1( block.keyId ) );
         QString keyWithWithoutURL
-            = isSMIME
+            // FIXME: Kleopatra misses a -query option, so disable this for now.
+            = /*isSMIME
             ? QString("%1%2</a>")
                 .arg( startKeyHREF,
                       cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
-            : "0x" + QString::fromUtf8( block.keyId );
+            : */"0x" + QString::fromUtf8( block.keyId );
 
 
         // temporary hack: always show key infos!
