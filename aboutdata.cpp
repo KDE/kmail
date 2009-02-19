@@ -115,7 +115,7 @@ namespace KMail {
     { "Sam Magnuson", 0,
       "sam@trolltech.com", 0 },
     { "Laurent Montel", 0,
-      "lmontel@mandrakesoft.com", 0 },
+      "montel@kde.org", 0 },
     { "Matt Newell", 0,
       "newellm@proaxis.com", 0 },
     { "Denis Perchine", 0,
