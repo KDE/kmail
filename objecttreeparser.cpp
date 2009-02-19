@@ -1532,11 +1532,14 @@ namespace KMail {
         if ( (*it).error() )
           htmlWriter()->queue( i18nc( "Certificate import failed.", "Failed: %1 (%2)", (*it).fingerprint(),
                                  QString::fromLocal8Bit( (*it).error().asString() ) ) );
-        else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
-          if ( (*it).status() & GpgME::Import::ContainedSecretKey )
+        else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey ) {
+          if ( (*it).status() & GpgME::Import::ContainedSecretKey ) {
             htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)", (*it).fingerprint() ) );
-          else
+          }
+          else {
             htmlWriter()->queue( i18n( "New or changed: %1", (*it).fingerprint() ) );
+          }
+        }
         htmlWriter()->queue( "<br>" );
       }
 
