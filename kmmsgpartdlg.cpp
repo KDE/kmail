@@ -90,7 +90,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
                                << QString::fromLatin1("application/octet-stream")
                                << QString::fromLatin1("application/x-gunzip")
                                << QString::fromLatin1("application/zip") );
-  connect( mMimeType, SIGNAL(textChanged(const QString&)),
+  connect( mMimeType, SIGNAL(editTextChanged(const QString&)),
            this, SLOT(slotMimeTypeChanged(const QString&)) );
   glay->addWidget( mMimeType, 0, 1 );
 
@@ -335,7 +335,7 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
   if ( !mt.isNull() )
     mIcon->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mt->iconName(),
                       KIconLoader::Desktop ) );
-  else 
+  else
     mIcon->setPixmap( DesktopIcon("unknown") );
 }
 
