@@ -449,18 +449,20 @@ namespace KMail {
     if ( doCheck && cryptProto ) {
       GpgME::VerificationResult result;
       if ( data ) { // detached
-        if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
+        const std::auto_ptr<Kleo::VerifyDetachedJob> job( cryptProto->verifyDetachedJob() );
+        if ( job.get() ) {
           KleoJobExecutor executor;
-          result = executor.exec( job, signaturetext, cleartext );
+          result = executor.exec( job.get(), signaturetext, cleartext );
           messagePart.auditLogError = executor.auditLogError();
           messagePart.auditLog = executor.auditLogAsHtml();
         } else {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       } else { // opaque
-        if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
+        const std::auto_ptr<Kleo::VerifyOpaqueJob> job( cryptProto->verifyOpaqueJob() );
+        if ( job.get() ) {
           KleoJobExecutor executor;
-          result = executor.exec( job, signaturetext, cleartext );
+          result = executor.exec( job.get(), signaturetext, cleartext );
           messagePart.auditLogError = executor.auditLogError();
           messagePart.auditLog = executor.auditLogAsHtml();
         } else {
@@ -492,7 +494,7 @@ namespace KMail {
         messagePart.isGoodSignature = true;
 
       // get key for this signature
-      Kleo::KeyListJob *job = cryptProto->keyListJob();
+      const std::auto_ptr<Kleo::KeyListJob> job( cryptProto->keyListJob() );
       std::vector<GpgME::Key> keys;
       if ( signature.fingerprint() ) // if the fingerprint is empty, the keylisting would return all available keys
         GpgME::KeyListResult keyListRes = job->exec( QStringList( QString::fromLatin1( signature.fingerprint() ) ),
@@ -704,14 +706,14 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     if ( mReader )
       emit mReader->noDrag(); // in case pineentry pops up, don't let kmheaders start a drag afterwards
 
-    Kleo::DecryptVerifyJob* job = cryptProto->decryptVerifyJob();
-    if ( !job ) {
+    const std::auto_ptr<Kleo::DecryptVerifyJob> job( cryptProto->decryptVerifyJob() );
+    if ( !job.get() ) {
       cryptPlugError = CANT_DECRYPT;
       cryptProto = 0;
     } else {
       QByteArray plainText;
       KleoJobExecutor executor;
-      const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = executor.exec( job, ciphertext, plainText );
+      const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = executor.exec( job.get(), ciphertext, plainText );
       const GpgME::DecryptionResult decryptResult = res.first;
       const GpgME::VerificationResult verifyResult = res.second;
       signatureFound = verifyResult.signatures().size() > 0;
@@ -1490,9 +1492,9 @@ namespace KMail {
 
       const QByteArray certData = node->msgPart().bodyDecodedBinary();
 
-      Kleo::ImportJob *import = smimeCrypto->importJob();
+      const std::auto_ptr<Kleo::ImportJob> import( smimeCrypto->importJob() );
       KleoJobExecutor executor;
-      const GpgME::ImportResult res = executor.exec( import, certData );
+      const GpgME::ImportResult res = executor.exec( import.get(), certData );
       if ( res.error() ) {
         htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br />"
                                    "Reason: %1", QString::fromLocal8Bit( res.error().asString() ) ) );
@@ -1712,8 +1714,8 @@ bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& body
   GlobalSettings::setChiasmusDecryptionKey( selectorDlg.key() );
   assert( !GlobalSettings::chiasmusDecryptionKey().isEmpty() );
 
-  Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );
-  if ( !job ) {
+  const std::auto_ptr<Kleo::SpecialJob> job( chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() ) );
+  if ( !job.get() ) {
     errorText = i18n( "Chiasmus backend does not offer the "
                       "\"x-decrypt\" function. Please report this bug." );
     return false;
