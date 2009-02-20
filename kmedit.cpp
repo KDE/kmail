@@ -226,6 +226,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
     mSpellLineEdit( false ),
     mPasteMode( QClipboard::Clipboard )
 {
+  connect( this, SIGNAL(selectionChanged()), this, SLOT(slotSelectionChanged()) );
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
   setOverwriteEnabled( true );

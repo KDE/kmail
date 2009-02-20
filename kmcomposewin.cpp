@@ -1311,11 +1311,15 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Paste as Attac&hment"),0,this,SLOT( slotPasteClipboardAsAttachment()),
                       actionCollection(), "paste_att");
 
-  mAddQuoteChars = new KAction(i18n("Add &Quote Characters"), 0, this,
+  KAction * addq = new KAction(i18n("Add &Quote Characters"), 0, this,
               SLOT(slotAddQuotes()), actionCollection(), "tools_quote");
+  connect( mEditor, SIGNAL(selectionAvailable(bool)),
+           addq, SLOT(setEnabled(bool)) );
 
-  mRemQuoteChars = new KAction(i18n("Re&move Quote Characters"), 0, this,
+  KAction * remq = new KAction(i18n("Re&move Quote Characters"), 0, this,
               SLOT(slotRemoveQuotes()), actionCollection(), "tools_unquote");
+  connect( mEditor, SIGNAL(selectionAvailable(bool)),
+           remq, SLOT(setEnabled(bool)) );
 
 
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
@@ -4992,8 +4996,6 @@ void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 void KMComposeWin::editorFocusChanged(bool gained)
 {
   mPasteQuotation->setEnabled(gained);
-  mAddQuoteChars->setEnabled(gained);
-  mRemQuoteChars->setEnabled(gained);
 }
 
 void KMComposeWin::slotSetAlwaysSend( bool bAlways )

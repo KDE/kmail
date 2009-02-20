@@ -80,6 +80,7 @@ signals:
   void pasteImage();
   void focusUp();
   void focusChanged( bool );
+  void selectionAvailable( bool );
   void insertSnippet();
 public slots:
   void initializeAutoSpellChecking();
@@ -105,6 +106,10 @@ protected:
 
 private slots:
   void slotExternalEditorTempFileChanged( const QString & fileName );
+  void slotSelectionChanged() {
+    // use !text.isEmpty() here, as null-selections exist, but make no sense
+    emit selectionAvailable( !selectedText().isEmpty() );
+  }
 
 private:
   void killExternalEditor();
