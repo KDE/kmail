@@ -1,5 +1,7 @@
 [Misc]
 Name=Application Octet Stream
+Name[gl]=Aplicación Octet Stream
+Name[ja]=アプリケーション/オクテットストリーム
 Name[nds]=Application/Octet-Stream
 Name[pt]=Aplicação Sequência Binária
 Name[pt_BR]=Aplicação Sequência Binária
@@ -25,7 +27,7 @@ Comment[gl]=Un engadido formatador do corpo para aplicacións/octet-stream
 Comment[hu]=Formázómodul application/octet-stream típusú adatfolyamokhoz
 Comment[is]=Sniðmátstól fyrir application/octet-stream
 Comment[it]=Un'estensione per la formattazione di application/octet-stream nei messaggi di posta
-Comment[ja]=application/octet-stream の Bodypart フォーマッタプラグイン
+Comment[ja]=application/octet-stream 用のメッセージ本体フォーマッタ
 Comment[ka]=ნაწილიბრივი დამფორმატებელი მოდული პროგრამისთვის/octet-stream
 Comment[kk]=Application/octet-ағымы үшін пішімдегіш модулі
 Comment[km]=កម្មវិធី​ជំនួយ​កម្មវិធី​ធ្វើ​ទ្រង់ទ្រាយ​ផ្នែក​តួ សម្រាប់​កម្មវិធី/octet-stream
