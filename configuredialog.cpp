@@ -2634,6 +2634,37 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
            mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
+  // a checkbox for "too many recipient warning" and a spinbox for the recipient threshold
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mRecipientCheck = new QCheckBox(
+           GlobalSettings::self()->tooManyRecipientsItem()->label(),
+           this, "kcfg_TooManyReceipients" );
+  hlay->addWidget( mRecipientCheck );
+  connect( mRecipientCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  QString recipientCheckWhatsthis =
+    i18n( GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().utf8() );
+  QWhatsThis::add( mRecipientCheck, recipientCheckWhatsthis );
+  
+  mRecipientSpin = new KIntSpinBox( 1/*min*/, 255/*max*/, 1/*step*/,
+           5/*init*/, 10 /*base*/, this, "kcfg_RecipientThreshold" );
+  mRecipientSpin->setEnabled( false ); 
+  connect( mRecipientSpin, SIGNAL( valueChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  QString recipientWhatsthis =
+    i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().utf8() );
+  QWhatsThis::add( mRecipientSpin, recipientWhatsthis );
+  
+
+  hlay->addWidget( mRecipientSpin );
+  hlay->addStretch( 1 );
+  // only enable the spinbox if the checkbox is checked:
+  connect( mRecipientCheck, SIGNAL(toggled(bool)),
+           mRecipientSpin, SLOT(setEnabled(bool)) );
+  
+
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this, "kcfg_AutosaveInterval" );
   label = new QLabel( mAutoSave,
@@ -2728,6 +2759,8 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
 
   mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
+  mRecipientCheck->setChecked( GlobalSettings::self()->tooManyRecipients() );
+  mRecipientSpin->setValue( GlobalSettings::self()->recipientThreshold() );
   mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
   if ( GlobalSettings::self()->forwardingInlineByDefault() )
     mForwardTypeCombo->setCurrentItem( 0 );
@@ -2757,6 +2790,10 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap" ) );
   if ( composer.hasKey( "break-at" ) )
     mWrapColumnSpin->setValue( composer.readNumEntry( "break-at" ) );
+  if ( composer.hasKey( "too-many-recipients" ) )
+    mRecipientCheck->setChecked( composer.readBoolEntry( "too-many-recipients" ) );
+  if ( composer.hasKey( "recipient-threshold" ) )
+    mRecipientSpin->setValue( composer.readNumEntry( "recipient-threshold" ) );
   if ( composer.hasKey( "autosave" ) )
     mAutoSave->setValue( composer.readNumEntry( "autosave" ) );
 
@@ -2776,6 +2813,8 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
 
   GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
+  GlobalSettings::self()->setTooManyRecipients( mRecipientCheck->isChecked() );
+  GlobalSettings::self()->setRecipientThreshold( mRecipientSpin->value() );
   GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
   GlobalSettings::self()->setForwardingInlineByDefault( mForwardTypeCombo->currentItem() == 0 );
 

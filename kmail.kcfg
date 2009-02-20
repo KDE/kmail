@@ -341,6 +341,18 @@
         <min>30</min>
         <max>255</max>
       </entry>
+      <entry name="TooManyRecipients" type="Bool" key="too-many-recipients">
+        <label>Warn if the recipient number is bigger than</label>
+        <default>true</default>
+        <whatsthis>If there are more recipients than this number for a mail, KMail warns the user and asks for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
+      </entry>
+      <entry name="RecipientThreshold" type="Int" key="recipient-threshold">
+        <label></label>
+        <default>5</default>
+        <min>1</min>
+        <max>255</max>
+        <whatsthis>If there are more recipients than this number for a mail, KMail warns the user and asks for a confirmation before sending the mail.</whatsthis>
+     </entry>
       <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
       <entry name="TransportHistory" type="StringList" key="transport-history" />

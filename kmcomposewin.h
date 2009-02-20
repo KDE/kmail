@@ -536,6 +536,12 @@ private:
   void rethinkHeaderLine( int value, int mask, int& row,
                           const QString& labelStr, QLabel* lbl,
                           QComboBox* cbx, QCheckBox *chk );
+  
+  /**
+   * Checks how many recipients are and warns if there are too many.
+   * @return true, if the user accepted the warning and the message should be sent
+   */
+  bool checkRecipientNumber() const;
 
   /**
    * Initialization methods
