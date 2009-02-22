@@ -93,7 +93,7 @@ namespace Core
  * very similar operations to be performed on the message tree.
  *
  * For a "View Fill" we have 5 passes.
- * 
+ *
  * Pass 1 scans the underlying storage, creates the MessageItem objects
  * (which are subclasses of ModelInvariantIndex) and retrieves invariant
  * storage indexes for them. It also builds threading caches and
@@ -225,7 +225,7 @@ public:
     { return mStartIndex; };
   void setStartIndex( int startIndex )
     { mStartIndex = startIndex; mCurrentIndex = startIndex; };
-  int currentIndex() const 
+  int currentIndex() const
     { return mCurrentIndex; };
   void setCurrentIndex( int currentIndex )
     { mCurrentIndex = currentIndex; };
@@ -396,7 +396,7 @@ bool Model::applyFilterToSubtree( Item * item, const QModelIndex &parentIndex )
     //                  It can take ~20 minutes on a tree with ~11000 items.
     //                  Without this call the same tree is scanned in a couple of seconds.
     //                  The complexity growth is almost certainly (close to) exponential.
-    // 
+    //
     // It ends up in _very_ deep recursive stacks like these:
     //
     // #0  0x00002b37e1e03f03 in QTreeViewPrivate::viewIndex (this=0xbd9ff0, index=@0x7fffd327a420) at itemviews/qtreeview.cpp:3195
@@ -669,7 +669,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
   // The knobs we can tune are:
   //
   // - The number of jobs used to scan the whole folder and their order
-  //   
+  //
   //   There are basically two approaches to this. One is the "single big job"
   //   approach. It scans the folder from the beginning to the end in a single job
   //   entry. The job passes are done only once. It's advantage is that it's simplier
@@ -694,7 +694,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
   //   The larger this time, the greater the number of messages per second that this
   //   engine can process but also greater time with frozen UI -> less interactivity.
   //   Reasonable values start at 50 msecs. Values larger than 300 msecs are very likely
-  //   to be percieved by the user as UI non-reactivity. 
+  //   to be percieved by the user as UI non-reactivity.
   //
   // - The number of messages processed in each job step subchunk.
   //
@@ -737,7 +737,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
           !mFilter &&
           (
             // we do no threading at all
-            ( mAggregation->threading() == Aggregation::NoThreading ) ||                 
+            ( mAggregation->threading() == Aggregation::NoThreading ) ||
             // or we never expand threads
             ( mAggregation->threadExpandPolicy() == Aggregation::NeverExpandThreads ) ||
             // or we expand threads but we'll be going to expand really only a few
@@ -864,7 +864,7 @@ void Model::applyMessagePreSelection( PreSelectionMode preSelectionMode )
 //
 // The "view fill" algorithm implemented in the functions below is quite smart but also quite complex.
 // It's governed by the following goals:
-// 
+//
 // - Be flexible: allow different configurations from "unsorted flat list" to a "grouped and threaded
 //     list with different sorting algorightms applied to each aggregation level"
 // - Be reasonably fast
@@ -1363,7 +1363,7 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
   }
 
   GroupHeaderItem * ghi;
- 
+
   ghi = mGroupHeaderItemHash->value( groupLabel, 0 );
   if( !ghi )
   {
@@ -1607,7 +1607,7 @@ MessageItem * Model::guessMessageParent( MessageItem * mi )
   Q_ASSERT( mi->subjectIsPrefixed() ); // caller must take care of this
   Q_ASSERT( mi->threadingStatus() == MessageItem::ParentMissing );
 
-  
+
   // Do subject based threading
   QString md5 = mi->strippedSubjectMD5();
   if ( !md5.isEmpty() )
@@ -1685,7 +1685,7 @@ MessageItem * Model::guessMessageParent( MessageItem * mi )
 
 //
 // A little template helper, hopefully inlineable.
-// 
+//
 // Return true if the specified message item is in the wrong position
 // inside the specified parent and needs re-sorting. Return false otherwise.
 // Both parent and messageItem must not be null.
@@ -2226,7 +2226,7 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
   // If we have just inserted a message inside the root then no work needs to be done:
   // no grouping is in effect and the message is already in the right place.
   if ( pParent == mRootItem )
-    return; 
+    return;
 
   // If we have just removed the item from this parent and re-inserted it
   // then this operation was a simple re-sort. The code above didn't update
@@ -2244,11 +2244,11 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
   // Aaah.. we're done. Time for a thea ? :)
 }
 
-// FIXME: ThreadItem ? 
+// FIXME: ThreadItem ?
 //
 // Foo Bar, Joe Thommason, Martin Rox ... Eddie Maiden                    <date of the thread>
 // Title                                      <number of messages>, Last by xxx <inner status>
-// 
+//
 // When messages are added, mark it as dirty only (?)
 
 Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob *job, const QTime &tStart )
@@ -2260,7 +2260,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob 
   int curIndex = job->currentIndex();
 
   QHash< GroupHeaderItem *, GroupHeaderItem * >::Iterator it = mGroupHeadersThatNeedUpdate->begin();
-  
+
   while ( it != mGroupHeadersThatNeedUpdate->end() )
   {
     if ( ( *it )->childItemCount() == 0 )
@@ -2673,7 +2673,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
       // Threading is requested
 
       // Fetch the data needed for proper threading
-      // Add the item to the threading caches 
+      // Add the item to the threading caches
 
       switch( mAggregation->threading() )
       {
@@ -2725,7 +2725,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
             // being displayed for a short while in the view and then
             // disappear until a perfect parent isn't found.
             if ( ( *it )->isViewable() )
-              needsImmediateReAttach = true; 
+              needsImmediateReAttach = true;
 
             ( *it )->setThreadingStatus( MessageItem::PerfectParentFound );
             attachMessageToParent( mi, *it );
@@ -2788,7 +2788,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
           case Aggregation::PerfectOnly:
             mightHaveOtherMeansForThreading = false;
           break;
-          default: 
+          default:
             // BUG: there shouldn't be other values (NoThreading is ecluded in an upper branch)
             Q_ASSERT( false );
             mightHaveOtherMeansForThreading = false; // make gcc happy
@@ -2804,7 +2804,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
           // a standalone message or a thread leader.
           // If there is no grouping in effect or thread leaders are just the "topmost"
           // messages then we might be done with this one.
-          if ( 
+          if (
                ( mAggregation->grouping() == Aggregation::NoGrouping ) ||
                ( mAggregation->threadLeader() == Aggregation::TopmostMessage )
             )
@@ -2922,13 +2922,13 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
     }
 
     if ( dyingMessage->parent() )
-    {      
+    {
       // Handle saving the current selection: if this item was the current before the step
       // then zero it out. We have killed it and it's OK for the current item to change.
 
-      if ( dyingMessage == mCurrentItemToRestoreAfterViewItemJobStep )
+      if ( dyingMessage->isViewable() &&
+           dyingMessage == mCurrentItemToRestoreAfterViewItemJobStep )
       {
-        Q_ASSERT( dyingMessage->isViewable() );
         // Try to select the item below the removed one as it helps in doing a "readon" of emails:
         // you read a message, decide to delete it and then go to the next.
         // Qt tends to select the message above the removed one instead (this is a hardcoded logic in
@@ -2947,10 +2947,10 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       }
 
       if (
-           dyingMessage->isViewable() && 
+           dyingMessage->isViewable() &&
            ( ( dyingMessage )->childItemCount() > 0 ) && // has children
            mView->isExpanded( index( dyingMessage, 0 ) ) // is actually expanded
-         )
+        )
         saveExpandedStateOfSubtree( dyingMessage );
 
       Item * oldParent = dyingMessage->parent();
@@ -3010,7 +3010,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       Q_ASSERT( childMessage );
 
       dyingMessage->takeChildItem( this, childMessage );
- 
+
       if ( mAggregation->threading() != Aggregation::NoThreading )
       {
         if ( childMessage->threadingStatus() == MessageItem::PerfectParentFound )
@@ -3039,7 +3039,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
 
         Q_ASSERT( childMessage->isViewable() );
       }
-     
+
       mOrphanChildrenHash->insert( childMessage, childMessage );
     }
 
@@ -3195,7 +3195,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
           Q_ASSERT( message->parent() ); // handleItemPropertyChanges() must never leave an item detached
 
           // Note that actually message->parent() may be different than pParent since
-          // handleItemPropertyChanges() may have re-grouped it. 
+          // handleItemPropertyChanges() may have re-grouped it.
 
           // Time to propagate up.
           propagateItemPropertiesToParent( message );
@@ -3885,7 +3885,7 @@ void Model::slotStorageModelRowsInserted( const QModelIndex &parent, int from, i
       //
       //               from  to
       //                 |    |                              -> shift up job
-      //               from             to 
+      //               from             to
       //                 |              |                    -> shift up job
       //               from                            to
       //                 |                             |     -> shift up job
@@ -3902,7 +3902,7 @@ void Model::slotStorageModelRowsInserted( const QModelIndex &parent, int from, i
       // 0                   currentIndex endIndex         count
       //                           +-- job --+
 
-      // 
+      //
 
       if ( from > job->endIndex() )
       {
@@ -4003,7 +4003,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
       //
       //               from  to
       //                 |    |                              -> shift down job
-      //               from             to 
+      //               from             to
       //                 |              |                    -> shift down and crop job
       //               from                            to
       //                 |                             |     -> kill job
@@ -4020,7 +4020,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
       // 0                   currentIndex endIndex         count
       //                           +-- job --+
 
-      // 
+      //
 
       if ( from > job->endIndex() )
       {
@@ -4032,7 +4032,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
         // The first part is unaffected by the shift and ranges from job->currentIndex() to from - 1
         // We use the existing job for this.
         job->setEndIndex( from - 1 ); // stop before the first removed row
- 
+
         Q_ASSERT( job->currentIndex() <= job->endIndex() );
 
         if ( to < job->endIndex() )
@@ -4067,7 +4067,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
           // since count = ( to - from ) + 1 so from = to + 1 - count
           job->setCurrentIndex( from );
           job->setEndIndex( job->endIndex() - count );
-          
+
           Q_ASSERT( job->currentIndex() <= job->endIndex() );
         } else {
           // The change is completely below the job: it must be shifted down.
@@ -4127,7 +4127,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
 void Model::slotStorageModelLayoutChanged()
 {
   // need to reset everything...
-  setStorageModel( mStorageModel );  
+  setStorageModel( mStorageModel );
 }
 
 void Model::slotStorageModelDataChanged( const QModelIndex &fromIndex, const QModelIndex &toIndex )
