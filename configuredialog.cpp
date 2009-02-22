@@ -2646,6 +2646,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   QString recipientCheckWhatsthis =
     i18n( GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().utf8() );
   QWhatsThis::add( mRecipientCheck, recipientCheckWhatsthis );
+  QToolTip::add( mRecipientCheck, recipientCheckWhatsthis );
   
   mRecipientSpin = new KIntSpinBox( 1/*min*/, 255/*max*/, 1/*step*/,
            5/*init*/, 10 /*base*/, this, "kcfg_RecipientThreshold" );
@@ -2656,6 +2657,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   QString recipientWhatsthis =
     i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().utf8() );
   QWhatsThis::add( mRecipientSpin, recipientWhatsthis );
+  QToolTip::add( mRecipientSpin, recipientWhatsthis );
   
 
   hlay->addWidget( mRecipientSpin );
