@@ -19,6 +19,7 @@
 */
 
 #include "kmfilterdlg.h"
+#include <klistwidgetsearchline.h>
 
 // other KMail headers:
 #include "kmsearchpatternedit.h"
@@ -610,6 +611,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   mListWidget->setMinimumWidth(150);
   mListWidget->setWhatsThis( i18n(_wt_filterlist) );
 
+  KListWidgetSearchLine* mSearchListWidget= new KListWidgetSearchLine( this, mListWidget );
+
+  layout->addWidget( mSearchListWidget );
   layout->addWidget( mListWidget );
 
   //----------- the first row of buttons
