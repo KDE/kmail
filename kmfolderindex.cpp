@@ -83,7 +83,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   old_umask = umask( 077 );
   FILE *tmpIndexStream = KDE_fopen( QFile::encodeName( tempName ), "w" );
-  kDebug( StorageDebug ) << "KDE_fopen(tempName=" << tempName << ", \"w\") == tmpIndexStream == " << tmpIndexStream;
+  //kDebug( StorageDebug ) << "KDE_fopen(tempName=" << tempName << ", \"w\") == tmpIndexStream == " << tmpIndexStream;
   umask( old_umask );
   if ( !tmpIndexStream ) {
     return errno;
@@ -130,7 +130,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   fError |= ferror( tmpIndexStream );
   if( fError != 0 ) {
     fclose( tmpIndexStream );
-    kDebug( StorageDebug ) << "fclose(tmpIndexStream = " << tmpIndexStream << ")";
+    //kDebug( StorageDebug ) << "fclose(tmpIndexStream = " << tmpIndexStream << ")";
     return fError;
   }
   if(    ( fflush( tmpIndexStream ) != 0 )
@@ -140,7 +140,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
     kWarning() << "fflush() or fsync() failed; fclose(tmpIndexStream = " << tmpIndexStream << ")";
     return errNo;
   }
-  kDebug( StorageDebug ) << "fclose(tmpIndexStream = " << tmpIndexStream << ")";
+  //kDebug( StorageDebug ) << "fclose(tmpIndexStream = " << tmpIndexStream << ")";
   if( fclose( tmpIndexStream ) != 0 ) {
     kWarning() << "fclose() failed";
     return errno;
@@ -152,7 +152,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
     // if ( !updateIndexStreamPtr() )
     //  return 1;
     bool ok = fclose( mIndexStream ) == 0;
-    kDebug( StorageDebug ) << "fclose(mIndexStream = " << mIndexStream << ")";
+    //kDebug( StorageDebug ) << "fclose(mIndexStream = " << mIndexStream << ")";
     mIndexStream = 0;
     if ( !ok ) {
       kWarning() << "fclose() failed";
@@ -168,7 +168,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 #ifndef Q_WS_WIN
   if (mIndexStream) {
       fclose(mIndexStream);
-      kDebug( StorageDebug ) << "fclose(mIndexStream = " << mIndexStream << ")";
+      //kDebug( StorageDebug ) << "fclose(mIndexStream = " << mIndexStream << ")";
   }
 #endif
 
@@ -176,7 +176,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
     return 0;
 
   mIndexStream = KDE_fopen(QFile::encodeName(indexName), "r+"); // index file
-  kDebug( StorageDebug ) << "KDE_fopen(indexName=" << indexName << ", \"r+\") == mIndexStream == " << mIndexStream;
+  //kDebug( StorageDebug ) << "KDE_fopen(indexName=" << indexName << ", \"r+\") == mIndexStream == " << mIndexStream;
   assert( mIndexStream );
 #ifndef Q_WS_WIN
   fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
@@ -234,7 +234,7 @@ bool KMFolderIndex::readIndex()
       if (feof(mIndexStream)) break;
       if (*line.data() == '\0') {
         fclose(mIndexStream);
-        kDebug( StorageDebug ) << "fclose(mIndexStream = " << mIndexStream << ")";
+        //kDebug( StorageDebug ) << "fclose(mIndexStream = " << mIndexStream << ")";
         mIndexStream = 0;
         clearIndex();
         return false;
