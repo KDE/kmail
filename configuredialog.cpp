@@ -2646,26 +2646,28 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   QString recipientCheckWhatsthis =
     i18n( GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().utf8() );
   QWhatsThis::add( mRecipientCheck, recipientCheckWhatsthis );
-  QToolTip::add( mRecipientCheck, recipientCheckWhatsthis );
-  
+  QToolTip::add( mRecipientCheck,
+                 i18n( "Warn if too many recipients are specified" ) );
+
   mRecipientSpin = new KIntSpinBox( 1/*min*/, 255/*max*/, 1/*step*/,
            5/*init*/, 10 /*base*/, this, "kcfg_RecipientThreshold" );
-  mRecipientSpin->setEnabled( false ); 
+  mRecipientSpin->setEnabled( false );
   connect( mRecipientSpin, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   QString recipientWhatsthis =
     i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().utf8() );
   QWhatsThis::add( mRecipientSpin, recipientWhatsthis );
-  QToolTip::add( mRecipientSpin, recipientWhatsthis );
-  
+  QToolTip::add( mRecipientSpin,
+                 i18n( "Warn if more than this many recipients are specified" ) );
+
 
   hlay->addWidget( mRecipientSpin );
   hlay->addStretch( 1 );
   // only enable the spinbox if the checkbox is checked:
   connect( mRecipientCheck, SIGNAL(toggled(bool)),
            mRecipientSpin, SLOT(setEnabled(bool)) );
-  
+
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this, "kcfg_AutosaveInterval" );
