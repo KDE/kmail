@@ -3735,6 +3735,8 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
+  if ( !checkRecipientNumber() )
+      return;
   if ( mEditor->checkExternalEditorFinished() ) {
     doSend( KMail::MessageSender::SendLater );
   }
@@ -3784,6 +3786,8 @@ void KMComposeWin::slotSendNow()
   if ( !mEditor->checkExternalEditorFinished() ) {
     return;
   }
+  if ( !checkRecipientNumber() )
+    return;
 
   if ( GlobalSettings::self()->confirmBeforeSend() ) {
     int rc = KMessageBox::warningYesNoCancel( mMainWidget,
@@ -3800,6 +3804,22 @@ void KMComposeWin::slotSendNow()
   } else {
     doSend( KMail::MessageSender::SendImmediate );
   }
+}
+
+//----------------------------------------------------------------------------
+bool KMComposeWin::checkRecipientNumber() const
+{
+  int thresHold = GlobalSettings::self()->recipientThreshold();
+  if ( GlobalSettings::self()->tooManyRecipients() && mRecipientsEditor->recipients().count() > thresHold ) {
+    if ( KMessageBox::questionYesNo( mMainWidget,
+         i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?").arg(thresHold),
+         i18n("Too many receipients"),
+         KGuiItem( i18n("&Send as Is") ),
+         KGuiItem( i18n("&Edit Recipients") ) ) == KMessageBox::No ) {
+            return false;
+    }
+  }
+  return true;
 }
 
 //----------------------------------------------------------------------------

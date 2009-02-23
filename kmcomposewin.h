@@ -538,6 +538,12 @@ class KMComposeWin : public KMail::Composer
                             QLabel *lbl, QComboBox *cbx, QCheckBox *chk );
 
     /**
+     * Checks how many recipients are and warns if there are too many.
+     * @return true, if the user accepted the warning and the message should be sent
+    */
+    bool checkRecipientNumber() const;
+
+    /**
      * Initialization methods
      */
     void setupActions();

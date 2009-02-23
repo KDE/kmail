@@ -712,6 +712,8 @@ private:
   QCheckBox	*mShowRecentAddressesInComposer;
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
+  QCheckBox     *mRecipientCheck;
+  KIntSpinBox   *mRecipientSpin;
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
