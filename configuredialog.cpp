@@ -2924,10 +2924,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   QString recipientCheckWhatsthis =
-      i18n( GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().utf8() );
-  QWhatsThis::add( mRecipientCheck, recipientCheckWhatsthis );
-  QToolTip::add( mRecipientCheck,
-                 i18n( "Warn if too many recipients are specified" ) );
+      i18n( GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8() );
+  mRecipientCheck->setWhatsThis( recipientCheckWhatsthis );
+  mRecipientCheck->setToolTip( i18n( "Warn if too many recipients are specified" ) );
 
   mRecipientSpin = new KIntSpinBox( 1/*min*/, 255/*max*/, 1/*step*/,
                                     5/*init*/, this );
@@ -2937,10 +2936,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   QString recipientWhatsthis =
-      i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().utf8() );
-  QWhatsThis::add( mRecipientSpin, recipientWhatsthis );
-  QToolTip::add( mRecipientSpin,
-                 i18n( "Warn if more than this many recipients are specified" ) );
+      i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().toUtf8() );
+  mRecipientSpin->setWhatsThis( recipientWhatsthis );
+  mRecipientSpin->setToolTip( i18n( "Warn if more than this many recipients are specified" ) );
 
 
   hlay->addWidget( mRecipientSpin );
