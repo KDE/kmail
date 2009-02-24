@@ -57,8 +57,8 @@ bool vPartFoundAndDecoded( KMMessage* msg, QString& s )
     s = QString::fromUtf8( msg->bodyDecoded() );
     return true;
   } else if( DwMime::kTypeMultipart == msg->type() &&
-             (DwMime::kSubtypeMixed  == msg->subtype() ) ||
-             (DwMime::kSubtypeAlternative  == msg->subtype() ))
+             ( ( DwMime::kSubtypeMixed  == msg->subtype() ) ||
+               ( DwMime::kSubtypeAlternative  == msg->subtype() ) ) )
   {
     // kDebug(5006) <<"KMGroupware looking for TNEF data";
     DwBodyPart* dwPart = msg->findDwBodyPart( DwMime::kTypeApplication,

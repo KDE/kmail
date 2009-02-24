@@ -292,7 +292,7 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
       start += headerLen;
       size_t stop = aStr.find( '\n', start );
       char ch = '\0';
-      while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
+      while ( stop != DwString::npos && ( ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' ) )
         stop = aStr.find( '\n', stop + 1 );
       const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
       const QByteArray codedValue( aStr.data() + start, len + 1 );

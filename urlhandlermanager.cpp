@@ -452,11 +452,14 @@ namespace {
       if ( url.protocol() == "kmail" && url.path() == "levelquote" )
       {
         QString query= url.query();
-        if ( query.length()>=2 )
-          if ( query[ 1 ] =='-'  )
+        if ( query.length()>=2 ) {
+          if ( query[ 1 ] =='-'  ) {
             return i18n("Expand all quoted text.");
-          else
+          }
+          else {
             return i18n("Collapse quoted text.");
+          }
+        }
       }
       return QString() ;
   }
