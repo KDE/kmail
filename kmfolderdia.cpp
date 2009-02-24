@@ -504,10 +504,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
       i18n( "This setting allows you to disable alarms for folders shared by "
           "others. ");
     mAlarmsBlockedCheckBox = new QCheckBox( this );
-    gl->addWidget( mAlarmsBlockedCheckBox, row, 0 );
-    label = new QLabel( i18n( "Block free/&busy and alarms locally" ), this );
-    gl->addWidget( label, row, 1 );
-    label->setBuddy( mAlarmsBlockedCheckBox );
+    mAlarmsBlockedCheckBox->setText( i18n( "Block free/&busy and alarms locally" ) );
+    gl->addMultiCellWidget( mAlarmsBlockedCheckBox, row, row, 0, 1);
     QWhatsThis::add( mAlarmsBlockedCheckBox, whatsThisForReadOnlyFolders );
 
     if ( mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeCalendar
