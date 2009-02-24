@@ -393,6 +393,12 @@ protected:
   mutable MessageStatus mStatus;
   mutable KMMessageTagList *mTagList;
 
+  // Those strings returned by getStringPart() are cached in this array, for
+  // faster access. This speeds up folder loading by 10%.
+  mutable QString mCachedStringParts[20];
+  mutable bool mStringPartCacheBuilt;
+  void fillStringPartCache() const;
+
 public:
   enum MsgPartType
   {
@@ -409,7 +415,9 @@ public:
     MsgLegacyStatusPart = 8,
     MsgSizePart = 9,
     MsgDatePart = 10,
+    // unicode string
     MsgFilePart = 11,
+    // unsigned long
     MsgCryptoStatePart = 12,
     MsgMDNSentPart = 13,
     //another two unicode strings

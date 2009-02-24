@@ -87,7 +87,8 @@ KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
     mDirty( false ),
     mEnableUndo( false ),
     mStatus(),
-    mTagList( 0 )
+    mTagList( 0 ),
+    mStringPartCacheBuilt( false )
 {
 }
 
@@ -105,7 +106,8 @@ KMMsgBase::KMMsgBase(KMFolder* aParentFolder, off_t off, short len)
     mDirty( false ),
     mEnableUndo( false ),
     mStatus(),
-    mTagList( 0 )
+    mTagList( 0 ),
+    mStringPartCacheBuilt( false )
 {
 }
 
@@ -115,6 +117,7 @@ KMMsgBase::KMMsgBase( const KMMsgBase& other )
 #ifdef KMAIL_SQLITE_INDEX
  , mData( 0 )
 #endif
+ , mStringPartCacheBuilt( false )
 {
     assign( &other );
 }
@@ -887,7 +890,14 @@ namespace {
 //-----------------------------------------------------------------------------
 QString KMMsgBase::getStringPart(MsgPartType t) const
 {
-  QString ret;
+  if ( !mStringPartCacheBuilt )
+    fillStringPartCache();
+  return mCachedStringParts[t];
+}
+
+//-----------------------------------------------------------------------------
+void KMMsgBase::fillStringPartCache() const
+{
 retry:
 #ifdef KMAIL_SQLITE_INDEX
   bool swapByteOrder = false;
@@ -903,13 +913,13 @@ retry:
     if ( mIndexOffset > (off_t)storage()->indexStreamLength() ) {
       // This message has not been indexed yet, data would lie
       // outside the index data structures so do not touch it.
-      return QString();
+      return;
     }
     g_chunk = storage()->indexStreamBasePtr() + mIndexOffset;
     g_chunk_length = mIndexLength;
   } else {
     if(!storage()->mIndexStream)
-      return ret;
+      return;
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
     off_t first_off = KDE_ftell(storage()->mIndexStream);
@@ -932,7 +942,7 @@ retry:
     }
     type = (MsgPartType) tmp;
     if( g_chunk_offset + len > mIndexLength ) {
-      kDebug() << "This should never happen..";
+      kWarning() << "This should never happen..";
 #ifndef KMAIL_SQLITE_INDEX
       if( using_mmap ) {
         g_chunk_length = 0;
@@ -940,15 +950,29 @@ retry:
       }
 #endif
       if ( !storage()->recreateIndex() )
-        return QString();
+        return;
       goto retry;
     }
-    if ( type == t ) {
+
+    // Only try to create strings if the part is really a string part, see declaration of
+    // MsgPartType
+    if ( len && ( ( type >= 1 && type <= 6 ) || type == 11 || type == 14 || type == 15 || type == 19 ) ) {
+
       // This works because the QString constructor does a memcpy.
       // Otherwise we would need to be concerned about the alignment.
-      if ( len )
-        ret = QString((QChar *)(g_chunk + g_chunk_offset), len/2);
-      break;
+      mCachedStringParts[type] = QString((QChar *)(g_chunk + g_chunk_offset), len/2);
+
+      // Normally we need to swap the byte order because the QStrings are written
+      // in the style of Qt2 (MSB -> network ordered).
+      // QStrings in Qt3 expect host ordering.
+      // On e.g. Intel host ordering is LSB, on e.g. Sparc it is MSB.
+
+#     if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+      // Byte order is little endian (swap is true)
+      swapEndian( mCachedStringParts[type] );
+#     else
+      // Byte order is big endian (swap is false)
+#     endif
     }
   } //for
 #ifndef KMAIL_SQLITE_INDEX
@@ -957,19 +981,8 @@ retry:
       g_chunk = 0;
   }
 #endif
-  // Normally we need to swap the byte order because the QStrings are written
-  // in the style of Qt2 (MSB -> network ordered).
-  // QStrings in Qt3 expect host ordering.
-  // On e.g. Intel host ordering is LSB, on e.g. Sparc it is MSB.
 
-# if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-  // Byte order is little endian (swap is true)
-  swapEndian(ret);
-# else
-  // Byte order is big endian (swap is false)
-# endif
-
-  return ret;
+  mStringPartCacheBuilt = true;
 }
 
 //-----------------------------------------------------------------------------
