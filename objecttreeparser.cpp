@@ -2100,12 +2100,16 @@ static QString makeShowAuditLogLink( const GpgME::Error & err, const QString & a
     }
   }
 
-  KURL url;
-  url.setProtocol( "kmail" );
-  url.setPath( "showAuditLog" );
-  url.addQueryItem( "log", auditLog );
+  if ( !auditLog.isEmpty() ) {
+    KURL url;
+    url.setProtocol( "kmail" );
+    url.setPath( "showAuditLog" );
+    url.addQueryItem( "log", auditLog );
 
-  return "<a href=\"" + url.htmlURL() + "\">" + i18n("The Audit Log is a detailed error log from the gnupg backend", "Show Audit Log") + "</a>";
+    return "<a href=\"" + url.htmlURL() + "\">" + i18n("The Audit Log is a detailed error log from the gnupg backend", "Show Audit Log") + "</a>";
+  }
+
+  return QString::null;
 }
 
 static QString endVerboseSigstatHeader( const PartMetaData & pmd )
@@ -2251,7 +2255,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     if( block.keyId.isEmpty() )
                         certificate = i18n("certificate");
                     else
-                        certificate = startKeyHREF + i18n("certificate") + "</a>"; 
+                        certificate = startKeyHREF + i18n("certificate") + "</a>";
                     if( !blockAddrs.empty() ){
                         if( blockAddrs.grep(
                                 msgFrom,
