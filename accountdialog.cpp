@@ -290,7 +290,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 {
   setCaption( caption );
   setButtons( Ok|Cancel|Help );
-  mValidator = new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 );
+  mValidator = new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), this );
   setHelp("receiving-mail");
 
   KAccount::Type accountType = mAccount->type();
@@ -328,8 +328,6 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 
 AccountDialog::~AccountDialog()
 {
-  delete mValidator;
-  mValidator = 0;
   delete mServerTest;
   mServerTest = 0;
 }
