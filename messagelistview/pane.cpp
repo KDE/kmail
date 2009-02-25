@@ -113,8 +113,7 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
 
   // We want to show "No Subject" and "Unknown sender/date/etc" again, otherwise a saved
   // empty draft message looks weird.
-  i18nc( "displayed as subject when the subject of a mail is empty", "No Subject" );
-  i18nc( "displayed when a mail has unknown sender, receiver or date", "Unknown" );
+  
 
   // We probably want to have a combobox in the config dialog to select the defailts
   i18n( "Default Theme" );

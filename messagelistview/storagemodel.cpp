@@ -270,6 +270,15 @@ bool StorageModel::initializeMessageItem( Core::MessageItem * mi, int row, bool 
   QString sender = msg->fromStrip();
   QString receiver = msg->toStrip();
 
+  // Static for speed reasons
+  static const QString noSubject = i18nc( "displayed as subject when the subject of a mail is empty", "No Subject" );
+  static const QString unknown( i18nc( "displayed when a mail has unknown sender, receiver or date", "Unknown" ) );
+
+  if ( sender.isEmpty() )
+    sender = unknown;
+  if ( receiver.isEmpty() )
+    receiver = unknown;
+
   mi->initialSetup(
       msg->date(), msg->msgSize(),
       sender, receiver,
@@ -280,8 +289,11 @@ bool StorageModel::initializeMessageItem( Core::MessageItem * mi, int row, bool 
 
   KPIM::MessageStatus stat = msg->messageStatus();
 
+  QString subject = msg->subject();
+  if ( subject.isEmpty() )
+    subject = '(' + noSubject + ')';
   mi->setSubjectAndStatus(
-      msg->subject(),
+      subject,
       stat
     );
 
