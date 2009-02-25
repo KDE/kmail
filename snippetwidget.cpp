@@ -553,7 +553,7 @@ QString SnippetWidget::parseText( const QString &text )
 QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QString> *mapSave )
 {
   // --BEGIN-- building a dynamic dialog
-  KDialog dlg(this);
+  QDialog dlg( this );  // don't fix this krazy issues without actually trying the code!
   dlg.setWindowTitle(i18n("Enter Values for Variables"));
 
   QGridLayout * layout = new QGridLayout( &dlg );
