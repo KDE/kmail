@@ -2649,7 +2649,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   QToolTip::add( mRecipientCheck,
                  i18n( "Warn if too many recipients are specified" ) );
 
-  mRecipientSpin = new KIntSpinBox( 1/*min*/, 255/*max*/, 1/*step*/,
+  mRecipientSpin = new KIntSpinBox( 1/*min*/, 100/*max*/, 1/*step*/,
            5/*init*/, 10 /*base*/, this, "kcfg_RecipientThreshold" );
   mRecipientSpin->setEnabled( false );
   connect( mRecipientSpin, SIGNAL( valueChanged(int) ),

@@ -350,7 +350,7 @@
         <label></label>
         <default>5</default>
         <min>1</min>
-        <max>255</max>
+        <max>100</max>
         <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
      </entry>
       <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
