@@ -121,6 +121,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   mToggleFlagAction = new KToggleAction( KIcon("mail-mark-important"),
                                          i18n("Mark Message as &Important"), this );
+  mToggleFlagAction->setShortcut( Qt::CTRL + Qt::Key_I );
   connect( mToggleFlagAction, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusFlag()) );
   mToggleFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Message Mark")) );
