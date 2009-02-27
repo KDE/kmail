@@ -78,13 +78,13 @@ class KMMessageTagDescription
     /** Accessor functions */
     const QString label() const { return mLabel; }
     const QString name() const { return mName; }
-    const int priority() const { return mPriority; }
+    int priority() const { return mPriority; }
     const QColor textColor() const { return mTextColor; }
     const QColor backgroundColor() const { return mBackgroundColor; }
     const QFont textFont() const { return mTextFont; }
-    const bool inToolbar() const { return mInToolbar; }
+    bool inToolbar() const { return mInToolbar; }
     const QString toolbarIconName() const { return mIconName; }
-    const bool isEmpty() const { return mEmpty; }
+    bool isEmpty() const { return mEmpty; }
     const KShortcut shortcut() { return mShortcut; }
 
     void setLabel( const QString & );
