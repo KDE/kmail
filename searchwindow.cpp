@@ -320,18 +320,29 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mReplyListAction  = new KAction(KIcon("mail-reply-list"), i18n("Reply to Mailing-&List..."), this);
   actionCollection()->addAction("search_reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
+
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("search_message_forward", mForwardActionMenu );
   connect( mForwardActionMenu, SIGNAL(triggered(bool)), this,
            SLOT(slotForwardMsg()) );
-  mForwardAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
-  actionCollection()->addAction("search_message_forward_inline", mForwardAction );
-  connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
-  mForwardActionMenu->addAction( mForwardAction );
+
+  mForwardInlineAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
+  actionCollection()->addAction("search_message_forward_inline", mForwardInlineAction );
+  connect(mForwardInlineAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
+
   mForwardAttachedAction  = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
   actionCollection()->addAction("search_message_forward_as_attachment", mForwardAttachedAction );
   connect(mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()));
-  mForwardActionMenu->addAction( mForwardAttachedAction );
+
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+    mForwardActionMenu->addAction( mForwardInlineAction );
+    mForwardActionMenu->addAction( mForwardAttachedAction );
+  }
+  else {
+    mForwardActionMenu->addAction( mForwardAttachedAction );
+    mForwardActionMenu->addAction( mForwardInlineAction );
+  }
+
   mSaveAsAction = actionCollection()->addAction(KStandardAction::SaveAs,  "search_file_save_as", this, SLOT(slotSaveMsg()));
   mSaveAtchAction  = new KAction(KIcon("mail-attachment"), i18n("Save Attachments..."), this);
   actionCollection()->addAction("search_save_attachments", mSaveAtchAction );

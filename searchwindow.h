@@ -164,7 +164,7 @@ protected:
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<QAction*,KMFolder*> mMenuToFolder;
   QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
-    *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
+    *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction, *mCopyAction, *mCutAction;
   KActionMenu *mForwardActionMenu;
   QList<QPointer<KMFolder> > mFolders;
