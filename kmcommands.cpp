@@ -2610,11 +2610,11 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if ( !file.open( QIODevice::WriteOnly ) )
     {
       KMessageBox::error( parentWidget(),
-          i18nc( "%2 is detailed error description",
-            "Could not write the file %1:\n%2",
-            file.fileName(),
-            QString::fromLocal8Bit( strerror( errno ) ) ),
-          i18n( "KMail Error" ) );
+                          i18nc( "1 = file name, 2 = error string",
+                                 "<qt>Could not write to the file<br><b>%1</b><br><br>%2",
+                                 file.fileName(),
+                                 QString::fromLocal8Bit( strerror( errno ) ) ),
+                          i18n( "Error saving attachment" ) );
       return Failed;
     }
 
@@ -2630,16 +2630,31 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     ds.setDevice( &tf );
   }
 
-  ds.writeRawData( data.data(), data.size() );
+  if ( ds.writeRawData( data.data(), data.size() ) == -1)
+  {
+    QFile *f = static_cast<QFile *>( ds.device() );
+    KMessageBox::error( parentWidget(),
+                        i18nc( "1 = file name, 2 = error string",
+                               "<qt>Could not write to the file<br><b>%1</b><br><br>%2",
+                               f->fileName(),
+                               f->errorString() ),
+                        i18n( "Error saving attachment" ) );
+    return Failed;
+  }
+
   if ( !url.isLocalFile() )
   {
+    // QTemporaryFile::fileName() is only defined while the file is open
+    QString tfName = tf.fileName();
     tf.close();
-    if ( !KIO::NetAccess::upload( tf.fileName(), url, parentWidget() ) )
+    if ( !KIO::NetAccess::upload( tfName, url, parentWidget() ) )
     {
       KMessageBox::error( parentWidget(),
-          i18n( "Could not write the file %1.",
-            url.path() ),
-          i18n( "KMail Error" ) );
+                          i18nc( "1 = file name, 2 = error string",
+                                 "<qt>Could not write to the file<br><b>%1</b><br><br>%2",
+                                 url.prettyUrl(),
+                                 KIO::NetAccess::lastErrorString() ),
+                          i18n( "Error saving attachment" ) );
       return Failed;
     }
   } else
