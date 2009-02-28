@@ -66,9 +66,7 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
   mCloseTabButton->setToolTip( i18nc("@info:tooltip", "Close the current tab"));
   setCornerWidget( mCloseTabButton, Qt::TopRightCorner );
 
-  setTabReorderingEnabled( true ); // this works with middle button (not really intuitive, found it by reading sources)
-  //setCloseButtonEnabled( true ); <-- not that nice (often one closes tabs by accident)
-  //setHoverCloseButton( true ); <-- deprecated
+  setMovable( true );
 
   connect( mNewTabButton, SIGNAL( clicked() ),
            SLOT( slotNewTab() ) );
