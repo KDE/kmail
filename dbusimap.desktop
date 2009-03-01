@@ -3,6 +3,7 @@ Type=ServiceType
 X-KDE-ServiceType=DBUS/ResourceBackend/IMAP
 Comment=Mail program with a D-Bus interface
 Comment[el]=Πρόγραμμα αλληλογραφίας με διασύνδεση D-Bus
+Comment[es]=Programa de correo con una interfaz D-Bus
 Comment[et]=E-posti rakendus D-Busi liidesega
 Comment[ga]=Clár ríomhphoist a bhfuil comhéadan D-Bus aige
 Comment[gl]=Programa de correo electrónico cunha interface D-BUS
