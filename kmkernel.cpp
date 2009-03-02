@@ -46,6 +46,8 @@ using KPIM::RecentAddresses;
 #include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
+#include "mailmanagerimpl.h"
+using KMail::MailManagerImpl;
 #include "jobscheduler.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
@@ -72,6 +74,7 @@ using KWallet::Wallet;
 #include <QObject>
 #include <QWidget>
 #include <QFileInfo>
+#include <QtDBus/QtDBus>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -97,7 +100,7 @@ static KMKernel * mySelf = 0;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
-  mContextMenuShown( false ), mWallet( 0 )
+  mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
   kDebug(5006);
   setObjectName( name );
@@ -185,6 +188,8 @@ KMKernel::~KMKernel ()
   mICalIface = 0;
   delete mMailService;
   mMailService = 0;
+  delete mMailManager;
+  mMailManager = 0;
 
   GlobalSettings::self()->writeConfig();
   delete mWallet;
@@ -196,10 +201,12 @@ KMKernel::~KMKernel ()
 void KMKernel::setupDBus()
 {
   (void) new KmailAdaptor( this );
+  qDBusRegisterMetaType<QVector<QStringList> >();
   QDBusConnection::sessionBus().registerObject( "/KMail", this );
   mICalIface->registerWithDBus();
   mICalIface->readConfig();
   mMailService =  new MailServiceImpl();
+  mMailManager =  new MailManagerImpl();
 }
 
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
