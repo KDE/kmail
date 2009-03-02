@@ -114,7 +114,7 @@
         <default>ShowOnUnread</default>
       </entry>
       <entry name="CloseDespiteSystemTray" type="Bool">
-          <label>Close the application when the mainwindow is closed, even if there is a system tray icon active.</label>
+          <label>Close the application when the main window is closed, even if there is a system tray icon active.</label>
         <default>false</default>
       </entry>
       <entry name="VerboseNewMailNotification" type="Bool">
@@ -178,7 +178,7 @@
       </entry>
 
      <entry name="ExchangeCompatibleInvitations" type="Bool">
-        <label>Exchange compatible invitations naming</label>
+        <label>Exchange-compatible invitation naming</label>
         <whatsthis>Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware e-mail. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</whatsthis>
         <default>false</default>
       </entry>
@@ -625,7 +625,7 @@
         </entry>
         <entry name="AllowOutOfOfficeUploadButNoSettings" type="Bool">
             <default>false</default>
-            <label>Allow users to upload out-of-office sieve scripts, but disallow them changin any settings, such as the domain to react to and the spam reaction switch.</label>
+            <label>Allow users to upload out-of-office sieve scripts, but prevent them from changing any settings, such as the domain to react to or the spam reaction switch.</label>
         </entry>
         <entry name="OutOfOfficeDomain" type="String">
             <default></default>

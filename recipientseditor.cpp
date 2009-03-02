@@ -103,7 +103,7 @@ QString Recipient::typeLabel( Recipient::Type type )
       break;
   }
 
-  return i18nc("@label:listbox", "<placeholder>Undefined RecipientType</placeholder>");
+  return i18nc("@label:listbox", "<placeholder>Undefined Recipient Type</placeholder>");
 }
 
 QStringList Recipient::allTypeLabels()

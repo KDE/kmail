@@ -219,14 +219,14 @@ has a problem understanding standards-compliant groupware e-mail.
 Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</string>
           </property>
           <property name="text" >
-           <string>Exchange compatible invitation &amp;naming</string>
+           <string>Exchange-compatible invitation &amp;naming</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="mAutomaticSending" >
           <property name="toolTip" >
-           <string>When this is on, the user will not see the mail composer window. Invitation mails are sent automatically</string>
+           <string>When this is on, the user will not see the mail composer window. Invitation mails are sent automatically.</string>
           </property>
           <property name="text" >
            <string>&amp;Automatic invitation sending</string>

@@ -702,7 +702,7 @@ void KMSender::slotResult( KJob *job )
             "fix the problem (e.g. a broken address) or remove the message "
             "from the 'outbox' folder.</p>"
             "<p>The following transport was used:  %2</p>"
-            "<p>Do you want me to continue sending the remaining messages?</p>",
+            "<p>Continue sending the remaining messages?</p>",
              errString,
              mMethodStr);
           res = KMessageBox::warningYesNo( 0, msg,

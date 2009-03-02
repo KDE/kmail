@@ -525,7 +525,8 @@ void ActionScheduler::enqueue(quint32 serNum)
 
 void ActionScheduler::processMessage()
 {
-  QString statusMsg = i18n( "%1 messages waiting to be filtered",
+  QString statusMsg = i18np( "1 message waiting to be filtered",
+                            "%1 messages waiting to be filtered",
                             mFetchSerNums.count() );
   KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
 

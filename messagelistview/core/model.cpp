@@ -3523,19 +3523,19 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
           case ViewItemJob::Pass1Fill:
           case ViewItemJob::Pass1Cleanup:
           case ViewItemJob::Pass1Update:
-            KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Processed %1 Messages of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
+            KPIM::BroadcastStatus::instance()->setStatusMsg( i18np("Processed 1 Message of %2", "Processed %1 Messages of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
           break;
           case ViewItemJob::Pass2:
-            KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Threaded %1 Messages of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
+            KPIM::BroadcastStatus::instance()->setStatusMsg( i18np("Threaded 1 Message of %2", "Threaded %1 Messages of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
           break;
           case ViewItemJob::Pass3:
-            KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Threaded %1 Messages of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
+            KPIM::BroadcastStatus::instance()->setStatusMsg( i18np("Threaded 1 Message of %2", "Threaded %1 Messages of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
           break;
           case ViewItemJob::Pass4:
-            KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Grouped %1 Threads of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
+            KPIM::BroadcastStatus::instance()->setStatusMsg( i18np("Grouped 1 Thread of %2", "Grouped %1 Threads of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
           break;
           case ViewItemJob::Pass5:
-            KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Updated %1 Groups of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
+            KPIM::BroadcastStatus::instance()->setStatusMsg( i18np("Updated 1 Group of %2", "Updated %1 Groups of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
           break;
         }
         return ViewItemJobInterrupted;
