@@ -38,12 +38,10 @@ using namespace KMail;
 ScheduledTask::ScheduledTask( KMFolder* folder, bool immediate )
   : mCurrentFolder( folder ), mImmediate( immediate )
 {
-  kDebug( Test1Area ) << this << "idString=" << (mCurrentFolder ? mCurrentFolder->idString() : QString()) << "immediate=" << mImmediate;
 }
 
 ScheduledTask::~ScheduledTask()
 {
-  kDebug( Test1Area ) << this << "idString=" << (mCurrentFolder ? mCurrentFolder->idString() : QString()) << "immediate=" << mImmediate;
 }
 
 JobScheduler::JobScheduler( QObject* parent, const char* name )
@@ -263,12 +261,10 @@ ScheduledJob::ScheduledJob( KMFolder* folder, bool immediate )
 {
   mCancellable = true;
   mSrcFolder = folder;
-  kDebug( Test1Area ) << this << "mDestFolder->idString=" << (mDestFolder ? mDestFolder->idString() : QString()) << "immediate=" << mImmediate;
 }
 
 ScheduledJob::~ScheduledJob()
 {
-  kDebug( Test1Area ) << this << "mDestFolder->idString=" << (mDestFolder ? mDestFolder->idString() : QString()) << "immediate=" << mImmediate;
 }
 
 #include "jobscheduler.moc"

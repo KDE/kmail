@@ -223,7 +223,6 @@ bool KMFolderIndex::readIndex()
     ok = false;
     kWarning() << "sqlite3_prepare_v2() error: sql=" << selectSql << errorMessage( result, mIndexDb );
   }
-  kDebug( Test1Area ) << fileName();
   while ( ok ) {
     result = sqlite3_step( pStmt );
     if ( result == SQLITE_DONE )
@@ -253,7 +252,6 @@ bool KMFolderIndex::readIndex()
         ++mUnreadMsgs;
     }
     mMsgList.append(mi, false);
-    kDebug( Test1Area ) << "getMsgSerNum:" << mi->getMsgSerNum();
     if ( mi->getMsgSerNum() == 0 ) {
       kDebug() << "mi->getMsgSerNum() == 0: let's rebuild the index";
       rowsToDelete.append( dbId );

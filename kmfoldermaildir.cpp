@@ -445,7 +445,6 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   aMsg->setMsgSize( msgText.length() );
   idx = mMsgList.append( &aMsg->toMsgBase(), mExportsSernums );
   const unsigned long msgSerNum = aMsg->getMsgSerNum();
-  kDebug( Test1Area ) << "getMsgSerNum:" << msgSerNum;
   if ( msgSerNum <= 0 )
     aMsg->setMsgSerNum();
   else
