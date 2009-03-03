@@ -567,7 +567,6 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
   const Theme::Column * skcolumn = mTheme->column( index.column() );
   if ( !skcolumn )
     return; // bleah
-  int iconSize = iconSizeFromSizeHint( skcolumn->messageSizeHint().height() );
 
   const QList< Theme::Row * > * rows; // I'd like to have it as reference, but gcc complains...
 
@@ -807,6 +806,8 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
   }
 
   Qt::LayoutDirection layoutDir = mItemView->layoutDirection();
+
+  int iconSize = iconSizeFromSizeHint( skcolumn->messageSizeHint().height() );
 
   for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
@@ -1152,7 +1153,9 @@ bool ThemeDelegate::hitTest( const QPoint &viewportPoint, bool exact )
   mHitColumn = mTheme->column( mHitIndex.column() );
   if ( !mHitColumn )
     return false; // bleah
+
   int iconSize = iconSizeFromSizeHint( mHitColumn->messageSizeHint().height() );
+
   const QList< Theme::Row * > * rows; // I'd like to have it as reference, but gcc complains...
 
   MessageItem * messageItem = 0;
@@ -1577,6 +1580,7 @@ QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column )
   for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
     int iconSize = iconSizeFromSizeHint( skcolumn->messageSizeHint().height() );
+
     compute_size_hint_for_row( *rowit, mPaintDevice, iconSize );
 
     QSize sh = ( *rowit )->sizeHint();
