@@ -980,7 +980,8 @@ private:
   GroupHeaderBackgroundMode mGroupHeaderBackgroundMode;   ///< How do we paint group header background ?
   QColor mGroupHeaderBackgroundColor;                     ///< The background color of the message group, used only if CustomColor
   GroupHeaderBackgroundStyle mGroupHeaderBackgroundStyle; ///< How do we paint group header background ?
-  ViewHeaderPolicy mViewHeaderPolicy;
+  ViewHeaderPolicy mViewHeaderPolicy;                     ///< Do we show the header or not ?
+  int mIconSize;                                          ///< The icon size for this theme, 16 is the default
 public:
   /**
    * Detaches this object from the shared runtime data for columns.
@@ -1091,6 +1092,19 @@ public:
    */
   void setViewHeaderPolicy( ViewHeaderPolicy vhp )
     { mViewHeaderPolicy = vhp; };
+
+  /**
+   * Returns the currently set icon size
+   */
+  int iconSize() const
+    { return mIconSize; };
+
+  /**
+   * Sets the icon size for this theme.
+   * Please note that the function will not let you set insane values.
+   * The allowable range is [8,64]
+   */
+  void setIconSize( int iconSize );
 
   /**
    * Enumerates the available view header policy options.

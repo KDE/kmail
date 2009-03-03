@@ -47,9 +47,16 @@ namespace Core
 // --------------------------------------------------------------------------------------------------------------
 //  0x1013  08.11.2008      Initial theme version, introduced when this piece of code has been moved into trunk.
 //  0x1014  12.11.2008      Added runtime column data: width and column visibility
+//  0x1015  03.03.2009      Added icon size
+//
+static const int gThemeCurrentVersion = 0x1015; // increase if you add new fields of change the meaning of some
+// you don't need to change the values below, but you might want to add new ones
+static const int gThemeMinimumSupportedVersion = 0x1013;
+static const int gThemeMinimumVersionWithColumnRuntimeData = 0x1014;
+static const int gThemeMinimumVersionWithIconSizeField = 0x1015;
 
-static const int gThemeCurrentVersion = 0x1014; // increase if you add new fields of change the meaning of some
-
+// the default icon size
+static const int gThemeDefaultIconSize = 16;
 
 
 Theme::ContentItem::ContentItem( Type type )
@@ -618,7 +625,7 @@ bool Theme::Column::load( QDataStream &stream, int themeVersion )
     addMessageRow( row );
   }
 
-  if ( themeVersion >= 0x1014 )
+  if ( themeVersion >= gThemeMinimumVersionWithColumnRuntimeData )
   {
     // starting with version 0x1014 we have runtime data too
     if( !mSharedRuntimeData->load( stream, themeVersion ) )
@@ -643,6 +650,7 @@ Theme::Theme()
 {
   mGroupHeaderBackgroundMode = AutoColor;
   mViewHeaderPolicy = ShowHeaderAlways;
+  mIconSize = gThemeDefaultIconSize;
 }
 
 Theme::Theme( const QString &name, const QString &description )
@@ -651,6 +659,7 @@ Theme::Theme( const QString &name, const QString &description )
   mGroupHeaderBackgroundMode = AutoColor;
   mGroupHeaderBackgroundStyle = StyledJoinedRect;
   mViewHeaderPolicy = ShowHeaderAlways;
+  mIconSize = gThemeDefaultIconSize;
 }
 
 
@@ -661,6 +670,7 @@ Theme::Theme( const Theme &src )
   mGroupHeaderBackgroundColor = src.mGroupHeaderBackgroundColor;
   mGroupHeaderBackgroundStyle = src.mGroupHeaderBackgroundStyle;
   mViewHeaderPolicy = src.mViewHeaderPolicy;
+  mIconSize = src.mIconSize;
 
   for ( QList< Column * >::ConstIterator it = src.mColumns.constBegin(); it != src.mColumns.constEnd() ; ++it )
     addColumn( new Column( *( *it ) ) );
@@ -739,6 +749,12 @@ QList< QPair< QString, int > > Theme::enumerateGroupHeaderBackgroundStyles()
   return ret;
 }
 
+void Theme::setIconSize( int iconSize )
+{
+  mIconSize = iconSize;
+  if ( ( mIconSize < 8 ) || ( mIconSize > 64 ) )
+    mIconSize = gThemeDefaultIconSize;
+}
 
 void Theme::resetCache()
 {
@@ -754,11 +770,11 @@ bool Theme::load( QDataStream &stream )
 
   stream >> themeVersion;
 
-  // We support themes starting at version 0x1013
+  // We support themes starting at version gThemeMinimumSupportedVersion (0x1013 actually)
 
   if (
        ( themeVersion > gThemeCurrentVersion ) ||
-       ( themeVersion < 0x1013 )
+       ( themeVersion < gThemeMinimumSupportedVersion )
      )
   {
     kDebug() << "Invalid theme version";
@@ -818,6 +834,16 @@ bool Theme::load( QDataStream &stream )
     break;
   }
 
+  if ( themeVersion >= gThemeMinimumVersionWithIconSizeField )
+  {
+    // icon size parameter
+    stream >> mIconSize;
+    if ( ( mIconSize < 8 ) || ( mIconSize > 64 ) )
+      mIconSize = gThemeDefaultIconSize; // limit insane values
+  } else {
+    mIconSize = gThemeDefaultIconSize;
+  }
+
   // column count
   stream >> val;
   if ( val < 1 || val > 50 )
@@ -846,6 +872,7 @@ void Theme::save( QDataStream &stream ) const
   stream << mGroupHeaderBackgroundColor;
   stream << (int)mGroupHeaderBackgroundStyle;
   stream << (int)mViewHeaderPolicy;
+  stream << mIconSize;
 
   stream << (int)mColumns.count();
 

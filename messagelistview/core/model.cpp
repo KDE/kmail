@@ -1982,7 +1982,7 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
 
       // Yet more unfortunately, while saving the expanded state might stop
       // at a certain (unexpanded) point in the tree, saving the selection
-      // is hopelessly recursive up to the bare leafs.
+      // is hopelessly recursive down to the bare leafs.
 
       // Furthermore the expansion of items is a common case while selection
       // in the subtree is rare, so saving it would be a huge cost with
@@ -2789,7 +2789,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
             mightHaveOtherMeansForThreading = false;
           break;
           default:
-            // BUG: there shouldn't be other values (NoThreading is ecluded in an upper branch)
+            // BUG: there shouldn't be other values (NoThreading is excluded in an upper branch)
             Q_ASSERT( false );
             mightHaveOtherMeansForThreading = false; // make gcc happy
           break;

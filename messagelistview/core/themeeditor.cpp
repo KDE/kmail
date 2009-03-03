@@ -42,6 +42,7 @@
 #include <QPaintEvent>
 #include <QPixmap>
 #include <QPushButton>
+#include <QSpinBox>
 #include <QStringList>
 
 #include <KColorDialog>
@@ -402,6 +403,9 @@ void ThemePreviewWidget::setTheme( Theme * theme )
   bool themeChanged = theme != mTheme;
 
   mSelectedThemeContentItem = 0;
+  mThemeSelectedContentItemRect = QRect();
+  mDropIndicatorPoint1 = QPoint();
+  mDropIndicatorPoint2 = QPoint();
   mTheme = theme;
   mDelegate->setTheme( theme );
   mGroupHeaderSampleItem->setExpanded( true );
@@ -1458,8 +1462,24 @@ ThemeEditor::ThemeEditor( QWidget *parent )
   mViewHeaderPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mViewHeaderPolicyCombo, 0, 1 );
 
+  l = new QLabel( i18n( "Icon Size:" ), tab );
+  tabg->addWidget( l, 1, 0 );
+
+  mIconSizeSpinBox = new QSpinBox( tab );
+  mIconSizeSpinBox->setMinimum(8);
+  mIconSizeSpinBox->setMaximum(64);
+  mIconSizeSpinBox->setSuffix( QString::fromAscii( " px" ) ); // FIXME: Should "px" be translated ?
+
+  QObject::connect(
+      mIconSizeSpinBox, SIGNAL( valueChanged( int ) ),
+      this, SLOT( slotIconSizeSpinBoxValueChanged( int ) )
+    );
+
+  tabg->addWidget( mIconSizeSpinBox, 1, 1 );
+
+
   tabg->setColumnStretch( 1, 1 );
-  tabg->setRowStretch( 1, 1 );
+  tabg->setRowStretch( 2, 1 );
 
 }
 
@@ -1487,6 +1507,7 @@ void ThemeEditor::editTheme( Theme *set )
   fillViewHeaderPolicyCombo();
   ComboBoxUtils::setIntegerOptionComboValue( mViewHeaderPolicyCombo, (int)mCurrentTheme->viewHeaderPolicy() );
 
+  mIconSizeSpinBox->setValue( set->iconSize() );
 }
 
 void ThemeEditor::commit()
@@ -1500,6 +1521,7 @@ void ThemeEditor::commit()
   mCurrentTheme->setViewHeaderPolicy(
       (Theme::ViewHeaderPolicy)ComboBoxUtils::getIntegerOptionComboValue( mViewHeaderPolicyCombo, 0 )
     );
+  mCurrentTheme->setIconSize( mIconSizeSpinBox->value() );
   // other settings are already committed to this theme
 }
 
@@ -1517,6 +1539,15 @@ void ThemeEditor::slotNameEditTextEdited( const QString &newName )
     return;
   mCurrentTheme->setName( newName );
   emit themeNameChanged();
+}
+
+void ThemeEditor::slotIconSizeSpinBoxValueChanged( int val )
+{
+  if( !mCurrentTheme )
+    return;
+  mCurrentTheme->setIconSize( val );
+
+  mPreviewWidget->setTheme( mCurrentTheme ); // will trigger a cache reset and a view update
 }
 
 } // namespace Core

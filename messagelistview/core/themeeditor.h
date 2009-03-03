@@ -33,6 +33,7 @@
 
 class QPaintDevice;
 class QCheckBox;
+class QSpinBox;
 
 class KComboBox;
 class KLineEdit;
@@ -203,6 +204,7 @@ private:
 
   // Advanced tab
   KComboBox * mViewHeaderPolicyCombo;
+  QSpinBox * mIconSizeSpinBox;
 public:
   /**
    * Sets the option set to be edited.
@@ -223,6 +225,7 @@ private:
 
 protected slots:
   void slotNameEditTextEdited( const QString &newName );
+  void slotIconSizeSpinBoxValueChanged( int val );
 };
 
 } // namespace Core
