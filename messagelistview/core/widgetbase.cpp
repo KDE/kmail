@@ -691,8 +691,8 @@ void Widget::switchMessageSorting( SortOrder::MessageSorting messageSorting,
     {
       if ( !mView->header()->isSectionHidden( idx ) )
       {
-        if ( column->messageSorting() == messageSorting ||
-             ( column->messageSorting() == SortOrder::SortMessagesBySenderOrReceiver ) &&
+        if ( ( column->messageSorting() == messageSorting ||
+             ( column->messageSorting() == SortOrder::SortMessagesBySenderOrReceiver ) ) &&
               ( messageSorting == SortOrder::SortMessagesByReceiver ||
                 messageSorting == SortOrder::SortMessagesBySender ) )
         {
