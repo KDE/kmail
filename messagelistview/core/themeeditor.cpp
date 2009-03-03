@@ -1466,9 +1466,9 @@ ThemeEditor::ThemeEditor( QWidget *parent )
   tabg->addWidget( l, 1, 0 );
 
   mIconSizeSpinBox = new QSpinBox( tab );
-  mIconSizeSpinBox->setMinimum(8);
-  mIconSizeSpinBox->setMaximum(64);
-  mIconSizeSpinBox->setSuffix( QString::fromAscii( " px" ) ); // FIXME: Should "px" be translated ?
+  mIconSizeSpinBox->setMinimum( 8 );
+  mIconSizeSpinBox->setMaximum( 64 );
+  mIconSizeSpinBox->setSuffix( ' ' + i18nc( "suffix in a spinbox", "Pixels" ) );
 
   QObject::connect(
       mIconSizeSpinBox, SIGNAL( valueChanged( int ) ),
