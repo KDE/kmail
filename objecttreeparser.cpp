@@ -680,6 +680,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     return false;
   }
 
+  const QString errorMsg = i18n( "Could not decrypt the data." );
   if ( cryptProto && !kmkernel->contextMenuShown() ) {
     QByteArray ciphertext = data.msgPart().bodyDecodedBinary();
 #ifdef MARCS_DEBUG
@@ -734,7 +735,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       else if ( mReader && showWarning ) {
         decryptedData = "<div style=\"font-size:x-large; text-align:center;"
                         "padding:20pt;\">"
-                      + i18n("Encrypted data not shown.").toUtf8()
+                      + errorMsg.toUtf8()
                       + "</div>";
         if ( !passphraseError )
           aErrorText = i18n("Crypto plug-in \"%1\" could not decrypt the data.", cryptPlugLibName )
@@ -746,7 +747,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
   if ( !cryptProto ) {
     decryptedData = "<div style=\"text-align:center; padding:20pt;\">"
-                  + i18n("Encrypted data not shown.").toUtf8()
+                  + errorMsg.toUtf8()
                   + "</div>";
     switch ( cryptPlugError ) {
     case NOT_INITIALIZED:
@@ -775,7 +776,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     else {
       decryptedData = "<div style=\"font-size:x-large; text-align:center;"
                       "padding:20pt;\">"
-                    + i18n("Encrypted data not shown.").toUtf8()
+                    + errorMsg.toUtf8()
                     + "</div>";
     }
   }
