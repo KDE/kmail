@@ -140,9 +140,9 @@ void KMSearchRuleWidget::initWidget()
 
   connect( mRuleField, SIGNAL( activated( const QString & ) ),
            this, SLOT( slotRuleFieldChanged( const QString & ) ) );
-  connect( mRuleField, SIGNAL( textChanged( const QString & ) ),
+  connect( mRuleField, SIGNAL(editTextChanged( const QString & ) ),
            this, SLOT( slotRuleFieldChanged( const QString & ) ) );
-  connect( mRuleField, SIGNAL( textChanged( const QString & ) ),
+  connect( mRuleField, SIGNAL(editTextChanged( const QString & ) ),
            this, SIGNAL( fieldChanged( const QString & ) ) );
 }
 
