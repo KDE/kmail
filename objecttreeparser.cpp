@@ -2139,12 +2139,16 @@ static QString makeShowAuditLogLink( const GpgME::Error & err, const QString & a
     }
   }
 
-  KUrl url;
-  url.setProtocol( "kmail" );
-  url.setPath( "showAuditLog" );
-  url.addQueryItem( "log", auditLog );
+  if ( !auditLog.isEmpty() ) {
+    KUrl url;
+    url.setProtocol( "kmail" );
+    url.setPath( "showAuditLog" );
+    url.addQueryItem( "log", auditLog );
 
-  return "<a href=\"" + url.url() + "\">" + i18nc("The Audit Log is a detailed error log from the gnupg backend", "Show Audit Log") + "</a>";
+    return "<a href=\"" + url.url() + "\">" + i18nc("The Audit Log is a detailed error log from the gnupg backend", "Show Audit Log") + "</a>";
+  }
+
+  return QString();
 }
 
 static QString endVerboseSigstatHeader( const PartMetaData & pmd )
