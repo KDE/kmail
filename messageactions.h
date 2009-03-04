@@ -30,6 +30,7 @@ class KAction;
 class KActionMenu;
 class KActionCollection;
 class KMMessage;
+class KXMLGUIClient;
 
 namespace KMail {
 
@@ -43,6 +44,18 @@ class MessageActions : public QObject
     MessageActions( KActionCollection* ac, QWidget *parent );
     void setMessageView( KMReaderWin *msgView );
 
+    /**
+     * This function adds or updates the actions of the forward action menu, taking the
+     * preference whether to forward inline or as attachment by default into account.
+     * This has to be called when that preference config has been changed.
+     */
+    void setupForwardActions();
+
+    /**
+     * Sets up action list for forward menu.
+     */
+    void setupForwardingActionsList( KXMLGUIClient *guiClient );
+
     void setCurrentMessage( KMMessage *msg );
     void setSelectedSernums( const QList<quint32> &sernums );
     void setSelectedVisibleSernums( const QList<quint32> &sernums );
@@ -50,8 +63,12 @@ class MessageActions : public QObject
     KActionMenu* replyMenu() const { return mReplyActionMenu; }
     KAction* replyListAction() const { return mReplyListAction; }
     KAction* createTodoAction() const { return mCreateTodoAction; }
+    KAction* forwardInlineAction() const { return mForwardInlineAction; }
+    KAction* forwardAttachedAction() const { return mForwardAttachedAction; }
+    KAction* redirectAction() const { return mRedirectAction; }
 
     KActionMenu* messageStatusMenu() const { return mStatusMenu; }
+    KActionMenu *forwardMenu() const { return mForwardActionMenu; }
 
     KAction* editAction() const { return mEditAction; }
 
@@ -93,9 +110,11 @@ class MessageActions : public QObject
 
     KActionMenu *mReplyActionMenu;
     KAction *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-            *mReplyListAction, *mNoQuoteReplyAction;
+            *mReplyListAction, *mNoQuoteReplyAction,
+            *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
     KAction *mCreateTodoAction;
     KActionMenu *mStatusMenu;
+    KActionMenu *mForwardActionMenu;
     KToggleAction *mToggleFlagAction, *mToggleToActAction;
     KAction *mEditAction;
 };

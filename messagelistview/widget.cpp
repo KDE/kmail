@@ -620,7 +620,7 @@ void Widget::viewMessageListContextPopupRequest( const QList< Core::MessageItem 
     // show most used actions
     if( !folder()->isSent() )
       menu.addAction( mMainWidget->messageActions()->replyMenu() );
-    menu.addAction( mMainWidget->forwardMenu() );
+    menu.addAction( mMainWidget->messageActions()->forwardMenu() );
     if( mMainWidget->sendAgainAction()->isEnabled() )
       menu.addAction( mMainWidget->sendAgainAction() );
     else

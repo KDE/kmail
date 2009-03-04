@@ -100,7 +100,7 @@ void KMReaderMainWin::initKMReaderMainWin() {
   setCentralWidget( mReaderWin );
   setupAccel();
   setupGUI( Keys | StatusBar | Create, "kmreadermainwin.rc" );
-  setupForwardingActionsList();
+  mMsgActions->setupForwardingActionsList( this );
   applyMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
   if( ! mReaderWin->message() ) {
     menuBar()->hide();
@@ -109,22 +109,6 @@ void KMReaderMainWin::initKMReaderMainWin() {
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
-}
-
-void KMReaderMainWin::setupForwardingActionsList()
-{
-  QList<QAction*> mForwardActionList;
-  unplugActionList( "forward_action_list" );
-  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
-    mForwardActionList.append( mForwardInlineAction );
-    mForwardActionList.append( mForwardAttachedAction );
-  }
-  else {
-    mForwardActionList.append( mForwardAttachedAction );
-    mForwardActionList.append( mForwardInlineAction );
-  }
-  mForwardActionList.append( mRedirectAction );
-  plugActionList( "forward_action_list", mForwardActionList );
 }
 
 //-----------------------------------------------------------------------------
@@ -271,36 +255,11 @@ void KMReaderMainWin::slotShowMsgSrc()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::setupForwardActions()
-{
-  disconnect( mForwardActionMenu, SIGNAL(triggered(bool)), 0, 0 );
-  mForwardActionMenu->removeAction( mForwardInlineAction );
-  mForwardActionMenu->removeAction( mForwardAttachedAction );
-
-  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
-    mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
-    mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
-    mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
-    mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
-    connect( mForwardActionMenu, SIGNAL(triggered(bool)), this,
-             SLOT( slotForwardInlineMsg() ) );
-  }
-  else {
-    mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
-    mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
-    mForwardInlineAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
-    mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
-    connect( mForwardActionMenu, SIGNAL(triggered(bool)), this,
-             SLOT( slotForwardAttachedMsg() ) );
-  }
-}
-
-//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotConfigChanged()
 {
   //readConfig();
-  setupForwardActions();
-  setupForwardingActionsList();
+  mMsgActions->setupForwardActions();
+  mMsgActions->setupForwardingActionsList( this );
 }
 
 void KMReaderMainWin::setupAccel()
@@ -339,29 +298,6 @@ void KMReaderMainWin::setupAccel()
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
   //----- Message Menu
-  mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
-  actionCollection()->addAction("message_forward", mForwardActionMenu );
-
-  mForwardAttachedAction  = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
-  actionCollection()->addAction("message_forward_as_attachment", mForwardAttachedAction );
-  mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
-  connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
-
-  mForwardInlineAction = new KAction( KIcon( "mail-forward" ),
-                                      i18nc( "@action:inmenu Forward current message inline.",
-                                             "&Inline..."),
-                                      this );
-  actionCollection()->addAction("message_forward_inline", mForwardInlineAction );
-  connect(mForwardInlineAction, SIGNAL(triggered(bool) ), SLOT(slotForwardInlineMsg()));
-  mForwardInlineAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
-
-  setupForwardActions();
-
-  mRedirectAction = new KAction(i18nc("Message->Forward->", "&Redirect..."), this);
-  actionCollection()->addAction("message_forward_redirect", mRedirectAction );
-  connect(mRedirectAction, SIGNAL(triggered(bool)), SLOT(slotRedirectMsg()));
-  mRedirectAction->setShortcut(QKeySequence(Qt::Key_E));
-  mForwardActionMenu->addAction( mRedirectAction );
 
   fontAction = new KFontAction( i18n("Select Font"), this );
   actionCollection()->addAction( "text_font", fontAction );
@@ -406,8 +342,8 @@ void KMReaderMainWin::updateCustomTemplateMenus()
              this, SLOT(slotCustomForwardMsg( const QString& )) );
   }
 
-  mForwardActionMenu->addSeparator();
-  mForwardActionMenu->addAction( mCustomTemplateMenus->forwardActionMenu() );
+  mMsgActions->forwardMenu()->addSeparator();
+  mMsgActions->forwardMenu()->addAction( mCustomTemplateMenus->forwardActionMenu() );
 
   mMsgActions->replyMenu()->addSeparator();
   mMsgActions->replyMenu()->addAction( mCustomTemplateMenus->replyActionMenu() );
@@ -488,7 +424,7 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
       // FIXME: needs custom templates added to menu
       // (see KMMainWidget::updateCustomTemplateMenus)
       menu->addAction( mMsgActions->replyMenu() );
-      menu->addAction( mForwardActionMenu );
+      menu->addAction( mMsgActions->forwardMenu() );
       menu->addSeparator();
     }
 

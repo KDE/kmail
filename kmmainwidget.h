@@ -141,8 +141,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     static void cleanup();
 
     QAction *action( const char *name ) { return mActionCollection->action( name ); }
-    KActionMenu *forwardMenu() const { return mForwardActionMenu; }
-    KAction *redirectAction() const { return mRedirectAction; }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KAction *printAction() const { return mPrintAction; }
     KAction *trashAction() const { return mTrashAction; }
@@ -192,11 +190,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
-
-    /**
-     * Sets up action list for forward menu.
-     */
-    void setupForwardingActionsList();
 
   public slots:
     // Moving messages around
@@ -491,13 +484,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEditNotifications();
     void slotEditKeys();
 
-    /**
-     * This function adds or updates the actions of the forward action menu, taking the
-     * preference whether to forward inline or as attachment by default into account.
-     * This has to be called when that preference config has been changed.
-     */
-    void setupForwardActions();
-
     void removeDuplicates();
 
     /** Slot to reply to a message */
@@ -649,10 +635,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       *mFavoritesCheckMailAction,
       *mMoveMsgToFolderAction;
     // Composition actions
-    KAction *mPrintAction,
-      *mForwardInlineAction, *mForwardAttachedAction,
-      *mRedirectAction;
-    KActionMenu *mForwardActionMenu;
+    KAction *mPrintAction;
     // Filter actions
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
