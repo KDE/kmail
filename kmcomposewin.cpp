@@ -3768,7 +3768,7 @@ bool KMComposeWin::checkRecipientNumber() const
   int thresHold = GlobalSettings::self()->recipientThreshold();
   if ( GlobalSettings::self()->tooManyRecipients() && mRecipientsEditor->recipients().count() > thresHold ) {
     if ( KMessageBox::questionYesNo( mMainWidget,
-         i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?").arg(thresHold),
+         i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
          i18n("Too many receipients"),
          KGuiItem( i18n("&Send as Is") ),
          KGuiItem( i18n("&Edit Recipients") ) ) == KMessageBox::No ) {
