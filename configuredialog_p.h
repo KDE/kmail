@@ -5,6 +5,8 @@
 #ifndef _CONFIGURE_DIALOG_PRIVATE_H_
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
+#include <config-enterprise.h>
+
 #include "kmail_export.h"
 
 #include <klineedit.h>
@@ -713,12 +715,14 @@ private:
   QCheckBox	*mShowRecentAddressesInComposer;
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
-  QCheckBox     *mRecipientCheck;
-  KIntSpinBox   *mRecipientSpin;
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
+#ifdef ENTERPRISE_BUILD
   KComboBox     *mForwardTypeCombo;
+  QCheckBox     *mRecipientCheck;
+  KIntSpinBox   *mRecipientSpin;
+#endif
 };
 
 class ComposerPagePhrasesTab : public ConfigModuleTab {

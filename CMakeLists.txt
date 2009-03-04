@@ -246,11 +246,22 @@ qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
 
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)
 
-
-
 kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui snippetdlgbase.ui imapsettings.ui localsettings.ui maildirsettings.ui popsettings.ui)
 
-kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc templatesconfiguration_kfg.kcfgc customtemplates_kfg.kcfgc )
+if(ENTERPRISE_BUILD)
+  set(WARN_TOOMANY_RECIPIENTS_DEFAULT true)
+else(ENTERPRISE_BUILD)
+  set(WARN_TOOMANY_RECIPIENTS_DEFAULT false)
+endif(ENTERPRISE_BUILD)
+configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
+
+kde4_add_kcfg_files(kmailprivate_LIB_SRCS
+  globalsettings_base.kcfgc
+  replyphrases.kcfgc
+  custommimeheader.kcfgc
+  templatesconfiguration_kfg.kcfgc
+  customtemplates_kfg.kcfgc
+)
 
 set(KMAIL_SQLITE_INDEX false CACHE BOOL "Use sqlite instead of mmap backend for KMail's folder indexes")
 mark_as_advanced(KMAIL_SQLITE_INDEX)
@@ -341,7 +352,7 @@ install(TARGETS kmail  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 ########### install files ###############
 
 install( FILES KMail.desktop kmail_view.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
-install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg customtemplates_kfg.kcfg templatesconfiguration_kfg.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg replyphrases.kcfg custommimeheader.kcfg customtemplates_kfg.kcfg templatesconfiguration_kfg.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install( FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
 install( FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
 install( FILES kmail_config_misc.desktop kmail_config_appearance.desktop     kmail_config_identity.desktop kmail_config_accounts.desktop kmail_config_composer.desktop     kmail_config_security.desktop  DESTINATION ${SERVICES_INSTALL_DIR})

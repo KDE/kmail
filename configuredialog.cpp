@@ -22,6 +22,8 @@
 
 // This must be first
 #include <config-kmail.h>
+#include <config-enterprise.h>
+
 // my headers:
 #include "configuredialog.h"
 #include "configuredialog_p.h"
@@ -2914,6 +2916,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
            mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
+#ifdef ENTERPRISE_BUILD
   // a checkbox for "too many recipient warning" and a spinbox for the recipient threshold
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
@@ -2947,6 +2950,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   // only enable the spinbox if the checkbox is checked:
   connect( mRecipientCheck, SIGNAL(toggled(bool)),
            mRecipientSpin, SLOT(setEnabled(bool)) );
+#endif
 
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
@@ -2962,6 +2966,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mAutoSave, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+#ifdef ENTERPRISE_BUILD
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mForwardTypeCombo = new KComboBox( false, this );
@@ -2975,6 +2980,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay->addStretch( 1 );
   connect( mForwardTypeCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged() ) );
+#endif
 
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
@@ -3052,13 +3058,16 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
   mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
+  mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
+
+#ifdef ENTERPRISE_BUILD
   mRecipientCheck->setChecked( GlobalSettings::self()->tooManyRecipients() );
   mRecipientSpin->setValue( GlobalSettings::self()->recipientThreshold() );
-  mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
   if ( GlobalSettings::self()->forwardingInlineByDefault() )
     mForwardTypeCombo->setCurrentIndex( 0 );
   else
     mForwardTypeCombo->setCurrentIndex( 1 );
+#endif
 
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
@@ -3085,10 +3094,14 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     mWordWrapCheck->setChecked( composer.readEntry( "word-wrap", false ) );
   if ( composer.hasKey( "break-at" ) )
     mWrapColumnSpin->setValue( composer.readEntry( "break-at", 0 ) );
+
+#ifdef ENTERPRISE_BUILD
   if ( composer.hasKey( "too-many-recipients" ) )
     mRecipientCheck->setChecked( composer.readEntry( "too-many-recipients", false ) );
   if ( composer.hasKey( "recipient-threshold" ) )
     mRecipientSpin->setValue( composer.readEntry( "recipient-threshold", 5 ) );
+#endif
+
   if ( composer.hasKey( "autosave" ) )
     mAutoSave->setValue( composer.readEntry( "autosave", 0 ) );
 
@@ -3109,10 +3122,13 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
   GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
+  GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
+
+#ifdef ENTERPRISE_BUILD
   GlobalSettings::self()->setTooManyRecipients( mRecipientCheck->isChecked() );
   GlobalSettings::self()->setRecipientThreshold( mRecipientSpin->value() );
-  GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
   GlobalSettings::self()->setForwardingInlineByDefault( mForwardTypeCombo->currentIndex() == 0 );
+#endif
 
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
