@@ -627,12 +627,18 @@ public slots:
     bool mFolderRemoved;
     bool mRecurse;
 
-    /**
-      Set to true by setStatus. Indicates that the client has changed
-      the status of at least one mail. The mail flags will therefore be
-      uploaded to the server, overwriting the server's notion of the status
-      of the mails in this folder.
+   /**
+    * UIDs added by setStatus. Indicates that the client has changed
+    * the status of those mails. The mail flags for changed mails will be
+    * uploaded to the server, overwriting the server's notion of the status
+    * of the mails in this folder.
     */
+    QList<ulong> mUIDsOfLocallyChangedStatuses;
+
+    /**
+     * Same as above, but uploads the flags of all mails, even if not all changed.
+     * Only still here for config compatibility.
+     */
     bool mStatusChangedLocally;
 
     /**
