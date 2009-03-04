@@ -41,11 +41,6 @@ public:
   // take ownership of and show @param msg
   void showMsg( const QString & encoding, KMMessage *msg );
 
-  /**
-   * Sets up action list for forward menu.
-  */
-  void setupForwardingActionsList();
-
 private slots:
   void slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint);
 
@@ -76,20 +71,13 @@ private:
   void updateMessageMenu();
   void updateCustomTemplateMenus();
 
-  /**
-   * @see the KMMainWidget function with the same name.
-   */
-  void setupForwardActions();
-
   KMReaderWin *mReaderWin;
   KMMessage *mMsg;
   KUrl mUrl;
   QMap<QAction*,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
-          *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction,
           *mViewSourceAction, *mCopyTextAction;
-  KActionMenu *mForwardActionMenu;
   KActionMenu *mCopyActionMenu;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;

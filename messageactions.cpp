@@ -23,18 +23,19 @@
 #include "kmmessage.h"
 #include "kmreaderwin.h"
 
-#include <kaction.h>
-#include <kactionmenu.h>
-#include <kactioncollection.h>
-#include <ktoggleaction.h>
-#include <kdebug.h>
-#include <klocale.h>
+#include <KAction>
+#include <KActionMenu>
+#include <KActionCollection>
+#include <KToggleAction>
+#include <KDebug>
+#include <KLocale>
+#include <KXMLGUIClient>
 
 #include <qwidget.h>
 
 using namespace KMail;
 
-MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
+MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     QObject( parent ),
     mParent( parent ),
     mActionCollection( ac ),
@@ -139,6 +140,30 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
            this, SLOT(editCurrentMessage()) );
   mEditAction->setShortcut( Qt::Key_T );
 
+  mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
+  mActionCollection->addAction("message_forward", mForwardActionMenu );
+
+  mForwardAttachedAction  = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
+  mActionCollection->addAction("message_forward_as_attachment", mForwardAttachedAction );
+  mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
+  connect( mForwardAttachedAction, SIGNAL(triggered(bool) ),
+           parent, SLOT(slotForwardAttachedMsg()) );
+
+  mForwardInlineAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
+  mActionCollection->addAction("message_forward_inline", mForwardInlineAction );
+  mForwardInlineAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+  connect( mForwardInlineAction, SIGNAL(triggered(bool) ),
+           parent, SLOT(slotForwardInlineMsg()) );
+
+  setupForwardActions();
+
+  mRedirectAction  = new KAction(i18nc("Message->Forward->", "&Redirect..."), this);
+  mActionCollection->addAction("message_forward_redirect", mRedirectAction );
+  connect( mRedirectAction, SIGNAL(triggered(bool)),
+           parent, SLOT(slotRedirectMsg()));
+  mRedirectAction->setShortcut(QKeySequence(Qt::Key_E));
+  mForwardActionMenu->addAction( mRedirectAction );
+
   updateActions();
 }
 
@@ -204,6 +229,47 @@ void MessageActions::setMessageView(KMReaderWin * msgView)
 {
   mMessageView = msgView;
 }
+
+void MessageActions::setupForwardActions()
+{
+  disconnect( mForwardActionMenu, SIGNAL( triggered(bool) ), 0, 0 );
+  mForwardActionMenu->removeAction( mForwardInlineAction );
+  mForwardActionMenu->removeAction( mForwardAttachedAction );
+
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
+    mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
+    mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+    QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
+                      mParent, SLOT(slotForwardInlineMsg()) );
+  }
+  else {
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
+    mForwardInlineAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+    mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
+    QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
+                      mParent, SLOT(slotForwardAttachedMsg()) );
+  }
+}
+
+void MessageActions::setupForwardingActionsList( KXMLGUIClient *guiClient )
+{
+  QList<QAction*> mForwardActionList;
+  guiClient->unplugActionList( "forward_action_list" );
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+    mForwardActionList.append( mForwardInlineAction );
+    mForwardActionList.append( mForwardAttachedAction );
+  }
+  else {
+    mForwardActionList.append( mForwardAttachedAction );
+    mForwardActionList.append( mForwardInlineAction );
+  }
+  mForwardActionList.append( mRedirectAction );
+  guiClient->plugActionList( "forward_action_list", mForwardActionList );
+}
+
 
 void MessageActions::slotReplyToMsg()
 {

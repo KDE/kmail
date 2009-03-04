@@ -2514,7 +2514,7 @@ void KMHeaders::slotRMB()
      // show most used actions
      if( !mFolder->isSent() )
        menu->addAction( mOwner->messageActions()->replyMenu() );
-     menu->addAction( mOwner->forwardMenu() );
+     menu->addAction( mOwner->messageActions()->forwardMenu() );
      if(mOwner->sendAgainAction()->isEnabled()) {
        menu->addAction( mOwner->sendAgainAction() );
      } else {
