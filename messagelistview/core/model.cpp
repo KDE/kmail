@@ -2926,9 +2926,9 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       // Handle saving the current selection: if this item was the current before the step
       // then zero it out. We have killed it and it's OK for the current item to change.
 
-      if ( dyingMessage->isViewable() &&
-           dyingMessage == mCurrentItemToRestoreAfterViewItemJobStep )
+      if ( dyingMessage == mCurrentItemToRestoreAfterViewItemJobStep )
       {
+        Q_ASSERT( dyingMessage->isViewable() );
         // Try to select the item below the removed one as it helps in doing a "readon" of emails:
         // you read a message, decide to delete it and then go to the next.
         // Qt tends to select the message above the removed one instead (this is a hardcoded logic in
@@ -3028,12 +3028,21 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       // Parent is gone
       childMessage->setThreadingStatus( MessageItem::ParentMissing );
 
-      // If the child is going to be selected, we must immediately
-      // reattach it to a temporary group in order for the selection
-      // to be preserved across multiple steps. Otherwise we could end
+      // If the child (or any message in its subtree) is going to be selected,
+      // then we must immediately reattach it to a temporary group in order for the
+      // selection to be preserved across multiple steps. Otherwise we could end
       // with the child-to-be-selected being non viewable at the end
       // of the view job step. Attach to a temporary group.
-      if ( childMessage == mCurrentItemToRestoreAfterViewItemJobStep )
+      if (
+           // child is going to be re-selected
+           ( childMessage == mCurrentItemToRestoreAfterViewItemJobStep ) ||
+           (
+             // there is a message that is going to be re-selected
+             mCurrentItemToRestoreAfterViewItemJobStep && 
+             // that message is in the childMessage subtree
+             mCurrentItemToRestoreAfterViewItemJobStep->hasAncestor( childMessage )
+           )
+         )
       {
         attachMessageToGroupHeader( childMessage );
 
