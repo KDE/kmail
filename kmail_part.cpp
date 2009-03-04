@@ -182,6 +182,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   mainWidget->initializeMessageTagActions();
   mainWidget->initializeFolderShortcutActions();
   mainWidget->updateVactionScriptStatus();
+  mainWidget->setupForwardingActionsList();
 }
 
 void KMailPart::exit()

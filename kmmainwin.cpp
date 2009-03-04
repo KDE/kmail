@@ -62,6 +62,8 @@ KMMainWin::KMMainWin(QWidget *)
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
 
+  mKMMainWidget->setupForwardingActionsList();
+
   //must be after createGUI, otherwise e.g toolbar settings are not loaded
   applyMainWindowSettings( KMKernel::config()->group( "Main Window") );
 

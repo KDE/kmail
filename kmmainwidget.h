@@ -142,8 +142,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     QAction *action( const char *name ) { return mActionCollection->action( name ); }
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
-    KAction *forwardAction() const { return mForwardAction; }
-    KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
     KAction *redirectAction() const { return mRedirectAction; }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KAction *printAction() const { return mPrintAction; }
@@ -194,6 +192,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
+
+    /**
+     * Sets up action list for forward menu.
+     */
+    void setupForwardingActionsList();
 
   public slots:
     // Moving messages around
@@ -488,12 +491,19 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEditNotifications();
     void slotEditKeys();
 
+    /**
+     * This function adds or updates the actions of the forward action menu, taking the
+     * preference whether to forward inline or as attachment by default into account.
+     * This has to be called when that preference config has been changed.
+     */
+    void setupForwardActions();
+
     void removeDuplicates();
 
     /** Slot to reply to a message */
     void slotCustomReplyToMsg( const QString &tmpl );
     void slotCustomReplyAllToMsg( const QString &tmpl );
-    void slotForwardMsg();
+    void slotForwardInlineMsg();
     void slotForwardAttachedMsg();
     void slotRedirectMsg();
     void slotCustomForwardMsg( const QString &tmpl );
@@ -640,7 +650,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       *mMoveMsgToFolderAction;
     // Composition actions
     KAction *mPrintAction,
-      *mForwardAction, *mForwardAttachedAction,
+      *mForwardInlineAction, *mForwardAttachedAction,
       *mRedirectAction;
     KActionMenu *mForwardActionMenu;
     // Filter actions

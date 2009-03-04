@@ -1619,7 +1619,7 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotForwardMsg()
+void KMMainWidget::slotForwardInlineMsg()
 {
   QList< KMMsgBase * > selectedMessages = mMessageListView->selectionAsMsgBaseList();
   if ( selectedMessages.isEmpty() )
@@ -2715,9 +2715,34 @@ void KMMainWidget::slotPrintMsg()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::setupForwardActions()
+{
+  disconnect( mForwardActionMenu, SIGNAL( triggered(bool) ), 0, 0 );
+  mForwardActionMenu->removeAction( mForwardInlineAction );
+  mForwardActionMenu->removeAction( mForwardAttachedAction );
+
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
+    mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
+    mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+    connect( mForwardActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotForwardInlineMsg()) );
+  }
+  else {
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
+    mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
+    mForwardInlineAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+    mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
+    connect( mForwardActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotForwardAttachedMsg()) );
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotConfigChanged()
 {
   readConfig();
+  setupForwardActions();
+  setupForwardingActionsList();
 }
 
 //-----------------------------------------------------------------------------
@@ -3875,31 +3900,29 @@ void KMMainWidget::setupActions()
 
   mForwardActionMenu = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("message_forward", mForwardActionMenu );
-  connect( mForwardActionMenu, SIGNAL(triggered(bool)), this,
-           SLOT(slotForwardMsg()) );
 
   mForwardAttachedAction = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
   actionCollection()->addAction("message_forward_as_attachment", mForwardAttachedAction );
-  mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
   connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
-  mForwardActionMenu->addAction( forwardAttachedAction() );
-  mForwardAction = new KAction(KIcon("mail-forward"),
-    i18nc("@action:inmenu Message->Forward->", "&Inline..."), this);
-  actionCollection()->addAction("message_forward_inline", mForwardAction );
-  connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
-  mForwardAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
 
-  mForwardActionMenu->addAction( forwardAction() );
-
-  mSendAgainAction = new KAction(i18n("Send A&gain..."), this);
-  actionCollection()->addAction("send_again", mSendAgainAction );
-  connect(mSendAgainAction, SIGNAL(triggered(bool) ), SLOT(slotResendMsg()));
+  mForwardInlineAction = new KAction( KIcon( "mail-forward" ),
+                                      i18nc( "@action:inmenu Message->Forward->",
+                                             "&Inline..." ),
+                                      this );
+  actionCollection()->addAction("message_forward_inline", mForwardInlineAction );
+  connect(mForwardInlineAction, SIGNAL(triggered(bool) ), SLOT(slotForwardInlineMsg()));
 
   mRedirectAction = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","&Redirect..."), this);
   actionCollection()->addAction("message_forward_redirect", mRedirectAction );
   mRedirectAction->setShortcut(QKeySequence(Qt::Key_E));
   connect(mRedirectAction, SIGNAL(triggered(bool) ), SLOT(slotRedirectMsg()));
-  mForwardActionMenu->addAction( redirectAction() );
+
+  setupForwardActions();
+  mForwardActionMenu->addAction( mRedirectAction );
+
+  mSendAgainAction = new KAction(i18n("Send A&gain..."), this);
+  actionCollection()->addAction("send_again", mSendAgainAction );
+  connect(mSendAgainAction, SIGNAL(triggered(bool) ), SLOT(slotResendMsg()));
 
   //----- Create filter actions
   mFilterMenu = new KActionMenu(KIcon("view-filter"), i18n("&Create Filter"), this);
@@ -4176,6 +4199,22 @@ void KMMainWidget::setupActions()
   updateFolderMenu();
 }
 
+void KMMainWidget::setupForwardingActionsList()
+{
+  QList<QAction*> mForwardActionList;
+  mGUIClient->unplugActionList( "forward_action_list" );
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+    mForwardActionList.append( mForwardInlineAction );
+    mForwardActionList.append( mForwardAttachedAction );
+  }
+  else {
+    mForwardActionList.append( mForwardAttachedAction );
+    mForwardActionList.append( mForwardInlineAction );
+  }
+  mForwardActionList.append( mRedirectAction );
+  mGUIClient->plugActionList( "forward_action_list", mForwardActionList );
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
@@ -4351,8 +4390,8 @@ void KMMainWidget::updateMessageActions()
   mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
   mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
   mFindInMessageAction->setEnabled( mass_actions );
-  mForwardAction->setEnabled( mass_actions );
   mForwardActionMenu->setEnabled( mass_actions );
+  mForwardInlineAction->setEnabled( mass_actions );
   mForwardAttachedAction->setEnabled( mass_actions );
 
   forwardMenu()->setEnabled( mass_actions );

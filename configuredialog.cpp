@@ -105,6 +105,7 @@ using MailTransport::TransportManagementWidget;
 #include <KIconButton>
 #include <KRandom>
 #include <KColorScheme>
+#include <KComboBox>
 
 // Qt headers:
 #include <QBoxLayout>
@@ -2906,6 +2907,20 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
+  mForwardTypeCombo = new KComboBox( false, this );
+  label = new QLabel( i18n( "Default Forwarding Type:" ),
+                      this );
+  label->setBuddy( mForwardTypeCombo );
+  mForwardTypeCombo->addItems( QStringList() << i18n( "Inline" )
+                                             << i18n( "As Attachment" ) );
+  hlay->addWidget( label );
+  hlay->addWidget( mForwardTypeCombo );
+  hlay->addStretch( 1 );
+  connect( mForwardTypeCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order..." ), this );
   connect( completionOrderBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureCompletionOrder() ) );
@@ -2983,6 +2998,10 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   mRecipientCheck->setChecked( GlobalSettings::self()->tooManyRecipients() );
   mRecipientSpin->setValue( GlobalSettings::self()->recipientThreshold() );
   mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
+  if ( GlobalSettings::self()->forwardingInlineByDefault() )
+    mForwardTypeCombo->setCurrentIndex( 0 );
+  else
+    mForwardTypeCombo->setCurrentIndex( 1 );
 
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
@@ -3036,6 +3055,7 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setTooManyRecipients( mRecipientCheck->isChecked() );
   GlobalSettings::self()->setRecipientThreshold( mRecipientSpin->value() );
   GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
+  GlobalSettings::self()->setForwardingInlineByDefault( mForwardTypeCombo->currentIndex() == 0 );
 
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );

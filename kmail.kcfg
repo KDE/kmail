@@ -294,6 +294,10 @@
     </group>
 
     <group name="Composer">
+      <entry name="ForwardingInlineByDefault" type="Bool">
+        <default>false</default>
+        <label>Forward Inline As Default.</label>
+      </entry>
       <entry name="ForceReplyCharset" type="Bool" key="force-reply-charset">
         <label>Keep original charset when replying or forwarding if possible</label>
         <default>false</default>

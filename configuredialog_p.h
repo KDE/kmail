@@ -63,6 +63,7 @@ class KColorCombo;
 class KFontRequester;
 class KIconButton;
 class KKeySequenceWidget;
+class KComboBox;
 
 namespace KMail {
   class IdentityDialog;
@@ -671,6 +672,7 @@ private:
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
+  KComboBox     *mForwardTypeCombo;
 };
 
 class ComposerPageTemplatesTab : public ConfigModuleTab {
