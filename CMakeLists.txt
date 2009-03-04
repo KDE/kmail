@@ -310,7 +310,62 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   ui/identitypage.ui
 )
 
-kde4_add_kcfg_files(kmailprivate_LIB_SRCS
+# KCFG files. The main kmail.kcfg is configured by CMake and put
+# in the build directory.
+
+macro (KMAIL_ADD_KCFG_FILES _sources )
+   if( ${ARGV1} STREQUAL "GENERATE_MOC" )
+      set(_kcfg_generatemoc TRUE)
+   endif( ${ARGV1} STREQUAL "GENERATE_MOC" )
+
+   foreach (_current_FILE ${ARGN})
+
+     if(NOT ${_current_FILE} STREQUAL "GENERATE_MOC")
+       get_filename_component(_tmp_FILE ${_current_FILE} ABSOLUTE)
+       get_filename_component(_abs_PATH ${_tmp_FILE} PATH)
+       get_filename_component(_basename ${_tmp_FILE} NAME_WE)
+
+       file(READ ${_tmp_FILE} _contents)
+       string(REGEX REPLACE "^(.*\n)?File=([^\n]+kcfg).*\n.*$" "\\2"  _kcfg_FILE "${_contents}")
+       set(_src_FILE    ${CMAKE_CURRENT_BINARY_DIR}/${_basename}.cpp)
+       set(_header_FILE ${CMAKE_CURRENT_BINARY_DIR}/${_basename}.h)
+       set(_moc_FILE    ${CMAKE_CURRENT_BINARY_DIR}/${_basename}.moc)
+       set(_kcfg_PATH   ${_abs_PATH}/${_kcfg_FILE})
+# Maybe the .kcfg is a generated file?
+       if(NOT EXISTS "${_kcfg_PATH}")
+           set(_kcfg_PATH   ${CMAKE_CURRENT_BINARY_DIR}/${_kcfg_FILE})
+       endif(NOT EXISTS "${_kcfg_PATH}")
+       if(NOT EXISTS "${_kcfg_PATH}")
+           message(ERROR "${_kcfg_FILE} not found; tried in ${_abs_PATH} and ${CMAKE_CURRENT_BINARY_DIR}")
+       endif(NOT EXISTS "${_kcfg_PATH}")
+
+# the command for creating the source file from the kcfg file
+       add_custom_command(OUTPUT ${_header_FILE} ${_src_FILE}
+          COMMAND ${KDE4_KCFGC_EXECUTABLE}
+          ARGS ${_kcfg_PATH} ${_tmp_FILE} -d ${CMAKE_CURRENT_BINARY_DIR}
+          MAIN_DEPENDENCY ${_tmp_FILE}
+          DEPENDS ${_kcfg_PATH} ${_KDE4_KCONFIG_COMPILER_DEP} )
+
+       if(_kcfg_generatemoc)
+         qt4_generate_moc(${_header_FILE} ${_moc_FILE} )
+         set_source_files_properties(${_src_FILE} PROPERTIES SKIP_AUTOMOC TRUE)  # don't run automoc on this file
+         list(APPEND ${_sources} ${_moc_FILE})
+       endif(_kcfg_generatemoc)
+
+       list(APPEND ${_sources} ${_src_FILE} ${_header_FILE})
+     endif(NOT ${_current_FILE} STREQUAL "GENERATE_MOC")
+   endforeach (_current_FILE)
+
+endmacro (KMAIL_ADD_KCFG_FILES)
+
+if(ENTERPRISE_BUILD)
+  set(WARN_TOOMANY_RECIPIENTS_DEFAULT true)
+else(ENTERPRISE_BUILD)
+  set(WARN_TOOMANY_RECIPIENTS_DEFAULT false)
+endif(ENTERPRISE_BUILD)
+configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
+
+kmail_add_kcfg_files(kmailprivate_LIB_SRCS
   globalsettings_base.kcfgc
   replyphrases.kcfgc
   custommimeheader.kcfgc
@@ -422,7 +477,7 @@ install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SK
 install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES KMail.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES
-  kmail.kcfg
+  ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
   replyphrases.kcfg
   custommimeheader.kcfg
   customtemplates_kfg.kcfg
@@ -465,4 +520,3 @@ install(FILES
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
   DESTINATION ${KDE4_DBUS_INTERFACES_DIR}
 )
-
