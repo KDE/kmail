@@ -313,6 +313,10 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
 # KCFG files. The main kmail.kcfg is configured by CMake and put
 # in the build directory.
 
+# TODO: Remove this on monday and replace with kde4_add_kcfg_files
+#       If you're reading this comment and thinking "Monday!? WTF,
+#       svn blame says that the comment is 5 years old!!!", then
+#       YOU should remove it NOW :)
 macro (KMAIL_ADD_KCFG_FILES _sources )
    if( ${ARGV1} STREQUAL "GENERATE_MOC" )
       set(_kcfg_generatemoc TRUE)

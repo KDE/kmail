@@ -129,7 +129,7 @@ ProcmailRCParser::processLocalLock(const QString &s)
     line = mStream->readLine().trimmed();
   } while ( !mStream->atEnd() &&
              ( line[0] == '*' ||
-               prevLine.length() > 0 && prevLine[prevLine.length() - 1] == '\\' ) );
+               ( prevLine.length() > 0 && prevLine[prevLine.length() - 1] == '\\' ) ) );
 
   if( line[0] != '!' && line[0] != '|' &&  line[0] != '{' ) {
     // this is a filename, expand it
