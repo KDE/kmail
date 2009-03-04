@@ -329,7 +329,19 @@
         <min>30</min>
         <max>255</max>
       </entry>
-      <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
+       <entry name="TooManyRecipients" type="Bool" key="too-many-recipients">
+        <label>Warn if the number of recipients is larger than</label>
+        <default>true</default>
+        <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
+      </entry>
+      <entry name="RecipientThreshold" type="Int" key="recipient-threshold">
+        <label></label>
+        <default>5</default>
+        <min>1</min>
+        <max>100</max>
+        <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
+     </entry>
+     <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
       <entry name="CurrentTransport" type="String" key="current-transport" />
       <entry name="MaxTransportEntries" type="Int" key="max-transport-items">
@@ -449,7 +461,7 @@
           <default>false</default>
       </entry>
       <entry name="SnippetSplitterPosition" type="IntList"/>
-      
+
       <entry name="MaximumAttachmentSize" type="Int">
           <label>The maximum size in MB that email attachments are allowed to have (-1 for no limit).</label>
           <default>-1</default>
