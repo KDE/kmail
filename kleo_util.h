@@ -77,5 +77,12 @@ static inline bool isOpenPGP( Kleo::CryptoMessageFormat f ) {
   return f == Kleo::InlineOpenPGPFormat || f == Kleo::OpenPGPMIMEFormat ;
 }
 
+static inline bool containsSMIME( unsigned int f ) {
+  return f & (Kleo::SMIMEFormat|Kleo::SMIMEOpaqueFormat) ;
+}
+
+static inline bool containsOpenPGP( unsigned int f ) {
+  return f & (Kleo::OpenPGPMIMEFormat|Kleo::InlineOpenPGPFormat) ;
+}
 
 #endif // __KDEPIM_KMAIL_KLEO_UTIL_H__
