@@ -672,7 +672,7 @@ private:
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
-#ifdef ENTERPRISE_BUILD
+#ifdef KDEPIM_ENTERPRISE_BUILD
   KComboBox     *mForwardTypeCombo;
   QCheckBox     *mRecipientCheck;
   KIntSpinBox   *mRecipientSpin;

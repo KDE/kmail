@@ -2859,7 +2859,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
            mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
-#ifdef ENTERPRISE_BUILD
+#ifdef KDEPIM_ENTERPRISE_BUILD
   // a checkbox for "too many recipient warning" and a spinbox for the recipient threshold
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
@@ -2909,7 +2909,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mAutoSave, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-#ifdef ENTERPRISE_BUILD
+#ifdef KDEPIM_ENTERPRISE_BUILD
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mForwardTypeCombo = new KComboBox( false, this );
@@ -3003,7 +3003,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
   mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
 
-#ifdef ENTERPRISE_BUILD
+#ifdef KDEPIM_ENTERPRISE_BUILD
   mRecipientCheck->setChecked( GlobalSettings::self()->tooManyRecipients() );
   mRecipientSpin->setValue( GlobalSettings::self()->recipientThreshold() );
   if ( GlobalSettings::self()->forwardingInlineByDefault() )
@@ -3038,7 +3038,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   if ( composer.hasKey( "break-at" ) )
     mWrapColumnSpin->setValue( composer.readEntry( "break-at", 0 ) );
 
-#ifdef ENTERPRISE_BUILD
+#ifdef KDEPIM_ENTERPRISE_BUILD
   if ( composer.hasKey( "too-many-recipients" ) )
     mRecipientCheck->setChecked( composer.readEntry( "too-many-recipients", false ) );
   if ( composer.hasKey( "recipient-threshold" ) )
@@ -3067,7 +3067,7 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
   GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
 
-#ifdef ENTERPRISE_BUILD
+#ifdef KDEPIM_ENTERPRISE_BUILD
   GlobalSettings::self()->setTooManyRecipients( mRecipientCheck->isChecked() );
   GlobalSettings::self()->setRecipientThreshold( mRecipientSpin->value() );
   GlobalSettings::self()->setForwardingInlineByDefault( mForwardTypeCombo->currentIndex() == 0 );
