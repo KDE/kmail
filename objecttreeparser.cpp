@@ -381,7 +381,7 @@ namespace KMail {
                                                       const QString& fromAddress,
                                                       bool doCheck,
                                                       QCString* cleartextData,
-                                                      std::vector<GpgME::Signature> paramSignatures,
+                                                      const std::vector<GpgME::Signature> & paramSignatures,
                                                       bool hideErrors )
   {
     bool bIsOpaqueSigned = false;
