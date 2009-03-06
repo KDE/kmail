@@ -86,6 +86,7 @@
 #include <gpgmepp/context.h>
 
 #include <algorithm>
+#include <sstream>
 #include <memory>
 
 // ## keep default values in sync with configuredialog.cpp, Security::CryptoTab::setup()
@@ -2177,6 +2178,11 @@ void MessageComposer::pgpSignedMsg( const QByteArray& cText, Kleo::CryptoMessage
   QByteArray signature;
   const GpgME::SigningResult res =
     job->exec( signingKeys, cText, signingMode( format ), signature );
+  {
+      std::stringstream ss;
+      ss << res;
+      kdDebug(5006) << ss.str().c_str() << endl;
+  }
   if ( res.error().isCanceled() ) {
     kdDebug() << "signing was canceled by user" << endl;
     return;
@@ -2226,6 +2232,11 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
 
   const GpgME::EncryptionResult res =
     job->exec( encryptionKeys, cText, true /* we do ownertrust ourselves */, encryptedBody );
+  {
+      std::stringstream ss;
+      ss << res;
+      kdDebug(5006) << ss.str().c_str() << endl;
+  }
   if ( res.error().isCanceled() ) {
     kdDebug() << "encryption was canceled by user" << endl;
     return Kpgp::Canceled;
@@ -2269,6 +2280,11 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBo
 
   const std::pair<GpgME::SigningResult,GpgME::EncryptionResult> res =
     job->exec( signingKeys, encryptionKeys, cText, false, encryptedBody );
+  {
+      std::stringstream ss;
+      ss << res.first << '\n' << res.second;
+      kdDebug(5006) << ss.str().c_str() << endl;
+  }
   if ( res.first.error().isCanceled() || res.second.error().isCanceled() ) {
     kdDebug() << "encrypt/sign was canceled by user" << endl;
     return Kpgp::Canceled;

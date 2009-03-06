@@ -108,6 +108,7 @@
 
 // other headers
 #include <memory>
+#include <sstream>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -475,6 +476,9 @@ namespace KMail {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       }
+      std::stringstream ss;
+      ss << result;
+      kdDebug(5006) << ss.str().c_str() << endl;
       signatures = result.signatures();
     }
 
@@ -718,6 +722,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = job->exec( ciphertext, plainText );
       const GpgME::DecryptionResult & decryptResult = res.first;
       const GpgME::VerificationResult & verifyResult = res.second;
+      std::stringstream ss;
+      ss << decryptResult << '\n' << verifyResult;
+      kdDebug(5006) << ss.str().c_str() << endl;
       signatureFound = verifyResult.signatures().size() > 0;
       signatures = verifyResult.signatures();
       bDecryptionOk = !decryptResult.error();
