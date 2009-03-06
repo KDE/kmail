@@ -808,6 +808,40 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
   viewItemJobStep();
 }
 
+void Model::checkIfDateChanged()
+{
+  // This function is called by MessageListView::Core::Manager once in a while (every 1 minute or sth).
+  // It is used to check if the current date has changed (with respect to mTodayDate).
+  //
+  // Our message items cache the formatted dates (as formatting them
+  // on the fly would be too expensive). We also cache the labels of the groups which often display dates.
+  // When the date changes we would need to fix all these strings.
+  //
+  // A dedicated algorithm to refresh the labels of the items would be either too complex
+  // or would block on large trees. Fixing the labels of the groups is also quite hard...
+  //
+  // So to keep the things simple we just reload the view.
+
+  if ( !mStorageModel )
+    return; // nothing to do
+
+  if ( mLoading )
+    return; // not now
+
+  if ( !mViewItemJobs->isEmpty() )
+    return; // not now
+
+  if ( rand() % 2 )
+    return; // date not changed
+
+  if ( mTodayDate.day() == QDate::currentDate().day() )
+    return; // date not changed
+
+  // date changed, reload the view (and try to preserve the current selection)
+  setStorageModel( mStorageModel, PreSelectLastSelected );
+}
+
+
 void Model::abortMessagePreSelection()
 {
   // This is used to abort a message pre-selection before we actually could apply it.

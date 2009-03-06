@@ -24,8 +24,10 @@
 #include "messagelistview/core/sortorder.h"
 #include <QList>
 #include <QHash>
+#include <QObject>
 
 class QPixmap;
+class QTimer;
 
 namespace KMime
 {
@@ -63,20 +65,22 @@ class Widget;
  * before the first MessageListView::Widget and destroyed after the last MessageListView::Widget.
  * But in KMail this is always the case :)
  */
-class Manager
+class Manager : public QObject
 {
+  Q_OBJECT
 protected:
   Manager();
   ~Manager();
 
 private:
-  static Manager *mInstance;
+  static Manager * mInstance;
   QList< Widget * > mWidgetList;
   QHash< QString, Aggregation * > mAggregations;
   QHash< QString, Theme * > mThemes;
   KMime::DateFormatter * mDateFormatter;
   bool mDisplayMessageToolTips;
   QString mCachedLocalizedUnknownText;
+  QTimer * mHeartBeatTimer;
 
   // pixmaps, never null
 
@@ -257,6 +261,15 @@ public:
    * Explicitly reloads the contents of all the widgets.
    */
   void reloadAllWidgets();
+
+protected slots:
+  /**
+   * This slot is connected to a very slow timer (1 minute).
+   * It actually sweeps through the registered models calling
+   * checkIfDateChanged() in order to fix date displays.
+   * Later we could find other uses for the heartbeat.
+   */
+  void slotHeartBeat();
 
 private:
   // internal configuration stuff
