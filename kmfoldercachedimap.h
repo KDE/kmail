@@ -534,17 +534,27 @@ private:
   bool mFolderRemoved;
   //bool mHoldSyncs;
   bool mRecurse;
-  /** Set to true by setStatus. Indicates that the client has changed
-      the status of at least one mail. The mail flags will therefore be
-      uploaded to the server, overwriting the server's notion of the status
-      of the mails in this folder. */
-  bool mStatusChangedLocally;
+
   /// Set to true when the foldertype annotation needs to be set on the next sync
   bool mAnnotationFolderTypeChanged;
   /// Set to true when the "incidences-for" annotation needs to be set on the next sync
   bool mIncidencesForChanged;
   /// Set to true when the "sharedseen" annotation needs to be set on the next sync
   bool mSharedSeenFlagsChanged;
+
+ /**
+  * UIDs added by setStatus. Indicates that the client has changed
+  * the status of those mails. The mail flags for changed mails will be
+  * uploaded to the server, overwriting the server's notion of the status
+  * of the mails in this folder.
+  */
+  QValueList<ulong> mUIDsOfLocallyChangedStatuses;
+
+ /**
+  * Same as above, but uploads the flags of all mails, even if not all changed.
+  * Only still here for config compatibility.
+  */
+  bool mStatusChangedLocally;
 
   QStringList mNamespacesToList;
   int mNamespacesToCheck;
