@@ -230,6 +230,9 @@ void View::applyThemeColumns()
   if ( !mTheme )
     return;
 
+  kDebug() << "Apply theme columns";
+
+
   const QList< Theme::Column * > & columns = mTheme->columns();
 
   if ( columns.count() < 1 )
@@ -278,12 +281,15 @@ void View::applyThemeColumns()
   {
     if ( ( *it )->currentlyVisible() || ( idx == 0 ) )
     {
+      kDebug() << "Column " << idx << " will be visible";
       // Column visible
       int savedWidth = ( *it )->currentWidth();
       int hintWidth = mDelegate->sizeHintForItemTypeAndColumn( Item::Message, idx ).width();
       totalVisibleWidthHint += savedWidth > 0 ? savedWidth : hintWidth;
       lColumnSizeHints.append( hintWidth );
+      kDebug() << "Column " << idx << " size hint is " << hintWidth;
     } else {
+      kDebug() << "Column " << idx << " will be not visible";
       // The column is not visible
       lColumnSizeHints.append( -1 ); // dummy
     }
@@ -422,9 +428,12 @@ void View::applyThemeColumns()
 
   idx = 0;
 
+  kDebug() << "Entering colum show/hide loop";
+
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
     bool visible = ( idx == 0 ) || ( *it )->currentlyVisible();
+    kDebug() << "Column " << idx << " visible " << visible;
     ( *it )->setCurrentlyVisible( visible );
     header()->setSectionHidden( idx, !visible );
     idx++;
@@ -441,7 +450,7 @@ void View::applyThemeColumns()
   {
     if ( ( *it )->currentlyVisible() )
     {
-      // kDebug() << "Resize section " << idx << " to " << lColumnWidths[ idx ];
+      kDebug() << "Resize section " << idx << " to " << lColumnWidths[ idx ];
       ( *it )->setCurrentWidth( lColumnWidths[ idx ] );
       header()->resizeSection( idx, lColumnWidths[ idx ] );
       totalVisibleWidth += lColumnWidths[ idx ];
@@ -501,6 +510,11 @@ void View::saveThemeColumnState()
   if ( !mTheme )
     return;
 
+  if ( mNeedToApplyThemeColumns )
+    return; // don't save the state if it hasn't been applied at all
+
+  kDebug() << "Save theme column state";
+
   const QList< Theme::Column * > & columns = mTheme->columns();
 
   if ( columns.count() < 1 )
@@ -513,9 +527,11 @@ void View::saveThemeColumnState()
   {
     if ( header()->isSectionHidden( idx ) )
     {
+      kDebug() << "Section " << idx << " is hidden";
       ( *it )->setCurrentlyVisible( false );
       ( *it )->setCurrentWidth( -1 ); // reset (hmmm... we could use the "don't touch" policy here too...)
     } else {
+      kDebug() << "Section " << idx << " is visible and has size " << header()->sectionSize( idx );
       ( *it )->setCurrentlyVisible( true );
       ( *it )->setCurrentWidth( header()->sectionSize( idx ) );
     }
