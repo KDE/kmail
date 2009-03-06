@@ -202,7 +202,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
     /*mHoldSyncs( false ),*/
     mFolderRemoved( false ),
     mRecurse( true ),
-    mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
+    mStatusChangedLocally( false ),
+    mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ),
     mSharedSeenFlagsChanged( false ),
     mPersonalNamespacesCheckDone( true ),
@@ -306,6 +307,10 @@ void KMFolderCachedImap::readConfig()
   KMFolderMaildir::readConfig();
 
   mStatusChangedLocally = group.readEntry( "StatusChangedLocally", false );
+  QStringList uidsChanged = group.readEntry( "UIDStatusChangedLocally", QStringList() );
+  foreach( const QString &uid, uidsChanged ) {
+    mUIDsOfLocallyChangedStatuses.append( uid.toUInt() );
+  }
   mAnnotationFolderTypeChanged = group.readEntry( "AnnotationFolderTypeChanged", false );
   mIncidencesForChanged = group.readEntry( "IncidencesForChanged", false );
   mSharedSeenFlagsChanged = group.readEntry( "SharedSeenFlagsChanged", false );
@@ -313,12 +318,12 @@ void KMFolderCachedImap::readConfig()
     mImapPathCreation = group.readEntry("ImapPathCreation");
   }
 
-  QStringList uids = group.readEntry( "UIDSDeletedSinceLastSync", QStringList() );
+  QStringList delUids = group.readEntry( "UIDSDeletedSinceLastSync" , QStringList() );
 #if MAIL_LOSS_DEBUGGING
   kDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyUrl() << endl << uids;
 #endif
-  for ( QStringList::iterator it = uids.begin(); it != uids.end(); it++ ) {
-      mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
+  for ( QStringList::iterator it = delUids.begin(); it != delUids.end(); it++ ) {
+    mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
   }
 }
 
@@ -334,7 +339,14 @@ void KMFolderCachedImap::writeConfig()
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
   configGroup.writeEntry( "FolderAttributes", mFolderAttributes );
-  configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
+
+  // StatusChangedLocally is always false, as we use UIDStatusChangedLocally now
+  configGroup.writeEntry( "StatusChangedLocally", false );
+  QStringList uidsToWrite;
+  foreach( const ulong uid, mUIDsOfLocallyChangedStatuses ) {
+    uidsToWrite.append( QString::number( uid ) );
+  }
+  configGroup.writeEntry( "UIDStatusChangedLocally", uidsToWrite );
   if ( !mImapPathCreation.isEmpty() ) {
     if ( mImapPath.isEmpty() ) {
       configGroup.writeEntry( "ImapPathCreation", mImapPathCreation );
@@ -958,12 +970,13 @@ void KMFolderCachedImap::serverSyncInternal()
       // Upload flags, unless we know from the ACL that we're not allowed
       // to do that or they did not change locally
       if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::WriteFlags ) ) {
-        if ( mStatusChangedLocally ) {
+        if ( !mUIDsOfLocallyChangedStatuses.isEmpty() || mStatusChangedLocally ) {
           uploadFlags();
           break;
         }
-      } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
-        if ( mStatusChangedLocally ) {
+      }
+      else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
+        if ( !mUIDsOfLocallyChangedStatuses.isEmpty() || mStatusChangedLocally ) {
           uploadSeenFlags();
           break;
         }
@@ -1439,6 +1452,10 @@ void KMFolderCachedImap::uploadFlags()
         // Either not a valid message or not one that is on the server yet
         continue;
       }
+      if ( mUIDsOfLocallyChangedStatuses.indexOf( msg->UID() ) < 0 && !mStatusChangedLocally ) {
+        // This message has not had its status changed locally
+        continue;
+      }
 
       QString flags = KMFolderImap::statusToFlags( msg->status(), mPermanentFlags );
       // Collect uids for each typem of flags.
@@ -1481,6 +1498,11 @@ void KMFolderCachedImap::uploadSeenFlags()
       if( !msg || msg->UID() == 0 )
         // Either not a valid message or not one that is on the server yet
         continue;
+
+      if ( mUIDsOfLocallyChangedStatuses.indexOf( msg->UID() ) < 0 && !mStatusChangedLocally ) {
+        // This message has not had its status changed locally
+        continue;
+      }
 
       if ( msg->status().isOld() || msg->status().isRead() )
         seenUids.append( msg->UID() );
@@ -1539,13 +1561,21 @@ void KMFolderCachedImap::slotImapStatusChanged( KMFolder *folder, const QString&
 void KMFolderCachedImap::setStatus( int idx, const MessageStatus &status, bool toggle )
 {
   KMFolderMaildir::setStatus( idx, status, toggle );
-  mStatusChangedLocally = true;
+  const KMMsgBase *msg = getMsgBase( idx );
+  Q_ASSERT( msg );
+  if ( msg )
+    mUIDsOfLocallyChangedStatuses.append( msg->UID() );
 }
 
 void KMFolderCachedImap::setStatus( QList<int> &ids, const MessageStatus &status, bool toggle )
 {
   KMFolderMaildir::setStatus( ids, status, toggle );
-  mStatusChangedLocally = true;
+  foreach( const int id, ids ) {
+    const KMMsgBase *msg = getMsgBase( id );
+    Q_ASSERT( msg );
+    if ( msg )
+      mUIDsOfLocallyChangedStatuses.append( msg->UID() );
+  }
 }
 
 /* Upload new folders to server */
@@ -1902,7 +1932,8 @@ void KMFolderCachedImap::getMessagesResult( KMail::FolderJob *job, bool lastSet 
   } else {
     if ( lastSet ) { // always true here (this comes from online-imap...)
       mContentState = imapFinished;
-      mStatusChangedLocally = false; // we are up to date again
+      mUIDsOfLocallyChangedStatuses.clear(); // we are up to date again
+      mStatusChangedLocally = false;
     }
   }
   serverSyncInternal();
