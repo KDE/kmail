@@ -193,6 +193,10 @@ namespace KMail {
                                            const std::vector<GpgME::Signature> & paramSignatures = std::vector<GpgME::Signature>(),
                                            bool hideErrors=false );
 
+    /** Writes out the block that we use when the node is encrypted,
+        but we're deferring decryption for later. */
+    void writeDeferredDecryptionBlock();
+
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     bool okDecryptMIME( partNode& data,
