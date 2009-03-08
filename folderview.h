@@ -582,7 +582,7 @@ protected:
 
   /**
    * Internal helper for moveOrCopyFolders needed to manage DND correctly.
-   * Returns true if the operation can be succesfuly initiated and false otherwise.
+   * Returns true if the operation can be successfully initiated and false otherwise.
    */
   bool moveOrCopyFoldersInternal( const QList<QPointer<KMFolder> > &sources, KMFolder* destination, bool move );
 

@@ -2056,7 +2056,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
     attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Delete );
     action->setEnabled( canChange );
   }
-  if ( name.endsWith( ".xia", Qt::CaseInsensitive ) &&
+  if ( name.endsWith( QLatin1String(".xia"), Qt::CaseInsensitive ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     action = menu->addAction( i18n( "Decrypt With Chiasmus..." ) );
     connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );

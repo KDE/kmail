@@ -428,7 +428,7 @@ void View::applyThemeColumns()
 
   idx = 0;
 
-  kDebug() << "Entering colum show/hide loop";
+  kDebug() << "Entering column show/hide loop";
 
   for ( it = columns.begin(); it != columns.end(); ++it )
   {
@@ -1177,7 +1177,7 @@ void View::growOrShrinkExistingSelection( const QModelIndex &newSelectedIndex, b
   // find out the actual selection range
   const QItemSelection selection = selectionModel()->selection();
 
-  foreach ( QItemSelectionRange range, selection )
+  foreach ( const QItemSelectionRange &range, selection )
   {
     // We're asking the model for the index as range.topLeft() and range.bottomRight()
     // can return indexes in invisible columns which have a null visualRect().
@@ -1221,7 +1221,7 @@ void View::growOrShrinkExistingSelection( const QModelIndex &newSelectedIndex, b
       } else {
         // selecting something below the top: shrink selection
         QModelIndexList selectedIndexes = selection.indexes();
-        foreach ( QModelIndex idx, selectedIndexes )
+        foreach ( const QModelIndex &idx, selectedIndexes )
         {
           if ( ( idx.column() == 0 ) && ( visualRect( idx ).top() > selectedVisualCoordinate ) )
             selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Deselect );
@@ -1235,7 +1235,7 @@ void View::growOrShrinkExistingSelection( const QModelIndex &newSelectedIndex, b
       } else {
         // selecting something above bottom: shrink selection
         QModelIndexList selectedIndexes = selection.indexes();
-        foreach ( QModelIndex idx, selectedIndexes )
+        foreach ( const QModelIndex &idx, selectedIndexes )
         {
           if ( ( idx.column() == 0 ) && ( visualRect( idx ).top() < selectedVisualCoordinate ) )
             selectionModel()->select( idx, QItemSelectionModel::Rows | QItemSelectionModel::Deselect );

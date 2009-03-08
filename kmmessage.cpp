@@ -4065,8 +4065,8 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
        partSpecifier != "TEXT" )
   {
     QString specifier = partSpecifier;
-    if ( partSpecifier.endsWith(".HEADER") ||
-         partSpecifier.endsWith(".MIME") ) {
+    if ( partSpecifier.endsWith( QLatin1String(".HEADER") ) ||
+         partSpecifier.endsWith( QLatin1String(".MIME") ) ) {
       // get the parent bodypart
       specifier = partSpecifier.section( '.', 0, -2 );
     }
@@ -4078,7 +4078,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
       kWarning(5006) << "Can not find part" << specifier;
       return;
     }
-    if ( partSpecifier.endsWith(".MIME") )
+    if ( partSpecifier.endsWith( QLatin1String(".MIME") ) )
     {
       // update headers
       // get rid of EOL
@@ -4088,7 +4088,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
       mLastUpdated->Headers().DeleteAllFields();
       mLastUpdated->Headers().FromString( content );
       mLastUpdated->Headers().Parse();
-    } else if ( partSpecifier.endsWith(".HEADER") )
+    } else if ( partSpecifier.endsWith( QLatin1String(".HEADER") ) )
     {
       // update header of embedded message
       mLastUpdated->Body().Message()->Headers().FromString( content );
@@ -4123,7 +4123,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     mMsg->Body().Parse();
   }
   mNeedsAssembly = true;
-  if (! partSpecifier.endsWith(".HEADER") )
+  if (! partSpecifier.endsWith( QLatin1String(".HEADER") ) )
   {
     // notify observers
     notify();

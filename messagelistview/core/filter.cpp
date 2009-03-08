@@ -78,8 +78,8 @@ bool Filter::isEmpty() const
 void Filter::clear()
 {
   mStatusMask = 0;
-  mSearchString = QString();
-  mTagId = QString();
+  mSearchString.clear();
+  mTagId.clear();
 }
 
 

@@ -852,13 +852,13 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         // twice, which confuses KHTML (especially with a signed
         // multipart/alternative message, the signature bars get rendered at the
         // wrong place)
-        bodyText = bodyText.replace( "<html>", QString(), Qt::CaseInsensitive );
-        bodyText = bodyText.replace( "<head>", QString(), Qt::CaseInsensitive );
-        bodyText = bodyText.replace( "</head>", QString(), Qt::CaseInsensitive );
+        bodyText = bodyText.remove( "<html>", Qt::CaseInsensitive );
+        bodyText = bodyText.remove( "<head>", Qt::CaseInsensitive );
+        bodyText = bodyText.remove( "</head>", Qt::CaseInsensitive );
         QRegExp bodyRegExp( "<body.*>" ); //the body tag might have additional attributes,
         bodyRegExp.setMinimal( true );    //so make sure to match them as well
         bodyRegExp.setCaseSensitivity( Qt::CaseInsensitive );
-        bodyText = bodyText.replace( bodyRegExp, QString() );
+        bodyText = bodyText.remove( bodyRegExp );
 
         // Strip </BODY> and </HTML> from end.
         // We must do this, or else the message will not be displayed correctly

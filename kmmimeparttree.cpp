@@ -435,7 +435,7 @@ void KMMimePartTreeItem::correctSize()
 void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
 {
   QString mimetype = mime.toLower();
-  if ( mimetype.startsWith( "multipart/" ) ) {
+  if ( mimetype.startsWith( QLatin1String("multipart/") ) ) {
     setText( columnType, mimetype );
     setIcon( columnDescription, QIcon( SmallIcon("folder") ) );
   } else if ( mimetype == "application/octet-stream" ) {

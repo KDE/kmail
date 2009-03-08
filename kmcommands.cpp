@@ -3057,7 +3057,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
     return;
 
   // FIXME: better detection of mimetype??
-  if ( !mAtmName.endsWith( ".xia", Qt::CaseInsensitive ) )
+  if ( !mAtmName.endsWith( QLatin1String(".xia"), Qt::CaseInsensitive ) )
     return;
 
   const Kleo::CryptoBackend::Protocol * chiasmus =

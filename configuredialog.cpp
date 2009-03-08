@@ -3338,7 +3338,7 @@ void ComposerPage::CharsetTab::save() {
   QStringList charsetList = mCharsetListEditor->stringList();
   QStringList::Iterator it = charsetList.begin();
   for ( ; it != charsetList.end() ; ++it )
-    if ( (*it).endsWith("(locale)") )
+    if ( (*it).endsWith( QLatin1String("(locale)") ) )
       (*it) = "locale";
   composer.writeEntry( "pref-charsets", charsetList );
   composer.writeEntry( "force-reply-charset",

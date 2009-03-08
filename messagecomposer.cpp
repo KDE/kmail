@@ -1400,13 +1400,13 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
 {
   kDebug() << "Starting to compose message";
 
-  // Handle Inline OpenPGP seperatly
+  // Handle Inline OpenPGP separately
   if ( format == Kleo::InlineOpenPGPFormat ) {
     composeInlineOpenPGPMessage( theMessage, doSign, doEncrypt );
     return;
   }
 
-  // Handle Chiasmus seperatly
+  // Handle Chiasmus separately
   if ( mEncryptWithChiasmus ) {
     composeChiasmusMessage( theMessage, format );
     return;
@@ -1421,12 +1421,12 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   // or encryption.
   // The main body part also contains attachments that have the same signing / encryption
   // policy like the composer text.
-  // Attachments outside the main body part are signed / encrypted seperatly later in
+  // Attachments outside the main body part are signed / encrypted separately later in
   // addBodyAndAttachments().
   // Thus, the main body part can be multipart/alternative for HTML mails,
   // multipart/related for HTML mails with images, text/plain for plain old mails
-  // or multipart/mixed for messages with attachments (more specifc, 'early' attachments
-  // that are not added seperatly later).
+  // or multipart/mixed for messages with attachments (more specific, 'early' attachments
+  // that are not added separately later).
   //
   // There are two main body parts: mOldBodyPart and mNewBodyPart.
   // mOldBodyPart is the main body part which we create here. mNewBodyPart is the main body
@@ -1626,7 +1626,7 @@ QByteArray MessageComposer::innerBodypartBody( KMMessage &theMessage, bool doSig
   else {
 
     // Ok, here we add a text/plain and a text/html part to the main body,
-    // seperated by a boundary.
+    // separated by a boundary.
 
     // Calculate a boundary string
     QByteArray boundaryCStr;  // storing boundary string data
@@ -1762,7 +1762,7 @@ shared_ptr<DwBodyPart> MessageComposer::imageBodyPart( KMMessage &theMessage,
   imageBodyPart.setSubtypeStr( "related" );
   imageBodyPart.setContentDisposition( "inline" );
 
-  // Create the body of the body part, which contains all images seperated by boundaries, and
+  // Create the body of the body part, which contains all images separated by boundaries, and
   // the old multipart/alternative body
   QByteArray imageBodyPartBody;
   imageBodyPartBody += "\n--";
@@ -1829,7 +1829,7 @@ shared_ptr<DwBodyPart> MessageComposer::mixedBodyPart( KMMessage &theMessage,
   mixedBodyPart.setSubtypeStr( "mixed" );
   mixedBodyPart.setContentDisposition( "inline" );
 
-  // Create the body of the body part, which contains all attachments seperated by boundaries, and
+  // Create the body of the body part, which contains all attachments separated by boundaries, and
   // the old image body part
   QByteArray mixedBodyPartBody;
   mixedBodyPartBody += "\n--";

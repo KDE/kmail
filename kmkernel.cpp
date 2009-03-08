@@ -297,7 +297,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     // not called with "-session foo"
     for(int i= 0; i < args->count(); i++)
     {
-      if (args->arg(i).startsWith("mailto:", Qt::CaseInsensitive))
+      if (args->arg(i).startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive))
         to += args->url(i).path() + ", ";
       else {
         QString tmpArg = args->arg(i);

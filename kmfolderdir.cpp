@@ -201,13 +201,13 @@ bool KMFolderDir::reload(void)
   {
     const QString fname = fileInfo.fileName();
     const bool fileIsHidden = fname.startsWith('.');
-    if ( fileIsHidden && !fname.endsWith( ".directory" ) ) {
+    if ( fileIsHidden && !fname.endsWith( QLatin1String(".directory") ) ) {
       // ignore all hidden files except our subfolder containers
       continue;
     }
     if ( fname == ".directory"
 #ifdef KMAIL_SQLITE_INDEX
-    || fname.endsWith( ".index.db" ) 
+    || fname.endsWith( QLatin1String(".index.db") ) 
 #endif
     ) {
       // ignore .directory and *.index.db files (not created by us)
@@ -215,7 +215,7 @@ bool KMFolderDir::reload(void)
     }
     // Collect subdirectories.
     if ( fileInfo.isDir() &&
-         fileIsHidden && fname.endsWith( ".directory" ) )
+         fileIsHidden && fname.endsWith( QLatin1String(".directory") ) )
     {
        dirs.insert(fname);
        continue;

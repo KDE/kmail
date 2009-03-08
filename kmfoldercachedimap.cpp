@@ -277,7 +277,7 @@ void KMFolderCachedImap::readConfig()
     mAnnotationFolderType = group.readEntry( "Annotation-FolderType" );
     // if there is an annotation, it has to be XML
     if ( !mAnnotationFolderType.isEmpty() &&
-         !mAnnotationFolderType.startsWith( "mail" ) ) {
+         !mAnnotationFolderType.startsWith( QLatin1String("mail") ) ) {
       kmkernel->iCalIface().setStorageFormat( folder(), StorageXML );
     }
   }
@@ -323,7 +323,7 @@ void KMFolderCachedImap::readConfig()
 #if MAIL_LOSS_DEBUGGING
   kDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyUrl() << endl << uids;
 #endif
-  for ( QStringList::iterator it = delUids.begin(); it != delUids.end(); it++ ) {
+  for ( QStringList::iterator it = delUids.begin(); it != delUids.end(); ++it ) {
     mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
   }
 }

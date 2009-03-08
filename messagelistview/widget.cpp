@@ -134,7 +134,7 @@ void Widget::viewMessageSelected( Core::MessageItem *msg )
     // No need to release the last selected message if it is the new selected
     // message is going to be the same.
     // This fixes a crash in KMMainWidget::slotMsgPopup(), which can activate
-    // an already active message in certain cirumstances. Releasing that message
+    // an already active message in certain circumstances. Releasing that message
     // would make all the message pointers invalid.
     if ( !selectedStaysSame ) {
       static_cast< StorageModel * >( storageModel() )->releaseMessage( mLastSelectedMessage );

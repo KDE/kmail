@@ -483,7 +483,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
        && itmime != attachmentMimetypes.constEnd()
        && iturl != attachmentURLs.constEnd();
        ++itname, ++iturl, ++itmime ){
-    bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
+    bool byname = !(*itmime).startsWith( QLatin1String("application/x-vnd.kolab.") );
     if( !updateAttachment( *msg, *iturl, *itname, *itmime, byname ) ){
       kWarning() << "Attachment error, can not add Incidence.";
       bAttachOK = false;
@@ -908,7 +908,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
           && itmime != attachmentMimetypes.constEnd()
           && itname != attachmentNames.constEnd();
           ++iturl, ++itname, ++itmime ){
-        bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
+        bool byname = !(*itmime).startsWith( QLatin1String("application/x-vnd.kolab.") );
         if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, byname ) ){
           kDebug() << "Attachment error, can not update attachment" << *iturl;
           break;
@@ -1590,7 +1590,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
     kWarning() << "path is too short:" << path;
     return;
   }
-  if ( path.startsWith( "/INBOX/", Qt::CaseInsensitive ) ) {
+  if ( path.startsWith( QLatin1String("/INBOX/"), Qt::CaseInsensitive ) ) {
     // If INBOX, replace it with the username (which is user@domain)
     path = path.mid( secondSlash );
     path.prepend( folderURL.user() );

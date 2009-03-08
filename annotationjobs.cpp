@@ -119,7 +119,7 @@ void AnnotationJobs::MultiGetAnnotationJob::slotResult( KJob *job )
   const AnnotationList& lst = getJob->annotations();
   for ( int i = 0 ; i < lst.size() ; ++ i ) {
     kDebug(5006) <<"found annotation" << lst[i].name <<" =" << lst[i].value;
-    if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
+    if ( lst[i].name.startsWith( QLatin1String("value.") ) ) { // value.priv or value.shared
       found = true;
       value = lst[i].value;
       break;
@@ -227,7 +227,7 @@ void AnnotationJobs::MultiUrlGetAnnotationJob::slotResult( KJob *job )
   const AnnotationList& lst = getJob->annotations();
   for ( int i = 0 ; i < lst.size() ; ++ i ) {
     kDebug(5006) <<"MultiURL: found annotation" << lst[i].name <<" =" << lst[i].value <<" for path:" << path;
-    if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
+    if ( lst[i].name.startsWith( QLatin1String("value.") ) ) { // value.priv or value.shared
       mAnnotations.insert( path, lst[i].value );
       break;
     }

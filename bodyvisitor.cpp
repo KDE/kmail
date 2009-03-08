@@ -113,7 +113,7 @@ QList<KMMessagePart*> BodyVisitor::partsToLoad()
       break;
     }
 
-    if ( headerCheck && !part->partSpecifier().endsWith(".HEADER") ) {
+    if ( headerCheck && !part->partSpecifier().endsWith(QLatin1String(".HEADER")) ) {
       // this is an embedded simple message (not multipart) so we get
       // no header part from imap. As we probably need to load the header
       // (e.g. in smart or inline mode) we add a fake part that is not
@@ -140,12 +140,12 @@ QList<KMMessagePart*> BodyVisitor::partsToLoad()
          parentNeedsLoading( part ) ||
          addPartToList( part ) ) {
       if ( part->typeStr() != "MULTIPART" ||
-           part->partSpecifier().endsWith(".HEADER") ) {
+           part->partSpecifier().endsWith(QLatin1String(".HEADER")) ) {
         // load the part itself
         part->setLoadPart( true );
       }
     }
-    if ( !part->partSpecifier().endsWith(".HEADER") &&
+    if ( !part->partSpecifier().endsWith(QLatin1String(".HEADER")) &&
          part->typeStr() != "MULTIPART" ) {
       part->setLoadHeaders( true ); // load MIME header
     }
@@ -184,7 +184,7 @@ BodyVisitorSmart::BodyVisitorSmart() : BodyVisitor()
 bool BodyVisitorSmart::addPartToList( KMMessagePart *part )
 {
   // header of an encapsulated message
-  if ( part->partSpecifier().endsWith(".HEADER") ) {
+  if ( part->partSpecifier().endsWith(QLatin1String(".HEADER")) ) {
     return true;
   }
 
@@ -200,7 +200,7 @@ BodyVisitorInline::BodyVisitorInline() : BodyVisitor()
 //-----------------------------------------------------------------------------
 bool BodyVisitorInline::addPartToList( KMMessagePart *part )
 {
-  if ( part->partSpecifier().endsWith(".HEADER") ) {
+  if ( part->partSpecifier().endsWith(QLatin1String(".HEADER")) ) {
     // header of an encapsulated message
     return true;
   } else if ( part->typeStr() == "IMAGE" ) {
@@ -224,7 +224,7 @@ BodyVisitorHidden::BodyVisitorHidden() : BodyVisitor()
 bool BodyVisitorHidden::addPartToList( KMMessagePart *part )
 {
   // header of an encapsulated message
-  if ( part->partSpecifier().endsWith(".HEADER") ) {
+  if ( part->partSpecifier().endsWith(QLatin1String(".HEADER")) ) {
     return true;
   }
 

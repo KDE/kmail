@@ -346,7 +346,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     IncidencesFor incidencesFor() const { return mIncidencesFor; }
     void setIncidencesFor( IncidencesFor incfor );
 
-    /** Returns wether the seen flag is shared among all users or every users has her own seen flags (default). */
+    /** Returns whether the seen flag is shared among all users or every users has her own seen flags (default). */
     bool sharedSeenFlags() const { return mSharedSeenFlags; }
     /** Enable shared seen flags (requires server support). */
     void setSharedSeenFlags( bool b );

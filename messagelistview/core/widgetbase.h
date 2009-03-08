@@ -89,9 +89,9 @@ private:
   Theme * mTheme;                        ///< The currently set theme, a deep copy
   SortOrder mSortOrder;                  ///< The currently set sort order
   Filter * mFilter;                      ///< The currently applied filter, owned by us.
-  bool mStorageUsesPrivateTheme;         ///< true if the corrent folder does not use the global theme
-  bool mStorageUsesPrivateAggregation;   ///< true if the corrent folder does not use the global aggregation
-  bool mStorageUsesPrivateSortOrder;     ///< true if the corrent folder does not use the global sort order
+  bool mStorageUsesPrivateTheme;         ///< true if the current folder does not use the global theme
+  bool mStorageUsesPrivateAggregation;   ///< true if the current folder does not use the global aggregation
+  bool mStorageUsesPrivateSortOrder;     ///< true if the current folder does not use the global sort order
 public:
   /**
    * Sets the storage model for this Widget.

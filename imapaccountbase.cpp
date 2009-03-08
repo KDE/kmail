@@ -229,7 +229,7 @@ void ImapAccountBase::readConfig( KConfigGroup &config )
   namespaceDelim namespaceToDelimiter;
   for ( QStringList::ConstIterator it = entries.begin();
         it != entries.end(); ++it ) {
-    if ( (*it).startsWith( "Namespace:" ) ) {
+    if ( (*it).startsWith( QLatin1String("Namespace:") ) ) {
       QString key = (*it).right( (*it).length() - 10 );
       namespaceToDelimiter[key] = config.readEntry( *it, QString() );
     }
