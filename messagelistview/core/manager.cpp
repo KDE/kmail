@@ -713,7 +713,7 @@ void Manager::createDefaultThemes()
   add_theme_simple_text_column( s, i18n( "Most Recent Date" ), Theme::ContentItem::MostRecentDate, false, SortOrder::SortMessagesByDateTimeOfMostRecent, false, true );
   add_theme_simple_text_column( s, i18nc( "Size of a message", "Size" ), Theme::ContentItem::Size, false, SortOrder::SortMessagesBySize, false, false );
   add_theme_simple_icon_column( s, i18nc( "Attachement indication", "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, SortOrder::SortMessagesByNewUnreadStatus );
   add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, SortOrder::NoMessageSorting );
   add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), Theme::ContentItem::ImportantStateIcon, false, SortOrder::NoMessageSorting );
   add_theme_simple_icon_column( s, i18n( "Action Item" ), Theme::ContentItem::ActionItemStateIcon, false, SortOrder::SortMessagesByActionItemStatus );

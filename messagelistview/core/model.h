@@ -270,6 +270,11 @@ private:
   qint32 mCachedNewStatusBits;
 
   /**
+   * Cached bits that we use for fast status checks
+   */
+  qint32 mCachedNewOrUnreadStatusBits;
+
+  /**
    * Flag signaling a possibly long job batch. This is checked by other
    * classes and used to display some kind of "please wait" feedback to the user.
    */
@@ -542,7 +547,8 @@ private:
   {
     DateChanged = 1,
     MaxDateChanged = (1 << 1),
-    ActionItemStatusChanged = (1 << 2)
+    ActionItemStatusChanged = (1 << 2),
+    NewUnreadStatusChanged = (1 << 3)
   };
 
   /**

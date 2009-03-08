@@ -88,7 +88,8 @@ class SortOrder
       SortMessagesByReceiver,              ///< Sort the messages by receiver
       SortMessagesBySubject,               ///< Sort the messages by subject
       SortMessagesBySize,                  ///< Sort the messages by size
-      SortMessagesByActionItemStatus       ///< Sort the messages by the "Action Item" flag of status
+      SortMessagesByActionItemStatus,      ///< Sort the messages by the "Action Item" flag of status
+      SortMessagesByNewUnreadStatus        ///< Sort the messages by the "New/Unread" flags of status
       // Warning: Never add enum entries in the middle: always add them at the end (numeric values are stored in configuration)
     };
 

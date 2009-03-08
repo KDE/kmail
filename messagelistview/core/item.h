@@ -819,6 +819,41 @@ public:
   }
 };
 
+/**
+ * A helper class used with MessageListView::Item::childItemNeedsReSorting() and
+ * MessageListView::Item::insertChildItem().
+ */
+class ItemNewUnreadStatusComparator
+{
+public:
+  static inline bool firstGreaterOrEqual( Item * first, Item * second )
+  {
+    if ( first->status().isNew() )
+    {
+      // fist is new
+      if ( second->status().isNew() )
+        return first->date() >= second->date(); // both are new
+      // new comes always first with respect to non-new
+      return true;
+    }
+    if ( second->status().isNew() )
+      return false;
+    if ( first->status().isUnread() )
+    {
+      // fist is unread
+      if ( second->status().isUnread() )
+        return first->date() >= second->date(); // both are unread
+      // unread comes always first with respect to non-unread
+      return true;
+    }
+    if ( second->status().isUnread() )
+      return false;
+    // both are read
+    return first->date() >= second->date();
+  }
+};
+
+
 } // namespace Core
 
 } // namespace MessageListView

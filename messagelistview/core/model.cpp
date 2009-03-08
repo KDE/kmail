@@ -295,6 +295,7 @@ Model::Model( View *pParent )
 
   mCachedWatchedOrIgnoredStatusBits = KPIM::MessageStatus::statusIgnored().toQInt32() | KPIM::MessageStatus::statusWatched().toQInt32();
   mCachedNewStatusBits = KPIM::MessageStatus::statusNew().toQInt32();
+  mCachedNewOrUnreadStatusBits = KPIM::MessageStatus::statusNew().toQInt32() | KPIM::MessageStatus::statusUnread().toQInt32();
 }
 
 Model::~Model()
@@ -1830,6 +1831,13 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
               attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
           } // else to do status changed, but it doesn't match sorting order: no need to re-sort
         break;
+        case SortOrder::SortMessagesByNewUnreadStatus:
+          if ( propertyChangeMask & NewUnreadStatusChanged ) // todo status changed
+          {
+            if ( messageItemNeedsReSorting< ItemNewUnreadStatusComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+              attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
+          } // else new/unread status changed, but it doesn't match sorting order: no need to re-sort
+    break;
         default:
           // this kind of message sorting isn't affected by the property changes: nothing to do.
         break;
@@ -1897,6 +1905,13 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
         if ( messageItemNeedsReSorting< ItemActionItemStatusComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
           attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
       } // else to do status changed, but it doesn't match sorting order: no need to re-sort
+    break;
+    case SortOrder::SortMessagesByNewUnreadStatus:
+      if ( propertyChangeMask & NewUnreadStatusChanged ) // todo status changed
+      {
+        if ( messageItemNeedsReSorting< ItemNewUnreadStatusComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
+          attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
+      } // else new/unread status changed, but it doesn't match sorting order: no need to re-sort
     break;
     default:
       // this kind of message sorting isn't affected by property changes: nothing to do.
@@ -2167,6 +2182,9 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
     break;
     case SortOrder::SortMessagesByActionItemStatus:
       INSERT_MESSAGE_WITH_COMPARATOR( ItemActionItemStatusComparator )
+    break;
+    case SortOrder::SortMessagesByNewUnreadStatus:
+      INSERT_MESSAGE_WITH_COMPARATOR( ItemNewUnreadStatusComparator )
     break;
     case SortOrder::NoMessageSorting:
       pParent->appendChildItem( mModelForItemFunctions, mi );
@@ -3212,6 +3230,8 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
     time_t prevDate = message->date();
     time_t prevMaxDate = message->maxDate();
     bool toDoStatus = message->status().isToAct();
+    qint32 prevNewUnreadStatus = message->status().toQInt32() & mCachedNewOrUnreadStatusBits;
+
 
     mStorageModel->updateMessageItemData( message, row );
 
@@ -3223,6 +3243,8 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
        propertyChangeMask |= MaxDateChanged;
     if ( toDoStatus != message->status().isToAct() )
        propertyChangeMask |= ActionItemStatusChanged;
+    if ( prevNewUnreadStatus != ( message->status().toQInt32() & mCachedNewOrUnreadStatusBits ) )
+       propertyChangeMask |= NewUnreadStatusChanged;
 
     if ( propertyChangeMask )
     {

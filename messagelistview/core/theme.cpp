@@ -48,12 +48,14 @@ namespace Core
 //  0x1013  08.11.2008      Initial theme version, introduced when this piece of code has been moved into trunk.
 //  0x1014  12.11.2008      Added runtime column data: width and column visibility
 //  0x1015  03.03.2009      Added icon size
+//  0x1016  08.03.2009      Added support for sorting by New/Unread status
 //
-static const int gThemeCurrentVersion = 0x1015; // increase if you add new fields of change the meaning of some
+static const int gThemeCurrentVersion = 0x1016; // increase if you add new fields of change the meaning of some
 // you don't need to change the values below, but you might want to add new ones
 static const int gThemeMinimumSupportedVersion = 0x1013;
 static const int gThemeMinimumVersionWithColumnRuntimeData = 0x1014;
 static const int gThemeMinimumVersionWithIconSizeField = 0x1015;
+static const int gThemeMinimumVersionWithSortingByNewUnreadStatusAllowed = 0x1016;
 
 // the default icon size
 static const int gThemeDefaultIconSize = 16;
@@ -581,6 +583,17 @@ bool Theme::Column::load( QDataStream &stream, int themeVersion )
   {
     kDebug() << "Invalid message sorting";
     return false;
+  }
+
+  if ( themeVersion < gThemeMinimumVersionWithSortingByNewUnreadStatusAllowed )
+  {
+    // The default "Classic" theme "New/Unread" column had sorting disabled here.
+    // We want to be nice to the existing users and automatically set
+    // the new sorting method for this column (so they don't have to make the
+    // complex steps to set it by themselves).
+    // This piece of code isn't strictly required: it's just a niceness :)
+    if ( ( mMessageSorting == SortOrder::NoMessageSorting ) && ( mLabel == i18n( "New/Unread" ) ) )
+      mMessageSorting = SortOrder::SortMessagesByNewUnreadStatus;
   }
 
   // group header row count
