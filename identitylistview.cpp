@@ -113,7 +113,8 @@ namespace KMail {
     header()->setMovable( false );
     setAllColumnsShowFocus( true );
     setAlternatingRowColors( true );
-    setSortingEnabled( false ); // disabled
+    setSortingEnabled( true );
+    sortByColumn( 0, Qt::AscendingOrder );
     setSelectionMode( SingleSelection ); // ### Extended would be nicer...
     setColumnWidth( 0, 175 );
 
