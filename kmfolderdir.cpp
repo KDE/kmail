@@ -223,7 +223,7 @@ bool KMFolderDir::reload(void)
 
     // define folder parameters
     QString folderName;
-    KMFolderType folderType;
+    KMFolderType folderType = KMFolderTypeMaildir;
     bool withIndex = true;
     bool exportedSernums = true;
 
