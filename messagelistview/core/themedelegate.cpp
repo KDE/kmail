@@ -65,6 +65,10 @@ ThemeDelegate::~ThemeDelegate()
 void ThemeDelegate::setTheme( const Theme * theme )
 {
   mTheme = theme;
+
+  if ( !mTheme )
+    return; // hum
+
   // yep..we're violating const here
   // But most of the QStyledItemDelegate virtual methods are const and expect
   // const behaviour. So we need the const pointer to avoid compiler complains
