@@ -86,6 +86,7 @@
 #include <QByteArray>
 
 #include <algorithm>
+#include <sstream>
 #include <memory>
 
 #undef MessageBox // Windows: avoid clash between MessageBox define and Kleo::MessageBox
@@ -2294,6 +2295,11 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
   QByteArray signature;
   const GpgME::SigningResult res =
     job->exec( signingKeys, plainText, signingMode( format ), signature );
+  {
+      std::stringstream ss;
+      ss << res;
+      kDebug() << ss.str().c_str();
+  }
   if ( res.error().isCanceled() ) {
     kDebug(5006) <<"signing was canceled by user";
     return;
@@ -2345,6 +2351,11 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray &encryptedBody,
 
   const GpgME::EncryptionResult res =
     job->exec( encryptionKeys, plainText, true /* we do ownertrust ourselves */, encryptedBody );
+  {
+      std::stringstream ss;
+      ss << res;
+      kdDebug() << ss.str().c_str();
+  }
   if ( res.error().isCanceled() ) {
     kDebug(5006) <<"encryption was canceled by user";
     return Kpgp::Canceled;
@@ -2388,6 +2399,11 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray &encryptedBod
 
   const std::pair<GpgME::SigningResult,GpgME::EncryptionResult> res =
     job->exec( signingKeys, encryptionKeys, cText, false, encryptedBody );
+  {
+      std::stringstream ss;
+      ss << res.first << '\n' << res.second;
+      kdDebug() << ss.str().c_str();
+  }
   if ( res.first.error().isCanceled() || res.second.error().isCanceled() ) {
     kDebug(5006) <<"encrypt/sign was canceled by user";
     return Kpgp::Canceled;
