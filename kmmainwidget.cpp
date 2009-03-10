@@ -1280,6 +1280,7 @@ void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
   if ( whichPage != KMMainWidget::PropsGeneral )
     props.setPage( whichPage );
   props.exec();
+
   updateFolderMenu();
 }
 

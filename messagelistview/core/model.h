@@ -346,6 +346,13 @@ private:
    */
   Model * mModelForItemFunctions;
 
+  /**
+   * The cached result of StorageModel::containsOutboundMessages().
+   * We access this property at each incoming message and StorageModel::containsOutboundMessages() is
+   * virtual (so it's always an indirect function call). Caching makes sense.
+   */
+  bool mStorageModelContainsOutboundMessages;
+
 public:
 
   /**
