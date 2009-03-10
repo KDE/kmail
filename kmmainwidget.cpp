@@ -4292,10 +4292,45 @@ void KMMainWidget::updateMessageActions()
     mMsgActions->setCurrentMessage( 0 );
   }
 
+  //
+  // Here we have:
+  //
+  // - A list of selected messages stored in selectedSernums.
+  //   The selected messages might contain some invisible ones as a selected
+  //   collapsed node "includes" all the children in the selection.
+  // - A list of selected AND visible messages stored in selectedVisibleSernums.
+  //   This list does not contain children of selected and collapsed nodes.
+  //
+  // Now, actions can operate on:
+  // - Any set of messages
+  //     These are called "mass actions" and are enabled whenever we have a message selected.
+  //     In fact we should differentiate between actions that operate on visible selection
+  //     and those that operate on the selection as a whole (without considering visibility)...
+  // - A single thread
+  //     These are called "thread actions" and are enabled whenever all the selected messages belong
+  //     to the same thread. If the selection doesn't cover the whole thread then the action
+  //     will act on the whole thread anyway (thus will silently extend the selection)
+  // - A single message
+  //     And we have two sub-cases:
+  //     - The selection must contain exactly one message
+  //       These actions can't ignore the hidden messages and thus must be disabled if
+  //       the selection contains any.
+  //     - The selection must contain exactly one visible message
+  //       These actions will ignore the hidden message and thus can be enabled if
+  //       the selection contains any.
+  //     
+
   updateListFilterAction();
 
+  // can we apply strictly single message actions ? (this is false if the whole selection contains more than one message)
+  bool single_actions = count == 1;
+  // can we apply loosely single message actions ? (this is false if the VISIBLE selection contains more than one message)
+  bool singleVisibleMessageSelected = selectedVisibleSernums.count() == 1;
+  // can we apply "mass" actions to the selection ? (this is actually always true if the selection is non-empty)
   bool mass_actions = count >= 1;
+  // does the selection identify a single thread ?
   bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessageListView->isThreaded();
+  // can we apply flags to the selected messages ?
   bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
 
   mThreadStatusMenu->setEnabled( thread_actions );
@@ -4334,7 +4369,6 @@ void KMMainWidget::updateMessageActions()
   mMsgActions->forwardAttachedAction()->setEnabled( mass_actions );
   mMsgActions->forwardMenu()->setEnabled( mass_actions );
 
-  bool single_actions = count == 1;
   mMsgActions->editAction()->setEnabled( single_actions );
   mUseAction->setEnabled( single_actions && kmkernel->folderIsTemplates( mFolder ) );
   filterMenu()->setEnabled( single_actions );
@@ -4347,8 +4381,11 @@ void KMMainWidget::updateMessageActions()
     mCustomTemplateMenus->replyAllActionMenu()->setEnabled( single_actions );
   }
 
-  printAction()->setEnabled( single_actions );
-  viewSourceAction()->setEnabled( single_actions );
+  // "Print" will act on the current message: it will ignore any hidden selection
+  printAction()->setEnabled( singleVisibleMessageSelected );
+
+  // "View Source" will act on the current message: it will ignore any hidden selection
+  viewSourceAction()->setEnabled( singleVisibleMessageSelected );
 
   mSendAgainAction->setEnabled(
       single_actions &&
@@ -4357,6 +4394,7 @@ void KMMainWidget::updateMessageActions()
     );
 
   mSaveAsAction->setEnabled( mass_actions );
+
   bool mails = mFolder && mFolder->count();
   bool enable_goto_unread = mails
        || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders);
