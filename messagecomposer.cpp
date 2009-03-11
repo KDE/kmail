@@ -2354,7 +2354,7 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray &encryptedBody,
   {
       std::stringstream ss;
       ss << res;
-      kdDebug() << ss.str().c_str();
+      kDebug() << ss.str().c_str();
   }
   if ( res.error().isCanceled() ) {
     kDebug(5006) <<"encryption was canceled by user";
@@ -2402,7 +2402,7 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray &encryptedBod
   {
       std::stringstream ss;
       ss << res.first << '\n' << res.second;
-      kdDebug() << ss.str().c_str();
+      kDebug() << ss.str().c_str();
   }
   if ( res.first.error().isCanceled() || res.second.error().isCanceled() ) {
     kDebug(5006) <<"encrypt/sign was canceled by user";
