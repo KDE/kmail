@@ -831,9 +831,6 @@ void Model::checkIfDateChanged()
   if ( !mViewItemJobs->isEmpty() )
     return; // not now
 
-  if ( rand() % 2 )
-    return; // date not changed
-
   if ( mTodayDate.day() == QDate::currentDate().day() )
     return; // date not changed
 
