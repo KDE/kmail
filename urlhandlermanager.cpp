@@ -2,7 +2,7 @@
     urlhandlermanager.cpp
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002-2003 Klarï¿½vdalens Datakonsult AB
+    Copyright (c) 2002-2003 Klarälvdalens Datakonsult AB
     Copyright (c) 2003      Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
