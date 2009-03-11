@@ -1603,6 +1603,8 @@ class MessageLessThanByDate
 public:
   inline bool operator()( const MessageItem * mi1, const MessageItem * mi2 ) const
   {
+    if ( mi1->date() == mi2->date() )
+      return mi1 < mi2;
     return mi1->date() < mi2->date();
   }
 };
