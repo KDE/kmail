@@ -94,6 +94,32 @@ void AccountManager::readConfig(void)
     uint id = group.readEntry( "Id", 0 );
     KAccount::Type acctType = KAccount::typeForName( group.readEntry( "Type" ) );
     QString accountName = group.readEntry( "Name" );
+
+    // Fixes for config compatibilty: We do have an update script, but that is not reliable, because
+    // sometimes the scripts don't run (or already run in KDE3, but don't actually change anything)
+    // This is a big problem, since incorrect account type values make you loose your account settings,
+    // which in case of disconnected IMAP means you'll loose your cache.
+    // So for extra saftey, convert the account type values here as well.
+    // See also kmail-4.0-misc.pl
+    if ( acctType == -1 ) {
+      kWarning() << "Config upgrade failed! Danger! Trying to convert old account type for account" << accountName;
+      const QString accountTypeName = group.readEntry( "Type" );
+      if ( accountTypeName == "cachedimap" )
+        acctType = KAccount::DImap;
+      if ( accountTypeName == "pop" )
+        acctType = KAccount::Pop;
+      if ( accountTypeName == "local" )
+        acctType = KAccount::Local;
+      if ( accountTypeName == "maildir" )
+        acctType = KAccount::Maildir;
+      if ( accountTypeName == "imap" )
+        acctType = KAccount::Imap;
+      if ( acctType == -1 )
+        kWarning() << "Unrecognized account type. Your account settings are now lost, sorry.";
+      else
+        kDebug() << "Account type upgraded.";
+    }
+
     if ( accountName.isEmpty() )
       accountName = i18n( "Account %1", accountNum++ );
     KMAccount *account = create( acctType, accountName, id );
