@@ -174,6 +174,7 @@ void MainFolderView::folderToPopupMenuInternal(
 
       popup->setObjectName( "subMenu" );
       popup->setTitle( label );
+      popup->setIcon( KIcon( fvi->normalIcon() ) );
 
       folderToPopupMenuInternal( action, target, popup, fvi );
 
@@ -199,12 +200,13 @@ void MainFolderView::folderToPopupMenuInternal(
 
       if ( subMenu )
       {
+        popup->addSeparator();
+
         QAction* act;
         if ( action == MoveMessage || action == MoveFolder )
           act = popup->addAction( i18n("Move to This Folder") );
         else
           act = popup->addAction( i18n("Copy to This Folder") );
-        popup->addSeparator();
 
         act->setData( QVariant::fromValue<void *>( (void *)( fvi->folder() ) ) );
       }
@@ -214,7 +216,7 @@ void MainFolderView::folderToPopupMenuInternal(
     } else {
 
       // insert an item
-      QAction* act = menu->addAction( label );
+      QAction* act = menu->addAction( KIcon( fvi->normalIcon() ), label );
       if ( fvi->folder() )
         act->setData( QVariant::fromValue<void *>( (void *)( fvi->folder() ) ) );
       bool enabled = (fvi->folder() ? true : false);

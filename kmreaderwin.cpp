@@ -699,7 +699,7 @@ void KMReaderWin::createActions()
   connect( mCopyURLAction, SIGNAL(triggered(bool)), SLOT(slotUrlCopy()) );
 
   // open URL
-  mUrlOpenAction = new KAction( i18n( "Open URL" ), this );
+  mUrlOpenAction = new KAction( KIcon( "document-open" ), i18n( "Open URL" ), this );
   ac->addAction( "open_url", mUrlOpenAction );
   connect( mUrlOpenAction, SIGNAL(triggered(bool)), SLOT(slotUrlOpen()) );
 
