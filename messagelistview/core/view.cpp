@@ -888,7 +888,49 @@ void View::setCurrentThreadExpanded( bool expand )
 
 void View::setAllThreadsExpanded( bool expand )
 {
-  setChildrenExpanded( mModel->rootItem(), expand );
+  if ( mAggregation->grouping() == Aggregation::NoGrouping )
+  {
+    // we have no groups so threads start under the root item: just expand/unexpand all
+    setChildrenExpanded( mModel->rootItem(), expand );
+    return;
+  }
+
+  // grouping is in effect: must expand/unexpand one level lower
+
+  QList< Item * > * childList = mModel->rootItem()->childItems();
+  if ( !childList )
+    return;
+
+  foreach ( Item * item, *childList )
+    setChildrenExpanded( item, expand );
+}
+
+void View::setAllGroupsExpanded( bool expand )
+{
+  if ( mAggregation->grouping() == Aggregation::NoGrouping )
+    return; // no grouping in effect
+
+  Item * item = mModel->rootItem();
+
+  QList< Item * > * childList = item->childItems();
+  if ( !childList )
+    return;
+
+  foreach ( Item * item, *childList )
+  {
+    Q_ASSERT( item->type() == Item::GroupHeader );
+    QModelIndex idx = mModel->index( item, 0 );
+    Q_ASSERT( idx.isValid() );
+    Q_ASSERT( static_cast< Item * >( idx.internalPointer() ) == item );
+    if ( expand )
+    {
+      if ( !isExpanded( idx ) )
+        setExpanded( idx, true );
+    } else {
+      if ( isExpanded( idx ) )
+        setExpanded( idx, false );
+    }
+  }
 }
 
 void View::selectMessageItems( const QList< MessageItem * > &list )
@@ -2268,46 +2310,12 @@ bool View::event( QEvent *e )
 
 void View::slotCollapseAllGroups()
 {
-  if ( mAggregation->grouping() == Aggregation::NoGrouping )
-    return;
-
-  Item * item = mModel->rootItem();
-
-  QList< Item * > * childList = item->childItems();
-  if ( !childList )
-    return;
-
-  for ( QList< Item * >::Iterator it = childList->begin(); it != childList->end(); ++it )
-  {
-    Q_ASSERT( ( *it )->type() == Item::GroupHeader );
-    QModelIndex idx = mModel->index( *it, 0 );
-    Q_ASSERT( idx.isValid() );
-    Q_ASSERT( static_cast< Item * >( idx.internalPointer() ) == ( *it ) );
-    if ( isExpanded( idx ) )
-      setExpanded( idx, false );
-  }
+  setAllGroupsExpanded( false );
 }
 
 void View::slotExpandAllGroups()
 {
-  if ( mAggregation->grouping() == Aggregation::NoGrouping )
-    return;
-
-  Item * item = mModel->rootItem();
-
-  QList< Item * > * childList = item->childItems();
-  if ( !childList )
-    return;
-
-  for ( QList< Item * >::Iterator it = childList->begin(); it != childList->end(); ++it )
-  {
-    Q_ASSERT( ( *it )->type() == Item::GroupHeader );
-    QModelIndex idx = mModel->index( *it, 0 );
-    Q_ASSERT( idx.isValid() );
-    Q_ASSERT( static_cast< Item * >( idx.internalPointer() ) == ( *it ) );
-    if ( !isExpanded( idx ) )
-      setExpanded( idx, true );
-  }
+  setAllGroupsExpanded( true );
 }
 
 } // namespace Core

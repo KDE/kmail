@@ -185,7 +185,7 @@ private:
 
   /**
    * Owned invisible root item, useful to implement algorithms that not need
-   * to handle the special case of parentless items
+   * to handle the special case of parentless items. This is never 0.
    */
   Item *mRootItem;
 
@@ -391,6 +391,7 @@ public:
 
   /**
    * Returns the hidden root item that all the messages are (or will be) attached to.
+   * The returned value is never 0.
    */
   Item * rootItem() const
     { return mRootItem; };
