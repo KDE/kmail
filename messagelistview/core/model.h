@@ -51,6 +51,7 @@ class ViewItemJob;
 class Filter;
 class GroupHeaderItem;
 class Item;
+class Manager;
 class MessageItem;
 class Theme;
 class StorageModel;
@@ -76,6 +77,7 @@ class View;
 class Model : public QAbstractItemModel
 {
   friend class Item;
+  friend class Manager;
 
   Q_OBJECT
 public:
@@ -466,7 +468,15 @@ public:
   void deletePersistentSet( MessageItemSetReference ref );
 
 protected:
+
   void fillView();
+
+  /**
+   * This is called by MessageListView::Manager once in a while.
+   * It is a good place to check if the date has changed and
+   * trigger a view reload.
+   */
+  void checkIfDateChanged();
 
 protected slots:
   void viewItemJobStep();

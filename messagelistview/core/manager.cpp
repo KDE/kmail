@@ -27,8 +27,10 @@
 #include "messagelistview/core/configurethemesdialog.h"
 #include "messagelistview/core/widgetbase.h"
 #include "messagelistview/core/storagemodelbase.h"
+#include "messagelistview/core/model.h"
 
 #include <QPixmap>
+#include <QTimer>
 
 #include <kmime/kmime_dateformatter.h> // kdepimlibs
 
@@ -53,6 +55,7 @@ namespace Core
 Manager * Manager::mInstance = 0;
 
 Manager::Manager()
+  : QObject()
 {
   mInstance = this;
 
@@ -96,13 +99,25 @@ Manager::Manager()
 
   mCachedLocalizedUnknownText = i18nc( "Unknown date", "Unknown" ) ;
 
+  mHeartBeatTimer = new QTimer(this);
+  QObject::connect(
+      mHeartBeatTimer,SIGNAL(timeout()),
+      this,SLOT(slotHeartBeat())
+    );
+
+  mHeartBeatTimer->start(60000); // 1 minute
+
   loadConfiguration();
 }
 
 Manager::~Manager()
 {
+  mHeartBeatTimer->stop();
+
   saveConfiguration();
   removeAllAggregations();
+
+  delete mHeartBeatTimer;
 
   delete mPixmapMessageNew;
   delete mPixmapMessageUnread;
@@ -138,8 +153,20 @@ Manager::~Manager()
   ConfigureAggregationsDialog::cleanup(); // make sure it's dead
   ConfigureThemesDialog::cleanup(); // make sure it's dead
 
-
   mInstance = 0;
+}
+
+void Manager::slotHeartBeat()
+{
+  // sweep through all the models asking them to check their dates
+  for( QList< Widget * >::Iterator it = mWidgetList.begin(); it != mWidgetList.end(); ++it )
+  {
+    if ( !( *it )->view() )
+      continue;
+    if ( !( *it )->view()->model() )
+      continue;
+    ( *it )->view()->model()->checkIfDateChanged();
+  }
 }
 
 void Manager::showConfigureAggregationsDialog( Widget *requester, const QString &preselectAggregationId )
