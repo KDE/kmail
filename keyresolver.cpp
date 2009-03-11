@@ -122,7 +122,7 @@ static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
         return false;
   const std::vector<GpgME::UserID> uids = key.userIDs();
   for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
-    if ( !it->isRevoked() && it->validity() > GpgME::UserID::Marginal )
+    if ( !it->isRevoked() && it->validity() >= GpgME::UserID::Marginal )
       return true;
 #if 0
     else
