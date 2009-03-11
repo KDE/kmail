@@ -107,6 +107,7 @@ using KPIMUtils::LinkLocator;
 #include <QPointer>
 
 // other headers
+#include <sstream>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -471,6 +472,9 @@ namespace KMail {
           cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       }
+      std::stringstream ss;
+      ss << result;
+      kDebug() << ss.str().c_str();
       signatures = result.signatures();
     }
     else
@@ -719,6 +723,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = executor.exec( job, ciphertext, plainText );
       const GpgME::DecryptionResult decryptResult = res.first;
       const GpgME::VerificationResult verifyResult = res.second;
+      std::stringstream ss;
+      ss << decryptResult << '\n' << verifyResult;
+      kDebug() << ss.str().c_str();
       signatureFound = verifyResult.signatures().size() > 0;
       signatures = verifyResult.signatures();
       bDecryptionOk = !decryptResult.error();
