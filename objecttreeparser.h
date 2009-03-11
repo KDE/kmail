@@ -187,7 +187,7 @@ namespace KMail {
                                            const QString & fromAddress,
                                            bool doCheck=true,
                                            QByteArray * cleartextData=0,
-                                           std::vector<GpgME::Signature> paramSignatures = std::vector<GpgME::Signature>(),
+                                           const std::vector<GpgME::Signature> & paramSignatures = std::vector<GpgME::Signature>(),
                                            bool hideErrors=false );
 
     /** Returns the contents of the given multipart/encrypted
