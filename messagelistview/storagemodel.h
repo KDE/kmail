@@ -227,6 +227,11 @@ private slots:
   /**
    * Internal handler of KMFolder signal.
    */
+  void slotViewConfigChanged();
+
+  /**
+   * Internal handler of KMFolder signal.
+   */
   void slotMessageHeaderChanged( KMFolder *folder, int idx );
 
 };

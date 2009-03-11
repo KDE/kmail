@@ -472,7 +472,7 @@ QVariant Model::headerData(int section, Qt::Orientation, int role) const
 
   if ( mStorageModel && column->isSenderOrReceiver() )
   {
-    if ( mStorageModel->containsOutboundMessages() )
+    if ( mStorageModelContainsOutboundMessages )
       return QVariant( i18n( "Receiver" ) );
     return QVariant( i18n( "Sender" ) );
   }
@@ -648,6 +648,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
 
   mPreSelectionMode = preSelectionMode;
   mUniqueIdOfLastSelectedMessageInFolder = Manager::instance()->preSelectedMessageForStorageModel( mStorageModel );
+  mStorageModelContainsOutboundMessages = mStorageModel->containsOutboundMessages();
 
   connect( mStorageModel, SIGNAL( rowsInserted( const QModelIndex &, int, int ) ),
            this, SLOT( slotStorageModelRowsInserted( const QModelIndex &, int, int ) ) );
@@ -2674,7 +2675,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
   int elapsed;
 
   // Should we use the receiver or the sender field for sorting ?
-  bool bUseReceiver = ( mStorageModel->containsOutboundMessages() );
+  bool bUseReceiver = mStorageModelContainsOutboundMessages;
 
   // The begin storage index of our work
   int curIndex = job->currentIndex();

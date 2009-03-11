@@ -87,6 +87,9 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
   connect( mFolder, SIGNAL( msgHeaderChanged( KMFolder * , int ) ),
            SLOT( slotMessageHeaderChanged( KMFolder *, int ) ) );
 
+  connect( mFolder, SIGNAL( viewConfigChanged() ),
+           SLOT( slotViewConfigChanged() ) );
+
 #if 0
   // FIXME: Do we need to handle these remaining signals ?
 
@@ -109,8 +112,6 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
   /** Emitted when a folder was removed */
   void removed(KMFolder*, bool);
 
-  /** Emitted when the variables for the config of the view have changed */
-  void viewConfigChanged();
 #endif
 
   mMessageCount = mFolder->count();
@@ -178,6 +179,12 @@ StorageModel::~StorageModel()
       mFolder, SIGNAL( msgHeaderChanged( KMFolder * , int ) ),
       this, SLOT( slotMessageHeaderChanged( KMFolder *, int ) )
     );
+
+  disconnect(
+      mFolder, SIGNAL( viewConfigChanged() ),
+      this, SLOT( slotViewConfigChanged() )
+    );
+
 
   //mFolder->markNewAsUnread(); <-- do we REALLY need to do this ?.. couldn't we use a timed-expire instead ?
   if ( mFolder->dirty() )
@@ -593,6 +600,11 @@ void StorageModel::slotFolderClosed()
 void StorageModel::slotFolderCleared()
 {
   mMessageCount = mFolder->count();
+  reset();
+}
+
+void StorageModel::slotViewConfigChanged()
+{
   reset();
 }
 

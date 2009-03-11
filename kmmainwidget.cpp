@@ -1277,6 +1277,7 @@ void KMMainWidget::slotModifyFolder()
   KMFolderDialog props( folder, folder->parent(), mMainFolderView,
                         i18n("Properties of Folder %1", folder->label() ) );
   props.exec();
+
   updateFolderMenu();
 }
 
