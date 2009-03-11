@@ -1566,6 +1566,47 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
 
 // Subject threading cache stuff
 
+#if 0
+// Debug helpers
+void dump_iterator_and_list( QList< MessageItem * >::Iterator &iter, QList< MessageItem * > *list )
+{
+  kDebug() << "Threading cache part dump" << endl;
+  if ( iter == list->end() )
+    kDebug() << "Iterator pointing to end of the list" << endl;
+  else
+    kDebug() << "Iterator pointing to " << *iter << " subject [" << (*iter)->subject() << "] date [" << (*iter)->date() << "]" << endl;
+
+  for ( QList< MessageItem * >::Iterator it = list->begin(); it != list->end(); ++it )
+  {
+    kDebug() << "List element " << *it << " subject [" << (*it)->subject() << "] date [" << (*it)->date() << "]" << endl;
+  }
+
+  kDebug() << "End of threading cache part dump" << endl;
+}
+
+void dump_list( QList< MessageItem * > *list )
+{
+  kDebug() << "Threading cache part dump" << endl;
+
+  for ( QList< MessageItem * >::Iterator it = list->begin(); it != list->end(); ++it )
+  {
+    kDebug() << "List element " << *it << " subject [" << (*it)->subject() << "] date [" << (*it)->date() << "]" << endl;
+  }
+
+  kDebug() << "End of threading cache part dump" << endl;
+}
+#endif // debug helpers
+
+// a helper class used in a qLowerBound() call below
+class MessageLessThanByDate
+{
+public:
+  inline bool operator()( const MessageItem * mi1, const MessageItem * mi2 ) const
+  {
+    return mi1->date() < mi2->date();
+  }
+};
+
 void Model::addMessageToSubjectBasedThreadingCache( MessageItem * mi )
 {
   // Unfortunately the entries in the cache can't be sorted by date. This is
@@ -1585,28 +1626,9 @@ void Model::addMessageToSubjectBasedThreadingCache( MessageItem * mi )
   Q_ASSERT( !messagesWithTheSameStrippedSubject->contains( mi ) );
 
   // Binary search based insertion
-  QList< MessageItem * >::Iterator it = qLowerBound( messagesWithTheSameStrippedSubject->begin(), messagesWithTheSameStrippedSubject->end(), mi );
+  QList< MessageItem * >::Iterator it = qLowerBound( messagesWithTheSameStrippedSubject->begin(), messagesWithTheSameStrippedSubject->end(), mi, MessageLessThanByDate() );
   messagesWithTheSameStrippedSubject->insert( it, mi );
 }
-
-#if 0
-// Debug helper
-void dump_iterator_and_list( QList< MessageItem * >::Iterator &iter, QList< MessageItem * > *list )
-{
-  kDebug() << "Threading cache part dump" << endl;
-  if ( iter == list->end() )
-    kDebug() << "Iterator pointing to end of the list" << endl;
-  else
-    kDebug() << "Iterator pointing to " << *iter << " subject [" << (*iter)->subject() << "] date [" << (*iter)->date() << "]" << endl;
-
-  for ( QList< MessageItem * >::Iterator it = list->begin(); it != list->end(); ++it )
-  {
-    kDebug() << "List element " << *it << " subject [" << (*it)->subject() << "] date [" << (*it)->date() << "]" << endl;
-  }
-
-  kDebug() << "End of threading cache part dump" << endl;
-}
-#endif
 
 void Model::removeMessageFromSubjectBasedThreadingCache( MessageItem * mi )
 {
