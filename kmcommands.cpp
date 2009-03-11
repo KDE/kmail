@@ -2942,7 +2942,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
 
   KTemporaryFile *linkFile = new KTemporaryFile();
   linkFile->setPrefix(atmFileInfo.fileName() +"_[");
-  linkFile->setSuffix("]."+ atmFileInfo.suffix());
+  linkFile->setSuffix( "]." + KMimeType::extractKnownExtension( atmFileInfo.fileName() ) );
   linkFile->open();
   QString linkName = linkFile->fileName();
   delete linkFile;
