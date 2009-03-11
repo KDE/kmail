@@ -1635,7 +1635,7 @@ void Model::removeMessageFromSubjectBasedThreadingCache( MessageItem * mi )
   QList< MessageItem * > * messagesWithTheSameStrippedSubject = mThreadingCacheMessageSubjectMD5ToMessageItem->value( mi->strippedSubjectMD5(), 0 );
   Q_ASSERT( messagesWithTheSameStrippedSubject );
 
-  QList< MessageItem * >::Iterator it = qLowerBound( messagesWithTheSameStrippedSubject->begin(), messagesWithTheSameStrippedSubject->end(), mi );
+  QList< MessageItem * >::Iterator it = qLowerBound( messagesWithTheSameStrippedSubject->begin(), messagesWithTheSameStrippedSubject->end(), mi, MessageLessThanByDate() );
   Q_ASSERT( it != messagesWithTheSameStrippedSubject->end() );
   Q_ASSERT( *it == mi );
 
