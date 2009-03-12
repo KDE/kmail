@@ -309,8 +309,17 @@ void FolderView::setSortingPolicy( SortingPolicy policy )
     case SortByDragAndDropKey:
       header()->setClickable( false );
       header()->setSortIndicatorShown( false );
-      setSortingEnabled( false );
+      //
+      // Qt 4.5 introduced a nasty bug here:
+      // Sorting must be enabled in order to sortByColumn() to work.
+      // If sorting is disabled it disconnects some internal signal/slot pairs
+      // and calling sortByColumn() silently has no effect.
+      // This is a bug as we actually DON'T want automatic sorting to be
+      // performed by the view whenever it wants. We want to control sorting.
+      //
+      setSortingEnabled( true ); // hack for qutie bug: the param here should be false
       sortByColumn( LabelColumn, Qt::AscendingOrder );
+      setSortingEnabled( false ); // hack for qutie bug: this call shouldn't be here at all
       fixSortingKeysForChildren( invisibleRootItem() );
     break;
     default:
@@ -675,7 +684,17 @@ void FolderView::reload( bool openFoldersForUpdate )
   if ( sortingPolicy() == SortByCurrentColumn )
     setSortingEnabled( true );
   else {
+    //
+    // Qt 4.5 introduced a nasty bug here:
+    // Sorting must be enabled in order to sortByColumn() to work.
+    // If sorting is disabled it disconnects some internal signal/slot pairs
+    // and calling sortByColumn() silently has no effect.
+    // This is a bug as we actually DON'T want automatic sorting to be
+    // performed by the view whenever it wants. We want to control sorting.
+    //
+    setSortingEnabled( true ); // hack for qutie bug: this call shouldn't be here at all
     sortByColumn( LabelColumn, Qt::AscendingOrder );
+    setSortingEnabled( false ); // hack for qutie bug: this call shouldn't be here at all
     fixSortingKeysForChildren( invisibleRootItem() );
   }
 }
