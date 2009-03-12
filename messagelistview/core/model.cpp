@@ -1838,7 +1838,7 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
           } // else to do status changed, but it doesn't match sorting order: no need to re-sort
         break;
         case SortOrder::SortMessagesByNewUnreadStatus:
-          if ( propertyChangeMask & NewUnreadStatusChanged ) // todo status changed
+          if ( propertyChangeMask & NewUnreadStatusChanged ) // new / unread status changed
           {
             if ( messageItemNeedsReSorting< ItemNewUnreadStatusComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
               attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
@@ -1913,7 +1913,7 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
       } // else to do status changed, but it doesn't match sorting order: no need to re-sort
     break;
     case SortOrder::SortMessagesByNewUnreadStatus:
-      if ( propertyChangeMask & NewUnreadStatusChanged ) // todo status changed
+      if ( propertyChangeMask & NewUnreadStatusChanged ) // new / unread status changed
       {
         if ( messageItemNeedsReSorting< ItemNewUnreadStatusComparator >( mSortOrder->messageSortDirection(), parent, static_cast< MessageItem * >( item ) ) )
           attachMessageToParent( parent, static_cast< MessageItem * >( item ) );
