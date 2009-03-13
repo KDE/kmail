@@ -683,6 +683,7 @@ void Pane::selectAll()
   if ( !w )
     return;
 
+  w->view()->setAllGroupsExpanded( true );
   w->view()->selectAll();
 }
 
