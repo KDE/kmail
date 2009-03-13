@@ -577,7 +577,7 @@ bool Widget::getSelectionStats(
     Q_ASSERT( mb );
 
     selectedSernums.append( mb->getMsgSerNum() );
-    if ( view()->isCurrentlyViewable( ( *it ) ) )
+    if ( view()->isDisplayedWithParentsExpanded( ( *it ) ) )
       selectedVisibleSernums.append( mb->getMsgSerNum() );
 
     if ( topmost == 0 )
