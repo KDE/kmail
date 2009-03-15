@@ -2036,14 +2036,16 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Show expand/collaps quote marks" check box;
-  QHBoxLayout *hlay= new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
   populateCheckBox( mShowExpandQuotesMark= new QCheckBox( this ), showExpandQuotesMark);
-  hlay->addWidget( mShowExpandQuotesMark);
+  vlay->addWidget( mShowExpandQuotesMark);
   connect( mShowExpandQuotesMark, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  hlay->addStretch( 1 );
+  //New HBoxLayout to show the collapseQuoteLevel spin+label one line down
+  QHBoxLayout * hlay = new QHBoxLayout();
+  vlay->addLayout( hlay );
+  hlay->addSpacing( 40 );
+
   mCollapseQuoteLevelSpin = new KIntSpinBox( 0/*min*/,10/*max*/,1/*step*/,
       3/*init*/,this );
 
@@ -2060,6 +2062,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 
   connect( mShowExpandQuotesMark, SIGNAL( toggled( bool ) ),
       mCollapseQuoteLevelSpin, SLOT( setEnabled( bool ) ) );
+
+  hlay->addStretch();
 
   // Fallback Character Encoding
   hlay = new QHBoxLayout(); // inherits spacing
