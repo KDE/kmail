@@ -361,9 +361,11 @@ void KMMsgBase::setDate(const QByteArray& aDateStr)
   // which doesn't seem to have the leading 0 digit in front of the hour...
   // Until now I've seen only it in spam stuff so let's ignore it (it's even good to catch spam).
 
-  // Another horror I've seen is
+  // Another set of horrors I've seen is
 
   // Sun, 13 Apr 2008 14:05:54 +0100 (GMT+01:00)
+  // Sun, 15 Feb 2009 22:48:51 -0800 (Pacific Standard Time)
+  // Fri, 13 Mar 2009 07:33:20 -0600 (Mountain Daylight Time)
 
   // We again ignore it as it's very rare.
 
