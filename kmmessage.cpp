@@ -1145,51 +1145,14 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
 {
   KMMessage* msg = new KMMessage();
 
-  // If this is a multipart mail or if the main part is only the text part,
-  // Make an identical copy of the mail, minus headers, so attachments are
-  // preserved
-  if ( type() == DwMime::kTypeMultipart ||
-     ( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypePlain ) ) {
-    // ## slow, we could probably use: delete msg->mMsg; msg->mMsg = new DwMessage( this->mMsg );
-    msg->fromDwString( this->asDwString() );
-    // remember the type and subtype, initFromMessage sets the contents type to
-    // text/plain, via initHeader, for unclear reasons
-    DwMediaType oldContentType = msg->mMsg->Headers().ContentType();
+  // This is a non-multipart, non-text mail (e.g. text/calendar). Construct
+  // a multipart/mixed mail and add the original body as an attachment.
+  if ( type() != DwMime::kTypeMultipart &&
+       ( type() != DwMime::kTypeText ||
+         ( type() == DwMime::kTypeText &&
+           subtype() != DwMime::kSubtypeHtml && subtype() != DwMime::kSubtypePlain ) ) ) {
 
-    msg->sanitizeHeaders();
 
-    // strip blacklisted parts
-    QStringList blacklist = GlobalSettings::self()->mimetypesToStripWhenInlineForwarding();
-    for ( QStringList::Iterator it = blacklist.begin(); it != blacklist.end(); ++it ) {
-      QString entry = (*it);
-      int sep = entry.indexOf( '/' );
-      QByteArray type = entry.left( sep ).toLatin1();
-      QByteArray subtype = entry.mid( sep+1 ).toLatin1();
-      kDebug( 5006 ) <<"Looking for blacklisted type:" << type <<"/" << subtype;
-      while ( DwBodyPart * part = msg->findDwBodyPart( type, subtype ) ) {
-        msg->mMsg->Body().RemoveBodyPart( part );
-      }
-    }
-    msg->mMsg->Assemble();
-    msg->initFromMessage( this );
-
-    //restore type
-    msg->mMsg->Headers().ContentType().FromString( oldContentType.AsString() );
-    msg->mMsg->Headers().ContentType().Parse();
-    msg->mMsg->Assemble();
-  }
-  else if( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypeHtml ) {
-    // This is non-multipart html mail. Let`s make it text/plain and allow
-    // template parser do the hard job.
-    msg->initFromMessage( this );
-    msg->setType( DwMime::kTypeText );
-    msg->setSubtype( DwMime::kSubtypeHtml );
-    msg->mNeedsAssembly = true;
-    msg->cleanupHeader();
-  }
-  else {
-    // This is a non-multipart, non-text mail (e.g. text/calendar). Construct
-    // a multipart/mixed mail and add the original body as an attachment.
     msg->initFromMessage( this );
     msg->removeHeaderField("Content-Type");
     msg->removeHeaderField("Content-Transfer-Encoding");
@@ -1218,7 +1181,22 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
     msg->cleanupHeader();
   }
 
-//  QString st = QString::fromUtf8(createForwardBody());
+  // Normal message (multipart or text/plain|html)
+  // Just copy the message, the template parser will do the hard work of
+  // replacing the body text in TemplateParser::addProcessedBodyToMessage()
+  else {
+    msg->fromDwString( this->asDwString() );
+    DwMediaType oldContentType = msg->mMsg->Headers().ContentType();
+    msg->sanitizeHeaders();
+    msg->initFromMessage( this );
+
+    // restore the content type, initFromMessage() sets the contents type to
+    // text/plain, via initHeader(), for unclear reasons
+    msg->mMsg->Headers().ContentType().FromString( oldContentType.AsString() );
+    msg->mMsg->Headers().ContentType().Parse();
+    msg->mMsg->Assemble();
+  }
+
   msg->setSubject( forwardSubject() );
 
   TemplateParser parser( msg, TemplateParser::Forward,
@@ -1228,12 +1206,6 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
     parser.process( tmpl, this );
   else
     parser.process( this );
-
-  // QByteArray encoding = autoDetectCharset(charset(), s->prefCharsets, msg->body());
-  // if (encoding.isEmpty()) encoding = "utf-8";
-  // msg->setCharset(encoding);
-  // force utf-8
-  // msg->setCharset( "utf-8" );
 
   msg->link( this, MessageStatus::statusForwarded() );
   return msg;
