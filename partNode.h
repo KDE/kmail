@@ -191,12 +191,12 @@ public:
 
     void setProcessed( bool processed, bool recurse ) {
         mWasProcessed = processed;
-	if ( recurse ) {
-	  if( mChild )
+        if ( recurse ) {
+          if( mChild )
             mChild->setProcessed( processed, true );
-	  if( mNext )
+          if( mNext )
             mNext->setProcessed( processed, true );
-	}
+        }
     }
 
     void setMimePartTreeItem( KMMimePartTreeItem* item ) {

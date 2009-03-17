@@ -69,7 +69,7 @@ partNode::partNode()
 }
 
 partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
-		    bool deleteDwBodyPart )
+                    bool deleteDwBodyPart )
   : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
     mWasProcessed( false ),
     mDwPart( dwPart ),
