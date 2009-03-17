@@ -42,8 +42,8 @@ namespace KMail {
   public:
     AttachmentCollector()
       : mDiveIntoEncryptions( true ),
-	mDiveIntoSignatures( true ),
-	mDiveIntoMessages( false ) {}
+        mDiveIntoSignatures( true ),
+        mDiveIntoMessages( false ) {}
 
     void setDiveIntoEncryptions( bool dive ) {
       mDiveIntoEncryptions = dive;
