@@ -903,8 +903,16 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
       KMMessagePart textPart;
       textPart.setBodyFromUnicode( body );
       mMsg->addDwBodyPart( mMsg->createDWBodyPart( &textPart ) );
+      mMsg->assembleIfNeeded();
 
       foreach( const partNode *attachment, ac.attachments() ) {
+
+        // When adding this body part, make sure to _not_ add the next bodypart
+        // as well, which mimelib would do, therefore creating a mail with many
+        // duplicate attachments (so many that KMail runs out of memory, in fact).
+        // Body::AddBodyPart is very misleading here...
+        attachment->dwPart()->SetNext( 0 );
+
         mMsg->addDwBodyPart( attachment->dwPart() );
         mMsg->assembleIfNeeded();
       }
