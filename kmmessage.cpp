@@ -1144,7 +1144,6 @@ void KMMessage::sanitizeHeaders( const QStringList& whiteList )
 KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
 {
   KMMessage* msg = new KMMessage();
-  QString id;
 
   // If this is a multipart mail or if the main part is only the text part,
   // Make an identical copy of the mail, minus headers, so attachments are
@@ -1155,7 +1154,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
     msg->fromDwString( this->asDwString() );
     // remember the type and subtype, initFromMessage sets the contents type to
     // text/plain, via initHeader, for unclear reasons
-    DwMediaType& oldContentType = msg->mMsg->Headers().ContentType();
+    DwMediaType oldContentType = msg->mMsg->Headers().ContentType();
 
     msg->sanitizeHeaders();
 

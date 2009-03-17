@@ -40,7 +40,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mParent( parent ),
     mActionCollection( ac ),
     mCurrentMessage( 0 ),
-    mMessageView( 0 )
+    mMessageView( 0 ),
+    mRedirectAction( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
   mActionCollection->addAction( "message_reply_menu", mReplyActionMenu );

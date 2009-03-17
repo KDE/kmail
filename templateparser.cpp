@@ -908,7 +908,6 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
         mMsg->addDwBodyPart( attachment->dwPart() );
         mMsg->assembleIfNeeded();
       }
-
     }
   }
 }
