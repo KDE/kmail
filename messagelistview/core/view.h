@@ -159,16 +159,17 @@ public:
   void setCurrentMessageItem( MessageItem * it );
 
   /**
-   * Returns true if the specified item is currently viewable.
-   * For 'viewable' here we mean not hidden and with parents expanded.
+   * Returns true if the specified item is currently displayed in the tree
+   * and has all the parents expanded. This means that the user can
+   * see the message (by eventually scrolling the view).
    */
-  bool isCurrentlyViewable( Item * it ) const;
+  bool isDisplayedWithParentsExpanded( Item * it ) const;
 
   /**
-   * Makes sure that the specified is currently viewable.
-   * For 'viewable' here we mean not hidden and with parents expanded.
+   * Makes sure that the specified is currently viewable by the user.
+   * This means that the user can see the message (by eventually scrolling the view).
    */
-  void ensureCurrentlyViewable( Item * it );
+  void ensureDisplayedWithParentsExpanded( Item * it );
 
   /**
    * Returns the currently selected MessageItems (bound to current StorageModel).

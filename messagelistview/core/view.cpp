@@ -944,7 +944,7 @@ void View::selectMessageItems( const QList< MessageItem * > &list )
     Q_ASSERT( static_cast< MessageItem * >( idx.internalPointer() ) == ( *it ) );
     if ( !selectionModel()->isSelected( idx ) )
       selection.append( QItemSelectionRange( idx ) );
-    ensureCurrentlyViewable( *it );
+    ensureDisplayedWithParentsExpanded( *it );
   }
   if ( !selection.isEmpty() )
     selectionModel()->select( selection, QItemSelectionModel::Select | QItemSelectionModel::Rows );
@@ -1163,7 +1163,7 @@ Item * View::messageItemBefore( Item * referenceItem, MessageTypeFilter messageT
             // !expand items
             ( messageTypeFilter == MessageTypeAny ) &&
             // has unexpanded parents or is itself hidden
-            ( ! isCurrentlyViewable( above ) )
+            ( ! isDisplayedWithParentsExpanded( above ) )
           ) ||
           // is hidden
           isRowHidden( above->parent()->indexOfChildItem( above ), mModel->index( above->parent(), 0 ) )
@@ -1304,7 +1304,7 @@ bool View::selectNextMessageItem(
   setFocus();
 
   if ( it->parent() != mModel->rootItem() )
-    ensureCurrentlyViewable( it );
+    ensureDisplayedWithParentsExpanded( it );
 
   QModelIndex idx = mModel->index( it, 0 );
 
@@ -1346,7 +1346,7 @@ bool View::selectPreviousMessageItem(
   setFocus();
 
   if ( it->parent() != mModel->rootItem() )
-    ensureCurrentlyViewable( it );
+    ensureDisplayedWithParentsExpanded( it );
 
   QModelIndex idx = mModel->index( it, 0 );
 
@@ -1383,7 +1383,7 @@ bool View::focusNextMessageItem( MessageTypeFilter messageTypeFilter, bool cente
   setFocus();
 
   if ( it->parent() != mModel->rootItem() )
-    ensureCurrentlyViewable( it );
+    ensureDisplayedWithParentsExpanded( it );
 
   QModelIndex idx = mModel->index( it, 0 );
 
@@ -1406,7 +1406,7 @@ bool View::focusPreviousMessageItem( MessageTypeFilter messageTypeFilter, bool c
   setFocus();
 
   if ( it->parent() != mModel->rootItem() )
-    ensureCurrentlyViewable( it );
+    ensureDisplayedWithParentsExpanded( it );
 
   QModelIndex idx = mModel->index( it, 0 );
 
@@ -1455,7 +1455,7 @@ bool View::selectFirstMessageItem( MessageTypeFilter messageTypeFilter, bool cen
   Q_ASSERT( it != mModel->rootItem() ); // must never happen (obviously)
 
   setFocus();
-  ensureCurrentlyViewable( it );
+  ensureDisplayedWithParentsExpanded( it );
 
   QModelIndex idx = mModel->index( it, 0 );
 
@@ -1516,7 +1516,7 @@ void View::markMessageItemsAsAboutToBeRemoved( QList< MessageItem * > &items, bo
   viewport()->update();
 }
 
-void View::ensureCurrentlyViewable( Item * it )
+void View::ensureDisplayedWithParentsExpanded( Item * it )
 {
   Q_ASSERT( it );
   Q_ASSERT( it->parent() );
@@ -1544,29 +1544,45 @@ void View::ensureCurrentlyViewable( Item * it )
   }
 }
 
-bool View::isCurrentlyViewable( Item * it ) const
+bool View::isDisplayedWithParentsExpanded( Item * it ) const
 {
-  Q_ASSERT( it );
-  Q_ASSERT( it->parent() );
+  // An item is currently viewable iff
+  //  - it is marked as viewable in the item structure (that is, qt knows about its existence)
+  //      (and this means that all of its parents are marked as viewable)
+  //  - it is not explicitly hidden
+  //  - all of its parents are expanded
+
+  if ( !it )
+    return false; // be nice and allow the caller not to care
 
   if ( !it->isViewable() )
-    return false;
+    return false; // item not viewable (not attacched to the viewable root or qt not yet aware of it)
+
+  // the item and all the parents are marked as viewable.
+
   if ( isRowHidden( it->parent()->indexOfChildItem( it ), mModel->index( it->parent(), 0 ) ) )
-    return false;
+    return false; // item qt rappresentation explicitly hidden
+
+  // the item (and theoretically all the parents) are not explicitly hidden
+
+  // check the parent chain
 
   it = it->parent();
 
-  if ( it == mModel->rootItem() )
-    return true;
-
   while ( it )
   {
-    if ( it->parent() == mModel->rootItem() )
-      return true;
+    if ( it == mModel->rootItem() )
+      return true; // parent is root item: ok
+
+    // parent is not root item
+
     if ( !isExpanded( mModel->index( it, 0 ) ) )
-      return false;
-    it = it->parent();
+      return false; // parent is not expanded (so child not actually visible)
+
+    it = it->parent(); // climb up
   }
+
+  // parent hierarchy interrupted somewhere
   return false;
 }
 

@@ -2272,7 +2272,7 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
       if ( applyFilterToSubtree( mi, index( pParent, 0 ) ) )
       {
         // mi matched, expand parents (unconditionally)
-        mView->ensureCurrentlyViewable( mi );
+        mView->ensureDisplayedWithParentsExpanded( mi );
       }
     }
   }
