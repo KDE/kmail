@@ -253,6 +253,12 @@ namespace KMail {
       node->setProcessed( false, true );
     }
 
+    // Make sure the whole content is relative, so that nothing is painted over the header
+    // if a malicious message uses absolute positioning.
+    bool isRoot = ( node->parentNode() == 0 );
+    if ( isRoot && mReader )
+      htmlWriter()->queue( "<div style=\"position: relative\">\n" );
+
     for ( ; node ; node = node->nextSibling() ) {
       if ( node->processed() )
         continue;
@@ -300,6 +306,9 @@ namespace KMail {
       if ( showOnlyOneMimePart() )
         break;
     }
+
+    if ( isRoot && mReader )
+      htmlWriter()->queue( "</div>\n" );
   }
 
   void ObjectTreeParser::defaultHandling( partNode * node, ProcessResult & result ) {
