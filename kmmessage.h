@@ -491,6 +491,12 @@ public:
   void setNeedsAssembly();
 
   /**
+   * Assemble the internal message. This is done automatically in most
+   * cases, but sometimes still necessary to call this manually.
+   */
+  void assembleIfNeeded();
+
+  /**
    * Get or set the 'Content-Transfer-Encoding' header field
    * The member functions that involve enumerated types (ints)
    * will work only for well-known encodings.
@@ -890,6 +896,21 @@ public:
   /** Delete this message as soon as it no longer in use. */
   void deleteWhenUnused();
 
+#ifndef NDEBUG
+
+  /**
+   * Dump the internal mimelib message structure to kDebug().
+   * This is useful if there are inconsistencies because of a missing
+   * Parse() or Assemble().
+   *
+   * This function is recursive, pass 0 as level when calling this with
+   * the root entity.
+   *
+   * If entity is 0, the root will be dumped.
+   */
+  void dump( DwEntity *entity = 0, int level = 0 );
+#endif
+
 private:
 
   /** Initialization shared by the ctors. */
@@ -900,7 +921,7 @@ private:
   QString mDrafts;
   QString mTemplates;
   mutable DwMessage* mMsg;
-  mutable bool       mNeedsAssembly :1;
+  mutable bool mNeedsAssembly :1;
   bool mDecodeHTML :1;
   bool mReadyToShow :1;
   bool mComplete :1;

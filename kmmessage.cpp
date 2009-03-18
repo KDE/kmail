@@ -1216,7 +1216,6 @@ void KMMessage::sanitizeHeaders( const QStringList& whiteList )
 KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
 {
   KMMessage* msg = new KMMessage();
-  QString id;
 
   // If this is a multipart mail or if the main part is only the text part,
   // Make an identical copy of the mail, minus headers, so attachments are
@@ -1227,8 +1226,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
     msg->fromDwString( this->asDwString() );
     // remember the type and subtype, initFromMessage sets the contents type to
     // text/plain, via initHeader, for unclear reasons
-    const int type = msg->type();
-    const int subtype = msg->subtype();
+    DwMediaType oldContentType = msg->mMsg->Headers().ContentType();
 
     msg->sanitizeHeaders();
 
@@ -1245,12 +1243,14 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
       }
     }
     msg->mMsg->Assemble();
-
     msg->initFromMessage( this );
+
     //restore type
-    msg->setType( type );
-    msg->setSubtype( subtype );
-  } else if( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypeHtml ) {
+    msg->mMsg->Headers().ContentType().FromString( oldContentType.AsString() );
+    msg->mMsg->Headers().ContentType().Parse();
+    msg->mMsg->Assemble();
+  }
+  else if( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypeHtml ) {
     // This is non-multipart html mail. Let`s make it text/plain and allow
     // template parser do the hard job.
     msg->initFromMessage( this );
@@ -1258,7 +1258,8 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
     msg->setSubtype( DwMime::kSubtypeHtml );
     msg->mNeedsAssembly = true;
     msg->cleanupHeader();
-  } else {
+  }
+  else {
     // This is a non-multipart, non-text mail (e.g. text/calendar). Construct
     // a multipart/mixed mail and add the original body as an attachment.
     msg->initFromMessage( this );
@@ -2561,6 +2562,16 @@ void KMMessage::setNeedsAssembly()
   mNeedsAssembly = true;
 }
 
+//-----------------------------------------------------------------------------
+void KMMessage::assembleIfNeeded()
+{
+  Q_ASSERT( mMsg );
+
+  if ( mNeedsAssembly ) {
+    mMsg->Assemble();
+    mNeedsAssembly = false;
+  }
+}
 
 //-----------------------------------------------------------------------------
 QByteArray KMMessage::body() const
@@ -2719,6 +2730,8 @@ void KMMessage::setBodyEncodedBinary( const QByteArray& bodyStr, DwEntity *entit
   }
 
   entity->Body().FromString( dwResult );
+  entity->Body().Parse();
+
   mNeedsAssembly = true;
 }
 
@@ -4342,3 +4355,26 @@ void KMMessage::deleteWhenUnused()
 {
   s->pendingDeletes << this;
 }
+
+#ifndef NDEBUG
+void KMMessage::dump( DwEntity *entity, int level )
+{
+  if ( !entity )
+    entity = mMsg;
+
+  QString spaces;
+  for ( int i = 1; i <= level; i++ )
+    spaces += "  ";
+
+  kDebug() << QString( spaces + "Headers of entity " + entity->partId() + ":" );
+  kDebug() << QString( spaces + entity->Headers().AsString().c_str() );
+  kDebug() << QString( spaces + "Body of entity " + entity->partId() + ":" );
+  kDebug() << QString( spaces + entity->Body().AsString().c_str() );
+
+  DwBodyPart *current = entity->Body().FirstBodyPart();
+  while ( current ) {
+    dump( current, level + 1 );
+    current = current->Next();
+  }
+}
+#endif

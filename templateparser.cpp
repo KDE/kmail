@@ -27,6 +27,8 @@
 #include "customtemplates_kfg.h"
 #include "globalsettings_base.h"
 #include "kmkernel.h"
+#include "partNode.h"
+#include "attachmentcollector.h"
 
 #include <mimelib/bodypart.h>
 
@@ -851,25 +853,72 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
     }
   }
 
-  // kDebug(5006) << "Message body:" << body;
+  addProcessedBodyToMessage( body );
+}
 
+
+void TemplateParser::addProcessedBodyToMessage( const QString &body )
+{
   if ( mAppend ) {
+
+    // ### What happens here if the body is multipart or in some way encoded?
     QByteArray msg_body = mMsg->body();
     msg_body.append( body.toUtf8() );
     mMsg->setBody( msg_body );
-  } else {
-    DwEntity *entityToChange = 0;
-    if ( mMsg->typeStr().toLower() == "multipart" ) {
-      entityToChange = mMsg->findDwBodyPart( "text", "plain" );
-      if ( !entityToChange )
-        kWarning() << "No text/plain part found in this multipart message, "
-                      "template parser can not set the text!";
+  }
+  else {
+
+    // Get the attachments of the original mail
+    partNode *root = partNode::fromMessage( mMsg );
+    KMail::AttachmentCollector ac;
+    ac.setDiveIntoEncryptions( true );
+    ac.setDiveIntoSignatures( true );
+    ac.setDiveIntoMessages( false );
+    ac.collectAttachmentsFrom( root );
+
+    // Now, delete the old content and set the new content, which
+    // is either only the new text or the new text with some attachments.
+    mMsg->deleteBodyParts();
+
+    // If we have no attachment, simply create a text/plain part and
+    // set the processed template text as the body
+    if ( ac.attachments().empty() ) {
+      mMsg->headers().ContentType().FromString( DwString() ); // to get rid of old boundary
+      mMsg->headers().ContentType().Parse();
+      mMsg->headers().ContentType().SetType( DwMime::kTypeText );
+      mMsg->headers().ContentType().SetSubtype( DwMime::kSubtypePlain );
+      mMsg->headers().Assemble();
+      mMsg->setBodyFromUnicode( body );
+      mMsg->assembleIfNeeded();
     }
 
-    mMsg->setBodyFromUnicode( body, entityToChange );
+    // If we have some attachments, create a multipart/mixed mail and
+    // add the normal body as well as the attachments
+    else
+    {
+      mMsg->headers().ContentType().SetType( DwMime::kTypeMultipart );
+      mMsg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
+      mMsg->headers().ContentType().CreateBoundary( 0 );
+
+      KMMessagePart textPart;
+      textPart.setBodyFromUnicode( body );
+      mMsg->addDwBodyPart( mMsg->createDWBodyPart( &textPart ) );
+      mMsg->assembleIfNeeded();
+
+      foreach( const partNode *attachment, ac.attachments() ) {
+
+        // When adding this body part, make sure to _not_ add the next bodypart
+        // as well, which mimelib would do, therefore creating a mail with many
+        // duplicate attachments (so many that KMail runs out of memory, in fact).
+        // Body::AddBodyPart is very misleading here...
+        attachment->dwPart()->SetNext( 0 );
+
+        mMsg->addDwBodyPart( attachment->dwPart() );
+        mMsg->assembleIfNeeded();
+      }
+    }
   }
 }
-
 QString TemplateParser::findCustomTemplate( const QString &tmplName )
 {
   CTemplates t( tmplName );
