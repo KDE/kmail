@@ -652,6 +652,32 @@ namespace KMail {
     return bIsOpaqueSigned;
   }
 
+void ObjectTreeParser::writeDeferredDecryptionBlock()
+{
+  kDebug();
+  assert( mReader );
+  const QString iconName = KIconLoader::global()->iconPath( "document-decrypt",
+                                                            KIconLoader::Small );
+  const QString decryptedData = "<div style=\"font-size:large; text-align:center;"
+        "padding-top:20pt;\">"
+        + i18n("This message is encrypted.").toUtf8()
+        + "</div>"
+        "<div style=\"text-align:center; padding-bottom:20pt;\">"
+        "<a href=\"kmail:decryptMessage\">"
+        "<img src=\"" + iconName.toUtf8() + "\"/>"
+        + i18n("Decrypt Message").toUtf8()
+        + "</a></div>";
+  PartMetaData messagePart;
+  messagePart.isDecryptable = true;
+  messagePart.isEncrypted = true;
+  messagePart.isSigned = false;
+  mRawReplyString += decryptedData.toUtf8();
+  htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                           cryptoProtocol(),
+                                           QString() ) );
+  htmlWriter()->queue( decryptedData );
+  htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+}
 
 bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       QByteArray& decryptedData,
@@ -678,20 +704,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   if ( cryptProto )
     cryptPlugLibName = cryptProto->name();
 
-  if ( mReader && !mReader->decryptMessage() ) {
-    QString iconName = KIconLoader::global()->iconPath( "document-decrypt",
-                                                        KIconLoader::Small );
-    decryptedData = "<div style=\"font-size:large; text-align:center;"
-                      "padding-top:20pt;\">"
-                    + i18n("This message is encrypted.").toUtf8()
-                    + "</div>"
-                      "<div style=\"text-align:center; padding-bottom:20pt;\">"
-                      "<a href=\"kmail:decryptMessage\">"
-                      "<img src=\"" + iconName.toUtf8() + "\"/>"
-                    + i18n("Decrypt Message").toUtf8()
-                    + "</a></div>";
-    return false;
-  }
+  assert( !mReader || mReader->decryptMessage() );
 
   const QString errorMsg = i18n( "Could not decrypt the data." );
   if ( cryptProto && !kmkernel->contextMenuShown() ) {
@@ -1274,8 +1287,15 @@ namespace KMail {
       return true;
     }
 
-    PartMetaData messagePart;
     node->setEncryptionState( KMMsgFullyEncrypted );
+
+    if ( mReader && !mReader->decryptMessage() ) {
+      writeDeferredDecryptionBlock();
+      data->setProcessed( true, false ); // Set the data node to done to prevent it from being processed
+      return true;
+    }
+
+    PartMetaData messagePart;
     QByteArray decryptedData;
     bool signatureFound;
     std::vector<GpgME::Signature> signatures;
@@ -1416,6 +1436,8 @@ namespace KMail {
           writeBodyString( cstr, node->trueFromAddress(),
                            codecFor( node ), result, false );
         mRawReplyString += cstr;
+      } else if ( mReader && !mReader->decryptMessage() ) {
+        writeDeferredDecryptionBlock();
       } else {
         /*
           ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
@@ -1592,7 +1614,10 @@ namespace KMail {
       bool passphraseError;
       bool actuallyEncrypted = true;
 
-      if ( okDecryptMIME( *node,
+      if ( mReader && !mReader->decryptMessage() ) {
+        writeDeferredDecryptionBlock();
+        isEncrypted = true;
+      } else if ( okDecryptMIME( *node,
                           decryptedData,
                           signatureFound,
                           signatures,
@@ -1635,10 +1660,8 @@ namespace KMail {
             htmlWriter()->queue( writeSigstatHeader( messagePart,
                                                      cryptoProtocol(),
                                                      node->trueFromAddress() ) );
-            if ( mReader->decryptMessage() )
-              writePartIcon( &node->msgPart(), node->nodeId() );
-            else
-              htmlWriter()->queue( QString::fromUtf8( decryptedData ) );
+            assert( mReader->decryptMessage() ); // handled above
+            writePartIcon( &node->msgPart(), node->nodeId() );
             htmlWriter()->queue( writeSigstatFooter( messagePart ) );
           }
         } else {
