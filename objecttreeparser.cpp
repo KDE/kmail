@@ -447,7 +447,7 @@ namespace KMail {
     }
 
     std::vector<GpgME::Signature> signatures;
-    if ( doCheck )
+    if ( !doCheck )
       signatures = paramSignatures;
 
     PartMetaData messagePart;
