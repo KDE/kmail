@@ -27,6 +27,8 @@
 #include "customtemplates_kfg.h"
 #include "globalsettings_base.h"
 #include "kmkernel.h"
+#include "partNode.h"
+#include "attachmentcollector.h"
 
 #include <mimelib/bodypart.h>
 
@@ -851,38 +853,65 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
     }
   }
 
-  // kDebug(5006) << "Message body:" << body;
+  addProcessedBodyToMessage( body );
+}
 
+
+void TemplateParser::addProcessedBodyToMessage( const QString &body )
+{
   if ( mAppend ) {
+
+    // ### What happens here if the body is multipart or in some way encoded?
     QByteArray msg_body = mMsg->body();
     msg_body.append( body.toUtf8() );
     mMsg->setBody( msg_body );
-  } else {
+  }
+  else {
 
-    // FIXME: We set the processed template to the first plain text part fo the
-    //        message. This will probably break in the following cases:
-    //        1. HTML-only message with attachment (simple multipart/mixed)
-    //        2. Messages with multiple text/plain parts. We only replace the
-    //           first part with the processed templates, the other parts stay
-    //           the same.
-    //           The composer then uses an ObjectTreeParser to get the plain text
-    //           of the complete message, which will likely include the other
-    //           parts twice.
-    //           Possible solution: Set a dummy zero length body for all other
-    //           plaintext parts.
-    DwEntity *entityToChange = 0;
-    if ( mMsg->typeStr().toLower() == "multipart" ) {
-      entityToChange = mMsg->findDwBodyPart( "text", "plain" );
-      if ( !entityToChange )
-        kWarning() << "No text/plain part found in this multipart message, "
-                      "template parser can not set the text!";
+    // Get the attachments of the original mail
+    partNode *root = partNode::fromMessage( mMsg );
+    KMail::AttachmentCollector ac;
+    ac.setDiveIntoEncryptions( true );
+    ac.setDiveIntoSignatures( true );
+    ac.setDiveIntoMessages( false );
+    ac.collectAttachmentsFrom( root );
+
+    // Now, delete the old content and set the new content, which
+    // is either only the new text or the new text with some attachments.
+    mMsg->deleteBodyParts();
+
+    // If we have no attachment, simply create a text/plain part and
+    // set the processed template text as the body
+    if ( ac.attachments().empty() ) {
+      mMsg->headers().ContentType().FromString( DwString() ); // to get rid of old boundary
+      mMsg->headers().ContentType().Parse();
+      mMsg->headers().ContentType().SetType( DwMime::kTypeText );
+      mMsg->headers().ContentType().SetSubtype( DwMime::kSubtypePlain );
+      mMsg->headers().Assemble();
+      mMsg->setBodyFromUnicode( body );
+      mMsg->assembleIfNeeded();
     }
 
-    mMsg->setBodyFromUnicode( body, entityToChange );
-    mMsg->assembleIfNeeded();
+    // If we have some attachments, create a multipart/mixed mail and
+    // add the normal body as well as the attachments
+    else
+    {
+      mMsg->headers().ContentType().SetType( DwMime::kTypeMultipart );
+      mMsg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
+      mMsg->headers().ContentType().CreateBoundary( 0 );
+
+      KMMessagePart textPart;
+      textPart.setBodyFromUnicode( body );
+      mMsg->addDwBodyPart( mMsg->createDWBodyPart( &textPart ) );
+
+      foreach( const partNode *attachment, ac.attachments() ) {
+        mMsg->addDwBodyPart( attachment->dwPart() );
+        mMsg->assembleIfNeeded();
+      }
+
+    }
   }
 }
-
 QString TemplateParser::findCustomTemplate( const QString &tmplName )
 {
   CTemplates t( tmplName );
