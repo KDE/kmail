@@ -879,6 +879,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
     }
 
     mMsg->setBodyFromUnicode( body, entityToChange );
+    mMsg->assembleIfNeeded();
   }
 }
 
