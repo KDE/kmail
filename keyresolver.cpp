@@ -1392,9 +1392,14 @@ std::vector<GpgME::Key> Kleo::KeyResolver::signingKeys( CryptoMessageFormat f ) 
 
 
 std::vector<GpgME::Key> Kleo::KeyResolver::selectKeys( const QString & person, const QString & msg, const std::vector<GpgME::Key> & selectedKeys ) const {
+  const bool opgp = containsOpenPGP( mCryptoMessageFormats );
+  const bool x509 = containsSMIME( mCryptoMessageFormats );
+
   Kleo::KeySelectionDialog dlg( i18n("Encryption Key Selection"),
 				msg, selectedKeys,
-				Kleo::KeySelectionDialog::ValidEncryptionKeys,
+                                Kleo::KeySelectionDialog::ValidEncryptionKeys
+                                & ~(opgp ? 0 : Kleo::KeySelectionDialog::OpenPGPKeys)
+                                & ~(x509 ? 0 : Kleo::KeySelectionDialog::SMIMEKeys),
 				true, true ); // multi-selection and "remember choice" box
 
   if ( dlg.exec() != QDialog::Accepted )
