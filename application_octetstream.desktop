@@ -8,6 +8,7 @@ Name[pt]=Aplicação Sequência Binária
 Name[pt_BR]=Aplicativo Octet Stream
 Name[sv]=Program-oktettström
 Name[uk]=Вісімковий потік програми
+Name[x-test]=xxApplication Octet Streamxx
 Name[zh_TW]=Application/Octet-Stream
 Comment=A bodypart formatter plugin for application/octet-stream
 Comment[af]='n Inprop module wat die lyf gedeelte vir 'application/octet-stream' formateer
