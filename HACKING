@@ -2,6 +2,9 @@ Getting Involved
 ================
 
 If you want to code on KMail - don't be shy, just start hacking and send in patches!
+You can find easy things to begin with on the techbase wiki, which has a list of KMail
+junior jobs: http://techbase.kde.org/Projects/PIM/KMail_Junior_Jobs
+
 See the "Committing" section on how to send patches.
 
 Some starting points are:
@@ -32,7 +35,7 @@ No questions are too stupid to ask, but make sure you read some of the pages lin
 Documentation
 =============
 
-The KMail documentation can be found at http://api.kde.org/4.x-api/kdepim-apidocs/kmail/html/index.html. 
+The KMail documentation can be found at http://api.kde.org/4.x-api/kdepim-apidocs/kmail/html/index.html.
 The documentation is auto-generated from comments in the KMail code.
 Note that many classes are not documented or the documentation is outdated. You'll have to read the code
 in order to understand it in those cases.
