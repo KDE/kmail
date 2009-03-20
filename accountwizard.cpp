@@ -420,11 +420,11 @@ QString AccountWizard::accountName() const
 
 QLabel *AccountWizard::createInfoLabel( const QString &msg )
 {
-  QLabel *label = new QLabel( msg, this );
+  QLabel *label = new QLabel( msg, this, Qt::Window | Qt::FramelessWindowHint );
   label->setFrameStyle( QFrame::Panel | QFrame::Raised );
   label->setLineWidth( 3 );
   label->resize( fontMetrics().width( msg ) + 20, label->height() * 2 );
-  label->move( width() / 2 - label->width() / 2, height() / 2 - label->height() / 2 );
+  label->move( x() + width() / 2 - label->width() / 2, y() + height() / 2 - label->height() / 2 );
   label->setAutoFillBackground( true );
   label->show();
 
