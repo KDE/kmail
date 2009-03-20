@@ -1172,7 +1172,7 @@ bool FolderView::event( QEvent *e )
       {
         QuotaInfo info = imap->quotaInfo();
         if ( info.isValid() && !info.isEmpty() )
-          tip += QString( "<strong>%1</strong>: %2" ).arg( i18n( "Quota" ) ).arg( info.toString() );
+          tip += QString( "<strong>%1</strong>: %2<br>" ).arg( i18n( "Quota" ) ).arg( info.toString() );
       }
 
       if ( fld->storage()->folderSize() >= 0 )
