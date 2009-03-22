@@ -420,7 +420,7 @@ QString AccountWizard::accountName() const
 
 QLabel *AccountWizard::createInfoLabel( const QString &msg )
 {
-  QLabel *label = new QLabel( msg, this, Qt::Window | Qt::FramelessWindowHint );
+  QLabel *label = new QLabel( msg, this, Qt::Popup );
   label->setFrameStyle( QFrame::Panel | QFrame::Raised );
   label->setLineWidth( 3 );
   label->resize( fontMetrics().width( msg ) + 20, label->height() * 2 );
