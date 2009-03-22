@@ -1986,6 +1986,14 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
     // add our Body Part
     DwBodyPart *tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
     DwHeaders &headers = tmpDwPart->Headers();
+
+    // Make sure to restore the content type, because createDWBodyPart() doesn't restore
+    // the charset (or more precisly, we never tell the fine body part about the charset)..
+    if ( !ourFineBodyPart.originalContentTypeStr().isEmpty() ) {
+      headers.ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
+      headers.ContentType().Parse();
+    }
+
     DwMediaType &ct = headers.ContentType();
     if ( !mSaveBoundary.empty() ) {
       ct.SetBoundary( mSaveBoundary );
