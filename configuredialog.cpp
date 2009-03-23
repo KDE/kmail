@@ -2638,7 +2638,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mRecipientCheck = new QCheckBox(
            GlobalSettings::self()->tooManyRecipientsItem()->label(),
-           this, "kcfg_TooManyReceipients" );
+           this, "kcfg_TooManyRecipients" );
   hlay->addWidget( mRecipientCheck );
   connect( mRecipientCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
