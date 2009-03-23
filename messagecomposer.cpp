@@ -996,19 +996,19 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely )
       const QString buttonText = !doEncryptCompletely
                                  ? i18n("&Encrypt All Parts") : i18n("&Encrypt");
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
-						i18n("Unencrypted Message Warning"),
-						KGuiItem( buttonText ),
-						KGuiItem( mDoSign
+                                                i18n("Unencrypted Message Warning"),
+                                                KGuiItem( buttonText ),
+                                                KGuiItem( mDoSign
                                                           ? i18n("&Sign Only")
                                                           : i18n("&Send As-Is")) ) ) {
       case KMessageBox::Cancel:
-	mRc = false;
-	return false;
+        mRc = false;
+        return false;
       case KMessageBox::Yes:
-	markAllAttachmentsForEncryption( true );
-	return true;
+        markAllAttachmentsForEncryption( true );
+        return true;
       case KMessageBox::No:
-	return encrypt || doEncryptCompletely;
+        return encrypt || doEncryptCompletely;
       }
     }
   }
