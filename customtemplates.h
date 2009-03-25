@@ -26,6 +26,8 @@
 #include "customtemplates_base.h"
 #include "templatesinsertcommand.h"
 
+#include <kshortcut.h>
+
 struct CustomTemplateItem;
 typedef QDict<CustomTemplateItem> CustomTemplateItemList;
 class KShortcut;

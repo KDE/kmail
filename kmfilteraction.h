@@ -141,6 +141,8 @@ public:
       case. Returns TRUE if a change was made.  */
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 
+  // TODO: template removed!
+
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction();
 
