@@ -40,7 +40,9 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   hbl->addWidget( mBtn );
 
   connect( mBtn, SIGNAL(clicked()),
-	   this, SLOT(slotAddrBook()) );
+           this, SLOT(slotAddrBook()) );
+  connect( mLineEdit, SIGNAL( textChanged(const QString&) ),
+           this, SIGNAL( textChanged(const QString&) ) );
 }
 
 void KMFilterActionWithAddressWidget::slotAddrBook()

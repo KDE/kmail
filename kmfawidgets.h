@@ -25,6 +25,10 @@ public:
   QString text() const { return mLineEdit->text(); }
   void setText( const QString & aString ) { mLineEdit->setText( aString ); }
 
+signals:
+  // Forwarded from the internal text edit
+  void textChanged(const QString&);
+
 protected slots:
   void slotAddrBook();
 

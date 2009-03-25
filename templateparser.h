@@ -53,8 +53,17 @@ class TemplateParser : public QObject
                           KMFolder *afolder = 0, bool append = false );
     virtual void processWithTemplate( const QString &tmpl );
 
+    /// This finds the template to use. Either the one from the folder, identity or
+    /// finally the global template.
+    /// This also reads the To and CC address of the template
+    /// @return the contents of the template
     virtual QString findTemplate();
+
+    /// Finds the template with the given name.
+    /// This also reads the To and CC address of the template
+    /// @return the contents of the template
     virtual QString findCustomTemplate( const QString &tmpl );
+
     virtual QString pipe( const QString &cmd, const QString &buf );
 
     virtual QString getFName( const QString &str );
@@ -77,6 +86,7 @@ class TemplateParser : public QObject
     bool mDebug;
     QString mQuoteString;
     bool mAppend;
+    QString mTo, mCC;
 
     /**
      * Called by processWithTemplate(). This adds the completely processed body to

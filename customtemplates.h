@@ -68,6 +68,8 @@ class CustomTemplates : public CustomTemplatesBase
 
   protected:
 
+    void setRecipientsEditsEnabled( bool enabled );
+
     QListViewItem *mCurrentItem;
     CustomTemplateItemList mItemList;
 
@@ -78,6 +80,10 @@ class CustomTemplates : public CustomTemplatesBase
     QPixmap mReplyAllPix;
     QPixmap mForwardPix;
 
+    /// Whether or not to emit the changed() signal. This is useful to disable when loading
+    /// templates, which changes the UI without user action
+    bool mBlockChangeSignal;
+
 };
 
 struct CustomTemplateItem
@@ -86,12 +92,15 @@ struct CustomTemplateItem
   CustomTemplateItem( const QString &name,
                       const QString &content,
                       KShortcut &shortcut,
-                      CustomTemplates::Type type ) :
-    mName( name ), mContent( content ), mShortcut(shortcut), mType( type ) {}
+                      CustomTemplates::Type type,
+                      QString to, QString cc ) :
+    mName( name ), mContent( content ), mShortcut(shortcut), mType( type ),
+    mTo( to ), mCC( cc ) {}
 
   QString mName, mContent;
   KShortcut mShortcut;
   CustomTemplates::Type mType;
+  QString mTo, mCC;
 };
 
 #endif // CUSTOMTEMPLATES_H
