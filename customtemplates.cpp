@@ -186,6 +186,15 @@ void CustomTemplates::load()
 
 void CustomTemplates::save()
 {
+  // Before saving the new templates, delete the old ones. That needs to be done before
+  // saving, since otherwise a new template with the new name wouldn't get saved.
+  for ( QStringList::const_iterator it = mItemsToDelete.constBegin();
+        it != mItemsToDelete.constEnd(); ++it ) {
+    CTemplates t( (*it) );
+    const QString configGroup = t.currentGroup();
+    kmkernel->config()->deleteGroup( configGroup );
+  }
+
   if ( mCurrentItem ) {
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
@@ -199,8 +208,7 @@ void CustomTemplates::save()
     list.append( (*lit)->text( 1 ) );
     ++lit;
   }
-  QDictIterator<CustomTemplateItem> it( mItemList );
-  for ( ; it.current() ; ++it ) {
+  for ( QDictIterator<CustomTemplateItem> it( mItemList ); it.current() ; ++it ) {
     // list.append( (*it)->mName );
     CTemplates t( (*it)->mName );
     QString &content = (*it)->mContent;
@@ -251,7 +259,9 @@ void CustomTemplates::slotAddClicked()
 void CustomTemplates::slotRemoveClicked()
 {
   if ( mCurrentItem ) {
-    CustomTemplateItem *vitem = mItemList.take( mCurrentItem->text( 1 ) );
+    const QString templateName = mCurrentItem->text( 1 );
+    mItemsToDelete.append( templateName );
+    CustomTemplateItem *vitem = mItemList.take( templateName );
     if ( vitem ) {
       delete vitem;
     }
