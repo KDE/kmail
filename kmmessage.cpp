@@ -1211,7 +1211,6 @@ void KMMessage::sanitizeHeaders( const QStringList& whiteList )
 KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 {
   KMMessage* msg = new KMMessage();
-  QString id;
 
   // If this is a multipart mail or if the main part is only the text part,
   // Make an identical copy of the mail, minus headers, so attachments are
@@ -1222,8 +1221,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
     msg->fromDwString( this->asDwString() );
     // remember the type and subtype, initFromMessage sets the contents type to
     // text/plain, via initHeader, for unclear reasons
-    const int type = msg->type();
-    const int subtype = msg->subtype();
+    DwMediaType oldContentType = msg->mMsg->Headers().ContentType();
 
     msg->sanitizeHeaders();
 
@@ -1240,12 +1238,14 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
       }
     }
     msg->mMsg->Assemble();
-
     msg->initFromMessage( this );
+
     //restore type
-    msg->setType( type );
-    msg->setSubtype( subtype );
-  } else if( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypeHtml ) {
+    msg->mMsg->Headers().ContentType().FromString( oldContentType.AsString() );
+    msg->mMsg->Headers().ContentType().Parse();
+    msg->mMsg->Assemble();
+  }
+  else if( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypeHtml ) {
     // This is non-multipart html mail. Let`s make it text/plain and allow
     // template parser do the hard job.
     msg->initFromMessage( this );
@@ -1253,7 +1253,8 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
     msg->setSubtype( DwMime::kSubtypeHtml );
     msg->mNeedsAssembly = true;
     msg->cleanupHeader();
-  } else {
+  }
+  else {
     // This is a non-multipart, non-text mail (e.g. text/calendar). Construct
     // a multipart/mixed mail and add the original body as an attachment.
     msg->initFromMessage( this );
@@ -2536,6 +2537,16 @@ void KMMessage::setNeedsAssembly()
   mNeedsAssembly = true;
 }
 
+//-----------------------------------------------------------------------------
+void KMMessage::assembleIfNeeded()
+{
+  Q_ASSERT( mMsg );
+
+  if ( mNeedsAssembly ) {
+    mMsg->Assemble();
+    mNeedsAssembly = false;
+  }
+}
 
 //-----------------------------------------------------------------------------
 QCString KMMessage::body() const
@@ -2735,6 +2746,8 @@ void KMMessage::setBodyEncodedBinary( const QByteArray& aStr, DwEntity *entity )
   }
 
   entity->Body().FromString( dwResult );
+  entity->Body().Parse();
+
   mNeedsAssembly = true;
 }
 

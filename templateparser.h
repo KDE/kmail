@@ -48,10 +48,11 @@ class TemplateParser : public QObject
                     bool aSmartQuote, bool anoQuote, bool aallowDecryption,
                     bool aselectionIsBody );
 
-    virtual void process( KMMessage *aorig_msg, KMFolder *afolder = NULL, bool append = false );
+    virtual void process( KMMessage *aorig_msg, KMFolder *afolder = 0, bool append = false );
     virtual void process( const QString &tmplName, KMMessage *aorig_msg,
-                          KMFolder *afolder = NULL, bool append = false );
+                          KMFolder *afolder = 0, bool append = false );
     virtual void processWithTemplate( const QString &tmpl );
+
     virtual QString findTemplate();
     virtual QString findCustomTemplate( const QString &tmpl );
     virtual QString pipe( const QString &cmd, const QString &buf );
@@ -76,6 +77,17 @@ class TemplateParser : public QObject
     bool mDebug;
     QString mQuoteString;
     bool mAppend;
+
+    /**
+     * Called by processWithTemplate(). This adds the completely processed body to
+     * the message.
+     *
+     * In append mode, this will simply append the text to the body.
+     *
+     * Otherwise, the content of the old message is deleted and replaced with @p body.
+     * Attachments of the original message are also added back to the new message. 
+     */
+    void addProcessedBodyToMessage( const QString &body );
 
     int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;

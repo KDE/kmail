@@ -505,6 +505,12 @@ public:
   void setNeedsAssembly();
 
   /**
+   * Assemble the internal message. This is done automatically in most
+   * cases, but sometimes still necessary to call this manually.
+   */
+  void assembleIfNeeded();
+
+  /**
    * Get or set the 'Content-Transfer-Encoding' header field
    * The member functions that involve enumerated types (ints)
    * will work only for well-known encodings.
@@ -924,7 +930,7 @@ private:
   QString mDrafts;
   QString mTemplates;
   mutable DwMessage* mMsg;
-  mutable bool       mNeedsAssembly :1;
+  mutable bool mNeedsAssembly :1;
   bool mDecodeHTML :1;
   bool mReadyToShow :1;
   bool mComplete :1;

@@ -1476,89 +1476,23 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
   // avoid endless loops when this action is used in a filter
   // which applies to sent messages
-  if ( KMMessage::addressIsInAddressList( mParameter, aMsg->to() ) )
+  if ( KMMessage::addressIsInAddressList( mParameter, aMsg->to() ) ) {
+    kdWarning(5006) << "Attempt to forward to receipient of original message, ignoring." << endl;
     return ErrorButGoOn;
-
-  // Create the forwarded message by hand to make forwarding of messages with
-  // attachments work.
-  // Note: This duplicates a lot of code from KMMessage::createForward() and
-  //       KMComposeWin::applyChanges().
-  // ### FIXME: Remove the code duplication again.
-
-  KMMessage* msg = new KMMessage;
-
-  msg->initFromMessage( aMsg );
-
-  // QString st = QString::fromUtf8( aMsg->createForwardBody() );
-  TemplateParser parser( msg, TemplateParser::Forward,
-                         aMsg->body(), false, false, false, false);
-  if ( mTemplate.isEmpty() )
-    parser.process( aMsg );
-  else
-    parser.process( mTemplate, aMsg );
-
-  QCString
-    encoding = KMMsgBase::autoDetectCharset( aMsg->charset(),
-                                             KMMessage::preferredCharsets(),
-                                             msg->body() );
-  if( encoding.isEmpty() )
-    encoding = "utf-8";
-  QCString str = KMMsgBase::codecForName( encoding )->fromUnicode( msg->body() );
-
-  msg->setCharset( encoding );
-  msg->setTo( mParameter );
-  msg->setSubject( "Fwd: " + aMsg->subject() );
-
-  bool isQP = kmkernel->msgSender()->sendQuotedPrintable();
-
-  if( aMsg->numBodyParts() == 0 )
-  {
-    msg->setAutomaticFields( true );
-    msg->setHeaderField( "Content-Type", "text/plain" );
-    // msg->setCteStr( isQP ? "quoted-printable": "8bit" );
-    QValueList<int> dummy;
-    msg->setBodyAndGuessCte(str, dummy, !isQP);
-    msg->setCharset( encoding );
-    if( isQP )
-      msg->setBodyEncoded( str );
-    else
-      msg->setBody( str );
-  }
-  else
-  {
-    KMMessagePart bodyPart, msgPart;
-
-    msg->removeHeaderField( "Content-Type" );
-    msg->removeHeaderField( "Content-Transfer-Encoding" );
-    msg->setAutomaticFields( true );
-    msg->setBody( "This message is in MIME format.\n\n" );
-
-    bodyPart.setTypeStr( "text" );
-    bodyPart.setSubtypeStr( "plain" );
-    // bodyPart.setCteStr( isQP ? "quoted-printable": "8bit" );
-    QValueList<int> dummy;
-    bodyPart.setBodyAndGuessCte(str, dummy, !isQP);
-    bodyPart.setCharset( encoding );
-    bodyPart.setBodyEncoded( str );
-    msg->addBodyPart( &bodyPart );
-
-    for( int i = 0; i < aMsg->numBodyParts(); i++ )
-    {
-      aMsg->bodyPart( i, &msgPart );
-      if( i > 0 || qstricmp( msgPart.typeStr(), "text" ) != 0 )
-        msg->addBodyPart( &msgPart );
-    }
   }
 
-  msg->cleanupHeader();
-  msg->link( aMsg, KMMsgStatusForwarded );
+  KMMessage *fwdMsg = aMsg->createForward( mTemplate );
+  fwdMsg->setTo( mParameter );
 
-  sendMDN( aMsg, KMime::MDN::Dispatched );
-
-  if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendDefault ) ) {
-    kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
+  if ( !kmkernel->msgSender()->send( fwdMsg, KMail::MessageSender::SendLater ) ) {
+    kdWarning(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
+  else
+    sendMDN( aMsg, KMime::MDN::Dispatched );
+
+  // (the msgSender takes ownership of the message, so don't delete it here)
+
   return GoOn;
 }
 
