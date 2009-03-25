@@ -1570,6 +1570,11 @@ QWidget* KMFilterActionForward::createParamWidget( QWidget* parent ) const
   addressEdit->setName( "addressEdit" );
   hBox->addWidget( addressEdit );
 
+  KLineEdit *lineEdit = dynamic_cast<KLineEdit*>( addressEdit->child( "addressEdit" ) );
+  Q_ASSERT( lineEdit );
+  QToolTip::add( lineEdit, i18n( "The addressee the message will be forwarded to" ) );
+  QWhatsThis::add( lineEdit, i18n( "The filter will forward the message to the addressee entered here." ) );
+
   QComboBox *templateCombo = new QComboBox( addressAndTemplate );
   templateCombo->setName( "templateCombo" );
   hBox->addWidget( templateCombo );

@@ -17,6 +17,7 @@
 #include <kstandarddirs.h>
 
 #include <qlayout.h>
+#include <qtooltip.h>
 
 //=============================================================================
 //
@@ -30,10 +31,12 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   QHBoxLayout *hbl = new QHBoxLayout(this);
   hbl->setSpacing(4);
   mLineEdit = new KLineEdit(this);
+  mLineEdit->setName( "addressEdit" );
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
   mBtn = new QPushButton( QString::null ,this );
   mBtn->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );
   mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
+  QToolTip::add( mBtn, i18n( "Open Address Book" ) );
   hbl->addWidget( mBtn );
 
   connect( mBtn, SIGNAL(clicked()),
