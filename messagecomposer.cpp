@@ -1779,7 +1779,7 @@ shared_ptr<DwBodyPart> MessageComposer::imageBodyPart( KMMessage &theMessage,
     singleImageBodyPart.setContentTransferEncodingStr( "base64" );
     singleImageBodyPart.setTypeStr( "image" );
     singleImageBodyPart.setSubtypeStr( "png" );
-    QString contentId = "<" + image->contentID + ">";
+    QString contentId = '<' + image->contentID + '>';
     singleImageBodyPart.setContentId( QByteArray( contentId.toLocal8Bit() ) );
 
     // Create a DwBodyPart out of the KMMessagePart, get its string representation, and add

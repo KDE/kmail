@@ -4261,9 +4261,9 @@ void KMMessage::dump( DwEntity *entity, int level )
   for ( int i = 1; i <= level; i++ )
     spaces += "  ";
 
-  kDebug() << QString( spaces + "Headers of entity " + entity->partId() + ":" );
+  kDebug() << QString( spaces + "Headers of entity " + entity->partId() + ':' );
   kDebug() << QString( spaces + entity->Headers().AsString().c_str() );
-  kDebug() << QString( spaces + "Body of entity " + entity->partId() + ":" );
+  kDebug() << QString( spaces + "Body of entity " + entity->partId() + ':' );
   kDebug() << QString( spaces + entity->Body().AsString().c_str() );
 
   DwBodyPart *current = entity->Body().FirstBodyPart();
