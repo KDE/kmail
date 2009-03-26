@@ -184,7 +184,7 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
 
   // If this is normal text, paste the text
   if ( md->hasText() ) {
-    textCursor().insertText( md->text() );
+    KMeditor::dropEvent( e );
     e->accept();
     return;
   }
