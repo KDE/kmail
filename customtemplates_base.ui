@@ -1,9 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>CustomTemplatesBase</class>
 <widget class="QWidget">
-    <property name="name">
-        <cstring>Form1</cstring>
-    </property>
     <property name="geometry">
         <rect>
             <x>0</x>
@@ -11,9 +8,6 @@
             <width>589</width>
             <height>463</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>Form1</string>
     </property>
     <grid>
         <property name="name">
