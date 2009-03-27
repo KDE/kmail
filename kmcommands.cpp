@@ -3214,8 +3214,10 @@ KMCommand::Result AttachmentModifyCommand::execute()
 
   Result res = doAttachmentModify();
   if ( res != OK )
+  {
+    kDebug(5006)<<"AttachmentModifyCommand::execute has failed";
     return res;
-
+  }
   setEmitsCompletedItself( true );
   setDeletesItself( true );
   return OK;
