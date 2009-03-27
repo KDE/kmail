@@ -148,7 +148,7 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
         }
       }
     } else if ( md->hasText() ) {
-      textCursor().insertText( md->text() );
+      KMeditor::dropEvent( e );
       e->accept();
     } else {
       kDebug(5006) << "Unable to add dropped object";
