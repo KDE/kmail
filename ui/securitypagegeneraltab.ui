@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>SecurityPageGeneralTab</class>
- <widget class="QWidget" name="SecurityPageGeneralTab" >
-  <property name="geometry" >
+ <widget class="QWidget" name="SecurityPageGeneralTab">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,43 +10,43 @@
     <height>425</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" >
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
       <string>HTML Messages</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout" >
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="mHtmlMailCheck" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;p>Messages sometimes come in both formats. This option controls whether you want the HTML part or the plain text part to be displayed.&lt;/p>&lt;p>Displaying the HTML part makes the message look better, but at the same time increases the risk of security holes being exploited.&lt;/p>&lt;p>Displaying the plain text part loses much of the message's formatting, but makes it almost &lt;em>impossible&lt;/em> to exploit security holes in the HTML renderer (Konqueror).&lt;/p>&lt;p>The option below guards against one common misuse of HTML messages, but it cannot guard against security issues that were not known at the time this version of KMail was written.&lt;/p>&lt;p>It is therefore advisable to &lt;em>not&lt;/em> prefer HTML to plain text.&lt;/p>&lt;p>&lt;b>Note:&lt;/b> You can set this option on a per-folder basis from the &lt;i>Folder&lt;/i> menu of KMail's main window.&lt;/p>&lt;/qt></string>
+       <widget class="QLabel" name="labelWarnHTML">
+        <property name="text">
+         <string>&lt;b&gt;WARNING:&lt;/b&gt; Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href=&quot;whatsthis1&quot;&gt;More about HTML mails...&lt;/a&gt; &lt;a href=&quot;whatsthis2&quot;&gt;More about external references...&lt;/a&gt;</string>
         </property>
-        <property name="text" >
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mHtmlMailCheck">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;p&gt;Messages sometimes come in both formats. This option controls whether you want the HTML part or the plain text part to be displayed.&lt;/p&gt;&lt;p&gt;Displaying the HTML part makes the message look better, but at the same time increases the risk of security holes being exploited.&lt;/p&gt;&lt;p&gt;Displaying the plain text part loses much of the message's formatting, but makes it almost &lt;em&gt;impossible&lt;/em&gt; to exploit security holes in the HTML renderer (Konqueror).&lt;/p&gt;&lt;p&gt;The option below guards against one common misuse of HTML messages, but it cannot guard against security issues that were not known at the time this version of KMail was written.&lt;/p&gt;&lt;p&gt;It is therefore advisable to &lt;em&gt;not&lt;/em&gt; prefer HTML to plain text.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; You can set this option on a per-folder basis from the &lt;i&gt;Folder&lt;/i&gt; menu of KMail's main window.&lt;/p&gt;&lt;/qt&gt;</string>
+        </property>
+        <property name="text">
          <string>Prefer HTML to plain text</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="mExternalReferences" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;p>Some mail advertisements are in HTML and contain references to, for example, images that the advertisers employ to find out that you have read their message (&amp;quot;web bugs&amp;quot;).&lt;/p>&lt;p>There is no valid reason to load images off the Internet like this, since the sender can always attach the required images directly to the message.&lt;/p>&lt;p>To guard from such a misuse of the HTML displaying feature of KMail, this option is &lt;em>disabled&lt;/em> by default.&lt;/p>&lt;p>However, if you wish to, for example, view images in HTML messages that were not attached to it, you can enable this option, but you should be aware of the possible problem.&lt;/p>&lt;/qt></string>
+       <widget class="QCheckBox" name="mExternalReferences">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;p&gt;Some mail advertisements are in HTML and contain references to, for example, images that the advertisers employ to find out that you have read their message (&amp;quot;web bugs&amp;quot;).&lt;/p&gt;&lt;p&gt;There is no valid reason to load images off the Internet like this, since the sender can always attach the required images directly to the message.&lt;/p&gt;&lt;p&gt;To guard from such a misuse of the HTML displaying feature of KMail, this option is &lt;em&gt;disabled&lt;/em&gt; by default.&lt;/p&gt;&lt;p&gt;However, if you wish to, for example, view images in HTML messages that were not attached to it, you can enable this option, but you should be aware of the possible problem.&lt;/p&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Allow messages to load external references from the Internet</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="labelWarnHTML" >
-        <property name="text" >
-         <string>&lt;b>WARNING:&lt;/b> Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href="whatsthis1">More about HTML mails...&lt;/a> &lt;a href="whatsthis2">More about external references...&lt;/a></string>
-        </property>
-        <property name="wordWrap" >
-         <bool>true</bool>
-        </property>
-        <property name="textInteractionFlags" >
-         <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
         </property>
        </widget>
       </item>
@@ -53,14 +54,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
       <string>Encrypted Messages</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3" >
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QCheckBox" name="mAlwaysDecrypt" >
-        <property name="text" >
+       <widget class="QCheckBox" name="mAlwaysDecrypt">
+        <property name="text">
          <string>Attempt decryption of encrypted messages when viewing</string>
         </property>
        </widget>
@@ -69,111 +70,111 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupMessageDisp" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupMessageDisp">
+     <property name="title">
       <string>Message Disposition Notifications</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="labelSend" >
-        <property name="text" >
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelSend">
+        <property name="text">
          <string>Send policy:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" >
-       <widget class="QRadioButton" name="radioIgnore" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;h3>Message Disposition Notification Policy&lt;/h3>&lt;p>MDNs are a generalization of what is commonly called &lt;b>read receipt&lt;/b>. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b>displayed&lt;/b> (i.e. read), &lt;b>deleted&lt;/b> and &lt;b>dispatched&lt;/b> (e.g. forwarded).&lt;/p>&lt;p>The following options are available to control KMail's sending of MDNs:&lt;/p>&lt;ul>&lt;li>&lt;em>Ignore&lt;/em>: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li>&lt;li>&lt;em>Ask&lt;/em>: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li>&lt;li>&lt;em>Deny&lt;/em>: Always sends a &lt;b>denied&lt;/b> notification. This is only &lt;em>slightly&lt;/em> better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li>&lt;li>&lt;em>Always send&lt;/em>: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li>&lt;/ul>&lt;/qt></string>
+      <item row="1" column="1">
+       <widget class="QRadioButton" name="radioIgnore">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;h3&gt;Message Disposition Notification Policy&lt;/h3&gt;&lt;p&gt;MDNs are a generalization of what is commonly called &lt;b&gt;read receipt&lt;/b&gt;. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b&gt;displayed&lt;/b&gt; (i.e. read), &lt;b&gt;deleted&lt;/b&gt; and &lt;b&gt;dispatched&lt;/b&gt; (e.g. forwarded).&lt;/p&gt;&lt;p&gt;The following options are available to control KMail's sending of MDNs:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;em&gt;Ignore&lt;/em&gt;: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li&gt;&lt;li&gt;&lt;em&gt;Ask&lt;/em&gt;: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Deny&lt;/em&gt;: Always sends a &lt;b&gt;denied&lt;/b&gt; notification. This is only &lt;em&gt;slightly&lt;/em&gt; better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Always send&lt;/em&gt;: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li&gt;&lt;/ul&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Ignore</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="2" >
-       <widget class="QRadioButton" name="radioAsk" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;h3>Message Disposition Notification Policy&lt;/h3>&lt;p>MDNs are a generalization of what is commonly called &lt;b>read receipt&lt;/b>. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b>displayed&lt;/b> (i.e. read), &lt;b>deleted&lt;/b> and &lt;b>dispatched&lt;/b> (e.g. forwarded).&lt;/p>&lt;p>The following options are available to control KMail's sending of MDNs:&lt;/p>&lt;ul>&lt;li>&lt;em>Ignore&lt;/em>: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li>&lt;li>&lt;em>Ask&lt;/em>: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li>&lt;li>&lt;em>Deny&lt;/em>: Always sends a &lt;b>denied&lt;/b> notification. This is only &lt;em>slightly&lt;/em> better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li>&lt;li>&lt;em>Always send&lt;/em>: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li>&lt;/ul>&lt;/qt></string>
+      <item row="1" column="2">
+       <widget class="QRadioButton" name="radioAsk">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;h3&gt;Message Disposition Notification Policy&lt;/h3&gt;&lt;p&gt;MDNs are a generalization of what is commonly called &lt;b&gt;read receipt&lt;/b&gt;. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b&gt;displayed&lt;/b&gt; (i.e. read), &lt;b&gt;deleted&lt;/b&gt; and &lt;b&gt;dispatched&lt;/b&gt; (e.g. forwarded).&lt;/p&gt;&lt;p&gt;The following options are available to control KMail's sending of MDNs:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;em&gt;Ignore&lt;/em&gt;: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li&gt;&lt;li&gt;&lt;em&gt;Ask&lt;/em&gt;: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Deny&lt;/em&gt;: Always sends a &lt;b&gt;denied&lt;/b&gt; notification. This is only &lt;em&gt;slightly&lt;/em&gt; better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Always send&lt;/em&gt;: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li&gt;&lt;/ul&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Ask</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="3" >
-       <widget class="QRadioButton" name="radioDeny" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;h3>Message Disposition Notification Policy&lt;/h3>&lt;p>MDNs are a generalization of what is commonly called &lt;b>read receipt&lt;/b>. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b>displayed&lt;/b> (i.e. read), &lt;b>deleted&lt;/b> and &lt;b>dispatched&lt;/b> (e.g. forwarded).&lt;/p>&lt;p>The following options are available to control KMail's sending of MDNs:&lt;/p>&lt;ul>&lt;li>&lt;em>Ignore&lt;/em>: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li>&lt;li>&lt;em>Ask&lt;/em>: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li>&lt;li>&lt;em>Deny&lt;/em>: Always sends a &lt;b>denied&lt;/b> notification. This is only &lt;em>slightly&lt;/em> better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li>&lt;li>&lt;em>Always send&lt;/em>: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li>&lt;/ul>&lt;/qt></string>
+      <item row="1" column="3">
+       <widget class="QRadioButton" name="radioDeny">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;h3&gt;Message Disposition Notification Policy&lt;/h3&gt;&lt;p&gt;MDNs are a generalization of what is commonly called &lt;b&gt;read receipt&lt;/b&gt;. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b&gt;displayed&lt;/b&gt; (i.e. read), &lt;b&gt;deleted&lt;/b&gt; and &lt;b&gt;dispatched&lt;/b&gt; (e.g. forwarded).&lt;/p&gt;&lt;p&gt;The following options are available to control KMail's sending of MDNs:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;em&gt;Ignore&lt;/em&gt;: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li&gt;&lt;li&gt;&lt;em&gt;Ask&lt;/em&gt;: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Deny&lt;/em&gt;: Always sends a &lt;b&gt;denied&lt;/b&gt; notification. This is only &lt;em&gt;slightly&lt;/em&gt; better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Always send&lt;/em&gt;: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li&gt;&lt;/ul&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Deny</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="4" >
-       <widget class="QRadioButton" name="radioAlways" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;h3>Message Disposition Notification Policy&lt;/h3>&lt;p>MDNs are a generalization of what is commonly called &lt;b>read receipt&lt;/b>. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b>displayed&lt;/b> (i.e. read), &lt;b>deleted&lt;/b> and &lt;b>dispatched&lt;/b> (e.g. forwarded).&lt;/p>&lt;p>The following options are available to control KMail's sending of MDNs:&lt;/p>&lt;ul>&lt;li>&lt;em>Ignore&lt;/em>: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li>&lt;li>&lt;em>Ask&lt;/em>: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li>&lt;li>&lt;em>Deny&lt;/em>: Always sends a &lt;b>denied&lt;/b> notification. This is only &lt;em>slightly&lt;/em> better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li>&lt;li>&lt;em>Always send&lt;/em>: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li>&lt;/ul>&lt;/qt></string>
+      <item row="1" column="4">
+       <widget class="QRadioButton" name="radioAlways">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;h3&gt;Message Disposition Notification Policy&lt;/h3&gt;&lt;p&gt;MDNs are a generalization of what is commonly called &lt;b&gt;read receipt&lt;/b&gt;. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b&gt;displayed&lt;/b&gt; (i.e. read), &lt;b&gt;deleted&lt;/b&gt; and &lt;b&gt;dispatched&lt;/b&gt; (e.g. forwarded).&lt;/p&gt;&lt;p&gt;The following options are available to control KMail's sending of MDNs:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;em&gt;Ignore&lt;/em&gt;: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li&gt;&lt;li&gt;&lt;em&gt;Ask&lt;/em&gt;: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Deny&lt;/em&gt;: Always sends a &lt;b&gt;denied&lt;/b&gt; notification. This is only &lt;em&gt;slightly&lt;/em&gt; better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Always send&lt;/em&gt;: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li&gt;&lt;/ul&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Always send</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" >
-       <widget class="QLabel" name="labelQuote" >
-        <property name="text" >
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelQuote">
+        <property name="text">
          <string>Quote original message:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" >
-       <widget class="QRadioButton" name="radioNothing" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;h3>Message Disposition Notification Policy&lt;/h3>&lt;p>MDNs are a generalization of what is commonly called &lt;b>read receipt&lt;/b>. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b>displayed&lt;/b> (i.e. read), &lt;b>deleted&lt;/b> and &lt;b>dispatched&lt;/b> (e.g. forwarded).&lt;/p>&lt;p>The following options are available to control KMail's sending of MDNs:&lt;/p>&lt;ul>&lt;li>&lt;em>Ignore&lt;/em>: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li>&lt;li>&lt;em>Ask&lt;/em>: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li>&lt;li>&lt;em>Deny&lt;/em>: Always sends a &lt;b>denied&lt;/b> notification. This is only &lt;em>slightly&lt;/em> better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li>&lt;li>&lt;em>Always send&lt;/em>: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li>&lt;/ul>&lt;/qt></string>
+      <item row="2" column="1">
+       <widget class="QRadioButton" name="radioNothing">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;h3&gt;Message Disposition Notification Policy&lt;/h3&gt;&lt;p&gt;MDNs are a generalization of what is commonly called &lt;b&gt;read receipt&lt;/b&gt;. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b&gt;displayed&lt;/b&gt; (i.e. read), &lt;b&gt;deleted&lt;/b&gt; and &lt;b&gt;dispatched&lt;/b&gt; (e.g. forwarded).&lt;/p&gt;&lt;p&gt;The following options are available to control KMail's sending of MDNs:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;em&gt;Ignore&lt;/em&gt;: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li&gt;&lt;li&gt;&lt;em&gt;Ask&lt;/em&gt;: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Deny&lt;/em&gt;: Always sends a &lt;b&gt;denied&lt;/b&gt; notification. This is only &lt;em&gt;slightly&lt;/em&gt; better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Always send&lt;/em&gt;: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li&gt;&lt;/ul&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Nothing</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="2" >
-       <widget class="QRadioButton" name="radioFull" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;h3>Message Disposition Notification Policy&lt;/h3>&lt;p>MDNs are a generalization of what is commonly called &lt;b>read receipt&lt;/b>. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b>displayed&lt;/b> (i.e. read), &lt;b>deleted&lt;/b> and &lt;b>dispatched&lt;/b> (e.g. forwarded).&lt;/p>&lt;p>The following options are available to control KMail's sending of MDNs:&lt;/p>&lt;ul>&lt;li>&lt;em>Ignore&lt;/em>: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li>&lt;li>&lt;em>Ask&lt;/em>: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li>&lt;li>&lt;em>Deny&lt;/em>: Always sends a &lt;b>denied&lt;/b> notification. This is only &lt;em>slightly&lt;/em> better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li>&lt;li>&lt;em>Always send&lt;/em>: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li>&lt;/ul>&lt;/qt></string>
+      <item row="2" column="2">
+       <widget class="QRadioButton" name="radioFull">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;h3&gt;Message Disposition Notification Policy&lt;/h3&gt;&lt;p&gt;MDNs are a generalization of what is commonly called &lt;b&gt;read receipt&lt;/b&gt;. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b&gt;displayed&lt;/b&gt; (i.e. read), &lt;b&gt;deleted&lt;/b&gt; and &lt;b&gt;dispatched&lt;/b&gt; (e.g. forwarded).&lt;/p&gt;&lt;p&gt;The following options are available to control KMail's sending of MDNs:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;em&gt;Ignore&lt;/em&gt;: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li&gt;&lt;li&gt;&lt;em&gt;Ask&lt;/em&gt;: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Deny&lt;/em&gt;: Always sends a &lt;b&gt;denied&lt;/b&gt; notification. This is only &lt;em&gt;slightly&lt;/em&gt; better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Always send&lt;/em&gt;: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li&gt;&lt;/ul&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Full message</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="3" >
-       <widget class="QRadioButton" name="radioHeaders" >
-        <property name="whatsThis" >
-         <string>&lt;qt>&lt;h3>Message Disposition Notification Policy&lt;/h3>&lt;p>MDNs are a generalization of what is commonly called &lt;b>read receipt&lt;/b>. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b>displayed&lt;/b> (i.e. read), &lt;b>deleted&lt;/b> and &lt;b>dispatched&lt;/b> (e.g. forwarded).&lt;/p>&lt;p>The following options are available to control KMail's sending of MDNs:&lt;/p>&lt;ul>&lt;li>&lt;em>Ignore&lt;/em>: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li>&lt;li>&lt;em>Ask&lt;/em>: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li>&lt;li>&lt;em>Deny&lt;/em>: Always sends a &lt;b>denied&lt;/b> notification. This is only &lt;em>slightly&lt;/em> better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li>&lt;li>&lt;em>Always send&lt;/em>: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li>&lt;/ul>&lt;/qt></string>
+      <item row="2" column="3">
+       <widget class="QRadioButton" name="radioHeaders">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;h3&gt;Message Disposition Notification Policy&lt;/h3&gt;&lt;p&gt;MDNs are a generalization of what is commonly called &lt;b&gt;read receipt&lt;/b&gt;. The message author requests a disposition notification to be sent and the receiver's mail program generates a reply from which the author can learn what happened to his message. Common disposition types include &lt;b&gt;displayed&lt;/b&gt; (i.e. read), &lt;b&gt;deleted&lt;/b&gt; and &lt;b&gt;dispatched&lt;/b&gt; (e.g. forwarded).&lt;/p&gt;&lt;p&gt;The following options are available to control KMail's sending of MDNs:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;em&gt;Ignore&lt;/em&gt;: Ignores any request for disposition notifications. No MDN will ever be sent automatically (recommended).&lt;/li&gt;&lt;li&gt;&lt;em&gt;Ask&lt;/em&gt;: Answers requests only after asking the user for permission. This way, you can send MDNs for selected messages while denying or ignoring them for others.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Deny&lt;/em&gt;: Always sends a &lt;b&gt;denied&lt;/b&gt; notification. This is only &lt;em&gt;slightly&lt;/em&gt; better than always sending MDNs. The author will still know that the messages has been acted upon, he just cannot tell whether it was deleted or read etc.&lt;/li&gt;&lt;li&gt;&lt;em&gt;Always send&lt;/em&gt;: Always sends the requested disposition notification. That means that the author of the message gets to know when the message was acted upon and, in addition, what happened to it (displayed, deleted, etc.). This option is strongly discouraged, but since it makes much sense e.g. for customer relationship management, it has been made available.&lt;/li&gt;&lt;/ul&gt;&lt;/qt&gt;</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Only headers</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="5" >
-       <widget class="QCheckBox" name="mNoMDNsWhenEncryptedCheck" >
-        <property name="text" >
+      <item row="3" column="0" colspan="5">
+       <widget class="QCheckBox" name="mNoMDNsWhenEncryptedCheck">
+        <property name="text">
          <string>Do not send MDNs in response to encrypted messages</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="5" >
-       <widget class="QLabel" name="labelWarning" >
-        <property name="text" >
-         <string>&lt;b>WARNING:&lt;/b> Unconditionally returning confirmations undermines your privacy. &lt;a href="whatsthis3">More about MDNs...&lt;/a></string>
+      <item row="0" column="0" colspan="5">
+       <widget class="QLabel" name="labelWarning">
+        <property name="text">
+         <string>&lt;b&gt;WARNING:&lt;/b&gt; Unconditionally returning confirmations undermines your privacy. &lt;a href=&quot;whatsthis3&quot;&gt;More about MDNs...&lt;/a&gt;</string>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>true</bool>
         </property>
-        <property name="textInteractionFlags" >
+        <property name="textInteractionFlags">
          <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
         </property>
        </widget>
@@ -182,14 +183,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_4" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
       <string>Certificate &amp;&amp; Key Bundle Attachments</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4" >
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <widget class="QCheckBox" name="mAutomaticallyImportAttachedKeysCheck" >
-        <property name="text" >
+       <widget class="QCheckBox" name="mAutomaticallyImportAttachedKeysCheck">
+        <property name="text">
          <string>Automatically import keys and certificate</string>
         </property>
        </widget>
@@ -198,11 +199,11 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer" >
-     <property name="orientation" >
+    <spacer name="verticalSpacer">
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
        <height>26</height>
