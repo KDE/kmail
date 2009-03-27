@@ -1111,7 +1111,7 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
     //FIXME: the questions is : should we iterate through all
     //messages in jobs? I don't think so, because it would
     //mean canceling the jobs that work with other messages
-    if ( (*it)->msgList().first() == msg )
+    if ( !(*it)->msgList().isEmpty() && (*it)->msgList().first() == msg )
     {
       FolderJob* job = (*it);
       it = mJobList.erase( it );
