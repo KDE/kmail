@@ -170,6 +170,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   connect( mEdit, SIGNAL( rightPressed() ), SIGNAL( rightPressed() ) );
 
   connect( mEdit, SIGNAL( leftPressed() ), mCombo, SLOT( setFocus() ) );
+  connect( mEdit, SIGNAL( editingFinished() ), SLOT( slotEditingFinished() ) );
   connect( mEdit, SIGNAL( clearButtonClicked() ), SLOT( slotPropagateDeletion() ) );
   connect( mCombo, SIGNAL( rightPressed() ), mEdit, SLOT( setFocus() ) );
 
@@ -269,6 +270,13 @@ void RecipientLine::slotReturnPressed()
 void RecipientLine::slotPropagateDeletion()
 {
   emit deleteLine( this );
+}
+
+void RecipientLine::slotEditingFinished()
+{
+  if ( mEdit->text().isEmpty() ) {
+    emit deleteLine( this );
+  }
 }
 
 void RecipientLine::keyPressEvent( QKeyEvent *ev )
@@ -490,7 +498,7 @@ void RecipientsView::slotDecideLineDeletion( RecipientLine *line )
     mModified = true;
   if ( mLines.count() == 1 ) {
     line->clear();
-  } else {
+  } else if ( mLines.indexOf( line ) != mLines.count() - 1 ) {
     mCurDelLine = line;
     QTimer::singleShot( 0, this, SLOT( slotDeleteLine( ) ) );
   }
@@ -504,13 +512,15 @@ void RecipientsView::slotDeleteLine()
   RecipientLine *line = mCurDelLine;
   int pos = mLines.indexOf( line );
 
-  int newPos;
-  if ( pos == 0 ) newPos = pos + 1;
-  else newPos = pos - 1;
+  if ( mCurDelLine->isActive() ) {
+    int newPos;
+    if ( pos == 0 ) newPos = pos + 1;
+    else newPos = pos - 1;
 
-  // if there is something left to activate, do so
-  if ( mLines.at( newPos ) )
-    mLines.at( newPos )->activate();
+    // if there is something left to activate, do so
+    if ( mLines.at( newPos ) )
+      mLines.at( newPos )->activate();
+  }
 
   mLines.removeAll( line );
   line->setParent( 0 );
