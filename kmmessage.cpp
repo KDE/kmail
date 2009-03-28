@@ -622,7 +622,7 @@ static QString stripSignature ( const QString & msg, bool clearSigned ) {
   const QRegExp sbDelimiterSearch = clearSigned ?
         QRegExp( "(^|\n)[> ]*--\\s?\n" ) : QRegExp( "(^|\n)[> ]*-- \n" );
   // The regular expresion to look for prefix change
-  const QRegExp commonReplySearch = QRegExp( "[ ]*>" );
+  const QRegExp commonReplySearch = QRegExp( "^[ ]*>" );
 
   QString res = msg;
   int posDeletingStart = 1; // to start looking at 0
