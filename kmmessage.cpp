@@ -616,11 +616,55 @@ static bool flushPart(QString &msg, QStringList &part,
    return appendEmptyLine;
 }
 
-static QString stripSignature( const QString & msg, bool clearSigned ) {
-  if ( clearSigned )
-    return msg.left( msg.lastIndexOf( QRegExp( "\n--\\s?\n" ) ) );
-  else
-    return msg.left( msg.lastIndexOf( "\n-- \n" ) );
+static QString stripSignature ( const QString & msg, bool clearSigned ) {
+  // Following RFC 3676, only > before --
+  // I prefer to not delete a SB instead of delete good mail content.
+  QRegExp sbDelimiterSearch = clearSigned ?
+      QRegExp( "(^|\n)[> ]*--\\s?\n" ) : QRegExp( "(^|\n)[> ]*-- \n" );
+  // The regular expresion to look for prefix change
+  QRegExp commonReplySearch = QRegExp( "[>]" );
+
+  QString res = msg;
+  QString prefix; // the current prefix
+  QString line; // the line to check if is part of the SB
+  int posDeletingStart = -1;
+  int posNewLine = -1;
+  int posSignatureBlock = -1;
+
+  // While there are SB delimiters
+  while ( ( posDeletingStart = res.indexOf( sbDelimiterSearch ) ) >= 0 )
+  {
+    // Look for the SB begining
+    posSignatureBlock = res.indexOf( '-', posDeletingStart );
+    // The prefix before "-- "$
+    if ( res[posDeletingStart] == '\n' ) ++posDeletingStart;
+    prefix = res.mid( posDeletingStart, posSignatureBlock - posDeletingStart );
+    posNewLine = res.indexOf( '\n', posSignatureBlock ) + 1;
+
+    // now go to the end of the SB
+    while ( posNewLine < res.size() && posNewLine > 0 )
+    {
+      line = res.mid( posNewLine, res.indexOf( '\n', posNewLine ) - posNewLine );
+
+      // check when the SB ends:
+      // * does not starts with prefix or
+      // * starts with prefix+(any substring of prefix)
+      if ( ( prefix.isEmpty() && line.indexOf( commonReplySearch ) < 0) ||
+           ( !prefix.isEmpty() && line.startsWith( prefix ) &&
+             !prefix.contains( line.mid( prefix.size(), 1 ) ) ) )
+      {
+        posNewLine = res.indexOf( '\n', posNewLine ) + 1;
+      }
+      else
+        break; // end of the SB
+    }
+    // remove the SB or truncate when is the last SB
+    if ( posNewLine > 0 )
+      res.remove( posDeletingStart, posNewLine - posDeletingStart );
+    else
+      res.truncate( posDeletingStart );
+  }
+  return res;
 }
 
 QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
