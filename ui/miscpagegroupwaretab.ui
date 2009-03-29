@@ -215,7 +215,7 @@
          <widget class="QCheckBox" name="mExchangeCompatibleInvitations" >
           <property name="toolTip" >
            <string>Microsoft Outlook, when used in combination with a Microsoft Exchange server,
-has a problem understanding standards-compliant groupware e-mail.
+has a problem understanding standards-compliant groupware email.
 Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</string>
           </property>
           <property name="text" >
