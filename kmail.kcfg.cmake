@@ -173,13 +173,13 @@
 
       <entry name="LegacyBodyInvites" type="Bool">
         <label>Send groupware invitations in the mail body</label>
-        <whatsthis>Microsoft Outlook has a number of shortcomings  in its implementation of the iCalendar standard; this option works around one of them. If you have problems with Outlook users not being able to get your invitations, try setting this option.</whatsthis>
+        <whatsthis>Microsoft Outlook has a number of shortcomings in its implementation of the iCalendar standard; this option works around one of them. If you have problems with Outlook users not being able to get your invitations, try setting this option.</whatsthis>
         <default>false</default>
       </entry>
 
      <entry name="ExchangeCompatibleInvitations" type="Bool">
         <label>Exchange-compatible invitation naming</label>
-        <whatsthis>Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware e-mail. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</whatsthis>
+        <whatsthis>Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware email. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</whatsthis>
         <default>false</default>
       </entry>
 
