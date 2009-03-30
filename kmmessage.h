@@ -442,9 +442,6 @@ public:
   */
   QList<QByteArray> rawHeaderFields( const QByteArray & field ) const;
 
-  /** Splits the given address list into separate addresses. */
-  static KMime::Types::AddressList splitAddrField( const QByteArray & str );
-
   /** Returns header address list as string list.
       Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
       ResentCc, ResentReplyTo, ResentTo */
@@ -553,13 +550,6 @@ public:
   void setBodyEncoded( const QByteArray& aStr );
   void setBodyEncodedBinary( const QByteArray& bodyStr, DwEntity *entity = 0 );
 
-  /** Returns a list of content-transfer-encodings that can be used with
-      the given result of the character frequency analysis of a message or
-      message part under the given restrictions. */
-  static QList<int> determineAllowedCtes( const KMime::CharFreq& cf,
-                                               bool allow8Bit,
-                                               bool willBeSigned );
-
   /**
    * Sets body, encoded in the best fitting
    * content-transfer-encoding, which is determined by character
@@ -639,94 +629,6 @@ public:
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
   void setStatusFields();
-
-  /** Generates the Message-Id. It uses either the Message-Id suffix
-   * defined by the user or the given email address as suffix. The address
-   * must be given as addr-spec as defined in RFC 2822.
-   */
-  static QString generateMessageId( const QString& addr );
-
-  /** Convert '<' into "&lt;" resp. '>' into "&gt;" in order to
-    * prevent their interpretation by KHTML.
-    * Does *not* use the Qt replace function but runs a very fast C code
-    * the same way as lf2crlf() does.
-   */
-  static QByteArray html2source( const QByteArray & src );
-
-  /** Encodes an email address as mailto URL
-   */
-  static QString encodeMailtoUrl( const QString& str );
-
-  /** Decodes a mailto URL
-    */
-  static QString decodeMailtoUrl( const QString& url );
-
-  /** This function generates a displayable string from a list of email
-      addresses.
-      Input : mailbox-list
-      Output: comma separated list of display name resp. comment resp.
-              address
-  */
-  static QByteArray stripEmailAddr(const QByteArray& emailAddr);
-
-  /** Does the same as the above function. Shouldn't be used.
-   */
-  static QString stripEmailAddr(const QString& emailAddr);
-
-  /** Quotes the following characters which have a special meaning in HTML:
-   * '<'  '>'  '&'  '"'. Additionally '\\n' is converted to "<br />" if
-   * @p removeLineBreaks is false. If @p removeLineBreaks is true, then
-   * '\\n' is removed. Last but not least '\\r' is removed.
-   */
-  static QString quoteHtmlChars( const QString& str,
-                                 bool removeLineBreaks = false );
-
-  /** Converts the email address(es) to (a) nice HTML mailto: anchor(s).
-   * If stripped is true then the visible part of the anchor contains
-   * only the name part and not the given emailAddr.
-   */
-  static QString emailAddrAsAnchor(const QString& emailAddr,
-          bool stripped = true, const QString& cssStyle = QString(), bool link = true);
-
-  /** Strips an address from an address list. This is for example used
-      when replying to all.
-  */
-  static QStringList stripAddressFromAddressList( const QString& address,
-                                                  const QStringList& addresses );
-
-  /** Strips all the user's addresses from an address list. This is used
-      when replying.
-  */
-  static QStringList stripMyAddressesFromAddressList( const QStringList& list );
-
-  /** Returns true if the given address is contained in the given address list.
-  */
-  static bool addressIsInAddressList( const QString& address,
-                                      const QStringList& addresses );
-
-  /** Expands aliases (distribution lists and nick names) and appends a
-      domain part to all email addresses which are missing the domain part.
-  */
-  static QString expandAliases( const QString& recipients );
-
-  /** Uses the hostname as domain part and tries to determine the real name
-      from the entries in the password file.
-  */
-  static QString guessEmailAddressFromLoginName( const QString& userName );
-
-  /**
-   *  Given argument msg add quoting characters and relayout for max width maxLength
-   *  @param msg the string which it to be quoted
-   *  @param maxLineLength reformat text to be this amount of columns at maximum, adding
-   *    linefeeds at word boundaries to make it fit.
-   */
-  static QString smartQuote( const QString &msg, int maxLineLength );
-
-  /** Get the default message charset.*/
-  static QByteArray defaultCharset();
-
-  /** Get a list of preferred message charsets.*/
-  static const QStringList &preferredCharsets();
 
   /** Replaces every occurrence of "${foo}" in @p s with headerField("foo") */
   QString replaceHeadersInString( const QString & s ) const;
@@ -885,6 +787,16 @@ public:
 
   /** Delete this message as soon as it no longer in use. */
   void deleteWhenUnused();
+
+  /**
+   * Get the default message charset.
+   */
+  static QByteArray defaultCharset();
+
+  /**
+   * Get a list of preferred message charsets.
+   */
+  static const QStringList &preferredCharsets();
 
 #ifndef NDEBUG
 

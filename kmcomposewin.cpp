@@ -70,6 +70,7 @@ using MailTransport::Transport;
 #include "partNode.h"
 #include "recipientseditor.h"
 #include "stl_util.h"
+#include "stringutil.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
@@ -127,6 +128,8 @@ using Sonnet::DictionaryComboBox;
 #include "kmcomposewin.moc"
 
 #include "snippetwidget.h"
+
+using namespace KMail;
 
 KMail::Composer *KMail::makeComposer( KMMessage *msg, uint identitiy ) {
   return KMComposeWin::create( msg, identitiy );
@@ -3077,7 +3080,7 @@ void KMComposeWin::slotUpdateFont()
 
 QString KMComposeWin::smartQuote( const QString & msg )
 {
-  return KMMessage::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
+  return StringUtil::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
 }
 
 void KMComposeWin::slotPasteAsAttachment()
@@ -3119,7 +3122,7 @@ QString KMComposeWin::addQuotesToText( const QString &inputText ) const
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );
   answer += '\n';
-  return KMMessage::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
+  return StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
 }
 
 //-----------------------------------------------------------------------------
@@ -3410,7 +3413,7 @@ bool KMComposeWin::validateAddresses( QWidget *parent, const QString &addresses 
 {
   QString brokenAddress;
   KPIMUtils::EmailParseResult errorCode =
-    KPIMUtils::isValidAddressList( KMMessage::expandAliases( addresses ),
+    KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses ),
                                    brokenAddress );
   if ( !( errorCode == KPIMUtils::AddressOk ||
           errorCode == KPIMUtils::AddressEmpty ) ) {
@@ -3657,14 +3660,14 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     } else if ( mSaveIn == KMComposeWin::Templates ) {
       sentOk = saveDraftOrTemplate( (*it)->templates(), (*it) );
     } else {
-      (*it)->setTo( KMMessage::expandAliases( to() ));
-      (*it)->setCc( KMMessage::expandAliases( cc() ));
+      (*it)->setTo( StringUtil::expandAliases( to() ));
+      (*it)->setCc( StringUtil::expandAliases( cc() ));
       if ( !mComposer->originalBCC().isEmpty() ) {
-        (*it)->setBcc( KMMessage::expandAliases( mComposer->originalBCC() ) );
+        (*it)->setBcc( StringUtil::expandAliases( mComposer->originalBCC() ) );
       }
       QString recips = (*it)->headerField( "X-KMail-Recipients" );
       if ( !recips.isEmpty() ) {
-        (*it)->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ), KMMessage::Address );
+        (*it)->setHeaderField( "X-KMail-Recipients", StringUtil::expandAliases( recips ), KMMessage::Address );
       }
       (*it)->cleanupHeader();
       sentOk = kmkernel->msgSender()->send( (*it), mSendMethod );

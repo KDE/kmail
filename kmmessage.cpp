@@ -75,6 +75,7 @@ using namespace KMime::Types;
 #include "util.h"
 #endif
 
+using namespace KMail;
 using namespace KMime;
 
 struct KMMessageStaticData
@@ -485,206 +486,6 @@ QString KMMessage::formatString( const QString &aStr ) const
   return result;
 }
 
-static void removeTrailingSpace( QString &line )
-{
-   int i = line.length()-1;
-   while( (i >= 0) && ((line[i] == ' ') || (line[i] == '\t')))
-      i--;
-   line.truncate( i+1);
-}
-
-static QString splitLine( QString &line)
-{
-    removeTrailingSpace( line );
-    int i = 0;
-    int j = -1;
-    int l = line.length();
-
-    // TODO: Replace tabs with spaces first.
-
-    while(i < l)
-    {
-       QChar c = line[i];
-       if ((c == '>') || (c == ':') || (c == '|'))
-          j = i+1;
-       else if ((c != ' ') && (c != '\t'))
-          break;
-       i++;
-    }
-
-    if ( j <= 0 )
-    {
-       return "";
-    }
-    if ( i == l )
-    {
-       QString result = line.left(j);
-       line.clear();
-       return result;
-    }
-
-    QString result = line.left(j);
-    line = line.mid(j);
-    return result;
-}
-
-static QString flowText(QString &text, const QString& indent, int maxLength)
-{
-   maxLength--;
-   if (text.isEmpty())
-   {
-      return indent+"<NULL>\n";
-   }
-   QString result;
-   while (1)
-   {
-      int i;
-      if ((int) text.length() > maxLength)
-      {
-         i = maxLength;
-         while( (i >= 0) && (text[i] != ' '))
-            i--;
-         if (i <= 0)
-         {
-            // Couldn't break before maxLength.
-            i = maxLength;
-//            while( (i < (int) text.length()) && (text[i] != ' '))
-//               i++;
-         }
-      }
-      else
-      {
-         i = text.length();
-      }
-
-      QString line = text.left(i);
-      if (i < (int) text.length())
-         text = text.mid(i);
-      else
-         text.clear();
-
-      result += indent + line + '\n';
-
-      if (text.isEmpty())
-         return result;
-   }
-}
-
-static bool flushPart(QString &msg, QStringList &part,
-                      const QString &indent, int maxLength)
-{
-   maxLength -= indent.length();
-   if (maxLength < 20) maxLength = 20;
-
-   // Remove empty lines at end of quote
-   while ((part.begin() != part.end()) && part.last().isEmpty())
-   {
-      part.removeLast();
-   }
-
-   QString text;
-   for(QStringList::Iterator it2 = part.begin();
-       it2 != part.end();
-       ++it2)
-   {
-      QString line = (*it2);
-
-      if (line.isEmpty())
-      {
-         if (!text.isEmpty())
-            msg += flowText(text, indent, maxLength);
-         msg += indent + '\n';
-      }
-      else
-      {
-         if (text.isEmpty())
-            text = line;
-         else
-            text += ' '+line.trimmed();
-
-         if (((int) text.length() < maxLength) || ((int) line.length() < (maxLength-10)))
-            msg += flowText(text, indent, maxLength);
-      }
-   }
-   if (!text.isEmpty())
-      msg += flowText(text, indent, maxLength);
-
-   bool appendEmptyLine = true;
-   if (!part.count())
-     appendEmptyLine = false;
-
-   part.clear();
-   return appendEmptyLine;
-}
-
-QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
-{
-  QStringList part;
-  QString oldIndent;
-  bool firstPart = true;
-
-  const QStringList lines = msg.split('\n');
-
-  QString result;
-  for(QStringList::const_iterator it = lines.begin();
-      it != lines.end();
-      ++it)
-  {
-     QString line = *it;
-
-     const QString indent = splitLine( line );
-
-     if ( line.isEmpty())
-     {
-        if (!firstPart)
-           part.append(QString());
-        continue;
-     };
-
-     if (firstPart)
-     {
-        oldIndent = indent;
-        firstPart = false;
-     }
-
-     if (oldIndent != indent)
-     {
-        QString fromLine;
-        // Search if the last non-blank line could be "From" line
-        if (part.count() && (oldIndent.length() < indent.length()))
-        {
-           QStringList::Iterator it2 = part.isEmpty() ? part.end() : --part.end();
-           // FIXME: what if all strings are empty? Then we'll decrement part.begin().
-           // Shouldn't we also check for .begin()?
-           while( (it2 != part.end()) && (*it2).isEmpty())
-             --it2;
-
-           if ((it2 != part.end()) && ((*it2).endsWith(':')))
-           {
-              fromLine = oldIndent + (*it2) + '\n';
-              part.erase(it2);
-           }
-        }
-        if (flushPart( result, part, oldIndent, maxLineLength))
-        {
-           if (oldIndent.length() > indent.length())
-              result += indent + '\n';
-           else
-              result += oldIndent + '\n';
-        }
-        if (!fromLine.isEmpty())
-        {
-           result += fromLine;
-        }
-        oldIndent = indent;
-     }
-     part.append(line);
-  }
-  flushPart( result, part, oldIndent, maxLineLength);
-  return result;
-}
-
-
 //-----------------------------------------------------------------------------
 void KMMessage::parseTextStringFromDwPart( partNode * root,
                                            QByteArray& parsedString,
@@ -788,7 +589,7 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
 
   // strip the signature (footer):
   if ( aStripSignature )
-    return KMail::StringUtil::stripSignature( result, clearSigned );
+    return StringUtil::stripSignature( result, clearSigned );
   else
     return result;
 }
@@ -814,12 +615,12 @@ QString KMMessage::asQuotedString( const QString& aIndentStr,
   content += '\n';
 
   if ( s->smartQuote && s->wordWrap )
-    return smartQuote( content, s->wrapCol );
+    return StringUtil::smartQuote( content, s->wrapCol );
   return content;
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
+KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
                                    const QString &selection /*.clear() */,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
@@ -852,7 +653,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   }
 
   switch( replyStrategy ) {
-  case KMail::ReplySmart : {
+  case ReplySmart : {
     if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
       toStr = headerField( "Mail-Followup-To" );
     }
@@ -870,14 +671,14 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     }
     // strip all my addresses from the list of recipients
     QStringList recipients = KPIMUtils::splitAddressList( toStr );
-    toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
+    toStr = StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
     // ... unless the list contains only my addresses (reply to self)
     if ( toStr.isEmpty() && !recipients.isEmpty() )
       toStr = recipients[0];
 
     break;
   }
-  case KMail::ReplyList : {
+  case ReplyList : {
     if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
       toStr = headerField( "Mail-Followup-To" );
     }
@@ -890,11 +691,11 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     }
     // strip all my addresses from the list of recipients
     QStringList recipients = KPIMUtils::splitAddressList( toStr );
-    toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
+    toStr = StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
 
     break;
   }
-  case KMail::ReplyAll : {
+  case ReplyAll : {
     QStringList recipients;
     QStringList ccRecipients;
 
@@ -906,7 +707,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = stripAddressFromAddressList( *it, recipients );
+        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
       }
     }
 
@@ -932,7 +733,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     }
 
     // strip all my addresses from the list of recipients
-    toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
+    toStr = StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
 
     // merge To header and CC header into a list of CC recipients
     if( !cc().isEmpty() || !to().isEmpty() ) {
@@ -942,8 +743,8 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       if (!cc().isEmpty())
         list += KPIMUtils::splitAddressList(cc());
       for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
-        if(    !addressIsInAddressList( *it, recipients )
-            && !addressIsInAddressList( *it, ccRecipients ) ) {
+        if(    !StringUtil::addressIsInAddressList( *it, recipients )
+            && !StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;
           kDebug(5006) <<"Added" << *it <<"to the list of CC recipients";
         }
@@ -952,7 +753,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
     if ( !ccRecipients.isEmpty() ) {
       // strip all my addresses from the list of CC recipients
-      ccRecipients = stripMyAddressesFromAddressList( ccRecipients );
+      ccRecipients = StringUtil::stripMyAddressesFromAddressList( ccRecipients );
 
       // in case of a reply to self toStr might be empty. if that's the case
       // then propagate a cc recipient to To: (if there is any).
@@ -970,7 +771,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     }
     break;
   }
-  case KMail::ReplyAuthor : {
+  case ReplyAuthor : {
     if ( !replyToStr.isEmpty() ) {
       QStringList recipients = KPIMUtils::splitAddressList( replyToStr );
       // strip the mailing list post address from the list of Reply-To
@@ -978,7 +779,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = stripAddressFromAddressList( *it, recipients );
+        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
       }
       if ( !recipients.isEmpty() ) {
         toStr = recipients.join(", ");
@@ -995,7 +796,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     replyAll = false;
     break;
   }
-  case KMail::ReplyNone : {
+  case ReplyNone : {
     // the addressees will be set by the caller
   }
   }
@@ -1101,7 +902,7 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
     msg->setHeaderField( "Date", origDate );
 
   // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
-  msg->setHeaderField( "Resent-Message-ID", generateMessageId( msg->sender() ),
+  msg->setHeaderField( "Resent-Message-ID", StringUtil::generateMessageId( msg->sender() ),
                        Structured, true);
   msg->setHeaderField( "Resent-Date", newDate, Structured, true );
   msg->setHeaderField( "Resent-To",   toStr,   Address, true );
@@ -1803,7 +1604,7 @@ void KMMessage::setTo(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::toStrip() const
 {
-  return stripEmailAddr( to() );
+  return StringUtil::stripEmailAddr( to() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1851,7 +1652,7 @@ void KMMessage::setCc(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::ccStrip() const
 {
-  return stripEmailAddr( cc() );
+  return StringUtil::stripEmailAddr( cc() );
 }
 
 
@@ -1923,7 +1724,7 @@ void KMMessage::setFrom(const QString& bStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::fromStrip() const
 {
-  return stripEmailAddr( from() );
+  return StringUtil::stripEmailAddr( from() );
 }
 
 //-----------------------------------------------------------------------------
@@ -2137,20 +1938,8 @@ void KMMessage::setUID(ulong uid)
 }
 
 //-----------------------------------------------------------------------------
-AddressList KMMessage::splitAddrField( const QByteArray & str )
-{
-  AddressList result;
-  const char * scursor = str.begin();
-  if ( !scursor )
-    return AddressList();
-  const char * const send = str.begin() + str.length();
-  if ( !parseAddressList( scursor, send, result ) )
-    kDebug(5006) <<"Error in address splitting: parseAddressList returned false!";
-  return result;
-}
-
 AddressList KMMessage::headerAddrField( const QByteArray & aName ) const {
-  return KMMessage::splitAddrField( rawHeaderField( aName ) );
+  return StringUtil::splitAddrField( rawHeaderField( aName ) );
 }
 
 AddrSpecList KMMessage::extractAddrSpecs( const QByteArray & header ) const {
@@ -2527,60 +2316,11 @@ QByteArray KMMessage::bodyDecoded() const
     break;
   }
 
-  QByteArray result = KMail::Util::ByteArray( dwstr );
+  QByteArray result = Util::ByteArray( dwstr );
   //kWarning(qstrlen(result) != dwstr.size(), 5006)
   //  << "KMMessage::bodyDecoded(): body is binary but used as text!";
   return result;
 }
-
-
-//-----------------------------------------------------------------------------
-QList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
-                                                 bool allow8Bit,
-                                                 bool willBeSigned )
-{
-  QList<int> allowedCtes;
-
-  switch ( cf.type() ) {
-  case CharFreq::SevenBitText:
-    allowedCtes << DwMime::kCte7bit;
-  case CharFreq::EightBitText:
-    if ( allow8Bit )
-      allowedCtes << DwMime::kCte8bit;
-  case CharFreq::SevenBitData:
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      // let n the length of data and p the number of printable chars.
-      // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
-      // => qp < base64 iff p > 5n/6.
-      allowedCtes << DwMime::kCteQp;
-      allowedCtes << DwMime::kCteBase64;
-    } else {
-      allowedCtes << DwMime::kCteBase64;
-      allowedCtes << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitData:
-    allowedCtes << DwMime::kCteBase64;
-    break;
-  case CharFreq::None:
-  default:
-    // just nothing (avoid compiler warning)
-    ;
-  }
-
-  // In the following cases only QP and Base64 are allowed:
-  // - the buffer will be OpenPGP/MIME signed and it contains trailing
-  //   whitespace (cf. RFC 3156)
-  // - a line starts with "From "
-  if ( ( willBeSigned && cf.hasTrailingWhitespace() ) ||
-       cf.hasLeadingFrom() ) {
-    allowedCtes.removeAll( DwMime::kCte8bit );
-    allowedCtes.removeAll( DwMime::kCte7bit );
-  }
-
-  return allowedCtes;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
@@ -2593,7 +2333,7 @@ void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
     entity = mMsg;
 
   CharFreq cf( aBuf ); // it's safe to pass null arrays
-  allowedCte = determineAllowedCtes( cf, allow8Bit, willBeSigned );
+  allowedCte = StringUtil::determineAllowedCtes( cf, allow8Bit, willBeSigned );
   setCte( allowedCte[0], entity ); // choose best fitting
   setBodyEncodedBinary( aBuf, entity );
 }
@@ -2611,7 +2351,7 @@ void KMMessage::setBodyEncodedBinary( const QByteArray& bodyStr, DwEntity *entit
   if ( !entity )
     entity = mMsg;
 
-  DwString dwSrc = KMail::Util::dwString( bodyStr );
+  DwString dwSrc = Util::dwString( bodyStr );
   DwString dwResult;
 
   switch ( cte( entity ) )
@@ -3172,650 +2912,6 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   addDwBodyPart( part );
 }
 
-
-//-----------------------------------------------------------------------------
-QString KMMessage::generateMessageId( const QString& addr )
-{
-  QDateTime datetime = QDateTime::currentDateTime();
-  QString msgIdStr;
-
-  msgIdStr = '<' + datetime.toString( "yyyyMMddhhmm.sszzz" );
-
-  QString msgIdSuffix;
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  if( general.readEntry( "useCustomMessageIdSuffix", false ) )
-    msgIdSuffix = general.readEntry( "myMessageIdSuffix" );
-
-  if( !msgIdSuffix.isEmpty() )
-    msgIdStr += '@' + msgIdSuffix;
-  else
-    msgIdStr += '.' + KPIMUtils::toIdn( addr );
-
-  msgIdStr += '>';
-
-  return msgIdStr;
-}
-
-
-//-----------------------------------------------------------------------------
-QByteArray KMMessage::html2source( const QByteArray & src )
-{
-  QByteArray result( 1 + 6*src.length(), '\0' );  // maximal possible length
-
-  QByteArray::ConstIterator s = src.begin();
-  QByteArray::Iterator d = result.begin();
-  while ( *s ) {
-    switch ( *s ) {
-    case '<': {
-        *d++ = '&';
-        *d++ = 'l';
-        *d++ = 't';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-    case '\r': {
-        ++s;
-      }
-      break;
-    case '\n': {
-        *d++ = '<';
-        *d++ = 'b';
-        *d++ = 'r';
-        *d++ = '>';
-        ++s;
-      }
-      break;
-    case '>': {
-        *d++ = '&';
-        *d++ = 'g';
-        *d++ = 't';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-    case '&': {
-        *d++ = '&';
-        *d++ = 'a';
-        *d++ = 'm';
-        *d++ = 'p';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-    case '"': {
-        *d++ = '&';
-        *d++ = 'q';
-        *d++ = 'u';
-        *d++ = 'o';
-        *d++ = 't';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-    case '\'': {
-        *d++ = '&';
-        *d++ = 'a';
-        *d++ = 'p';
-        *d++ = 's';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-    default:
-        *d++ = *s++;
-    }
-  }
-  result.truncate( d - result.begin() );
-  return result;
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::encodeMailtoUrl( const QString& str )
-{
-  QString result;
-  result = QString::fromLatin1( KMMsgBase::encodeRFC2047String( str,
-                                                                "utf-8" ) );
-  result = KUrl::toPercentEncoding( result );
-  return result;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMMessage::decodeMailtoUrl( const QString& url )
-{
-  QString result;
-  result = KUrl::fromPercentEncoding( url.toLatin1() );
-  result = KMMsgBase::decodeRFC2047String( result.toLatin1() );
-  return result;
-}
-
-
-//-----------------------------------------------------------------------------
-QByteArray KMMessage::stripEmailAddr( const QByteArray& aStr )
-{
-  //kDebug(5006) << "(" << aStr <<" )";
-
-  if ( aStr.isEmpty() )
-    return QByteArray();
-
-  QByteArray result;
-
-  // The following is a primitive parser for a mailbox-list (cf. RFC 2822).
-  // The purpose is to extract a displayable string from the mailboxes.
-  // Comments in the addr-spec are not handled. No error checking is done.
-
-  QByteArray name;
-  QByteArray comment;
-  QByteArray angleAddress;
-  enum { TopLevel, InComment, InAngleAddress } context = TopLevel;
-  bool inQuotedString = false;
-  int commentLevel = 0;
-
-  for ( const char* p = aStr.data(); *p; ++p ) {
-    switch ( context ) {
-    case TopLevel : {
-      switch ( *p ) {
-      case '"' : inQuotedString = !inQuotedString;
-                 break;
-      case '(' : if ( !inQuotedString ) {
-                   context = InComment;
-                   commentLevel = 1;
-                 }
-                 else
-                   name += *p;
-                 break;
-      case '<' : if ( !inQuotedString ) {
-                   context = InAngleAddress;
-                 }
-                 else
-                   name += *p;
-                 break;
-      case '\\' : // quoted character
-                 ++p; // skip the '\'
-                 if ( *p )
-                   name += *p;
-                 break;
-      case ',' : if ( !inQuotedString ) {
-                   // next email address
-                   if ( !result.isEmpty() )
-                     result += ", ";
-                   name = name.trimmed();
-                   comment = comment.trimmed();
-                   angleAddress = angleAddress.trimmed();
-                   /*
-                   kDebug(5006) <<"Name    : \"" << name
-                                 << "\"";
-                   kDebug(5006) <<"Comment : \"" << comment
-                                 << "\"";
-                   kDebug(5006) <<"Address : \"" << angleAddress
-                                 << "\"";
-                   */
-                   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
-                     // handle Outlook-style addresses like
-                     // john.doe@invalid (John Doe)
-                     result += comment;
-                   }
-                   else if ( !name.isEmpty() ) {
-                     result += name;
-                   }
-                   else if ( !comment.isEmpty() ) {
-                     result += comment;
-                   }
-                   else if ( !angleAddress.isEmpty() ) {
-                     result += angleAddress;
-                   }
-                   name = QByteArray();
-                   comment = QByteArray();
-                   angleAddress = QByteArray();
-                 }
-                 else
-                   name += *p;
-                 break;
-      default :  name += *p;
-      }
-      break;
-    }
-    case InComment : {
-      switch ( *p ) {
-      case '(' : ++commentLevel;
-                 comment += *p;
-                 break;
-      case ')' : --commentLevel;
-                 if ( commentLevel == 0 ) {
-                   context = TopLevel;
-                   comment += ' '; // separate the text of several comments
-                 }
-                 else
-                   comment += *p;
-                 break;
-      case '\\' : // quoted character
-                 ++p; // skip the '\'
-                 if ( *p )
-                   comment += *p;
-                 break;
-      default :  comment += *p;
-      }
-      break;
-    }
-    case InAngleAddress : {
-      switch ( *p ) {
-      case '"' : inQuotedString = !inQuotedString;
-                 angleAddress += *p;
-                 break;
-      case '>' : if ( !inQuotedString ) {
-                   context = TopLevel;
-                 }
-                 else
-                   angleAddress += *p;
-                 break;
-      case '\\' : // quoted character
-                 ++p; // skip the '\'
-                 if ( *p )
-                   angleAddress += *p;
-                 break;
-      default :  angleAddress += *p;
-      }
-      break;
-    }
-    } // switch ( context )
-  }
-  if ( !result.isEmpty() )
-    result += ", ";
-  name = name.trimmed();
-  comment = comment.trimmed();
-  angleAddress = angleAddress.trimmed();
-  /*
-  kDebug(5006) <<"Name    : \"" << name <<"\"";
-  kDebug(5006) <<"Comment : \"" << comment <<"\"";
-  kDebug(5006) <<"Address : \"" << angleAddress <<"\"";
-  */
-  if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
-    // handle Outlook-style addresses like
-    // john.doe@invalid (John Doe)
-    result += comment;
-  }
-  else if ( !name.isEmpty() ) {
-    result += name;
-  }
-  else if ( !comment.isEmpty() ) {
-    result += comment;
-  }
-  else if ( !angleAddress.isEmpty() ) {
-    result += angleAddress;
-  }
-
-  //kDebug(5006) << "Returns \"" << result << "\"";
-  return result;
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::stripEmailAddr( const QString& aStr )
-{
-  //kDebug(5006) << "(" << aStr << ")";
-
-  if ( aStr.isEmpty() )
-    return QString();
-
-  QString result;
-
-  // The following is a primitive parser for a mailbox-list (cf. RFC 2822).
-  // The purpose is to extract a displayable string from the mailboxes.
-  // Comments in the addr-spec are not handled. No error checking is done.
-
-  QString name;
-  QString comment;
-  QString angleAddress;
-  enum { TopLevel, InComment, InAngleAddress } context = TopLevel;
-  bool inQuotedString = false;
-  int commentLevel = 0;
-
-  QChar ch;
-  int strLength(aStr.length());
-  for ( int index = 0; index < strLength; ++index ) {
-    ch = aStr[index];
-    switch ( context ) {
-    case TopLevel : {
-      switch ( ch.toLatin1() ) {
-      case '"' : inQuotedString = !inQuotedString;
-                 break;
-      case '(' : if ( !inQuotedString ) {
-                   context = InComment;
-                   commentLevel = 1;
-                 }
-                 else
-                   name += ch;
-                 break;
-      case '<' : if ( !inQuotedString ) {
-                   context = InAngleAddress;
-                 }
-                 else
-                   name += ch;
-                 break;
-      case '\\' : // quoted character
-                 ++index; // skip the '\'
-                 if ( index < aStr.length() )
-                   name += aStr[index];
-                 break;
-      case ',' : if ( !inQuotedString ) {
-                   // next email address
-                   if ( !result.isEmpty() )
-                     result += ", ";
-                   name = name.trimmed();
-                   comment = comment.trimmed();
-                   angleAddress = angleAddress.trimmed();
-                   /*
-                   kDebug(5006) <<"Name    : \"" << name
-                                 << "\"";
-                   kDebug(5006) <<"Comment : \"" << comment
-                                 << "\"";
-                   kDebug(5006) <<"Address : \"" << angleAddress
-                                 << "\"";
-                   */
-                   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
-                     // handle Outlook-style addresses like
-                     // john.doe@invalid (John Doe)
-                     result += comment;
-                   }
-                   else if ( !name.isEmpty() ) {
-                     result += name;
-                   }
-                   else if ( !comment.isEmpty() ) {
-                     result += comment;
-                   }
-                   else if ( !angleAddress.isEmpty() ) {
-                     result += angleAddress;
-                   }
-                   name.clear();
-                   comment.clear();
-                   angleAddress.clear();
-                 }
-                 else
-                   name += ch;
-                 break;
-      default :  name += ch;
-      }
-      break;
-    }
-    case InComment : {
-      switch ( ch.toLatin1() ) {
-      case '(' : ++commentLevel;
-                 comment += ch;
-                 break;
-      case ')' : --commentLevel;
-                 if ( commentLevel == 0 ) {
-                   context = TopLevel;
-                   comment += ' '; // separate the text of several comments
-                 }
-                 else
-                   comment += ch;
-                 break;
-      case '\\' : // quoted character
-                 ++index; // skip the '\'
-                 if ( index < aStr.length() )
-                   comment += aStr[index];
-                 break;
-      default :  comment += ch;
-      }
-      break;
-    }
-    case InAngleAddress : {
-      switch ( ch.toLatin1() ) {
-      case '"' : inQuotedString = !inQuotedString;
-                 angleAddress += ch;
-                 break;
-      case '>' : if ( !inQuotedString ) {
-                   context = TopLevel;
-                 }
-                 else
-                   angleAddress += ch;
-                 break;
-      case '\\' : // quoted character
-                 ++index; // skip the '\'
-                 if ( index < aStr.length() )
-                   angleAddress += aStr[index];
-                 break;
-      default :  angleAddress += ch;
-      }
-      break;
-    }
-    } // switch ( context )
-  }
-  if ( !result.isEmpty() )
-    result += ", ";
-  name = name.trimmed();
-  comment = comment.trimmed();
-  angleAddress = angleAddress.trimmed();
-  /*
-  kDebug(5006) <<"Name    : \"" << name <<"\"";
-  kDebug(5006) <<"Comment : \"" << comment <<"\"";
-  kDebug(5006) <<"Address : \"" << angleAddress <<"\"";
-  */
-  if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
-    // handle Outlook-style addresses like
-    // john.doe@invalid (John Doe)
-    result += comment;
-  }
-  else if ( !name.isEmpty() ) {
-    result += name;
-  }
-  else if ( !comment.isEmpty() ) {
-    result += comment;
-  }
-  else if ( !angleAddress.isEmpty() ) {
-    result += angleAddress;
-  }
-
-  //kDebug(5006) << "Returns \"" << result << "\"";
-  return result;
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
-{
-  QString result;
-
-  unsigned int strLength(str.length());
-  result.reserve( 6*strLength ); // maximal possible length
-  for( unsigned int i = 0; i < strLength; ++i )
-    switch ( str[i].toLatin1() ) {
-    case '<':
-      result += "&lt;";
-      break;
-    case '>':
-      result += "&gt;";
-      break;
-    case '&':
-      result += "&amp;";
-      break;
-    case '"':
-      result += "&quot;";
-      break;
-    case '\n':
-      if ( !removeLineBreaks )
-        result += "<br>";
-      break;
-    case '\r':
-      // ignore CR
-      break;
-    default:
-      result += str[i];
-    }
-
-  result.squeeze();
-  return result;
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const QString& cssStyle, bool aLink)
-{
-  if( aEmail.isEmpty() )
-    return aEmail;
-
-  const QStringList addressList = KPIMUtils::splitAddressList( aEmail );
-
-  QString result;
-
-  for( QStringList::ConstIterator it = addressList.constBegin();
-       ( it != addressList.constEnd() );
-       ++it ) {
-    if( !(*it).isEmpty() ) {
-      QString address = *it;
-      if( aLink ) {
-        result += "<a href=\"mailto:"
-                + KMMessage::encodeMailtoUrl( address )
-                + "\" "+cssStyle+">";
-      }
-      if( stripped )
-        address = KMMessage::stripEmailAddr( address );
-      result += KMMessage::quoteHtmlChars( address, true );
-      if( aLink ) {
-        result += "</a>, ";
-      }
-    }
-  }
-  // cut of the trailing ", "
-  if( aLink ) {
-    result.truncate( result.length() - 2 );
-  }
-
-  //kDebug(5006) << "('" << aEmail << "') returns:\n-->" << result << "<--";
-  return result;
-}
-
-
-//-----------------------------------------------------------------------------
-//static
-QStringList KMMessage::stripAddressFromAddressList( const QString& address,
-                                                    const QStringList& list )
-{
-  QStringList addresses( list );
-  QString addrSpec( KPIMUtils::extractEmailAddress( address ) );
-  for ( QStringList::Iterator it = addresses.begin();
-       it != addresses.end(); ) {
-    if ( kasciistricmp( addrSpec.toUtf8().data(),
-                        KPIMUtils::extractEmailAddress( *it ).toUtf8().data() ) == 0 ) {
-      kDebug(5006) <<"Removing" << *it <<" from the address list";
-      it = addresses.erase( it );
-    }
-    else
-      ++it;
-  }
-  return addresses;
-}
-
-
-//-----------------------------------------------------------------------------
-//static
-QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list )
-{
-  QStringList addresses = list;
-  for( QStringList::Iterator it = addresses.begin();
-       it != addresses.end(); ) {
-    kDebug(5006) <<"Check whether" << *it <<"is one of my addresses";
-    if( kmkernel->identityManager()->thatIsMe( KPIMUtils::extractEmailAddress( *it ) ) ) {
-      kDebug(5006) <<"Removing" << *it <<"from the address list";
-      it = addresses.erase( it );
-    }
-    else
-      ++it;
-  }
-  return addresses;
-}
-
-
-//-----------------------------------------------------------------------------
-//static
-bool KMMessage::addressIsInAddressList( const QString& address,
-                                        const QStringList& addresses )
-{
-  QString addrSpec = KPIMUtils::extractEmailAddress( address );
-  for( QStringList::ConstIterator it = addresses.begin();
-       it != addresses.end(); ++it ) {
-    if ( kasciistricmp( addrSpec.toUtf8().data(),
-                        KPIMUtils::extractEmailAddress( *it ).toUtf8().data() ) == 0 )
-      return true;
-  }
-  return false;
-}
-
-
-//-----------------------------------------------------------------------------
-//static
-QString KMMessage::expandAliases( const QString& recipients )
-{
-  if ( recipients.isEmpty() )
-    return QString();
-
-  QStringList recipientList = KPIMUtils::splitAddressList( recipients );
-
-  QString expandedRecipients;
-  for ( QStringList::Iterator it = recipientList.begin();
-        it != recipientList.end(); ++it ) {
-    if ( !expandedRecipients.isEmpty() )
-      expandedRecipients += ", ";
-    QString receiver = (*it).trimmed();
-
-    // try to expand distribution list
-    QString expandedList = KPIM::KAddrBookExternal::expandDistributionList( receiver );
-    if ( !expandedList.isEmpty() ) {
-      expandedRecipients += expandedList;
-      continue;
-    }
-
-    // try to expand nick name
-    QString expandedNickName = KabcBridge::expandNickName( receiver );
-    if ( !expandedNickName.isEmpty() ) {
-      expandedRecipients += expandedNickName;
-      continue;
-    }
-
-    // check whether the address is missing the domain part
-    // FIXME: looking for '@' might be wrong
-    if ( !receiver.contains('@') ) {
-      KConfigGroup general( KMKernel::config(), "General" );
-      QString defaultdomain = general.readEntry( "Default domain" );
-      if( !defaultdomain.isEmpty() ) {
-        expandedRecipients += receiver + '@' + defaultdomain;
-      }
-      else {
-        expandedRecipients += guessEmailAddressFromLoginName( receiver );
-      }
-    }
-    else
-      expandedRecipients += receiver;
-  }
-
-  return expandedRecipients;
-}
-
-
-//-----------------------------------------------------------------------------
-//static
-QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
-{
-  if ( loginName.isEmpty() )
-    return QString();
-
-  QString address = loginName;
-  address += '@';
-  address += QHostInfo::localHostName();
-
-  // try to determine the real name
-  const KUser user( loginName );
-  if ( user.isValid() ) {
-    QString fullName = user.property( KUser::FullName ).toString();
-    if ( fullName.contains( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) )
-      address = '"' + fullName.replace( '\\', "\\" ).replace( '"', "\\" )
-                    + "\" <" + address + '>';
-    else
-      address = fullName + " <" + address + '>';
-  }
-
-  return address;
-}
-
 //-----------------------------------------------------------------------------
 void KMMessage::readConfig()
 {
@@ -3841,28 +2937,6 @@ void KMMessage::readConfig()
     KConfigGroup config( KMKernel::config(), "Reader" );
     s->headerStrategy = HeaderStrategy::create( config.readEntry( "header-set-displayed", "rich" ) );
   }
-}
-
-QByteArray KMMessage::defaultCharset()
-{
-  QByteArray retval;
-
-  if (!s->prefCharsets.isEmpty())
-    retval = s->prefCharsets[0].toLatin1();
-
-  if (retval.isEmpty()  || (retval == "locale")) {
-    retval = QByteArray(kmkernel->networkCodec()->name());
-    kAsciiToLower( retval.data() );
-  }
-
-  if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
-  else if (retval == "ksc5601.1987-0") retval = "euc-kr";
-  return retval;
-}
-
-const QStringList &KMMessage::preferredCharsets()
-{
-  return s->prefCharsets;
 }
 
 //-----------------------------------------------------------------------------
@@ -4178,7 +3252,7 @@ void KMMessage::setBodyFromUnicode( const QString &str, DwEntity *entity )
 {
   QByteArray encoding =
     KMMsgBase::autoDetectCharset( charset(),
-                                  KMMessage::preferredCharsets(), str );
+                                  preferredCharsets(), str );
   if ( encoding.isEmpty() ) {
     encoding = "utf-8";
   }
@@ -4242,6 +3316,28 @@ QByteArray KMMessage::mboxMessageSeparator()
 void KMMessage::deleteWhenUnused()
 {
   s->pendingDeletes << this;
+}
+
+QByteArray KMMessage::defaultCharset()
+{
+  QByteArray retval;
+
+  if (!s->prefCharsets.isEmpty())
+    retval = s->prefCharsets[0].toLatin1();
+
+  if (retval.isEmpty()  || (retval == "locale")) {
+    retval = QByteArray(kmkernel->networkCodec()->name());
+    kAsciiToLower( retval.data() );
+  }
+
+  if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
+  else if (retval == "ksc5601.1987-0") retval = "euc-kr";
+  return retval;
+}
+
+const QStringList &KMMessage::preferredCharsets()
+{
+  return s->prefCharsets;
 }
 
 #ifndef NDEBUG

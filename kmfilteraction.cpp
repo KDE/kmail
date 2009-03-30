@@ -28,6 +28,7 @@ using KMail::MessageProperty;
 using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
+#include "stringutil.h"
 
 #include <kcombobox.h>
 #include <ktemporaryfile.h>
@@ -1474,7 +1475,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( KMMessage *msg ) cons
 
   // avoid endless loops when this action is used in a filter
   // which applies to sent messages
-  if ( KMMessage::addressIsInAddressList( mParameter, QStringList( msg->to() ) ) ) {
+  if ( KMail::StringUtil::addressIsInAddressList( mParameter, QStringList( msg->to() ) ) ) {
     kWarning() << "Attempt to forward to receipient of original message, ignoring.";
     return ErrorButGoOn;
   }

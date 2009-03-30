@@ -50,6 +50,7 @@
 #include "globalsettings.h"
 #include "util.h"
 #include "kleojobexecutor.h"
+#include "stringutil.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -869,7 +870,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     if ( mReader->htmlMail() )
       bodyText = codecFor( curNode )->toUnicode( partBody );
     else
-      bodyText = KMMessage::html2source( partBody );
+      bodyText = StringUtil::html2source( partBody );
 
     if ( curNode->isFirstTextPart() ||
          attachmentStrategy()->defaultDisplay( curNode ) == AttachmentStrategy::Inline ||
@@ -1088,10 +1089,10 @@ namespace KMail {
                           && !showOnlyOneMimePart()
                           && !label.isEmpty();
     if ( bDrawFrame ) {
-      label = KMMessage::quoteHtmlChars( label, true );
+      label = StringUtil::quoteHtmlChars( label, true );
 
       const QString comment =
-        KMMessage::quoteHtmlChars( curNode->msgPart().contentDescription(), true );
+        StringUtil::quoteHtmlChars( curNode->msgPart().contentDescription(), true );
 
       const QString fileName =
         mReader->writeMessagePartToTempFile( &curNode->msgPart(),
@@ -1837,8 +1838,8 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     QString label = node->msgPart().fileName().trimmed();
     if ( label.isEmpty() )
       label = node->msgPart().name().trimmed();
-    label = KMMessage::quoteHtmlChars( label, true );
-    const QString comment = KMMessage::quoteHtmlChars( node->msgPart().contentDescription(), true );
+    label = StringUtil::quoteHtmlChars( label, true );
+    const QString comment = StringUtil::quoteHtmlChars( node->msgPart().contentDescription(), true );
     const QString dir = QApplication::isRightToLeft() ? "rtl" : "ltr" ;
 
     QString htmlStr = "<table cellspacing=\"1\" class=\"textAtm\">"
@@ -1860,7 +1861,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     QString label = att->displayName();
     if( label.isEmpty() )
       label = att->name();
-    label = KMMessage::quoteHtmlChars( label, true );
+    label = StringUtil::quoteHtmlChars( label, true );
 
     QString dir = mReader->createTempDir( "ktnef-" + QString::number( i ) );
     parser.extractFileTo( att->name(), dir );
@@ -1905,10 +1906,10 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
       label = msgPart->name();
     if ( label.isEmpty() )
       label = i18nc( "display name for an unnamed attachment", "Unnamed" );
-    label = KMMessage::quoteHtmlChars( label, true );
+    label = StringUtil::quoteHtmlChars( label, true );
 
     QString comment = msgPart->contentDescription();
-    comment = KMMessage::quoteHtmlChars( comment, true );
+    comment = StringUtil::quoteHtmlChars( comment, true );
     if ( label == comment )
       comment.clear();
 
@@ -2392,7 +2393,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         signer = "";
                     else {
                         if( !blockAddrs.empty() ){
-                            QString address = KMMessage::encodeMailtoUrl( blockAddrs.first() );
+                            QString address = StringUtil::encodeMailtoUrl( blockAddrs.first() );
                             signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
                         }
                     }
@@ -2496,7 +2497,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
             else
             {
                 // HTMLize the signer's user id and create mailto: link
-                signer = KMMessage::quoteHtmlChars( signer, true );
+                signer = StringUtil::quoteHtmlChars( signer, true );
                 signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
 
                 if (block.isGoodSignature) {

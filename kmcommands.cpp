@@ -104,9 +104,9 @@ using KMail::RedirectDialog;
 using KMail::TemplateParser;
 #include "editorwatcher.h"
 #include "korghelper.h"
-
 #include "broadcaststatus.h"
 #include "globalsettings.h"
+#include "stringutil.h"
 
 #include <kpimutils/kfileio.h>
 #include "calendarinterface.h"
@@ -474,7 +474,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
   msg->initHeader(id);
   msg->setCharset("utf-8");
-  msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
+  msg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( msg, id );
   win->setCharset("", true);
@@ -499,7 +499,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     return Failed;
   }
   KMMessage *rmsg = msg->createReply( KMail::ReplyNone, mSelection );
-  rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
+  rmsg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( rmsg, 0 );
   win->setCharset( msg->codec()->name(), true );
@@ -524,7 +524,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
     return Failed;
   }
   KMMessage *fmsg = msg->createForward();
-  fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
+  fmsg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( fmsg );
   win->setCharset( msg->codec()->name(), true );
@@ -560,7 +560,7 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 {
-  KPIM::KAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
+  KPIM::KAddrBookExternal::addEmail( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ),
                                      parentWidget() );
 
   return OK;
@@ -575,7 +575,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
-  QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
+  QString addr = KMail::StringUtil::decodeMailtoUrl( mUrl.path() );
   KPIM::KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr),
                                       addr, parentWidget() );
 
@@ -594,7 +594,7 @@ KMCommand::Result KMUrlCopyCommand::execute()
 
   if (mUrl.protocol() == "mailto") {
     // put the url into the mouse selection and the clipboard
-    QString address = KMMessage::decodeMailtoUrl( mUrl.path() );
+    QString address = KMail::StringUtil::decodeMailtoUrl( mUrl.path() );
     clip->setText( address, QClipboard::Clipboard );
     clip->setText( address, QClipboard::Selection );
     KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Address copied to clipboard." ));
@@ -2272,7 +2272,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
     msg = new KMMessage;
     msg->initHeader(mIdentity);
     msg->setCharset("utf-8");
-    msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
+    msg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
     QString body = mUrl.queryItem( "body" );
     QString subject = mUrl.queryItem( "subject" );

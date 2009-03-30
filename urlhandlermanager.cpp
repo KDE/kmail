@@ -2,7 +2,7 @@
     urlhandlermanager.cpp
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002-2003 Klar‰lvdalens Datakonsult AB
+    Copyright (c) 2002-2003 Klar√§lvdalens Datakonsult AB
     Copyright (c) 2003      Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
@@ -41,6 +41,7 @@
 #include "kmkernel.h"
 #include "callback.h"
 
+#include "stringutil.h"
 #include "stl_util.h"
 #include <kurl.h>
 #include <QProcess>
@@ -512,7 +513,7 @@ namespace {
   QString MailToURLHandler::statusBarMessage( const KUrl & url, KMReaderWin * ) const {
     if ( url.protocol() != "mailto" )
       return QString();
-    return KMMessage::decodeMailtoUrl( url.url() );
+    return KMail::StringUtil::decodeMailtoUrl( url.url() );
   }
 }
 

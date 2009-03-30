@@ -4,6 +4,7 @@
 #include "kmkernel.h"
 #include "kmmessage.h"
 #include "globalsettings.h"
+#include "stringutil.h"
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>
@@ -23,6 +24,7 @@
 #include <assert.h>
 
 using namespace KMime;
+using namespace KMail;
 
 //-----------------------------------------------------------------------------
 KMMessagePart::KMMessagePart()
@@ -160,15 +162,15 @@ void KMMessagePart::setBodyEncoded(const QByteArray& aStr)
 }
 
 void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
-				       QList<int> & allowedCte,
-				       bool allow8Bit,
+                                       QList<int> & allowedCte,
+                                       bool allow8Bit,
                                        bool willBeSigned )
 {
   mBodyDecodedSize = aBuf.length();
 
   CharFreq cf( aBuf.data(), mBodyDecodedSize ); // save to pass null strings
 
-  allowedCte = KMMessage::determineAllowedCtes( cf, allow8Bit, willBeSigned );
+  allowedCte = StringUtil::determineAllowedCtes( cf, allow8Bit, willBeSigned );
 
 #ifndef NDEBUG
   DwString dwCte;

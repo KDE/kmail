@@ -38,6 +38,7 @@ using KPIMUtils::LinkLocator;
 #include "kmmessage.h"
 #include "spamheaderanalyzer.h"
 #include "globalsettings.h"
+#include "stringutil.h"
 
 #include <kpimutils/email.h>
 #include <libkdepim/kxface.h>
@@ -148,17 +149,17 @@ namespace KMail {
       QString fromStr = message->from();
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
-      QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true );
+      QString fromPart = KMail::StringUtil::emailAddrAsAnchor( fromStr, true );
       if ( !vCardName.isEmpty() )
         fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
       headerParts << fromPart;
     }
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-      headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true );
+      headerParts << i18n("CC: ") + KMail::StringUtil::emailAddrAsAnchor( message->cc(), true );
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
-      headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true );
+      headerParts << i18n("BCC: ") + KMail::StringUtil::emailAddrAsAnchor( message->bcc(), true );
 
     if ( strategy->showHeader( "date" ) )
       headerParts << strToHtml(message->dateShortStr());
@@ -261,7 +262,7 @@ namespace KMail {
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
       headerStr.append( i18n("From: ") +
-                        KMMessage::emailAddrAsAnchor( fromStr, false, "", true ) );
+                        KMail::StringUtil::emailAddrAsAnchor( fromStr, false, "", true ) );
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
@@ -275,19 +276,19 @@ namespace KMail {
 
     if ( strategy->showHeader( "to" ) )
       headerStr.append(i18nc("To-field of the mailheader.", "To: ")+
-                       KMMessage::emailAddrAsAnchor(message->to(),false) + "<br/>\n");
+                       KMail::StringUtil::emailAddrAsAnchor(message->to(),false) + "<br/>\n");
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
       headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(message->cc(),false) + "<br/>\n");
+                       KMail::StringUtil::emailAddrAsAnchor(message->cc(),false) + "<br/>\n");
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
       headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(message->bcc(),false) + "<br/>\n");
+                       KMail::StringUtil::emailAddrAsAnchor(message->bcc(),false) + "<br/>\n");
 
     if ( strategy->showHeader( "reply-to" ) && !message->replyTo().isEmpty())
       headerStr.append(i18n("Reply to: ")+
-                     KMMessage::emailAddrAsAnchor(message->replyTo(),false) + "<br/>\n");
+                     KMail::StringUtil::emailAddrAsAnchor(message->replyTo(),false) + "<br/>\n");
 
     headerStr += "</div>\n";
 
@@ -573,10 +574,10 @@ namespace KMail {
       headerStr += QString("<tr><th>%1</th>\n"
                            "<td>")
                            .arg(i18n("From: "))
-                 + KMMessage::emailAddrAsAnchor( fromStr, false )
+                 + KMail::StringUtil::emailAddrAsAnchor( fromStr, false )
                  + ( !message->headerField( "Resent-From" ).isEmpty() ? "&nbsp;"
                                 + i18n("(resent from %1)",
-                                    KMMessage::emailAddrAsAnchor(
+                                    KMail::StringUtil::emailAddrAsAnchor(
                                     message->headerField( "Resent-From" ),false) )
                               : QString("") )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
@@ -594,21 +595,21 @@ namespace KMail {
       headerStr.append(QString("<tr><th>%1</th>\n"
                    "<td>%2</td></tr>\n")
                             .arg(i18nc("To-field of the mail header.","To: "))
-                            .arg(KMMessage::emailAddrAsAnchor(message->to(),false)));
+                            .arg(KMail::StringUtil::emailAddrAsAnchor(message->to(),false)));
 
     // cc line, if any
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                    "<td>%2</td></tr>\n")
                               .arg(i18n("CC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(message->cc(),false)));
+                              .arg(KMail::StringUtil::emailAddrAsAnchor(message->cc(),false)));
 
     // Bcc line, if any
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                    "<td>%2</td></tr>\n")
                               .arg(i18n("BCC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(message->bcc(),false)));
+                              .arg(KMail::StringUtil::emailAddrAsAnchor(message->bcc(),false)));
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
@@ -718,15 +719,15 @@ namespace KMail {
 
     QStringList headerParts;
     if ( strategy->showHeader( "to" ) ) {
-      headerParts << KMMessage::emailAddrAsAnchor( message->to(), false, linkColor );
+      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->to(), false, linkColor );
     }
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() ) {
-      headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor );
+      headerParts << i18n("CC: ") + KMail::StringUtil::emailAddrAsAnchor( message->cc(), true, linkColor );
     }
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() ) {
-      headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor );
+      headerParts << i18n("BCC: ") + KMail::StringUtil::emailAddrAsAnchor( message->bcc(), true, linkColor );
     }
 
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
@@ -785,7 +786,7 @@ namespace KMail {
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
       // TODO vcard
-      QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true, linkColor );
+      QString fromPart = KMail::StringUtil::emailAddrAsAnchor( fromStr, true, linkColor );
       if ( !vCardName.isEmpty() )
         fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
       //TDDO strategy date

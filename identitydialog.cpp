@@ -40,6 +40,7 @@ using KMail::FolderRequester;
 #include "kleo_util.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
+#include "stringutil.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
 
@@ -529,7 +530,7 @@ namespace KMail {
     QString brokenAddress;
 
     KPIMUtils::EmailParseResult errorCode =
-      KPIMUtils::isValidAddressList( KMMessage::expandAliases( addresses ),
+      KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses ),
                                      brokenAddress );
     if ( !( errorCode == KPIMUtils::AddressOk ||
             errorCode == KPIMUtils::AddressEmpty ) ) {

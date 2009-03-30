@@ -4,7 +4,7 @@
 #include "kmmsginfo.h"
 #include "kmmessage.h"
 #include "kmmessagetag.h"
-//#include "kmmsgpart.h" // for encode
+#include "stringutil.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +12,8 @@
 #include <assert.h>
 #include <mimelib/datetime.h>
 #include <QByteArray>
+
+using namespace KMail;
 
 /** The old status format, only one at a time possible. Needed
     for upgrade path purposes. */
@@ -228,9 +230,9 @@ void KMMsgInfo::init(const QByteArray& aSubject, const QByteArray& aFrom,
         kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
     kd->subject = decodeRFC2047String( aSubject, prefCharset );
-    kd->from = decodeRFC2047String( KMMessage::stripEmailAddr( aFrom ),
+    kd->from = decodeRFC2047String( StringUtil::stripEmailAddr( aFrom ),
                                     prefCharset );
-    kd->to = decodeRFC2047String( KMMessage::stripEmailAddr( aTo ),
+    kd->to = decodeRFC2047String( StringUtil::stripEmailAddr( aTo ),
                                   prefCharset );
     kd->replyToIdMD5 = base64EncodedMD5( replyToId );
     kd->replyToAuxIdMD5 = base64EncodedMD5( replyToAuxId );

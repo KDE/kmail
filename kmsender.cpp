@@ -59,11 +59,15 @@ using namespace MailTransport;
 #include "kmmsgpart.h"
 #include "protocols.h"
 #include "kmcommands.h"
+#include "stringutil.h"
+
 #include <mimelib/mediatyp.h>
 #include <mimelib/enum.h>
 #include <mimelib/param.h>
 
-#define SENDER_GROUP "sending mail"
+static const QString SENDER_GROUP( "sending mail" );
+
+using namespace KMail;
 
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
@@ -134,7 +138,7 @@ static void handleRedirections( KMMessage *m ) {
   const QString from  = m->headerField( "X-KMail-Redirect-From" );
   const QString msgId = m->msgId();
   if ( from.isEmpty() || msgId.isEmpty() ) {
-    m->setMsgId( KMMessage::generateMessageId( m->sender() ) );
+    m->setMsgId( StringUtil::generateMessageId( m->sender() ) );
   }
 }
 
