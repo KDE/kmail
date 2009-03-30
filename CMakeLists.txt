@@ -239,6 +239,7 @@ set(kmailprivate_LIB_SRCS
    kleojobexecutor.cpp
    messagetree.cpp
    procmailparser.cpp
+   stringutil.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp
