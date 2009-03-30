@@ -22,43 +22,38 @@ void MessageDictTester::cleanupTestCase()
     delete m_dict;
 }
 
-void MessageDictTester::testKMDictCreation()
+void MessageDictTester::test_KMDictCreation()
 {
-    kDebug(5006) << "Check creation with size of next prime: ";
     QCOMPARE( m_dict->size(), 31 );
     m_dict->init( 13 ); // will be created with a 13, no nextPrime()
     QCOMPARE( m_dict->size(), 13 );
 }
 
-void MessageDictTester::testKMDictInsert()
+void MessageDictTester::test_KMDictInsert()
 {
-    kDebug(5006) << "Insert: ";
     KMDictItem *item = new KMDictItem();
     m_dict->insert( 12345, item );
     KMDictItem *found = m_dict->find( 12345 );
     QCOMPARE( item, found);
 }
  
-void MessageDictTester::testKMDictRemove()
+void MessageDictTester::test_KMDictRemove()
 {
-  kDebug(5006) << "Remove: ";
   m_dict->remove( 12345 );
   KMDictItem *item = m_dict->find( 12345 );
   QCOMPARE( item, (KMDictItem*)0 );
 }
 
-void MessageDictTester::testKMDictClear()
+void MessageDictTester::test_KMDictClear()
 {
-  kDebug(5006) << "Check clear: ";
   for ( unsigned int i=0; i<11; ++i )
     m_dict->insert( i, new KMDictItem() );
   m_dict->clear();
   QCOMPARE( m_dict->mVecs, (KMDictItem**)0 );
 }
 
-void MessageDictTester::testKMDictReplace()
+void MessageDictTester::test_KMDictReplace()
 {
-  kDebug(5006) << "Check replace: ";
   m_dict->init( 31 );
   KMDictItem *oldItem = new KMDictItem();
   KMDictItem *newItem = new KMDictItem();

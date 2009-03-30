@@ -15,14 +15,14 @@ class MessageDictTester : public QObject
 {
     Q_OBJECT
 
-public slots:
+private slots:
     void initTestCase();
     void cleanupTestCase();
-    void testKMDictCreation();
-    void testKMDictInsert();
-    void testKMDictRemove();
-    void testKMDictClear();
-    void testKMDictReplace();
+    void test_KMDictCreation();
+    void test_KMDictInsert();
+    void test_KMDictRemove();
+    void test_KMDictClear();
+    void test_KMDictReplace();
 private:
     KMDict *m_dict;
 };
