@@ -170,7 +170,7 @@ void KMail::ManageSieveScriptsDialog::slotItem( KMail::SieveJob * job, const QSt
 void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QTreeWidgetItem *item, QPoint p ) {
   if ( !item )
     return;
-  if ( !item->parent() && !mUrls.count( item ) )
+  if ( !item->parent() && !mUrls.count( item ))
     return;
   QMenu menu;
   mContextMenuItem = item;
@@ -182,7 +182,8 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QTreeWidgetItem 
     // top-levels:
     menu.addAction( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
   }
-  menu.exec( p );
+  if ( !menu.actions().isEmpty() )
+    menu.exec( p );
   mContextMenuItem = 0;
 }
 
