@@ -325,6 +325,7 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   vlay->setMargin( 0 );
   mTextEdit = new QTextEdit( frame);
   vlay->addWidget( mTextEdit );
+  mTextEdit->setFocus();
   mTextEdit->setAcceptRichText( false );
   mTextEdit->setWordWrapMode ( QTextOption::NoWrap );
   mTextEdit->setFont( KGlobalSettings::fixedFont() );
