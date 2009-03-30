@@ -181,7 +181,8 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( Q3ListViewItem *
     // top-levels:
     menu.addAction( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
   }
-  menu.exec( p );
+  if ( !menu.actions().isEmpty() )
+    menu.exec( p );
   mContextMenuItem = 0;
 }
 
