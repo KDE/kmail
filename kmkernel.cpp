@@ -2122,7 +2122,6 @@ void KMKernel::slotEmptyTrash()
 
 KMKernel* KMKernel::self()
 {
-  assert( mySelf );
   return mySelf;
 }
 
