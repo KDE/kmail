@@ -768,7 +768,6 @@ void AccountsPage::SendingTab::slotSetDefaultTransport()
   } else {
     item->setText( 1, i18n( "sendmail (Default)" ));
   }
-
   GlobalSettings::self()->setDefaultTransport( item->text(0) );
 
 }
@@ -902,6 +901,10 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
+  bool selectedTransportWasDefault = false;
+  if ( item->text( 0 ) == GlobalSettings::self()->defaultTransport() ) {
+      selectedTransportWasDefault = true;
+  }
   QStringList changedIdents;
   KPIM::IdentityManager * im = kmkernel->identityManager();
   for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
@@ -931,25 +934,25 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 
   KMTransportInfo ti;
 
-  QListViewItem *newCurrent = item->itemBelow();
-  if ( !newCurrent ) newCurrent = item->itemAbove();
-  //mTransportList->removeItem( item );
-  if ( newCurrent ) {
-    mTransportList->setCurrentItem( newCurrent );
-    mTransportList->setSelected( newCurrent, true );
-    GlobalSettings::self()->setDefaultTransport( newCurrent->text(0) );
-    ti.readConfig( KMTransportInfo::findTransport( newCurrent->text(0) ));
-    if ( item->text( 0 ) == GlobalSettings::self()->defaultTransport() ) {
+  if( selectedTransportWasDefault )
+  {
+    QListViewItem *newCurrent = item->itemBelow();
+    if ( !newCurrent ) newCurrent = item->itemAbove();
+    //mTransportList->removeItem( item );
+    if ( newCurrent ) {
+      mTransportList->setCurrentItem( newCurrent );
+      mTransportList->setSelected( newCurrent, true );
+      GlobalSettings::self()->setDefaultTransport( newCurrent->text(0) );
+      ti.readConfig( KMTransportInfo::findTransport( newCurrent->text(0) ));
       if ( ti.type != "sendmail" ) {
         newCurrent->setText( 1, i18n("smtp (Default)") );
       } else {
         newCurrent->setText( 1, i18n("sendmail (Default)" ));
       }
+    } else {
+      GlobalSettings::self()->setDefaultTransport( QString::null );
     }
-  } else {
-    GlobalSettings::self()->setDefaultTransport( QString::null );
   }
-
   delete item;
   mTransportInfoList.remove( it );
 
