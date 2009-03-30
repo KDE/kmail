@@ -300,6 +300,7 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, spacingHint() );
   mTextEdit = new QTextEdit( plainPage() );
   vlay->addWidget( mTextEdit );
+  mTextEdit->setFocus();
   mTextEdit->setTextFormat( QTextEdit::PlainText );
   mTextEdit->setWordWrap( QTextEdit::NoWrap );
   mTextEdit->setFont( KGlobalSettings::fixedFont() );
