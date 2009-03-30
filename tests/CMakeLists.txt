@@ -1,6 +1,9 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
-include_directories( ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/kmail  )
+include_directories(
+  ${CMAKE_SOURCE_DIR}/mimelib
+  ${CMAKE_SOURCE_DIR}/kmail
+)
 
 ########### utiltests ###############
 
@@ -25,9 +28,13 @@ target_link_libraries(mimelibtests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBR
 ########### signaturetest ###############
 
 set(signaturetest_SRCS signaturetest.cpp ../stringutil.cpp)
+add_definitions(-DKMAIL_UNITTESTS=YES)
 kde4_add_unit_test(signaturetest TESTNAME kmail-signaturetest ${signaturetest_SRCS})
-target_link_libraries(signaturetest ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY}
-                      ${KDE4_KIO_LIBS})
+target_link_libraries(signaturetest
+  ${QT_QTTEST_LIBRARY}
+  ${QT_QTCORE_LIBRARY}
+  ${KDE4_KIO_LIBS}
+)
 
 ########### dbus test ###############
 set(dbustest_SRCS dbustest.cpp)

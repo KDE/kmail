@@ -18,6 +18,8 @@
 */
 #include "stringutil.h"
 
+#ifndef KMAIL_UNITTESTS
+
 #include "kmaddrbook.h"
 #include "kmkernel.h"
 
@@ -36,11 +38,16 @@
 
 #include <QHostInfo>
 #include <QRegExp>
+#endif
 #include <QStringList>
+
+#ifndef KMAIL_UNITTESTS
 
 using namespace KMime;
 using namespace KMime::Types;
 using namespace KMime::HeaderParsing;
+
+#endif
 
 namespace KMail
 {
@@ -236,6 +243,7 @@ QString stripSignature ( const QString & msg, bool clearSigned )
   return res;
 }
 
+#ifndef KMAIL_UNITTESTS
 //-----------------------------------------------------------------------------
 QList<int> determineAllowedCtes( const CharFreq& cf,
                                  bool allow8Bit,
@@ -317,6 +325,7 @@ QString generateMessageId( const QString& addr )
 
   return msgIdStr;
 }
+#endif
 
 QByteArray html2source( const QByteArray & src )
 {
@@ -390,6 +399,7 @@ QByteArray html2source( const QByteArray & src )
   return result;
 }
 
+#ifndef KMAIL_UNITTESTS
 QString encodeMailtoUrl( const QString& str )
 {
   QString result;
@@ -406,6 +416,7 @@ QString decodeMailtoUrl( const QString& url )
   result = KMMsgBase::decodeRFC2047String( result.toLatin1() );
   return result;
 }
+#endif
 
 QByteArray stripEmailAddr( const QByteArray& aStr )
 {
@@ -760,6 +771,7 @@ QString quoteHtmlChars( const QString& str, bool removeLineBreaks )
   return result;
 }
 
+#ifndef KMAIL_UNITTESTS
 QString emailAddrAsAnchor( const QString& aEmail, bool stripped, const QString& cssStyle,
                            bool aLink )
 {
@@ -815,7 +827,6 @@ QStringList stripAddressFromAddressList( const QString& address,
   return addresses;
 }
 
-
 QStringList stripMyAddressesFromAddressList( const QStringList& list )
 {
   QStringList addresses = list;
@@ -831,7 +842,6 @@ QStringList stripMyAddressesFromAddressList( const QStringList& list )
   }
   return addresses;
 }
-
 
 bool addressIsInAddressList( const QString& address,
                              const QStringList& addresses )
@@ -915,6 +925,7 @@ QString guessEmailAddressFromLoginName( const QString& loginName )
 
   return address;
 }
+#endif
 
 QString smartQuote( const QString & msg, int maxLineLength )
 {
