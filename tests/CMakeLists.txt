@@ -9,6 +9,12 @@ kde4_add_unit_test(utiltests TESTNAME kmail-utiltests ${utiltests_SRCS})
 target_link_libraries(utiltests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY}
                       ${KDE4_KIO_LIBS})
 
+########### messagedicttests ###############
+set(messagedicttests_SRCS messagedicttests.cpp ../kmdict.cpp)
+kde4_add_unit_test(messagedicttests TESTNAME kmail-messagedicttests ${messagedicttests_SRCS})
+target_link_libraries(messagedicttests ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY}
+                      ${KDE4_KIO_LIBS})
+
 ########### mimelibtests ###############
 
 set(mimelibtests_SRCS mimelibtests.cpp ../util.cpp )
@@ -16,19 +22,15 @@ kde4_add_unit_test(mimelibtests TESTNAME kmail-mimelibtests ${mimelibtests_SRCS}
 target_link_libraries(mimelibtests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY}
                       ${KDE4_KIO_LIBS})
 
-########### next target ###############
+########### dbus test ###############
 set(dbustest_SRCS dbustest.cpp )
 qt4_add_dbus_interfaces( dbustest_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml)
 qt4_add_dbus_interfaces( dbustest_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml )
-
-
 kde4_add_executable(dbustest TEST ${dbustest_SRCS})
 add_dependencies(dbustest kmail_xml)
-
 target_link_libraries(dbustest  ${KDE4_KIO_LIBS} )
 
-
-########### next target ###############
+########### recipientseditor test ###############
 
 set(recipienteditortest_SRCS recipientseditortest.cpp )
 

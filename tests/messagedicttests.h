@@ -7,17 +7,17 @@
 #ifndef MESSAGEDICTTESTS_H
 #define MESSAGEDICTTESTS_H
 
-#include <kunittest/tester.h>
+#include <qobject.h>
 
 class KMDict;
 
-class MessageDictTester : public KUnitTest::SlotTester
+class MessageDictTester : public QObject
 {
     Q_OBJECT
 
 public slots:
-    void setUp();
-    void tearDown();
+    void initTestCase();
+    void cleanupTestCase();
     void testKMDictCreation();
     void testKMDictInsert();
     void testKMDictRemove();
