@@ -321,7 +321,6 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
                                    KStandardGuiItem::del() )
        != KMessageBox::Continue )
     return;
-
   SieveJob * job = SieveJob::del( u );
   connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotRefresh()) );
@@ -370,7 +369,6 @@ void KMail::ManageSieveScriptsDialog::slotNewScript() {
   QTreeWidgetItem *newItem =
       new QTreeWidgetItem( mContextMenuItem );
   addRadioButton( newItem, name );
-
   mCurrentURL = u;
   slotGetResult( 0, true, QString(), false );
 }
@@ -394,11 +392,16 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   mTextEdit->setAcceptRichText( false );
   mTextEdit->setWordWrapMode ( QTextOption::NoWrap );
   mTextEdit->setFont( KGlobalSettings::fixedFont() );
-
+  connect( mTextEdit, SIGNAL( textChanged () ), SLOT( slotTextChanged() ) );
   resize( 3 * sizeHint() );
 }
 
 KMail::SieveEditor::~SieveEditor() {}
+
+void KMail::SieveEditor::slotTextChanged()
+{
+  enableButtonOk( !script().isEmpty() );
+}
 
 void KMail::ManageSieveScriptsDialog::slotGetResult( KMail::SieveJob *, bool success, const QString & script, bool isActive ) {
   if ( !success )
