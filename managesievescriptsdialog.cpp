@@ -178,6 +178,8 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QTreeWidgetItem 
     // script items:
     menu.addAction( i18n( "Delete Script" ), this, SLOT(slotDeleteScript()) );
     menu.addAction( i18n( "Edit Script..." ), this, SLOT(slotEditScript()) );
+    if ( isRadioButtonChecked( item ) )
+      menu.addAction( i18n( "Desactivate Script" ), this, SLOT(slotDesactivateScript()) );
   } else if ( !item->parent() ) {
     // top-levels:
     menu.addAction( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
@@ -187,18 +189,30 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QTreeWidgetItem 
   mContextMenuItem = 0;
 }
 
+void KMail::ManageSieveScriptsDialog::slotDesactivateScript() {
+  QTreeWidgetItem * item = mListView->currentItem();
+  if ( !isFileNameItem( item ) )
+    return;
+  QTreeWidgetItem *parent = item->parent();
+  if ( isRadioButtonChecked( item )) {
+    mSelectedItems[parent] = item;
+    changeActiveScript( parent,false );
+  }
+}
+
 void KMail::ManageSieveScriptsDialog::slotSelectionChanged() {
+  qDebug()<<" void KMail::ManageSieveScriptsDialog::slotSelectionChanged() { ";
   QTreeWidgetItem * item = mListView->currentItem();
   if ( !isFileNameItem( item ) )
     return;
   QTreeWidgetItem *parent = item->parent();
   if ( isRadioButtonChecked( item ) && mSelectedItems[parent] != item ) {
     mSelectedItems[parent] = item;
-    changeActiveScript( parent );
+    changeActiveScript( parent, true );
   }
 }
 
-void KMail::ManageSieveScriptsDialog::changeActiveScript( QTreeWidgetItem * item ) {
+void KMail::ManageSieveScriptsDialog::changeActiveScript( QTreeWidgetItem * item,bool activate ) {
   if ( !item )
     return;
   if ( !mUrls.count( item ) )
@@ -213,7 +227,11 @@ void KMail::ManageSieveScriptsDialog::changeActiveScript( QTreeWidgetItem * item
     return;
   u.setFileName( itemText( selected ) );
 
-  SieveJob * job = SieveJob::activate( u );
+  SieveJob * job;
+  if ( activate )
+    job = SieveJob::activate( u );
+  else
+    job = SieveJob::desactivate( u );
   connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotRefresh()) );
 }

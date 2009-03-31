@@ -31,13 +31,14 @@ private slots:
   void slotNewScript();
   void slotEditScript();
   void slotDeleteScript();
+  void slotDesactivateScript();
   void slotGetResult( KMail::SieveJob *, bool, const QString &, bool );
   void slotPutResult( KMail::SieveJob *, bool );
   void slotSieveEditorOkClicked();
   void slotSieveEditorCancelClicked();
 private:
   void killAllJobs();
-  void changeActiveScript( QTreeWidgetItem* );
+  void changeActiveScript( QTreeWidgetItem*,bool activate = true );
 
   /**
    * Adds a radio button to the specified item.
