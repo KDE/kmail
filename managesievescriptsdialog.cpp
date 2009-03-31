@@ -180,12 +180,24 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( Q3ListViewItem *
     // script items:
     menu.addAction( i18n( "Delete Script" ), this, SLOT(slotDeleteScript()) );
     menu.addAction( i18n( "Edit Script..." ), this, SLOT(slotEditScript()) );
+    if ( item->isOn() )
+      menu.addAction( i18n( "Deactivate Script" ), this, SLOT(slotDeactivateScript()) );
   } else {
     // top-levels:
     menu.addAction( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
   }
   menu.exec( p );
   mContextMenuItem = 0;
+}
+
+void KMail::ManageSieveScriptsDialog::slotDeactivateScript() {
+  Q3CheckListItem * item = qcli_cast( mListView->currentItem() );
+
+  Q3CheckListItem *parent = qcli_cast( item->parent() );
+  if ( item->isOn() ) {
+    mSelectedItems[parent] = item;
+    changeActiveScript( parent, false );
+  }
 }
 
 void KMail::ManageSieveScriptsDialog::slotSelectionChanged( Q3ListViewItem * i ) {
@@ -197,11 +209,11 @@ void KMail::ManageSieveScriptsDialog::slotSelectionChanged( Q3ListViewItem * i )
     return;
   if ( item->isOn() && mSelectedItems[parent] != item ) {
     mSelectedItems[parent] = item;
-    changeActiveScript( parent );
+    changeActiveScript( parent, true );
   }
 }
 
-void KMail::ManageSieveScriptsDialog::changeActiveScript( Q3CheckListItem * item ) {
+void KMail::ManageSieveScriptsDialog::changeActiveScript( Q3CheckListItem * item, bool activate ) {
   if ( !item )
     return;
   if ( !mUrls.count( item ) )
@@ -216,7 +228,11 @@ void KMail::ManageSieveScriptsDialog::changeActiveScript( Q3CheckListItem * item
     return;
   u.setFileName( selected->text( 0 ) );
 
-  SieveJob * job = SieveJob::activate( u );
+  SieveJob * job;
+  if ( activate )
+    job = SieveJob::activate( u );
+  else
+    job = SieveJob::deactivate( u );
   connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotRefresh()) );
 }

@@ -30,6 +30,7 @@ private slots:
   void slotNewScript();
   void slotEditScript();
   void slotDeleteScript();
+  void slotDeactivateScript();
   void slotGetResult( KMail::SieveJob *, bool, const QString &, bool );
   void slotPutResult( KMail::SieveJob *, bool );
   void slotSieveEditorOkClicked();
@@ -37,7 +38,7 @@ private slots:
 
 private:
   void killAllJobs();
-  void changeActiveScript( Q3CheckListItem * );
+  void changeActiveScript( Q3CheckListItem*, bool activate = true );
 
 private:
   Q3ListView * mListView;

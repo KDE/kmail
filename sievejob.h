@@ -65,6 +65,8 @@ namespace KMail {
 
     static SieveJob * activate( const KUrl & url );
 
+    static SieveJob * deactivate( const KUrl & url );
+
     void kill( KJob::KillVerbosity verbosity = KJob::Quietly );
 
     void setInteractive( bool interactive );
