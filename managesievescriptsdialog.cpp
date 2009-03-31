@@ -258,7 +258,6 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
                                    KStdGuiItem::del() )
        != KMessageBox::Continue )
     return;
-
   SieveJob * job = SieveJob::del( u );
   connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotRefresh()) );
@@ -360,6 +359,7 @@ void KMail::ManageSieveScriptsDialog::slotSieveEditorOkClicked() {
 void KMail::ManageSieveScriptsDialog::slotSieveEditorCancelClicked() {
   mSieveEditor->deleteLater(); mSieveEditor = 0;
   mCurrentURL = KURL();
+  slotRefresh();
 }
 
 void KMail::ManageSieveScriptsDialog::slotPutResult( KMail::SieveJob *, bool success ) {
