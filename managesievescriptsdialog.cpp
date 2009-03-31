@@ -179,7 +179,7 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QTreeWidgetItem 
     menu.addAction( i18n( "Delete Script" ), this, SLOT(slotDeleteScript()) );
     menu.addAction( i18n( "Edit Script..." ), this, SLOT(slotEditScript()) );
     if ( isRadioButtonChecked( item ) )
-      menu.addAction( i18n( "Desactivate Script" ), this, SLOT(slotDesactivateScript()) );
+      menu.addAction( i18n( "Deactivate Script" ), this, SLOT(slotDeactivateScript()) );
   } else if ( !item->parent() ) {
     // top-levels:
     menu.addAction( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
@@ -189,7 +189,7 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QTreeWidgetItem 
   mContextMenuItem = 0;
 }
 
-void KMail::ManageSieveScriptsDialog::slotDesactivateScript() {
+void KMail::ManageSieveScriptsDialog::slotDeactivateScript() {
   QTreeWidgetItem * item = mListView->currentItem();
   if ( !isFileNameItem( item ) )
     return;
@@ -201,7 +201,6 @@ void KMail::ManageSieveScriptsDialog::slotDesactivateScript() {
 }
 
 void KMail::ManageSieveScriptsDialog::slotSelectionChanged() {
-  qDebug()<<" void KMail::ManageSieveScriptsDialog::slotSelectionChanged() { ";
   QTreeWidgetItem * item = mListView->currentItem();
   if ( !isFileNameItem( item ) )
     return;

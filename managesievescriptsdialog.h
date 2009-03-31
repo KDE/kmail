@@ -31,7 +31,7 @@ private slots:
   void slotNewScript();
   void slotEditScript();
   void slotDeleteScript();
-  void slotDesactivateScript();
+  void slotDeactivateScript();
   void slotGetResult( KMail::SieveJob *, bool, const QString &, bool );
   void slotPutResult( KMail::SieveJob *, bool );
   void slotSieveEditorOkClicked();
