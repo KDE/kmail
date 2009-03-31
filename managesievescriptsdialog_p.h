@@ -16,7 +16,8 @@ public:
 
   QString script() const { return mTextEdit->text(); }
   void setScript( const QString & script ) { mTextEdit->setText( script ); }
-
+private slots:
+  void slotTextChanged();
 private:
   QTextEdit * mTextEdit;
 };

@@ -322,11 +322,17 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   mTextEdit->setTextFormat( QTextEdit::PlainText );
   mTextEdit->setWordWrap( QTextEdit::NoWrap );
   mTextEdit->setFont( KGlobalSettings::fixedFont() );
-
+  connect( mTextEdit, SIGNAL( textChanged () ), SLOT( slotTextChanged() ) );
   resize( 3 * sizeHint() );
 }
 
 KMail::SieveEditor::~SieveEditor() {}
+
+
+void KMail::SieveEditor::slotTextChanged()
+{
+  enableButtonOK( !script().isEmpty() );
+}
 
 void KMail::ManageSieveScriptsDialog::slotGetResult( KMail::SieveJob *, bool success, const QString & script, bool isActive ) {
   if ( !success )
