@@ -164,7 +164,7 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QListViewItem * 
     // script items:
     menu.insertItem( i18n( "Delete Script" ), this, SLOT(slotDeleteScript()) );
     menu.insertItem( i18n( "Edit Script..." ), this, SLOT(slotEditScript()) );
-    menu.insertItem( i18n( "Desactivate Script" ), this, SLOT(slotDesactivateScript()) );
+    menu.insertItem( i18n( "Deactivate Script" ), this, SLOT(slotDeactivateScript()) );
   } else {
     // top-levels:
     menu.insertItem( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
@@ -174,7 +174,7 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QListViewItem * 
 }
 
 
-void KMail::ManageSieveScriptsDialog::slotDesactivateScript() {
+void KMail::ManageSieveScriptsDialog::slotDeactivateScript() {
   if ( !mContextMenuItem )
     return;
 

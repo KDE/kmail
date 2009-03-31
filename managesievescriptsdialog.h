@@ -28,7 +28,7 @@ private slots:
   void slotSelectionChanged( QListViewItem * );
   void slotNewScript();
   void slotEditScript();
-  void slotDesactivateScript();
+  void slotDeactivateScript();
   void slotDeleteScript();
   void slotGetResult( KMail::SieveJob *, bool, const QString &, bool );
   void slotPutResult( KMail::SieveJob *, bool );
