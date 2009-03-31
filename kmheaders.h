@@ -197,6 +197,9 @@ public:
   */
   bool isMessageCut( Q_UINT32 serNum ) const;
 
+  /** Write global config options. */
+  virtual void writeConfig(void);
+
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */
@@ -320,9 +323,6 @@ protected:
 
   /** Write per-folder config options. */
   virtual void writeFolderConfig(void);
-
-  /** Write global config options. */
-  virtual void writeConfig(void);
 
   /** Handle shift and control selection */
   virtual void contentsMousePressEvent(QMouseEvent*);
