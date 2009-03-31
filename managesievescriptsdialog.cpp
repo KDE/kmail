@@ -447,6 +447,7 @@ void KMail::ManageSieveScriptsDialog::slotSieveEditorOkClicked() {
 void KMail::ManageSieveScriptsDialog::slotSieveEditorCancelClicked() {
   mSieveEditor->deleteLater(); mSieveEditor = 0;
   mCurrentURL = KUrl();
+  slotRefresh();
 }
 
 void KMail::ManageSieveScriptsDialog::slotPutResult( KMail::SieveJob *, bool success ) {
