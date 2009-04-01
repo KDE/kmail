@@ -584,7 +584,7 @@ void FolderView::reloadInternal( QTreeWidgetItem *item )
         Util::reconnectSignalSlotPair( fld, SIGNAL( folderSizeChanged( KMFolder * ) ), fvi, SLOT( slotFolderCountsChanged( KMFolder * ) ) );
 
         Util::reconnectSignalSlotPair( fld, SIGNAL( shortcutChanged( KMFolder * ) ), mMainWidget, SLOT( slotShortcutChanged( KMFolder * ) ) );
-      }  
+      }
     }
     i++;
   }
@@ -858,7 +858,7 @@ FolderView::UpdateCountsResult FolderView::updateCountsForChildren( QTreeWidgetI
         // not end up in endless loops trying to update and never making progress.
         elapsed = tStart.msecsTo( QTime::currentTime() );
         if ( ( elapsed > gUpdateCountsProcessingInterval ) || ( elapsed < 0 ) )
-          return OperationInterrupted; // it's taking too long, will continue later.  
+          return OperationInterrupted; // it's taking too long, will continue later.
       break;
       case OperationCompletedClean:
         // no children were dirty
@@ -880,7 +880,7 @@ FolderView::UpdateCountsResult FolderView::updateCountsForChildren( QTreeWidgetI
       {
         elapsed = tStart.msecsTo( QTime::currentTime() );
         if ( ( elapsed > gUpdateCountsProcessingInterval ) || ( elapsed < 0 ) )
-          return OperationInterrupted; // it's taking too long, will continue later.  
+          return OperationInterrupted; // it's taking too long, will continue later.
       }
     }
   }
@@ -1016,7 +1016,7 @@ void FolderView::activateItemInternal( FolderViewItem *fvi, bool keepSelection, 
 
   if ( notifyManager )
     mManager->viewFolderActivated( this, folder, middleButton );
- 
+
   if ( folder )
   {
     // update counts up to top-level parent
@@ -1026,7 +1026,7 @@ void FolderView::activateItemInternal( FolderViewItem *fvi, bool keepSelection, 
          break; // nothing has changed at this level: parents can't change
       fvi = static_cast< FolderViewItem * >( static_cast< QTreeWidgetItem *>( fvi )->parent() );
     }
-    
+
   }
 
   updateCopyActions();
@@ -1090,7 +1090,7 @@ void FolderView::updateCopyActions()
       {
         // yes, it can happen
         bCanMove = false; // stay safe
-        break; 
+        break;
       }
 
       if( !( *it )->isMoveable() )
@@ -1220,7 +1220,7 @@ bool FolderView::event( QEvent *e )
   tip += QString::fromLatin1(
           "</td>" \
           "<td align=\"right\" valign=\"top\">" \
-            "<table border=\"0\"><tr><td width=\"32\" height=\"32\" align=\"center\" valign=\"middle\">" 
+            "<table border=\"0\"><tr><td width=\"32\" height=\"32\" align=\"center\" valign=\"middle\">"
               "<img src=\"%1\">" \
             "</td></tr></table>" \
           "</td>" \
@@ -1234,7 +1234,7 @@ bool FolderView::event( QEvent *e )
 
   QToolTip::showText( he->globalPos(), tip, viewport(), visualItemRect( it ) );
 
-  return true;  
+  return true;
 }
 
 bool FolderView::fillHeaderContextMenu( KMenu * menu, const QPoint &clickPoint )
@@ -1372,7 +1372,7 @@ void FolderView::fillContextMenuAccountRelatedActions( KMenu *menu, FolderViewIt
 {
   if ( multiSelection )
     return; // no multiSelection Account Related actions
- 
+
   KMFolder *folder = item->folder();
 
   if ( !folder )
@@ -1418,7 +1418,7 @@ void FolderView::fillContextMenuMessageRelatedActions( KMenu *menu, FolderViewIt
 {
   if ( multiSelection )
     return; // no multiSelection Account Related actions
- 
+
   KMFolder *folder = item->folder();
 
   if ( !folder )
@@ -2186,7 +2186,7 @@ FolderView::DragMode FolderView::dragMode( bool alwaysAsk, bool canMove )
   } else {
     // FIXME: anybody sets this option to false ?
     if ( GlobalSettings::self()->showPopupAfterDnD() || alwaysAsk )
-    { 
+    {
       KMenu menu;
       QAction *moveAction = menu.addAction( KIcon( "go-jump"), i18n( "&Move Here" ) );
       if ( ! canMove )
@@ -2316,7 +2316,7 @@ void FolderView::dragEnterEvent( QDragEnterEvent *e )
 
     e->acceptProposedAction();
   } else
-    e->ignore(); 
+    e->ignore();
 }
 
 
@@ -2406,7 +2406,7 @@ void FolderView::dragMoveEvent( QDragMoveEvent *e )
   // First of all call the base class implementation in order to
   // handle scrolling and item expanding
   FolderTreeWidget::dragMoveEvent( e );
- 
+
   if ( e->mimeData()->hasFormat( DraggedFolderList::mimeDataType() ) )
     handleFoldersDragMoveEvent( e );
   else if ( e->mimeData()->hasFormat( KPIM::MailList::mimeDataType() ) )
@@ -2458,7 +2458,7 @@ void FolderView::slotFolderExpanded( QTreeWidgetItem *item )
         static_cast<QTreeWidgetItem *>( fvi )->parent()
       )
     )
-    return; 
+    return;
 
   if ( folder->getSubfolderState() != KMFolderImap::imapNoInformation )
     return;
@@ -2466,7 +2466,7 @@ void FolderView::slotFolderExpanded( QTreeWidgetItem *item )
   // the tree will be reloaded after that
   bool success = folder->listDirectory();
   if (!success)
-    fvi->setExpanded( false ); // failed to list the directory 
+    fvi->setExpanded( false ); // failed to list the directory
 
   if ( ( fvi->childCount() == 0 ) && static_cast<QTreeWidgetItem *>( fvi )->parent() )
     fvi->setChildIndicatorPolicy( QTreeWidgetItem::DontShowIndicatorWhenChildless ); // no children after listing
@@ -2551,7 +2551,7 @@ void FolderView::createFolderList( QStringList *folderNames, QList< QPointer< KM
           depth++;
         }
         QString prefix;
-        prefix.fill( ' ', 2 * depth );   
+        prefix.fill( ' ', 2 * depth );
         folderNames->append( prefix + fvi->labelText() );
       } else {
         folderNames->append( fvi->labelText() );
@@ -2572,7 +2572,7 @@ void FolderView::resetFolderList( FolderViewItem *item, bool startList )
   if ( !item->folder() )
     return;
   if ( item->folder()->folderType() != KMFolderTypeImap )
-    return; 
+    return;
 
   KMFolderImap *folder = static_cast< KMFolderImap * >( item->folder()->storage() );
   folder->setSubfolderState( KMFolderImap::imapNoInformation );
@@ -2666,7 +2666,11 @@ QString FolderViewItem::normalIcon() const
         icon = "document-new";
       break;
       default:
-        icon = kmkernel->iCalIface().folderPixmap( folderType() );
+      {
+        //If not a resource folder don't try to use icalIface folder pixmap
+        if(kmkernel->iCalIface().isResourceFolder( mFolder ))
+          icon = kmkernel->iCalIface().folderPixmap( folderType() );
+      }
       break;
     }
 
@@ -2715,7 +2719,9 @@ QString FolderViewItem::unreadIcon() const
     if ( fld && fld->noContent() )
       icon = "folder-open-grey";
     else {
-      icon = kmkernel->iCalIface().folderPixmap( folderType() );
+      //If not a resource folder don't try to use icalIface folder pixmap
+      if(kmkernel->iCalIface().isResourceFolder( mFolder ))
+        icon = kmkernel->iCalIface().folderPixmap( folderType() );
       if ( icon.isEmpty() )
          icon = "folder-open";
     }
@@ -2740,7 +2746,7 @@ QString FolderViewItem::configGroupName() const
   if ( protocol() == Search )
     return "Folder_search";     // FIXME: Why we're using a different prefix here ? Folder-Virtual-Search wouldn't be nice ?
 
-  return QString();  
+  return QString();
 }
 
 void FolderViewItem::slotIconsChanged()
