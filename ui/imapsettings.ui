@@ -61,7 +61,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Ho&amp;st:</string>
+            <string>Incoming mail &amp;server:</string>
            </property>
            <property name="buddy">
             <cstring>hostEdit</cstring>
@@ -640,6 +640,7 @@ Namespaces allow KMail for example to display your personal folders and shared f
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>KTabWidget</class>
