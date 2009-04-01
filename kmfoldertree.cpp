@@ -126,7 +126,13 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case Trash: icon = "trashcan_empty"; break;
       case Drafts: icon = "edit"; break;
       case Templates: icon = "filenew"; break;
-      default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
+      default:
+      {
+        //If not a resource folder don't try to use icalIface folder pixmap
+        if(kmkernel->iCalIface().isResourceFolder( mFolder ))
+          icon = kmkernel->iCalIface().folderPixmap( type() );
+        break;
+      }
     }
     // non-root search folders
     if ( protocol() == KMFolderTreeItem::Search ) {
