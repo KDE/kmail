@@ -188,7 +188,8 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
       pm = il->loadIcon( "folder-open-grey", KIconLoader::Small, size,
                          KIconLoader::DefaultState, QStringList(), 0, true );
     } else {
-      pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),
+      if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
+        pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),
                          KIconLoader::Small, size, KIconLoader::DefaultState, QStringList(), 0, true );
       if ( pm.isNull() )
         pm = il->loadIcon( "folder-open", KIconLoader::Small, size,
