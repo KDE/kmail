@@ -4099,6 +4099,7 @@ void KMMainWidget::slotFolderTreeColumnsChanged()
   mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
   mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
   mSizeColumnToggle->setChecked( mFolderTree->isSizeActive() );
+  mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
 }
 
 void KMMainWidget::toggleSystemTray()
