@@ -3854,6 +3854,7 @@ void KMMainWidget::slotFolderTreeColumnsChanged()
   mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
   mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
   mSizeColumnToggle->setChecked( mFolderTree->isSizeActive() );
+  mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
 }
 
 void KMMainWidget::toggleSystemTray()
