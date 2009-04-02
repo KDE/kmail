@@ -488,6 +488,8 @@ class KMComposeWin : public KMail::Composer
   public: // kmkernel, attachmentlistview
     bool addAttach( const KUrl &url );
 
+    bool checkTransport() const;
+
   public: // kmcommand
     /**
      * Add an attachment to the list.
