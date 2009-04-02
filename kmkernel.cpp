@@ -264,11 +264,11 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      body = args->getOption("body");
   }
 
-  QStringList attachList = args->getOptionList("attach");
+  const QStringList attachList = args->getOptionList("attach");
   if (!attachList.isEmpty())
   {
      mailto = true;
-     for ( QStringList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
+     for ( QStringList::ConstIterator it = attachList.constBegin() ; it != attachList.constEnd() ; ++it )
        if ( !(*it).isEmpty() )
          attachURLs += KUrl( *it );
   }
