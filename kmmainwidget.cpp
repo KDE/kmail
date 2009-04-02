@@ -3456,31 +3456,34 @@ void KMMainWidget::updateMessageActions()
     mCopyActionMenu->setEnabled( mass_actions );
     mTrashAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
     mDeleteAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
-    mFindInMessageAction->setEnabled( mass_actions );
+    mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+    mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+    mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+    mMsgActions->forwardMenu()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
 
-    mMsgActions->forwardInlineAction()->setEnabled( mass_actions );
-    mMsgActions->forwardAttachedAction()->setEnabled( mass_actions );
+  mMsgActions->forwardInlineAction()->setEnabled( mass_actions );
+  mMsgActions->forwardAttachedAction()->setEnabled( mass_actions );
 
-    mMsgActions->forwardMenu()->setEnabled( mass_actions );
+  mMsgActions->forwardMenu()->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
     mMsgActions->editAction()->setEnabled( single_actions );
     mUseAction->setEnabled( single_actions &&
-                            kmkernel->folderIsTemplates( mFolder ) );
+                          kmkernel->folderIsTemplates( mFolder ) );
     filterMenu()->setEnabled( single_actions );
-    mMsgActions->redirectAction()->setEnabled( single_actions );
+    mMsgActions->redirectAction()->setEnabled( single_actions && !kmkernel->folderIsTemplates( mFolder ) );
 
-    if ( mCustomTemplateMenus )
-    {
-      mCustomTemplateMenus->forwardActionMenu()->setEnabled( mass_actions );
-      mCustomTemplateMenus->replyActionMenu()->setEnabled( single_actions );
-      mCustomTemplateMenus->replyAllActionMenu()->setEnabled( single_actions );
-    }
+  if ( mCustomTemplateMenus )
+  {
+    mCustomTemplateMenus->forwardActionMenu()->setEnabled( mass_actions );
+    mCustomTemplateMenus->replyActionMenu()->setEnabled( single_actions );
+    mCustomTemplateMenus->replyAllActionMenu()->setEnabled( single_actions );
+  }
 
-    printAction()->setEnabled( single_actions );
-    viewSourceAction()->setEnabled( single_actions );
+  printAction()->setEnabled( single_actions );
+  viewSourceAction()->setEnabled( single_actions );
 
-    mSendAgainAction->setEnabled( single_actions &&
+  mSendAgainAction->setEnabled( single_actions &&
              ( mHeaders->currentMsg() && mHeaders->currentMsg()->status().isSent() )
           || ( mFolder && mHeaders->currentMsg() &&
                kmkernel->folderIsSentMailFolder( mFolder ) ) );
