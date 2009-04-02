@@ -16,6 +16,7 @@ using KPIM::BroadcastStatus;
 #include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
+#include "kmheaders.h"
 #define REALLY_WANT_KMSENDER
 #include "kmsender.h"
 #undef REALLY_WANT_KMSENDER
@@ -1918,8 +1919,8 @@ void KMKernel::slotShowConfigurationDialog()
     win->show();
 
   }
-
-  if( mConfigureDialog->isHidden() ) {
+  if ( mConfigureDialog->isHidden() ) {
+    getKMMainWidget()->headers()->writeConfig();
     mConfigureDialog->show();
   } else {
     mConfigureDialog->raise();
