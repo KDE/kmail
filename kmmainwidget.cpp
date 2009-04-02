@@ -3358,18 +3358,18 @@ void KMMainWidget::updateMessageActions()
     mCopyActionMenu->setEnabled( mass_actions );
     mTrashAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
     mDeleteAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
-    mFindInMessageAction->setEnabled( mass_actions );
-    mForwardInlineAction->setEnabled( mass_actions );
-    mForwardAttachedAction->setEnabled( mass_actions );
-    mForwardDigestAction->setEnabled( count > 1 || parent_thread );
+    mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+    mForwardInlineAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ));
+    mForwardAttachedAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+    mForwardDigestAction->setEnabled( ( count > 1 || parent_thread ) && !kmkernel->folderIsTemplates( mFolder ) );
 
-    forwardMenu()->setEnabled( mass_actions );
+    forwardMenu()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ));
 
     bool single_actions = count == 1;
     mUseAction->setEnabled( single_actions &&
                             kmkernel->folderIsTemplates( mFolder ) );
     filterMenu()->setEnabled( single_actions );
-    redirectAction()->setEnabled( single_actions );
+    redirectAction()->setEnabled( single_actions && !kmkernel->folderIsTemplates( mFolder ) );
     printAction()->setEnabled( single_actions );
     viewSourceAction()->setEnabled( single_actions );
 
