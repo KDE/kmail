@@ -4319,7 +4319,7 @@ void KMMainWidget::updateMessageActions()
   //     - The selection must contain exactly one visible message
   //       These actions will ignore the hidden message and thus can be enabled if
   //       the selection contains any.
-  //     
+  //
 
   updateListFilterAction();
 
@@ -4365,15 +4365,15 @@ void KMMainWidget::updateMessageActions()
   mCopyActionMenu->setEnabled( mass_actions );
   mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
   mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
-  mFindInMessageAction->setEnabled( mass_actions );
-  mMsgActions->forwardInlineAction()->setEnabled( mass_actions );
-  mMsgActions->forwardAttachedAction()->setEnabled( mass_actions );
-  mMsgActions->forwardMenu()->setEnabled( mass_actions );
+  mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+  mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+  mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+  mMsgActions->forwardMenu()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
 
   mMsgActions->editAction()->setEnabled( single_actions );
   mUseAction->setEnabled( single_actions && kmkernel->folderIsTemplates( mFolder ) );
   filterMenu()->setEnabled( single_actions );
-  mMsgActions->redirectAction()->setEnabled( single_actions );
+  mMsgActions->redirectAction()->setEnabled( single_actions && !kmkernel->folderIsTemplates( mFolder ) );
 
   if ( mCustomTemplateMenus )
   {
