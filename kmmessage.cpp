@@ -856,7 +856,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    const QString &tmpl /* = QString::null */ )
 {
   KMMessage* msg = new KMMessage;
-  QString str, replyStr, mailingListStr, replyToStr, toStr;
+  QString mailingListStr, replyToStr, toStr;
   QStringList mailingListAddresses;
   QCString refStr, headerName;
   bool replyAll = true;
@@ -881,8 +881,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   }
 
   // use the "On ... Joe User wrote:" header by default
-  replyStr = sReplyAllStr;
-
   switch( replyStrategy ) {
   case KMail::ReplySmart : {
     if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
@@ -898,7 +896,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     else {
       // doesn't seem to be a mailing list, reply to From: address
       toStr = from();
-      replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+      //replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
       replyAll = false;
     }
     // strip all my addresses from the list of recipients
@@ -1028,7 +1026,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     else if ( !from().isEmpty() ) {
       toStr = from();
     }
-    replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
     replyAll = false;
     break;
   }
@@ -1056,15 +1053,17 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 //   }
 
   msg->setSubject( replySubject() );
-
-  TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-    selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
-  if ( !tmpl.isEmpty() ) {
-    parser.process( tmpl, this );
-  } else {
-    parser.process( this );
+  msg->setHeaderField( "X-KMail-QuotePrefix",
+		                         formatString( GlobalSettings::self()->quoteString() ) );
+  if( !noQuote ) {
+     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
+      selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
+     if ( !tmpl.isEmpty() ) {
+       parser.process( tmpl, this );
+     } else {
+       parser.process( this );
+     }
   }
-
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
 
