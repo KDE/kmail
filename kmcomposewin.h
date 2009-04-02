@@ -524,6 +524,7 @@ class KMComposeWin : public KMail::Composer
     */
     bool checkRecipientNumber() const;
 
+    bool checkTransport() const;
     /**
      * Initialization methods
      */
