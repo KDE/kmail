@@ -4283,11 +4283,22 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   return;
 }
 
+bool KMComposeWin::checkTransport() const
+{
+  if ( KMail::TransportManager::transportNames().isEmpty() ) {
+    KMessageBox::information( mMainWidget,
+                              i18n("Please create an account for sending and try again.") );
+    return false;
+  }
+  return true;
 
+}
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
+  if ( !checkTransport() )
+    return;
   if ( !checkRecipientNumber() )
     return;
   if ( mEditor->checkExternalEditorFinished() )
@@ -4331,6 +4342,8 @@ void KMComposeWin::slotSendLaterVia( int item )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendNow() {
   if ( !mEditor->checkExternalEditorFinished() )
+    return;
+  if ( !checkTransport() )
     return;
   if ( !checkRecipientNumber() )
     return;
