@@ -252,11 +252,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mDlg( dlg )
 {
 
-
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
-       mDlg->folder()->folderType() != KMFolderTypeImap &&
-       mDlg->folder()->folderType() != KMFolderTypeCachedImap;
-
+    mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
@@ -434,7 +430,6 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         "sender email address, signature and signing or encryption keys "
         "automatically. Identities can be set up in the main configuration "
         "dialog. (Settings -> Configure KMail)") );
-
 
   // folder contents
   if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() ) {
@@ -733,9 +728,8 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
   : FolderDiaTab( parent, 0 ), mDlg( dlg )
 {
 
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
-       mDlg->folder()->folderType() != KMFolderTypeImap &&
-       mDlg->folder()->folderType() != KMFolderTypeCachedImap;
+  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
+
 
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
 
