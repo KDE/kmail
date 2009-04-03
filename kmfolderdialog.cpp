@@ -126,7 +126,7 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
   addTab( tab );
 
   // Don't add template tab for special folders
-  if (!mFolder->isSystemFolder() || mFolder->isMainInbox()) 
+  if (!mFolder->isSystemFolder() || mFolder->isMainInbox())
   {
     box = new KVBox( this );
     addPage( box, i18n("Templates") );
@@ -158,7 +158,7 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->load();
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
-  connect( this, SIGNAL( applyClicked() ), SLOT( slotApply() ) ); 
+  connect( this, SIGNAL( applyClicked() ), SLOT( slotApply() ) );
 }
 
 void KMFolderDialog::addTab( FolderDialogTab* tab )
@@ -270,11 +270,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   mDlg( dlg )
 {
 
-
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
-       mDlg->folder()->folderType() != KMFolderTypeImap &&
-       mDlg->folder()->folderType() != KMFolderTypeCachedImap;
-
+    mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
@@ -448,7 +444,6 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
         "automatically. Identities can be set up in the main configuration "
         "dialog. (Settings -> Configure KMail)") );
 
-
   // sender or receiver column?
   ++row;
   QString tip = i18n("Show Sender/Receiver Column in List of Messages");
@@ -515,7 +510,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     mIncidencesForComboBox->addItem( i18n( "Nobody" ) );
     mIncidencesForComboBox->addItem( i18n( "Admins of This Folder" ) );
     mIncidencesForComboBox->addItem( i18n( "All Readers of This Folder" ) );
-    const QString whatsThisForMyOwnFolders = 
+    const QString whatsThisForMyOwnFolders =
       i18n( "This setting defines which users sharing "
           "this folder should get \"busy\" periods in their freebusy lists "
           "and should see the alarms for the events or tasks in this folder. "
@@ -531,7 +526,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
           "since it is not known who will go to those events." );
 
     mIncidencesForComboBox->setWhatsThis( whatsThisForMyOwnFolders );
- 
+
     ++row;
     const QString whatsThisForReadOnlyFolders =
       i18n( "This setting allows you to disable alarms for folders shared by "
@@ -723,7 +718,7 @@ bool FolderDialogGeneralTab::save()
     if ( folder->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
       if ( mIncidencesForComboBox ) {
-        KMFolderCachedImap::IncidencesFor incfor = 
+        KMFolderCachedImap::IncidencesFor incfor =
                static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentIndex() );
         if ( dimap->incidencesFor() != incfor ) {
           dimap->setIncidencesFor( incfor );
@@ -776,9 +771,7 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
   : FolderDialogTab( parent, 0 ), mDlg( dlg )
 {
 
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
-       mDlg->folder()->folderType() != KMFolderTypeImap &&
-       mDlg->folder()->folderType() != KMFolderTypeCachedImap;
+  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setMargin( 0 );
