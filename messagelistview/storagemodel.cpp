@@ -287,7 +287,8 @@ bool StorageModel::initializeMessageItem( Core::MessageItem * mi, int row, bool 
     receiver = unknown;
 
   mi->initialSetup(
-      msg->date(), msg->msgSize(),
+      msg->date(),
+      mFolder->folderType() == KMFolderTypeImap ? msg->msgSizeServer() : msg->msgSize(),
       sender, receiver,
       bUseReceiver ? receiver : sender
     );
