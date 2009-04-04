@@ -2304,6 +2304,21 @@ int KMFolderImap::expungeContents()
 }
 
 //-----------------------------------------------------------------------------
+qint64 KMFolderImap::doFolderSize() const
+{
+  if ( count() == -1 )
+  {
+    return -1;
+  }
+
+  qint64 folderSize = 0;
+  for ( int i = 0, end = count(); i < end; ++i ) {
+    folderSize += getMsgBase( i )->msgSizeServer();
+  }
+  return folderSize;
+}
+
+//-----------------------------------------------------------------------------
 void
 KMFolderImap::setUserRights( unsigned int userRights )
 {

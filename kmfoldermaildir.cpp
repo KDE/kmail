@@ -434,7 +434,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     }
   }
   ++mTotalMsgs;
-  mSize = -1;
+  mCachedSize = -1;
 
   if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
@@ -1076,7 +1076,7 @@ void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
   KIO::DirectorySizeJob * dirsize = dynamic_cast<KIO::DirectorySizeJob*>( job );
   if ( dirsize && !dirsize->error() )
   {
-    mSize = dirsize->totalSize();
+    mCachedSize = dirsize->totalSize();
     //kDebug(5006) << << "DirectorySizeJob completed. Folder"
     //             << location() << "has size" << mSize;
     emit folderSizeChanged();

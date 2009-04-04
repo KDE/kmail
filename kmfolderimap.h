@@ -421,6 +421,9 @@ protected:
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
 
+  /**  reimp */
+  virtual qint64 doFolderSize() const;
+
   void setChildrenState( const QString &attributes );
 
   /** Create or find the INBOX and initialize it */
