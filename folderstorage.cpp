@@ -76,7 +76,7 @@ FolderStorage::FolderStorage( KMFolder *folder, const char *aName )
   mUnreadMsgs = -1;
   mGuessedUnreadMsgs = -1;
   mTotalMsgs = -1;
-  mSize = -1;
+  mCachedSize = -1;
   needsCompact = false;
   mConvertToUtf8 = false;
   mCompactable = true;
@@ -415,7 +415,7 @@ void FolderStorage::removeMsg(int idx, bool)
   }
   --mTotalMsgs;
 
-  mSize = -1;
+  mCachedSize = -1;
   QString msgIdMD5 = mb->msgIdMD5();
   emit msgRemoved( idx, msgIdMD5 );
   emit msgRemoved( folder() );
@@ -453,7 +453,7 @@ KMMessage* FolderStorage::take(int idx)
   --mTotalMsgs;
   msg->setParent(0);
   setDirty( true );
-  mSize = -1;
+  mCachedSize = -1;
   needsCompact=true; // message is taken from here - needs to be compacted
   QString msgIdMD5 = msg->msgIdMD5();
   emit msgRemoved( idx, msgIdMD5 );
@@ -828,7 +828,7 @@ int FolderStorage::expunge()
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
-  mSize = 0;
+  mCachedSize = 0;
   emit numUnreadMsgsChanged( folder() );
   if ( mAutoCreateIndex ) {  // FIXME Heh? - Till
     writeConfig();
@@ -877,11 +877,10 @@ int FolderStorage::countUnread()
 
 qint64 FolderStorage::folderSize() const
 {
-    if ( mSize != -1 ) {
-        return mSize;
-    } else {
-        return doFolderSize();
-    }
+  if ( mCachedSize == -1 ) {
+    mCachedSize = doFolderSize();
+  }
+  return mCachedSize;
 }
 
 
@@ -954,8 +953,8 @@ void FolderStorage::readConfig()
   if (mTotalMsgs == -1)
     mTotalMsgs = group.readEntry("TotalMsgs", -1 );
   mCompactable = group.readEntry("Compactable", true );
-  if ( mSize == -1 )
-    mSize = group.readEntry( "FolderSize", Q_INT64_C(-1) );
+  if ( mCachedSize == -1 )
+    mCachedSize = group.readEntry( "FolderSize", Q_INT64_C(-1) );
 
   int type = group.readEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
@@ -974,7 +973,7 @@ void FolderStorage::writeConfig()
   group.writeEntry( "TotalMsgs", mTotalMsgs );
   group.writeEntry( "Compactable", mCompactable );
   group.writeEntry( "ContentsType", (int)mContentsType );
-  group.writeEntry( "FolderSize", mSize );
+  group.writeEntry( "FolderSize", mCachedSize );
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( group );

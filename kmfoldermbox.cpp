@@ -1135,7 +1135,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     }
   }
   ++mTotalMsgs;
-  mSize = -1;
+  mCachedSize = -1;
 
   if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
