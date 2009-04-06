@@ -3452,7 +3452,7 @@ void KMMainWidget::updateFolderMenu()
       mHeaders->folder() ? ( mThreadMessagesAction->isChecked()) : false );
   mThreadBySubjectAction->setChecked( mFolderThreadSubjPref );
 
-  mNewFolderAction->setEnabled( !multiFolder );
+  mNewFolderAction->setEnabled( !multiFolder && ( mFolder && mFolder->folderType() != KMFolderTypeSearch ));
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mFolder && mFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder );
 }
@@ -3902,6 +3902,7 @@ void KMMainWidget::updateFileMenu()
 
   actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
   actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
+  actionCollection()->action("favorite_check_mail")->setEnabled( actList.size() > 0 );
 }
 
 
