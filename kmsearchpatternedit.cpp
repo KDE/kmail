@@ -51,6 +51,9 @@ static const struct {
   const char *internalName;
   const char *context;
   const char *displayName;
+
+  QString getLocalizedDisplayName() const { return i18nc(context, displayName); };
+
 } SpecialRuleFields[] = {
   { "<message>",     I18N_NOOP( "Complete Message" )       },
   { "<body>",        I18N_NOOP( "Body of Message" )          },
@@ -221,7 +224,7 @@ void KMSearchRuleWidget::slotValueChanged()
 QByteArray KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
-    if ( i18nVal == i18nc( SpecialRuleFields[i].context, SpecialRuleFields[i].displayName ) )
+    if ( i18nVal == SpecialRuleFields[i].getLocalizedDisplayName() )
       return SpecialRuleFields[i].internalName;
   }
   return i18nVal.toLatin1();
@@ -230,7 +233,7 @@ QByteArray KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
 int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
-    if ( i18nVal == i18nc( SpecialRuleFields[i].context, SpecialRuleFields[i].displayName ) )
+    if ( i18nVal == SpecialRuleFields[i].getLocalizedDisplayName() )
       return i;
   }
   return -1; // no pseudo header
@@ -240,7 +243,7 @@ static QString displayNameFromInternalName( const QString & internal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
     if ( internal == SpecialRuleFields[i].internalName )
-      return i18nc(SpecialRuleFields[i].context, SpecialRuleFields[i].displayName);
+      return SpecialRuleFields[i].getLocalizedDisplayName();
   }
   return internal.toLatin1();
 }
@@ -267,18 +270,18 @@ void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
   mFilterFieldList.clear();
   mFilterFieldList.append(""); // empty entry for user input
   if( !headersOnly ) {
-    mFilterFieldList.append( i18nc( SpecialRuleFields[Message].context, SpecialRuleFields[Message].displayName ) );
-    mFilterFieldList.append( i18nc( SpecialRuleFields[Body].context, SpecialRuleFields[Body].displayName ) );
+    mFilterFieldList.append( SpecialRuleFields[Message].getLocalizedDisplayName() );
+    mFilterFieldList.append( SpecialRuleFields[Body].getLocalizedDisplayName()    );
   }
-  mFilterFieldList.append( i18nc( SpecialRuleFields[AnyHeader].context, SpecialRuleFields[AnyHeader].displayName ) );
-  mFilterFieldList.append( i18nc( SpecialRuleFields[Recipients].context, SpecialRuleFields[Recipients].displayName ) );
-  mFilterFieldList.append( i18nc( SpecialRuleFields[Size].context, SpecialRuleFields[Size].displayName ) );
+  mFilterFieldList.append( SpecialRuleFields[AnyHeader].getLocalizedDisplayName()  );
+  mFilterFieldList.append( SpecialRuleFields[Recipients].getLocalizedDisplayName() );
+  mFilterFieldList.append( SpecialRuleFields[Size].getLocalizedDisplayName()       );
   if ( !absoluteDates )
-    mFilterFieldList.append( i18nc( SpecialRuleFields[AgeInDays].context, SpecialRuleFields[AgeInDays].displayName ) );
-  mFilterFieldList.append( i18nc( SpecialRuleFields[Subject].context, SpecialRuleFields[Subject].displayName ) );
-  mFilterFieldList.append( i18nc( SpecialRuleFields[From].context, SpecialRuleFields[From].displayName ) );
-  mFilterFieldList.append( i18nc( SpecialRuleFields[To].context, SpecialRuleFields[To].displayName ) );
-  mFilterFieldList.append( i18nc( SpecialRuleFields[CC].context, SpecialRuleFields[CC].displayName ) );
+    mFilterFieldList.append( SpecialRuleFields[AgeInDays].getLocalizedDisplayName() );
+  mFilterFieldList.append( SpecialRuleFields[Subject].getLocalizedDisplayName() );
+  mFilterFieldList.append( SpecialRuleFields[From].getLocalizedDisplayName()    );
+  mFilterFieldList.append( SpecialRuleFields[To].getLocalizedDisplayName()      );
+  mFilterFieldList.append( SpecialRuleFields[CC].getLocalizedDisplayName()      );
 
   // these others only represent message headers and you can add to
   // them as you like
