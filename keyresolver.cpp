@@ -1694,7 +1694,7 @@ void Kleo::KeyResolver::saveContactPreference( const QString& email, const Conta
   KABC::Addressee addr;
   if ( res.isEmpty() ) {
      bool ok = true;
-     QString fullName = KInputDialog::getText( i18n( "Name Selection" ), i18n( "Which name shall the contact '%1' have in your addressbook?", email ), QString(), &ok );
+     QString fullName = KInputDialog::getText( i18n( "Name Selection" ), i18n( "Which name shall the contact '%1' have in your address book?", email ), QString(), &ok );
     if ( ok ) {
       addr.setNameFromString( fullName );
       addr.insertEmail( email, true );

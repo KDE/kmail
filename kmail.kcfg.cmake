@@ -225,7 +225,7 @@
       </entry>
 
       <entry name="TheIMAPResourceStorageFormat" type="Enum">
-        <whatsthis>&lt;p&gt;Choose the storage format of the groupware folders. &lt;ul&gt;&lt;li&gt;The default format is to use the ical (for calendar folders) and vcard (for addressbook folders) standards. This format makes all Kontact features available.&lt;/li&gt;&lt;li&gt;The Kolab XML format uses a custom model that matches more closely the one used in Outlook. This format gives better Outlook compatibility, when using a Kolab server or a compatible solution.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</whatsthis>
+        <whatsthis>&lt;p&gt;Choose the storage format of the groupware folders. &lt;ul&gt;&lt;li&gt;The default format is to use the ical (for calendar folders) and vcard (for address book folders) standards. This format makes all Kontact features available.&lt;/li&gt;&lt;li&gt;The Kolab XML format uses a custom model that matches more closely the one used in Outlook. This format gives better Outlook compatibility, when using a Kolab server or a compatible solution.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</whatsthis>
         <choices>
           <choice name="IcalVcard"/>
           <choice name="XML"/>
