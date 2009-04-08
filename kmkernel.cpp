@@ -265,19 +265,21 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   }
 
   const QStringList attachList = args->getOptionList("attach");
-  if (!attachList.isEmpty()) {
-     mailto = true;
-     for ( QStringList::ConstIterator it = attachList.constBegin() ; it != attachList.constEnd() ; ++it ) {
-         if ( !(*it).isEmpty() ) {
-             KUrl url( *it );
-             if ( url.protocol().isEmpty() ) {
-                 const QString newUrl =  QDir::currentPath () + QDir::separator () + url.fileName();
-                 attachURLs.append( KUrl( newUrl ) );
-             }
-             else
-               attachURLs.append( url );
-         }
-     }
+  if ( !attachList.isEmpty() ) {
+    mailto = true;
+    for ( QStringList::ConstIterator it = attachList.constBegin();
+          it != attachList.constEnd(); ++it ) {
+      if ( !(*it).isEmpty() ) {
+        KUrl url( *it );
+        if ( url.protocol().isEmpty() ) {
+          const QString newUrl = QDir::currentPath () + QDir::separator () + url.fileName();
+          attachURLs.append( KUrl( newUrl ) );
+        }
+        else {
+          attachURLs.append( url );
+        }
+      }
+    }
   }
 
   customHeaders = args->getOptionList("header");
