@@ -164,22 +164,12 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
     return;
   }
 
-  // If this is a PNG image, paste it.
-  if ( md->hasFormat( "image/png" ) ) {
+  // If this is a PNG image or URL list, let MimeData functions handle it.
+  if ( md->hasFormat( "image/png" ) || md->hasUrls() ) {
     if ( canInsertFromMimeData( md ) ) {
       insertFromMimeData( md );
       return;
     }
-  }
-
-  // If this is a URL list, add those files as attachments
-  KUrl::List urlList = KUrl::List::fromMimeData( md );
-  if ( !urlList.isEmpty() ) {
-    e->accept();
-    foreach( const KUrl &url, urlList ) {
-       m_composerWin->addAttach( url );
-    }
-    return;
   }
 
   // If this is normal text, paste the text
@@ -204,6 +194,8 @@ bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
     return true;
+  if ( source->hasUrls() )
+    return true;
   if ( textMode() == KRichTextEdit::Rich && source->hasImage() )
     return true;
   return KMeditor::canInsertFromMimeData( source );
@@ -221,6 +213,16 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
      addImageHelper( imageName, image );
      return;
   }
+
+  // If this is a URL list, add those files as attachments
+  const KUrl::List urlList = KUrl::List::fromMimeData( source );
+  if ( !urlList.isEmpty() ) {
+    foreach( const KUrl &url, urlList ) {
+       m_composerWin->addAttach( url );
+    }
+    return;
+  }
+
   KMeditor::insertFromMimeData( source );
 }
 
