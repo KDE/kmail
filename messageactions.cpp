@@ -201,7 +201,7 @@ void MessageActions::updateActions()
   bool singleMsg = (mCurrentMessage != 0);
   if ( mCurrentMessage && mCurrentMessage->parent() ) {
     if ( mCurrentMessage->parent()->isSent() ||
-         mCurrentMessage->parent()->isTemplates())
+         mCurrentMessage->parent()->isTemplates() )
       singleMsg = false;
   }
   const bool multiVisible = mVisibleSernums.count() > 0 || mCurrentMessage;

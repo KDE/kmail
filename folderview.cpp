@@ -2668,8 +2668,9 @@ QString FolderViewItem::normalIcon() const
       default:
       {
         //If not a resource folder don't try to use icalIface folder pixmap
-        if(kmkernel->iCalIface().isResourceFolder( mFolder ))
+        if ( kmkernel->iCalIface().isResourceFolder( mFolder ) ) {
           icon = kmkernel->iCalIface().folderPixmap( folderType() );
+        }
       }
       break;
     }
@@ -2720,10 +2721,12 @@ QString FolderViewItem::unreadIcon() const
       icon = "folder-open-grey";
     else {
       //If not a resource folder don't try to use icalIface folder pixmap
-      if(kmkernel->iCalIface().isResourceFolder( mFolder ))
+      if( kmkernel->iCalIface().isResourceFolder( mFolder ) ) {
         icon = kmkernel->iCalIface().folderPixmap( folderType() );
-      if ( icon.isEmpty() )
+      }
+      if ( icon.isEmpty() ) {
          icon = "folder-open";
+      }
     }
   }
 

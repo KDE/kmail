@@ -73,7 +73,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   for ( QStringList::ConstIterator it = logEntries.constBegin();
         it != logEntries.constEnd(); ++it )
   {
-      mTextEdit->append(*it);
+    mTextEdit->append(*it);
   }
 
   mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
