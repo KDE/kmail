@@ -60,6 +60,7 @@ using namespace MailTransport;
 #include "protocols.h"
 #include "kmcommands.h"
 #include "stringutil.h"
+#include "util.h"
 
 #include <mimelib/mediatyp.h>
 #include <mimelib/enum.h>
@@ -123,17 +124,6 @@ void KMSender::writeConfig(bool aWithSync)
 }
 
 
-//-----------------------------------------------------------------------------
-bool KMSender::settingsOk() const
-{
-  if ( TransportManager::self()->transportNames().isEmpty() ) {
-    KMessageBox::information( 0,
-                              i18n("Please create an account for sending and try again.") );
-    return false;
-  }
-  return true;
-}
-
 static void handleRedirections( KMMessage *m ) {
   const QString from  = m->headerField( "X-KMail-Redirect-From" );
   const QString msgId = m->msgId();
@@ -149,7 +139,7 @@ bool KMSender::doSend(KMMessage *aMsg, short sendNow )
     return false;
   }
 
-  if ( !settingsOk() ) {
+  if ( !KMail::Util::checkTransport(0) ) {
     return false;
   }
 
@@ -218,7 +208,7 @@ void KMSender::outboxMsgAdded( int idx )
 //-----------------------------------------------------------------------------
 bool KMSender::doSendQueued( const QString &customTransport )
 {
-  if ( !settingsOk() ) {
+  if ( !KMail::Util::checkTransport(0) ) {
     return false;
   }
 

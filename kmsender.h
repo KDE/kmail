@@ -115,11 +115,6 @@ private:
   /** cleanup after sending */
   void cleanup();
 
-  /** Test if all required settings are set.
-      Reports problems to user via dialogs and returns false.
-      Returns true if everything is Ok. */
-  bool settingsOk() const;
-
 private:
   bool mSendImmediate;
   bool mSendQuotedPrintable;

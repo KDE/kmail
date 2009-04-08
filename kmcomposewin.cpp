@@ -71,6 +71,7 @@ using MailTransport::Transport;
 #include "recipientseditor.h"
 #include "stl_util.h"
 #include "stringutil.h"
+#include "util.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
@@ -3691,21 +3692,10 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   close();
 }
 
-bool KMComposeWin::checkTransport() const
-{
-  if ( TransportManager::self()->transportNames().isEmpty() ) {
-    KMessageBox::information( mMainWidget,
-                              i18n("Please create an account for sending and try again.") );
-    return false;
-  }
-  return true;
-
-}
-
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
-  if ( !checkTransport() )
+  if ( !KMail::Util::checkTransport(this) )
     return;
   if ( !checkRecipientNumber() )
       return;
@@ -3758,7 +3748,7 @@ void KMComposeWin::slotSendNow()
   if ( !mEditor->checkExternalEditorFinished() ) {
     return;
   }
-  if ( !checkTransport() )
+  if ( !KMail::Util::checkTransport(this) )
     return;
   if ( !checkRecipientNumber() )
     return;
