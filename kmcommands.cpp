@@ -1739,7 +1739,9 @@ KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
 
 void KMMetaFilterActionCommand::start()
 {
-  if ( ActionScheduler::isEnabled() && false ) { // don't use it for now
+  if ( ActionScheduler::isEnabled() ||
+       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget() )
+  {
     // use action scheduler
     KMFilterMgr::FilterSet set = KMFilterMgr::All;
     QList<KMFilter*> filters;
@@ -1747,6 +1749,7 @@ void KMMetaFilterActionCommand::start()
     ActionScheduler *scheduler = new ActionScheduler( set, filters );
     scheduler->setAlwaysMatch( true );
     scheduler->setAutoDestruct( true );
+    scheduler->setIgnoreFilterSet( true );
 
     QList<KMMsgBase*> msgList = mMainWidget->messageListView()->selectionAsMsgBaseList();
 

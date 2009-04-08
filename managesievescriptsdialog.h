@@ -38,7 +38,7 @@ private slots:
   void slotSieveEditorCancelClicked();
 private:
   void killAllJobs();
-  void changeActiveScript( QTreeWidgetItem*,bool activate = true );
+  void changeActiveScript( QTreeWidgetItem*, bool activate = true );
 
   /**
    * Adds a radio button to the specified item.
