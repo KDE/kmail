@@ -139,7 +139,7 @@ bool KMSender::doSend(KMMessage *aMsg, short sendNow )
     return false;
   }
 
-  if ( !KMail::Util::checkTransport(0) ) {
+  if ( !KMail::Util::checkTransport( 0 ) ) {
     return false;
   }
 
@@ -208,7 +208,7 @@ void KMSender::outboxMsgAdded( int idx )
 //-----------------------------------------------------------------------------
 bool KMSender::doSendQueued( const QString &customTransport )
 {
-  if ( !KMail::Util::checkTransport(0) ) {
+  if ( !KMail::Util::checkTransport( 0 ) ) {
     return false;
   }
 

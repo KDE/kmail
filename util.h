@@ -66,10 +66,11 @@ namespace Util {
 
     // return true if we should proceed, false if we should abort
     bool checkOverwrite( const KUrl &url, QWidget *w );
+
     /** Test if all required settings are set.
       Reports problems to user via dialogs and returns false.
       Returns true if everything is Ok. */
-    bool checkTransport(QWidget *w);
+    bool checkTransport( QWidget *w );
 
     /**
      * Convert all sequences of "\r\n" (carriage return followed by a line

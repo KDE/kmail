@@ -146,9 +146,7 @@ bool KMail::Util::handleUrlOnMac( const KUrl& url )
 #endif
 }
 
-
-
-bool KMail::Util::checkTransport(QWidget *w)
+bool KMail::Util::checkTransport( QWidget *w )
 {
   if ( MailTransport::TransportManager::self()->transportNames().isEmpty() ) {
     KMessageBox::information( w,

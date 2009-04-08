@@ -3695,7 +3695,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
-  if ( !KMail::Util::checkTransport(this) )
+  if ( !KMail::Util::checkTransport( this ) )
     return;
   if ( !checkRecipientNumber() )
       return;
@@ -3748,7 +3748,7 @@ void KMComposeWin::slotSendNow()
   if ( !mEditor->checkExternalEditorFinished() ) {
     return;
   }
-  if ( !KMail::Util::checkTransport(this) )
+  if ( !KMail::Util::checkTransport( this ) )
     return;
   if ( !checkRecipientNumber() )
     return;
