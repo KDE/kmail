@@ -719,7 +719,8 @@ static QString subresourceLabelForPresentation( const KMFolder * folder )
       QStringList remainder(parts);
       remainder.pop_front();
       remainder.pop_front();
-      if ( dimapAccountCount() > 1 ) {
+      if ( dimapAccountCount() > 1 && folder && folder->storage() &&
+           static_cast<const KMFolderCachedImap*>( folder->storage() )->account() ) {
         label = i18n( "My %1 (%2)", remainder.join( QString::fromLatin1("/") ),
                       static_cast<const KMFolderCachedImap*>( folder->storage() )->account()->name() );
       } else {
