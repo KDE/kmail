@@ -3871,6 +3871,7 @@ void KMComposeWin::slotEncryptToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 {
+  bool wasModified = isModified();
   if ( setByUser )
     setModified( true );
   if ( !mEncryptAction->isEnabled() )
@@ -3878,7 +3879,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
   // check if the user wants to encrypt messages to himself and if he defined
   // an encryption key for the current identity
   else if ( encrypt && encryptToSelf() && !mLastIdentityHasEncryptionKey ) {
-    if ( setByUser )
+    if ( setByUser ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>You have requested that messages be "
 			       "encrypted to yourself, but the currently selected "
@@ -3888,6 +3889,8 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
                                "in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Encryption Key") );
+      setModified(wasModified);
+    }
     encrypt = false;
   }
 
