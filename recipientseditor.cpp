@@ -910,7 +910,8 @@ void RecipientsEditor::saveDistributionList()
 {
   DistributionListDialog *dlg = new DistributionListDialog( this );
   dlg->setRecipients( mRecipientsView->recipients() );
-  dlg->show();
+  dlg->exec();
+  delete dlg;
 }
 
 Recipient::List RecipientsEditor::recipients() const
