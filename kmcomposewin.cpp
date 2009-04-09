@@ -3889,7 +3889,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
                                "in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Encryption Key") );
-      setModified(wasModified);
+      setModified( wasModified );
     }
     encrypt = false;
   }
@@ -3925,6 +3925,7 @@ void KMComposeWin::slotSignToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setSigning( bool sign, bool setByUser )
 {
+  bool wasModified = isModified();
   if ( setByUser )
     setModified( true );
   if ( !mSignAction->isEnabled() )
@@ -3932,7 +3933,7 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 
   // check if the user defined a signing key for the current identity
   if ( sign && !mLastIdentityHasSigningKey ) {
-    if ( setByUser )
+    if ( setByUser ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to sign "
                                "this message you first have to "
@@ -3942,6 +3943,8 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
                                "in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Signing Key") );
+      setModified( wasModified );
+    }
     sign = false;
   }
 
