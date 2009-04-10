@@ -862,7 +862,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Other Actions" button:
-  mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
+  mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns..."), group );
   mOtherNewMailActionsButton->setSizePolicy( QSizePolicy( QSizePolicy::Fixed,
                                                           QSizePolicy::Fixed ) );
   connect( mOtherNewMailActionsButton, SIGNAL(clicked()),
