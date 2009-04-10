@@ -344,7 +344,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
 	   SLOT(slotEditACL(QListViewItem*)) );
   connect( mListView, SIGNAL(returnPressed(QListViewItem*)),
 	   SLOT(slotEditACL(QListViewItem*)) );
-  connect( mListView, SIGNAL(selectionChanged(QListViewItem*)),
+  connect( mListView, SIGNAL(currentChanged(QListViewItem*)),
 	   SLOT(slotSelectionChanged(QListViewItem*)) );
 
   QVBox* buttonBox = new QVBox( mACLWidget );
