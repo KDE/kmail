@@ -100,7 +100,6 @@ void TreeBase::slotContextMenuRequested( QListViewItem *lvi,  const QPoint &p )
       folderMenu->exec (p, 0);
       kmkernel->setContextMenuShown( false );
       delete folderMenu;
-      folderMenu = 0;
 
 }
 
