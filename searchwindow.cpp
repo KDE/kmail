@@ -662,7 +662,8 @@ void SearchWindow::renameSearchFolder()
 void SearchWindow::openSearchFolder()
 {
     renameSearchFolder();
-    mKMMainWidget->slotSelectFolder( mFolder->folder() );
+    if ( mFolder )
+      mKMMainWidget->slotSelectFolder( mFolder->folder() );
     slotClose();
 }
 
