@@ -2002,6 +2002,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
     if ( parent && ( parent->hasNamedFolder( sourceFolderName ) ||
          sourceFolderNames.contains( sourceFolderName ) ) ) {
       KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> here because a folder with the same name already exists.</qt>", sourceFolderName ) );
+      setDragEnabled( true );
       return;
     }
     sourceFolderNames.append( sourceFolderName );
@@ -2011,6 +2012,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
     while ( f ) {
       if ( f->moveInProgress() ) {
         KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> because it is not completely copied itself.</qt>", sourceFolderName ) );
+        setDragEnabled( true );
         return;
       }
       if ( f->parent() )
@@ -2029,6 +2031,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
         if ( folderDir->indexOf( source ) != -1 )
         {
           KMessageBox::error( this, message );
+          setDragEnabled( true );
           return;
         }
         folderDir = folderDir->parent();
@@ -2038,12 +2041,14 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
     if( source && source->child() && parent &&
         ( parent->path().indexOf( source->child()->path() + '/' ) == 0 ) ) {
       KMessageBox::error( this, message );
+      setDragEnabled( true );
       return;
     }
 
     if( source && source->child()
         && ( parent == source->child() ) ) {
       KMessageBox::error( this, message );
+      setDragEnabled( true );
       return;
     }
   }
@@ -2060,6 +2065,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
       do {
         if ( parentDir == childDir || parentDir->indexOf( childDir->owner() ) != -1 ) {
           KMessageBox::error( this, i18n("Moving the selected folders is not possible") );
+          setDragEnabled( true );
           return;
         }
         childDir = childDir->parent();
