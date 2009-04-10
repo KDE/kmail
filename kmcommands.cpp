@@ -2403,9 +2403,9 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   KUrl url, dirUrl;
   if ( mAttachmentMap.count() > 1 ) {
     // get the dir
-    dirUrl = KFileDialog::getExistingDirectoryUrl( QString(),
+    dirUrl = KFileDialog::getExistingDirectoryUrl( KUrl( "kfiledialog:///saveAttachment" ),
                                                    parentWidget(),
-                                                   i18n("Save Attachments To") );
+                                                   i18n( "Save Attachments To" ) );
     if ( !dirUrl.isValid() ) {
       setResult( Canceled );
       emit completed( this );
@@ -2426,8 +2426,10 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       s = node->msgPart().name().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
       s = i18nc("filename for an unnamed attachment", "attachment.1");
-    url = KFileDialog::getSaveUrl( KUrl::fromPath( s ), QString(),
-                                   parentWidget(), QString() );
+    url = KFileDialog::getSaveUrl( KUrl( "kfiledialog:///saveAttachment/" + s ),
+                                   QString(),
+                                   parentWidget(),
+                                   i18n( "Save Attachment" ) );
     if ( url.isEmpty() ) {
       setResult( Canceled );
       emit completed( this );
@@ -2494,7 +2496,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       if ( !overwriteAll && KIO::NetAccess::exists( curUrl, KIO::NetAccess::DestinationSide, parentWidget() ) ) {
         if ( mAttachmentMap.count() == 1 ) {
           if ( KMessageBox::warningContinueCancel( parentWidget(),
-                i18n( "A file named %1 already exists. Do you want to overwrite it?",
+                i18n( "A file named <br><filename>%1</filename><br>already exists.<br><br>Do you want to overwrite it?",
                   curUrl.fileName() ),
                 i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")) ) == KMessageBox::Cancel) {
             continue;
@@ -2503,7 +2505,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         else {
           int button = KMessageBox::warningYesNoCancel(
                 parentWidget(),
-                i18n( "A file named %1 already exists. Do you want to overwrite it?",
+                i18n( "A file named <br><filename>%1</filename><br>already exists.<br><br>Do you want to overwrite it?",
                   curUrl.fileName() ),
                 i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")),
                 KGuiItem(i18n("Overwrite &All")) );
@@ -2614,7 +2616,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     {
       KMessageBox::error( parentWidget(),
                           i18nc( "1 = file name, 2 = error string",
-                                 "<qt>Could not write to the file<br><b>%1</b><br><br>%2",
+                                 "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
                                  file.fileName(),
                                  QString::fromLocal8Bit( strerror( errno ) ) ),
                           i18n( "Error saving attachment" ) );
@@ -2638,7 +2640,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     QFile *f = static_cast<QFile *>( ds.device() );
     KMessageBox::error( parentWidget(),
                         i18nc( "1 = file name, 2 = error string",
-                               "<qt>Could not write to the file<br><b>%1</b><br><br>%2",
+                               "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
                                f->fileName(),
                                f->errorString() ),
                         i18n( "Error saving attachment" ) );
@@ -2654,7 +2656,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     {
       KMessageBox::error( parentWidget(),
                           i18nc( "1 = file name, 2 = error string",
-                                 "<qt>Could not write to the file<br><b>%1</b><br><br>%2",
+                                 "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
                                  url.prettyUrl(),
                                  KIO::NetAccess::lastErrorString() ),
                           i18n( "Error saving attachment" ) );
