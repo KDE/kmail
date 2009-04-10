@@ -68,7 +68,7 @@ SnippetDlg::~SnippetDlg()
  */
 void SnippetDlg::languageChange()
 {
-    textLabel3->setText( tr2i18n( "Sh&ortcut:" ) );
+    textLabel3->setText( i18n( "Sh&ortcut:" ) );
 }
 
 static bool shortcutIsValid( const KActionCollection* actionCollection, const KShortcut &sc )
