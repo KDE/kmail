@@ -81,12 +81,12 @@ int FolderTreeBase::dndMode(bool alwaysAsk)
     action = DRAG_MOVE;
   } else {
     if ( GlobalSettings::self()->showPopupAfterDnD() || alwaysAsk ) {
-      KPopupMenu *menu = new KPopupMenu( this );
-      menu->insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
-      menu->insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );
-      menu->insertSeparator();
-      menu->insertItem( SmallIcon("cancel"), i18n("C&ancel"), DRAG_CANCEL, 3 );
-      action = menu->exec( QCursor::pos(), 0 );
+      KPopupMenu menu;
+      menu.insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
+      menu.insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );
+      menu.insertSeparator();
+      menu.insertItem( SmallIcon("cancel"), i18n("C&ancel"), DRAG_CANCEL, 3 );
+      action = menu.exec( QCursor::pos(), 0 );
     }
     else
       action = DRAG_MOVE;
