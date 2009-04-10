@@ -108,7 +108,6 @@ void KMSystemTray::buildPopupMenu()
 {
   // Delete any previously created popup menu
   delete mPopupMenu;
-  mPopupMenu = 0;
 
   mPopupMenu = new KPopupMenu();
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
