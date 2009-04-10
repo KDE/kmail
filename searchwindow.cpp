@@ -656,14 +656,15 @@ void SearchWindow::renameSearchFolder()
             ++i;
         }
     }
-    mSearchFolderOpenBtn->setEnabled(true);
+    if ( mFolder )
+      mSearchFolderOpenBtn->setEnabled(true);
 }
 
 void SearchWindow::openSearchFolder()
 {
+  Q_ASSERT( mFolder );
     renameSearchFolder();
-    if ( mFolder )
-      mKMMainWidget->slotSelectFolder( mFolder->folder() );
+    mKMMainWidget->slotSelectFolder( mFolder->folder() );
     slotClose();
 }
 
