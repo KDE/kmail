@@ -36,10 +36,10 @@ static const struct {
   KMMsgPartDialog::Encoding encoding;
   const char * displayName;
 } encodingTypes[] = {
-  { KMMsgPartDialog::SevenBit, I18N_NOOP("None (7-bit text)") },
-  { KMMsgPartDialog::EightBit, I18N_NOOP("None (8-bit text)") },
-  { KMMsgPartDialog::QuotedPrintable, I18N_NOOP("Quoted Printable") },
-  { KMMsgPartDialog::Base64, I18N_NOOP2("Base 64 message encoding.", "Base 64") },
+  { KMMsgPartDialog::SevenBit, I18N_NOOP2("message encoding type", "None (7-bit text)") },
+  { KMMsgPartDialog::EightBit, I18N_NOOP2("message encoding type", "None (8-bit text)") },
+  { KMMsgPartDialog::QuotedPrintable, I18N_NOOP2("message encoding type", "Quoted Printable") },
+  { KMMsgPartDialog::Base64, I18N_NOOP2("message encoding type", "Base 64") },
 };
 static const int numEncodingTypes =
   sizeof encodingTypes / sizeof *encodingTypes;
@@ -62,7 +62,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   setHelp( QString::fromLatin1("attachments") );
 
   for ( int i = 0 ; i < numEncodingTypes ; ++i )
-    mI18nizedEncodings << i18n( encodingTypes[i].displayName );
+    mI18nizedEncodings << i18nc( "message encoding type", encodingTypes[i].displayName );
   QFrame *frame = new QFrame( this );
   setMainWidget( frame );
   glay = new QGridLayout(frame );
