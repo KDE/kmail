@@ -183,10 +183,9 @@ void SnippetWidget::slotRemove()
   //get current data
   QTreeWidgetItem * item = currentItem();
   SnippetItem *snip = dynamic_cast<SnippetItem*>( item );
-  SnippetGroup *group = dynamic_cast<SnippetGroup*>( item );
   if (!snip)
     return;
-
+  SnippetGroup *group = dynamic_cast<SnippetGroup*>( item );
   if (group) {
     if (group->childCount() > 0 &&
         KMessageBox::warningContinueCancel(this, i18n("Do you really want to remove this group and all its snippets?"),QString(), KStandardGuiItem::del())
