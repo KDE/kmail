@@ -50,7 +50,6 @@ class TemplatesInsertCommand : public QPushButton
     void insertCommand( const QString& cmd, int adjustCursor = 0 );
 
   public slots:
-    void slotClicked();
     void slotMapped( int cmd );
 
   protected:
