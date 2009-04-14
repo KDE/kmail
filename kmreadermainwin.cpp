@@ -407,8 +407,8 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
     }
     menu->addAction( mMsgActions->replyMenu() );
     menu->addSeparator();
-    if(!copyAdded)
-       menu->addAction( mReaderWin->copyAction() );
+    if( !copyAdded )
+      menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
