@@ -322,7 +322,9 @@ void PopAccount::slotProcessPendingMsgs()
     const bool addedOk = processNewMsg( msg ); //added ok? Error displayed if not.
 
     if ( !addedOk ) {
+      kWarning() << "Error while processing new mail, aborting mail check.";
       mMsgsPendingDownload.clear();
+      slotAbortRequested();
       break;
     }
 
