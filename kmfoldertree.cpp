@@ -395,7 +395,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
 
   int namecol = addColumn( i18n("Folder"), 250 );
   header()->setStretchEnabled( true, namecol );
-
+  setResizeMode( QListView::NoColumn );
   // connect
   connectSignals();
 
