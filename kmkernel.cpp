@@ -1583,7 +1583,7 @@ bool KMKernel::doSessionManagement()
     while (KMMainWin::canBeRestored(n)){
       //only restore main windows! (Matthias);
       if (KMMainWin::classNameOfToplevel(n) == "KMMainWin")
-        (new KMMainWin)->restore(n);
+        (new KMMainWin)->restoreDockedState(n);
       n++;
     }
     return true; // we were restored by SM
