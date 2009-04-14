@@ -539,6 +539,7 @@ private:
   bool mDecrytMessageOverwrite;
   bool mShowSignatureDetails;
   bool mShowAttachmentQuicklist;
+  bool mExternalWindow;
 };
 
 

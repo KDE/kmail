@@ -519,6 +519,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mShowSignatureDetails( false ),
     mShowAttachmentQuicklist( true )
 {
+  mExternalWindow  = (aParent == mainWindow );
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
   mMimeTreeAtBottom = true;
@@ -735,31 +736,42 @@ KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy
 void KMReaderWin::slotEnterpriseHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
                              HeaderStrategy::rich() );
+  if( !mExternalWindow )
+     writeConfig();
 }
 
 void KMReaderWin::slotFancyHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::fancy(),
                              HeaderStrategy::rich() );
+  if( !mExternalWindow )
+     writeConfig();
 }
 
 void KMReaderWin::slotBriefHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::brief(),
                              HeaderStrategy::brief() );
+  if( !mExternalWindow )
+     writeConfig();
 }
 
 void KMReaderWin::slotStandardHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
                              HeaderStrategy::standard());
+  writeConfig();
 }
 
 void KMReaderWin::slotLongHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
                              HeaderStrategy::rich() );
+  if( !mExternalWindow )
+     writeConfig();
 }
 
 void KMReaderWin::slotAllHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
                              HeaderStrategy::all() );
+  if( !mExternalWindow )
+     writeConfig();
 }
 
 void KMReaderWin::slotLevelQuote( int l )
