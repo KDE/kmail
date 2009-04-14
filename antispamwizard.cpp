@@ -839,9 +839,8 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
     banner = *bannerName;
 
   mLayout = new QHBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-  mPixmap = new QPixmap( UserIcon(banner) );
   mBannerLabel = new QLabel( this );
-  mBannerLabel->setPixmap( *mPixmap );
+  mBannerLabel->setPixmap( UserIcon(banner) );
   mBannerLabel->setScaledContents( false );
   mBannerLabel->setFrameShape( QFrame::StyledPanel );
   mBannerLabel->setFrameShadow( QFrame::Sunken );

@@ -290,7 +290,6 @@ namespace KMail {
       QBoxLayout *mLayout;
 
     private:
-      QPixmap *mPixmap;
       QLabel *mBannerLabel;
   };
 
