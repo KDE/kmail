@@ -41,8 +41,15 @@ using KMail::RuleWidgetHandlerManager;
 //       you change the following i18n-ized strings!
 // Note: The index of the values in the following array has to correspond to
 //       the value of the entries in the enum in KMSearchRuleWidget.
+
+#undef I18N_NOOP
+#define I18N_NOOP(t) 0, t
+#undef I18N_NOOP2
+#define I18N_NOOP2(c,t) c, t
+
 static const struct {
   const char *internalName;
+  const char *context;
   const char *displayName;
 } SpecialRuleFields[] = {
   { "<message>",     I18N_NOOP( "Complete Message" )       },
@@ -214,7 +221,7 @@ void KMSearchRuleWidget::slotValueChanged()
 QByteArray KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
-    if ( i18nVal == i18n( SpecialRuleFields[i].displayName ) )
+    if ( i18nVal == i18nc( SpecialRuleFields[i].context, SpecialRuleFields[i].displayName ) )
       return SpecialRuleFields[i].internalName;
   }
   return i18nVal.toLatin1();
@@ -223,7 +230,7 @@ QByteArray KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
 int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
-    if ( i18nVal == i18n( SpecialRuleFields[i].displayName ) )
+    if ( i18nVal == i18nc( SpecialRuleFields[i].context, SpecialRuleFields[i].displayName ) )
       return i;
   }
   return -1; // no pseudo header
@@ -233,7 +240,7 @@ static QString displayNameFromInternalName( const QString & internal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
     if ( internal == SpecialRuleFields[i].internalName )
-      return i18n(SpecialRuleFields[i].displayName);
+      return i18nc(SpecialRuleFields[i].context, SpecialRuleFields[i].displayName);
   }
   return internal.toLatin1();
 }
@@ -260,18 +267,18 @@ void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
   mFilterFieldList.clear();
   mFilterFieldList.append(""); // empty entry for user input
   if( !headersOnly ) {
-    mFilterFieldList.append( i18n( SpecialRuleFields[Message].displayName ) );
-    mFilterFieldList.append( i18n( SpecialRuleFields[Body].displayName ) );
+    mFilterFieldList.append( i18nc( SpecialRuleFields[Message].context, SpecialRuleFields[Message].displayName ) );
+    mFilterFieldList.append( i18nc( SpecialRuleFields[Body].context, SpecialRuleFields[Body].displayName ) );
   }
-  mFilterFieldList.append( i18n( SpecialRuleFields[AnyHeader].displayName ) );
-  mFilterFieldList.append( i18n( SpecialRuleFields[Recipients].displayName ) );
-  mFilterFieldList.append( i18n( SpecialRuleFields[Size].displayName ) );
+  mFilterFieldList.append( i18nc( SpecialRuleFields[AnyHeader].context, SpecialRuleFields[AnyHeader].displayName ) );
+  mFilterFieldList.append( i18nc( SpecialRuleFields[Recipients].context, SpecialRuleFields[Recipients].displayName ) );
+  mFilterFieldList.append( i18nc( SpecialRuleFields[Size].context, SpecialRuleFields[Size].displayName ) );
   if ( !absoluteDates )
-    mFilterFieldList.append( i18n( SpecialRuleFields[AgeInDays].displayName ) );
-  mFilterFieldList.append( i18n( SpecialRuleFields[Subject].displayName ) );
-  mFilterFieldList.append( i18n( SpecialRuleFields[From].displayName ) );
-  mFilterFieldList.append( i18n( SpecialRuleFields[To].displayName ) );
-  mFilterFieldList.append( i18n( SpecialRuleFields[CC].displayName ) );
+    mFilterFieldList.append( i18nc( SpecialRuleFields[AgeInDays].context, SpecialRuleFields[AgeInDays].displayName ) );
+  mFilterFieldList.append( i18nc( SpecialRuleFields[Subject].context, SpecialRuleFields[Subject].displayName ) );
+  mFilterFieldList.append( i18nc( SpecialRuleFields[From].context, SpecialRuleFields[From].displayName ) );
+  mFilterFieldList.append( i18nc( SpecialRuleFields[To].context, SpecialRuleFields[To].displayName ) );
+  mFilterFieldList.append( i18nc( SpecialRuleFields[CC].context, SpecialRuleFields[CC].displayName ) );
 
   // these others only represent message headers and you can add to
   // them as you like
