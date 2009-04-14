@@ -35,7 +35,6 @@ private slots:
   void slotPutResult( KMail::SieveJob *, bool );
   void slotSieveEditorOkClicked();
   void slotSieveEditorCancelClicked();
-
 private:
   void killAllJobs();
   void changeActiveScript( Q3CheckListItem*, bool activate = true );
