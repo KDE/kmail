@@ -124,7 +124,7 @@ void TreeBase::recolorRows()
          }
 
          if ( visible ) {
-          TreeItemBase * treeItemBase = static_cast<TreeItemBase*>( item );
+          TreeItemBase * treeItemBase = dynamic_cast<TreeItemBase*>( item );
           treeItemBase->setAlternate( alt );
           alt = !alt;
          }
