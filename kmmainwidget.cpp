@@ -788,6 +788,7 @@ void KMMainWidget::createWidgets()
   mFolderQuickSearch = new K3ListViewSearchLine( mSearchAndTree );
   mFolderTree = new KMFolderTree( this, mSearchAndTree, "folderTree" );
   mFolderQuickSearch->setListView( mFolderTree );
+  mFolderQuickSearch->setClickMessage( i18n( "Search" ) );
   vboxlayout->addWidget( mFolderQuickSearch );
   vboxlayout->addWidget( mFolderTree );
   mSearchAndTree->setLayout( vboxlayout );
