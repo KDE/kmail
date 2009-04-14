@@ -189,6 +189,25 @@ void KMMainWin::slotQuit()
 }
 
 //-----------------------------------------------------------------------------
+bool KMMainWin::restoreDockedState( int n )
+{
+  // Default restore behavior is to show the window once it is restored.
+  // Override this if the main window was hidden in the system tray
+  // when the session was saved.
+  KConfigGroup config( kapp->sessionConfig(), QString::number( n ) );
+  bool show = !config.readEntry ("docked", false );
+
+  return KMainWindow::restore ( n, show );
+}
+
+void KMMainWin::saveProperties( KConfigGroup &config )
+{
+  // This is called by the session manager on log-off
+  // Save the shown/hidden status so we can restore to the same state.
+  KMainWindow::saveProperties( config );
+  config.writeEntry( "docked", isHidden() );
+}
+
 bool KMMainWin::queryClose()
 {
   if ( kmkernel->shuttingDown() || kapp->sessionSaving() || mReallyClose )

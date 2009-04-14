@@ -45,6 +45,11 @@ public:
   StatusbarProgressWidget* progressWidget() const { return mLittleProgress; }
   ProgressDialog* progressDialog() const { return mProgressDialog; }
 
+  /// Same as KMMainWin::restore(), except that it also restores the docked state,
+  /// which we have saved in saveProperties().
+  /// TODO: KDE5: Move to kdelibs, see http://reviewboard.kde.org/r/504
+  bool restoreDockedState( int number );
+
 public slots:
   void displayStatusMsg(const QString&);
   void slotEditToolbars();
@@ -52,6 +57,10 @@ public slots:
   void setupStatusBar();
 
 protected:
+
+  /// Reimplemented to save the docked state
+  virtual void saveProperties( KConfigGroup & );
+
   virtual bool queryClose ();
 
 protected slots:
