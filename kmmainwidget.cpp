@@ -1807,7 +1807,7 @@ void KMMainWidget::slotToggleSizeColumn()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
-  KMail::FolderSelectionDialog dlg( this, i18n("Jump to Folder"), true );
+  KMail::FolderSelectionDialog dlg( this, i18n("Jump to Folder"), false );
   KMFolder* dest;
 
   if (!dlg.exec()) return;
