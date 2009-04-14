@@ -270,7 +270,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   int width = geometry.readEntry( "ConfigureDialogWidth", 0 );
   int height = geometry.readEntry( "ConfigureDialogHeight", 0 );
   if ( width != 0 && height != 0 ) {
-     setMinimumSize( width, height );
+     resize( width, height );
   }
 
 }
