@@ -340,6 +340,7 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   vlay->setSpacing( spacingHint() );
   vlay->setMargin( 0 );
   mTextEdit = new QTextEdit( frame);
+  mTextEdit->setFocus();
   vlay->addWidget( mTextEdit );
   mTextEdit->setFocus();
   mTextEdit->setAcceptRichText( false );
