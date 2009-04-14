@@ -151,6 +151,7 @@ class RecipientLine : public QWidget
     void analyzeLine( const QString & );
     void slotFocusUp();
     void slotFocusDown();
+    void slotEditingFinished();
     void slotPropagateDeletion();
     void slotTypeModified();
 
