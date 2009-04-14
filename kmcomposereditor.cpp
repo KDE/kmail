@@ -126,40 +126,33 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
     KMCommand *command = new KMForwardAttachedCommand( m_composerWin, messageList,
                                                        identity, m_composerWin );
     command->start();
-  } else if ( md->hasFormat( "image/png" ) ) {
-    emit attachPNGImageData( e->encodedData( "image/png" ) );
-  } else {
-    KUrl::List urlList = KUrl::List::fromMimeData( md );
-    if ( !urlList.isEmpty() ) {
-      e->accept();
-      KMenu p;
-      const QAction *addAsTextAction = p.addAction( i18n("Add as Text") );
-      const QAction *addAsAtmAction = p.addAction( i18n("Add as Attachment") );
-      const QAction *selectedAction = p.exec( mapToGlobal( e->pos() ) );
-      if ( selectedAction == addAsTextAction ) {
-        for ( KUrl::List::Iterator it = urlList.begin();
-              it != urlList.end(); ++it ) {
-          textCursor().insertText( (*it).url() );
-        }
-      } else if ( selectedAction == addAsAtmAction ) {
-        for ( KUrl::List::Iterator it = urlList.begin();
-              it != urlList.end(); ++it ) {
-          m_composerWin->addAttach( *it );
-        }
-      }
-    } else if ( md->hasText() ) {
-      KMeditor::dropEvent( e );
-      e->accept();
-    } else {
-      kDebug(5006) << "Unable to add dropped object";
-      return KMeditor::dropEvent( e );
+    return;
+  }
+
+  // If this is a PNG image or URL list, let MimeData functions handle it.
+  if ( md->hasFormat( "image/png" ) || md->hasUrls() ) {
+    if ( canInsertFromMimeData( md ) ) {
+      insertFromMimeData( md );
+      return;
     }
   }
+
+  // If this is normal text, paste the text
+  if ( md->hasText() ) {
+    KMeditor::dropEvent( e );
+    e->accept();
+    return;
+  }
+
+  kDebug() << "Unable to add dropped object";
+  return KMeditor::dropEvent( e );
 }
 
 bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
+    return true;
+  if ( source->hasUrls() )
     return true;
   return KMeditor::canInsertFromMimeData( source );
 }
@@ -168,6 +161,16 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 {
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
     emit insertSnippet();
+
+  // If this is a URL list, add those files as attachments
+  const KUrl::List urlList = KUrl::List::fromMimeData( source );
+  if ( !urlList.isEmpty() ) {
+    foreach( const KUrl &url, urlList ) {
+       m_composerWin->addAttach( url );
+    }
+    return;
+  }
+
   KMeditor::insertFromMimeData( source );
 }
 
