@@ -31,8 +31,7 @@ KMPopHeaders::KMPopHeaders()
 
 KMPopHeaders::~KMPopHeaders()
 {
-  if ( mHeader )
-    delete mHeader;
+  delete mHeader;
 }
 
 KMPopHeaders::KMPopHeaders( const QByteArray & id, const QByteArray & uid,
