@@ -70,16 +70,14 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mTextEdit = new QTextEdit( page );
   mTextEdit->setReadOnly( true );
   mTextEdit->setLineWrapMode ( QTextEdit::NoWrap );
-  mTextEdit->setAcceptRichText( false );
 
   QString text;
-  QStringList logEntries = FilterLog::instance()->getLogEntries();
-  for ( QStringList::Iterator it = logEntries.begin();
-        it != logEntries.end(); ++it )
+  const QStringList logEntries = FilterLog::instance()->getLogEntries();
+  for ( QStringList::ConstIterator it = logEntries.constBegin();
+        it != logEntries.constEnd(); ++it )
   {
-    text+=*it;
+      mTextEdit->append(*it);
   }
-  mTextEdit->setText(text);
 
   mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
