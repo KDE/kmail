@@ -368,7 +368,7 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
   mUrl = aUrl;
   mMsg = &aMsg;
   bool urlMenuAdded = false;
-
+  bool copyAdded = false;
   if ( !aUrl.isEmpty() ) {
     if ( aUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
@@ -388,6 +388,7 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
         menu->addAction( mReaderWin->openAddrBookAction() );
       }
       menu->addAction( mReaderWin->copyAction() );
+      copyAdded = true;
     } else {
       // popup on a not-mailto URL
       menu->addAction( mReaderWin->urlOpenAction() );
@@ -403,8 +404,8 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
     }
     menu->addAction( mMsgActions->replyMenu() );
     menu->addSeparator();
-
-    menu->addAction( mReaderWin->copyAction() );
+    if( !copyAdded )
+      menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
