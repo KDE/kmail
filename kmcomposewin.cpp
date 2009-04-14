@@ -3265,6 +3265,7 @@ void KMComposeWin::slotEncryptToggled( bool on )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 {
+  bool wasModified = isModified();
   if ( setByUser ) {
     setModified( true );
   }
@@ -3284,6 +3285,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
                                "in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Encryption Key") );
+      setModified( wasModified );
     }
     encrypt = false;
   }
@@ -3320,6 +3322,7 @@ void KMComposeWin::slotSignToggled( bool on )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setSigning( bool sign, bool setByUser )
 {
+  bool wasModified = isModified();
   if ( setByUser ) {
     setModified( true );
   }
@@ -3339,6 +3342,7 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
                                "in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Signing Key") );
+      setModified( wasModified );
     }
     sign = false;
   }
