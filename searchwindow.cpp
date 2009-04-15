@@ -474,6 +474,9 @@ void SearchWindow::slotSearch()
   mFetchingInProgress = 0;
 
   mSearchFolderOpenBtn->setEnabled( true );
+  if ( mSearchFolderEdt->text().isEmpty() ) {
+    mSearchFolderEdt->setText( i18n("Last Search") );
+  }
   enableButton( User1, false );
   enableButton( User2, true );
 
@@ -486,9 +489,6 @@ void SearchWindow::slotSearch()
   // If we haven't openend an existing search folder, find or create one.
   if ( !mFolder ) {
     KMFolderMgr *mgr = kmkernel->searchFolderMgr();
-    if ( mSearchFolderEdt->text().isEmpty() ) {
-      mSearchFolderEdt->setText( i18n("Last Search") );
-    }
     QString baseName = mSearchFolderEdt->text();
     QString fullName = baseName;
     int count = 0;
@@ -646,7 +646,7 @@ void SearchWindow::scheduleRename(const QString &s)
     mSearchFolderOpenBtn->setEnabled(false);
   } else {
     mRenameTimer.stop();
-    mSearchFolderOpenBtn->setEnabled(true);
+    mSearchFolderOpenBtn->setEnabled(!s.isEmpty());
   }
 }
 
