@@ -182,16 +182,11 @@ Widget::~Widget()
 
   Manager::unregisterWidget( this );
 
-  if ( mSearchTimer )
-    delete mSearchTimer;
-  if ( mTheme )
-    delete mTheme;
-  if ( mAggregation )
-    delete mAggregation;
-  if ( mFilter )
-    delete mFilter;
-  if ( mStorageModel )
-    delete mStorageModel;
+  delete mSearchTimer;
+  delete mTheme;
+  delete mAggregation;
+  delete mFilter;
+  delete mStorageModel;
 }
 
 KPIM::MessageStatus Widget::currentFilterStatus() const
@@ -226,8 +221,7 @@ void Widget::setDefaultAggregationForStorageModel( const StorageModel * storageM
 
   Q_ASSERT( opt );
 
-  if ( mAggregation )
-    delete mAggregation;
+  delete mAggregation;
   mAggregation = new Aggregation( *opt );
 
   mView->setAggregation( mAggregation );
@@ -241,8 +235,7 @@ void Widget::setDefaultThemeForStorageModel( const StorageModel * storageModel )
 
   Q_ASSERT( opt );
 
-  if ( mTheme )
-    delete mTheme;
+  delete mTheme;
   mTheme = new Theme( *opt );
 
   mView->setTheme( mTheme );
@@ -311,8 +304,7 @@ void Widget::setStorageModel( StorageModel * storageModel, PreSelectionMode preS
 
   mView->setStorageModel( mStorageModel, preSelectionMode );
 
-  if ( oldModel )
-    delete oldModel;
+  delete oldModel;
 
   mStatusFilterButton->setEnabled( mStorageModel );
   mSortOrderButton->setEnabled( mStorageModel );
@@ -432,8 +424,7 @@ void Widget::themeSelected( bool )
 
   const Theme * opt = Manager::instance()->theme( id );
 
-  if ( mTheme )
-    delete mTheme;
+  delete mTheme;
   mTheme = new Theme( *opt );
 
   mView->setTheme( mTheme );
@@ -546,8 +537,7 @@ void Widget::aggregationSelected( bool )
 
   const Aggregation * opt = Manager::instance()->aggregation( id );
 
-  if ( mAggregation )
-    delete mAggregation;
+  delete mAggregation;
   mAggregation = new Aggregation( *opt );
 
   mView->setAggregation( mAggregation );

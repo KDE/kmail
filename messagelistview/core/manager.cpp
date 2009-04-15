@@ -313,8 +313,7 @@ const Aggregation * Manager::aggregationForStorageModel( const StorageModel *sto
 void Manager::addAggregation( Aggregation *set )
 {
   Aggregation * old = mAggregations.value( set->id() );
-  if ( old )
-    delete old;
+  delete old;
   mAggregations.insert( set->id(), set );
 }
 
@@ -591,8 +590,7 @@ const Theme * Manager::themeForStorageModel( const StorageModel *storageModel, b
 void Manager::addTheme( Theme *set )
 {
   Theme * old = mThemes.value( set->id() );
-  if ( old )
-    delete old;
+  delete old;
   mThemes.insert( set->id(), set );
 }
 

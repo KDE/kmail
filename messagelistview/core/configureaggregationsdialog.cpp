@@ -56,8 +56,7 @@ public:
   }
   ~AggregationListWidgetItem()
   {
-    if ( mAggregation )
-      delete mAggregation;
+    delete mAggregation;
   }
 
 public:

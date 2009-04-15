@@ -217,8 +217,7 @@ public:
 
   ~ViewItemJob()
   {
-    if ( mInvariantIndexList )
-      delete mInvariantIndexList;
+    delete mInvariantIndexList;
   }
 public:
   int startIndex() const
@@ -315,8 +314,7 @@ Model::~Model()
   delete mThreadingCacheMessageInReplyToIdMD5ToMessageItem;
   void clearThreadingCacheMessageSubjectMD5ToMessageItem();
   delete mThreadingCacheMessageSubjectMD5ToMessageItem;
-  if ( mPersistentSetManager )
-    delete mPersistentSetManager;
+  delete mPersistentSetManager;
   // Delete the invariant row mapper before removing the items.
   // It's faster since the items will not need to call the invariant
   delete mInvariantRowMapper;

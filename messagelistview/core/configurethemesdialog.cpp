@@ -56,8 +56,7 @@ public:
   }
   ~ThemeListWidgetItem()
   {
-    if ( mTheme )
-      delete mTheme;
+    delete mTheme;
   }
 
 public:
