@@ -739,7 +739,9 @@ void SnippetWidget::startDrag( Qt::DropActions supportedActions )
   if ( dynamic_cast<SnippetGroup*>( currentItem() ) )
     return;
 
-  QString text = dynamic_cast<SnippetItem*>( currentItem() )->getText();
+  QString text = static_cast<SnippetItem*>( currentItem() )->getText();
+  if( text.isEmpty() )
+    return;
   QDrag *drag = new QDrag( this );
   QMimeData *mimeData = new QMimeData();
   mimeData->setData( "text/x-kmail-textsnippet", text.toUtf8() );
