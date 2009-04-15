@@ -1067,7 +1067,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("insert_file_recent", mRecentAction );
   connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
           SLOT(slotInsertRecentFile(const KUrl&)));
-  connect(mRecentAction, SIGNAL(recentListClear()),
+  connect(mRecentAction, SIGNAL(recentListCleared()),
           SLOT(slotRecentListFileClear()));
   mRecentAction->loadEntries( KMKernel::config()->group( QString() ) );
 
