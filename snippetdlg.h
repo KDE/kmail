@@ -9,7 +9,6 @@
 using Ui::SnippetDlgBase;
 
 class KActionCollection;
-class KShortcut;
 
 class SnippetDlg : public QDialog, public SnippetDlgBase
 {
