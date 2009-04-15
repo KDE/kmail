@@ -287,6 +287,7 @@ class KMComposeWin : public KMail::Composer
     void slotAttachFile();
     void slotInsertRecentFile( const KUrl & );
     void slotAttachedFile( const KUrl & );
+    void slotRecentListFileClear();
 
   public slots: // kmkernel, callback
     void slotSendNow();

@@ -1067,7 +1067,8 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("insert_file_recent", mRecentAction );
   connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
           SLOT(slotInsertRecentFile(const KUrl&)));
-
+  connect(mRecentAction, SIGNAL(recentListClear()),
+          SLOT(slotRecentListFileClear()));
   mRecentAction->loadEntries( KMKernel::config()->group( QString() ) );
 
   action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
@@ -2518,6 +2519,15 @@ void KMComposeWin::slotInsertFile()
   slotInsertRecentFile( u );
 }
 
+
+void KMComposeWin::slotRecentListFileClear()
+{
+   KConfig *config = KMKernel::config();
+   KConfigGroup group( config, "Composer" );
+   group.deleteEntry("recent-urls");
+   group.deleteEntry("recent-encodings");
+   mRecentAction->saveEntries( config->group( QString() ) );
+}
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertRecentFile( const KUrl &u )
 {
