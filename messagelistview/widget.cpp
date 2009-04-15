@@ -293,7 +293,7 @@ void Widget::activateMessageItemByMsgBase( KMMsgBase * msg )
 
   QItemSelection sel;
 
-  for ( QList< Core::MessageItem * >::Iterator it = selectedItems.begin(); it != selectedItems.end(); ++it )
+  for ( QList< Core::MessageItem * >::ConstIterator it = selectedItems.constBegin(); it != selectedItems.constEnd(); ++it )
   {
     if ( static_cast< StorageModel * >( storageModel() )->msgBase( *it ) == msg )
     {
@@ -342,7 +342,7 @@ QList< KMMessage * > Widget::selectionAsMessageList( bool includeCollapsedChildr
 
   QList< Core::MessageItem * > selectedItems = view()->selectionAsMessageItemList( includeCollapsedChildren );
 
-  for ( QList< Core::MessageItem * >::Iterator it = selectedItems.begin(); it != selectedItems.end(); ++it )
+  for ( QList< Core::MessageItem * >::ConstIterator it = selectedItems.constBegin(); it != selectedItems.constEnd(); ++it )
   {
     KMMessage * msg = static_cast< StorageModel * >( storageModel() )->message( *it );
     Q_ASSERT( msg );
@@ -360,7 +360,7 @@ QList< KMMsgBase * > Widget::selectionAsMsgBaseList( bool includeCollapsedChildr
 
   QList< Core::MessageItem * > selectedItems = view()->selectionAsMessageItemList( includeCollapsedChildren );
 
-  for ( QList< Core::MessageItem * >::Iterator it = selectedItems.begin(); it != selectedItems.end(); ++it )
+  for ( QList< Core::MessageItem * >::ConstIterator it = selectedItems.constBegin(); it != selectedItems.constEnd(); ++it )
   {
     KMMsgBase * msg = static_cast< StorageModel * >( storageModel() )->msgBase( *it );
     Q_ASSERT( msg );
@@ -379,7 +379,7 @@ MessageTreeCollection * Widget::itemListToMessageTreeCollection( const QList< Co
 
   QHash< Core::MessageItem *, MessageTree * > messageItemsToMessageTrees;
 
-  for( QList< Core::MessageItem * >::ConstIterator it = list.begin(); it != list.end(); ++it )
+  for( QList< Core::MessageItem * >::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
   {
     KMMsgBase * msg = static_cast< StorageModel * >( storageModel() )->msgBase( *it );
     Q_ASSERT( msg );
@@ -389,7 +389,7 @@ MessageTreeCollection * Widget::itemListToMessageTreeCollection( const QList< Co
     messageItemsToMessageTrees.insert( *it, tree );
   }
 
-  for( QList< Core::MessageItem * >::ConstIterator it = list.begin(); it != list.end(); ++it )
+  for( QList< Core::MessageItem * >::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
   {
     MessageTree * tree = messageItemsToMessageTrees.value( *it, 0 );
 
@@ -444,7 +444,7 @@ QList< KMMsgBase * > Widget::currentThreadAsMsgBaseList() const
 
   QList< Core::MessageItem * > currentThreadItems = view()->currentThreadAsMessageItemList();
 
-  for ( QList< Core::MessageItem * >::Iterator it = currentThreadItems.begin(); it != currentThreadItems.end(); ++it )
+  for ( QList< Core::MessageItem * >::ConstIterator it = currentThreadItems.constBegin(); it != currentThreadItems.constEnd(); ++it )
   {
     KMMsgBase * msg = static_cast< StorageModel * >( storageModel() )->msgBase( *it );
     Q_ASSERT( msg );
@@ -462,7 +462,7 @@ QList< KMMessage * > Widget::currentThreadAsMessageList() const
 
   QList< Core::MessageItem * > currentThreadItems = view()->currentThreadAsMessageItemList();
 
-  for ( QList< Core::MessageItem * >::Iterator it = currentThreadItems.begin(); it != currentThreadItems.end(); ++it )
+  for ( QList< Core::MessageItem * >::ConstIterator it = currentThreadItems.constBegin(); it != currentThreadItems.constEnd(); ++it )
   {
     KMMessage * msg = static_cast< StorageModel * >( storageModel() )->message( *it );
     Q_ASSERT( msg );
@@ -501,7 +501,7 @@ QList< KMMsgBase * > Widget::persistentSetContentsAsMsgBaseList( Core::MessageIt
   if ( setItems.isEmpty() )
     return ret;
 
-  for ( QList< Core::MessageItem * >::Iterator it = setItems.begin(); it != setItems.end(); ++it )
+  for ( QList< Core::MessageItem * >::ConstIterator it = setItems.constBegin(); it != setItems.constEnd(); ++it )
   {
     KMMsgBase * msg = static_cast< StorageModel * >( storageModel() )->msgBase( *it );
     Q_ASSERT( msg );
@@ -571,7 +571,7 @@ bool Widget::getSelectionStats(
 
   *allSelectedBelongToSameThread = true;
 
-  for ( QList< Core::MessageItem * >::Iterator it = selected.begin(); it != selected.end(); ++it )
+  for ( QList< Core::MessageItem * >::ConstIterator it = selected.constBegin(); it != selected.constEnd(); ++it )
   {
     KMMsgBase * mb = static_cast< StorageModel * >( storageModel() )->msgBase( ( *it ) );
     Q_ASSERT( mb );

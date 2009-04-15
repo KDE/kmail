@@ -416,7 +416,7 @@ void ThemePreviewWidget::setTheme( Theme * theme )
 
   QStringList headerLabels;
 
-  for( QList< Theme::Column * >::ConstIterator it = columns.begin(); it != columns.end(); ++it )
+  for( QList< Theme::Column * >::ConstIterator it = columns.constBegin(); it != columns.constEnd(); ++it )
   {
     QString label = ( *it )->label();
     if ( ( *it )->visibleByDefault() )
