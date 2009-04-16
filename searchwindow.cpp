@@ -723,8 +723,8 @@ void SearchWindow::enableGUI()
     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
     bool searching = (search) ? (search->running()) : false;
     actionButton(KDialogBase::Close)->setEnabled(!searching);
-    mCbxFolders->setEnabled(!searching);
-    mChkSubFolders->setEnabled(!searching);
+    mCbxFolders->setEnabled(!searching && !mChkbxAllFolders->isChecked());
+    mChkSubFolders->setEnabled(!searching && !mChkbxAllFolders->isChecked());
     mChkbxAllFolders->setEnabled(!searching);
     mChkbxSpecificFolders->setEnabled(!searching);
     mPatternEdit->setEnabled(!searching);
