@@ -1530,6 +1530,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   mCloseToQuotaThreshold->setSingleStep( 1 );
   connect( mCloseToQuotaThreshold, SIGNAL( valueChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  mCloseToQuotaThreshold->setEnabled( false );
   mCloseToQuotaThreshold->setSuffix( i18n("%"));
   hbox->addWidget( mCloseToQuotaThreshold );
   hbox->addWidget( new QWidget(this), 2 );
@@ -1541,6 +1542,8 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
            mRecycleColorCheck, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            l, SLOT(setEnabled(bool)) );
+  connect( mCustomColorCheck, SIGNAL(toggled(bool)),
+	   mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
 
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
