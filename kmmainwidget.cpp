@@ -1101,6 +1101,9 @@ void KMMainWidget::modifyFolder( KMFolderTreeItem* folderItem )
                         i18n("Properties of Folder %1").arg( folder->label() ) );
   props.exec();
   updateFolderMenu();
+  //Kolab issue 2152
+  if ( mSystemTray )
+    mSystemTray->foldersChanged();
 }
 
 //-----------------------------------------------------------------------------
