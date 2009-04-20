@@ -49,10 +49,11 @@ public:
   int mode() const;
 
   void hideKMail();
+public slots:
+  void foldersChanged();
 
 private slots:
   void updateNewMessageNotification(KMFolder * folder);
-  void foldersChanged();
   void selectedAccount(int);
   void updateNewMessages();
   void slotActivated( QSystemTrayIcon::ActivationReason reason );
