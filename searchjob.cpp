@@ -211,8 +211,8 @@ void SearchJob::slotSearchData( KJob* job, const QString& data, const QString& )
 //-----------------------------------------------------------------------------
 bool SearchJob::canMapAllUIDs()
 {
-  for ( QStringList::Iterator it = mImapSearchHits.begin();
-        it != mImapSearchHits.end(); ++it )
+  for ( QStringList::ConstIterator it = mImapSearchHits.constBegin();
+        it != mImapSearchHits.constEnd(); ++it )
   {
     if ( mFolder->serNumForUID( (*it).toULong() ) == 0 )
       return false;

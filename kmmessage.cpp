@@ -742,7 +742,7 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
         list += KPIMUtils::splitAddressList(to());
       if (!cc().isEmpty())
         list += KPIMUtils::splitAddressList(cc());
-      for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+      for( QStringList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) {
         if(    !StringUtil::addressIsInAddressList( *it, recipients )
             && !StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;

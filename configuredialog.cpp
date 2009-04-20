@@ -2120,8 +2120,8 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   }
   QStringList encodings = KMMsgBase::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
-  QStringList::Iterator it( encodings.begin() );
-  QStringList::Iterator end( encodings.end() );
+  QStringList::ConstIterator it( encodings.constBegin() );
+  QStringList::ConstIterator end( encodings.constEnd() );
   int i = 0;
   for( ; it != end; ++it)
   {

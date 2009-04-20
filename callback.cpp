@@ -154,7 +154,7 @@ QString Callback::receiver() const
 
   QStringList addrs = KPIMUtils::splitAddressList( mMsg->to() );
   int found = 0;
-  for ( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
+  for ( QStringList::ConstIterator it = addrs.constBegin(); it != addrs.constEnd(); ++it ) {
     if ( kmkernel->identityManager()->identityForAddress( *it ) !=
          KPIMIdentities::Identity::null() ) {
       // Ok, this could be us
@@ -164,7 +164,7 @@ QString Callback::receiver() const
   }
 
   QStringList ccaddrs = KPIMUtils::splitAddressList( mMsg->cc() );
-  for ( QStringList::Iterator it = ccaddrs.begin(); it != ccaddrs.end(); ++it ) {
+  for ( QStringList::ConstIterator it = ccaddrs.constBegin(); it != ccaddrs.constEnd(); ++it ) {
     if ( kmkernel->identityManager()->identityForAddress( *it ) !=
          KPIMIdentities::Identity::null() ) {
       // Ok, this could be us

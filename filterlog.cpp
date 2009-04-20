@@ -104,8 +104,8 @@ void FilterLog::dump()
 {
 #ifndef NDEBUG
   kDebug(5006) <<"----- starting filter log -----";
-  for ( QStringList::Iterator it = mLogEntries.begin();
-        it != mLogEntries.end(); ++it )
+  for ( QStringList::ConstIterator it = mLogEntries.constBegin();
+        it != mLogEntries.constEnd(); ++it )
   {
     kDebug(5006) << *it;
   }

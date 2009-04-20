@@ -105,7 +105,7 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
   //kDebug(5006) <<"killAllJobs: disconnectSlave=" << disconnectSlave << mapJobData.count() <<" jobs in map.";
   QList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
-  for( QList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+  for( QList<KMFolderCachedImap*>::ConstIterator it = folderList.constBegin(); it != folderList.constEnd(); ++it ) {
     KMFolderCachedImap *fld = *it;
     fld->resetSyncState();
     fld->setContentState(KMFolderCachedImap::imapNoInformation);
