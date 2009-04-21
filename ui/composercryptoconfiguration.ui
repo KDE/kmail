@@ -1,7 +1,4 @@
 <ui version="4.0" stdsetdef="1" >
-  <author></author>
-  <comment></comment>
-  <exportmacro></exportmacro>
   <class>ComposerCryptoConfiguration</class>
   <widget class="QWidget" name="ComposerCryptoConfiguration" >
     <property name="geometry" >
@@ -127,8 +124,6 @@ However, there may be local rules that require you to turn this option on. When 
       </item>
     </layout>
   </widget>
-  <layoutdefault spacing="6" margin="11" />
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
   <tabstops>
     <tabstop>mEncToSelf</tabstop>
     <tabstop>mShowEncryptionResult</tabstop>
