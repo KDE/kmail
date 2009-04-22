@@ -2264,6 +2264,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       htmlWriter()->end();
       setWindowTitle( i18n("View Attachment: %1", pname ) );
       show();
+      delete iio;
   } else {
     htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
     htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
