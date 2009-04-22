@@ -37,7 +37,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
 
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   KABC::AddressBook::ConstIterator it;
-  for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
+  for( it = addressBook->constBegin(); it != addressBook->constEnd(); ++it ) {
     const QStringList emails = (*it).emails();
     QString n = (*it).prefix() + ' ' +
                 (*it).givenName() + ' ' +
