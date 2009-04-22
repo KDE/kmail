@@ -1529,7 +1529,7 @@ QWidget* KMFilterActionForward::createParamWidget( QWidget* parent ) const
          templat.type() == CustomTemplates::TUniversal )
       templateCombo->addItem( templateName );
   }
-  templateCombo->setEnabled( templateNames.size() > 1 );
+  templateCombo->setEnabled( templateCombo->count() > 1 );
   templateCombo->setToolTip( i18n( "The template used when forwarding" ) );
   templateCombo->setWhatsThis( i18n( "Set the forwarding template that will be used with this filter." ) );
 
