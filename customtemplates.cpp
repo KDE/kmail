@@ -310,9 +310,7 @@ void CustomTemplates::slotRemoveClicked()
     const QString templateName = mCurrentItem->text( 1 );
     mItemsToDelete.append( templateName );
     CustomTemplateItem *vitem = mItemList.take( templateName );
-    if ( vitem ) {
-      delete vitem;
-    }
+    delete vitem;
     delete mCurrentItem;
     mCurrentItem = 0;
     if ( !mBlockChangeSignal )

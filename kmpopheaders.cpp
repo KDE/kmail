@@ -22,8 +22,7 @@ KMPopHeaders::KMPopHeaders()
 }
 
 KMPopHeaders::~KMPopHeaders(){
-  if (mHeader)
-    delete mHeader;
+  delete mHeader;
 }
 
 /** No descriptions */
