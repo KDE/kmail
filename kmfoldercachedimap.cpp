@@ -129,11 +129,11 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
                       "and all its subfolders.</p>" );
   topLayout->addWidget( new QLabel( txt, page ) );
 
-  QButtonGroup *group = new QButtonGroup( 0 );
+  mButtonGroup = new QButtonGroup( 0 );
 
   mIndexButton = new QRadioButton( page );
   mIndexButton->setText( i18n( "Rebuild &Index" ) );
-  group->insert( mIndexButton );
+  mButtonGroup->insert( mIndexButton );
   topLayout->addWidget( mIndexButton );
 
   QHBox *hbox = new QHBox( page );
@@ -148,15 +148,16 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
 
   mCacheButton = new QRadioButton( page );
   mCacheButton->setText( i18n( "Refresh &Cache" ) );
-  group->insert( mCacheButton );
+  mButtonGroup->insert( mCacheButton );
   topLayout->addWidget( mCacheButton );
 
   enableButtonSeparator( true );
 
   connect ( mIndexButton, SIGNAL(toggled(bool)), mIndexScope, SLOT(setEnabled(bool)) );
   connect ( mIndexButton, SIGNAL(toggled(bool)), scopeLabel, SLOT(setEnabled(bool)) );
-
+  connect( mButtonGroup, SIGNAL( clicked( int ) ), SLOT( slotChanged() ) );
   connect( this, SIGNAL( okClicked () ), this, SLOT( slotDone() ) );
+  enableButtonOK( false );
 }
 
 int DImapTroubleShootDialog::run()
@@ -164,6 +165,11 @@ int DImapTroubleShootDialog::run()
   DImapTroubleShootDialog d;
   d.exec();
   return d.rc;
+}
+
+void DImapTroubleShootDialog::slotChanged()
+{
+  enableButtonOK( mButtonGroup->selected() != 0 );
 }
 
 void DImapTroubleShootDialog::slotDone()

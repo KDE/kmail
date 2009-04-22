@@ -79,10 +79,11 @@ public:
 
 private slots:
   void slotDone();
-
+  void slotChanged();
 private:
   QRadioButton *mIndexButton, *mCacheButton;
   QComboBox *mIndexScope;
+  QButtonGroup *mButtonGroup;
   int rc;
 };
 
