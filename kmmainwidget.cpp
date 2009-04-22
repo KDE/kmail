@@ -1280,6 +1280,9 @@ void KMMainWidget::slotModifyFolder()
   props.exec();
 
   updateFolderMenu();
+  //Kolab issue 2152
+  if ( mSystemTray )
+    mSystemTray->foldersChanged();
 }
 
 
