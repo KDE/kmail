@@ -43,11 +43,13 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   hbl->setSpacing(4);
   hbl->setMargin( 0 );
   mLineEdit = new KLineEdit(this);
+  mLineEdit->setObjectName( "addressEdit" );
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
   mBtn = new QPushButton( QString(),this );
   mBtn->setIcon( KIcon( "help-contents" ) );
   mBtn->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
+  mBtn->setToolTip( i18n( "Open Address Book" ) );
   hbl->addWidget( mBtn );
 
   connect( mBtn, SIGNAL(clicked()), this, SLOT(slotAddrBook()) );
