@@ -67,6 +67,8 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 
   protected:
 
+    void setRecipientsEditsEnabled( bool enabled );
+
     CustomTemplateItemList mItemList;
 
     /// These templates will be deleted when we're saving.
@@ -80,6 +82,12 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 
     void slotHelpLinkClicked( const QString& );
     void slotNameChanged( const QString & text );
+
+  private:
+
+    /// Whether or not to emit the changed() signal. This is useful to disable when loading
+    /// templates, which changes the UI without user action
+    bool mBlockChangeSignal;
 };
 
 struct CustomTemplateItem
@@ -88,13 +96,16 @@ struct CustomTemplateItem
   CustomTemplateItem( const QString &name,
                       const QString &content,
                       KShortcut &shortcut,
-                      CustomTemplates::Type type ) :
-    mName( name ), mContent( content ), mShortcut(shortcut), mType( type ) {}
+                      CustomTemplates::Type type,
+                      QString to, QString cc ) :
+    mName( name ), mContent( content ), mShortcut(shortcut), mType( type ),
+    mTo( to ), mCC( cc ) {}
 
   QString mName, mContent;
   //QKeySequence might do the trick too, check the rest of your code. --ahartmetz
   KShortcut mShortcut;
   CustomTemplates::Type mType;
+  QString mTo, mCC;
 };
 
 #endif // CUSTOMTEMPLATES_H

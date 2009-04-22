@@ -23,6 +23,12 @@
       <whatsthis></whatsthis>
       <default>0</default>
     </entry>
+    <entry name="To" type="String" key="To">
+      <default></default>
+    </entry>
+    <entry name="CC" type="String" key="CC">
+      <default></default>
+    </entry>
   </group>
 
 </kcfg>
