@@ -686,9 +686,15 @@ static QString subresourceLabelForPresentation( const KMFolder * folder )
         remainder.pop_front();
         remainder.pop_front();
         if ( dimapAccountCount() > 1 ) {
+          // Fix kolab issue 2531 folder->storage() )->account() can be null
+          if( folder->storage() && static_cast<const KMFolderCachedImap*>( folder->storage() )->account() ) {
           label = i18n( "My %1 (%2)")
               .arg( remainder.join( QString::fromLatin1("/") ),
                     static_cast<const KMFolderCachedImap*>( folder->storage() )->account()->name() );
+          } else {
+            label = i18n("My %1")
+              .arg( remainder.join( QString::fromLatin1("/") ) );
+          }
         } else {
           label = i18n("My %1")
               .arg( remainder.join( QString::fromLatin1("/") ) );
