@@ -498,6 +498,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
   mResizeTimer.setObjectName( "mResizeTimer" );
+
+  mExternalWindow  = ( aParent == mainWindow );
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
   mMimeTreeAtBottom = true;
@@ -795,31 +797,42 @@ KToggleAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrateg
 void KMReaderWin::slotEnterpriseHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
                              HeaderStrategy::rich() );
+  if( !mExternalWindow )
+    writeConfig();
 }
 
 void KMReaderWin::slotFancyHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::fancy(),
                              HeaderStrategy::rich() );
+  if( !mExternalWindow )
+    writeConfig();
 }
 
 void KMReaderWin::slotBriefHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::brief(),
                              HeaderStrategy::brief() );
+  if( !mExternalWindow )
+    writeConfig();
 }
 
 void KMReaderWin::slotStandardHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
                              HeaderStrategy::standard());
+  writeConfig();
 }
 
 void KMReaderWin::slotLongHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
                              HeaderStrategy::rich() );
+  if( !mExternalWindow )
+    writeConfig();
 }
 
 void KMReaderWin::slotAllHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
                              HeaderStrategy::all() );
+  if( !mExternalWindow )
+    writeConfig();
 }
 
 void KMReaderWin::slotLevelQuote( int l )
