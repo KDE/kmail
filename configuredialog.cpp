@@ -3993,12 +3993,12 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
 
 void SecurityPageWarningTab::updateSpinBoxSuffix()
 {
-  mWidget->mWarnSignKeyExpiresSB->setSuffix(QString(" ") + i18np("day", "days", mWidget->mWarnSignKeyExpiresSB->value()));
-  mWidget->mWarnSignChainCertExpiresSB->setSuffix(QString(" ") + i18np("day", "days", mWidget->mWarnSignChainCertExpiresSB->value()));
-  mWidget->mWarnSignRootCertExpiresSB->setSuffix(QString(" ") + i18np("day", "days", mWidget->mWarnSignRootCertExpiresSB->value()));
-  mWidget->mWarnEncrKeyExpiresSB->setSuffix(QString(" ") + i18np("day", "days", mWidget->mWarnEncrKeyExpiresSB->value()));
-  mWidget->mWarnEncrChainCertExpiresSB->setSuffix(QString(" ") + i18np("day", "days", mWidget->mWarnEncrChainCertExpiresSB->value()));
-  mWidget->mWarnEncrRootCertExpiresSB->setSuffix(QString(" ") + i18np("day", "days", mWidget->mWarnEncrRootCertExpiresSB->value()));
+  mWidget->mWarnSignKeyExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnSignKeyExpiresSB->value()));
+  mWidget->mWarnSignChainCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnSignChainCertExpiresSB->value()));
+  mWidget->mWarnSignRootCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnSignRootCertExpiresSB->value()));
+  mWidget->mWarnEncrKeyExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnEncrKeyExpiresSB->value()));
+  mWidget->mWarnEncrChainCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnEncrChainCertExpiresSB->value()));
+  mWidget->mWarnEncrRootCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnEncrRootCertExpiresSB->value()));
   slotEmitChanged();
 }
 

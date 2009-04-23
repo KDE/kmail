@@ -203,8 +203,8 @@ void ExpiryPropertiesDialog::slotUpdateControls()
 
 void ExpiryPropertiesDialog::updateSpinBoxSuffix()
 {
-  expireReadMailSB->setSuffix( QString(" ") + i18np("day", "days", expireReadMailSB->value() ) );
-  expireUnreadMailSB->setSuffix( QString(" ") + i18np("day", "days", expireUnreadMailSB->value() ) );
+  expireReadMailSB->setSuffix( i18np(" day", " days", expireReadMailSB->value() ) );
+  expireUnreadMailSB->setSuffix( i18np(" day", " days", expireUnreadMailSB->value() ) );
 }
 
 
