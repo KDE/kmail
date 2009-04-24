@@ -309,7 +309,8 @@ void FavoriteFolderView::dropped(QDropEvent * e, QListViewItem * after)
       KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
       if ( !fti->folder() )
         continue;
-      afterItem = addFolder( fti->folder(), prettyName( fti ), afterItem );
+      if( !mFolderToItem.contains( fti->folder() ) )
+         afterItem = addFolder( fti->folder(), prettyName( fti ), afterItem );
     }
     e->accept();
   }
