@@ -83,6 +83,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
 
   connect( mBtnTo, SIGNAL(clicked()), SLOT(slotAddrBook()) );
 
+  connect( mEditTo, SIGNAL( textChanged ( const QString & ) ), SLOT( slotEmailChanged( const QString & ) ) );
   mLabelTo->setBuddy( mBtnTo );
   mEditTo->setFocus();
 
@@ -90,8 +91,16 @@ RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
   setButtonGuiItem( User2, KGuiItem( i18n("Send &Later"), "mail-queue" ) );
   connect(this,SIGNAL(user1Clicked()),this, SLOT(slotUser1()));
   connect(this,SIGNAL(user2Clicked()),this, SLOT(slotUser2()));
+  enableButton( User1, false );
+  enableButton( User2, false );
 }
 
+
+void RedirectDialog::slotEmailChanged( const QString & text )
+{
+  enableButton( User1, !text.isEmpty() );
+  enableButton( User2, !text.isEmpty() );
+}
 
 //-----------------------------------------------------------------------------
 void RedirectDialog::slotUser1()
