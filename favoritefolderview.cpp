@@ -351,8 +351,13 @@ void FavoriteFolderView::contextMenu(QListViewItem * item, const QPoint & point)
 
 void FavoriteFolderView::removeFolder()
 {
+  KMFolderTreeItem *fti = mContextMenuItem;
+  KMFolder *folder = 0;
+  if( fti )
+    folder = fti->folder();
   delete mContextMenuItem;
   mContextMenuItem = 0;
+  removeFromFolderToItemMap(folder);
   notifyInstancesOnChange();
 }
 
