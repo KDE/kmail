@@ -457,6 +457,9 @@ void FavoriteFolderView::addFolder()
   KMFolder *folder = dlg.folder();
   if ( !folder )
     return;
+  if ( mFolderToItem.contains( folder ) )
+    return;
+
   KMFolderTreeItem *fti = findFolderTreeItem( folder );
   addFolder( folder, fti ? prettyName( fti ) : folder->label() );
 }
