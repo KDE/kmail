@@ -100,16 +100,24 @@
                     </property>
                     <property name="sizePolicy">
                         <sizepolicy>
-                            <hsizetype>5</hsizetype>
+                            <hsizetype>7</hsizetype>
                             <vsizetype>7</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
+                            <horstretch>3</horstretch>
+                            <verstretch>1</verstretch>
                         </sizepolicy>
                     </property>
                     <property name="allColumnsShowFocus">
                         <bool>true</bool>
                     </property>
                 </widget>
+                        <widget class="KActiveLabel" >
+                            <property name="name">
+                                <cstring>mHelp</cstring>
+                            </property>
+                            <property name="text">
+                                <string>How does this work?</string>
+                            </property>
+                        </widget>
             </vbox>
         </widget>
         <widget class="QFrame" row="0" column="1">
@@ -292,14 +300,6 @@
                             </property>
                             <property name="text">
                                 <string>None</string>
-                            </property>
-                        </widget>
-                        <widget class="KActiveLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>mHelp</cstring>
-                            </property>
-                            <property name="text">
-                                <string>How does this work?</string>
                             </property>
                         </widget>
                     </grid>
