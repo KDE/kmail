@@ -459,7 +459,8 @@ void KMail::FavoriteFolderView::addFolder(KMFolderTreeItem * fti)
 {
   if ( !fti || !fti->folder() )
     return;
-  addFolder( fti->folder(), prettyName( fti ) );
+  if ( !mFolderToItem.contains( fti->folder()  ) )
+    addFolder( fti->folder(), prettyName( fti ) );
 }
 
 KMFolderTreeItem * FavoriteFolderView::findFolderTreeItem(KMFolder * folder) const
