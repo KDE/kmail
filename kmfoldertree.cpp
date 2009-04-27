@@ -364,7 +364,7 @@ void KMFolderTreeItem::assignShortcut()
               kmkernel->getKMMainWidget(),
               listView() );
   shorty->exec();
-  return;
+  delete shorty;
 }
 
 //-----------------------------------------------------------------------------
