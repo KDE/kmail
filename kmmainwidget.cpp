@@ -1788,6 +1788,7 @@ void KMMainWidget::slotUndo()
 {
     mHeaders->undo();
     updateMessageActions();
+    updateFolderMenu();
 }
 
 //-----------------------------------------------------------------------------
