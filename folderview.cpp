@@ -1402,7 +1402,7 @@ void FolderView::fillContextMenuAccountRelatedActions( KMenu *menu, FolderViewIt
 
     menu->addAction(
         KIcon( "folder-bookmarks" ),
-        i18n( "Subscription..." ), mMainWidget,
+        i18n( "Serverside Subscription..." ), mMainWidget,
         SLOT( slotSubscriptionDialog() )
       );
 
