@@ -125,12 +125,22 @@ namespace KMail {
       void createListViewItem( int i );
 
       /**
-       * If subscriptions are not used for the server,
-       * asks "Do you want to enable subscriptions?"
+       * If subscriptions are not enabled it
+       * shows a messagebox which asks to user to enable the option.
+       *
+       * If the subscriptions should be enabled, this method will set
+       * mForceSubscriptionEnable to true, otherwise to false.
+       *
+       * This function calls subscriptionOptionEnabled() to check if the option
+       * is currently enabled and subscriptionOptionQuestion() to get the text for
+       * the messagebox.
        *
        * @return false if the user clicked cancel, true otherwise
        */
       bool checkIfSubscriptionsEnabled();
+
+      virtual bool subscriptionOptionEnabled( const KMail::ImapAccountBase *account ) const = 0;
+      virtual QString subscriptionOptionQuestion( const QString &accountName ) const = 0;
 
       QString mDelimiter;
       QStringList mFolderNames, mFolderPaths,
@@ -161,6 +171,10 @@ namespace KMail {
       virtual void processFolderListing();
       /** reimpl */
       virtual bool doSave();
+      /** reimpl */
+      virtual bool subscriptionOptionEnabled( const KMail::ImapAccountBase *account ) const;
+      /** reimpl */
+      virtual QString subscriptionOptionQuestion( const QString &accountName ) const;
 
     private:
       /**

@@ -54,6 +54,10 @@ namespace KMail {
       virtual void processFolderListing();
       /**  reimpl */
       virtual bool doSave();
+      /** reimpl */
+      virtual bool subscriptionOptionEnabled( const KMail::ImapAccountBase *account ) const;
+      /** reimpl */
+      virtual QString subscriptionOptionQuestion( const QString &accountName ) const;
       virtual void loadingComplete();
 
     private:
