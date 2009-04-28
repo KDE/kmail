@@ -100,7 +100,7 @@ void LocalSubscriptionDialog::setCheckedStateOfAllItems()
 }
 
 /*virtual*/
-void LocalSubscriptionDialog::doSave()
+bool LocalSubscriptionDialog::doSave()
 {
   bool somethingHappened = false;
   // subscribe
@@ -132,6 +132,8 @@ void LocalSubscriptionDialog::doSave()
   if ( somethingHappened ) {
     kmkernel->acctMgr()->singleCheckMail( mAccount, true);
   }
+
+  return true;
 }
 
 void LocalSubscriptionDialog::loadingComplete()
