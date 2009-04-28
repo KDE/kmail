@@ -2148,14 +2148,21 @@ KMCommand::Result KMMoveCommand::execute()
   mProgressItem->setTotalItems( mSerNumList.count() );
 
   for ( QValueList<Q_UINT32>::ConstIterator it = mSerNumList.constBegin(); it != mSerNumList.constEnd(); ++it ) {
-    KMFolder *srcFolder;
+    if ( *it == 0 ) {
+      kdDebug(5006) << k_funcinfo << "serial number == 0!" << endl;
+      continue; // invalid message
+    }
+    KMFolder *srcFolder = 0;
     int idx = -1;
     KMMsgDict::instance()->getLocation( *it, &srcFolder, &idx );
     if (srcFolder == mDestFolder)
       continue;
+    assert(srcFolder);
     assert(idx != -1);
-    srcFolder->open( "kmmovecommand" );
-    mOpenedFolders.append( srcFolder );
+    if ( !srcFolder->isOpened() ) {
+      srcFolder->open( "kmmovecommand" );
+      mOpenedFolders.append( srcFolder );
+    }
     msg = srcFolder->getMsg(idx);
     if ( !msg ) {
       kdDebug(5006) << k_funcinfo << "No message found for serial number " << *it << endl;
