@@ -63,6 +63,16 @@ public:
   /** Apply all filters even if they don't match */
   void setAlwaysMatch( bool );
 
+  /**
+   * Ignoring the filter set means the action scheduler will not care about
+   * the filter set which was set in the constructor. Instead, it will apply
+   * all fiters on the message.
+   * This is useful when the user manually applies a filter.
+   *
+   * The default is false.
+   */
+  void setIgnoreFilterSet( bool ignore );
+
   /** Set a default folder to move messages into */
   void setDefaultDestinationFolder( KMFolder* );
 
@@ -89,11 +99,10 @@ public:
   static QString debug();
   static bool isEnabled();
 
-  /** Allow or deny manipulations on the message to be filtered.
+  /** Ignores the given message on the next msgAdded()
       This is needed when using pipe-through filters, because the
-      changes made by the filter have to be written back.
-      The old value before applying the new value is returned. */
-  bool ignoreChanges( bool ignore );
+      changes made by the filter have to be written back. */
+  void addMsgToIgnored( quint32 serNum );
 
 signals:
   /** Emitted when filtering is completed */
@@ -166,6 +175,9 @@ private:
   // removed as soon as the message is fetched from the original source folder.
   QList<quint32> mFetchSerNums;
 
+  //List of serial numbers to be ignored in msgAdded()
+  QList<quint32> mIgnoredSerNums;
+
   QList<QPointer<KMFolder> > mOpenFolders;
   QList<KMFilter*> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;
@@ -174,8 +186,8 @@ private:
   QPointer<KMFolder> mSrcFolder, mDestFolder;
   bool mExecuting, mExecutingLock, mFetchExecuting;
   bool mUnget, mFetchUnget;
-  bool mIgnore;
   bool mFiltersAreQueued;
+  bool mIgnoreFilterSet;
   bool mAutoDestruct;
   bool mAlwaysMatch;
   bool mAccount;

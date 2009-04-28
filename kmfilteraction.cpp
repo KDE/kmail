@@ -1573,6 +1573,8 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 #include <threadweaver/DebuggingAids.h>
 class PipeJob : public ThreadWeaver::Job
 {
+  Q_OBJECT
+
   public:
     PipeJob(QObject* parent = 0, KMMessage* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
       : ThreadWeaver::Job ( parent ),
@@ -1580,18 +1582,22 @@ class PipeJob : public ThreadWeaver::Job
         mCmd( cmd ),
         mMsg( aMsg )
     {
+      connect( this, SIGNAL( done(  ThreadWeaver::Job* ) ),
+               this, SLOT( slotDone( ThreadWeaver::Job* ) ) );
     }
 
     ~PipeJob() {}
 
-    virtual void done( ThreadWeaver::Job *job )
+  private slots:
+
+    void slotDone( ThreadWeaver::Job * )
     {
-      ThreadWeaver::Job::done( job );
       deleteLater( );
     }
 
   protected:
-    void run()
+
+    virtual void run()
     {
       ThreadWeaver::debug (1, "PipeJob::run: doing it .\n");
       FILE *p;
@@ -1616,14 +1622,22 @@ class PipeJob : public ThreadWeaver::Job
         KMFolder *filterFolder =  mMsg->parent();
         ActionScheduler *handler = MessageProperty::filterHandler( mMsg->getMsgSerNum() );
 
+        // If the pipe through alters the message, it could very well
+        // happen that it no longer has a X-UID header afterwards. That is
+        // unfortunate, as we need to removed the original from the folder
+        // using that, and look it up in the message. When the (new) message
+        // is uploaded, the header is stripped anyhow. */
+        const QString uid = mMsg->headerField( "X-UID" );
         mMsg->fromString( ba );
+        if ( !uid.isEmpty() )
+          mMsg->setHeaderField( "X-UID", uid );
+
         if ( !origSerNum.isEmpty() )
           mMsg->setHeaderField( "X-KMail-Filtered", origSerNum );
         if ( filterFolder && handler ) {
-          bool oldStatus = handler->ignoreChanges( true );
+          handler->addMsgToIgnored( mMsg->getMsgSerNum() );
           filterFolder->take( filterFolder->find( mMsg ) );
           filterFolder->addMsg( mMsg );
-          handler->ignoreChanges( oldStatus );
         } else {
           kDebug(5006) <<"Warning: Cannot refresh the message from the external filter.";
         }
@@ -1706,7 +1720,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   atmList.clear();
 
   PipeJob *job = new PipeJob(0, aMsg, commandLine, tempFileName);
-  QObject::connect ( job, SIGNAL( done() ),
+  QObject::connect ( job, SIGNAL( done( ThreadWeaver::Job* ) ),
                      handler, SLOT( actionMessage() ) );
   kmkernel->weaver()->enqueue(job);
 }
@@ -1911,3 +1925,5 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   mList.append( desc );
   delete action;
 }
+
+#include "kmfilteraction.moc"
