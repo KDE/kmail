@@ -74,7 +74,7 @@ namespace KMail {
     mHtmlPart->view()->viewport()->setUpdatesEnabled( false );
     mHtmlPart->view()->ensureVisible( 0, 0 );
 
-    mHtmlPart->begin( KUrl( "file:/" ) );
+    mHtmlPart->begin( KUrl() );
     if ( !css.isEmpty() )
       mHtmlPart->setUserStyleSheet( css );
     mState = Begun;
