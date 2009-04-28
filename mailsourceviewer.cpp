@@ -41,11 +41,34 @@
 namespace KMail {
 
 void MailSourceHighlighter::highlightBlock ( const QString & text ) {
-  QRegExp regexp( "^([\\w-]+:\\s)" );
-  if( regexp.indexIn( text ) != -1 ) {
-    QFont font = document()->defaultFont ();
-    font.setBold( true );
-    setFormat( 0, regexp.matchedLength(), font );
+  // all visible ascii except space and :
+  const QRegExp regexp( "^([\\x21-9;-\\x7E]+:\\s)" );
+  const int headersState = -1; // Also the initial State
+  const int bodyState = 0;
+
+  // keep the previous state
+  setCurrentBlockState( previousBlockState() );
+  // If a header is found
+  if( regexp.indexIn( text ) != -1 )
+  {
+    // Content- header starts a new mime part, and therefore new headers
+    // If a Content-* header is found, change State to headers until a blank line is found.
+    if ( text.startsWith( "Content-" ) )
+    {
+      setCurrentBlockState( headersState );
+    }
+    // highligth it if in headers state
+    if( ( currentBlockState() == headersState ) )
+    {
+      QFont font = document()->defaultFont ();
+      font.setBold( true );
+      setFormat( 0, regexp.matchedLength(), font );
+    }
+  }
+  // Change to body state
+  else if (text.isEmpty())
+  {
+    setCurrentBlockState( bodyState );
   }
 }
 
