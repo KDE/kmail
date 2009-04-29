@@ -66,7 +66,7 @@ void MailSourceHighlighter::highlightBlock ( const QString & text ) {
     }
   }
   // Change to body state
-  else if (text.isEmpty())
+  else if ( text.isEmpty() )
   {
     setCurrentBlockState( bodyState );
   }
