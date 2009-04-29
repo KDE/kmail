@@ -1990,7 +1990,7 @@ void KMKernel::slotShowConfigurationDialog()
 {
   if( !mConfigureDialog ) {
     mConfigureDialog = new ConfigureDialog( 0, "configure", false );
-    connect( mConfigureDialog, SIGNAL( configCommitted() ),
+    connect( mConfigureDialog, SIGNAL( configChanged() ),
              this, SLOT( slotConfigChanged() ) );
   }
 
