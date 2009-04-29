@@ -207,9 +207,10 @@ void SimpleStringListEditor::slotAdd() {
 					    &ok, this );
   // let the user verify the string before adding
   emit aboutToAdd( newEntry );
-  if ( ok && !newEntry.isEmpty() )
-    mListBox->insertItem( newEntry );
-  emit changed();
+  if ( ok && !newEntry.isEmpty() ) {
+      mListBox->insertItem( newEntry );
+      emit changed();
+  }
 }
 
 void SimpleStringListEditor::slotRemove() {
