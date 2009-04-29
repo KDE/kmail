@@ -166,6 +166,15 @@ QStringList SimpleStringListEditor::stringList() const {
   return result;
 }
 
+bool SimpleStringListEditor::containsString( const QString & str ) {
+  for ( QListBoxItem * item = mListBox->firstItem() ;
+	item ; item = item->next() ) {
+    if ( item->text() == str )
+      return true;
+  }
+  return false;
+}
+
 void SimpleStringListEditor::setButtonText( ButtonCode button,
 					    const QString & text ) {
   switch ( button ) {
@@ -207,7 +216,7 @@ void SimpleStringListEditor::slotAdd() {
 					    &ok, this );
   // let the user verify the string before adding
   emit aboutToAdd( newEntry );
-  if ( ok && !newEntry.isEmpty() ) {
+  if ( ok && !newEntry.isEmpty() && !containsString( newEntry )) {
       mListBox->insertItem( newEntry );
       emit changed();
   }

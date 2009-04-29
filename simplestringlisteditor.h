@@ -91,6 +91,7 @@ protected slots:
   void slotSelectionChanged();
 
 protected:
+  bool containsString( const QString & str );
   QListBox      *mListBox;
   QPushButton   *mAddButton;
   QPushButton   *mRemoveButton;
