@@ -214,15 +214,24 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
      return;
   }
 
-  // If this is a URL list, add those files as attachments
+  // If this is a URL list, add those files as attachments or text
   const KUrl::List urlList = KUrl::List::fromMimeData( source );
   if ( !urlList.isEmpty() ) {
-    foreach( const KUrl &url, urlList ) {
-       m_composerWin->addAttach( url );
+    KMenu p;
+    const QAction *addAsTextAction = p.addAction( i18n("Add as &Text") );
+    const QAction *addAsAttachmentAction = p.addAction( i18n("Add as &Attachment") );
+    const QAction *selectedAction = p.exec( QCursor::pos() );
+    if ( selectedAction == addAsTextAction ) {
+      foreach( const KUrl &url, urlList ) {
+        textCursor().insertText(url.url());
+      }
+    } else if ( selectedAction == addAsAttachmentAction ) {
+      foreach( const KUrl &url, urlList ) {
+        m_composerWin->addAttach( url );
+      }
     }
     return;
   }
-
   KMeditor::insertFromMimeData( source );
 }
 
