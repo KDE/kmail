@@ -2511,6 +2511,7 @@ void KMMainWidget::slotUndo()
 {
   kmkernel->undoStack()->undo();
   updateMessageActions();
+  updateFolderMenu();
 }
 
 
