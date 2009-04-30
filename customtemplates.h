@@ -69,6 +69,9 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 
     CustomTemplateItemList mItemList;
 
+    /// These templates will be deleted when we're saving.
+    QStringList mItemsToDelete;
+
     QPixmap mReplyPix;
     QPixmap mReplyAllPix;
     QPixmap mForwardPix;

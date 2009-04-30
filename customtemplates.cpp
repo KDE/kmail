@@ -202,6 +202,14 @@ void CustomTemplates::load()
 
 void CustomTemplates::save()
 {
+  // Before saving the new templates, delete the old ones. That needs to be done before
+  // saving, since otherwise a new template with the new name wouldn't get saved.
+  foreach( const QString &item, mItemsToDelete ) {
+    CTemplates t( item );
+    const QString configGroup = t.currentGroup();
+    kmkernel->config()->deleteGroup( configGroup );
+  }
+
   QStringList list;
   QTreeWidgetItemIterator lit( mList );
   while ( *lit ) {
@@ -209,10 +217,8 @@ void CustomTemplates::save()
     ++lit;
   }
 
-  for ( CustomTemplateItemList::const_iterator it = mItemList.constBegin();
-        it != mItemList.constEnd(); ++it)
-  {
-    const CustomTemplateItem *ti = it.value();
+  foreach( const CustomTemplateItem *item, mItemList ) {
+    const CustomTemplateItem *ti = item;
     CTemplates t( ti->mName );
     QString content = ti->mContent;
     if ( content.trimmed().isEmpty() ) {
@@ -270,7 +276,9 @@ void CustomTemplates::slotRemoveClicked()
   if ( !mList->currentItem() )
     return;
 
-  delete mItemList.take( mList->currentItem()->text( 1 ) );
+  const QString templateName = mList->currentItem()->text( 1 );
+  mItemsToDelete.append( templateName );
+  delete mItemList.take( templateName );
   delete mList->takeTopLevelItem( mList->indexOfTopLevelItem (
                                   mList->currentItem() ) );
   mRemove->setEnabled( mList->topLevelItemCount() > 0 );
