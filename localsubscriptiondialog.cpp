@@ -103,6 +103,9 @@ void LocalSubscriptionDialog::setCheckedStateOfAllItems()
 /*virtual*/
 bool LocalSubscriptionDialog::doSave()
 {
+  if ( !checkIfSubscriptionsEnabled() )
+    return false;
+
   bool somethingHappened = false;
   // subscribe
   QTreeWidgetItemIterator it(subView);
@@ -130,11 +133,29 @@ bool LocalSubscriptionDialog::doSave()
 
     }
   }
-  if ( somethingHappened ) {
+
+  // Slight code duplication with SubscriptionDialog follows!
+  KMail::ImapAccountBase *a = static_cast<KMail::ImapAccountBase*>( mAcct );
+  if ( mForceSubscriptionEnable ) {
+    a->setOnlyLocallySubscribedFolders( true );
+  }
+
+  if ( somethingHappened && subscriptionOptionEnabled( a ) ) {
     kmkernel->acctMgr()->singleCheckMail( mAccount, true);
   }
 
   return true;
+}
+
+bool LocalSubscriptionDialog::subscriptionOptionEnabled( const KMail::ImapAccountBase *account ) const
+{
+  return account->onlyLocallySubscribedFolders();
+}
+
+QString LocalSubscriptionDialog::subscriptionOptionQuestion( const QString &accountName ) const
+{
+  return i18nc( "@info", "Currently local subscriptions are not used for account <resource>%1</resource>.<nl/>"
+      "\nDo you want to enable local subscriptions?", accountName );
 }
 
 void LocalSubscriptionDialog::loadingComplete()

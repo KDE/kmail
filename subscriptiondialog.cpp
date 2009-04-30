@@ -33,6 +33,7 @@
 #include "folderstorage.h"
 #include "listjob.h"
 #include "imapaccountbase.h"
+#include "accountmanager.h"
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -363,12 +364,13 @@ bool SubscriptionDialogBase::checkIfSubscriptionsEnabled()
   KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
   if( !account )
     return true;
-  if( account->onlySubscribedFolders() )
+  if( subscriptionOptionEnabled( account ) )
     return true;
+
   int result = KMessageBox::questionYesNoCancel( this,
-    i18nc("@info", "Currently subscriptions are not used for server <resource>%1</resource>.<nl/>"
-      "\nDo you want to enable subscriptions?", account->name() ),
-      i18n("Enable Subscriptions?"), KGuiItem(i18n("Enable")), KGuiItem(i18n("Do Not Enable")));
+      subscriptionOptionQuestion( account->name() ),
+      i18n("Enable Subscriptions?"), KGuiItem( i18n("Enable") ), KGuiItem( i18n("Do Not Enable") ) );
+
   switch(result) {
     case KMessageBox::Yes:
         mForceSubscriptionEnable = true;
@@ -402,12 +404,15 @@ bool SubscriptionDialog::doSave()
   if ( !checkIfSubscriptionsEnabled() )
     return false;
 
+  bool somethingHappened = false;
+
   // subscribe
   QTreeWidgetItemIterator it(subView);
   for ( ; *it; ++it)
   {
     static_cast<ImapAccountBase*>(account())->changeSubscription(true,
         static_cast<GroupItem*>(*it)->info().path);
+    somethingHappened = true;
   }
 
   // unsubscribe
@@ -416,13 +421,31 @@ bool SubscriptionDialog::doSave()
   {
     static_cast<ImapAccountBase*>(account())->changeSubscription(false,
         static_cast<GroupItem*>(*it2)->info().path);
+    somethingHappened = true;
   }
 
+  // Slight code duplication with LocalSubscriptionDialog follows!
+  KMail::ImapAccountBase *a = static_cast<KMail::ImapAccountBase*>( mAcct );
   if ( mForceSubscriptionEnable ) {
-    KMail::ImapAccountBase *a = static_cast<KMail::ImapAccountBase*>(mAcct);
-    a->setOnlySubscribedFolders(true);
+    a->setOnlySubscribedFolders( true );
   }
+
+  if ( somethingHappened && subscriptionOptionEnabled( a ) ) {
+    kmkernel->acctMgr()->singleCheckMail( a, true );
+  }
+
   return true;
+}
+
+bool SubscriptionDialog::subscriptionOptionEnabled( const KMail::ImapAccountBase *account ) const
+{
+  return account->onlySubscribedFolders();
+}
+
+QString SubscriptionDialog::subscriptionOptionQuestion( const QString &accountName ) const
+{
+  return i18nc( "@info", "Currently subscriptions are not used for server <resource>%1</resource>.<nl/>"
+                         "\nDo you want to enable subscriptions?", accountName );
 }
 
 void SubscriptionDialog::processItems()
