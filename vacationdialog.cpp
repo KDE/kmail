@@ -189,9 +189,10 @@ namespace KMail {
   }
 
   void VacationDialog::setDomainName( const QString & domain ) {
-    mDomainEdit->setText( domain );
-    if ( !domain.isEmpty() )
+    if ( !domain.isEmpty() ) {
+      mDomainEdit->setText( domain );
       mDomainCheck->setChecked( true );
+    }
   }
 
   bool VacationDialog::sendForSpam() const {
