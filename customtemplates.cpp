@@ -107,28 +107,6 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   mHelp->setText( i18n( "<a href=\"whatsthis\">How does this work?</a>" ) );
   connect( mHelp, SIGNAL( linkActivated ( const QString& ) ),
           SLOT( slotHelpLinkClicked( const QString& ) ) );
-}
-
-void CustomTemplates::slotHelpLinkClicked( const QString& )
-{
-  QString help =
-      i18n( "<qt>"
-      "<p>Here you can add, edit, and delete custom message "
-      "templates to use when you compose a reply or forwarding message. "
-      "Create the custom template by selecting it using the right mouse "
-      " button menu or toolbar menu. Also, you can bind a keyboard "
-      "combination to the template for faster operations.</p>"
-      "<p>Message templates support substitution commands, "
-      "by simply typing them or selecting them from the "
-      "<i>Insert command</i> menu.</p>"
-      "<p>There are four types of custom templates: used to "
-      "<i>Reply</i>, <i>Reply to All</i>, <i>Forward</i>, and "
-      "<i>Universal</i> which can be used for all kinds of operations. "
-      "You cannot bind a keyboard shortcut to <i>Universal</i> templates.</p>"
-      "</qt>" );
-
-  QWhatsThis::showText( QCursor::pos(), help );
-  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>", help ) );
 
   const QString toToolTip = i18n( "Additional recipients of the message when forwarding" );
   const QString ccToolTip = i18n( "Additional recipients who get a copy of the message when forwarding" );
@@ -152,6 +130,27 @@ void CustomTemplates::slotHelpLinkClicked( const QString& )
   toLineEdit->setWhatsThis( toWhatsThis );
 
   slotNameChanged( mName->text() );
+}
+
+void CustomTemplates::slotHelpLinkClicked( const QString& )
+{
+  QString help =
+      i18n( "<qt>"
+      "<p>Here you can add, edit, and delete custom message "
+      "templates to use when you compose a reply or forwarding message. "
+      "Create the custom template by selecting it using the right mouse "
+      " button menu or toolbar menu. Also, you can bind a keyboard "
+      "combination to the template for faster operations.</p>"
+      "<p>Message templates support substitution commands, "
+      "by simply typing them or selecting them from the "
+      "<i>Insert command</i> menu.</p>"
+      "<p>There are four types of custom templates: used to "
+      "<i>Reply</i>, <i>Reply to All</i>, <i>Forward</i>, and "
+      "<i>Universal</i> which can be used for all kinds of operations. "
+      "You cannot bind a keyboard shortcut to <i>Universal</i> templates.</p>"
+      "</qt>" );
+
+  QWhatsThis::showText( QCursor::pos(), help );
 }
 
 CustomTemplates::~CustomTemplates()
