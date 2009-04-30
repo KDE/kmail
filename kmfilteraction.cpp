@@ -3,6 +3,8 @@
 #include "kmfilteraction.h"
 
 // other KMail headers:
+#include "customtemplates.h"
+#include "customtemplates_kfg.h"
 #include "kmcommands.h"
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
@@ -10,11 +12,6 @@
 #include "kmfoldermgr.h"
 #include "messagesender.h"
 #include "kmmainwidget.h"
-#include <kpimidentities/identity.h>
-#include <kpimidentities/identitymanager.h>
-#include <kpimidentities/identitycombo.h>
-#include <kpimutils/kfileio.h>
-#include <mimelib/message.h>
 #include "kmfawidgets.h"
 #include "folderrequester.h"
 #include "mainfolderview.h"
@@ -30,6 +27,14 @@ using KMail::ActionScheduler;
 using KMail::RegExpLineEdit;
 #include "stringutil.h"
 
+// KDE PIM libs headers
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimidentities/identitycombo.h>
+#include <kpimutils/kfileio.h>
+#include <mimelib/message.h>
+
+// KDE headers
 #include <kcombobox.h>
 #include <ktemporaryfile.h>
 #include <kdebug.h>
@@ -1448,14 +1453,25 @@ bool KMFilterActionCopy::requiresBody( KMMsgBase *msg ) const
 
 //=============================================================================
 // KMFilterActionForward - forward to
-// Forward message to another user
+// Forward message to another user, with a defined template
 //=============================================================================
 class KMFilterActionForward: public KMFilterActionWithAddress
 {
   public:
     KMFilterActionForward();
-    virtual ReturnCode process( KMMessage *msg ) const;
     static KMFilterAction* newAction( void );
+    virtual ReturnCode process( KMMessage *msg ) const;
+    virtual QWidget* createParamWidget( QWidget* parent ) const;
+    virtual void applyParamWidgetValue( QWidget* paramWidget );
+    virtual void setParamWidgetValue( QWidget* paramWidget ) const;
+    virtual void clearParamWidget( QWidget* paramWidget ) const;
+    virtual void argsFromString( const QString &argsStr );
+    virtual const QString argsAsString() const;
+    virtual const QString displayString() const;
+
+private:
+
+  mutable QString mTemplate;
 };
 
 KMFilterAction *KMFilterActionForward::newAction( void )
@@ -1480,7 +1496,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( KMMessage *msg ) cons
     return ErrorButGoOn;
   }
 
-  KMMessage *fwdMsg = msg->createForward();
+  KMMessage *fwdMsg = msg->createForward( mTemplate );
   fwdMsg->setTo( mParameter );
 
   if ( !kmkernel->msgSender()->send( fwdMsg, KMail::MessageSender::SendLater ) ) {
@@ -1491,10 +1507,120 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( KMMessage *msg ) cons
     sendMDN( msg, KMime::MDN::Dispatched );
 
   // (the msgSender takes ownership of the message, so don't delete it here)
-
   return GoOn;
 }
 
+QWidget* KMFilterActionForward::createParamWidget( QWidget* parent ) const
+{
+  QWidget *addressAndTemplate = new QWidget( parent );
+  QHBoxLayout *hBox = new QHBoxLayout( addressAndTemplate );
+  QWidget *addressEdit = KMFilterActionWithAddress::createParamWidget( addressAndTemplate );
+  addressEdit->setObjectName( "addressEdit" );
+  hBox->addWidget( addressEdit );
+
+  QComboBox *templateCombo = new QComboBox( addressAndTemplate );
+  templateCombo->setObjectName( "templateCombo" );
+  hBox->addWidget( templateCombo );
+
+  templateCombo->addItem( i18n( "Default Template" ) );
+  QStringList templateNames = GlobalSettingsBase::self()->customTemplates();
+  foreach( const QString &templateName, templateNames ) {
+    CTemplates templat( templateName );
+    if ( templat.type() == CustomTemplates::TForward ||
+         templat.type() == CustomTemplates::TUniversal )
+      templateCombo->addItem( templateName );
+  }
+  templateCombo->setEnabled( templateNames.size() > 1 );
+  templateCombo->setToolTip( i18n( "The template used when forwarding" ) );
+  templateCombo->setWhatsThis( i18n( "Set the forwarding template that will be used with this filter." ) );
+
+  return addressAndTemplate;
+}
+
+void KMFilterActionForward::applyParamWidgetValue( QWidget* paramWidget )
+{
+  QWidget *addressEdit = paramWidget->findChild<QWidget*>( "addressEdit" );
+  Q_ASSERT( addressEdit );
+  KMFilterActionWithAddress::applyParamWidgetValue( addressEdit );
+
+  QComboBox *templateCombo = paramWidget->findChild<QComboBox*>( "templateCombo" );
+  Q_ASSERT( templateCombo );
+
+  if ( templateCombo->currentIndex() == 0 ) {
+    // Default template, so don't use a custom one
+    mTemplate.clear();
+  }
+  else {
+    mTemplate = templateCombo->currentText();
+  }
+}
+
+void KMFilterActionForward::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  QWidget *addressEdit = paramWidget->findChild<QWidget*>( "addressEdit" );
+  Q_ASSERT( addressEdit );
+  KMFilterActionWithAddress::setParamWidgetValue( addressEdit );
+
+  QComboBox *templateCombo = paramWidget->findChild<QComboBox*>( "templateCombo" );
+  Q_ASSERT( templateCombo );
+
+  if ( mTemplate.isEmpty() ) {
+    templateCombo->setCurrentIndex( 0 );
+  }
+  else {
+    int templateIndex = templateCombo->findText( mTemplate );
+    if ( templateIndex != -1 ) {
+      templateCombo->setCurrentIndex( templateIndex );
+    }
+    else {
+      mTemplate.clear();
+    }
+  }
+}
+
+void KMFilterActionForward::clearParamWidget( QWidget* paramWidget ) const
+{
+  QWidget *addressEdit = paramWidget->findChild<QWidget*>( "addressEdit" );
+  Q_ASSERT( addressEdit );
+  KMFilterActionWithAddress::clearParamWidget( addressEdit );
+
+  QComboBox *templateCombo = paramWidget->findChild<QComboBox*>( "templateCombo" );
+  Q_ASSERT( templateCombo );
+
+  templateCombo->setCurrentIndex( 0 );
+}
+
+// We simply place a "@$$@" between the two parameters. The template is the last
+// parameter in the string, for compatibility reasons.
+static const QString forwardFilterArgsSeperator = "@$$@";
+
+void KMFilterActionForward::argsFromString( const QString &argsStr )
+{
+  int seperatorPos = argsStr.indexOf( forwardFilterArgsSeperator );
+
+  if ( seperatorPos == - 1 ) {
+    // Old config, assume that the whole string is the addressee
+    KMFilterActionWithAddress::argsFromString( argsStr );
+  }
+  else {
+    QString addressee = argsStr.left( seperatorPos );
+    mTemplate = argsStr.mid( seperatorPos + forwardFilterArgsSeperator.length() );
+    KMFilterActionWithAddress::argsFromString( addressee );
+  }
+}
+
+const QString KMFilterActionForward::argsAsString() const
+{
+  return KMFilterActionWithAddress::argsAsString() + forwardFilterArgsSeperator + mTemplate;
+}
+
+const QString KMFilterActionForward::displayString() const
+{
+  if ( mTemplate.isEmpty() )
+    return i18n( "Forward to %1 with default template ", mParameter );
+  else
+    return i18n( "Forward to %1 with template %2", mParameter, mTemplate );
+}
 
 //=============================================================================
 // KMFilterActionRedirect - redirect to
