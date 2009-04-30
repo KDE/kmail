@@ -1261,7 +1261,8 @@ void KMMainWidget::slotFolderShortcutCommand()
   if ( !folder )
     return;
 
-  ( new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mMainFolderView ) )->exec();
+  KMail::FolderShortcutDialog shorty( folder, kmkernel->getKMMainWidget(), mMainFolderView );
+  shorty.exec();
   //slotModifyFolder( KMMainWidget::PropsShortcut );
 }
 
