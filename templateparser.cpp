@@ -880,6 +880,15 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     // is either only the new text or the new text with some attachments.
     mMsg->deleteBodyParts();
 
+    // Set To and CC from the template
+    if ( mMode == Forward ) {
+      if ( !mTo.isEmpty() ) {
+        mMsg->setTo( mMsg->to() + ',' + mTo );
+      }
+      if ( !mCC.isEmpty() )
+        mMsg->setCc( mMsg->cc() + ',' + mCC );
+    }
+
     // If we have no attachment, simply create a text/plain part and
     // set the processed template text as the body
     if ( ac.attachments().empty() ) {
@@ -922,6 +931,8 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
 QString TemplateParser::findCustomTemplate( const QString &tmplName )
 {
   CTemplates t( tmplName );
+  mTo = t.to();
+  mCC = t.cC();
   QString content = t.content();
   if ( !content.isEmpty() ) {
     return content;

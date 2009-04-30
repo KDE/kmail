@@ -24,6 +24,7 @@
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qtextedit.h>
+#include <qlabel.h>
 #include <qlineedit.h>
 #include <QWhatsThis>
 #include <qtoolbox.h>
@@ -44,9 +45,11 @@
 #include "globalsettings.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
+#include "kmfawidgets.h"
 
 CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
-  : QWidget(parent)
+  : QWidget( parent ),
+    mBlockChangeSignal( false )
 {
   setupUi(this);
   setObjectName(name);
@@ -65,6 +68,10 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
 
   connect( mEdit, SIGNAL( textChanged() ),
           this, SLOT( slotTextChanged( void ) ) );
+  connect( mToEdit, SIGNAL( textChanged() ),
+           this, SLOT( slotTextChanged() ) );
+  connect( mCCEdit, SIGNAL( textChanged() ),
+           this, SLOT( slotTextChanged() ) );
 
   connect( mName, SIGNAL( textChanged( const QString & ) ),
            this, SLOT( slotNameChanged( const QString & ) ) );
@@ -121,11 +128,48 @@ void CustomTemplates::slotHelpLinkClicked( const QString& )
       "</qt>" );
 
   QWhatsThis::showText( QCursor::pos(), help );
+  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>", help ) );
+
+  const QString toToolTip = i18n( "Additional recipients of the message when forwarding" );
+  const QString ccToolTip = i18n( "Additional recipients who get a copy of the message when forwarding" );
+  const QString toWhatsThis = i18n( "When using this template for forwarding, the default recipients are those you enter here. This is a comma-separated list of mail addresses." );
+  const QString ccWhatsThis = i18n( "When using this template for forwarding, the recipients you enter here will by default get a copy of this message. This is a comma-separated list of mail addresses." );
+
+  // We only want to set the tooltip/whatsthis to the lineedit, not the complete widget,
+  // so we use the name here to find the lineedit. This is similar to what KMFilterActionForward
+  // does.
+  KLineEdit *ccLineEdit = mCCEdit->findChild<KLineEdit*>( "addressEdit" );
+  KLineEdit *toLineEdit = mToEdit->findChild<KLineEdit*>( "addressEdit" );
+  Q_ASSERT( ccLineEdit && toLineEdit );
+
+  mCCLabel->setToolTip( ccToolTip );
+  ccLineEdit->setToolTip( ccToolTip );
+  mToLabel->setToolTip( toToolTip );
+  toLineEdit->setToolTip( toToolTip );
+  mCCLabel->setWhatsThis( ccWhatsThis );
+  ccLineEdit->setWhatsThis( ccWhatsThis );
+  mToLabel->setWhatsThis( toWhatsThis );
+  toLineEdit->setWhatsThis( toWhatsThis );
+
+  slotNameChanged( mName->text() );
 }
 
 CustomTemplates::~CustomTemplates()
 {
   qDeleteAll( mItemList ); // no auto-delete with QHash
+}
+
+void CustomTemplates::setRecipientsEditsEnabled( bool enabled )
+{
+  mToEdit->setHidden( !enabled );
+  mCCEdit->setHidden( !enabled );
+  mToLabel->setHidden( !enabled );
+  mCCLabel->setHidden( !enabled );
+}
+
+void CustomTemplates::slotNameChanged( const QString& text )
+{
+  mAdd->setEnabled( !text.isEmpty() );
 }
 
 QString CustomTemplates::indexToType( int index )
@@ -148,20 +192,21 @@ QString CustomTemplates::indexToType( int index )
   return typeStr;
 }
 
-void CustomTemplates::slotNameChanged( const QString & text )
-{
-  mAdd->setEnabled( !text.isEmpty() );
-}
-
 void CustomTemplates::slotTextChanged()
 {
   if ( mList->currentItem() ) {
     CustomTemplateItem *vitem = mItemList[ mList->currentItem()->text( 1 ) ];
-    if ( vitem )
+    if ( vitem ) {
       vitem->mContent = mEdit->toPlainText();
+      if ( !mBlockChangeSignal ) {
+        vitem->mTo = mToEdit->text();
+        vitem->mCC = mCCEdit->text();
+      }
+    }
   }
 
-  emit changed();
+  if ( !mBlockChangeSignal )
+    emit changed();
 }
 
 void CustomTemplates::load()
@@ -175,7 +220,7 @@ void CustomTemplates::load()
     CustomTemplateItem *vitem =
       new CustomTemplateItem( *it, t.content(),
         shortcut,
-        static_cast<Type>( t.type() ) );
+        static_cast<Type>( t.type() ), t.to(), t.cC() );
     mItemList.insert( *it, vitem );
     QTreeWidgetItem *item = new QTreeWidgetItem( mList );
     item->setText( 0, typeStr );
@@ -218,15 +263,16 @@ void CustomTemplates::save()
   }
 
   foreach( const CustomTemplateItem *item, mItemList ) {
-    const CustomTemplateItem *ti = item;
-    CTemplates t( ti->mName );
-    QString content = ti->mContent;
+    CTemplates t( item->mName );
+    QString content = item->mContent;
     if ( content.trimmed().isEmpty() ) {
       content = "%BLANK";
     }
     t.setContent( content );
-    t.setShortcut( ti->mShortcut.toString() );
-    t.setType( ti->mType );
+    t.setShortcut( item->mShortcut.toString() );
+    t.setType( item->mType );
+    t.setTo( item->mTo );
+    t.setCC( item->mCC );
     t.writeConfig();
   }
   GlobalSettings::self()->setCustomTemplates( list );
@@ -256,7 +302,8 @@ void CustomTemplates::slotAddClicked()
       // see slotShortcutChanged(). oh, and you should look up documentation on the english breakfast network!
       // FIXME There must be a better way of doing this...
       KShortcut nullShortcut;
-      vitem = new CustomTemplateItem( str, "", nullShortcut, TUniversal );
+      vitem = new CustomTemplateItem( str, "", nullShortcut, TUniversal,
+                                      QString(), QString() );
       mItemList.insert( str, vitem );
       QTreeWidgetItem *item =
         new QTreeWidgetItem( mList );
@@ -266,7 +313,8 @@ void CustomTemplates::slotAddClicked()
       mRemove->setEnabled( true );
       mName->clear();
       mKeySequenceWidget->setEnabled( false );
-      emit changed();
+      if ( !mBlockChangeSignal )
+        emit changed();
     }
   }
 }
@@ -282,7 +330,8 @@ void CustomTemplates::slotRemoveClicked()
   delete mList->takeTopLevelItem( mList->indexOfTopLevelItem (
                                   mList->currentItem() ) );
   mRemove->setEnabled( mList->topLevelItemCount() > 0 );
-  emit changed();
+  if ( !mBlockChangeSignal )
+    emit changed();
 }
 
 void CustomTemplates::slotListSelectionChanged()
@@ -292,17 +341,15 @@ void CustomTemplates::slotListSelectionChanged()
     mEditFrame->setEnabled( true );
     CustomTemplateItem *vitem = mItemList[ mList->currentItem()->text( 1 ) ];
     if ( vitem ) {
-      // avoid emit changed()
-      disconnect( mEdit, SIGNAL( textChanged() ),
-                  this, SLOT( slotTextChanged( void ) ) );
 
+      mBlockChangeSignal = true;
       mEdit->setText( vitem->mContent );
       mKeySequenceWidget->setKeySequence( vitem->mShortcut.primary(),
                                           KKeySequenceWidget::NoValidate );
       mType->setCurrentIndex( mType->findText( indexToType ( vitem->mType ) ) );
-
-      connect( mEdit, SIGNAL( textChanged() ),
-              this, SLOT( slotTextChanged( void ) ) );
+      mToEdit->setText( vitem->mTo );
+      mCCEdit->setText( vitem->mCC );
+      mBlockChangeSignal = false;
 
       // I think the logic (originally 'vitem->mType==TUniversal') was inverted here:
       // a key shortcut is only allowed for a specific type of template and not for
@@ -310,6 +357,8 @@ void CustomTemplates::slotListSelectionChanged()
       // key sequence is activated!
       // This agrees with KMMainWidget::updateCustomTemplateMenus() -- marten
       mKeySequenceWidget->setEnabled( vitem->mType != TUniversal );
+      setRecipientsEditsEnabled( vitem->mType == TForward ||
+                                 vitem->mType == TUniversal );
     }
   } else {
     mEditFrame->setEnabled( false );
@@ -317,6 +366,8 @@ void CustomTemplates::slotListSelectionChanged()
     // see above
     mKeySequenceWidget->clearKeySequence();
     mType->setCurrentIndex( 0 );
+    mToEdit->clear();
+    mCCEdit->clear();
   }
 }
 
@@ -347,8 +398,14 @@ void CustomTemplates::slotTypeActivated( int index )
 
     // see slotListSelectionChanged() above
     mKeySequenceWidget->setEnabled( vitem->mType != TUniversal );
-    emit changed();
+
+    setRecipientsEditsEnabled( vitem->mType == TForward ||
+                               vitem->mType == TUniversal );
+    if ( !mBlockChangeSignal )
+      emit changed();
   }
+  else
+    setRecipientsEditsEnabled( false );
 }
 
 void CustomTemplates::slotShortcutChanged( const QKeySequence &newSeq )
@@ -360,7 +417,8 @@ void CustomTemplates::slotShortcutChanged( const QKeySequence &newSeq )
       mKeySequenceWidget->applyStealShortcut();
     }
 
-    emit changed();
+    if ( !mBlockChangeSignal )
+      emit changed();
 }
 
 #include "customtemplates.moc"
