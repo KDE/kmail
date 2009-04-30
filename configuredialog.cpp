@@ -3021,7 +3021,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
 
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
-  mEditorRequester->setPath( GlobalSettings::self()->externalEditor() );
+  mEditorRequester->setUrl( KUrl( GlobalSettings::self()->externalEditor() ) );
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -3059,7 +3059,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
        && general.hasKey( "external-editor" ) ) {
     mExternalEditorCheck->setChecked(
         general.readEntry( "use-external-editor", false ) );
-    mEditorRequester->setPath( general.readPathEntry( "external-editor", QString() ) );
+    mEditorRequester->setUrl( KUrl( general.readPathEntry( "external-editor", QString() ) ) );
   }
 }
 
