@@ -644,7 +644,7 @@ void SearchWindow::closeEvent(QCloseEvent *e)
 //-----------------------------------------------------------------------------
 void SearchWindow::scheduleRename( const QString &s )
 {
-  if ( !s.isEmpty() && s != i18n("Last Search") ) {
+  if ( !s.isEmpty() ) {
     mRenameTimer.setSingleShot( true );
     mRenameTimer.start( 250 );
     mSearchFolderOpenBtn->setEnabled( false );
