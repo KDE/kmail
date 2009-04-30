@@ -79,10 +79,12 @@ class DImapTroubleShootDialog : public KDialog
 
   private slots:
     void slotDone();
+    void slotChanged( int id );
 
   private:
     QRadioButton *mIndexButton, *mCacheButton;
     KComboBox *mIndexScope;
+    QButtonGroup *mButtonGroup;
     int rc;
 };
 

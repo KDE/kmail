@@ -140,11 +140,11 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
   topLayout->addWidget( label );
   showButtonSeparator( true );
 
-  QButtonGroup *group = new QButtonGroup( 0 );
+  mButtonGroup = new QButtonGroup( 0 );
 
   mIndexButton = new QRadioButton( page );
   mIndexButton->setText( i18n( "Rebuild &index" ) );
-  group->addButton( mIndexButton );
+  mButtonGroup->addButton( mIndexButton );
   topLayout->addWidget( mIndexButton );
 
   KHBox *hbox = new KHBox( page );
@@ -159,16 +159,17 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
   topLayout->addWidget( hbox );
 
   mCacheButton = new QRadioButton( page );
-  mCacheButton->setText( i18n( "Refresh &cache" ) );
-  group->addButton( mCacheButton );
+  mCacheButton->setText( i18n( "Refresh &Cache" ) );
+  mButtonGroup->addButton( mCacheButton );
   topLayout->addWidget( mCacheButton );
 
   connect ( mIndexButton, SIGNAL( toggled( bool ) ),
             mIndexScope, SLOT( setEnabled( bool ) ) );
   connect ( mIndexButton, SIGNAL( toggled( bool ) ),
             scopeLabel, SLOT( setEnabled( bool ) ) );
-
+  connect( mButtonGroup, SIGNAL( buttonClicked( int ) ), SLOT( slotChanged( int ) ) );
   connect( this, SIGNAL( okClicked () ), this, SLOT( slotDone() ) );
+  enableButtonOk( false );
 }
 
 int DImapTroubleShootDialog::run()
@@ -176,6 +177,11 @@ int DImapTroubleShootDialog::run()
   DImapTroubleShootDialog d;
   d.exec();
   return d.rc;
+}
+
+void DImapTroubleShootDialog::slotChanged( int id )
+{
+  enableButtonOk( mButtonGroup->button( id )->isChecked() );
 }
 
 void DImapTroubleShootDialog::slotDone()
