@@ -1484,7 +1484,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   KMMessage *fwdMsg = aMsg->createForward( mTemplate );
   fwdMsg->setTo( fwdMsg->to() + ',' + mParameter );
 
-  if ( !kmkernel->msgSender()->send( fwdMsg, KMail::MessageSender::SendLater ) ) {
+  if ( !kmkernel->msgSender()->send( fwdMsg, KMail::MessageSender::SendDefault ) ) {
     kdWarning(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
