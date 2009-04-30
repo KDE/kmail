@@ -64,7 +64,9 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
                                  QList<KMFilter*> filters,
                                  KMHeaders *headers,
                                  KMFolder *srcFolder)
-  : mSet( set ), mHeaders( headers )
+  : mSet( set ),
+    mHeaders( headers ),
+    mIgnoreFilterSet( false )
 {
   ++count;
   ++refCount;
@@ -73,7 +75,6 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   mFetchExecuting = false;
   mFiltersAreQueued = false;
   mResult = ResultOk;
-  mIgnore = false;
   mAutoDestruct = false;
   mAlwaysMatch = false;
   mAccountId = 0;
@@ -153,6 +154,11 @@ void ActionScheduler::setAutoDestruct( bool autoDestruct )
 void ActionScheduler::setAlwaysMatch( bool alwaysMatch )
 {
   mAlwaysMatch = alwaysMatch;
+}
+
+void ActionScheduler::setIgnoreFilterSet( bool ignore )
+{
+  mIgnoreFilterSet = ignore;
 }
 
 void ActionScheduler::setDefaultDestinationFolder( KMFolder *destFolder )
@@ -497,7 +503,7 @@ void ActionScheduler::messageFetched( KMMessage *msg )
 
 void ActionScheduler::msgAdded( KMFolder*, quint32 serNum )
 {
-  if (!mIgnore)
+  if ( !mIgnoredSerNums.removeOne(serNum) )
     enqueue( serNum );
 }
 
@@ -621,11 +627,12 @@ void ActionScheduler::filterMessage()
     moveMessage();
     return;
   }
-  if (((mSet & KMFilterMgr::Outbound) && (*mFilterIt)->applyOnOutbound()) ||
+  if ( mIgnoreFilterSet ||
+      ((((mSet & KMFilterMgr::Outbound) && (*mFilterIt)->applyOnOutbound()) ||
       ((mSet & KMFilterMgr::Inbound) && (*mFilterIt)->applyOnInbound() &&
        (!mAccount ||
         (mAccount && (*mFilterIt)->applyOnAccount(mAccountId)))) ||
-      ((mSet & KMFilterMgr::Explicit) && (*mFilterIt)->applyOnExplicit())) {
+      ((mSet & KMFilterMgr::Explicit) && (*mFilterIt)->applyOnExplicit())))) {
 
       // filter is applicable
     if ( FilterLog::instance()->isLogging() ) {
@@ -716,11 +723,10 @@ void ActionScheduler::moveMessage()
       folder = orgMsg->parent();
   }
 
-  mIgnore = true;
+  mIgnoredSerNums.append( msg->getMsgSerNum() );
   assert( msg->parent() == mSrcFolder.operator->() );
   mSrcFolder->take( mSrcFolder->find( msg ) );
   mSrcFolder->addMsg( msg );
-  mIgnore = false;
 
   if (msg && folder && kmkernel->folderIsTrash( folder ))
     KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
@@ -894,11 +900,10 @@ bool ActionScheduler::isEnabled()
   return sEnabled;
 }
 
-bool ActionScheduler::ignoreChanges( bool ignore )
+void ActionScheduler::addMsgToIgnored( quint32 serNum )
 {
-  bool oldValue = mIgnore;
-  mIgnore = ignore;
-  return oldValue;
+  kDebug() << "Adding ignored message:" << serNum;
+  mIgnoredSerNums.append( serNum );
 }
 
 #include "actionscheduler.moc"
