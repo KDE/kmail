@@ -343,7 +343,7 @@ kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.p
 
 kde4_add_executable(kmail ${kmail_SRCS})
 
-kdepim4_link_unique_libraries(kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
+kdepim4_link_unique_libraries(kmail  ${KDE4_KDEUI_LIBS} ${KDE4_KDECORE_LIBS} kdepim kmailprivate )
 
 install(TARGETS kmail  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
