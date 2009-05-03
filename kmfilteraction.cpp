@@ -1520,7 +1520,7 @@ QWidget* KMFilterActionForward::createParamWidget( QWidget* parent ) const
 
   KLineEdit *lineEdit = addressEdit->findChild<KLineEdit*>( "addressEdit" );
   Q_ASSERT( lineEdit );
-  lineEdit->setToolTip( i18n( "The addressee the message will be forwarded to" ) );
+  lineEdit->setToolTip( i18n( "The addressee to whom the message will be forwarded." ) );
   lineEdit->setWhatsThis( i18n( "The filter will forward the message to the addressee entered here." ) );
 
   QComboBox *templateCombo = new QComboBox( addressAndTemplate );
@@ -1622,7 +1622,7 @@ const QString KMFilterActionForward::argsAsString() const
 const QString KMFilterActionForward::displayString() const
 {
   if ( mTemplate.isEmpty() )
-    return i18n( "Forward to %1 with default template ", mParameter );
+    return i18n( "Forward to %1 with default template", mParameter );
   else
     return i18n( "Forward to %1 with template %2", mParameter, mTemplate );
 }

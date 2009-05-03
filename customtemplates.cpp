@@ -109,9 +109,9 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
           SLOT( slotHelpLinkClicked( const QString& ) ) );
 
   const QString toToolTip = i18n( "Additional recipients of the message when forwarding" );
-  const QString ccToolTip = i18n( "Additional recipients who get a copy of the message when forwarding" );
+  const QString ccToolTip = i18n( "Additional recipients who are sent a copy of the message when forwarding." );
   const QString toWhatsThis = i18n( "When using this template for forwarding, the default recipients are those you enter here. This is a comma-separated list of mail addresses." );
-  const QString ccWhatsThis = i18n( "When using this template for forwarding, the recipients you enter here will by default get a copy of this message. This is a comma-separated list of mail addresses." );
+  const QString ccWhatsThis = i18n( "When using this template for forwarding, the recipients you enter here will be sent a copy of the message by default. This is a comma-separated list of mail addresses." );
 
   // We only want to set the tooltip/whatsthis to the lineedit, not the complete widget,
   // so we use the name here to find the lineedit. This is similar to what KMFilterActionForward
