@@ -2360,7 +2360,9 @@ void FolderView::handleMessagesDropEvent( QDropEvent *e )
   e->accept();
 
   // KMHeaders does copy/move itself
-  if ( action == DragMove && item->folder() )
+  if ( action == DragCancel )
+     return;
+  else if ( action == DragMove && item->folder() )
      emit folderDrop( item->folder() );
   else if ( action == DragCopy && item->folder() )
      emit folderDropCopy( item->folder() );
