@@ -21,20 +21,20 @@
 
 #include "kmcomposereditor.h"
 #include "kmcomposewin.h"
-#include "kemailquotinghighter.h"
 #include "kmcommands.h"
 #include "kmmsgdict.h"
 #include "kmfolder.h"
 #include "maillistdrag.h"
 
 #include <kmime/kmime_codecs.h>
+#include <KPIMTextEdit/EMailQuoteHighlighter>
 
 #include <KAction>
 #include <KActionCollection>
 #include <KFileDialog>
-#include <klocale.h>
-#include <kmenu.h>
-#include <kmessagebox.h>
+#include <KLocale>
+#include <KMenu>
+#include <KMessageBox>
 #include <KPushButton>
 
 #include <QBuffer>
@@ -55,10 +55,6 @@ void KMComposerEditor::createActions( KActionCollection *actionCollection )
 {
   KMeditor::createActions( actionCollection );
 
-  actionAddImage = new KAction( KIcon( "insert-image" ), i18n("Add Image"), this );
-  actionCollection->addAction( "add_image", actionAddImage );
-  connect( actionAddImage, SIGNAL(triggered(bool) ), SLOT( slotAddImage() ) );
-
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection->addAction("paste_quoted", mPasteQuotation );
   connect( mPasteQuotation, SIGNAL(triggered(bool) ), this, SLOT( slotPasteAsQuotation()) );
@@ -72,7 +68,7 @@ void KMComposerEditor::createActions( KActionCollection *actionCollection )
   connect (mRemQuoteChars, SIGNAL(triggered(bool) ), this, SLOT(slotRemoveQuotes()) );
 }
 
-void KMComposerEditor::changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter)
+void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter)
 {
   // defaults from kmreaderwin.cpp. FIXME: centralize somewhere.
   QColor color1( 0x00, 0x80, 0x00 );
@@ -97,12 +93,24 @@ QString KMComposerEditor::smartQuote( const QString & msg )
   return m_composerWin->smartQuote( msg );
 }
 
-QString KMComposerEditor::quotePrefixName() const
+const QString KMComposerEditor::defaultQuoteSign() const
 {
   if ( !m_quotePrefix.simplified().isEmpty() )
     return m_quotePrefix;
   else
-    return ">";
+    return KPIMTextEdit::TextEdit::defaultQuoteSign();
+}
+
+int KMComposerEditor::quoteLength( const QString& line ) const
+{
+  if ( !m_quotePrefix.simplified().isEmpty() ) {
+    if ( line.startsWith( m_quotePrefix ) )
+      return m_quotePrefix.length();
+    else
+      return 0;
+  }
+  else
+    return KPIMTextEdit::TextEdit::quoteLength( line );
 }
 
 void KMComposerEditor::setQuotePrefixName( const QString &quotePrefix )
@@ -110,6 +118,14 @@ void KMComposerEditor::setQuotePrefixName( const QString &quotePrefix )
   m_quotePrefix = quotePrefix;
 }
 
+QString KMComposerEditor::quotePrefixName() const
+{
+  if ( !m_quotePrefix.simplified().isEmpty() )
+    return m_quotePrefix;
+  else
+    return ">";
+}
+ 
 void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 {
   QTextCursor cursor( document() );
@@ -127,17 +143,25 @@ void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
   cursor.endEditBlock();
 }
 
-void KMComposerEditor::dropEvent( QDropEvent *e )
+bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
-  const QMimeData *md = e->mimeData();
-  if ( !md )
-    return;
+  if ( KPIM::MailList::canDecode( source ) )
+    return true;
+  if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
+    return true;
+  if ( source->hasUrls() )
+    return true;
 
-  // If this is a list of mails, attach those mails as forwards.
-  if ( KPIM::MailList::canDecode( md ) ) {
-    e->accept();
+  return KPIMTextEdit::TextEdit::canInsertFromMimeData( source );
+}
+
+void KMComposerEditor::insertFromMimeData( const QMimeData *source )
+{
+    // If this is a list of mails, attach those mails as forwards.
+  if ( KPIM::MailList::canDecode( source ) ) {
+
     // Decode the list of serial numbers stored as the drag data
-    QByteArray serNums = KPIM::MailList::serialsFromMimeData( md );
+    QByteArray serNums = KPIM::MailList::serialsFromMimeData( source );
     QBuffer serNumBuffer( &serNums );
     serNumBuffer.open( QIODevice::ReadOnly );
     QDataStream serNumStream( &serNumBuffer );
@@ -164,54 +188,9 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
     return;
   }
 
-  // If this is a PNG image or URL list, let MimeData functions handle it.
-  if ( md->hasFormat( "image/png" ) || md->hasUrls() ) {
-    if ( canInsertFromMimeData( md ) ) {
-      insertFromMimeData( md );
-      return;
-    }
-  }
-
-  // If this is normal text, paste the text
-  if ( md->hasText() ) {
-    KMeditor::dropEvent( e );
-    e->accept();
-    return;
-  }
-
-  kDebug() << "Unable to add dropped object";
-  return KMeditor::dropEvent( e );
-}
-
-void KMComposerEditor::paste()
-{
-  const QMimeData *md = QApplication::clipboard()->mimeData();
-  if ( md && canInsertFromMimeData( md ) )
-    insertFromMimeData( md );
-}
-
-bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
-{
-  if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
-    return true;
-  if ( source->hasUrls() )
-    return true;
-  if ( textMode() == KRichTextEdit::Rich && source->hasImage() )
-    return true;
-  return KMeditor::canInsertFromMimeData( source );
-}
-
-void KMComposerEditor::insertFromMimeData( const QMimeData *source )
-{
-  if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
+  if ( source->hasFormat( "text/x-kmail-textsnippet" ) ) {
     emit insertSnippet();
-  if ( textMode() == KRichTextEdit::Rich && source->hasImage() )
-  {
-     QImage image = qvariant_cast<QImage>( source->imageData() );
-     QFileInfo fi( source->text() );
-     QString imageName = fi.baseName().isEmpty() ? "image" : fi.baseName();
-     addImageHelper( imageName, image );
-     return;
+    return;
   }
 
   // If this is a URL list, add those files as attachments or text
@@ -232,107 +211,8 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     }
     return;
   }
-  KMeditor::insertFromMimeData( source );
-}
 
-void KMComposerEditor::addImage( const KUrl &url )
-{
-  QImage image;
-  if ( !image.load( url.path() ) ) {
-    KMessageBox::error( this,
-                i18nc( "@info", "Unable to load image <filename>%1</filename>.", url.path() ) );
-    return;
-  }
-  QFileInfo fi( url.path() );
-  QString imageName = fi.baseName().isEmpty() ? "image.png" : fi.baseName() + ".png";
-  addImageHelper( imageName, image );
-}
-
-void KMComposerEditor::addImageHelper( const QString &imageName, const QImage &image )
-{
-  QString imageNameToAdd = imageName;
-  QTextDocument *document = this->document();
-
-  // determine the imageNameToAdd
-  int imageNumber = 1;
-  while ( mImageNames.contains( imageNameToAdd ) ) {
-    QVariant qv = document->resource( QTextDocument::ImageResource, QUrl( imageNameToAdd ) );
-    if ( qv == image ) {
-      // use the same name
-      break;
-    }
-    imageNameToAdd = imageName + QString::number( imageNumber++ );
-  }
-
-  if ( !mImageNames.contains( imageNameToAdd ) ) {
-    document->addResource( QTextDocument::ImageResource, QUrl( imageNameToAdd ), image );
-    mImageNames << imageNameToAdd;
-  }
-  textCursor().insertImage( imageNameToAdd );
-  enableRichTextMode();
-}
-
-QList<KMail::EmbeddedImage*> KMComposerEditor::embeddedImages() const
-{
-  QList<KMail::EmbeddedImage*> retImages;
-  QStringList seenImageNames;
-  QList<QTextImageFormat> imageFormats = embeddedImageFormats();
-  foreach( const QTextImageFormat &imageFormat, imageFormats ) {
-    if ( !seenImageNames.contains( imageFormat.name() ) ) {
-      QVariant data = document()->resource( QTextDocument::ImageResource, QUrl( imageFormat.name() ) );
-      QImage image = qvariant_cast<QImage>( data );
-      QBuffer buffer;
-      buffer.open( QIODevice::WriteOnly );
-      image.save( &buffer, "PNG" );
-
-      qsrand( QDateTime::currentDateTime().toTime_t() + qHash( imageFormat.name() ) );
-      KMail::EmbeddedImage *embeddedImage = new KMail::EmbeddedImage();
-      retImages.append( embeddedImage );
-      embeddedImage->image = KMime::Codec::codecForName( "base64" )->encode( buffer.buffer() );
-      embeddedImage->imageName = imageFormat.name();
-      embeddedImage->contentID = QString( "%1" ).arg( qrand() );
-      seenImageNames.append( imageFormat.name() );
-    }
-  }
-  return retImages;
-}
-
-QList<QTextImageFormat> KMComposerEditor::embeddedImageFormats() const
-{
-  QTextDocument *doc = document();
-  QList<QTextImageFormat> retList;
-
-  QTextBlock currentBlock = doc->begin();
-  while ( currentBlock.isValid() ) {
-    QTextBlock::iterator it;
-    for ( it = currentBlock.begin(); !it.atEnd(); ++it ) {
-      QTextFragment fragment = it.fragment();
-      if ( fragment.isValid() ) {
-        QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
-        if ( imageFormat.isValid() ) {
-          retList.append( imageFormat );
-        }
-      }
-    }
-    currentBlock = currentBlock.next();
-  }
-  return retList;
-}
-
-void KMComposerEditor::slotAddImage()
-{
-  KFileDialog fdlg( QString(), QString(), this );
-  fdlg.setOperationMode( KFileDialog::Other );
-  fdlg.setCaption( i18n("Add Image") );
-  fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Add"), "document-open") );
-  fdlg.setMode( KFile::Files );
-  if ( fdlg.exec() != KDialog::Accepted )
-    return;
-
-  const KUrl::List files = fdlg.selectedUrls();
-  foreach ( const KUrl& url, files ) {
-    addImage( url );
-  }
+  KPIMTextEdit::TextEdit::insertFromMimeData(source);
 }
 
 #include "kmcomposereditor.moc"

@@ -28,21 +28,6 @@ using namespace KPIM;
 class KAction;
 class KMComposeWin;
 
-namespace KMail {
-
-/**
-  * Holds information about an embedded HTML image.
-  * A list with all images can be retrieved with KMComposerEditor::embeddedImages().
-  */
-struct EmbeddedImage
-{
-  QByteArray image;   ///< The image, encoded as PNG with base64 encoding
-  QString contentID;  ///< The content id of the embedded image
-  QString imageName;  ///< Name of the image as it is available as a resource in the editor
-};
-
-}
-
 class KMComposerEditor : public KMeditor
 {
   Q_OBJECT
@@ -60,20 +45,14 @@ class KMComposerEditor : public KMeditor
      * Reimplemented from KMEditor, to support more actions.
      *
      * The additional action XML names are:
-     * - add_image
      * - paste_quoted
      * - tools_quote
      * - tools_unquote
      */
     virtual void createActions( KActionCollection *actionCollection );
 
-    /**
-     * Reimplemented from KMEditor.
-     *
-     * @return the quote prefix set before with setQuotePrefixName(), or an empty
-     *         string if that was never called.
-     */
-    virtual QString quotePrefixName() const;
+    virtual int quoteLength( const QString& line ) const;
+    virtual const QString defaultQuoteSign() const;
 
     /**
      * Sets a quote prefix. Lines starting with the passed quote prefix will
@@ -81,6 +60,12 @@ class KMComposerEditor : public KMeditor
      * '>' and '|').
      */
     void setQuotePrefixName( const QString &quotePrefix );
+
+    /**
+     * @return the quote prefix set before with setQuotePrefixName(), or an empty
+     *         string if that was never called.
+     */
+    virtual QString quotePrefixName() const;
 
     /**
      * This replaces all characters not known to the specified codec with
@@ -96,74 +81,18 @@ class KMComposerEditor : public KMeditor
     /**
      * Reimplemented from KMEditor.
      */
-    virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
-
-    /**
-     * Adds an image. The image is loaded from file and then pasted to the current
-     * cursor position.
-     *
-     * @param url The URL of the file which contains the image
-     */
-     void addImage( const KUrl &url );
-
-     /**
-      * Get a list with all embedded HTML images.
-      * If the same image is contained twice or more in the editor, it will have only
-      * one entry in this list.
-      *
-      * The ownership of the EmbeddedImage pointers is transferred to the caller, the
-      * caller is responsible for deleting them again.
-      *
-      * @return a list of embedded HTML images of the editor.
-      */
-     QList<KMail::EmbeddedImage*> embeddedImages() const;
-
-  protected:
-
-    /**
-     * Helper function for addImage(), which does the actual work of adding the QImage as a
-     * resource to the document, pasting it and adding it to the image name list.
-     *
-     * @param imageName the desired image name. If it is already taken, a number will
-     *                  be appended to it
-     * @param image the actual image to add
-     */
-    void addImageHelper( const QString &imageName, const QImage &image );
-
-    /**
-     * Helper function to get the list of all QTextImageFormats in the document.
-     */
-    QList<QTextImageFormat> embeddedImageFormats() const;
-
-  public slots:
-
-    /**
-     * Pastes the content of the clipboard into the editor, if the
-     * mime type of the clipboard's contents in supported.
-     */
-     void paste();
+    virtual void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter);
 
   private:
 
      KMComposeWin *m_composerWin;
      QString m_quotePrefix;
-     KAction *actionAddImage, *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
-
-     /**
-      * The names of embedded images.
-      * Used to easily obtain the names of the images.
-      * New images are compared to the the list and not added as resource if already present.
-      */
-     QStringList mImageNames;
+     KAction *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
 
   protected:
-     void dropEvent( QDropEvent *e );
-     bool canInsertFromMimeData( const QMimeData *source ) const;
-     void insertFromMimeData( const QMimeData *source );
 
-  protected slots:
-
-    void slotAddImage();
+        virtual bool canInsertFromMimeData( const QMimeData *source ) const;
+        virtual void insertFromMimeData( const QMimeData *source );
 
   signals:
      void insertSnippet();

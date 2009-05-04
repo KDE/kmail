@@ -33,6 +33,7 @@
 #include "kmmsgpart.h"
 #define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
+#include "kmcomposereditor.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H
 #include "kcursorsaver.h"
 #include "messagesender.h"
@@ -342,7 +343,6 @@ MessageComposer::MessageComposer( KMComposeWin *win )
 
 MessageComposer::~MessageComposer()
 {
-  qDeleteAll( mEmbeddedImages );
   mEmbeddedImages.clear();
   delete mKeyResolver;
   mKeyResolver = 0;
@@ -1668,15 +1668,7 @@ QByteArray MessageComposer::innerBodypartBody( KMMessage &theMessage, bool doSig
     htmlBodyPart.setSubtypeStr( "html" );
     QByteArray htmlbody = mHtmlSource;
 
-    // For all embedded images, replace the image name in the <img> tag with cid:content-id,
-    // so that the HTML references the image body parts, see RFC 2557.
-    if ( mEmbeddedImages.size() > 0 ) {
-      foreach( const KMail::EmbeddedImage *image, mEmbeddedImages ) {
-        QString newImageName = "cid:" + image->contentID.toLocal8Bit();
-        htmlbody.replace( QByteArray( "\"" + image->imageName.toLocal8Bit() + "\"" ),
-                          QByteArray( "\"" + newImageName.toLocal8Bit() ) + "\"" );
-      }
-    }
+    htmlbody = KPIMTextEdit::TextEdit::imageNamesToContentIds( htmlbody, mEmbeddedImages );
 
     // the signed body must not be 8bit encoded
     htmlBodyPart.setBodyAndGuessCte(
@@ -1770,7 +1762,7 @@ shared_ptr<DwBodyPart> MessageComposer::imageBodyPart( KMMessage &theMessage,
   imageBodyPartBody +=     multipartRelatedBoundary;
   imageBodyPartBody +=                            '\n';
   imageBodyPartBody += innerBodyPart->AsString().c_str();
-  foreach ( const KMail::EmbeddedImage *image, mEmbeddedImages )
+  foreach ( const QSharedPointer<KPIMTextEdit::EmbeddedImage> &image, mEmbeddedImages )
   {
     // Create the KMMessagePart and add the encoded image to it.
     KMMessagePart singleImageBodyPart;

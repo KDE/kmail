@@ -35,9 +35,9 @@
 #include "keyresolver.h"
 
 #include <QObject>
-
 #include <QList>
 #include <QByteArray>
+#include <QSharedPointer>
 
 #include <mimelib/mediatyp.h>
 #include "kleo/cryptobackend.h"
@@ -65,8 +65,8 @@ namespace KPIM {
   class Identity;
 }
 
-namespace KMail {
-  struct EmbeddedImage;
+namespace KPIMTextEdit {
+  class EmbeddedImage;
 }
 
 /**
@@ -352,7 +352,7 @@ class MessageComposer : public QObject {
     QVector<Attachment> mAttachments;
 
     // The list of embedded HTML images of the editor
-    QList<KMail::EmbeddedImage*> mEmbeddedImages;
+    QList< QSharedPointer<KPIMTextEdit::EmbeddedImage> > mEmbeddedImages;
 
     QString mPGPSigningKey, mSMIMESigningKey;
     bool mUseOpportunisticEncryption;

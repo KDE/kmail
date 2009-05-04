@@ -1320,6 +1320,7 @@ void KMComposeWin::setupActions( void )
                                KRichTextWidget::SupportRuleLine |
                                KRichTextWidget::SupportHyperlinks |
                                KRichTextWidget::SupportAlignment );
+  mEditor->enableImageActions();
   mEditor->createActions( actionCollection() );
 
   createGUI( "kmcomposerui.rc" );
@@ -3198,20 +3199,12 @@ void KMComposeWin::slotPaste()
   if ( !fw ) {
     return;
   }
-
-  const QMimeData *mimeData = QApplication::clipboard()->mimeData();
-  const KUrl::List urlList = KUrl::List::fromMimeData( mimeData );
-  if ( mEditor->textMode() == KRichTextEdit::Rich &&
-      mimeData->hasFormat( "image/png" ) )  {
+  if ( fw == mEditor ) {
     mEditor->paste();
-  } else if ( !urlList.isEmpty() ) {
-    foreach( const KUrl &url, urlList ) {
-      addAttach( url );
-    }
-  } else if ( mimeData->hasHtml() && mEditor->textMode() == KMeditor::Rich ) {
-    mEditor->textCursor().insertHtml( mimeData->html() );
-  } else if ( mimeData->hasText() ) {
-    mEditor->textCursor().insertText( mimeData->text() );
+  }
+  else {
+    QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
+    qApp->notify( fw, &k );
   }
 }
 
