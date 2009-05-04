@@ -59,7 +59,7 @@ It is recommended to leave this option turned on for maximum integrity.
      </property>
      <property name="whatsThis" >
       <string>&lt;qt>
-&lt;h1>Warn If Receiver's Email Address Is Not In Certificate&lt;/h1>
+&lt;h1>Warn if receiver's email address is not in certificate&lt;/h1>
 If this option is checked, a warning is issued if the email address of the receiver is not contained in the certificate used for encrypting.
 &lt;p>
 It is recommended to leave this option turned on for maximum security.
@@ -85,7 +85,7 @@ It is recommended to leave this option turned on for maximum security.
       <item row="0" column="1" >
        <widget class="QLabel" name="textLabel2" >
         <property name="text" >
-         <string>For signing</string>
+         <string>For Signing</string>
         </property>
         <property name="alignment" >
          <set>Qt::AlignCenter</set>
@@ -98,7 +98,7 @@ It is recommended to leave this option turned on for maximum security.
       <item row="0" column="2" >
        <widget class="QLabel" name="textLabel2_2" >
         <property name="text" >
-         <string>For encryption</string>
+         <string>For Encryption</string>
         </property>
         <property name="alignment" >
          <set>Qt::AlignCenter</set>
