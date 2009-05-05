@@ -50,7 +50,7 @@ AggregationEditor::AggregationEditor( QWidget *parent )
 
   // Grouping and Threading tab
   QWidget * tab = new QWidget( this );
-  addTab( tab, i18n( "Groups and Threading" ) );
+  addTab( tab, i18n( "Groups && Threading" ) );
 
   QGridLayout * tabg = new QGridLayout( tab );
 
@@ -61,7 +61,7 @@ AggregationEditor::AggregationEditor( QWidget *parent )
   connect( mGroupingCombo, SIGNAL( activated( int ) ),
            SLOT( groupingComboActivated( int ) ) );
 
-  tabg->addWidget( new QLabel( i18n( "Group Expand Policy:" ), tab ), 3, 0 );
+  tabg->addWidget( new QLabel( i18n( "Group expand policy:" ), tab ), 3, 0 );
   mGroupExpandPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mGroupExpandPolicyCombo, 3, 1 );
 
@@ -72,11 +72,11 @@ AggregationEditor::AggregationEditor( QWidget *parent )
   connect( mThreadingCombo, SIGNAL( activated( int ) ),
            SLOT( threadingComboActivated( int ) ) );
 
-  tabg->addWidget( new QLabel( i18n( "Thread Leader:" ), tab ), 5, 0 );
+  tabg->addWidget( new QLabel( i18n( "Thread leader:" ), tab ), 5, 0 );
   mThreadLeaderCombo = new KComboBox( tab );
   tabg->addWidget( mThreadLeaderCombo, 5, 1 );
 
-  tabg->addWidget( new QLabel( i18n( "Thread Expand Policy:" ), tab ), 6, 0 );
+  tabg->addWidget( new QLabel( i18n( "Thread expand policy:" ), tab ), 6, 0 );
   mThreadExpandPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mThreadExpandPolicyCombo, 6, 1 );
 
@@ -89,7 +89,7 @@ AggregationEditor::AggregationEditor( QWidget *parent )
 
   tabg = new QGridLayout( tab );
 
-  tabg->addWidget( new QLabel( i18n( "Fill View Strategy:" ), tab ), 0, 0 );
+  tabg->addWidget( new QLabel( i18n( "Fill view strategy:" ), tab ), 0, 0 );
   mFillViewStrategyCombo = new KComboBox( tab );
   tabg->addWidget( mFillViewStrategyCombo, 0, 1 );
 

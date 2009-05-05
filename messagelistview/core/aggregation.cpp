@@ -212,11 +212,11 @@ QList< QPair< QString, int > > Aggregation::enumerateGroupingOptions()
 {
   QList< QPair< QString, int > > ret;
   ret.append( QPair< QString, int >( i18nc( "No grouping of messages", "None" ), NoGrouping ) );
-  ret.append( QPair< QString, int >( i18n( "by Exact Date (of Thread Leaders)" ), GroupByDate ) );
-  ret.append( QPair< QString, int >( i18n( "by Smart Date Ranges (of Thread Leaders)" ), GroupByDateRange ) );
-  ret.append( QPair< QString, int >( i18n( "by Smart Sender/Receiver" ), GroupBySenderOrReceiver ) );
-  ret.append( QPair< QString, int >( i18n( "by Sender" ), GroupBySender ) );
-  ret.append( QPair< QString, int >( i18n( "by Receiver" ), GroupBySender ) );
+  ret.append( QPair< QString, int >( i18n( "By Exact Date (of Thread Leaders)" ), GroupByDate ) );
+  ret.append( QPair< QString, int >( i18n( "By Smart Date Ranges (of Thread Leaders)" ), GroupByDateRange ) );
+  ret.append( QPair< QString, int >( i18n( "By Smart Sender/Receiver" ), GroupBySenderOrReceiver ) );
+  ret.append( QPair< QString, int >( i18n( "By Sender" ), GroupBySender ) );
+  ret.append( QPair< QString, int >( i18n( "By Receiver" ), GroupBySender ) );
   return ret;
 }
 

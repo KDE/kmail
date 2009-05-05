@@ -93,18 +93,18 @@ ThemeColumnPropertiesDialog::ThemeColumnPropertiesDialog( QWidget * parent, Them
   mNameEdit->setToolTip( i18n( "The label that will be displayed in the column header." ) );
   g->addWidget( mNameEdit, 0, 1 );
 
-  l = new QLabel( i18n( "Header Click Sorts Messages" ), base );
+  l = new QLabel( i18n( "Header click sorts messages:" ), base );
   g->addWidget( l, 1, 0 );
 
   mMessageSortingCombo = new KComboBox( base );
-  mMessageSortingCombo->setToolTip( i18n( "The sorting order that cliking on this column header will switch to." ) );
+  mMessageSortingCombo->setToolTip( i18n( "The sorting order that clicking on this column header will switch to." ) );
   g->addWidget( mMessageSortingCombo, 1, 1 );
 
-  mVisibleByDefaultCheck = new QCheckBox( i18n( "Visible by Default" ), base );
+  mVisibleByDefaultCheck = new QCheckBox( i18n( "Visible by default" ), base );
   mVisibleByDefaultCheck->setToolTip( i18n( "Check this if this column should be visible when the theme is selected." ) );
   g->addWidget( mVisibleByDefaultCheck, 2, 1 );
 
-  mIsSenderOrReceiverCheck = new QCheckBox( i18n( "Contains \"Sender or Receiver\" Field" ), base );
+  mIsSenderOrReceiverCheck = new QCheckBox( i18n( "Contains \"Sender or Receiver\" field" ), base );
   mIsSenderOrReceiverCheck->setToolTip( i18n( "Check this if this column label should be updated depending on the folder \"inbound\"/\"outbound\" type." ) );
   g->addWidget( mIsSenderOrReceiverCheck, 3, 1 );
 
@@ -1200,7 +1200,7 @@ void ThemePreviewWidget::slotHeaderContextMenuRequested( const QPoint &pos )
 
   QAction * act;
 
-  act = menu.addAction( i18n( "Column Properties..." ) );
+  act = menu.addAction( i18n( "Column Properties" ) );
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotColumnProperties() ) );
 
@@ -1462,7 +1462,7 @@ ThemeEditor::ThemeEditor( QWidget *parent )
   mViewHeaderPolicyCombo = new KComboBox( tab );
   tabg->addWidget( mViewHeaderPolicyCombo, 0, 1 );
 
-  l = new QLabel( i18n( "Icon Size:" ), tab );
+  l = new QLabel( i18n( "Icon size:" ), tab );
   tabg->addWidget( l, 1, 0 );
 
   mIconSizeSpinBox = new QSpinBox( tab );

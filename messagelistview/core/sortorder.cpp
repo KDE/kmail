@@ -44,16 +44,16 @@ QList< QPair< QString, int > > SortOrder::enumerateMessageSortingOptions( Aggreg
 {
   QList< QPair< QString, int > > ret;
   ret.append( QPair< QString, int >( i18n( "None (Storage Order)" ), SortOrder::NoMessageSorting ) );
-  ret.append( QPair< QString, int >( i18n( "by Date/Time" ), SortOrder::SortMessagesByDateTime ) );
+  ret.append( QPair< QString, int >( i18n( "By Date/Time" ), SortOrder::SortMessagesByDateTime ) );
   if ( t != Aggregation::NoThreading )
-    ret.append( QPair< QString, int >( i18n( "by Date/Time of Most Recent in Subtree" ), SortOrder::SortMessagesByDateTimeOfMostRecent ) );
-  ret.append( QPair< QString, int >( i18n( "by Sender" ), SortOrder::SortMessagesBySender ) );
-  ret.append( QPair< QString, int >( i18n( "by Receiver" ), SortOrder::SortMessagesByReceiver ) );
-  ret.append( QPair< QString, int >( i18n( "by Smart Sender/Receiver" ), SortOrder::SortMessagesBySenderOrReceiver ) );
-  ret.append( QPair< QString, int >( i18n( "by Subject" ), SortOrder::SortMessagesBySubject ) );
-  ret.append( QPair< QString, int >( i18n( "by Size" ), SortOrder::SortMessagesBySize ) );
-  ret.append( QPair< QString, int >( i18n( "by Action Item Status" ), SortOrder::SortMessagesByActionItemStatus ) );
-  ret.append( QPair< QString, int >( i18n( "by New/Unread Status" ), SortOrder::SortMessagesByNewUnreadStatus ) );
+    ret.append( QPair< QString, int >( i18n( "By Date/Time of Most Recent in Subtree" ), SortOrder::SortMessagesByDateTimeOfMostRecent ) );
+  ret.append( QPair< QString, int >( i18n( "By Sender" ), SortOrder::SortMessagesBySender ) );
+  ret.append( QPair< QString, int >( i18n( "By Receiver" ), SortOrder::SortMessagesByReceiver ) );
+  ret.append( QPair< QString, int >( i18n( "By Smart Sender/Receiver" ), SortOrder::SortMessagesBySenderOrReceiver ) );
+  ret.append( QPair< QString, int >( i18n( "By Subject" ), SortOrder::SortMessagesBySubject ) );
+  ret.append( QPair< QString, int >( i18n( "By Size" ), SortOrder::SortMessagesBySize ) );
+  ret.append( QPair< QString, int >( i18n( "By Action Item Status" ), SortOrder::SortMessagesByActionItemStatus ) );
+  ret.append( QPair< QString, int >( i18n( "By New/Unread Status" ), SortOrder::SortMessagesByNewUnreadStatus ) );
   return ret;
 }
 
