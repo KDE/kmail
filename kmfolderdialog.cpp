@@ -270,15 +270,17 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   mDlg( dlg )
 {
 
-    mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
+  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
+  mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
+
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( 0 );
 
-  // Musn't be able to edit details for a system folder.
-  if ( !mIsLocalSystemFolder ) {
+  // Musn't be able to edit details for a non-resource, system folder.
+  if ( !mIsLocalSystemFolder || mIsResourceFolder ) {
 
     QHBoxLayout *hl = new QHBoxLayout();
     topLayout->addItem( hl );
@@ -289,7 +291,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
 
     mNameEdit = new KLineEdit( this );
     if( !mDlg->folder() )
-            mNameEdit->setFocus();
+      mNameEdit->setFocus();
     mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
     if (!aName.isEmpty())
             mNameEdit->setText(aName);
@@ -465,7 +467,8 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   else if (whoField == "To") mShowSenderReceiverComboBox->setCurrentIndex(2);
 
   // folder contents
-  if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() ) {
+  if ( ( !mIsLocalSystemFolder || mIsResourceFolder ) &&
+       kmkernel->iCalIface().isEnabled() ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
     ++row;
@@ -485,7 +488,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
       mContentsComboBox->setCurrentIndex( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
               this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
-    if ( mDlg->folder()->isReadOnly() )
+    if ( mDlg->folder()->isReadOnly() || mIsResourceFolder )
       mContentsComboBox->setEnabled( false );
   } else {
     mContentsComboBox = 0;

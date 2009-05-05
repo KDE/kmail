@@ -151,6 +151,7 @@ private:
 
   KMFolderDialog* mDlg;
   bool mIsLocalSystemFolder;
+  bool mIsResourceFolder;
 };
 
 /**
