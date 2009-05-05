@@ -3796,23 +3796,23 @@ bool KMComposeWin::checkRecipientNumber() const
 //----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  insertSignatureHelper( KPIM::KMeditor::End );
+  insertSignatureHelper( KPIMIdentities::Signature::End );
 }
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotPrependSignature()
 {
-  insertSignatureHelper( KPIM::KMeditor::Start );
+  insertSignatureHelper( KPIMIdentities::Signature::Start );
 }
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotInsertSignatureAtCursor()
 {
-  insertSignatureHelper( KPIM::KMeditor::AtCursor );
+  insertSignatureHelper( KPIMIdentities::Signature::AtCursor );
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
+void KMComposeWin::insertSignatureHelper( KPIMIdentities::Signature::Placement placement )
 {
   // Identity::signature() is not const, although it should be, therefore the
   // const_cast.
@@ -3825,12 +3825,12 @@ void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
        signature.type() == KPIMIdentities::Signature::Inlined ) {
     kDebug(5006) << "HTML signature, turning editor into HTML mode";
     enableHtml();
-    mEditor->insertSignature( signature, placement,
-                              GlobalSettings::self()->dashDashSignature() );
+    signature.insertIntoTextEdit( mEditor, placement,
+                               GlobalSettings::self()->dashDashSignature() );
   }
   else
-    mEditor->insertSignature( signature, placement,
-                              GlobalSettings::self()->dashDashSignature() );
+    signature.insertIntoTextEdit( mEditor, placement,
+                               GlobalSettings::self()->dashDashSignature() );
 }
 
 //-----------------------------------------------------------------------------
@@ -4019,9 +4019,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     // Just append the signature if there is no old signature
     if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
       if ( GlobalSettings::self()->prependSignature() )
-        mEditor->insertSignature( newSig, KMeditor::Start, true );
+        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::Start, true );
       else
-        mEditor->insertSignature( newSig, KMeditor::End, true );
+        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End, true );
     }
   }
 

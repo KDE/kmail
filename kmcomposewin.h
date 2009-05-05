@@ -683,7 +683,7 @@ class KMComposeWin : public KMail::Composer
      * in the editor, connecting slot functions to KMeditor::insertSignature().
      * @param placement the position of the signature
      */
-    void insertSignatureHelper( KPIM::KMeditor::Placement = KPIM::KMeditor::End );
+    void insertSignatureHelper( KPIMIdentities::Signature::Placement = KPIMIdentities::Signature::End );
 
 
   private slots:
