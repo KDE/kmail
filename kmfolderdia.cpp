@@ -252,13 +252,15 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mDlg( dlg )
 {
 
-    mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
+  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
+  mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
+
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
 
-  // Musn't be able to edit details for a system folder.
-  if ( !mIsLocalSystemFolder ) {
+  // Musn't be able to edit details for a non-resource, system folder.
+  if ( !mIsLocalSystemFolder || mIsResourceFolder ) {
 
     QHBoxLayout *hl = new QHBoxLayout( topLayout );
     hl->setSpacing( KDialog::spacingHint() );
@@ -268,7 +270,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
     mNameEdit = new KLineEdit( this );
     if( !mDlg->folder() )
-            mNameEdit->setFocus();
+      mNameEdit->setFocus();
     mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
     if (!aName.isEmpty())
             mNameEdit->setText(aName);
@@ -432,7 +434,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         "dialog. (Settings -> Configure KMail)") );
 
   // folder contents
-  if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() ) {
+  if ( ( !mIsLocalSystemFolder || mIsResourceFolder ) &&
+       kmkernel->iCalIface().isEnabled() ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
     ++row;
@@ -452,7 +455,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
       mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
               this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
-    if ( mDlg->folder()->isReadOnly() )
+    if ( mDlg->folder()->isReadOnly() || mIsResourceFolder )
       mContentsComboBox->setEnabled( false );
   } else {
     mContentsComboBox = 0;
