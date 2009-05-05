@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>IdentityPage</class>
- <widget class="QWidget" name="IdentityPage" >
-  <property name="geometry" >
+ <widget class="QWidget" name="IdentityPage">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,67 +10,82 @@
     <height>177</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" >
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" >
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="KMail::IdentityListView" native="1" name="mIdentityList" />
+      <widget class="KMail::IdentityListView" name="mIdentityList" native="true" />
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout" >
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="mButtonAdd" >
-         <property name="text" >
+        <widget class="QPushButton" name="mButtonAdd">
+         <property name="toolTip">
+          <string>Add a new identity</string>
+         </property>
+         <property name="text">
           <string>&amp;Add...</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mModifyButton" >
-         <property name="enabled" >
+        <widget class="QPushButton" name="mModifyButton">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="toolTip">
+          <string>Modify the selected identity</string>
+         </property>
+         <property name="text">
           <string>&amp;Modify...</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mRenameButton" >
-         <property name="enabled" >
+        <widget class="QPushButton" name="mRenameButton">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="toolTip">
+          <string>Rename the selected identity</string>
+         </property>
+         <property name="text">
           <string>&amp;Rename</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mRemoveButton" >
-         <property name="enabled" >
+        <widget class="QPushButton" name="mRemoveButton">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="toolTip">
+          <string>Remove the selected identity</string>
+         </property>
+         <property name="text">
           <string>Remo&amp;ve</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mSetAsDefaultButton" >
-         <property name="enabled" >
+        <widget class="QPushButton" name="mSetAsDefaultButton">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="toolTip">
+          <string>Use the selected identity by default</string>
+         </property>
+         <property name="text">
           <string>Set as &amp;Default</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_2" >
-         <property name="orientation" >
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
            <height>40</height>

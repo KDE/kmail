@@ -59,7 +59,14 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="KLineEdit" name="nameEdit"/>
+          <widget class="KLineEdit" name="nameEdit">
+           <property name="toolTip">
+            <string>Name displayed in the list of accounts</string>
+           </property>
+           <property name="whatsThis">
+            <string>Account name: This defines the name displayed in KMail's account list.</string>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_5">
@@ -72,7 +79,14 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="KLineEdit" name="hostEdit"/>
+          <widget class="KLineEdit" name="hostEdit">
+           <property name="toolTip">
+            <string>Address of the mail POP3 server</string>
+           </property>
+           <property name="whatsThis">
+            <string>The address of the POP3 server, e.g. pop3.yourprovider.org. You should get this address from your mail provider.</string>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_6">
@@ -86,6 +100,12 @@
          </item>
          <item row="2" column="1">
           <widget class="KIntNumInput" name="portEdit">
+           <property name="toolTip">
+            <string>Communication port with the mail server</string>
+           </property>
+           <property name="whatsThis">
+            <string>Port: Defines the communication port with the mail server. You do not need to change this unless your mail provider uses some non-standard port.</string>
+           </property>
            <property name="minimum">
             <number>1</number>
            </property>
@@ -105,7 +125,14 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="KLineEdit" name="loginEdit"/>
+          <widget class="KLineEdit" name="loginEdit">
+           <property name="toolTip">
+            <string>The username that identifies you against the mail server</string>
+           </property>
+           <property name="whatsThis">
+            <string>Your Internet Service Provider gave you a &lt;em&gt;user name&lt;/em&gt; which is used to authenticate you with their servers. It usually is the first part of your email address (the part before &lt;em&gt;@&lt;/em&gt;).</string>
+           </property>
+          </widget>
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_4">
@@ -119,6 +146,12 @@
          </item>
          <item row="4" column="1">
           <widget class="KLineEdit" name="passwordEdit">
+           <property name="toolTip">
+            <string>Password for access to the mail server</string>
+           </property>
+           <property name="whatsThis">
+            <string>Password: The password given to you by your mail provider.</string>
+           </property>
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
            </property>
@@ -128,6 +161,13 @@
        </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="storePasswordCheck">
+         <property name="toolTip">
+          <string>Whether to store the password or ask for it when checking for new mail</string>
+         </property>
+         <property name="whatsThis">
+          <string>Check this option to have KMail store the password. If KWallet is available the password will be stored there which is considered safe.
+However, if KWallet is not available, the password will be stored in KMail's configuration file. The password is stored in an obfuscated format, but should not be considered secure from decryption efforts if access to the configuration file is obtained.</string>
+         </property>
          <property name="text">
           <string>Sto&amp;re POP password</string>
          </property>
@@ -135,6 +175,9 @@
        </item>
        <item row="2" column="0">
         <widget class="QCheckBox" name="includeInCheck">
+         <property name="toolTip">
+          <string>Include this account when clicking on the toolbar button</string>
+         </property>
          <property name="text">
           <string>Include in man&amp;ual mail check</string>
          </property>
@@ -142,6 +185,9 @@
        </item>
        <item row="3" column="0">
         <widget class="QCheckBox" name="intervalCheck">
+         <property name="toolTip">
+          <string>If active, KMail checks for new mail every x minutes</string>
+         </property>
          <property name="text">
           <string>Enable &amp;interval mail checking</string>
          </property>
@@ -196,6 +242,12 @@
        </property>
        <item row="0" column="0" colspan="2">
         <widget class="QCheckBox" name="leaveOnServerCheck">
+         <property name="toolTip">
+          <string>If checked the message is not deleted from the mail server</string>
+         </property>
+         <property name="whatsThis">
+          <string>KMail can fetch a copy of mails and leave the original message on the server.</string>
+         </property>
          <property name="text">
           <string>Lea&amp;ve fetched messages on the server</string>
          </property>
@@ -203,6 +255,9 @@
        </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="leaveOnServerDaysCheck">
+         <property name="toolTip">
+          <string>The original message is deleted from the server after x days</string>
+         </property>
          <property name="text">
           <string>Leave messages on the server for</string>
          </property>
@@ -229,6 +284,12 @@
        </item>
        <item row="2" column="0">
         <widget class="QCheckBox" name="leaveOnServerCountCheck">
+         <property name="toolTip">
+          <string>Only the x most recent messages are kept on the server</string>
+         </property>
+         <property name="whatsThis">
+          <string>KMail keeps only the x most recent messages on the server and deletes all older.</string>
+         </property>
          <property name="text">
           <string>Keep onl&amp;y the last</string>
          </property>
@@ -255,6 +316,12 @@
        </item>
        <item row="3" column="0">
         <widget class="QCheckBox" name="leaveOnServerSizeCheck">
+         <property name="toolTip">
+          <string>Keep most recent messages within the quota and delete oldest</string>
+         </property>
+         <property name="whatsThis">
+          <string>If active, most recent messages are kept until the quota is reached and oldest messages are deleted.</string>
+         </property>
          <property name="text">
           <string>Keep only the last</string>
          </property>
@@ -353,7 +420,11 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="KComboBox" name="folderCombo"/>
+          <widget class="KComboBox" name="folderCombo">
+           <property name="toolTip">
+            <string>Set the folder where new messages from this account are put</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
