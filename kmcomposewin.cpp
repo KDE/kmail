@@ -3571,14 +3571,14 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
 
-  if ( mEditor->textMode() == KMeditor::Rich ) {
+  if ( mEditor->isFormattingUsed() ) {
     kDebug(5006) << "Html mode";
     mMsg->setHeaderField( "X-KMail-Markup", "true" );
   } else {
     mMsg->removeHeaderField( "X-KMail-Markup" );
     kDebug(5006) << "Plain text";
   }
-  if ( mEditor->textMode() == KMeditor::Rich &&
+  if ( mEditor->isFormattingUsed() &&
        inlineSigningEncryptionSelected() ) {
     QString keepBtnText = mEncryptAction->isChecked() ?
       mSignAction->isChecked() ? i18n( "&Keep markup, do not sign/encrypt" )

@@ -549,7 +549,7 @@ void MessageComposer::readFromComposeWin()
 
   mEncryptWithChiasmus = mComposeWin->mEncryptWithChiasmus;
 
-  mIsRichText = ( mComposeWin->mEditor->textMode() == KMeditor::Rich );
+  mIsRichText = mComposeWin->mEditor->isFormattingUsed();
   mIdentityUid = mComposeWin->identityUid();
   if ( !breakLinesAndApplyCodec() ) {
     mRc = false;
