@@ -127,7 +127,7 @@ void SubscriptionDialogBase::createListViewItem( int i )
     // the parent is not available and it's no root-item
     // this happens when the folders do not arrive in hierarchical order
     // so we create each parent in advance
-    QStringList folders = parentPath.split(mDelimiter);
+    QStringList folders = parentPath.split( mDelimiter, QString::SkipEmptyParts );
     uint i = 0;
     for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it )
     {
@@ -158,10 +158,12 @@ void SubscriptionDialogBase::createListViewItem( int i )
       // as these items are "dummies" we create them non-checkable
       if (!item)
       {
-        if (parent)
+        if (parent) {
           item = new GroupItem(parent, info, this, false);
-        else
+        }
+        else {
           item = new GroupItem(folderTree(), info, this, false);
+        }
         mItemDict.insert(info.path, item);
       }
 
@@ -179,10 +181,12 @@ void SubscriptionDialogBase::createListViewItem( int i )
   // only checkable when the folder is selectable
   bool checkable = ( mFolderMimeTypes[i] == "inode/directory" ) ? false : true;
   // create a new item
-  if (parent)
+  if ( parent ) {
     item = new GroupItem(parent, info, this, checkable);
-  else
+  }
+  else {
     item = new GroupItem(folderTree(), info, this, checkable);
+  }
 
   if (oldItem) // remove old item
     mItemDict.remove(info.path);
