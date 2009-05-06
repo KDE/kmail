@@ -278,6 +278,10 @@ void KMSystemTray::foldersChanged()
       /** Check all new folders to see if we started with any new messages */
       updateNewMessageNotification(currentFolder);
     }
+    else {
+      disconnect( currentFolder, SIGNAL( numUnreadMsgsChanged(KMFolder*) ),
+                  this, SLOT( updateNewMessageNotification(KMFolder *) ) );
+    }
   }
 }
 
