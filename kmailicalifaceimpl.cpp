@@ -195,6 +195,7 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
 
 KMailICalIfaceImpl::~KMailICalIfaceImpl()
 {
+  QDBusConnection::sessionBus().unregisterService( "org.kde.kmail.groupware" );
   qDeleteAll( mExtraFolders );
   qDeleteAll( mAccumulators );
   mAccumulators.clear();
@@ -206,6 +207,11 @@ void KMailICalIfaceImpl::registerWithDBus()
   KMail::registerGroupwareTypes();
   QDBusConnection::sessionBus().registerObject( "/Groupware", this, QDBusConnection::ExportAdaptors );
   new GroupwareAdaptor( this );
+
+  // Register a dummy service, so we can use isServiceRegistered() in other applications
+  // to find out if the KMail groupware services are available.
+  // And no, D-Bus does not provide an easy way to just check for the /Groupware object :(
+  QDBusConnection::sessionBus().registerService( "org.kde.kmail.groupware" );
 }
 
 /* libkcal part of the interface, called from the resources using this
