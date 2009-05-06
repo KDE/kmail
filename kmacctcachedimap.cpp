@@ -208,7 +208,12 @@ void KMAcctCachedImap::processNewMail( bool /*interactive*/ )
   else {
     KMFolder* f = mMailCheckFolders.front();
     mMailCheckFolders.pop_front();
-    processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), false );
+
+    // Only check mail if the folder really exists, it might have been removed by the sync in
+    // the meantime.
+    if ( f ) {
+      processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), false );
+    }
   }
 }
 
