@@ -579,4 +579,9 @@ void KMSystemTray::selectedAccount(int id)
   ftw->setCurrentFolder( fldr );
 }
 
+bool KMSystemTray::hasUnreadMail() const
+{
+  return ( mCount != 0 );
+}
+
 #include "kmsystemtray.moc"

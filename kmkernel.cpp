@@ -2259,7 +2259,7 @@ bool KMKernel::canQueryClose()
   if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
     systray->hideKMail();
     return false;
-  } else if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
+  } else if ( ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) && ( systray->hasUnreadMail() )) {
     systray->show();
     systray->hideKMail();
     return false;

@@ -50,6 +50,8 @@ public:
   int mode() const;
 
   void hideKMail();
+  bool hasUnreadMail() const;
+
 public slots:
   void foldersChanged();
 
