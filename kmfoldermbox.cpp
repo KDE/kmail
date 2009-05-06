@@ -125,7 +125,7 @@ int KMFolderMbox::open( const char *owner )
   assert( !folder()->name().isEmpty() );
 
   mFilesLocked = false;
-  mStream = KDE_fopen( QFile::encodeName( location() ), "r+" ); // messages file
+  mStream = KDE_fopen( QFile::encodeName( location() ), "rb+" ); // messages file
   if ( !mStream ) {
     KMessageBox::sorry( 0, i18n( "Cannot open file \"%1\":\n%2",
                                  location(), strerror( errno ) ) );
@@ -1068,6 +1068,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     fread( endStr, 1, 2, mStream ); // ensure separating empty line
     if ( KDE_ftell( mStream ) > 0 && endStr[0]!='\n' ) {
       ++growth;
+      KDE_fseek( mStream, 0, SEEK_END ); // required at least on Windows, Solaris, etc.
       if ( endStr[1]!='\n' ) {
         //printf ("****endStr[1]=%c\n", endStr[1]);
         fwrite( "\n\n", 1, 2, mStream );
