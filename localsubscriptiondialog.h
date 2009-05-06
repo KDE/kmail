@@ -53,7 +53,7 @@ namespace KMail {
       /** reimpl */
       virtual void processFolderListing();
       /**  reimpl */
-      virtual void doSave();
+      virtual bool doSave();
       virtual void loadingComplete();
 
     private:

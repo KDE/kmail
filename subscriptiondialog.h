@@ -89,11 +89,6 @@ namespace KMail {
           const QStringList&, const QStringList&, const ImapAccountBase::jobData &);
 
       /**
-       * called by Ok-button, saves the changes
-       */
-      void slotSave();
-
-      /**
        * Called from the account when a connection was established
        */
       void slotConnectionResult( int errorCode, const QString& errorMsg );
@@ -105,9 +100,21 @@ namespace KMail {
       void slotLoadFolders();
 
     protected:
+
+      /**
+       * Reimplemented from KDialog to call doSave() when the OK button is clicked.
+       * This makes it possible to keep the dialog open after the user canceled the dialog
+       * from checkIfSubscriptionsEnabled().
+       */
+      virtual void slotButtonClicked( int button );
+
       virtual void listAllAvailableAndCreateItems() = 0;
       virtual void processFolderListing() = 0;
-      virtual void doSave() = 0;
+
+      /**
+       * @return false is saving was canceled by the user
+       */
+      virtual bool doSave() = 0;
 
       // helpers
       /** Move all child items of @param oldItem under @param item */
@@ -117,9 +124,13 @@ namespace KMail {
        * folders. */
       void createListViewItem( int i );
 
-      /** If subscriptions are not used for the server, 
-       *  asks "Do you want to enable subscriptions?" */
-      void checkIfSubscriptionsEnabled();
+      /**
+       * If subscriptions are not used for the server,
+       * asks "Do you want to enable subscriptions?"
+       *
+       * @return false if the user clicked cancel, true otherwise
+       */
+      bool checkIfSubscriptionsEnabled();
 
       QString mDelimiter;
       QStringList mFolderNames, mFolderPaths,
@@ -149,7 +160,7 @@ namespace KMail {
       /** reimpl */
       virtual void processFolderListing();
       /** reimpl */
-      virtual void doSave();
+      virtual bool doSave();
 
     private:
       /**

@@ -49,9 +49,6 @@ SubscriptionDialogBase::SubscriptionDialogBase( QWidget *parent, const QString &
   hideTreeCheckbox();
   hideNewOnlyCheckbox();
 
-  // ok-button
-  connect(this, SIGNAL(okClicked()), SLOT(slotSave()));
-
   // reload-list button
   connect(this, SIGNAL(user1Clicked()), SLOT(slotLoadFolders()));
 
@@ -76,6 +73,18 @@ void SubscriptionDialogBase::slotListDirectory( const QStringList& subfolderName
   mCount = 0;
 
   processFolderListing();
+}
+
+void SubscriptionDialogBase::slotButtonClicked( int button )
+{
+  if ( button == KDialog::Ok ) {
+    if ( doSave() ) {
+      accept();
+    }
+  }
+  else {
+    KDialog::slotButtonClicked( button );
+  }
 }
 
 void SubscriptionDialogBase::moveChildrenToNewParent( GroupItem *oldItem, GroupItem *item  )
@@ -215,12 +224,6 @@ void SubscriptionDialogBase::findParentItem( QString &name, QString &path, QStri
 }
 
 //------------------------------------------------------------------------------
-void SubscriptionDialogBase::slotSave()
-{
-  doSave();
-}
-
-//------------------------------------------------------------------------------
 void SubscriptionDialogBase::slotLoadFolders()
 {
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
@@ -311,7 +314,6 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
 /* virtual */
 SubscriptionDialog::~SubscriptionDialog()
 {
-
 }
 
 /* virtual */
@@ -354,13 +356,13 @@ void SubscriptionDialogBase::slotConnectionResult( int errorCode, const QString&
     slotLoadFolders();
 }
 
-void SubscriptionDialogBase::checkIfSubscriptionsEnabled()
+bool SubscriptionDialogBase::checkIfSubscriptionsEnabled()
 {
   KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
   if( !account )
-    return;
+    return true;
   if( account->onlySubscribedFolders() )
-    return;
+    return true;
   kDebug(5006) <<"Not subscribed!!!";
   int result = KMessageBox::questionYesNoCancel( this,
     i18nc("@info", "Currently subscriptions are not used for server <resource>%1</resource>.<nl/>"
@@ -373,9 +375,11 @@ void SubscriptionDialogBase::checkIfSubscriptionsEnabled()
     case KMessageBox::No:
         break;
     case KMessageBox::Cancel:
-        reject();
+        return false;
         break;
   }
+
+  return true;
 }
 
 void SubscriptionDialogBase::show()
@@ -392,9 +396,10 @@ void SubscriptionDialog::processFolderListing()
 }
 
 /* virtual */
-void SubscriptionDialog::doSave()
+bool SubscriptionDialog::doSave()
 {
-  checkIfSubscriptionsEnabled();
+  if ( !checkIfSubscriptionsEnabled() )
+    return false;
 
   // subscribe
   Q3ListViewItemIterator it(subView);
@@ -416,6 +421,7 @@ void SubscriptionDialog::doSave()
     KMail::ImapAccountBase *a = static_cast<KMail::ImapAccountBase*>(mAcct);
     a->setOnlySubscribedFolders(true);
   }
+  return true;
 }
 
 void SubscriptionDialog::processItems()
