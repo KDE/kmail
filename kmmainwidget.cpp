@@ -2412,9 +2412,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     if ( mFolder->isTemplates() ) {
       mUseAction->plug( menu );
     } else {
-
-      if ( !mFolder->isSent() )
-        mMsgActions->replyMenu()->plug( menu );
+      mMsgActions->replyMenu()->plug( menu );
       mForwardActionMenu->plug( menu );
     }
     editAction()->plug(menu);
