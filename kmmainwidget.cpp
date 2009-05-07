@@ -3455,10 +3455,7 @@ void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint 
     if ( mFolder->isTemplates() ) {
       menu->addAction( mUseAction );
     } else {
-
-      if ( !mFolder->isSent() ) {
-        menu->addAction( mMsgActions->replyMenu() );
-      }
+      menu->addAction( mMsgActions->replyMenu() );
       menu->addAction( mMsgActions->forwardMenu() );
     }
     menu->addAction(editAction());
