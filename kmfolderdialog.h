@@ -162,6 +162,7 @@ private:
   KPIMIdentities::IdentityCombo *mIdentityComboBox;
 
   bool mIsLocalSystemFolder;
+  bool mIsResourceFolder;
 };
 
 
