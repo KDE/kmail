@@ -144,7 +144,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
 
   mIndexButton = new QRadioButton( page );
   mIndexButton->setText( i18n( "Rebuild &index" ) );
-  mButtonGroup->insert( mIndexButton );
+  mButtonGroup->addButton( mIndexButton, 1 );
   topLayout->addWidget( mIndexButton );
 
   KHBox *hbox = new KHBox( page );
@@ -159,7 +159,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
 
   mCacheButton = new QRadioButton( page );
   mCacheButton->setText( i18n( "Refresh &Cache" ) );
-  mButtonGroup->insert( mCacheButton );
+  mButtonGroup->addButton( mCacheButton, 2 );
   topLayout->addWidget( mCacheButton );
 
   connect ( mIndexButton, SIGNAL( toggled( bool ) ),
