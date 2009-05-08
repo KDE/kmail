@@ -199,7 +199,7 @@ static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sTy
   // top-level parts we do *not* have to travel into embedded multiparts
   DwBodyPart* part = msg.getFirstDwBodyPart();
   while( part ){
-  //    kDebug() << part->Headers().ContentType().TypeStr().c_str()
+  //    kWarning() << part->Headers().ContentType().TypeStr().c_str()
   //             << part->Headers().ContentType().SubtypeStr().c_str();
     if ( part->hasHeaders() ) {
       DwMediaType& contentType = part->Headers().ContentType();
@@ -224,7 +224,7 @@ static DwBodyPart* findBodyPart( const KMMessage& msg, const QString& attachment
   // quickly searching for our message part: since Kolab parts are
   // top-level parts we do *not* have to travel into embedded multiparts
   for ( DwBodyPart* part = msg.getFirstDwBodyPart(); part; part = part->Next() ) {
-    //kDebug() << "findBodyPart:  -" << part->Headers().ContentDisposition().Filename().c_str();
+    //kWarning() << "findBodyPart:  -" << part->Headers().ContentDisposition().Filename().c_str();
     if ( part->hasHeaders()
          && attachmentName == part->Headers().ContentDisposition().Filename().c_str() )
       return part;
@@ -237,14 +237,14 @@ static DwBodyPart* findBodyPart( const KMMessage& msg, const QString& attachment
 #if 0
 static void debugBodyParts( const char* foo, const KMMessage& msg )
 {
-  kDebug() << "--debugBodyParts" << foo <<"--";
+  kWarning() << "--debugBodyParts" << foo <<"--";
   for ( DwBodyPart* part = msg.getFirstDwBodyPart(); part; part = part->Next() ) {
     if ( part->hasHeaders() ) {
-      kDebug() << " bodypart:" << part;
-      kDebug() << part->Headers().AsString().c_str();
+      kWarning() << " bodypart:" << part;
+      kWarning() << part->Headers().AsString().c_str();
     }
     else
-      kDebug() << " part" << part <<" has no headers";
+      kWarning() << " part" << part <<" has no headers";
   }
 }
 #else
@@ -262,7 +262,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
                                            const QString& attachmentMimetype,
                                            bool lookupByName )
 {
-  kDebug() << attachmentURL;
+  kWarning() << attachmentURL;
 
   bool bOK = false;
 
@@ -308,17 +308,17 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
         *part = *newPart;
         delete newPart;
         msg.setNeedsAssembly();
-        kDebug() << "Attachment" << attachmentName <<" updated.";
+        kWarning() << "Attachment" << attachmentName <<" updated.";
       } else {
         msg.addDwBodyPart( newPart );
-        kDebug() << "Attachment" << attachmentName <<" added.";
+        kWarning() << "Attachment" << attachmentName <<" added.";
       }
       bOK = true;
     }else{
-      kDebug() << "Attachment" << attachmentURL <<" can not be read.";
+      kWarning() << "Attachment" << attachmentURL <<" can not be read.";
     }
   }else{
-    kDebug() << "Attachment" << attachmentURL <<" not a local file.";
+    kWarning() << "Attachment" << attachmentURL <<" not a local file.";
   }
 
   return bOK;
@@ -349,7 +349,7 @@ bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QS
 bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
                                            const QString& attachmentName )
 {
-  kDebug() << attachmentName;
+  kWarning() << attachmentName;
 
   bool bOK = false;
 
@@ -360,12 +360,12 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
     msg.getTopLevelPart()->Body().RemoveBodyPart( part );
     delete part;
     msg.setNeedsAssembly();
-    kDebug() << "Attachment deleted.";
+    kWarning() << "Attachment deleted.";
     bOK = true;
   }
 
   if( !bOK ){
-    kDebug() << "Attachment" << attachmentName <<" not found.";
+    kWarning() << "Attachment" << attachmentName <<" not found.";
   }
 
   return bOK;
@@ -428,7 +428,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QStringList& attachmentNames,
                                                 const QStringList& attachmentMimetypes )
 {
-  kDebug() << attachmentNames;
+  kWarning() << attachmentNames;
 
   quint32 sernum = 0;
   bool bAttachOK = true;
@@ -480,7 +480,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     if ( folder.addMsg( msg ) == 0 )
       // Message stored
       sernum = msg->getMsgSerNum();
-    kDebug() << "Message done and saved. Sernum:" << sernum;
+    kWarning() << "Message done and saved. Sernum:" << sernum;
 
     //debugBodyParts( "after addMsg", *msg );
     addFolderChange( &folder,ContentsChanged );
@@ -498,7 +498,7 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
   if( !mUseResourceIMAP )
     return false;
 
-  kDebug() << resource << ", " << sernum;
+  kWarning() << resource << ", " << sernum;
 
   // Find the folder
   KMFolder* f = findResourceFolder( resource );
@@ -516,7 +516,7 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
     syncFolder( f );
     rc = true;
   } else {
-    kDebug() << "Message not found, cannot remove serNum" << sernum;
+    kWarning() << "Message not found, cannot remove serNum" << sernum;
   }
   return rc;
 }
@@ -539,7 +539,7 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
   f->open( "kolabcount" );
   int n = f->count();
   f->close( "kolabcount" );
-  kDebug() << resource << " returned" << n;
+  kWarning() << resource << " returned" << n;
   return n;
 }
 
@@ -566,7 +566,7 @@ KMail::SernumDataPair::List KMailICalIfaceImpl::incidencesKolab( const QString& 
 
   int stopIndex = nbMessages == -1 ? f->count() :
                   qMin( f->count(), startIndex + nbMessages );
-  kDebug() <<  mimetype << "," << resource << " from" << startIndex << "to" << stopIndex;
+  kWarning() <<  mimetype << "," << resource << " from" << startIndex << "to" << stopIndex;
 
   for(int i = startIndex; i < stopIndex; ++i) {
 #if 0
@@ -721,7 +721,7 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
   if ( f ) {
     subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                       !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
-    kDebug() << "Adding(1) folder" << f->location()
+    kWarning() << "Adding(1) folder" << f->location()
              <<  ( f->isReadOnly() ? "readonly" : "" );
   }
 
@@ -733,19 +733,19 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
     if ( f && f->storage()->contentsType() == t ) {
       subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                         !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
-      kDebug() << "Adding(2) folder" << f->location()
+      kWarning() << "Adding(2) folder" << f->location()
                << ( f->isReadOnly() ? "readonly" : "" );
     }
   }
 
   if ( subResources.isEmpty() )
-    kDebug() << "No folder found for" << contentsType;
+    kWarning() << "No folder found for" << contentsType;
   return subResources;
 }
 
 bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
 {
-  kDebug() ;
+  kWarning() ;
   QList<SubResource> folderList = subresourcesKolab( contentsType );
   for ( QList<SubResource>::const_iterator it( folderList.begin() ),
                                                                     end( folderList.end() );
@@ -824,11 +824,11 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
 
   Q_ASSERT( !resource.isEmpty() );
 
-  kDebug() << resource << "," << sernum;
-  kDebug() << attachmentURLs;
-  kDebug() << attachmentMimetypes;
-  kDebug() << attachmentNames;
-  kDebug() << "deleted attachments:" << deletedAttachments;
+  kWarning() << resource << "," << sernum;
+  kWarning() << attachmentURLs;
+  kWarning() << attachmentMimetypes;
+  kWarning() << attachmentNames;
+  kWarning() << "deleted attachments:" << deletedAttachments;
 
   // Find the folder
   KMFolder* f = findResourceFolder( resource );
@@ -867,7 +867,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
         ( subtype.toLower() == "calendar" || subtype.toLower() == "x-vcard" ) );
 
     if ( storageFormat( f ) == StorageIcalVcard ) {
-      //kDebug() << " StorageFormatIcalVcard";
+      //kWarning() << " StorageFormatIcalVcard";
       if ( !messageWasIcalVcardFormat ) {
         setIcalVcardContentTypeHeader( newMsg, t, f );
       }
@@ -878,7 +878,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
         // convert
        setXMLContentTypeHeader( newMsg, plainTextBody );
       }
-      //kDebug() << " StorageFormatXML";
+      //kWarning() << " StorageFormatXML";
       // Add all attachments by reading them from their temp. files
       QStringList::ConstIterator iturl = attachmentURLs.begin();
       QStringList::ConstIterator itmime = attachmentMimetypes.begin();
@@ -890,7 +890,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
           ++iturl, ++itname, ++itmime ){
         bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
         if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, byname ) ){
-          kDebug() << "Attachment error, can not update attachment" << *iturl;
+          kWarning() << "Attachment error, can not update attachment" << *iturl;
           break;
         }
       }
@@ -907,7 +907,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
     if ( f->addMsg( newMsg ) == 0 ) {
       // Message stored
       rc = newMsg->getMsgSerNum();
-      kDebug() << "forget about" << sernum <<", it's" << rc <<" now";
+      kWarning() << "forget about" << sernum <<", it's" << rc <<" now";
     }
     addFolderChange( f, ContentsChanged );
     syncFolder( f );
@@ -933,7 +933,7 @@ QString KMailICalIfaceImpl::getAttachment( const QString& resource,
   if( !mUseResourceIMAP )
     return QString();
 
-  kDebug() << resource << ", " << sernum << ", " << filename;
+  kWarning() << resource << ", " << sernum << ", " << filename;
 
   // Find the folder
   KMFolder* f = findResourceFolder( resource );
@@ -974,10 +974,10 @@ QString KMailICalIfaceImpl::getAttachment( const QString& resource,
     }
 
     if( !bOK ){
-      kDebug() << "Attachment" << filename << " not found.";
+      kWarning() << "Attachment" << filename << " not found.";
     }
   }else{
-    kDebug() << "Message not found.";
+    kWarning() << "Message not found.";
   }
 
   mResourceQuiet = quiet;
@@ -1005,10 +1005,10 @@ QString KMailICalIfaceImpl::attachmentMimetype( const QString & resource,
       msg->bodyPart( part, &kmPart );
       return QString( kmPart.typeStr() ) + "/" + QString( kmPart.subtypeStr() );
     } else {
-      kDebug() << "Attachment " << filename << " not found.";
+      kWarning() << "Attachment " << filename << " not found.";
     }
   } else {
-    kDebug() << "Message not found.";
+    kWarning() << "Message not found.";
   }
 
   return QString();
@@ -1049,7 +1049,7 @@ QStringList KMailICalIfaceImpl::listAttachments(const QString & resource, quint3
       }
     }
   } else {
-    kDebug() << "Message not found.";
+    kWarning() << "Message not found.";
   }
 
   return rv;
@@ -1079,7 +1079,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
   if( mResourceQuiet || !mUseResourceIMAP )
     return;
 
-//  kDebug();
+//  kWarning();
   QString type = folderContentsType( folder->storage()->contentsType() );
   if( type.isEmpty() ) {
     kError() <<"Not an IMAP resource folder";
@@ -1151,7 +1151,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     return;
 
   QString type = folderContentsType( folder->storage()->contentsType() );
-  //kDebug() << folder << type << sernum;
+  //kWarning() << folder << type << sernum;
   if( !type.isEmpty() ) {
     // Get the index of the mail
     int i = 0;
@@ -1180,7 +1180,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
         break;
     }
     if ( ok ) {
-        kDebug() << "Emitting D-Bus signal incidenceDeleted("
+        kWarning() << "Emitting D-Bus signal incidenceDeleted("
                  << type << "," << folder->location() << "," << uid << ")";
 
         emit incidenceDeleted( type, folder->location(), uid );
@@ -1194,7 +1194,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
   if( mUseResourceIMAP ) {
-    kDebug() << "Emitting D-Bus signal signalRefresh(" << type << " )";
+    kWarning() << "Emitting D-Bus signal signalRefresh(" << type << " )";
     emit signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
   }
 }
@@ -1400,7 +1400,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 {
   if ( !mUseResourceIMAP )
     return;
-//  kDebug() << "folderContentsTypeChanged(" << folder->name()
+//  kWarning() << "folderContentsTypeChanged(" << folder->name()
 //           << ", " << contentsType << ")\n";
 
   // The builtins can't change type
@@ -1427,7 +1427,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     if ( contentsType == KMail::ContentsTypeMail )
         return;
 
-    //kDebug() << "registering" << location <<" as extra folder";
+    //kWarning() << "registering" << location <<" as extra folder";
     // Make a new entry for the list
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( location, ef );
@@ -1442,7 +1442,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     // in Japanese. On the server the folders are always in English.
     if ( folder->folderType() == KMFolderTypeCachedImap ) {
       QString annotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
-      kDebug() << "folderContentsTypeChanged:" << folder->name() <<" has annotation" << annotation;
+      kWarning() << "folderContentsTypeChanged:" << folder->name() <<" has annotation" << annotation;
       if ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
         folder->setLabel( localizedDefaultFolderName( contentsType ) );
     }
@@ -1500,7 +1500,7 @@ void KMailICalIfaceImpl::addFolderChange( KMFolder* folder, FolderChanges change
   if ( it != mFolderInfoMap.end() ) {
     (*it).mChanges = static_cast<FolderChanges>( (*it).mChanges | changes );
   } else { // Otherwise, well, it's a folder we don't care about.
-    kDebug() << "addFolderChange: nothing known about folder" << folder->location();
+    kWarning() << "addFolderChange: nothing known about folder" << folder->location();
   }
   KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
   configGroup.writeEntry( folder->idString() + "-changes", (int)(*it).mChanges );
@@ -1584,7 +1584,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
   httpURL.setQuery( QString() );
   // Ensure that we encode everything with UTF8
   httpURL = KUrl( httpURL.url( KUrl::LeaveTrailingSlash ) );
-  kDebug() << "Triggering PFB update for" << folderURL <<" : getting" << httpURL;
+  kWarning() << "Triggering PFB update for" << folderURL <<" : getting" << httpURL;
   // "Fire and forget". No need for error handling, nor for explicit deletion.
   // Maybe we should try to prevent launching it if it's already running (for this URL) though.
   /*KIO::Job* job =*/ KIO::get( httpURL, KIO::NoReload, KIO::HideProgressInfo );
@@ -1651,7 +1651,7 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 
 void KMailICalIfaceImpl::changeResourceUIName( const QString &folderPath, const QString &newName )
 {
-  kDebug() << "Folder path" << folderPath;
+  kWarning() << "Folder path" << folderPath;
   KMFolder *f = findResourceFolder( folderPath );
   if ( f ) {
     KMailICalIfaceImpl::getResourceMap()->insert( folderPath, newName );
@@ -1695,7 +1695,7 @@ void KMailICalIfaceImpl::readConfig()
   if( folderParent == 0 ) {
     // Parent folder not found. It was probably deleted. The user will have to
     // configure things again.
-    kDebug() << "Groupware folder" << parentName <<" not found. Groupware functionality disabled";
+    kWarning() << "Groupware folder" << parentName <<" not found. Groupware functionality disabled";
     // Or maybe the inbox simply wasn't created on the first startup
     KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::self()->theIMAPResourceAccount() );
     if ( account ) {
@@ -1705,7 +1705,7 @@ void KMailICalIfaceImpl::readConfig()
       connect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                this, SLOT( slotCheckDone() ) );
     } else {
-      kDebug() << "null IMAP account!";
+      kWarning() << "null IMAP account!";
     }
     mUseResourceIMAP = false;
     // We can't really call cleanup(), if those folders were completely deleted.
@@ -1832,9 +1832,9 @@ void KMailICalIfaceImpl::readConfig()
     // BEGIN TILL TODO The below only uses the dimap folder manager, which
     // will fail for all other folder types. Adjust.
 
-    kDebug() << "mCalendar=" << mCalendar << mCalendar->location();
-    kDebug() << "mContacts=" << mContacts << mContacts->location();
-    kDebug() << "mNotes=" << mNotes << mNotes->location();
+    kWarning() << "mCalendar=" << mCalendar << mCalendar->location();
+    kWarning() << "mContacts=" << mContacts << mContacts->location();
+    kWarning() << "mNotes=" << mNotes << mNotes->location();
 
     // Find all extra folders
     QStringList folderNames;
@@ -1907,9 +1907,9 @@ void KMailICalIfaceImpl::readConfig()
     // BEGIN TILL TODO The below only uses the dimap folder manager, which
     // will fail for all other folder types. Adjust.
 
-    kDebug() << "mCalendar=" << mCalendar << " " << mCalendar->location();
-    kDebug() << "mContacts=" << mContacts << " " << mContacts->location();
-    kDebug() << "mNotes=" << mNotes << " " << mNotes->location();
+    kWarning() << "mCalendar=" << mCalendar << " " << mCalendar->location();
+    kWarning() << "mContacts=" << mContacts << " " << mContacts->location();
+    kWarning() << "mNotes=" << mNotes << " " << mNotes->location();
 
     // Find all extra folders
     QStringList folderNames;
@@ -1982,7 +1982,7 @@ void KMailICalIfaceImpl::slotCheckDone()
 {
   QString parentName = GlobalSettings::self()->theIMAPResourceFolderParent();
   KMFolder* folderParent = kmkernel->findFolderById( parentName );
-  //kDebug() <<" folderParent=" << folderParent;
+  //kWarning() <<" folderParent=" << folderParent;
   if ( folderParent )  // cool it exists now
   {
     KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::self()->theIMAPResourceAccount() );
@@ -2000,7 +2000,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
 
   KFolderTreeItem::Type itemType = s_folderContentsType[contentsType].treeItemType;
-  //kDebug() << folderName( itemType );
+  //kWarning() << folderName( itemType );
 
   // Find the folder
   StandardFolderSearchResult result = findStandardResourceFolder( mFolderParentDir, contentsType );
@@ -2033,7 +2033,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   } else {
     FolderInfo info = readFolderInfo( folder );
     mFolderInfoMap.insert( folder, info );
-    //kDebug() <<"Found existing folder type" << itemType <<" :" << folder->location();
+    //kWarning() <<"Found existing folder type" << itemType <<" :" << folder->location();
   }
 
   if( !folder->canAccess() ) {
@@ -2091,7 +2091,7 @@ KMFolder* KMailICalIfaceImpl::initScalixFolder( KMail::FolderContentsType conten
   } else {
     FolderInfo info = readFolderInfo( folder );
     mFolderInfoMap.insert( folder, info );
-    //kDebug() << "Found existing folder type " << itemType << " : " << folder->location();
+    //kWarning() << "Found existing folder type " << itemType << " : " << folder->location();
   }
 
   if( !folder->canAccess() ) {
@@ -2225,7 +2225,7 @@ static QList<KMFolder*> findFolderByAnnotation( KMFolderDir* folderParentDir, co
       KMFolder* folder = static_cast<KMFolder *>( *it );
       if ( folder->folderType() == KMFolderTypeCachedImap ) {
         QString folderAnnotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
-        //kDebug() <<"findStandardResourceFolder:" << folder->name() <<" has annotation" << folderAnnotation;
+        //kWarning() <<"findStandardResourceFolder:" << folder->name() <<" has annotation" << folderAnnotation;
         if ( folderAnnotation == annotation )
           rv.append( folder );
       }
@@ -2253,7 +2253,7 @@ KMailICalIfaceImpl::StandardFolderSearchResult KMailICalIfaceImpl::findStandardR
     if ( node && !node->isDir() )
       return StandardFolderSearchResult( static_cast<KMFolder *>( node ), StandardFolderSearchResult::FoundByName );
 
-    kDebug() <<"findStandardResourceFolder: found no resource folder for" << s_folderContentsType[contentsType].annotation;
+    kWarning() <<"findStandardResourceFolder: found no resource folder for" << s_folderContentsType[contentsType].annotation;
     return StandardFolderSearchResult( 0, StandardFolderSearchResult::NotFound );
   }
   else // icalvcard: look up standard resource folders by name
@@ -2290,10 +2290,10 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
     relevantForEveryone = ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
   }
 #if 0
-  kDebug() ;
-  kDebug() <<"Folder:" << folder->label() <<" has administer rights:" << administerRights;
-  kDebug() <<"and is relevant for owner:" << relevantForOwner;
-  kDebug() <<"and relevant for everyone:"  << relevantForEveryone;
+  kWarning() ;
+  kWarning() <<"Folder:" << folder->label() <<" has administer rights:" << administerRights;
+  kWarning() <<"and is relevant for owner:" << relevantForOwner;
+  kWarning() <<"and relevant for everyone:"  << relevantForEveryone;
 #endif
   return ( administerRights && relevantForOwner ) || relevantForEveryone;
 }
@@ -2313,8 +2313,8 @@ bool KMailICalIfaceImpl::addSubresource( const QString& resource,
                                          const QString& parent,
                                          const QString& contentsType )
 {
-  kDebug() <<"Adding subresource to parent:" << parent <<" with name:" << resource;
-  kDebug() <<"contents type:" << contentsType;
+  kWarning() <<"Adding subresource to parent:" << parent <<" with name:" << resource;
+  kWarning() <<"contents type:" << contentsType;
   KMFolder *folder = findResourceFolder( parent );
   KMFolderDir *parentFolderDir = !parent.isEmpty() && folder ? folder->createChildFolder(): mFolderParentDir;
   if ( !parentFolderDir || parentFolderDir->hasNamedFolder( resource ) ) return false;
@@ -2340,7 +2340,7 @@ bool KMailICalIfaceImpl::addSubresource( const QString& resource,
 
 bool KMailICalIfaceImpl::removeSubresource( const QString& location )
 {
-  kDebug();
+  kWarning();
 
   KMFolder *folder = findResourceFolder( location );
 
