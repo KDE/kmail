@@ -13,7 +13,7 @@ target_link_libraries(utiltests mimelib
   ${QT_QTTEST_LIBRARY}
   ${QT_QTCORE_LIBRARY}
   ${KDE4_KIO_LIBS}
-  ${KDE4_MAILTRANSPORT_LIBS}
+  ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
 )
 
 ########### messagedicttests ###############
@@ -30,7 +30,7 @@ target_link_libraries(mimelibtests mimelib
   ${QT_QTTEST_LIBRARY}
   ${QT_QTCORE_LIBRARY}
   ${KDE4_KIO_LIBS}
-  ${KDE4_MAILTRANSPORT_LIBS}
+  ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
 )
 
 ########### signaturetest ###############
