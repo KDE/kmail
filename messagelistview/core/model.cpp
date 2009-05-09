@@ -269,21 +269,10 @@ Model::Model( View *pParent )
   mRootItem = new Item( Item::InvisibleRoot );
   mRootItem->setViewable( 0, true );
 
-  mViewItemJobs = new QList< ViewItemJob * >();
-  mGroupHeaderItemHash = new QHash< QString, GroupHeaderItem * >();
-  mGroupHeadersThatNeedUpdate = new QHash< GroupHeaderItem *, GroupHeaderItem * >();
-  mThreadingCacheMessageIdMD5ToMessageItem = new QHash< QString, MessageItem * >();
-  mThreadingCacheMessageInReplyToIdMD5ToMessageItem = new QMultiHash< QString, MessageItem * >();
-  mThreadingCacheMessageSubjectMD5ToMessageItem = new QHash< QString, QList< MessageItem * > * >();
-  mUnassignedMessageListForPass2 = new QList< MessageItem * >();
-  mUnassignedMessageListForPass3 = new QList< MessageItem * >();
-  mUnassignedMessageListForPass4 = new QList< MessageItem * >();
-  mOrphanChildrenHash = new QHash< MessageItem *, MessageItem * >();
-  mFillStepTimer = new QTimer( this );
-  mFillStepTimer->setSingleShot( true );
+  mFillStepTimer.setSingleShot( true );
   mInvariantRowMapper = new ModelInvariantRowMapper();
   mModelForItemFunctions= this;
-  connect( mFillStepTimer, SIGNAL( timeout() ),
+  connect( &mFillStepTimer, SIGNAL( timeout() ),
            SLOT( viewItemJobStep() ) );
 
   mCachedTodayLabel = i18n( "Today" );
@@ -304,19 +293,9 @@ Model::~Model()
 {
   setStorageModel( 0 );
   clearJobList();
-  delete mViewItemJobs;
   clearUnassignedMessageLists();
-  delete mUnassignedMessageListForPass2;
-  delete mUnassignedMessageListForPass3;
-  delete mUnassignedMessageListForPass4;
   clearOrphanChildrenHash();
-  delete mOrphanChildrenHash;
-  delete mGroupHeaderItemHash;
-  delete mGroupHeadersThatNeedUpdate;
-  delete mThreadingCacheMessageIdMD5ToMessageItem;
-  delete mThreadingCacheMessageInReplyToIdMD5ToMessageItem;
   void clearThreadingCacheMessageSubjectMD5ToMessageItem();
-  delete mThreadingCacheMessageSubjectMD5ToMessageItem;
   delete mPersistentSetManager;
   // Delete the invariant row mapper before removing the items.
   // It's faster since the items will not need to call the invariant
@@ -577,8 +556,8 @@ int Model::rowCount( const QModelIndex &parent ) const
 
 void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSelectionMode )
 {
-  if( mFillStepTimer->isActive() )
-    mFillStepTimer->stop();
+  if( mFillStepTimer.isActive() )
+    mFillStepTimer.stop();
 
   if ( mStorageModel )
   {
@@ -602,10 +581,10 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
   clearJobList();
   clearUnassignedMessageLists();
   clearOrphanChildrenHash();
-  mGroupHeaderItemHash->clear();
-  mGroupHeadersThatNeedUpdate->clear();
-  mThreadingCacheMessageIdMD5ToMessageItem->clear();
-  mThreadingCacheMessageInReplyToIdMD5ToMessageItem->clear();
+  mGroupHeaderItemHash.clear();
+  mGroupHeadersThatNeedUpdate.clear();
+  mThreadingCacheMessageIdMD5ToMessageItem.clear();
+  mThreadingCacheMessageInReplyToIdMD5ToMessageItem.clear();
   clearThreadingCacheMessageSubjectMD5ToMessageItem();
   mViewItemJobStepChunkTimeout = 100;
   mViewItemJobStepIdleInterval = 10;
@@ -761,11 +740,11 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
         // First a small job with the most recent messages. Large chunk, small (but non zero) idle interval
         // and a larger number of messages to process at once.
         ViewItemJob * job1 = new ViewItemJob( mStorageModel->rowCount() - 1000, mStorageModel->rowCount() - 1, 200, 20, 100, canDoFirstSmallChunkWithDisconnectedUI );
-        mViewItemJobs->append( job1 );
+        mViewItemJobs.append( job1 );
         // Then a larger job with older messages. Small chunk, bigger idle interval, small number of messages to
         // process at once.
         ViewItemJob * job2 = new ViewItemJob( 0, mStorageModel->rowCount() - 1001, 100, 50, 10, false );
-        mViewItemJobs->append( job2 );
+        mViewItemJobs.append( job2 );
 
         // We could even extremize this by splitting the folder in several
         // chunks and scanning them from the newest to the oldest... but the overhead
@@ -774,7 +753,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
         // small folder or can be done with disconnected UI: single chunk work.
         // Lag the CPU a bit more but not too much to destroy even the earliest interactivity.
         ViewItemJob * job = new ViewItemJob( 0, mStorageModel->rowCount() - 1, 150, 30, 30, canDoJobWithDisconnectedUI );
-        mViewItemJobs->append( job );
+        mViewItemJobs.append( job );
       }
     break;
     case Aggregation::FavorSpeed:
@@ -783,21 +762,21 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
       {
         // large folder, but favor speed
         ViewItemJob * job1 = new ViewItemJob( mStorageModel->rowCount() - 1000, mStorageModel->rowCount() - 1, 250, 0, 100, canDoFirstSmallChunkWithDisconnectedUI );
-        mViewItemJobs->append( job1 );
+        mViewItemJobs.append( job1 );
         ViewItemJob * job2 = new ViewItemJob( 0, mStorageModel->rowCount() - 1001, 200, 0, 10, false );
-        mViewItemJobs->append( job2 );
+        mViewItemJobs.append( job2 );
       } else {
         // small folder or can be done with disconnected UI and favor speed: single chunk work.
         // Lag the CPU more, get more work done
         ViewItemJob * job = new ViewItemJob( 0, mStorageModel->rowCount() - 1, 250, 0, 100, canDoJobWithDisconnectedUI );
-        mViewItemJobs->append( job );
+        mViewItemJobs.append( job );
       }
     break;
     case Aggregation::BatchNoInteractivity:
     {
       // one large job, never interrupt, block UI
       ViewItemJob * job = new ViewItemJob( 0, mStorageModel->rowCount() - 1, 60000, 0, 100000, canDoJobWithDisconnectedUI );
-      mViewItemJobs->append( job );
+      mViewItemJobs.append( job );
     }
     break;
     default:
@@ -831,7 +810,7 @@ void Model::checkIfDateChanged()
   if ( mLoading )
     return; // not now
 
-  if ( !mViewItemJobs->isEmpty() )
+  if ( !mViewItemJobs.isEmpty() )
     return; // not now
 
   if ( mTodayDate.day() == QDate::currentDate().day() )
@@ -919,7 +898,7 @@ void Model::clearUnassignedMessageLists()
 
   QList< MessageItem * >::Iterator it;
 
-  if ( !mUnassignedMessageListForPass2->isEmpty() )
+  if ( !mUnassignedMessageListForPass2.isEmpty() )
   {
     // We're actually in Pass1* or Pass2: everything is mUnassignedMessageListForPass2
     // Something may *also* be in mUnassignedMessageListForPass3 and mUnassignedMessageListForPass4
@@ -932,7 +911,8 @@ void Model::clearUnassignedMessageLists()
 
     QList< MessageItem * > parentless;
 
-    for ( it = mUnassignedMessageListForPass2->begin(); it != mUnassignedMessageListForPass2->end(); ++it )
+    for ( it = mUnassignedMessageListForPass2.begin();
+          it != mUnassignedMessageListForPass2.end(); ++it )
     {
       if( !( *it )->parent() )
         parentless.append( *it );
@@ -941,16 +921,16 @@ void Model::clearUnassignedMessageLists()
     for ( it = parentless.begin(); it != parentless.end(); ++it )
       delete *it;
 
-    mUnassignedMessageListForPass2->clear();
+    mUnassignedMessageListForPass2.clear();
     // Any message these list contain was also in mUnassignedMessageListForPass2
-    mUnassignedMessageListForPass3->clear();
-    mUnassignedMessageListForPass4->clear();
+    mUnassignedMessageListForPass3.clear();
+    mUnassignedMessageListForPass4.clear();
     return;
   }
 
   // mUnassignedMessageListForPass2 is empty
 
-  if ( !mUnassignedMessageListForPass3->isEmpty() )
+  if ( !mUnassignedMessageListForPass3.isEmpty() )
   {
     // We're actually at the very end of Pass2 or inside Pass3
     // Pass2 pushes stuff in mUnassignedMessageListForPass3 *or* mUnassignedMessageListForPass4
@@ -958,19 +938,19 @@ void Model::clearUnassignedMessageLists()
     // So if we're in Pass2 then the two lists contain distinct messages but if we're in Pass3
     // then the two lists may contain the same messages.
 
-    if ( !mUnassignedMessageListForPass4->isEmpty() )
+    if ( !mUnassignedMessageListForPass4.isEmpty() )
     {
       // We're actually in Pass3: the messiest one.
 
       QHash< MessageItem *, MessageItem * > itemsToDelete;
 
-      for ( it = mUnassignedMessageListForPass3->begin(); it != mUnassignedMessageListForPass3->end(); ++it )
+      for ( it = mUnassignedMessageListForPass3.begin(); it != mUnassignedMessageListForPass3.end(); ++it )
       {
         if( !( *it )->parent() )
           itemsToDelete.insert( *it, *it );
       }
 
-      for ( it = mUnassignedMessageListForPass4->begin(); it != mUnassignedMessageListForPass4->end(); ++it )
+      for ( it = mUnassignedMessageListForPass4.begin(); it != mUnassignedMessageListForPass4.end(); ++it )
       {
         if( !( *it )->parent() )
           itemsToDelete.insert( *it, *it );
@@ -979,8 +959,8 @@ void Model::clearUnassignedMessageLists()
       for ( QHash< MessageItem *, MessageItem * >::Iterator it3 = itemsToDelete.begin(); it3 != itemsToDelete.end(); ++it3 )
         delete ( *it3 );
 
-      mUnassignedMessageListForPass3->clear();
-      mUnassignedMessageListForPass4->clear();
+      mUnassignedMessageListForPass3.clear();
+      mUnassignedMessageListForPass4.clear();
       return;
     }
 
@@ -988,7 +968,7 @@ void Model::clearUnassignedMessageLists()
     // We have the same problem as in mUnassignedMessageListForPass2.
     QList< MessageItem * > parentless;
 
-    for ( it = mUnassignedMessageListForPass3->begin(); it != mUnassignedMessageListForPass3->end(); ++it )
+    for ( it = mUnassignedMessageListForPass3.begin(); it != mUnassignedMessageListForPass3.end(); ++it )
     {
       if( !( *it )->parent() )
         parentless.append( *it );
@@ -997,19 +977,19 @@ void Model::clearUnassignedMessageLists()
     for ( it = parentless.begin(); it != parentless.end(); ++it )
       delete *it;
 
-    mUnassignedMessageListForPass3->clear();
+    mUnassignedMessageListForPass3.clear();
     return;
   }
 
   // mUnassignedMessageListForPass3 is empty
-  if ( !mUnassignedMessageListForPass4->isEmpty() )
+  if ( !mUnassignedMessageListForPass4.isEmpty() )
   {
     // we're in Pass4.. this is easy.
 
     // We have the same problem as in mUnassignedMessageListForPass2.
     QList< MessageItem * > parentless;
 
-    for (  it = mUnassignedMessageListForPass4->begin(); it != mUnassignedMessageListForPass4->end(); ++it )
+    for (  it = mUnassignedMessageListForPass4.begin(); it != mUnassignedMessageListForPass4.end(); ++it )
     {
       if( !( *it )->parent() )
         parentless.append( *it );
@@ -1018,30 +998,31 @@ void Model::clearUnassignedMessageLists()
     for ( it = parentless.begin(); it != parentless.end(); ++it )
       delete *it;
 
-    mUnassignedMessageListForPass4->clear();
+    mUnassignedMessageListForPass4.clear();
     return;
   }
 }
 
 void Model::clearThreadingCacheMessageSubjectMD5ToMessageItem()
 {
-  qDeleteAll( *mThreadingCacheMessageSubjectMD5ToMessageItem );
-  mThreadingCacheMessageSubjectMD5ToMessageItem->clear();
+  qDeleteAll( mThreadingCacheMessageSubjectMD5ToMessageItem );
+  mThreadingCacheMessageSubjectMD5ToMessageItem.clear();
 }
 
 void Model::clearOrphanChildrenHash()
 {
-  for ( QHash< MessageItem *, MessageItem * >::Iterator it = mOrphanChildrenHash->begin(); it != mOrphanChildrenHash->end(); ++it )
+  for ( QHash< MessageItem *, MessageItem * >::Iterator it = mOrphanChildrenHash.begin();
+        it != mOrphanChildrenHash.end(); ++it )
   {
     //Q_ASSERT( !( *it )->parent() ); <-- this assert can actually fail for items that get a temporary parent assigned (to preserve the selection).
     delete ( *it );
   }
-  mOrphanChildrenHash->clear();
+  mOrphanChildrenHash.clear();
 }
 
 void Model::clearJobList()
 {
-  if ( mViewItemJobs->isEmpty() )
+  if ( mViewItemJobs.isEmpty() )
     return;
 
   if ( mInLengthyJobBatch )
@@ -1050,9 +1031,10 @@ void Model::clearJobList()
     mView->modelJobBatchTerminated();
   }
 
-  for( QList< ViewItemJob * >::Iterator it = mViewItemJobs->begin(); it != mViewItemJobs->end() ; ++it )
+  for( QList< ViewItemJob * >::Iterator it = mViewItemJobs.begin();
+       it != mViewItemJobs.end() ; ++it )
     delete ( *it );
-  mViewItemJobs->clear();
+  mViewItemJobs.clear();
 
   mModelForItemFunctions = this; // make sure it's true, as there remains no job with disconnected UI
 }
@@ -1398,7 +1380,7 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
 
   GroupHeaderItem * ghi;
 
-  ghi = mGroupHeaderItemHash->value( groupLabel, 0 );
+  ghi = mGroupHeaderItemHash.value( groupLabel, 0 );
   if( !ghi )
   {
     // not found
@@ -1435,7 +1417,7 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
 
     attachGroup( ghi ); // this will expand the group if required
 
-    mGroupHeaderItemHash->insert( groupLabel, ghi );
+    mGroupHeaderItemHash.insert( groupLabel, ghi );
   } else {
     // the group was already there (certainly viewable)
 
@@ -1480,7 +1462,7 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
   if ( !md5.isEmpty() )
   {
     // have an In-Reply-To field MD5
-    pParent = mThreadingCacheMessageIdMD5ToMessageItem->value( md5, 0 );
+    pParent = mThreadingCacheMessageIdMD5ToMessageItem.value( md5, 0 );
     if(pParent)
     {
       // Take care of circular references
@@ -1525,7 +1507,7 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
   md5 = mi->referencesIdMD5();
   if ( !md5.isEmpty() )
   {
-    pParent = mThreadingCacheMessageIdMD5ToMessageItem->value( md5, 0 );
+    pParent = mThreadingCacheMessageIdMD5ToMessageItem.value( md5, 0 );
     if(pParent)
     {
       // Take care of circular references
@@ -1622,11 +1604,12 @@ void Model::addMessageToSubjectBasedThreadingCache( MessageItem * mi )
   // Also "unknown" dates often popup so the "appending" optimization is voided anyway.
   // We use plain pointer comparison then.
 
-  QList< MessageItem * > * messagesWithTheSameStrippedSubject = mThreadingCacheMessageSubjectMD5ToMessageItem->value( mi->strippedSubjectMD5(), 0 );
+  QList< MessageItem * > * messagesWithTheSameStrippedSubject =
+      mThreadingCacheMessageSubjectMD5ToMessageItem.value( mi->strippedSubjectMD5(), 0 );
   if ( !messagesWithTheSameStrippedSubject )
   {
     messagesWithTheSameStrippedSubject = new QList< MessageItem * >();
-    mThreadingCacheMessageSubjectMD5ToMessageItem->insert( mi->strippedSubjectMD5(), messagesWithTheSameStrippedSubject );
+    mThreadingCacheMessageSubjectMD5ToMessageItem.insert( mi->strippedSubjectMD5(), messagesWithTheSameStrippedSubject );
     messagesWithTheSameStrippedSubject->append( mi );
     return;
   }
@@ -1640,7 +1623,7 @@ void Model::addMessageToSubjectBasedThreadingCache( MessageItem * mi )
 
 void Model::removeMessageFromSubjectBasedThreadingCache( MessageItem * mi )
 {
-  QList< MessageItem * > * messagesWithTheSameStrippedSubject = mThreadingCacheMessageSubjectMD5ToMessageItem->value( mi->strippedSubjectMD5(), 0 );
+  QList< MessageItem * > * messagesWithTheSameStrippedSubject = mThreadingCacheMessageSubjectMD5ToMessageItem.value( mi->strippedSubjectMD5(), 0 );
   Q_ASSERT( messagesWithTheSameStrippedSubject );
 
   QList< MessageItem * >::Iterator it = qLowerBound( messagesWithTheSameStrippedSubject->begin(), messagesWithTheSameStrippedSubject->end(), mi, MessageLessThanByDate() );
@@ -1650,7 +1633,7 @@ void Model::removeMessageFromSubjectBasedThreadingCache( MessageItem * mi )
   messagesWithTheSameStrippedSubject->erase( it );
   if ( messagesWithTheSameStrippedSubject->isEmpty() )
   {
-    mThreadingCacheMessageSubjectMD5ToMessageItem->remove( mi->strippedSubjectMD5() );
+    mThreadingCacheMessageSubjectMD5ToMessageItem.remove( mi->strippedSubjectMD5() );
     delete messagesWithTheSameStrippedSubject;
   }
 }
@@ -1673,7 +1656,8 @@ MessageItem * Model::guessMessageParent( MessageItem * mi )
   QString md5 = mi->strippedSubjectMD5();
   if ( !md5.isEmpty() )
   {
-    QList< MessageItem * > * messagesWithTheSameStrippedSubject = mThreadingCacheMessageSubjectMD5ToMessageItem->value( mi->strippedSubjectMD5(), 0 );
+    QList< MessageItem * > * messagesWithTheSameStrippedSubject =
+        mThreadingCacheMessageSubjectMD5ToMessageItem.value( mi->strippedSubjectMD5(), 0 );
 
     if ( messagesWithTheSameStrippedSubject )
     {
@@ -1806,7 +1790,7 @@ bool Model::handleItemPropertyChanges( int propertyChangeMask, Item * parent, It
         // Groups are large container of messages so it's likely that
         // another message inserted will cause this group to be marked again.
         // So we wait until the end to do the grand final re-sorting: it will be done in Pass4.
-        mGroupHeadersThatNeedUpdate->insert( static_cast< GroupHeaderItem * >( item ), static_cast< GroupHeaderItem * >( item ) );
+        mGroupHeadersThatNeedUpdate.insert( static_cast< GroupHeaderItem * >( item ), static_cast< GroupHeaderItem * >( item ) );
       }
     } else {
       // item is a message. It might need re-sorting.
@@ -1974,7 +1958,7 @@ void Model::messageDetachedUpdateParentProperties( Item *oldParent, MessageItem 
   if ( oldParent->type() == Item::GroupHeader )
   {
     if ( oldParent->childItemCount() == 0 )
-      mGroupHeadersThatNeedUpdate->insert( static_cast< GroupHeaderItem * >( oldParent ), static_cast< GroupHeaderItem * >( oldParent ) );
+      mGroupHeadersThatNeedUpdate.insert( static_cast< GroupHeaderItem * >( oldParent ), static_cast< GroupHeaderItem * >( oldParent ) );
   }
 }
 
@@ -2103,19 +2087,19 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
     {
       case MessageItem::PerfectParentFound:
         if ( !mi->inReplyToIdMD5().isEmpty() )
-          mThreadingCacheMessageInReplyToIdMD5ToMessageItem->remove( mi->inReplyToIdMD5(), mi );
+          mThreadingCacheMessageInReplyToIdMD5ToMessageItem.remove( mi->inReplyToIdMD5(), mi );
       break;
       case MessageItem::ImperfectParentFound:
       case MessageItem::ParentMissing: // may be: temporary or just fallback assignment
         if ( !mi->inReplyToIdMD5().isEmpty() )
         {
-          if ( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem->contains( mi->inReplyToIdMD5(), mi ) )
-            mThreadingCacheMessageInReplyToIdMD5ToMessageItem->insert( mi->inReplyToIdMD5(), mi );
+          if ( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem.contains( mi->inReplyToIdMD5(), mi ) )
+            mThreadingCacheMessageInReplyToIdMD5ToMessageItem.insert( mi->inReplyToIdMD5(), mi );
         }
       break;
       case MessageItem::NonThreadable: // this also happens when we do no threading at all
         // make gcc happy
-        Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem->contains( mi->inReplyToIdMD5(), mi ) );
+        Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem.contains( mi->inReplyToIdMD5(), mi ) );
       break;
     }
   }
@@ -2337,15 +2321,15 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob 
 
   int curIndex = job->currentIndex();
 
-  QHash< GroupHeaderItem *, GroupHeaderItem * >::Iterator it = mGroupHeadersThatNeedUpdate->begin();
+  QHash< GroupHeaderItem *, GroupHeaderItem * >::Iterator it = mGroupHeadersThatNeedUpdate.begin();
 
-  while ( it != mGroupHeadersThatNeedUpdate->end() )
+  while ( it != mGroupHeadersThatNeedUpdate.end() )
   {
     if ( ( *it )->childItemCount() == 0 )
     {
       // group with no children, kill it
       ( *it )->parent()->takeChildItem( mModelForItemFunctions, *it );
-      mGroupHeaderItemHash->remove( ( *it )->label() );
+      mGroupHeaderItemHash.remove( ( *it )->label() );
       delete *it;
     } else {
       // Group with children: probably needs re-sorting.
@@ -2403,8 +2387,8 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob 
         attachGroup( *it ); // it will first detach and then re-attach in the proper place
     }
 
-    mGroupHeadersThatNeedUpdate->erase( it );
-    it = mGroupHeadersThatNeedUpdate->begin();
+    mGroupHeadersThatNeedUpdate.erase( it );
+    it = mGroupHeadersThatNeedUpdate.begin();
 
     curIndex++;
 
@@ -2416,7 +2400,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob 
       elapsed = tStart.msecsTo( QTime::currentTime() );
       if ( ( elapsed > mViewItemJobStepChunkTimeout ) || ( elapsed < 0 ) )
       {
-        if ( it != mGroupHeadersThatNeedUpdate->end() )
+        if ( it != mGroupHeadersThatNeedUpdate.end() )
         {
           job->setCurrentIndex( curIndex );
           return ViewItemJobInterrupted;
@@ -2448,7 +2432,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass4( ViewItemJob 
 
   while ( curIndex <= endIndex )
   {
-    MessageItem * mi = (*mUnassignedMessageListForPass4)[curIndex];
+    MessageItem * mi = mUnassignedMessageListForPass4[curIndex];
     if ( !mi->parent() )
     {
       // Unassigned item: thread leader, insert into the proper group.
@@ -2476,7 +2460,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass4( ViewItemJob 
     }
   }
 
-  mUnassignedMessageListForPass4->clear();
+  mUnassignedMessageListForPass4.clear();
   return ViewItemJobCompleted;
 }
 
@@ -2501,7 +2485,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass3( ViewItemJob 
   while ( curIndex <= endIndex )
   {
     // If we're here, then threading is requested for sure.
-    MessageItem * mi = (*mUnassignedMessageListForPass3)[curIndex];
+    MessageItem * mi = mUnassignedMessageListForPass3[curIndex];
     if ( ( !mi->parent() ) || ( mi->threadingStatus() == MessageItem::ParentMissing ) )
     {
       // Parent is missing (either "physically" with the item being not attacched or "logically"
@@ -2534,13 +2518,13 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass3( ViewItemJob 
         } else {
           // so parent not found, (threadingStatus() is either MessageItem::ParentMissing or MessageItem::NonThreadable)
           Q_ASSERT( ( mi->threadingStatus() == MessageItem::ParentMissing ) || ( mi->threadingStatus() == MessageItem::NonThreadable ) );
-          mUnassignedMessageListForPass4->append( mi ); // this is ~O(1)
+          mUnassignedMessageListForPass4.append( mi ); // this is ~O(1)
           // and wait for Pass4
         }
       } else {
         // can't guess the parent as the subject isn't prefixed
         Q_ASSERT( ( mi->threadingStatus() == MessageItem::ParentMissing ) || ( mi->threadingStatus() == MessageItem::NonThreadable ) );
-        mUnassignedMessageListForPass4->append( mi ); // this is ~O(1)
+        mUnassignedMessageListForPass4.append( mi ); // this is ~O(1)
         // and wait for Pass4
       }
     } else {
@@ -2569,7 +2553,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass3( ViewItemJob 
     }
   }
 
-  mUnassignedMessageListForPass3->clear();
+  mUnassignedMessageListForPass3.clear();
   return ViewItemJobCompleted;
 }
 
@@ -2596,7 +2580,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass2( ViewItemJob 
   while ( curIndex <= endIndex )
   {
     // If we're here, then threading is requested for sure.
-    MessageItem * mi = (*mUnassignedMessageListForPass2)[curIndex];
+    MessageItem * mi = mUnassignedMessageListForPass2[curIndex];
     // The item may or may not have a parent.
     // If it has no parent or it has a temporary one (mi->parent() && mi->threadingStatus() == MessageItem::ParentMissing)
     // then we attempt to (re-)thread it. Otherwise we just do nothing (the job has already been done by the previous steps).
@@ -2632,15 +2616,15 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass2( ViewItemJob 
             if ( mAggregation->threading() == Aggregation::PerfectReferencesAndSubject )
             {
               // parent missing but still can be found in Pass3
-              mUnassignedMessageListForPass3->append( mi ); // this is ~O(1)
+              mUnassignedMessageListForPass3.append( mi ); // this is ~O(1)
             } else {
               // We're not doing subject based threading: will never be threaded, go straight to Pass4
-              mUnassignedMessageListForPass4->append( mi ); // this is ~O(1)
+              mUnassignedMessageListForPass4.append( mi ); // this is ~O(1)
             }
           break;
           case MessageItem::NonThreadable:
             // will never be threaded, go straight to Pass4
-            mUnassignedMessageListForPass4->append( mi ); // this is ~O(1)
+            mUnassignedMessageListForPass4.append( mi ); // this is ~O(1)
           break;
           default:
             // a bug for sure
@@ -2679,7 +2663,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass2( ViewItemJob 
     }
   }
 
-  mUnassignedMessageListForPass2->clear();
+  mUnassignedMessageListForPass2.clear();
   return ViewItemJobCompleted;
 }
 
@@ -2770,7 +2754,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
       }
 
       // Perfect/References threading cache
-      mThreadingCacheMessageIdMD5ToMessageItem->insert( mi->messageIdMD5(), mi );
+      mThreadingCacheMessageIdMD5ToMessageItem.insert( mi->messageIdMD5(), mi );
 
       // Check if this item is a perfect parent for some imperfectly threaded
       // message (that is actually attacched to it, but not necessairly to the
@@ -2779,9 +2763,9 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
 
       bool needsImmediateReAttach = false;
 
-      if ( mThreadingCacheMessageInReplyToIdMD5ToMessageItem->count() > 0 ) // unlikely
+      if ( mThreadingCacheMessageInReplyToIdMD5ToMessageItem.count() > 0 ) // unlikely
       {
-        QList< MessageItem * > lImperfectlyThreaded = mThreadingCacheMessageInReplyToIdMD5ToMessageItem->values( mi->messageIdMD5() );
+        QList< MessageItem * > lImperfectlyThreaded = mThreadingCacheMessageInReplyToIdMD5ToMessageItem.values( mi->messageIdMD5() );
         if ( !lImperfectlyThreaded.isEmpty() )
         {
           // must move all of the items in the perfect parent
@@ -2830,7 +2814,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
       {
         // Have an In-Reply-To field MD5.
         // In well behaved mailing lists 70% of the threadable messages get a parent here :)
-        pParent = mThreadingCacheMessageIdMD5ToMessageItem->value( md5, 0 );
+        pParent = mThreadingCacheMessageIdMD5ToMessageItem.value( md5, 0 );
 
         if( pParent ) // very likely
         {
@@ -2838,7 +2822,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
           {
             // Bad, bad message.. it has In-Reply-To equal to MessageId...
             // Will wait for Pass2 with References-Id only
-            mUnassignedMessageListForPass2->append( mi );
+            mUnassignedMessageListForPass2.append( mi );
           } else {
             // wow, got a perfect parent for this message!
             mi->setThreadingStatus( MessageItem::PerfectParentFound );
@@ -2848,7 +2832,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
         } else {
           // got no parent
           // will have to wait Pass2
-          mUnassignedMessageListForPass2->append( mi );
+          mUnassignedMessageListForPass2.append( mi );
         }
       } else {
         // No In-Reply-To header.
@@ -2876,7 +2860,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
         if ( mightHaveOtherMeansForThreading )
         {
           // We might have other means for threading this message, wait until Pass2
-          mUnassignedMessageListForPass2->append( mi );
+          mUnassignedMessageListForPass2.append( mi );
         } else {
           // No other means for threading this message. This is either
           // a standalone message or a thread leader.
@@ -2897,7 +2881,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
           } else {
             // Threads belong to the most recent message in the thread. This means
             // that we have to wait until Pass2 or Pass3 to assign a group.
-            mUnassignedMessageListForPass2->append( mi );
+            mUnassignedMessageListForPass2.append( mi );
           }
         }
       }
@@ -2970,7 +2954,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
   int endIndex = job->endIndex();
 
   if ( curIndex == job->startIndex() )
-    Q_ASSERT( mOrphanChildrenHash->isEmpty() );
+    Q_ASSERT( mOrphanChildrenHash.isEmpty() );
 
   while( curIndex <= endIndex )
   {
@@ -3044,16 +3028,16 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       // We might have already removed its parent from the view, so it
       // might already be in the orphan child hash...
       if ( dyingMessage->threadingStatus() == MessageItem::ParentMissing )
-        mOrphanChildrenHash->remove( dyingMessage ); // this can turn to a no-op (dyingMessage not present in fact)
+        mOrphanChildrenHash.remove( dyingMessage ); // this can turn to a no-op (dyingMessage not present in fact)
 
     } else {
       // The dying message had no parent: this should happen only if it's already an orphan
 
       Q_ASSERT( dyingMessage->threadingStatus() == MessageItem::ParentMissing );
-      Q_ASSERT( mOrphanChildrenHash->contains( dyingMessage ) );
+      Q_ASSERT( mOrphanChildrenHash.contains( dyingMessage ) );
       Q_ASSERT( dyingMessage != mCurrentItemToRestoreAfterViewItemJobStep );
 
-      mOrphanChildrenHash->remove( dyingMessage );
+      mOrphanChildrenHash.remove( dyingMessage );
     }
 
     if ( mAggregation->threading() != Aggregation::NoThreading )
@@ -3061,7 +3045,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       // Threading is requested: remove the message from threading caches.
 
       // Remove from the cache of potential parent items
-      mThreadingCacheMessageIdMD5ToMessageItem->remove( dyingMessage->messageIdMD5() );
+      mThreadingCacheMessageIdMD5ToMessageItem.remove( dyingMessage->messageIdMD5() );
 
       // If we also have a cache for subject-based threading then remove the message from there too
       if( mAggregation->threading() == Aggregation::PerfectReferencesAndSubject )
@@ -3073,10 +3057,10 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
         case MessageItem::ImperfectParentFound:
         case MessageItem::ParentMissing:
           if ( !dyingMessage->inReplyToIdMD5().isEmpty() )
-            mThreadingCacheMessageInReplyToIdMD5ToMessageItem->remove( dyingMessage->inReplyToIdMD5() );
+            mThreadingCacheMessageInReplyToIdMD5ToMessageItem.remove( dyingMessage->inReplyToIdMD5() );
         break;
         default:
-          Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem->contains( dyingMessage->inReplyToIdMD5(), dyingMessage ) );
+          Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem.contains( dyingMessage->inReplyToIdMD5(), dyingMessage ) );
           // make gcc happy
         break;
       }
@@ -3097,8 +3081,8 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
           // lost its perfect parent. Add to the cache of imperfectly parented.
           if ( !childMessage->inReplyToIdMD5().isEmpty() )
           {
-            Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem->contains( childMessage->inReplyToIdMD5(), childMessage ) );
-            mThreadingCacheMessageInReplyToIdMD5ToMessageItem->insert( childMessage->inReplyToIdMD5(), childMessage );
+            Q_ASSERT( !mThreadingCacheMessageInReplyToIdMD5ToMessageItem.contains( childMessage->inReplyToIdMD5(), childMessage ) );
+            mThreadingCacheMessageInReplyToIdMD5ToMessageItem.insert( childMessage->inReplyToIdMD5(), childMessage );
           }
         }
       }
@@ -3127,7 +3111,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
         Q_ASSERT( childMessage->isViewable() );
       }
 
-      mOrphanChildrenHash->insert( childMessage, childMessage );
+      mOrphanChildrenHash.insert( childMessage, childMessage );
     }
 
     delete dyingMessage;
@@ -3162,17 +3146,17 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
   // We move all the messages from the orphan child hash to the unassigned message
   // list and get them ready for the standard Pass2.
 
-  QHash< MessageItem *, MessageItem * >::Iterator it = mOrphanChildrenHash->begin();
+  QHash< MessageItem *, MessageItem * >::Iterator it = mOrphanChildrenHash.begin();
 
   curIndex = 0;
 
-  while ( it != mOrphanChildrenHash->end() )
+  while ( it != mOrphanChildrenHash.end() )
   {
-    mUnassignedMessageListForPass2->append( *it );
+    mUnassignedMessageListForPass2.append( *it );
 
-    mOrphanChildrenHash->erase( it );
+    mOrphanChildrenHash.erase( it );
 
-    it = mOrphanChildrenHash->begin();
+    it = mOrphanChildrenHash.begin();
 
     // This is still interruptible
 
@@ -3184,7 +3168,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
       elapsed = tStart.msecsTo( QTime::currentTime() );
       if ( ( elapsed > mViewItemJobStepChunkTimeout ) || ( elapsed < 0 ) )
       {
-        if ( it != mOrphanChildrenHash->end() )
+        if ( it != mOrphanChildrenHash.end() )
           return ViewItemJobInterrupted;
       }
     }
@@ -3380,7 +3364,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
         // # TODO: Refactor this, make it virtual or whatever, but switch == bad, code duplication etc
         job->setCurrentPass( ViewItemJob::Pass2 );
         job->setStartIndex( 0 );
-        job->setEndIndex( mUnassignedMessageListForPass2->count() - 1 );
+        job->setEndIndex( mUnassignedMessageListForPass2.count() - 1 );
         // take care of small jobs which never timeout by themselves because
         // of a small number of messages. At the end of each job check
         // the time used and if we're timeoutting and there is another job
@@ -3410,7 +3394,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
         // pass 1 has been completed
         job->setCurrentPass( ViewItemJob::Pass2 );
         job->setStartIndex( 0 );
-        job->setEndIndex( mUnassignedMessageListForPass2->count() - 1 );
+        job->setEndIndex( mUnassignedMessageListForPass2.count() - 1 );
         // take care of small jobs which never timeout by themselves because
         // of a small number of messages. At the end of each job check
         // the time used and if we're timeoutting and there is another job
@@ -3442,7 +3426,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
         // we simply skip them. (TODO: Triple-verify this assertion...).
         job->setCurrentPass( ViewItemJob::Pass5 );
         job->setStartIndex( 0 );
-        job->setEndIndex( mGroupHeadersThatNeedUpdate->count() - 1 );
+        job->setEndIndex( mGroupHeadersThatNeedUpdate.count() - 1 );
         // take care of small jobs which never timeout by themselves because
         // of a small number of messages. At the end of each job check
         // the time used and if we're timeoutting and there is another job
@@ -3476,7 +3460,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
         // pass 2 has been completed
         job->setCurrentPass( ViewItemJob::Pass3 );
         job->setStartIndex( 0 );
-        job->setEndIndex( mUnassignedMessageListForPass3->count() - 1 );
+        job->setEndIndex( mUnassignedMessageListForPass3.count() - 1 );
         // take care of small jobs which never timeout by themselves because
         // of a small number of messages. At the end of each job check
         // the time used and if we're timeoutting and there is another job
@@ -3507,7 +3491,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
         // pass 3 has been completed
         job->setCurrentPass( ViewItemJob::Pass4 );
         job->setStartIndex( 0 );
-        job->setEndIndex( mUnassignedMessageListForPass4->count() - 1 );
+        job->setEndIndex( mUnassignedMessageListForPass4.count() - 1 );
         // take care of small jobs which never timeout by themselves because
         // of a small number of messages. At the end of each job check
         // the time used and if we're timeoutting and there is another job
@@ -3538,7 +3522,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
         // pass 4 has been completed
         job->setCurrentPass( ViewItemJob::Pass5 );
         job->setStartIndex( 0 );
-        job->setEndIndex( mGroupHeadersThatNeedUpdate->count() - 1 );
+        job->setEndIndex( mGroupHeadersThatNeedUpdate.count() - 1 );
         // take care of small jobs which never timeout by themselves because
         // of a small number of messages. At the end of each job check
         // the time used and if we're timeoutting and there is another job
@@ -3630,16 +3614,16 @@ void Model::printStatistics()
 
   int messagesWithSameSubjectAvg = 0;
   int messagesWithSameSubjectMax = 0;
-  foreach( const QList< MessageItem * > *messages, *mThreadingCacheMessageSubjectMD5ToMessageItem ) {
+  foreach( const QList< MessageItem * > *messages, mThreadingCacheMessageSubjectMD5ToMessageItem ) {
     if ( messages->size() > messagesWithSameSubjectMax )
       messagesWithSameSubjectMax = messages->size();
     messagesWithSameSubjectAvg += messages->size();
   }
-  messagesWithSameSubjectAvg = messagesWithSameSubjectAvg / (float)mThreadingCacheMessageSubjectMD5ToMessageItem->size();
+  messagesWithSameSubjectAvg = messagesWithSameSubjectAvg / (float)mThreadingCacheMessageSubjectMD5ToMessageItem.size();
 
   int totalThreads = 0;
-  if ( !mGroupHeaderItemHash->isEmpty() ) {
-    foreach( const GroupHeaderItem *groupHeader, *mGroupHeaderItemHash ) {
+  if ( !mGroupHeaderItemHash.isEmpty() ) {
+    foreach( const GroupHeaderItem *groupHeader, mGroupHeaderItemHash ) {
       totalThreads += groupHeader->childItemCount();
     }
   }
@@ -3658,9 +3642,9 @@ void Model::printStatistics()
   kDebug() << "Number of messages per second in the model:" << msgPerSecond;
   kDebug() << "Number of messages per second in total:" << msgPerSecondComplete;
   kDebug() << "Number of threads:" << totalThreads;
-  kDebug() << "Number of groups:" << mGroupHeaderItemHash->size();
+  kDebug() << "Number of groups:" << mGroupHeaderItemHash.size();
   kDebug() << "Messages per thread:" << totalMessages / (float)totalThreads;
-  kDebug() << "Threads per group:" << totalThreads / (float)mGroupHeaderItemHash->size();
+  kDebug() << "Threads per group:" << totalThreads / (float)mGroupHeaderItemHash.size();
   kDebug() << "Messages with the same subject:"
               << "Max:" << messagesWithSameSubjectMax
               << "Avg:" << messagesWithSameSubjectAvg;
@@ -3697,10 +3681,10 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
   QTime tStart = QTime::currentTime();
   int elapsed;
 
-  while( !mViewItemJobs->isEmpty() )
+  while( !mViewItemJobs.isEmpty() )
   {
     // Have a job to do.
-    ViewItemJob * job = mViewItemJobs->first();
+    ViewItemJob * job = mViewItemJobs.first();
 
 #ifdef KMAIL_FOLDEROPEN_PROFILE
 
@@ -3816,7 +3800,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
         }
 
         // this job has been completed
-        delete mViewItemJobs->takeFirst();
+        delete mViewItemJobs.takeFirst();
 
 #ifdef KMAIL_FOLDEROPEN_PROFILE
         // Last job finished!
@@ -3831,7 +3815,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
         elapsed = tStart.msecsTo( QTime::currentTime() );
         if ( ( elapsed > mViewItemJobStepChunkTimeout ) || ( elapsed < 0 ) )
         {
-          if ( !mViewItemJobs->isEmpty() )
+          if ( !mViewItemJobs.isEmpty() )
             return ViewItemJobInterrupted;
           // else it's completed in fact
         } // else proceed with the next job
@@ -3863,8 +3847,8 @@ void Model::viewItemJobStep()
 
   mViewItemJobStepStartTime = ::time( 0 );
 
-  if( mFillStepTimer->isActive() )
-    mFillStepTimer->stop();
+  if( mFillStepTimer.isActive() )
+    mFillStepTimer.stop();
 
   if ( !mStorageModel )
     return; // nothing more to do
@@ -3906,7 +3890,7 @@ void Model::viewItemJobStep()
         mInLengthyJobBatch = true;
         mView->modelJobBatchStarted();
       }
-      mFillStepTimer->start( mViewItemJobStepIdleInterval ); // this is a single shot timer connected to viewItemJobStep()
+      mFillStepTimer.start( mViewItemJobStepIdleInterval ); // this is a single shot timer connected to viewItemJobStep()
       // and go dealing with current/selection out of the switch.
     break;
     case ViewItemJobCompleted:
@@ -4101,11 +4085,11 @@ void Model::slotStorageModelRowsInserted( const QModelIndex &parent, int from, i
 
   // look if no current job is in the middle
 
-  int jobCount = mViewItemJobs->count();
+  int jobCount = mViewItemJobs.count();
 
   for ( int idx = 0; idx < jobCount; idx++ )
   {
-    ViewItemJob * job = mViewItemJobs->at( idx );
+    ViewItemJob * job = mViewItemJobs.at( idx );
     if ( job->currentPass() == ViewItemJob::Pass1Fill )
     {
       //
@@ -4152,7 +4136,7 @@ void Model::slotStorageModelRowsInserted( const QModelIndex &parent, int from, i
 
         idx++; // we can skip this job in the loop, it's already ok
         jobCount++; // and our range increases by one.
-        mViewItemJobs->insert( idx, newJob );
+        mViewItemJobs.insert( idx, newJob );
 
       } else {
         // The change starts below (or exactly on the beginning of) the job.
@@ -4177,7 +4161,7 @@ void Model::slotStorageModelRowsInserted( const QModelIndex &parent, int from, i
   // aren't jobs _after_ it).
   if ( jobCount > 0 )
   {
-    ViewItemJob * job = mViewItemJobs->at( jobCount - 1 );
+    ViewItemJob * job = mViewItemJobs.at( jobCount - 1 );
     if ( job->currentPass() == ViewItemJob::Pass1Fill )
     {
       if (
@@ -4199,11 +4183,11 @@ void Model::slotStorageModelRowsInserted( const QModelIndex &parent, int from, i
   {
     // FIXME: Should take timing options from aggregation here ?
     ViewItemJob * job = new ViewItemJob( from, to, 100, 50, 10 );
-    mViewItemJobs->append( job );
+    mViewItemJobs.append( job );
   }
 
-  if ( !mFillStepTimer->isActive() )
-    mFillStepTimer->start( mViewItemJobStepIdleInterval );
+  if ( !mFillStepTimer.isActive() )
+    mFillStepTimer.start( mViewItemJobStepIdleInterval );
 }
 
 void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, int to )
@@ -4219,11 +4203,11 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
 
   int count = ( to - from ) + 1;
 
-  int jobCount = mViewItemJobs->count();
+  int jobCount = mViewItemJobs.count();
 
   for ( int idx = 0; idx < jobCount; idx++ )
   {
-    ViewItemJob * job = mViewItemJobs->at( idx );
+    ViewItemJob * job = mViewItemJobs.at( idx );
     if ( job->currentPass() == ViewItemJob::Pass1Fill )
     {
       //
@@ -4276,7 +4260,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
 
           idx++; // we can skip this job in the loop, it's already ok
           jobCount++; // and our range increases by one.
-          mViewItemJobs->insert( idx, newJob );
+          mViewItemJobs.insert( idx, newJob );
         } // else the change includes completely the end of the job and no other part of it can be completed.
       } else {
         // The change starts below (or exactly on the beginning of) the job. ( from <= job->currentIndex() )
@@ -4284,7 +4268,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
         {
           // The change completely covers the job: kill it
           delete job;
-          mViewItemJobs->removeAt( idx );
+          mViewItemJobs.removeAt( idx );
           idx--;
           jobCount--;
         } else if ( to >= job->currentIndex() )
@@ -4322,7 +4306,7 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
     // aren't jobs _after_ it).
     if ( jobCount > 0 )
     {
-      ViewItemJob * job = mViewItemJobs->at( jobCount - 1 );
+      ViewItemJob * job = mViewItemJobs.at( jobCount - 1 );
       if ( job->currentPass() == ViewItemJob::Pass1Cleanup )
       {
         if ( ( job->currentIndex() <= job->endIndex() ) && job->invariantIndexList() )
@@ -4344,11 +4328,11 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
       //kDebug() << "Creating new cleanup job for " << invalidatedIndexes->count() << " invalidated indexes" << endl;
       // FIXME: Should take timing options from aggregation here ?
       ViewItemJob * job = new ViewItemJob( ViewItemJob::Pass1Cleanup, invalidatedIndexes, 100, 50, 10 );
-      mViewItemJobs->append( job );
+      mViewItemJobs.append( job );
     }
 
-    if ( !mFillStepTimer->isActive() )
-      mFillStepTimer->start( mViewItemJobStepIdleInterval );
+    if ( !mFillStepTimer.isActive() )
+      mFillStepTimer.start( mViewItemJobStepIdleInterval );
   }
 }
 
@@ -4369,7 +4353,7 @@ void Model::slotStorageModelDataChanged( const QModelIndex &fromIndex, const QMo
 
   int count = ( to - from ) + 1;
 
-  int jobCount = mViewItemJobs->count();
+  int jobCount = mViewItemJobs.count();
 
   // This will find out the ModelInvariantIndex-es that need an update and will return
   // them all in a nice list that we can feed to a view removal job.
@@ -4384,7 +4368,7 @@ void Model::slotStorageModelDataChanged( const QModelIndex &fromIndex, const QMo
     // aren't jobs _after_ it).
     if ( jobCount > 0 )
     {
-      ViewItemJob * job = mViewItemJobs->at( jobCount - 1 );
+      ViewItemJob * job = mViewItemJobs.at( jobCount - 1 );
       if ( job->currentPass() == ViewItemJob::Pass1Update )
       {
         if ( ( job->currentIndex() <= job->endIndex() ) && job->invariantIndexList() )
@@ -4403,11 +4387,11 @@ void Model::slotStorageModelDataChanged( const QModelIndex &fromIndex, const QMo
       // Didn't append to any existing update job.. create a new one
       // FIXME: Should take timing options from aggregation here ?
       ViewItemJob * job = new ViewItemJob( ViewItemJob::Pass1Update, indexesThatNeedUpdate, 100, 50, 10 );
-      mViewItemJobs->append( job );
+      mViewItemJobs.append( job );
     }
 
-    if ( !mFillStepTimer->isActive() )
-      mFillStepTimer->start( mViewItemJobStepIdleInterval );
+    if ( !mFillStepTimer.isActive() )
+      mFillStepTimer.start( mViewItemJobStepIdleInterval );
   }
 
 }

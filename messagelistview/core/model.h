@@ -28,6 +28,7 @@
 #include <QHash>
 #include <QMultiHash>
 #include <QDate>
+#include <QTimer>
 
 #include "messagelistview/core/aggregation.h"
 #include "messagelistview/core/enums.h"
@@ -35,7 +36,6 @@
 
 #include <time.h> // time_t
 
-class QTimer;
 class QTime;
 
 namespace KMail
@@ -124,61 +124,60 @@ private:
   /**
    * The timer involved in breaking the "fill" operation in steps
    */
-  QTimer *mFillStepTimer;
+  QTimer mFillStepTimer;
 
   /**
    * Group Key (usually the label) -> GroupHeaderItem, used to quickly find groups, pointers are shallow copies
-   * TODO: Why are all these pointers?? Make them non-pointers!
    */
-  QHash< QString, GroupHeaderItem * > * mGroupHeaderItemHash;
+  QHash< QString, GroupHeaderItem * > mGroupHeaderItemHash;
 
   /**
    * Threading cache.
    * MessageIdMD5 -> MessageItem, pointers are shallow copies
    */
-  QHash< QString, MessageItem * > * mThreadingCacheMessageIdMD5ToMessageItem;
+  QHash< QString, MessageItem * > mThreadingCacheMessageIdMD5ToMessageItem;
 
   /**
    * Threading cache.
    * MessageInReplyToIdMD5 -> MessageItem, pointers are shallow copies
    */
-  QMultiHash< QString, MessageItem * > * mThreadingCacheMessageInReplyToIdMD5ToMessageItem;
+  QMultiHash< QString, MessageItem * > mThreadingCacheMessageInReplyToIdMD5ToMessageItem;
 
   /**
    * Threading cache.
    * SubjectMD5 -> MessageItem, pointers are shallow copies
    */
-  QHash< QString, QList< MessageItem * > * > * mThreadingCacheMessageSubjectMD5ToMessageItem;
+  QHash< QString, QList< MessageItem * > * > mThreadingCacheMessageSubjectMD5ToMessageItem;
 
   /**
    * List of group headers that either need to be re-sorted or must be removed because empty
    */
-  QHash< GroupHeaderItem *, GroupHeaderItem * > * mGroupHeadersThatNeedUpdate;
+  QHash< GroupHeaderItem *, GroupHeaderItem * > mGroupHeadersThatNeedUpdate;
 
   /**
    * List of unassigned messages, used to handle threading in two passes, pointers are owned!
    */
-  QList< MessageItem * > * mUnassignedMessageListForPass2;
+  QList< MessageItem * > mUnassignedMessageListForPass2;
 
   /**
    * List of unassigned messages, used to handle threading in two passes, pointers are owned!
    */
-  QList< MessageItem * > * mUnassignedMessageListForPass3;
+  QList< MessageItem * > mUnassignedMessageListForPass3;
 
   /**
    * List of unassigned messages, used to handle threading in two passes, pointers are owned!
    */
-  QList< MessageItem * > * mUnassignedMessageListForPass4;
+  QList< MessageItem * > mUnassignedMessageListForPass4;
 
   /**
    * Hash of orphan children used in Pass1Cleanup.
    */
-  QHash< MessageItem *, MessageItem * > * mOrphanChildrenHash;
+  QHash< MessageItem *, MessageItem * > mOrphanChildrenHash;
 
   /**
    * Pending fill view jobs, pointers are owned
    */
-  QList< ViewItemJob * > * mViewItemJobs;
+  QList< ViewItemJob * > mViewItemJobs;
 
   /**
    * The today's date. Set when the StorageModel is set and thus grouping is performed.
