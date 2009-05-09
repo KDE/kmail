@@ -22,6 +22,8 @@
 
 #include "messagelistview/core/messageitem.h"
 
+#include <config-kmail.h>
+
 #include <libkdepim/messagestatus.h>
 
 #include <KDebug>
@@ -44,7 +46,20 @@ namespace MessageListView
 StorageModel::StorageModel( KMFolder * folder, QObject * parent )
   : Core::StorageModel( parent ), mFolder( folder )
 {
+
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+  QTime openFolderTimer;
+  openFolderTimer.start();
+#endif
+
   mFolder->open( "MessageListView::StorageModel" );
+
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+  kDebug() << "==========================================================";
+  kDebug() << "Opening the folder took" << openFolderTimer.elapsed() << "msecs.";
+  QTime serialCacheTimer;
+  serialCacheTimer.start();
+#endif
 
   // Add all items of the folder to the serial cache. This makes initalizing
   // the message items much faster, since they no longer need to call the expensive
@@ -54,6 +69,10 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
      if ( index )
        index->addToSerialCache();
   }
+
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+  kDebug() << "Creating the serial cache took" << serialCacheTimer.elapsed() << "msecs.";
+#endif
 
 #if 0
   // This signal is unreliable, it's not emitted when quiet() is set on the folder...

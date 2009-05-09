@@ -12,3 +12,5 @@
 #cmakedefine NEPOMUK_FOUND 1
 
 #cmakedefine HAVE_MMAP 1
+
+#cmakedefine KMAIL_FOLDEROPEN_PROFILE 1

@@ -49,6 +49,8 @@
 #include "messagelistview/core/manager.h"
 #include "messagelistview/core/messageitemsetmanager.h"
 
+#include <config-kmail.h>
+
 #include <libkdepim/broadcaststatus.h> // KPIM::BroadcastStatus
 #include <libkdepim/messagestatus.h>
 
@@ -150,13 +152,14 @@ class ViewItemJob
 public:
   enum Pass
   {
-    Pass1Fill,            ///< Build threading caches, *TRY* to do some threading, try to attach something to the view
-    Pass1Cleanup,         ///< Kill messages, build list of orphans
-    Pass1Update,          ///< Update messages
-    Pass2,                ///< Thread everything by using caches, try to attach more to the view
-    Pass3,                ///< Do more threading (this time try to guess), try to attach more to the view
-    Pass4,                ///< Attach anything is still unattacched
-    Pass5                 ///< Eventually Re-sort group headers and remove the empty ones
+    Pass1Fill    = 0,     ///< Build threading caches, *TRY* to do some threading, try to attach something to the view
+    Pass1Cleanup = 1,     ///< Kill messages, build list of orphans
+    Pass1Update  = 2,     ///< Update messages
+    Pass2        = 3,     ///< Thread everything by using caches, try to attach more to the view
+    Pass3        = 4,     ///< Do more threading (this time try to guess), try to attach more to the view
+    Pass4        = 5,     ///< Attach anything is still unattacched
+    Pass5        = 6,     ///< Eventually Re-sort group headers and remove the empty ones
+    LastIndex    = 7      ///< Keep this at the end, needed to get the size of the enum
   };
 private:
   // Data for "View Fill" jobs
@@ -3374,6 +3377,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
       break;
       case ViewItemJobCompleted:
         // pass 1 has been completed
+        // # TODO: Refactor this, make it virtual or whatever, but switch == bad, code duplication etc
         job->setCurrentPass( ViewItemJob::Pass2 );
         job->setStartIndex( 0 );
         job->setEndIndex( mUnassignedMessageListForPass2->count() - 1 );
@@ -3556,8 +3560,133 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
   return viewItemJobStepInternalForJobPass5( job, tStart );
 }
 
-// FIXME: Remove for release
-#define WANT_FILL_VIEW_STATS
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+
+// Namespace to collect all the vars and functions for KMAIL_FOLDEROPEN_PROFILE
+namespace Stats {
+
+// Number of existing jobs/passes
+static const int numberOfPasses = ViewItemJob::LastIndex;
+
+// The pass in the last call of viewItemJobStepInternal(), used to detect when
+// a new pass starts
+static int lastPass = -1;
+
+// Total number of messages in the folder
+static int totalMessages;
+
+// Per-Job data
+static int numElements[numberOfPasses];
+static int totalTime[numberOfPasses];
+static int chunks[numberOfPasses];
+
+// Time, in msecs for some special operations
+static int expandingTreeTime;
+static int layoutChangeTime;
+
+// Descriptions of the job, for nicer debug output
+static const char *jobDescription[numberOfPasses] = {
+  "Creating items from messages and simple threading",
+  "Removing messages",
+  "Updating messages",
+  "Additional Threading",
+  "Subject-Based threading",
+  "Grouping",
+  "Group resorting + cleanup"
+};
+
+// Timer to track time between start of first job and end of last job
+static QTime firstStartTime;
+
+// Timer to track time the current job takes
+static QTime currentJobStartTime;
+
+// Zeros the stats, to be called when the first job starts
+static void resetStats()
+{
+  totalMessages = 0;
+  layoutChangeTime = 0;
+  expandingTreeTime = 0;
+  lastPass = -1;
+  for ( int i = 0; i < numberOfPasses; i++ ) {
+    numElements[i] = 0;
+    totalTime[i] = 0;
+    chunks[i] = 0;
+  }
+}
+
+} // namespace Stats
+
+void Model::printStatistics()
+{
+  using namespace Stats;
+  int totalTotalTime = 0;
+  int completeTime = firstStartTime.elapsed();
+  for ( int i = 0; i < numberOfPasses; i++ )
+    totalTotalTime += totalTime[i];
+
+  float msgPerSecond = totalMessages / ( totalTotalTime / 1000.0f );
+  float msgPerSecondComplete = totalMessages / ( completeTime / 1000.0f );
+
+  int messagesWithSameSubjectAvg = 0;
+  int messagesWithSameSubjectMax = 0;
+  foreach( const QList< MessageItem * > *messages, *mThreadingCacheMessageSubjectMD5ToMessageItem ) {
+    if ( messages->size() > messagesWithSameSubjectMax )
+      messagesWithSameSubjectMax = messages->size();
+    messagesWithSameSubjectAvg += messages->size();
+  }
+  messagesWithSameSubjectAvg = messagesWithSameSubjectAvg / (float)mThreadingCacheMessageSubjectMD5ToMessageItem->size();
+
+  int totalThreads = 0;
+  if ( !mGroupHeaderItemHash->isEmpty() ) {
+    foreach( const GroupHeaderItem *groupHeader, *mGroupHeaderItemHash ) {
+      totalThreads += groupHeader->childItemCount();
+    }
+  }
+  else
+    totalThreads = mRootItem->childItemCount();
+
+  kDebug() << "Finished filling the view with" << totalMessages << "messages";
+  kDebug() << "That took" << totalTotalTime << "msecs inside the model and"
+                          << completeTime << "in total.";
+  kDebug() << ( totalTotalTime / (float) completeTime ) * 100.0f
+           << "percent of the time was spent in the model.";
+  kDebug() << "Time for layoutChanged(), in msecs:" << layoutChangeTime
+           << "(" << (layoutChangeTime / (float)totalTotalTime) * 100.0f << "percent )";
+  kDebug() << "Time to expand tree, in msecs:" << expandingTreeTime
+           << "(" << (expandingTreeTime / (float)totalTotalTime) * 100.0f << "percent )";
+  kDebug() << "Number of messages per second in the model:" << msgPerSecond;
+  kDebug() << "Number of messages per second in total:" << msgPerSecondComplete;
+  kDebug() << "Number of threads:" << totalThreads;
+  kDebug() << "Number of groups:" << mGroupHeaderItemHash->size();
+  kDebug() << "Messages per thread:" << totalMessages / (float)totalThreads;
+  kDebug() << "Threads per group:" << totalThreads / (float)mGroupHeaderItemHash->size();
+  kDebug() << "Messages with the same subject:"
+              << "Max:" << messagesWithSameSubjectMax
+              << "Avg:" << messagesWithSameSubjectAvg;
+  kDebug();
+  kDebug() << "Now follows a breakdown of the jobs.";
+  kDebug();
+  for ( int i = 0; i < numberOfPasses; i++ ) {
+    if ( totalTime[i] == 0 )
+      continue;
+    float elementsPerSecond = numElements[i] / ( totalTime[i] / 1000.0f );
+    float percent = totalTime[i] / (float)totalTotalTime * 100.0f;
+    kDebug() << "----------------------------------------------";
+    kDebug() << "Job" << i + 1 << "(" << jobDescription[i] << ")";
+    kDebug() << "Share of complete time:" << percent << "percent";
+    kDebug() << "Time in msecs:" << totalTime[i];
+    kDebug() << "Number of elements:" << numElements[i]; // TODO: map of element string
+    kDebug() << "Elements per second:" << elementsPerSecond;
+    kDebug() << "Number of chunks:" << chunks[i];
+    kDebug();
+  }
+
+  kDebug() << "==========================================================";
+  resetStats();
+}
+
+#endif
 
 Model::ViewItemJobResult Model::viewItemJobStepInternal()
 {
@@ -3573,17 +3702,31 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
     // Have a job to do.
     ViewItemJob * job = mViewItemJobs->first();
 
-#ifdef WANT_FILL_VIEW_STATS
-    // BEGIN STATS (REMOVE FOR RELEASE)
-    static int statsTotalMessages = 0;
-    static QTime tStatsTotalStart;
-    if ( job->currentPass() == ViewItemJob::Pass1Fill && job->currentIndex() == job->startIndex() )
-    {
-      statsTotalMessages = job->endIndex() - job->startIndex();
-      tStatsTotalStart = QTime::currentTime();
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+
+    // Here we check if an old job has just completed or if we are at the start of the
+    // first job. We then initalize job data stuff and timers based on this.
+
+    const int currentPass = job->currentPass();
+    const bool firstChunk = currentPass != Stats::lastPass;
+    if ( currentPass != Stats::lastPass && Stats::lastPass != -1 ) {
+      Stats::totalTime[Stats::lastPass] = Stats::currentJobStartTime.elapsed();
     }
-    // END STATS (REMOVE FOR RELEASE)
-#endif //WANT_FILL_VIEW_STATS
+    const bool firstJob = job->currentPass() == ViewItemJob::Pass1Fill && firstChunk;
+    const int elements = job->endIndex() - job->startIndex();
+    if ( firstJob ) {
+      Stats::resetStats();
+      Stats::totalMessages = elements;
+      Stats::firstStartTime.restart();
+    }
+    if ( firstChunk ) {
+      Stats::numElements[currentPass] = elements;
+      Stats::currentJobStartTime.restart();
+    }
+    Stats::chunks[currentPass]++;
+    Stats::lastPass = currentPass;
+
+#endif
 
     mViewItemJobStepIdleInterval = job->idleInterval();
     mViewItemJobStepChunkTimeout = job->chunkTimeout();
@@ -3625,21 +3768,12 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
           case ViewItemJob::Pass5:
             KPIM::BroadcastStatus::instance()->setStatusMsg( i18np("Updated 1 Group of %2", "Updated %1 Groups of %2", job->currentIndex() - job->startIndex(), ( job->endIndex() - job->startIndex() ) + 1 ) );
           break;
+          default: break;
         }
         return ViewItemJobInterrupted;
       }
       break;
       case ViewItemJobCompleted:
-
-#ifdef WANT_FILL_VIEW_STATS
-        // BEGIN STATS (REMOVE FOR RELEASE)
-        {
-          int msecs = tStatsTotalStart.msecsTo( QTime::currentTime() );
-          double dMsgSec = (statsTotalMessages * 1000.0) / msecs;
-          kDebug() << "FILLED THE VIEW AT " << dMsgSec << " MSG/SEC";
-        }
-        // END STATS (REMOVE FOR RELEASE)
-#endif //WANT_FILL_VIEW_STATS
 
         // If this job worked with a disconnected UI, emit layoutChanged()
         // to reconnect it. We go back to normal operation now.
@@ -3649,17 +3783,19 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
           // This call would destroy the expanded state of items.
           // This is why when mModelForItemFunctions was 0 we didn't actually expand them
           // but we just set a "ExpandNeeded" mark...
-          kDebug() << "Emitting layoutChanged()";
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+          QTime layoutChangedTimer;
+          layoutChangedTimer.start();
+#endif
           mView->modelAboutToEmitLayoutChanged();
           emit layoutChanged();
           mView->modelEmittedLayoutChanged();
-          kDebug() << "Emitted layoutChanged()";
 
-#ifdef WANT_FILL_VIEW_STATS
-          // BEGIN STATS (REMOVE FOR RELEASE)
-          tStatsTotalStart = QTime::currentTime();
-          // END STATS (REMOVE FOR RELEASE)
-#endif //WANT_FILL_VIEW_STATS
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+          Stats::layoutChangeTime = layoutChangedTimer.elapsed();
+          QTime expandingTime;
+          expandingTime.start();
+#endif
 
           // expand all the items that need it in a single sweep
 
@@ -3674,17 +3810,20 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
                 syncExpandedStateOfSubtree( *it );
             }
           }
-
-#ifdef WANT_FILL_VIEW_STATS
-          // BEGIN STATS (REMOVE FOR RELEASE)
-          kDebug() << "EXPANDING THE TREE TOOK " << tStatsTotalStart.msecsTo( QTime::currentTime() ) << " MSECS";
-          // END STATS (REMOVE FOR RELEASE)
-#endif //WANT_FILL_VIEW_STATS
-
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+          Stats::expandingTreeTime = expandingTime.elapsed();
+#endif
         }
 
         // this job has been completed
         delete mViewItemJobs->takeFirst();
+
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+        // Last job finished!
+        Stats::totalTime[currentPass] = Stats::currentJobStartTime.elapsed();
+        printStatistics();
+#endif
+
         // take care of small jobs which never timeout by themselves because
         // of a small number of messages. At the end of each job check
         // the time used and if we're timeoutting and there is another job
@@ -3696,6 +3835,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
             return ViewItemJobInterrupted;
           // else it's completed in fact
         } // else proceed with the next job
+
       break;
       default:
         // This is *really* a BUG

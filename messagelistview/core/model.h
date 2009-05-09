@@ -21,6 +21,8 @@
 #ifndef __KMAIL_MESSAGELISTVIEW_CORE_MODEL_H__
 #define __KMAIL_MESSAGELISTVIEW_CORE_MODEL_H__
 
+#include <config-kmail.h>
+
 #include <QAbstractItemModel>
 #include <QList>
 #include <QHash>
@@ -126,6 +128,7 @@ private:
 
   /**
    * Group Key (usually the label) -> GroupHeaderItem, used to quickly find groups, pointers are shallow copies
+   * TODO: Why are all these pointers?? Make them non-pointers!
    */
   QHash< QString, GroupHeaderItem * > * mGroupHeaderItemHash;
 
@@ -522,6 +525,8 @@ private:
   };
   ViewItemJobResult viewItemJobStepInternal();
   ViewItemJobResult viewItemJobStepInternalForJob( ViewItemJob *job, const QTime &tStart );
+
+  // FIXME: Those look like they should be made virtual in some job class! -> Refactor
   ViewItemJobResult viewItemJobStepInternalForJobPass1Fill( ViewItemJob *job, const QTime &tStart );
   ViewItemJobResult viewItemJobStepInternalForJobPass1Cleanup( ViewItemJob *job, const QTime &tStart );
   ViewItemJobResult viewItemJobStepInternalForJobPass1Update( ViewItemJob *job, const QTime &tStart );
@@ -550,6 +555,11 @@ private:
    * and viewable.
    */
   void saveExpandedStateOfSubtree( Item *root );
+
+#ifdef KMAIL_FOLDEROPEN_PROFILE
+  // This prints out all the stats we collected
+  void printStatistics();
+#endif
 
   enum PropertyChanges
   {

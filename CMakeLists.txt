@@ -23,6 +23,8 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
   endif (KdeSubversion_FOUND)
 endif (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
 
+option(KMAIL_FOLDEROPEN_PROFILE "Enable debug output for timing folder loading" FALSE)
+
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h)
 
