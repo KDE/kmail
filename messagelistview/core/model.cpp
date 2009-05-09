@@ -3544,9 +3544,9 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
   return viewItemJobStepInternalForJobPass5( job, tStart );
 }
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
 
-// Namespace to collect all the vars and functions for KMAIL_FOLDEROPEN_PROFILE
+// Namespace to collect all the vars and functions for KDEPIM_FOLDEROPEN_PROFILE
 namespace Stats {
 
 // Number of existing jobs/passes
@@ -3686,7 +3686,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
     // Have a job to do.
     ViewItemJob * job = mViewItemJobs.first();
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
 
     // Here we check if an old job has just completed or if we are at the start of the
     // first job. We then initalize job data stuff and timers based on this.
@@ -3767,7 +3767,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
           // This call would destroy the expanded state of items.
           // This is why when mModelForItemFunctions was 0 we didn't actually expand them
           // but we just set a "ExpandNeeded" mark...
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
           QTime layoutChangedTimer;
           layoutChangedTimer.start();
 #endif
@@ -3775,7 +3775,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
           emit layoutChanged();
           mView->modelEmittedLayoutChanged();
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
           Stats::layoutChangeTime = layoutChangedTimer.elapsed();
           QTime expandingTime;
           expandingTime.start();
@@ -3794,7 +3794,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
                 syncExpandedStateOfSubtree( *it );
             }
           }
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
           Stats::expandingTreeTime = expandingTime.elapsed();
 #endif
         }
@@ -3802,7 +3802,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
         // this job has been completed
         delete mViewItemJobs.takeFirst();
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
         // Last job finished!
         Stats::totalTime[currentPass] = Stats::currentJobStartTime.elapsed();
         printStatistics();

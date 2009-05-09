@@ -47,14 +47,14 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
   : Core::StorageModel( parent ), mFolder( folder )
 {
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
   QTime openFolderTimer;
   openFolderTimer.start();
 #endif
 
   mFolder->open( "MessageListView::StorageModel" );
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
   kDebug() << "==========================================================";
   kDebug() << "Opening the folder took" << openFolderTimer.elapsed() << "msecs.";
   QTime serialCacheTimer;
@@ -70,7 +70,7 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
        index->addToSerialCache();
   }
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
   kDebug() << "Creating the serial cache took" << serialCacheTimer.elapsed() << "msecs.";
 #endif
 

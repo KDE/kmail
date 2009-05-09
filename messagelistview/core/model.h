@@ -555,7 +555,7 @@ private:
    */
   void saveExpandedStateOfSubtree( Item *root );
 
-#ifdef KMAIL_FOLDEROPEN_PROFILE
+#ifdef KDEPIM_FOLDEROPEN_PROFILE
   // This prints out all the stats we collected
   void printStatistics();
 #endif
