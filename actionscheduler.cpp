@@ -711,7 +711,7 @@ void ActionScheduler::moveMessage()
   if (!orgMsg || !orgMsg->parent()) {
     // Original message is gone, no point filtering it anymore
     mSrcFolder->removeMsg( mSrcFolder->find( msg ) );
-    kDebug(5006) << "The original serial number is missing."
+    kDebug() << "The original serial number is missing."
                  << "Cannot complete the filtering.";
     mExecutingLock = false;
     processMessageTimer->start( 0 );

@@ -65,116 +65,116 @@ public:
     SieveDebugDataExtractor()
     :   KSieve::ScriptBuilder()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     virtual ~SieveDebugDataExtractor()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
 private:
     void commandStart( const QString & identifier )
     {
-        kDebug( 5006 ) <<"Identifier: '" << identifier <<"'";
+        kDebug() <<"Identifier: '" << identifier <<"'";
         reset();
     }
 
     void commandEnd()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void testStart( const QString & )
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void testEnd()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void testListStart()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void testListEnd()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void blockStart()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void blockEnd()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void hashComment( const QString & )
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void bracketComment( const QString & )
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void lineFeed()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void error( const KSieve::Error & e )
     {
-        kDebug( 5006 ) <<"###" <<"Error:" <<
+        kDebug() <<"###" <<"Error:" <<
             e.asString() << "@" << e.line() << "," << e.column();
     }
 
     void finished()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void taggedArgument( const QString & tag )
     {
-        kDebug( 5006 ) <<"Tag: '" << tag <<"'";
+        kDebug() <<"Tag: '" << tag <<"'";
     }
 
     void stringArgument( const QString & string, bool, const QString & )
     {
-        kDebug( 5006 ) <<"String: '" << string <<"'";
+        kDebug() <<"String: '" << string <<"'";
     }
 
     void numberArgument( unsigned long number, char )
     {
-        kDebug( 5006 ) <<"Number:" << number;
+        kDebug() <<"Number:" << number;
     }
 
     void stringListArgumentStart()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
     void stringListEntry( const QString & string, bool, const QString & )
     {
-        kDebug( 5006 ) <<"String: '" << string <<"'";
+        kDebug() <<"String: '" << string <<"'";
     }
 
     void stringListArgumentEnd()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 
 private:
     void reset()
     {
-        kDebug( 5006 ) ;
+        kDebug() ;
     }
 };
 
@@ -218,7 +218,7 @@ SieveDebugDialog::~SieveDebugDialog()
         mSieveJob->kill();
         mSieveJob = 0;
     }
-    kDebug( 5006 ) ;
+    kDebug() ;
 }
 
 static KUrl urlFromAccount( const KMail::ImapAccountBase * a ) {
@@ -310,7 +310,7 @@ void SieveDebugDialog::slotDiagNextScript()
 void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
     const QString &script, bool active )
 {
-    kDebug( 5006 ) << "( ??," << success
+    kDebug() << "( ??," << success
                    << ", ?," << active << ")" << endl
                    << "script:" << endl
                    << script;
@@ -335,7 +335,7 @@ void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
 void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
     const QStringList &scriptList, const QString &activeScript )
 {
-    kDebug( 5006 ) <<"Success:" << success <<", List:" << scriptList.join("," ) <<
+    kDebug() <<"Success:" << success <<", List:" << scriptList.join("," ) <<
         ", active:" << activeScript;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
@@ -373,7 +373,7 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
 
 void SieveDebugDialog::slotDialogOk()
 {
-    kDebug(5006);
+    kDebug();
 }
 
 void SieveDebugDialog::slotPutActiveResult( SieveJob * job, bool success )
@@ -397,7 +397,7 @@ void SieveDebugDialog::handlePutResult( SieveJob *, bool success, bool activated
             "Out of Office reply has been deactivated." ) );
     }
 
-    kDebug( 5006 ) << "( ???," << success <<", ? )";
+    kDebug() << "( ???," << success <<", ? )";
     mSieveJob = 0; // job deletes itself after returning from this slot!
 }
 

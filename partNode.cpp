@@ -85,7 +85,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     mType    = explicitType;     // this happens e.g. for the Root Node
     mSubType = explicitSubType;  // representing the _whole_ message
   } else {
-//    kDebug(5006) << "explicitType == DwMime::kTypeUnknown";
+//    kDebug() << "explicitType == DwMime::kTypeUnknown";
     if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
       mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
       mSubType = dwPart->Headers().ContentType().Subtype();
@@ -99,7 +99,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     DwString type, subType;
     DwTypeEnumToStr( mType, type );
     DwSubtypeEnumToStr( mSubType, subType );
-    kDebug(5006) << "\n" << type.c_str() <<"/" << subType.c_str();
+    kDebug() << "\n" << type.c_str() <<"/" << subType.c_str();
   }
 #endif
 }
@@ -163,7 +163,7 @@ partNode::~partNode() {
 
 #ifndef NDEBUG
 void partNode::dump( int chars ) const {
-  kDebug(5006) << QString().fill( ' ', chars ) <<"+"
+  kDebug() << QString().fill( ' ', chars ) <<"+"
 		<< typeString() << '/' << subTypeString();
   if ( mChild )
     mChild->dump( chars + 1 );
@@ -291,7 +291,7 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
         }
     }
 
-//kDebug(5006) <<"\n\n  KMMsgEncryptionState:" << myState;
+//kDebug() <<"\n\n  KMMsgEncryptionState:" << myState;
 
     return myState;
 }
@@ -334,7 +334,7 @@ KMMsgSignatureState  partNode::overallSignatureState() const
         }
     }
 
-//kDebug(5006) <<"\n\n  KMMsgSignatureState:" << myState;
+//kDebug() <<"\n\n  KMMsgSignatureState:" << myState;
 
     return myState;
 }

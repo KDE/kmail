@@ -214,7 +214,7 @@ void KMReaderMainWin::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-  kDebug(5006) << "Reply with template:" << tmpl;
+  kDebug() << "Reply with template:" << tmpl;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
@@ -225,7 +225,7 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  kDebug(5006) << "Reply to All with template:" << tmpl;
+  kDebug() << "Reply to All with template:" << tmpl;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
@@ -236,7 +236,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
-  kDebug(5006) << "Forward with template:" << tmpl;
+  kDebug() << "Forward with template:" << tmpl;
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );

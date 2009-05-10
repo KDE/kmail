@@ -1,1 +1,2 @@
 SKIP /tests
+EXTRA kdebug

@@ -60,11 +60,11 @@ static unsigned int IMAPRightsToPermission( const QString& str, const KUrl& url,
     // Reading without 'seen' is, well, annoying. Unusable, even.
     // So we treat 'rs' as a single one.
     // But if the permissions were set out of kmail, better check that both are set
-    kWarning(5006) <<"IMAPRightsToPermission: found read (r) but not seen (s). Things will not work well for folder" << url <<" and user" << ( user.isEmpty() ?"myself" : user );
+    kWarning() <<"IMAPRightsToPermission: found read (r) but not seen (s). Things will not work well for folder" << url <<" and user" << ( user.isEmpty() ?"myself" : user );
     if ( perm & ACLJobs::Administer )
-      kWarning(5006) <<"You can change this yourself in the ACL dialog";
+      kWarning() <<"You can change this yourself in the ACL dialog";
     else
-      kWarning(5006) <<"Ask your admin for 's' permissions.";
+      kWarning() <<"Ask your admin for 's' permissions.";
     // Is the above correct enough to be turned into a KMessageBox?
   }
 

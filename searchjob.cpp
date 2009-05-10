@@ -173,7 +173,7 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
     }
   }
 
-  kDebug(5006) << search <<";localSearch=" << mLocalSearchPattern->asString();
+  kDebug() << search <<";localSearch=" << mLocalSearchPattern->asString();
   return search;
 }
 

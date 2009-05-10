@@ -157,19 +157,19 @@ int KMFolderMaildir::createMaildirFolders( const QString &folderPath )
 
   // create the maildir directory structure
   if ( KDE_mkdir( QFile::encodeName( folderPath ), S_IRWXU ) > 0 ) {
-    kDebug(5006) << "Could not create folder" << folderPath;
+    kDebug() << "Could not create folder" << folderPath;
     return errno;
   }
   if ( KDE_mkdir( QFile::encodeName( folderPath + "/new" ), S_IRWXU ) > 0 ) {
-    kDebug(5006) << "Could not create folder" << folderPath << "/new";
+    kDebug() << "Could not create folder" << folderPath << "/new";
     return errno;
   }
   if ( KDE_mkdir( QFile::encodeName( folderPath + "/cur" ), S_IRWXU ) > 0 ) {
-    kDebug(5006) << "Could not create folder" << folderPath << "/cur";
+    kDebug() << "Could not create folder" << folderPath << "/cur";
     return errno;
   }
   if ( KDE_mkdir( QFile::encodeName( folderPath + "/tmp" ), S_IRWXU ) > 0 ) {
-    kDebug(5006) << "Could not create folder" << folderPath << "/tmp";
+    kDebug() << "Could not create folder" << folderPath << "/tmp";
     return errno;
   }
 
@@ -258,7 +258,7 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
 
   unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
                            qMin( mMsgList.count(), startIndex + nbMessages );
-  //kDebug(5006) <<"KMFolderMaildir: compacting from" << startIndex <<" to" << stopIndex;
+  //kDebug() <<"KMFolderMaildir: compacting from" << startIndex <<" to" << stopIndex;
   for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
     if (!mi)
@@ -375,7 +375,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     aMsg->setHeaderField( "X-UID", uidHeader );
 
   if ( msgText.isEmpty() ) {
-    kDebug(5006) <<"Message added to folder `" << objectName() <<"' contains no data. Ignoring it.";
+    kDebug() <<"Message added to folder `" << objectName() <<"' contains no data. Ignoring it.";
     return 0;
   }
 
@@ -393,7 +393,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   KMFolderOpener openThis(folder(), "maildir");
   if (openThis.openResult())
   {
-    kDebug(5006) << openThis.openResult() << "of folder:" << label();
+    kDebug() << openThis.openResult() << "of folder:" << label();
     return openThis.openResult();
   }
 
@@ -423,11 +423,11 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     else
       ++mUnreadMsgs;
     if ( !mQuiet ) {
-      kDebug( 5006 ) << "FolderStorage::msgStatusChanged";
+      kDebug() << "FolderStorage::msgStatusChanged";
       emit numUnreadMsgsChanged( folder() );
     }else{
       if ( !mEmitChangedTimer->isActive() ) {
-//        kDebug( 5006 )<<"QuietTimer started";
+//        kDebug()<<"QuietTimer started";
         mEmitChangedTimer->start( 3000 );
       }
       mChanged = true;
@@ -468,17 +468,17 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     KMMsgBase * mb = &aMsg->toMsgBase();
     int error = writeMessages( mb, true /*flush*/ );
     if ( error )
-	kDebug(5006) << "Error: writing the index for this folder failed";
+	kDebug() << "Error: writing the index for this folder failed";
 
     if ( mExportsSernums )
       error |= appendToFolderIdsFile( idx );
 
     if ( error ) {
-      kDebug(5006) << "Error: Could not add message to folder (No space left on device?)";
+      kDebug() << "Error: Could not add message to folder (No space left on device?)";
 #ifdef KMAIL_SQLITE_INDEX
 #else
       if ( KDE_ftell( mIndexStream ) > revert ) {
-	kDebug(5006) << "Undoing changes";
+	kDebug() << "Undoing changes";
 	truncate( QFile::encodeName( indexLocation() ), revert );
       }
 #endif
@@ -550,7 +550,7 @@ DwString KMFolderMaildir::getDwString(int idx)
       return str;
     }
   }
-  kDebug(5006) <<"Could not open file r+" << abs_file;
+  kDebug() <<"Could not open file r+" << abs_file;
   return DwString();
 }
 
@@ -580,9 +580,9 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   // open the file and get a pointer to it
   QFile f( file );
   if ( f.open( QIODevice::ReadOnly ) == false ) {
-    kWarning(5006) <<"The file '" << QFile::encodeName(dir) <<"/" << file
-                   << "' could not be opened for reading the message."
-                   << "Please check ownership and permissions.";
+    kWarning() << "The file '" << QFile::encodeName(dir) << "/" << file
+               << "' could not be opened for reading the message."
+               << "Please check ownership and permissions.";
     return;
   }
 
@@ -803,7 +803,7 @@ int KMFolderMaildir::createIndexFromContents()
   dirinfo.setFile(location() + "/new");
   if (!dirinfo.exists() || !dirinfo.isDir())
   {
-    kDebug(5006) << "Directory" << location() <<"/new doesn't exist or is a file";
+    kDebug() << "Directory" << location() <<"/new doesn't exist or is a file";
     return 1;
   }
   QDir newDir(location() + "/new");
@@ -812,7 +812,7 @@ int KMFolderMaildir::createIndexFromContents()
   dirinfo.setFile(location() + "/cur");
   if (!dirinfo.exists() || !dirinfo.isDir())
   {
-    kDebug(5006) << "Directory" << location() <<"/cur doesn't exist or is a file";
+    kDebug() << "Directory" << location() <<"/cur doesn't exist or is a file";
     return 1;
   }
   QDir curDir(location() + "/cur");
@@ -929,7 +929,7 @@ bool KMFolderMaildir::removeFile( const QString & folderPath,
       return true;
   }
 
-  kDebug(5006) <<"Can't delete" << abs_file << perror;
+  kDebug() <<"Can't delete" << abs_file << perror;
   return false;
 }
 
@@ -1060,7 +1060,7 @@ qint64 KMFolderMaildir::doFolderSize() const
   // a DirectorySizeJob right away
   if ( s_DirSizeJobQueue->size() == 1 )
   {
-    //kDebug(5006) << "Starting DirectorySizeJob for folder" << location();
+    //kDebug() << "Starting DirectorySizeJob for folder" << location();
     KIO::DirectorySizeJob* job = KIO::directorySize( list );
     connect( job, SIGNAL( result( KJob* ) ),
              this, SLOT( slotDirSizeJobResult( KJob*) ) );
@@ -1076,7 +1076,7 @@ void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
   if ( dirsize && !dirsize->error() )
   {
     mCachedSize = dirsize->totalSize();
-    //kDebug(5006) << << "DirectorySizeJob completed. Folder"
+    //kDebug() << << "DirectorySizeJob completed. Folder"
     //             << location() << "has size" << mSize;
     emit folderSizeChanged();
   }
@@ -1091,7 +1091,7 @@ void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
     if ( entry.first )
     {
       // start the next dirSizeJob
-      //kDebug(5006) << "Starting DirectorySizeJob for folder"
+      //kDebug() << "Starting DirectorySizeJob for folder"
       //             << entry.first->location();
       KIO::DirectorySizeJob* job = KIO::directorySize( entry.second );
       connect( job, SIGNAL( result( KJob* ) ),

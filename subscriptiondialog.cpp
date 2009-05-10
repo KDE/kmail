@@ -239,7 +239,7 @@ void SubscriptionDialogBase::slotLoadFolders()
   // we need a connection
   if ( ai->makeConnection() == ImapAccountBase::Error )
   {
-    kWarning(5006) <<"SubscriptionDialog - got no connection";
+    kWarning() <<"SubscriptionDialog - got no connection";
     return;
   } else if ( ai->makeConnection() == ImapAccountBase::Connecting )
   {

@@ -813,7 +813,7 @@ void KMSearchPattern::purify() {
     --it;
     if ( (*it)->isEmpty() ) {
 #ifndef NDEBUG
-      kDebug(5006) << "Removing" << (*it)->asString();
+      kDebug() << "Removing" << (*it)->asString();
 #endif
       erase( it );
       it = end();
@@ -826,7 +826,7 @@ void KMSearchPattern::readConfig( const KConfigGroup & config ) {
 
   mName = config.readEntry("name");
   if ( !config.hasKey("rules") ) {
-    kDebug(5006) << "Found legacy config! Converting.";
+    kDebug() << "Found legacy config! Converting.";
     importLegacyConfig( config );
     return;
   }

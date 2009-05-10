@@ -263,7 +263,7 @@ void KMail::FolderDialogACLTab::ListViewItem::load( const ACLListEntry& entry )
   // It's ok in distribution list names though, that's why this check is only done here
   // and also why there's no validator on the lineedit.
   if ( entry.userId.contains( ' ' ) )
-    kWarning(5006) <<"Userid contains a space!!!  '" << entry.userId <<"'";
+    kWarning() <<"Userid contains a space!!!  '" << entry.userId <<"'";
 
   setUserId( entry.userId );
   mPermissions = entry.permissions;
@@ -788,7 +788,7 @@ void KMail::FolderDialogACLTab::slotACLChanged( const QString& userId, int permi
     ok = ( nr > 0 );
   }
   if ( !ok )
-    kWarning(5006) <<" no item found for userId" << userId;
+    kWarning() <<" no item found for userId" << userId;
 }
 
 void KMail::FolderDialogACLTab::slotChanged( bool b )

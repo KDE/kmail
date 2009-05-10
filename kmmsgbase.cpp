@@ -243,7 +243,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 
 void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int idx )
 {
-    //kDebug(5006) <<"***setEncryptionState1(" << status <<" )";
+    //kDebug() <<"***setEncryptionState1(" << status <<" )";
     mDirty = true;
     if (storage())
         storage()->headerOfMsgChanged(this, idx);
@@ -251,7 +251,7 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int i
 
 void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 {
-    //kDebug(5006) <<"***setEncryptionState2(" << (status.isNull() ? '?' : status.toLatin1()) <<" )";
+    //kDebug() <<"***setEncryptionState2(" << (status.isNull() ? '?' : status.toLatin1()) <<" )";
 
     if( status.toLatin1() == (char)KMMsgEncryptionStateUnknown )
         setEncryptionState( KMMsgEncryptionStateUnknown, idx );
@@ -268,7 +268,7 @@ void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 
 void KMMsgBase::setSignatureState( const KMMsgSignatureState /*status*/, int idx )
 {
-    //kDebug(5006) <<"***setSignatureState1(" << status <<" )";
+    //kDebug() <<"***setSignatureState1(" << status <<" )";
     mDirty = true;
     if (storage())
          storage()->headerOfMsgChanged(this, idx);
@@ -282,7 +282,7 @@ void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
-    //kDebug(5006) <<"***setSignatureState2(" << (status.isNull() ? '?' : status.toLatin1()) <<" )";
+    //kDebug() <<"***setSignatureState2(" << (status.isNull() ? '?' : status.toLatin1()) <<" )";
 
     if( status.toLatin1() == (char)KMMsgSignatureStateUnknown )
         setSignatureState( KMMsgSignatureStateUnknown, idx );
@@ -821,7 +821,7 @@ QByteArray KMMsgBase::autoDetectCharset(const QByteArray &_encoding, const QStri
        {
          const QTextCodec *codec = KMMsgBase::codecForName(encoding);
          if (!codec) {
-           kDebug(5006) <<"Auto-Charset: Something is wrong and I can not get a codec. [" << encoding <<"]";
+           kDebug() <<"Auto-Charset: Something is wrong and I can not get a codec. [" << encoding <<"]";
          } else {
            if (codec->canEncode(text))
               return encoding;
@@ -878,7 +878,7 @@ namespace {
   template < typename T > void copy_from_stream( T & x ) {
     if( g_chunk_offset + int(sizeof(T)) > g_chunk_length ) {
       g_chunk_offset = g_chunk_length;
-      kDebug( 5006 ) <<"This should never happen..";
+      kDebug() <<"This should never happen..";
       x = 0;
     } else {
       // the memcpy is optimized out by the compiler for the values
@@ -1035,7 +1035,7 @@ retry:
     MsgPartType type = (MsgPartType) tmp;
 
     if (g_chunk_offset + len > mIndexLength) {
-      kDebug(5006) <<"This should never happen..";
+      kDebug() <<"This should never happen..";
 #ifndef KMAIL_SQLITE_INDEX
       if(using_mmap) {
         g_chunk_length = 0;
@@ -1263,7 +1263,7 @@ QString KMMsgBase::replacePrefixes( const QString& str,
                       .arg( prefixRegExps.join(")|(?:") );
   QRegExp rx( bigRegExp, Qt::CaseInsensitive );
   if ( !rx.isValid() ) {
-    kWarning(5006) << "bigRegExp = \""
+    kWarning() << "bigRegExp = \""
                    << bigRegExp << "\"\n"
                    << "prefix regexp is invalid!";
     // try good ole Re/Fwd:

@@ -114,7 +114,7 @@ QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KConfig *config
         filter->purify();
         if ( filter->isEmpty() ) {
     #ifndef NDEBUG
-            kDebug(5006) << "Filter" << filter->asString() << "is empty!";
+            kDebug() << "Filter" << filter->asString() << "is empty!";
     #endif
             delete filter;
         } else

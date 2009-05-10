@@ -99,7 +99,7 @@ SnippetWidget::~SnippetWidget()
  */
 void SnippetWidget::slotAdd()
 {
-  //kDebug(5006) << "Ender slotAdd()";
+  //kDebug() << "Ender slotAdd()";
   SnippetDlg dlg( mActionCollection, this );
   dlg.setObjectName( "SnippetDlg" );
 
@@ -163,7 +163,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
  */
 void SnippetWidget::slotAddGroup()
 {
-  //kDebug(5006) << "Ender slotAddGroup()";
+  //kDebug() << "Ender slotAddGroup()";
   SnippetDlg dlg( mActionCollection, this );
   dlg.setObjectName( "SnippetDlg" );
   dlg.setGroupMode( true );
@@ -199,7 +199,7 @@ void SnippetWidget::slotRemove()
     }
   }
 
-  //kDebug(5006) << "remove " << snip->getName();
+  //kDebug() << "remove " << snip->getName();
   int snipIndex = _list.indexOf(snip);
   if (snipIndex > -1)
     delete _list.takeAt(snipIndex);
@@ -399,7 +399,7 @@ void SnippetWidget::readConfig()
   SnippetItem *item;
   SnippetGroup *group;
 
-  //kDebug(5006);
+  //kDebug();
 
   //if entry doesn't get found, this will return -1 which we will need a bit later
   int iCount = kcg.readEntry("snippetGroupCount", -1);
@@ -413,11 +413,11 @@ void SnippetWidget::readConfig()
 
     strNameVal = kcg.readEntry(strKeyName, "");
     iIdVal = kcg.readEntry(strKeyId, -1);
-    //kDebug(5006) << "Read group "  << " " << iIdVal;
+    //kDebug() << "Read group "  << " " << iIdVal;
 
     if ( !strNameVal.isEmpty() && iIdVal != -1 ) {
       group = new SnippetGroup(this, strNameVal, iIdVal);
-      //kDebug(5006) << "Created group " << group->getName() << " " << group->getId();
+      //kDebug() << "Created group " << group->getName() << " " << group->getId();
       _list.append(group);
     }
   }
@@ -442,12 +442,12 @@ void SnippetWidget::readConfig()
         strNameVal = kcg.readEntry(strKeyName, "");
         strTextVal = kcg.readEntry(strKeyText, "");
         iParentVal = kcg.readEntry(strKeyId, -1);
-        //kDebug(5006) << "Read item " << strNameVal << " " << iParentVal;
+        //kDebug() << "Read item " << strNameVal << " " << iParentVal;
 
         if ( !strNameVal.isEmpty() && !strTextVal.isEmpty() && iParentVal != -1) {
             KShortcut shortcut( kcg.readEntry( QString("snippetShortcut_%1").arg(i), QString() ) );
             item = makeItem( SnippetItem::findGroupById( iParentVal, _list ), strNameVal, strTextVal, shortcut.primary() );
-            //kDebug(5006) << "Created item " << item->getName() << " " << item->getParent();
+            //kDebug() << "Created item " << item->getName() << " " << item->getParent();
             _list.append(item);
         }
     }

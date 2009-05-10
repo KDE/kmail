@@ -68,13 +68,13 @@ void ListJob::execute()
 {
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
   {
-    kWarning(5006) <<"ListJob - got no connection";
+    kWarning() <<"ListJob - got no connection";
     deleteLater();
     return;
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
     // We'll wait for the connectionResult signal from the account.
-    kDebug(5006) <<"ListJob - waiting for connection";
+    kDebug() <<"ListJob - waiting for connection";
     connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotConnectionResult(int, const QString&) ) );
     return;
@@ -87,7 +87,7 @@ void ListJob::execute()
     } else if ( mStorage && mStorage->folderType() == KMFolderTypeCachedImap ) {
       mPath = static_cast<KMFolderCachedImap*>(mStorage)->imapPath();
     } else {
-      kError(5006) <<"ListJob - no valid path and no folder given";
+      kError() <<"ListJob - no valid path and no folder given";
       deleteLater();
       return;
     }
@@ -139,7 +139,7 @@ void ListJob::execute()
       + ";TYPE=" + ltype
       + section );
   // go
-  //kDebug(5006) <<"start listjob for" << url.path();
+  //kDebug() <<"start listjob for" << url.path();
   KIO::SimpleJob *job = KIO::listDir( url, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );

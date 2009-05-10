@@ -267,7 +267,7 @@ int FolderStorage::expungeOldMsg(int days)
     msgTime = mb->date();
 
     if (msgTime < maxTime) {
-      //kDebug(5006) <<"deleting msg" << i <<" :" << mb->subject() <<" -" << mb->dateStr(); //;
+      //kDebug() <<"deleting msg" << i <<" :" << mb->subject() <<" -" << mb->dateStr(); //;
       removeMsg( i );
       msgnb++;
     }
@@ -385,7 +385,7 @@ void FolderStorage::removeMsg(int idx, bool)
   //assert(idx>=0);
   if(idx < 0)
   {
-    kDebug(5006) << "idx < 0";
+    kDebug() << "idx < 0";
     return;
   }
 
@@ -403,11 +403,11 @@ void FolderStorage::removeMsg(int idx, bool)
       (folder() == kmkernel->outboxFolder())) {
     --mUnreadMsgs;
     if ( !mQuiet ) {
-//      kDebug( 5006 ) <<"FolderStorage::msgStatusChanged";
+//      kDebug() <<"FolderStorage::msgStatusChanged";
       emit numUnreadMsgsChanged( folder() );
     }else{
       if ( !mEmitChangedTimer->isActive() ) {
-//        kDebug( 5006 )<<"EmitChangedTimer started";
+//        kDebug()<<"EmitChangedTimer started";
         mEmitChangedTimer->start( 3000 );
       }
       mChanged = true;
@@ -495,7 +495,7 @@ KMMessage* FolderStorage::getMsg(int idx)
       msg = readMsg(idx);
       // sanity check
       if (mCompactable && (msg->subject().isEmpty() != mbSubject.isEmpty())) {
-        kDebug(5006) <<"Error:" << location() <<
+        kDebug() <<"Error:" << location() <<
           "Index file is inconsistent with folder file. This should never happen.";
         mCompactable = false; // Don't compact
         writeConfig();
@@ -945,7 +945,7 @@ void FolderStorage::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 //-----------------------------------------------------------------------------
 void FolderStorage::readConfig()
 {
-  //kDebug(5006)<<"#### READING CONFIG  ="<< name();
+  //kDebug()<<"#### READING CONFIG  ="<< name();
   KConfig* config = KMKernel::config();
   KConfigGroup group(config, folder()->configGroupName());
   if (mUnreadMsgs == -1)
@@ -1069,7 +1069,7 @@ void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int 
 void FolderStorage::setRDict( KMMsgDictREntry *rentry ) const
 {
   if ( ! mExportsSernums )
-    kDebug(5006) <<"WTF, this FolderStorage should be invisible to the msgdict, who is calling us?" << kBacktrace();
+    kDebug() <<"WTF, this FolderStorage should be invisible to the msgdict, who is calling us?" << kBacktrace();
   assert( mExportsSernums ); // otherwise things are very wrong
   if ( rentry == mRDict )
     return;

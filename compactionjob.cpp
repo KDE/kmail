@@ -100,17 +100,17 @@ int MboxCompactionJob::executeNow( bool silent )
   FolderStorage *storage = mSrcFolder->storage();
   KMFolderMbox *mbox = static_cast<KMFolderMbox *>( storage );
   if ( !storage->compactable() ) {
-    kDebug(5006) << storage->location() <<" compaction skipped.";
+    kDebug() << storage->location() <<" compaction skipped.";
     if ( !mSilent ) {
       QString str = i18n( "For safety reasons, compaction has been disabled for %1", mbox->label() );
       BroadcastStatus::instance()->setStatusMsg( str );
     }
     return 0;
   }
-  kDebug(5006) <<"Compacting" << mSrcFolder->idString();
+  kDebug() <<"Compacting" << mSrcFolder->idString();
 
   if ( KMFolderIndex::IndexOk != mbox->indexStatus() ) {
-    kDebug(5006) <<"Critical error:" << storage->location()
+    kDebug() <<"Critical error:" << storage->location()
                  << "has been modified by an external application while KMail was running.";
     //      exit(1); backed out due to broken nfs
   }
@@ -124,7 +124,7 @@ int MboxCompactionJob::executeNow( bool silent )
   mTmpFile = KDE_fopen( QFile::encodeName( mTempName ), "w" );
   umask( old_umask );
   if (!mTmpFile) {
-    kWarning(5006) <<"Couldn't start compacting" << mSrcFolder->label()
+    kWarning() <<"Couldn't start compacting" << mSrcFolder->label()
                    << ":" << strerror( errno )
                    << "while creating" << mTempName;
     return errno;
@@ -136,7 +136,7 @@ int MboxCompactionJob::executeNow( bool silent )
   mOffset = 0;
   mCurrentIndex = 0;
 
-  kDebug(5006) <<"MboxCompactionJob: starting to compact folder"
+  kDebug() <<"MboxCompactionJob: starting to compact folder"
                << mSrcFolder->location() << "into" << mTempName;
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   if ( !mImmediate ) {
@@ -186,12 +186,12 @@ void MboxCompactionJob::done( int rc )
     mbox->setAutoCreateIndex( autoCreate );
     mbox->setNeedsCompacting( false );            // We are clean now
     str = i18n( "Folder \"%1\" successfully compacted", mSrcFolder->label() );
-    kDebug(5006) << str;
+    kDebug() << str;
   } else {
     mbox->close( "mboxcompact" );
     str = i18n( "Error occurred while compacting \"%1\". Compaction aborted.", mSrcFolder->label() );
-    kDebug(5006) <<"Error occurred while compacting" << mbox->location();
-    kDebug(5006) <<"Compaction aborted.";
+    kDebug() <<"Error occurred while compacting" << mbox->location();
+    kDebug() <<"Compaction aborted.";
     QFile::remove( mTempName );
   }
   mErrorCode = rc;
@@ -231,7 +231,7 @@ int MaildirCompactionJob::executeNow( bool silent )
   mSilent = silent;
   KMFolderMaildir *storage =
     static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
-  kDebug(5006) <<"Compacting" << mSrcFolder->idString();
+  kDebug() <<"Compacting" << mSrcFolder->idString();
 
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open( "maildircompact" );
@@ -242,7 +242,7 @@ int MaildirCompactionJob::executeNow( bool silent )
   mEntryList = d.entryList();
   mCurrentIndex = 0;
 
-  kDebug(5006) <<"MaildirCompactionJob: starting to compact in folder"
+  kDebug() <<"MaildirCompactionJob: starting to compact in folder"
                << mSrcFolder->location();
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   if ( !mImmediate ) {

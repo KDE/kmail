@@ -286,7 +286,7 @@ void KMSearch::slotSearchFolderResult( KMFolder *folder,
   if ( pattern != mSearchPattern ) {
     return;
   }
-  kDebug(5006) << folder->label()
+  kDebug() << folder->label()
                << "found" << serNums.count();
   mLastFolder = folder->label();
   QList<quint32>::Iterator it;
@@ -460,7 +460,7 @@ void KMFolderSearch::addSerNum( quint32 serNum )
   // warn instead of assert() because of
   // https://intevation.de/roundup/kolab/issue2216
   if ( !aFolder || ( idx == -1 ) ) {
-    kDebug(5006) << "Not adding message with serNum" << serNum
+    kDebug() << "Not adding message with serNum" << serNum
                  << ": folder is" << aFolder << ", index is" << idx;
     return;
   }
@@ -608,9 +608,9 @@ int KMFolderSearch::create()
   assert( !folder()->name().isEmpty() );
   assert( mOpenCount == 0 );
 
-  kDebug(5006) <<"Creating folder" << location();
+  kDebug() <<"Creating folder" << location();
   if ( access( QFile::encodeName( location() ), F_OK ) == 0 ) {
-    kDebug(5006) << "Call to access function failed.";
+    kDebug() << "Call to access function failed.";
     return EEXIST;
   }
 
@@ -767,7 +767,7 @@ int KMFolderSearch::writeIndex( bool )
   umask( old_umask );
 
   if ( !tmpIndexStream ) {
-    kDebug(5006) << "Cannot write '" << filename
+    kDebug() << "Cannot write '" << filename
                  << strerror( errno ) << "(" << errno << ")";
     truncate( QFile::encodeName( filename ), 0 );
     return -1;
@@ -1006,7 +1006,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     return;
   }
   KMFolderOpener openFolder( folder, "SearchExamineMsgDone" );
-  kDebug(5006) << folder->label() <<": serNum" << serNum
+  kDebug() << folder->label() <<": serNum" << serNum
                << "matches?" << matches;
 
   Q_ASSERT( mFoldersCurrentlyBeingSearched.contains( folder ) );

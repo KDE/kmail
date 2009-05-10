@@ -465,7 +465,7 @@ namespace KMail {
       if ( addresses[0].photo().isIntern() )
       {
         // get photo data and convert to data: url
-        //kDebug( 5006 ) <<"INTERNAL photo found";
+        //kDebug() <<"INTERNAL photo found";
         QImage photo = addresses[0].photo().data();
         if ( !photo.isNull() )
         {
@@ -483,7 +483,7 @@ namespace KMail {
       }
       else
       {
-        //kDebug( 5006 ) <<"URL found";
+        //kDebug() <<"URL found";
         photoURL = addresses[0].photo().url();
         if ( photoURL.startsWith('/') )
           photoURL.prepend( "file:" );
@@ -500,7 +500,7 @@ namespace KMail {
       if ( !faceheader.isEmpty() ) {
         QImage faceimage;
 
-        kDebug( 5006 ) <<"Found Face: header";
+        kDebug() <<"Found Face: header";
 
         QByteArray facestring = faceheader.toUtf8();
         // Spec says header should be less than 998 bytes
@@ -516,13 +516,13 @@ namespace KMail {
               photoWidth = 48;
               photoHeight = 48;
             } else {
-              kDebug( 5006 ) <<"Face: header image is" << faceimage.width() <<"by" << faceimage.height() <<"not 48x48 Pixels";
+              kDebug() <<"Face: header image is" << faceimage.width() <<"by" << faceimage.height() <<"not 48x48 Pixels";
             }
           } else {
-            kDebug( 5006 ) <<"Failed to load decoded png from Face: header";
+            kDebug() <<"Failed to load decoded png from Face: header";
           }
         } else {
-          kDebug( 5006 ) <<"Face: header too long at" << facestring.length();
+          kDebug() <<"Face: header too long at" << facestring.length();
         }
       }
     }
@@ -544,7 +544,7 @@ namespace KMail {
 
     if( !photoURL.isEmpty() )
     {
-        //kDebug( 5006 ) <<"Got a photo:" << photoURL;
+        //kDebug() <<"Got a photo:" << photoURL;
       userHTML = QString("<img src=\"%1\" width=\"%2\" height=\"%3\">")
           .arg( photoURL ).arg( photoWidth ).arg( photoHeight );
       userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";

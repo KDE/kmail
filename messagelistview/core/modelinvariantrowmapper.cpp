@@ -226,7 +226,8 @@ ModelInvariantIndex * ModelInvariantRowMapper::modelIndexRowToModelInvariantInde
     idx--;
   }
 
-  kWarning() << "Requested invariant for storage row index " << modelIndexRow << " not found in history" << endl;
+  kWarning() << "Requested invariant for storage row index "
+             << modelIndexRow << " not found in history";
   return 0; // not found in history
 }
 
@@ -330,7 +331,7 @@ QList< ModelInvariantIndex * > * ModelInvariantRowMapper::modelIndexRowRangeToMo
       return 0; // no invariants emitted, even if rows are changed, no invariant is affected.
   }
 
-  // Find the invariants in range. 
+  // Find the invariants in range.
   // It's somewhat impossible to split this in chunks.
 
   QList< ModelInvariantIndex * > * invariantList = new QList< ModelInvariantIndex * >();
@@ -478,10 +479,10 @@ QList< ModelInvariantIndex * > * ModelInvariantRowMapper::modelRowsRemoved( int 
       deadInvariants->append( dyingInvariant );
     } else {
       // got no dying invariant
-      kWarning() << "Could not find invariant to invalidate at current row " << idx << endl;
+      kWarning() << "Could not find invariant to invalidate at current row " << idx;
     }
   }
-  
+
   if ( !mRowShiftList )
   {
     // have no pending shifts, look if we are keeping other invariants
@@ -567,7 +568,7 @@ void ModelInvariantRowMapper::slotPerformLazyUpdate()
   //   - We could keep a single (or multiple) array as large as the model
   //     but then we'd have a large memory consumption and large overhead
   //     when inserting / removing items from the middle.
-  // 
+  //
   // So finally I think that the multiple hash approach is a "minimum loss" approach.
 
   QTime startTime = QTime::currentTime();
@@ -600,7 +601,7 @@ void ModelInvariantRowMapper::slotPerformLazyUpdate()
         if ( modelIndexRow >= thatShift->mMinimumRowIndex )
           modelIndexRow += thatShift->mShift;
       }
-  
+
       // update and make it belong to the current serial
       invariant->setModelIndexRowAndRowMapperSerial( modelIndexRow, mCurrentShiftSerial );
 

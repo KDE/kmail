@@ -423,7 +423,7 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
       if ( collIt != collectionMap.constEnd() ) {
         (*collIt)->addItem( item );
       } else {
-        kDebug(5006) << "Collection for resource not found. shouldn't happen";
+        kDebug() << "Collection for resource not found. shouldn't happen";
       }
 
       QStringList categories = (*it).categories();
@@ -581,7 +581,7 @@ void RecipientsPicker::rebuildAllRecipientsList()
     if ( (*it) == mAllRecipients )
       continue;
 
-    kDebug(5006) << "processing collection" << (*it)->id() << (*it)->title();
+    kDebug() << "processing collection" << (*it)->id() << (*it)->title();
 
     RecipientItem::List coll = (*it)->items();
 
@@ -650,7 +650,7 @@ void RecipientsPicker::slotPicked()
 
 void RecipientsPicker::pick( Recipient::Type type )
 {
-  kDebug(5006) << int( type );
+  kDebug() << int( type );
 
   int count = mRecipientList->selectedItems().count();
 

@@ -104,13 +104,13 @@ static bool ValidOpenPGPEncryptionKey( const GpgME::Key & key ) {
   }
 #if 0
   if ( key.isRevoked() )
-    kWarning(5006) <<" is revoked";
+    kWarning() <<" is revoked";
   if ( key.isExpired() )
-    kWarning(5006) <<" is expired";
+    kWarning() <<" is expired";
   if ( key.isDisabled() )
-    kWarning(5006) <<" is disabled";
+    kWarning() <<" is disabled";
   if ( !key.canEncrypt() )
-    kWarning(5006) <<" can't encrypt";
+    kWarning() <<" can't encrypt";
 #endif
   if ( key.isRevoked() || key.isExpired() || key.isDisabled() || !key.canEncrypt() )
     return false;
@@ -127,9 +127,9 @@ static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
 #if 0
     else
       if ( it->isRevoked() )
-        kWarning(5006) <<"a userid is revoked";
+        kWarning() <<"a userid is revoked";
       else
-        kWarning(5006) <<"bad validity" << it->validity();
+        kWarning() <<"bad validity" << it->validity();
 #endif
   }
   return false;
@@ -546,7 +546,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
                                                     int recur_limit, const GpgME::Key & orig ) const
 {
   if ( recur_limit <= 0 ) {
-    kDebug(5006) << "Key chain too long (>100 certs)";
+    kDebug() << "Key chain too long (>100 certs)";
     return Kpgp::Ok;
   }
   const GpgME::Subkey subkey = key.subkey(0);
@@ -559,7 +559,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
   const double secsTillExpiry = ::difftime( subkey.expirationTime(), time(0) );
   if ( secsTillExpiry <= 0 ) {
       const int daysSinceExpiry = 1 + int( -secsTillExpiry / secsPerDay );
-      kDebug(5006) << "Key 0x" << key.shortKeyID() << " expired less than "
+      kDebug() << "Key 0x" << key.shortKeyID() << " expired less than "
                    << daysSinceExpiry << " days ago";
       const QString msg =
           key.protocol() == GpgME::OpenPGP
@@ -651,7 +651,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
           return Kpgp::Canceled;
   } else {
   const int daysTillExpiry = 1 + int( secsTillExpiry / secsPerDay );
-  kDebug(5006) <<"Key 0x" << key.shortKeyID() <<"expires in less than"
+  kDebug() <<"Key 0x" << key.shortKeyID() <<"expires in less than"
 	           << daysTillExpiry << "days";
   const int threshold =
     ca
@@ -1519,7 +1519,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   const QStringList fingerprints = keysForAddress( address );
 
   if ( !fingerprints.empty() ) {
-    kDebug(5006) <<"Using encryption keys 0x"
+    kDebug() <<"Using encryption keys 0x"
 	             << fingerprints.join( ", 0x" )
 	             << "for" << person;
     std::vector<GpgME::Key> keys = lookup( fingerprints );
@@ -1597,7 +1597,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
 std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns, bool secret ) const {
   if ( patterns.empty() )
     return std::vector<GpgME::Key>();
-  kDebug(5006) << "( \"" << patterns.join("\", \"" ) << "\"," << secret << ")";
+  kDebug() << "( \"" << patterns.join("\", \"" ) << "\"," << secret << ")";
   std::vector<GpgME::Key> result;
   if ( mCryptoMessageFormats & (InlineOpenPGPFormat|OpenPGPMIMEFormat) )
     if ( const Kleo::CryptoBackend::Protocol * p = Kleo::CryptoBackendFactory::instance()->openpgp() ) {
@@ -1617,7 +1617,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns,
 	result.insert( result.end(), keys.begin(), keys.end() );
       }
     }
-  kDebug(5006) <<"  returned" << result.size() <<" keys";
+  kDebug() <<"  returned" << result.size() <<" keys";
   return result;
 }
 
@@ -1649,7 +1649,7 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items ) {
       }
     }
     if ( f == AutoFormat )
-      kWarning(5006) << "Something went wrong. Didn't find a format for \""
+      kWarning() << "Something went wrong. Didn't find a format for \""
                   << it->address << "\"";
     else
       std::remove_copy_if( it->keys.begin(), it->keys.end(),

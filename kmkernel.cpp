@@ -102,7 +102,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
-  kDebug(5006);
+  kDebug();
   setObjectName( name );
   mySelf = this;
   the_startingUp = true;
@@ -195,7 +195,7 @@ KMKernel::~KMKernel ()
   delete mWallet;
   mWallet = 0;
   mySelf = 0;
-  kDebug(5006);
+  kDebug();
 }
 
 void KMKernel::setupDBus()
@@ -355,7 +355,7 @@ QStringList KMKernel::accounts()
 
 void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
 {
-  kDebug(5006);
+  kDebug();
   if ( account.isEmpty() )
     checkMail();
   else {
@@ -369,7 +369,7 @@ void KMKernel::openReader( bool onlyCheck )
 {
   mWin = 0;
   KMainWindow *ktmw = 0;
-  kDebug(5006);
+  kDebug();
 
   foreach ( KMainWindow *window, KMainWindow::memberList() )
   {
@@ -409,7 +409,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
                             const QStringList &attachmentPaths,
                             const QStringList &customHeaders )
 {
-  kDebug(5006);
+  kDebug();
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
@@ -490,7 +490,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QByteArray &attachCharset,
                             unsigned int identity )
 {
-  kDebug(5006);
+  kDebug();
 
   KMMessage *msg = new KMMessage;
   KMMessagePart *msgPart = 0;
@@ -545,7 +545,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         msgPart->setContentDisposition( attachContDisp );
       }
       if( !attachCharset.isEmpty() ) {
-        // kDebug(5006) << "Set attachCharset to" << attachCharset;
+        // kDebug() << "Set attachCharset to" << attachCharset;
         msgPart->setCharset( attachCharset );
       }
       // Don't show the composer window if the automatic sending is checked
@@ -589,7 +589,7 @@ void KMKernel::setDefaultTransport( const QString & transport )
 {
   MailTransport::Transport *t = MailTransport::TransportManager::self()->transportByName( transport, false );
   if ( !t ) {
-    kWarning(5006) <<"The transport you entered is not available";
+    kWarning() <<"The transport you entered is not available";
     return;
   }
   MailTransport::TransportManager::self()->setDefaultTransport( t->id() );
@@ -719,7 +719,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
                               const QString & messageFile,
                               const QString & MsgStatusFlags)
 {
-  kDebug(5006);
+  kDebug();
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
@@ -892,7 +892,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 {
   // Use this function to import messages without
   // search for already existing emails.
-  kDebug(5006);
+  kDebug();
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
@@ -1016,7 +1016,7 @@ QString KMKernel::getFolder( const QString& vpath )
     folderAdaptor = new KMail::FolderAdaptor(adaptorName);
     return vpath;
   }
-  kWarning(5006) << "Folder not found:" << vpath;
+  kWarning() << "Folder not found:" << vpath;
   return QString();
 }
 
@@ -1799,8 +1799,8 @@ bool KMKernel::transferMail( QString & destinationDir )
   }
 
   if ( !KIO::NetAccess::move( dir, destinationDir ) ) {
-    kDebug(5006) <<"Moving" << dir <<" to" << destinationDir <<" failed:" << KIO::NetAccess::lastErrorString();
-    kDebug(5006) <<"Deleting" << destinationDir;
+    kDebug() <<"Moving" << dir <<" to" << destinationDir <<" failed:" << KIO::NetAccess::lastErrorString();
+    kDebug() <<"Deleting" << destinationDir;
     KIO::NetAccess::del( destinationDir, 0 );
     destinationDir = dir;
     return false;
@@ -1877,7 +1877,7 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     // send MAX_CHUNK_SIZE bytes to the receiver (deep copy)
     data = QByteArray( (*it).data.data() + (*it).offset, MAX_CHUNK_SIZE );
     (*it).offset += MAX_CHUNK_SIZE;
-    //kDebug( 5006 ) <<"Sending" << MAX_CHUNK_SIZE <<" bytes ("
+    //kDebug() <<"Sending" << MAX_CHUNK_SIZE <<" bytes ("
     //                << remainingBytes - MAX_CHUNK_SIZE << " bytes remain)\n";
   }
   else
@@ -1886,7 +1886,7 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     data = QByteArray( (*it).data.data() + (*it).offset, remainingBytes );
     (*it).data = QByteArray();
     (*it).offset = 0;
-    //kDebug( 5006 ) <<"Sending" << remainingBytes <<" bytes";
+    //kDebug() <<"Sending" << remainingBytes <<" bytes";
   }
 }
 
@@ -1988,7 +1988,7 @@ void KMKernel::emergencyExit( const QString& reason )
                       "terminate now.\nThe error was:\n%1", reason );
   }
 
-  kWarning(5006) << mesg;
+  kWarning() << mesg;
   KMessageBox::error( 0, mesg );
 
   ::exit(1);
@@ -2069,7 +2069,7 @@ bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
 
 KPIMIdentities::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
-    kDebug(5006);
+    kDebug();
     mIdentityManager = new KPIMIdentities::IdentityManager( false, this, "mIdentityManager" );
   }
   return mIdentityManager;
@@ -2154,7 +2154,7 @@ KMailICalIfaceImpl& KMKernel::iCalIface()
 
 void KMKernel::selectFolder( const QString &folderPath )
 {
-  kDebug(5006)<<"Selecting a folder"<<folderPath;
+  kDebug()<<"Selecting a folder"<<folderPath;
   const QString localPrefix = "/Local";
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )

@@ -133,7 +133,7 @@ FolderIface::messageRefs()
     } else
       return refList;
 
-    kDebug(5006)<<"refList =="<<messageCache.count();
+    kDebug()<<"refList =="<<messageCache.count();
 
     for( int i = 0; i < messageCache.size(); ++i ) {
       KMMsgBase *msg = messageCache[i];
@@ -143,7 +143,7 @@ FolderIface::messageRefs()
       }
     }
 
-    kDebug(5006)<<"Reflist size ="<<refList.count();
+    kDebug()<<"Reflist size ="<<refList.count();
     return refList;
 }*/
 

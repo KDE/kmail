@@ -373,7 +373,7 @@ void KMMessage::setStatusFields()
   setHeaderField("X-KMail-EncryptionState", str);
 
   str[0] = (char)signatureState();
-  //kDebug(5006) <<"Setting SignatureState header field to" << str[0];
+  //kDebug() <<"Setting SignatureState header field to" << str[0];
   setHeaderField("X-KMail-SignatureState", str);
 
   str[0] = static_cast<char>( mdnSentState() );
@@ -504,7 +504,7 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
   partNode * curNode = root->findType( DwMime::kTypeText,
                                        DwMime::kSubtypeUnknown,
                                        true, false );
-  kDebug(5006) << ( curNode ? "text part found!\n" : "sorry, no text node!\n" );
+  kDebug() << ( curNode ? "text part found!\n" : "sorry, no text node!\n" );
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->subType();
     // now parse the TEXT message part we want to quote
@@ -717,7 +717,7 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
         // The sender didn't set a Reply-to address, so we add the From
         // address to the list of CC recipients.
         ccRecipients += from();
-        kDebug(5006) <<"Added" << from() <<"to the list of CC recipients";
+        kDebug() <<"Added" << from() <<"to the list of CC recipients";
       }
       // if it is a mailing list, add the posting address
       recipients.prepend( mailingListAddresses[0] );
@@ -728,7 +728,7 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
         // in case of replying to a normal message only then add the From
         // address to the list of recipients if there was no Reply-to address
         recipients += from();
-        kDebug(5006) <<"Added" << from() <<"to the list of recipients";
+        kDebug() <<"Added" << from() <<"to the list of recipients";
       }
     }
 
@@ -746,7 +746,7 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
         if(    !StringUtil::addressIsInAddressList( *it, recipients )
             && !StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;
-          kDebug(5006) <<"Added" << *it <<"to the list of CC recipients";
+          kDebug() <<"Added" << *it <<"to the list of CC recipients";
         }
       }
     }
@@ -1067,7 +1067,7 @@ static int requestAdviceOnMDN( const char * what ) {
         return answer ? answer + 2 : 0 ; // map to "mode" in createMDN
       }
     }
-  kWarning(5006) <<"didn't find data for message box \""
+  kWarning() <<"didn't find data for message box \""
                  << what << "\"";
   return 0;
 }
@@ -1089,7 +1089,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     return 0;
 #else
   char st[2]; st[0] = (char)mdnSentState(); st[1] = 0;
-  kDebug(5006) <<"mdnSentState() == '" << st <<"'";
+  kDebug() <<"mdnSentState() == '" << st <<"'";
 #endif
 
   // RFC 2298: An MDN MUST NOT be generated in response to an MDN.
@@ -1143,8 +1143,8 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // RFC 2298: [ Confirmation from the user SHOULD be obtained (or no
   // MDN sent) ] if there is more than one distinct address in the
   // Disposition-Notification-To header.
-  kDebug(5006) <<"KPIMUtils::splitAddressList(receiptTo):"
-               << KPIMUtils::splitAddressList(receiptTo).join("\n");
+  kDebug() << "KPIMUtils::splitAddressList(receiptTo):"
+           << KPIMUtils::splitAddressList(receiptTo).join("\n");
   if ( KPIMUtils::splitAddressList(receiptTo).count() > 1 ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( "mdnMultipleAddressesInReceiptTo" );
@@ -1159,7 +1159,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   AddrSpecList returnPathList = extractAddrSpecs("Return-Path");
   QString returnPath = returnPathList.isEmpty() ? QString()
     : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
-  kDebug(5006) <<"clean return path:" << returnPath;
+  kDebug() <<"clean return path:" << returnPath;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, Qt::CaseSensitive ) ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( returnPath.isEmpty() ?
@@ -1269,7 +1269,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   receipt->cleanupHeader();
 
-  kDebug(5006) <<"final message:" + receipt->asString();
+  kDebug() <<"final message:" + receipt->asString();
 
   //
   // Set "MDN sent" status:
@@ -1494,7 +1494,7 @@ QString KMMessage::dateStr() const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
 
-  //kDebug(5006)<<"####  Date ="<<header.Date().AsString().c_str();
+  //kDebug()<<"####  Date ="<<header.Date().AsString().c_str();
 
   return KMime::DateFormatter::formatDate(
       static_cast<KMime::DateFormatter::FormatType>(general.readEntry( "dateFormat",
@@ -2032,7 +2032,7 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
 {
 #if 0
   if ( type != Unstructured )
-    kDebug(5006) << "( \"" << aName <<"\", \"" << bValue << "\"," << type << ")";
+    kDebug() << "( \"" << aName <<"\", \"" << bValue << "\"," << type << ")";
 #endif
   if (aName.isEmpty()) return;
 
@@ -2048,7 +2048,7 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
       value = KPIMUtils::normalizeAddressesAndEncodeIdn( value );
 #if 0
     if ( type != Unstructured )
-      kDebug(5006) <<"value: \"" << value <<"\"";
+      kDebug() <<"value: \"" << value <<"\"";
 #endif
     QByteArray encoding = autoDetectCharset( charset(), s->prefCharsets, value );
     if (encoding.isEmpty())
@@ -2056,7 +2056,7 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
     aValue = encodeRFC2047String( value, encoding );
 #if 0
     if ( type != Unstructured )
-      kDebug(5006) <<"aValue: \"" << aValue <<"\"";
+      kDebug() <<"aValue: \"" << aValue <<"\"";
 #endif
   }
   // FIXME PORTING
@@ -2550,7 +2550,7 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
     // pending(khz): Find out WHY this look does not travel down *into* an
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
     if ( curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
-      kDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
+      kDebug() << curpart->Headers().ContentType().TypeStr().c_str()
                    << " " << curpart->Headers().ContentType().SubtypeStr().c_str();
     }
 
@@ -2599,7 +2599,7 @@ DwBodyPart * KMMessage::findDwBodyPart( const QByteArray& type, const QByteArray
     // pending(khz): Find out WHY this look does not travel down *into* an
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
     if (curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
-      kDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
+      kDebug() << curpart->Headers().ContentType().TypeStr().c_str()
                    << " " << curpart->Headers().ContentType().SubtypeStr().c_str();
     }
 
@@ -3127,7 +3127,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     mLastUpdated = findDwBodyPart( getFirstDwBodyPart(), specifier );
     if (!mLastUpdated)
     {
-      kWarning(5006) << "Can not find part" << specifier;
+      kWarning() << "Can not find part" << specifier;
       return;
     }
     if ( partSpecifier.endsWith( QLatin1String(".MIME") ) )
@@ -3190,7 +3190,7 @@ void KMMessage::updateAttachmentState( DwBodyPart *part )
   }
 
   if ( !part ) {
-    // kDebug(5006) <<"updateAttachmentState - no part!";
+    // kDebug() <<"updateAttachmentState - no part!";
     if ( mStatus.hasAttachment() ) {
       toggleStatus( MessageStatus::statusHasAttachment() );
     }

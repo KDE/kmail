@@ -247,7 +247,7 @@ void ProfileDialog::setup() {
   const QString profileFilenameFilter = QString::fromLatin1("kmail/profile-*-rc");
   mProfileList = KGlobal::dirs()->findAllResources( "data", profileFilenameFilter );
 
-  kDebug(5006) << "Profile manager: found" << mProfileList.count()
+  kDebug() << "Profile manager: found" << mProfileList.count()
                << "profiles:";
 
   // build the list and populate the list view:
@@ -258,13 +258,13 @@ void ProfileDialog::setup() {
     KConfigGroup profile(&_profile, "KMail Profile");
     QString name = profile.readEntry( "Name" );
     if ( name.isEmpty() ) {
-      kWarning(5006) << "File \"" << (*it)
+      kWarning() << "File \"" << (*it)
                      << "\" doesn't provide a profile name!";
       name = i18nc("Missing profile name placeholder","Unnamed");
     }
     QString desc = profile.readEntry( "Comment" );
     if ( desc.isEmpty() ) {
-      kWarning(5006) << "File \"" << (*it)
+      kWarning() << "File \"" << (*it)
                      << "\" doesn't provide a description!";
       desc = i18nc("Missing profile description placeholder","Not available");
     }

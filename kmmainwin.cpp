@@ -96,7 +96,7 @@ KMMainWin::~KMMainWin()
     }
 
     if ( not_withdrawn == 0 ) {
-      kDebug(5006) <<"Closing last KMMainWin: stopping mail check";
+      kDebug() <<"Closing last KMMainWin: stopping mail check";
       // Running KIO jobs prevent kapp from exiting, so we need to kill them
       // if they are only about checking mail (not important stuff like moving messages)
       kmkernel->abortMailCheck();

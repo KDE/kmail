@@ -560,7 +560,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
 
   mIdentity->setCurrentIdentity( mId );
 
-  kDebug(5006) << mIdentity->currentIdentityName();
+  kDebug() << mIdentity->currentIdentityName();
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
@@ -612,11 +612,11 @@ void KMComposeWin::writeConfig( void )
 //-----------------------------------------------------------------------------
 void KMComposeWin::autoSaveMessage()
 {
-  kDebug(5006) ;
+  kDebug() ;
   if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() ) {
     return;
   }
-  kDebug(5006) <<"autosaving message";
+  kDebug() <<"autosaving message";
 
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
@@ -635,23 +635,23 @@ void KMComposeWin::slotContinueAutoSave()
 {
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
-    kDebug(5006) <<"Composing the message failed.";
+    kDebug() <<"Composing the message failed.";
     return;
   }
   KMMessage *msg = mComposedMessages.first();
   if ( !msg ) // a bit of extra defensiveness
     return;
 
-  kDebug(5006) <<"opening autoSaveFile" << mAutoSaveFilename;
+  kDebug() <<"opening autoSaveFile" << mAutoSaveFilename;
   const QString filename =
     KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
   KSaveFile autoSaveFile( filename );
   int status = 0;
   bool opened = autoSaveFile.open();
-  kDebug(5006) <<"autoSaveFile.open() =" << opened;
+  kDebug() <<"autoSaveFile.open() =" << opened;
   if ( opened ) { // no error
     autoSaveFile.setPermissions( QFile::ReadUser|QFile::WriteUser );
-    kDebug(5006) <<"autosaving message in" << filename;
+    kDebug() <<"autosaving message in" << filename;
     int fd = autoSaveFile.handle();
     const DwString &msgStr = msg->asDwString();
     if ( ::write( fd, msgStr.data(), msgStr.length() ) == -1 ) {
@@ -659,11 +659,11 @@ void KMComposeWin::slotContinueAutoSave()
     }
   }
   if ( status == 0 ) {
-    kDebug(5006) <<"closing autoSaveFile";
+    kDebug() <<"closing autoSaveFile";
     autoSaveFile.finalize();
     mLastAutoSaveErrno = 0;
   } else {
-    kDebug(5006) <<"autosaving failed";
+    kDebug() <<"autosaving failed";
     autoSaveFile.abort();
     if ( status != mLastAutoSaveErrno ) {
       // don't show the same error message twice
@@ -716,7 +716,7 @@ void KMComposeWin::slotView( void )
     id = HDR_DICTIONARY;
   } else {
     id = 0;
-    kDebug(5006) <<"Something is wrong (Oh, yeah?)";
+    kDebug() <<"Something is wrong (Oh, yeah?)";
     return;
   }
 
@@ -802,7 +802,7 @@ void KMComposeWin::rethinkFields( bool fromSlot )
   mGrid->setRowStretch( mNumHeaders + 1, 100 );
 
   row = 0;
-  kDebug(5006);
+  kDebug();
 
   mLabelWidth = mRecipientsEditor->setFirstColumnWidth( 0 );
   mLabelWidth = calcColumnWidth( HDR_IDENTITY, showHeaders, mLabelWidth );
@@ -1449,7 +1449,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
   if ( !newMsg ) {
-    kDebug(5006) << "newMsg == 0!";
+    kDebug() << "newMsg == 0!";
     return;
   }
   mMsg = newMsg;
@@ -1674,7 +1674,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 
 #ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
   const int num = mMsg->numBodyParts();
-  kDebug(5006) << "mMsg->numBodyParts=" << mMsg->numBodyParts();
+  kDebug() << "mMsg->numBodyParts=" << mMsg->numBodyParts();
 
   if ( num > 0 ) {
     KMMessagePart bodyPart;
@@ -1691,7 +1691,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
            node->parentNode()->hasType( DwMime::kTypeMultipart ) &&
            node->parentNode()->hasSubType( DwMime::kSubtypeAlternative ) ) {
         // we have a mp/al body part with a text and an html body
-        kDebug(5006) << "text/html found";
+        kDebug() << "text/html found";
         firstAttachment = 2;
         if ( mMsg->headerField( "X-KMail-Markup" ) == "true" ) {
           enableHtml();
@@ -1704,7 +1704,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
       mMsg->bodyPart( 0, &bodyPart );
       if ( bodyPart.typeStr().toLower() == "text" ) {
         // we have a mp/mx body with a text body
-        kDebug(5006) << "text/* found";
+        kDebug() << "text/* found";
         firstAttachment = 1;
       }
     }
@@ -1973,16 +1973,16 @@ bool KMComposeWin::userForgotAttachment()
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 {
-  kDebug(5006) << "Entering";
+  kDebug() << "Entering";
 
   if(!mMsg) {
-    kDebug(5006) << "mMsg == 0!";
+    kDebug() << "mMsg == 0!";
     emit applyChangesDone( false );
     return;
   }
 
   if( mComposer ) {
-    kDebug(5006) << "applyChanges called twice";
+    kDebug() << "applyChanges called twice";
     return;
   }
 
@@ -2784,11 +2784,11 @@ void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
   QByteArray cDisp = "attachment;";
   QByteArray encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
                                                       KMMessage::preferredCharsets(), name );
-  kDebug(5006) <<"encoding:" << encoding;
+  kDebug() <<"encoding:" << encoding;
   if ( encoding.isEmpty() ) {
     encoding = "utf-8";
   }
-  kDebug(5006) <<"encoding after:" << encoding;
+  kDebug() <<"encoding after:" << encoding;
   QByteArray encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
@@ -3082,7 +3082,7 @@ void KMComposeWin::slotAttachRemove()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdateFont()
 {
-  kDebug(5006);
+  kDebug();
   if ( !mFixedFontAction ) {
     return;
   }
@@ -3407,7 +3407,7 @@ void KMComposeWin::slotContinuePrint( bool rc )
 
   if ( rc ) {
     if ( mComposedMessages.isEmpty() ) {
-      kDebug(5006) <<"Composing the message failed.";
+      kDebug() <<"Composing the message failed.";
       return;
     }
     KMCommand *command = new KMPrintCommand( this, mComposedMessages.first() );
@@ -3535,11 +3535,11 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     mMsg->setHeaderField( "X-KMail-QuotePrefix", mEditor->quotePrefixName() );
 
   if ( mEditor->isFormattingUsed() ) {
-    kDebug(5006) << "Html mode";
+    kDebug() << "Html mode";
     mMsg->setHeaderField( "X-KMail-Markup", "true" );
   } else {
     mMsg->removeHeaderField( "X-KMail-Markup" );
-    kDebug(5006) << "Plain text";
+    kDebug() << "Plain text";
   }
   if ( mEditor->isFormattingUsed() &&
        inlineSigningEncryptionSelected() ) {
@@ -3622,9 +3622,9 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
   }
 
   theFolder->open( "composer" );
-  kDebug(5006) << "theFolder=" << theFolder->name();
+  kDebug() << "theFolder=" << theFolder->name();
   if ( imapTheFolder ) {
-    kDebug(5006) << "imapTheFolder=" << imapTheFolder->name();
+    kDebug() << "imapTheFolder=" << imapTheFolder->name();
   }
 
   bool sentOk = !( theFolder->addMsg( msg ) );
@@ -3646,7 +3646,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
 
 void KMComposeWin::slotContinueDoSend( bool sentOk )
 {
-  kDebug(5006) << sentOk;
+  kDebug() << sentOk;
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
               this, SLOT( slotContinueDoSend( bool ) ) );
 
@@ -3823,7 +3823,7 @@ void KMComposeWin::insertSignatureHelper( KPIMIdentities::Signature::Placement p
 
   if ( signature.isInlinedHtml() &&
        signature.type() == KPIMIdentities::Signature::Inlined ) {
-    kDebug(5006) << "HTML signature, turning editor into HTML mode";
+    kDebug() << "HTML signature, turning editor into HTML mode";
     enableHtml();
     signature.insertIntoTextEdit( mEditor, placement,
                                GlobalSettings::self()->dashDashSignature() );
@@ -4109,7 +4109,7 @@ int KMComposeWin::autoSaveInterval() const
 
 void KMComposeWin::initAutoSave()
 {
-  kDebug(5006) ;
+  kDebug() ;
   // make sure the autosave folder exists
   KMFolderMaildir::createMaildirFolders( KMKernel::localDataPath() + "autosave" );
   if ( mAutoSaveFilename.isEmpty() ) {
@@ -4146,7 +4146,7 @@ void KMComposeWin::cleanupAutoSave()
 {
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
   if ( !mAutoSaveFilename.isEmpty() ) {
-    kDebug(5006) <<"deleting autosave file"
+    kDebug() <<"deleting autosave file"
                  << mAutoSaveFilename;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );
@@ -4181,7 +4181,7 @@ void KMComposeWin::slotFolderRemoved( KMFolder *folder )
   // TODO: need to handle templates here?
   if ( (mFolder) && (folder->idString() == mFolder->idString()) ) {
     mFolder = kmkernel->draftsFolder();
-    kDebug(5006) << "restoring drafts to" << mFolder->idString();
+    kDebug() << "restoring drafts to" << mFolder->idString();
   }
   if ( mMsg ) {
     mMsg->setParent( 0 );
@@ -4313,7 +4313,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
 
 void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
 {
-  kDebug(5006) ;
+  kDebug() ;
   KMMessagePart *part = mEditorMap[ watcher ];
   KTemporaryFile *tf = mEditorTempFiles[ watcher ];
   mEditorMap.remove( watcher );
@@ -4337,7 +4337,7 @@ void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
 
 void KMComposeWin::slotAttachmentDragStarted()
 {
-  kDebug(5006);
+  kDebug();
   QList<QUrl> urls;
   foreach ( KMAtmListViewItem *const item, mAtmItemList ) {
     if ( item->isSelected() ) {

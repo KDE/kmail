@@ -63,7 +63,7 @@ namespace KMail {
 
   void KHtmlPartHtmlWriter::begin( const QString & css ) {
     if ( mState != Ended ) {
-      kWarning( 5006 ) <<"KHtmlPartHtmlWriter: begin() called on non-ended session!";
+      kWarning() <<"KHtmlPartHtmlWriter: begin() called on non-ended session!";
       reset();
     }
 
@@ -145,7 +145,7 @@ namespace KMail {
       if ( url.protocol() == "cid" ) {
         EmbeddedPartMap::const_iterator it = mEmbeddedPartMap.constFind( url.path() );
         if ( it != mEmbeddedPartMap.constEnd() ) {
-          kDebug(5006) <<"Replacing" << url.prettyUrl() <<" by" << it.value();
+          kDebug() <<"Replacing" << url.prettyUrl() <<" by" << it.value();
           image.setSrc( it.value() );
         }
       }

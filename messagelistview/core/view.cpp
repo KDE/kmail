@@ -105,7 +105,7 @@ View::View( Widget *pParent )
 }
 
 View::~View()
-{ 
+{
   if ( mSaveThemeColumnStateTimer->isActive() )
     mSaveThemeColumnStateTimer->stop();
   delete mSaveThemeColumnStateTimer;
@@ -115,7 +115,7 @@ View::~View()
 
   // Zero out the theme, aggregation and ApplyThemeColumnsTimer so Model will not cause accesses to them in its destruction process
   mApplyThemeColumnsTimer = 0;
-  
+
   mTheme = 0;
   mAggregation = 0;
 }
@@ -323,7 +323,7 @@ void View::applyThemeColumns()
       }
 
       if ( realWidth < 2 )
-        realWidth = 2; // don't allow very insane values 
+        realWidth = 2; // don't allow very insane values
 
       totalVisibleWidth += realWidth;
     } else {
@@ -554,7 +554,7 @@ void View::resizeEvent( QResizeEvent * e )
   QTreeView::resizeEvent( e );
 
   if ( !isVisible() )
-    return; // don't play with 
+    return; // don't play with
 
   if ( (!mFirstShow) && mNeedToApplyThemeColumns )
     triggerDelayedApplyThemeColumns();
@@ -833,7 +833,7 @@ QList< MessageItem * > View::currentThreadAsMessageItemList() const
 
   msg->subTreeToList( currentThread );
 
-  return currentThread;  
+  return currentThread;
 }
 
 void View::setChildrenExpanded( const Item * root, bool expand )
@@ -1640,11 +1640,11 @@ void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & 
     {
       if ( mLastCurrentItem != it )
       {
-        kDebug() << "Message selected [" << it->subject().toUtf8().data() << "]" << endl;
+        kDebug() << "Message selected [" << it->subject().toUtf8().data() << "]";
         mWidget->viewMessageSelected( static_cast< MessageItem * >( it ) );
         mLastCurrentItem = 0;
       }
-    } 
+    }
     break;
     case Item::GroupHeader:
       if ( mLastCurrentItem )
@@ -1698,7 +1698,7 @@ void View::mouseDoubleClickEvent( QMouseEvent * e )
           // make gcc happy
         break;
       }
-    } 
+    }
     break;
     case Item::GroupHeader:
     {
@@ -1789,7 +1789,7 @@ void View::mousePressEvent( QMouseEvent * e )
                     it->status().isToAct() ? KPIM::MessageStatus() : KPIM::MessageStatus::statusToAct(),
                     it->status().isToAct() ? KPIM::MessageStatus::statusToAct() : KPIM::MessageStatus()
                   );
-                return; // don't select the item  
+                return; // don't select the item
               break;
               case Theme::ContentItem::ImportantStateIcon:
                 changeMessageStatus(
@@ -1797,7 +1797,7 @@ void View::mousePressEvent( QMouseEvent * e )
                     it->status().isImportant() ? KPIM::MessageStatus() : KPIM::MessageStatus::statusImportant(),
                     it->status().isImportant() ? KPIM::MessageStatus::statusImportant() : KPIM::MessageStatus()
                   );
-                return; // don't select the item  
+                return; // don't select the item
               break;
               case Theme::ContentItem::SpamHamStateIcon:
                 changeMessageStatus(
@@ -1805,7 +1805,7 @@ void View::mousePressEvent( QMouseEvent * e )
                     it->status().isSpam() ? KPIM::MessageStatus() : ( it->status().isHam() ? KPIM::MessageStatus::statusSpam() : KPIM::MessageStatus::statusHam() ),
                     it->status().isSpam() ? KPIM::MessageStatus::statusSpam() : ( it->status().isHam() ? KPIM::MessageStatus::statusHam() : KPIM::MessageStatus() )
                   );
-                return; // don't select the item  
+                return; // don't select the item
               break;
               case Theme::ContentItem::WatchedIgnoredStateIcon:
                 changeMessageStatus(
@@ -1813,7 +1813,7 @@ void View::mousePressEvent( QMouseEvent * e )
                     it->status().isIgnored() ? KPIM::MessageStatus() : ( it->status().isWatched() ? KPIM::MessageStatus::statusIgnored() : KPIM::MessageStatus::statusWatched() ),
                     it->status().isIgnored() ? KPIM::MessageStatus::statusIgnored() : ( it->status().isWatched() ? KPIM::MessageStatus::statusWatched() : KPIM::MessageStatus() )
                   );
-                return; // don't select the item  
+                return; // don't select the item
               break;
               default:
                 // make gcc happy
@@ -1835,7 +1835,7 @@ void View::mousePressEvent( QMouseEvent * e )
           // make gcc happy
         break;
       }
-    } 
+    }
     break;
     case Item::GroupHeader:
     {
@@ -2321,7 +2321,7 @@ bool View::event( QEvent *e )
 
   QToolTip::showText( he->globalPos(), tip, viewport(), visualRect( idx ) );
 
-  return true;  
+  return true;
 }
 
 void View::slotCollapseAllGroups()

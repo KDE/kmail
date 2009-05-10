@@ -232,7 +232,7 @@ void DistributionListDialog::slotUser1()
   }
 
   if ( saveError )
-    kWarning(5006) <<" Couldn't save new addresses in the distribution list just created to the address book";
+    kWarning() <<" Couldn't save new addresses in the distribution list just created to the address book";
 
   close();
 }

@@ -175,7 +175,7 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
 #ifndef NDEBUG
   DwString dwCte;
   DwCteEnumToStr(allowedCte[0], dwCte);
-  kDebug(5006) <<"CharFreq returned" << cf.type() <<"/"
+  kDebug() <<"CharFreq returned" << cf.type() <<"/"
 	    << cf.printableRatio() << "and I chose"
 	    << dwCte.c_str();
 #endif
@@ -209,7 +209,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
       break;
     }
   default:
-    kWarning(5006) <<"setBodyEncodedBinary: unknown encoding '" << cteStr()
+    kWarning() <<"setBodyEncodedBinary: unknown encoding '" << cteStr()
 		    << "'. Assuming binary.";
     // fall through
   case DwMime::kCte7bit:
@@ -237,7 +237,7 @@ void KMMessagePart::setMessageBody( const QByteArray &aBuf )
     cte = DwMime::kCte8bit;
     break;
   default:
-    kWarning(5006) <<"Calling"
+    kWarning() <<"Calling"
                    << "with something containing neither 7 nor 8 bit text!"
                    << "Fix this caller:" << kBacktrace();
     cte = 0;
@@ -264,7 +264,7 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
         // Nice: we can use the convenience function :-)
         result = codec->decode( mBody );
       else {
-        kWarning(5006) <<"bodyDecodedBinary: unknown encoding '" << cteStr()
+        kWarning() <<"bodyDecodedBinary: unknown encoding '" << cteStr()
                         << "'. Assuming binary.";
         result = mBody;
       }
@@ -316,7 +316,7 @@ QString KMMessagePart::iconName( int size ) const
   if (mime) {
     fileName = mime->iconName();
   } else {
-    kWarning(5006) <<"unknown mimetype" << mimeType;
+    kWarning() <<"unknown mimetype" << mimeType;
   }
 
   if ( fileName.isEmpty() )

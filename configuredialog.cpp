@@ -1005,7 +1005,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
         if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
         {
           // connect to server - the namespaces are fetched automatically
-          kDebug(5006) <<"slotModifySelectedAccount - connect";
+          kDebug() <<"slotModifySelectedAccount - connect";
           ai->makeConnection();
         }
       }
@@ -1321,7 +1321,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
 
 void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 {
-  kDebug(5006) <<"slotFontSelectorChanged() called";
+  kDebug() <<"slotFontSelectorChanged() called";
   if( index < 0 || index >= mFontLocationCombo->count() )
     return; // Should never happen, but it is better to check.
 
@@ -1379,7 +1379,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
     if ( fonts.hasKey( fontNames[i].configName ) ) {
       needChange = true;
       mFont[i] = fonts.readEntry( fontNames[i].configName, QFont() );
-      kDebug(5006) <<"got font \"" << fontNames[i].configName
+      kDebug() <<"got font \"" << fontNames[i].configName
                 << "\" thusly: \"" << mFont[i].toString() << "\"";
     }
   if ( needChange && mFontLocationCombo->currentIndex() > 0 )
@@ -2137,7 +2137,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   }
   if ( i == encodings.size() ) {
     // the current value of overrideCharacterEncoding is an unknown encoding => reset to Auto
-    kWarning(5006) <<"Unknown override character encoding \"" << currentOverrideEncoding
+    kWarning() <<"Unknown override character encoding \"" << currentOverrideEncoding
                    << "\". Resetting to Auto.";
     mOverrideCharsetCombo->setCurrentIndex( 0 );
     GlobalSettings::self()->setOverrideCharacterEncoding( QString() );
@@ -3502,7 +3502,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   // calling this w/o selection is a programming error:
   QTreeWidgetItem *item = mTagList->currentItem();
   if ( !item ) {
-    kDebug(5006) <<"=================================================="
+    kDebug() <<"=================================================="
                   << "Error: Remove button was pressed although no custom header was selected\n"
                   << "==================================================\n";
     return;
@@ -3511,7 +3511,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   QTreeWidgetItem *below = mTagList->itemBelow( item );
 
   if ( below ) {
-    kDebug(5006) <<"below";
+    kDebug() <<"below";
     mTagList->setCurrentItem( below );
     delete item;
     item = 0;
@@ -4386,11 +4386,11 @@ Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const char* comp
 {
     Kleo::CryptoConfigEntry* entry = mConfig->entry( componentName, groupName, entryName );
     if ( !entry ) {
-        kWarning(5006) << QString("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName );
+        kWarning() << QString("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName );
         return 0;
     }
     if( entry->argType() != argType || entry->isList() != isList ) {
-        kWarning(5006) << QString("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() );
+        kWarning() << QString("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() );
         return 0;
     }
     return entry;
@@ -4713,7 +4713,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings()
   if ( selectedAccount )
     mMGTab.mAccountCombo->setCurrentAccount( selectedAccount );
   else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 )
-    kDebug(5006) <<"Folder" << folderId <<" not found as an account's inbox";
+    kDebug() <<"Folder" << folderId <<" not found as an account's inbox";
 }
 
 void MiscPage::GroupwareTab::save()

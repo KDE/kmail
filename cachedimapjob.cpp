@@ -135,7 +135,7 @@ void CachedImapJob::execute()
   assert( mAccount != 0 );
   if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     // No connection to the IMAP server
-    kDebug(5006) <<"mAccount->makeConnection() failed";
+    kDebug() <<"mAccount->makeConnection() failed";
     mPassiveDestructor = true;
     delete this;
     return;
@@ -463,7 +463,7 @@ void CachedImapJob::slotPutMessageInfoData(KJob *job, const QString &data, const
   if ( data.contains("UID") && mMsg )
   {
     int uid = (data.right(data.length()-4)).toInt();
-    kDebug( 5006 ) <<"Server told us uid is:" << uid;
+    kDebug() <<"Server told us uid is:" << uid;
     mMsg->setUID( uid );
   }
 }
@@ -688,17 +688,17 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
   if (a < 0) {
     // Something is seriously rotten here!
     // TODO: Tell the user that he has a problem
-    kDebug(5006) <<"No uidvalidity available for folder"
+    kDebug() <<"No uidvalidity available for folder"
                   << mFolder->objectName();
   }
   else {
     int b = cstr.indexOf("\r\n", a);
     if ( (b - a - 15) >= 0 ) {
       QString uidv = cstr.mid(a + 15, b - a - 15);
-      // kDebug(5006) <<"New uidv =" << uidv <<", old uidv ="
+      // kDebug() <<"New uidv =" << uidv <<", old uidv ="
       //               << mFolder->uidValidity();
       if( !mFolder->uidValidity().isEmpty() && mFolder->uidValidity() != uidv ) {
-        // kDebug(5006) <<"Expunging the mailbox" << mFolder->name()
+        // kDebug() <<"Expunging the mailbox" << mFolder->name()
         //               << "!";
         mFolder->expunge();
         mFolder->open( "cachedimap" ); // reopen after the forced close by expunge() for KMFolderCachedImap
@@ -706,20 +706,20 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
         mFolder->clearUidMap();
       }
     } else
-      kDebug(5006) <<"No uidvalidity available for folder"
+      kDebug() <<"No uidvalidity available for folder"
                     << mFolder->objectName();
   }
 
   a = cstr.indexOf( "X-PermanentFlags: " );
   if ( a < 0 ) {
-    kDebug(5006) << "no PERMANENTFLAGS response? assumming custom flags are not available";
+    kDebug() << "no PERMANENTFLAGS response? assumming custom flags are not available";
   } else {
     int b = cstr.indexOf( "\r\n", a );
     if ( (b - a - 18) >= 0 ) {
       int flags = cstr.mid( a + 18, b - a - 18 ).toInt();
       emit permanentFlags( flags );
     } else {
-      kDebug(5006) << "PERMANENTFLAGS response broken, assumming custom flags are not available";
+      kDebug() << "PERMANENTFLAGS response broken, assumming custom flags are not available";
     }
   }
 

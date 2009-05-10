@@ -683,7 +683,7 @@ void AccountDialog::slotPipeliningClicked()
 
 void AccountDialog::slotPopEncryptionChanged( int id )
 {
-  kDebug(5006) << "ID:" << id;
+  kDebug() << "ID:" << id;
   // adjust port
   if ( id == Transport::EnumEncryption::SSL || mPop.ui.portEdit->value() == 995 )
     mPop.ui.portEdit->setValue( ( id == Transport::EnumEncryption::SSL ) ? 995 : 110 );
@@ -704,7 +704,7 @@ void AccountDialog::slotPopPasswordChanged(const QString& text)
 
 void AccountDialog::slotImapEncryptionChanged( int id )
 {
-  kDebug(5006) << id;
+  kDebug() << id;
   // adjust port
   if ( id == Transport::EnumEncryption::SSL || mImap.ui.portEdit->value() == 993 )
     mImap.ui.portEdit->setValue( ( id == Transport::EnumEncryption::SSL ) ? 993 : 143 );
@@ -795,7 +795,7 @@ void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
 
 void AccountDialog::enablePopFeatures()
 {
-  kDebug(5006);
+  kDebug();
   if ( !mServerTest || mServerTestFailed )
     return;
 
@@ -913,7 +913,7 @@ void AccountDialog::slotIdentityCheckboxChanged()
 
 void AccountDialog::enableImapAuthMethods()
 {
-  kDebug(5006);
+  kDebug();
   if ( !mServerTest || mServerTestFailed )
     return;
 
@@ -937,7 +937,7 @@ void AccountDialog::enableImapAuthMethods()
 
 void AccountDialog::checkHighest( QButtonGroup *btnGroup )
 {
-  kDebug(5006) << btnGroup;
+  kDebug() << btnGroup;
   QListIterator<QAbstractButton*> it( btnGroup->buttons() );
   it.toBack();
   while ( it.hasPrevious() ) {
@@ -1052,7 +1052,7 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()) );
-    //kDebug(5006) <<"account for folder" << mAccount->folder()->name();
+    //kDebug() <<"account for folder" << mAccount->folder()->name();
 
     initAccountForConnect();
     KMAcctCachedImap &epa = *(KMAcctCachedImap*)mAccount;

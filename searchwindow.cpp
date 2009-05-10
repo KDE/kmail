@@ -307,7 +307,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   if ( r )
       r->setFocus();
   else
-      kDebug(5006) <<"SearchWindow: regExpLineEdit not found";
+      kDebug() <<"SearchWindow: regExpLineEdit not found";
 
   //set up actions
   KActionCollection *ac = actionCollection();

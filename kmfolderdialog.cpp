@@ -99,7 +99,7 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
   setObjectName( "KMFolderDialog" );
   setModal( true );
 
-  kDebug(5006);
+  kDebug();
 
   QStringList folderNames;
   QList<QPointer<KMFolder> > folders;
@@ -918,7 +918,7 @@ bool FolderDialogTemplatesTab::save()
   QString fid = folder->idString();
   Templates t(fid);
 
-  kDebug(5006) <<"use custom templates for folder" << fid <<":" << mCustom->isChecked();
+  kDebug() <<"use custom templates for folder" << fid <<":" << mCustom->isChecked();
   t.setUseCustomTemplates(mCustom->isChecked());
   t.writeConfig();
 

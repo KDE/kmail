@@ -678,9 +678,9 @@ void RecipientsView::setFocusTop()
   if ( !mLines.empty() ) {
     RecipientLine *line = mLines.first();
     if ( line ) line->activate();
-    else kWarning(5006) <<"No first";
+    else kWarning() <<"No first";
   }
-  else kWarning(5006) <<"No first";
+  else kWarning() <<"No first";
 }
 
 void RecipientsView::setFocusBottom()
@@ -690,7 +690,7 @@ void RecipientsView::setFocusBottom()
     ensureWidgetVisible( line );
     line->activate();
   }
-  else  kWarning(5006) <<"No last";
+  else  kWarning() <<"No last";
 }
 
 int RecipientsView::setFirstColumnWidth( int w )

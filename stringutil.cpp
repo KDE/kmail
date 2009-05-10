@@ -420,7 +420,7 @@ QString decodeMailtoUrl( const QString& url )
 
 QByteArray stripEmailAddr( const QByteArray& aStr )
 {
-  //kDebug(5006) << "(" << aStr <<" )";
+  //kDebug() << "(" << aStr <<" )";
 
   if ( aStr.isEmpty() )
     return QByteArray();
@@ -470,11 +470,11 @@ QByteArray stripEmailAddr( const QByteArray& aStr )
               comment = comment.trimmed();
               angleAddress = angleAddress.trimmed();
                    /*
-              kDebug(5006) <<"Name    : \"" << name
+              kDebug() <<"Name    : \"" << name
               << "\"";
-              kDebug(5006) <<"Comment : \"" << comment
+              kDebug() <<"Comment : \"" << comment
               << "\"";
-              kDebug(5006) <<"Address : \"" << angleAddress
+              kDebug() <<"Address : \"" << angleAddress
               << "\"";
                    */
               if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -552,9 +552,9 @@ QByteArray stripEmailAddr( const QByteArray& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kDebug(5006) <<"Name    : \"" << name <<"\"";
-  kDebug(5006) <<"Comment : \"" << comment <<"\"";
-  kDebug(5006) <<"Address : \"" << angleAddress <<"\"";
+  kDebug() <<"Name    : \"" << name <<"\"";
+  kDebug() <<"Comment : \"" << comment <<"\"";
+  kDebug() <<"Address : \"" << angleAddress <<"\"";
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -571,13 +571,13 @@ QByteArray stripEmailAddr( const QByteArray& aStr )
     result += angleAddress;
   }
 
-  //kDebug(5006) << "Returns \"" << result << "\"";
+  //kDebug() << "Returns \"" << result << "\"";
   return result;
 }
 
 QString stripEmailAddr( const QString& aStr )
 {
-  //kDebug(5006) << "(" << aStr << ")";
+  //kDebug() << "(" << aStr << ")";
 
   if ( aStr.isEmpty() )
     return QString();
@@ -630,11 +630,11 @@ QString stripEmailAddr( const QString& aStr )
               comment = comment.trimmed();
               angleAddress = angleAddress.trimmed();
                    /*
-              kDebug(5006) <<"Name    : \"" << name
+              kDebug() <<"Name    : \"" << name
               << "\"";
-              kDebug(5006) <<"Comment : \"" << comment
+              kDebug() <<"Comment : \"" << comment
               << "\"";
-              kDebug(5006) <<"Address : \"" << angleAddress
+              kDebug() <<"Address : \"" << angleAddress
               << "\"";
                    */
               if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -712,9 +712,9 @@ QString stripEmailAddr( const QString& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kDebug(5006) <<"Name    : \"" << name <<"\"";
-  kDebug(5006) <<"Comment : \"" << comment <<"\"";
-  kDebug(5006) <<"Address : \"" << angleAddress <<"\"";
+  kDebug() <<"Name    : \"" << name <<"\"";
+  kDebug() <<"Comment : \"" << comment <<"\"";
+  kDebug() <<"Address : \"" << angleAddress <<"\"";
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -731,7 +731,7 @@ QString stripEmailAddr( const QString& aStr )
     result += angleAddress;
   }
 
-  //kDebug(5006) << "Returns \"" << result << "\"";
+  //kDebug() << "Returns \"" << result << "\"";
   return result;
 }
 
@@ -805,7 +805,7 @@ QString emailAddrAsAnchor( const QString& aEmail, bool stripped, const QString& 
     result.truncate( result.length() - 2 );
   }
 
-  //kDebug(5006) << "('" << aEmail << "') returns:\n-->" << result << "<--";
+  //kDebug() << "('" << aEmail << "') returns:\n-->" << result << "<--";
   return result;
 }
 

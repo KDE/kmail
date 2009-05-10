@@ -57,7 +57,7 @@ void AccountComboBox::slotRefreshAccounts()
   QList<KMAccount *>::ConstIterator it = lst.constBegin();
   for ( ; it != lst.constEnd() ; ++it )
     accountNames.append( (*it)->name() );
-  kDebug(5006) << accountNames;
+  kDebug() << accountNames;
   addItems( accountNames );
   if ( curr )
     setCurrentAccount( curr );

@@ -200,7 +200,7 @@ KMCommand::~KMCommand()
 KMCommand::Result KMCommand::result() const
 {
   if ( mResult == Undefined ) {
-    kDebug(5006) <<"mResult is Undefined";
+    kDebug() <<"mResult is Undefined";
   }
   return mResult;
 }
@@ -336,7 +336,7 @@ void KMCommand::transferSelectedMsgs()
     if ( thisMsg->parent() && !thisMsg->isComplete() &&
          ( !mProgressDialog || !mProgressDialog->wasCancelled() ) )
     {
-      kDebug(5006)<<"### INCOMPLETE";
+      kDebug()<<"### INCOMPLETE";
       // the message needs to be transferred first
       complete = false;
       KMCommand::mCountJobs++;
@@ -1430,7 +1430,7 @@ KMCommand::Result KMRedirectCommand::execute()
     ? KMail::MessageSender::SendImmediate
     : KMail::MessageSender::SendLater;
   if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
-    kDebug(5006) <<"KMRedirectCommand: could not redirect message (sending failed)";
+    kDebug() <<"KMRedirectCommand: could not redirect message (sending failed)";
     return Failed; // error: couldn't send
   }
   return OK;
@@ -1954,7 +1954,7 @@ void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
 {
   mPendingJobs.removeAll( job );
   if ( job->error() ) {
-    kDebug(5006) <<"folder job failed:" << job->error();
+    kDebug() <<"folder job failed:" << job->error();
     // kill all pending jobs
     for ( QList<KMail::FolderJob*>::Iterator it = mPendingJobs.begin(); it != mPendingJobs.end(); ++it ) {
       disconnect( (*it), SIGNAL(result(KMail::FolderJob*)),
@@ -1975,7 +1975,7 @@ void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
 
 void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 {
-  kDebug(5006) << success;
+  kDebug() << success;
   if ( !success )
     setResult( Failed );
   mDestFolder->close( "kmcommand" );
@@ -2048,7 +2048,7 @@ KMCommand::Result KMMoveCommand::execute()
 
   for ( QList<quint32>::ConstIterator it = mSerNumList.constBegin(); it != mSerNumList.constEnd(); ++it ) {
     if ( *it == 0 ) {
-      kDebug(5006) << "serial number == 0!";
+      kDebug() << "serial number == 0!";
       continue; // invalid message
     }
     KMFolder *srcFolder = 0;
@@ -2064,7 +2064,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
     msg = srcFolder->getMsg(idx);
     if ( !msg ) {
-      kDebug(5006) <<"No message found for serial number" << *it;
+      kDebug() <<"No message found for serial number" << *it;
       continue;
     }
     bool undo = msg->enableUndo();
@@ -2169,7 +2169,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
   if ( folder != mDestFolder || !mLostBoys.contains( serNum )  ) {
-    //kDebug(5006) << "Different folder or invalid serial number.";
+    //kDebug() << "Different folder or invalid serial number.";
     return;
   }
   mLostBoys.removeAll(serNum);
@@ -2244,7 +2244,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( quint32 sernum )
     addMsg( msg );
     setDestFolder( findTrashFolder( srcFolder ) );
   } else {
-    kWarning( 5006 ) << "Failed to find a source folder for serial number: " << sernum;
+    kWarning() << "Failed to find a source folder for serial number: " << sernum;
   }
 }
 
@@ -2706,7 +2706,7 @@ void KMLoadPartsCommand::slotStart()
                  this, SLOT(slotPartRetrieved(KMMessage*, const QString&)) );
         job->start();
       } else
-        kWarning(5006) <<"KMLoadPartsCommand - msg has no parent";
+        kWarning() <<"KMLoadPartsCommand - msg has no parent";
     }
   }
   if ( mNeedsRetrieval == 0 )
@@ -2727,7 +2727,7 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
         it.key()->setDwPart( part );
     }
   } else
-    kWarning(5006) << "Could not find bodypart!";
+    kWarning() << "Could not find bodypart!";
   --mNeedsRetrieval;
   if ( mNeedsRetrieval == 0 )
     execute();
@@ -2877,7 +2877,7 @@ void KMHandleAttachmentCommand::slotStart()
   if ( !mNode->msgPart().isComplete() )
   {
     // load the part
-    kDebug(5006) <<"load part";
+    kDebug() <<"load part";
     KMLoadPartsCommand *command = new KMLoadPartsCommand( mNode, mMsg );
     connect( command, SIGNAL( partsRetrieved() ),
         this, SLOT( slotPartComplete() ) );
@@ -2917,7 +2917,7 @@ KMCommand::Result KMHandleAttachmentCommand::execute()
       return Undefined;
       break;
     default:
-      kDebug(5006) <<"unknown action" << mAction;
+      kDebug() <<"unknown action" << mAction;
       break;
   }
   setResult( OK );
@@ -2932,7 +2932,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
 
   if ( atmFileInfo.size() == 0 )
   {
-    kDebug(5006) <<"rewriting attachment";
+    kDebug() <<"rewriting attachment";
     // there is something wrong so write the file again
     QByteArray data = mNode->msgPart().bodyDecodedBinary();
     if ( mNode->msgPart().type() == DwMime::kTypeText && data.size() > 0 ) {
@@ -2990,7 +2990,7 @@ void KMHandleAttachmentCommand::atmOpen()
   if ( !mOffer )
     mOffer = getServiceOffer();
   if ( !mOffer ) {
-    kDebug(5006) <<"got no offer";
+    kDebug() <<"got no offer";
     return;
   }
 
@@ -3220,7 +3220,7 @@ KMCommand::Result AttachmentModifyCommand::execute()
   Result res = doAttachmentModify();
   if ( res != OK )
   {
-    kDebug(5006)<<"AttachmentModifyCommand::execute has failed";
+    kDebug() << "has failed";
     return res;
   }
   setEmitsCompletedItself( true );
@@ -3231,7 +3231,7 @@ KMCommand::Result AttachmentModifyCommand::execute()
 void AttachmentModifyCommand::storeChangedMessage(KMMessage * msg)
 {
   if ( !mFolder || !mFolder->storage() ) {
-    kWarning(5006) <<"We lost the folder!";
+    kWarning() <<"We lost the folder!";
     setResult( Failed );
     emit completed( this );
     deleteLater();
@@ -3255,7 +3255,7 @@ void AttachmentModifyCommand::messageStoreResult(KMFolderImap* folder, bool succ
     delCmd->start();
     return;
   }
-  kWarning(5006) <<"Adding modified message failed.";
+  kWarning() <<"Adding modified message failed.";
   setResult( Failed );
   emit completed( this );
   deleteLater();
@@ -3294,12 +3294,12 @@ DwBodyPart * AttachmentModifyCommand::findPartInternal(DwEntity * root, int inde
 KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     AttachmentModifyCommand( node, msg, parent )
 {
-  kDebug(5006) ;
+  kDebug() ;
 }
 
 KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
 {
-  kDebug(5006) ;
+  kDebug() ;
 }
 
 KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
@@ -3349,7 +3349,7 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
 KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     AttachmentModifyCommand( node, msg, parent )
 {
-  kDebug(5006) ;
+  kDebug() ;
   mTempFile.setAutoRemove( true );
 }
 
@@ -3371,7 +3371,7 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
     return Failed;
 
   if ( !mTempFile.open() ) {
-    kWarning(5006) << "KMEditAttachmentCommand: Unable to open temp file.";
+    kWarning() << "KMEditAttachmentCommand: Unable to open temp file.";
     return Failed;
   }
   mTempFile.write( part.bodyDecodedBinary() );
@@ -3392,10 +3392,10 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
 
 void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
 {
-  kDebug(5006) ;
+  kDebug() ;
   // anything changed?
   if ( !watcher->fileChanged() ) {
-    kDebug(5006) <<"File has not been changed";
+    kDebug() <<"File has not been changed";
     setResult( Canceled );
     emit completed( this );
     deleteLater();
@@ -3450,7 +3450,7 @@ KMCommand::Result CreateTodoCommand::execute()
   KTemporaryFile tf;
   tf.setAutoRemove( true );
   if ( !tf.open() ) {
-    kWarning(5006) << "CreateTodoCommand: Unable to open temp file.";
+    kWarning() << "CreateTodoCommand: Unable to open temp file.";
     return Failed;
   }
   QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + '/' + msg->msgId();

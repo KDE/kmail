@@ -65,7 +65,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   hlay->addWidget( mListBox, 1 );
 
   if ( buttons == None )
-    kDebug(5006) <<"SimpleStringListBox called with no buttons."
+    kDebug() <<"SimpleStringListBox called with no buttons."
       "Consider using a plain QListBox instead!";
 
   QVBoxLayout * vlay = new QVBoxLayout(); // inherits spacing
@@ -110,7 +110,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
 
   if ( buttons & Up ) {
     if ( !(buttons & Down) )
-      kDebug(5006) <<"Are you sure you want to use an Up button"
+      kDebug() <<"Are you sure you want to use an Up button"
         "without a Down button??";
     mUpButton = new KPushButton( QString(), this );
     mUpButton->setIcon( KIcon( "go-up" ) );
@@ -124,7 +124,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
 
   if ( buttons & Down ) {
     if ( !(buttons & Up) )
-      kDebug(5006) <<"Are you sure you want to use a Down button"
+      kDebug() <<"Are you sure you want to use a Down button"
         "without an Up button??";
     mDownButton = new KPushButton( QString(), this );
     mDownButton->setIcon( KIcon( "go-down" ) );
@@ -183,18 +183,18 @@ void SimpleStringListEditor::setButtonText( ButtonCode button,
     return;
   case Up:
   case Down:
-    kDebug(5006) <<"SimpleStringListEditor: Cannot change text of"
+    kDebug() <<"SimpleStringListEditor: Cannot change text of"
                    "Up and Down buttons: they don't contains text!";
     return;
   default:
     if ( button & All )
-      kDebug(5006) << "No such button!";
+      kDebug() << "No such button!";
     else
-      kDebug(5006) << "Can only set text for one button at a time!";
+      kDebug() << "Can only set text for one button at a time!";
     return;
   }
 
-  kDebug(5006) << "The requested button has not been created!";
+  kDebug() << "The requested button has not been created!";
 }
 
 void SimpleStringListEditor::slotAdd() {

@@ -780,7 +780,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
     }
     break;
     default:
-      kWarning() << "Unrecognized fill view strategy" << endl;
+      kWarning() << "Unrecognized fill view strategy";
       Q_ASSERT( false );
     break;
   }
@@ -1474,7 +1474,7 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
            )
          )
       {
-        kWarning() << "Circular In-Reply-To reference loop detected in the message tree" << endl;
+        kWarning() << "Circular In-Reply-To reference loop detected in the message tree";
         mi->setThreadingStatus( MessageItem::NonThreadable );
         return 0; // broken message: throw it away
       }
@@ -1519,7 +1519,7 @@ MessageItem * Model::findMessageParent( MessageItem * mi )
            )
          )
       {
-        kWarning() << "Circular reference loop detected in the message tree" << endl;
+        kWarning() << "Circular reference loop detected in the message tree";
         mi->setThreadingStatus( MessageItem::NonThreadable );
         return 0; // broken message: throw it away
       }
@@ -2639,7 +2639,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass2( ViewItemJob 
       Q_ASSERT( mi->threadingStatus() != MessageItem::ImperfectParentFound );
       if ( !mi->isViewable() )
       {
-        kWarning() << "Non viewable message " << mi << " subject " << mi->subject().toUtf8().data() << endl;
+        kWarning() << "Non viewable message " << mi << " subject " << mi->subject().toUtf8().data();
         Q_ASSERT( mi->isViewable() );
       }
     }
@@ -2704,7 +2704,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Fill( ViewItem
     if ( !mStorageModel->initializeMessageItem( mi, curIndex, bUseReceiver ) )
     {
       // ugh
-      kWarning() << "Fill of the MessageItem at storage row index " << curIndex << " failed" << endl;
+      kWarning() << "Fill of the MessageItem at storage row index " << curIndex << " failed";
       curIndex++;
       continue;
     }
@@ -3100,7 +3100,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Cleanup( ViewI
            ( childMessage == mCurrentItemToRestoreAfterViewItemJobStep ) ||
            (
              // there is a message that is going to be re-selected
-             mCurrentItemToRestoreAfterViewItemJobStep && 
+             mCurrentItemToRestoreAfterViewItemJobStep &&
              // that message is in the childMessage subtree
              mCurrentItemToRestoreAfterViewItemJobStep->hasAncestor( childMessage )
            )
@@ -3377,7 +3377,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
       break;
       default:
         // This is *really* a BUG
-        kWarning() << "ERROR: Model::viewItemJobStepInternalForJobPass1Fill() returned an invalid result";
+        kWarning() << "ERROR: returned an invalid result";
         Q_ASSERT( false );
       break;
     }
@@ -3407,7 +3407,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
       break;
       default:
         // This is *really* a BUG
-        kWarning() << "ERROR: Model::viewItemJobStepInternalForJobPass1Cleanup() returned an invalid result";
+        kWarning() << "ERROR: returned an invalid result";
         Q_ASSERT( false );
       break;
     }
@@ -3439,7 +3439,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
       break;
       default:
         // This is *really* a BUG
-        kWarning() << "ERROR: Model::viewItemJobStepInternalForJobPass1Cleanup() returned an invalid result";
+        kWarning() << "ERROR: returned an invalid result";
         Q_ASSERT( false );
       break;
     }
@@ -3472,7 +3472,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
       break;
       default:
         // This is *really* a BUG
-        kWarning() << "ERROR: Model::viewItemJobStepInternalForJobPass2() returned an invalid result";
+        kWarning() << "ERROR: returned an invalid result";
         Q_ASSERT( false );
       break;
     }
@@ -3503,7 +3503,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
       break;
       default:
         // This is *really* a BUG
-        kWarning() << "ERROR: Model::viewItemJobStepInternalForJobPass3() returned an invalid result";
+        kWarning() << "ERROR: returned an invalid result";
         Q_ASSERT( false );
       break;
     }
@@ -3534,7 +3534,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJob( ViewItemJob *job,
       break;
       default:
         // This is *really* a BUG
-        kWarning() << "ERROR: Model::viewItemJobStepInternalForJobPass4() returned an invalid result";;
+        kWarning() << "ERROR: returned an invalid result";;
         Q_ASSERT( false );
       break;
     }
@@ -3823,7 +3823,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
       break;
       default:
         // This is *really* a BUG
-        kWarning() << "ERROR: Model::viewItemJobStepInternalForJob() returned an invalid result";
+        kWarning() << "ERROR: returned an invalid result";
         Q_ASSERT( false );
       break;
     }
@@ -3975,7 +3975,7 @@ void Model::viewItemJobStep()
     break;
     default:
       // This is *really* a BUG
-      kWarning() << "ERROR: Model::viewItemJobStepInternal() returned an invalid result";
+      kWarning() << "ERROR: returned an invalid result";
       Q_ASSERT( false );
     break;
   }
