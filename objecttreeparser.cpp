@@ -2801,7 +2801,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   const QString quoteEnd = "</div>";
 
   const unsigned int length = s.length();
-  bool paraIsRTL;
+  bool paraIsRTL = false;
   bool startNewPara = true;
   unsigned int pos, beg;
 
