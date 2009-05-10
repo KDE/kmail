@@ -71,7 +71,7 @@ namespace KMail {
 
     mLogin.clear();
     mPasswd.clear();
-    mAuth = "*";
+    mAuth = '*';
     mHost.clear();
     mPort = defaultPort();
     mStorePasswd = false;

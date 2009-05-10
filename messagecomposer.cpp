@@ -353,7 +353,8 @@ void MessageComposer::applyChanges( bool disableCrypto )
   // Do the initial setup
   if ( !qgetenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" ).isEmpty() ) {
     QByteArray cE = qgetenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" );
-    mDebugComposerCrypto = ( cE == "1" || cE.toUpper() == "ON" || cE.toUpper() == "TRUE" );
+    mDebugComposerCrypto = ( cE == "1" || //krazy:exclude=doublequote_chars
+                             cE.toUpper() == "ON" || cE.toUpper() == "TRUE" );
     kDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE";
   } else {
     mDebugComposerCrypto = false;
@@ -2480,7 +2481,7 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
     return;
   }
 
-  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() && 
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() &&
        Kleo::MessageBox::showAuditLogButton( job.get() ) )
     Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Signing Operation") );
 
