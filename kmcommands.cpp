@@ -436,7 +436,7 @@ void KMCommand::slotTransferCancelled()
 
   KMCommand::mCountJobs = 0;
   mCountMsgs = 0;
-  // unget the transfered messages
+  // unget the transferred messages
   QList<KMMessage*>::const_iterator it;
   for ( it = mRetrievedMsgs.constBegin(); it != mRetrievedMsgs.constEnd(); ++it ) {
     KMMessage* msg = (*it);
@@ -739,7 +739,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
     return Failed;
   }
   if ( msg->isComplete() && !mMsgWasComplete ) {
-    msg->notify(); // notify observers as msg was transfered
+    msg->notify(); // notify observers as msg was transferred
   }
   QString str = msg->codec()->toUnicode( msg->asString() );
 

@@ -44,6 +44,7 @@ AttachmentListView::AttachmentListView( KMail::Composer * composer,
   setIndentation( 0 );
   setAllColumnsShowFocus( true );
   QStringList headerNames;
+  //TODO: fix the spelling of "collumn" below
   headerNames << i18nc("@title collumn attachment name.", "Name")
               << i18nc("@title collumn attachment size.", "Size")
               << i18nc("@title collumn attachment encoding.", "Encoding")

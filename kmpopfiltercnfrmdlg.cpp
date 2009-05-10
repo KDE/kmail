@@ -380,7 +380,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
     }
   }
 
-  // Initally sort the columns of the treewidgets by size
+  // Initially sort the columns of the treewidgets by size
   upperHeadersView->slotSectionClicked( 7 );
   mFilteredHeaders->slotSectionClicked( 7 );
 

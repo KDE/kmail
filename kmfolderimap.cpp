@@ -340,7 +340,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
   }
   if ( !account()->hasCapability("uidplus") ) {
     // Remember the status with the MD5 as key
-    // so it can be transfered to the new message
+    // so it can be transferred to the new message
     mMetaDataMap.insert( aMsg->msgIdMD5(),
         new KMMsgMetaData( aMsg->status(), serNum ) );
   }
@@ -371,7 +371,7 @@ void KMFolderImap::addMsgQuiet(QList<KMMessage*> msgList)
       kmkernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
     if ( !uidplus ) {
       // Remember the status with the MD5 as key
-      // so it can be transfered to the new message
+      // so it can be transferred to the new message
       mMetaDataMap.insert( msg->msgIdMD5(),
           new KMMsgMetaData( msg->status(), msg->getMsgSerNum() ) );
     }
@@ -532,7 +532,7 @@ void KMFolderImap::copyMsg(QList<KMMessage*>& msgList)
     KMMessage *msg;
     foreach ( msg, msgList ) {
       // Remember the status with the MD5 as key
-      // so it can be transfered to the new message
+      // so it can be transferred to the new message
       mMetaDataMap.insert( msg->msgIdMD5(), new KMMsgMetaData( msg->status() ) );
     }
   }

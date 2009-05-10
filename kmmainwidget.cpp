@@ -486,9 +486,9 @@ void KMMainWidget::layoutSplitters()
     }
   }
 
-  // Because the reader windows's width increases a tiny bit after each restart
-  // in short folder list mode with mesage window at side, disable the stretching
-  // as a workaround here
+  // Because the reader windows's width increases a tiny bit after each
+  // restart in short folder list mode with message window at side, disable
+  // the stretching as a workaround here
   if ( readerWindowAtSide && !mLongFolderList ) {
     mSplitter1->setStretchFactor( 0, 1 );
     mSplitter1->setStretchFactor( 1, 0 );

@@ -74,7 +74,7 @@ class KMFilterListBox : public QGroupBox
 {
   Q_OBJECT
 public:
-  /** Constuctor. */
+  /** Constructor. */
   explicit KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0, bool popFilter = false);
 
   /** Destructor. */
@@ -296,7 +296,7 @@ private:
     select a filter to be displayed using the widgets on the right
     half. It also has buttons to delete filters, add new ones, to
     rename them and to change their order (maybe you will be able to
-    move the filters around by dragging later, and to optimise the
+    move the filters around by dragging later, and to optimize the
     filters by trying to apply them to all locally available
     KMMessage in turn and thus profiling which filters (and which
     rules of the search patterns) matches most often and sorting the
@@ -394,7 +394,7 @@ protected slots:
   void slotImportFilters();
 
   /** Called when a user clicks the export filters button. Pops up
-   * a dialog asking the user which filters to export and which 
+   * a dialog asking the user which filters to export and which
    * file to export to. */
   void slotExportFilters();
 

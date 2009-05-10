@@ -240,7 +240,7 @@ void lockOrDie() {
 }
 
 void insertLibraryCataloguesAndIcons() {
-  static const char * const catalogues[] = {
+  static const char * const catalogs[] = {
     "libkdepim",
     "libksieve",
     "libkleopatra",
@@ -249,9 +249,9 @@ void insertLibraryCataloguesAndIcons() {
 
   KLocale * l = KGlobal::locale();
   KIconLoader * il = KIconLoader::global();
-  for ( unsigned int i = 0 ; i < sizeof catalogues / sizeof *catalogues ; ++i ) {
-    l->insertCatalog( catalogues[i] );
-    il->addAppDir( catalogues[i] );
+  for ( unsigned int i = 0 ; i < sizeof catalogs / sizeof *catalogs ; ++i ) {
+    l->insertCatalog( catalogs[i] );
+    il->addAppDir( catalogs[i] );
   }
 
 }

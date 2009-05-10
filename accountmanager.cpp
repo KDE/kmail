@@ -95,11 +95,13 @@ void AccountManager::readConfig(void)
     KAccount::Type acctType = KAccount::typeForName( group.readEntry( "Type" ) );
     QString accountName = group.readEntry( "Name" );
 
-    // Fixes for config compatibilty: We do have an update script, but that is not reliable, because
-    // sometimes the scripts don't run (or already run in KDE3, but don't actually change anything)
-    // This is a big problem, since incorrect account type values make you loose your account settings,
-    // which in case of disconnected IMAP means you'll loose your cache.
-    // So for extra saftey, convert the account type values here as well.
+    // Fixes for config compatibility: We do have an update script, but that
+    // is not reliable, because sometimes the scripts don't run (or already
+    // run in KDE3, but don't actually change anything)
+    // This is a big problem, since incorrect account type values make you
+    // loose your account settings, which in case of disconnected IMAP means
+    // you'll loose your cache.
+    // So for extra safety, convert the account type values here as well.
     // See also kmail-4.0-misc.pl
     if ( acctType == -1 ) {
       kWarning() << "Config upgrade failed! Danger! Trying to convert old account type for account" << accountName;
@@ -137,10 +139,10 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
   mNewMailArrived = false;
   mInteractive = interactive;
 
- // if sync has been requested by the user then check if check-interval was disabled by user, if yes, then 
+ // if sync has been requested by the user then check if check-interval was disabled by user, if yes, then
  // de-install the timer
  // Safe guard against an infinite sync loop (kolab/issue2607)
-  if ( mInteractive ) 
+  if ( mInteractive )
       account->readTimerConfig();
 
   // queue the account
@@ -200,7 +202,7 @@ void AccountManager::processNextCheck( bool _newMail )
   }
   if ( !curAccount ) return; // no account or all of them are already checking
 
-  if ( curAccount->type() != KAccount::Imap && 
+  if ( curAccount->type() != KAccount::Imap &&
        curAccount->type() != KAccount::DImap &&
        curAccount->folder() == 0 ) {
     QString tmp = i18n("Account %1 has no mailbox defined:\n"

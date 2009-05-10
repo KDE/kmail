@@ -251,7 +251,7 @@ bool Item::recomputeMaxDate()
         newMaxDate = ( *it )->mMaxDate;
     }
   }
-    
+
   if ( newMaxDate != mMaxDate )
   {
     setMaxDate( newMaxDate );
@@ -354,7 +354,7 @@ int Item::appendChildItem( Model *model, Item *child )
     child->setViewable( model, true );
   } else {
     mChildItems->append( child );
-    child->setIndexGuess( idx );    
+    child->setIndexGuess( idx );
   }
   return idx;
 }
@@ -383,7 +383,7 @@ void Item::takeChildItem( Model *model, Item *child )
   if ( !mIsViewable )
   {
     //qDebug("TAKING NON VIEWABLE CHILD ITEM %x",child);
-    // We can highly optimise this case
+    // We can highly optimize this case
     mChildItems->removeOne( child );
 #if 0
     // This *could* be done, but we optimize and avoid it.
@@ -397,13 +397,13 @@ void Item::takeChildItem( Model *model, Item *child )
     return;
   }
 
-  // Can't optimise: must call the model functions
+  // Can't optimize: must call the model functions
   int idx = child->indexGuess();
   if ( mChildItems->count() > idx )
   {
     if ( mChildItems->at( idx ) != child ) // bad guess :/
       idx = mChildItems->indexOf( child );
-  } else 
+  } else
     idx = mChildItems->indexOf( child ); // bad guess :/
 
   if ( idx < 0 )

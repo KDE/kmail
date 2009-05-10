@@ -69,7 +69,7 @@ using KPIM::BroadcastStatus;
 #define INIT_MSGS 8
 #endif
 
-// Regular expression to find the line that seperates messages in a mail
+// Regular expression to find the line that separates messages in a mail
 // folder:
 #define MSG_SEPERATOR_START "From "
 #define MSG_SEPERATOR_START_LEN (sizeof(MSG_SEPERATOR_START) - 1)

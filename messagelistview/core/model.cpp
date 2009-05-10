@@ -3689,7 +3689,7 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
 #ifdef KDEPIM_FOLDEROPEN_PROFILE
 
     // Here we check if an old job has just completed or if we are at the start of the
-    // first job. We then initalize job data stuff and timers based on this.
+    // first job. We then initialize job data stuff and timers based on this.
 
     const int currentPass = job->currentPass();
     const bool firstChunk = currentPass != Stats::lastPass;

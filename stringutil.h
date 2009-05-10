@@ -42,7 +42,7 @@ namespace StringUtil
 
   /**
    * Strips the signature from a message text. "-- " is considered as
-   * a signature seperator.
+   * a signature separator.
    */
   QString stripSignature ( const QString & msg, bool clearSigned );
 

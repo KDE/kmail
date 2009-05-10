@@ -194,7 +194,7 @@ QString stripSignature ( const QString & msg, bool clearSigned )
   // I prefer to not delete a SB instead of delete good mail content.
   const QRegExp sbDelimiterSearch = clearSigned ?
       QRegExp( "(^|\n)[> ]*--\\s?\n" ) : QRegExp( "(^|\n)[> ]*-- \n" );
-  // The regular expresion to look for prefix change
+  // The regular expression to look for prefix change
   const QRegExp commonReplySearch = QRegExp( "^[ ]*>" );
 
   QString res = msg;
@@ -207,7 +207,7 @@ QString stripSignature ( const QString & msg, bool clearSigned )
     QString line; // the line to check if is part of the SB
     int posNewLine = -1;
     int posSignatureBlock = -1;
-    // Look for the SB begining
+    // Look for the SB beginning
     posSignatureBlock = res.indexOf( '-', posDeletingStart );
     // The prefix before "-- "$
     if ( res[posDeletingStart] == '\n' ) ++posDeletingStart;
