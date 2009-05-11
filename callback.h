@@ -77,6 +77,7 @@ public:
 
   bool askForComment( KCal::Attendee::PartStat status ) const;
   bool deleteInvitationAfterReply() const;
+  bool exchangeCompatibleInvitations() const;
 
 private:
   KMMessage* mMsg;

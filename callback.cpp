@@ -217,6 +217,11 @@ bool Callback::deleteInvitationAfterReply() const
     return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
 }
 
+bool Callback::exchangeCompatibleInvitations() const
+{
+  return GlobalSettings::self()->exchangeCompatibleInvitations();
+}
+
 QString Callback::sender() const
 {
   return mMsg->from();

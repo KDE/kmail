@@ -4903,7 +4903,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
-  QToolTip::add( mExchangeCompatibleInvitations, i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware e-mail. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands." ) );
+  QToolTip::add( mExchangeCompatibleInvitations, i18n( "Outlook(tm), when used in combination with a Microsoft Exchange server,\nhas a problem understanding standards-compliant groupware e-mail.\nTurn this option on to send groupware invitations and replies in an Exchange compatible way." ) );
   QWhatsThis::add( mExchangeCompatibleInvitations, i18n( GlobalSettings::self()->
            exchangeCompatibleInvitationsItem()->whatsThis().utf8() ) );
   connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
