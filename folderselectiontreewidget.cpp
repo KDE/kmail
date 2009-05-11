@@ -120,8 +120,9 @@ void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSele
 
   item->setText( mPathColumnIndex, path );
 
-  // Make readonly items unselectable, if we're told so
-  if ( mLastMustBeReadWrite && ( fti->folder() && fti->folder()->isReadOnly() ) ) {
+  // Make readonly and nocoontent items unselectable, if we're told so
+  if ( ( mLastMustBeReadWrite && ( fti->folder() && fti->folder()->isReadOnly() ) ) ||
+       ( fti->folder() && fti->folder()->noContent() ) ) {
     item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
   } else {
     item->setFolder( fti->folder() );
