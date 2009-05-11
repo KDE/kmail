@@ -98,6 +98,11 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *nam
   mapper->setMapping( action, COTimeLongEn );
   menu->addAction( action );
 
+  action = new KAction( i18n( "Addresses of all original recipients" ), menu );
+  connect( action, SIGNAL( triggered(bool)), mapper, SLOT(map()));
+  mapper->setMapping( action, COAddresseesAddr );
+  menu->addAction( action );
+
   action = new KAction( i18n("To Field Address"), menu );
   connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
   mapper->setMapping( action, COToAddr );
@@ -416,6 +421,7 @@ void TemplatesInsertCommand::slotMapped( int cmd )
   case TemplatesInsertCommand::CTime: emit insertCommand("%TIME"); break;
   case TemplatesInsertCommand::CTimeLong: emit insertCommand("%TIMELONG"); break;
   case TemplatesInsertCommand::CTimeLongEn: emit insertCommand("%TIMELONGEN"); break;
+  case TemplatesInsertCommand::COAddresseesAddr: emit insertCommand("%OADDRESSEESADDR"); break;
   case TemplatesInsertCommand::CToAddr: emit insertCommand("%TOADDR"); break;
   case TemplatesInsertCommand::CToName: emit insertCommand("%TONAME"); break;
   case TemplatesInsertCommand::CToFName: emit insertCommand("%TOFNAME"); break;

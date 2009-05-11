@@ -389,7 +389,7 @@ void TemplatesConfiguration::importFromPhrases()
     "Subject: %OFULLSUBJECT\n"
     "Date: %ODATE\n"
     "From: %OFROMADDR\n"
-    "To: %OTOADDR\n"
+    "%OADDRESSEESADDR\n"
     "\n"
     "%TEXT\n"
     "-------------------------------------------------------\n",
@@ -532,7 +532,7 @@ QString TemplatesConfiguration::defaultForward() {
     "Subject: %OFULLSUBJECT\n"
     "Date: %ODATE\n"
     "From: %OFROMADDR\n"
-    "To: %OTOADDR\n"
+    "%OADDRESSEESADDR\n"
     "\n"
     "%TEXT\n"
     "-------------------------------------------------------"
