@@ -237,6 +237,11 @@ void Callback::deleteInvitation() const
   ( new KMDeleteMsgCommand( sernum ) )->start();
 }
 
+bool Callback::exchangeCompatibleInvitations() const
+{
+  return GlobalSettings::self()->exchangeCompatibleInvitations();
+}
+
 QString Callback::sender() const
 {
   return mMsg->from();
