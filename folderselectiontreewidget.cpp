@@ -321,13 +321,13 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
   // Now search...
   QList<QTreeWidgetItem *> lItems = findItems( mFilter, Qt::MatchContains | Qt::MatchRecursive, mPathColumnIndex );
 
-  for( QList<QTreeWidgetItem *>::Iterator it = lItems.begin(); it != lItems.end(); ++it )
+  foreach( QTreeWidgetItem *item, lItems )
   {
-    ( *it )->setFlags( ( *it )->flags() | Qt::ItemIsSelectable );
-    ( *it )->setHidden( false );
+    item->setFlags( item->flags() | Qt::ItemIsSelectable );
+    item->setHidden( false );
 
     // Open all the parents up to this item
-    QTreeWidgetItem * p = ( *it )->parent();
+    QTreeWidgetItem * p = item->parent();
     while( p )
     {
       p->setHidden( false );
