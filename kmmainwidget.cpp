@@ -854,7 +854,7 @@ void KMMainWidget::createWidgets()
     action->setShortcut( QKeySequence( Qt::Key_C ) );
   }
   {
-    KAction *action = new KAction( i18n("Jump to Folder"), this );
+    KAction *action = new KAction( i18n("Jump to Folder..."), this );
     actionCollection()->addAction( "jump_to_folder", action );
     connect( action, SIGNAL( triggered ( bool ) ),
              SLOT( slotJumpToFolder() ) );
