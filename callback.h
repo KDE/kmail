@@ -80,6 +80,7 @@ class KMAIL_EXPORT Callback {
     bool askForComment( KCal::Attendee::PartStat status ) const;
     bool deleteInvitationAfterReply() const;
     void deleteInvitation() const;
+    bool exchangeCompatibleInvitations() const;
 
     /**
       Closes the main window showing this message, if it's a secondary window.
