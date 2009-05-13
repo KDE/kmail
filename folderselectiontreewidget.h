@@ -153,6 +153,11 @@ protected:
    */
   void recursiveReload( FolderViewItem *fti, FolderSelectionTreeWidgetItem *parent );
 
+  /**
+   * Returns false if the item is read-only and we need write access or has no content.
+   */
+  bool itemSelectable( const FolderSelectionTreeWidgetItem *item ) const;
+
 signals:
   /**
    * Emitted when the tree widget selection changes, to inform the parent dialogue
