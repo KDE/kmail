@@ -1304,7 +1304,7 @@ void KMMainWidget::slotRefreshFolder()
       imap->getAndCheckFolder();
     } else if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( mFolder->storage() );
-      f->account()->processNewMailSingleFolder( mFolder );
+      f->account()->processNewMailInFolder( mFolder );
     }
   }
 }

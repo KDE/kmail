@@ -1189,7 +1189,7 @@ void KMFolderImap::getAndCheckFolder(bool force)
     return getFolder(force);
 
   if ( account() )
-    account()->processNewMailSingleFolder( folder() );
+    account()->processNewMailInFolder( folder() );
   if (force) {
     // force an update
     mCheckFlags = true;

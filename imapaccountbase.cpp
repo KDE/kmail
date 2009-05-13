@@ -1017,12 +1017,12 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
+  void ImapAccountBase::processNewMailInFolder( KMFolder* folder, FolderListType type /*= Single*/ )
   {
     if ( mFoldersQueuedForChecking.contains( folder ) )
       return;
-    mFoldersQueuedForChecking.append(folder);
-    mCheckingSingleFolder = true;
+    mFoldersQueuedForChecking.append( folder );
+    mCheckingSingleFolder = ( type == Single );
     if ( checkingMail() )
     {
       disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),

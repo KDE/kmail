@@ -500,7 +500,7 @@ void FavoriteFolderView::checkMail()
         imap->getAndCheckFolder();
       } else if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
         KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
-        f->account()->processNewMailSingleFolder( fti->folder() );
+        f->account()->processNewMailInFolder( fti->folder() );
       }
     }
   }
