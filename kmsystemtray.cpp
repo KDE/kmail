@@ -201,7 +201,7 @@ void KMSystemTray::updateCount()
     }
 
     // Overlay the light KMail icon with the number image
-    QImage iconWithNumberImage = mDefaultIcon.toImage().copy();
+    QPixmap iconWithNumberImage = mDefaultIcon;
     QPainter p( &iconWithNumberImage );
     p.setFont( countFont );
     KColorScheme scheme( QPalette::Active, KColorScheme::View );
@@ -222,7 +222,7 @@ void KMSystemTray::updateCount()
     p.setOpacity( 1.0 );
     p.drawText( iconWithNumberImage.rect(), Qt::AlignCenter, countString );
 
-    setIcon( QPixmap::fromImage( iconWithNumberImage ) );
+    setIcon( iconWithNumberImage );
   } else
   {
     setIcon( mDefaultIcon );
