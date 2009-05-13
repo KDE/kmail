@@ -101,9 +101,9 @@ void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSe
   QPixmap pix = fti->normalIcon( KIconLoader::SizeSmall );
   item->setIcon( mNameColumnIndex, pix.isNull() ? SmallIcon( "folder" ) : QIcon( pix ) );
 
-  // Make items without folders and readonly items unselectable
-  // if we're told so
-  if ( mLastMustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
+  // Make readonly and nocoontent items unselectable, if we're told so
+  if ( ( mLastMustBeReadWrite && ( fti->folder() && fti->folder()->isReadOnly() ) ) ||
+       ( fti->folder() && fti->folder()->noContent() ) ) {
     item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
   } else {
     if ( fti->folder() )
