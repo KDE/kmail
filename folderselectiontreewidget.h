@@ -155,6 +155,10 @@ protected:
    */
   void recursiveReload( KMFolderTreeItem *fti, FolderSelectionTreeWidgetItem *parent );
 
+  /**
+   * Returns false if the item is read-only and we need write access or has no content.
+   */
+  bool itemSelectable( const FolderSelectionTreeWidgetItem *item ) const;
 };
 
 } // namespace KMail

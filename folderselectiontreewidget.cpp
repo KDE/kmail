@@ -51,6 +51,16 @@ public:
   KMFolder * folder() const
     { return mFolder; };
 
+  bool isReadOnly() const
+  {
+    return folder() && folder()->isReadOnly();
+  }
+
+  bool noContent() const
+  {
+    return folder() && folder()->noContent();
+  }
+
 private:
   KMFolder * mFolder;
 
@@ -68,6 +78,12 @@ FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent, KMFolder
   setContextMenuPolicy( Qt::CustomContextMenu );
   connect( this, SIGNAL( customContextMenuRequested( const QPoint & ) ),
            this, SLOT( slotContextMenuRequested( const QPoint & ) ) );
+}
+
+bool FolderSelectionTreeWidget::itemSelectable( const FolderSelectionTreeWidgetItem *item ) const
+{
+  return !( ( mLastMustBeReadWrite && item->isReadOnly() ) ||
+            ( item->noContent() ) );
 }
 
 void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSelectionTreeWidgetItem *parent )
@@ -102,8 +118,7 @@ void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti, FolderSe
   item->setIcon( mNameColumnIndex, pix.isNull() ? SmallIcon( "folder" ) : QIcon( pix ) );
 
   // Make readonly and nocoontent items unselectable, if we're told so
-  if ( ( mLastMustBeReadWrite && ( fti->folder() && fti->folder()->isReadOnly() ) ) ||
-       ( fti->folder() && fti->folder()->noContent() ) ) {
+  if ( !itemSelectable( item ) ) {
     item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
   } else {
     if ( fti->folder() )
@@ -256,7 +271,10 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
     {
       item->setHidden( false );
       item->setSelected( false );
-      item->setFlags( item->flags() | Qt::ItemIsSelectable );
+      if ( itemSelectable( static_cast< FolderSelectionTreeWidgetItem* >( item ) ) )
+        item->setFlags( item->flags() | Qt::ItemIsSelectable );
+      else
+        item->setFlags( item->flags() & ~Qt::ItemIsSelectable );
       ++clean;
     }
 
@@ -280,6 +298,9 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
 
   for( QList<QTreeWidgetItem *>::Iterator it = lItems.begin(); it != lItems.end(); ++it )
   {
+    if ( !itemSelectable( static_cast<FolderSelectionTreeWidgetItem*>( ( *it ) ) ) )
+      continue;
+
     ( *it )->setFlags( ( *it )->flags() | Qt::ItemIsSelectable );
     ( *it )->setHidden( false );
 
