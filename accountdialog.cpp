@@ -1472,6 +1472,11 @@ void NamespaceEditDialog::slotRemoveEntry( int id )
     if ( edit->isModified() ) {
       mDelimMap.remove( edit->lastText() );
     }
+    if ( mDelimMap.isEmpty() ) {
+      // Make sure that old values get overwritten in the config when the map is
+      // empty. It is needed to add an empty item for that.
+      mDelimMap.insert( QString(), QString() );
+    }
     mLineEditMap.remove( id );
     mainWidget()->layout()->removeWidget( edit );
     edit->close();
