@@ -290,10 +290,12 @@ ConfigureDialog::~ConfigureDialog() {
 
 void ConfigureDialog::slotApply() {
   GlobalSettings::self()->writeConfig();
+  emit configChanged();
 }
 
 void ConfigureDialog::slotOk() {
   GlobalSettings::self()->writeConfig();
+  emit configChanged();
 }
 
 void ConfigureDialog::slotUser2() {

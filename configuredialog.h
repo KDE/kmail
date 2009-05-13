@@ -50,6 +50,7 @@ signals:
       included in the file.
   */
   void installProfile( KConfig *profile );
+  void configChanged();
 protected:
   void hideEvent( QHideEvent *i );
 protected slots:
