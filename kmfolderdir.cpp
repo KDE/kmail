@@ -168,6 +168,31 @@ QString KMFolderDir::prettyUrl() const
     return label();
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderDir::addDirToParent( const QString &dirName, KMFolder *parentFolder )
+{
+  KMFolderDir* folderDir = new KMFolderDir( parentFolder, this, dirName, mDirType);
+  folderDir->reload();
+  append( folderDir );
+  parentFolder->setChild( folderDir );
+}
+
+// Get the default folder type of the given dir type. This function should only be used when
+// needing to find out what the folder type of a missing folder is.
+KMFolderType dirTypeToFolderType( KMFolderDirType dirType )
+{
+  switch( dirType ) {
+
+    // Use maildir for normal folder dirs, as this function is only called when finding a dir
+    // without a parent folder, which can only happen with maildir-like folders
+    case KMStandardDir: return KMFolderTypeMaildir;
+
+    case KMImapDir: return KMFolderTypeImap;
+    case KMDImapDir: return KMFolderTypeCachedImap;
+    case KMSearchDir: return KMFolderTypeSearch;
+    default: Q_ASSERT( false ); return KMFolderTypeMaildir;
+  }
+}
 
 //-----------------------------------------------------------------------------
 bool KMFolderDir::reload(void)
@@ -291,19 +316,41 @@ bool KMFolderDir::reload(void)
     }
   }
 
+  QSet<QString> dirsWithoutFolder = dirs;
   foreach ( KMFolder* folder, folderList )
   {
-    if ( dirs.contains( '.' + folder->fileName() + ".directory" ) )
+    const QString dirName = '.' + folder->fileName() + ".directory";
+    if ( dirs.contains( dirName ) )
     {
-      KMFolderDir* folderDir = new KMFolderDir( folder, this, '.' + folder->fileName() + ".directory", mDirType );
-      folderDir->reload();
-      append(folderDir);
-      folder->setChild(folderDir);
+      dirsWithoutFolder.remove( dirName );
+      addDirToParent( dirName, folder );
     }
+  }
+
+  // Check if the are any dirs without an associated folder. This can happen if the user messes
+  // with the on-disk folder structure, see kolab issue 2972. In that case, we don't want to loose
+  // the subfolders as well, so we recreate the folder so the folder/dir hierachy is OK again.
+  foreach ( const QString &dirName, dirsWithoutFolder ) {
+
+    // .foo.directory => foo
+    QString folderName = dirName;
+    int right = folderName.indexOf( ".directory" );
+    int left = folderName.indexOf( "." );
+    Q_ASSERT( left != -1 && right != -1 );
+    folderName = folderName.mid( left + 1, right - 1 );
+
+    kWarning() << "Found dir without associated folder:" << dirName << ", recreating the folder"
+               << folderName;
+
+    // Recreate the missing folder
+    KMFolder *folder = new KMFolder( this, folderName, KMFolderTypeCachedImap );
+    append( folder );
+    folderList.append( folder );
+
+    addDirToParent( dirName, folder );
   }
   return true;
 }
-
 
 //-----------------------------------------------------------------------------
 KMFolderNode* KMFolderDir::hasNamedFolder(const QString& aName)
