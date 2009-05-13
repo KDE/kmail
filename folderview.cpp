@@ -156,6 +156,7 @@ void FolderViewManager::viewFolderActivated( FolderView *view, KMFolder *fld, bo
 
 FolderView::FolderView( KMMainWidget *mainWidget, FolderViewManager *manager, QWidget *parent, const QString &configPrefix, const char *name )
  : KPIM::FolderTreeWidget( parent, name ),
+   mIgnoreResizes( false ),
    mMainWidget( mainWidget ),
    mManager( manager ),
    mConfigPrefix( configPrefix ),
@@ -183,8 +184,8 @@ FolderView::FolderView( KMMainWidget *mainWidget, FolderViewManager *manager, QW
 
   setDropIndicatorShown( false );
 
-  header()->setMinimumSectionSize( 30 ); // empiric :)
-  header()->setDefaultSectionSize( 30 ); // empiric :)
+  header()->setMinimumSectionSize( 20 ); // empiric :)
+  header()->setStretchLastSection( false );
 
   setIconSize( QSize( 22, 22 ) );
 
@@ -195,13 +196,16 @@ FolderView::FolderView( KMMainWidget *mainWidget, FolderViewManager *manager, QW
                          "Total" ) );
   addDataSizeColumn( i18nc( "@title:column Size of the folder.", "Size" ) );
 
-  header()->setResizeMode( LabelColumn, QHeaderView::Stretch );
-  header()->setResizeMode( UnreadColumn, QHeaderView::ResizeToContents );
-  header()->setResizeMode( TotalColumn, QHeaderView::ResizeToContents );
-  header()->setResizeMode( DataSizeColumn, QHeaderView::ResizeToContents );
+  header()->setResizeMode( LabelColumn, QHeaderView::Interactive );
+  header()->setResizeMode( UnreadColumn, QHeaderView::Interactive);
+  header()->setResizeMode( TotalColumn, QHeaderView::Interactive );
+  header()->setResizeMode( DataSizeColumn, QHeaderView::Interactive );
 
   connect( this, SIGNAL( columnVisibilityChanged( int ) ),
            SLOT( slotColumnVisibilityChanged( int ) ) );
+
+  connect( header(), SIGNAL( sectionResized( int, int, int ) ),
+           this, SLOT( handleSectionResize( int, int, int ) ) );
 
   // Connect local folder manager
   connect( kmkernel->folderMgr(), SIGNAL( changed() ),
@@ -263,6 +267,7 @@ void FolderView::readConfig()
   else
     setFont( KGlobalSettings::generalFont() );
 
+  mIgnoreResizes = true;
   if ( !restoreLayout( KMKernel::config(), "Geometry", mConfigPrefix + "Layout" ) )
   {
     // hide all the columns but the first (the default)
@@ -271,7 +276,11 @@ void FolderView::readConfig()
     setColumnHidden( TotalColumn, true );
     // default sort order is ascending
     header()->setSortIndicator( LabelColumn, Qt::AscendingOrder );
+
+    // Use a singleshot, as there is no layout here yet, and therefore no correct sizes
+    QTimer::singleShot( 0, this, SLOT( setDefaultColumnSizes() ) );
   }
+  mIgnoreResizes = false;
 
   KConfigGroup myGroup( KMKernel::config(), mConfigPrefix );
   int iIconSize = myGroup.readEntry( "IconSize", iconSize().width() );
@@ -435,10 +444,141 @@ void FolderView::cleanupConfigFile()
   }
 }
 
+int FolderView::totalColumnsSize() const
+{
+  int totalw = 0;
+  int count = header()->count();
+
+  // Compute the actual total width and find out the width of the label column
+  for ( int i = 0; i < count ; i++ )
+  {
+    if ( !isColumnHidden( i ) )
+    {
+      int size = header()->sectionSize( i );
+      totalw += size;
+    }
+  }
+  return totalw;
+}
+
+void FolderView::resizeEvent( QResizeEvent *event )
+{
+  KPIM::FolderTreeWidget::resizeEvent( event );
+  if ( !event->oldSize().isValid() )
+    return;
+
+  mIgnoreResizes = true;
+
+  int diff = event->oldSize().width() - event->size().width();
+  //kDebug() << "We got resized by" << -diff << "pixels, old size was" << event->oldSize().width()
+  //         << ", new size is" << event->size().width();
+  if ( !isColumnHidden( LabelColumn ) ) {
+
+    const int smallestSize = 20;
+    // If the label column can handle shrinking (or growing) without being < 20 pixels,
+    // resize it.
+    int newSize = header()->sectionSize( LabelColumn ) - diff;
+    //kDebug() << "The new size of the label column would be:" << newSize;
+    if ( newSize > smallestSize ) {
+      //kDebug() << "Ok, resizing the label column to that size";
+      header()->resizeSection( LabelColumn, newSize );
+    }
+    else {
+
+      // Ok, resizing the label column is not enough to make every column fit.
+      // So resize all other columns as well
+      for ( int i = 0; i < header()->count(); i++ ) {
+
+        if ( isColumnHidden( i ) )
+          continue;
+
+        // Each column has a minimum of 5 pixels.
+        int amountToResizeSection = diff;
+        if ( header()->sectionSize( i ) - diff < smallestSize )
+          amountToResizeSection = header()->sectionSize( i ) - smallestSize;
+        diff -= amountToResizeSection;
+        //kDebug() << "Going to resize section" << i << "by" << amountToResizeSection << "pixels";
+        header()->resizeSection( i, header()->sectionSize( i ) - amountToResizeSection );
+      }
+    }
+  }
+  mIgnoreResizes = false;
+}
+
+
+void FolderView::handleSectionResize( int logicalIndex, int oldSize, int newSize )
+{
+  if ( mIgnoreResizes ) {
+    return;
+  }
+
+  //kDebug() << "Section" << logicalIndex << "was resized from" << oldSize << "to" << newSize;
+
+  // Some column got bigger or smaller. That means the column after it needs to get a new size.
+  // In the loop below, find the column that should be resized, which is normally the next column
+  int diff = newSize - oldSize;
+
+  int columnToResize = LabelColumn;
+  for ( int i = logicalIndex + 1; i < header()->count(); i++ ) {
+    if ( !isColumnHidden( i ) ) {
+      if ( header()->sectionSize( i ) - diff > 5 ) {
+        columnToResize = i;
+        break;
+      }
+    }
+  }
+  mIgnoreResizes = true;
+  //kDebug() << "Section" << columnToResize << "is going to pay for this, it will be resized" << diff << "pixels";
+  header()->resizeSection( columnToResize, header()->sectionSize( columnToResize ) - diff );
+  mIgnoreResizes = false;
+}
+
+void FolderView::setDefaultColumnSizes()
+{
+    // OK: what follows is totally empiric.. but it looks nice ;)
+
+  //kDebug() << "Setting default column sizes!";
+
+  // A shown column usually causes the horizontal scrollbar to appear.
+  // The user is then forced to readjust the size of the column manually,
+  // sometimes with non trivial operations (try it: #ifdef this code and see :D).
+  // This tends to be very annoying thus a section relayout is a good idea.
+
+  // We do our own resizing since none of the defaults provided by Qt 4.4 seem to
+  // be nice enough. QHeaderView::Interactive and QHeaderView::Fixed are clearly
+  // useless here. QHeaderView::Stretch makes all the columns the same size (which looks ugly)
+  // and QHeaderView::ResizeToContents often will cause the scrollbar to appear again.
+
+  // If you feel afraid when mantaining the following code, be aware
+  // that nothing really relies on it...
+
+  mIgnoreResizes = true;
+  if ( !isColumnHidden( LabelColumn ) )
+  {
+    int count = header()->count();
+    int vwidth = viewport()->width();
+
+    // all the sections but the "LabelColumn" get 70 pixels (yes, this is heuristic)
+    for ( int c = 0; c < count ; c++ )
+    {
+      if ( !isColumnHidden( c ) && ( c != LabelColumn ) )
+      {
+        header()->resizeSection( c, 70 );
+        vwidth -= 70;
+      }
+    }
+    // then the LabelSection gets the remaining space (but at least 180 pixels)
+    header()->resizeSection( LabelColumn, vwidth >= 180 ? vwidth : 180 );
+  }
+  mIgnoreResizes = false;
+}
+
 void FolderView::slotColumnVisibilityChanged( int logicalIndex )
 {
   // This is called when one of our columns is hidden or shown either
   // by the means of the header popup menu or programmatically.
+
+  //kDebug() << "Column visibility changed!";
 
   bool nowVisible = !isColumnHidden( logicalIndex );
 
@@ -454,59 +594,7 @@ void FolderView::slotColumnVisibilityChanged( int logicalIndex )
     break;
   }
 
-  // OK: what follows is totally empiric.. but it looks nice ;)
-
-  // A shown column usually causes the horizontal scrollbar to appear.
-  // The user is then forced to readjust the size of the column manually,
-  // sometimes with non trivial operations (try it: #ifdef this code and see :D).
-  // This tends to be very annoying thus a section relayout is a good idea.
-
-  // We do our own resizing since none of the defaults provided by Qt 4.4 seem to
-  // be nice enough. QHeaderView::Interactive and QHeaderView::Fixed are clearly
-  // useless here. QHeaderView::Stretch makes all the columns the same size (which looks ugly)
-  // and QHeaderView::ResizeToContents often will cause the scrollbar to appear again.
-
-  // If you feel afraid when mantaining the following code, be aware
-  // that nothing really relies on it...
-
-  if ( nowVisible && ( !isColumnHidden( LabelColumn ) ) )
-  {
-    // A new column appeared and the "LabelColumn" (the long one) is actually visible.
-    int count = header()->count();
-    int totalw = 0;
-    int labelw = 180;
-
-    // Compute the actual total width and find out the width of the label column
-    for ( int i = 0; i < count ; i++ )
-    {
-      if ( !isColumnHidden( i ) )
-      {
-        int size = header()->sectionSize( i );
-        totalw += size;
-        if ( i == LabelColumn )
-          labelw = size;
-      }
-    }
-
-    int vwidth = viewport()->width();
-
-    // If the total width extends beyond the view or the label column is really too small
-    // then perform a nice proportional re-layout.
-    if ( ( totalw > vwidth ) || ( labelw < 180 ) )
-    {
-      // all the sections but the "LabelColumn" get 70 pixels (yes, this is heuristic)
-      for ( int c = 0; c < count ; c++ )
-      {
-        if ( !isColumnHidden( c ) && ( c != LabelColumn ) )
-        {
-          header()->resizeSection( c, 70 );
-          vwidth -= 70;
-        }
-      }
-      // then the LabelSection gets the remaining space (but at least 180 pixels)
-      header()->resizeSection( LabelColumn, vwidth >= 180 ? vwidth : 180 );
-    }
-  } // else less space is needed and the view should look OK without resizing.
+  setDefaultColumnSizes();
 
   emit columnsChanged();
 }

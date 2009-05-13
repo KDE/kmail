@@ -737,7 +737,15 @@ protected:
   /**
    * Reimplemented in order to draw our custom drop indications
    */
-  virtual void paintEvent( QPaintEvent *e);
+  virtual void paintEvent( QPaintEvent *e );
+
+  /**
+   * Reimplemented, to handle column resizing.
+   * If the folder view was enlarged, we give the label column the space.
+   * If it was shrunk, we take the space from the label column and other columns
+   * if it gets really small.
+   */
+  virtual void resizeEvent( QResizeEvent *event );
 
   /**
    * Internal helper for drop our custom drop indicator
@@ -782,7 +790,29 @@ protected:
    */
   UpdateCountsResult updateCountsForChildren( QTreeWidgetItem *it, const QTime &tStart );
 
+  /**
+   * @return the total size of all columns combined
+   */
+  int totalColumnsSize() const;
+
 protected Q_SLOTS:
+
+  /**
+   * Resets all column sizes to some default values.
+   * The size, unread and total column get 70 pixels, label column the rest
+   */
+  void setDefaultColumnSizes();
+
+  /**
+   * Slot which handles the resize of a column.
+   * If one column gets bigger, it would mean that the total width of all columns would be bigger
+   * than the complete view, meaning we get a scrollbar.
+   * To compensate for this, the next section is shrunk.
+   *
+   * Same case for the opposite, when a column gets smaller.
+   */
+  void handleSectionResize( int logicalIndex, int oldSize, int newSize );
+
   /**
    * Connected to our own signal columnVisibilityChanged()
    * Used to trigger columnsChanged() which is handled by KMMainWindow
@@ -927,6 +957,10 @@ private: // enums used internally
   };
 
 private: // member variables
+
+  /// Ignore header section resizes and don't act on them. This should always be set before
+  /// resizing a section programmatically.
+  bool mIgnoreResizes;
 
   QTimer * mUpdateCountsTimer;                      ///< Timer used to trigger a delayed updateCounts()
   QList< QPointer< KMFolder > > mFolderClipboard;   ///< Local clipboard of folders
