@@ -454,9 +454,13 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     if (idx != -1) {
 
       msg = folder->getMsg( idx );
-      if (!msg) { // sanity checking
+      if ( !msg ) {
         mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
         continue;
+      }
+
+      if ( msg->parent() && msg->parent()->find( msg ) == -1 ) {
+        kWarning() << "WTF!?!? Message is in reverse dictionary, but not in the index!!";
       }
 
       if (ActionScheduler::isEnabled() ||
@@ -593,7 +597,16 @@ int KMAcctImap::slotFilterMsg( KMMessage *msg )
     // messageRetrieved(0) is always possible
     return -1;
   }
-  msg->setTransferInProgress(false);
+
+  msg->setTransferInProgress( false );
+
+  if ( msg->parent() && msg->parent()->find( msg ) == -1 ) {
+    // ### Isn't the msg pointer invalid already at this point, because it was removed
+    //     from the message list!? Seems to work, so...
+    kWarning() << "The message with subject" << msg->subject() << "was removed from the server"
+               << "while we were filtering!";
+    return 1; // Yay for clean return enums! (see kmfiltermgr for explaination)
+  }
   quint32 serNum = msg->getMsgSerNum();
   if ( serNum )
     mFilterSerNumsToSave.remove( QString( "%1" ).arg( serNum ) );
