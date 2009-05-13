@@ -25,6 +25,11 @@ public:
 
   virtual bool isDir() const { return true; }
 
+  /**
+   * Adds the given subdirectory of this directory to the associated folder.
+   */
+  void addDirToParent( const QString &dirName, KMFolder *parentFolder );
+
   /** Read contents of directory. */
   virtual bool reload();
 
