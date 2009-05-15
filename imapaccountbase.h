@@ -256,9 +256,10 @@ namespace KMail {
     virtual void cancelMailCheck();
 
     /**
-     * Init a new-mail-check for a single folder
+     * Init a new-mail-check for a single folder, and optionally its subfolders.
      */
-    void processNewMailSingleFolder(KMFolder* folder);
+    enum FolderListType { Single, Recursive };
+    void processNewMailInFolder( KMFolder* folder, FolderListType type = Single );
 
     /**
      * Return true if we are processing a mailcheck for a single folder
