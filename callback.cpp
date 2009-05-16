@@ -133,6 +133,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
     cWin->addAttach( msgPart );
   }
 
+  cWin->forceDisableHtml();
   if ( GlobalSettings::self()->automaticSending() ) {
     cWin->setAttribute( Qt::WA_DeleteOnClose );
     cWin->slotSendNow();
