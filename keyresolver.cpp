@@ -235,7 +235,7 @@ static QStringList keysAsStrings( const std::vector<GpgME::Key>& keys ) {
   return strings;
 }
 
-static inline std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgME::Key> & keys ) {
+static std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgME::Key> & keys ) {
 
   std::vector<GpgME::Key> fishies;
   std::vector<GpgME::Key> ickies;
