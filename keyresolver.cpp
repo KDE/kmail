@@ -221,6 +221,40 @@ static inline bool NotValidSMIMESigningKey( const GpgME::Key & key ) {
   return !ValidSMIMESigningKey( key );
 }
 
+namespace {
+    struct ByTrustScore {
+        static int score( const GpgME::UserID & uid ) {
+            return uid.isRevoked() || uid.isInvalid() ? -1 : uid.validity() ;
+        }
+        bool operator()( const GpgME::UserID & lhs, const GpgME::UserID & rhs ) const {
+            return score( lhs ) < score( rhs ) ;
+        }
+    };
+}
+
+static std::vector<GpgME::UserID> matchingUIDs( const std::vector<GpgME::UserID> & uids, const QString & address ) {
+    if ( address.isEmpty() )
+        return std::vector<GpgME::UserID>();
+
+    std::vector<GpgME::UserID> result;
+    result.reserve( uids.size() );
+    for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin(), end = uids.end() ; it != end ; ++it )
+        // PENDING(marc) check DN for an EMAIL, too, in case of X.509 certs... :/
+        if ( const char * email = it->email() )
+            if ( *email && QString::fromUtf8( email ).stripWhiteSpace().lower() == address )
+                result.push_back( *it );
+    return result;
+}
+
+static GpgME::UserID findBestMatchUID( const GpgME::Key & key, const QString & address ) {
+    const std::vector<GpgME::UserID> all = key.userIDs();
+    if ( all.empty() )
+        return GpgME::UserID();
+    const std::vector<GpgME::UserID> matching = matchingUIDs( all, address.lower() );
+    const std::vector<GpgME::UserID> & v = matching.empty() ? all : matching ;
+    return *std::max_element( v.begin(), v.end(), ByTrustScore() );
+}
+
 static QStringList keysAsStrings( const std::vector<GpgME::Key>& keys ) {
   QStringList strings;
   for ( std::vector<GpgME::Key>::const_iterator it = keys.begin() ; it != keys.end() ; ++it ) {
@@ -235,35 +269,40 @@ static QStringList keysAsStrings( const std::vector<GpgME::Key>& keys ) {
   return strings;
 }
 
-static std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgME::Key> & keys ) {
+static std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgME::Key> & keys, const QString & address ) {
 
+  // PENDING(marc) work on UserIDs here?
   std::vector<GpgME::Key> fishies;
   std::vector<GpgME::Key> ickies;
+  std::vector<GpgME::Key> rewookies;
   std::vector<GpgME::Key>::const_iterator it = keys.begin();
   const std::vector<GpgME::Key>::const_iterator end = keys.end();
   for ( ; it != end ; it++ ) {
-    const GpgME::Key key = *it;
+    const GpgME::Key & key = *it;
     assert( ValidEncryptionKey( key ) );
-    const std::vector<GpgME::UserID> uids = key.userIDs();
-    for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
-      if ( !it->isRevoked()  && it->validity() == GpgME::UserID::Marginal ) {
+    const GpgME::UserID uid = findBestMatchUID( key, address );
+    if ( uid.isRevoked() ) {
+        rewookies.push_back( key );
+    }
+    if ( !uid.isRevoked()  && uid.validity() == GpgME::UserID::Marginal ) {
         fishies.push_back( key );
-        break;
-      }
-      if ( !it->isRevoked()  && it->validity() < GpgME::UserID::Never ) {
+    }
+    if ( !uid.isRevoked()  && uid.validity() < GpgME::UserID::Never ) {
         ickies.push_back( key );
-        break;
-      }
     }
   }
 
-  if ( fishies.empty() && ickies.empty() )
+  if ( fishies.empty() && ickies.empty() && rewookies.empty() )
     return keys;
 
   // if  some keys are not fully trusted, let the user confirm their use
-  QString msg = i18n("One or more of your configured OpenPGP encryption "
-                      "keys or S/MIME certificates is not fully trusted "
-                      "for encryption.");
+  QString msg = address.isEmpty()
+      ? i18n("One or more of your configured OpenPGP encryption "
+             "keys or S/MIME certificates is not fully trusted "
+             "for encryption.")
+      : i18n("One or more of the OpenPGP encryption keys or S/MIME "
+             "certificates for recipient \"%1\" is not fully trusted "
+             "for encryption.").arg(address) ;
 
   if ( !fishies.empty() ) {
     // certificates can't have marginal trust
@@ -273,6 +312,10 @@ static std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgME::Key>
   if ( !ickies.empty() ) {
     msg += i18n( "\nThe following keys or certificates have unknown trust level: \n");
     msg += keysAsStrings( ickies ).join(",");
+  }
+  if ( !rewookies.empty() ) {
+    msg += i18n( "\nThe following keys or certificates are <b>revoked</b>: \n");
+    msg += keysAsStrings( rewookies ).join(",");
   }
 
   if( KMessageBox::warningContinueCancel( 0, msg, i18n("Not Fully Trusted Encryption Keys"),
@@ -1538,7 +1581,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
               "be used for this recipient.", person),
             keys );
       }
-      keys = TrustedOrConfirmed( keys );
+      keys = TrustedOrConfirmed( keys, address );
 
       if ( !keys.empty() )
         return keys;
@@ -1563,7 +1606,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   // check if there are keys for this recipients, not (yet) their validity, so
   // don't show the untrusted encryption key warning in that case
   if ( !quiet )
-    matchingKeys = TrustedOrConfirmed( matchingKeys );
+      matchingKeys = TrustedOrConfirmed( matchingKeys, address );
   if ( quiet || matchingKeys.size() == 1 )
     return matchingKeys;
 
@@ -1588,7 +1631,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
               "More than one key matches \"%1\".\n\n"
               "Select the key(s) which should "
               "be used for this recipient.", person),
-          matchingKeys ) );
+          matchingKeys ), address );
 }
 
 
