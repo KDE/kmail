@@ -222,14 +222,16 @@ static inline bool NotValidSMIMESigningKey( const GpgME::Key & key ) {
 }
 
 namespace {
-    struct ByTrustScore {
-        static int score( const GpgME::UserID & uid ) {
-            return uid.isRevoked() || uid.isInvalid() ? -1 : uid.validity() ;
-        }
-        bool operator()( const GpgME::UserID & lhs, const GpgME::UserID & rhs ) const {
-            return score( lhs ) < score( rhs ) ;
-        }
-    };
+  struct ByTrustScore {
+    static int score( const GpgME::UserID & uid )
+    {
+      return uid.isRevoked() || uid.isInvalid() ? -1 : uid.validity() ;
+    }
+    bool operator()( const GpgME::UserID & lhs, const GpgME::UserID & rhs ) const
+    {
+      return score( lhs ) < score( rhs ) ;
+    }
+  };
 }
 
 static std::vector<GpgME::UserID> matchingUIDs( const std::vector<GpgME::UserID> & uids, const QString & address ) {
@@ -302,7 +304,7 @@ static std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgME::Key>
              "for encryption.")
       : i18n("One or more of the OpenPGP encryption keys or S/MIME "
              "certificates for recipient \"%1\" is not fully trusted "
-             "for encryption.").arg(address) ;
+             "for encryption.", address) ;
 
   if ( !fishies.empty() ) {
     // certificates can't have marginal trust
@@ -1606,7 +1608,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   // check if there are keys for this recipients, not (yet) their validity, so
   // don't show the untrusted encryption key warning in that case
   if ( !quiet )
-      matchingKeys = TrustedOrConfirmed( matchingKeys, address );
+    matchingKeys = TrustedOrConfirmed( matchingKeys, address );
   if ( quiet || matchingKeys.size() == 1 )
     return matchingKeys;
 
