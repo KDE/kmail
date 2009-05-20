@@ -1228,11 +1228,15 @@ KMCommand::Result KMForwardCommand::execute()
   if (msgList.count() >= 2) {
     // ask if they want a mime digest forward
 
-    if (KMessageBox::questionYesNo( parentWidget(),
-                                    i18n("Do you want to forward the selected messages as "
-                                         "attachments in one message (as a MIME digest) or as "
-                                         "individual messages?"), QString(), KGuiItem(i18n("Send As Digest")), KGuiItem(i18n("Send Individually")) )
-        == KMessageBox::Yes) {
+    int answer = KMessageBox::questionYesNoCancel(
+                   parentWidget(),
+                   i18n("Do you want to forward the selected messages as "
+                        "attachments in one message (as a MIME digest) or as "
+                        "individual messages?"), QString(),
+                   KGuiItem(i18n("Send As Digest")),
+                   KGuiItem(i18n("Send Individually")) );
+
+    if ( answer == KMessageBox::Yes ) {
       uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
       KMMessagePart *msgPart = new KMMessagePart;
@@ -1297,7 +1301,7 @@ KMCommand::Result KMForwardCommand::execute()
       win->addAttach(msgPart);
       win->show();
       return OK;
-    } else {            // NO MIME DIGEST, Multiple forward
+    } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
       uint id = 0;
       QList<KMMessage*> linklist;
       QList<KMMessage*>::const_iterator it;
@@ -1328,6 +1332,9 @@ KMCommand::Result KMForwardCommand::execute()
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->setCharset("");
       win->show();
+      return OK;
+    } else {
+      // user cancelled
       return OK;
     }
   }
