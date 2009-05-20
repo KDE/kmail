@@ -324,6 +324,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
   connect( mImap.ui.useDefaultIdentityCheck, SIGNAL( toggled(bool) ), this, SLOT( slotIdentityCheckboxChanged() ) );
   connect( mImap.ui.checkCapabilities, SIGNAL(clicked()), SLOT(slotCheckImapCapabilities()));
   connect( mImap.encryptionButtonGroup, SIGNAL(buttonClicked(int)), SLOT(slotImapEncryptionChanged(int)) );
+  connect( mImap.ui.passwordEdit, SIGNAL( textEdited( const QString& ) ),
+           this, SLOT( slotImapPasswordChanged( const QString& ) ) );
 
   // TODO (marc/bo): Test this
   mSieveConfigEditor = new SieveConfigEditor( mImap.ui.tabWidget );
@@ -694,12 +696,20 @@ void AccountDialog::slotPopEncryptionChanged( int id )
     checkHighest( mPop.authButtonGroup );
 }
 
-void AccountDialog::slotPopPasswordChanged(const QString& text)
+void AccountDialog::slotPopPasswordChanged( const QString& text )
 {
   if ( text.isEmpty() )
     mPop.ui.storePasswordCheck->setCheckState( Qt::Unchecked );
   else
     mPop.ui.storePasswordCheck->setCheckState( Qt::Checked );
+}
+
+void AccountDialog::slotImapPasswordChanged( const QString& text )
+{
+  if ( text.isEmpty() )
+    mImap.ui.storePasswordCheck->setCheckState( Qt::Unchecked );
+  else
+    mImap.ui.storePasswordCheck->setCheckState( Qt::Checked );
 }
 
 void AccountDialog::slotImapEncryptionChanged( int id )
