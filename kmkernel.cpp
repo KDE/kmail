@@ -406,11 +406,11 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   // tentatively decode to, cc and bcc because invokeMailer calls us with
   // RFC 2047 encoded addresses in order to protect non-ASCII email addresses
   if (!to.isEmpty())
-    msg->setTo( KMMsgBase::decodeRFC2047String( to.toLatin1() ) );
+    msg->setTo( KMMsgBase::decodeRFC2047String( to.toLocal8Bit() ) );
   if (!cc.isEmpty())
-    msg->setCc( KMMsgBase::decodeRFC2047String( cc.toLatin1() ) );
+    msg->setCc( KMMsgBase::decodeRFC2047String( cc.toLocal8Bit() ) );
   if (!bcc.isEmpty())
-    msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLatin1() ) );
+    msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLocal8Bit() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
 
   KUrl messageUrl = KUrl( messageFile );
