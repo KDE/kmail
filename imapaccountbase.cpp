@@ -1,3 +1,4 @@
+
 /** -*- c++ -*-
  * imapaccountbase.cpp
  *
@@ -1124,12 +1125,12 @@ void ImapAccountBase::cancelMailCheck()
 }
 
 //-----------------------------------------------------------------------------
-void ImapAccountBase::processNewMailSingleFolder( KMFolder *folder )
+void ImapAccountBase::processNewMailInFolder( KMFolder *folder, FolderListType type /*= Single*/  )
 {
   if ( mFoldersQueuedForChecking.contains( folder ) )
     return;
   mFoldersQueuedForChecking.append( folder );
-  mCheckingSingleFolder = true;
+  mCheckingSingleFolder = ( type == Single );
   if ( checkingMail() ) {
     disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                 this, SLOT( slotCheckQueuedFolders() ) );

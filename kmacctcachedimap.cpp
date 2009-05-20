@@ -214,7 +214,7 @@ void KMAcctCachedImap::processNewMail( bool /*interactive*/ )
     // Only check mail if the folder really exists, it might have been removed by the sync in
     // the meantime.
     if ( f ) {
-      processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), false );
+      processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), !checkingSingleFolder() );
     }
   }
 }
@@ -358,8 +358,8 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
   QStringList strList;
   QList<QPointer<KMFolder> > folderList;
   kmkernel->dimapFolderMgr()->createFolderList( &strList, &folderList,
-						folder->folder()->child(), QString(),
-						false );
+                                                folder->folder()->child(), QString(),
+                                                false );
   QList<QPointer<KMFolder> >::Iterator it;
   mCountLastUnread = 0;
   mUnreadBeforeCheck.clear();
@@ -371,13 +371,12 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
       // This invalidates the folder completely
       cfolder->setUidValidity("INVALID");
       cfolder->writeUidCache();
-      processNewMailSingleFolder( f );
     }
   }
   folder->setUidValidity("INVALID");
   folder->writeUidCache();
 
-  processNewMailSingleFolder( folder->folder() );
+  processNewMailInFolder( folder->folder(), Recursive );
 }
 
 //-----------------------------------------------------------------------------
