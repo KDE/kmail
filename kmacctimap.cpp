@@ -459,10 +459,6 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
         continue;
       }
 
-      if ( msg->parent() && msg->parent()->find( msg ) == -1 ) {
-        kWarning() << "WTF!?!? Message is in reverse dictionary, but not in the index!!";
-      }
-
       if (ActionScheduler::isEnabled() ||
           kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
         mScheduler->execFilters( msg );
