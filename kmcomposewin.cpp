@@ -1312,7 +1312,7 @@ void KMComposeWin::setupActions( void )
   connect( action, SIGNAL(triggered(bool) ), SLOT(slotSpellcheckConfig()) );
 
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
-    KToggleAction *a = new KToggleAction( KIcon( "chidecrypted" ), i18n("Encrypt Message with Chiasmus..."), this );
+    KToggleAction *a = new KToggleAction( KIcon( "chiasmus_chi" ), i18n("Encrypt Message with Chiasmus..."), this );
     actionCollection()->addAction( "encrypt_message_chiasmus", a );
     a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
     mEncryptChiasmusAction = a;
