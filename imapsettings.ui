@@ -243,7 +243,7 @@ However, if KWallet is not available, the password will be stored in KMail's con
        <item>
         <widget class="QCheckBox" name="subscribedFoldersCheck" >
          <property name="text" >
-          <string>Show only s&amp;ubscribed folders</string>
+          <string>Show only serverside s&amp;ubscribed folders</string>
          </property>
         </widget>
        </item>
