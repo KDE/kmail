@@ -2993,7 +2993,7 @@ void KMMainWidget::setupActions()
 
   mPrintAction = KStandardAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
-  mUseAction = new KAction( KIcon("file-new"), i18n("New Message From &Template"), this );
+  mUseAction = new KAction( KIcon("document-new"), i18n("New Message From &Template"), this );
   actionCollection()->addAction("use_template", mUseAction);
   connect(mUseAction, SIGNAL(triggered(bool) ), SLOT(slotUseTemplate()));
   mUseAction->setShortcut(QKeySequence(Qt::Key_N));
