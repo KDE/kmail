@@ -116,7 +116,8 @@ class AccountDialog : public KDialog
     void slotFilterOnServerClicked();
     void slotPipeliningClicked();
     void slotPopEncryptionChanged(int);
-    void slotPopPasswordChanged(const QString& text);
+    void slotPopPasswordChanged( const QString& text );
+    void slotImapPasswordChanged( const QString& text );
     void slotImapEncryptionChanged(int);
     void slotCheckPopCapabilities();
     void slotCheckImapCapabilities();
