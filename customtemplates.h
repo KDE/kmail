@@ -67,8 +67,6 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 
   protected:
 
-    void setRecipientsEditsEnabled( bool enabled );
-
     CustomTemplateItemList mItemList;
 
     /// These templates will be deleted when we're saving.
