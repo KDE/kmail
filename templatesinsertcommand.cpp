@@ -98,7 +98,7 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *nam
   mapper->setMapping( action, COTimeLongEn );
   menu->addAction( action );
 
-  action = new KAction( i18n( "Addresses of all original recipients" ), menu );
+  action = new KAction( i18n( "Addresses of all recipients" ), menu );
   connect( action, SIGNAL( triggered(bool)), mapper, SLOT(map()));
   mapper->setMapping( action, COAddresseesAddr );
   menu->addAction( action );
