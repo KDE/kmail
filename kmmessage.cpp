@@ -1926,14 +1926,14 @@ void KMMessage::setMsgSizeServer(size_t size)
 
 //-----------------------------------------------------------------------------
 ulong KMMessage::UID() const {
-  return headerField( "X-UID" ).toULong();
+  return headerField( "X-UID", NoEncoding ).toULong();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setUID(ulong uid)
 {
-  setHeaderField("X-UID", QByteArray::number((qlonglong)uid));
+  setHeaderField( "X-UID", QByteArray::number((qlonglong)uid), Unstructured, false, NoEncoding );
   mDirty = true;
 }
 
@@ -1976,7 +1976,7 @@ QList<QByteArray> KMMessage::rawHeaderFields( const QByteArray& field ) const
   return headerFields;
 }
 
-QString KMMessage::headerField(const QByteArray& aName) const
+QString KMMessage::headerField( const QByteArray& aName, EncodingMode encodingMode ) const
 {
   if ( aName.isEmpty() ) {
     return QString();
@@ -1986,8 +1986,13 @@ QString KMMessage::headerField(const QByteArray& aName) const
     return QString();
   }
 
-  return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str(),
-                              charset() );
+  const char *fieldValue = mMsg->Headers().FieldBody( aName.data() ).AsString().c_str();
+  if ( encodingMode == NoEncoding ) {
+    return QString( fieldValue );
+  }
+  else {
+    return decodeRFC2047String( fieldValue, charset() );
+  }
 }
 
 QStringList KMMessage::headerFields( const QByteArray& field ) const
@@ -2028,7 +2033,7 @@ void KMMessage::removeHeaderFields(const QByteArray& aName)
 
 //-----------------------------------------------------------------------------
 void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
-                                HeaderFieldType type, bool prepend )
+                                HeaderFieldType type, bool prepend, EncodingMode encodingMode )
 {
 #if 0
   if ( type != Unstructured )
@@ -2050,10 +2055,16 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
     if ( type != Unstructured )
       kDebug() <<"value: \"" << value <<"\"";
 #endif
-    QByteArray encoding = autoDetectCharset( charset(), s->prefCharsets, value );
-    if (encoding.isEmpty())
-       encoding = "utf-8";
-    aValue = encodeRFC2047String( value, encoding );
+    if ( encodingMode == NoEncoding ) {
+      aValue = value.toAscii();
+      Q_ASSERT( QString::fromAscii( aValue ) == bValue );
+    }
+    else {
+      QByteArray encoding = autoDetectCharset( charset(), s->prefCharsets, value );
+      if (encoding.isEmpty())
+        encoding = "utf-8";
+      aValue = encodeRFC2047String( value, encoding );
+    }
 #if 0
     if ( type != Unstructured )
       kDebug() <<"aValue: \"" << aValue <<"\"";

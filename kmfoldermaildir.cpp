@@ -363,7 +363,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     aMsg->removeHeaderField("Content-Type");        // the line above
 
 
-  const QString uidHeader = aMsg->headerField( "X-UID" );
+  const QString uidHeader = aMsg->headerField( "X-UID", KMMessage::NoEncoding );
   if ( !uidHeader.isEmpty() && stripUid )
     aMsg->removeHeaderField( "X-UID" );
 
@@ -372,7 +372,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   // Re-add the uid so that the take can make use of it, in case the
   // message is currently in an imap folder
   if ( !uidHeader.isEmpty() && stripUid )
-    aMsg->setHeaderField( "X-UID", uidHeader );
+    aMsg->setHeaderField( "X-UID", uidHeader, KMMessage::Unstructured, false, KMMessage::NoEncoding );
 
   if ( msgText.isEmpty() ) {
     kDebug() <<"Message added to folder `" << objectName() <<"' contains no data. Ignoring it.";
