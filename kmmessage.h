@@ -415,11 +415,13 @@ public:
     as long as the mail is not in a folder. */
   void setMsgSerNum(unsigned long newMsgSerNum = 0);
 
+  enum EncodingMode { NoEncoding, MessageCharsetEncoding };
+
   /** Returns the value of a header field with the given name. If multiple
       header fields with the given name might exist then you should use
       headerFields() instead.
   */
-  QString headerField(const QByteArray& name) const;
+  QString headerField( const QByteArray& name, EncodingMode encodingMode = MessageCharsetEncoding ) const;
 
   enum HeaderFieldType { Unstructured, Structured, Address };
 
@@ -429,7 +431,7 @@ public:
   */
   void setHeaderField( const QByteArray& name, const QString& value,
                        HeaderFieldType type = Unstructured,
-                       bool prepend = false );
+                       bool prepend = false, EncodingMode encodingMode = MessageCharsetEncoding );
 
   /** Returns a list of the values of all header fields with the given name. */
   QStringList headerFields( const QByteArray& name ) const;

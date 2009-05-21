@@ -561,9 +561,9 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
        unfortunate, as we need to removed the original from the folder
        using that, and look it up in the message. When the (new) message
        is uploaded, the header is stripped anyhow. */
-      QString uid = aMsg->headerField("X-UID");
+      QString uid = aMsg->headerField( "X-UID", KMMessage::NoEncoding );
       aMsg->fromString( msgText );
-      aMsg->setHeaderField("X-UID",uid);
+      aMsg->setHeaderField( "X-UID", uid, KMMessage::Unstructured, false, KMMessage::NoEncoding );
     }
     else {
       qDeleteAll( atmList );
@@ -1753,10 +1753,10 @@ class PipeJob : public ThreadWeaver::Job
         // unfortunate, as we need to removed the original from the folder
         // using that, and look it up in the message. When the (new) message
         // is uploaded, the header is stripped anyhow. */
-        const QString uid = mMsg->headerField( "X-UID" );
+        const QString uid = mMsg->headerField( "X-UID", KMMessage::NoEncoding );
         mMsg->fromString( ba );
         if ( !uid.isEmpty() )
-          mMsg->setHeaderField( "X-UID", uid );
+          mMsg->setHeaderField( "X-UID", uid, KMMessage::Unstructured, false, KMMessage::NoEncoding );
 
         if ( !origSerNum.isEmpty() )
           mMsg->setHeaderField( "X-KMail-Filtered", origSerNum );

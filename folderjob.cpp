@@ -47,8 +47,8 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
     mPassiveDestructor( false ), mStarted( false )
 {
   if ( msg ) {
-    mMsgList.append(msg);
-    mSets = msg->headerField("X-UID");
+    mMsgList.append( msg );
+    mSets = msg->headerField( "X-UID", KMMessage::NoEncoding );
   }
   init();
 }
