@@ -212,9 +212,10 @@ void KMLineEdit::loadContacts()
 
 
 KMLineEditSpell::KMLineEditSpell(bool useCompletion,
-                       QWidget *parent, const char *name)
-    : KMLineEdit(useCompletion,parent,name)
+                                 QWidget *parent, const char *name)
+  : KMLineEdit(useCompletion,parent,name)
 {
+  allowSemiColonAsSeparator( GlobalSettings::allowSemicolonAsAddressSeparator() );
 }
 
 
