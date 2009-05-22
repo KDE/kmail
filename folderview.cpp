@@ -350,7 +350,6 @@ void FolderView::saveItemStates()
       KConfigGroup conf( KMKernel::config(), configGroupName );
 
       conf.writeEntry( mConfigPrefix + "ItemIsExpanded", fvi->isExpanded() );
-      conf.writeEntry( mConfigPrefix + "ItemIsHidden", fvi->isHidden() );
       conf.writeEntry( mConfigPrefix + "ItemIsSelected", fvi->isSelected() );
       conf.writeEntry( mConfigPrefix + "ItemDnDSortingKey", fvi->dndSortingKey() );
     }
@@ -393,7 +392,6 @@ void FolderView::restoreItemStates()
     KConfigGroup conf( KMKernel::config(), mit.key() );
 
     fvi->setExpanded( conf.readEntry( mConfigPrefix + "ItemIsExpanded", false ) );
-    fvi->setHidden( conf.readEntry( mConfigPrefix + "ItemIsHidden", false ) );
     fvi->setSelected( conf.readEntry( mConfigPrefix + "ItemIsSelected", false ) );
     fvi->setDndSortingKey( conf.readEntry( mConfigPrefix + "ItemDnDSortingKey", -1 ) );
   }
