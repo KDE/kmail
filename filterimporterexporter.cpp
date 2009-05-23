@@ -88,6 +88,11 @@ bool FilterSelectionDialog::cancelled()
 
 void FilterSelectionDialog::setFilters( const QValueList<KMFilter*>& filters )
 {
+  if ( filters.isEmpty() )
+  {
+    enableButtonOK( false );
+    return;
+  }
   originalFilters = filters;
   filtersListView->clear();
   QValueListConstIterator<KMFilter*> it = filters.constEnd();
