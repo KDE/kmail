@@ -1958,7 +1958,7 @@ QByteArray KMMessage::rawHeaderField( const QByteArray &name ) const
   }
 
   DwHeaders &header = mMsg->Headers();
-  DwField *field = header.FindField( name.data() );
+  DwField *field = header.FindField( name.constData() );
 
   if ( !field ) {
     return QByteArray();
