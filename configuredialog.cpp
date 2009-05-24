@@ -606,7 +606,7 @@ AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent )
   // "Receiving" tab:
   //
   mReceivingTab = new ReceivingTab();
-  addTab( mReceivingTab, i18n( "Receiving" ) );
+  addTab( mReceivingTab, i18nc( "@title:tab Tab page where the user configures accounts to receive mail", "Receiving" ) );
   connect( mReceivingTab, SIGNAL(accountListChanged(const QStringList &)),
            this, SIGNAL(accountListChanged(const QStringList &)) );
 
@@ -614,7 +614,7 @@ AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent )
   // "Sending" tab:
   //
   mSendingTab = new SendingTab();
-  addTab( mSendingTab, i18n( "Sending" ) );
+  addTab( mSendingTab, i18nc( "@title:tab Tab page where the user configures accounts to send mail", "Sending" ) );
 }
 
 AccountsPageSendingTab::~AccountsPageSendingTab()
