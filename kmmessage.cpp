@@ -1951,13 +1951,18 @@ AddrSpecList KMMessage::extractAddrSpecs( const QByteArray & header ) const {
   return result;
 }
 
-QByteArray KMMessage::rawHeaderField( const QByteArray & name ) const {
-  if ( name.isEmpty() ) return QByteArray();
+QByteArray KMMessage::rawHeaderField( const QByteArray &name ) const
+{
+  if ( name.isEmpty() ) {
+    return QByteArray();
+  }
 
-  DwHeaders & header = mMsg->Headers();
-  DwField * field = header.FindField( name );
+  DwHeaders &header = mMsg->Headers();
+  DwField *field = header.FindField( name.data() );
 
-  if ( !field ) return QByteArray();
+  if ( !field ) {
+    return QByteArray();
+  }
 
   return header.FieldBody( name.data() ).AsString().c_str();
 }
