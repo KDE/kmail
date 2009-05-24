@@ -1917,7 +1917,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
   Q_ASSERT( set );
 
-  if ( command->result() != KMCommand::OK )
+  if ( command->result() == KMCommand::OK )
   {
     BroadcastStatus::instance()->setStatusMsg( i18n( "Messages copied successfully." ) );
   } else {
