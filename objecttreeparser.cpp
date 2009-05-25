@@ -111,7 +111,7 @@ using KPIMUtils::LinkLocator;
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <memory>
+#include <cassert>
 #include "chiasmuskeyselector.h"
 
 namespace KMail {
@@ -647,6 +647,25 @@ namespace KMail {
     kDebug() << "done, returning" << ( bIsOpaqueSigned ? "TRUE" : "FALSE" );
     return bIsOpaqueSigned;
   }
+
+void ObjectTreeParser::writeDecryptionInProgressBlock()
+{
+  kDebug(5006) << k_funcinfo << endl;
+  assert( mReader );
+  // PENDING(marc) find an animated icon here:
+  //const QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
+  const QString decryptedData = i18n("Encrypted data not shown");
+  PartMetaData messagePart;
+  messagePart.isDecryptable = true;
+  messagePart.isEncrypted = true;
+  messagePart.isSigned = false;
+  messagePart.inProgress = true;
+  htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                           cryptoProtocol(),
+                                           QString() ) );
+  //htmlWriter()->queue( decryptedData );
+  htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+}
 
 void ObjectTreeParser::writeDeferredDecryptionBlock()
 {
@@ -1572,14 +1591,16 @@ namespace KMail {
       }
       htmlWriter()->queue( "<b>" + i18n( "Certificate import details:" ) + "</b><br>" );
       for ( std::vector<GpgME::Import>::const_iterator it = imports.begin() ; it != imports.end() ; ++it ) {
-        if ( (*it).error() )
+        if ( (*it).error() ) {
           htmlWriter()->queue( i18n( "Failed: %1 (%2)", (*it).fingerprint(),
-                                 QString::fromLocal8Bit( (*it).error().asString() ) ) );
-        else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
-          if ( (*it).status() & GpgME::Import::ContainedSecretKey )
+                                     QString::fromLocal8Bit( (*it).error().asString() ) ) );
+        } else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey ) {
+          if ( (*it).status() & GpgME::Import::ContainedSecretKey ) {
             htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)", (*it).fingerprint() ) );
-          else
+          } else {
             htmlWriter()->queue( i18n( "New or changed: %1", (*it).fingerprint() ) );
+          }
+        }
         htmlWriter()->queue( "<br>" );
       }
 
@@ -2209,42 +2230,51 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const QString & fromAddress,
                                               const QString & filename )
 {
-    const bool isSMIME = cryptProto && ( cryptProto == Kleo::CryptoBackendFactory::instance()->smime() );
-    QString signer = block.signer;
+  const bool isSMIME = cryptProto && ( cryptProto == Kleo::CryptoBackendFactory::instance()->smime() );
+  QString signer = block.signer;
 
-    QString htmlStr, simpleHtmlStr;
-    QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
-    QString cellPadding("cellpadding=\"1\"");
+  QString htmlStr, simpleHtmlStr;
+  QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
+  QString cellPadding("cellpadding=\"1\"");
 
-    if( block.isEncapsulatedRfc822Message )
-    {
-        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
-            "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
-        if( !filename.isEmpty() )
-            htmlStr += "<a href=\"" + QString("file:")
-                     + KUrl::toPercentEncoding( filename ) + "\">"
-                     + i18n("Encapsulated message") + "</a>";
-        else
-            htmlStr += i18n("Encapsulated message");
-        htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
+  if ( block.isEncapsulatedRfc822Message ) {
+    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
+               "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
+    if ( !filename.isEmpty() ) {
+      htmlStr += "<a href=\"" + QString("file:") +
+        KUrl::toPercentEncoding( filename ) + "\">" +
+        i18n("Encapsulated message") + "</a>";
+    } else {
+      htmlStr += i18n("Encapsulated message");
     }
+    htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
+  }
 
-    if( block.isEncrypted )
-    {
-        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
-            "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
-        if( block.isDecryptable )
-            htmlStr += i18n("Encrypted message");
-        else {
-            htmlStr += i18n("Encrypted message (decryption not possible)");
-            if( !block.errorText.isEmpty() )
-                htmlStr += "<br />" + i18n("Reason: %1", block.errorText );
-        }
-        htmlStr += "</td></tr><tr class=\"encrB\"><td>";
+  if ( block.isEncrypted ) {
+    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
+               "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
+    if ( block.inProgress ) {
+      htmlStr += i18n("Please wait while the message is being decrypted...");
+    } else if ( block.isDecryptable ) {
+      htmlStr += i18n("Encrypted message");
+    } else {
+      htmlStr += i18n("Encrypted message (decryption not possible)");
+      if( !block.errorText.isEmpty() )
+        htmlStr += "<br />" + i18n("Reason: %1", block.errorText );
+    }
+    htmlStr += "</td></tr><tr class=\"encrB\"><td>";
+  }
+
+    if ( block.isSigned && block.inProgress ) {
+      block.signClass = "signInProgress";
+      htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"signInProgress\">"
+        "<tr class=\"signInProgressH\"><td dir=\"" + dir + "\">";
+      htmlStr += i18n("Please wait while the signature is being verified...");
+      htmlStr += "</td></tr><tr class=\"signInProgressB\"><td>";
     }
     simpleHtmlStr = htmlStr;
 
-    if( block.isSigned ) {
+    if ( block.isSigned && !block.inProgress ) {
         QStringList& blockAddrs( block.signerMailAddresses );
         // note: At the moment frameColor and showKeyInfos are
         //       used for CMS only but not for PGP signatures
@@ -3014,7 +3044,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
         case '\t':
         case '\r':
           break;
-        default: 
+        default:
           found = true;
           break;
       }
@@ -3023,7 +3053,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     if ( !found ) {
       // next line is essentially empty, it seems -- empty lines are
       // para separators
-      return true; 
+      return true;
     }
     //Find end of first word.
     //Note: flowText (in kmmessage.cpp) separates words for wrap by

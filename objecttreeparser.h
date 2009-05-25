@@ -194,6 +194,10 @@ namespace KMail {
         but we're deferring decryption for later. */
     void writeDeferredDecryptionBlock();
 
+    /** Writes out the block that we use when the node is encrypted,
+        but we've just kicked off async decryption. */
+    void writeDecryptionInProgressBlock();
+
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     bool okDecryptMIME( partNode& data,

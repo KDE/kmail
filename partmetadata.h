@@ -34,6 +34,7 @@ namespace KMail {
         isGoodSignature( false ),
         isEncrypted( false ),
         isDecryptable( false ),
+        inProgress( false ),
         technicalProblem( false ),
         isEncapsulatedRfc822Message( false )
     {
@@ -55,6 +56,7 @@ namespace KMail {
     bool isGoodSignature : 1;
     bool isEncrypted : 1;
     bool isDecryptable : 1;
+    bool inProgress : 1;
     bool technicalProblem : 1;
     bool isEncapsulatedRfc822Message : 1;
   };
