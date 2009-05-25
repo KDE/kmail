@@ -40,6 +40,8 @@
 #include <kleo/cryptobackend.h>
 #include <gpgmepp/verificationresult.h>
 
+#include <cassert>
+
 class KMReaderWin;
 class KMMessagePart;
 class QString;
@@ -113,6 +115,11 @@ namespace KMail {
                       KMail::HtmlWriter * htmlWriter=0,
                       KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
+
+    void setAllowAsync( bool allow ) { assert( !mHasPendingAsyncJobs ); mAllowAsync = allow; }
+    bool allowAsync() const { return mAllowAsync; }
+
+    bool hasPendingAsyncJobs() const { return mHasPendingAsyncJobs; }
 
     QCString rawReplyString() const { return mRawReplyString; }
 
@@ -210,6 +217,7 @@ namespace KMail {
                         bool showWarning,
                         bool& passphraseError,
                         bool& actuallyEncrypted,
+                        bool& decryptionStarted,
                         QString& aErrorText,
                         GpgME::Error & auditLogError,
                         QString& auditLog );
@@ -294,6 +302,8 @@ namespace KMail {
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;
     bool mIncludeSignatures;
+    bool mHasPendingAsyncJobs;
+    bool mAllowAsync;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
     KMail::CSSHelper * mCSSHelper;

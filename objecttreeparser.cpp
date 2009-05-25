@@ -34,6 +34,7 @@
 
 // my header file
 #include "objecttreeparser.h"
+#include "objecttreeparser_p.h"
 
 // other KMail headers
 #include "kmkernel.h"
@@ -147,6 +148,8 @@ namespace KMail {
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
       mKeepEncryptions( keepEncryptions ),
       mIncludeSignatures( includeSignatures ),
+      mHasPendingAsyncJobs( false ),
+      mAllowAsync( false ),
       mAttachmentStrategy( strategy ),
       mHtmlWriter( htmlWriter ),
       mCSSHelper( cssHelper )
@@ -166,6 +169,8 @@ namespace KMail {
       mShowOnlyOneMimePart( other.showOnlyOneMimePart() ),
       mKeepEncryptions( other.keepEncryptions() ),
       mIncludeSignatures( other.includeSignatures() ),
+      mHasPendingAsyncJobs( other.hasPendingAsyncJobs() ),
+      mAllowAsync( other.allowAsync() ),
       mAttachmentStrategy( other.attachmentStrategy() ),
       mHtmlWriter( other.htmlWriter() ),
       mCSSHelper( other.cssHelper() )
@@ -244,6 +249,9 @@ namespace KMail {
 
     if ( !node )
       return;
+
+    // reset pending async jobs state (we'll rediscover pending jobs as we go)
+    mHasPendingAsyncJobs = false;
 
     // reset "processed" flags for...
     if ( showOnlyOneMimePart() ) {
@@ -455,29 +463,85 @@ namespace KMail {
     messagePart.status = i18n("Wrong Crypto Plug-In.");
     messagePart.status_code = GPGME_SIG_STAT_NONE;
 
+    GpgME::Key key;
+
     if ( doCheck && cryptProto ) {
       GpgME::VerificationResult result;
       if ( data ) { // detached
-        const STD_NAMESPACE_PREFIX auto_ptr<Kleo::VerifyDetachedJob> job( cryptProto->verifyDetachedJob() );
-        if ( job.get() ) {
-          QByteArray plainData = cleartext;
-          plainData.resize( cleartext.size() - 1 );
-          result = job->exec( signaturetext, plainData );
-          messagePart.auditLogError = job->auditLogError();
-          messagePart.auditLog = job->auditLogAsHtml();
-        } else {
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
+        const VerifyDetachedBodyPartMemento * m
+          = dynamic_cast<VerifyDetachedBodyPartMemento*>( data->bodyPartMemento( "verifydetached" ) );
+        if ( !m ) {
+          Kleo::VerifyDetachedJob * job = cryptProto->verifyDetachedJob();
+          if ( !job ) {
+            cryptPlugError = CANT_VERIFY_SIGNATURES;
+            // PENDING(marc) cryptProto = 0 here?
+          } else {
+            QByteArray plainData = cleartext;
+            plainData.resize( cleartext.size() - 1 );
+            VerifyDetachedBodyPartMemento * newM
+              = new VerifyDetachedBodyPartMemento( job, cryptProto->keyListJob(), signaturetext, plainData );
+            if ( allowAsync() ) {
+              if ( newM->start() ) {
+                messagePart.inProgress = true;
+                mHasPendingAsyncJobs = true;
+              } else {
+                m = newM;
+              }
+            } else {
+              newM->exec();
+              m = newM;
+            }
+            data->setBodyPartMemento( "verifydetached", newM );
+          }
+        } else if ( m->isRunning() ) {
+          messagePart.inProgress = true;
+          mHasPendingAsyncJobs = true;
+          m = 0;
+        }
+
+        if ( m ) {
+          result = m->verifyResult();
+          messagePart.auditLogError = m->auditLogError();
+          messagePart.auditLog = m->auditLogAsHtml();
+          key = m->signingKey();
         }
       } else { // opaque
-        const STD_NAMESPACE_PREFIX auto_ptr<Kleo::VerifyOpaqueJob> job( cryptProto->verifyOpaqueJob() );
-        if ( job.get() ) {
-          QByteArray plainData;
-          result = job->exec( signaturetext, plainData );
+        const VerifyOpaqueBodyPartMemento * m
+          = dynamic_cast<VerifyOpaqueBodyPartMemento*>( data->bodyPartMemento( "verifyopaque" ) );
+        if ( !m ) {
+          Kleo::VerifyOpaqueJob * job = cryptProto->verifyOpaqueJob();
+          if ( !job ) {
+            cryptPlugError = CANT_VERIFY_SIGNATURES;
+            // PENDING(marc) cryptProto = 0 here?
+          } else {
+            VerifyOpaqueBodyPartMemento * newM
+              = new VerifyOpaqueBodyPartMemento( job, cryptProto->keyListJob(), signaturetext );
+            if ( allowAsync() ) {
+              if ( newM->start() ) {
+                messagePart.inProgress = true;
+                mHasPendingAsyncJobs = true;
+              } else {
+                m = newM;
+              }
+            } else {
+              newM->exec();
+              m = newM;
+            }
+            data->setBodyPartMemento( "verifyopaque", newM );
+          }
+        } else if ( m->isRunning() ) {
+          messagePart.inProgress = true;
+          mHasPendingAsyncJobs = true;
+          m = 0;
+        }
+
+        if ( m ) {
+          result = m->verifyResult();
+          const QByteArray & plainData = m->plainText();
           cleartext = QCString( plainData.data(), plainData.size() + 1 );
-          messagePart.auditLogError = job->auditLogError();
-          messagePart.auditLog = job->auditLogAsHtml();
-        } else {
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
+          messagePart.auditLogError = m->auditLogError();
+          messagePart.auditLog = m->auditLogAsHtml();
+          key = m->signingKey();
         }
       }
       std::stringstream ss;
@@ -504,16 +568,6 @@ namespace KMail {
       }
       if ( messagePart.status_code & GPGME_SIG_STAT_GOOD )
         messagePart.isGoodSignature = true;
-
-      // get key for this signature
-      const STD_NAMESPACE_PREFIX auto_ptr<Kleo::KeyListJob> job( cryptProto->keyListJob() );
-      std::vector<GpgME::Key> keys;
-      GpgME::KeyListResult keyListRes = job->exec( QString::fromLatin1( signature.fingerprint() ), false, keys );
-      GpgME::Key key;
-      if ( keys.size() == 1 )
-        key = keys[0];
-      else if ( keys.size() > 1 )
-        assert( false ); // ### wtf, what should we do in this case??
 
       // save extended signature status flags
       messagePart.sigSummary = signature.summary();
@@ -698,11 +752,13 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       bool showWarning,
                                       bool& passphraseError,
                                       bool& actuallyEncrypted,
+                                      bool& decryptionStarted,
                                       QString& aErrorText,
                                       GpgME::Error & auditLogError,
                                       QString& auditLog )
 {
   passphraseError = false;
+  decryptionStarted = false;
   aErrorText = QString::null;
   auditLogError = GpgME::Error();
   auditLog = QString::null;
@@ -747,15 +803,40 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     if ( mReader )
       emit mReader->noDrag(); // in case pineentry pops up, don't let kmheaders start a drag afterwards
 
-    const STD_NAMESPACE_PREFIX auto_ptr<Kleo::DecryptVerifyJob> job( cryptProto->decryptVerifyJob() );
-    if ( !job.get() ) {
-      cryptPlugError = CANT_DECRYPT;
-      cryptProto = 0;
-    } else {
-      QByteArray plainText;
-      const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = job->exec( ciphertext, plainText );
-      const GpgME::DecryptionResult & decryptResult = res.first;
-      const GpgME::VerificationResult & verifyResult = res.second;
+    // Check whether the memento contains a result from last time:
+    const DecryptVerifyBodyPartMemento * m
+      = dynamic_cast<DecryptVerifyBodyPartMemento*>( data.bodyPartMemento( "decryptverify" ) );
+    if ( !m ) {
+      Kleo::DecryptVerifyJob * job = cryptProto->decryptVerifyJob();
+      if ( !job ) {
+        cryptPlugError = CANT_DECRYPT;
+        cryptProto = 0;
+      } else {
+        DecryptVerifyBodyPartMemento * newM
+          = new DecryptVerifyBodyPartMemento( job, ciphertext );
+        if ( allowAsync() ) {
+          if ( newM->start() ) {
+            decryptionStarted = true;
+            mHasPendingAsyncJobs = true;
+          } else {
+            m = newM;
+          }
+        } else {
+          newM->exec();
+          m = newM;
+        }
+        data.setBodyPartMemento( "decryptverify", newM );
+      }
+    } else if ( m->isRunning() ) {
+      decryptionStarted = true;
+      mHasPendingAsyncJobs = true;
+      m = 0;
+    }
+
+    if ( m ) {
+      const QByteArray & plainText = m->plainText();
+      const GpgME::DecryptionResult & decryptResult = m->decryptResult();
+      const GpgME::VerificationResult & verifyResult = m->verifyResult();
       std::stringstream ss;
       ss << decryptResult << '\n' << verifyResult;
       kdDebug(5006) << ss.str().c_str() << endl;
@@ -766,8 +847,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         || decryptResult.error().code() == GPG_ERR_NO_SECKEY;
       actuallyEncrypted = decryptResult.error().code() != GPG_ERR_NO_DATA;
       aErrorText = QString::fromLocal8Bit( decryptResult.error().asString() );
-      auditLogError = job->auditLogError();
-      auditLog = job->auditLogAsHtml();
+      auditLogError = m->auditLogError();
+      auditLog = m->auditLogAsHtml();
 
       kdDebug(5006) << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG"
                     << endl;
@@ -1272,6 +1353,7 @@ namespace KMail {
     std::vector<GpgME::Signature> signatures;
     bool passphraseError;
     bool actuallyEncrypted = true;
+    bool decryptionStarted;
 
     bool bOkDecrypt = okDecryptMIME( *data,
                                      decryptedData,
@@ -1280,9 +1362,15 @@ namespace KMail {
                                      true,
                                      passphraseError,
                                      actuallyEncrypted,
+                                     decryptionStarted,
                                      messagePart.errorText,
                                      messagePart.auditLogError,
                                      messagePart.auditLog );
+
+    if ( decryptionStarted ) {
+      writeDecryptionInProgressBlock();
+      return true;
+    }
 
     // paint the frame
     if ( mReader ) {
@@ -1427,6 +1515,7 @@ namespace KMail {
         std::vector<GpgME::Signature> signatures;
         bool passphraseError;
         bool actuallyEncrypted = true;
+        bool decryptionStarted;
 
         bool bOkDecrypt = okDecryptMIME( *node,
                                          decryptedData,
@@ -1435,9 +1524,15 @@ namespace KMail {
                                          true,
                                          passphraseError,
                                          actuallyEncrypted,
+                                         decryptionStarted,
                                          messagePart.errorText,
                                          messagePart.auditLogError,
                                          messagePart.auditLog );
+
+        if ( decryptionStarted ) {
+          writeDecryptionInProgressBlock();
+          return true;
+        }
 
         // paint the frame
         if ( mReader ) {
@@ -1591,6 +1686,7 @@ namespace KMail {
       std::vector<GpgME::Signature> signatures;
       bool passphraseError;
       bool actuallyEncrypted = true;
+      bool decryptionStarted;
 
       if ( mReader && !mReader->decryptMessage() ) {
         writeDeferredDecryptionBlock();
@@ -1602,6 +1698,7 @@ namespace KMail {
                           false,
                           passphraseError,
                           actuallyEncrypted,
+                          decryptionStarted,
                           messagePart.errorText,
                           messagePart.auditLogError,
                           messagePart.auditLog ) ) {
@@ -1609,17 +1706,21 @@ namespace KMail {
         isEncrypted = true;
         node->setEncryptionState( KMMsgFullyEncrypted );
         signTestNode = 0;
-        // paint the frame
-        messagePart.isDecryptable = true;
-        if ( mReader )
-          htmlWriter()->queue( writeSigstatHeader( messagePart,
-                                                   cryptoProtocol(),
-                                                   node->trueFromAddress() ) );
-        insertAndParseNewChildNode( *node,
-                                    &*decryptedData,
-                                    "encrypted data" );
-        if ( mReader )
-          htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+        if ( decryptionStarted ) {
+          writeDecryptionInProgressBlock();
+        } else {
+          // paint the frame
+          messagePart.isDecryptable = true;
+          if ( mReader )
+            htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                     cryptoProtocol(),
+                                                     node->trueFromAddress() ) );
+          insertAndParseNewChildNode( *node,
+                                      &*decryptedData,
+                                      "encrypted data" );
+          if ( mReader )
+            htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+        }
       } else {
           // decryption failed, which could be because the part was encrypted but
           // decryption failed, or because we didn't know if it was encrypted, tried,

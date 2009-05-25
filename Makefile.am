@@ -91,6 +91,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 headerstrategy.cpp headerstyle.cpp khtmlparthtmlwriter.cpp \
                 filehtmlwriter.cpp teehtmlwriter.cpp \
                 mailcomposerIface.skel objecttreeparser.cpp \
+		objecttreeparser_p.cpp \
                 attachmentcollector.cpp \
                 bodypartformatter.cpp bodypartformatterfactory.cpp \
                 partNode.cpp \
