@@ -1214,9 +1214,10 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       kDebug(5006) <<"(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
         << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
 
-  //Reset the level quote if the msg has changed.
+  // Reset message-transient state
   if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
     mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin()-1;
+    clearBodyPartMementos();
   }
   if ( mPrinting )
     mLevelQuote = -1;
@@ -2845,6 +2846,64 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
 
   html += renderAttachments( node->nextSibling(), nextColor ( bgColor ) );
   return html;
+}
+
+using namespace KMail::Interface;
+
+void KMReaderWin::setBodyPartMemento( const partNode *node,
+                                      const QByteArray &which,
+                                      BodyPartMemento *memento )
+{
+  const QByteArray index = node->path() + ':' + which.toLower();
+
+  const std::map<QByteArray,BodyPartMemento*>::iterator it =
+    mBodyPartMementoMap.lower_bound( index );
+
+  if ( it != mBodyPartMementoMap.end() && it->first == index ) {
+    if ( memento && memento == it->second ) {
+      return;
+    }
+
+    delete it->second;
+
+    if ( memento ) {
+      it->second = memento;
+    } else {
+      mBodyPartMementoMap.erase( it );
+    }
+  } else {
+    if ( memento ) {
+      mBodyPartMementoMap.insert( it, std::make_pair( index, memento ) );
+    }
+  }
+
+  if ( Observable * o = memento ? memento->asObservable() : 0 ) {
+    o->attach( this );
+  }
+}
+
+BodyPartMemento *KMReaderWin::bodyPartMemento( const partNode *node,
+                                               const QByteArray &which ) const
+{
+  const QByteArray index = node->path() + ':' + which.toLower();
+  const std::map<QByteArray,BodyPartMemento*>::const_iterator it =
+    mBodyPartMementoMap.find( index );
+
+  if ( it == mBodyPartMementoMap.end() ) {
+    return 0;
+  } else {
+    return it->second;
+  }
+}
+
+void KMReaderWin::clearBodyPartMementos()
+{
+  for ( std::map<QByteArray,BodyPartMemento*>::const_iterator
+          it = mBodyPartMementoMap.begin(), end = mBodyPartMementoMap.end();
+        it != end; ++it ) {
+    delete it->second;
+  }
+  mBodyPartMementoMap.clear();
 }
 
 #include "kmreaderwin.moc"
