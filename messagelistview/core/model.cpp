@@ -59,6 +59,7 @@
 #include <QScrollBar>
 
 #include <KLocale>
+#include <KGlobal>
 #include <KDebug>
 #include <kcursorsaver.h>
 
@@ -1243,8 +1244,9 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
         )
       {
         // within this month
-        int todayWeekNumber = mTodayDate.weekNumber();
-        int dateWeekNumber = dDate.weekNumber();
+        int weekStartOffset = KGlobal::locale()->workingWeekStartDay() - 1;
+        int todayWeekNumber = mTodayDate.addDays( -weekStartOffset ).weekNumber();
+        int dateWeekNumber = dDate.addDays( -weekStartOffset ).weekNumber();
         if ( dateWeekNumber == todayWeekNumber )
         {
           // within this week
@@ -1312,8 +1314,9 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
         )
       {
         // within this month
-        int todayWeekNumber = mTodayDate.weekNumber();
-        int dateWeekNumber = dDate.weekNumber();
+        int weekStartOffset = KGlobal::locale()->workingWeekStartDay() - 1;
+        int todayWeekNumber = mTodayDate.addDays( -weekStartOffset ).weekNumber();
+        int dateWeekNumber = dDate.addDays( -weekStartOffset ).weekNumber();
         if ( dateWeekNumber == todayWeekNumber )
         {
           // within this week
