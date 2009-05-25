@@ -30,7 +30,10 @@
 */
 
 #include <config.h>
+
 #include "partNode.h"
+#include "kmreaderwin.h"
+
 #include <klocale.h>
 #include <kdebug.h>
 #include "kmmimeparttree.h"
@@ -64,12 +67,13 @@ partNode::partNode()
     mEncodedOk( false ),
     mDeleteDwBodyPart( false ),
     mMimePartTreeItem( 0 ),
-    mBodyPartMemento( 0 )
+    mBodyPartMementoMap(),
+    mReader( 0 )
 {
   adjustDefaultType( this );
 }
 
-partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
+partNode::partNode( KMReaderWin * win, DwBodyPart* dwPart, int explicitType, int explicitSubType,
 		    bool deleteDwBodyPart )
   : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
     mWasProcessed( false ),
@@ -80,7 +84,8 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     mEncodedOk( false ),
     mDeleteDwBodyPart( deleteDwBodyPart ),
     mMimePartTreeItem( 0 ),
-    mBodyPartMemento( 0 )
+    mBodyPartMementoMap(),
+    mReader( win )
 {
   if ( explicitType != DwMime::kTypeUnknown ) {
     mType    = explicitType;     // this happens e.g. for the Root Node
@@ -105,7 +110,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
 #endif
 }
 
-partNode * partNode::fromMessage( const KMMessage * msg ) {
+partNode * partNode::fromMessage( const KMMessage * msg, KMReaderWin * win ) {
   if ( !msg )
     return 0;
 
@@ -124,7 +129,7 @@ partNode * partNode::fromMessage( const KMMessage * msg ) {
   // as just another DwBodyPart...
   DwBodyPart * mainBody = new DwBodyPart( *msg->getTopLevelPart() );
 
-  partNode * root = new partNode( mainBody, mainType, mainSubType, true );
+  partNode * root = new partNode( win, mainBody, mainType, mainSubType, true );
   root->buildObjectTree();
 
   root->setFromAddress( msg->from() );
@@ -142,7 +147,8 @@ partNode::partNode( bool deleteDwBodyPart, DwBodyPart* dwPart )
     mEncodedOk( false ),
     mDeleteDwBodyPart( deleteDwBodyPart ),
     mMimePartTreeItem( 0 ),
-    mBodyPartMemento( 0 )
+    mBodyPartMementoMap(),
+    mReader( 0 )
 {
   if ( dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType() ) {
     mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
@@ -159,7 +165,9 @@ partNode::~partNode() {
   mDwPart = 0;
   delete mChild; mChild = 0;
   delete mNext; mNext = 0;
-  delete mBodyPartMemento; mBodyPartMemento = 0;
+  for ( std::map<QCString,KMail::Interface::BodyPartMemento*>::const_iterator it = mBodyPartMementoMap.begin(), end = mBodyPartMementoMap.end() ; it != end ; ++it )
+      delete it->second;
+  mBodyPartMementoMap.clear();
 }
 
 #ifndef NDEBUG
@@ -194,7 +202,7 @@ void partNode::buildObjectTree( bool processSiblings )
     while( curNode && curNode->dwPart() ) {
         //dive into multipart messages
         while( DwMime::kTypeMultipart == curNode->type() ) {
-            partNode * newNode = new partNode( curNode->dwPart()->Body().FirstBodyPart() );
+            partNode * newNode = new partNode( mReader, curNode->dwPart()->Body().FirstBodyPart() );
             curNode->setFirstChild( newNode );
             curNode = newNode;
         }
@@ -210,7 +218,7 @@ void partNode::buildObjectTree( bool processSiblings )
             return;
         // store next node
         if( curNode && curNode->dwPart() && curNode->dwPart()->Next() ) {
-            partNode* nextNode = new partNode( curNode->dwPart()->Next() );
+            partNode* nextNode = new partNode( mReader, curNode->dwPart()->Next() );
             curNode->setNext( nextNode );
             curNode = nextNode;
         } else
@@ -624,4 +632,44 @@ const QString& partNode::trueFromAddress() const
   while( node->mFromAddress.isEmpty() && node->mRoot )
     node = node->mRoot;
   return node->mFromAddress;
+}
+
+KMail::Interface::BodyPartMemento * partNode::bodyPartMemento( const QCString & which ) const
+{
+    if ( const KMReaderWin * r = reader() )
+        return r->bodyPartMemento( this, which );
+    else
+        return internalBodyPartMemento( which );
+}
+
+KMail::Interface::BodyPartMemento * partNode::internalBodyPartMemento( const QCString & which ) const
+{
+    assert( !reader() );
+
+    const std::map<QCString,KMail::Interface::BodyPartMemento*>::const_iterator it = mBodyPartMementoMap.find( which.lower() );
+    return it != mBodyPartMementoMap.end() ? it->second : 0 ;
+}
+
+void partNode::setBodyPartMemento( const QCString & which, KMail::Interface::BodyPartMemento * memento )
+{
+    if ( KMReaderWin * r = reader() )
+        r->setBodyPartMemento( this, which, memento );
+    else
+        internalSetBodyPartMemento( which, memento );
+}
+
+void partNode::internalSetBodyPartMemento( const QCString & which, KMail::Interface::BodyPartMemento * memento )
+{
+    assert( !reader() );
+
+    const std::map<QCString,KMail::Interface::BodyPartMemento*>::iterator it = mBodyPartMementoMap.lower_bound( which.lower() );
+    if ( it != mBodyPartMementoMap.end() && it->first == which.lower() ) {
+        delete it->second;
+        if ( memento )
+            it->second = memento;
+        else
+            mBodyPartMementoMap.erase( it );
+    } else {
+        mBodyPartMementoMap.insert( it, std::make_pair( which.lower(), memento ) );
+    }
 }

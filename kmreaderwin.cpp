@@ -1560,7 +1560,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     return;
   } else
     delete mRootNode;
-  mRootNode = partNode::fromMessage( aMsg );
+  mRootNode = partNode::fromMessage( aMsg, this );
   const QCString mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
 
   QString cntDesc = aMsg->subject();
