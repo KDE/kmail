@@ -650,7 +650,7 @@ namespace KMail {
 
 void ObjectTreeParser::writeDecryptionInProgressBlock()
 {
-  kDebug(5006) << k_funcinfo << endl;
+  kDebug();
   assert( mReader );
   // PENDING(marc) find an animated icon here:
   //const QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
@@ -2190,10 +2190,10 @@ static QString beginVerboseSigstatHeader()
 static QString makeShowAuditLogLink( const GpgME::Error & err, const QString & auditLog ) {
   if ( const unsigned int code = err.code() ) {
     if ( code == GPG_ERR_NOT_IMPLEMENTED ) {
-      kDebug(5006) << "makeShowAuditLogLink: not showing link (not implemented)";
+      kDebug() << "not showing link (not implemented)";
       return QString();
     } else if ( code == GPG_ERR_NO_DATA ) {
-      kDebug(5006) << "makeShowAuditLogLink: not showing link (not available)";
+      kDebug() << "not showing link (not available)";
       return i18n("No Audit Log available");
     } else {
       return i18n("Error Retrieving Audit Log: %1", QString::fromLocal8Bit( err.asString() ) );
