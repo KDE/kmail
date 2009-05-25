@@ -112,6 +112,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <cassert>
 #include "chiasmuskeyselector.h"
 
 namespace KMail {
@@ -643,6 +644,24 @@ namespace KMail {
                   << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
     return bIsOpaqueSigned;
   }
+
+void ObjectTreeParser::writeDecryptionInProgressBlock() {
+    kdDebug(5006) << k_funcinfo << endl;
+    assert( mReader );
+    // PENDING(marc) find an animated icon here:
+    //const QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
+    const QString decryptedData = i18n("Encrypted data not shown");
+    PartMetaData messagePart;
+    messagePart.isDecryptable = true;
+    messagePart.isEncrypted = true;
+    messagePart.isSigned = false;
+    messagePart.inProgress = true;
+    htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                             cryptoProtocol(),
+                                             QString() ) );
+    //htmlWriter()->queue( decryptedData );
+    htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+}
 
 void ObjectTreeParser::writeDeferredDecryptionBlock() {
     kdDebug(5006) << k_funcinfo << endl;
@@ -2183,7 +2202,9 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
     {
         htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
             "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
-        if( block.isDecryptable )
+        if ( block.inProgress )
+            htmlStr += i18n("Please wait while the message is being decrypted...");
+        else if ( block.isDecryptable )
             htmlStr += i18n("Encrypted message");
         else {
             htmlStr += i18n("Encrypted message (decryption not possible)");
@@ -2192,9 +2213,18 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
         }
         htmlStr += "</td></tr><tr class=\"encrB\"><td>";
     }
+
+    if ( block.isSigned && block.inProgress )
+    {
+        block.signClass = "signInProgress";
+        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"signInProgress\">"
+            "<tr class=\"signInProgressH\"><td dir=\"" + dir + "\">";
+        htmlStr += i18n("Please wait while the signature is being verified...");
+        htmlStr += "</td></tr><tr class=\"signInProgressB\"><td>";
+    }
     simpleHtmlStr = htmlStr;
 
-    if( block.isSigned ) {
+    if ( block.isSigned && !block.inProgress ) {
         QStringList& blockAddrs( block.signerMailAddresses );
         // note: At the moment frameColor and showKeyInfos are
         //       used for CMS only but not for PGP signatures
