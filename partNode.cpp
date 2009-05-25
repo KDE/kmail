@@ -340,6 +340,21 @@ KMMsgSignatureState  partNode::overallSignatureState() const
     return myState;
 }
 
+QCString partNode::path() const
+{
+    if ( !parentNode() )
+        return ':';
+    const partNode * p = parentNode();
+
+    // count number of siblings with the same type as us:
+    int nth = 0;
+    for ( const partNode * c = p->firstChild() ; c != this ; c = c->nextSibling() )
+        if ( c->type() == type() && c->subType() == subType() )
+            ++nth;
+
+    return p->path() + QCString().sprintf( ":%X/%X[%X]", type(), subType(), nth );
+}
+
 
 int partNode::nodeId() const
 {
