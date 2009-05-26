@@ -706,7 +706,7 @@ void KMMainWidget::createWidgets()
            SLOT( slotMessageStatusChangeRequest( KMMsgBase *, const KPIM::MessageStatus &, const KPIM::MessageStatus &  ) ) );
   {
     KAction *action = new KAction( i18n("Set Focus to Quick Search"), this );
-    action->setShortcut( QKeySequence( Qt::Key_Alt + Qt::Key_Q ) );
+    action->setShortcut( QKeySequence( Qt::ALT + Qt::Key_Q ) );
     actionCollection()->addAction( "focus_to_quickseach", action );
     connect( action, SIGNAL( triggered( bool ) ),
              SLOT( slotFocusQuickSearch() ) );
