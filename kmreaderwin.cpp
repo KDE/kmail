@@ -1611,6 +1611,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   // show message content
   ObjectTreeParser otp( this );
+  otp.setAllowAsync( true );
   otp.parseObjectTree( mRootNode );
 
   // store encrypted/signed status information in the KMMessage

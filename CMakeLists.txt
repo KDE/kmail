@@ -145,6 +145,7 @@ set(kmailprivate_LIB_SRCS
    khtmlparthtmlwriter.cpp
    filehtmlwriter.cpp
    teehtmlwriter.cpp
+   objecttreeparser_p.cpp
    objecttreeparser.cpp
    attachmentcollector.cpp
    bodypartformatter.cpp
