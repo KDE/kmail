@@ -47,6 +47,8 @@
 #include "cachedimapjob.h"
 #include "quotajobs.h"
 
+#include <set>
+
 using KMail::FolderJob;
 using KMail::QuotaInfo;
 class KMCommand;
@@ -549,7 +551,7 @@ private:
   * uploaded to the server, overwriting the server's notion of the status
   * of the mails in this folder.
   */
-  QValueList<ulong> mUIDsOfLocallyChangedStatuses;
+  std::set<ulong> mUIDsOfLocallyChangedStatuses;
 
  /**
   * Same as above, but uploads the flags of all mails, even if not all changed.
