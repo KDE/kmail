@@ -314,24 +314,26 @@ bool KMFolderDir::reload(void)
   // Check if the are any dirs without an associated folder. This can happen if the user messes
   // with the on-disk folder structure, see kolab issue 2972. In that case, we don't want to loose
   // the subfolders as well, so we recreate the folder so the folder/dir hierachy is OK again.
-  for ( QStringList::Iterator it = dirsWithoutFolder.begin();
-        it != dirsWithoutFolder.end(); ++it ) {
+  if ( type() == KMDImapDir ) {
+    for ( QStringList::Iterator it = dirsWithoutFolder.begin();
+          it != dirsWithoutFolder.end(); ++it ) {
 
-    // .foo.directory => foo
-    QString folderName = *it;
-    int right = folderName.find( ".directory" );
-    int left = folderName.find( "." );
-    Q_ASSERT( left != -1 && right != -1 );
-    folderName = folderName.mid( left + 1, right - 1 );
+      // .foo.directory => foo
+      QString folderName = *it;
+      int right = folderName.find( ".directory" );
+      int left = folderName.find( "." );
+      Q_ASSERT( left != -1 && right != -1 );
+      folderName = folderName.mid( left + 1, right - 1 );
 
-    kdDebug(5006) << "Found dir without associated folder: " << ( *it ) << ", recreating the folder " << folderName << "." << endl;
+      kdDebug(5006) << "Found dir without associated folder: " << ( *it ) << ", recreating the folder " << folderName << "." << endl;
 
-    // Recreate the missing folder
-    KMFolder *folder = new KMFolder( this, folderName, KMFolderTypeCachedImap );
-    append( folder );
-    folderList.append( folder );
+      // Recreate the missing folder
+      KMFolder *folder = new KMFolder( this, folderName, KMFolderTypeCachedImap );
+      append( folder );
+      folderList.append( folder );
 
-    addDirToParent( *it, folder );
+      addDirToParent( *it, folder );
+    }
   }
   return TRUE;
 }
