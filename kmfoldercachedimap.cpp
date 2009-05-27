@@ -315,7 +315,7 @@ void KMFolderCachedImap::readConfig()
   mStatusChangedLocally = group.readEntry( "StatusChangedLocally", false );
   QStringList uidsChanged = group.readEntry( "UIDStatusChangedLocally", QStringList() );
   foreach( const QString &uid, uidsChanged ) {
-    mUIDsOfLocallyChangedStatuses.append( uid.toUInt() );
+    mUIDsOfLocallyChangedStatuses.insert( uid.toUInt() );
   }
   mAnnotationFolderTypeChanged = group.readEntry( "AnnotationFolderTypeChanged", false );
   mIncidencesForChanged = group.readEntry( "IncidencesForChanged", false );
@@ -1458,7 +1458,7 @@ void KMFolderCachedImap::uploadFlags()
         // Either not a valid message or not one that is on the server yet
         continue;
       }
-      if ( mUIDsOfLocallyChangedStatuses.indexOf( msg->UID() ) < 0 && !mStatusChangedLocally ) {
+      if ( !mUIDsOfLocallyChangedStatuses.contains( msg->UID() ) && !mStatusChangedLocally ) {
         // This message has not had its status changed locally
         continue;
       }
@@ -1505,7 +1505,7 @@ void KMFolderCachedImap::uploadSeenFlags()
         // Either not a valid message or not one that is on the server yet
         continue;
 
-      if ( mUIDsOfLocallyChangedStatuses.indexOf( msg->UID() ) < 0 && !mStatusChangedLocally ) {
+      if ( !mUIDsOfLocallyChangedStatuses.contains( msg->UID() ) && !mStatusChangedLocally ) {
         // This message has not had its status changed locally
         continue;
       }
@@ -1570,7 +1570,7 @@ void KMFolderCachedImap::setStatus( int idx, const MessageStatus &status, bool t
   const KMMsgBase *msg = getMsgBase( idx );
   Q_ASSERT( msg );
   if ( msg )
-    mUIDsOfLocallyChangedStatuses.append( msg->UID() );
+    mUIDsOfLocallyChangedStatuses.insert( msg->UID() );
 }
 
 void KMFolderCachedImap::setStatus( QList<int> &ids, const MessageStatus &status, bool toggle )
@@ -1580,7 +1580,7 @@ void KMFolderCachedImap::setStatus( QList<int> &ids, const MessageStatus &status
     const KMMsgBase *msg = getMsgBase( id );
     Q_ASSERT( msg );
     if ( msg )
-      mUIDsOfLocallyChangedStatuses.append( msg->UID() );
+      mUIDsOfLocallyChangedStatuses.insert( msg->UID() );
   }
 }
 

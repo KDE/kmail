@@ -45,6 +45,7 @@
 
 #include <QDialog>
 #include <QList>
+#include <QSet>
 #include <QTimerEvent>
 
 using KMail::FolderJob;
@@ -641,7 +642,7 @@ public slots:
     * uploaded to the server, overwriting the server's notion of the status
     * of the mails in this folder.
     */
-    QList<ulong> mUIDsOfLocallyChangedStatuses;
+    QSet<ulong> mUIDsOfLocallyChangedStatuses;
 
     /**
      * Same as above, but uploads the flags of all mails, even if not all changed.
