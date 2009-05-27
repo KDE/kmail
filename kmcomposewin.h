@@ -270,7 +270,8 @@ class KMComposeWin : public KMail::Composer
       * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
       * "Formatting" action. Also, removes all rich-text formatting.
       */
-     void disableHtml();
+     enum Confirmation { LetUserConfirm, NoConfirmationNeeded };
+     void disableHtml( Confirmation confirmation );
 
      /**
       * Tries to find the given mimetype @p type in the KDE Mimetype registry.
