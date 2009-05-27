@@ -2806,7 +2806,7 @@ QString FolderViewItem::unreadIcon() const
   if ( icon.isEmpty() )
   {
     if ( fld && fld->noContent() )
-      icon = "folder-open-grey";
+      icon = "folder-grey";
     else {
       //If not a resource folder don't try to use icalIface folder pixmap
       if( kmkernel->iCalIface().isResourceFolder( mFolder ) ) {
