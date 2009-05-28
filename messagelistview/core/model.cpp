@@ -1602,38 +1602,60 @@ public:
 
 void Model::addMessageToSubjectBasedThreadingCache( MessageItem * mi )
 {
-  // Unfortunately the entries in the cache can't be sorted by date. This is
-  // because the date may be updated (and it would cause our lists to become unsorted).
-  // Also "unknown" dates often popup so the "appending" optimization is voided anyway.
-  // We use plain pointer comparison then.
+  // Messages in this cache are sorted by date, and if dates are equal then they are sorted by pointer value.
+  // Sorting by date is used to optimize the parent lookup in guessMessageParent() below.
 
+  // WARNING: If the message date changes for some reason (like in the "update" step)
+  //          then the cache may become unsorted. For this reason the message about to
+  //          be changed must be first removed from the cache and then reinserted.
+
+  // Lookup the list of messages with the same stripped subject
   QList< MessageItem * > * messagesWithTheSameStrippedSubject =
       mThreadingCacheMessageSubjectMD5ToMessageItem.value( mi->strippedSubjectMD5(), 0 );
+
   if ( !messagesWithTheSameStrippedSubject )
   {
+    // Not there yet: create it and append.
     messagesWithTheSameStrippedSubject = new QList< MessageItem * >();
     mThreadingCacheMessageSubjectMD5ToMessageItem.insert( mi->strippedSubjectMD5(), messagesWithTheSameStrippedSubject );
     messagesWithTheSameStrippedSubject->append( mi );
     return;
   }
 
+  // Found: assert that we have no duplicates in the cache.
   Q_ASSERT( !messagesWithTheSameStrippedSubject->contains( mi ) );
 
-  // Binary search based insertion
+  // Ordered insert: first by date then by pointer value.
   QList< MessageItem * >::Iterator it = qLowerBound( messagesWithTheSameStrippedSubject->begin(), messagesWithTheSameStrippedSubject->end(), mi, MessageLessThanByDate() );
   messagesWithTheSameStrippedSubject->insert( it, mi );
 }
 
 void Model::removeMessageFromSubjectBasedThreadingCache( MessageItem * mi )
 {
+  // We assume that the caller knows what he is doing and the message is actually in the cache.
+  // If the message isn't in the cache then we should be called at all.
+  //
+  // The game is called "performance"
+
+  // Grab the list of all the messages with the same stripped subject (all potential parents)
   QList< MessageItem * > * messagesWithTheSameStrippedSubject = mThreadingCacheMessageSubjectMD5ToMessageItem.value( mi->strippedSubjectMD5(), 0 );
+
+  // We assume that the message is there so the list must be non null.
   Q_ASSERT( messagesWithTheSameStrippedSubject );
 
+  // The cache *MUST* be ordered first by date then by pointer value
   QList< MessageItem * >::Iterator it = qLowerBound( messagesWithTheSameStrippedSubject->begin(), messagesWithTheSameStrippedSubject->end(), mi, MessageLessThanByDate() );
+
+  // The binary based search must have found a message
   Q_ASSERT( it != messagesWithTheSameStrippedSubject->end() );
+
+  // and it must have found exactly the message requested
   Q_ASSERT( *it == mi );
 
+  // Kill it
   messagesWithTheSameStrippedSubject->erase( it );
+
+  // And kill the list if it was the last one
   if ( messagesWithTheSameStrippedSubject->isEmpty() )
   {
     mThreadingCacheMessageSubjectMD5ToMessageItem.remove( mi->strippedSubjectMD5() );
@@ -3226,8 +3248,18 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass1Update( ViewIt
     bool toDoStatus = message->status().isToAct();
     qint32 prevNewUnreadStatus = message->status().toQInt32() & mCachedNewOrUnreadStatusBits;
 
+    // The subject based threading cache is sorted by date: we must remove
+    // the item and re-insert it since updateMessageItemData() may change the date too.
+    if( mAggregation->threading() == Aggregation::PerfectReferencesAndSubject )
+      removeMessageFromSubjectBasedThreadingCache( message );
 
+    // Do update
     mStorageModel->updateMessageItemData( message, row );
+
+    // Reinsert the item to the cache, if needed
+    if( mAggregation->threading() == Aggregation::PerfectReferencesAndSubject )
+      addMessageToSubjectBasedThreadingCache( message );
+
 
     int propertyChangeMask = 0;
 
