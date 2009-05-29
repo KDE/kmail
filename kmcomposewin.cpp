@@ -3926,7 +3926,7 @@ void KMComposeWin::disableHtml( Confirmation confirmation )
   if ( confirmation == LetUserConfirm && mEditor->isFormattingUsed() && !mForceDisableHtml ) {
     int choice = KMessageBox::warningContinueCancel( this, i18n( "Turning HTML mode off "
         "will cause the text to lose the formatting. Are you sure?" ),
-        i18n( "Lose the formatting?" ), KGuiItem( "Lose Formatting" ), KStandardGuiItem::cancel(),
+        i18n( "Lose the formatting?" ), KGuiItem( i18n( "Lose Formatting" ) ), KStandardGuiItem::cancel(),
               "LoseFormattingWarning" );
     if ( choice != KMessageBox::Continue ) {
       enableHtml();
