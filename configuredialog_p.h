@@ -1022,6 +1022,7 @@ private:
   QCheckBox* mLegacyMangleFromTo;
   QCheckBox* mLegacyBodyInvites;
   QCheckBox* mExchangeCompatibleInvitations;
+  QCheckBox* mOutlookCompatibleInvitationComments;
   QCheckBox* mAutomaticSending;
 };
 
