@@ -1421,7 +1421,7 @@ void KMFolderCachedImap::uploadFlags()
       if( !msg || msg->UID() == 0 )
         // Either not a valid message or not one that is on the server yet
         continue;
-      if ( mUIDsOfLocallyChangedStatuses.find( msg->UID() ) != mUIDsOfLocallyChangedStatuses.end()
+      if ( mUIDsOfLocallyChangedStatuses.find( msg->UID() ) == mUIDsOfLocallyChangedStatuses.end()
            && !mStatusChangedLocally ) {
         // This message has not had its status changed locally
         continue;
@@ -1469,7 +1469,7 @@ void KMFolderCachedImap::uploadSeenFlags()
         // Either not a valid message or not one that is on the server yet
         continue;
 
-      if ( mUIDsOfLocallyChangedStatuses.find( msg->UID() ) != mUIDsOfLocallyChangedStatuses.end()
+      if ( mUIDsOfLocallyChangedStatuses.find( msg->UID() ) == mUIDsOfLocallyChangedStatuses.end()
            && !mStatusChangedLocally ) {
         // This message has not had its status changed locally
         continue;
