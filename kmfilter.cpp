@@ -391,7 +391,8 @@ bool KMFilter::isEmpty() const
   if (bPopFilter)
     return mPattern.isEmpty();
   else
-    return mPattern.isEmpty() && mActions.isEmpty() && mAccounts.isEmpty();
+    return ( mPattern.isEmpty() && mActions.isEmpty() ) ||
+        ( ( applicability() == Checked ) && mAccounts.isEmpty() );
 }
 
 QString KMFilter::toolbarName() const
