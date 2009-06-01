@@ -14,6 +14,7 @@ Name[sv]=Program-oktettström
 Name[tr]=Uygulama Sekizli Akışı
 Name[uk]=Вісімковий потік програми
 Name[x-test]=xxApplication Octet Streamxx
+Name[zh_CN]=应用程序 Octet 数据流
 Name[zh_TW]=Application/Octet-Stream
 Comment=A bodypart formatter plugin for application/octet-stream
 Comment[af]='n Inprop module wat die lyf gedeelte vir 'application/octet-stream' formateer
