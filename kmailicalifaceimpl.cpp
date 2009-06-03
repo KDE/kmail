@@ -2194,9 +2194,9 @@ QString KMailICalIfaceImpl::folderPixmap( KPIM::FolderTreeWidgetItem::FolderType
     return QString();
 
   if( type == KPIM::FolderTreeWidgetItem::Contacts )
-    return QString::fromLatin1( "text-directory" );
+    return QString::fromLatin1( "view-pim-contacts" );
   else if( type == KPIM::FolderTreeWidgetItem::Calendar )
-    return QString::fromLatin1( "text-calendar" );
+    return QString::fromLatin1( "view-pim-calendar" );
   else if( type == KPIM::FolderTreeWidgetItem::Notes )
     return QString::fromLatin1( "view-pim-notes" );
   else if( type == KPIM::FolderTreeWidgetItem::Tasks )
