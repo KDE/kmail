@@ -683,6 +683,10 @@ void KMComposeWin::autoSaveMessage()
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
   }
+  // Make sure that this slot isn't connected multiple times
+  disconnect( this, SIGNAL( applyChangesDone( bool ) ),
+           this, SLOT( slotContinueAutoSave() ) );
+  // Now reconnect it once.
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            this, SLOT( slotContinueAutoSave() ) );
   // This method is called when KMail crashed, so don't try signing/encryption
