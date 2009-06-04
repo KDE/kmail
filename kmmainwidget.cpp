@@ -760,13 +760,8 @@ void KMMainWidget::createWidgets()
              mHeaders, SLOT( slotNoDrag() ) );
 #endif
 
-    // Use a queued connection, since slotMsgSelected() can show a MDN request dialog, which
-    // uses a nested event loop, which would lead to unexpected reentrancy and a crash for
-    // normal connections.
     connect( mMessageListView, SIGNAL( messageSelected( KMMessage * ) ),
-             this, SLOT( slotMsgSelected( KMMessage * ) ),
-             Qt::QueuedConnection );
-
+             this, SLOT( slotMsgSelected( KMMessage * ) ) );
   }
 
   //
