@@ -191,13 +191,14 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
   if ( !w )
   {
     w = addNewWidget();
+    setCurrentWidget( w ); // will call internalSetCurrentWidget -> internalSetCurrentFolder
     w->setFolder( fld, icon, preSelectionMode );
     if ( !overrideLabel.isEmpty() )
       setTabText( indexOf( w ), overrideLabel );
     else if ( fld )
       setTabText( indexOf( w ), fld->label() );
-    setCurrentWidget( w ); // will call internalSetCurrentWidget -> internalSetCurrentFolder
   } else {
+    internalSetCurrentFolder( fld );
     w->setFolder( fld, icon, preSelectionMode );
     if ( !overrideLabel.isEmpty() )
       setTabText( indexOf( w ), overrideLabel );
@@ -205,8 +206,6 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
       setTabText( indexOf( w ), fld->label() );
     else
       setTabText( indexOf( w ), i18nc( "@title:tab Empty messagelist", "Empty" ) );
-    // is already current
-    internalSetCurrentFolder( fld );
   }
 
 }
