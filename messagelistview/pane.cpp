@@ -153,11 +153,14 @@ bool Pane::isFolderOpen( KMFolder * fld ) const
 
 void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelectionMode preSelectionMode, const QString &overrideLabel )
 {
+  // This function is quite critical, mainly because of the "appearance"
+  // we want to expose to KMainWidget which is very sensible to folder changes.  
+
   Widget * w = messageListViewWidgetWithFolder( fld );
 
   if ( w )
   {
-    // Already open, just activate it
+    // The requested folder is already open, we just eventually need to activate it
     if ( w != mCurrentWidget )
       setCurrentWidget( w ); // will call internalSetCurrentWidget -> internalSetCurrentFolder
     if ( !overrideLabel.isEmpty() )
@@ -166,12 +169,11 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
     return;
   }
 
-  // Not open yet.
+  // The folder isn't open yet.
 
-  // Set a nice icon for the folder. We actually set this icon on Widget
-  // and not directly with setTabIcon(). This is because Widget may manipulate
-  // it to show progress of the internal jobs. Widget will call widgetIconChangeRequest()
-  // when it wants its icon to be updated.
+  // First of all figure out a nice icon for the folder. We actually set this icon on Widget
+  // and not directly with setTabIcon(). This is because Widget may manipulate it to show progress
+  // of the internal jobs. Widget will call widgetIconChangeRequest() when it wants its icon to be updated.
 
   QIcon icon;
 
@@ -186,28 +188,51 @@ void Pane::setCurrentFolder( KMFolder *fld, bool preferEmptyTab, Core::PreSelect
     icon = QIcon(); // FIXME: find a nicer empty icon
   }
 
-  w = preferEmptyTab ? messageListViewWidgetWithFolder( 0 ) : currentMessageListViewWidget();
+  // Now find a victim widget to open the folder in.
+  // If an empty tab is preferred then first try to find it in the currently open widgets.
+  // If no empty tab is requested then just use the current widget.
+
+  w = preferEmptyTab ? messageListViewWidgetWithFolder( 0 ) : mCurrentWidget;
 
   if ( !w )
   {
+    // No victim found: need to create a new one.
+    // (this happens only if preferEmptyTab is true and there is no empty tab available)
+
+    // Add the new widget to the tab list (this will go to the end, inactive)
     w = addNewWidget();
-    setCurrentWidget( w ); // will call internalSetCurrentWidget -> internalSetCurrentFolder
+
+    // Set its folder: this can emit a new message selection
+    // but we will block it if mCurrentWidget != w
     w->setFolder( fld, icon, preSelectionMode );
+
+    // Set the override label, if needed
     if ( !overrideLabel.isEmpty() )
       setTabText( indexOf( w ), overrideLabel );
     else if ( fld )
       setTabText( indexOf( w ), fld->label() );
   } else {
-    internalSetCurrentFolder( fld );
+    // We got the victim widget: it's either empty or the current one.
+    // Set the folder (may emit a currentFolderChanged())
     w->setFolder( fld, icon, preSelectionMode );
+
     if ( !overrideLabel.isEmpty() )
       setTabText( indexOf( w ), overrideLabel );
     else if ( fld )
       setTabText( indexOf( w ), fld->label() );
     else
-      setTabText( indexOf( w ), i18nc( "@title:tab Empty messagelist", "Empty" ) );
+      setTabText( indexOf( w ), i18nc( "@title:tab Empty messagelist", "Empty" ) ); 
   }
 
+  // activate it, if needed
+  if ( w != mCurrentWidget )
+    setCurrentWidget( w );
+  if ( fld != mCurrentFolder )
+    internalSetCurrentFolder( fld );
+
+  // Now verify our assumptions.
+  Q_ASSERT( mCurrentWidget == w );
+  Q_ASSERT( mCurrentFolder == fld );
 }
 
 void Pane::widgetIconChangeRequest( Widget * w, const QIcon &icon )
@@ -413,28 +438,51 @@ Widget * Pane::addNewWidget()
 
 void Pane::slotSelectionChanged()
 {
-  if ( sender() != currentMessageListViewWidget() )
+  Widget * w = static_cast< Widget * >( sender() );
+  if ( w != mCurrentWidget )
     return; // Don't forward, it should be hidden. (But may happen if a message is removed from that view)
+  if ( w->folder() != mCurrentFolder )
+  {
+    // nasty... we set the current widget but not the current folder, yet
+    // set it, so KMMainWidget is synchronized
+    internalSetCurrentFolder( w->folder() );
+  }
   emit selectionChanged();
 }
 
 void Pane::slotMessageSelected( KMMessage * msg )
 {
-  if ( sender() != currentMessageListViewWidget() )
+  Widget * w = static_cast< Widget * >( sender() );
+  if ( w != mCurrentWidget )
     return; // Don't forward, it should be hidden. (But may happen if a message is removed from that view)
+  if ( w->folder() != mCurrentFolder )
+  {
+    // nasty... we set the current widget but not the current folder, yet
+    // set it, so KMMainWidget is synchronized
+    internalSetCurrentFolder( w->folder() );
+  }
   emit messageSelected( msg );
 }
 
 void Pane::slotMessageActivated( KMMessage * msg )
 {
-  if ( sender() != currentMessageListViewWidget() )
+  Widget * w = static_cast< Widget * >( sender() );
+  if ( w != mCurrentWidget )
     return; // Don't forward, it should be hidden. (But may happen if a message is removed from that view)
+  if ( w->folder() != mCurrentFolder )
+  {
+    // nasty... we set the current widget but not the current folder, yet
+    // set it, so KMMainWidget is synchronized
+    internalSetCurrentFolder( w->folder() );
+  }
   emit messageActivated( msg );
 }
 
 
 void Pane::slotCurrentTabChanged( int )
 {
+  kDebug() << "current tab changed";
+
   QWidget * qw = currentWidget();
   if ( !qw )
   {
@@ -454,8 +502,11 @@ void Pane::slotCurrentTabChanged( int )
 
 void Pane::internalSetCurrentFolder( KMFolder * folder )
 {
+  kDebug() << "internal set current folder to" << folder;
   if ( mCurrentFolder == folder )
     return;
+
+  kDebug() << "different than the current (" << mCurrentFolder << ")";
 
   mCurrentFolder = folder;
 
@@ -464,8 +515,11 @@ void Pane::internalSetCurrentFolder( KMFolder * folder )
 
 void Pane::internalSetCurrentWidget( Widget * newCurrentWidget )
 {
+  kDebug() << "internal set current widget to" << newCurrentWidget;
   if ( mCurrentWidget == newCurrentWidget )
     return; // nothing changed
+
+  kDebug() << "different than the current (" << mCurrentWidget << ")";
 
   mCurrentWidget = newCurrentWidget;
 
