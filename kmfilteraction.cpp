@@ -1514,6 +1514,7 @@ QWidget* KMFilterActionForward::createParamWidget( QWidget* parent ) const
 {
   QWidget *addressAndTemplate = new QWidget( parent );
   QHBoxLayout *hBox = new QHBoxLayout( addressAndTemplate );
+  hBox->setMargin( 0 );
   QWidget *addressEdit = KMFilterActionWithAddress::createParamWidget( addressAndTemplate );
   addressEdit->setObjectName( "addressEdit" );
   hBox->addWidget( addressEdit );
