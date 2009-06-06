@@ -3905,8 +3905,40 @@ void Model::viewItemJobStep()
   // the current item in the sample place when items are added or removed...
   QRect rectBeforeViewItemJobStep;
 
-  // This is generally SLOW AS HELL...
-  if ( mCurrentItemToRestoreAfterViewItemJobStep )
+  // There is another popular requisite: people want the view to automatically
+  // scroll in order to show new arriving mail. This actually makes sense
+  // only when the view is sorted by date and the new mail is (usually) either
+  // appended at the bottom or inserted at the top. It would be also confusing
+  // when the user is browsing some other thread in the meantime.
+  // 
+  // So here we make a simple guess: if the view is scrolled somewhere in the
+  // middle then we assume that the user is browsing other threads and we
+  // try to keep the currently selected item steady on the screen.
+  // When the view is "locked" to the top (scrollbar value 0) or to the
+  // bottom (scrollbar value == maximum) then we assume that the user
+  // isn't browsing and we should attempt to show the incoming messages
+  // by keeping the view "locked".
+  //
+  // The "locking" also doesn't make sense in the first big fill view job.
+
+  int scrollBarPositionBeforeViewItemJobStep = mView->verticalScrollBar()->value();
+  int scrollBarMaximumBeforeViewItemJobStep = mView->verticalScrollBar()->maximum();
+ 
+  bool lockView = (
+                    // not the first loading job
+                    !mLoading
+                  ) && (
+                    // messages sorted by date
+                    ( mSortOrder->messageSorting() == SortOrder::SortMessagesByDateTime ) ||
+                    ( mSortOrder->messageSorting() == SortOrder::SortMessagesByDateTimeOfMostRecent )
+                  ) && (
+                    // scrollbar at top or bottom
+                    ( scrollBarPositionBeforeViewItemJobStep == 0 ) ||
+                    ( scrollBarPositionBeforeViewItemJobStep == scrollBarMaximumBeforeViewItemJobStep )
+                  );
+
+  // This is generally SLOW AS HELL... (so we avoid it if we lock the view and thus don't need it)
+  if ( mCurrentItemToRestoreAfterViewItemJobStep && ( !lockView ) )
     rectBeforeViewItemJobStep = mView->visualRect( currentIndexBeforeStep );
 
   // FIXME: If the current item is NOT in the view, preserve the position
@@ -4080,12 +4112,23 @@ void Model::viewItemJobStep()
     }
 
     // FIXME: If it was selected before the change, then re-select it (it may happen that it's not)
-
-    QRect rectAfterViewItemJobStep = mView->visualRect( index( mCurrentItemToRestoreAfterViewItemJobStep, 0 ) );
-    if ( rectBeforeViewItemJobStep.y() != rectAfterViewItemJobStep.y() )
+    if ( lockView )
     {
-      // QTreeView lost its position...
-      mView->verticalScrollBar()->setValue( mView->verticalScrollBar()->value() + rectAfterViewItemJobStep.y() - rectBeforeViewItemJobStep.y() );
+      // we prefer to keep the view locked to the top or bottom
+      if ( scrollBarPositionBeforeViewItemJobStep != 0 )
+      {
+        // we wanted the view to be locked to the bottom
+        if ( mView->verticalScrollBar()->value() != mView->verticalScrollBar()->maximum() )
+          mView->verticalScrollBar()->setValue( mView->verticalScrollBar()->maximum() );
+      } // else we wanted the view to be locked to top and we shouldn't need to do anything
+    } else {
+      // we prefer to keep the currently selected item steady in the view
+      QRect rectAfterViewItemJobStep = mView->visualRect( index( mCurrentItemToRestoreAfterViewItemJobStep, 0 ) );
+      if ( rectBeforeViewItemJobStep.y() != rectAfterViewItemJobStep.y() )
+      {
+        // QTreeView lost its position...
+        mView->verticalScrollBar()->setValue( mView->verticalScrollBar()->value() + rectAfterViewItemJobStep.y() - rectBeforeViewItemJobStep.y() );
+      }
     }
 
     // and kill the insulation, if not yet done
@@ -4104,6 +4147,16 @@ void Model::viewItemJobStep()
     // lost in a cleanup..
     // tell the view that we have a new current, this time with no insulation
     mView->slotSelectionChanged( QItemSelection(), QItemSelection() );
+  }
+
+  if ( lockView )
+  {
+    if ( scrollBarPositionBeforeViewItemJobStep != 0 )
+    {
+      // we wanted the view to be locked to the bottom
+      if ( mView->verticalScrollBar()->value() != mView->verticalScrollBar()->maximum() )
+        mView->verticalScrollBar()->setValue( mView->verticalScrollBar()->maximum() );
+    } // else we wanted the view to be locked to top and we shouldn't need to do anything
   }
 }
 
