@@ -2355,6 +2355,12 @@ Model::ViewItemJobResult Model::viewItemJobStepInternalForJobPass5( ViewItemJob 
       // group with no children, kill it
       ( *it )->parent()->takeChildItem( mModelForItemFunctions, *it );
       mGroupHeaderItemHash.remove( ( *it )->label() );
+
+      // If we were going to restore its position after the job step, well.. we can't do it anymore.
+      if ( mCurrentItemToRestoreAfterViewItemJobStep == ( *it ) )
+        mCurrentItemToRestoreAfterViewItemJobStep = 0;
+
+      // bye bye
       delete *it;
     } else {
       // Group with children: probably needs re-sorting.
