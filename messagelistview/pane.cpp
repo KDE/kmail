@@ -481,8 +481,6 @@ void Pane::slotMessageActivated( KMMessage * msg )
 
 void Pane::slotCurrentTabChanged( int )
 {
-  kDebug() << "current tab changed";
-
   QWidget * qw = currentWidget();
   if ( !qw )
   {
@@ -502,11 +500,8 @@ void Pane::slotCurrentTabChanged( int )
 
 void Pane::internalSetCurrentFolder( KMFolder * folder )
 {
-  kDebug() << "internal set current folder to" << folder;
   if ( mCurrentFolder == folder )
     return;
-
-  kDebug() << "different than the current (" << mCurrentFolder << ")";
 
   mCurrentFolder = folder;
 
@@ -515,11 +510,8 @@ void Pane::internalSetCurrentFolder( KMFolder * folder )
 
 void Pane::internalSetCurrentWidget( Widget * newCurrentWidget )
 {
-  kDebug() << "internal set current widget to" << newCurrentWidget;
   if ( mCurrentWidget == newCurrentWidget )
     return; // nothing changed
-
-  kDebug() << "different than the current (" << mCurrentWidget << ")";
 
   mCurrentWidget = newCurrentWidget;
 
