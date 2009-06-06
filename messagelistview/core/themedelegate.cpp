@@ -1131,6 +1131,11 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
 
 bool ThemeDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 {
+  mHitItem = 0;
+  mHitColumn = 0;
+  mHitRow = 0;
+  mHitContentItem = 0;
+
   if ( !mTheme )
     return false; // hm hm...
 
