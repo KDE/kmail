@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MiscGroupTab</class>
- <widget class="QWidget" name="MiscGroupTab" >
-  <property name="geometry" >
+ <widget class="QWidget" name="MiscGroupTab">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,172 +10,165 @@
     <height>504</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" >
-   <item>
-    <layout class="QVBoxLayout" name="layout" >
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <widget class="QGroupBox" name="groupBox" >
-       <property name="title" >
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
         <string>IMAP Resource Folder Options</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout" >
-        <item row="0" column="0" colspan="2" >
-         <widget class="QCheckBox" name="mEnableImapResCB" >
-          <property name="toolTip" >
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0" colspan="2">
+         <widget class="QCheckBox" name="mEnableImapResCB">
+          <property name="toolTip">
            <string>This enables the IMAP storage for the Kontact applications</string>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>&amp;Enable IMAP resource functionality</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2" >
-         <widget class="QWidget" native="1" name="mBox" >
-          <layout class="QVBoxLayout" name="verticalLayout_2" >
+        <item row="1" column="0" colspan="2">
+         <widget class="QWidget" name="mBox" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <layout class="QGridLayout" name="grid" >
-             <item row="0" column="0" >
-              <widget class="QLabel" name="storageFormatLA" >
-               <property name="toolTip" >
+            <layout class="QGridLayout" name="grid">
+             <item row="0" column="0">
+              <widget class="QLabel" name="storageFormatLA">
+               <property name="toolTip">
                 <string>Choose the format to use to store the contents of the groupware folders.</string>
                </property>
-               <property name="text" >
+               <property name="text">
                 <string>&amp;Format used for the groupware folders:</string>
                </property>
-               <property name="buddy" >
+               <property name="buddy">
                 <cstring>mStorageFormatCombo</cstring>
                </property>
               </widget>
              </item>
-             <item row="0" column="1" >
-              <widget class="KComboBox" name="mStorageFormatCombo" >
-               <property name="toolTip" >
+             <item row="0" column="1">
+              <widget class="KComboBox" name="mStorageFormatCombo">
+               <property name="toolTip">
                 <string>Choose the format to use to store the contents of the groupware folders.</string>
                </property>
                <item>
-                <property name="text" >
+                <property name="text">
                  <string>Deprecated Kolab1 (iCal/vCard)</string>
                 </property>
                </item>
                <item>
-                <property name="text" >
+                <property name="text">
                  <string>Kolab2 (XML)</string>
                 </property>
                </item>
               </widget>
              </item>
-             <item row="1" column="0" >
-              <widget class="QLabel" name="label_2" >
-               <property name="toolTip" >
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="toolTip">
                 <string>Set the language of the folder names</string>
                </property>
-               <property name="text" >
+               <property name="text">
                 <string>&amp;Language of the groupware folders:</string>
                </property>
-               <property name="buddy" >
+               <property name="buddy">
                 <cstring>mLanguageCombo</cstring>
                </property>
               </widget>
              </item>
-             <item row="1" column="1" >
-              <widget class="KComboBox" name="mLanguageCombo" >
-               <property name="toolTip" >
+             <item row="1" column="1">
+              <widget class="KComboBox" name="mLanguageCombo">
+               <property name="toolTip">
                 <string>Set the language of the folder names</string>
                </property>
                <item>
-                <property name="text" >
+                <property name="text">
                  <string>English</string>
                 </property>
                </item>
                <item>
-                <property name="text" >
+                <property name="text">
                  <string>German</string>
                 </property>
                </item>
                <item>
-                <property name="text" >
+                <property name="text">
                  <string>French</string>
                 </property>
                </item>
                <item>
-                <property name="text" >
+                <property name="text">
                  <string>Dutch</string>
                 </property>
                </item>
               </widget>
              </item>
-             <item row="2" column="0" >
-              <widget class="QLabel" name="mFolderComboLabel" >
-               <property name="toolTip" >
+             <item row="2" column="0">
+              <widget class="QLabel" name="mFolderComboLabel">
+               <property name="toolTip">
                 <string>Set the parent of the resource folders</string>
                </property>
-               <property name="text" >
+               <property name="text">
                 <string/>
                </property>
               </widget>
              </item>
-             <item row="4" column="0" colspan="2" >
-              <widget class="QCheckBox" name="mOnlyShowGroupwareFolders" >
-               <property name="toolTip" >
-                <string>When this is checked, you will not see normal mail folders in the folder tree for the account configured for groupware.</string>
+             <item row="2" column="1">
+              <widget class="QStackedWidget" name="mFolderComboStack">
+               <property name="currentIndex">
+                <number>1</number>
                </property>
-               <property name="text" >
-                <string>&amp;Only show groupware folders for this account</string>
-               </property>
+               <widget class="QWidget" name="page">
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <property name="margin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="KMail::FolderRequester" name="mFolderCombo" native="true"/>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_2">
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <property name="margin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="KMail::AccountComboBox" name="mAccountCombo" native="true"/>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
-             <item row="5" column="0" colspan="2" >
-              <widget class="QCheckBox" name="mSyncImmediately" >
-               <property name="toolTip" >
-                <string>Synchronize groupware changes in disconnected IMAP folders immediately when being online.</string>
-               </property>
-               <property name="text" >
-                <string>&amp;Synchronize groupware changes immediately</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0" colspan="2" >
-              <widget class="QCheckBox" name="mDeleteInvitations" >
-               <property name="text" >
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" colspan="2" >
-              <widget class="QCheckBox" name="mHideGroupwareFolders" >
-               <property name="toolTip" >
+             <item row="3" column="0" colspan="2">
+              <widget class="QCheckBox" name="mHideGroupwareFolders">
+               <property name="toolTip">
                 <string>When this is checked, you will not see the IMAP resource folders in the folder tree.</string>
                </property>
-               <property name="text" >
+               <property name="text">
                 <string>&amp;Hide groupware folders</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1" >
-              <widget class="QStackedWidget" name="mFolderComboStack" >
-               <property name="currentIndex" >
-                <number>1</number>
+             <item row="4" column="0" colspan="2">
+              <widget class="QCheckBox" name="mOnlyShowGroupwareFolders">
+               <property name="toolTip">
+                <string>When this is checked, you will not see normal mail folders in the folder tree for the account configured for groupware.</string>
                </property>
-               <widget class="QWidget" name="page" >
-                <layout class="QVBoxLayout" name="verticalLayout_5" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="KMail::FolderRequester" native="1" name="mFolderCombo" />
-                 </item>
-                </layout>
-               </widget>
-               <widget class="QWidget" name="page_2" >
-                <layout class="QVBoxLayout" name="verticalLayout_6" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="KMail::AccountComboBox" native="1" name="mAccountCombo" />
-                 </item>
-                </layout>
-               </widget>
+               <property name="text">
+                <string>&amp;Only show groupware folders for this account</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="2">
+              <widget class="QCheckBox" name="mSyncImmediately">
+               <property name="toolTip">
+                <string>Synchronize groupware changes in disconnected IMAP folders immediately when being online.</string>
+               </property>
+               <property name="text">
+                <string>&amp;Synchronize groupware changes immediately</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -186,70 +180,80 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_2" >
-       <property name="title" >
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
         <string>Groupware Compatibility &amp;&amp; Legacy Options</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout" >
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QCheckBox" name="mLegacyMangleFromTo" >
-          <property name="toolTip" >
+         <widget class="QCheckBox" name="mLegacyMangleFromTo">
+          <property name="toolTip">
            <string>Turn this option on in order to make Outlook(tm) understand your answers to invitation replies</string>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>&amp;Mangle From:/To: headers in replies to invitations</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="mLegacyBodyInvites" >
-          <property name="toolTip" >
+         <widget class="QCheckBox" name="mLegacyBodyInvites">
+          <property name="toolTip">
            <string>Turn this option on in order to make Outlook(tm) understand your answers to invitations</string>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Send &amp;invitations in the mail body</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="mExchangeCompatibleInvitations" >
-          <property name="toolTip" >
+         <widget class="QCheckBox" name="mExchangeCompatibleInvitations">
+          <property name="toolTip">
            <string>Microsoft Outlook, when used in combination with a Microsoft Exchange server,
 has a problem understanding standards-compliant groupware email.
 Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</string>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Exchange-compatible invitation &amp;naming</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="mAutomaticSending" >
-          <property name="toolTip" >
+         <widget class="QCheckBox" name="mAutomaticSending">
+          <property name="toolTip">
            <string>When this is on, the user will not see the mail composer window. Invitation mails are sent automatically.</string>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>&amp;Automatic invitation sending</string>
           </property>
          </widget>
         </item>
        </layout>
+       <zorder>mLegacyMangleFromTo</zorder>
+       <zorder>mLegacyBodyInvites</zorder>
+       <zorder>mExchangeCompatibleInvitations</zorder>
+       <zorder>mAutomaticSending</zorder>
+       <zorder>groupBox_3</zorder>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>Common Options</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="mDeleteInvitations">
+          <property name="text">
+           <string>Delete invitation emails after the reply to them has been sent</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+       <zorder>mDeleteInvitations</zorder>
+       <zorder>mDeleteInvitations</zorder>
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer" >
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
@@ -279,7 +283,6 @@ Turn this option on to send groupware invitations in a way that Microsoft Exchan
   <tabstop>mHideGroupwareFolders</tabstop>
   <tabstop>mOnlyShowGroupwareFolders</tabstop>
   <tabstop>mSyncImmediately</tabstop>
-  <tabstop>mDeleteInvitations</tabstop>
   <tabstop>mLegacyMangleFromTo</tabstop>
   <tabstop>mLegacyBodyInvites</tabstop>
   <tabstop>mExchangeCompatibleInvitations</tabstop>
