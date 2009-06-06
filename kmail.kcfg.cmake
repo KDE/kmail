@@ -192,7 +192,7 @@
       <entry name="DeleteInvitationEmailsAfterSendingReply" type="Bool">
         <label>Delete invitation emails after the reply to them has been sent</label>
         <whatsthis>When this is checked, received invitation emails that have been replied to will be moved to the Trash folder, once the reply has been successfully sent.</whatsthis>
-        <default>true</default>
+        <default>${DELETE_INVITATIONS_AFTER_REPLY_DEFAULT}</default>
       </entry>
 
       <entry name="AskForCommentWhenReactingToInvitation"  type="Enum">
