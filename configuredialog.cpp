@@ -5318,6 +5318,16 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mOutlookCompatibleInvitationComments =
+    new QCheckBox( i18n( "Outlook compatible invitation reply comments" ), gBox );
+  mOutlookCompatibleInvitationComments->setToolTip(
+    i18n( "Send invitation reply comments in a way that "
+          "Microsoft Outlook(tm) understands." ) );
+  mOutlookCompatibleInvitationComments->setWhatsThis( i18n( GlobalSettings::self()->
+           outlookCompatibleInvitationReplyCommentsItem()->whatsThis().utf8() ) );
+  connect( mOutlookCompatibleInvitationComments, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
   mAutomaticSending->setToolTip( i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
   mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
@@ -5363,6 +5373,8 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   mLegacyBodyInvites->blockSignals( true );
   mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
   mLegacyBodyInvites->blockSignals( false );
+
+  mOutlookCompatibleInvitationComments->setChecked( GlobalSettings::self()->outlookCompatibleInvitationReplyComments() );
 
   mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
   mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
@@ -5433,6 +5445,7 @@ void MiscPage::GroupwareTab::save()
   GlobalSettings::self()->setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
   GlobalSettings::self()->setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
   GlobalSettings::self()->setExchangeCompatibleInvitations( mExchangeCompatibleInvitations->isChecked() );
+  GlobalSettings::self()->setOutlookCompatibleInvitationReplyComments( mOutlookCompatibleInvitationComments->isChecked() );
   GlobalSettings::self()->setAutomaticSending( mAutomaticSending->isChecked() );
 
   int format = mStorageFormatCombo->currentIndex();
