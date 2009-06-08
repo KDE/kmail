@@ -658,6 +658,7 @@ void Pane::setAllThreadsExpanded( bool expand )
   return w->view()->setAllThreadsExpanded( expand );
 }
 
+
 bool Pane::selectNextMessageItem(
     Core::MessageTypeFilter messageTypeFilter,
     Core::ExistingSelectionBehaviour existingSelectionBehaviour,

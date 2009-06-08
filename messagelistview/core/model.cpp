@@ -4095,6 +4095,7 @@ void Model::viewItemJobStep()
          // actually notify the view of the restored setting.
       }
       // Restore it
+      kDebug() << "Gonna restore current here" << mCurrentItemToRestoreAfterViewItemJobStep->subject();
       mView->setCurrentIndex( index( mCurrentItemToRestoreAfterViewItemJobStep, 0 ) );
     } else {
       // The item we're expected to set as current is already current
@@ -4109,6 +4110,8 @@ void Model::viewItemJobStep()
         {
           stillIgnoringCurrentChanges = false;
           mView->ignoreCurrentChanges( false );
+
+          kDebug() << "Gonna restore selection here" << mCurrentItemToRestoreAfterViewItemJobStep->subject();
 
           QItemSelection selection;
           selection.append( QItemSelectionRange( index( mCurrentItemToRestoreAfterViewItemJobStep, 0 ) ) );

@@ -504,7 +504,8 @@ QList< KMMsgBase * > Widget::persistentSetContentsAsMsgBaseList( Core::MessageIt
   for ( QList< Core::MessageItem * >::ConstIterator it = setItems.constBegin(); it != setItems.constEnd(); ++it )
   {
     KMMsgBase * msg = static_cast< StorageModel * >( storageModel() )->msgBase( *it );
-    Q_ASSERT( msg );
+    if ( !msg )
+      continue; // this may actually fail (in delete operations, for instance)
     ret.append( msg );
   }
 

@@ -763,6 +763,8 @@ MessageItem * View::currentMessageItem( bool selectIfNeeded ) const
 
 void View::setCurrentMessageItem( MessageItem * it )
 {
+  kDebug() << "Setting current message to" << it->subject();
+
   if ( it )
     selectionModel()->setCurrentIndex( mModel->index( it, 0 ), QItemSelectionModel::Select | QItemSelectionModel::Current | QItemSelectionModel::Rows );
   else
@@ -1033,17 +1035,26 @@ Item * View::messageItemAfter( Item * referenceItem, MessageTypeFilter messageTy
   // ok.. now below points to the next message.
   // While it doesn't satisfy our requirements, go further down
 
+  QModelIndex parentIndex = mModel->index( below->parent(), 0 );
+  QModelIndex belowIndex = mModel->index( below, 0 );
+  int belowRowIdx = below->parent()->indexOfChildItem( below );
+
+  Q_ASSERT( belowIndex.isValid() );
+  Q_ASSERT( belowRowIdx >= 0 );
+
   while (
           // is not a message (we want messages, don't we ?)
           ( below->type() != Item::Message ) ||
           // message filter doesn't match
           ( !message_type_matches( below, messageTypeFilter ) ) ||
           // is hidden (and we don't want hidden items as they arent "officially" in the view)
-          isRowHidden( below->parent()->indexOfChildItem( below ), mModel->index( below->parent(), 0 ) )
+          isRowHidden( belowRowIdx, parentIndex ) ||
+          // is not enabled or not selectable
+          ( ( mModel->flags( belowIndex ) & ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) ) != ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) )
     )
   {
     // find the next one
-    if ( ( below->childItemCount() > 0 ) && ( ( messageTypeFilter != MessageTypeAny ) || isExpanded( mModel->index( below, 0 ) ) ) )
+    if ( ( below->childItemCount() > 0 ) && ( ( messageTypeFilter != MessageTypeAny ) || isExpanded( belowIndex ) ) )
     {
       // the current item had children: either expanded or we want unread messages (and so we'll expand it if it isn't)
       below = below->itemBelow();
@@ -1073,6 +1084,13 @@ Item * View::messageItemAfter( Item * referenceItem, MessageTypeFilter messageTy
       Q_ASSERT( loop );
       return 0; // looped and returned back to the first message
     }
+
+    parentIndex = mModel->index( below->parent(), 0 );
+    belowIndex = mModel->index( below, 0 );
+    belowRowIdx = below->parent()->indexOfChildItem( below );
+
+    Q_ASSERT( belowIndex.isValid() );
+    Q_ASSERT( belowRowIdx >= 0 );
   }
 
   return below;
@@ -1153,6 +1171,13 @@ Item * View::messageItemBefore( Item * referenceItem, MessageTypeFilter messageT
   // ok.. now below points to the previous message.
   // While it doesn't satisfy our requirements, go further up
 
+  QModelIndex parentIndex = mModel->index( above->parent(), 0 );
+  QModelIndex aboveIndex = mModel->index( above, 0 );
+  int aboveRowIdx = above->parent()->indexOfChildItem( above );
+
+  Q_ASSERT( aboveIndex.isValid() );
+  Q_ASSERT( aboveRowIdx >= 0 );
+
   while (
           // is not a message (we want messages, don't we ?)
           ( above->type() != Item::Message ) ||
@@ -1166,7 +1191,9 @@ Item * View::messageItemBefore( Item * referenceItem, MessageTypeFilter messageT
             ( ! isDisplayedWithParentsExpanded( above ) )
           ) ||
           // is hidden
-          isRowHidden( above->parent()->indexOfChildItem( above ), mModel->index( above->parent(), 0 ) )
+          isRowHidden( aboveRowIdx, parentIndex ) ||
+          // is not enabled or not selectable
+          ( ( mModel->flags( aboveIndex ) & ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) ) != ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) )
     )
   {
 
@@ -1192,6 +1219,13 @@ Item * View::messageItemBefore( Item * referenceItem, MessageTypeFilter messageT
       Q_ASSERT( loop );
       return 0; // looped and returned back to the first message
     }
+
+    parentIndex = mModel->index( above->parent(), 0 );
+    aboveIndex = mModel->index( above, 0 );
+    aboveRowIdx = above->parent()->indexOfChildItem( above );
+
+    Q_ASSERT( aboveIndex.isValid() );
+    Q_ASSERT( aboveRowIdx >= 0 );
   }
 
   return above;
@@ -1494,23 +1528,156 @@ void View::deletePersistentSet( MessageItemSetReference ref )
 
 void View::markMessageItemsAsAboutToBeRemoved( QList< MessageItem * > &items, bool bMark )
 {
-  if ( bMark )
+  if ( !bMark )
   {
-    for ( QList< MessageItem * >::Iterator it = items.begin(); it != items.end(); ++it )
-    {
-      ( *it )->setAboutToBeRemoved( true );
-      QModelIndex idx = mModel->index( *it, 0 );
-      Q_ASSERT( idx.isValid() );
-      Q_ASSERT( static_cast< MessageItem * >( idx.internalPointer() ) == *it );
-      if ( selectionModel()->isSelected( idx ) )
-        selectionModel()->select( idx, QItemSelectionModel::Deselect | QItemSelectionModel::Rows );
-    }
-  } else {
     for ( QList< MessageItem * >::Iterator it = items.begin(); it != items.end(); ++it )
     {
       if ( ( *it )->isValid() ) // hasn't been removed in the meantime
         ( *it )->setAboutToBeRemoved( false );
     }
+
+    viewport()->update();
+
+    return;
+  }
+
+  // ok.. we're going to mark the messages as "about to be deleted".
+  // This means that we're going to make them non selectable.
+
+  // What happens to the selection is generally an untrackable big mess.
+  // Several components and entities are involved.
+
+  // Qutie tries to apply some kind of internal logic in order to keep
+  // "something" selected and "something" (else) to be current.
+  // The results sometimes appear to depend on the current moon phase.
+
+  // The Model will do crazy things in order to preserve the current
+  // selection (and possibly the current item). If it's impossible then
+  // it will make its own guesses about what should be selected next.
+  // A problem is that the Model will do it one message at a time.
+  // When item reparenting/reordering is involved then the guesses
+  // can produce non-intuitive results.
+
+  // Add the fact that selection and current item are distinct concepts,
+  // their relative interaction depends on the settings and is often quite
+  // unclear.
+
+  // Add the fact that (at the time of writing) several styles don't show
+  // the current item (only Yoda knows why) and this causes some confusion to the user.
+
+  // Add the fact that the operations are asynchronous: deletion will start
+  // a job, do some event loop processing and then complete the work at a later time.
+  // The Qutie views also tend to accumulate the changes and perform them
+  // all at once at the latest possible stage.
+
+  // A radical approach is needed: we FIRST deal with the selection
+  // by tring to move it away from the messages about to be deleted
+  // and THEN mark the (hopefully no longer selected) messages as "about to be deleted".
+
+  // First of all, find out if we're going to clear the entire selection (very likely).
+
+  bool clearingEntireSelection = true;
+
+  QModelIndexList selectedIndexes = selectionModel()->selectedRows( 0 );
+
+  if ( selectedIndexes.count() > items.count() )
+  {
+    // the selection is bigger: we can't clear it completly
+    clearingEntireSelection = false;
+  } else {
+    // the selection has same size or is smaller: we can clear it completly with our removal
+    foreach ( const QModelIndex &selectedIndex , selectedIndexes )
+    {
+      Q_ASSERT( selectedIndex.isValid() );
+      Q_ASSERT( selectedIndex.column() == 0 );
+
+      Item * selectedItem = static_cast< Item * >( selectedIndex.internalPointer() );
+      Q_ASSERT( selectedItem );
+
+      if ( selectedItem->type() != Item::Message )
+        continue;
+
+      if ( !items.contains( static_cast< MessageItem * >( selectedItem ) ) )
+      {
+        // the selection contains something that we aren't going to remove:
+        // we will not clear the selection completly
+        clearingEntireSelection = false;
+        break;
+      }
+    }
+  }
+
+  if ( clearingEntireSelection )
+  {
+    // Try to clear the current selection and select something sensible instead,
+    // so after the deletion we will not end up with a random selection.
+    // Pick up a message in the set (which is very likely to be contiguous), walk the tree
+    // and select the next message that is NOT in the set.
+
+    MessageItem * aMessage = items.last();
+    Q_ASSERT( aMessage );
+
+    // Avoid infinite loops by carrying only a limited number of attempts.
+    // If there is any message that is not in the set then items.count() attemps should find it.
+    int maxAttempts = items.count();
+
+    while ( items.contains( aMessage ) && ( maxAttempts > 0 ) )
+    {
+      Item * next = messageItemAfter( aMessage, MessageTypeAny, false );
+      if ( !next )
+      {
+        // no way
+        aMessage = 0;
+        break;
+      }
+      Q_ASSERT( next->type() == Item::Message );
+      aMessage = static_cast< MessageItem * >( next );
+      maxAttempts--;
+    }
+
+    if ( !aMessage )
+    {
+      // try backwards
+      aMessage = items.first();
+      Q_ASSERT( aMessage );
+      maxAttempts = items.count();
+
+      while ( items.contains( aMessage ) && ( maxAttempts > 0 ) )
+      {
+        Item * prev = messageItemBefore( aMessage, MessageTypeAny, false );
+        if ( !prev )
+        {
+          // no way
+          aMessage = 0;
+          break;
+        }
+        Q_ASSERT( prev->type() == Item::Message );
+        aMessage = static_cast< MessageItem * >( prev );
+        maxAttempts--;
+      }
+    }
+
+    if ( aMessage )
+    {
+      QModelIndex aMessageIndex = mModel->index( aMessage, 0 );
+      Q_ASSERT( aMessageIndex.isValid() );
+      Q_ASSERT( static_cast< MessageItem * >( aMessageIndex.internalPointer() ) == aMessage );
+      Q_ASSERT( !selectionModel()->isSelected( aMessageIndex ) );
+      selectionModel()->select( aMessageIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows | QItemSelectionModel::Current );
+      setCurrentIndex( aMessageIndex );
+    }
+  } // else we aren't clearing the entire selection so something should just stay selected.
+
+  // Now mark messages as about to be removed.
+
+  for ( QList< MessageItem * >::Iterator it = items.begin(); it != items.end(); ++it )
+  {
+    ( *it )->setAboutToBeRemoved( true );
+    QModelIndex idx = mModel->index( *it, 0 );
+    Q_ASSERT( idx.isValid() );
+    Q_ASSERT( static_cast< MessageItem * >( idx.internalPointer() ) == *it );
+    if ( selectionModel()->isSelected( idx ) )
+      selectionModel()->select( idx, QItemSelectionModel::Deselect | QItemSelectionModel::Rows | QItemSelectionModel::Current );
   }
 
   viewport()->update();
