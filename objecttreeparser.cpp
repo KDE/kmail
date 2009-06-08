@@ -463,90 +463,27 @@ namespace KMail {
     messagePart.status = i18n("Wrong Crypto Plug-In.");
     messagePart.status_code = GPGME_SIG_STAT_NONE;
 
-    GpgME::Key key;
-
     if ( doCheck && cryptProto ) {
       GpgME::VerificationResult result;
       if ( data ) { // detached
-        const VerifyDetachedBodyPartMemento * m
-          = dynamic_cast<VerifyDetachedBodyPartMemento*>( data->bodyPartMemento( "verifydetached" ) );
-        if ( !m ) {
-          Kleo::VerifyDetachedJob * job = cryptProto->verifyDetachedJob();
-          if ( !job ) {
-            cryptPlugError = CANT_VERIFY_SIGNATURES;
-            // PENDING(marc) cryptProto = 0 here?
-          } else {
-            QByteArray plainData = cleartext;
-            plainData.resize( cleartext.size() - 1 );
-            VerifyDetachedBodyPartMemento * newM
-              = new VerifyDetachedBodyPartMemento( job, cryptProto->keyListJob(), signaturetext, plainData );
-            if ( allowAsync() ) {
-              if ( newM->start() ) {
-                messagePart.inProgress = true;
-                mHasPendingAsyncJobs = true;
-              } else {
-                m = newM;
-              }
-            } else {
-              newM->exec();
-              m = newM;
-            }
-            data->setBodyPartMemento( "verifydetached", newM );
-          }
-        } else if ( m->isRunning() ) {
-          messagePart.inProgress = true;
-          mHasPendingAsyncJobs = true;
-          m = 0;
-        }
-
-        if ( m ) {
-          result = m->verifyResult();
-          messagePart.auditLogError = m->auditLogError();
-          messagePart.auditLog = m->auditLogAsHtml();
-          key = m->signingKey();
+        if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
+          QByteArray plainData = cleartext;
+          plainData.resize( cleartext.size() - 1 );
+          result = job->exec( signaturetext, plainData );
+          messagePart.auditLog = job->auditLogAsHtml();
+        } else {
+          cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       } else { // opaque
-        const VerifyOpaqueBodyPartMemento * m
-          = dynamic_cast<VerifyOpaqueBodyPartMemento*>( data->bodyPartMemento( "verifyopaque" ) );
-        if ( !m ) {
-          Kleo::VerifyOpaqueJob * job = cryptProto->verifyOpaqueJob();
-          if ( !job ) {
-            cryptPlugError = CANT_VERIFY_SIGNATURES;
-            // PENDING(marc) cryptProto = 0 here?
-          } else {
-            VerifyOpaqueBodyPartMemento * newM
-              = new VerifyOpaqueBodyPartMemento( job, cryptProto->keyListJob(), signaturetext );
-            if ( allowAsync() ) {
-              if ( newM->start() ) {
-                messagePart.inProgress = true;
-                mHasPendingAsyncJobs = true;
-              } else {
-                m = newM;
-              }
-            } else {
-              newM->exec();
-              m = newM;
-            }
-            data->setBodyPartMemento( "verifyopaque", newM );
-          }
-        } else if ( m->isRunning() ) {
-          messagePart.inProgress = true;
-          mHasPendingAsyncJobs = true;
-          m = 0;
-        }
-
-        if ( m ) {
-          result = m->verifyResult();
-          const QByteArray & plainData = m->plainText();
+        if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
+          QByteArray plainData = plainData;
+          result = job->exec( signaturetext, plainData );
           cleartext = QCString( plainData.data(), plainData.size() + 1 );
-          messagePart.auditLogError = m->auditLogError();
-          messagePart.auditLog = m->auditLogAsHtml();
-          key = m->signingKey();
+          messagePart.auditLog = job->auditLogAsHtml();
+        } else {
+          cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       }
-      std::stringstream ss;
-      ss << result;
-      kdDebug(5006) << ss.str().c_str() << endl;
       signatures = result.signatures();
     }
 
@@ -568,6 +505,16 @@ namespace KMail {
       }
       if ( messagePart.status_code & GPGME_SIG_STAT_GOOD )
         messagePart.isGoodSignature = true;
+
+      // get key for this signature
+      Kleo::KeyListJob *job = cryptProto->keyListJob();
+      std::vector<GpgME::Key> keys;
+      GpgME::KeyListResult keyListRes = job->exec( QString::fromLatin1( signature.fingerprint() ), false, keys );
+      GpgME::Key key;
+      if ( keys.size() == 1 )
+        key = keys[0];
+      else if ( keys.size() > 1 )
+        assert( false ); // ### wtf, what should we do in this case??
 
       // save extended signature status flags
       messagePart.sigSummary = signature.summary();
@@ -1645,11 +1592,13 @@ namespace KMail {
           htmlWriter()->queue( i18n( "Failed: %1 (%2)" )
                                .arg( (*it).fingerprint(),
                                      QString::fromLocal8Bit( (*it).error().asString() ) ) );
-        else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
-          if ( (*it).status() & GpgME::Import::ContainedSecretKey )
+        else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey ) {
+          if ( (*it).status() & GpgME::Import::ContainedSecretKey ) {
             htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)" ).arg( (*it).fingerprint() ) );
-          else
+          } else {
             htmlWriter()->queue( i18n( "New or changed: %1" ).arg( (*it).fingerprint() ) );
+          }
+        }
         htmlWriter()->queue( "<br>" );
       }
 
@@ -2892,7 +2841,8 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   const unsigned int length = s.length();
 
   // skip leading empty lines
-  for ( pos = 0; pos < length && s[pos] <= ' '; pos++ );
+  for ( pos = 0; pos < length && s[pos] <= ' '; pos++ )
+    ;
   while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
   beg = pos;
 
