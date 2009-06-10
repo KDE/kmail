@@ -4562,6 +4562,7 @@ void KMMainWidget::updateMessageTagActions( const int count )
            ( aTagList->indexOf( QString((*it).first->label() ) ) != -1 );
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setChecked( list_present );
+      aToggler->setEnabled( true );
     }
   } else if ( count > 1 )
   {
@@ -4571,6 +4572,7 @@ void KMMainWidget::updateMessageTagActions( const int count )
     {
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setChecked( false );
+      aToggler->setEnabled( true );
       aToggler->setText( i18n("Toggle Message Tag %1", (*it).first->name() ) );
     }
   } else {
