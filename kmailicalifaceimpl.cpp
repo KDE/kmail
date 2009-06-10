@@ -700,11 +700,12 @@ static QString subresourceLabelForPresentation( const KMFolder * folder )
       remainder.pop_front();
       if ( dimapAccountCount() > 1 && folder && folder->storage() &&
            static_cast<const KMFolderCachedImap*>( folder->storage() )->account() ) {
-        label = i18n( "My %1 (%2)", remainder.join( QString::fromLatin1("/") ),
+        label = i18n( "%1 (%2)", remainder.join( QString::fromLatin1("/") ),
                       static_cast<const KMFolderCachedImap*>( folder->storage() )->account()->name() );
       } else {
-        label = i18n("My %1", remainder.join( QString::fromLatin1("/") ) );
+        label = i18n( "%1", remainder.join( QString::fromLatin1("/") ) );
       }
+      label = i18nc( "eg. My Calendar or My Inbox", "My %1", label );
       break;
     }
   }
