@@ -33,7 +33,6 @@
 #include "kmmsgpart.h"
 #define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
-#include "kmcomposereditor.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H
 #include "kcursorsaver.h"
 #include "messagesender.h"
