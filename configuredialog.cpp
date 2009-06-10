@@ -5266,15 +5266,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mSyncImmediately = new QCheckBox( i18n( "Synchronize groupware changes immediately" ), mBox );
   mSyncImmediately->setToolTip( i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
   connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  grid->addWidget( mSyncImmediately, 4, 0, 0, 1 );
-
-  mDeleteInvitations = new QCheckBox(
-             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ), mBox );
-  mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
-             ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
-  connect( mDeleteInvitations, SIGNAL( toggled(bool) ),
-           SLOT( slotEmitChanged() ) );
-  grid->addWidget( mDeleteInvitations, 5, 0, 1, 2 );
+  grid->addWidget( mSyncImmediately, 4, 0, 1, 1 );
 
   // Groupware functionality compatibility setup
   b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
@@ -5336,6 +5328,24 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            this, SLOT( slotEmitChanged( void ) ) );
   layout->addWidget( gBox );
   vlay->addWidget( b1 );
+
+  //
+  // Common Options group box
+  //
+  QGroupBox *invitationGroupBox = new QGroupBox( i18n("Common Options"), this );
+  KVBox *invitationVBox = new KVBox( invitationGroupBox );
+  layout = new QVBoxLayout( invitationGroupBox );
+  invitationVBox->setSpacing( KDialog::spacingHint() );
+  invitationVBox->setMargin( 0 );
+  mDeleteInvitations = new QCheckBox(
+    i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ),
+    invitationVBox );
+  mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
+                          ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
+  connect( mDeleteInvitations, SIGNAL( toggled(bool) ),
+           SLOT( slotEmitChanged() ) );
+  layout->addWidget( invitationVBox );
+  vlay->addWidget( invitationGroupBox );
   vlay->addStretch( 10 ); // spacer
 }
 
