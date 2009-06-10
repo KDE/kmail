@@ -1663,8 +1663,8 @@ void View::markMessageItemsAsAboutToBeRemoved( QList< MessageItem * > &items, bo
       Q_ASSERT( aMessageIndex.isValid() );
       Q_ASSERT( static_cast< MessageItem * >( aMessageIndex.internalPointer() ) == aMessage );
       Q_ASSERT( !selectionModel()->isSelected( aMessageIndex ) );
-      selectionModel()->select( aMessageIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows | QItemSelectionModel::Current );
       setCurrentIndex( aMessageIndex );
+      selectionModel()->select( aMessageIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
     }
   } // else we aren't clearing the entire selection so something should just stay selected.
 
@@ -1677,7 +1677,7 @@ void View::markMessageItemsAsAboutToBeRemoved( QList< MessageItem * > &items, bo
     Q_ASSERT( idx.isValid() );
     Q_ASSERT( static_cast< MessageItem * >( idx.internalPointer() ) == *it );
     if ( selectionModel()->isSelected( idx ) )
-      selectionModel()->select( idx, QItemSelectionModel::Deselect | QItemSelectionModel::Rows | QItemSelectionModel::Current );
+      selectionModel()->select( idx, QItemSelectionModel::Deselect | QItemSelectionModel::Rows );
   }
 
   viewport()->update();
@@ -1807,7 +1807,6 @@ void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & 
     {
       if ( mLastCurrentItem != it )
       {
-        kDebug() << "Message selected [" << it->subject().toUtf8().data() << "]";
         mWidget->viewMessageSelected( static_cast< MessageItem * >( it ) );
         mLastCurrentItem = 0;
       }
