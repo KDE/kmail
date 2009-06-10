@@ -5330,9 +5330,9 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   vlay->addWidget( b1 );
 
   //
-  // Common Options group box
+  // Invitation options group box
   //
-  QGroupBox *invitationGroupBox = new QGroupBox( i18n("Common Options"), this );
+  QGroupBox *invitationGroupBox = new QGroupBox( i18n("Invitation Options"), this );
   KVBox *invitationVBox = new KVBox( invitationGroupBox );
   layout = new QVBoxLayout( invitationGroupBox );
   invitationVBox->setSpacing( KDialog::spacingHint() );
