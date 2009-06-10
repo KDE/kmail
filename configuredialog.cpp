@@ -5316,7 +5316,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
     i18n( "Send invitation reply comments in a way that "
           "Microsoft Outlook(tm) understands." ) );
   mOutlookCompatibleInvitationComments->setWhatsThis( i18n( GlobalSettings::self()->
-           outlookCompatibleInvitationReplyCommentsItem()->whatsThis().utf8() ) );
+           outlookCompatibleInvitationReplyCommentsItem()->whatsThis().toUtf8() ) );
   connect( mOutlookCompatibleInvitationComments, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
