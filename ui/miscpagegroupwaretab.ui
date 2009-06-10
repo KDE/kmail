@@ -10,7 +10,7 @@
     <height>504</height>
    </rect>
   </property>
-  <layout class="QFormLayout" name="formLayout">
+  <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
@@ -228,11 +228,6 @@ Turn this option on to send groupware invitations in a way that Microsoft Exchan
          </widget>
         </item>
        </layout>
-       <zorder>mLegacyMangleFromTo</zorder>
-       <zorder>mLegacyBodyInvites</zorder>
-       <zorder>mExchangeCompatibleInvitations</zorder>
-       <zorder>mAutomaticSending</zorder>
-       <zorder>groupBox_3</zorder>
       </widget>
      </item>
      <item>
@@ -249,8 +244,6 @@ Turn this option on to send groupware invitations in a way that Microsoft Exchan
          </widget>
         </item>
        </layout>
-       <zorder>mDeleteInvitations</zorder>
-       <zorder>mDeleteInvitations</zorder>
       </widget>
      </item>
     </layout>
