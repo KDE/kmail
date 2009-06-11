@@ -107,6 +107,7 @@ set(kmailprivate_LIB_SRCS
    kmfoldermgr.cpp
    kmfoldernode.cpp
    kmsender.cpp
+   akonadisender.cpp
    kmacctseldlg.cpp
    kmfiltermgr.cpp
    filterimporterexporter.cpp
@@ -354,6 +355,8 @@ target_link_libraries(kmailprivate
   ${KDE4_KHTML_LIBRARY}
   ${KDE4_THREADWEAVER_LIBRARY}
   ${KDE4_KMIME_LIBRARY}
+  ${KDE4_AKONADI_LIBS}
+  outboxinterface
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
   ${KDE4_PHONON_LIBRARY}
   ${KDE4_KNOTIFYCONFIG_LIBRARY}
