@@ -29,14 +29,122 @@
 #include <qsignalmapper.h>
 #include <qpushbutton.h>
 
+#undef I18N_NOOP
+#define I18N_NOOP(t) 0, t
+#undef I18N_NOOP2
+#define I18N_NOOP2(c,t) c, t
+
+struct InsertCommand
+{
+  const char * context;
+  const char * name;
+  const TemplatesInsertCommand::Command command;
+
+  QString getLocalizedDisplayName() const { return i18nc( context, name ); };
+};
+
+static const InsertCommand originalCommands[] = {
+  { I18N_NOOP( "Message Text as Is" ), TemplatesInsertCommand::CText },
+  { I18N_NOOP( "Message Id" ), TemplatesInsertCommand::COMsgId },
+  { I18N_NOOP( "Date" ), TemplatesInsertCommand::CODate },
+  { I18N_NOOP( "Date in Short Format" ), TemplatesInsertCommand::CODateShort },
+  { I18N_NOOP( "Date in C Locale" ), TemplatesInsertCommand::CODateEn },
+  { I18N_NOOP( "Day of Week" ), TemplatesInsertCommand::CODow },
+  { I18N_NOOP( "Time" ), TemplatesInsertCommand::COTime },
+  { I18N_NOOP( "Time in Long Format" ), TemplatesInsertCommand::COTimeLong },
+  { I18N_NOOP( "Time in C Locale" ), TemplatesInsertCommand::COTimeLongEn },
+  { I18N_NOOP( "To Field Address" ), TemplatesInsertCommand::COToAddr },
+  { I18N_NOOP( "To Field Name" ), TemplatesInsertCommand::COToName },
+  { I18N_NOOP( "To Field First Name" ), TemplatesInsertCommand::COToFName },
+  { I18N_NOOP( "To Field Last Name" ), TemplatesInsertCommand::COToLName },
+  { I18N_NOOP( "CC Field Address" ), TemplatesInsertCommand::COCCAddr },
+  { I18N_NOOP( "CC Field Name" ), TemplatesInsertCommand::COCCName },
+  { I18N_NOOP( "CC Field First Name" ), TemplatesInsertCommand::COCCFName },
+  { I18N_NOOP( "CC Field Last Name" ), TemplatesInsertCommand::COCCLName },
+  { I18N_NOOP( "From Field Address" ), TemplatesInsertCommand::COFromAddr },
+  { I18N_NOOP( "From Field Name" ), TemplatesInsertCommand::COFromName },
+  { I18N_NOOP( "From Field First Name" ), TemplatesInsertCommand::COFromFName },
+  { I18N_NOOP( "From Field Last Name" ), TemplatesInsertCommand::COFromLName },
+  { I18N_NOOP2( "Template value for subject of the message",
+      "Subject" ), TemplatesInsertCommand::COFullSubject },
+  { I18N_NOOP( "Quoted Headers" ), TemplatesInsertCommand::CQHeaders },
+  { I18N_NOOP( "Headers as Is" ), TemplatesInsertCommand::CHeaders },
+  { I18N_NOOP( "Header Content" ), TemplatesInsertCommand::COHeader }
+};
+static const int originalCommandsCount =
+  sizeof( originalCommands ) / sizeof( *originalCommands );
+
+static const InsertCommand currentCommands[] = {
+  { I18N_NOOP( "Date" ), TemplatesInsertCommand::CDate },
+  { I18N_NOOP( "Date in Short Format" ), TemplatesInsertCommand::CDateShort },
+  { I18N_NOOP( "Date in C Locale" ), TemplatesInsertCommand::CDateEn },
+  { I18N_NOOP( "Day of Week" ), TemplatesInsertCommand::CDow },
+  { I18N_NOOP( "Time" ), TemplatesInsertCommand::CTime },
+  { I18N_NOOP( "Time in Long Format" ), TemplatesInsertCommand::CTimeLong },
+  { I18N_NOOP( "Time in C Locale" ), TemplatesInsertCommand::CTimeLongEn },
+  { I18N_NOOP( "To Field Address" ), TemplatesInsertCommand::CToAddr },
+  { I18N_NOOP( "To Field Name" ), TemplatesInsertCommand::CToName },
+  { I18N_NOOP( "To Field First Name" ), TemplatesInsertCommand::CToFName },
+  { I18N_NOOP( "To Field Last Name" ), TemplatesInsertCommand::CToLName },
+  { I18N_NOOP( "CC Field Address" ), TemplatesInsertCommand::CCCAddr },
+  { I18N_NOOP( "CC Field Name" ), TemplatesInsertCommand::CCCName },
+  { I18N_NOOP( "CC Field First Name" ), TemplatesInsertCommand::CCCFName },
+  { I18N_NOOP( "CC Field Last Name" ), TemplatesInsertCommand::CCCLName },
+  { I18N_NOOP( "From Field Address" ), TemplatesInsertCommand::CFromAddr },
+  { I18N_NOOP( "From field Name" ), TemplatesInsertCommand::CFromName },
+  { I18N_NOOP( "From Field First Name" ), TemplatesInsertCommand::CFromFName },
+  { I18N_NOOP( "From Field Last Name" ), TemplatesInsertCommand::CFromLName },
+  { I18N_NOOP2( "Template subject command.", "Subject" ), TemplatesInsertCommand::CFullSubject },
+  { I18N_NOOP( "Header Content" ), TemplatesInsertCommand::CHeader }
+};
+static const int currentCommandsCount =
+  sizeof( currentCommands ) / sizeof( *currentCommands );
+
+static const InsertCommand extCommands[] = {
+  { I18N_NOOP( "Pipe Original Message Body and Insert Result as Quoted Text" ), TemplatesInsertCommand::CQuotePipe },
+  { I18N_NOOP( "Pipe Original Message Body and Insert Result as Is" ), TemplatesInsertCommand::CTextPipe },
+  { I18N_NOOP( "Pipe Original Message with Headers and Insert Result as Is" ), TemplatesInsertCommand::CMsgPipe },
+  { I18N_NOOP( "Pipe Current Message Body and Insert Result as Is" ), TemplatesInsertCommand::CBodyPipe },
+  { I18N_NOOP( "Pipe Current Message Body and Replace with Result" ), TemplatesInsertCommand::CClearPipe }
+};
+static const int extCommandsCount =
+  sizeof( extCommands ) / sizeof( *extCommands );
+
+static const InsertCommand miscCommands[] = {
+  { I18N_NOOP( "Insert File Content" ), TemplatesInsertCommand::CInsert },
+  { I18N_NOOP2( "All characters, up to and including the next newline, are discarded without performing any macro expansion",
+    "Discard to Next Line" ), TemplatesInsertCommand::CDnl },
+  { I18N_NOOP( "Template Comment" ), TemplatesInsertCommand::CRem },
+  { I18N_NOOP( "No Operation" ), TemplatesInsertCommand::CNop },
+  { I18N_NOOP( "Clear Generated Message" ), TemplatesInsertCommand::CClear },
+  { I18N_NOOP( "Turn Debug On" ), TemplatesInsertCommand::CDebug },
+  { I18N_NOOP( "Turn Debug Off" ), TemplatesInsertCommand::CDebugOff }
+};
+static const int miscCommandsCount =
+  sizeof( miscCommands ) / sizeof( *miscCommands );
+
+static void fillMenuFromActionMap( const QMap< QString, TemplatesInsertCommand::Command > &map,
+                                   KActionMenu *menu, QSignalMapper *mapper ) {
+  QMap< QString, TemplatesInsertCommand::Command >::const_iterator it = map.constBegin();
+  QMap< QString, TemplatesInsertCommand::Command >::const_iterator end = map.constEnd();
+
+  while ( it != end ) {
+    KAction *action = new KAction( it.key(), menu );
+    QObject::connect( action, SIGNAL( triggered( bool ) ), mapper, SLOT( map() ) );
+    mapper->setMapping( action, it.value() );
+    menu->addAction( action );
+    ++it;
+  }
+}
+
 TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *name )
   : QPushButton( parent )
 {
   setObjectName( name );
   setText( i18n( "&Insert Command" ) );
 
-  KAction *action;
   KActionMenu *menu;
+  QMap< QString, Command > commandMap;
 
   QSignalMapper *mapper = new QSignalMapper( this );
   connect( mapper, SIGNAL( mapped(int) ),
@@ -48,327 +156,41 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent, const char *nam
   menu = new KActionMenu( i18n( "Original Message" ), mMenu );
   mMenu->addAction( menu );
 
-  action = new KAction( i18n("Quoted Message"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CQuote );
-  menu->addAction( action );
+  // Map sorts commands
+  for ( int i = 0; i < originalCommandsCount; ++i )
+    commandMap.insert( originalCommands[i].getLocalizedDisplayName(), originalCommands[i].command );
 
-  action = new KAction( i18n("Message Text as Is"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CText );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Message Id"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COMsgId );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Date"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CODate );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Date in Short Format"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CODateShort );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Date in C Locale"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CODateEn );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Day of Week"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CODow );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Time"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COTime );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Time in Long Format"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COTimeLong );
-  menu->addAction( action );
-
-  action = new KAction( i18n("Time in C Locale"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COTimeLongEn );
-  menu->addAction( action );
-
-  action = new KAction( i18n("To Field Address"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COToAddr );
-  menu->addAction( action );
-
-  action = new KAction( i18n("To Field Name"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COToName );
-  menu->addAction( action );
-
-  action = new KAction( i18n("To Field First Name"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COToFName );
-  menu->addAction( action );
-
-  action = new KAction( i18n("To Field Last Name"), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COToLName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field Address" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COCCAddr );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COCCName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field First Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COCCFName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field Last Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COCCLName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From Field Address" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COFromAddr );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From Field Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COFromName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From Field First Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COFromFName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From Field Last Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COFromLName );
-  menu->addAction( action );
-
-  action = new KAction( i18nc( "Template value for subject of the message", "Subject" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COFullSubject );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Quoted Headers" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CQHeaders );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Headers as Is" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CHeaders );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Header Content" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, COHeader );
-  menu->addAction( action );
+  fillMenuFromActionMap( commandMap, menu, mapper );
+  commandMap.clear();
 
   // ******************************************************
   menu = new KActionMenu( i18n( "Current Message" ), mMenu );
   mMenu->addAction( menu );
 
-  action = new KAction( i18n( "Message Id" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CMsgId );
-  menu->addAction( action );
+  for ( int i = 0; i < currentCommandsCount; ++i )
+    commandMap.insert( currentCommands[i].getLocalizedDisplayName(), currentCommands[i].command );
 
-  action = new KAction( i18n( "Date" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CDate );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Date in Short Format" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CDateShort );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Date in C Locale" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CDateEn );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Day of Week" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CDow );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Time" ), menu );
-  mapper->setMapping( action, CTime );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Time in Long Format" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CTimeLong );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Time in C Locale" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CTimeLongEn );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "To Field Address" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CToAddr );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "To Field Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CToName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "To Field First Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CToFName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "To Field Last Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CToLName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field Address" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CCCAddr );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CCCName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field First Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CCCFName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "CC Field Last Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CCCLName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From Field Address" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CFromAddr );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From field Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CFromName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From Field First Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CFromFName );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "From Field Last Name" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CFromLName );
-  menu->addAction( action );
-
-  action = new KAction( i18nc( "Template subject command.", "Subject" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CFullSubject );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Header Content" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CHeader );
-  menu->addAction( action );
+  fillMenuFromActionMap( commandMap, menu, mapper );
+  commandMap.clear();
 
   // ******************************************************
   menu = new KActionMenu( i18n( "Process with External Programs" ), mMenu );
   mMenu->addAction( menu );
 
-  action = new KAction( i18n( "Insert Result of Command" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CSystem );
-  menu->addAction( action );
+  for ( int i = 0; i < extCommandsCount; ++i )
+    commandMap.insert( extCommands[i].getLocalizedDisplayName(), extCommands[i].command );
 
-  action = new KAction( i18n( "Pipe Original Message Body and Insert Result as Quoted Text" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CQuotePipe );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Pipe Original Message Body and Insert Result as Is" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CTextPipe );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Pipe Original Message with Headers and Insert Result as Is" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CMsgPipe );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Pipe Current Message Body and Insert Result as Is" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CBodyPipe );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Pipe Current Message Body and Replace with Result" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CClearPipe );
-  menu->addAction( action );
+  fillMenuFromActionMap( commandMap, menu, mapper );
+  commandMap.clear();
 
   // ******************************************************
   menu = new KActionMenu( i18nc( "Miscellaneous template commands menu", "Miscellaneous" ), mMenu );
   mMenu->addAction( menu );
 
-  action = new KAction( i18n( "Set Cursor Position" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CCursor );
-  menu->addAction( action );
+  for ( int i = 0; i < miscCommandsCount; ++i )
+    commandMap.insert( miscCommands[i].getLocalizedDisplayName(), miscCommands[i].command );
 
-  action = new KAction( i18n( "Insert File Content" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CInsert );
-  menu->addAction( action );
-
-  action = new KAction( i18nc( "All characters, up to and including the next newline, are discarded without performing any macro expansion", "Discard to Next Line" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CDnl );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Template Comment" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CRem );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "No Operation" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CNop );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Clear Generated Message" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CClear );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Turn Debug On" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CDebug );
-  menu->addAction( action );
-
-  action = new KAction( i18n( "Turn Debug Off" ), menu );
-  connect(action,SIGNAL(triggered(bool)),mapper,SLOT(map()));
-  mapper->setMapping( action, CDebugOff );
-  menu->addAction( action );
+  fillMenuFromActionMap( commandMap, menu, mapper );
 
   setMenu( mMenu->menu() );
 }
