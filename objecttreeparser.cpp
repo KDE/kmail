@@ -311,7 +311,8 @@ namespace KMail {
 
     // always show images in multipart/related when showing in html, not with an additional icon
     if ( result.isImage() &&
-         node->parentNode()->subType() == DwMime::kSubtypeRelated && mReader->htmlMail() ) {
+         node->parentNode() && node->parentNode()->subType() == DwMime::kSubtypeRelated &&
+         mReader->htmlMail() ) {
       QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
       QString href = "file:" + KUrl::toPercentEncoding( fileName );
       htmlWriter()->embedPart( node->msgPart().contentId(), href);
@@ -332,7 +333,7 @@ namespace KMail {
     else if ( !result.neverDisplayInline() )
       if ( const AttachmentStrategy * as = attachmentStrategy() )
         asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
- 
+
     // neither image nor text -> show as icon
     if ( !result.isImage()
          && node->type() != DwMime::kTypeText )
