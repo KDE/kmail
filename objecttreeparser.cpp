@@ -2815,6 +2815,18 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   int currQuoteLevel = -2; // -2 == no previous lines
   bool curHidden = false; // no hide any block
 
+  if ( GlobalSettings::self()->showExpandQuotesMark() )
+  {
+    // Cache Icons
+    if ( mCollapseIcon.isEmpty() ) {
+      mCollapseIcon= LinkLocator::pngToDataUrl(
+          KIconLoader::global()->iconPath( "quotecollapse",0 ));
+    }
+    if ( mExpandIcon.isEmpty() )
+      mExpandIcon= LinkLocator::pngToDataUrl(
+          KIconLoader::global()->iconPath( "quoteexpand",0 ));
+  }
+  
   while (beg<length)
   {
     QString line;
@@ -2829,18 +2841,6 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 
     /* calculate line's current quoting depth */
     int actQuoteLevel = -1;
-
-    if ( GlobalSettings::self()->showExpandQuotesMark() )
-    {
-      // Cache Icons
-      if ( mCollapseIcon.isEmpty() ) {
-        mCollapseIcon= LinkLocator::pngToDataUrl(
-            KIconLoader::global()->iconPath( "quotecollapse",0 ));
-      }
-      if ( mExpandIcon.isEmpty() )
-        mExpandIcon= LinkLocator::pngToDataUrl(
-            KIconLoader::global()->iconPath( "quoteexpand",0 ));
-    }
 
     for (int p=0; p<line.length(); p++) {
       switch (line[p].toLatin1()) {
