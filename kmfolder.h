@@ -587,6 +587,10 @@ signals:
    * discard any messages */
   void closed();
 
+  /** Emitted at the end of a compaction job step.
+   *  in order to reload the views. */
+  void compacted();
+
   /** Emitted when the contents of a folder have been cleared
      (new search in a search folder, for example) */
   void cleared();

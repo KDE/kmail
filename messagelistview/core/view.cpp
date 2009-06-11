@@ -1807,6 +1807,7 @@ void View::slotSelectionChanged( const QItemSelection &, const QItemSelection & 
     {
       if ( mLastCurrentItem != it )
       {
+        kDebug() << "View message selected [" << static_cast< MessageItem * >( it )->subject() << "]";
         mWidget->viewMessageSelected( static_cast< MessageItem * >( it ) );
         mLastCurrentItem = 0;
       }

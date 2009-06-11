@@ -91,6 +91,9 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
   connect( mFolder, SIGNAL( cleared() ),
            SLOT( slotFolderCleared() ) );
 
+  connect( mFolder, SIGNAL( compacted() ),
+           SLOT( slotFolderCompacted() ) );
+
   connect( mFolder, SIGNAL( closed() ),
            SLOT( slotFolderClosed() ) );
 
@@ -612,6 +615,8 @@ int StorageModel::initialUnreadRowCountGuess() const
 
 void StorageModel::slotFolderClosed()
 {
+  Q_ASSERT( mFolder );
+
   // Reopen the folder, then reset the model.
   mFolder->open( "MessageListView::StorageModel" );
   slotFolderCleared();
@@ -619,8 +624,19 @@ void StorageModel::slotFolderClosed()
 
 void StorageModel::slotFolderCleared()
 {
+  Q_ASSERT( mFolder );
+
+  // Something is screwed in the MBOX compaction: the folder tends to be closed and the closed() signal isnt emitted
+  if( !mFolder->isOpened() )
+    mFolder->open( "MessageListView::StorageModel" );
+
   mMessageCount = mFolder->count();
   reset();
+}
+
+void StorageModel::slotFolderCompacted()
+{
+  slotFolderCleared();
 }
 
 void StorageModel::slotViewConfigChanged()
@@ -630,12 +646,12 @@ void StorageModel::slotViewConfigChanged()
 
 void StorageModel::slotFolderExpunged()
 {
+  // ?
   slotFolderClosed();
 }
 
 void StorageModel::slotFolderInvalidated()
 {
-  kDebug() << "Folder invalidated.";
   slotFolderCleared();
 }
 

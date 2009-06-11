@@ -102,6 +102,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
   // Resend all mStorage signals
   connect( mStorage, SIGNAL( changed() ), SIGNAL( changed() ) );
+  connect( mStorage, SIGNAL( compacted() ), SIGNAL( compacted() ) );
   connect( mStorage, SIGNAL( cleared() ), SIGNAL( cleared() ) );
   connect( mStorage, SIGNAL( expunged( KMFolder* ) ),
            SIGNAL( expunged( KMFolder* ) ) );

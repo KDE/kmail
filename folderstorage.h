@@ -448,6 +448,10 @@ signals:
      (new search in a search folder, for example) */
   void cleared();
 
+  /** Emitted at the end of a compaction job step.
+   *  in order to reload the views. */
+
+  void compacted();
   /** Emitted after an expunge. If not quiet, changed() will be
       emmitted first. */
   void expunged( KMFolder* );

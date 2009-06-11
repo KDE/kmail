@@ -1262,7 +1262,7 @@ int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE *tmpfil
           }
           offs += folder_offset;
         } else {
-          rc = 666;
+          rc = 666; // yes.. this is evil
         }
         break;
       } else {
@@ -1303,6 +1303,7 @@ int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE *tmpfil
     offs += msize;
   }
   done = ( !rc && stopIndex == mMsgList.count() ); // finished without errors
+  emit compacted();
   return rc;
 }
 
@@ -1322,6 +1323,7 @@ int KMFolderMbox::compact( bool silent )
   // so save/restore it
   QString statusMsg = BroadcastStatus::instance()->statusMsg();
   emit changed();
+  emit compacted();
   BroadcastStatus::instance()->setStatusMsg( statusMsg );
   return rc;
 }

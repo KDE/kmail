@@ -294,6 +294,7 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
 #endif
   }
   done = ( stopIndex == mMsgList.count() );
+  emit compacted();
   return 0;
 }
 

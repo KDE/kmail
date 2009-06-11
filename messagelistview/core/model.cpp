@@ -4435,8 +4435,10 @@ void Model::slotStorageModelRowsRemoved( const QModelIndex &parent, int from, in
 
 void Model::slotStorageModelLayoutChanged()
 {
+  kDebug() << "Storage model layout changed";
   // need to reset everything...
   setStorageModel( mStorageModel );
+  kDebug() << "Storage model layout changed done";
 }
 
 void Model::slotStorageModelDataChanged( const QModelIndex &fromIndex, const QModelIndex &toIndex )

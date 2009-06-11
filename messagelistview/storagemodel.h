@@ -217,6 +217,11 @@ private slots:
   /**
    * Internal handler of KMFolder signal.
    */
+  void slotFolderCompacted();
+
+  /**
+   * Internal handler of KMFolder signal.
+   */
   void slotFolderInvalidated();
 
   /**
