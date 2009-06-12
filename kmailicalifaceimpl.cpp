@@ -706,8 +706,30 @@ static QString subresourceLabelForPresentation( const KMFolder * folder )
       } else {
         label = remainder.join( QString::fromLatin1("/") );
       }
-      label = i18nc( "eg. My Calendar or My Inbox", "My %1", label );
-      break;
+
+      if ( folder && folder->storage() ) {
+        // Although the strings here are all the same, they may be different in other languages
+        switch ( folder->storage()->contentsType() ) {
+          case ContentsTypeCalendar:
+            label = i18nc( "My Calendar", "My %1", label );
+            break;
+          case ContentsTypeContact:
+            label = i18nc( "My Contacts", "My %1", label );
+            break;
+          case ContentsTypeJournal:
+            label = i18nc( "My Journal", "My %1", label );
+            break;
+          case ContentsTypeNote:
+            label = i18nc( "My Notes", "My %1", label );
+            break;
+          case ContentsTypeTask:
+            label = i18nc( "My Tasks", "My %1", label );
+            break;
+          default:
+            kWarning() << "Unexpected subresource type for folder" << folder->location();
+            break;
+        }
+      }
     }
   }
   return label;
