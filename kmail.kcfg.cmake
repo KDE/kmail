@@ -618,7 +618,7 @@
 
   <group name="GlobalTemplates">
     <entry name="PhrasesConverted" type="Bool" key="PhrasesConverted">
-      <label>Phrases has been converted to templates</label>
+      <label>Phrases have been converted to templates</label>
       <whatsthis>Old phrases have been converted to templates</whatsthis>
       <default>false</default>
     </entry>
