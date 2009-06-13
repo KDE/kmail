@@ -2767,7 +2767,10 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
       html += "<div style=\"float:left;\">";
       html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
-      html += QString::fromLatin1( "<a href=\"#att%1\">" ).arg( node->nodeId() );
+      QString fileName = writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
+      QString href = "file:" + KURL::encode_string( fileName ) ;
+      html += QString::fromLatin1( "<a href=\"" ) + href +
+              QString::fromLatin1( "\">" );
       html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
       if ( headerStyle() == HeaderStyle::enterprise() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
