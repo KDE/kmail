@@ -232,8 +232,9 @@ void lockOrDie() {
     }
   }
 
-  group.writeEntry("pid", getpid());
-  group.writeEntry("hostname", hostName);
+  qlonglong pid = static_cast<qlonglong>( getpid() );
+  group.writeEntry( "pid", pid );
+  group.writeEntry( "hostname", hostName );
   group.writeEntry( "appName", appName );
   group.writeEntry( "programName", programName );
   group.sync();
