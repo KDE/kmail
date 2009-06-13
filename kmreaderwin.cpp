@@ -1797,19 +1797,13 @@ void KMReaderWin::printMsg()
 int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 {
   if (aUrl.isEmpty()) return -1;
-
-  bool ok;
-  if ( aUrl.url().startsWith( "#att" ) ) {
-    int res = aUrl.url().mid( 4 ).toInt( &ok );
-    if ( ok ) return res;
-  }
-
   if (!aUrl.isLocalFile()) return -1;
 
   QString path = aUrl.path();
   uint right = path.findRev('/');
   uint left = path.findRev('.', right);
 
+  bool ok;
   int res = path.mid(left + 1, right - left - 1).toInt(&ok);
   return (ok) ? res : -1;
 }
