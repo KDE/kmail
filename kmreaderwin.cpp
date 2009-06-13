@@ -1967,6 +1967,26 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   }
 }
 
+// Checks if the given node has a parent node that is a DIV which has an ID attribute
+// with the value specified here
+static bool hasParentDivWithId( const DOM::Node &start, const QString &id )
+{
+  if ( start.isNull() )
+    return false;
+
+  if ( start.nodeName().string() == "div" ) {
+    for ( unsigned int i = 0; i < start.attributes().length(); i++ ) {
+      if ( start.attributes().item( i ).nodeName().string() == "id" &&
+           start.attributes().item( i ).nodeValue().string() == id )
+        return true;
+    }
+  }
+
+  if ( !start.parentNode().isNull() )
+    return hasParentDivWithId( start.parentNode(), id );
+  else return false;
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p )
 {
@@ -1987,6 +2007,13 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
     menu->insertItem( i18n( "Decrypt With Chiasmus..." ), 6 );
   menu->insertItem(i18n("Properties"), 5);
+
+  const bool attachmentInHeader = hasParentDivWithId( mViewer->nodeUnderMouse(), "attachmentInjectionPoint" );
+  const bool hasScrollbar = mViewer->view()->verticalScrollBar()->isVisible();
+  if ( attachmentInHeader && hasScrollbar ) {
+    menu->insertItem( i18n("Scroll To"), 10 );
+  }
+
   connect(menu, SIGNAL(activated(int)), this, SLOT(slotHandleAttachment(int)));
   menu->exec( p ,0 );
   delete menu;
@@ -2042,6 +2069,9 @@ void KMReaderWin::slotHandleAttachment( int choice )
     urls.append( url );
     KURLDrag* drag = new KURLDrag( urls, this );
     QApplication::clipboard()->setData( drag, QClipboard::Clipboard );
+  } else if ( choice == 10 ) { // Scroll To
+    // The anchors for this are created in ObjectTreeParser::parseObjectTree()
+    mViewer->gotoAnchor( QString::fromLatin1( "att%1" ).arg( node->nodeId() ) );
   }
 }
 
