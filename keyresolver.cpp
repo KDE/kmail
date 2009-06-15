@@ -243,7 +243,7 @@ static std::vector<GpgME::UserID> matchingUIDs( const std::vector<GpgME::UserID>
     for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin(), end = uids.end() ; it != end ; ++it )
         // PENDING(marc) check DN for an EMAIL, too, in case of X.509 certs... :/
         if ( const char * email = it->email() )
-            if ( *email && QString::fromUtf8( email ).stripWhiteSpace().lower() == address )
+            if ( *email && QString::fromUtf8( email ).trimmed().toLower() == address )
                 result.push_back( *it );
     return result;
 }
@@ -252,7 +252,7 @@ static GpgME::UserID findBestMatchUID( const GpgME::Key & key, const QString & a
     const std::vector<GpgME::UserID> all = key.userIDs();
     if ( all.empty() )
         return GpgME::UserID();
-    const std::vector<GpgME::UserID> matching = matchingUIDs( all, address.lower() );
+    const std::vector<GpgME::UserID> matching = matchingUIDs( all, address.toLower() );
     const std::vector<GpgME::UserID> & v = matching.empty() ? all : matching ;
     return *std::max_element( v.begin(), v.end(), ByTrustScore() );
 }
@@ -409,6 +409,11 @@ public:
   }
   void operator()( Item & item );
 
+  template <typename Container>
+  void process( Container & c ) {
+    *this = std::for_each( c.begin(), c.end(), *this );
+  }
+
 #define make_int_accessor(x) unsigned int num##x() const { return m##x; }
   make_int_accessor(NoKey)
   make_int_accessor(NeverEncrypt)
@@ -421,6 +426,7 @@ public:
 #undef make_int_accessor
 private:
   EncryptionPreference mDefaultPreference;
+  bool mNoOps;
   unsigned int mTotal;
   unsigned int mNoKey;
   unsigned int mNeverEncrypt, mUnknownPreference, mAlwaysEncrypt,
@@ -428,11 +434,13 @@ private:
 };
 
 void Kleo::KeyResolver::EncryptionPreferenceCounter::operator()( Item & item ) {
+  if ( _this ) {
   if ( item.needKeys )
     item.keys = _this->getEncryptionKeys( item.address, true );
   if ( item.keys.empty() ) {
     ++mNoKey;
     return;
+  }
   }
   switch ( !item.pref ? mDefaultPreference : item.pref ) {
 #define CASE(x) case Kleo::x: ++m##x; break
@@ -980,6 +988,20 @@ Kleo::Action Kleo::KeyResolver::checkEncryptionPreferences( bool encryptionReque
        d->mOpenPGPEncryptToSelfKeys.empty() && d->mSMIMEEncryptToSelfKeys.empty() )
     return Impossible;
 
+  if ( !encryptionRequested && !mOpportunisticEncyption ) {
+    // try to minimize crypto ops (including key lookups) by only
+    // looking up keys when at least one the the encryption
+    // preferences needs it:
+    EncryptionPreferenceCounter count( 0, UnknownPreference );
+    count.process( d->mPrimaryEncryptionKeys );
+    count.process( d->mSecondaryEncryptionKeys );
+    if ( !count.numAlwaysEncrypt() &&
+         !count.numAlwaysAskForEncryption() && // this guy might not need a lookup, when declined, but it's too complex to implement that here
+         !count.numAlwaysEncryptIfPossible() &&
+         !count.numAskWheneverPossible() )
+        return DontDoIt;
+  }
+
   EncryptionPreferenceCounter count( this, mOpportunisticEncyption ? AskWheneverPossible : UnknownPreference );
   count = std::for_each( d->mPrimaryEncryptionKeys.begin(), d->mPrimaryEncryptionKeys.end(),
 			 count );
@@ -1025,16 +1047,17 @@ Kpgp::Result Kleo::KeyResolver::resolveAllKeys( bool& signingRequested, bool& en
     result = resolveEncryptionKeys( signingRequested );
   if ( result != Kpgp::Ok )
     return result;
-  if ( signingRequested )
-    if ( encryptionRequested )
+  if ( signingRequested ) {
+    if ( encryptionRequested ) {
       result = resolveSigningKeysForEncryption();
-    else {
+    } else {
       result = resolveSigningKeysForSigningOnly();
       if ( result == Kpgp::Failure ) {
         signingRequested = false;
         return Kpgp::Ok;
       }
     }
+  }
   return result;
 }
 
