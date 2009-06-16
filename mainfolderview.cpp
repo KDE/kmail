@@ -72,7 +72,7 @@ void MainFolderView::fillContextMenuTreeStructureRelatedActions( KMenu *menu, Fo
 
   if ( !multiSelection )
   {
-    // Treat the special case of the root and account folders 
+    // Treat the special case of the root and account folders
     if ( ( !folder ) || ( folder->noContent() && ( item->folderType() == FolderViewItem::Root ) ) )
     {
       if ( folder || ( ( item->folderType() == FolderViewItem::Root ) && ( item->protocol() == FolderViewItem::Local ) ) )
@@ -243,7 +243,7 @@ void MainFolderView::folderToPopupMenu( MenuAction action, QObject * target, QMe
       Util::reconnectSignalSlotPair( menu, SIGNAL( triggered( QAction * ) ), target, SLOT( slotMoveSelectedMessagesToFolder( QAction* ) ) );
     break;
     case MoveFolder:
-      Util::reconnectSignalSlotPair( menu, SIGNAL( triggered( QAction * ) ), target, SLOT( slotCopySelectedFoldersToFolder( QAction* ) ) );
+      Util::reconnectSignalSlotPair( menu, SIGNAL( triggered( QAction * ) ), target, SLOT( slotMoveSelectedFoldersToFolder( QAction* ) ) );
     break;
     case CopyMessage:
      Util::reconnectSignalSlotPair( menu, SIGNAL( triggered( QAction * ) ), target, SLOT( slotCopySelectedMessagesToFolder( QAction* ) ) );
@@ -334,7 +334,7 @@ bool MainFolderView::acceptDropCopyOrMoveFolders( FolderViewItem *item )
         return false; // dragged folder is a direct child of local top-level
       if ( ! ( ( *it )->ownerFolder() || ( ( *it )->folderType() == KMFolderTypeMbox ) || ( ( *it )->folderType() == KMFolderTypeMaildir ) ) )
         return false; // dragging a non local root
-    }     
+    }
   }
 
   return true; // item would accept a copy/move of all the dragged folders
@@ -366,7 +366,7 @@ public:
 void MainFolderView::computeFoldersDropAction( QDropEvent *e, MainFolderViewFoldersDropAction *act )
 {
   // Ok, this is quite complex.
-  // 
+  //
   // It attempts to determine what to do with the currently dragged folders
   // if they were dropped on the item in the current mouse position.
   //
@@ -582,7 +582,7 @@ void MainFolderView::handleFoldersDragMoveEvent( QDragMoveEvent *e )
     e->accept( act.validityRect );
     setDropIndicatorData(
         act.doCopyOrMove ? act.moveTarget : 0,
-        act.doPositionalInsert ? act.reference : 0, 
+        act.doPositionalInsert ? act.reference : 0,
         act.insertPosition
      );
   } else {
@@ -628,7 +628,7 @@ void MainFolderView::handleFoldersDropEvent( QDropEvent *e )
     {
       if ( !( *it ) )
         continue; // umphf
- 
+
       FolderViewItem *moved = static_cast< FolderViewItem * >( *it );
 
       int removedIdx = commonParent ? commonParent->indexOfChild( moved ) : indexOfTopLevelItem( moved );
