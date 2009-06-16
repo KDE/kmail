@@ -704,8 +704,9 @@ void KMFolder::setWhoField(const QString& aWhoField )
 
 void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
 {
-  if ( mUserWhoField == whoField )
+  if ( mUserWhoField == whoField && !whoField.isEmpty() )
     return;
+
   if ( whoField.isEmpty() )
   {
     // default setting
