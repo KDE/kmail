@@ -531,6 +531,12 @@ public:
   void setPutRepliesInSameFolder( bool b ) { mPutRepliesInSameFolder = b; }
 
   /**
+   * Returns true if this folder should be hidden from all folder selection dialogs
+   */
+  bool hideInSelectionDialog() const { return mHideInSelectionDialog; }
+  void setHideInSelectionDialog( bool hide ) { mHideInSelectionDialog = hide; }
+
+  /**
    * Returns true if the user doesn't want to get notified about new mail
    * in this folder.
    */
@@ -677,6 +683,9 @@ private:
 
   /** Should replies to messages in this folder be put in here? */
   bool mPutRepliesInSameFolder;
+
+  /** Should this folder be hidden in the folder selection dialog? */
+  bool mHideInSelectionDialog;
 
   /** Should new mail in this folder be ignored? */
   bool mIgnoreNewMail;
