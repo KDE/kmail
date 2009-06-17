@@ -36,13 +36,9 @@ class QKeyEvent;
 class QTreeWidget;
 class QWidget;
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-#include <libkdepim/distributionlist.h>
-#else
 namespace KABC {
 class DistributionList;
 }
-#endif
 
 namespace KPIM {
 class  LdapSearchDialog;
@@ -53,15 +49,9 @@ class RecipientItem
   public:
     typedef QList<RecipientItem *> List;
 
-#ifdef KDEPIM_NEW_DISTRLISTS
-    RecipientItem( KABC::AddressBook *ab );
-    void setDistributionList( const KPIM::DistributionList& );
-    KPIM::DistributionList& distributionList() const;
-#else
     RecipientItem();
     void setDistributionList( KABC::DistributionList * );
     KABC::DistributionList * distributionList() const;
-#endif
 
     void setAddressee( const KABC::Addressee &, const QString &email );
 
@@ -79,22 +69,13 @@ class RecipientItem
     QString tooltip() const;
 
   private:
-#ifdef KDEPIM_NEW_DISTRLISTS
-    QString createTooltip( KPIM::DistributionList & ) const;
-#else
     QString createTooltip( KABC::DistributionList * ) const;
-#endif
 
     KABC::Addressee mAddressee;
     QString mName;
     QString mEmail;
     QString mRecipient;
-#ifdef KDEPIM_NEW_DISTRLISTS
-    KPIM::DistributionList mDistributionList;
-    KABC::AddressBook *mAddressBook;
-#else
     KABC::DistributionList *mDistributionList;
-#endif
     QString mType;
     QString mTooltip;
 

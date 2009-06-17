@@ -41,11 +41,7 @@
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
 #include <kio/jobuidelegate.h>
-#ifdef KDEPIM_NEW_DISTRLISTS
-#include <libkdepim/distributionlist.h>
-#else
 #include <kabc/distributionlist.h>
-#endif
 #include <kabc/stdaddressbook.h>
 #include <kpushbutton.h>
 #include <kdebug.h>
@@ -281,21 +277,6 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
                                                  IMAPUserIdFormat userIdFormat )
 {
   // expand distribution lists
-#ifdef KDEPIM_NEW_DISTRLISTS
-  KPIM::DistributionList list = KPIM::DistributionList::findByName( addressBook, userId(), false );
-  if ( !list.isEmpty() ) {
-    Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
-    KPIM::DistributionList::Entry::List entryList = list.entries(addressBook);
-    KPIM::DistributionList::Entry::List::ConstIterator it;
-    for( it = entryList.begin(); it != entryList.end(); ++it ) {
-      QString email = (*it).email;
-      if ( email.isEmpty() )
-        email = addresseeToUserId( (*it).addressee, userIdFormat );
-      ACLListEntry entry( email, QString(), mPermissions );
-      entry.changed = true;
-      aclList.append( entry );
-    }
-#else
   KABC::DistributionList* list = addressBook->findDistributionListByName( userId(),  Qt::CaseInsensitive );
   if ( list ) {
     Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
@@ -309,7 +290,6 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
       entry.changed = true;
       aclList.append( entry );
     }
-#endif
   } else { // it wasn't a distribution list
     ACLListEntry entry( userId(), mInternalRightsList, mPermissions );
     if ( mModified ) {
