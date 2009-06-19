@@ -235,7 +235,7 @@ bool Callback::deleteInvitationAfterReply() const
 void Callback::deleteInvitation() const
 {
   const unsigned long sernum = getMsg()->getMsgSerNum();
-  ( new KMDeleteMsgCommand( sernum ) )->start();
+  ( new KMTrashMsgCommand( sernum ) )->start();
 }
 
 bool Callback::exchangeCompatibleInvitations() const

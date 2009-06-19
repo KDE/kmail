@@ -960,7 +960,7 @@ void KMMainWidget::slotSearch()
     mSearchWin->setModal( false );
     mSearchWin->setObjectName( "Search" );
     connect(mSearchWin, SIGNAL(destroyed()),
-	    this, SLOT(slotSearchClosed()));
+            this, SLOT(slotSearchClosed()));
   }
   else
   {
@@ -1300,7 +1300,7 @@ void KMMainWidget::slotExpireFolder()
   if (!mFolder->isAutoExpire()) {
     canBeExpired = false;
   } else if (mFolder->getUnreadExpireUnits()==expireNever &&
-	     mFolder->getReadExpireUnits()==expireNever) {
+             mFolder->getReadExpireUnits()==expireNever) {
     canBeExpired = false;
   }
 
@@ -1315,8 +1315,8 @@ void KMMainWidget::slotExpireFolder()
   if (group.readEntry("warn-before-expire", true ) ) {
     str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", Qt::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
-					   KGuiItem(i18n("&Expire")))
-	!= KMessageBox::Continue) return;
+                                           KGuiItem(i18n("&Expire")))
+        != KMessageBox::Continue) return;
   }
 
   mFolder->expireOldMessages( true /*immediate*/);
@@ -1530,9 +1530,9 @@ void KMMainWidget::slotTroubleshootMaildir()
 void KMMainWidget::slotInvalidateIMAPFolders() {
   if ( KMessageBox::warningContinueCancel( this,
           i18n("Are you sure you want to refresh the IMAP cache?\n"
-	       "This will remove all changes that you have done "
-	       "locally to your IMAP folders."),
-	  i18n("Refresh IMAP Cache"), KGuiItem(i18n("&Refresh")) ) == KMessageBox::Continue )
+               "This will remove all changes that you have done "
+               "locally to your IMAP folders."),
+          i18n("Refresh IMAP Cache"), KGuiItem(i18n("&Refresh")) ) == KMessageBox::Continue )
     kmkernel->acctMgr()->invalidateIMAPFolders();
 }
 
@@ -1545,8 +1545,8 @@ void KMMainWidget::slotExpireAll() {
 
   if (group.readEntry("warn-before-expire", true ) ) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
-			 i18n("Are you sure you want to expire all old messages?"),
-			 i18n("Expire Old Messages?"), KGuiItem(i18n("Expire")));
+                         i18n("Are you sure you want to expire all old messages?"),
+                         i18n("Expire Old Messages?"), KGuiItem(i18n("Expire")));
     if (ret != KMessageBox::Continue) {
       return;
     }
@@ -2006,11 +2006,10 @@ void KMMainWidget::trashMessageSet( KMail::MessageListView::MessageSet * set )
     return;
   }
 
-  // FIXME: Why KMDeleteMsgCommand is so misnamed ?
   // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
 
-  // And stuff them into a KMDeleteMsgCommand :)
-  KMCommand *command = new KMDeleteMsgCommand( set->folder(), selectedMessages );
+  // And stuff them into a KMTrashMsgCommand :)
+  KMCommand *command = new KMTrashMsgCommand( set->folder(), selectedMessages );
 
   // Reparent the set to the command so it's deleted even if the command
   // doesn't notify the completion for some reason.

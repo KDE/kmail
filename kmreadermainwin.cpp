@@ -160,7 +160,7 @@ void KMReaderMainWin::slotTrashMsg()
     KMMessage *msg = parent->getMsg( index );
     if (msg) {
       // now delete the msg and close this window
-      KMDeleteMsgCommand *command = new KMDeleteMsgCommand( parent, msg );
+      KMTrashMsgCommand *command = new KMTrashMsgCommand( parent, msg );
       command->start();
       close();
     }

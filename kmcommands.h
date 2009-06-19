@@ -761,14 +761,14 @@ private:
   bool mCompleteWithAddedMsg;
 };
 
-class KMAIL_EXPORT KMDeleteMsgCommand : public KMMoveCommand
+class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
 {
   Q_OBJECT
 
 public:
-  KMDeleteMsgCommand( KMFolder* srcFolder, const QList<KMMsgBase*> &msgList );
-  KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg );
-  KMDeleteMsgCommand( quint32 sernum );
+  KMTrashMsgCommand( KMFolder* srcFolder, const QList<KMMsgBase*> &msgList );
+  KMTrashMsgCommand( KMFolder* srcFolder, KMMessage * msg );
+  KMTrashMsgCommand( quint32 sernum );
 
 private:
   static KMFolder * findTrashFolder( KMFolder * srcFolder );
@@ -1000,7 +1000,7 @@ class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
 
   private slots:
     void messageStoreResult( KMFolderImap* folder, bool success );
-    void messageDeleteResult( KMCommand *cmd );
+    void messageTrashResult( KMCommand *cmd );
 
   private:
     QPointer<KMFolder> mFolder;

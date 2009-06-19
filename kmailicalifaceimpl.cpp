@@ -1430,7 +1430,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
 {
   if( !msg ) return;
   // Commands are now delayed; can't use that anymore, we need immediate deletion
-  //( new KMDeleteMsgCommand( msg->parent(), msg ) )->start();
+  //( new KMTrashMsgCommand( msg->parent(), msg ) )->start();
   KMFolder *srcFolder = msg->parent();
   int idx = srcFolder->find(msg);
   assert(idx != -1);

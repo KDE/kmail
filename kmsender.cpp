@@ -763,8 +763,8 @@ void KMSender::setStatusByLink( const KMMessage *aMsg )
       KMFolderOpener openFolder( folder, "setstatus" );
       if ( status.isDeleted() ) {
         // Move the message to the trash folder
-        KMDeleteMsgCommand *cmd =
-          new KMDeleteMsgCommand( folder, folder->getMsg( index ) );
+        KMTrashMsgCommand *cmd =
+          new KMTrashMsgCommand( folder, folder->getMsg( index ) );
         cmd->start();
       } else {
         folder->setStatus( index, status );

@@ -2222,7 +2222,7 @@ void KMMoveCommand::slotMoveCanceled()
 }
 
 // srcFolder doesn't make much sense for searchFolders
-KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
+KMTrashMsgCommand::KMTrashMsgCommand( KMFolder* srcFolder,
   const QList<KMMsgBase*> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
@@ -2230,14 +2230,14 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   mOpenedFolders.push_back( srcFolder );
 }
 
-KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
+KMTrashMsgCommand::KMTrashMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 :KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
   srcFolder->open( "kmcommand" );
   mOpenedFolders.push_back( srcFolder );
 }
 
-KMDeleteMsgCommand::KMDeleteMsgCommand( quint32 sernum )
+KMTrashMsgCommand::KMTrashMsgCommand( quint32 sernum )
 :KMMoveCommand( sernum )
 {
   KMFolder *srcFolder = 0;
@@ -2255,7 +2255,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( quint32 sernum )
   }
 }
 
-KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
+KMFolder * KMTrashMsgCommand::findTrashFolder( KMFolder * folder )
 {
   KMFolder* trash = folder->trashFolder();
   if( !trash )
@@ -3257,9 +3257,9 @@ void AttachmentModifyCommand::messageStoreResult(KMFolderImap* folder, bool succ
 {
   Q_UNUSED( folder );
   if ( success ) {
-    KMCommand *delCmd = new KMDeleteMsgCommand( mSernum );
-    connect( delCmd, SIGNAL(completed(KMCommand*)), SLOT(messageDeleteResult(KMCommand*)) );
-    delCmd->start();
+    KMCommand *trashCmd = new KMTrashMsgCommand( mSernum );
+    connect( trashCmd, SIGNAL(completed(KMCommand*)), SLOT(messageTrashResult(KMCommand*)) );
+    trashCmd->start();
     return;
   }
   kWarning() <<"Adding modified message failed.";
@@ -3268,7 +3268,7 @@ void AttachmentModifyCommand::messageStoreResult(KMFolderImap* folder, bool succ
   deleteLater();
 }
 
-void AttachmentModifyCommand::messageDeleteResult(KMCommand * cmd)
+void AttachmentModifyCommand::messageTrashResult(KMCommand * cmd)
 {
   setResult( cmd->result() );
   emit completed( this );
