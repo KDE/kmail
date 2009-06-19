@@ -45,11 +45,11 @@ QString IconNameCache::iconPath( const QString &name, int size ) const
   entry.fileName = name;
   entry.size = size;
 
-  if ( m_cachedEntries.contains( entry ) )
-    return m_cachedEntries.value( entry );
+  if ( mCachedEntries.contains( entry ) )
+    return mCachedEntries.value( entry );
 
   const QString fileName = KIconLoader::global()->iconPath( name, size );
-  m_cachedEntries.insert( entry, fileName );
+  mCachedEntries.insert( entry, fileName );
   return fileName;
 }
 

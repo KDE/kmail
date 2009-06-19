@@ -50,7 +50,7 @@ class IconNameCache
         bool operator < ( const Entry &other ) const;
     };
 
-    mutable QMap<Entry,QString> m_cachedEntries;
+    mutable QMap<Entry,QString> mCachedEntries;
 };
 
 }
