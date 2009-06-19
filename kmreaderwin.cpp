@@ -2796,7 +2796,7 @@ void KMReaderWin::injectAttachments()
   if ( html.isEmpty() )
     return;
 
-  QString link("");
+  QString link;
   if ( headerStyle() == HeaderStyle::fancy() ) {
     link += "<div style=\"text-align: left;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
     html.prepend( link );

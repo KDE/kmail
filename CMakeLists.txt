@@ -242,6 +242,7 @@ set(kmailprivate_LIB_SRCS
    messagetree.cpp
    procmailparser.cpp
    stringutil.cpp
+   iconnamecache.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp
