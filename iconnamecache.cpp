@@ -23,7 +23,7 @@
 
 namespace KMail {
 
-K_GLOBAL_STATIC( IconNameCache, s_iconNameCache );
+K_GLOBAL_STATIC( IconNameCache, s_iconNameCache )
 
 IconNameCache* IconNameCache::instance()
 {
