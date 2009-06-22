@@ -144,7 +144,7 @@ Widget::Widget( QWidget *pParent )
 
   // The Theme menu
   mThemeButton = new QToolButton( this );
-  mThemeButton->setIcon( KIcon( "view-preview" ) );
+  mThemeButton->setIcon( KIcon( "preferences-desktop-theme" ) );
   mThemeButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mThemeButton->setText( i18n( "Select View Appearance (Theme)" ) );
   mThemeButton->setToolTip( mThemeButton->text() );
