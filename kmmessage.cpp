@@ -1953,18 +1953,17 @@ AddrSpecList KMMessage::extractAddrSpecs( const QByteArray & header ) const {
 
 QByteArray KMMessage::rawHeaderField( const QByteArray &name ) const
 {
-  if ( name.isEmpty() ) {
-    return QByteArray();
+  if ( !name.isEmpty() && mMsg ) {
+    DwHeaders &header = mMsg->Headers();
+    DwField *field = header.FindField( name.constData() );
+
+    if ( !field ) {
+      return QByteArray();
+    }
+
+    return header.FieldBody( name.data() ).AsString().c_str();
   }
-
-  DwHeaders &header = mMsg->Headers();
-  DwField *field = header.FindField( name.constData() );
-
-  if ( !field ) {
-    return QByteArray();
-  }
-
-  return header.FieldBody( name.data() ).AsString().c_str();
+  return QByteArray();
 }
 
 QList<QByteArray> KMMessage::rawHeaderFields( const QByteArray& field ) const
