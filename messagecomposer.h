@@ -66,7 +66,7 @@ namespace KPIM {
 }
 
 namespace KPIMTextEdit {
-  class EmbeddedImage;
+  struct EmbeddedImage;
 }
 
 /**
@@ -393,7 +393,7 @@ class MessageComposer : public QObject {
 
     // Convenience variable, this is the same as one of the two variables above,
     // depending on the HTML mode
-    QByteArray mBodyText; 
+    QByteArray mBodyText;
 
     // The old body part contains the main body part, i.e. the body part before doing
     // signing/encryption and before adding late attachments.
