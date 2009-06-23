@@ -156,7 +156,6 @@ void FolderViewManager::viewFolderActivated( FolderView *view, KMFolder *fld, bo
 
 FolderView::FolderView( KMMainWidget *mainWidget, FolderViewManager *manager, QWidget *parent, const QString &configPrefix, const char *name )
  : KPIM::FolderTreeWidget( parent, name ),
-   mIgnoreResizes( false ),
    mMainWidget( mainWidget ),
    mManager( manager ),
    mConfigPrefix( configPrefix ),
@@ -203,9 +202,6 @@ FolderView::FolderView( KMMainWidget *mainWidget, FolderViewManager *manager, QW
 
   connect( this, SIGNAL( columnVisibilityChanged( int ) ),
            SLOT( slotColumnVisibilityChanged( int ) ) );
-
-  connect( header(), SIGNAL( sectionResized( int, int, int ) ),
-           this, SLOT( handleSectionResize( int, int, int ) ) );
 
   // Connect local folder manager
   connect( kmkernel->folderMgr(), SIGNAL( changed() ),
@@ -267,7 +263,6 @@ void FolderView::readConfig()
   else
     setFont( KGlobalSettings::generalFont() );
 
-  mIgnoreResizes = true;
   if ( !restoreLayout( KMKernel::config(), "Geometry", mConfigPrefix + "Layout" ) )
   {
     // hide all the columns but the first (the default)
@@ -280,7 +275,6 @@ void FolderView::readConfig()
     // Use a singleshot, as there is no layout here yet, and therefore no correct sizes
     QTimer::singleShot( 0, this, SLOT( setDefaultColumnSizes() ) );
   }
-  mIgnoreResizes = false;
 
   KConfigGroup myGroup( KMKernel::config(), mConfigPrefix );
   int iIconSize = myGroup.readEntry( "IconSize", iconSize().width() );
@@ -451,95 +445,6 @@ void FolderView::cleanupConfigFile()
   }
 }
 
-int FolderView::totalColumnsSize() const
-{
-  int totalw = 0;
-  int count = header()->count();
-
-  // Compute the actual total width and find out the width of the label column
-  for ( int i = 0; i < count ; i++ )
-  {
-    if ( !isColumnHidden( i ) )
-    {
-      int size = header()->sectionSize( i );
-      totalw += size;
-    }
-  }
-  return totalw;
-}
-
-void FolderView::resizeEvent( QResizeEvent *event )
-{
-  KPIM::FolderTreeWidget::resizeEvent( event );
-  if ( !event->oldSize().isValid() )
-    return;
-
-  mIgnoreResizes = true;
-
-  int diff = event->oldSize().width() - event->size().width();
-  //kDebug() << "We got resized by" << -diff << "pixels, old size was" << event->oldSize().width()
-  //         << ", new size is" << event->size().width();
-  if ( !isColumnHidden( LabelColumn ) ) {
-
-    const int smallestSize = 20;
-    // If the label column can handle shrinking (or growing) without being < 20 pixels,
-    // resize it.
-    int newSize = header()->sectionSize( LabelColumn ) - diff;
-    //kDebug() << "The new size of the label column would be:" << newSize;
-    if ( newSize > smallestSize ) {
-      //kDebug() << "Ok, resizing the label column to that size";
-      header()->resizeSection( LabelColumn, newSize );
-    }
-    else {
-
-      // Ok, resizing the label column is not enough to make every column fit.
-      // So resize all other columns as well
-      for ( int i = 0; i < header()->count(); i++ ) {
-
-        if ( isColumnHidden( i ) )
-          continue;
-
-        // Each column has a minimum of 5 pixels.
-        int amountToResizeSection = diff;
-        if ( header()->sectionSize( i ) - diff < smallestSize )
-          amountToResizeSection = header()->sectionSize( i ) - smallestSize;
-        diff -= amountToResizeSection;
-        //kDebug() << "Going to resize section" << i << "by" << amountToResizeSection << "pixels";
-        header()->resizeSection( i, header()->sectionSize( i ) - amountToResizeSection );
-      }
-    }
-  }
-  mIgnoreResizes = false;
-}
-
-
-void FolderView::handleSectionResize( int logicalIndex, int oldSize, int newSize )
-{
-  if ( mIgnoreResizes ) {
-    return;
-  }
-
-  //kDebug() << "Section" << logicalIndex << "was resized from" << oldSize << "to" << newSize;
-
-  // Some column got bigger or smaller. That means the column after it needs to get a new size.
-  // In the loop below, find the column that should be resized, which is normally the next column
-  int diff = newSize - oldSize;
-
-  int columnToResize = LabelColumn;
-  for ( int i = logicalIndex + 1; i < header()->count(); i++ ) {
-    if ( !isColumnHidden( i ) ) {
-      if ( header()->sectionSize( i ) - diff > 5 ) {
-        columnToResize = i;
-        break;
-      }
-    }
-  }
-  mIgnoreResizes = true;
-  //kDebug() << "Section" << columnToResize << "is going to pay for this, it will be resized" << diff << "pixels";
-  header()->resizeSection( columnToResize, header()->sectionSize( columnToResize ) - diff );
-  mIgnoreResizes = false;
-}
-
 void FolderView::setDefaultColumnSizes()
 {
     // OK: what follows is totally empiric.. but it looks nice ;)
@@ -559,7 +464,6 @@ void FolderView::setDefaultColumnSizes()
   // If you feel afraid when mantaining the following code, be aware
   // that nothing really relies on it...
 
-  mIgnoreResizes = true;
   if ( !isColumnHidden( LabelColumn ) )
   {
     int count = header()->count();
@@ -577,7 +481,6 @@ void FolderView::setDefaultColumnSizes()
     // then the LabelSection gets the remaining space (but at least 180 pixels)
     header()->resizeSection( LabelColumn, vwidth >= 180 ? vwidth : 180 );
   }
-  mIgnoreResizes = false;
 }
 
 void FolderView::slotColumnVisibilityChanged( int logicalIndex )
