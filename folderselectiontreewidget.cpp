@@ -110,6 +110,10 @@ bool FolderSelectionTreeWidget::itemSelectable( const FolderSelectionTreeWidgetI
 
 void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSelectionTreeWidgetItem *parent )
 {
+  // hidden folders are not shown (that is a surprise, right?)
+  if ( fti->folder() && fti->folder()->hideInSelectionDialog() )
+    return;
+
   // search folders are never shown
   if ( fti->protocol() == KPIM::FolderTreeWidgetItem::Search )
     return;

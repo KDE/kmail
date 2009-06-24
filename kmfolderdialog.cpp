@@ -487,6 +487,19 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   hbl->addWidget( mKeepRepliesInSameFolderCheckBox );
   hbl->addStretch( 1 );
 
+  // should this folder be shown in the folder selection dialog?
+  hbl = new QHBoxLayout();
+  topLayout->addItem( hbl );
+  hbl->setSpacing( KDialog::spacingHint() );
+  mHideInSelectionDialogCheckBox =
+      new QCheckBox( i18n( "Hide this folder in the folder selection dialog" ), this );
+  mHideInSelectionDialogCheckBox->setWhatsThis(
+                  i18nc( "@info:whatsthis", "Check this option if you do not want that this folder "
+                         "is shown in the folder selection dialogs, like the <interface>"
+                          "Jump to Folder</interface> dialog." ) );
+  hbl->addWidget( mHideInSelectionDialogCheckBox );
+  hbl->addStretch( 1 );
+
   addLine( this, topLayout );
 
   // use grid layout for the following combobox settings
@@ -667,6 +680,7 @@ void FolderDialogGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) 
   const bool keepInFolder = !folder->isReadOnly() && folder->putRepliesInSameFolder();
   mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
   mKeepRepliesInSameFolderCheckBox->setDisabled( folder->isReadOnly() );
+  mHideInSelectionDialogCheckBox->setChecked( folder->hideInSelectionDialog() );
 
   if (folder->folderType() == KMFolderTypeImap)
   {
@@ -745,6 +759,7 @@ bool FolderDialogGeneralTab::save()
 
   folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
   folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
+  folder->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
 
   QString fldName, oldFldName;
   if ( !mIsLocalSystemFolder )
