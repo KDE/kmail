@@ -479,7 +479,7 @@ namespace KMail {
       GpgME::VerificationResult result;
       if ( data ) { // detached
         const VerifyDetachedBodyPartMemento * m
-          = dynamic_cast<VerifyDetachedBodyPartMemento*>( data->bodyPartMemento( "verifydetached" ) );
+          = dynamic_cast<VerifyDetachedBodyPartMemento*>( sign.bodyPartMemento( "verifydetached" ) );
         if ( !m ) {
           Kleo::VerifyDetachedJob * job = cryptProto->verifyDetachedJob();
           if ( !job ) {
@@ -500,7 +500,7 @@ namespace KMail {
               newM->exec();
               m = newM;
             }
-            data->setBodyPartMemento( "verifydetached", newM );
+            sign.setBodyPartMemento( "verifydetached", newM );
           }
         } else if ( m->isRunning() ) {
           messagePart.inProgress = true;
@@ -516,7 +516,7 @@ namespace KMail {
         }
       } else { // opaque
         const VerifyOpaqueBodyPartMemento * m
-          = dynamic_cast<VerifyOpaqueBodyPartMemento*>( data->bodyPartMemento( "verifyopaque" ) );
+          = dynamic_cast<VerifyOpaqueBodyPartMemento*>( sign.bodyPartMemento( "verifyopaque" ) );
         if ( !m ) {
           Kleo::VerifyOpaqueJob * job = cryptProto->verifyOpaqueJob();
           if ( !job ) {
@@ -536,7 +536,7 @@ namespace KMail {
               newM->exec();
               m = newM;
             }
-            data->setBodyPartMemento( "verifyopaque", newM );
+            sign.setBodyPartMemento( "verifyopaque", newM );
           }
         } else if ( m->isRunning() ) {
           messagePart.inProgress = true;
