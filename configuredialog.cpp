@@ -4561,8 +4561,6 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {
   mMGTab.setupUi( this );
-  mMGTab.gridLayout->setSpacing( KDialog::spacingHint() );
-  mMGTab.gridLayout->setMargin( KDialog::marginHint() );
 
   // IMAP resource setup
   mMGTab.mEnableImapResCB->setWhatsThis(
@@ -4636,6 +4634,11 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mMGTab.mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mMGTab.mOutlookCompatibleInvitationComments->setWhatsThis( i18n( GlobalSettings::self()->
+           outlookCompatibleInvitationReplyCommentsItem()->whatsThis().toUtf8() ) );
+  connect( mMGTab.mOutlookCompatibleInvitationComments, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mMGTab.mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
            automaticSendingItem()->whatsThis().toUtf8() ) );
   connect( mMGTab.mAutomaticSending, SIGNAL( stateChanged( int ) ),
@@ -4671,6 +4674,8 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings()
   mMGTab.mLegacyBodyInvites->blockSignals( true );
   mMGTab.mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
   mMGTab.mLegacyBodyInvites->blockSignals( false );
+
+  mMGTab.mOutlookCompatibleInvitationComments->setChecked( GlobalSettings::self()->outlookCompatibleInvitationReplyComments() );
 
   mMGTab.mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
   mMGTab.mAutomaticSending->setEnabled( !mMGTab.mLegacyBodyInvites->isChecked() );
@@ -4741,6 +4746,7 @@ void MiscPage::GroupwareTab::save()
   GlobalSettings::self()->setLegacyMangleFromToHeaders( mMGTab.mLegacyMangleFromTo->isChecked() );
   GlobalSettings::self()->setLegacyBodyInvites( mMGTab.mLegacyBodyInvites->isChecked() );
   GlobalSettings::self()->setExchangeCompatibleInvitations( mMGTab.mExchangeCompatibleInvitations->isChecked() );
+  GlobalSettings::self()->setOutlookCompatibleInvitationReplyComments( mMGTab.mOutlookCompatibleInvitationComments->isChecked() );
   GlobalSettings::self()->setAutomaticSending( mMGTab.mAutomaticSending->isChecked() );
 
   int format = mMGTab.mStorageFormatCombo->currentIndex();
