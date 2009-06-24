@@ -266,9 +266,12 @@ namespace KMail {
         // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
         part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
+#if 0
+        // done in KMReaderWin::setBodyPartMemento() now
         if ( mReader && node->bodyPartMemento() )
           if ( Interface::Observable * obs = node->bodyPartMemento()->asObservable() )
             obs->attach( mReader );
+#endif
         switch ( result ) {
         case Interface::BodyPartFormatter::AsIcon:
           processResult.setNeverDisplayInline( true );
