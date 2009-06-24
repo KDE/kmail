@@ -298,6 +298,10 @@
         <default>false</default>
         <label>Forward Inline As Default.</label>
       </entry>
+      <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
+        <default>${ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT}</default>
+        <label>Allow the semicolon charactor (';') to be used as separator in the message composer.</label>
+      </entry>
       <entry name="ForceReplyCharset" type="Bool" key="force-reply-charset">
         <label>Keep original charset when replying or forwarding if possible</label>
         <default>false</default>
