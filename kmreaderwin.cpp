@@ -41,6 +41,7 @@
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QScrollArea>
+#include <QScrollBar>
 #include <QSignalMapper>
 using KMail::MailSourceViewer;
 #include "partNode.h"
@@ -2041,6 +2042,26 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   }
 }
 
+// Checks if the given node has a parent node that is a DIV which has an ID attribute
+// with the value specified here
+static bool hasParentDivWithId( const DOM::Node &start, const QString &id )
+{
+  if ( start.isNull() )
+    return false;
+
+  if ( start.nodeName().string() == "div" ) {
+    for ( unsigned int i = 0; i < start.attributes().length(); i++ ) {
+      if ( start.attributes().item( i ).nodeName().string() == "id" &&
+           start.attributes().item( i ).nodeValue().string() == id )
+        return true;
+    }
+  }
+
+  if ( !start.parentNode().isNull() )
+    return hasParentDivWithId( start.parentNode(), id );
+  else return false;
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
 {
@@ -2070,6 +2091,14 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(i18nc("to view something", "View") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::View );
+
+  const bool attachmentInHeader = hasParentDivWithId( mViewer->nodeUnderMouse(), "attachmentInjectionPoint" );
+  const bool hasScrollbar = mViewer->view()->verticalScrollBar()->isVisible();
+  if ( attachmentInHeader && hasScrollbar ) {
+    action = menu->addAction( i18n( "Scroll To" ) );
+    connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::ScrollTo );
+  }
 
   action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
@@ -2155,6 +2184,9 @@ void KMReaderWin::slotHandleAttachment( int choice )
     QMimeData *mimeData = new QMimeData;
     mimeData->setUrls( urls );
     QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
+  } else if ( choice == KMHandleAttachmentCommand::ScrollTo ) {
+    // The anchors for this are created in ObjectTreeParser::parseObjectTree()
+    mViewer->gotoAnchor( QString::fromLatin1( "att%1" ).arg( node->nodeId() ) );
   }
   else {
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(

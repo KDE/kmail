@@ -925,7 +925,8 @@ public:
     ChiasmusEncrypt = 6,
     Delete = 7,
     Edit = 8,
-    Copy = 9
+    Copy = 9,
+    ScrollTo = 10
   };
   /**
    * Construct a new command
