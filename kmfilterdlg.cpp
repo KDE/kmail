@@ -835,6 +835,7 @@ QList<KMFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) con
         emptyFilters,
         QString(),
         KGuiItem( i18n( "Discard" ) ),
+        KStandardGuiItem::cancel(),
         "ShowInvalidFilterWarning" );
       if ( response == KMessageBox::Cancel )
         emit abortClosing();
