@@ -487,7 +487,6 @@ namespace KMail {
             // PENDING(marc) cryptProto = 0 here?
           } else {
             QByteArray plainData = cleartext;
-            plainData.resize( cleartext.size() - 1 );
             VerifyDetachedBodyPartMemento * newM
               = new VerifyDetachedBodyPartMemento( job, cryptProto->keyListJob(), signaturetext, plainData );
             if ( allowAsync() ) {
@@ -547,8 +546,7 @@ namespace KMail {
 
         if ( m ) {
           result = m->verifyResult();
-          const QByteArray & plainData = m->plainText();
-          cleartext = QByteArray( plainData.data(), plainData.size() + 1 );
+          cleartext = m->plainText();
           messagePart.auditLogError = m->auditLogError();
           messagePart.auditLog = m->auditLogAsHtml();
           key = m->signingKey();
