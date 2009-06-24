@@ -2364,12 +2364,27 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mTextColorCombo, SIGNAL( activated( int ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
-  //Third for font selection
+  //Third row for text background color
+  mBackgroundColorCheck = new QCheckBox( i18n("Change &background color:"),
+                                             mTagSettingGroupBox );
+  settings->addWidget( mBackgroundColorCheck, 3, 0 );
+
+  mBackgroundColorCombo = new KColorCombo( mTagSettingGroupBox );
+  settings->addWidget( mBackgroundColorCombo, 3, 1 );
+
+  connect( mBackgroundColorCheck, SIGNAL( toggled( bool ) ),
+          mBackgroundColorCombo, SLOT( setEnabled( bool ) ) );
+  connect( mBackgroundColorCheck, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+  connect( mBackgroundColorCombo, SIGNAL( activated( int ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+
+  //Fourth for font selection
   mTextFontCheck = new QCheckBox( i18n("Change fo&nt:"), mTagSettingGroupBox );
-  settings->addWidget( mTextFontCheck, 3, 0 );
+  settings->addWidget( mTextFontCheck, 4, 0 );
 
   mFontRequester = new KFontRequester( mTagSettingGroupBox );
-  settings->addWidget( mFontRequester, 3, 1 );
+  settings->addWidget( mFontRequester, 4, 1 );
 
   connect( mTextFontCheck, SIGNAL( toggled( bool ) ),
           mFontRequester, SLOT( setEnabled( bool ) ) );
@@ -2378,7 +2393,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mFontRequester, SIGNAL( fontSelected( const QFont& ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
-  //Fourth for toolbar icon
+  //Fifth for toolbar icon
   mIconButton = new KIconButton( mTagSettingGroupBox );
   mIconButton->setIconSize( 16 );
   mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
@@ -2394,7 +2409,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mIconButton, SIGNAL( iconChanged( QString ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
-  //Fifth for shortcut
+  //Sixth for shortcut
   mKeySequenceWidget = new KKeySequenceWidget( mTagSettingGroupBox );
   settings->addWidget( mKeySequenceWidget, 6, 1 );
   QLabel *sclabel = new QLabel( i18n("Shortc&ut:") , mTagSettingGroupBox );
@@ -2406,7 +2421,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence & ) ),
            this, SLOT( slotEmitChangeCheck() ) );
 
-  //Sixth for Toolbar checkbox
+  //Seventh for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
                                    mTagSettingGroupBox );
   settings->addWidget( mInToolbarCheck, 7, 0 );

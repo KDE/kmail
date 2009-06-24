@@ -555,6 +555,13 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
 
   opt.text.clear(); // draw no text for me, please.. I'll do it in a while
 
+  // Set background color of control if necessary
+  if ( item->type() == Item::Message ) {
+    MessageItem * msgItem = static_cast< MessageItem * >( item );
+    if ( msgItem->backgroundColor().isValid() )
+      opt.backgroundBrush = QBrush( msgItem->backgroundColor() );
+  }
+
   QStyle * style = mItemView->style();
   style->drawControl( QStyle::CE_ItemViewItem, &opt, painter, mItemView );
 

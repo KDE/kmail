@@ -80,10 +80,10 @@ KMMessageTagDescription::KMMessageTagDescription( const KConfigGroup& aGroup )
 
 void KMMessageTagDescription::setLabel( const QString& aLabel ) { mLabel = aLabel; }
 void KMMessageTagDescription::setName( const QString& aName ) { mName = aName; }
-/*void KMMessageTagDescription::setBackgroundColor( const QColor& aBackgroundColor )
+void KMMessageTagDescription::setBackgroundColor( const QColor& aBackgroundColor )
 {
   mBackgroundColor = aBackgroundColor; 
-}*/
+}
 void KMMessageTagDescription::setTextColor( const QColor& aTextColor ) 
 {
   mTextColor = aTextColor; 
@@ -136,6 +136,8 @@ void KMMessageTagDescription::writeConfig( KConfigGroup &group ) const
   group.writeEntry( "Name", mName );
   if ( mTextColor.isValid() ) 
     group.writeEntry( "text-color", mTextColor );
+  if ( mBackgroundColor.isValid() )
+    group.writeEntry( "background-color", mBackgroundColor );
 
   if ( mTextFont != QFont() ) 
     group.writeEntry( "text-font", mTextFont );
