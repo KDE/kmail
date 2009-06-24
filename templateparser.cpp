@@ -893,13 +893,11 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     mMsg->deleteBodyParts();
 
     // Set To and CC from the template
-    if ( mMode == Forward ) {
-      if ( !mTo.isEmpty() ) {
-        mMsg->setTo( mMsg->to() + ',' + mTo );
-      }
-      if ( !mCC.isEmpty() )
-        mMsg->setCc( mMsg->cc() + ',' + mCC );
+    if ( !mTo.isEmpty() ) {
+      mMsg->setTo( mMsg->to() + ',' + mTo );
     }
+    if ( !mCC.isEmpty() )
+      mMsg->setCc( mMsg->cc() + ',' + mCC );
 
     // If we have no attachment, simply create a text/plain part and
     // set the processed template text as the body

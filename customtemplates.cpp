@@ -108,10 +108,10 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mHelp, SIGNAL( linkActivated ( const QString& ) ),
           SLOT( slotHelpLinkClicked( const QString& ) ) );
 
-  const QString toToolTip = i18n( "Additional recipients of the message when forwarding" );
-  const QString ccToolTip = i18n( "Additional recipients who are sent a copy of the message when forwarding." );
-  const QString toWhatsThis = i18n( "When using this template for forwarding, the default recipients are those you enter here. This is a comma-separated list of mail addresses." );
-  const QString ccWhatsThis = i18n( "When using this template for forwarding, the recipients you enter here will be sent a copy of the message by default. This is a comma-separated list of mail addresses." );
+  const QString toToolTip = i18n( "Additional recipients of the message" );
+  const QString ccToolTip = i18n( "Additional recipients who get a copy of the message" );
+  const QString toWhatsThis = i18n( "When using this template, the default recipients are those you enter here. This is a comma-separated list of mail addresses." );
+  const QString ccWhatsThis = i18n( "When using this template, the recipients you enter here will by default get a copy of this message. This is a comma-separated list of mail addresses." );
 
   // We only want to set the tooltip/whatsthis to the lineedit, not the complete widget,
   // so we use the name here to find the lineedit. This is similar to what KMFilterActionForward
@@ -156,14 +156,6 @@ void CustomTemplates::slotHelpLinkClicked( const QString& )
 CustomTemplates::~CustomTemplates()
 {
   qDeleteAll( mItemList ); // no auto-delete with QHash
-}
-
-void CustomTemplates::setRecipientsEditsEnabled( bool enabled )
-{
-  mToEdit->setHidden( !enabled );
-  mCCEdit->setHidden( !enabled );
-  mToLabel->setHidden( !enabled );
-  mCCLabel->setHidden( !enabled );
 }
 
 void CustomTemplates::slotNameChanged( const QString& text )
@@ -356,8 +348,6 @@ void CustomTemplates::slotListSelectionChanged()
       // key sequence is activated!
       // This agrees with KMMainWidget::updateCustomTemplateMenus() -- marten
       mKeySequenceWidget->setEnabled( vitem->mType != TUniversal );
-      setRecipientsEditsEnabled( vitem->mType == TForward ||
-                                 vitem->mType == TUniversal );
     }
   } else {
     mEditFrame->setEnabled( false );
@@ -398,13 +388,9 @@ void CustomTemplates::slotTypeActivated( int index )
     // see slotListSelectionChanged() above
     mKeySequenceWidget->setEnabled( vitem->mType != TUniversal );
 
-    setRecipientsEditsEnabled( vitem->mType == TForward ||
-                               vitem->mType == TUniversal );
     if ( !mBlockChangeSignal )
       emit changed();
   }
-  else
-    setRecipientsEditsEnabled( false );
 }
 
 void CustomTemplates::slotShortcutChanged( const QKeySequence &newSeq )
