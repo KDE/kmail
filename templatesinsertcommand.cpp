@@ -65,7 +65,7 @@ static const InsertCommand originalCommands[] = {
   { I18N_NOOP( "From Field Name" ), TemplatesInsertCommand::COFromName },
   { I18N_NOOP( "From Field First Name" ), TemplatesInsertCommand::COFromFName },
   { I18N_NOOP( "From Field Last Name" ), TemplatesInsertCommand::COFromLName },
-  { I18N_NOOP( "Addresses of all original recipients" ), TemplatesInsertCommand::COAddresseesAddr },
+  { I18N_NOOP( "Addresses of all recipients" ), TemplatesInsertCommand::COAddresseesAddr },
   { I18N_NOOP2( "Template value for subject of the message",
       "Subject" ), TemplatesInsertCommand::COFullSubject },
   { I18N_NOOP( "Quoted Headers" ), TemplatesInsertCommand::CQHeaders },
