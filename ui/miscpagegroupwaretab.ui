@@ -241,7 +241,7 @@ Turn this option on to send groupware invitations in a way that Microsoft Exchan
    <item>
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>Common Options</string>
+      <string>Invitation Options</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
