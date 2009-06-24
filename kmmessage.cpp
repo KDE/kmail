@@ -2267,15 +2267,18 @@ AddrSpecList KMMessage::extractAddrSpecs( const QByteArray & header ) const {
   return result;
 }
 
-QByteArray KMMessage::rawHeaderField( const QByteArray & name ) const {
-  if ( name.isEmpty() ) return QByteArray();
+QByteArray KMMessage::rawHeaderField( const QByteArray &name ) const
+{
+  if ( !name.isEmpty() && mMsg ) {
+    DwHeaders &header = mMsg->Headers();
+    DwField *field = header.FindField( name.constData() );
 
-  DwHeaders & header = mMsg->Headers();
-  DwField * field = header.FindField( name );
-
-  if ( !field ) return QByteArray();
-
-  return header.FieldBody( name.data() ).AsString().c_str();
+    if ( !field ) {
+      return QByteArray();
+    }
+    return header.FieldBody( name.data() ).AsString().c_str();
+  }
+  return QByteArray();
 }
 
 QList<QByteArray> KMMessage::rawHeaderFields( const QByteArray& field ) const
