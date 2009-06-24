@@ -1145,13 +1145,13 @@ void KMMainWidget::slotCompose()
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( NULL, mFolder );
-      win = KMail::makeComposer( msg, KMail::Composer::New, mFolder->identity() );
+      win = KMail::makeComposer( msg, mFolder->identity() );
   } else {
       msg->initHeader();
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( NULL, NULL );
-      win = KMail::makeComposer( msg, KMail::Composer::New );
+      win = KMail::makeComposer( msg );
   }
 
   win->show();

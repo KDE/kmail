@@ -71,12 +71,9 @@ using MailTransport::Transport;
 #include "recipientseditor.h"
 #include "stl_util.h"
 #include "stringutil.h"
-#include "kmmsgdict.h"
-#include "templateparser.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
-using KMail::TemplateParser;
 
 // KDELIBS includes
 #include <kactioncollection.h>
@@ -134,20 +131,18 @@ using KMail::TemplateParser;
 
 using namespace KMail;
 
-KMail::Composer *KMail::makeComposer( KMMessage *msg, Composer::TemplateContext context,
-                                      uint identity ) {
-  return KMComposeWin::create( msg, context, identity );
+KMail::Composer *KMail::makeComposer( KMMessage *msg, uint identitiy ) {
+  return KMComposeWin::create( msg, identitiy );
 }
 
-KMail::Composer *KMComposeWin::create( KMMessage *msg, Composer::TemplateContext context,
-                                       uint identity ) {
-  return new KMComposeWin( msg, context, identity );
+KMail::Composer *KMComposeWin::create( KMMessage *msg, uint identitiy ) {
+  return new KMComposeWin( msg, identitiy );
 }
 
 int KMComposeWin::s_composerNumber = 0;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, uint id )
+KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
     mAtmModified( false ),
@@ -157,7 +152,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
     mFolder( 0 ),
     mForceDisableHtml( false ),
     mId( id ),
-    mContext( context ),
     mAttachPK( 0 ), mAttachMPK( 0 ),
     mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
     mSignAction( 0 ), mEncryptAction( 0 ), mRequestMDNAction( 0 ),
@@ -974,52 +968,6 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
       aChk->hide();
     }
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::applyTemplate( uint uoid )
-{
-  const KPIMIdentities::Identity &ident =
-    kmkernel->identityManager()->identityForUoid( uoid );
-  if ( ident.isNull() )
-    return;
-
-  mMsg->setTemplates( ident.templates() );
-  TemplateParser::Mode mode;
-  switch ( mContext ) {
-    case New:
-      mode = TemplateParser::NewMessage;
-      break;
-    case Reply:
-      mode = TemplateParser::Reply;
-      break;
-    case ReplyToAll:
-      mode = TemplateParser::ReplyAll;
-      break;
-    case Forward:
-      mode = TemplateParser::Forward;
-      break;
-    default:
-      return;
-  }
-
-  TemplateParser parser( mMsg, mode, QString(), false, false, false );
-  if ( mode != TemplateParser::NewMessage ) {
-    foreach ( const QString& serNumStr,
-              mMsg->headerField( "X-KMail-Link-Message" ).split( ',' ) ) {
-      ulong serNum = serNumStr.toULong();
-      int idx = -1;
-      KMFolder *folder;
-      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-      if ( folder ) {
-        KMMessage *originalMessage = folder->getMsg( idx );
-        parser.processWithIdentity( uoid, originalMessage );
-      }
-    }
-  } else {
-    parser.processWithIdentity( uoid, 0 );
-  }
-  mEditor->setText( mMsg->bodyToUnicode() );
 }
 
 //-----------------------------------------------------------------------------
@@ -4064,14 +4012,11 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
                                                ( oldIdentity ).signature();
   KPIMIdentities::Signature newSig = const_cast<KPIMIdentities::Identity&>
                                                ( ident ).signature();
-  // apply new template if unmodified
-  bool msgCleared = false;
-  if ( !isModified() && !ident.templates().isEmpty() ) {
-    applyTemplate( uoid );
-    msgCleared = true;
+  if ( !oldSig.rawText().isEmpty() ) {
+    mEditor->replaceSignature( oldSig, newSig );
   }
+  else {
 
-  if ( msgCleared || oldSig.rawText().isEmpty() ) {
     // Just append the signature if there is no old signature
     if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
       if ( GlobalSettings::self()->prependSignature() )
@@ -4079,8 +4024,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
       else
         newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End, true );
     }
-  } else {
-    mEditor->replaceSignature( oldSig, newSig );
   }
 
   // disable certain actions if there is no PGP user identity set
@@ -4109,6 +4052,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
 
+  setModified( true );
   mId = uoid;
 
   // make sure the From and BCC fields are shown if necessary
