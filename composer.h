@@ -34,15 +34,14 @@ class MailComposerIface;
 
 namespace KMail {
 
-class Composer;
-
-Composer *makeComposer( KMMessage *msg=0, uint identity=0 );
-
 class Composer : public KMail::SecondaryWindow
 {
   Q_OBJECT
   protected:
     Composer( const char *name=0 ) : KMail::SecondaryWindow( name ) {}
+
+  public:
+    enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };
 
   public: // mailserviceimpl
     /**
@@ -153,6 +152,9 @@ class Composer : public KMail::SecondaryWindow
      */
     virtual void addAttach( KMMessagePart *msgPart ) = 0;
 };
+
+Composer *makeComposer( KMMessage *msg=0, Composer::TemplateContext context=Composer::NoTemplate,
+                        uint identity=0 );
 
 }
 

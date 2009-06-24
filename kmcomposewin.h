@@ -116,11 +116,13 @@ class KMComposeWin : public KMail::Composer
   friend class ::MessageComposer;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposeWin( KMMessage *msg=0, uint identity=0 );
+    explicit KMComposeWin( KMMessage *msg=0, TemplateContext context=NoTemplate,
+                           uint identity=0 );
     ~KMComposeWin();
 
   public:
-    static Composer *create( KMMessage *msg = 0, uint identity = 0 );
+    static Composer *create( KMMessage *msg = 0, TemplateContext context=NoTemplate,
+                             uint identity = 0 );
 
   QString dbusObjectPath() const;
   QString smartQuote( const QString & msg );
@@ -520,6 +522,11 @@ class KMComposeWin : public KMail::Composer
                             QLabel *lbl, QComboBox *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
 
     /**
+     * Apply template to new or unmodified message.
+     */
+    void applyTemplate( uint uoid );
+
+    /**
      * Checks how many recipients are and warns if there are too many.
      * @return true, if the user accepted the warning and the message should be sent
     */
@@ -736,6 +743,7 @@ class KMComposeWin : public KMail::Composer
     QList<KTemporaryFile*> mAtmTempList;
     QPalette mPalette;
     uint mId;
+    TemplateContext mContext;
 
     KAction *mAttachPK, *mAttachMPK, *mAttachRemoveAction, *mAttachSaveAction,
             *mAttachPropertiesAction, *mCleanSpace;

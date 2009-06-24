@@ -204,6 +204,13 @@ void TemplateParser::process( const QString &tmplName, KMMessage *aorig_msg,
   return processWithTemplate( tmpl );
 }
 
+void TemplateParser::processWithIdentity( uint uoid, KMMessage *aorig_msg,
+                                          KMFolder *afolder, bool append )
+{
+  mIdentity = uoid;
+  return process( aorig_msg, afolder, append );
+}
+
 void TemplateParser::processWithTemplate( const QString &tmpl )
 {
   QString body;
