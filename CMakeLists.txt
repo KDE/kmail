@@ -233,6 +233,7 @@ set(kmailprivate_LIB_SRCS
    statusbarlabel.cpp
    groupware_types.cpp
    kleojobexecutor.cpp
+   iconnamecache.cpp
 )
 
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )

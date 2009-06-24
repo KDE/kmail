@@ -4,6 +4,7 @@
 #include "kmkernel.h"
 #include "kmmessage.h"
 #include "globalsettings.h"
+#include "iconnamecache.h"
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>
@@ -15,7 +16,6 @@
 #include <kdebug.h>
 #include <kcodecs.h>
 #include <kascii.h>
-#include <kiconloader.h>
 
 #include <QTextCodec>
 #include <QList>
@@ -307,7 +307,6 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   mSubtype = mimetype.mid(sep+1).toLatin1();
 }
 
-
 //-----------------------------------------------------------------------------
 QString KMMessagePart::iconName( int size ) const
 {
@@ -332,11 +331,8 @@ QString KMMessagePart::iconName( int size ) const
     }
   }
 
-  fileName =
-    KIconLoader::global()->iconPath( fileName, size );
-  return fileName;
+  return KMail::IconNameCache::instance()->iconPath( fileName, size );
 }
-
 
 //-----------------------------------------------------------------------------
 int KMMessagePart::type() const {
