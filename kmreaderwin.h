@@ -35,6 +35,8 @@ using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 
+#include <map>
+
 class QSplitter;
 class KHBox;
 class QTreeWidgetItem;
@@ -56,6 +58,7 @@ class KMMessagePart;
 namespace KMail {
   namespace Interface {
     class Observable;
+    class BodyPartMemento;
   }
   class ObjectTreeParser;
   class AttachmentStrategy;
@@ -317,6 +320,19 @@ public:
   /* show or hide the list that points to the attachments */
   void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true ) { mShowAttachmentQuicklist = showAttachmentQuicklist; }
 
+  /* retrieve BodyPartMemento of id \a which for partNode \a node */
+  KMail::Interface::BodyPartMemento * bodyPartMemento( const partNode * node, const QByteArray & which ) const;
+
+  /* set/replace BodyPartMemento \a memento of id \a which for
+     partNode \a node. If there was a BodyPartMemento registered
+     already, replaces (deletes) that one. */
+  void setBodyPartMemento( const partNode * node, const QByteArray & which, KMail::Interface::BodyPartMemento * memento );
+
+private:
+  /* deletes all BodyPartMementos. Use this when skipping to another
+     message (as opposed to re-loading the same one again). */
+  void clearBodyPartMementos();
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -557,12 +573,13 @@ private:
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
   QPointer<KMail::KHtmlPartHtmlWriter> mPartHtmlWriter;
 
+  std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
   // an attachment should be updated
   bool mAtmUpdate;
   int mChoice;
   unsigned long mWaitingForSerNum;
   float mSavedRelativePosition;
-	int mLevelQuote;
+  int mLevelQuote;
   bool mDecrytMessageOverwrite;
   bool mShowSignatureDetails;
   bool mShowAttachmentQuicklist;
