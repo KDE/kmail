@@ -220,9 +220,13 @@ void DistributionListDialog::slotUser1()
     }
   }
 
-  // FIXME: Ask the user which resource to save to instead of the default
+  // let the resource know that the data has changed
+  KABC::Resource *resource = dlist->resource();
+  resource->insertDistributionList( dlist );
+
+  // save the resource
   bool saveError = true;
-  KABC::Ticket *ticket = ab->requestSaveTicket( 0 /*default resource */ );
+  KABC::Ticket *ticket = ab->requestSaveTicket( resource );
   if ( ticket ) {
     if ( ab->save( ticket ) ) {
       saveError = false;
