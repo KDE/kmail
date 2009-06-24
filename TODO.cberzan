@@ -26,3 +26,4 @@ post-processing???
 
 bugs:
 * apparently the composer window doesn't use the default transport by default...
+* handle case when MDA is offline

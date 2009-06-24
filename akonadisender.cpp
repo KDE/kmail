@@ -154,7 +154,6 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
   mCustomTransport = customTransport;
 
   // Watch progress of the MDA.
-  Q_ASSERT( DispatcherInterface::self()->isReady() );
   mProgressItem = ProgressManager::createProgressItem( 0,
       DispatcherInterface::self()->dispatcherInstance(),
       "Sender",
