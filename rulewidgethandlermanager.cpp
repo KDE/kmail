@@ -157,6 +157,36 @@ namespace {
     int currentStatusValue( const QStackedWidget *valueStack ) const;
   };
 
+  class TagRuleWidgetHandler : public KMail::RuleWidgetHandler {
+  public:
+    TagRuleWidgetHandler() : KMail::RuleWidgetHandler() {}
+    ~TagRuleWidgetHandler() {}
+
+    QWidget * createFunctionWidget( int number,
+                                    QStackedWidget *functionStack,
+                                    const QObject *receiver ) const;
+    QWidget * createValueWidget( int number,
+                                 QStackedWidget *valueStack,
+                                 const QObject *receiver ) const;
+    KMSearchRule::Function function( const QByteArray & field,
+                                     const QStackedWidget *functionStack ) const;
+    QString value( const QByteArray & field,
+                   const QStackedWidget *functionStack,
+                   const QStackedWidget *valueStack ) const;
+    QString prettyValue( const QByteArray & field,
+                         const QStackedWidget *functionStack,
+                         const QStackedWidget *valueStack ) const;
+    bool handlesField( const QByteArray & field ) const;
+    void reset( QStackedWidget *functionStack,
+                QStackedWidget *valueStack ) const;
+    bool setRule( QStackedWidget *functionStack,
+                  QStackedWidget *valueStack,
+                  const KMSearchRule *rule ) const;
+    bool update( const QByteArray & field,
+                 QStackedWidget *functionStack,
+                 QStackedWidget *valueStack ) const;
+  };
+
   class NumericRuleWidgetHandler : public KMail::RuleWidgetHandler {
   public:
     NumericRuleWidgetHandler() : KMail::RuleWidgetHandler() {}
@@ -194,6 +224,7 @@ namespace {
 
 KMail::RuleWidgetHandlerManager::RuleWidgetHandlerManager()
 {
+  registerHandler( new TagRuleWidgetHandler() );
   registerHandler( new NumericRuleWidgetHandler() );
   registerHandler( new StatusRuleWidgetHandler() );
   registerHandler( new MessageRuleWidgetHandler() );
@@ -348,6 +379,8 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
 #include "kmsearchpattern.h"
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
+#include "kmkernel.h"
+#include "kmmessagetag.h"
 
 #include <kcombobox.h>
 #include <klocale.h>
@@ -1179,6 +1212,269 @@ namespace {
   }
 
 } // anonymous namespace for StatusRuleWidgetHandler
+
+//=============================================================================
+//
+// class TagRuleWidgetHandler
+//
+//=============================================================================
+
+namespace {
+  static const struct {
+    const KMSearchRule::Function id;
+    const char *displayName;
+  } TagFunctions[] = {
+    { KMSearchRule::FuncContains,           I18N_NOOP( "contains" )          },
+    { KMSearchRule::FuncContainsNot,        I18N_NOOP( "does not contain" )   },
+    { KMSearchRule::FuncEquals,             I18N_NOOP( "equals" )            },
+    { KMSearchRule::FuncNotEqual,           I18N_NOOP( "does not equal" )     },
+    { KMSearchRule::FuncRegExp,             I18N_NOOP( "matches regular expr." ) },
+    { KMSearchRule::FuncNotRegExp,          I18N_NOOP( "does not match reg. expr." ) }
+  };
+  static const int TagFunctionCount =
+    sizeof( TagFunctions ) / sizeof( *TagFunctions );
+
+  //---------------------------------------------------------------------------
+
+  QWidget * TagRuleWidgetHandler::createFunctionWidget( int number,
+                                                        QStackedWidget *functionStack,
+                                                        const QObject *receiver ) const
+  {
+    if ( number != 0 )
+      return 0;
+
+    KComboBox *funcCombo = new KComboBox( functionStack );
+    funcCombo->setObjectName( "tagRuleFuncCombo" );
+    for ( int i = 0; i < TagFunctionCount; ++i ) {
+      funcCombo->addItem( i18n( TagFunctions[i].displayName ) );
+    }
+    funcCombo->adjustSize();
+    QObject::connect( funcCombo, SIGNAL( activated( int ) ),
+                      receiver, SLOT( slotFunctionChanged() ) );
+    return funcCombo;
+  }
+
+  //---------------------------------------------------------------------------
+
+  QWidget * TagRuleWidgetHandler::createValueWidget( int number,
+                                                     QStackedWidget *valueStack,
+                                                     const QObject *receiver ) const
+  {
+    if ( number == 0 ) {
+      RegExpLineEdit *lineEdit = new RegExpLineEdit( valueStack );
+      lineEdit->setObjectName( "tagRuleRegExpLineEdit" );
+      QObject::connect( lineEdit, SIGNAL( textChanged( const QString & ) ),
+                        receiver, SLOT( slotValueChanged() ) );
+      return lineEdit;
+    }
+
+    if ( number == 1 ) {
+      KComboBox *valueCombo = new KComboBox( valueStack );
+      valueCombo->setObjectName( "tagRuleValueCombo" );
+      valueCombo->setEditable( true );
+      valueCombo->addItem( QString() ); // empty entry for user input
+      foreach ( const KMMessageTagDescription * tagDesc, *kmkernel->msgTagMgr()->msgTagList() )
+        valueCombo->addItem( tagDesc->name(), tagDesc->label() );
+      valueCombo->adjustSize();
+      QObject::connect( valueCombo, SIGNAL( activated( int ) ),
+                        receiver, SLOT( slotValueChanged() ) );
+      return valueCombo;
+    }
+
+    return 0;
+  }
+
+  //---------------------------------------------------------------------------
+
+  KMSearchRule::Function TagRuleWidgetHandler::function( const QByteArray & field,
+                                                         const QStackedWidget *functionStack ) const
+  {
+    if ( !handlesField( field ) )
+      return KMSearchRule::FuncNone;
+
+    const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "tagRuleFuncCombo" );
+
+    if ( funcCombo && funcCombo->currentIndex() >= 0) {
+      return TagFunctions[funcCombo->currentIndex()].id;
+    }
+    return KMSearchRule::FuncNone;
+  }
+
+  //---------------------------------------------------------------------------
+
+  QString TagRuleWidgetHandler::value( const QByteArray & field,
+                                       const QStackedWidget *functionStack,
+                                       const QStackedWidget *valueStack ) const
+  {
+    if ( !handlesField( field ) )
+      return QString();
+
+    KMSearchRule::Function func = function( field, functionStack );
+    if ( func == KMSearchRule::FuncRegExp || func == KMSearchRule::FuncNotRegExp ) {
+      // Use regexp line edit
+      const RegExpLineEdit *lineEdit =
+        valueStack->findChild<RegExpLineEdit*>( "tagRuleRegExpLineEdit ");
+      if ( lineEdit )
+        return lineEdit->text();
+      else
+        return QString();
+    }
+
+    // Use combo box
+    const KComboBox *tagCombo = valueStack->findChild<KComboBox*>( "tagRuleValueCombo" );
+    if ( tagCombo )
+      return tagCombo->currentText();
+    else
+      return QString();
+  }
+
+  //---------------------------------------------------------------------------
+
+  QString TagRuleWidgetHandler::prettyValue( const QByteArray & field,
+                                             const QStackedWidget *funcStack,
+                                             const QStackedWidget *valueStack ) const
+  {
+    return value( field, funcStack, valueStack );
+  }
+
+  //---------------------------------------------------------------------------
+
+  bool TagRuleWidgetHandler::handlesField( const QByteArray & field ) const
+  {
+    return ( field == "<tag>" );
+  }
+
+  //---------------------------------------------------------------------------
+
+  void TagRuleWidgetHandler::reset( QStackedWidget *functionStack,
+                                    QStackedWidget *valueStack ) const
+  {
+    // reset the function combo box
+    KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "tagRuleFuncCombo" );
+    if ( funcCombo ) {
+      funcCombo->blockSignals( true );
+      funcCombo->setCurrentIndex( 0 );
+      funcCombo->blockSignals( false );
+    }
+
+    // reset the status value combo box and reg exp line edit
+    RegExpLineEdit *lineEdit = valueStack->findChild<RegExpLineEdit*>( "tagRuleRegExpLineEdit");
+    if ( lineEdit ) {
+      lineEdit->blockSignals( true );
+      lineEdit->clear();
+      lineEdit->blockSignals( false );
+      lineEdit->showEditButton( false );
+      valueStack->setCurrentWidget( lineEdit );
+    }
+
+    KComboBox *tagCombo = valueStack->findChild<KComboBox*>( "tagRuleValueCombo" );
+    if ( tagCombo ) {
+      tagCombo->blockSignals( true );
+      tagCombo->setCurrentIndex( 0 );
+      tagCombo->blockSignals( false );
+    }
+  }
+
+  //---------------------------------------------------------------------------
+
+  bool TagRuleWidgetHandler::setRule( QStackedWidget *functionStack,
+                                      QStackedWidget *valueStack,
+                                      const KMSearchRule *rule ) const
+  {
+    if ( !rule || !handlesField( rule->field() ) ) {
+      reset( functionStack, valueStack );
+      return false;
+    }
+
+    // set the function
+    const KMSearchRule::Function func = rule->function();
+    int funcIndex = 0;
+    for ( ; funcIndex < StatusFunctionCount; ++funcIndex )
+      if ( func == StatusFunctions[funcIndex].id )
+        break;
+    KComboBox *funcCombo =
+            functionStack->findChild<KComboBox*>( "tagRuleFuncCombo" );
+
+    if ( funcCombo ) {
+      funcCombo->blockSignals( true );
+      if ( funcIndex < StatusFunctionCount ) {
+        funcCombo->setCurrentIndex( funcIndex );
+      } else {
+        funcCombo->setCurrentIndex( 0 );
+      }
+      funcCombo->blockSignals( false );
+      functionStack->setCurrentWidget( funcCombo );
+    }
+
+    // set the value
+    if ( func == KMSearchRule::FuncRegExp || func == KMSearchRule::FuncNotRegExp ) {
+      // set reg exp value
+      RegExpLineEdit *lineEdit = valueStack->findChild<RegExpLineEdit*>( "tagRuleRegExpLineEdit" );
+
+      if ( lineEdit ) {
+        lineEdit->blockSignals( true );
+        lineEdit->setText( rule->contents() );
+        lineEdit->blockSignals( false );
+        lineEdit->showEditButton( true );
+        valueStack->setCurrentWidget( lineEdit );
+      }
+    } else {
+      // set combo box value
+      int valueIndex = -1;
+      const QList< KMMessageTagDescription* >* tagList = kmkernel->msgTagMgr()->msgTagList();
+      for ( int i = 0, end = tagList->size(); i < end; ++i ) {
+        const KMMessageTagDescription * tagDesc = tagList->at( i );
+        if ( tagDesc->name() == rule->contents() ) {
+          valueIndex = i;
+          break;
+        }
+      }
+
+      KComboBox *tagCombo = valueStack->findChild<KComboBox*>( "tagRuleValueCombo" );
+
+      if ( tagCombo ) {
+        tagCombo->blockSignals( true );
+        if ( valueIndex == -1 ) {
+          tagCombo->setCurrentIndex( 0 );
+          // Still show tag if it was deleted from MsgTagMgr
+          QLineEdit *lineEdit = tagCombo->lineEdit();
+          Q_ASSERT( lineEdit );
+          lineEdit->setText( rule->contents() );
+        } else {
+          // Existing tags numbered from 1
+          tagCombo->setCurrentIndex( valueIndex + 1 );
+        }
+        tagCombo->blockSignals( false );
+        valueStack->setCurrentWidget( tagCombo );
+      }
+    }
+    return true;
+  }
+
+  //---------------------------------------------------------------------------
+
+  bool TagRuleWidgetHandler::update( const QByteArray &field,
+                                     QStackedWidget *functionStack,
+                                     QStackedWidget *valueStack ) const
+  {
+    if ( !handlesField( field ) )
+      return false;
+
+    // raise the correct function widget
+    functionStack->setCurrentWidget( functionStack->findChild<QWidget*>( "tagRuleFuncCombo" ) );
+
+    // raise the correct value widget
+    KMSearchRule::Function func = function( field, functionStack );
+    if ( func == KMSearchRule::FuncRegExp || func == KMSearchRule::FuncNotRegExp ) {
+      valueStack->setCurrentWidget( valueStack->findChild<QWidget*>( "tagRuleRegExpLineEdit" ) );
+    } else {
+      valueStack->setCurrentWidget( valueStack->findChild<QWidget*>( "tagRuleValueCombo" ) );
+    }
+
+    return true;
+  }
+
+} // anonymous namespace for TagRuleWidgetHandler
 
 
 //=============================================================================

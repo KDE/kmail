@@ -137,6 +137,7 @@ public:
       @li \<size\>: Try to match against size of message (numerical).
       @li \<age in days\>: Try to match against age of message (numerical).
       @li \<status\>: Try to match against status of message (status).
+      @li \<tag\>: Try to match against message tags.
   */
   QByteArray field() const { return mField; }
 

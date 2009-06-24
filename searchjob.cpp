@@ -146,7 +146,8 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
       result += (*it)->contents();
     } else if ( (*it)->field() == "<age in days>" ||
               (*it)->field() == "<status>" ||
-              (*it)->field() == "<any header>" ) {
+              (*it)->field() == "<any header>" ||
+              (*it)->field() == "<tag>" ) {
       accept = false;
     } else {
       result += "HEADER "+ field + " \"" + (*it)->contents() + "\"";
