@@ -339,14 +339,33 @@ KMMsgSignatureState  partNode::overallSignatureState() const
     return myState;
 }
 
+QByteArray partNode::path() const
+{
+  if ( !parentNode() ) {
+    return QByteArray( ":" );
+  }
+  const partNode *p = parentNode();
+
+  // count number of siblings with the same type as us:
+  int nth = 0;
+  for ( const partNode *c = p->firstChild(); c != this; c = c->nextSibling() ) {
+    if ( c->type() == type() && c->subType() == subType() ) {
+      ++nth;
+    }
+  }
+  QString subpath;
+  return p->path() + subpath.sprintf( ":%X/%X[%X]", type(), subType(), nth ).toLocal8Bit();
+}
+
 
 int partNode::nodeId() const
 {
-    int curId = 0;
-    partNode* rootNode = const_cast<partNode*>( this );
-    while( rootNode->mRoot )
-        rootNode = rootNode->mRoot;
-    return rootNode->calcNodeIdOrFindNode( curId, this, 0, 0 );
+  int curId = 0;
+  partNode *rootNode = const_cast<partNode*>( this );
+  while( rootNode->mRoot ) {
+    rootNode = rootNode->mRoot;
+  }
+  return rootNode->calcNodeIdOrFindNode( curId, this, 0, 0 );
 }
 
 

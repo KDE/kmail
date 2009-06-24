@@ -152,6 +152,11 @@ public:
         return mSignatureState;
     }
 
+    // path is a hierarchical path to this partNode. It is designed to
+    // be stable under decryption, where new child nodes are
+    // added. Treat it as an opaque string.
+    QByteArray path() const;
+
     int nodeId() const;  // node ids start at 1 (this is the top level root node)
 
     partNode* findId( int id );  // returns the node which has the given id (or 0, resp.)
