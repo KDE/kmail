@@ -65,6 +65,7 @@ static const InsertCommand originalCommands[] = {
   { I18N_NOOP( "From Field Name" ), TemplatesInsertCommand::COFromName },
   { I18N_NOOP( "From Field First Name" ), TemplatesInsertCommand::COFromFName },
   { I18N_NOOP( "From Field Last Name" ), TemplatesInsertCommand::COFromLName },
+  { I18N_NOOP( "Addresses of all original recipients" ), TemplatesInsertCommand::COAddresseesAddr },
   { I18N_NOOP2( "Template value for subject of the message",
       "Subject" ), TemplatesInsertCommand::COFullSubject },
   { I18N_NOOP( "Quoted Headers" ), TemplatesInsertCommand::CQHeaders },
@@ -238,6 +239,7 @@ void TemplatesInsertCommand::slotMapped( int cmd )
   case TemplatesInsertCommand::CTime: emit insertCommand("%TIME"); break;
   case TemplatesInsertCommand::CTimeLong: emit insertCommand("%TIMELONG"); break;
   case TemplatesInsertCommand::CTimeLongEn: emit insertCommand("%TIMELONGEN"); break;
+  case TemplatesInsertCommand::COAddresseesAddr: emit insertCommand("%OADDRESSEESADDR"); break;
   case TemplatesInsertCommand::CToAddr: emit insertCommand("%TOADDR"); break;
   case TemplatesInsertCommand::CToName: emit insertCommand("%TONAME"); break;
   case TemplatesInsertCommand::CToFName: emit insertCommand("%TOFNAME"); break;

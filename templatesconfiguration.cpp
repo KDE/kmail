@@ -337,20 +337,18 @@ void TemplatesConfiguration::importFromPhrases()
              "%1: forward phrase, e.g. \"Forwarded Message\", "
              "%2: subject of original message, %3: date of original message, "
              "%4: mail address of sender of original message, "
-             "%5: mail address of receiver of original message, "
-             "%6: text of original message",
+             "%5: text of original message",
              "\n"
              "----------  %1  ----------\n"
              "\n"
              "Subject: %2\n"
              "Date: %3\n"
              "From: %4\n"
-             "To: %5\n"
+             "%OADDRESSEESADDR\n"
              "\n"
-             "%6\n"
+             "%5\n"
              "-------------------------------------------------------\n",
-             convertPhrases( str ), "%OFULLSUBJECT", "%ODATE", "%OFROMADDR",
-             "%OTOADDR", "%TEXT" ) );
+             convertPhrases( str ), "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%TEXT" ) );
   }
   else {
     GlobalSettings::self()->setTemplateForward( defaultForward() );
@@ -480,25 +478,25 @@ QString TemplatesConfiguration::defaultReplyAll() {
            "%ODATE", "%OTIMELONG", "%OFROMNAME", "%QUOTE", "%CURSOR");
 }
 
-QString TemplatesConfiguration::defaultForward() {
+QString TemplatesConfiguration::defaultForward()
+{
   return
     "%REM=\"" + i18n( "Default forward template" ) + "\"%-\n" +
     i18nc( "Default forward template: %1: subject of original message, "
            "%2: date of original message, "
            "%3: mail address of original sender, "
-           "%4: mail address of original receiver, "
-           "%5: original message text",
+           "%4: original message text",
            "\n"
            "----------  Forwarded Message  ----------\n"
            "\n"
            "Subject: %1\n"
            "Date: %2\n"
            "From: %3\n"
-           "To: %4\n"
+           "%OADDRESSEESADDR\n"
            "\n"
-           "%5\n"
+           "%4\n"
            "-------------------------------------------------------",
-           "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%OTOADDR", "%TEXT" );
+           "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%TEXT" );
 }
 
 QString TemplatesConfiguration::defaultQuoteString() {
