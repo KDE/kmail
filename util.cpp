@@ -41,8 +41,6 @@
 
 #include <stdlib.h>
 #include <mimelib/string.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
 
 void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
 {
@@ -145,15 +143,3 @@ bool KMail::Util::handleUrlOnMac( const KUrl& url )
   return false;
 #endif
 }
-
-bool KMail::Util::checkTransport( QWidget *w )
-{
-  if ( MailTransport::TransportManager::self()->transportNames().isEmpty() ) {
-    KMessageBox::information( w,
-                              i18n("Please create an account for sending and try again.") );
-    return false;
-  }
-  return true;
-
-}
-
