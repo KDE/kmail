@@ -102,9 +102,10 @@ public:
   void appendFilter( KMFilter* aFilter );
 
   /** Returns a list of _copies_ of the current list of filters.
-   * The list owns the contents and thus the caller needs to clean them
-   * up. */
-  QList<KMFilter *> filtersForSaving() const;
+   * The list owns the contents and thus the caller needs to clean them up.
+   * @param closeAfterSaving If true user is given option to continue editing
+   * after being warned about invalid filters. Otherwise, user is just warned. */
+  QList<KMFilter *> filtersForSaving( bool closeAfterSaving ) const;
 
 signals:
   /** Emitted when a new filter has been selected by the user or if
@@ -122,6 +123,10 @@ signals:
       to the current filter. */
   void applyWidgets();
 
+  /** Emitted when the user decides to continue editing after being warned
+   *  about invalid filters. */
+  void abortClosing() const;
+
 public slots:
   /** Called when the name of a filter might have changed (e.g.
       through changing the first rule in KMSearchPatternEdit).
@@ -130,7 +135,7 @@ public slots:
   void slotUpdateFilterName();
   /** Called when the user clicks either 'Apply' or 'OK' in
       KMFilterDlg. Updates the filter list in the KMFilterMgr. */
-  void slotApplyFilterChanges();
+  void slotApplyFilterChanges( KDialog::ButtonCode );
   /** Called when the user toggles the 'Show Download Later Msgs'
       Checkbox in the Global Options section */
   void slotShowLaterToggled(bool aOn);
@@ -370,6 +375,8 @@ public slots:
   void slotFilterSelected(KMFilter * aFilter);
   /** Action for popFilter */
   void slotActionChanged(const KMPopFilterAction aAction);
+  /** Override QDialog::accept to allow disabling close */
+  virtual void accept();
 
 protected slots:
   void slotApplicabilityChanged();
@@ -397,6 +404,9 @@ protected slots:
    * a dialog asking the user which filters to export and which
    * file to export to. */
   void slotExportFilters();
+
+  /** Called when a user decides to continue editing invalid filters */
+  void slotDisableAccept();
 
 protected:
   /** The widget that contains the ListBox showing the filters, and
@@ -430,6 +440,7 @@ protected:
 
   KMFilter *mFilter;
   bool bPopFilter;
+  bool mDoNotClose;
 };
 
 

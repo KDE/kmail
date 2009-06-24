@@ -127,7 +127,8 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 
 KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter )
   : KDialog( parent ),
-  bPopFilter(popFilter)
+  bPopFilter(popFilter),
+  mDoNotClose( false )
 {
   if ( popFilter )
     setCaption( i18n("POP3 Filter Rules") );
@@ -346,21 +347,23 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   connect( mPatternEdit, SIGNAL(maybeNameChanged()),
            mFilterList, SLOT(slotUpdateFilterName()) );
 
-  // apply changes on 'Apply'
-  connect( this, SIGNAL(applyClicked()),
-           mFilterList, SLOT(slotApplyFilterChanges()) );
-
-  // apply changes on 'OK'
-  connect( this, SIGNAL(okClicked()),
-           mFilterList, SLOT(slotApplyFilterChanges()) );
+  // save filters on 'Apply' or 'OK'
+  connect( this, SIGNAL( buttonClicked( KDialog::ButtonCode ) ),
+           mFilterList, SLOT( slotApplyFilterChanges( KDialog::ButtonCode ) ) );
 
   // save dialog size on 'OK'
   connect( this, SIGNAL(okClicked()),
            this, SLOT(slotSaveSize()) );
 
-  // destruct the dialog on OK, close and Cancel
-  connect( this, SIGNAL(finished()),
-           this, SLOT(slotFinished()) );
+  // destruct the dialog on close and Cancel
+  connect( this, SIGNAL( closeClicked() ),
+           this, SLOT( slotFinished() ) );
+  connect( this, SIGNAL( cancelClicked() ),
+           this, SLOT( slotFinished() ) );
+
+  // disable closing when user wants to continue editing
+  connect( mFilterList, SIGNAL( abortClosing() ),
+           this, SLOT( slotDisableAccept() ) );
 
   KConfigGroup geometry( KMKernel::config(), "Geometry");
   const char * configKey
@@ -372,6 +375,16 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
 
   // load the filter list (emits filterSelected())
   mFilterList->loadFilterList( createDummyFilter );
+}
+
+void KMFilterDlg::accept()
+{
+  if ( mDoNotClose ) {
+    mDoNotClose = false; // only abort current close attempt
+  } else {
+    KDialog::accept();
+    slotFinished();
+  }
 }
 
 void KMFilterDlg::slotFinished() {
@@ -754,8 +767,16 @@ void KMFilterListBox::slotShowLaterToggled(bool aOn)
   mShowLater = aOn;
 }
 
-void KMFilterListBox::slotApplyFilterChanges()
+void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
 {
+  bool closeAfterSaving;
+  if ( button == KDialog::Ok )
+    closeAfterSaving = true;
+  else if ( button == KDialog::Apply )
+    closeAfterSaving = false;
+  else
+    return; // ignore close and cancel
+
   if ( mIdxSelItem >= 0 ) {
     emit applyWidgets();
     slotSelected( mListWidget->currentRow() );
@@ -770,7 +791,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   else
     fm = kmkernel->filterMgr();
 
-  QList<KMFilter *> newFilters = filtersForSaving();
+  QList<KMFilter *> newFilters = filtersForSaving( closeAfterSaving );
 
   if ( bPopFilter )
     fm->setShowLaterMsgs( mShowLater );
@@ -785,7 +806,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   }
 }
 
-QList<KMFilter *> KMFilterListBox::filtersForSaving() const
+QList<KMFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) const
 {
   const_cast<KMFilterListBox*>( this )->applyWidgets(); // signals aren't const
   QList<KMFilter *> filters;
@@ -805,11 +826,28 @@ QList<KMFilter *> KMFilterListBox::filtersForSaving() const
 
   // report on invalid filters:
   if ( !emptyFilters.empty() ) {
-    QString msg = i18n("The following filters have not been saved because they "
-                       "were invalid (e.g. containing no actions or no search "
-                       "rules).");
-    KMessageBox::informationList( 0, msg, emptyFilters, QString(),
-                                  "ShowInvalidFilterWarning" );
+    if ( closeAfterSaving ) {
+      // Ok clicked. Give option to continue editing
+      int response = KMessageBox::warningContinueCancelList(
+        0,
+        i18n( "The following filters are invalid (e.g. containing no actions"
+              "or no search rules). Discard or edit invalid filters?" ),
+        emptyFilters,
+        QString(),
+        KGuiItem( i18n( "Discard" ) ),
+        "ShowInvalidFilterWarning" );
+      if ( response == KMessageBox::Cancel )
+        emit abortClosing();
+    } else {
+      // Apply clicked. Just warn.
+      KMessageBox::informationList(
+        0,
+        i18n( "The following filters have not been saved because they were invalid "
+              "(e.g. containing no actions or no search rules)." ),
+        emptyFilters,
+        QString(),
+        "ShowInvalidFilterWarning" );
+    }
   }
   return filters;
 }
@@ -1370,11 +1408,16 @@ void KMFilterDlg::slotImportFilters()
 void KMFilterDlg::slotExportFilters()
 {
   FilterImporterExporter exporter( this, bPopFilter );
-  QList<KMFilter *> filters = mFilterList->filtersForSaving();
+  QList<KMFilter *> filters = mFilterList->filtersForSaving( false );
   exporter.exportFilters( filters );
   QList<KMFilter *>::ConstIterator it;
   for ( it = filters.constBegin(); it != filters.constEnd(); ++it )
     delete *it;
+}
+
+void KMFilterDlg::slotDisableAccept()
+{
+  mDoNotClose = true;
 }
 
 #include "kmfilterdlg.moc"
