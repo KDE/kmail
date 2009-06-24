@@ -904,6 +904,7 @@ void KMReaderWin::slotCycleAttachmentStrategy() {
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  clearBodyPartMementos();
   delete mHtmlWriter; mHtmlWriter = 0;
   delete mCSSHelper;
   if (mAutoDelete) delete message();
