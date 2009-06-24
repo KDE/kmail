@@ -1,0 +1,28 @@
+* GPL or LGPL?
+* what can be inline?
+* KGlobal::ref()?
+* KConfigXT...
+* switch to using transport IDs instead of transport names?
+
+need to implement in MDA-based sender too:
+* prompt if unencrypted transport
+* ability to change transport when sending queued messages
+* what happens if sending is in progress when exiting?
+* error handling... KMSender has a lot of KMessageBoxes
+
+things that should probably be done on a higher level (not by the sender):
+* setSendQuotedPrintable
+* handleRedirections
+* filtering?
+* "undisclosed recipients"
+* disposition notifications
+* getting sender address from identities
+* transport & extractSenderToCCAndBcc?
+
+post-processing???
+* store unencrypted after sending
+* setStatusByLink (replied/forwarded)
+* filtering?
+
+bugs:
+* apparently the composer window doesn't use the default transport by default...
