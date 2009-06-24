@@ -618,6 +618,26 @@ private:
   bool mToggle;
 };
 
+/** This command is used to set or toggle a tag for a list of messages. If toggle is
+    true then the tag is deleted if it is already applied.
+ */
+class KMAIL_EXPORT KMSetTagCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  enum SetTagMode { AddIfNotExisting, Toggle };
+
+  KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
+                   SetTagMode mode=AddIfNotExisting );
+
+private:
+  virtual Result execute();
+
+  QString mTagLabel;
+  QList< unsigned long > mSerNums;
+  SetTagMode mMode;
+};
 
 /* This command is used to create a filter based on the user's
     decision, e.g. filter by From header */
