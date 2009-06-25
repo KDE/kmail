@@ -32,6 +32,7 @@
 
 // my header file
 #include "objecttreeparser.h"
+#include "objecttreeparser_p.h"
 
 // other KMail headers
 #include "kmkernel.h"
@@ -112,7 +113,7 @@ using KPIMUtils::LinkLocator;
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <memory>
+#include <cassert>
 #include "chiasmuskeyselector.h"
 
 namespace KMail {
@@ -147,6 +148,8 @@ namespace KMail {
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
       mKeepEncryptions( keepEncryptions ),
       mIncludeSignatures( includeSignatures ),
+      mHasPendingAsyncJobs( false ),
+      mAllowAsync( false ),
       mAttachmentStrategy( strategy ),
       mHtmlWriter( htmlWriter ),
       mCSSHelper( cssHelper )
@@ -166,6 +169,8 @@ namespace KMail {
       mShowOnlyOneMimePart( other.showOnlyOneMimePart() ),
       mKeepEncryptions( other.keepEncryptions() ),
       mIncludeSignatures( other.includeSignatures() ),
+      mHasPendingAsyncJobs( other.hasPendingAsyncJobs() ),
+      mAllowAsync( other.allowAsync() ),
       mAttachmentStrategy( other.attachmentStrategy() ),
       mHtmlWriter( other.htmlWriter() ),
       mCSSHelper( other.cssHelper() )
@@ -234,6 +239,9 @@ namespace KMail {
     if ( !node )
       return;
 
+    // reset pending async jobs state (we'll rediscover pending jobs as we go)
+    mHasPendingAsyncJobs = false;
+
     // reset "processed" flags for...
     if ( showOnlyOneMimePart() ) {
       // ... this node and all descendants
@@ -266,9 +274,12 @@ namespace KMail {
         // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
         part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
+#if 0
+        // done in KMReaderWin::setBodyPartMemento() now
         if ( mReader && node->bodyPartMemento() )
           if ( Interface::Observable * obs = node->bodyPartMemento()->asObservable() )
             obs->attach( mReader );
+#endif
         switch ( result ) {
         case Interface::BodyPartFormatter::AsIcon:
           processResult.setNeverDisplayInline( true );
@@ -462,25 +473,83 @@ namespace KMail {
     messagePart.status = i18n("Wrong Crypto Plug-In.");
     messagePart.status_code = GPGME_SIG_STAT_NONE;
 
+    GpgME::Key key;
+
     if ( doCheck && cryptProto ) {
       GpgME::VerificationResult result;
       if ( data ) { // detached
-        if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
-          KleoJobExecutor executor;
-          result = executor.exec( job, signaturetext, cleartext );
-          messagePart.auditLogError = executor.auditLogError();
-          messagePart.auditLog = executor.auditLogAsHtml();
-        } else {
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
+        const VerifyDetachedBodyPartMemento * m
+          = dynamic_cast<VerifyDetachedBodyPartMemento*>( sign.bodyPartMemento( "verifydetached" ) );
+        if ( !m ) {
+          Kleo::VerifyDetachedJob * job = cryptProto->verifyDetachedJob();
+          if ( !job ) {
+            cryptPlugError = CANT_VERIFY_SIGNATURES;
+            // PENDING(marc) cryptProto = 0 here?
+          } else {
+            QByteArray plainData = cleartext;
+            VerifyDetachedBodyPartMemento * newM
+              = new VerifyDetachedBodyPartMemento( job, cryptProto->keyListJob(), signaturetext, plainData );
+            if ( allowAsync() ) {
+              if ( newM->start() ) {
+                messagePart.inProgress = true;
+                mHasPendingAsyncJobs = true;
+              } else {
+                m = newM;
+              }
+            } else {
+              newM->exec();
+              m = newM;
+            }
+            sign.setBodyPartMemento( "verifydetached", newM );
+          }
+        } else if ( m->isRunning() ) {
+          messagePart.inProgress = true;
+          mHasPendingAsyncJobs = true;
+          m = 0;
+        }
+
+        if ( m ) {
+          result = m->verifyResult();
+          messagePart.auditLogError = m->auditLogError();
+          messagePart.auditLog = m->auditLogAsHtml();
+          key = m->signingKey();
         }
       } else { // opaque
-        if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
-          KleoJobExecutor executor;
-          result = executor.exec( job, signaturetext, cleartext );
-          messagePart.auditLogError = executor.auditLogError();
-          messagePart.auditLog = executor.auditLogAsHtml();
-        } else {
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
+        const VerifyOpaqueBodyPartMemento * m
+          = dynamic_cast<VerifyOpaqueBodyPartMemento*>( sign.bodyPartMemento( "verifyopaque" ) );
+        if ( !m ) {
+          Kleo::VerifyOpaqueJob * job = cryptProto->verifyOpaqueJob();
+          if ( !job ) {
+            cryptPlugError = CANT_VERIFY_SIGNATURES;
+            // PENDING(marc) cryptProto = 0 here?
+          } else {
+            VerifyOpaqueBodyPartMemento * newM
+              = new VerifyOpaqueBodyPartMemento( job, cryptProto->keyListJob(), signaturetext );
+            if ( allowAsync() ) {
+              if ( newM->start() ) {
+                messagePart.inProgress = true;
+                mHasPendingAsyncJobs = true;
+              } else {
+                m = newM;
+              }
+            } else {
+              newM->exec();
+              m = newM;
+            }
+            sign.setBodyPartMemento( "verifyopaque", newM );
+          }
+        } else if ( m->isRunning() ) {
+          messagePart.inProgress = true;
+          mHasPendingAsyncJobs = true;
+          m = 0;
+        }
+
+        if ( m ) {
+          result = m->verifyResult();
+          cleartext = m->plainText();
+          messagePart.auditLogError = m->auditLogError();
+          messagePart.auditLog = m->auditLogAsHtml();
+          key = m->signingKey();
         }
       }
       std::stringstream ss;
@@ -509,18 +578,6 @@ namespace KMail {
       }
       if ( messagePart.status_code & GPGME_SIG_STAT_GOOD )
         messagePart.isGoodSignature = true;
-
-      // get key for this signature
-      Kleo::KeyListJob *job = cryptProto->keyListJob();
-      std::vector<GpgME::Key> keys;
-      if ( signature.fingerprint() ) // if the fingerprint is empty, the keylisting would return all available keys
-        GpgME::KeyListResult keyListRes = job->exec( QStringList( QString::fromLatin1( signature.fingerprint() ) ),
-                                                     false, keys );
-      GpgME::Key key;
-      if ( keys.size() == 1 )
-        key = keys[0];
-      else if ( keys.size() > 1 )
-        assert( false ); // ### wtf, what should we do in this case??
 
       // save extended signature status flags
       messagePart.sigSummary = signature.summary();
@@ -654,6 +711,25 @@ namespace KMail {
     return bIsOpaqueSigned;
   }
 
+void ObjectTreeParser::writeDecryptionInProgressBlock()
+{
+  kDebug();
+  assert( mReader );
+  // PENDING(marc) find an animated icon here:
+  //const QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
+  const QString decryptedData = i18n("Encrypted data not shown");
+  PartMetaData messagePart;
+  messagePart.isDecryptable = true;
+  messagePart.isEncrypted = true;
+  messagePart.isSigned = false;
+  messagePart.inProgress = true;
+  htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                           cryptoProtocol(),
+                                           QString() ) );
+  //htmlWriter()->queue( decryptedData );
+  htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+}
+
 void ObjectTreeParser::writeDeferredDecryptionBlock()
 {
   kDebug();
@@ -688,11 +764,13 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       bool showWarning,
                                       bool& passphraseError,
                                       bool& actuallyEncrypted,
+                                      bool& decryptionStarted,
                                       QString& aErrorText,
                                       GpgME::Error & auditLogError,
                                       QString& auditLog )
 {
   passphraseError = false;
+  decryptionStarted = false;
   aErrorText.clear();
   auditLogError = GpgME::Error();
   auditLog.clear();
@@ -737,16 +815,40 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     if ( mReader )
       emit mReader->noDrag(); // in case pineentry pops up, don't let kmheaders start a drag afterwards
 
-    Kleo::DecryptVerifyJob* job = cryptProto->decryptVerifyJob();
-    if ( !job ) {
-      cryptPlugError = CANT_DECRYPT;
-      cryptProto = 0;
-    } else {
-      QByteArray plainText;
-      KleoJobExecutor executor;
-      const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = executor.exec( job, ciphertext, plainText );
-      const GpgME::DecryptionResult decryptResult = res.first;
-      const GpgME::VerificationResult verifyResult = res.second;
+    // Check whether the memento contains a result from last time:
+    const DecryptVerifyBodyPartMemento * m
+      = dynamic_cast<DecryptVerifyBodyPartMemento*>( data.bodyPartMemento( "decryptverify" ) );
+    if ( !m ) {
+      Kleo::DecryptVerifyJob * job = cryptProto->decryptVerifyJob();
+      if ( !job ) {
+        cryptPlugError = CANT_DECRYPT;
+        cryptProto = 0;
+      } else {
+        DecryptVerifyBodyPartMemento * newM
+          = new DecryptVerifyBodyPartMemento( job, ciphertext );
+        if ( allowAsync() ) {
+          if ( newM->start() ) {
+            decryptionStarted = true;
+            mHasPendingAsyncJobs = true;
+          } else {
+            m = newM;
+          }
+        } else {
+          newM->exec();
+          m = newM;
+        }
+        data.setBodyPartMemento( "decryptverify", newM );
+      }
+    } else if ( m->isRunning() ) {
+      decryptionStarted = true;
+      mHasPendingAsyncJobs = true;
+      m = 0;
+    }
+
+    if ( m ) {
+      const QByteArray & plainText = m->plainText();
+      const GpgME::DecryptionResult & decryptResult = m->decryptResult();
+      const GpgME::VerificationResult & verifyResult = m->verifyResult();
       std::stringstream ss;
       ss << decryptResult << '\n' << verifyResult;
       kDebug() << ss.str().c_str();
@@ -757,8 +859,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         || decryptResult.error().code() == GPG_ERR_NO_SECKEY;
       actuallyEncrypted = decryptResult.error().code() != GPG_ERR_NO_DATA;
       aErrorText = QString::fromLocal8Bit( decryptResult.error().asString() );
-      auditLogError = executor.auditLogError();
-      auditLog = executor.auditLogAsHtml();
+      auditLogError = m->auditLogError();
+      auditLog = m->auditLogAsHtml();
 
       kDebug() << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
       if ( bDecryptionOk )
@@ -1303,6 +1405,7 @@ namespace KMail {
     std::vector<GpgME::Signature> signatures;
     bool passphraseError;
     bool actuallyEncrypted = true;
+    bool decryptionStarted;
 
     bool bOkDecrypt = okDecryptMIME( *data,
                                      decryptedData,
@@ -1311,9 +1414,15 @@ namespace KMail {
                                      true,
                                      passphraseError,
                                      actuallyEncrypted,
+                                     decryptionStarted,
                                      messagePart.errorText,
                                      messagePart.auditLogError,
                                      messagePart.auditLog );
+
+    if ( decryptionStarted ) {
+      writeDecryptionInProgressBlock();
+      return true;
+    }
 
     // paint the frame
     if ( mReader ) {
@@ -1451,6 +1560,7 @@ namespace KMail {
         std::vector<GpgME::Signature> signatures;
         bool passphraseError;
         bool actuallyEncrypted = true;
+        bool decryptionStarted;
 
         bool bOkDecrypt = okDecryptMIME( *node,
                                          decryptedData,
@@ -1459,9 +1569,15 @@ namespace KMail {
                                          true,
                                          passphraseError,
                                          actuallyEncrypted,
+                                         decryptionStarted,
                                          messagePart.errorText,
                                          messagePart.auditLogError,
                                          messagePart.auditLog );
+
+        if ( decryptionStarted ) {
+          writeDecryptionInProgressBlock();
+          return true;
+        }
 
         // paint the frame
         if ( mReader ) {
@@ -1568,14 +1684,13 @@ namespace KMail {
       }
       htmlWriter()->queue( "<b>" + i18n( "Certificate import details:" ) + "</b><br>" );
       for ( std::vector<GpgME::Import>::const_iterator it = imports.begin() ; it != imports.end() ; ++it ) {
-        if ( (*it).error() )
+        if ( (*it).error() ) {
           htmlWriter()->queue( i18nc( "Certificate import failed.", "Failed: %1 (%2)", (*it).fingerprint(),
-                                 QString::fromLocal8Bit( (*it).error().asString() ) ) );
-        else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey ) {
+                                     QString::fromLocal8Bit( (*it).error().asString() ) ) );
+        } else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey ) {
           if ( (*it).status() & GpgME::Import::ContainedSecretKey ) {
             htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)", (*it).fingerprint() ) );
-          }
-          else {
+          } else {
             htmlWriter()->queue( i18n( "New or changed: %1", (*it).fingerprint() ) );
           }
         }
@@ -1615,6 +1730,7 @@ namespace KMail {
       std::vector<GpgME::Signature> signatures;
       bool passphraseError;
       bool actuallyEncrypted = true;
+      bool decryptionStarted;
 
       if ( mReader && !mReader->decryptMessage() ) {
         writeDeferredDecryptionBlock();
@@ -1626,6 +1742,7 @@ namespace KMail {
                           false,
                           passphraseError,
                           actuallyEncrypted,
+                          decryptionStarted,
                           messagePart.errorText,
                           messagePart.auditLogError,
                           messagePart.auditLog ) ) {
@@ -1633,17 +1750,21 @@ namespace KMail {
         isEncrypted = true;
         node->setEncryptionState( KMMsgFullyEncrypted );
         signTestNode = 0;
-        // paint the frame
-        messagePart.isDecryptable = true;
-        if ( mReader )
-          htmlWriter()->queue( writeSigstatHeader( messagePart,
-                                                   cryptoProtocol(),
-                                                   node->trueFromAddress() ) );
-        insertAndParseNewChildNode( *node,
-                                    decryptedData.constData(),
-                                    "encrypted data" );
-        if ( mReader )
-          htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+        if ( decryptionStarted ) {
+          writeDecryptionInProgressBlock();
+        } else {
+          // paint the frame
+          messagePart.isDecryptable = true;
+          if ( mReader )
+            htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                     cryptoProtocol(),
+                                                     node->trueFromAddress() ) );
+          insertAndParseNewChildNode( *node,
+                                      &*decryptedData,
+                                      "encrypted data" );
+          if ( mReader )
+            htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+        }
       } else {
           // decryption failed, which could be because the part was encrypted but
           // decryption failed, or because we didn't know if it was encrypted, tried,
@@ -2161,10 +2282,10 @@ static QString beginVerboseSigstatHeader()
 static QString makeShowAuditLogLink( const GpgME::Error & err, const QString & auditLog ) {
   if ( const unsigned int code = err.code() ) {
     if ( code == GPG_ERR_NOT_IMPLEMENTED ) {
-      kDebug() << "makeShowAuditLogLink: not showing link (not implemented)";
+      kDebug() << "not showing link (not implemented)";
       return QString();
     } else if ( code == GPG_ERR_NO_DATA ) {
-      kDebug() << "makeShowAuditLogLink: not showing link (not available)";
+      kDebug() << "not showing link (not available)";
       return i18n("No Audit Log available");
     } else {
       return i18n("Error Retrieving Audit Log: %1", QString::fromLocal8Bit( err.asString() ) );
@@ -2201,42 +2322,51 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const QString & fromAddress,
                                               const QString & filename )
 {
-    const bool isSMIME = cryptProto && ( cryptProto == Kleo::CryptoBackendFactory::instance()->smime() );
-    QString signer = block.signer;
+  const bool isSMIME = cryptProto && ( cryptProto == Kleo::CryptoBackendFactory::instance()->smime() );
+  QString signer = block.signer;
 
-    QString htmlStr, simpleHtmlStr;
-    QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
-    QString cellPadding("cellpadding=\"1\"");
+  QString htmlStr, simpleHtmlStr;
+  QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
+  QString cellPadding("cellpadding=\"1\"");
 
-    if( block.isEncapsulatedRfc822Message )
-    {
-        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
-            "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
-        if( !filename.isEmpty() )
-            htmlStr += "<a href=\"" + QString("file:")
-                     + KUrl::toPercentEncoding( filename ) + "\">"
-                     + i18n("Encapsulated message") + "</a>";
-        else
-            htmlStr += i18n("Encapsulated message");
-        htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
+  if ( block.isEncapsulatedRfc822Message ) {
+    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
+               "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
+    if ( !filename.isEmpty() ) {
+      htmlStr += "<a href=\"" + QString("file:") +
+        KUrl::toPercentEncoding( filename ) + "\">" +
+        i18n("Encapsulated message") + "</a>";
+    } else {
+      htmlStr += i18n("Encapsulated message");
     }
+    htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
+  }
 
-    if( block.isEncrypted )
-    {
-        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
-            "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
-        if( block.isDecryptable )
-            htmlStr += i18n("Encrypted message");
-        else {
-            htmlStr += i18n("Encrypted message (decryption not possible)");
-            if( !block.errorText.isEmpty() )
-                htmlStr += "<br />" + i18n("Reason: %1", block.errorText );
-        }
-        htmlStr += "</td></tr><tr class=\"encrB\"><td>";
+  if ( block.isEncrypted ) {
+    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
+               "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
+    if ( block.inProgress ) {
+      htmlStr += i18n("Please wait while the message is being decrypted...");
+    } else if ( block.isDecryptable ) {
+      htmlStr += i18n("Encrypted message");
+    } else {
+      htmlStr += i18n("Encrypted message (decryption not possible)");
+      if( !block.errorText.isEmpty() )
+        htmlStr += "<br />" + i18n("Reason: %1", block.errorText );
+    }
+    htmlStr += "</td></tr><tr class=\"encrB\"><td>";
+  }
+
+    if ( block.isSigned && block.inProgress ) {
+      block.signClass = "signInProgress";
+      htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"signInProgress\">"
+        "<tr class=\"signInProgressH\"><td dir=\"" + dir + "\">";
+      htmlStr += i18n("Please wait while the signature is being verified...");
+      htmlStr += "</td></tr><tr class=\"signInProgressB\"><td>";
     }
     simpleHtmlStr = htmlStr;
 
-    if( block.isSigned ) {
+    if ( block.isSigned && !block.inProgress ) {
         QStringList& blockAddrs( block.signerMailAddresses );
         // note: At the moment frameColor and showKeyInfos are
         //       used for CMS only but not for PGP signatures

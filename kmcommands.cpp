@@ -122,6 +122,10 @@ using namespace KMime;
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
 
+#ifdef Nepomuk_FOUND
+  #include <nepomuk/tag.h>
+#endif
+
 #include <gpgme++/error.h>
 
 #include <QClipboard>
@@ -1674,6 +1678,62 @@ KMCommand::Result KMSetStatusCommand::execute()
   return OK;
 }
 
+KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
+    SetTagMode mode )
+  : mTagLabel( tagLabel ), mSerNums( serNums ), mMode( mode )
+{
+}
+
+KMCommand::Result KMSetTagCommand::execute()
+{
+#ifdef Nepomuk_FOUND
+  //Set the visible name for the tag
+  const KMMessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
+  Nepomuk::Tag n_tag( mTagLabel );
+  if ( tagDesc )
+    n_tag.setLabel( tagDesc->name() );
+#endif
+
+  QList< KMMsgBase * > msgList;
+  foreach ( unsigned long serNum, mSerNums ) {
+    KMFolder * folder;
+    int idx;
+    KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
+    if ( folder ) {
+      KMMsgBase *msg = folder->getMsgBase( idx );
+#ifdef Nepomuk_FOUND
+      Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msgBase->getMsgSerNum() ) );
+#endif
+
+      KMMessageTagList tagList;
+      if ( msg->tagList() )
+        tagList = * msg->tagList();
+
+      int tagPosition = tagList.indexOf( mTagLabel );
+      if ( tagPosition == -1 ) {
+        tagList.append( mTagLabel );
+#ifdef Nepomuk_FOUND
+        n_resource.addTag( n_tag );
+#endif
+      } else if ( mMode == Toggle ) {
+#ifdef Nepomuk_FOUND
+        QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
+        for (int i = 0; i < n_tag_list.count(); ++i ) {
+          if ( n_tag_list[i].identifiers()[0] == mTagLabel ) {
+            n_tag_list.removeAt( i );
+            break;
+          }
+        }
+        n_resource.setTags( n_tag_list );
+#endif
+        tagList.removeAt( tagPosition );
+      }
+      msg->setTagList( tagList );
+    }
+  }
+
+  return OK;
+}
 
 KMFilterCommand::KMFilterCommand( const QByteArray &field, const QString &value )
   : mField( field ), mValue( value )

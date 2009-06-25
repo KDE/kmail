@@ -62,6 +62,7 @@ static const struct {
   { "<size>",        I18N_NOOP( "Size in Bytes" ) },
   { "<age in days>", I18N_NOOP( "Age in Days" )   },
   { "<status>",      I18N_NOOP( "Message Status" )        },
+  { "<tag>",         I18N_NOOP( "Message Tag" ) },
   { "Subject",       I18N_NOOP2( "Subject of an email.", "Subject" )  },
   { "From",          I18N_NOOP( "From" )  },
   { "To",            I18N_NOOP2( "Receiver of an email.", "To" )  },
@@ -282,6 +283,7 @@ void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
   mFilterFieldList.append( SpecialRuleFields[From].getLocalizedDisplayName()    );
   mFilterFieldList.append( SpecialRuleFields[To].getLocalizedDisplayName()      );
   mFilterFieldList.append( SpecialRuleFields[CC].getLocalizedDisplayName()      );
+  mFilterFieldList.append( SpecialRuleFields[Tag].getLocalizedDisplayName()     );
 
   // these others only represent message headers and you can add to
   // them as you like

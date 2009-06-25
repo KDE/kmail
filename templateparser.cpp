@@ -404,6 +404,18 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( quote );
         }
 
+      } else if ( cmd.startsWith( QLatin1String("OADDRESSEESADDR") ) ) {
+        kDebug() << "Command: OADDRESSEESADDR";
+        i += strlen( "OADDRESSEESADDR" );
+        const QString to = mOrigMsg->to();
+        const QString cc = mOrigMsg->cc();
+        if ( !to.isEmpty() )
+          body.append( i18n( "To:" ) + QLatin1Char( ' ' ) + to );
+        if ( !to.isEmpty() && !cc.isEmpty() )
+          body.append( QLatin1Char( '\n' ) );
+        if ( !cc.isEmpty() )
+          body.append( i18n( "CC:" ) + QLatin1Char( ' ' ) +  cc );
+
       } else if ( cmd.startsWith( QLatin1String("CCADDR") ) ) {
         kDebug() <<"Command: CCADDR";
         i += strlen( "CCADDR" );
@@ -881,13 +893,11 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     mMsg->deleteBodyParts();
 
     // Set To and CC from the template
-    if ( mMode == Forward ) {
-      if ( !mTo.isEmpty() ) {
-        mMsg->setTo( mMsg->to() + ',' + mTo );
-      }
-      if ( !mCC.isEmpty() )
-        mMsg->setCc( mMsg->cc() + ',' + mCC );
+    if ( !mTo.isEmpty() ) {
+      mMsg->setTo( mMsg->to() + ',' + mTo );
     }
+    if ( !mCC.isEmpty() )
+      mMsg->setCc( mMsg->cc() + ',' + mCC );
 
     // If we have no attachment, simply create a text/plain part and
     // set the processed template text as the body

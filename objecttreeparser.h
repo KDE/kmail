@@ -38,6 +38,8 @@
 #include <kleo/cryptobackend.h>
 #include <gpgme++/verificationresult.h>
 
+#include <cassert>
+
 class KMReaderWin;
 class KMMessagePart;
 class QString;
@@ -110,6 +112,11 @@ namespace KMail {
                       KMail::HtmlWriter * htmlWriter=0,
                       KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
+
+    void setAllowAsync( bool allow ) { assert( !mHasPendingAsyncJobs ); mAllowAsync = allow; }
+    bool allowAsync() const { return mAllowAsync; }
+
+    bool hasPendingAsyncJobs() const { return mHasPendingAsyncJobs; }
 
     QByteArray rawReplyString() const { return mRawReplyString; }
 
@@ -194,6 +201,10 @@ namespace KMail {
         but we're deferring decryption for later. */
     void writeDeferredDecryptionBlock();
 
+    /** Writes out the block that we use when the node is encrypted,
+        but we've just kicked off async decryption. */
+    void writeDecryptionInProgressBlock();
+
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     bool okDecryptMIME( partNode& data,
@@ -203,6 +214,7 @@ namespace KMail {
                         bool showWarning,
                         bool& passphraseError,
                         bool& actuallyEncrypted,
+                        bool& decryptionStarted,
                         QString& aErrorText,
                         GpgME::Error & auditLogError,
                         QString& auditLog );
@@ -271,7 +283,7 @@ namespace KMail {
     QString quotedHTML(const QString& pos, bool decorate);
 
     const QTextCodec * codecFor( partNode * node ) const;
-    /** Check if the newline at position @p newLinePos in string @p s 
+    /** Check if the newline at position @p newLinePos in string @p s
         seems to separate two paragraphs (important for correct BiDi
         behavior, but is heuristic because paragraphs are not
         well-defined) */
@@ -292,6 +304,8 @@ namespace KMail {
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;
     bool mIncludeSignatures;
+    bool mHasPendingAsyncJobs;
+    bool mAllowAsync;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
     KMail::CSSHelper * mCSSHelper;

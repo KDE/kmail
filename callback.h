@@ -81,6 +81,7 @@ class KMAIL_EXPORT Callback {
     bool deleteInvitationAfterReply() const;
     void deleteInvitation() const;
     bool exchangeCompatibleInvitations() const;
+    bool outlookCompatibleInvitationReplyComments() const;
 
     /**
       Closes the main window showing this message, if it's a secondary window.

@@ -46,8 +46,12 @@
 #include <kdebug.h>
 #include <QByteArray>
 
+#include <map>
+
 class KMMimePartTreeItem;
 class KMMimePartTree;
+
+class KMReaderWin;
 
 /*
  ===========================================================================
@@ -68,13 +72,13 @@ class partNode
     int calcNodeIdOrFindNode( int& curId, const partNode* calcNode,
                               int findId, partNode** findNode );
 
-public:
-    static partNode * fromMessage( const KMMessage * msg );
+    partNode( KMReaderWin *win, DwBodyPart *dwPart,
+              int explicitType    = DwMime::kTypeUnknown,
+              int explicitSubType = DwMime::kSubtypeUnknown,
+	      bool deleteDwBodyPart = false );
 
-    explicit partNode( DwBodyPart* dwPart,
-		       int explicitType    = DwMime::kTypeUnknown,
-		       int explicitSubType = DwMime::kSubtypeUnknown,
-		       bool deleteDwBodyPart = false );
+public:
+    static partNode *fromMessage( const KMMessage *msg, KMReaderWin *win=0 );
 
     partNode( bool deleteDwBodyPart,
               DwBodyPart* dwPart );
@@ -151,6 +155,11 @@ public:
     KMMsgSignatureState signatureState() const {
         return mSignatureState;
     }
+
+    // path is a hierarchical path to this partNode. It is designed to
+    // be stable under decryption, where new child nodes are
+    // added. Treat it as an opaque string.
+    QByteArray path() const;
 
     int nodeId() const;  // node ids start at 1 (this is the top level root node)
 
@@ -231,10 +240,15 @@ public:
     int childCount() const;
     bool processed() const { return mWasProcessed; }
 
-    KMail::Interface::BodyPartMemento * bodyPartMemento() const { return mBodyPartMemento; }
-    void setBodyPartMemento( KMail::Interface::BodyPartMemento * memento ) {
-        mBodyPartMemento = memento;
+    KMail::Interface::BodyPartMemento *bodyPartMemento( const QByteArray &which ) const;
+    void setBodyPartMemento( const QByteArray &which, KMail::Interface::BodyPartMemento *memento );
+
+private:
+    KMReaderWin *reader() const {
+      return mReader ? mReader : mRoot ? mRoot->reader() : 0 ;
     }
+    KMail::Interface::BodyPartMemento *internalBodyPartMemento( const QByteArray & ) const;
+    void internalSetBodyPartMemento( const QByteArray &which, KMail::Interface::BodyPartMemento *memento );
 
 private:
     partNode*     mRoot;
@@ -254,7 +268,8 @@ private:
     bool          mEncodedOk;
     bool          mDeleteDwBodyPart;
     KMMimePartTreeItem* mMimePartTreeItem;
-    KMail::Interface::BodyPartMemento * mBodyPartMemento;
+    std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
+    KMReaderWin  *mReader;
 };
 
 #endif

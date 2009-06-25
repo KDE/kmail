@@ -61,6 +61,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mUseCustomIcons( false ), mMailingListEnabled( false ),
     mAcctList( 0 ),
     mPutRepliesInSameFolder( false ),
+    mHideInSelectionDialog( false ),
     mIgnoreNewMail( false )
 {
   mIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
@@ -214,6 +215,7 @@ void KMFolder::readConfig( KConfigGroup & configGroup )
   if ( savedId != 0 && mId == 0 )
     mId = savedId;
   mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
+  mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
   mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
 
   if ( mUseCustomIcons )
@@ -256,6 +258,7 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
   configGroup.writeEntry("WhoField", mUserWhoField);
   configGroup.writeEntry("Id", mId);
   configGroup.writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
+  configGroup.writeEntry( "HideInSelectionDialog", mHideInSelectionDialog );
   configGroup.writeEntry( "IgnoreNewMail", mIgnoreNewMail );
   if ( !mShortcut.isEmpty() )
     configGroup.writeEntry( "Shortcut", mShortcut.toString() );

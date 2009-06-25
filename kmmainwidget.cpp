@@ -159,10 +159,6 @@ using KMail::TemplateParser;
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
 
-#ifdef Nepomuk_FOUND
-  #include <nepomuk/tag.h>
-#endif
-
 #include <errno.h> // ugh
 
 #include "kmmainwidget.moc"
@@ -883,7 +879,7 @@ void KMMainWidget::createWidgets()
     action->setShortcut( QKeySequence( Qt::Key_C ) );
   }
   {
-    KAction *action = new KAction( i18n("Jump to Folder"), this );
+    KAction *action = new KAction( i18n("Jump to Folder..."), this );
     actionCollection()->addAction( "jump_to_folder", action );
     connect( action, SIGNAL( triggered ( bool ) ),
              SLOT( slotJumpToFolder() ) );
@@ -2090,8 +2086,6 @@ void KMMainWidget::toggleMessageSetTag(
     const QString &taglabel
   )
 {
-  // TODO: Use KMCommand class !!!
-
   Q_ASSERT( set );
 
   if ( !set->isValid() )
@@ -2102,59 +2096,13 @@ void KMMainWidget::toggleMessageSetTag(
 
   Q_ASSERT( set->folder() ); // must exist since the set is valid
 
-  // Get the list of messages
-  QList< KMMsgBase * > selectedMessages = set->contentsAsMsgBaseList();
-  if ( selectedMessages.isEmpty() )
-  {
-    delete set;
-    return;
-  }
+  QList< unsigned long > serNums = KMMsgDict::serNumList( set->contentsAsMsgBaseList() );
+  Q_ASSERT( !serNums.empty() );
 
-#ifdef Nepomuk_FOUND
-  //Set the visible name for the tag
-  const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( taglabel );
-
-  Nepomuk::Tag n_tag( taglabel );
-  if ( tmp_desc )
-    n_tag.setLabel( tmp_desc->name() );
-#endif
-
-  for( QList< KMMsgBase * >::Iterator it = selectedMessages.begin(); it != selectedMessages.end(); ++it )
-  {
-    KMMsgBase * msgBase = *it;
-#ifdef Nepomuk_FOUND
-    Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msgBase->getMsgSerNum() ) );
-#endif
-
-    if ( msgBase->tagList() )
-    {
-      KMMessageTagList tmp_list = *msgBase->tagList();
-      int tagPosition = tmp_list.indexOf( taglabel );
-
-      if ( tagPosition == -1 )
-      {
-        tmp_list.append( taglabel );
-#ifdef Nepomuk_FOUND
-        n_resource.addTag( n_tag );
-#endif
-      } else {
-#ifdef Nepomuk_FOUND
-        QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
-        for (int i = 0; i < n_tag_list.count(); ++i )
-        {
-          if ( n_tag_list[i].identifiers()[0] == taglabel )
-          {
-            n_tag_list.removeAt(i);
-            break;
-          }
-        }
-        n_resource.setTags( n_tag_list );
-#endif
-        tmp_list.removeAt( tagPosition );
-      }
-      msgBase->setTagList( tmp_list );
-    }
-  }
+  // Create command for those messages
+  KMCommand *command = new KMSetTagCommand( taglabel, serNums, KMSetTagCommand::Toggle );
+  set->setParent( command ); // so it will be deleted when the command finishes
+  command->start();
 }
 
 void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )

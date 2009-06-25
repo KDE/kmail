@@ -183,6 +183,12 @@
         <default>false</default>
       </entry>
 
+      <entry name="OutlookCompatibleInvitationReplyComments" type="Bool">
+        <label>Outlook compatible invitation reply comments</label>
+        <whatsthis>When replying to invitations, send the reply comment in way that Microsoft Outlook understands.</whatsthis>
+        <default>false</default>
+      </entry>
+
       <entry name="AutomaticSending" type="Bool">
         <label>Automatic invitation sending</label>
         <whatsthis>When this is checked, you will not see the mail composer window. Instead, all invitation mails are sent automatically. If you want to see the mail before sending it, you can uncheck this option. However, be aware that the text in the composer window is in iCalendar syntax, and you should not try modifying it by hand.</whatsthis>
@@ -297,6 +303,10 @@
       <entry name="ForwardingInlineByDefault" type="Bool">
         <default>false</default>
         <label>Forward Inline As Default.</label>
+      </entry>
+      <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
+        <default>${ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT}</default>
+        <label>Allow the semicolon charactor (';') to be used as separator in the message composer.</label>
       </entry>
       <entry name="ForceReplyCharset" type="Bool" key="force-reply-charset">
         <label>Keep original charset when replying or forwarding if possible</label>
@@ -603,7 +613,7 @@
 
   <group name="GlobalTemplates">
     <entry name="PhrasesConverted" type="Bool" key="PhrasesConverted">
-      <label>Phrases has been converted to templates</label>
+      <label>Phrases have been converted to templates</label>
       <whatsthis>Old phrases have been converted to templates</whatsthis>
       <default>false</default>
     </entry>

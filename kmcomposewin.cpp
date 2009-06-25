@@ -71,7 +71,6 @@ using MailTransport::Transport;
 #include "recipientseditor.h"
 #include "stl_util.h"
 #include "stringutil.h"
-#include "util.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
@@ -3390,7 +3389,7 @@ void KMComposeWin::disableWordWrap()
 void KMComposeWin::forceDisableHtml()
 {
   mForceDisableHtml = true;
-  disableHtml();
+  disableHtml( NoConfirmationNeeded );
   markupAction->setEnabled( false );
   // FIXME: Remove the toggle toolbar action somehow
 }
@@ -3568,12 +3567,12 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
       mEncryptAction->setChecked( false );
       mSignAction->setChecked( false );
     } else {
-      disableHtml();
+      disableHtml( NoConfirmationNeeded );
     }
   }
 
   if ( mForceDisableHtml )
-    disableHtml();
+    disableHtml( NoConfirmationNeeded );
 
   if ( neverEncrypt && saveIn != KMComposeWin::None ) {
       // we can't use the state of the mail itself, to remember the
@@ -3706,7 +3705,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
-  if ( !KMail::Util::checkTransport( this ) )
+  if ( !TransportManager::self()->checkTransport( this ) )
     return;
   if ( !checkRecipientNumber() )
       return;
@@ -3759,7 +3758,7 @@ void KMComposeWin::slotSendNow()
   if ( !mEditor->checkExternalEditorFinished() ) {
     return;
   }
-  if ( !KMail::Util::checkTransport( this ) )
+  if ( !TransportManager::self()->checkTransport( this ) )
     return;
   if ( !checkRecipientNumber() )
     return;
@@ -3857,13 +3856,18 @@ void KMComposeWin::slotCleanSpace()
 void KMComposeWin::enableHtml()
 {
   if ( mForceDisableHtml ) {
-    disableHtml();;
+    disableHtml( NoConfirmationNeeded );;
     return;
   }
 
   mEditor->enableRichTextMode();
-  if ( !toolBar( "htmlToolBar" )->isVisible() )
-    toolBar( "htmlToolBar" )->show();
+  if ( !toolBar( "htmlToolBar" )->isVisible() ) {
+    // Use singleshot, as we we might actually be called from a slot that wanted to disable the
+    // toolbar (but the messagebox in disableHtml() prevented that and called us).
+    // The toolbar can't correctly deal with being enabled right in a slot called from the "disabled"
+    // signal, so wait one event loop run for that.
+    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT( show() ) );
+  }
   if ( !markupAction->isChecked() )
     markupAction->setChecked( true );
 
@@ -3872,12 +3876,25 @@ void KMComposeWin::enableHtml()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::disableHtml()
+void KMComposeWin::disableHtml( Confirmation confirmation )
 {
+  if ( confirmation == LetUserConfirm && mEditor->isFormattingUsed() && !mForceDisableHtml ) {
+    int choice = KMessageBox::warningContinueCancel( this, i18n( "Turning HTML mode off "
+        "will cause the text to lose the formatting. Are you sure?" ),
+        i18n( "Lose the formatting?" ), KGuiItem( i18n( "Lose Formatting" ) ), KStandardGuiItem::cancel(),
+              "LoseFormattingWarning" );
+    if ( choice != KMessageBox::Continue ) {
+      enableHtml();
+      return;
+    }
+  }
+
   mEditor->switchToPlainText();
   slotUpdateFont();
-  if ( toolBar( "htmlToolBar" )->isVisible() )
-    toolBar( "htmlToolBar" )->hide();
+  if ( toolBar( "htmlToolBar" )->isVisible() ) {
+    // See the comment in enableHtml() why we use a singleshot timer, similar situation here.
+    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT( hide() ) );
+  }
   if ( markupAction->isChecked() )
     markupAction->setChecked( false );
 }
@@ -3888,14 +3905,14 @@ void KMComposeWin::slotToggleMarkup()
   if ( markupAction->isChecked() )
     enableHtml();
   else
-    disableHtml();
+    disableHtml( LetUserConfirm );
 }
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotTextModeChanged( KPIM::KMeditor::Mode mode )
 {
   if ( mode == KMeditor::Plain )
-    disableHtml();
+    disableHtml( NoConfirmationNeeded ); // ### Can this happen at all?
   else
     enableHtml();
 }
@@ -3906,7 +3923,7 @@ void KMComposeWin::htmlToolBarVisibilityChanged( bool visible )
   if ( visible )
     enableHtml();
   else
-    disableHtml();
+    disableHtml( LetUserConfirm );
 }
 
 //-----------------------------------------------------------------------------

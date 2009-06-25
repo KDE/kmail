@@ -101,6 +101,7 @@ private:
   SignatureState mSignatureState;
   QList< Tag * > * mTagList;        ///< Usually 0....
   QColor mTextColor;                ///< If invalid, use default text color
+  QColor mBackgroundColor;          ///< If invalid, use default background color
   unsigned long mUniqueId;          ///< The unique id of this message (serial number of KMMsgBase at the moment of writing)
   
   bool mAboutToBeRemoved;           ///< Set to true when this item is going to be deleted and shouldn't be selectable
@@ -130,8 +131,14 @@ public:
   const QColor & textColor() const
     { return mTextColor; };
 
+  const QColor & backgroundColor() const
+    { return mBackgroundColor; };
+
   void setTextColor( const QColor &clr )
     { mTextColor = clr; };
+
+  void setBackgroundColor( const QColor &clr )
+    { mBackgroundColor = clr; };
 
   SignatureState signatureState() const
     { return mSignatureState; };

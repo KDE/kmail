@@ -156,6 +156,7 @@ private:
   QCheckBox   *mNewMailCheckBox;
   QCheckBox   *mNotifyOnNewMailCheckBox;
   QCheckBox   *mKeepRepliesInSameFolderCheckBox;
+  QCheckBox   *mHideInSelectionDialogCheckBox;
   QCheckBox   *mUseDefaultIdentityCheckBox;
   KLineEdit   *mNameEdit;
 

@@ -26,6 +26,7 @@ using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 #include "stringutil.h"
+#include "kmmessagetag.h"
 
 // KDE PIM libs headers
 #include <kpimidentities/identity.h>
@@ -43,6 +44,9 @@ using KMail::RegExpLineEdit;
 #include <Phonon/MediaObject>
 #include <kshell.h>
 #include <kprocess.h>
+#ifdef Nepomuk_FOUND
+  #include <nepomuk/tag.h>
+#endif
 
 // Qt headers:
 #include <QTextCodec>
@@ -855,6 +859,97 @@ const QString KMFilterActionSetStatus::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
+}
+
+//=============================================================================
+// KMFilterActionAddTag - append tag to message
+// Appends a tag to messages
+//=============================================================================
+class KMFilterActionAddTag: public KMFilterActionWithStringList
+{
+public:
+  KMFilterActionAddTag();
+  virtual ReturnCode process( KMMessage* msg ) const;
+  virtual bool requiresBody( KMMsgBase* ) const;
+
+  static KMFilterAction* newAction();
+
+  virtual bool isEmpty() const { return false; }
+
+  virtual void argsFromString( const QString &argsStr );
+  virtual const QString argsAsString() const;
+  virtual const QString displayString() const;
+
+private:
+  QStringList mLabelList;
+};
+
+KMFilterAction* KMFilterActionAddTag::newAction()
+{
+  return (new KMFilterActionAddTag);
+}
+
+KMFilterActionAddTag::KMFilterActionAddTag()
+  : KMFilterActionWithStringList( "add tag", i18n("Add Tag") )
+{
+  const QHash<QString, KMMessageTagDescription *> * tagDict = kmkernel->msgTagMgr()->msgTagDict();
+  if ( tagDict ) {
+    foreach ( const KMMessageTagDescription * tagDesc, *tagDict ) {
+      mParameterList.append( tagDesc->name() );
+      mLabelList.append( tagDesc->label() );
+    }
+  }
+}
+
+KMFilterAction::ReturnCode KMFilterActionAddTag::process( KMMessage* msg ) const
+{
+  const int idx = mParameterList.indexOf( mParameter );
+  if ( idx == -1 ) return ErrorButGoOn;
+
+  KMMessageTagList tagList;
+  if ( msg->tagList() )
+    tagList = * msg->tagList();
+
+  const QString& tagLabel = mLabelList.at( idx );
+  const int tagPosition = tagList.indexOf( tagLabel );
+  if ( tagPosition == -1 ) {
+    tagList.append( tagLabel );
+#ifdef Nepomuk_FOUND
+    n_resource.addTag( mParameter );
+#endif
+    msg->setTagList( tagList );
+  }
+
+  return GoOn;
+}
+
+bool KMFilterActionAddTag::requiresBody( KMMsgBase* ) const
+{
+  return false;
+}
+
+void KMFilterActionAddTag::argsFromString( const QString &argsStr )
+{
+  foreach ( const QString& tag, mParameterList ) {
+    if ( tag == argsStr ) {
+      mParameter = tag;
+      return;
+    }
+  }
+  mParameter = mParameterList.at( 0 );
+}
+
+const QString KMFilterActionAddTag::argsAsString() const
+{
+  const int idx = mParameterList.indexOf( mParameter );
+  if ( idx == -1 ) return QString();
+
+  return mParameterList.at( idx );
+}
+
+const QString KMFilterActionAddTag::displayString() const
+{
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -2024,6 +2119,7 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionCopy::newAction );
   insert( KMFilterActionIdentity::newAction );
   insert( KMFilterActionSetStatus::newAction );
+  insert( KMFilterActionAddTag::newAction );
   insert( KMFilterActionFakeDisposition::newAction );
   insert( KMFilterActionTransport::newAction );
   insert( KMFilterActionReplyTo::newAction );

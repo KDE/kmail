@@ -372,7 +372,16 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     else
       msgContents += ", " + msg->cc();
     msgContents += ", " + msg->headerField("Bcc");
-  }  else {
+  } else if ( field() == "<tag>" ) {
+    if ( msg->tagList() ) {
+      foreach ( const QString &label, * msg->tagList() ) {
+        const KMMessageTagDescription * tagDesc = kmkernel->msgTagMgr()->find( label );
+        if ( tagDesc )
+          msgContents += tagDesc->name();
+      }
+      logContents = false;
+    }
+  } else {
     // make sure to treat messages with multiple header lines for
     // the same header correctly
     msgContents = msg->headerFields( field() ).join( " " );

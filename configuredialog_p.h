@@ -592,12 +592,12 @@ private: // data
 
   QListWidget *mTagListBox;
 
-  QCheckBox *mTextColorCheck,
+  QCheckBox *mTextColorCheck, *mBackgroundColorCheck,
             *mTextFontCheck, *mInToolbarCheck;
 
   QGroupBox *mTagsGroupBox, *mTagSettingGroupBox;
 
-  KColorCombo *mTextColorCombo;
+  KColorCombo *mTextColorCombo, *mBackgroundColorCombo;
 
   KFontRequester *mFontRequester;
 

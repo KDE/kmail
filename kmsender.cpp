@@ -60,7 +60,6 @@ using namespace MailTransport;
 #include "protocols.h"
 #include "kmcommands.h"
 #include "stringutil.h"
-#include "util.h"
 
 #include <mimelib/mediatyp.h>
 #include <mimelib/enum.h>
@@ -139,7 +138,7 @@ bool KMSender::doSend(KMMessage *aMsg, short sendNow )
     return false;
   }
 
-  if ( !KMail::Util::checkTransport( 0 ) ) {
+  if ( !TransportManager::self()->checkTransport( 0 ) ) {
     return false;
   }
 
@@ -208,7 +207,7 @@ void KMSender::outboxMsgAdded( int idx )
 //-----------------------------------------------------------------------------
 bool KMSender::doSendQueued( const QString &customTransport )
 {
-  if ( !KMail::Util::checkTransport( 0 ) ) {
+  if ( !TransportManager::self()->checkTransport( 0 ) ) {
     return false;
   }
 

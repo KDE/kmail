@@ -153,6 +153,7 @@ set(kmailprivate_LIB_SRCS
    khtmlparthtmlwriter.cpp
    filehtmlwriter.cpp
    teehtmlwriter.cpp
+   objecttreeparser_p.cpp
    objecttreeparser.cpp
    attachmentcollector.cpp
    bodypartformatter.cpp
@@ -321,9 +322,11 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
 if(KDEPIM_ENTERPRISE_BUILD)
   set(WARN_TOOMANY_RECIPIENTS_DEFAULT true)
   set(DELETE_INVITATIONS_AFTER_REPLY_DEFAULT true)
+  set(ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT true)
 else(KDEPIM_ENTERPRISE_BUILD)
   set(WARN_TOOMANY_RECIPIENTS_DEFAULT false)
   set(DELETE_INVITATIONS_AFTER_REPLY_DEFAULT false)
+  set(ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT false)
 endif(KDEPIM_ENTERPRISE_BUILD)
 configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
@@ -376,6 +379,7 @@ target_link_libraries(kmailprivate
   ${KDE4_KIO_LIBS}
   ${KDEPIMLIBS_KABC_LIBS}
   ${KDEPIMLIBS_KPIMUTILS_LIBS}
+  ${KDEPIMLIBS_KPIMTEXTEDIT_LIBS}
   ${QT_QT3SUPPORT_LIBRARY}
 )
 

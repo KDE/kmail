@@ -83,11 +83,11 @@ bool KMail::PartNodeBodyPart::hasCompleteBody() const {
 }
 
 KMail::Interface::BodyPartMemento * KMail::PartNodeBodyPart::memento() const {
-  return mPartNode.bodyPartMemento();
+  return mPartNode.bodyPartMemento( "__plugin__" );
 }
 
 void KMail::PartNodeBodyPart::setBodyPartMemento( Interface::BodyPartMemento * memento ) {
-  mPartNode.setBodyPartMemento( memento );
+  mPartNode.setBodyPartMemento( "__plugin__", memento );
 }
 
 KMail::Interface::BodyPart::Display KMail::PartNodeBodyPart::defaultDisplay() const {
