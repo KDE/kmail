@@ -830,7 +830,7 @@ QList<KMFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) con
       // Ok clicked. Give option to continue editing
       int response = KMessageBox::warningContinueCancelList(
         0,
-        i18n( "The following filters are invalid (e.g. containing no actions"
+        i18n( "The following filters are invalid (e.g. containing no actions "
               "or no search rules). Discard or edit invalid filters?" ),
         emptyFilters,
         QString(),
