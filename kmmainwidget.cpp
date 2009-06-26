@@ -3577,7 +3577,7 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
     actionCollection()->addAction("addressbook", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
-    if (KStandardDirs::findExe("kaddressbook").isEmpty()) action->setEnabled(false);
+    if (KStandardDirs::findExe("kcontactmanager").isEmpty()) action->setEnabled(false);
   }
 
   {
