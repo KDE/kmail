@@ -382,7 +382,7 @@ if(KMAIL_SQLITE_INDEX)
 endif(KMAIL_SQLITE_INDEX)
 
 if(Nepomuk_FOUND)
-  target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES})
+  target_link_libraries(kmailprivate LINK_INTERFACE_LIBRARIES ${KDE4_NEPOMUK_LIBS})
 endif(Nepomuk_FOUND)
 
 set_target_properties(kmailprivate
