@@ -2667,6 +2667,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       size_t size = cstr.size();
       if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
         // convert CRLF to LF before writing text attachments to disk
+        // PENDING (romain) disable on Windows ?
         size = KMail::Util::crlf2lf( data.data(), size );
       }
       data.resize( size );
@@ -2678,7 +2679,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   if ( url.isLocalFile() )
   {
     // save directly
-    file.setFileName( url.path() );
+    file.setFileName( url.toLocalFile() );
     if ( !file.open( QIODevice::WriteOnly ) )
     {
       KMessageBox::error( parentWidget(),
