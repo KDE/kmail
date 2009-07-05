@@ -1126,7 +1126,7 @@ void FolderDialogMaintenanceTab::updateFolderIndexSizes()
   if ( u.isValid() && u.isLocalFile() )
   {
     // the index should always be a file
-    QFileInfo fi( u.path() );
+    QFileInfo fi( u.toLocalFile() );
     mIndexSizeLabel->setText( convertSizeWithBytes( fi.size() ) );
   }
 }
