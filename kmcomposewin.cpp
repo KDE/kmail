@@ -2984,7 +2984,7 @@ void KMComposeWin::openAttach( int index )
   KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(), false, false,
                           false );
   if ( ::chmod( QFile::encodeName( atmTempFile->fileName() ), S_IRUSR ) != 0) {
-    QFile::remove(url.path());
+    QFile::remove(url.toLocalFile());
     return;
   }
 
@@ -2997,11 +2997,11 @@ void KMComposeWin::openAttach( int index )
 
   if ( !offer || mimetype.isNull() ) {
     if ( ( !KRun::displayOpenWithDialog( url, this, autoDelete ) ) && autoDelete ) {
-      QFile::remove(url.path());
+      QFile::remove(url.toLocalFile());
     }
   } else {
     if ( ( !KRun::run( *offer, url, this, autoDelete ) ) && autoDelete ) {
-      QFile::remove( url.path() );
+      QFile::remove( url.toLocalFile() );
     }
   }
 }

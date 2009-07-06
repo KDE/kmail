@@ -3014,7 +3014,7 @@ void KMHandleAttachmentCommand::atmOpen()
   url.setPath( fname );
   lst.append( url );
   if ( (!KRun::run( *mOffer, lst, 0, autoDelete )) && autoDelete ) {
-      QFile::remove(url.path());
+      QFile::remove(url.toLocalFile());
   }
 }
 
@@ -3033,7 +3033,7 @@ void KMHandleAttachmentCommand::atmOpenWith()
   url.setPath( fname );
   lst.append( url );
   if ( (! KRun::displayOpenWithDialog(lst, kmkernel->mainWin(), autoDelete)) && autoDelete ) {
-    QFile::remove( url.path() );
+    QFile::remove( url.toLocalFile() );
   }
 }
 
