@@ -2334,6 +2334,10 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
 :KMMoveCommand( sernum )
 {
+  if ( !sernum ) {
+    return;
+  }
+
   KMFolder *srcFolder = 0;
   int idx;
   KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
