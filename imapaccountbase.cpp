@@ -50,6 +50,7 @@ using KPIM::ProgressManager;
 #include <kconfiggroup.h>
 #include <kconfig.h>
 #include <klocale.h>
+#include <knotification.h>
 #include <kmessagebox.h>
 using KIO::MetaData;
 #include <kio/passworddialog.h>
@@ -1058,11 +1059,17 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
           KMessageBox::detailedError( QApplication::activeWindow(), msg,
                                       errors.join("\n").prepend("<qt>"), caption );
         } else {
-          if ( !errors.isEmpty() )
+          if ( !errors.isEmpty() ) {
             KMessageBox::detailedError( QApplication::activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
-          else
-            KMessageBox::error( QApplication::activeWindow(), msg, caption );
           }
+          else {
+            KNotification::event( "mail-check-error",
+                      i18n( "Error while checking for new mail:%1", msg ),
+                      QPixmap(),
+                      QApplication::activeWindow(),
+                      KNotification::CloseOnTimeout );
+          }
+        }
       }
     } else { // i.e. we have a chance to continue, ask the user about it
       if ( errors.count() >= 3 ) { // there is no detailedWarningContinueCancel... (#86517)
