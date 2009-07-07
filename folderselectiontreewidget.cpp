@@ -114,8 +114,8 @@ void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSele
   if ( fti->folder() && fti->folder()->hideInSelectionDialog() )
     return;
 
-  // search folders are never shown
-  if ( fti->protocol() == KPIM::FolderTreeWidgetItem::Search )
+  // search folders are only shown when they are read-only
+  if ( fti->protocol() == KPIM::FolderTreeWidgetItem::Search && mLastMustBeReadWrite )
     return;
 
   // imap folders?
