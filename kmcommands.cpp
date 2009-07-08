@@ -745,7 +745,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   if ( msg->isComplete() && !mMsgWasComplete ) {
     msg->notify(); // notify observers as msg was transferred
   }
-  QString str = msg->codec()->toUnicode( msg->asString() );
+  QString str = QString::fromAscii( msg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
   viewer->setWindowTitle( i18n("Message as Plain Text") );
@@ -2667,6 +2667,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       size_t size = cstr.size();
       if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
         // convert CRLF to LF before writing text attachments to disk
+        // PENDING (romain) disable on Windows ?
         size = KMail::Util::crlf2lf( data.data(), size );
       }
       data.resize( size );
@@ -2678,7 +2679,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   if ( url.isLocalFile() )
   {
     // save directly
-    file.setFileName( url.path() );
+    file.setFileName( url.toLocalFile() );
     if ( !file.open( QIODevice::WriteOnly ) )
     {
       KMessageBox::error( parentWidget(),
@@ -3074,7 +3075,7 @@ void KMHandleAttachmentCommand::atmOpen()
   url.setPath( fname );
   lst.append( url );
   if ( (!KRun::run( *mOffer, lst, 0, autoDelete )) && autoDelete ) {
-      QFile::remove(url.path());
+      QFile::remove(url.toLocalFile());
   }
 }
 
@@ -3093,7 +3094,7 @@ void KMHandleAttachmentCommand::atmOpenWith()
   url.setPath( fname );
   lst.append( url );
   if ( (! KRun::displayOpenWithDialog(lst, kmkernel->mainWin(), autoDelete)) && autoDelete ) {
-    QFile::remove( url.path() );
+    QFile::remove( url.toLocalFile() );
   }
 }
 

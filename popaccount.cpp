@@ -44,6 +44,8 @@ using KPIM::BroadcastStatus;
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kio/jobuidelegate.h>
+#include <knotification.h>
+
 using KIO::MetaData;
 
 static const unsigned short int pop3DefaultPort = 110;
@@ -1103,7 +1105,12 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
   }
 
   if (interactive && kmkernel) {
-    KMessageBox::error(kmkernel->mainWin(), KIO::buildErrorString(error, errorMsg));
+    KNotification::event( "mail-check-error",
+                          i18n( "Error while checking for new mail:\n%1",
+                                KIO::buildErrorString( error, errorMsg ) ),
+                          QPixmap(),
+                          kmkernel->mainWin(),
+                          KNotification::CloseOnTimeout );
   }
 
 

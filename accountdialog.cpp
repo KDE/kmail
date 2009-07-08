@@ -1174,7 +1174,7 @@ void AccountDialog::slotLocationChooser()
     return;
   }
 
-  mLocal.ui.locationEdit->setEditText( url.path() );
+  mLocal.ui.locationEdit->setEditText( url.toLocalFile() );
   directory = url.directory();
 }
 

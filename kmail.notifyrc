@@ -10,6 +10,11 @@ Comment[th]=จัดการจดหมาย K
 Comment[x-test]=xxKMailxx
 Comment[zh_TW]=KMail 郵件軟體
 
+[Event/mail-check-error]
+Name=Error While Checking Mail
+Comment=There was an error while checking for new mail
+Action=Popup
+
 [Event/new-mail-arrived]
 Name=New Mail Arrived
 Name[af]=Nuwe pos het gearriveer

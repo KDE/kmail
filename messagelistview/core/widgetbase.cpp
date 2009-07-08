@@ -159,6 +159,7 @@ Widget::Widget( QWidget *pParent )
 
   mView = new View( this );
   mView->setSortOrder( &mSortOrder );
+  mView->setFocus();
   g->addWidget( mView, 1, 0, 1, 6 );
 
   connect( mView->header(), SIGNAL( sectionClicked( int ) ),

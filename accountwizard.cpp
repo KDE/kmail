@@ -59,6 +59,7 @@ using KMail::IdentityListViewItem;
 #include <kconfiggroup.h>
 #include <kvbox.h>
 #include <kmaccount.h>
+#include <kpushbutton.h>
 
 #include <QCheckBox>
 #include <QDir>
@@ -114,6 +115,7 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
     mAccount( 0 ), mTransport( 0 ), mServerTest( 0 )
 {
   showButton( Help, false );
+  button( KDialog::Cancel )->setText( i18n( "Create an Account Later" ) );
 
   setupWelcomePage();
   setupAccountTypePage();
