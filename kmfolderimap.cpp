@@ -451,7 +451,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
             // we need the messages that belong to the current set to pass them to the ImapJob
             QList<KMMessage*> temp_msgs = splitMessageList(*it, msgList);
             if ( temp_msgs.isEmpty() ) {
-              kDebug() << "Wow! KMFolderImap::splitMessageList() returned an empty list!";
+              kDebug() << "Wow! KMFolderImap::splitMessageList() returned an empty list!"; // krazy:exclude=kdebug
             }
             imapJob = new ImapJob(temp_msgs, *it, ImapJob::tMoveMessage, this);
             connect(imapJob, SIGNAL(messageCopied(QList<KMMessage*>)),

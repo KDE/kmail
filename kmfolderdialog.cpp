@@ -997,7 +997,7 @@ KMail::FolderDialogMaintenanceTab::FolderDialogMaintenanceTab( KMFolderDialog *d
   label = new QLabel( folderDesc, filesGroup );
   box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
 
-  QLineEdit *label2 = new KLineEdit( mFolder->location(), filesGroup );
+  KLineEdit *label2 = new KLineEdit( mFolder->location(), filesGroup );
   label2->setReadOnly( true );
   box->addRow( i18n("Location:"), label2 );
 

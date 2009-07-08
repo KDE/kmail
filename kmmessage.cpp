@@ -1143,7 +1143,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // RFC 2298: [ Confirmation from the user SHOULD be obtained (or no
   // MDN sent) ] if there is more than one distinct address in the
   // Disposition-Notification-To header.
-  kDebug() << "KPIMUtils::splitAddressList(receiptTo):"
+  kDebug() << "KPIMUtils::splitAddressList(receiptTo):" // krazy:exclude=kdebug
            << KPIMUtils::splitAddressList(receiptTo).join("\n");
   if ( KPIMUtils::splitAddressList(receiptTo).count() > 1 ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
