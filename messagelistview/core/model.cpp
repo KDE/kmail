@@ -48,6 +48,7 @@
 #include "messagelistview/core/theme.h"
 #include "messagelistview/core/manager.h"
 #include "messagelistview/core/messageitemsetmanager.h"
+#include "util.h"
 
 #include <config-kmail.h>
 
@@ -557,6 +558,13 @@ int Model::rowCount( const QModelIndex &parent ) const
 
 void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSelectionMode )
 {
+  // Prevent a case of recursion when opening a folder that has a message and the folder was
+  // never opened before.
+  static int recursionCounter = 0;
+  KMail::Util::RecursionPreventer preventer( recursionCounter );
+  if ( preventer.isRecursive() )
+    return;
+
   if( mFillStepTimer.isActive() )
     mFillStepTimer.stop();
 
