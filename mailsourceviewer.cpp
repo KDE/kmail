@@ -53,7 +53,7 @@ void MailSourceHighlighter::highlightBlock ( const QString & text ) {
   {
     // Content- header starts a new mime part, and therefore new headers
     // If a Content-* header is found, change State to headers until a blank line is found.
-    if ( text.startsWith( "Content-" ) )
+    if ( text.startsWith( QLatin1String( "Content-" ) ) )
     {
       setCurrentBlockState( headersState );
     }

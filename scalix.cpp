@@ -30,9 +30,9 @@ FolderAttributeParser::FolderAttributeParser( const QString &attribute )
   QStringList parts = attribute.split( ',', QString::SkipEmptyParts );
 
   for ( int i = 0; i < parts.count(); ++i ) {
-    if ( parts[i].startsWith( "\\X-SpecialFolder=" ) )
+    if ( parts[i].startsWith( QLatin1String( "\\X-SpecialFolder=" ) ) )
       mFolderName = parts[i].mid( 17 );
-    else if ( parts[i].startsWith( "\\X-FolderClass=" ) )
+    else if ( parts[i].startsWith( QLatin1String( "\\X-FolderClass=" ) ) )
       mFolderClass = parts[i].mid( 15 );
   }
 }

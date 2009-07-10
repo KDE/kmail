@@ -1619,7 +1619,7 @@ QWidget* KMFilterActionForward::createParamWidget( QWidget* parent ) const
   lineEdit->setToolTip( i18n( "The addressee to whom the message will be forwarded." ) );
   lineEdit->setWhatsThis( i18n( "The filter will forward the message to the addressee entered here." ) );
 
-  QComboBox *templateCombo = new QComboBox( addressAndTemplate );
+  KComboBox *templateCombo = new KComboBox( addressAndTemplate );
   templateCombo->setObjectName( "templateCombo" );
   hBox->addWidget( templateCombo );
 
@@ -1644,7 +1644,7 @@ void KMFilterActionForward::applyParamWidgetValue( QWidget* paramWidget )
   Q_ASSERT( addressEdit );
   KMFilterActionWithAddress::applyParamWidgetValue( addressEdit );
 
-  QComboBox *templateCombo = paramWidget->findChild<QComboBox*>( "templateCombo" );
+  KComboBox *templateCombo = paramWidget->findChild<KComboBox*>( "templateCombo" );
   Q_ASSERT( templateCombo );
 
   if ( templateCombo->currentIndex() == 0 ) {
@@ -1662,7 +1662,7 @@ void KMFilterActionForward::setParamWidgetValue( QWidget* paramWidget ) const
   Q_ASSERT( addressEdit );
   KMFilterActionWithAddress::setParamWidgetValue( addressEdit );
 
-  QComboBox *templateCombo = paramWidget->findChild<QComboBox*>( "templateCombo" );
+  KComboBox *templateCombo = paramWidget->findChild<KComboBox*>( "templateCombo" );
   Q_ASSERT( templateCombo );
 
   if ( mTemplate.isEmpty() ) {
@@ -1685,7 +1685,7 @@ void KMFilterActionForward::clearParamWidget( QWidget* paramWidget ) const
   Q_ASSERT( addressEdit );
   KMFilterActionWithAddress::clearParamWidget( addressEdit );
 
-  QComboBox *templateCombo = paramWidget->findChild<QComboBox*>( "templateCombo" );
+  KComboBox *templateCombo = paramWidget->findChild<KComboBox*>( "templateCombo" );
   Q_ASSERT( templateCombo );
 
   templateCombo->setCurrentIndex( 0 );

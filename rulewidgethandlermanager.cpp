@@ -1437,7 +1437,7 @@ namespace {
         if ( valueIndex == -1 ) {
           tagCombo->setCurrentIndex( 0 );
           // Still show tag if it was deleted from MsgTagMgr
-          QLineEdit *lineEdit = tagCombo->lineEdit();
+          QLineEdit *lineEdit = tagCombo->lineEdit(); // krazy:exclude=qclasses
           Q_ASSERT( lineEdit );
           lineEdit->setText( rule->contents() );
         } else {
