@@ -31,6 +31,7 @@ using KPIM::ProgressItem;
 #include "globalsettings.h"
 using namespace KPIM;
 #include "messageactions.h"
+#include "util.h"
 
 #include <kde_file.h>
 #include <kactionmenu.h>
@@ -574,6 +575,13 @@ void KMHeaders::readConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::reset()
 {
+  // Prevent a case of recursion when opening a folder that has a message and the folder was
+  // never opened before.
+  static int recursionCounter = 0;
+  KMail::Util::RecursionPreventer preventer( recursionCounter );
+  if ( preventer.isRecursive() )
+    return;
+
   int top = topItemIndex();
   int id = currentItemIndex();
   noRepaint = true;

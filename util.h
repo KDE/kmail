@@ -124,6 +124,22 @@ namespace Util {
       bool m_disabled;
     };
 
+    /**
+      * Small helper class that implements a variable when it is constructed and decrements that
+      * when it is destructed.
+      * Intended use is to use this with a static int that is initialy 0.
+      */
+    class RecursionPreventer
+    {
+      public:
+        explicit RecursionPreventer( int &counter );
+        ~RecursionPreventer();
+        bool isRecursive() const;
+
+      private:
+        int &mCounter;
+    };
+
 }
 }
 
