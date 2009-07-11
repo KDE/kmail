@@ -28,6 +28,7 @@ using KMail::HeaderStrategy;
 #include "templateparser.h"
 using KMail::TemplateParser;
 #include "stringutil.h"
+#include "mdnadvicedialog.h"
 
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
@@ -1046,25 +1047,24 @@ static const struct {
 
 static const int numMdnMessageBoxes
       = sizeof mdnMessageBoxes / sizeof *mdnMessageBoxes;
-
-
+      
 static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) ) {
-      if ( mdnMessageBoxes[i].canDeny ) {
-        const KCursorSaver saver( Qt::ArrowCursor );
-        int answer = QMessageBox::information( 0,
-                         i18n("Message Disposition Notification Request"),
-                         i18n( mdnMessageBoxes[i].text ),
-                         i18n("&Ignore"), i18n("Send \"&denied\""), i18n("&Send") );
-        return answer ? answer + 1 : 0 ; // map to "mode" in createMDN
-      } else {
-        const KCursorSaver saver( Qt::ArrowCursor );
-        int answer = QMessageBox::information( 0,
-                         i18n("Message Disposition Notification Request"),
-                         i18n( mdnMessageBoxes[i].text ),
-                         i18n("&Ignore"), i18n("&Send") );
-        return answer ? answer + 2 : 0 ; // map to "mode" in createMDN
+      const KCursorSaver saver( Qt::ArrowCursor );
+      MDNAdviceDialog::MDNAdvice answer;
+      answer = MDNAdviceDialog::questionIgnoreSend( mdnMessageBoxes[i].text,
+                                                    mdnMessageBoxes[i].canDeny );
+      switch ( answer ) {
+        case MDNAdviceDialog::MDNSend:
+          return 3;
+
+        case MDNAdviceDialog::MDNSendDenied:
+          return 2;
+
+        default:
+        case MDNAdviceDialog::MDNIgnore:
+          return 0;
       }
     }
   kWarning() <<"didn't find data for message box \""
