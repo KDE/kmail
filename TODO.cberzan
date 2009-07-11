@@ -1,3 +1,4 @@
+===== AkonadiSender =========================================================
 * GPL or LGPL?
 * what can be inline?
 * KGlobal::ref()?
@@ -27,3 +28,10 @@ post-processing???
 bugs:
 * apparently the composer window doesn't use the default transport by default...
 * handle case when MDA is offline
+* If kmail passes a message to the MDA then it *must* be accepted.  Check for
+  case when it's not.
+
+===== Composer ==============================================================
+* Ask about wrapping logic.  Should drafts be wordwrapped, for instance?
+* Why kAsciiToLower when there is QByteArray::toLower()?
+* What should be in namespace KMail?

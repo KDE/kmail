@@ -17,10 +17,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef BUILD_NEW_COMPOSER
-#define REALLY_WANT_KMCOMPOSEWIN_H
-#include "kmcomposewin.h"
-#undef REALLY_WANT_KMCOMPOSEWIN_H
+#ifdef BUILD_NEW_COMPOSER
+#include "newcomposerwin.h"
 
 // KDEPIM includes
 #include "kleo/cryptobackendfactory.h"
@@ -43,16 +41,22 @@ using KPIM::RecentAddresses;
 #include <kpimutils/kfileio.h>
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
-#include <kmime/kmime_codecs.h>
-
 using MailTransport::TransportManager;
+#include <mailtransport/transport.h>
 using MailTransport::Transport;
+#include <mailtransport/messagequeuejob.h>
+#include <kmime/kmime_codecs.h>
+#include <messagecomposer/composer.h>
+#include <messagecomposer/attachmentpart.h>
+#include <messagecomposer/infopart.h>
+#include <messagecomposer/job.h>
+#include <messagecomposer/textpart.h>
 
 // KMail includes
 #include "attachmentcollector.h"
 #include "attachmentlistview.h"
 #include "chiasmuskeyselector.h"
+#include "codecaction.h"
 #include "editorwatcher.h"
 #include "kleo_util.h"
 #include "kmatmlistview.h"
@@ -66,7 +70,6 @@ using MailTransport::Transport;
 #include "kmmsgpartdlg.h"
 #include "kmreadermainwin.h"
 #include "mailcomposeradaptor.h"
-#include "messagecomposer.h"
 #include "objecttreeparser.h"
 #include "partNode.h"
 #include "recipientseditor.h"
@@ -80,7 +83,8 @@ using Sonnet::DictionaryComboBox;
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
-#include <kcharsets.h>
+//#include <kcharsets.h>
+//#include <kcodecaction.h>
 #include <kcursorsaver.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
@@ -126,7 +130,7 @@ using Sonnet::DictionaryComboBox;
 #include <memory>
 
 // MOC
-#include "kmcomposewin.moc"
+#include "newcomposerwin.moc"
 
 #include "snippetwidget.h"
 
@@ -147,7 +151,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
     mAtmModified( false ),
-    mMsg( 0 ),
+    //mMsg( 0 ),
     mAttachMenu( 0 ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
     mFolder( 0 ),
@@ -161,17 +165,19 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mIdentityAction( 0 ), mTransportAction( 0 ), mFccAction( 0 ),
     mWordWrapAction( 0 ), mFixedFontAction( 0 ), mAutoSpellCheckingAction( 0 ),
     mDictionaryAction( 0 ), mSnippetAction( 0 ),
-    mEncodingAction( 0 ),
+    //mEncodingAction( 0 ),
+    mCodecAction( 0 ),
     mCryptoModuleAction( 0 ),
     mEncryptChiasmusAction( 0 ),
     mEncryptWithChiasmus( false ),
     mComposer( 0 ),
+    mPendingQueueJobs( 0 ),
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false )
 {
-  (void) new MailcomposerAdaptor( this );
+  //(void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
   QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
@@ -228,7 +234,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mAtmModified = false;
   mAutoDeleteMsg = false;
   mFolder = 0;
-  mAutoCharset = true;
+  //mAutoCharset = true;
   mFixedFontAction = 0;
   // the attachment view is separated from the editor by a splitter
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
@@ -370,10 +376,12 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   initAutoSave();
 
+#if 0
   mMsg = 0;
   if ( aMsg ) {
     setMsg( aMsg );
   }
+#endif
   mRecipientsEditor->setFocus();
   mEditor->updateActionStates(); // set toolbar buttons to correct values
 
@@ -385,6 +393,7 @@ KMComposeWin::~KMComposeWin()
 {
   writeConfig();
 
+#if 0
   if ( mFolder && mMsg ) {
     mAutoDeleteMsg = false;
     mFolder->addMsg( mMsg );
@@ -396,6 +405,7 @@ KMComposeWin::~KMComposeWin()
     delete mMsg;
     mMsg = 0;
   }
+#endif
 
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.begin();
   while ( it != mMapAtmLoadData.end() ) {
@@ -404,7 +414,7 @@ KMComposeWin::~KMComposeWin()
     job->kill();
     it = mMapAtmLoadData.begin();
   }
-  deleteAll( mComposedMessages );
+  //deleteAll( mComposedMessages );
 
   qDeleteAll( mAtmList );
   qDeleteAll( mAtmTempList );
@@ -511,7 +521,7 @@ void KMComposeWin::addAttachment( const QString &name,
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig( bool reload /* = false */ )
 {
-  mDefCharset = KMMessage::defaultCharset();
+  //mDefCharset = KMMessage::defaultCharset();
   mBtnIdentity->setChecked( GlobalSettings::self()->stickyIdentity() );
   if (mBtnIdentity->isChecked()) {
     mId = ( GlobalSettings::self()->previousIdentity() != 0 ) ?
@@ -612,11 +622,12 @@ void KMComposeWin::writeConfig( void )
 //-----------------------------------------------------------------------------
 void KMComposeWin::autoSaveMessage()
 {
-  kDebug() ;
+  kDebug() << "Implement me.";
+#if 0
   if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() ) {
     return;
   }
-  kDebug() <<"autosaving message";
+  kDebug() << "autosaving message";
 
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
@@ -633,18 +644,21 @@ void KMComposeWin::autoSaveMessage()
   applyChanges( true, true );
 
   // Don't continue before the applyChanges is done!
+#endif
 }
 
 void KMComposeWin::slotContinueAutoSave()
 {
+  Q_ASSERT( false );
+#if 0
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
-    kDebug() <<"Composing the message failed.";
+    kDebug() << "Composing the message failed (composed 0 messages).";
     return;
   }
-  KMMessage *msg = mComposedMessages.first();
-  if ( !msg ) // a bit of extra defensiveness
-    return;
+  Message::Ptr msg = mComposedMessages.first();
+
+  // BLAAAAAARG need to convert KMMessage -> KMime::Message
 
   kDebug() <<"opening autoSaveFile" << mAutoSaveFilename;
   const QString filename =
@@ -684,6 +698,7 @@ void KMComposeWin::slotContinueAutoSave()
   if ( autoSaveInterval() > 0 ) {
     updateAutoSave();
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1134,9 +1149,8 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("options_request_mdn", mRequestMDNAction );
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
   //----- Message-Encoding Submenu
-  mEncodingAction = new KSelectAction( KIcon( "accessories-character-map" ), i18n("Se&t Encoding"), this );
-  actionCollection()->addAction( "charsets", mEncodingAction );
-  connect( mEncodingAction, SIGNAL(triggered(int)), SLOT(slotSetCharset()) );
+  mCodecAction = new CodecAction( CodecAction::ComposerMode, this );
+  actionCollection()->addAction( "charsets", mCodecAction );
   mWordWrapAction = new KToggleAction( i18n( "&Wordwrap" ), this );
   actionCollection()->addAction( "wordwrap", mWordWrapAction );
   mWordWrapAction->setChecked( GlobalSettings::self()->wordWrap() );
@@ -1161,11 +1175,6 @@ void KMComposeWin::setupActions( void )
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
   connect( mEditor, SIGNAL( checkSpellingChanged( bool ) ),
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
-
-  QStringList encodings = KMMsgBase::supportedEncodings( true );
-  encodings.prepend( i18n("Auto-Detect") );
-  mEncodingAction->setItems( encodings );
-  mEncodingAction->setCurrentItem( -1 );
 
   connect( mEditor, SIGNAL( textModeChanged( KRichTextEdit::Mode ) ),
            this, SLOT( slotTextModeChanged( KRichTextEdit::Mode ) ) );
@@ -1452,6 +1461,8 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
 void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
+  kDebug() << "implement me!!!";
+#if 0
   if ( !newMsg ) {
     kDebug() << "newMsg == 0!";
     return;
@@ -1784,6 +1795,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !newMsg->fcc().isEmpty() && ident.fcc() != newMsg->fcc() );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1874,10 +1886,8 @@ bool KMComposeWin::queryClose ()
     return true;
   }
 
-  if ( mComposer && mComposer->isPerformingSignOperation() ) {
-    // since the non-gpg-agent gpg plugin gets a passphrase using
-    // QDialog::exec() the user can try to close the window,
-    // which destroys mComposer mid-call.
+  if( mComposer ) {
+    kWarning() << "Tried to close while composer was active";
     return false;
   }
 
@@ -1979,41 +1989,155 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 {
   kDebug() << "Entering";
 
+#if 0
   if(!mMsg) {
     kDebug() << "mMsg == 0!";
     emit applyChangesDone( false );
     return;
   }
+#endif
 
   if( mComposer ) {
-    kDebug() << "applyChanges called twice";
+    // This may happen if e.g. the autosave timer calls applyChanges.
+    kDebug() << "Called while composer active; ignoring.";
     return;
   }
 
-  // Make new job and execute it
-  mComposer = new MessageComposer( this );
-  connect( mComposer, SIGNAL( done( bool ) ),
-           this, SLOT( slotComposerDone( bool ) ) );
-
-  // TODO: Add a cancel button for the following operations?
   // Disable any input to the window, so that we have a snapshot of the
-  // composed stuff
-  if ( !dontDisable ) setEnabled( false );
-  // apply the current state to the composer and let it do it's thing
-  mComposer->setDisableBreaking( mDisableBreaking ); // FIXME
-  mComposer->applyChanges( dontSignNorEncrypt );
+  // composed stuff.
+  if( !dontDisable ) {
+    setEnabled( false );
+  }
+
+  // Compose the message and queue it for sending.
+  // TODO handle drafts, autosave, etc.
+  mComposer = new MessageComposer::Composer;
+  mComposer->setParentWidget( this );
+  fillTextPart( mComposer->textPart() );
+  fillInfoPart( mComposer->infoPart() );
+
+  connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotComposerResult(KJob*)) );
+  mComposer->start();
+  kDebug() << "Composer started.";
 }
 
-void KMComposeWin::slotComposerDone( bool rc )
+void KMComposeWin::fillTextPart( MessageComposer::TextPart *textPart )
 {
-  deleteAll( mComposedMessages );
-  mComposedMessages = mComposer->composedMessageList();
-  emit applyChangesDone( rc );
-  delete mComposer;
-  mComposer = 0;
+  textPart->setCharsets( mCodecAction->mimeCharsets() );
+  textPart->setCleanPlainText( mEditor->toCleanPlainText() );
+  textPart->setWrappedPlainText( mEditor->toWrappedPlainText() );
+  // TODO no html for now -- assert.
+}
 
-  // re-enable the composewin, the messsage composition is now done
-  setEnabled( true );
+void KMComposeWin::fillInfoPart( MessageComposer::InfoPart *infoPart )
+{
+  QStringList to, cc, bcc;
+  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
+    switch( r.type() ) {
+      case Recipient::To: to << r.email(); break;
+      case Recipient::Cc: cc << r.email(); break;
+      case Recipient::Bcc: bcc << r.email(); break;
+      default: Q_ASSERT( false ); break;
+    }
+  }
+  // TODO what about address groups and all that voodoo?
+
+  // TODO splitAddressList and expandAliases ugliness should be handled by a
+  // special AddressListEdit widget... (later: see RecipientsEditor)
+
+  infoPart->setTransportId( mTransport->currentTransportId() );
+  infoPart->setFrom( from() );
+  infoPart->setTo( to );
+  infoPart->setCc( cc );
+  infoPart->setBcc( bcc );
+  infoPart->setSubject( subject() );
+}
+
+void KMComposeWin::slotComposerResult( KJob *job )
+{
+  using MessageComposer::Composer;
+  using MessageComposer::Job;
+
+  kDebug() << "error" << job->error() << "errorString" << job->errorString();
+  Q_ASSERT( mComposer == job );
+  //emit applyChangesDone( !job->error() ); // TODO get rid of this
+  // TODO fix save/discard warning
+
+  if( mComposer->error() == Job::NoError ) {
+    // The messages were composed successfully.
+    // TODO handle drafts, autosave, etc.
+    kDebug() << "NoError.";
+    queueMessages( mComposer->messages() );
+  } else if( mComposer->error() == Job::UserCancelledError ) {
+    // The job warned the user about something, and the user chose to return
+    // to the message.  Nothing to do.
+    kDebug() << "UserCancelledError.";
+    setEnabled( true );
+  } else {
+    kDebug() << "other Error.";
+    QString msg;
+    if( mComposer->error() == Job::BugError ) {
+      msg = i18n( "Error composing message:\n\n%1\n\nPlease report this bug.", job->errorString() );
+    } else {
+      msg = i18n( "Error composing message:\n\n%1", job->errorString() );
+    }
+    setEnabled( true );
+    KMessageBox::sorry( this, msg, i18n( "Composer" ) );
+  }
+
+  mComposer = 0;
+}
+
+void KMComposeWin::queueMessages( const MessageComposer::FinalMessage::List &messages )
+{
+  using MessageComposer::FinalMessage;
+  using MailTransport::MessageQueueJob;
+
+  Q_ASSERT( mPendingQueueJobs == 0 );
+  foreach( const FinalMessage *msg, messages ) {
+    if( msg->hasCustomHeaders() ) {
+      // Custom headers means it should not be sent.  For example Bcc might be revealed.
+      kWarning() << "This message has custom headers.";
+      Q_ASSERT( false );
+      continue;
+    }
+    MessageQueueJob *qjob = new MessageQueueJob( this );
+    qjob->setMessage( msg->message() );
+    qjob->setTransportId( msg->transportId() );
+    // TODO dispatch mode.
+    // TODO sent-mail collection
+    qjob->setFrom( msg->from() );
+    qjob->setTo( msg->to() );
+    qjob->setCc( msg->cc() );
+    qjob->setBcc( msg->bcc() );
+
+    connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
+    mPendingQueueJobs++;
+    qjob->start();
+  }
+
+  kDebug() << "Queued" << messages.count() << "messages.";
+}
+
+void KMComposeWin::slotQueueResult( KJob *job )
+{
+  mPendingQueueJobs--;
+  kDebug() << "mPendingQueueJobs" << mPendingQueueJobs;
+  Q_ASSERT( mPendingQueueJobs >= 0 );
+
+  if( job->error() ) {
+    kDebug() << "Failed to queue a message:" << job->errorString();
+    // There is not much we can do now, since all the MessageQueueJobs have been
+    // started.  So just wait for them to finish.
+    // TODO show a message box or something
+    return;
+  }
+
+  if( mPendingQueueJobs == 0 ) {
+    setModified( false );
+    cleanupAutoSave();
+    close();
+  }
 }
 
 const KPIMIdentities::Identity & KMComposeWin::identity() const
@@ -2213,6 +2337,8 @@ bool KMComposeWin::signFlagOfAttachment( int idx )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setCharset( const QByteArray &aCharset, bool forceDefault )
 {
+  kDebug() << "implement me...";
+#if 0
   if ( ( forceDefault && GlobalSettings::self()->forceReplyCharset() ) ||
        aCharset.isEmpty() ) {
     mCharset = mDefCharset;
@@ -2249,6 +2375,7 @@ void KMComposeWin::setCharset( const QByteArray &aCharset, bool forceDefault )
   if ( !aCharset.isEmpty() && !charsetFound ) {
     setCharset( "", true );
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2298,6 +2425,8 @@ void KMComposeWin::slotAttachFileData( KIO::Job *job, const QByteArray &data )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachFileResult( KJob *job )
 {
+  kDebug() << "implement me.";
+#if 0
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(static_cast<KIO::Job*>(job));
 
   assert( it != mMapAtmLoadData.end() );
@@ -2486,6 +2615,7 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
   if ( attachURLfound ) {
     emit attachmentAdded( attachUrl, true );
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2565,6 +2695,7 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
 }
 
 //-----------------------------------------------------------------------------
+#if 0
 void KMComposeWin::slotSetCharset()
 {
   if ( mEncodingAction->currentItem() == 0 ) {
@@ -2575,6 +2706,7 @@ void KMComposeWin::slotSetCharset()
 
   mCharset = KMMsgBase::encodingForName( mEncodingAction->currentText() ).toLatin1();
 }
+#endif
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSelectCryptoModule( bool init )
@@ -2709,6 +2841,8 @@ void KMComposeWin::slotAttachPopupMenu( QTreeWidgetItem* )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachProperties()
 {
+  kDebug() << "implement me.";
+#if 0
   KMAtmListViewItem *currentItem =
       static_cast<KMAtmListViewItem*>( mAtmListView->currentItem() );
   if ( !currentItem )
@@ -2740,6 +2874,7 @@ void KMComposeWin::slotAttachProperties()
   if ( msgPart->typeStr().toLower() != "text" ) {
     msgPart->setCharset( QByteArray() );
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2944,6 +3079,8 @@ void KMComposeWin::slotAttachEditWith()
 //-----------------------------------------------------------------------------
 void KMComposeWin::viewAttach( int index )
 {
+  kDebug() << "implement me.";
+#if 0
   QString pname;
   KMMessagePart *msgPart;
   msgPart = mAtmList.at( index );
@@ -2963,6 +3100,7 @@ void KMComposeWin::viewAttach( int index )
   KMReaderMainWin *win =
     new KMReaderMainWin( msgPart, false, atmTempFile->fileName(), pname, mCharset );
   win->show();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3398,26 +3536,32 @@ void KMComposeWin::forceDisableHtml()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
+  kDebug() << "Implement me.";
+#if 0
   mMessageWasModified = isModified();
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            this, SLOT( slotContinuePrint( bool ) ) );
   applyChanges( true );
+#endif
 }
 
 void KMComposeWin::slotContinuePrint( bool rc )
 {
+  Q_ASSERT( false );
+#if 0
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
               this, SLOT( slotContinuePrint( bool ) ) );
 
   if ( rc ) {
     if ( mComposedMessages.isEmpty() ) {
-      kDebug() <<"Composing the message failed.";
+      kDebug() << "Composing the message failed.";
       return;
     }
     KMCommand *command = new KMPrintCommand( this, mComposedMessages.first() );
     command->start();
     setModified( mMessageWasModified );
   }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3443,6 +3587,7 @@ bool KMComposeWin::validateAddresses( QWidget *parent, const QString &addresses 
 void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
                            KMComposeWin::SaveIn saveIn )
 {
+  // TODO integrate with MDA online status
   if ( method != KMail::MessageSender::SendLater && kmkernel->isOffline() ) {
     KMessageBox::information( this,
                               i18n("KMail is currently in offline mode. "
@@ -3520,6 +3665,8 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   }
 
   KCursorSaver busy( KBusyPtr::busy() );
+
+#if 0
   mMsg->setDateToday();
 
   mMsg->setHeaderField( "X-KMail-Transport", mTransport->currentText() );
@@ -3528,8 +3675,9 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
 
   const bool neverEncrypt = ( mDisableBreaking && GlobalSettings::self()->neverEncryptDrafts() ) ||
     mSigningAndEncryptionExplicitlyDisabled;
-  connect( this, SIGNAL( applyChangesDone( bool ) ),
-           SLOT( slotContinueDoSend( bool ) ) );
+
+  connect( this, SIGNAL(applyChangesDone(bool)),
+           SLOT(slotEnqueueResult(bool)) );
 
   // Save the quote prefix which is used for this message. Each message can have
   // a different quote prefix, for example depending on the original sender.
@@ -3586,9 +3734,11 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     mMsg->removeHeaderField( "X-KMail-EncryptActionEnabled" );
     mMsg->removeHeaderField( "X-KMail-CryptoMessageFormat" );
   }
+#endif
 
   kDebug() << "Calling applyChanges()";
-  applyChanges( neverEncrypt );
+  //applyChanges( neverEncrypt );
+  applyChanges( false ); // TODO rename and separate logic for print/sent/autosave
 }
 
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
@@ -3648,8 +3798,25 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
   return sentOk;
 }
 
+#if 0
+void KMComposeWin::slotEnqueueResult( bool success )
+{
+  // TODO move everything to slotComposeResult?
+  kDebug() << "success" << success;
+
+  // TODO copied from slotContinueDoSend
+  setModified( false );
+  mAutoDeleteMsg = false;
+  mFolder = 0;
+  cleanupAutoSave();
+  close();
+}
+#endif
+
 void KMComposeWin::slotContinueDoSend( bool sentOk )
 {
+  Q_ASSERT( false );
+#if 0
   kDebug() << sentOk;
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
               this, SLOT( slotContinueDoSend( bool ) ) );
@@ -3701,6 +3868,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   mFolder = 0;
   cleanupAutoSave();
   close();
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3984,6 +4152,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     mRecipientsEditor->setFocusBottom();
   }
 
+#if 0
   if ( ident.organization().isEmpty() ) {
     mMsg->removeHeaderField( "Organization" );
   } else {
@@ -4019,6 +4188,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
       mTransport->setCurrentTransport( transport->id() );
     }
   }
+#endif
 
   mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   mEditor->setSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
@@ -4198,6 +4368,8 @@ void KMComposeWin::slotConfigChanged()
  */
 void KMComposeWin::slotFolderRemoved( KMFolder *folder )
 {
+  kDebug() << "you killed me.";
+#if 0
   // TODO: need to handle templates here?
   if ( (mFolder) && (folder->idString() == mFolder->idString()) ) {
     mFolder = kmkernel->draftsFolder();
@@ -4206,6 +4378,7 @@ void KMComposeWin::slotFolderRemoved( KMFolder *folder )
   if ( mMsg ) {
     mMsg->setParent( 0 );
   }
+#endif
 }
 
 void KMComposeWin::slotSetAlwaysSend( bool bAlways )
@@ -4414,4 +4587,4 @@ void KMComposeWin::slotLanguageChanged( const QString &language )
   mDictionaryCombo->setCurrentByDictionary( language );
 }
 
-#endif // not BUILD_NEW_COMPOSER
+#endif // BUILD_NEW_COMPOSER

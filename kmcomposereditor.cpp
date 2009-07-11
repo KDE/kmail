@@ -21,6 +21,7 @@
 
 #include "kmcomposereditor.h"
 #include "kmcomposewin.h"
+#include "newcomposerwin.h"
 #include "kmcommands.h"
 #include "kmmsgdict.h"
 #include "kmfolder.h"

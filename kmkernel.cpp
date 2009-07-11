@@ -143,6 +143,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mXmlGuiInstance = KComponentData();
 
 
+  // cberzan: this crap moved to CodecManager ======================
   netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
 
   // In the case of Japan. Japanese locale name is "eucjp" but
@@ -164,6 +165,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     // QTextCodec::setCodecForLocale(cdc);
     // KGlobal::locale()->setEncoding(cdc->mibEnum());
   }
+  // till here ================================================
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),

@@ -17,7 +17,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef BUILD_NEW_COMPOSER
+#ifdef BUILD_NEW_COMPOSER
 #ifndef __KMComposeWin
 #define __KMComposeWin
 
@@ -37,6 +37,9 @@
 // LIBKDEPIM includes
 #include <libkdepim/kmeditor.h>
 
+// KDEPIMLIBS includes
+#include <messagecomposer/finalmessage.h>
+
 // Other includes
 #include "kleo/enum.h"
 
@@ -50,6 +53,7 @@ class QPushButton;
 class QSplitter;
 class QTreeWidgetItem;
 
+class CodecAction;
 class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
@@ -69,7 +73,6 @@ class KTempDir;
 class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
-class MessageComposer;
 class RecipientsEditor;
 class KMLineEdit;
 class KMAtmListViewItem;
@@ -106,6 +109,12 @@ namespace GpgME {
   class Error;
 }
 
+namespace MessageComposer {
+  class Composer;
+  class InfoPart;
+  class TextPart;
+}
+
 //-----------------------------------------------------------------------------
 class KMComposeWin : public KMail::Composer
 {
@@ -113,8 +122,6 @@ class KMComposeWin : public KMail::Composer
   Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.mailcomposer")
 
   friend class ::KMComposerEditor;
-
-  friend class ::MessageComposer;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
     explicit KMComposeWin( KMMessage *msg=0, uint identity=0 );
@@ -195,7 +202,7 @@ class KMComposeWin : public KMail::Composer
      * Returns message of the composer. To apply the user changes to the
      * message, call applyChanges() first.
      */
-     KMMessage *msg() const { return mMsg; }
+     //KMMessage *msg() const { return mMsg; }
 
   public: // kmkernel
     /**
@@ -347,7 +354,7 @@ class KMComposeWin : public KMail::Composer
      */
     void slotInsertFile();
 
-    void slotSetCharset();
+    //void slotSetCharset();
     /**
      * Check spelling of text.
      */
@@ -485,7 +492,7 @@ class KMComposeWin : public KMail::Composer
     bool encryptToSelf() const;
 
   signals:
-    void applyChangesDone( bool );
+    //void applyChangesDone( bool );
     void attachmentAdded( const KUrl &, bool success );
 
   private:
@@ -496,7 +503,11 @@ class KMComposeWin : public KMail::Composer
      * Disables the controls of the composer window unless @p dontDisable
      * is true.
      */
-    void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false );
+    void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false ); // TODO rename
+
+    void fillTextPart( MessageComposer::TextPart *part );
+    void fillInfoPart( MessageComposer::InfoPart *part );
+    void queueMessages( const MessageComposer::FinalMessage::List &messages );
 
     /**
      * Install grid management and header fields. If fields exist that
@@ -715,8 +726,8 @@ class KMComposeWin : public KMail::Composer
 
     KMComposerEditor *mEditor;
     QGridLayout *mGrid;
-    KMMessage *mMsg;
-    QVector<KMMessage*> mComposedMessages;
+    //KMMessage *mMsg;
+    //QVector<KMMessage*> mComposedMessages;
     KMail::AttachmentListView *mAtmListView;
     QList<KMAtmListViewItem*> mAtmItemList;
     QList<KMMessagePart*> mAtmList;
@@ -730,7 +741,7 @@ class KMComposeWin : public KMail::Composer
     KMFolder *mFolder;
     long mShowHeaders;
     bool mConfirmSend;
-    bool mDisableBreaking;
+    //bool mDisableBreaking;
     bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
                                 // mail body.
     int mNumHeaders;
@@ -754,13 +765,14 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *markupAction;
     KAction *actionFormatReset;
 
-    KSelectAction *mEncodingAction;
+    CodecAction *mCodecAction;
+    //KSelectAction *mEncodingAction;
     KSelectAction *mCryptoModuleAction;
 
-    QByteArray mCharset;
-    QByteArray mDefCharset;
-    QStringList mCharsets;
-    bool mAutoCharset;
+    //QByteArray mCharset;
+    //QByteArray mDefCharset;
+    //QStringList mCharsets;
+    //bool mAutoCharset;
 
     bool mAlwaysSend;
 
@@ -785,8 +797,10 @@ class KMComposeWin : public KMail::Composer
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();
 
-    void slotComposerDone( bool );
+    void slotComposerResult( KJob *job );
+    void slotQueueResult( KJob *job );
 
+    //void slotEnqueueResult( bool result );
     void slotContinueDoSend( bool );
     void slotContinuePrint( bool );
     void slotContinueAutoSave();
@@ -832,8 +846,8 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mEncryptChiasmusAction;
     bool mEncryptWithChiasmus;
 
-    // The temporary object that constructs the message out of the window
-    MessageComposer *mComposer;
+    MessageComposer::Composer *mComposer;
+    int mPendingQueueJobs;
 
     // Temp var for slotPrint:
     bool mMessageWasModified;
@@ -867,4 +881,4 @@ class KMComposeWin : public KMail::Composer
 };
 
 #endif
-#endif // not BUILD_NEW_COMPOSER
+#endif // BUILD_NEW_COMPOSER

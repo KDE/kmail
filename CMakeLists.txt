@@ -1,5 +1,7 @@
 project(kmail)
 
+set( BUILD_NEW_COMPOSER true )
+
 include(CheckIncludeFiles)
 check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
@@ -32,7 +34,6 @@ add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5006)
 add_definitions(-DStorageDebug=5120)
 
 qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
-qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
@@ -82,7 +83,6 @@ set(kmailprivate_LIB_SRCS
    favoritefolderview.cpp
    kmaccount.cpp
    listjob.cpp
-   kmcomposewin.cpp
    snippetdlg.cpp
    snippetwidget.cpp
    snippetitem.cpp
@@ -187,7 +187,8 @@ set(kmailprivate_LIB_SRCS
    secondarywindow.cpp
    filterlog.cpp
    filterlogdlg.cpp
-   messagecomposer.cpp
+   codecaction.cpp
+   codecmanager.cpp
    keyresolver.cpp
    globalsettings.cpp
    regexplineedit.cpp
@@ -244,6 +245,9 @@ set(kmailprivate_LIB_SRCS
    procmailparser.cpp
    stringutil.cpp
    iconnamecache.cpp
+   kmcomposewin.cpp
+   messagecomposer.cpp
+   newcomposerwin.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp
@@ -274,11 +278,17 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/widgetbase.cpp
 )
 
+if( BUILD_NEW_COMPOSER )
+  add_definitions( -DBUILD_NEW_COMPOSER )
+else( BUILD_NEW_COMPOSER )
+  qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+  qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
+  )
+endif( BUILD_NEW_COMPOSER )
+
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
-)
-qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
-  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
 )
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl
@@ -359,7 +369,7 @@ target_link_libraries(kmailprivate
   ${KDE4_THREADWEAVER_LIBRARY}
   ${KDE4_KMIME_LIBRARY}
   ${KDE4_AKONADI_LIBS}
-  outboxinterface
+  messagecomposer
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
   ${KDE4_PHONON_LIBRARY}
   ${KDE4_KNOTIFYCONFIG_LIBRARY}

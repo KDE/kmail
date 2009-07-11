@@ -33,18 +33,13 @@
 #include <KConfig>
 #include <KConfigGroup>
 
-//#include <mimelib/mediatyp.h>
-//#include <mimelib/enum.h>
-//#include <mimelib/param.h>
-
 #include <kmime/kmime_message.h>
 #include <boost/shared_ptr.hpp>
 
+#include <mailtransport/dispatcherinterface.h>
+#include <mailtransport/messagequeuejob.h>
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
-
-#include <outboxinterface/dispatcherinterface.h>
-#include <outboxinterface/messagequeuejob.h>
 
 static const QString SENDER_GROUP( "sending mail" );
 
@@ -53,7 +48,6 @@ using namespace KMime;
 using namespace KMime::Types;
 using namespace KPIM;
 using namespace MailTransport;
-using namespace OutboxInterface;
 
 
 static QStringList addrSpecListToStringList( const AddrSpecList &l, bool allowEmpty = false )

@@ -89,7 +89,7 @@ protected:
 
 private:
   /**
-    Queue one message using OutboxInterface::MessageQueueJob.
+    Queue one message using MailTransport::MessageQueueJob.
     This involves translating the message to KMime.
   */
   void queueMessage( KMMessage *msg );

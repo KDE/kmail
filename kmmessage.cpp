@@ -2945,6 +2945,7 @@ void KMMessage::readConfig()
     if (s->wrapCol < 30)
       s->wrapCol = 30;
 
+    // cberzan: moved to CodecManager
     s->prefCharsets = config.readEntry("pref-charsets", QStringList() );
   }
 
@@ -3335,6 +3336,7 @@ void KMMessage::deleteWhenUnused()
 
 QByteArray KMMessage::defaultCharset()
 {
+  // cberzan: wtf is this used???
   QByteArray retval;
 
   if (!s->prefCharsets.isEmpty())
