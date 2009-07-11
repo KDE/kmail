@@ -1611,6 +1611,23 @@ QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column )
   return ret;
 }
 
+int ThemeDelegate::maximumHeightForItemType( Item::Type type ) const
+{
+  if ( !mTheme )
+    return 16; // bleah
+
+  int count = mTheme->columns().count();
+  int maxHeight = 8; // this is the bare minimum
+  for ( int idx = 0; idx < count; idx++ )
+  {
+    int columnHeight = sizeHintForItemTypeAndColumn( type, idx ).height();
+    if ( columnHeight > maxHeight )
+      maxHeight = columnHeight;
+  }
+
+  return maxHeight;
+}
+
 
 QSize ThemeDelegate::sizeHint( const QStyleOptionViewItem &, const QModelIndex & index ) const
 {

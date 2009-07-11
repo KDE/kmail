@@ -8,6 +8,7 @@ enterprise_icon.png            enterprise_top_right.png  mail-thread-watch.png
 enterprise_left.png            enterprise_w.png          pgp-keys.png
 enterprise_right.png           kmwizard.png              quotecollapse.png
 enterprise_sbar.png            mail-deleted.png          quoteexpand.png
-enterprise_s_left.png          mail-download-later.png)
+enterprise_s_left.png          mail-download-later.png   mail-vertical-separator-line.png
+mail-horizontal-space.png)
 
 install( FILES ${pics} DESTINATION ${DATA_INSTALL_DIR}/kmail/pics)

@@ -38,6 +38,7 @@
 #include <QToolTip>
 #include <QHeaderView>
 #include <QTimer>
+#include <QPaintEvent>
 
 #include <KMenu>
 #include <KLocale>
@@ -63,6 +64,7 @@ View::View( Widget *pParent )
   mDelegate = new Delegate( this );
   mLastCurrentItem = 0;
   mFirstShow = true;
+  mIgnoreUpdateGeometries = false;
 
   mSaveThemeColumnStateTimer = new QTimer();
   connect( mSaveThemeColumnStateTimer, SIGNAL( timeout() ), this, SLOT( saveThemeColumnState() ) );
@@ -134,6 +136,17 @@ void View::ignoreCurrentChanges( bool ignore )
   }
 }
 
+void View::ignoreUpdateGeometries( bool ignore )
+{
+  mIgnoreUpdateGeometries = ignore;
+}
+
+void View::updateGeometries()
+{
+  if( mIgnoreUpdateGeometries )
+    return;
+  QTreeView::updateGeometries();
+}
 
 StorageModel * View::storageModel() const
 {

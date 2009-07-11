@@ -83,6 +83,11 @@ public:
   QSize sizeHintForItemTypeAndColumn( Item::Type type, int column ) const;
 
   /**
+   * Returns the maximum estimated height for the specified item type.
+   */
+  int maximumHeightForItemType( Item::Type type ) const;
+
+  /**
    * Performs a hit test on the specified viewport point.
    * Returns true if the point hit something and false otherwise.
    * When the hit test is succesfull then the hitIndex(), hitItem(), hitColumn(), hitRow(), and hitContentItem()

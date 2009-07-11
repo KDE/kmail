@@ -46,9 +46,9 @@
 #include "messagelistview/core/modelinvariantrowmapper.h"
 #include "messagelistview/core/storagemodelbase.h"
 #include "messagelistview/core/theme.h"
+#include "messagelistview/core/delegate.h"
 #include "messagelistview/core/manager.h"
 #include "messagelistview/core/messageitemsetmanager.h"
-#include "util.h"
 
 #include <config-kmail.h>
 
@@ -558,13 +558,6 @@ int Model::rowCount( const QModelIndex &parent ) const
 
 void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSelectionMode )
 {
-  // Prevent a case of recursion when opening a folder that has a message and the folder was
-  // never opened before.
-  static int recursionCounter = 0;
-  KMail::Util::RecursionPreventer preventer( recursionCounter );
-  if ( preventer.isRecursive() )
-    return;
-
   if( mFillStepTimer.isActive() )
     mFillStepTimer.stop();
 
@@ -655,6 +648,14 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
 
   if ( mStorageModel->rowCount() == 0 )
     return; // folder empty: nothing to fill
+
+  // If we have no group headers then all the rows have the same height.
+  // If the header height == message height then again all rows have the same heights.
+  // Tell it to QTreeView so it can optimize the operations a bit.
+  mView->setUniformRowHeights(
+      ( mAggregation->grouping() == Aggregation::NoGrouping ) ||
+      ( mView->delegate()->maximumHeightForItemType( Item::Message ) == mView->delegate()->maximumHeightForItemType( Item::GroupHeader ) )
+    );
 
   // Here we use different strategies based on user preference and the folder size.
   // The knobs we can tune are:
@@ -3772,6 +3773,21 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
       // FIXME: Should assert yet more that this is the very first job for this StorageModel
       //        Asserting only mLoading is not enough as we could be using a two-jobs loading strategy
       //        or this could be a job enqueued before the first job has completed.
+    } else {
+      // With a connected UI we need to avoid the view to update the scrollbars at EVERY insertion or expansion.
+      // QTreeViewPrivate::updateScrollBars() is very expensive as it loops through ALL the items in the view every time.
+      // We can't disable the function directly as it's hidden in the private data object of QTreeView
+      // but we can disable the parent QTreeView::updateGeometries() instead.
+      // We will trigger it "manually" at the end of the step.
+      mView->ignoreUpdateGeometries( true );
+
+      // Ok.. I know that this seems unbelieveable but disabling updates actually
+      // causes a (significant) performance loss in most cases. This is probably because QTreeView
+      // uses delayed layouts when updates are disabled which should be delayed but in
+      // fact are "forced" by next item insertions. The delayed layout algorithm, then
+      // is probably slower than the non-delayed one.
+      // Disabling the paintEvent() doesn't seem to work either.
+      //mView->setUpdatesEnabled( false );
     }
 
     switch( viewItemJobStepInternalForJob( job, tStart ) )
@@ -3803,6 +3819,14 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
           break;
           default: break;
         }
+
+        if( !job->disconnectUI() )
+        {
+          mView->ignoreUpdateGeometries( false );
+          // explicit call to updateGeometries() here
+          mView->updateGeometries();
+        }
+
         return ViewItemJobInterrupted;
       }
       break;
@@ -3846,6 +3870,10 @@ Model::ViewItemJobResult Model::viewItemJobStepInternal()
 #ifdef KDEPIM_FOLDEROPEN_PROFILE
           Stats::expandingTreeTime = expandingTime.elapsed();
 #endif
+        } else {
+          mView->ignoreUpdateGeometries( false );
+          // explicit call to updateGeometries() here
+          mView->updateGeometries();
         }
 
         // this job has been completed
