@@ -2169,7 +2169,7 @@ QString ObjectTreeParser::sigStatusToString( const Kleo::CryptoBackend::Protocol
             if( summary & GpgME::Signature::KeyMissing ) {
                 result2 += i18n("Unable to verify: key missing.");
                 // if the signature certificate is missing
-                // we cannot show infos on it
+                // we cannot show information on it
                 showKeyInfos = false;
                 frameColor = SIG_FRAME_COL_YELLOW;
             }
@@ -2422,7 +2422,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
             : */"0x" + QString::fromUtf8( block.keyId );
 
 
-        // temporary hack: always show key infos!
+        // temporary hack: always show key information!
         showKeyInfos = true;
 
         // Sorry for using 'black' as null color but .isValid()

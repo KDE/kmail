@@ -328,9 +328,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QList<KActionCollection*> actionCollections() const;
 
     /**
-     * Sets the list of copied/cutted messages.
+     * Sets the list of copied/cut messages.
      * @param msgs A list of serial numbers.
-     * @param move if true, the messages were cutted
+     * @param move if true, the messages were cut
      */
     void setMessageClipboardContents( const QList< quint32 > &msgs, bool move );
 
