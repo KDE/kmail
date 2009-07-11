@@ -542,6 +542,12 @@ void KMMainWidget::layoutSplitters()
   //
   mTopLayout->addWidget( mSplitter1 );
 
+  // Make sure the focus is on the view, and not on the quick search line edit, because otherwise
+  // shortcuts like + or j go to the wrong place.
+  // This would normally be done in the message list itself, but apparently something resets the focus
+  // again, probably all the reparenting we do here.
+  mMessageListView->focusView();
+
   // Make the copy action work, see disconnect comment above
   if ( mMsgView )
     connect( mMsgView->copyAction(), SIGNAL( triggered(bool) ),

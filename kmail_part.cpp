@@ -87,6 +87,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget( parentWidget );
   canvas->setFocusPolicy(Qt::ClickFocus);
+  canvas->setObjectName( "canvas" );
   setWidget(canvas);
   KIconLoader::global()->addAppDir("kmail");
   KIconLoader::global()->addAppDir( "kdepim" );
@@ -109,6 +110,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 #else
   mainWidget = new KMMainWidget( canvas, this, actionCollection(),
                                  KGlobal::config().data());
+  mainWidget->setObjectName( "partmainwidget" );
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   topLayout->setMargin(0);

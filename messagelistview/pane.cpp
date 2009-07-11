@@ -54,6 +54,7 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
     mCurrentFolder( 0 )
 {
   // setCornerWidget
+  setObjectName( "Pane" );
   mNewTabButton = new QToolButton( this );
   mNewTabButton->setIcon( KIcon( "tab-new" ) );
   mNewTabButton->adjustSize();
@@ -863,6 +864,16 @@ void Pane::focusQuickSearch()
     KLineEdit *quickSearch = widget->quickSearch();
     if ( quickSearch )
       quickSearch->setFocus();
+  }
+}
+
+void Pane::focusView()
+{
+  Widget *widget = currentMessageListViewWidget();
+  if ( widget ) {
+    QWidget *view = widget->view();
+    if ( view )
+      view->setFocus();
   }
 }
 
