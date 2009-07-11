@@ -799,7 +799,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
     dumpToFile( "dat_04_reader.encrypted", ciphertext.data(), ciphertext.size() );
 
-    QByteArray deb;
+    QString deb;
     deb =  "\n\nE N C R Y P T E D    D A T A = ";
     if ( cipherIsBinary )
       deb += "[binary data]";
