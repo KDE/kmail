@@ -990,7 +990,8 @@ KMail::FolderDialogMaintenanceTab::FolderDialogMaintenanceTab( KMFolderDialog *d
   QLabel *label = new QLabel( contentsDesc, filesGroup );
   // Passing a QLabel rather than QString to addRow(), so that it doesn't
   // get a buddy set (except in the cases where we do want one).
-  box->addRow( new QLabel( i18n("Contents:"), filesGroup ), label );
+  box->addRow( new QLabel( i18nc( "@label:textbox Folder content type (eg. Mail)", "Contents:" ),
+                           filesGroup ), label );
 
   KMFolderType folderType = mFolder->folderType();
   QString folderDesc = folderTypeDesc( folderType );

@@ -114,7 +114,7 @@
            <item>
             <widget class="QLabel" name="mToLabel">
              <property name="text">
-              <string>To:</string>
+              <string comment="@label:textbox Recipient mail address">To:</string>
              </property>
             </widget>
            </item>

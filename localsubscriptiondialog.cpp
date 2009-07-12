@@ -118,11 +118,12 @@ bool LocalSubscriptionDialog::doSave()
   // unsubscribe
   QTreeWidgetItemIterator it2(unsubView);
   if ( unsubView->topLevelItemCount() > 0 ) {
-    const QString message = i18n("Locally unsubscribing from folders will remove all "
+    const QString message = i18nc( "@info", "Locally unsubscribing from folders will remove all "
         "information that is present locally about those folders. The folders will "
         "not be changed on the server. Press cancel now if you want to make sure "
         "all local changes have been written to the server by checking mail first.");
-    const QString caption = i18n("Local changes will be lost when unsubscribing");
+    const QString caption = i18nc( "@title:window", "Local changes will be lost when "
+                                  "unsubscribing" );
     if ( KMessageBox::warningContinueCancel( this, message, caption )
         != KMessageBox::Cancel ) {
       somethingHappened = true;

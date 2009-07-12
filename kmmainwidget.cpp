@@ -793,7 +793,8 @@ void KMMainWidget::createWidgets()
   QVBoxLayout *vboxlayout = new QVBoxLayout;
   vboxlayout->setMargin(0);
   mFolderQuickSearch = new KTreeWidgetSearchLine( mSearchAndTree );
-  mFolderQuickSearch->setClickMessage( i18n( "Search" ) );
+  mFolderQuickSearch->setClickMessage( i18nc( "@info/plain Displayed grayed-out inside the "
+                                              "textbox, verb to search", "Search" ) );
   vboxlayout->addWidget( mFolderQuickSearch );
   mSearchAndTree->setLayout( vboxlayout );
 
