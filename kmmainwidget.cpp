@@ -3525,9 +3525,9 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
   }
   {
-    KAction *action = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
-    actionCollection()->addAction("file_invalidate_imap_cache", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
+    mRefreshImapCacheAction = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
+    actionCollection()->addAction("file_invalidate_imap_cache", mRefreshImapCacheAction );
+    connect(mRefreshImapCacheAction, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
   }
   {
     KAction *action = new KAction(i18n("Empty All &Trash Folders"), this);
@@ -4809,6 +4809,10 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
       break;
     }
   }
+
+  // Enable the "Refresh Local IMAP Cache" action if there's at least one "Disconnected IMAP" account
+  mRefreshImapCacheAction->setEnabled( hasImapAccount );
+
   if ( hasImapAccount == ( mTroubleshootFolderAction != 0 ) )
     return; // nothing to do
 
