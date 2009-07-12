@@ -12,6 +12,7 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/mail-check-error]
 Name=Error While Checking Mail
+Name[nds]=Fehler bi't Kieken na Nettpost
 Name[pt]=Erro na Verificação do Correio
 Name[pt_BR]=Erro durante a verificação de e-mails
 Name[sv]=Fel vid kontroll av post
@@ -19,6 +20,7 @@ Name[uk]=Помилка під час спроби отримання пошти
 Name[x-test]=xxError While Checking Mailxx
 Name[zh_TW]=檢查郵件時發生錯誤
 Comment=There was an error while checking for new mail
+Comment[nds]=Bi't Kieken na nieg Nettpost hett dat en Fehler geven
 Comment[pt]=Ocorreu um erro ao verificar o correio novo
 Comment[pt_BR]=Ocorreu um erro durante a verificação de novos e-mails
 Comment[sv]=Ett fel uppstod vid kontroll av ny post
