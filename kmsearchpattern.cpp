@@ -774,27 +774,31 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
     return true;
   }
 
-  bool res;
+  bool res = false;
   int idx = -1;
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
-    return false;
+    return res;
   }
 
   KMFolderOpener openFolder( folder, "searptr" );
-  KMMsgBase *msgBase = folder->getMsgBase( idx );
-  if (requiresBody() && !ignoreBody) {
-    bool unGet = !msgBase->isMessage();
-    KMMessage *msg = folder->getMsg(idx);
-    res = false;
-    if ( msg ) {
-      res = matches( msg, ignoreBody );
-      if (unGet)
-        folder->unGetMsg(idx);
+  if ( openFolder.openResult() == 0 ) { // 0 means no error codes
+    KMFolder *f =  openFolder.folder();
+    KMMsgBase *msgBase = f->getMsgBase( idx );
+    if ( msgBase && requiresBody() && !ignoreBody ) {
+      bool unGet = !msgBase->isMessage();
+      KMMessage *msg = f->getMsg( idx );
+      res = false;
+      if ( msg ) {
+        res = matches( msg, ignoreBody );
+        if ( unGet ) {
+          folder->unGetMsg( idx );
+        }
+      }
+    } else {
+      res = matches( f->getDwString( idx ), ignoreBody );
     }
-  } else {
-    res = matches( folder->getDwString(idx), ignoreBody );
   }
   return res;
 }
