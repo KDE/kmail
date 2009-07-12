@@ -45,7 +45,6 @@ private:
   QString mLocation;
   QString mProcmailLockFileName;
   bool mHasNewMail;
-  bool mProcessingNewMail;
   bool mAddedOk;
   LockType mLock;
   int mNumMsgs;
