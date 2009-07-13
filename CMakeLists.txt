@@ -1,6 +1,6 @@
 project(kmail)
 
-set( BUILD_NEW_COMPOSER true )
+set( BUILD_NEW_COMPOSER false )
 
 include(CheckIncludeFiles)
 check_include_files(fcntl.h HAVE_FCNTL_H)
