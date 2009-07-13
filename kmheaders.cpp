@@ -108,7 +108,8 @@ QPixmap* KMHeaders::pixReadFwdReplied = 0;
 
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
-  K3ListView( parent )
+  K3ListView( parent ),
+  mRecursionCounterForReset( 0 )
 {
   static bool pixmapsLoaded = false;
   //qInitImageIO();
@@ -577,8 +578,7 @@ void KMHeaders::reset()
 {
   // Prevent a case of recursion when opening a folder that has a message and the folder was
   // never opened before.
-  static int recursionCounter = 0;
-  KMail::Util::RecursionPreventer preventer( recursionCounter );
+  KMail::Util::RecursionPreventer preventer( mRecursionCounterForReset );
   if ( preventer.isRecursive() )
     return;
 

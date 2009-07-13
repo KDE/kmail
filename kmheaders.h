@@ -472,5 +472,8 @@ private:
   // copied messages
   QList<quint32> mCopiedMessages;
   bool mMoveMessages;
+
+  /** counter to avoid infinite recursions in the reset() function */
+  int mRecursionCounterForReset;
 }; // class
 #endif
