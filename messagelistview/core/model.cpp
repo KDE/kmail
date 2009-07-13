@@ -637,6 +637,9 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
   if ( !mStorageModel )
     return; // no folder: nothing to fill
 
+  // Sometimes the folders need to be resurrected...
+  mStorageModel->prepareForScan();
+
   mPreSelectionMode = preSelectionMode;
   mUniqueIdOfLastSelectedMessageInFolder = Manager::instance()->preSelectedMessageForStorageModel( mStorageModel );
   mStorageModelContainsOutboundMessages = mStorageModel->containsOutboundMessages();

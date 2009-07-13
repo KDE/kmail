@@ -378,6 +378,18 @@ static void setMessageItemSignatureState( Core::MessageItem * mi, KMMsgBase * ms
   }
 }
 
+void StorageModel::prepareForScan()
+{
+  Q_ASSERT( mFolder );
+
+  if ( !mFolder->isOpened() )
+  {
+    // It happens... hard to say why :D
+    kDebug() << "The folder was closed. Re-opening.";
+    mFolder->open( "MessageListView::StorageModel" );
+  }
+}
+
 bool StorageModel::initializeMessageItem( Core::MessageItem * mi, int row, bool bUseReceiver ) const
 {
   KMMsgBase * msg = mFolder->getMsgBase( row );
