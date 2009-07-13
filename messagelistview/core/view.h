@@ -82,6 +82,7 @@ private:
   bool mSaveThemeColumnStateOnSectionResize;      ///< This is used to filter out programmatic column resizes in slotSectionResized().
   QTimer * mSaveThemeColumnStateTimer;            ///< Used to trigger a delayed "save theme state"
   QTimer * mApplyThemeColumnsTimer;               ///< Used to trigger a delayed "apply theme columns"
+  bool mIgnoreUpdateGeometries;                   ///< Shall we ignore the "update geometries" calls ?
 public:
 
   /**
@@ -93,7 +94,7 @@ public:
 
   /**
    * Returns the Delegate attacched to this View. You probably never need to manipulate
-   * it directly.
+   * it directly. Model uses it to obtain size hints.
    */
   Delegate * delegate() const
     { return mDelegate; };
@@ -409,6 +410,17 @@ protected:
    * Reimplemented in order to kill the QTreeView column auto-resizing
    */
   virtual int sizeHintForColumn( int logicalColumnIndex ) const;
+
+  /**
+   * Reimplemented in order to disable update of the geometries
+   * while a job step is running (as it takes a very long time and it's called for every item insertion...)
+   */
+  virtual void updateGeometries();
+
+  /**
+   *  Used to enable/disable the ignoring of updateGeometries() calls.
+   */
+  void ignoreUpdateGeometries( bool ignore );
 
   /**
    * This is called by the model from inside setFolder().

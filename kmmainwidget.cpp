@@ -542,6 +542,12 @@ void KMMainWidget::layoutSplitters()
   //
   mTopLayout->addWidget( mSplitter1 );
 
+  // Make sure the focus is on the view, and not on the quick search line edit, because otherwise
+  // shortcuts like + or j go to the wrong place.
+  // This would normally be done in the message list itself, but apparently something resets the focus
+  // again, probably all the reparenting we do here.
+  mMessageListView->focusView();
+
   // Make the copy action work, see disconnect comment above
   if ( mMsgView )
     connect( mMsgView->copyAction(), SIGNAL( triggered(bool) ),
@@ -787,7 +793,8 @@ void KMMainWidget::createWidgets()
   QVBoxLayout *vboxlayout = new QVBoxLayout;
   vboxlayout->setMargin(0);
   mFolderQuickSearch = new KTreeWidgetSearchLine( mSearchAndTree );
-  mFolderQuickSearch->setClickMessage( i18n( "Search" ) );
+  mFolderQuickSearch->setClickMessage( i18nc( "@info/plain Displayed grayed-out inside the "
+                                              "textbox, verb to search", "Search" ) );
   vboxlayout->addWidget( mFolderQuickSearch );
   mSearchAndTree->setLayout( vboxlayout );
 
@@ -3519,9 +3526,9 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
   }
   {
-    KAction *action = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
-    actionCollection()->addAction("file_invalidate_imap_cache", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
+    mRefreshImapCacheAction = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
+    actionCollection()->addAction("file_invalidate_imap_cache", mRefreshImapCacheAction );
+    connect(mRefreshImapCacheAction, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
   }
   {
     KAction *action = new KAction(i18n("Empty All &Trash Folders"), this);
@@ -4803,6 +4810,10 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
       break;
     }
   }
+
+  // Enable the "Refresh Local IMAP Cache" action if there's at least one "Disconnected IMAP" account
+  mRefreshImapCacheAction->setEnabled( hasImapAccount );
+
   if ( hasImapAccount == ( mTroubleshootFolderAction != 0 ) )
     return; // nothing to do
 

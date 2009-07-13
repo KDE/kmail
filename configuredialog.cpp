@@ -791,7 +791,10 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountList = new ListView( this );
   mAccountList->setObjectName( "accountList" );
   mAccountList->setHeaderLabels( QStringList() <<
-                                 i18n( "Name" ) << i18n( "Type" ) << i18n( "Folder" ) );
+                                 i18nc( "@title:column Mail account name", "Name" ) <<
+                                 i18nc( "@title:column Mail account type (eg. POP3)", "Type" ) <<
+                                 i18nc( "@title:column Mail account destination folder",
+                                        "Folder" ) );
   mAccountList->setSortingEnabled( true );
   mAccountList->sortByColumn( 0, Qt::AscendingOrder );
 
@@ -2940,7 +2943,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label = new QLabel( i18n( "Default Forwarding Type:" ),
                       this );
   label->setBuddy( mForwardTypeCombo );
-  mForwardTypeCombo->addItems( QStringList() << i18n( "Inline" )
+  mForwardTypeCombo->addItems( QStringList() << i18nc( "@item:inlistbox Inline mail forwarding",
+                                                       "Inline" )
                                              << i18n( "As Attachment" ) );
   hlay->addWidget( label );
   hlay->addWidget( mForwardTypeCombo );

@@ -152,10 +152,10 @@ signals:
   void quotaRootResult( const QStringList& roots );
 
   /**
-   * Emitted when the server returns a list of quota infos for the specified
+   * Emitted when the server returns a list of quota information for the specified
    * mailbox. This is an aggregate of all quotas for all applicable roots for
    * the mailbox. It happens as a side effect of root listing.
-   * @param info List of quota infos for the mailbox
+   * @param info List of quota information for the mailbox
    */
   void quotaInfoReceived( const QuotaInfoList& info );
 

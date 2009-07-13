@@ -159,3 +159,4 @@ bool KMail::Util::RecursionPreventer::isRecursive() const
 {
   return mCounter > 1;
 }
+

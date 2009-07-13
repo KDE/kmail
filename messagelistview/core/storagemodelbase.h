@@ -111,6 +111,11 @@ public:
    */
   virtual void setMessageItemStatus( MessageItem * mi, const KPIM::MessageStatus &status ) = 0;
 
+  /**
+   * Called by Model just before this StorageModel is attacched to it.
+   */
+  virtual void prepareForScan() = 0;
+
 };
 
 } // namespace Core

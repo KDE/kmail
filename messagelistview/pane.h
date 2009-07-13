@@ -406,6 +406,11 @@ public:
    */
   void focusQuickSearch();
 
+  /**
+   * Sets the focus on the view of the currently active tab.
+   */
+  void focusView();
+
 signals:
   /**
    * Emitted when a message has been selected in the folder we're announcing as current.

@@ -625,7 +625,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   mListWidget->setWhatsThis( i18n(_wt_filterlist) );
 
   KListWidgetSearchLine* mSearchListWidget = new KListWidgetSearchLine( this, mListWidget );
-  mSearchListWidget->setClickMessage( i18n( "Search" ) );
+  mSearchListWidget->setClickMessage( i18nc( "@info/plain Displayed grayed-out inside the "
+                                             "textbox, verb to search", "Search" ) );
 
   layout->addWidget( mSearchListWidget );
   layout->addWidget( mListWidget );

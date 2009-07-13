@@ -22,7 +22,7 @@
    </size>
   </property>
   <property name="windowTitle" >
-   <string>Template Configuration</string>
+   <string comment="@title:window">Template Configuration</string>
   </property>
   <layout class="QVBoxLayout" >
    <property name="spacing" >
@@ -254,7 +254,7 @@
         </sizepolicy>
        </property>
        <property name="text" >
-        <string>&amp;Quote indicator:</string>
+        <string comment="@label:textbox Prefix for quoted message lines">&amp;Quote indicator:</string>
        </property>
        <property name="alignment" >
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -267,7 +267,7 @@
      <item>
       <widget class="KLineEdit" name="lineEdit_quote" >
        <property name="whatsThis" >
-           <string>
+           <string comment="@info:whatsthis">
              &lt;qt&gt;The following placeholders are supported in the quote indicator:
              &lt;ul&gt;
              &lt;li&gt;%f: sender's initials&lt;/li&gt;

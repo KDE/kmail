@@ -187,6 +187,13 @@ public:
    */
   virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 
+  /**
+   * Called by Model just before this StorageModel is attacched to it.
+   * It's used to resurrect KMFolder instances that have been closed
+   * for some obscure reason.
+   */
+  virtual void prepareForScan();
+
 private slots:
 
   /**

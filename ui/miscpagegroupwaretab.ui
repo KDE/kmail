@@ -82,22 +82,22 @@
              </property>
              <item>
               <property name="text">
-               <string>English</string>
+               <string comment="@item:inlistbox Adjective, language">English</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>German</string>
+               <string comment="@item:inlistbox Adjective, language">German</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>French</string>
+               <string comment="@item:inlistbox Adjective, language">French</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Dutch</string>
+               <string comment="@item:inlistbox Adjective, language">Dutch</string>
               </property>
              </item>
             </widget>

@@ -26,7 +26,7 @@ using KPIM::ProgressManager;
 //-----------------------------------------------------------------------------
 KMAcctLocal::KMAcctLocal(AccountManager* aOwner, const QString& aAccountName, uint id):
   KMAccount(aOwner, aAccountName, id), mHasNewMail( false ),
-  mProcessingNewMail( false ), mAddedOk( true ), mNumMsgs( 0 ),
+  mAddedOk( true ), mNumMsgs( 0 ),
   mMsgsFetched( 0 ), mMailFolder( 0 )
 {
   mLock = procmail_lockfile;
@@ -61,14 +61,9 @@ void KMAcctLocal::pseudoAssign( const KMAccount * a )
 //-----------------------------------------------------------------------------
 void KMAcctLocal::processNewMail(bool)
 {
-  if ( mProcessingNewMail )
-    return;
-
   mHasNewMail = false;
-  mProcessingNewMail = true;
 
   if ( !preProcess() ) {
-    mProcessingNewMail = false;
     return;
   }
 
@@ -87,7 +82,6 @@ void KMAcctLocal::processNewMail(bool)
   }
 
   postProcess();
-  mProcessingNewMail = false;
 }
 
 

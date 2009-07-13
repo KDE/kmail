@@ -69,6 +69,7 @@ Widget::Widget( QWidget *pParent )
   Manager::registerWidget( this );
 
   setAutoFillBackground( true );
+  setObjectName( "messagelistwidget" );
 
   QGridLayout * g = new QGridLayout( this );
   g->setMargin( 2 ); // use a smaller default
@@ -76,6 +77,7 @@ Widget::Widget( QWidget *pParent )
 
   mSearchEdit = new KLineEdit( this );
   mSearchEdit->setClickMessage( i18nc( "Search for messages.", "Search" ) );
+  mSearchEdit->setObjectName( "quicksearch" );
   mSearchEdit->setClearButtonShown( true );
 
   connect( mSearchEdit, SIGNAL( textEdited( const QString & ) ),
@@ -159,7 +161,7 @@ Widget::Widget( QWidget *pParent )
 
   mView = new View( this );
   mView->setSortOrder( &mSortOrder );
-  mView->setFocus();
+  mView->setObjectName( "messagealistview" );
   g->addWidget( mView, 1, 0, 1, 6 );
 
   connect( mView->header(), SIGNAL( sectionClicked( int ) ),

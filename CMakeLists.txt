@@ -248,6 +248,7 @@ set(kmailprivate_LIB_SRCS
    kmcomposewin.cpp
    messagecomposer.cpp
    newcomposerwin.cpp
+   mdnadvicedialog.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp

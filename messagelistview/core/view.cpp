@@ -38,6 +38,7 @@
 #include <QToolTip>
 #include <QHeaderView>
 #include <QTimer>
+#include <QPaintEvent>
 
 #include <KMenu>
 #include <KLocale>
@@ -63,6 +64,7 @@ View::View( Widget *pParent )
   mDelegate = new Delegate( this );
   mLastCurrentItem = 0;
   mFirstShow = true;
+  mIgnoreUpdateGeometries = false;
 
   mSaveThemeColumnStateTimer = new QTimer();
   connect( mSaveThemeColumnStateTimer, SIGNAL( timeout() ), this, SLOT( saveThemeColumnState() ) );
@@ -134,6 +136,17 @@ void View::ignoreCurrentChanges( bool ignore )
   }
 }
 
+void View::ignoreUpdateGeometries( bool ignore )
+{
+  mIgnoreUpdateGeometries = ignore;
+}
+
+void View::updateGeometries()
+{
+  if( mIgnoreUpdateGeometries )
+    return;
+  QTreeView::updateGeometries();
+}
 
 StorageModel * View::storageModel() const
 {
@@ -1582,10 +1595,10 @@ void View::markMessageItemsAsAboutToBeRemoved( QList< MessageItem * > &items, bo
 
   if ( selectedIndexes.count() > items.count() )
   {
-    // the selection is bigger: we can't clear it completly
+    // the selection is bigger: we can't clear it completely
     clearingEntireSelection = false;
   } else {
-    // the selection has same size or is smaller: we can clear it completly with our removal
+    // the selection has same size or is smaller: we can clear it completely with our removal
     foreach ( const QModelIndex &selectedIndex , selectedIndexes )
     {
       Q_ASSERT( selectedIndex.isValid() );
@@ -1600,7 +1613,7 @@ void View::markMessageItemsAsAboutToBeRemoved( QList< MessageItem * > &items, bo
       if ( !items.contains( static_cast< MessageItem * >( selectedItem ) ) )
       {
         // the selection contains something that we aren't going to remove:
-        // we will not clear the selection completly
+        // we will not clear the selection completely
         clearingEntireSelection = false;
         break;
       }
