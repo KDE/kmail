@@ -256,7 +256,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void folderSelected();
 
-    void slotMsgSelected(KMMessage*);
+    void slotMsgSelected( KMMessage * );
+
+    /**
+      Open a separate viewer window containing the specified message.
+    */
+    void slotMsgActivated( KMMessage * );
 
     /**
       Change the current folder, select a message in the current folder
@@ -462,7 +467,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** etc. */
     void slotDisplayCurrentMessage();
-    void slotMsgActivated( KMMessage* );
 
     void slotShowNewFromTemplate();
     void slotNewFromTemplate( QAction* );
@@ -684,7 +688,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     bool          mWasEverShown;
     int copyId, moveId, htmlId, threadId;
     bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
-      mFolderHtmlPref, mFolderHtmlLoadExtPref, 
+      mFolderHtmlPref, mFolderHtmlLoadExtPref,
       mReaderWindowActive, mReaderWindowBelow;
     bool mEnableFavoriteFolderView;
     bool mEnableFolderQuickSearch;
