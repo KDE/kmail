@@ -714,7 +714,8 @@ static QString subresourceLabelForPresentation( const KMFolder * folder )
     remainder.pop_front();
     remainder.pop_front();
     remainder.pop_front();
-    label = i18n("%1's %2", parts[2], remainder.join( QLatin1String("/") ) );
+    label = i18nc( "calendar|tasks|contacts=%2 belonging to %1",
+                   "%1's %2", parts[2], remainder.join( QLatin1String("/") ) );
   }
   // Another special case is our own folders, under the imap INBOX, make
   // those prettier too
