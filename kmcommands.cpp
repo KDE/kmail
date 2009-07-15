@@ -741,7 +741,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   if ( msg->isComplete() && !mMsgWasComplete ) {
     msg->notify(); // notify observers as msg was transfered
   }
-  QString str = msg->codec()->toUnicode( msg->asString() );
+  QString str = QString::fromAscii( msg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
   viewer->setWindowTitle( i18n("Message as Plain Text") );

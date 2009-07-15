@@ -4373,8 +4373,10 @@ void KMMessage::deleteWhenUnused()
 #ifndef NDEBUG
 void KMMessage::dump( DwEntity *entity, int level )
 {
-  if ( !entity )
+  if ( !entity ) {
     entity = mMsg;
+    entity->Assemble();
+  }
 
   QString spaces;
   for ( int i = 1; i <= level; i++ )

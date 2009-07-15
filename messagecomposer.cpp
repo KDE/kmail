@@ -1255,7 +1255,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage &theMessage,
 
   // set the main headers
   theMessage.deleteBodyParts();
-  QString oldContentType = theMessage.headerField( "Content-Type" );
+  QString oldContentType = theMessage.headerField( "Content-Type", KMMessage::NoEncoding );
   theMessage.removeHeaderField( "Content-Type" );
   theMessage.removeHeaderField( "Content-Transfer-Encoding" );
 
@@ -1337,7 +1337,7 @@ void MessageComposer::composeChiasmusMessage( KMMessage &theMessage,
 
   // set the main headers
   theMessage.deleteBodyParts();
-  QString oldContentType = theMessage.headerField( "Content-Type" );
+  QString oldContentType = theMessage.headerField( "Content-Type", KMMessage::NoEncoding );
   theMessage.removeHeaderField( "Content-Type" );
   theMessage.removeHeaderField( "Content-Transfer-Encoding" );
 
@@ -1416,7 +1416,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   }
 
   // set the main headers
-  QString oldContentType = theMessage.headerField( "Content-Type" );
+  QString oldContentType = theMessage.headerField( "Content-Type", KMMessage::NoEncoding );
   theMessage.deleteBodyParts();
   theMessage.removeHeaderField( "Content-Type" );
   theMessage.removeHeaderField( "Content-Transfer-Encoding" );
