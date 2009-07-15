@@ -95,6 +95,15 @@ namespace Util {
      */
     DwString dwString( const QByteArray& str );
 
+
+    /**
+     * Validates a list of email addresses.
+     * @return true if all addresses are valid.
+     * @return false if one or several addresses are invalid.
+     */
+    bool validateAddresses( QWidget *parent, const QString &addresses );
+
+
     /**
      * A LaterDeleter is intended to be used with the RAII ( Resource
      * Acquisiation is Initialization ) paradigm. When an instance of it

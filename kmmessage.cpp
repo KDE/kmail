@@ -3855,7 +3855,7 @@ bool KMMessage::addressIsInAddressList( const QString& address,
 
 //-----------------------------------------------------------------------------
 //static
-QString KMMessage::expandAliases( const QString& recipients )
+QString KMMessage::expandAliases( const QString& recipients, bool &distributionListIsEmpty )
 {
   if ( recipients.isEmpty() )
     return QString();
@@ -3869,9 +3869,14 @@ QString KMMessage::expandAliases( const QString& recipients )
       expandedRecipients += ", ";
     QString receiver = (*it).trimmed();
 
-    // try to expand distribution list
-    QString expandedList = KPIM::KAddrBookExternal::expandDistributionList( receiver );
-    if ( !expandedList.isEmpty() ) {
+     // try to expand distribution list
+    QString expandedList = KPIM::KAddrBookExternal::expandDistributionList( receiver, distributionListIsEmpty );
+    if ( distributionListIsEmpty ) {
+      expandedRecipients += receiver;
+      continue;
+    }
+
+    if ( !expandedList.isEmpty()) {
       expandedRecipients += expandedList;
       continue;
     }

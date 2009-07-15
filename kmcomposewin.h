@@ -685,13 +685,6 @@ class KMComposeWin : public KMail::Composer
     void cleanupAutoSave();
 
     /**
-     * Validates a list of email addresses.
-     * @return true if all addresses are valid.
-     * @return false if one or several addresses are invalid.
-     */
-    static bool validateAddresses( QWidget *parent, const QString &addresses );
-
-    /**
      * Helper to insert the signature of the current identity arbitrarily
      * in the editor, connecting slot functions to KMeditor::insertSignature().
      * @param placement the position of the signature

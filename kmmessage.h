@@ -712,7 +712,7 @@ public:
   /** Expands aliases (distribution lists and nick names) and appends a
       domain part to all email addresses which are missing the domain part.
   */
-  static QString expandAliases( const QString& recipients );
+  static QString expandAliases( const QString& recipients, bool &distributionListIsEmpty );
 
   /** Uses the hostname as domain part and tries to determine the real name
       from the entries in the password file.
