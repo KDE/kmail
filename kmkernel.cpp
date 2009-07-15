@@ -415,7 +415,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 
   KUrl messageUrl = KUrl( messageFile );
   if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
-    QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.path(), true, false );
+    QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.toLocalFile(), true, false );
     if( !str.isEmpty() ) {
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
@@ -729,7 +729,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
 
     const QByteArray messageText =
-      KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
+      KPIMUtils::kFileToByteArray( msgUrl.toLocalFile(), true, false );
     if ( messageText.isEmpty() )
       return -2;
 
@@ -901,7 +901,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
   KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
     const QByteArray messageText =
-      KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
+      KPIMUtils::kFileToByteArray( msgUrl.toLocalFile(), true, false );
     if ( messageText.isEmpty() )
       return -2;
 

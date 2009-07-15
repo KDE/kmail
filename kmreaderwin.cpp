@@ -1740,7 +1740,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
   const partNode * node = mRootNode->findId( aPartNum );
   KUrl existingFileName = tempFileUrlFromPartNode( node );
   if ( !existingFileName.isEmpty() ) {
-    return existingFileName.path();
+    return existingFileName.toLocalFile();
   }
 
   QString fileName = aMsgPart->fileName();
@@ -1831,7 +1831,7 @@ int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
   if ( aUrl.isEmpty() ) return -1;
   if ( !aUrl.isLocalFile() ) return -1;
 
-  QString path = aUrl.path();
+  QString path = aUrl.toLocalFile();
   uint right = path.lastIndexOf( '/' );
   uint left = path.lastIndexOf( '.', right );
 
@@ -2321,7 +2321,7 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
     mAtmCurrent = id;
     mAtmCurrentName = name;
     if ( mAtmCurrentName.isEmpty() )
-      mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
+      mAtmCurrentName = tempFileUrlFromPartNode( node ).toLocalFile();
 
     KMMessagePart& msgPart = node->msgPart();
     QString pname = msgPart.fileName();
@@ -2357,7 +2357,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     return;
   }
   if ( mAtmCurrentName.isEmpty() )
-    mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
+    mAtmCurrentName = tempFileUrlFromPartNode( node ).toLocalFile();
 
   KMMessagePart& msgPart = node->msgPart();
   if (kasciistricmp(msgPart.typeStr(), "message")==0)
@@ -2716,7 +2716,7 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
       // special processing for shift+click
       mAtmCurrent = msgPartFromUrl( mUrlClicked );
       if ( mAtmCurrent < 0 ) return false; // not an attachment
-      mAtmCurrentName = mUrlClicked.path();
+      mAtmCurrentName = mUrlClicked.toLocalFile();
       slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
       return true; // eat event
     }

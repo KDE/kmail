@@ -268,7 +268,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
 
   KUrl url( attachmentURL );
   if ( url.isValid() && url.isLocalFile() ) {
-    const QString fileName( url.path() );
+    const QString fileName( url.toLocalFile() );
     QFile file( fileName );
     if( file.open( QIODevice::ReadOnly ) ) {
       QByteArray rawData = file.readAll();

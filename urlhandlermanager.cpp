@@ -520,6 +520,7 @@ namespace {
     const int id = KMReaderWin::msgPartFromUrl( url );
     if ( id <= 0 )
       return false;
+    // PENDING(romain_kdab) : replace with toLocalFile() ?
     w->openAttachment( id, url.path() );
     return true;
   }
@@ -530,6 +531,7 @@ namespace {
     const int id = KMReaderWin::msgPartFromUrl( url );
     if ( id <= 0 )
       return false;
+    // PENDING(romain_kdab) : replace with toLocalFile() ?
     w->showAttachmentPopup( id, url.path(), p );
     return true;
   }

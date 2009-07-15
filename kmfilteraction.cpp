@@ -1971,7 +1971,8 @@ QWidget* KMFilterActionWithUrl::createParamWidget( QWidget* parent ) const
 
 void KMFilterActionWithUrl::applyParamWidgetValue( QWidget* paramWidget )
 {
-  mParameter = ((KUrlRequester*)paramWidget)->url().path();
+    const KUrl url = ((KUrlRequester*)paramWidget)->url();
+  mParameter = url.isLocalFile() ? url.toLocalFile() : url.path();
 }
 
 void KMFilterActionWithUrl::setParamWidgetValue( QWidget* paramWidget ) const

@@ -3141,7 +3141,7 @@ void ComposerPage::GeneralTab::save() {
 
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
-  GlobalSettings::self()->setExternalEditor( mEditorRequester->url().path() );
+  GlobalSettings::self()->setExternalEditor( mEditorRequester->url().toLocalFile() );
 }
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
