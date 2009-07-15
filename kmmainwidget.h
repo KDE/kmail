@@ -193,6 +193,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMsgChanged();
 
     /**
+      Open a separate viewer window containing the specified message.
+    */
+    void slotMsgActivated( KMMessage * );
+
+    /**
       Change the current folder, select a message in the current folder
     */
     void slotSelectFolder(KMFolder*);
@@ -388,7 +393,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** etc. */
     void slotDisplayCurrentMessage();
-    void slotMsgActivated( KMMessage* );
 
     void slotShowNewFromTemplate();
     void slotNewFromTemplate( QAction* );

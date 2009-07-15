@@ -107,6 +107,7 @@ protected slots:
   void folderInvalidated(KMFolder *);
   virtual bool slotShowMsg(QTreeWidgetItem *,int);
   void slotShowSelectedMsg();
+  virtual bool slotViewMsg( QTreeWidgetItem *, int );
   void slotCurrentChanged(QTreeWidgetItem *);
   virtual void updateContextMenuActions();
   virtual void slotContextMenuRequested( QTreeWidgetItem* );
@@ -176,6 +177,10 @@ protected:
   KMSearchPattern *mSearchPattern;
 
   static const int MSGID_COLUMN;
+
+private:
+  KMMessage *indexToMessage( QTreeWidgetItem *item );
+
 };
 
 // QTreeWidget sub-class for dnd support

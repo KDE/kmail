@@ -236,8 +236,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mLbxMatches->setColumnWidth( 3, group.readEntry( "FolderWidth", 100 ) );
   mLbxMatches->setColumnWidth( 4, 0 );
 
-  connect(mLbxMatches, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
+  connect(mLbxMatches, SIGNAL(itemClicked(QTreeWidgetItem *,int)),
           this, SLOT(slotShowMsg(QTreeWidgetItem *,int)));
+  connect(mLbxMatches, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
+          this, SLOT(slotViewMsg(QTreeWidgetItem *,int)));
   connect(mLbxMatches, SIGNAL(currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *)),
           this, SLOT(slotCurrentChanged(QTreeWidgetItem *)));
   connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
@@ -693,26 +695,34 @@ void SearchWindow::folderInvalidated(KMFolder *folder)
 }
 
 //-----------------------------------------------------------------------------
-bool SearchWindow::slotShowMsg(QTreeWidgetItem *item,int)
+KMMessage *SearchWindow::indexToMessage( QTreeWidgetItem *item )
 {
-    if(!item)
-        return false;
+  if( !item ) {
+    return 0;
+  }
 
-    KMFolder* folder;
-    int msgIndex;
-    KMMsgDict::instance()->getLocation(item->text(MSGID_COLUMN).toUInt(),
-                                   &folder, &msgIndex);
+  KMFolder *folder;
+  int msgIndex;
+  KMMsgDict::instance()->getLocation( item->text( MSGID_COLUMN ).toUInt(),
+                                      &folder, &msgIndex );
 
-    if (!folder || msgIndex < 0)
-        return false;
+  if ( !folder || msgIndex < 0 ) {
+    return 0;
+  }
 
-    mKMMainWidget->slotSelectFolder(folder);
-    KMMessage* message = folder->getMsg(msgIndex);
-    if (!message)
-        return false;
+  mKMMainWidget->slotSelectFolder( folder );
+  return folder->getMsg( msgIndex );
+}
 
-    mKMMainWidget->slotSelectMessage(message);
+//-----------------------------------------------------------------------------
+bool SearchWindow::slotShowMsg( QTreeWidgetItem *item, int )
+{
+  KMMessage *message = indexToMessage( item );
+  if ( message ) {
+    mKMMainWidget->slotSelectMessage( message );
     return true;
+  }
+  return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -722,7 +732,18 @@ void SearchWindow::slotShowSelectedMsg()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotCurrentChanged(QTreeWidgetItem *item)
+bool SearchWindow::slotViewMsg( QTreeWidgetItem *item, int )
+{
+  KMMessage *message = indexToMessage( item );
+  if ( message ) {
+    mKMMainWidget->slotMsgActivated( message );
+    return true;
+  }
+  return false;
+}
+
+//-----------------------------------------------------------------------------
+void SearchWindow::slotCurrentChanged( QTreeWidgetItem *item )
 {
   mSearchResultOpenBtn->setEnabled( item!=0 );
 }
