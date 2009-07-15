@@ -130,6 +130,7 @@ bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
   return true;
 }
 
+#ifndef KMAIL_UNITTESTS
 bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
 {
   QString brokenAddress;
@@ -154,6 +155,7 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
   }
   return true;
 }
+#endif
 
 #ifdef Q_WS_MACX
 #include <QDesktopServices>
