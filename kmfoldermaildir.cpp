@@ -533,10 +533,10 @@ DwString KMFolderMaildir::getDwString(int idx)
   abs_file += mi->fileName();
   QFileInfo fi( abs_file );
 
-  if (fi.exists() && fi.isFile() && fi.isWritable() && fi.size() > 0)
+  if (fi.exists() && fi.isFile() && fi.size() > 0)
   {
-    FILE* stream = KDE_fopen(QFile::encodeName(abs_file), "r+");
-    kDebug( StorageDebug ) << "KDE_fopen(abs_file=" << abs_file << ", \"r+\") == stream == " << stream;
+    FILE* stream = KDE_fopen(QFile::encodeName(abs_file), "r");
+    kDebug( StorageDebug ) << "KDE_fopen(abs_file=" << abs_file << ", \"r\") == stream == " << stream;
     if (stream) {
       size_t msgSize = fi.size();
       char* msgText = new char[ msgSize + 1 ];
@@ -551,7 +551,7 @@ DwString KMFolderMaildir::getDwString(int idx)
       return str;
     }
   }
-  kDebug() <<"Could not open file r+" << abs_file;
+  kDebug() <<"Could not open file r" << abs_file;
   return DwString();
 }
 
