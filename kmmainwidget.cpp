@@ -3337,6 +3337,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 void KMMainWidget::slotMarkAll()
 {
   mMessageListView->selectAll();
+  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
