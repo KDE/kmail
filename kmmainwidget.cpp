@@ -2481,6 +2481,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 void KMMainWidget::slotMarkAll()
 {
   mHeaders->selectAll( true );
+  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
