@@ -51,6 +51,7 @@
 #include "util.h"
 #include "kleojobexecutor.h"
 #include "stringutil.h"
+#include "iconnamecache.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -158,6 +159,7 @@ namespace KMail {
       mHtmlWriter = reader->htmlWriter();
     if ( reader && !this->cssHelper() )
       mCSSHelper = reader->mCSSHelper;
+
   }
 
   ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )
@@ -2815,18 +2817,18 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   int currQuoteLevel = -2; // -2 == no previous lines
   bool curHidden = false; // no hide any block
 
-  if ( GlobalSettings::self()->showExpandQuotesMark() )
+  if ( GlobalSettings::self()->showExpandQuotesMark() && beg<length )
   {
     // Cache Icons
     if ( mCollapseIcon.isEmpty() ) {
       mCollapseIcon= LinkLocator::pngToDataUrl(
-          KIconLoader::global()->iconPath( "quotecollapse",0 ));
+          KMail::IconNameCache::instance()->iconPath( "quotecollapse", 0 ));
     }
-    if ( mExpandIcon.isEmpty() )
+    if ( (mExpandIcon).isEmpty() )
       mExpandIcon= LinkLocator::pngToDataUrl(
-          KIconLoader::global()->iconPath( "quoteexpand",0 ));
+          KMail::IconNameCache::instance()->iconPath( "quoteexpand", 0 ));
   }
-  
+
   while (beg<length)
   {
     QString line;
