@@ -38,9 +38,10 @@
 
 
 #include "util.h"
-
+#include "stringutil.h"
 #include <stdlib.h>
 #include <mimelib/string.h>
+#include <kpimutils/email.h>
 
 void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
 {
@@ -125,6 +126,31 @@ bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
              i18n( "Overwrite File?" ),
                    KStandardGuiItem::overwrite() ) )
       return false;
+  }
+  return true;
+}
+
+bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
+{
+  QString brokenAddress;
+
+  bool distributionListIsEmpty;
+  KPIMUtils::EmailParseResult errorCode =
+    KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses,distributionListIsEmpty ),
+                                   brokenAddress );
+  if ( distributionListIsEmpty ) {
+    QString errorMsg = i18n( "Distribution list \"addresses\" is empty. You can not use it.",addresses );
+    KMessageBox::sorry( parent , errorMsg, i18n("Invalid Email Address") );
+    return false;
+  }
+  if ( !( errorCode == KPIMUtils::AddressOk ||
+          errorCode == KPIMUtils::AddressEmpty ) ) {
+    QString errorMsg( "<qt><p><b>" + brokenAddress +
+                      "</b></p><p>" +
+                      KPIMUtils::emailParseResultToString( errorCode ) +
+                      "</p></qt>" );
+    KMessageBox::sorry( parent , errorMsg, i18n("Invalid Email Address") );
+    return false;
   }
   return true;
 }

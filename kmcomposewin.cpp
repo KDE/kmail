@@ -71,6 +71,7 @@ using MailTransport::Transport;
 #include "recipientseditor.h"
 #include "stl_util.h"
 #include "stringutil.h"
+#include "util.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
@@ -3420,25 +3421,6 @@ void KMComposeWin::slotContinuePrint( bool rc )
 }
 
 //----------------------------------------------------------------------------
-bool KMComposeWin::validateAddresses( QWidget *parent, const QString &addresses )
-{
-  QString brokenAddress;
-  KPIMUtils::EmailParseResult errorCode =
-    KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses ),
-                                   brokenAddress );
-  if ( !( errorCode == KPIMUtils::AddressOk ||
-          errorCode == KPIMUtils::AddressEmpty ) ) {
-    QString errorMsg( "<qt><p><b>" + brokenAddress +
-                      "</b></p><p>" +
-                      KPIMUtils::emailParseResultToString( errorCode ) +
-                      "</p></qt>" );
-    KMessageBox::sorry( parent, errorMsg, i18n("Invalid Email Address") );
-    return false;
-  }
-  return true;
-}
-
-//----------------------------------------------------------------------------
 void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
                            KMComposeWin::SaveIn saveIn )
 {
@@ -3486,15 +3468,15 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     }
 
     // Validate the To:, CC: and BCC fields
-    if ( !validateAddresses( this, to().trimmed() ) ) {
+    if ( !Util::validateAddresses( this, to().trimmed() ) ) {
       return;
     }
 
-    if ( !validateAddresses( this, cc().trimmed() ) ) {
+    if ( !Util::validateAddresses( this, cc().trimmed() ) ) {
       return;
     }
 
-    if ( !validateAddresses( this, bcc().trimmed() ) ) {
+    if ( !Util::validateAddresses( this, bcc().trimmed() ) ) {
       return;
     }
 
@@ -3657,7 +3639,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     mDisableBreaking = false;
     return;
   }
-
+  bool listIsEmpty;
   for ( QVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
 
     // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
@@ -3671,14 +3653,14 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     } else if ( mSaveIn == KMComposeWin::Templates ) {
       sentOk = saveDraftOrTemplate( (*it)->templates(), (*it) );
     } else {
-      (*it)->setTo( StringUtil::expandAliases( to() ));
-      (*it)->setCc( StringUtil::expandAliases( cc() ));
+      (*it)->setTo( StringUtil::expandAliases( to(), listIsEmpty ));
+      (*it)->setCc( StringUtil::expandAliases( cc(), listIsEmpty ));
       if ( !mComposer->originalBCC().isEmpty() ) {
-        (*it)->setBcc( StringUtil::expandAliases( mComposer->originalBCC() ) );
+        (*it)->setBcc( StringUtil::expandAliases( mComposer->originalBCC(),listIsEmpty ) );
       }
       QString recips = (*it)->headerField( "X-KMail-Recipients" );
       if ( !recips.isEmpty() ) {
-        (*it)->setHeaderField( "X-KMail-Recipients", StringUtil::expandAliases( recips ), KMMessage::Address );
+        (*it)->setHeaderField( "X-KMail-Recipients", StringUtil::expandAliases( recips,listIsEmpty ), KMMessage::Address );
       }
       (*it)->cleanupHeader();
       sentOk = kmkernel->msgSender()->send( (*it), mSendMethod );

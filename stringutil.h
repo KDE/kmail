@@ -139,7 +139,7 @@ namespace StringUtil
    * Expands aliases (distribution lists and nick names) and appends a
    * domain part to all email addresses which are missing the domain part.
    */
-  QString expandAliases( const QString& recipients );
+  QString expandAliases( const QString& recipients,bool &distributionListIsEmpty );
 
   /**
    * Uses the hostname as domain part and tries to determine the real name
