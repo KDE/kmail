@@ -257,6 +257,7 @@ public:
 
 Model::Model( View *pParent )
   : QAbstractItemModel( pParent ),
+    mRecursionCounterForReset( 0 ),
     mStorageModel( 0 ), mView( pParent )
 {
   mAggregation = 0;
@@ -561,8 +562,7 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
 {
   // Prevent a case of recursion when opening a folder that has a message and the folder was
   // never opened before.
-  static int recursionCounter = 0;
-  KMail::Util::RecursionPreventer preventer( recursionCounter );
+  KMail::Util::RecursionPreventer preventer( mRecursionCounterForReset );
   if ( preventer.isRecursive() )
     return;
 
