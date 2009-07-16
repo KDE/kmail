@@ -1103,12 +1103,12 @@ bool FolderView::event( QEvent *e )
   if( e->type() != QEvent::ToolTip )
     return KPIM::FolderTreeWidget::event( e );
 
+  if ( mToolTipDisplayPolicy == DisplayNever )
+    return true; // never display tooltips
+
   QHelpEvent * he = dynamic_cast< QHelpEvent * >( e );
   if ( !he )
     return true; // eh ?
-
-  if ( mToolTipDisplayPolicy == DisplayNever )
-    return true; // never display tooltips
 
   QPoint pnt = viewport()->mapFromGlobal( mapToGlobal( he->pos() ) );
 
