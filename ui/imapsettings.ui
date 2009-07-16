@@ -238,7 +238,7 @@ However, if KWallet is not available, the password will be stored in KMail's con
      </widget>
      <widget class="QWidget" name="optionsTab">
       <attribute name="title">
-       <string comment="@title:tab Advanced settings">Advanced</string>
+       <string comment="@title:tab">IMAP Settings</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
