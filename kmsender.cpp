@@ -511,6 +511,7 @@ void KMSender::doSendMsg()
         true );
     connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
              this, SLOT( slotAbortSend() ) );
+    qDebug() << "KGlobal::ref() from void KMSender::doSendMsg() ";
     KGlobal::ref();
     mSendInProgress = true;
   }
@@ -603,6 +604,7 @@ void KMSender::cleanup( void )
   mTransportJob = 0;
   mSendProcStarted = false;
   if ( mSendInProgress ) {
+    qDebug() << "KGlobal::deref() from void KMSender::cleanup() ";
     KGlobal::deref();
   }
   mSendInProgress = false;
