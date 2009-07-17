@@ -2335,6 +2335,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
 :KMMoveCommand( sernum )
 {
   if ( !sernum ) {
+    setDestFolder( 0 );
     return;
   }
 
