@@ -169,7 +169,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
-    mPreventFccOverwrite( false )
+    mPreventFccOverwrite( false ),
+    mCheckForRecipients( false )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
@@ -3395,6 +3396,11 @@ void KMComposeWin::forceDisableHtml()
   // FIXME: Remove the toggle toolbar action somehow
 }
 
+void KMComposeWin::disableRecipientNumberCheck()
+{
+  mCheckForRecipients = false;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
@@ -3784,13 +3790,8 @@ void KMComposeWin::slotSendNow()
 //----------------------------------------------------------------------------
 bool KMComposeWin::checkRecipientNumber() const
 {
-  bool isInvitation = false;
-  const bool messageHasIinvitation = !mMsg->headerField("X-Kontact-Invitation").isEmpty();
-  if ( messageHasIinvitation )
-    isInvitation = ( mMsg->headerField( "X-Kontact-Invitation" ).simplified() == "true" );
-
   int thresHold = GlobalSettings::self()->recipientThreshold();
-  if ( !isInvitation && GlobalSettings::self()->tooManyRecipients() && mRecipientsEditor->recipients().count() > thresHold ) {
+  if ( mCheckForRecipients && GlobalSettings::self()->tooManyRecipients() && mRecipientsEditor->recipients().count() > thresHold ) {
     if ( KMessageBox::questionYesNo( mMainWidget,
          i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
          i18n("Too many receipients"),

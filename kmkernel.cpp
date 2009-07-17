@@ -529,7 +529,6 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                            QString( "text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
                            arg( attachParamValue ) );
-      msg->setHeaderField( "X-Kontact-Invitation", "true" );
 
       iCalAutoSend = true; // no point in editing raw ICAL
       noWordWrap = true; // we shant word wrap inline invitations
@@ -565,8 +564,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     cWin->setCharset( "" /* default charset */, true /* force default charset */ );
   if ( msgPart )
     cWin->addAttach( msgPart );
-  if ( isICalInvitation )
+  if ( isICalInvitation ) {
     cWin->forceDisableHtml();
+    cWin->disableRecipientNumberCheck();
+  }
 
   if ( !hidden && !iCalAutoSend ) {
     cWin->show();
