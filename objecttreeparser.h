@@ -40,6 +40,8 @@
 
 #include <cassert>
 
+#define MARCS_DEBUG 1
+
 class KMReaderWin;
 class KMMessagePart;
 class QString;
