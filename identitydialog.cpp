@@ -45,7 +45,7 @@ using KMail::FolderRequester;
 #include "kmfolder.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
-#include "util.h"
+
 // other kdepim headers:
 #include <kpimidentities/identity.h>
 #include <kpimidentities/signatureconfigurator.h>
@@ -525,6 +525,25 @@ namespace KMail {
     }
   }
 
+  bool IdentityDialog::validateAddresses( const QString &addresses )
+  {
+    QString brokenAddress;
+
+    KPIMUtils::EmailParseResult errorCode =
+      KPIMUtils::isValidAddressList( KMMessage::expandAliases( addresses ),
+                                     brokenAddress );
+    if ( !( errorCode == KPIMUtils::AddressOk ||
+            errorCode == KPIMUtils::AddressEmpty ) ) {
+      QString errorMsg( "<qt><p><b>" + brokenAddress +
+                        "</b></p><p>" +
+                        KPIMUtils::emailParseResultToString( errorCode ) +
+                        "</p></qt>" );
+      KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
+      return false;
+    }
+    return true;
+  }
+
   void IdentityDialog::slotButtonClicked( int button )
   {
     if ( button != KDialog::Ok ) {
@@ -541,11 +560,11 @@ namespace KMail {
       return;
     }
 
-    if ( !Util::validateAddresses( this, mReplyToEdit->text().trimmed() ) ) {
+    if ( !validateAddresses( mReplyToEdit->text().trimmed() ) ) {
       return;
     }
 
-    if ( !Util::validateAddresses( this, mBccEdit->text().trimmed() ) ) {
+    if ( !validateAddresses( mBccEdit->text().trimmed() ) ) {
       return;
     }
 
