@@ -584,6 +584,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( msgPart )
     cWin->addAttach(msgPart);
 
+  if ( isICalInvitation ) {
+    cWin->disableRecipientNumberCheck();
+  }
+
   if ( hidden == 0 && !iCalAutoSend ) {
     cWin->show();
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());

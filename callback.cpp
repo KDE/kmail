@@ -126,6 +126,7 @@ bool Callback::mailICal( const QString& to, const QString &iCal,
     cWin->addAttach( msgPart );
   }
 
+  cWin->disableRecipientNumberCheck();
   if ( options.readBoolEntry( "AutomaticSending", true ) ) {
     cWin->setAutoDeleteWindow(  true );
     cWin->slotSendNow();

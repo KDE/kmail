@@ -184,7 +184,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreserveUserCursorPosition( false ),
-    mPreventFccOverwrite( false )
+    mPreventFccOverwrite( false ),
+    mCheckForRecipients( false )
 {
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -3982,6 +3983,10 @@ void KMComposeWin::disableWordWrap()
     mEditor->setWordWrap( QTextEdit::NoWrap );
 }
 
+void KMComposeWin::disableRecipientNumberCheck()
+{
+  mCheckForRecipients = false;
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
@@ -4375,7 +4380,9 @@ void KMComposeWin::slotSendNow() {
 bool KMComposeWin::checkRecipientNumber() const
 {
   int thresHold = GlobalSettings::self()->recipientThreshold();
-  if ( GlobalSettings::self()->tooManyRecipients() && mRecipientsEditor->recipients().count() > thresHold ) {
+  if ( mCheckForRecipients &&
+       GlobalSettings::self()->tooManyRecipients() &&
+       mRecipientsEditor->recipients().count() > thresHold ) {
     if ( KMessageBox::questionYesNo( mMainWidget,
                                i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?").arg(thresHold),
                                i18n("Too many receipients"),

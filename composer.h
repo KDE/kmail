@@ -148,6 +148,8 @@ namespace KMail {
 
     virtual void disableWordWrap() = 0;
 
+    virtual void disableRecipientNumberCheck() = 0;
+
   public: // kmcommand
     /**
      * Add an attachment to the list.
