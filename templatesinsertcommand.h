@@ -44,7 +44,7 @@ class TemplatesInsertCommand : public QPushButton
                   CBlank, CNop, CClear, CDebug, CDebugOff, CToFName, CToLName, CFromFName, CFromLName, 
                   COToFName, COToLName, COFromFName, COFromLName, CCursor, 
                   CCCAddr, CCCName, CCCFName, CCCLName, COCCAddr, COCCName, COCCFName, COCCLName,
-                  COAddresseesAddr };
+                  COAddresseesAddr, CSignature };
 
   signals:
     void insertCommand( TemplatesInsertCommand::Command cmd );
