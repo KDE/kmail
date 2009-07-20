@@ -185,6 +185,9 @@ class KMComposeWin : public KMail::Composer
       */
      void forceDisableHtml();
 
+     /** Don't check if there are too many recipients for a mail, eg. when sending out invitations. */
+     void disableRecipientNumberCheck();
+
      /**
       * Returns @c true while the message composing is in progress.
       */
@@ -674,13 +677,6 @@ class KMComposeWin : public KMail::Composer
     void cleanupAutoSave();
 
     /**
-     * Validates a list of email addresses.
-     * @return true if all addresses are valid.
-     * @return false if one or several addresses are invalid.
-     */
-    static bool validateAddresses( QWidget *parent, const QString &addresses );
-
-    /**
      * Helper to insert the signature of the current identity arbitrarily
      * in the editor, connecting slot functions to KMeditor::insertSignature().
      * @param placement the position of the signature
@@ -864,6 +860,7 @@ class KMComposeWin : public KMail::Composer
     QLabel *mEncryptionStateIndicator;
 
     bool mPreventFccOverwrite;
+    bool mCheckForRecipients;
 };
 
 #endif

@@ -856,13 +856,12 @@ bool addressIsInAddressList( const QString& address,
   return false;
 }
 
-QString expandAliases( const QString& recipients )
+QString expandAliases( const QString& recipients, QStringList &distributionListEmpty )
 {
   if ( recipients.isEmpty() )
     return QString();
 
   QStringList recipientList = KPIMUtils::splitAddressList( recipients );
-
   QString expandedRecipients;
   for ( QStringList::Iterator it = recipientList.begin();
         it != recipientList.end(); ++it ) {
@@ -871,8 +870,15 @@ QString expandAliases( const QString& recipients )
     QString receiver = (*it).trimmed();
 
     // try to expand distribution list
-    QString expandedList = KPIM::KAddrBookExternal::expandDistributionList( receiver );
-    if ( !expandedList.isEmpty() ) {
+    bool distributionListIsEmpty = false;
+    QString expandedList = KPIM::KAddrBookExternal::expandDistributionList( receiver, distributionListIsEmpty );
+    if ( distributionListIsEmpty ) {
+      expandedRecipients += receiver;
+      distributionListEmpty << receiver;
+      continue;
+    }
+
+    if ( !expandedList.isEmpty()) {
       expandedRecipients += expandedList;
       continue;
     }

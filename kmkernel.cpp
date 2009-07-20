@@ -566,8 +566,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     cWin->setCharset( "" /* default charset */, true /* force default charset */ );
   if ( msgPart )
     cWin->addAttach( msgPart );
-  if ( isICalInvitation )
+  if ( isICalInvitation ) {
     cWin->forceDisableHtml();
+    cWin->disableRecipientNumberCheck();
+  }
 
   if ( !hidden && !iCalAutoSend ) {
     cWin->show();

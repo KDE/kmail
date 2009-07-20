@@ -96,6 +96,9 @@ public:
 
 private:
 
+  /** counter to avoid infinite recursions in the setStorageModel() function */
+  int mRecursionCounterForReset;
+
   /**
    * The currently set storage model: shallow pointer.
    */

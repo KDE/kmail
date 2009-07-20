@@ -41,8 +41,11 @@ namespace StringUtil
 {
 
   /**
-   * Strips the signature from a message text. "-- " is considered as
-   * a signature separator.
+   * Strips the signature blocks from a message text. "-- " is considered as a signature block separator.
+   @param msg. The message to remove the signature block from.
+   @param clearSigned. Before a message is cryptographically signed
+   all trailing whitespace is removed. Therefore the signature
+   separator loses the trailing space.
    */
   QString stripSignature ( const QString & msg, bool clearSigned );
 
@@ -139,7 +142,7 @@ namespace StringUtil
    * Expands aliases (distribution lists and nick names) and appends a
    * domain part to all email addresses which are missing the domain part.
    */
-  QString expandAliases( const QString& recipients );
+  QString expandAliases( const QString& recipients,QStringList &distributionListIsEmpty );
 
   /**
    * Uses the hostname as domain part and tries to determine the real name
