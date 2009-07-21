@@ -647,7 +647,7 @@
     <group name="OutOfOffice">
         <entry name="AllowOutOfOfficeSettings" type="Bool">
             <default>true</default>
-            <label>Allow out-of-office settings to to be changeable by the user.</label>
+            <label>Allow out-of-office settings to be changeable by the user.</label>
         </entry>
         <entry name="AllowOutOfOfficeUploadButNoSettings" type="Bool">
             <default>false</default>
