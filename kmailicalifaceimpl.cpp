@@ -714,9 +714,9 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f ) {
     subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
-                                      !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
+                                      f->isWritable(), folderIsAlarmRelevant( f ) ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
-      ( f->isReadOnly() ? "readonly" : "" ) << endl;
+      ( !f->isWritable() ? "readonly" : "" ) << endl;
   }
 
   // get the extra ones
@@ -726,9 +726,9 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t ) {
       subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
-                                        !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
+                                        f->isWritable(), folderIsAlarmRelevant( f ) ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
-              ( f->isReadOnly() ? "readonly" : "" ) << endl;
+              ( !f->isWritable() ? "readonly" : "" ) << endl;
     }
   }
 
@@ -772,7 +772,7 @@ bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
     // Definitely not writable
     return false;
 
-  return !f->isReadOnly();
+  return f->isWritable();
 }
 
 /* Used by the resource to query the storage format of the folder. */
@@ -1446,7 +1446,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   }
   // Tell about the new resource
   subresourceAdded( folderContentsType( contentsType ), location, subresourceLabelForPresentation(folder),
-                    !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
+                    folder->isWritable(), folderIsAlarmRelevant( folder ) );
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1591,7 +1591,7 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
     subresourceDeleted( contentsTypeStr, location );
 
     subresourceAdded( contentsTypeStr, location, subresourceLabelForPresentation( folder ),
-                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
+                      folder->isWritable(), folderIsAlarmRelevant( folder ) );
   }
 }
 

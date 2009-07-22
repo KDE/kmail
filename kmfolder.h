@@ -353,6 +353,8 @@ public:
 
   /** Is the folder read-only? */
   bool isReadOnly() const;
+  /** Can we write into and delete from this folder (on IMAP that's not necessarily !isReadOnly()) */
+  bool isWritable() const;
 
   /** Can messages in this folder be deleted? */
   bool canDeleteMessages() const;
