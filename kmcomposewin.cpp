@@ -3683,7 +3683,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     mDisableBreaking = false;
     return;
   }
-  bool listIsEmpty;
+  QStringList listIsEmpty;
   for ( QVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
 
     // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
