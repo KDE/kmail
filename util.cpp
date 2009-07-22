@@ -38,9 +38,10 @@
 
 
 #include "util.h"
-
+#include "kmmessage.h"
 #include <stdlib.h>
 #include <mimelib/string.h>
+#include <kpimutils/email.h>
 
 size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 {
@@ -121,6 +122,33 @@ bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
   }
   return true;
 }
+
+#ifndef KMAIL_UNITTESTS
+bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
+{
+  QString brokenAddress;
+
+  bool distributionListIsEmpty;
+  KPIMUtils::EmailParseResult errorCode =
+    KPIMUtils::isValidAddressList( KMMessage::expandAliases( addresses,distributionListIsEmpty ),
+                                   brokenAddress );
+  if ( distributionListIsEmpty ) {
+    QString errorMsg = i18n( "Distribution list \"addresses\" is empty. You can not use it.",addresses );
+    KMessageBox::sorry( parent , errorMsg, i18n("Invalid Email Address") );
+    return false;
+  }
+  if ( !( errorCode == KPIMUtils::AddressOk ||
+          errorCode == KPIMUtils::AddressEmpty ) ) {
+    QString errorMsg( "<qt><p><b>" + brokenAddress +
+                      "</b></p><p>" +
+                      KPIMUtils::emailParseResultToString( errorCode ) +
+                      "</p></qt>" );
+    KMessageBox::sorry( parent , errorMsg, i18n("Invalid Email Address") );
+    return false;
+  }
+  return true;
+}
+#endif
 
 #ifdef Q_WS_MACX
 #include <QDesktopServices>
