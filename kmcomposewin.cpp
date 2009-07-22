@@ -3838,8 +3838,13 @@ void KMComposeWin::slotSendNow()
 //----------------------------------------------------------------------------
 bool KMComposeWin::checkRecipientNumber() const
 {
+  bool isInvitation = false;
+  const bool messageHasIinvitation = !mMsg->headerField("X-Kontact-Invitation").isEmpty();
+  if ( messageHasIinvitation )
+    isInvitation = ( mMsg->headerField( "X-Kontact-Invitation" ).simplified() == "true" );
+
   int thresHold = GlobalSettings::self()->recipientThreshold();
-  if ( mCheckForRecipients && GlobalSettings::self()->tooManyRecipients() && mRecipientsEditor->recipients().count() > thresHold ) {
+  if ( !isInvitation && GlobalSettings::self()->tooManyRecipients() && mRecipientsEditor->recipients().count() > thresHold ) {
     if ( KMessageBox::questionYesNo( mMainWidget,
          i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
          i18n("Too many recipients"),
