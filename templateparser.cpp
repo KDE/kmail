@@ -45,6 +45,7 @@
 #include <libkpimidentities/identitymanager.h>
 #include "partNode.h"
 #include "attachmentcollector.h"
+#include "objecttreeparser.h"
 
 #include "templateparser.h"
 #include <mimelib/bodypart.h>
@@ -848,6 +849,8 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
 
     // Get the attachments of the original mail
     partNode *root = partNode::fromMessage( mMsg );
+    KMail::ObjectTreeParser otp; // all defaults are ok
+    otp.parseObjectTree( root );
     KMail::AttachmentCollector ac;
     ac.collectAttachmentsFrom( root );
 
