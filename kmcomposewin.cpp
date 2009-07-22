@@ -1672,10 +1672,6 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   otp.parseObjectTree( root );
 
   KMail::AttachmentCollector ac;
-  ac.setDiveIntoEncryptions( true );
-  ac.setDiveIntoSignatures( true );
-  ac.setDiveIntoMessages( false );
-
   ac.collectAttachmentsFrom( root );
 
   for ( std::vector<partNode*>::const_iterator it = ac.attachments().begin();

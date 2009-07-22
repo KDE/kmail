@@ -40,20 +40,7 @@ namespace KMail {
 
   class AttachmentCollector {
   public:
-    AttachmentCollector()
-      : mDiveIntoEncryptions( true ),
-	mDiveIntoSignatures( true ),
-	mDiveIntoMessages( false ) {}
-
-    void setDiveIntoEncryptions( bool dive ) {
-      mDiveIntoEncryptions = dive;
-    }
-    void setDiveIntoSignatures( bool dive ) {
-      mDiveIntoSignatures = dive;
-    }
-    void setDiveIntoMessages( bool dive ) {
-      mDiveIntoMessages = dive;
-    }
+    AttachmentCollector() {}
 
     void collectAttachmentsFrom( partNode * node );
 
@@ -61,9 +48,6 @@ namespace KMail {
 
   private:
     std::vector<partNode*> mAttachments;
-    bool mDiveIntoEncryptions : 1;
-    bool mDiveIntoSignatures  : 1;
-    bool mDiveIntoMessages    : 1;
 
   private: // disabled
     AttachmentCollector( const AttachmentCollector & );
