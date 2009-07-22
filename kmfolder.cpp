@@ -590,6 +590,11 @@ bool KMFolder::isReadOnly() const
   return mStorage->isReadOnly();
 }
 
+bool KMFolder::isWritable() const
+{
+  return !mStorage->isReadOnly() && mStorage->canDeleteMessages();
+}
+
 bool KMFolder::canDeleteMessages() const
 {
   return mStorage->canDeleteMessages();
