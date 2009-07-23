@@ -56,6 +56,7 @@ using KMail::ListJob;
 #include "annotationjobs.h"
 #include "quotajobs.h"
 #include "groupwareadaptor.h"
+#include "autoqpointer.h"
 using namespace KMail;
 
 #include <kio/jobuidelegate.h>
@@ -3198,10 +3199,11 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
           "<p>Do you want to move these messages to another folder now?</p>", folder()->prettyUrl() ) );
     if ( KMessageBox::warningYesNo( 0, msg, QString(), KGuiItem( i18n("Move") ), KGuiItem( i18n("Do Not Move") ) )
           == KMessageBox::Yes ) {
-      KMail::FolderSelectionDialog dlg( kmkernel->getKMMainWidget(),
-          i18n("Move Messages to Folder"), true );
-      if ( dlg.exec() ) {
-        dest = dlg.folder();
+      AutoQPointer<KMail::FolderSelectionDialog> dlg;
+      dlg = new KMail::FolderSelectionDialog( kmkernel->getKMMainWidget(),
+                                              i18n("Move Messages to Folder"), true );
+      if ( dlg->exec() && dlg ) {
+        dest = dlg->folder();
       }
     }
   }

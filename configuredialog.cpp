@@ -63,6 +63,7 @@ using KPIM::RecentAddresses;
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
+#include "autoqpointer.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -395,20 +396,20 @@ void IdentityPage::slotNewIdentity()
   Q_ASSERT( !mIdentityDialog );
 
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  NewIdentityDialog dialog( im->shadowIdentities(), this );
-  dialog.setObjectName( "new" );
+  AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog( im->shadowIdentities(), this ) );
+  dialog->setObjectName( "new" );
 
-  if( dialog.exec() == QDialog::Accepted ) {
-    QString identityName = dialog.identityName().trimmed();
+  if ( dialog->exec() == QDialog::Accepted && dialog ) {
+    QString identityName = dialog->identityName().trimmed();
     Q_ASSERT( !identityName.isEmpty() );
 
     //
     // Construct a new Identity:
     //
-    switch ( dialog.duplicateMode() ) {
+    switch ( dialog->duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-        KPIMIdentities::Identity &dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
+        KPIMIdentities::Identity &dupThis = im->modifyIdentityForName( dialog->duplicateIdentity() );
         im->newFromExisting( dupThis, identityName );
         break;
       }
@@ -935,10 +936,12 @@ QStringList AccountsPage::ReceivingTab::occupiedNames()
 }
 
 void AccountsPage::ReceivingTab::slotAddAccount() {
-  KMAcctSelDlg accountSelectorDialog( this );
-  if( accountSelectorDialog.exec() != QDialog::Accepted ) return;
+  AutoQPointer<KMAcctSelDlg> accountSelectorDialog( new KMAcctSelDlg( this ) );
+  if ( accountSelectorDialog->exec() != QDialog::Accepted || !accountSelectorDialog ) {
+    return;
+  }
 
-  KAccount::Type accountType = accountSelectorDialog.selected();
+  KAccount::Type accountType = accountSelectorDialog->selected();
   KMAccount *account = kmkernel->acctMgr()->create( accountType );
   if ( !account ) {
     // ### FIXME: Give the user more information. Is this error
@@ -949,9 +952,9 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
 
   account->init(); // fill the account fields with good default values
 
-  AccountDialog dialog( i18n("Add Account"), account, this );
+  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Add Account"), account, this ) );
 
-  if( dialog.exec() != QDialog::Accepted ) {
+  if ( dialog->exec() != QDialog::Accepted ) {
     delete account;
     return;
   }
@@ -1028,9 +1031,9 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   QStringList accountNames = occupiedNames();
   accountNames.removeAll( account->name() );
 
-  AccountDialog dialog( i18n("Modify Account"), account, this );
+  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Modify Account"), account, this ) );
 
-  if( dialog.exec() != QDialog::Accepted ) return;
+  if ( dialog->exec() != QDialog::Accepted ) return;
 
   if ( accountNames.contains( account->name() ) )
     account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
@@ -3108,11 +3111,11 @@ void ComposerPage::GeneralTab::save() {
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
 {
-  KPIM::RecentAddressDialog dlg( this );
-  dlg.setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
-  if ( dlg.exec() ) {
+  AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
+  dlg->setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
+  if ( dlg->exec() && dlg ) {
     RecentAddresses::self( KMKernel::config() )->clear();
-    const QStringList &addrList = dlg.addresses();
+    const QStringList &addrList = dlg->addresses();
     QStringList::ConstIterator it;
     for ( it = addrList.constBegin(); it != addrList.constEnd(); ++it )
       RecentAddresses::self( KMKernel::config() )->add( *it );

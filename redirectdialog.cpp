@@ -38,6 +38,7 @@
 using KPIM::AddressesDialog;
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
+#include "autoqpointer.h"
 
 #include <kiconloader.h>
 #include <klocale.h>
@@ -128,26 +129,25 @@ void RedirectDialog::accept()
 //-----------------------------------------------------------------------------
 void RedirectDialog::slotAddrBook()
 {
-  AddressesDialog dlg( this );
+  AutoQPointer<AddressesDialog> dlg( new AddressesDialog( this ) );
 
   mResentTo = mEditTo->text();
   if ( !mResentTo.isEmpty() ) {
       QStringList lst = KPIMUtils::splitAddressList( mResentTo );
-      dlg.setSelectedTo( lst );
+      dlg->setSelectedTo( lst );
   }
 
-  dlg.setRecentAddresses(
-      RecentAddresses::self( KMKernel::config() )->kabcAddresses() );
+  dlg->setRecentAddresses( RecentAddresses::self( KMKernel::config() )->kabcAddresses() );
 
   // Make it impossible to specify Cc or Bcc addresses as we support
   // only the Redirect-To header!
-  dlg.setShowCC( false );
-  dlg.setShowBCC( false );
+  dlg->setShowCC( false );
+  dlg->setShowBCC( false );
 
-  if (dlg.exec()==KDialog::Rejected) return;
-
-  mEditTo->setText( dlg.to().join(", ") );
-  mEditTo->setModified( true );
+  if ( dlg->exec() != KDialog::Rejected && dlg ) {
+    mEditTo->setText( dlg->to().join(", ") );
+    mEditTo->setModified( true );
+  }
 }
 
 

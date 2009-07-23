@@ -25,6 +25,7 @@
 #include "messagelistview/core/modelinvariantrowmapper.h"
 #include "messagelistview/core/manager.h"
 #include "messagelistview/core/comboboxutils.h"
+#include "autoqpointer.h"
 
 #include <libkdepim/messagestatus.h>
 
@@ -1236,7 +1237,8 @@ void ThemePreviewWidget::slotAddColumn()
   mSelectedThemeColumn->addMessageRow( new Theme::Row() );
   mSelectedThemeColumn->addGroupHeaderRow( new Theme::Row() );
 
-  ThemeColumnPropertiesDialog * dlg = new ThemeColumnPropertiesDialog( this, mSelectedThemeColumn, i18n( "Add New Column" ) );
+  AutoQPointer<ThemeColumnPropertiesDialog> dlg;
+  dlg = new ThemeColumnPropertiesDialog( this, mSelectedThemeColumn, i18n( "Add New Column" ) );
 
   if ( dlg->exec() == QDialog::Accepted )
   {
@@ -1253,8 +1255,6 @@ void ThemePreviewWidget::slotAddColumn()
     delete mSelectedThemeColumn;
     mSelectedThemeColumn = 0;
   }
-
-  delete dlg;
 }
 
 void ThemePreviewWidget::slotColumnProperties()
@@ -1262,7 +1262,8 @@ void ThemePreviewWidget::slotColumnProperties()
   if ( !mSelectedThemeColumn )
     return;
 
-  ThemeColumnPropertiesDialog * dlg = new ThemeColumnPropertiesDialog( this, mSelectedThemeColumn, i18n( "Column Properties" ) );
+  AutoQPointer<ThemeColumnPropertiesDialog> dlg;
+  dlg = new ThemeColumnPropertiesDialog( this, mSelectedThemeColumn, i18n( "Column Properties" ) );
 
   if ( dlg->exec() == QDialog::Accepted )
   {
@@ -1272,8 +1273,6 @@ void ThemePreviewWidget::slotColumnProperties()
 
     setTheme( mTheme ); // this will reset theme cache and trigger a global update
   }
-
-  delete dlg;
 }
 
 void ThemePreviewWidget::slotDeleteColumn()

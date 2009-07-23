@@ -29,6 +29,7 @@
 #include "kwindowpositioner.h"
 #include "distributionlistdialog.h"
 #include "globalsettings.h"
+#include "autoqpointer.h"
 
 #include <kpimutils/email.h>
 
@@ -908,10 +909,9 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
 
 void RecipientsEditor::saveDistributionList()
 {
-  DistributionListDialog *dlg = new DistributionListDialog( this );
+  AutoQPointer<DistributionListDialog> dlg( new DistributionListDialog( this ) );
   dlg->setRecipients( mRecipientsView->recipients() );
   dlg->exec();
-  delete dlg;
 }
 
 Recipient::List RecipientsEditor::recipients() const

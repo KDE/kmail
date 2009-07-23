@@ -41,6 +41,7 @@ using KMail::AccountManager;
 #include "kpimidentities/identity.h"
 #include "kpimidentities/identitymanager.h"
 #include "protocols.h"
+#include "autoqpointer.h"
 
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
@@ -138,8 +139,8 @@ void AccountWizard::start( KMKernel *kernel, QWidget *parent )
 {
   KConfigGroup wizardConfig( KMKernel::config(), "AccountWizard" );
 
-  AccountWizard wizard( kernel, parent );
-  int result = wizard.exec();
+  AutoQPointer<AccountWizard> wizard( new AccountWizard( kernel, parent ) );
+  int result = wizard->exec();
   if ( result == QDialog::Accepted ) {
     wizardConfig.writeEntry( "ShowOnStartup", false );
     kernel->slotConfigChanged();

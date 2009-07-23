@@ -53,6 +53,7 @@
 #include "kleojobexecutor.h"
 #include "stringutil.h"
 #include "iconnamecache.h"
+#include "autoqpointer.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -1864,14 +1865,16 @@ bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& body
   }
 
   emit mReader->noDrag();
-  ChiasmusKeySelector selectorDlg( mReader, i18n( "Chiasmus Decryption Key Selection" ),
-                                   keys, GlobalSettings::chiasmusDecryptionKey(),
-                                   GlobalSettings::chiasmusDecryptionOptions() );
-  if ( selectorDlg.exec() != KDialog::Accepted )
+  AutoQPointer<ChiasmusKeySelector> selectorDlg;
+  selectorDlg = new ChiasmusKeySelector( mReader, i18n( "Chiasmus Decryption Key Selection" ),
+                                         keys, GlobalSettings::chiasmusDecryptionKey(),
+                                         GlobalSettings::chiasmusDecryptionOptions() );
+  if ( selectorDlg->exec() != KDialog::Accepted || !selectorDlg ) {
     return false;
+  }
 
-  GlobalSettings::setChiasmusDecryptionOptions( selectorDlg.options() );
-  GlobalSettings::setChiasmusDecryptionKey( selectorDlg.key() );
+  GlobalSettings::setChiasmusDecryptionOptions( selectorDlg->options() );
+  GlobalSettings::setChiasmusDecryptionKey( selectorDlg->key() );
   assert( !GlobalSettings::chiasmusDecryptionKey().isEmpty() );
 
   Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );

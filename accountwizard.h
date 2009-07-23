@@ -66,9 +66,10 @@ class AccountWizard : public KAssistantDialog
      */
     static void start( KMKernel *kernel, QWidget *parent = 0 );
 
+    ~AccountWizard();
+
   protected:
     AccountWizard( KMKernel *kernel, QWidget *parent );
-    ~AccountWizard();
 
     void setupWelcomePage();
     void setupAccountTypePage();

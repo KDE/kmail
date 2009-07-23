@@ -72,6 +72,7 @@ using MailTransport::Transport;
 #include "stl_util.h"
 #include "stringutil.h"
 #include "util.h"
+#include "autoqpointer.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
@@ -2265,20 +2266,20 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KEncodingFileDialog fdlg( QString(), QString(), QString(), QString(),
-                            KFileDialog::Opening, this );
-  fdlg.setOperationMode( KFileDialog::Other );
-  fdlg.setCaption( i18n("Attach File") );
-  fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
-  fdlg.setMode( KFile::Files );
-  if ( fdlg.exec() != KDialog::Accepted )
-    return;
-
-  const KUrl::List files = fdlg.selectedUrls();
-  foreach ( const KUrl& url, files ) {
-    KUrl urlWithEncoding = url;
-    urlWithEncoding.setFileEncoding( fdlg.selectedEncoding() );
-    addAttach( urlWithEncoding );
+  AutoQPointer<KEncodingFileDialog> fdlg( new KEncodingFileDialog( QString(), QString(), QString(),
+                                                                   QString(), KFileDialog::Opening,
+                                                                   this ) );
+  fdlg->setOperationMode( KFileDialog::Other );
+  fdlg->setCaption( i18n("Attach File") );
+  fdlg->okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
+  fdlg->setMode( KFile::Files );
+  if ( fdlg->exec() == KDialog::Accepted && fdlg ) {
+    const KUrl::List files = fdlg->selectedUrls();
+    foreach ( const KUrl& url, files ) {
+      KUrl urlWithEncoding = url;
+      urlWithEncoding.setFileEncoding( fdlg->selectedEncoding() );
+      addAttach( urlWithEncoding );
+    }
   }
 }
 
@@ -2648,21 +2649,19 @@ void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QB
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertPublicKey()
 {
-  Kleo::KeySelectionDialog dlg( i18n("Attach Public OpenPGP Key"),
-                                i18n("Select the public key which should "
-                                     "be attached."),
-				std::vector<GpgME::Key>(),
-				Kleo::KeySelectionDialog::PublicKeys|Kleo::KeySelectionDialog::OpenPGPKeys,
-				false /* no multi selection */,
-                                false /* no remember choice box */,
-                                this, "attach public key selection dialog" );
+  AutoQPointer<Kleo::KeySelectionDialog> dlg;
+  dlg = new Kleo::KeySelectionDialog( i18n("Attach Public OpenPGP Key"), i18n("Select the public "
+                                      "key which should be attached."), std::vector<GpgME::Key>(),
+                                      Kleo::KeySelectionDialog::PublicKeys |
+                                      Kleo::KeySelectionDialog::OpenPGPKeys,
+                                      false /* no multi selection */,
+                                      false /* no remember choice box */,
+                                      this, "attach public key selection dialog" );
 
-  if ( dlg.exec() != KDialog::Accepted ) {
-    return;
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
+    mFingerprint = dlg->fingerprint();
+    startPublicKeyExport();
   }
-
-  mFingerprint = dlg.fingerprint();
-  startPublicKeyExport();
 }
 
 //-----------------------------------------------------------------------------
@@ -4303,19 +4302,18 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
     return;
   }
 
-  ChiasmusKeySelector selectorDlg( this, i18n( "Chiasmus Encryption Key Selection" ),
-                                   keys, GlobalSettings::chiasmusKey(),
-                                   GlobalSettings::chiasmusOptions() );
+  AutoQPointer<ChiasmusKeySelector> selectorDlg;
+  selectorDlg = new ChiasmusKeySelector( this, i18n( "Chiasmus Encryption Key Selection" ),
+                                         keys, GlobalSettings::chiasmusKey(),
+                                         GlobalSettings::chiasmusOptions() );
 
-  if ( selectorDlg.exec() != KDialog::Accepted ) {
-    return;
+  if ( selectorDlg->exec() == KDialog::Accepted && selectorDlg ) {
+    GlobalSettings::setChiasmusOptions( selectorDlg->options() );
+    GlobalSettings::setChiasmusKey( selectorDlg->key() );
+    assert( !GlobalSettings::chiasmusKey().isEmpty() );
+    mEncryptWithChiasmus = true;
+    resetter.disable();
   }
-
-  GlobalSettings::setChiasmusOptions( selectorDlg.options() );
-  GlobalSettings::setChiasmusKey( selectorDlg.key() );
-  assert( !GlobalSettings::chiasmusKey().isEmpty() );
-  mEncryptWithChiasmus = true;
-  resetter.disable();
 }
 
 void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)

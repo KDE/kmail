@@ -31,6 +31,7 @@
 #include "kmmainwidget.h"
 #include "korghelper.h"
 #include "mainfolderview.h"
+#include "autoqpointer.h"
 
 #include <kicon.h>
 #include <kinputdialog.h>
@@ -363,13 +364,15 @@ FolderViewItem * FavoriteFolderView::addFolderInternal( KMFolder *fld )
 
 void FavoriteFolderView::addFolder()
 {
-  FolderSelectionDialog dlg( mainWidget(), i18n("Add Favorite Folder"), false );
-  if ( dlg.exec() != QDialog::Accepted )
-    return;
-  KMFolder *folder = dlg.folder();
-  if ( !folder )
-    return;
-  addFolderInternal( folder );
+  AutoQPointer<FolderSelectionDialog> dlg( new FolderSelectionDialog( mainWidget(),
+                                                                      i18n("Add Favorite Folder"),
+                                                                      false ) );
+  if ( dlg->exec() == QDialog::Accepted && dlg ) {
+    KMFolder *folder = dlg->folder();
+    if ( folder ) {
+      addFolderInternal( folder );
+    }
+  }
 }
 
 void FavoriteFolderView::renameFolder()

@@ -107,6 +107,7 @@ using KMail::TemplateParser;
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 #include "stringutil.h"
+#include "autoqpointer.h"
 
 #include <kpimutils/kfileio.h>
 #include "calendarinterface.h"
@@ -1430,14 +1431,17 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  RedirectDialog dlg( parentWidget(), kmkernel->msgSender()->sendImmediate() );
-  dlg.setObjectName( "redirect" );
-  if (dlg.exec()==QDialog::Rejected) return Failed;
+  AutoQPointer<RedirectDialog> dlg( new RedirectDialog( parentWidget(),
+                                                        kmkernel->msgSender()->sendImmediate() ) );
+  dlg->setObjectName( "redirect" );
+  if ( dlg->exec() == QDialog::Rejected || !dlg ) {
+    return Failed;
+  }
 
-  KMMessage *newMsg = msg->createRedirect( dlg.to() );
+  KMMessage *newMsg = msg->createRedirect( dlg->to() );
   KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
-  const KMail::MessageSender::SendMethod method = dlg.sendImmediate()
+  const KMail::MessageSender::SendMethod method = dlg->sendImmediate()
     ? KMail::MessageSender::SendImmediate
     : KMail::MessageSender::SendLater;
   if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
@@ -3171,14 +3175,17 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
     return;
   }
 
-  ChiasmusKeySelector selectorDlg( parentWidget(), i18n( "Chiasmus Decryption Key Selection" ),
-                                   keys, GlobalSettings::chiasmusDecryptionKey(),
-                                   GlobalSettings::chiasmusDecryptionOptions() );
-  if ( selectorDlg.exec() != QDialog::Accepted )
+  AutoQPointer<ChiasmusKeySelector> selectorDlg;
+  selectorDlg = new ChiasmusKeySelector( parentWidget(),
+                                         i18n( "Chiasmus Decryption Key Selection" ),
+                                         keys, GlobalSettings::chiasmusDecryptionKey(),
+                                         GlobalSettings::chiasmusDecryptionOptions() );
+  if ( selectorDlg->exec() != QDialog::Accepted || !selectorDlg ) {
     return;
+  }
 
-  GlobalSettings::setChiasmusDecryptionOptions( selectorDlg.options() );
-  GlobalSettings::setChiasmusDecryptionKey( selectorDlg.key() );
+  GlobalSettings::setChiasmusDecryptionOptions( selectorDlg->options() );
+  GlobalSettings::setChiasmusDecryptionKey( selectorDlg->key() );
   assert( !GlobalSettings::chiasmusDecryptionKey().isEmpty() );
 
   Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );

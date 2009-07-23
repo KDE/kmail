@@ -37,6 +37,7 @@
 #include "kmacctcachedimap.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
+#include "autoqpointer.h"
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
@@ -147,17 +148,18 @@ static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat 
 
 void KMail::ACLEntryDialog::slotSelectAddresses()
 {
-  KPIM::AddressesDialog dlg( this );
-  dlg.setShowCC( false );
-  dlg.setShowBCC( false );
+  AutoQPointer<KPIM::AddressesDialog> dlg( new KPIM::AddressesDialog( this ) );
+  dlg->setShowCC( false );
+  dlg->setShowBCC( false );
   if ( mUserIdFormat == FullEmail ) // otherwise we have no way to go back from userid to email
-    dlg.setSelectedTo( userIds() );
-  if ( dlg.exec() != QDialog::Accepted )
+    dlg->setSelectedTo( userIds() );
+  if ( dlg->exec() != QDialog::Accepted || !dlg ) {
     return;
+  }
 
-  const QStringList distrLists = dlg.toDistributionLists();
+  const QStringList distrLists = dlg->toDistributionLists();
   QString txt = distrLists.join( ", " );
-  const KABC::Addressee::List lst = dlg.toAddresses();
+  const KABC::Addressee::List lst = dlg->toAddresses();
   if ( !lst.isEmpty() ) {
     for( QList<KABC::Addressee>::ConstIterator it = lst.constBegin(); it != lst.constEnd(); ++it ) {
       if ( !txt.isEmpty() )
@@ -553,18 +555,20 @@ void KMail::FolderDialogACLTab::slotEditACL(QTreeWidgetItem* item)
   if ( !canAdmin ) return;
 
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
-  ACLEntryDialog dlg( mUserIdFormat, i18n( "Modify Permissions" ), this );
-  dlg.setValues( ACLitem->userId(), ACLitem->permissions() );
-  if ( dlg.exec() == QDialog::Accepted ) {
-    QStringList userIds = dlg.userIds();
+  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( mUserIdFormat,
+                                                        i18n( "Modify Permissions" ),
+                                                        this ) );
+  dlg->setValues( ACLitem->userId(), ACLitem->permissions() );
+  if ( dlg->exec() == QDialog::Accepted && dlg ) {
+    QStringList userIds = dlg->userIds();
     Q_ASSERT( !userIds.isEmpty() ); // impossible, the OK button is disabled in that case
-    ACLitem->setUserId( dlg.userIds().front() );
-    ACLitem->setPermissions( dlg.permissions() );
+    ACLitem->setUserId( dlg->userIds().front() );
+    ACLitem->setPermissions( dlg->permissions() );
     ACLitem->setModified( true );
     emit changed(true);
     if ( userIds.count() > 1 ) { // more emails were added, append them
       userIds.pop_front();
-      addACLs( userIds, dlg.permissions() );
+      addACLs( userIds, dlg->permissions() );
     }
   }
 }
@@ -587,10 +591,11 @@ void KMail::FolderDialogACLTab::addACLs( const QStringList& userIds, unsigned in
 
 void KMail::FolderDialogACLTab::slotAddACL()
 {
-  ACLEntryDialog dlg( mUserIdFormat, i18n( "Add Permissions" ), this );
-  if ( dlg.exec() == QDialog::Accepted ) {
-    const QStringList userIds = dlg.userIds();
-    addACLs( dlg.userIds(), dlg.permissions() );
+  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( mUserIdFormat, i18n( "Add Permissions" ),
+                                                        this ) );
+  if ( dlg->exec() == QDialog::Accepted && dlg ) {
+    const QStringList userIds = dlg->userIds();
+    addACLs( dlg->userIds(), dlg->permissions() );
     emit changed(true);
   }
 }

@@ -155,6 +155,7 @@ using KMail::TemplateParser;
 #include "messagelistview/pane.h"
 #include "messagelistview/messageset.h"
 #include "messagetree.h"
+#include "autoqpointer.h"
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
@@ -1263,8 +1264,9 @@ void KMMainWidget::slotFolderShortcutCommand()
   if ( !folder )
     return;
 
-  KMail::FolderShortcutDialog shorty( folder, kmkernel->getKMMainWidget(), mMainFolderView );
-  shorty.exec();
+  AutoQPointer<KMail::FolderShortcutDialog> shorty;
+  shorty = new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mMainFolderView );
+  shorty->exec();
   //slotModifyFolder( KMMainWidget::PropsShortcut );
 }
 
@@ -1279,11 +1281,13 @@ void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
   if ( !folder )
     return;
 
-  KMFolderDialog props( folder, folder->parent(), mMainFolderView,
-                        i18n("Properties of Folder %1", folder->label() ) );
+  AutoQPointer<KMFolderDialog> props( new KMFolderDialog( folder, folder->parent(),
+                                                          mMainFolderView,
+                                                          i18n("Properties of Folder %1",
+                                                               folder->label() ) ) );
   if ( whichPage != KMMainWidget::PropsGeneral )
-    props.setPage( whichPage );
-  props.exec();
+    props->setPage( whichPage );
+  props->exec();
 
   updateFolderMenu();
   //Kolab issue 2152
@@ -1828,17 +1832,16 @@ void KMMainWidget::slotMoveSelectedMessagesToFolder( QAction * act )
 //        When changing the name also change the slot name in the QObject::connect calls all around...
 void KMMainWidget::slotMoveMsg()
 {
-  KMail::FolderSelectionDialog dlg( this, i18n( "Move Messages to Folder" ), true );
+  AutoQPointer<KMail::FolderSelectionDialog> dlg;
+  dlg = new KMail::FolderSelectionDialog( this, i18n( "Move Messages to Folder" ), true );
 
-  if ( !dlg.exec() )
-    return;
+  if ( dlg->exec() && dlg ) {
+    KMFolder * dest = dlg->folder();
 
-  KMFolder * dest = dlg.folder();
-
-  if ( !dest )
-    return; // would be a deletion!
-
-  slotMoveMsgToFolder( dest );
+    if ( dest ) {
+      slotMoveMsgToFolder( dest );
+    }
+  }
 }
 
 // FIXME: Use better name for this (slotMoveSelectedMessagesToFolder() ?)
@@ -1937,17 +1940,16 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 //        When changing the name also change the slot name in the QObject::connect calls all around...
 void KMMainWidget::slotCopyMsg()
 {
-  KMail::FolderSelectionDialog dlg( this, i18n( "Copy Messages to Folder" ), true );
+  AutoQPointer<KMail::FolderSelectionDialog> dlg;
+  dlg = new KMail::FolderSelectionDialog( this, i18n( "Copy Messages to Folder" ), true );
 
-  if ( !dlg.exec() )
-    return;
+  if ( dlg->exec() && dlg ) {
+    KMFolder * dest = dlg->folder();
 
-  KMFolder * dest = dlg.folder();
-
-  if ( !dest )
-    return; // would be a deletion!
-
-  slotCopyMsgToFolder( dest );
+    if ( dest ) {
+      slotCopyMsgToFolder( dest );
+    }
+  }
 }
 
 // FIXME: Use better name for this (slotCopySelectedMessagesToFolder() ?)
@@ -2473,11 +2475,13 @@ void KMMainWidget::slotUndo()
 void KMMainWidget::slotJumpToFolder()
 {
   // can jump to anywhere, need not be read/write
-  KMail::FolderSelectionDialog dlg( this, i18n("Jump to Folder"), false );
+  AutoQPointer<KMail::FolderSelectionDialog> dlg;
+  dlg = new KMail::FolderSelectionDialog( this, i18n("Jump to Folder"), false );
 
-  if (!dlg.exec()) return;
-  // safe to accept folder==0 (means "Local Folders" root) here
-  slotSelectFolder( dlg.folder() );
+  if ( dlg->exec() && dlg ) {
+    // safe to accept folder==0 (means "Local Folders" root) here
+    slotSelectFolder( dlg->folder() );
+  }
 }
 
 

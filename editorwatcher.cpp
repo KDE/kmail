@@ -17,6 +17,7 @@
 */
 
 #include "editorwatcher.h"
+#include "autoqpointer.h"
 
 #include <config-kmail.h>
 
@@ -68,11 +69,13 @@ bool EditorWatcher::start()
   list.append( mUrl );
   KService::Ptr offer = KMimeTypeTrader::self()->preferredService( mMimeType, "Application" );
   if ( mOpenWith || !offer ) {
-    KOpenWithDialog dlg( list, i18n("Edit with:"), QString(), 0 );
-    if ( !dlg.exec() )
-      return false;
-    offer = dlg.service();
-    if ( !offer )
+    AutoQPointer<KOpenWithDialog> dlg( new KOpenWithDialog( list, i18n("Edit with:"),
+                                                            QString(), 0 ) );
+    int dlgrc = dlg->exec();
+    if ( dlgrc && dlg ) {
+      offer = dlg->service();
+    }
+    if ( !dlgrc || !offer )
       return false;
   }
 

@@ -14,6 +14,7 @@
 #include "snippetwidget.h"
 #include "snippetitem.h"
 #include "snippetdlg.h"
+#include "autoqpointer.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -100,8 +101,8 @@ SnippetWidget::~SnippetWidget()
 void SnippetWidget::slotAdd()
 {
   //kDebug() << "Ender slotAdd()";
-  SnippetDlg dlg( mActionCollection, this );
-  dlg.setObjectName( "SnippetDlg" );
+  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  dlg->setObjectName( "SnippetDlg" );
 
   /*check if the user clicked a SnippetGroup
     If not, we set the group variable to the SnippetGroup
@@ -126,16 +127,16 @@ void SnippetWidget::slotAdd()
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach (SnippetItem *item, _list) {
     if (dynamic_cast<SnippetGroup*>(item)) {
-      dlg.cbGroup->addItem(item->getName());
+      dlg->cbGroup->addItem(item->getName());
     }
   }
-  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( group->getName() ) );
+  dlg->cbGroup->setCurrentIndex( dlg->cbGroup->findText( group->getName() ) );
 
-  if (dlg.exec() == KDialog::Accepted) {
-      group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
-      _list.append( makeItem( group, dlg.snippetName->text(),
-                              dlg.snippetText->toPlainText(),
-                              dlg.keyWidget->keySequence() ) );
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
+      group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg->cbGroup->currentText(), _list));
+      _list.append( makeItem( group, dlg->snippetName->text(),
+                              dlg->snippetText->toPlainText(),
+                              dlg->keyWidget->keySequence() ) );
   }
 }
 
@@ -164,13 +165,13 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
 void SnippetWidget::slotAddGroup()
 {
   //kDebug() << "Ender slotAddGroup()";
-  SnippetDlg dlg( mActionCollection, this );
-  dlg.setObjectName( "SnippetDlg" );
-  dlg.setGroupMode( true );
-  dlg.setWindowTitle( i18n("Add Group") );
+  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  dlg->setObjectName( "SnippetDlg" );
+  dlg->setGroupMode( true );
+  dlg->setWindowTitle( i18n("Add Group") );
 
-  if (dlg.exec() == KDialog::Accepted) {
-    _list.append( new SnippetGroup(this, dlg.snippetName->text(), SnippetGroup::getMaxId() ) );
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
+    _list.append( new SnippetGroup(this, dlg->snippetName->text(), SnippetGroup::getMaxId() ) );
   }
 }
 
@@ -222,37 +223,37 @@ void SnippetWidget::slotEdit( QTreeWidgetItem* item )
     return;
 
   //init the dialog
-  SnippetDlg dlg( mActionCollection, this );
-  dlg.setObjectName( "SnippetDlg" );
-  dlg.snippetName->setText(pSnippet->getName());
-  dlg.snippetText->setText(pSnippet->getText());
-  dlg.btnAdd->setText(i18n("&Apply"));
+  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  dlg->setObjectName( "SnippetDlg" );
+  dlg->snippetName->setText(pSnippet->getName());
+  dlg->snippetText->setText(pSnippet->getText());
+  dlg->btnAdd->setText(i18n("&Apply"));
   if ( pSnippet->getAction() )
-    dlg.keyWidget->setKeySequence( pSnippet->getAction()->shortcut().primary() );
+    dlg->keyWidget->setKeySequence( pSnippet->getAction()->shortcut().primary() );
 
-  dlg.setWindowTitle(i18n("Edit Snippet"));
+  dlg->setWindowTitle(i18n("Edit Snippet"));
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach (SnippetItem *item, _list) {
     if (dynamic_cast<SnippetGroup*>(item)) {
-      dlg.cbGroup->addItem( item->getName() );
+      dlg->cbGroup->addItem( item->getName() );
     }
   }
   QString parentGroupText =
       SnippetItem::findGroupById( pSnippet->getParent(), _list )->getName();
-  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( parentGroupText ) );
+  dlg->cbGroup->setCurrentIndex( dlg->cbGroup->findText( parentGroupText ) );
 
-  if (dlg.exec() == KDialog::Accepted) {
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
     //update the QListView and the SnippetItem
-    item->setText( 0, dlg.snippetName->text() );
-    pSnippet->setName( dlg.snippetName->text() );
-    pSnippet->setText( dlg.snippetText->toPlainText() );
+    item->setText( 0, dlg->snippetName->text() );
+    pSnippet->setName( dlg->snippetName->text() );
+    pSnippet->setText( dlg->snippetText->toPlainText() );
     pSnippet->setToolTip( 0, pSnippet->getText() );
     if ( pSnippet->getAction() )
-      pSnippet->getAction()->setShortcut( dlg.keyWidget->keySequence());
+      pSnippet->getAction()->setShortcut( dlg->keyWidget->keySequence());
 
     /* if the user changed the parent we need to move the snippet */
-    if ( SnippetItem::findGroupById(pSnippet->getParent(), _list)->getName() != dlg.cbGroup->currentText() ) {
-      SnippetGroup * newGroup = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
+    if ( SnippetItem::findGroupById(pSnippet->getParent(), _list)->getName() != dlg->cbGroup->currentText() ) {
+      SnippetGroup * newGroup = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg->cbGroup->currentText(), _list));
       pSnippet->parent()->removeChild(pSnippet);
       newGroup->addChild(pSnippet);
       pSnippet->resetParent();
@@ -275,17 +276,17 @@ void SnippetWidget::slotEditGroup()
     return;
 
   //init the dialog
-  SnippetDlg dlg( mActionCollection, this );
-  dlg.setObjectName( "SnippetDlg" );
-  dlg.setGroupMode( true );
-  dlg.snippetName->setText(pGroup->getName());
-  dlg.btnAdd->setText(i18n("&Apply"));
-  dlg.setWindowTitle(i18n("Edit Group"));
+  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  dlg->setObjectName( "SnippetDlg" );
+  dlg->setGroupMode( true );
+  dlg->snippetName->setText(pGroup->getName());
+  dlg->btnAdd->setText(i18n("&Apply"));
+  dlg->setWindowTitle(i18n("Edit Group"));
 
-  if (dlg.exec() == KDialog::Accepted) {
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
     //update the QListView and the SnippetGroup
-    item->setText( 0, dlg.snippetName->text() );
-    pGroup->setName( dlg.snippetName->text() );
+    item->setText( 0, dlg->snippetName->text() );
+    pGroup->setName( dlg->snippetName->text() );
 
     item->setSelected( true );
   }
@@ -552,10 +553,10 @@ QString SnippetWidget::parseText( const QString &text )
 QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QString> *mapSave )
 {
   // --BEGIN-- building a dynamic dialog
-  QDialog dlg( this );  // don't fix this krazy issues without actually trying the code!
-  dlg.setWindowTitle(i18n("Enter Values for Variables"));
+  AutoQPointer<QDialog> dlg( new QDialog( this ) );  // don't fix this krazy issues without actually trying the code!
+  dlg->setWindowTitle(i18n("Enter Values for Variables"));
 
-  QGridLayout * layout = new QGridLayout( &dlg );
+  QGridLayout * layout = new QGridLayout( dlg );
   QGridLayout * layoutTop = new QGridLayout();
   QGridLayout * layoutVar = new QGridLayout();
   QGridLayout * layoutBtn = new QGridLayout();
@@ -572,23 +573,23 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   layoutVar->setObjectName( "layoutVar" );
   layoutBtn->setObjectName( "layoutBtn" );
 
-  KTextEdit *te = NULL;
+  KTextEdit * te = NULL;
   QLabel * labTop = NULL;
   QCheckBox * cb = NULL;
 
-  labTop = new QLabel( &dlg );
+  labTop = new QLabel( dlg );
   labTop->setObjectName( "label" );
   layoutTop->addWidget(labTop, 0, 0);
   labTop->setText( i18n("Enter the replacement values for %1:", var) );
   layout->addLayout( layoutTop, 0, 0, 1, 2 );
 
 
-  cb = new QCheckBox( &dlg );
+  cb = new QCheckBox( dlg );
   cb->setObjectName( "cbVar" );
   cb->setChecked( false );
   cb->setText(i18n( "Make value &default" ));
 
-  te = new KTextEdit( &dlg );
+  te = new KTextEdit( dlg );
   te->setObjectName( "teVar" );
   layoutVar->addWidget( te, 0, 1, Qt::AlignTop);
   layoutVar->addWidget( cb, 1, 1, Qt::AlignTop);
@@ -604,11 +605,11 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
 
   layout->addLayout( layoutVar, 1, 0, 1, 2 );
 
-  KPushButton * btn1 = new KPushButton( KStandardGuiItem::cancel(), &dlg );
+  KPushButton * btn1 = new KPushButton( KStandardGuiItem::cancel(), dlg );
   btn1->setObjectName( "pushButton1") ;
   layoutBtn->addWidget( btn1, 0, 0 );
 
-  KPushButton * btn2 = new KPushButton( KStandardGuiItem::apply(), &dlg );
+  KPushButton * btn2 = new KPushButton( KStandardGuiItem::apply(), dlg );
   btn2->setObjectName( "pushButton2") ;
   btn2->setDefault( true );
   layoutBtn->addWidget( btn2, 0, 1 );
@@ -618,12 +619,12 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   // --END-- building a dynamic dialog
 
   //connect the buttons to the KDialog default slots
-  connect(btn1, SIGNAL(clicked()), &dlg, SLOT(reject()) );
-  connect(btn2, SIGNAL(clicked()), &dlg, SLOT(accept()) );
+  connect(btn1, SIGNAL(clicked()), dlg, SLOT(reject()) );
+  connect(btn2, SIGNAL(clicked()), dlg, SLOT(accept()) );
 
   //execute the dialog
   QString strReturn = "";
-  if ( dlg.exec() == KDialog::Accepted ) {
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
     if (cb->isChecked())     //if the checkbox is on; save the values for later
       (*mapSave)[var] = te->toPlainText();
     else
@@ -632,16 +633,12 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
     strReturn = te->toPlainText();    //copy the entered values back to the given map
   }
 
-  //do some cleanup
-  delete cb;
-  delete te;
-  delete labTop;
-  delete btn1;
-  delete btn2;
-  delete layoutTop;
-  delete layoutVar;
-  delete layoutBtn;
-  delete layout;
+  // AutoQPointer will delete dlg when it goes out of scope.
+  // Previously all widgets were deleted here but this should be enough.
+  // - all widgets as well as the main layout are child to the dialog and
+  //   get deleted automatically
+  // - all sub-layouts are child to the main layout and get deleted
+  //   automatically.
 
   return strReturn;
 }
@@ -709,25 +706,25 @@ void SnippetWidget::dropEvent( QDropEvent * event )
   }
 
   // fill the dialog with the given data
-  SnippetDlg dlg( mActionCollection, this );
-  dlg.setObjectName( "SnippetDlg" );
-  dlg.snippetName->clear();
-  dlg.snippetText->setText( event->mimeData()->text() );
+  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  dlg->setObjectName( "SnippetDlg" );
+  dlg->snippetName->clear();
+  dlg->snippetText->setText( event->mimeData()->text() );
 
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach ( SnippetItem *const si, _list ) {
     if ( dynamic_cast<SnippetGroup*>( si ) ) {
-      dlg.cbGroup->addItem( si->getName() );
+      dlg->cbGroup->addItem( si->getName() );
     }
   }
-  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( parent->getName() ) );
+  dlg->cbGroup->setCurrentIndex( dlg->cbGroup->findText( parent->getName() ) );
 
-  if ( dlg.exec() == KDialog::Accepted ) {
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
     /* get the group that the user selected with the combobox */
     group = dynamic_cast<SnippetGroup*>(
-             SnippetItem::findItemByName( dlg.cbGroup->currentText(), _list ) );
-    _list.append( makeItem( group, dlg.snippetName->text(),
-                  dlg.snippetText->toPlainText(), dlg.keyWidget->keySequence() ) );
+             SnippetItem::findItemByName( dlg->cbGroup->currentText(), _list ) );
+    _list.append( makeItem( group, dlg->snippetName->text(),
+                  dlg->snippetText->toPlainText(), dlg->keyWidget->keySequence() ) );
   }
 }
 

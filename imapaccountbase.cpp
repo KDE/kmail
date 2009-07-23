@@ -45,6 +45,7 @@ using KMail::ImapJob;
 using KPIM::ProgressManager;
 #include "kmfoldermgr.h"
 #include "listjob.h"
+#include "autoqpointer.h"
 
 #include <kdebug.h>
 #include <kconfiggroup.h>
@@ -318,15 +319,16 @@ ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
                        "access this mailbox.");
     mPasswordDialogIsActive = true;
 
-    KPasswordDialog dlg( KMKernel::self()->mainWin(),
-                         KPasswordDialog::ShowUsernameLine | KPasswordDialog::ShowKeepPassword );
-    dlg.setPrompt( msg );
-    dlg.setUsername( log );
-    dlg.setModal( true );
-    dlg.setPlainCaption( i18n("Authorization Dialog") );
-    dlg.addCommentLine( i18n("Account:"), name() );
-    int ret = dlg.exec();
-    if (ret != QDialog::Accepted ) {
+    AutoQPointer<KPasswordDialog> dlg( new KPasswordDialog( KMKernel::self()->mainWin(),
+                                                            KPasswordDialog::ShowUsernameLine |
+                                                            KPasswordDialog::ShowKeepPassword ) );
+    dlg->setPrompt( msg );
+    dlg->setUsername( log );
+    dlg->setModal( true );
+    dlg->setPlainCaption( i18n("Authorization Dialog") );
+    dlg->addCommentLine( i18n("Account:"), name() );
+    int ret = dlg->exec();
+    if ( ret != QDialog::Accepted || !dlg ) {
       mPasswordDialogIsActive = false;
       mAskAgain = false;
       mPasswordEnteredAndEmpty = false;
@@ -337,12 +339,12 @@ ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
 
     // If the user entered an empty password, we need to be able to keep apart
     // the case from the case that the user simply didn't enter a password at all.
-    mPasswordEnteredAndEmpty = dlg.password().isEmpty();
+    mPasswordEnteredAndEmpty = dlg->password().isEmpty();
 
     // The user has been given the chance to change login and
     // password, so copy both from the dialog:
-    setPasswd( dlg.password(), dlg.keepPassword() );
-    setLogin( dlg.username() );
+    setPasswd( dlg->password(), dlg->keepPassword() );
+    setLogin( dlg->username() );
     mAskAgain = false;
   }
   // already waiting for a connection?

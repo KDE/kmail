@@ -38,6 +38,7 @@
 using namespace MailTransport;
 #include "globalsettings.h"
 #include "procmailparser.h"
+#include "autoqpointer.h"
 
 #include <KComboBox>
 #include <KGlobalSettings>
@@ -1154,16 +1155,16 @@ void AccountDialog::slotLocationChooser()
 {
   static QString directory( QDir::rootPath() );
 
-  KFileDialog dialog( directory, QString(), this );
-  dialog.setCaption( i18n("Choose Location") );
-  dialog.setMode( KFile::LocalOnly );
+  AutoQPointer<KFileDialog> dialog( new KFileDialog( directory, QString(), this ) );
+  dialog->setCaption( i18n("Choose Location") );
+  dialog->setMode( KFile::LocalOnly );
 
-  if( dialog.exec() != QDialog::Accepted )
+  if( dialog->exec() != QDialog::Accepted || !dialog )
   {
     return;
   }
 
-  KUrl url = dialog.selectedUrl();
+  KUrl url = dialog->selectedUrl();
   if( url.isEmpty() )
   {
     return;
@@ -1394,24 +1395,30 @@ void AccountDialog::initAccountForConnect()
 
 void AccountDialog::slotEditPersonalNamespace()
 {
-  NamespaceEditDialog dialog( this, ImapAccountBase::PersonalNS, &mImap.nsMap );
-  if ( dialog.exec() == QDialog::Accepted ) {
+  AutoQPointer<NamespaceEditDialog> dialog( new NamespaceEditDialog( this,
+                                                                     ImapAccountBase::PersonalNS,
+                                                                     &mImap.nsMap ) );
+  if ( dialog->exec() == QDialog::Accepted ) {
     slotSetupNamespaces( mImap.nsMap );
   }
 }
 
 void AccountDialog::slotEditOtherUsersNamespace()
 {
-  NamespaceEditDialog dialog( this, ImapAccountBase::OtherUsersNS, &mImap.nsMap );
-  if ( dialog.exec() == QDialog::Accepted ) {
+  AutoQPointer<NamespaceEditDialog> dialog( new NamespaceEditDialog( this,
+                                                                     ImapAccountBase::OtherUsersNS,
+                                                                     &mImap.nsMap ) );
+  if ( dialog->exec() == QDialog::Accepted ) {
     slotSetupNamespaces( mImap.nsMap );
   }
 }
 
 void AccountDialog::slotEditSharedNamespace()
 {
-  NamespaceEditDialog dialog( this, ImapAccountBase::SharedNS, &mImap.nsMap );
-  if ( dialog.exec() == QDialog::Accepted ) {
+  AutoQPointer<NamespaceEditDialog> dialog( new NamespaceEditDialog( this,
+                                                                     ImapAccountBase::SharedNS,
+                                                                     &mImap.nsMap ) );
+  if ( dialog->exec() == QDialog::Accepted ) {
     slotSetupNamespaces( mImap.nsMap );
   }
 }
