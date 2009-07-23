@@ -112,7 +112,8 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   }
 
   // --- contents -----
-  if ( kmkernel->iCalIface().isEnabled() ) {
+  if ( kmkernel->iCalIface().isEnabled() &&
+       mFolder && mFolder->folderType() == KMFolderTypeCachedImap ) {
     mContentsHBox = new QHBoxLayout( 0, 0, 6, "mContentsHBox");
 
     mContentsLabel = new QLabel( privateLayoutWidget, "mContentsLabel" );
