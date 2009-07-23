@@ -2235,9 +2235,8 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       if ( const char *str = nestedContentDisposition( format, signing ) ) {
         codeCStr += "Content-Disposition: ";
         codeCStr += str;
-        if ( !QString(str).endsWith('\n') )
-        {
-           codeCStr += '\n';
+        if  ( !codeCStr.endsWith( '\n' ) ) {
+          codeCStr += '\n';
         }
       }
       if ( binaryHint( format ) ) {
