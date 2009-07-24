@@ -651,6 +651,7 @@ void View::showEvent( QShowEvent *e )
 
 const int gHeaderContextMenuAdjustColumnSizesId = -1;
 const int gHeaderContextMenuShowDefaultColumnsId = -2;
+const int gHeaderContextMenuDisplayToolTipsId = -3;
 
 void View::slotHeaderContextMenuRequested( const QPoint &pnt )
 {
@@ -689,6 +690,12 @@ void View::slotHeaderContextMenuRequested( const QPoint &pnt )
   act = menu.addAction( i18n( "Show Default Columns" ) );
   act->setData( QVariant( static_cast< int >( gHeaderContextMenuShowDefaultColumnsId ) ) );
 
+  menu.addSeparator();
+  act = menu.addAction( i18n( "Display Tooltips" ) );
+  act->setCheckable( true );
+  act->setChecked( Manager::instance()->displayMessageToolTips() );
+  act->setData( QVariant( static_cast< int >( gHeaderContextMenuDisplayToolTipsId ) ) );
+
   QObject::connect(
       &menu, SIGNAL( triggered( QAction * ) ),
       this, SLOT( slotHeaderContextMenuTriggered( QAction *  ) )
@@ -723,6 +730,10 @@ void View::slotHeaderContextMenuTriggered( QAction * act )
       // "Show Default Columns"
       mTheme->resetColumnState();
       applyThemeColumns();
+    } else if ( columnIdx == gHeaderContextMenuDisplayToolTipsId )
+    {
+      // "Display Tooltips"
+      Manager::instance()->setDisplayMessageToolTips( act->isChecked() );
     }
     return;
   }

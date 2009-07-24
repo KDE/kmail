@@ -571,8 +571,6 @@ void KMMainWidget::readConfig()
 
   if ( mStartupDone )
   {
-    writeConfig();
-
     readPreConfig();
 
     layoutChanged = ( oldLongFolderList != mLongFolderList ) ||

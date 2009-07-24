@@ -1638,14 +1638,40 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  QHBoxLayout* folderCBHLayout = new QHBoxLayout();
   mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
   connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  vlay->addWidget( mFavoriteFolderViewCB );
+  folderCBHLayout->addWidget( mFavoriteFolderViewCB );
 
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  vlay->addWidget( mFolderQuickSearchCB );
+  folderCBHLayout->addWidget( mFolderQuickSearchCB );
+
+  vlay->addLayout( folderCBHLayout );
   vlay->addSpacing( KDialog::spacingHint() );		// space before next box
+
+  // "folder tooltips" radio buttons:
+  mFolderToolTipsGroupBox = new QGroupBox( this );
+  mFolderToolTipsGroupBox->setTitle( i18n( "Folder Tooltips" ) );
+  mFolderToolTipsGroupBox->setLayout( new QHBoxLayout() );
+  mFolderToolTipsGroupBox->layout()->setSpacing( KDialog::spacingHint() );
+  mFolderToolTipsGroup = new QButtonGroup( this );
+  connect( mFolderToolTipsGroup, SIGNAL( buttonClicked( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  QRadioButton* folderToolTipsAlwaysRadio = new QRadioButton( i18n( "Always" ), mFolderToolTipsGroupBox );
+  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( KMail::FolderView::DisplayAlways ) );
+  mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsAlwaysRadio );
+
+  QRadioButton* folderToolTipsElidedRadio = new QRadioButton( i18n( "When Text Obscured" ), mFolderToolTipsGroupBox );
+  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( KMail::FolderView::DisplayWhenTextElided ) );
+  mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsElidedRadio );
+
+  QRadioButton* folderToolTipsNeverRadio = new QRadioButton( i18n( "Never" ), mFolderToolTipsGroupBox );
+  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( KMail::FolderView::DisplayNever ) );
+  mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsNeverRadio );
+
+  vlay->addWidget( mFolderToolTipsGroupBox );
 
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
@@ -1654,16 +1680,19 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
+  QHBoxLayout* mimeHLayout = new QHBoxLayout();
   populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), Qt::Vertical, mimeTreeMode );
-  vlay->addWidget( mMIMETreeModeGroupBox );
+  mimeHLayout->addWidget( mMIMETreeModeGroupBox );
   connect( mMIMETreeModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
-  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), Qt::Horizontal, mimeTreeLocation );
-  vlay->addWidget( mMIMETreeLocationGroupBox );
+  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), Qt::Vertical, mimeTreeLocation );
+  mimeHLayout->addWidget( mMIMETreeLocationGroupBox );
   connect( mMIMETreeLocationGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
+
+  vlay->addLayout( mimeHLayout );
 
   vlay->addStretch( 10 ); // spacer
 }
@@ -1671,6 +1700,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
 void AppearancePage::LayoutTab::doLoadOther() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  const KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
 
   loadWidget( mFolderListGroupBox, mFolderListGroup, geometry, folderListMode );
   loadWidget( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
@@ -1678,21 +1708,29 @@ void AppearancePage::LayoutTab::doLoadOther() {
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
+  const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
+  if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
+    mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   const KConfigGroup reader( profile, "Reader" );
   const KConfigGroup geometry( profile, "Geometry" );
+  const KConfigGroup mainFolderView( profile, "MainFolderView" );
 
   loadProfile( mFolderListGroupBox, mFolderListGroup, geometry, folderListMode );
   loadProfile( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadProfile( mMIMETreeModeGroupBox, mMIMETreeModeGroup, reader, mimeTreeMode );
   loadProfile( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
+  const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
+  if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
+    mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
 }
 
 void AppearancePage::LayoutTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
 
   saveButtonGroup( mFolderListGroup, geometry, folderListMode );
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
@@ -1700,6 +1738,7 @@ void AppearancePage::LayoutTab::save() {
   saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
   GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
+  mainFolderView.writeEntry( "ToolTipDisplayPolicy", mFolderToolTipsGroup->checkedId() );
 }
 
 //
