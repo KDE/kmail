@@ -50,6 +50,8 @@ class TemplateParser : public QObject
     virtual void process( KMMessage *aorig_msg, KMFolder *afolder = 0, bool append = false );
     virtual void process( const QString &tmplName, KMMessage *aorig_msg,
                           KMFolder *afolder = 0, bool append = false );
+    virtual void processWithIdentity( uint uoid, KMMessage *aorig_msg, KMFolder *afolder = 0,
+                          bool append = false );
     virtual void processWithTemplate( const QString &tmpl );
 
     /// This finds the template to use. Either the one from the folder, identity or

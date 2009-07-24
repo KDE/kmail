@@ -666,7 +666,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
                          QString(), false, false, false );
   parser.process( NULL, folder );
 
-  KMail::Composer *win = makeComposer( msg, id );
+  KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
 
   //Add the attachment if we have one
   if ( !attachURL.isEmpty() && attachURL.isValid() ) {

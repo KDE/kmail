@@ -481,7 +481,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   msg->setCharset("utf-8");
   msg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
-  KMail::Composer * win = KMail::makeComposer( msg, id );
+  KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, id );
   win->setCharset("", true);
   win->setFocusToSubject();
   win->show();
@@ -506,7 +506,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   KMMessage *rmsg = msg->createReply( KMail::ReplyNone, mSelection );
   rmsg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
-  KMail::Composer * win = KMail::makeComposer( rmsg, 0 );
+  KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -531,7 +531,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   KMMessage *fmsg = msg->createForward();
   fmsg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
-  KMail::Composer * win = KMail::makeComposer( fmsg );
+  KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
   win->setCharset( msg->codec()->name(), true );
   win->show();
 
@@ -1102,7 +1102,7 @@ KMCommand::Result KMReplyToCommand::execute()
     return Failed;
   }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply );
+  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::Reply, 0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -1125,7 +1125,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
     return Failed;
   }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, "", true);
-  KMail::Composer *win = KMail::makeComposer( reply );
+  KMail::Composer *win = KMail::makeComposer( reply, KMail::Composer::Reply );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus( false );
   win->show();
@@ -1148,7 +1148,8 @@ KMCommand::Result KMReplyListCommand::execute()
     return Failed;
   }
   KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply );
+  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::ReplyToAll,
+                                               0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus( false );
   win->show();
@@ -1171,7 +1172,8 @@ KMCommand::Result KMReplyToAllCommand::execute()
     return Failed;
   }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply );
+  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::ReplyToAll, 0,
+                                               mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -1194,7 +1196,8 @@ KMCommand::Result KMReplyAuthorCommand::execute()
     return Failed;
   }
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply );
+  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::Reply, 0,
+                                               mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -1293,7 +1296,7 @@ KMCommand::Result KMForwardCommand::execute()
       // THIS HAS TO BE AFTER setCte()!!!!
       msgPart->setBodyEncoded(msgPartText.toAscii());
       KCursorSaver busy(KBusyPtr::busy());
-      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+      KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
       win->addAttach(msgPart);
       win->show();
       return OK;
@@ -1324,7 +1327,7 @@ KMCommand::Result KMForwardCommand::execute()
       }
 
       KCursorSaver busy(KBusyPtr::busy());
-      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+      KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
       win->setCharset("");
       win->show();
       return OK;
@@ -1346,7 +1349,7 @@ KMCommand::Result KMForwardCommand::execute()
   if ( id == 0 )
     id = mIdentity;
   {
-    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
     win->setCharset( fwdMsg->codec()->name(), true );
     win->show();
   }
@@ -1389,7 +1392,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 
   KCursorSaver busy(KBusyPtr::busy());
   if (!mWin)
-    mWin = KMail::makeComposer(fwdMsg, mIdentity);
+    mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
 
   // iterate through all the messages to be forwarded
   KMMessage *msg;
@@ -1468,7 +1471,8 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
                                        false, true, false, mTemplate );
-  KMail::Composer * win = KMail::makeComposer( reply );
+  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::Reply, 0,
+                                               mSelection, mTemplate );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -1493,7 +1497,8 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
                                        false, true, false, mTemplate );
-  KMail::Composer * win = KMail::makeComposer( reply );
+  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::ReplyToAll, 0,
+                                               mSelection, mTemplate );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -1553,7 +1558,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
     }
 
     KCursorSaver busy( KBusyPtr::busy() );
-    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
+                                                 QString(), mTemplate );
     win->setCharset("");
     win->show();
 
@@ -1571,7 +1577,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
     if ( id == 0 )
       id = mIdentity;
     {
-      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+      KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
+                                                   QString(), mTemplate );
       win->setCharset( fwdMsg->codec()->name(), true );
       win->show();
     }
@@ -2358,7 +2365,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
     if ( !cc.isEmpty() )
       msg->setCc( cc );
 
-    KMail::Composer * win = KMail::makeComposer( msg, mIdentity );
+    KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, mIdentity );
     win->setCharset("", true);
     win->show();
   }
