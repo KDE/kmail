@@ -38,8 +38,9 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
     mBufferedFolderTarget( true ),
     mRefCount( 0 )
 {
-  if (bPopFilter)
+  if ( bPopFilter ) {
     kDebug() <<"pPopFilter set";
+  }
   connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
            this, SLOT( slotFolderRemoved( KMFolder* ) ) );
 }
