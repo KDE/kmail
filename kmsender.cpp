@@ -406,7 +406,7 @@ void KMSender::doSendMsg()
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
     switch ( processResult ) {
     case 2:
-      perror( "Critical error: Unable to process sent mail (out of space?)" );
+      kError() << "Critical error: Unable to process sent mail (out of space?)";
       KMessageBox::information( 0,
                                 i18n("Critical error: "
                                      "Unable to process sent mail (out of space?)"

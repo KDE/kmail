@@ -1292,7 +1292,7 @@ void KMKernel::recoverDeadLetters()
   KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
   KMFolderOpener openFolder( &folder, "recover" );
   if ( !folder.isOpened() ) {
-    perror( "cannot open autosave folder" );
+    kError() << "Cannot open autosave folder!";
     return;
   }
 

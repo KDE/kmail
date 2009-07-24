@@ -468,8 +468,9 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 
     KMMsgBase * mb = &aMsg->toMsgBase();
     int error = writeMessages( mb, true /*flush*/ );
-    if ( error )
-	kDebug() << "Error: writing the index for this folder failed";
+    if ( error ) {
+      kDebug() << "Error: writing the index for this folder failed";
+    }
 
     if ( mExportsSernums )
       error |= appendToFolderIdsFile( idx );
@@ -930,7 +931,7 @@ bool KMFolderMaildir::removeFile( const QString & folderPath,
       return true;
   }
 
-  kDebug() <<"Can't delete" << abs_file << perror;
+  kDebug() << "Can't delete" << abs_file << perror;
   return false;
 }
 

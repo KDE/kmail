@@ -1789,7 +1789,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     int filterResult = kmkernel->filterMgr()->process( serNum, mFilter );
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
-      perror("Critical error");
+      kError() << "Critical error";
       kmkernel->emergencyExit( i18n("Not enough free disk space?" ));
     }
     progressItem->incCompletedItems();
