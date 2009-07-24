@@ -75,7 +75,6 @@ using MailTransport::Transport;
 #include "autoqpointer.h"
 #include "kmmsgdict.h"
 #include "templateparser.h"
-#include "util.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
