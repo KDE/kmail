@@ -54,6 +54,11 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
 
     QLabel *helpLabel() const { return mHelp; }
 
+    /**
+     * Returns the template configuration identifier string for a given identity.
+     */
+    static QString configIdString( uint id );
+
   public slots:
     void slotInsertCommand( const QString &cmd, int adjustCursor = 0 );
     void slotTextChanged();

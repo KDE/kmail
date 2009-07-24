@@ -75,6 +75,7 @@ using MailTransport::Transport;
 #include "autoqpointer.h"
 #include "kmmsgdict.h"
 #include "templateparser.h"
+#include "templatesconfiguration_kfg.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
@@ -1039,6 +1040,24 @@ void KMComposeWin::applyTemplate( uint uoid )
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::setQuotePrefix( uint uoid )
+{
+  QString quotePrefix = mMsg->headerField( "X-KMail-QuotePrefix" );
+  if ( quotePrefix.isEmpty() ) {
+    // no quote prefix header, set quote prefix according in identity
+    if ( mCustomTemplate.isEmpty() ) {
+      const KPIMIdentities::Identity &identity =
+        kmkernel->identityManager()->identityForUoidOrDefault( uoid );
+      // Get quote prefix from template
+      // ( custom templates don't specify custom quotes prefixes )
+      ::Templates quoteTemplate( TemplatesConfiguration::configIdString( identity.uoid() ) );
+      quotePrefix = quoteTemplate.quoteString();
+    }
+  }
+  mEditor->setQuotePrefixName( StringUtil::formatString( quotePrefix, mMsg->from() ) );
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::getTransportMenu()
 {
   QStringList availTransports;
@@ -1715,12 +1734,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   }
   setCharset( mCharset );
 
-  // Restore the quote prefix. We can't just use the global quote prefix here,
-  // since the prefix is different for each message, it might for example depend
-  // on the original sender in a reply.
-  QString quotePrefix = newMsg->headerField( "X-KMail-QuotePrefix" );
-  if ( !quotePrefix.isEmpty() )
-    mEditor->setQuotePrefixName( quotePrefix );
+  setQuotePrefix( mId );
 
   /* Handle the special case of non-mime mails */
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
@@ -4138,6 +4152,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
+
+  setQuotePrefix( uoid );
 
   mId = uoid;
 

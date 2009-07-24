@@ -1049,7 +1049,7 @@ QString TemplateParser::findTemplate()
 
   QString iid;
   if ( mIdentity ) {
-    iid = QString("IDENTITY_%1").arg( mIdentity );	// templates ID for that identity
+    iid = TemplatesConfiguration::configIdString( mIdentity );	// templates ID for that identity
   }
   else {
     iid = "IDENTITY_NO_IDENTITY"; // templates ID for no identity

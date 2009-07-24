@@ -689,7 +689,7 @@ namespace KMail {
 
     // "Templates" tab:
     uint identity = ident.uoid();
-    QString iid = QString("IDENTITY_%1").arg( identity );
+    QString iid = TemplatesConfiguration::configIdString( identity );
     Templates t( iid );
     mCustom->setChecked(t.useCustomTemplates());
     mWidget->loadFromIdentity( identity );
@@ -728,7 +728,7 @@ namespace KMail {
 
     // "Templates" tab:
     uint identity = ident.uoid();
-    QString iid = QString("IDENTITY_%1").arg( identity );
+    QString iid = TemplatesConfiguration::configIdString( identity );
     Templates t( iid );
     kDebug() <<"use custom templates for identity" << identity <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());

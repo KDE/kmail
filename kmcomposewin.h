@@ -543,6 +543,11 @@ class KMComposeWin : public KMail::Composer
     void applyTemplate( uint uoid );
 
     /**
+     * Set the quote prefix according to identity.
+     */
+    void setQuotePrefix( uint uoid );
+
+    /**
      * Checks how many recipients are and warns if there are too many.
      * @return true, if the user accepted the warning and the message should be sent
     */

@@ -726,9 +726,6 @@ public:
    * and @p retStatus. */
   void getLink(int n, ulong *retMsgSerNum, MessageStatus& retStatus) const;
 
-  /** Convert wildcards into normal string */
-  QString formatString(const QString&) const;
-
   /** Sets the body of the specified part */
   void updateBodyPart(const QString partSpecifier, const QByteArray & data);
 
