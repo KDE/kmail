@@ -164,14 +164,22 @@ namespace KMail {
     { "Sam Abed", 0, 0, 0 }, // KConfigXT porting, smileys->emoticons replacement
     { "Joern Ahrens", 0, 0, 0 }, // implement wish 77182 (Add some separators to "Mark Message as" popup menu)
     { "Tom Albers", 0, 0, 0 }, // small fixes, bugzilla maintenance
+    { "Jaime Torres Amate", 0, "jtamate@gmail.com", 0 },
     { "Albert Cervera Areny", 0, 0, 0 }, // implemented wish 88309 (optional compression of attachments)
+    { "Jonathan Armond", 0, "jon.armond@gmail.com", 0 },
     { "Patrick Audley", 0, 0, 0 }, // add optional graphical spam status to fancy headers
     { "Benjamin Azan", 0, 0, 0 }, // implemented todo status handling
+    { "Davide Bettio", 0, "davide.bettio@kdemail.net", 0 },
+    { "Pradeepto Bhattacharya", 0, "pradeepto@kde.org", 0 },
+    { "Bruno Bigras", 0, "bigras.bruno@gmail.com", 0 },
+    { "Bertjan Broeksema", 0 , "b.broeksema@home.nl", 0 },
     { "Albert Astals Cid", 0, 0, 0 }, // fix for bug:95441 (folder tree context menu doesn't show shortcuts assigned to the actions)
     { "Cornelius Schumacher", 0, "schumacher@kde.org", 0 }, // implemented the new recipients editor and picker
     { "Frederick Emmott", I18N_NOOP("Anti-virus support"),
       "fred87@users.sf.net", 0 },
+    { "Christophe Giboudeaux", 0, "cgiboudeaux@gmail.com", 0 },
     { "Sandro Giessl", 0, 0, 0 }, // frame width fixes for widget styles
+    { "Olivier Goffart", 0, "ogoffart@kde.org", 0 },
     { "Severin Greimel", 0, 0, 0 }, // several patches
     { "Shaheed Haque", 0, 0, 0 }, // fix for bug:69744 (Resource folders: "Journals" should be "Journal")
     { "Ingo Heeskens", 0, 0, 0 }, // implemented wish 34857 (per folder option for loading external references)
@@ -184,29 +192,45 @@ namespace KMail {
     { "Christoph Kl\303\274nter", 0, 0, 0 }, // fix for bug:88216 (drag&drop from KAddressBook to the To: field)
     { "Martin Koller", 0, 0, 0 }, // optional columns in the message list
     { "Tobias K\303\266nig", 0, 0, 0 }, // edit recent addresses, store email<->OpenPGP key association in address book
+    { "Nikolai Kosjar", 0, "klebezettel@gmx.net", 0 },
     { "Francois Kritzinger", 0, 0, 0 }, // fix bug in configuration dialog
     { "Danny Kukawka", 0, 0, 0 }, // DCOP enhancements for better message importing
     { "Roger Larsson", 0, 0, 0 }, // add name of checked account to status bar message
+    { "Michael Leupold", 0, "lemma@confuego.org", 0 },
+    { "Thiago Macieira", 0, "thiago@kde.org", 0 },
+    { "Andras Mantia", 0, "amantia@kde.org", 0 },
+    { "Jonathan Marten", 0, "jjm@keelhaul.me.uk", 0 },
+    { "Sergio Luis Martins", 0, "iamsergio@gmail.com", 0 },
     { "Jeffrey McGee", 0, 0, 0 }, // fix for bug:64251
+    { "Thomas Moenicke", 0, "tm@php-qt.org", 0 },
     { "Dirk M\303\274ller", 0, 0, 0 }, // KUrl() fixes and qt_cast optimizations
+    { "Torgny Nyblom", 0, "kde@nyblom.org", 0 },
     { "OpenUsability", I18N_NOOP("Usability tests and improvements"), 0, "http://www.openusability.org" },
     { "Mario Teijeiro Otero", 0, 0, 0 }, // various vendor annotations fixes
+    { "Kevin Ottens", 0, "ervin@kde.org", 0 },
     { "Simon Perreault", 0, 0, 0 }, // make the composer remember its "Use Fixed Font" setting (bug 49481)
+    { "Jakob Petsovits", 0, "jpetso@gmx.at", 0 },
+    { "Romain Pokrzywka", 0, "romain@kdab.net", 0 },
     { "Bernhard Reiter", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "bernhard@intevation.de", 0 },
-    { "Edwin Schepers", 0, "yez@familieschepers.nl", 0 }, // composition of HTML messages
+    { "Darío Andrés Rodríguez", 0, "andresbajotierra@gmail.com", 0 },
+    { "Edwin Schepers", I18N_NOOP( "Improved HTML support" ), "yez@familieschepers.nl", 0 }, // composition of HTML messages
     { "Jakob Schr\303\266ter", 0, 0, 0 }, // implemented wish 28319 (X-Face support)
     { "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"),
       "jan@simonson.pp.se", 0 },
     { "Paul Sprakes", 0, 0, 0 }, // fix for bug:63619 (filter button in toolbar doesn't work), context menu clean up
+    { "Jaroslaw Staniek", 0, "js@iidea.pl", 0 },
     { "Will Stephenson", 0, 0, 0 }, // added IM status indicator
     { "Hasso Tepper", 0, 0, 0 }, // improve layout of recipients editor
+    { "Frank Thieme", 0, "frank@fthieme.net", 0 },
     { "Patrick S. Vogt", I18N_NOOP("timestamp for 'Transmission completed' status messages"),
       "patrick.vogt@unibas.ch", 0 },
     { "Jan-Oliver Wagner", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "jan@intevation.de", 0 },
     { "Wolfgang Westphal", I18N_NOOP("multiple encryption keys per address"),
       "wolfgang.westphal@gmx.de", 0 },
+    { "Allen Winter", 0, "winter@kde.org", 0 },
+    { "Urs Wolfer", 0, "uwolfer@kde.org", 0 },
     { "Thorsten Zachmann", I18N_NOOP("POP filters"),
       "t.zachmann@zagge.de", 0 },
     { "Thomas Zander", 0, 0, 0 }
