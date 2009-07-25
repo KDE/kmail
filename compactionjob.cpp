@@ -100,17 +100,17 @@ int MboxCompactionJob::executeNow( bool silent )
   FolderStorage *storage = mSrcFolder->storage();
   KMFolderMbox *mbox = static_cast<KMFolderMbox *>( storage );
   if ( !storage->compactable() ) {
-    kDebug() << storage->location() <<" compaction skipped.";
+    kDebug() << storage->location() << "compaction skipped.";
     if ( !mSilent ) {
       QString str = i18n( "For safety reasons, compaction has been disabled for %1", mbox->label() );
       BroadcastStatus::instance()->setStatusMsg( str );
     }
     return 0;
   }
-  kDebug() <<"Compacting" << mSrcFolder->idString();
+  kDebug() << "Compacting" << mSrcFolder->idString();
 
   if ( KMFolderIndex::IndexOk != mbox->indexStatus() ) {
-    kDebug() <<"Critical error:" << storage->location()
+    kDebug() << "Critical error:" << storage->location()
                  << "has been modified by an external application while KMail was running.";
     //      exit(1); backed out due to broken nfs
   }
@@ -136,7 +136,7 @@ int MboxCompactionJob::executeNow( bool silent )
   mOffset = 0;
   mCurrentIndex = 0;
 
-  kDebug() <<"MboxCompactionJob: starting to compact folder"
+  kDebug() << "MboxCompactionJob: starting to compact folder"
                << mSrcFolder->location() << "into" << mTempName;
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   if ( !mImmediate ) {
@@ -190,8 +190,8 @@ void MboxCompactionJob::done( int rc )
   } else {
     mbox->close( "mboxcompact" );
     str = i18n( "Error occurred while compacting \"%1\". Compaction aborted.", mSrcFolder->label() );
-    kDebug() <<"Error occurred while compacting" << mbox->location();
-    kDebug() <<"Compaction aborted.";
+    kDebug() << "Error occurred while compacting" << mbox->location();
+    kDebug() << "Compaction aborted.";
     QFile::remove( mTempName );
   }
   mErrorCode = rc;
@@ -231,7 +231,7 @@ int MaildirCompactionJob::executeNow( bool silent )
   mSilent = silent;
   KMFolderMaildir *storage =
     static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
-  kDebug() <<"Compacting" << mSrcFolder->idString();
+  kDebug() << "Compacting" << mSrcFolder->idString();
 
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open( "maildircompact" );
@@ -242,7 +242,7 @@ int MaildirCompactionJob::executeNow( bool silent )
   mEntryList = d.entryList();
   mCurrentIndex = 0;
 
-  kDebug() <<"MaildirCompactionJob: starting to compact in folder"
+  kDebug() << "MaildirCompactionJob: starting to compact in folder"
                << mSrcFolder->location();
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   if ( !mImmediate ) {

@@ -45,7 +45,7 @@ namespace KMail {
   SieveJob::~SieveJob() {
     kill();
     delete mDec;
-    kDebug() <<"~SieveJob()";
+    kDebug() << "~SieveJob()";
   }
 
   void SieveJob::kill( KJob::KillVerbosity verbosity ) {
@@ -62,13 +62,13 @@ namespace KMail {
   void SieveJob::schedule( Command command ) {
     switch ( command ) {
     case Get:
-      kDebug() << "get(" << mUrl.prettyUrl() <<" )";
+      kDebug() << "get(" << mUrl.prettyUrl() << ")";
       mJob = KIO::get( mUrl );
       connect( mJob, SIGNAL(data(KIO::Job*,const QByteArray&)),
                SLOT(slotData(KIO::Job*,const QByteArray&)) );
       break;
     case Put:
-      kDebug() << "put(" << mUrl.prettyUrl() <<" )";
+      kDebug() << "put(" << mUrl.prettyUrl() << ")";
       mJob = KIO::put( mUrl, 0600, KIO::Overwrite );
       connect( mJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
                SLOT(slotDataReq(KIO::Job*,QByteArray&)) );
@@ -82,7 +82,7 @@ namespace KMail {
       mJob = KIO::chmod( mUrl, 0600 );
       break;
     case SearchActive:
-      kDebug() << "listDir(" << mUrl.prettyUrl() <<" )";
+      kDebug() << "listDir(" << mUrl.prettyUrl() << ")";
       {
         KUrl url = mUrl;
         QString query = url.query(); //save query part, because KUrl::cd() erases it
@@ -96,7 +96,7 @@ namespace KMail {
         break;
       }
     case List:
-      kDebug() << "listDir(" << mUrl.prettyUrl() <<" )";
+      kDebug() << "listDir(" << mUrl.prettyUrl() << ")";
       {
         mJob = KIO::listDir( mUrl );
         connect( mJob, SIGNAL( entries(KIO::Job *, const KIO::UDSEntryList & ) ),
@@ -104,7 +104,7 @@ namespace KMail {
         break;
       }
     case Delete:
-      kDebug() << "delete(" << mUrl.prettyUrl() <<" )";
+      kDebug() << "delete(" << mUrl.prettyUrl() << ")";
       mJob = KIO::del( mUrl );
       break;
     default:
@@ -180,7 +180,7 @@ namespace KMail {
 
     if ( mSieveCapabilities.empty() ) {
       mSieveCapabilities = static_cast<KIO::Job*>(job)->queryMetaData( "sieveExtensions" ).split(' ', QString::SkipEmptyParts );
-      kDebug() <<"Received Sieve extensions supported:\n" << mSieveCapabilities.join("\n");
+      kDebug() << "Received Sieve extensions supported:\n" << mSieveCapabilities.join("\n");
     }
 
     // check for errors:

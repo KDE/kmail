@@ -201,7 +201,7 @@ static partNode * partNodeFromXKMailUrl( const KUrl & url, KMReaderWin * w, QStr
 
   // urlPath format is: /bodypart/<random number>/<part id>/<path>
 
-  kDebug() <<"BodyPartURLHandler: urlPath == \"" << urlPath <<"\"";
+  kDebug() << "BodyPartURLHandler: urlPath == \"" << urlPath <<"\"";
   if ( !urlPath.startsWith( QLatin1String("/bodypart/") ) )
     return 0;
 

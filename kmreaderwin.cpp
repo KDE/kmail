@@ -179,50 +179,50 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
 
     switch( curNode->type() ){
       case DwMime::kTypeText: {
-          kDebug() <<"* text *";
+          kDebug() << "* text *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeHtml:
-            kDebug() <<"html";
+            kDebug() << "html";
             break;
           case DwMime::kSubtypeXVCard:
-            kDebug() <<"v-card";
+            kDebug() << "v-card";
             break;
           case DwMime::kSubtypeRichtext:
-            kDebug() <<"rich text";
+            kDebug() << "rich text";
             break;
           case DwMime::kSubtypeEnriched:
-            kDebug() <<"enriched";
+            kDebug() << "enriched";
             break;
           case DwMime::kSubtypePlain:
-            kDebug() <<"plain";
+            kDebug() << "plain";
             break;
           default:
-            kDebug() <<"default";
+            kDebug() << "default";
             break;
           }
         }
         break;
       case DwMime::kTypeMultipart: {
-          kDebug() <<"* multipart *";
+          kDebug() << "* multipart *";
           bIsMultipart = true;
           switch( curNode->subType() ){
           case DwMime::kSubtypeMixed:
-            kDebug() <<"mixed";
+            kDebug() << "mixed";
             break;
           case DwMime::kSubtypeAlternative:
-            kDebug() <<"alternative";
+            kDebug() << "alternative";
             break;
           case DwMime::kSubtypeDigest:
-            kDebug() <<"digest";
+            kDebug() << "digest";
             break;
           case DwMime::kSubtypeParallel:
-            kDebug() <<"parallel";
+            kDebug() << "parallel";
             break;
           case DwMime::kSubtypeSigned:
-            kDebug() <<"signed";
+            kDebug() << "signed";
             break;
           case DwMime::kSubtypeEncrypted: {
-              kDebug() <<"encrypted";
+              kDebug() << "encrypted";
               if ( child ) {
                 /*
                     ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
@@ -237,16 +237,16 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
             }
             break;
           default :
-            kDebug() <<"(  unknown subtype  )";
+            kDebug() << "(  unknown subtype  )";
             break;
           }
         }
         break;
       case DwMime::kTypeMessage: {
-          kDebug() <<"* message *";
+          kDebug() << "* message *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeRfc822: {
-              kDebug() <<"RfC 822";
+              kDebug() << "RfC 822";
               if ( child )
                 dataNode = child;
             }
@@ -255,25 +255,25 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
         }
         break;
       case DwMime::kTypeApplication: {
-          kDebug() <<"* application *";
+          kDebug() << "* application *";
           switch( curNode->subType() ){
           case DwMime::kSubtypePostscript:
-            kDebug() <<"postscript";
+            kDebug() << "postscript";
             break;
           case DwMime::kSubtypeOctetStream: {
-              kDebug() <<"octet stream";
+              kDebug() << "octet stream";
               if ( child )
                 dataNode = child;
             }
             break;
           case DwMime::kSubtypePgpEncrypted:
-            kDebug() <<"pgp encrypted";
+            kDebug() << "pgp encrypted";
             break;
           case DwMime::kSubtypePgpSignature:
-            kDebug() <<"pgp signed";
+            kDebug() << "pgp signed";
             break;
           case DwMime::kSubtypePkcs7Mime: {
-              kDebug() <<"pkcs7 mime";
+              kDebug() << "pkcs7 mime";
               // note: subtype Pkcs7Mime can also be signed
               //       and we do NOT want to remove the signature!
               if ( child && curNode->encryptionState() != KMMsgNotEncrypted )
@@ -284,37 +284,37 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
         }
         break;
       case DwMime::kTypeImage: {
-          kDebug() <<"* image *";
+          kDebug() << "* image *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeJpeg:
-            kDebug() <<"JPEG";
+            kDebug() << "JPEG";
             break;
           case DwMime::kSubtypeGif:
-            kDebug() <<"GIF";
+            kDebug() << "GIF";
             break;
           }
         }
         break;
       case DwMime::kTypeAudio: {
-          kDebug() <<"* audio *";
+          kDebug() << "* audio *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeBasic:
-            kDebug() <<"basic";
+            kDebug() << "basic";
             break;
           }
         }
         break;
       case DwMime::kTypeVideo: {
-          kDebug() <<"* video *";
+          kDebug() << "* video *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeMpeg:
-            kDebug() <<"mpeg";
+            kDebug() << "mpeg";
             break;
           }
         }
         break;
       case DwMime::kTypeModel:
-          kDebug() <<"* model *";
+          kDebug() << "* model *";
         break;
     }
 
@@ -328,20 +328,20 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
             ? &rootHeaders
             : 0 ) );
     if( dataNode == curNode ) {
-      kDebug() <<"dataNode == curNode:  Save curNode without replacing it.";
+      kDebug() << "dataNode == curNode:  Save curNode without replacing it.";
 
       // A) Store the headers of this part IF curNode is not the root node
       //    AND we are not replacing a node that already *has* replaced
       //    the root node in previous recursion steps of this function...
       if( headers ) {
         if( dataNode->parentNode() && !weAreReplacingTheRootNode ) {
-          kDebug() <<"dataNode is NOT replacing the root node:  Store the headers.";
+          kDebug() << "dataNode is NOT replacing the root node:  Store the headers.";
           resultingData += headers->AsString().c_str();
         } else if( weAreReplacingTheRootNode && part && part->hasHeaders() ){
-          kDebug() <<"dataNode replace the root node:  Do NOT store the headers but change";
-          kDebug() <<"                                 the Message's headers accordingly.";
-          kDebug() <<"              old Content-Type =" << rootHeaders.ContentType().AsString().c_str();
-          kDebug() <<"              new Content-Type =" << headers->ContentType(   ).AsString().c_str();
+          kDebug() << "dataNode replace the root node:  Do NOT store the headers but change";
+          kDebug() << "                                the Message's headers accordingly.";
+          kDebug() << "             old Content-Type =" << rootHeaders.ContentType().AsString().c_str();
+          kDebug() << "             new Content-Type =" << headers->ContentType(   ).AsString().c_str();
           rootHeaders.ContentType()             = headers->ContentType();
           theMessage.setContentTransferEncodingStr(
               headers->HasContentTransferEncoding()
@@ -355,12 +355,12 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
 
       // B) Store the body of this part.
       if( headers && bIsMultipart && dataNode->firstChild() )  {
-        kDebug() <<"is valid Multipart, processing children:";
+        kDebug() << "is valid Multipart, processing children:";
         QByteArray boundary = headers->ContentType().Boundary().c_str();
         curNode = dataNode->firstChild();
         // store children of multipart
         while( curNode ) {
-          kDebug() <<"--boundary";
+          kDebug() << "--boundary";
           if( resultingData.size() &&
               ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
             resultingData += '\n';
@@ -378,23 +378,23 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                     recCount + 1 );
           curNode = curNode->nextSibling();
         }
-        kDebug() <<"--boundary--";
+        kDebug() << "--boundary--";
         resultingData += "\n--";
         resultingData += boundary;
         resultingData += "--\n\n";
-        kDebug() <<"Multipart processing children - DONE";
+        kDebug() << "Multipart processing children - DONE";
       } else if( part ){
         // store simple part
-        kDebug() <<"is Simple part or invalid Multipart, storing body data .. DONE";
+        kDebug() << "is Simple part or invalid Multipart, storing body data .. DONE";
         resultingData += part->Body().AsString().c_str();
       }
     } else {
-      kDebug() <<"dataNode != curNode:  Replace curNode by dataNode.";
+      kDebug() << "dataNode != curNode:  Replace curNode by dataNode.";
       bool rootNodeReplaceFlag = weAreReplacingTheRootNode || !curNode->parentNode();
       if( rootNodeReplaceFlag ) {
-        kDebug() <<"                      Root node will be replaced.";
+        kDebug() << "                     Root node will be replaced.";
       } else {
-        kDebug() <<"                      Root node will NOT be replaced.";
+        kDebug() << "                     Root node will NOT be replaced.";
       }
       // store special data to replace the current part
       // (e.g. decrypted data or embedded RfC 822 data)
@@ -1649,7 +1649,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     KABC::VCardConverter t;
     if ( !t.parseVCards( vCard ).isEmpty() ) {
       hasVCard = true;
-      kDebug() <<"FOUND A VALID VCARD";
+      kDebug() << "FOUND A VALID VCARD";
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
@@ -1689,14 +1689,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   //       something different than 'curNode'.
 
 
-kDebug() <<"\n\n\nSpecial post-encryption handling:\n1.";
-kDebug() <<"(aMsg == msg) ="                      << (aMsg == message());
-kDebug() <<"   mLastStatus.isOfUnknownStatus() =" << mLastStatus.isOfUnknownStatus();
-kDebug() <<"|| mLastStatus.isNew() ="             << mLastStatus.isNew();
-kDebug() <<"|| mLastStatus.isUnread) ="           << mLastStatus.isUnread();
-kDebug() <<"(mIdOfLastViewedMessage != aMsg->msgId()) ="       << (mIdOfLastViewedMessage != aMsg->msgId());
-kDebug() <<"   (KMMsgFullyEncrypted == encryptionState) ="     << (KMMsgFullyEncrypted == encryptionState);
-kDebug() <<"|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartiallyEncrypted == encryptionState);
+kDebug() << "\n\n\nSpecial post-encryption handling:\n1.";
+kDebug() << "(aMsg == msg) ="                      << (aMsg == message());
+kDebug() << "  mLastStatus.isOfUnknownStatus() =" << mLastStatus.isOfUnknownStatus();
+kDebug() << "|| mLastStatus.isNew() ="             << mLastStatus.isNew();
+kDebug() << "|| mLastStatus.isUnread) ="           << mLastStatus.isUnread();
+kDebug() << "(mIdOfLastViewedMessage != aMsg->msgId()) ="       << (mIdOfLastViewedMessage != aMsg->msgId());
+kDebug() << "  (KMMsgFullyEncrypted == encryptionState) ="     << (KMMsgFullyEncrypted == encryptionState);
+kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartiallyEncrypted == encryptionState);
          // only proceed if we were called the normal way - not by
          // double click on the message (==not running in a separate window)
   if(    (aMsg == message())
@@ -1711,7 +1711,7 @@ kDebug() <<"|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartiall
       && (    (KMMsgFullyEncrypted == encryptionState)
            || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
 
-    kDebug() <<"Calling objectTreeToDecryptedMsg()";
+    kDebug() << "Calling objectTreeToDecryptedMsg()";
 
     QByteArray decryptedData;
     // note: The following call may change the message's headers.
@@ -1719,7 +1719,7 @@ kDebug() <<"|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartiall
     kDebug() << "Resulting data:" << decryptedData;
 
     if( !decryptedData.isEmpty() ) {
-      kDebug() <<"Composing unencrypted message";
+      kDebug() << "Composing unencrypted message";
       // try this:
       aMsg->setBody( decryptedData );
       KMMessage* unencryptedMessage = new KMMessage( *aMsg );
@@ -2477,7 +2477,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
   } else { // Cancel
-    kDebug() <<"Canceled opening attachment";
+    kDebug() << "Canceled opening attachment";
   }
 }
 

@@ -447,14 +447,14 @@ void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString 
   if ( stage == Head ) {
     KMPopHeaders *header = mHeadersOnServer[ mHeaderIndex ];
     int size = mMsgsPendingDownload[ header->id() ];
-    kDebug() <<"Size of Message:" << size;
+    kDebug() << "Size of Message:" << size;
     msg->setMsgLength( size );
     header->setHeader( msg );
     ++mHeaderIndex;
     slotGetNextHdr();
   } else {
     //kDebug() << kfuncinfo <<"stage == Retr";
-    //kDebug() <<"curMsgData.size() =" << curMsgData.size();
+    //kDebug() << "curMsgData.size() =" << curMsgData.size();
     msg->setMsgLength( curMsgData.size() );
     msgsAwaitingProcessing.enqueue( msg );
     msgIdsAwaitingProcessing.enqueue( idsOfMsgs[indexOfCurrentMsg] );
@@ -469,7 +469,7 @@ void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString 
 void PopAccount::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
-    kDebug() <<"stage == List";
+    kDebug() << "stage == List";
     // set the initial size of mUidsOfNextSeenMsgsDict to the number of
     // messages on the server + 10%
     mUidsOfNextSeenMsgsDict.reserve( KMail::nextPrime( ( idsOfMsgs.count() * 11 ) / 10 ) );
@@ -480,7 +480,7 @@ void PopAccount::slotJobFinished() {
     stage = Uidl;
   }
   else if (stage == Uidl) {
-    kDebug() <<"stage == Uidl";
+    kDebug() << "stage == Uidl";
     mUidlFinished = true;
 
     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
@@ -498,10 +498,10 @@ void PopAccount::slotJobFinished() {
     if (mFilterOnServer == true) {
       for ( QMap<QByteArray, int>::const_iterator hids = mMsgsPendingDownload.constBegin();
             hids != mMsgsPendingDownload.constEnd(); ++hids ) {
-          kDebug() <<"Length:" << hids.value();
+          kDebug() << "Length:" << hids.value();
           //check for mails bigger mFilterOnServerCheckSize
           if ( (unsigned int)hids.value() >= mFilterOnServerCheckSize ) {
-            kDebug() <<"bigger than" << mFilterOnServerCheckSize;
+            kDebug() << "bigger than" << mFilterOnServerCheckSize;
             const QByteArray uid = mUidForIdMap[ hids.key() ];
             KMPopHeaders *header = new KMPopHeaders( hids.key(), uid, Later );
             //set Action if already known
@@ -522,7 +522,7 @@ void PopAccount::slotJobFinished() {
       mHeaderDownUids.clear();
       mHeaderLaterUids.clear();
     }
-    // kDebug() <<"Num of Msgs to Filter:" << mHeadersOnServer.count();
+    // kDebug() << "Num of Msgs to Filter:" << mHeadersOnServer.count();
     // if there are mails which should be checkedc download the headers
     if ( ( mHeadersOnServer.count() > 0 ) && ( mFilterOnServer == true ) ) {
       KUrl url = getUrl();
@@ -562,7 +562,7 @@ void PopAccount::slotJobFinished() {
     }
   }
   else if (stage == Head) {
-    kDebug() <<"stage == Head";
+    kDebug() << "stage == Head";
 
     // All headers have been downloaded, check which mail you want to get
     // data is in list mHeadersOnServer
@@ -577,24 +577,24 @@ void PopAccount::slotJobFinished() {
       //debug todo
       switch ( action ) {
         case NoAction:
-          kDebug() <<"PopFilterAction = NoAction";
+          kDebug() << "PopFilterAction = NoAction";
           break;
         case Later:
-          kDebug() <<"PopFilterAction = Later";
+          kDebug() << "PopFilterAction = Later";
           break;
         case Delete:
-          kDebug() <<"PopFilterAction = Delete";
+          kDebug() << "PopFilterAction = Delete";
           break;
         case Down:
-          kDebug() <<"PopFilterAction = Down";
+          kDebug() << "PopFilterAction = Down";
           break;
         default:
-          kDebug() <<"PopFilterAction = default oops!";
+          kDebug() << "PopFilterAction = default oops!";
           break;
       }
       switch ( action ) {
         case NoAction:
-          //kDebug() <<"PopFilterAction = NoAction";
+          //kDebug() << "PopFilterAction = NoAction";
           dlgPopup = true;
           break;
         case Later:
@@ -739,7 +739,7 @@ void PopAccount::slotJobFinished() {
           // get rid of the first numToDelete messages
           #ifdef DEBUG
           for ( int i = 0; i < numToDelete; ++i )
-            kDebug() <<"deleting msg id" << idsToSave[i].second;
+            kDebug() << "deleting msg id" << idsToSave[i].second;
           #endif
           idsToSave = idsToSave.mid( numToDelete );
         }
@@ -760,7 +760,7 @@ void PopAccount::slotJobFinished() {
           firstMsgToKeep++;
         #ifdef DEBUG
         for ( int i = 0; i < firstMsgToKeep; ++i )
-          kDebug() <<"deleting msg id" << idsToSave[i].second;
+          kDebug() << "deleting msg id" << idsToSave[i].second;
         #endif
         if ( firstMsgToKeep > 0 )
           idsToSave = idsToSave.mid( firstMsgToKeep );
@@ -807,7 +807,7 @@ void PopAccount::slotJobFinished() {
     connectJob();
   }
   else if (stage == Dele) {
-    kDebug() <<"stage == Dele";
+    kDebug() << "stage == Dele";
     // remove the uids of all messages which have been deleted
     for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.constBegin();
           it != idsOfMsgsToDelete.constEnd(); ++it ) {
@@ -826,7 +826,7 @@ void PopAccount::slotJobFinished() {
     connectJob();
   }
   else if (stage == Quit) {
-    kDebug() <<"stage == Quit";
+    kDebug() << "stage == Quit";
     saveUidList();
     job = 0;
     if ( mSlave )
@@ -922,11 +922,11 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
   Q_UNUSED( job );
 
   if (data.size() == 0) {
-    kDebug() <<"Data: <End>";
+    kDebug() << "Data: <End>";
     if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
       numBytesRead += curMsgLen - numMsgBytesRead;
     else if (stage == Head){
-      kDebug() <<"Head: <End>";
+      kDebug() << "Head: <End>";
     }
     return;
   }
@@ -1125,7 +1125,7 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
 
 //-----------------------------------------------------------------------------
 void PopAccount::slotGetNextHdr(){
-  kDebug() <<"slotGetNextHeader";
+  kDebug() << "slotGetNextHeader";
 
   curMsgData.resize(0);
   delete curMsgStrm;

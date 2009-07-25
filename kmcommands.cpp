@@ -205,7 +205,7 @@ KMCommand::~KMCommand()
 KMCommand::Result KMCommand::result() const
 {
   if ( mResult == Undefined ) {
-    kDebug() <<"mResult is Undefined";
+    kDebug() << "mResult is Undefined";
   }
   return mResult;
 }
@@ -1448,7 +1448,7 @@ KMCommand::Result KMRedirectCommand::execute()
     ? KMail::MessageSender::SendImmediate
     : KMail::MessageSender::SendLater;
   if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
-    kDebug() <<"KMRedirectCommand: could not redirect message (sending failed)";
+    kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
     return Failed; // error: couldn't send
   }
   return OK;
@@ -2032,7 +2032,7 @@ void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
 {
   mPendingJobs.removeAll( job );
   if ( job->error() ) {
-    kDebug() <<"folder job failed:" << job->error();
+    kDebug() << "folder job failed:" << job->error();
     // kill all pending jobs
     for ( QList<KMail::FolderJob*>::Iterator it = mPendingJobs.begin(); it != mPendingJobs.end(); ++it ) {
       disconnect( (*it), SIGNAL(result(KMail::FolderJob*)),
@@ -2142,7 +2142,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
     msg = srcFolder->getMsg(idx);
     if ( !msg ) {
-      kDebug() <<"No message found for serial number" << *it;
+      kDebug() << "No message found for serial number" << *it;
       continue;
     }
     bool undo = msg->enableUndo();
@@ -2957,7 +2957,7 @@ void KMHandleAttachmentCommand::slotStart()
   if ( !mNode->msgPart().isComplete() )
   {
     // load the part
-    kDebug() <<"load part";
+    kDebug() << "load part";
     KMLoadPartsCommand *command = new KMLoadPartsCommand( mNode, mMsg );
     connect( command, SIGNAL( partsRetrieved() ),
         this, SLOT( slotPartComplete() ) );
@@ -2997,7 +2997,7 @@ KMCommand::Result KMHandleAttachmentCommand::execute()
       return Undefined;
       break;
     default:
-      kDebug() <<"unknown action" << mAction;
+      kDebug() << "unknown action" << mAction;
       break;
   }
   setResult( OK );
@@ -3012,7 +3012,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
 
   if ( atmFileInfo.size() == 0 )
   {
-    kDebug() <<"rewriting attachment";
+    kDebug() << "rewriting attachment";
     // there is something wrong so write the file again
     QByteArray data = mNode->msgPart().bodyDecodedBinary();
     if ( mNode->msgPart().type() == DwMime::kTypeText && data.size() > 0 ) {
@@ -3070,7 +3070,7 @@ void KMHandleAttachmentCommand::atmOpen()
   if ( !mOffer )
     mOffer = getServiceOffer();
   if ( !mOffer ) {
-    kDebug() <<"got no offer";
+    kDebug() << "got no offer";
     return;
   }
 
@@ -3478,7 +3478,7 @@ void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
   kDebug() ;
   // anything changed?
   if ( !watcher->fileChanged() ) {
-    kDebug() <<"File has not been changed";
+    kDebug() << "File has not been changed";
     setResult( Canceled );
     emit completed( this );
     deleteLater();

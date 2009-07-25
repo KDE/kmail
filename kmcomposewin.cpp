@@ -630,7 +630,7 @@ void KMComposeWin::autoSaveMessage()
   if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() ) {
     return;
   }
-  kDebug() <<"autosaving message";
+  kDebug() << "autosaving message";
 
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
@@ -653,23 +653,23 @@ void KMComposeWin::slotContinueAutoSave()
 {
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
-    kDebug() <<"Composing the message failed.";
+    kDebug() << "Composing the message failed.";
     return;
   }
   KMMessage *msg = mComposedMessages.first();
   if ( !msg ) // a bit of extra defensiveness
     return;
 
-  kDebug() <<"opening autoSaveFile" << mAutoSaveFilename;
+  kDebug() << "opening autoSaveFile" << mAutoSaveFilename;
   const QString filename =
     KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
   KSaveFile autoSaveFile( filename );
   int status = 0;
   bool opened = autoSaveFile.open();
-  kDebug() <<"autoSaveFile.open() =" << opened;
+  kDebug() << "autoSaveFile.open() =" << opened;
   if ( opened ) { // no error
     autoSaveFile.setPermissions( QFile::ReadUser|QFile::WriteUser );
-    kDebug() <<"autosaving message in" << filename;
+    kDebug() << "autosaving message in" << filename;
     int fd = autoSaveFile.handle();
     const DwString &msgStr = msg->asDwString();
     if ( ::write( fd, msgStr.data(), msgStr.length() ) == -1 ) {
@@ -677,11 +677,11 @@ void KMComposeWin::slotContinueAutoSave()
     }
   }
   if ( status == 0 ) {
-    kDebug() <<"closing autoSaveFile";
+    kDebug() << "closing autoSaveFile";
     autoSaveFile.finalize();
     mLastAutoSaveErrno = 0;
   } else {
-    kDebug() <<"autosaving failed";
+    kDebug() << "autosaving failed";
     autoSaveFile.abort();
     if ( status != mLastAutoSaveErrno ) {
       // don't show the same error message twice
@@ -734,7 +734,7 @@ void KMComposeWin::slotView( void )
     id = HDR_DICTIONARY;
   } else {
     id = 0;
-    kDebug() <<"Something is wrong (Oh, yeah?)";
+    kDebug() << "Something is wrong (Oh, yeah?)";
     return;
   }
 
@@ -2879,11 +2879,11 @@ void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
   QByteArray cDisp = "attachment;";
   QByteArray encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
                                                       KMMessage::preferredCharsets(), name );
-  kDebug() <<"encoding:" << encoding;
+  kDebug() << "encoding:" << encoding;
   if ( encoding.isEmpty() ) {
     encoding = "utf-8";
   }
-  kDebug() <<"encoding after:" << encoding;
+  kDebug() << "encoding after:" << encoding;
   QByteArray encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
@@ -3507,7 +3507,7 @@ void KMComposeWin::slotContinuePrint( bool rc )
 
   if ( rc ) {
     if ( mComposedMessages.isEmpty() ) {
-      kDebug() <<"Composing the message failed.";
+      kDebug() << "Composing the message failed.";
       return;
     }
     KMCommand *command = new KMPrintCommand( this, mComposedMessages.first() );
@@ -4249,7 +4249,7 @@ void KMComposeWin::cleanupAutoSave()
 {
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
   if ( !mAutoSaveFilename.isEmpty() ) {
-    kDebug() <<"deleting autosave file"
+    kDebug() << "deleting autosave file"
                  << mAutoSaveFilename;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );

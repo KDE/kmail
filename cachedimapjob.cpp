@@ -135,7 +135,7 @@ void CachedImapJob::execute()
   assert( mAccount != 0 );
   if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     // No connection to the IMAP server
-    kDebug() <<"mAccount->makeConnection() failed";
+    kDebug() << "mAccount->makeConnection() failed";
     mPassiveDestructor = true;
     delete this;
     return;
@@ -689,17 +689,17 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
   if (a < 0) {
     // Something is seriously rotten here!
     // TODO: Tell the user that he has a problem
-    kDebug() <<"No uidvalidity available for folder"
+    kDebug() << "No uidvalidity available for folder"
                   << mFolder->objectName();
   }
   else {
     int b = cstr.indexOf("\r\n", a);
     if ( (b - a - 15) >= 0 ) {
       QString uidv = cstr.mid(a + 15, b - a - 15);
-      // kDebug() <<"New uidv =" << uidv <<", old uidv ="
+      // kDebug() << "New uidv =" << uidv <<", old uidv ="
       //               << mFolder->uidValidity();
       if( !mFolder->uidValidity().isEmpty() && mFolder->uidValidity() != uidv ) {
-        // kDebug() <<"Expunging the mailbox" << mFolder->name()
+        // kDebug() << "Expunging the mailbox" << mFolder->name()
         //               << "!";
         mFolder->expunge();
         mFolder->open( "cachedimap" ); // reopen after the forced close by expunge() for KMFolderCachedImap
@@ -707,7 +707,7 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
         mFolder->clearUidMap();
       }
     } else
-      kDebug() <<"No uidvalidity available for folder"
+      kDebug() << "No uidvalidity available for folder"
                     << mFolder->objectName();
   }
 

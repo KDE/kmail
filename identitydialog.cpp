@@ -730,7 +730,7 @@ namespace KMail {
     uint identity = ident.uoid();
     QString iid = TemplatesConfiguration::configIdString( identity );
     Templates t( iid );
-    kDebug() <<"use custom templates for identity" << identity <<":" << mCustom->isChecked();
+    kDebug() << "use custom templates for identity" << identity <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());
     t.writeConfig();
     mWidget->saveToIdentity( identity );

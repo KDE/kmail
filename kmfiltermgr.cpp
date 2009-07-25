@@ -39,7 +39,7 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
     mRefCount( 0 )
 {
   if ( bPopFilter ) {
-    kDebug() <<"pPopFilter set";
+    kDebug() << "pPopFilter set";
   }
   connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
            this, SLOT( slotFolderRemoved( KMFolder* ) ) );
@@ -114,7 +114,7 @@ int KMFilterMgr::moveMessage(KMMessage *msg) const
     if ( kmkernel->folderIsTrash( MessageProperty::filterFolder( msg )))
       KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
   } else {
-    kDebug() <<"KMfilterAction - couldn't move msg";
+    kDebug() << "KMfilterAction - couldn't move msg";
     return 2;
   }
   return 0;
@@ -222,7 +222,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
     return processPop( msg );
 
   if ( set == NoSet ) {
-    kDebug() <<"KMFilterMgr: process() called with not filter set selected";
+    kDebug() << "KMFilterMgr: process() called with not filter set selected";
     return 1;
   }
 

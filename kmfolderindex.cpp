@@ -123,7 +123,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
       msgBase->setIndexOffset(tmp);
       msgBase->setIndexLength(len);
       if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
-        kDebug() <<"Whoa!";
+        kDebug() << "Whoa!";
     }*/
   }
 
@@ -301,13 +301,13 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       *gv = indexVersion;
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
-        kDebug() <<"Converting old index file" << indexLocation() <<" to utf-8";
+        kDebug() << "Converting old index file" << indexLocation() << "to utf-8";
         mConvertToUtf8 = true;
       }
       return true;
   } else if (indexVersion == 1505) {
   } else if (indexVersion < INDEX_VERSION) {
-      kDebug() <<"Index file" << indexLocation() <<" is out of date. Re-creating it.";
+      kDebug() << "Index file" << indexLocation() << "is out of date. Re-creating it.";
       createIndexFromContents();
       return false;
   } else if(indexVersion > INDEX_VERSION) {

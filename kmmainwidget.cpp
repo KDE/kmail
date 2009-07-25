@@ -1058,7 +1058,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     kmkernel->acctMgr()->singleCheckMail( t );
   }
   else {
-    kDebug() <<" - account with name '" << item->data().toString() <<"' not found";
+    kDebug() << "- account with name '" << item->data().toString() <<"' not found";
   }
 }
 
@@ -2329,7 +2329,7 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 
   QString text = mMsgView ? mMsgView->copyText() : "";
 
-  kDebug() <<"Reply with template:" << tmpl;
+  kDebug() << "Reply with template:" << tmpl;
 
   KMCommand *command = new KMCustomReplyToCommand(
       this, msg, text, tmpl
@@ -2347,7 +2347,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 
   QString text = mMsgView? mMsgView->copyText() : "";
 
-  kDebug() <<"Reply to All with template:" << tmpl;
+  kDebug() << "Reply to All with template:" << tmpl;
 
   KMCommand *command = new KMCustomReplyAllToCommand(
       this, msg, text, tmpl
@@ -2364,7 +2364,7 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
   if ( selectedMessages.isEmpty() )
     return;
 
-  kDebug() <<"Forward with template:" << tmpl;
+  kDebug() << "Forward with template:" << tmpl;
 
   KMCustomForwardCommand * command = new KMCustomForwardCommand(
       this, selectedMessages, mFolder->identity(), tmpl
@@ -2641,7 +2641,7 @@ void KMMainWidget::slotStartCertManager()
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );
   else
-    kDebug() <<"\nslotStartCertManager(): certificate manager started.";
+    kDebug() << "\nslotStartCertManager(): certificate manager started.";
 }
 
 //-----------------------------------------------------------------------------
@@ -3387,7 +3387,7 @@ void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint 
     }
 
     urlMenuAdded = true;
-    kDebug() <<" URL is:" << aUrl;
+    kDebug() << "URL is:" << aUrl;
   }
 
   if ( mMsgView && !mMsgView->copyText().isEmpty() ) {
@@ -4954,7 +4954,7 @@ void KMMainWidget::toggleSystemTray()
   }
   else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
     // Get rid of system tray on user's request
-    kDebug() <<"deleting systray";
+    kDebug() << "deleting systray";
     delete mSystemTray;
     mSystemTray = 0;
   }

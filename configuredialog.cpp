@@ -1013,7 +1013,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
         if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
         {
           // connect to server - the namespaces are fetched automatically
-          kDebug() <<"slotModifySelectedAccount - connect";
+          kDebug() << "slotModifySelectedAccount - connect";
           ai->makeConnection();
         }
       }
@@ -1329,7 +1329,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
 
 void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 {
-  kDebug() <<"slotFontSelectorChanged() called";
+  kDebug() << "slotFontSelectorChanged() called";
   if( index < 0 || index >= mFontLocationCombo->count() )
     return; // Should never happen, but it is better to check.
 
@@ -1387,7 +1387,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
     if ( fonts.hasKey( fontNames[i].configName ) ) {
       needChange = true;
       mFont[i] = fonts.readEntry( fontNames[i].configName, QFont() );
-      kDebug() <<"got font \"" << fontNames[i].configName
+      kDebug() << "got font \"" << fontNames[i].configName
                 << "\" thusly: \"" << mFont[i].toString() << "\"";
     }
   if ( needChange && mFontLocationCombo->currentIndex() > 0 )
@@ -1502,7 +1502,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            l, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
-	   mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
+     mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
 
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1648,7 +1648,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   folderCBHLayout->addWidget( mFolderQuickSearchCB );
 
   vlay->addLayout( folderCBHLayout );
-  vlay->addSpacing( KDialog::spacingHint() );		// space before next box
+  vlay->addSpacing( KDialog::spacingHint() );   // space before next box
 
   // "folder tooltips" radio buttons:
   mFolderToolTipsGroupBox = new QGroupBox( this );
@@ -3565,7 +3565,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   // calling this w/o selection is a programming error:
   QTreeWidgetItem *item = mTagList->currentItem();
   if ( !item ) {
-    kDebug() <<"=================================================="
+    kDebug() << "=================================================="
                   << "Error: Remove button was pressed although no custom header was selected\n"
                   << "==================================================\n";
     return;
@@ -3574,7 +3574,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   QTreeWidgetItem *below = mTagList->itemBelow( item );
 
   if ( below ) {
-    kDebug() <<"below";
+    kDebug() << "below";
     mTagList->setCurrentItem( below );
     delete item;
     item = 0;

@@ -1229,7 +1229,7 @@ int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE *tmpfil
   unsigned int stopIndex = nbMessages == -1
                        ? mMsgList.count()
                        : qMin( mMsgList.count(), startIndex + nbMessages );
-  //kDebug() << "KMFolderMbox: compacting from" << startIndex <<" to" << stopIndex;
+  //kDebug() << "KMFolderMbox: compacting from" << startIndex << "to" << stopIndex;
   for ( unsigned int idx = startIndex; idx < stopIndex; ++idx ) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at( idx );
     size_t msize = mi->msgSize();

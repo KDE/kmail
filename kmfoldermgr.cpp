@@ -585,7 +585,7 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
 //-----------------------------------------------------------------------------
 void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 {
-  kDebug() <<"Copy folder:" << folder->prettyUrl();
+  kDebug() << "Copy folder:" << folder->prettyUrl();
   CopyFolderJob* job = new CopyFolderJob( folder->storage(), newParent );
   connect( job, SIGNAL( folderCopyComplete( bool ) ),
 	   this, SIGNAL( folderMoveOrCopyOperationFinished() ) );

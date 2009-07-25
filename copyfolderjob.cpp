@@ -135,7 +135,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
     mNextChildFolder->close( "copyfolder" ); // refcount
   // previous sibling failed
   if ( !success ) {
-    kDebug() <<"Failed to copy one subfolder, let's not continue:" << mNewFolder->prettyUrl();
+    kDebug() << "Failed to copy one subfolder, let's not continue:" << mNewFolder->prettyUrl();
     rollback();
     emit folderCopyComplete( false );
     deleteLater();
@@ -166,7 +166,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
 
   KMFolderDir * const dir = mNewFolder->createChildFolder();
   if ( !dir ) {
-    kDebug() <<"Failed to create subfolders of:" << mNewFolder->prettyUrl();
+    kDebug() << "Failed to create subfolders of:" << mNewFolder->prettyUrl();
     emit folderCopyComplete( false );
     deleteLater();
     return;

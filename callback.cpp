@@ -65,7 +65,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
                          const QString &subject, const QString &status,
                          bool delMessage ) const
 {
-  kDebug() <<"Mailing message:" << iCal;
+  kDebug() << "Mailing message:" << iCal;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();

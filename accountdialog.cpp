@@ -1063,7 +1063,7 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()) );
-    //kDebug() <<"account for folder" << mAccount->folder()->name();
+    //kDebug() << "account for folder" << mAccount->folder()->name();
 
     initAccountForConnect();
     KMAcctCachedImap &epa = *(KMAcctCachedImap*)mAccount;

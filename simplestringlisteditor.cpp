@@ -186,7 +186,7 @@ void SimpleStringListEditor::setButtonText( ButtonCode button,
     return;
   case Up:
   case Down:
-    kDebug() <<"SimpleStringListEditor: Cannot change text of"
+    kDebug() << "SimpleStringListEditor: Cannot change text of"
                    "Up and Down buttons: they don't contains text!";
     return;
   default:

@@ -85,7 +85,7 @@ static void insertBodyPartFormatter( const char * type, const char * subtype,
 
   TypeRegistry::iterator type_it = all->find( type );
   if ( type_it == all->end() ) {
-    kDebug() <<"BodyPartFormatterFactory: instantiating new Subtype Registry for \""
+    kDebug() << "BodyPartFormatterFactory: instantiating new Subtype Registry for \""
 		    << type << "\"";
     type_it = all->insert( std::make_pair( type, SubtypeRegistry() ) ).first;
     assert( type_it != all->end() );
@@ -94,7 +94,7 @@ static void insertBodyPartFormatter( const char * type, const char * subtype,
   SubtypeRegistry & subtype_reg = type_it->second;
   SubtypeRegistry::iterator subtype_it = subtype_reg.find( subtype );
   if ( subtype_it != subtype_reg.end() ) {
-    kDebug() <<"BodyPartFormatterFactory: overwriting previously registered formatter for \""
+    kDebug() << "BodyPartFormatterFactory: overwriting previously registered formatter for \""
 		    << type << "/" << subtype << "\"";
     subtype_reg.erase( subtype_it ); subtype_it = subtype_reg.end();
   }
@@ -109,7 +109,7 @@ static void loadPlugins() {
     return;
   }
   const QStringList types = pl->types();
-  kDebug() <<"BodyPartFormatterFactory: found" << types.size() <<" plugins.";
+  kDebug() << "BodyPartFormatterFactory: found" << types.size() << "plugins.";
   for ( QStringList::const_iterator it = types.begin() ; it != types.end() ; ++it ) {
     const KMail::Interface::BodyPartFormatterPlugin * plugin = pl->createForName( *it );
     if ( !plugin ) {

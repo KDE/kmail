@@ -105,7 +105,7 @@ void TemplatesConfiguration::slotTextChanged()
 void TemplatesConfiguration::loadFromGlobal()
 {
   if ( !GlobalSettings::self()->phrasesConverted() ) {
-    kDebug() <<"Phrases to templates conversion";
+    kDebug() << "Phrases to templates conversion";
     importFromPhrases();
   }
 
@@ -438,11 +438,11 @@ void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCu
   } else if( toolBox1->widget( toolBox1->currentIndex() ) == page_forward ) {
     edit = textEdit_forward;
   } else {
-    kDebug() <<"Unknown current page in TemplatesConfiguration!";
+    kDebug() << "Unknown current page in TemplatesConfiguration!";
     return;
   }
 
-  // kDebug() <<"Insert command:" << cmd;
+  // kDebug() << "Insert command:" << cmd;
   QTextCursor cursor = edit->textCursor();
   cursor.insertText( cmd );
   cursor.setPosition( cursor.position() + adjustCursor );

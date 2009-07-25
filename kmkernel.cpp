@@ -1801,8 +1801,8 @@ bool KMKernel::transferMail( QString & destinationDir )
   }
 
   if ( !KIO::NetAccess::move( dir, destinationDir ) ) {
-    kDebug() <<"Moving" << dir <<" to" << destinationDir <<" failed:" << KIO::NetAccess::lastErrorString();
-    kDebug() <<"Deleting" << destinationDir;
+    kDebug() << "Moving" << dir << "to" << destinationDir << "failed:" << KIO::NetAccess::lastErrorString();
+    kDebug() << "Deleting" << destinationDir;
     KIO::NetAccess::del( destinationDir, 0 );
     destinationDir = dir;
     return false;
@@ -1879,7 +1879,7 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     // send MAX_CHUNK_SIZE bytes to the receiver (deep copy)
     data = QByteArray( (*it).data.data() + (*it).offset, MAX_CHUNK_SIZE );
     (*it).offset += MAX_CHUNK_SIZE;
-    //kDebug() <<"Sending" << MAX_CHUNK_SIZE <<" bytes ("
+    //kDebug() << "Sending" << MAX_CHUNK_SIZE << "bytes ("
     //                << remainingBytes - MAX_CHUNK_SIZE << " bytes remain)\n";
   }
   else
@@ -1888,7 +1888,7 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     data = QByteArray( (*it).data.data() + (*it).offset, remainingBytes );
     (*it).data = QByteArray();
     (*it).offset = 0;
-    //kDebug() <<"Sending" << remainingBytes <<" bytes";
+    //kDebug() << "Sending" << remainingBytes << "bytes";
   }
 }
 

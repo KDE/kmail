@@ -150,7 +150,7 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
 
   if (account->checkingMail())
   {
-    kDebug() <<"account" << account->name() <<" busy, queuing";
+    kDebug() << "account" << account->name() << "busy, queuing";
     return;
   }
 
@@ -160,7 +160,7 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
 //-----------------------------------------------------------------------------
 void AccountManager::processNextCheck( bool _newMail )
 {
-  kDebug() <<"processNextCheck, remaining" << mAcctTodo.count();
+  kDebug() << "processNextCheck, remaining" << mAcctTodo.count();
   if ( _newMail )
     mNewMailArrived = true;
 
@@ -170,7 +170,7 @@ void AccountManager::processNextCheck( bool _newMail )
     if ( acct->checkingMail() )
       continue;
     // check done
-    kDebug() <<"account" << acct->name() <<" finished check";
+    kDebug() << "account" << acct->name() << "finished check";
     mAcctChecking.removeAll( acct );
     kmkernel->filterMgr()->deref();
     disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
@@ -222,7 +222,7 @@ void AccountManager::processNextCheck( bool _newMail )
   KPIM::BroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail", curAccount->name()));
 
-  kDebug() <<"processing next mail check for" << curAccount->name();
+  kDebug() << "processing next mail check for" << curAccount->name();
 
   curAccount->setCheckingMail( true );
   mAcctChecking.append( curAccount );

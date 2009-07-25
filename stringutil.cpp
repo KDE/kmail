@@ -421,7 +421,7 @@ QString decodeMailtoUrl( const QString& url )
 
 QByteArray stripEmailAddr( const QByteArray& aStr )
 {
-  //kDebug() << "(" << aStr <<" )";
+  //kDebug() << "(" << aStr << ")";
 
   if ( aStr.isEmpty() )
     return QByteArray();
@@ -471,11 +471,11 @@ QByteArray stripEmailAddr( const QByteArray& aStr )
               comment = comment.trimmed();
               angleAddress = angleAddress.trimmed();
                    /*
-              kDebug() <<"Name    : \"" << name
+              kDebug() << "Name    : \"" << name
               << "\"";
-              kDebug() <<"Comment : \"" << comment
+              kDebug() << "Comment : \"" << comment
               << "\"";
-              kDebug() <<"Address : \"" << angleAddress
+              kDebug() << "Address : \"" << angleAddress
               << "\"";
                    */
               if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -553,9 +553,9 @@ QByteArray stripEmailAddr( const QByteArray& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kDebug() <<"Name    : \"" << name <<"\"";
-  kDebug() <<"Comment : \"" << comment <<"\"";
-  kDebug() <<"Address : \"" << angleAddress <<"\"";
+  kDebug() << "Name    : \"" << name <<"\"";
+  kDebug() << "Comment : \"" << comment <<"\"";
+  kDebug() << "Address : \"" << angleAddress <<"\"";
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -631,11 +631,11 @@ QString stripEmailAddr( const QString& aStr )
               comment = comment.trimmed();
               angleAddress = angleAddress.trimmed();
                    /*
-              kDebug() <<"Name    : \"" << name
+              kDebug() << "Name    : \"" << name
               << "\"";
-              kDebug() <<"Comment : \"" << comment
+              kDebug() << "Comment : \"" << comment
               << "\"";
-              kDebug() <<"Address : \"" << angleAddress
+              kDebug() << "Address : \"" << angleAddress
               << "\"";
                    */
               if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -713,9 +713,9 @@ QString stripEmailAddr( const QString& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kDebug() <<"Name    : \"" << name <<"\"";
-  kDebug() <<"Comment : \"" << comment <<"\"";
-  kDebug() <<"Address : \"" << angleAddress <<"\"";
+  kDebug() << "Name    : \"" << name <<"\"";
+  kDebug() << "Comment : \"" << comment <<"\"";
+  kDebug() << "Address : \"" << angleAddress <<"\"";
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -819,7 +819,7 @@ QStringList stripAddressFromAddressList( const QString& address,
         it != addresses.end(); ) {
     if ( kasciistricmp( addrSpec.toUtf8().data(),
          KPIMUtils::extractEmailAddress( *it ).toUtf8().data() ) == 0 ) {
-      kDebug() << "Removing" << *it <<" from the address list";
+      kDebug() << "Removing" << *it << "from the address list";
       it = addresses.erase( it );
     }
     else

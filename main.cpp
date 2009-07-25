@@ -72,7 +72,7 @@ int KMailApplication::newInstance()
   // fully initialized. Creating an instance would therefore fail, this is why
   // that is delayed until delayedInstanceCreation() is called.
   if ( !mEventLoopReached ) {
-    kDebug() <<"Delaying instance creation.";
+    kDebug() << "Delaying instance creation.";
     mDelayedInstanceCreation = true;
     return 0;
   }

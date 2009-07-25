@@ -305,7 +305,7 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
         }
     }
 
-//kDebug() <<"\n\n  KMMsgEncryptionState:" << myState;
+//kDebug() << "\n\n  KMMsgEncryptionState:" << myState;
 
     return myState;
 }
@@ -348,7 +348,7 @@ KMMsgSignatureState  partNode::overallSignatureState() const
         }
     }
 
-//kDebug() <<"\n\n  KMMsgSignatureState:" << myState;
+//kDebug() << "\n\n  KMMsgSignatureState:" << myState;
 
     return myState;
 }

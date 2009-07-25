@@ -67,7 +67,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
     mNewMessagesPopup( 0 ),
     mSendQueued( 0 )
 {
-  kDebug() <<"Initting systray";
+  kDebug() << "Initting systray";
 
   mLastUpdate = time( 0 );
   mUpdateTimer = new QTimer( this );
@@ -152,7 +152,7 @@ void KMSystemTray::setMode(int newMode)
 {
   if(newMode == mMode) return;
 
-  kDebug() <<"Setting systray mMode to" << newMode;
+  kDebug() << "Setting systray mMode to" << newMode;
   mMode = newMode;
 
   switch ( mMode ) {
@@ -167,7 +167,7 @@ void KMSystemTray::setMode(int newMode)
       show();
     break;
   default:
-    kDebug() <<" Unknown systray mode" << mMode;
+    kDebug() << "Unknown systray mode" << mMode;
   }
 }
 
@@ -291,7 +291,7 @@ void KMSystemTray::foldersChanged()
  */
 void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
 {
-  kDebug() <<"trigger:" << reason;
+  kDebug() << "trigger:" << reason;
 
   // switch to kmail on left mouse button
   if( reason == QSystemTrayIcon::Trigger )
@@ -339,7 +339,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     mNewMessagesPopup->setTitle( i18n("New Messages In") );
     contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
 
-    kDebug() <<"Folders added";
+    kDebug() << "Folders added";
   }
 }
 
@@ -358,12 +358,12 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
     if((imap->account() != 0) &&
        (imap->account()->name() != 0) )
     {
-      kDebug() <<"IMAP folder, prepend label with type";
+      kDebug() << "IMAP folder, prepend label with type";
       rvalue = imap->account()->name() + "->" + rvalue;
     }
   }
 
-  kDebug() <<"Got label" << rvalue;
+  kDebug() << "Got label" << rvalue;
 
   return rvalue;
 }
@@ -456,7 +456,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   if( !fldr ||
       fldr->folderType() == KMFolderTypeSearch )
   {
-    // kDebug() <<"Null or a search folder, can't mess with that";
+    // kDebug() << "Null or a search folder, can't mess with that";
     return;
   }
 
@@ -500,7 +500,7 @@ void KMSystemTray::updateNewMessages()
     if ( unread > 0 ) {
       // Add folder to our internal store, or update unread count if already mapped
       mFoldersWithUnread.insert( fldr, unread );
-      //kDebug() <<"There are now" << mFoldersWithUnread.count() <<" folders with unread";
+      //kDebug() << "There are now" << mFoldersWithUnread.count() << "folders with unread";
     }
 
     /*

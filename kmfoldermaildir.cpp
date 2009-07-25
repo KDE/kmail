@@ -258,7 +258,7 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
 
   unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
                            qMin( mMsgList.count(), startIndex + nbMessages );
-  //kDebug() <<"KMFolderMaildir: compacting from" << startIndex <<" to" << stopIndex;
+  //kDebug() << "KMFolderMaildir: compacting from" << startIndex << "to" << stopIndex;
   for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
     if (!mi)
@@ -376,7 +376,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     aMsg->setHeaderField( "X-UID", uidHeader, KMMessage::Unstructured, false, KMMessage::NoEncoding );
 
   if ( msgText.isEmpty() ) {
-    kDebug() <<"Message added to folder `" << objectName() <<"' contains no data. Ignoring it.";
+    kDebug() << "Message added to folder `" << objectName() <<"' contains no data. Ignoring it.";
     return 0;
   }
 
@@ -552,7 +552,7 @@ DwString KMFolderMaildir::getDwString(int idx)
       return str;
     }
   }
-  kDebug() <<"Could not open file r" << abs_file;
+  kDebug() << "Could not open file r" << abs_file;
   return DwString();
 }
 

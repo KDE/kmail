@@ -73,7 +73,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
 
     if ( !scoreValid ) {
       score = -5.0;
-      kDebug() <<"Score could not be extracted from header '"
+      kDebug() << "Score could not be extracted from header '"
                     << mField << "'";
     } else {
       bool floatValid = false;
@@ -93,7 +93,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kDebug() <<"Score (" << scoreString <<") is no number";
+            kDebug() << "Score (" << scoreString <<") is no number";
           }
           else
             score *= 100.0;
@@ -103,7 +103,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kDebug() <<"Score (" << scoreString <<") is no number";
+            kDebug() << "Score (" << scoreString <<") is no number";
           }
           break;
 
@@ -111,7 +111,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kDebug() <<"Score (" << scoreString <<") is no number";
+            kDebug() << "Score (" << scoreString <<") is no number";
             break;
           }
 
@@ -123,14 +123,14 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           }
           else {
             score = -6.0;
-            kDebug() <<"Threshold could not be extracted from header '"
+            kDebug() << "Threshold could not be extracted from header '"
                           << mField << "'";
             break;
           }
           float threshold = thresholdString.toFloat( &floatValid );
           if ( !floatValid || ( threshold <= 0.0 ) ) {
             score = -4.0;
-            kDebug() <<"Threshold (" << thresholdString <<") is no"
+            kDebug() << "Threshold (" << thresholdString <<") is no"
                           << "number or is negative";
             break;
           }
@@ -161,7 +161,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
       }
       confidence = confidenceString.toFloat( &confidenceValid );
       if( !confidenceValid) {
-        kDebug() <<"Unable to convert confidence to float:" << confidenceString;
+        kDebug() << "Unable to convert confidence to float:" << confidenceString;
         confidence = -3.0;
       }
     }

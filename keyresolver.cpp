@@ -104,13 +104,13 @@ static bool ValidOpenPGPEncryptionKey( const GpgME::Key & key ) {
   }
 #if 0
   if ( key.isRevoked() )
-    kWarning() <<" is revoked";
+    kWarning() << "is revoked";
   if ( key.isExpired() )
-    kWarning() <<" is expired";
+    kWarning() << "is expired";
   if ( key.isDisabled() )
-    kWarning() <<" is disabled";
+    kWarning() << "is disabled";
   if ( !key.canEncrypt() )
-    kWarning() <<" can't encrypt";
+    kWarning() << "can't encrypt";
 #endif
   if ( key.isRevoked() || key.isExpired() || key.isDisabled() || !key.canEncrypt() )
     return false;
@@ -704,7 +704,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
           return Kpgp::Canceled;
   } else {
   const int daysTillExpiry = 1 + int( secsTillExpiry / secsPerDay );
-  kDebug() <<"Key 0x" << key.shortKeyID() <<"expires in less than"
+  kDebug() << "Key 0x" << key.shortKeyID() <<"expires in less than"
 	           << daysTillExpiry << "days";
   const int threshold =
     ca
@@ -1586,7 +1586,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   const QStringList fingerprints = keysForAddress( address );
 
   if ( !fingerprints.empty() ) {
-    kDebug() <<"Using encryption keys 0x"
+    kDebug() << "Using encryption keys 0x"
 	             << fingerprints.join( ", 0x" )
 	             << "for" << person;
     std::vector<GpgME::Key> keys = lookup( fingerprints );
@@ -1684,7 +1684,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns,
 	result.insert( result.end(), keys.begin(), keys.end() );
       }
     }
-  kDebug() <<"  returned" << result.size() <<" keys";
+  kDebug() << " returned" << result.size() << "keys";
   return result;
 }
 

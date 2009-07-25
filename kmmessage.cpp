@@ -374,7 +374,7 @@ void KMMessage::setStatusFields()
   setHeaderField("X-KMail-EncryptionState", str);
 
   str[0] = (char)signatureState();
-  //kDebug() <<"Setting SignatureState header field to" << str[0];
+  //kDebug() << "Setting SignatureState header field to" << str[0];
   setHeaderField("X-KMail-SignatureState", str);
 
   str[0] = static_cast<char>( mdnSentState() );
@@ -664,7 +664,7 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
         // The sender didn't set a Reply-to address, so we add the From
         // address to the list of CC recipients.
         ccRecipients += from();
-        kDebug() <<"Added" << from() <<"to the list of CC recipients";
+        kDebug() << "Added" << from() <<"to the list of CC recipients";
       }
       // if it is a mailing list, add the posting address
       recipients.prepend( mailingListAddresses[0] );
@@ -675,7 +675,7 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
         // in case of replying to a normal message only then add the From
         // address to the list of recipients if there was no Reply-to address
         recipients += from();
-        kDebug() <<"Added" << from() <<"to the list of recipients";
+        kDebug() << "Added" << from() <<"to the list of recipients";
       }
     }
 
@@ -693,7 +693,7 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
         if(    !StringUtil::addressIsInAddressList( *it, recipients )
             && !StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;
-          kDebug() <<"Added" << *it <<"to the list of CC recipients";
+          kDebug() << "Added" << *it <<"to the list of CC recipients";
         }
       }
     }
@@ -1033,7 +1033,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     return 0;
 #else
   char st[2]; st[0] = (char)mdnSentState(); st[1] = 0;
-  kDebug() <<"mdnSentState() == '" << st <<"'";
+  kDebug() << "mdnSentState() == '" << st <<"'";
 #endif
 
   // RFC 2298: An MDN MUST NOT be generated in response to an MDN.
@@ -1103,7 +1103,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   AddrSpecList returnPathList = extractAddrSpecs("Return-Path");
   QString returnPath = returnPathList.isEmpty() ? QString()
     : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
-  kDebug() <<"clean return path:" << returnPath;
+  kDebug() << "clean return path:" << returnPath;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, Qt::CaseSensitive ) ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( returnPath.isEmpty() ?
@@ -1213,7 +1213,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   receipt->cleanupHeader();
 
-  kDebug() <<"final message:" + receipt->asString();
+  kDebug() << "final message:" + receipt->asString();
 
   //
   // Set "MDN sent" status:
@@ -2001,7 +2001,7 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
       value = KPIMUtils::normalizeAddressesAndEncodeIdn( value );
 #if 0
     if ( type != Unstructured )
-      kDebug() <<"value: \"" << value <<"\"";
+      kDebug() << "value: \"" << value <<"\"";
 #endif
     if ( encodingMode == NoEncoding ) {
       aValue = value.toAscii();
@@ -2015,7 +2015,7 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
     }
 #if 0
     if ( type != Unstructured )
-      kDebug() <<"aValue: \"" << aValue <<"\"";
+      kDebug() << "aValue: \"" << aValue <<"\"";
 #endif
   }
   // FIXME PORTING
@@ -3149,7 +3149,7 @@ void KMMessage::updateAttachmentState( DwBodyPart *part )
   }
 
   if ( !part ) {
-    // kDebug() <<"updateAttachmentState - no part!";
+    // kDebug() << "updateAttachmentState - no part!";
     if ( mStatus.hasAttachment() ) {
       toggleStatus( MessageStatus::statusHasAttachment() );
     }

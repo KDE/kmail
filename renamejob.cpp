@@ -202,7 +202,7 @@ void RenameJob::folderCopyComplete(bool success)
     mStorageTempOpened = 0;
   }
 
-  kDebug() <<"deleting old folder";
+  kDebug() << "deleting old folder";
   // move complete or not necessary
   // save our settings
   QString oldconfig = mStorage->folder()->configGroupName();

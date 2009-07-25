@@ -1263,7 +1263,7 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 
   int superfluousItems = (int)mActionList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
-    kDebug() <<"KMFilterActionWidgetLister: Clipping action list to"
+    kDebug() << "KMFilterActionWidgetLister: Clipping action list to"
 	      << mMaxWidgets << "items!";
 
     for ( ; superfluousItems ; superfluousItems-- )
