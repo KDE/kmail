@@ -116,6 +116,7 @@ Manager::~Manager()
 
   saveConfiguration();
   removeAllAggregations();
+  removeAllThemes(); 
 
   delete mHeartBeatTimer;
 
