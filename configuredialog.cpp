@@ -4780,8 +4780,9 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings()
   }
   if ( selectedAccount )
     mMGTab.mAccountCombo->setCurrentAccount( selectedAccount );
-  else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 )
-    kDebug() <<"Folder" << folderId <<" not found as an account's inbox";
+  else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 ) {
+    kDebug() << "Folder" << folderId << "not found as an account's inbox";
+  }
 }
 
 void MiscPage::GroupwareTab::save()

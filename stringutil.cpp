@@ -298,8 +298,9 @@ AddressList splitAddrField( const QByteArray & str )
   if ( !scursor )
     return AddressList();
   const char * const send = str.begin() + str.length();
-  if ( !parseAddressList( scursor, send, result ) )
+  if ( !parseAddressList( scursor, send, result ) ) {
     kDebug() << "Error in address splitting: parseAddressList returned false!";
+  }
   return result;
 }
 

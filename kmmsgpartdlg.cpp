@@ -433,9 +433,10 @@ void KMMsgPartDialogCompat::applyChanges()
 
   // apply Content-Transfer-Encoding:
   QByteArray cte;
-  if (subtype == "rfc822" && type == "message")
+  if ( subtype == "rfc822" && type == "message" ) {
     kWarning( encoding() != SevenBit && encoding() != EightBit, 5006 )
       << "encoding on rfc822/message must be \"7bit\" or \"8bit\"";
+  }
   switch ( encoding() ) {
   case SevenBit:        cte = "7bit";             break;
   case EightBit:        cte = "8bit";             break;

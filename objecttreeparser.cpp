@@ -563,8 +563,9 @@ namespace KMail {
     else
       messagePart.auditLogError = GpgME::Error( GPG_ERR_NOT_IMPLEMENTED );
 
-    if ( doCheck )
+    if ( doCheck ) {
       kDebug() << "returned from CRYPTPLUG";
+    }
 
     // ### only one signature supported
     if ( !signatures.empty() ) {

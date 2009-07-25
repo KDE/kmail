@@ -64,9 +64,10 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   mListBox = new QListWidget( this );
   hlay->addWidget( mListBox, 1 );
 
-  if ( buttons == None )
-    kDebug() <<"SimpleStringListBox called with no buttons."
-      "Consider using a plain QListBox instead!";
+  if ( buttons == None ) {
+    kDebug() << "SimpleStringListBox called with no buttons."
+                "Consider using a plain QListBox instead!";
+  }
 
   QVBoxLayout * vlay = new QVBoxLayout(); // inherits spacing
   hlay->addLayout( vlay );
@@ -109,9 +110,10 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   }
 
   if ( buttons & Up ) {
-    if ( !(buttons & Down) )
-      kDebug() <<"Are you sure you want to use an Up button"
-        "without a Down button??";
+    if ( !(buttons & Down) ) {
+      kDebug() << "Are you sure you want to use an Up button"
+                  "without a Down button??";
+    }
     mUpButton = new KPushButton( QString(), this );
     mUpButton->setIcon( KIcon( "go-up" ) );
     mUpButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
@@ -123,9 +125,10 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   }
 
   if ( buttons & Down ) {
-    if ( !(buttons & Up) )
-      kDebug() <<"Are you sure you want to use a Down button"
-        "without an Up button??";
+    if ( !(buttons & Up) ) {
+      kDebug() << "Are you sure you want to use a Down button"
+                  "without an Up button??";
+    }
     mDownButton = new KPushButton( QString(), this );
     mDownButton->setIcon( KIcon( "go-down" ) );
     mDownButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );

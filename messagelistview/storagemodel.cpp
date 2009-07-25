@@ -218,8 +218,9 @@ StorageModel::~StorageModel()
 void StorageModel::releaseMessage( int row ) const
 {
   Q_ASSERT( row >= 0 );
-  if( row >= mFolder->count() )
-    kWarning() << "Trying to release a message at row " << row << " that no longer exists in the folder";
+  if ( row >= mFolder->count() ) {
+    kWarning() << "Trying to release a message at row" << row << "that no longer exists in the folder";
+  }
 
   KMMessage * msg = mFolder->getMsg( row );
   if ( !msg )

@@ -359,10 +359,12 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       // Seek to end of header
       KDE_fseek(mIndexStream, endOfHeader, SEEK_SET );
 
-      if (mIndexSwapByteOrder)
-         kDebug() <<"Index File has byte order swapped!";
-      if (mIndexSizeOfLong != sizeof(long))
-         kDebug() <<"Index File sizeOfLong is" << mIndexSizeOfLong <<" while sizeof(long) is" << sizeof(long) <<" !";
+      if ( mIndexSwapByteOrder ) {
+         kDebug() << "Index File has byte order swapped!";
+      }
+      if ( mIndexSizeOfLong != sizeof( long ) ) {
+         kDebug() << "Index File sizeOfLong is" << mIndexSizeOfLong << "while sizeof(long) is" << sizeof(long) << "!";
+      }
 
   }
   return true;
@@ -377,17 +379,20 @@ bool KMFolderIndex::updateIndexStreamPtr(bool just_close)
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
-  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( location() ) ), 0 ) )
+  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( location() ) ), 0 ) ) {
     kWarning() << "utime(" << QDir::toNativeSeparators( location() )
                << ", 0) failed (location())";
+  }
 
-  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( indexLocation() ) ), 0 ) )
+  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( indexLocation() ) ), 0 ) ) {
     kWarning() << "utime(" << QDir::toNativeSeparators( indexLocation() )
                << ", 0) failed (indexLocation())";
+  }
 
-  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( KMMsgDict::getFolderIdsLocation( *this ) ) ), 0 ) )
+  if ( 0 != utime( QFile::encodeName( QDir::toNativeSeparators( KMMsgDict::getFolderIdsLocation( *this ) ) ), 0 ) ) {
     kWarning() << "utime(" << QDir::toNativeSeparators( KMMsgDict::getFolderIdsLocation( *this ) )
                << ", 0) failed (KMMsgDict::getFolderIdsLocation( *this ))";
+  }
 
   mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP

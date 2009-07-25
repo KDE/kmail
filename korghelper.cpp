@@ -37,8 +37,9 @@ void KMail::KorgHelper::ensureRunning()
     QDBusInterface iface( "org.kde.korganizer", "/korganizer_PimApplication", "org.kde.KUniqueApplication" );
     if ( iface.isValid() ) {
       QDBusReply<bool> r = iface.call( "load" );
-      if ( !r.isValid() || !r.value() )
+      if ( !r.isValid() || !r.value() ) {
         kWarning() << "Loading korganizer failed: " << iface.lastError().message();
+      }
     } else
       kWarning() << "Couldn't obtain korganizer D-Bus interface" << iface.lastError().message();
   } else

@@ -790,8 +790,9 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
     }
   }
 
-  if ( subResources.isEmpty() )
+  if ( subResources.isEmpty() ) {
     kDebug() << "No folder found for" << contentsType;
+  }
   return subResources;
 }
 
@@ -1421,8 +1422,9 @@ KMMessage *KMailICalIfaceImpl::findMessageBySerNum( quint32 serNum, KMFolder* fo
   } else {
     if( aFolder )
       message = aFolder->getMsg( index );
-    if (!message)
-      kWarning() <<"findMessageBySerNum(" << serNum <<" ) invalid serial number";
+    if ( !message ) {
+      kWarning() << "Invalid serial number" << serNum;
+    }
   }
   return message;
 }

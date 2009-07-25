@@ -1259,9 +1259,10 @@ void KMReaderWin::readGlobalOverrideCodec()
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
-  if (aMsg)
-      kDebug() <<"(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
-        << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
+  if ( aMsg ) {
+    kDebug() << "(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
+             << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
+  }
 
   // Reset message-transient state
   if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
@@ -2608,8 +2609,9 @@ KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
     KMMsgDict::instance()->getLocation( mLastSerNum, &folder, &index );
     if (folder )
       message = folder->getMsg( index );
-    if (!message)
-      kWarning() <<"Attempt to reference invalid serial number" << mLastSerNum;
+    if ( !message ) {
+      kWarning() << "Attempt to reference invalid serial number" << mLastSerNum;
+    }
     return message;
   }
   return 0;
