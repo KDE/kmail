@@ -500,6 +500,22 @@ void KMSender::doSendMsg()
   }
   mCurrentMsg->setTransferInProgress( true );
 
+  // apply filters before sending message
+  // TODO: to support encrypted/signed messages this sould be moved to messagecomposer.cpp
+  // Disable the emitting of msgAdded signal, because the message is taken out of the
+  // current folder (outbox) and re-added, to make filter actions changing the message
+  // work. We don't want that to screw up message counts.
+  if ( kmkernel->filterMgr() ) {
+    if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( true );
+    const int processResult = kmkernel->filterMgr()->process( mCurrentMsg, KMFilterMgr::BeforeOutbound );
+    if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( false );
+    if ( processResult == 2 /* critical error */ ) {
+      kError() << "Critical error: Unable to execute filters before sending message (out of space?)";
+      KMessageBox::information( 0, i18n( "Critical error: "
+            "Unable to execute filters before sending message (out of space?)" ) );
+    }
+  }
+
   /// start the sender process or initialize communication
   if ( !mSendInProgress ) {
     Q_ASSERT( !mProgressItem );

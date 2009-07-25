@@ -49,6 +49,7 @@ KMFilter::KMFilter( bool popFilter )
     mAction = Down;
   else {
     bApplyOnInbound = true;
+    bApplyBeforeOutbound = false;
     bApplyOnOutbound = false;
     bApplyOnExplicit = true;
     bStopProcessingHere = true;
@@ -77,6 +78,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     mAction = aFilter.mAction;
   } else {
     bApplyOnInbound = aFilter.applyOnInbound();
+    bApplyBeforeOutbound = aFilter.applyBeforeOutbound();
     bApplyOnOutbound = aFilter.applyOnOutbound();
     bApplyOnExplicit = aFilter.applyOnExplicit();
     bStopProcessingHere = aFilter.stopProcessingHere();
@@ -242,11 +244,13 @@ void KMFilter::readConfig(KConfigGroup & config)
   else {
     QStringList sets = config.readEntry("apply-on", QStringList() );
     if ( sets.isEmpty() && !config.hasKey("apply-on") ) {
+      bApplyBeforeOutbound = false;
       bApplyOnOutbound = false;
       bApplyOnInbound = true;
       bApplyOnExplicit = true;
       mApplicability = ButImap;
     } else {
+      bApplyBeforeOutbound = bool(sets.contains("before-send-mail"));
       bApplyOnInbound = bool(sets.contains("check-mail"));
       bApplyOnOutbound = bool(sets.contains("send-mail"));
       bApplyOnExplicit = bool(sets.contains("manual-filtering"));
@@ -331,6 +335,8 @@ void KMFilter::writeConfig(KConfigGroup & config) const
     QStringList sets;
     if ( bApplyOnInbound )
       sets.append( "check-mail" );
+    if ( bApplyBeforeOutbound )
+      sets.append( "before-send-mail" );
     if ( bApplyOnOutbound )
       sets.append( "send-mail" );
     if ( bApplyOnExplicit )
@@ -428,6 +434,8 @@ const QString KMFilter::asString() const
     result += "This filter belongs to the following sets:";
     if ( bApplyOnInbound )
       result += " Inbound";
+    if ( bApplyBeforeOutbound )
+      result += " before-Outbound";
     if ( bApplyOnOutbound )
       result += " Outbound";
     if ( bApplyOnExplicit )

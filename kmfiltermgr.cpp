@@ -238,6 +238,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
          ( !account ||
              ( account && (*it)->applyOnAccount( accountId ) ) ) ) ||
          ( (set&Outbound)  && (*it)->applyOnOutbound() ) ||
+         ( (set&BeforeOutbound)  && (*it)->applyBeforeOutbound() ) ||
          ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
         // filter is applicable
 

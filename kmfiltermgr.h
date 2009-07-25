@@ -38,7 +38,7 @@ public:
   void clear();
 
   enum FilterSet { NoSet = 0x0, Inbound = 0x1, Outbound = 0x2, Explicit = 0x4,
-                   All = Inbound|Outbound|Explicit };
+       BeforeOutbound = 0x8, All = Inbound|BeforeOutbound|Outbound|Explicit };
 
   /** Reload filter rules from config file. */
   void readConfig(void);

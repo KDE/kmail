@@ -140,11 +140,23 @@ public:
   */
   void setApplyOnOutbound( bool aApply=true ) { bApplyOnOutbound = aApply; }
 
+  /** Set whether this filter should be applied on
+      outbound messages before sending (@p aApply == TRUE) or not.
+      See applyOnOutbound applyOnInbound setApplyOnInbound
+  */
+  void setApplyBeforeOutbound( bool aApply=true ) { bApplyBeforeOutbound = aApply; }
+
   /** @return true if this filter should be applied on
       outbound messages, false otherwise.
       @see setApplyOnOutbound applyOnInbound setApplyOnInbound
   */
   bool applyOnOutbound() const { return bApplyOnOutbound; }
+
+  /** @return TRUE if this filter should be applied on
+      outbound messages before they are sent, FALSE otherwise.
+      @see setApplyOnOutbound applyOnInbound setApplyOnInbound
+  */
+  bool applyBeforeOutbound() const { return bApplyBeforeOutbound; }
 
   /** Set whether this filter should be applied on
       inbound messages (@p aApply == true) or not.
@@ -312,6 +324,7 @@ private:
   KShortcut mShortcut;
   bool bPopFilter : 1;
   bool bApplyOnInbound : 1;
+  bool bApplyBeforeOutbound : 1;
   bool bApplyOnOutbound : 1;
   bool bApplyOnExplicit : 1;
   bool bStopProcessingHere : 1;

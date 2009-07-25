@@ -421,7 +421,7 @@ protected:
   KMPopFilterActionWidget *mActionGroup;
   /** Lets the user select whether to apply this filter on
       inbound/outbound messages, both, or only on explicit CTRL-J. */
-  QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyOnCtrlJ;
+  QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyBeforeOut, *mApplyOnCtrlJ;
   /** For a filter applied to inbound messages selects whether to apply
       this filter to all accounts or to selected accounts only. */
   QRadioButton *mApplyOnForAll, *mApplyOnForTraditional, *mApplyOnForChecked;
