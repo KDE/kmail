@@ -54,6 +54,7 @@
 #include "stringutil.h"
 #include "iconnamecache.h"
 #include "autoqpointer.h"
+#include "htmlquotecolorer.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -984,6 +985,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
          showOnlyOneMimePart() )
     {
       if ( mReader->htmlMail() ) {
+
+        HTMLQuoteColorer colorer( cssHelper() );
+        bodyText = colorer.process( bodyText );
 
         // Strip <html>, <head>, and <body>, so we don't end up having those tags
         // twice, which confuses KHTML (especially with a signed

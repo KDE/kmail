@@ -245,6 +245,7 @@ set(kmailprivate_LIB_SRCS
    stringutil.cpp
    iconnamecache.cpp
    mdnadvicedialog.cpp
+   htmlquotecolorer.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp
