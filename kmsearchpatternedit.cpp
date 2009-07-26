@@ -283,6 +283,7 @@ void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
   mFilterFieldList.append( SpecialRuleFields[From].getLocalizedDisplayName()    );
   mFilterFieldList.append( SpecialRuleFields[To].getLocalizedDisplayName()      );
   mFilterFieldList.append( SpecialRuleFields[CC].getLocalizedDisplayName()      );
+  mFilterFieldList.append( SpecialRuleFields[Status].getLocalizedDisplayName()  );
   mFilterFieldList.append( SpecialRuleFields[Tag].getLocalizedDisplayName()     );
 
   // these others only represent message headers and you can add to
