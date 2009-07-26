@@ -1267,6 +1267,13 @@ namespace KMail {
 
     partNode * dataHtml = child->findType( DwMime::kTypeText,
                                            DwMime::kSubtypeHtml, false, true );
+    if ( !dataHtml ) {
+      // If we didn't find the HTML part as the first child of the multipart/alternative, it might
+      // be that this is a HTML message with images, and text/plain and multipart/related are the
+      // immediate children of this multipart/alternative node.
+      // In this case, the HTML node is a child of multipart/related.
+      dataHtml = child->findType( DwMime::kTypeMultipart, DwMime::kSubtypeRelated, false, true );
+    }
     partNode * dataPlain = child->findType( DwMime::kTypeText,
                                             DwMime::kSubtypePlain, false, true );
 
