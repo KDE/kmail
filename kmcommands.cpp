@@ -3463,8 +3463,8 @@ KMCommand::Result CreateTodoCommand::execute()
   OrgKdeKorganizerCalendarInterface *iface =
       new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
                                              QDBusConnection::sessionBus(), this );
-  iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt,
-                         uri, tf.fileName(), QStringList(), "message/rfc822" );
+  iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt, uri,
+                         tf.fileName(), QStringList(), "message/rfc822", true );
   delete iface;
   tf.close();
 
