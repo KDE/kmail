@@ -680,14 +680,14 @@ void Widget::switchMessageSorting( SortOrder::MessageSorting messageSorting,
     // try to find the specified message sorting in the theme columns
     const QList< Theme::Column * > & columns = mTheme->columns();
     int idx = 0;
+
+    // First try with a well defined message sorting.
+
     foreach( const Theme::Column* column, columns )
     {
       if ( !mView->header()->isSectionHidden( idx ) )
       {
-        if ( ( column->messageSorting() == messageSorting ||
-             ( column->messageSorting() == SortOrder::SortMessagesBySenderOrReceiver ) ) &&
-              ( messageSorting == SortOrder::SortMessagesByReceiver ||
-                messageSorting == SortOrder::SortMessagesBySender ) )
+        if ( column->messageSorting() == messageSorting )
         {
           // found a visible column with this message sorting
           logicalHeaderColumnIndex = idx;
@@ -695,6 +695,36 @@ void Widget::switchMessageSorting( SortOrder::MessageSorting messageSorting,
         }
       }
       ++idx;
+    }
+
+    // if still not found, try again with a wider range
+    if ( logicalHeaderColumnIndex == 1 )
+    {
+      idx = 0;
+      foreach( const Theme::Column* column, columns )
+      {
+        if ( !mView->header()->isSectionHidden( idx ) )
+        {
+          if (
+               (
+                 ( column->messageSorting() == SortOrder::SortMessagesBySenderOrReceiver ) ||
+                 ( column->messageSorting() == SortOrder::SortMessagesByReceiver ) ||
+                 ( column->messageSorting() == SortOrder::SortMessagesBySender )
+               ) && 
+               (
+                 ( messageSorting == SortOrder::SortMessagesBySenderOrReceiver ) ||
+                 ( messageSorting == SortOrder::SortMessagesByReceiver ) ||
+                 ( messageSorting == SortOrder::SortMessagesBySender )
+               )
+             )
+          {
+            // found a visible column with this message sorting
+            logicalHeaderColumnIndex = idx;
+            break;
+          }
+        }
+        ++idx;
+      }
     }
   }
 
@@ -706,6 +736,7 @@ void Widget::switchMessageSorting( SortOrder::MessageSorting messageSorting,
   }
 
   mView->header()->setSortIndicatorShown( true );
+
   if ( sortDirection == SortOrder::Ascending )
     mView->header()->setSortIndicator( logicalHeaderColumnIndex, Qt::AscendingOrder );
   else
