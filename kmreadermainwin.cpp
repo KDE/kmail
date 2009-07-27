@@ -435,6 +435,7 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
     menu->addAction( mReaderWin->toggleFixFontAction() );
+    menu->addAction( mReaderWin->toggleMimePartTreeAction() );
     menu->addSeparator();
     menu->addAction( mPrintAction );
     menu->addAction( mSaveAsAction );

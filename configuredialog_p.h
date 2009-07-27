@@ -132,32 +132,6 @@ private:
   QButtonGroup *mButtonGroup;
 };
 
-//
-//
-// Profile dialog
-//
-//
-
-class ProfileDialog : public KDialog {
-  Q_OBJECT
-public:
-  ProfileDialog( QWidget * parent=0 );
-
-signals:
-  void profileSelected( KConfig * profile );
-
-private slots:
-  void slotSelectionChanged();
-  void slotOk();
-
-private:
-  void setup();
-
-private:
-  QTreeWidget *mListView;
-  QStringList mProfileList;
-};
-
 #include <kvbox.h>
 class ConfigModule : public KCModule {
   Q_OBJECT
@@ -173,15 +147,6 @@ public:
 
   /** Should return the help anchor for this page or tab */
   virtual QString helpAnchor() const = 0;
-
-signals:
-  /** Emitted when the installation of a profile is
-      requested. All connected kcms should load the values
-      from the profile only for those entries that
-      really have keys defined in the profile.
-   */
-   void installProfile( KConfig * profile );
-
 };
 
 
@@ -196,8 +161,6 @@ public:
   void load();
   virtual void save() = 0;
   void defaults();
-  // the below are optional
-  virtual void installProfile( KConfig* ) {};
 signals:
    // forwarded to the ConfigModule
   void changed(bool);
@@ -230,7 +193,6 @@ public:
   virtual void load();
   virtual void save();
   virtual void defaults();
-  virtual void installProfile( KConfig * profile );
 
 protected:
   void addTab( ConfigModuleTab* tab, const QString & title );
@@ -388,8 +350,6 @@ public:
   QString helpAnchor() const;
   void save();
 
-  void installProfile( KConfig * profile );
-
 private slots:
   void slotFontSelectorChanged( int );
 
@@ -415,8 +375,6 @@ public:
   QString helpAnchor() const;
   void save();
 
-  void installProfile( KConfig * profile );
-
 private:
   //virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
@@ -436,7 +394,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private:
   //virtual void doLoadFromGlobalSettings();
@@ -466,7 +423,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private: // methods
   //virtual void doLoadFromGlobalSettings();
@@ -493,7 +449,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private:
   virtual void doLoadFromGlobalSettings();
@@ -522,7 +477,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private:
   virtual void doLoadFromGlobalSettings();
@@ -543,7 +497,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 public slots:
   /**Enables/disables Add button according to whether @p aText is empty.
@@ -654,7 +607,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 protected slots:
   void slotConfigureRecentAddresses();
   void slotConfigureCompletionOrder();
@@ -846,7 +798,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private:
   //virtual void doLoadFromGlobalSettings();
@@ -871,7 +822,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private:
   //virtual void doLoadFromGlobalSettings();
@@ -890,7 +840,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private slots:
   void slotReenableAllWarningsClicked();
@@ -914,7 +863,6 @@ public:
   QString helpAnchor() const;
 
   void save();
-  void installProfile( KConfig * profile );
 
 private slots:
   void slotUpdateHTTPActions();
@@ -954,9 +902,6 @@ public:
   explicit SecurityPage( const KComponentData &instance, QWidget *parent=0 );
 
   QString helpAnchor() const;
-
-  // OpenPGP tab is special:
-  void installProfile( KConfig * profile );
 
   typedef SecurityPageGeneralTab GeneralTab;
   typedef SecurityPageComposerCryptoTab ComposerCryptoTab;

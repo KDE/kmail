@@ -267,7 +267,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
   mVacationScriptIndicator->hide();
   connect( mVacationScriptIndicator, SIGNAL(clicked()), SLOT(slotEditVacation()) );
-  if ( GlobalSettings::checkOutOfOfficeOnStartup() )
+  if ( GlobalSettings::self()->checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 
   // must be the last line of the constructor:
@@ -314,9 +314,9 @@ void KMMainWidget::readPreConfig()
   const KConfigGroup general( KMKernel::config(), "General" );
   const KConfigGroup reader( KMKernel::config(), "Reader" );
 
-  mLongFolderList = geometry.readEntry( "FolderList", "long" ) != "short";
-  mReaderWindowActive = geometry.readEntry( "readerWindowMode", "below" ) != "hide";
-  mReaderWindowBelow = geometry.readEntry( "readerWindowMode", "below" ) == "below";
+  mLongFolderList = GlobalSettings::self()->folderList() == GlobalSettings::EnumFolderList::longlist;
+  mReaderWindowActive = GlobalSettings::self()->readerWindowMode() != GlobalSettings::EnumReaderWindowMode::hide;
+  mReaderWindowBelow = GlobalSettings::self()->readerWindowMode() == GlobalSettings::EnumReaderWindowMode::below;
   mThreadPref = geometry.readEntry( "nestedMessages", false );
 
   mHtmlPref = reader.readEntry( "htmlMail", false );
@@ -560,7 +560,7 @@ void KMMainWidget::readConfig()
 {
   KConfig *config = KMKernel::config();
 
-  bool oldLongFolderList =  mLongFolderList;
+  bool oldLongFolderList = mLongFolderList;
   bool oldReaderWindowActive = mReaderWindowActive;
   bool oldReaderWindowBelow = mReaderWindowBelow;
   bool oldFavoriteFolderView = mEnableFavoriteFolderView;
@@ -818,7 +818,7 @@ void KMMainWidget::createWidgets()
     vboxlayout->addWidget( mMainFolderView );
   }
 
-  if ( !GlobalSettings::enableFolderQuickSearch() ) {
+  if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
     mFolderQuickSearch->hide();
   }
 
@@ -3428,6 +3428,7 @@ void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint 
     menu->addAction( viewSourceAction() );
     if ( mMsgView ) {
       menu->addAction( mMsgView->toggleFixFontAction() );
+      menu->addAction( mMsgView->toggleMimePartTreeAction() );
     }
     menu->addSeparator();
     menu->addAction( mPrintAction );
@@ -3644,7 +3645,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction( "accountWizard", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAccountWizard()) );
   }
-  if ( GlobalSettings::allowOutOfOfficeSettings() )
+  if ( GlobalSettings::self()->allowOutOfOfficeSettings() )
   {
     KAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
     actionCollection()->addAction( "tools_edit_vacation", action );

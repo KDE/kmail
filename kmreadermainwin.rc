@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui version="411" name="kmreadermainwin" >
+<kpartgui version="412" name="kmreadermainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -17,6 +17,7 @@
    <Action name="view_attachments"/>
    <Separator/>
    <Action name="view_source"/>
+   <Action name="toggle_mimeparttree"/>
    <Separator/>
    <Action name="toggle_fixedfont"/>
    <Action name="encoding" />

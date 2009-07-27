@@ -502,8 +502,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 
   mExternalWindow  = ( aParent == mainWindow );
   mSplitterSizes << 180 << 100;
-  mMimeTreeMode = 1;
-  mMimeTreeAtBottom = true;
   mAutoDelete = false;
   mLastSerNum = 0;
   mWaitingForSerNum = 0;
@@ -511,7 +509,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mLastStatus.clear();
   mMsgDisplay = true;
   mPrinting = false;
-  mShowColorbar = false;
   mAtmUpdate = false;
 
   createWidgets();
@@ -722,6 +719,12 @@ void KMReaderWin::createActions()
   ac->addAction( "toggle_fixedfont", mToggleFixFontAction );
   connect( mToggleFixFontAction, SIGNAL(triggered(bool)), SLOT(slotToggleFixedFont()) );
   mToggleFixFontAction->setShortcut( QKeySequence( Qt::Key_X ) );
+
+  // Show message structure viewer
+  mToggleMimePartTreeAction = new KToggleAction( i18n( "Show Message Structure" ), this );
+  ac->addAction( "toggle_mimeparttree", mToggleMimePartTreeAction );
+  connect( mToggleMimePartTreeAction, SIGNAL(toggled(bool)),
+           SLOT(slotToggleMimePartTree()));
 
   //
   // Scroll actions
@@ -1029,27 +1032,10 @@ void KMReaderWin::readConfig(void)
   if ( raction )
     raction->setChecked( true );
 
-  // if the user uses OpenPGP then the color bar defaults to enabled
-  // else it defaults to disabled
-  mShowColorbar = reader.readEntry( "showColorbar", Kpgp::Module::getKpgp()->usePGP() ) ;
-  // if the value defaults to enabled and KMail (with color bar) is used for
-  // the first time the config dialog doesn't know this if we don't save the
-  // value now
-  reader.writeEntry( "showColorbar", mShowColorbar );
-
-  mMimeTreeAtBottom = reader.readEntry( "MimeTreeLocation", "bottom" ) != "top";
-  const QString s = reader.readEntry( "MimeTreeMode", "smart" );
-  if ( s == "never" )
-    mMimeTreeMode = 0;
-  else if ( s == "always" )
-    mMimeTreeMode = 2;
-  else
-    mMimeTreeMode = 1;
-
   const int mimeH = reader.readEntry( "MimePaneHeight", 100 );
   const int messageH = reader.readEntry( "MessagePaneHeight", 180 );
   mSplitterSizes.clear();
-  if ( mMimeTreeAtBottom )
+  if ( GlobalSettings::self()->mimeTreeLocation() == GlobalSettings::EnumMimeTreeLocation::bottom )
     mSplitterSizes << messageH << mimeH;
   else
     mSplitterSizes << mimeH << messageH;
@@ -1071,18 +1057,19 @@ void KMReaderWin::readConfig(void)
 
 
 void KMReaderWin::adjustLayout() {
-  if ( mMimeTreeAtBottom )
+  if ( GlobalSettings::self()->mimeTreeLocation() == GlobalSettings::EnumMimeTreeLocation::bottom )
     mSplitter->addWidget( mMimePartTree );
   else
     mSplitter->insertWidget( 0, mMimePartTree );
   mSplitter->setSizes( mSplitterSizes );
 
-  if ( mMimeTreeMode == 2 && mMsgDisplay )
+  if ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Always &&
+       mMsgDisplay )
     mMimePartTree->show();
   else
     mMimePartTree->hide();
 
-  if ( mShowColorbar && mMsgDisplay )
+  if ( GlobalSettings::self()->showColorbar() && mMsgDisplay )
     mColorBar->show();
   else
     mColorBar->hide();
@@ -1095,8 +1082,9 @@ void KMReaderWin::saveSplitterSizes( KConfigGroup & c ) const {
   if ( mMimePartTree->isHidden() )
     return; // don't rely on QSplitter maintaining sizes for hidden widgets.
 
-  c.writeEntry( "MimePaneHeight", mSplitter->sizes()[ mMimeTreeAtBottom ? 1 : 0 ] );
-  c.writeEntry( "MessagePaneHeight", mSplitter->sizes()[ mMimeTreeAtBottom ? 0 : 1 ] );
+  const bool mimeTreeAtBottom = GlobalSettings::self()->mimeTreeLocation() == GlobalSettings::EnumMimeTreeLocation::bottom;
+  c.writeEntry( "MimePaneHeight", mSplitter->sizes()[ mimeTreeAtBottom ? 1 : 0 ] );
+  c.writeEntry( "MessagePaneHeight", mSplitter->sizes()[ mimeTreeAtBottom ? 0 : 1 ] );
 }
 
 //-----------------------------------------------------------------------------
@@ -1525,7 +1513,7 @@ void KMReaderWin::updateReaderWin()
   KMFolder* folder = 0;
   if (message(&folder))
   {
-    if ( mShowColorbar ) {
+    if ( GlobalSettings::self()->showColorbar() ) {
       mColorBar->show();
     } else {
       mColorBar->hide();
@@ -1555,9 +1543,10 @@ int KMReaderWin::pointsToPixel(int pointSize) const
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showHideMimeTree( bool isPlainTextTopLevel ) {
-  if ( mMimeTreeMode == 2 ||
-       ( mMimeTreeMode == 1 && !isPlainTextTopLevel ) )
+void KMReaderWin::showHideMimeTree() {
+  if ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Always ||
+       ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Smart &&
+         !mIsPlainText ) )
     mMimePartTree->show();
   else {
     // don't rely on QSplitter maintaining sizes for hidden widgets:
@@ -1565,15 +1554,22 @@ void KMReaderWin::showHideMimeTree( bool isPlainTextTopLevel ) {
     saveSplitterSizes( reader );
     mMimePartTree->hide();
   }
+  if ( mToggleMimePartTreeAction->isChecked() != mMimePartTree->isVisible() )
+    mToggleMimePartTreeAction->setChecked( mMimePartTree->isVisible() );
+  mToggleMimePartTreeAction->setEnabled(
+      GlobalSettings::self()->mimeTreeMode() != GlobalSettings::EnumMimeTreeMode::Smart );
+  mToggleMimePartTreeAction->setVisible(
+      GlobalSettings::self()->mimeTreeMode() != GlobalSettings::EnumMimeTreeMode::Smart );
 }
 
 void KMReaderWin::displayMessage() {
   KMMessage * msg = message();
 
   mMimePartTree->clearAndResetSortOrder();
-  showHideMimeTree( !msg || // treat no message as "text/plain"
-                    ( msg->type() == DwMime::kTypeText
-                   && msg->subtype() == DwMime::kSubtypePlain ) );
+  mIsPlainText = !msg || // treat no message as "text/plain"
+                 ( msg->type() == DwMime::kTypeText &&
+                   msg->subtype() == DwMime::kSubtypePlain );
+  showHideMimeTree();
 
   if ( !msg )
     return;
@@ -1750,8 +1746,9 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
     kDebug() << "Invoce saving in decrypted form:";
     emit replaceMsgByUnencryptedVersion();
   } else {
-    showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
-                      rootNodeCntSubtype == DwMime::kSubtypePlain );
+    mIsPlainText = rootNodeCntType == DwMime::kTypeText &&
+                   rootNodeCntSubtype == DwMime::kSubtypePlain;
+    showHideMimeTree();
   }
 
   aMsg->setIsBeingParsed( false );
@@ -2211,6 +2208,18 @@ void KMReaderWin::slotToggleFixedFont()
   mUseFixedFont = !mUseFixedFont;
   saveRelativePosition();
   update( true );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotToggleMimePartTree()
+{
+  if ( GlobalSettings::self()->mimeTreeMode() != GlobalSettings::EnumMimeTreeMode::Smart ) {
+    if ( mToggleMimePartTreeAction->isChecked() )
+      GlobalSettings::self()->setMimeTreeMode( GlobalSettings::EnumMimeTreeMode::Always );
+    else
+      GlobalSettings::self()->setMimeTreeMode( GlobalSettings::EnumMimeTreeMode::Never );
+  }
+  showHideMimeTree();
 }
 
 //-----------------------------------------------------------------------------

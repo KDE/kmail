@@ -106,7 +106,8 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   enableButtonOk( false ); // since line edit is empty
 }
 
-NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
+NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
+{
   int id = mButtonGroup->checkedId();
   assert( id == (int)Empty
           || id == (int)ControlCenter
@@ -114,7 +115,8 @@ NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
   return static_cast<DuplicateMode>( id );
 }
 
-void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
+void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName )
+{
   // OK button is disabled if
   QString name = proposedIdentityName.trimmed();
   // name isn't empty
@@ -185,110 +187,6 @@ QSize ListView::sizeHint() const
   return s;
 }
 
-//
-//
-//  ProfileDialog
-//
-//
-
-ProfileDialog::ProfileDialog( QWidget * parent )
-  : KDialog( parent )
-{
-  setCaption( i18n("Load Profile") );
-  setButtons( Ok|Cancel );
-  // tmp. vars:
-  QWidget *page = new QWidget( this );
-  setMainWidget( page );
-  QVBoxLayout * vlay = new QVBoxLayout( page );
-  vlay->setSpacing( spacingHint() );
-  vlay->setMargin( 0 );
-
-  mListView = new QTreeWidget( page );
-  mListView->setObjectName( "mListView" );
-  mListView->setHeaderLabels( 
-    QStringList () << i18n("Available Profiles") << i18n("Description") 
-  );
-  mListView->setAllColumnsShowFocus( true );
-  mListView->setSortingEnabled( false );
-  mListView->setRootIsDecorated( false );
-  mListView->setSelectionMode( QAbstractItemView::SingleSelection );
-
-  QLabel *l = new QLabel( i18n("&Select a profile and click 'OK' to "
-                               "load its settings:"), page );
-  l->setBuddy( mListView );
-  vlay->addWidget( l );
-  vlay->addWidget( mListView, 1 );
-
-  setup();
-
-  connect( mListView, SIGNAL(itemSelectionChanged()),
-           SLOT(slotSelectionChanged()) );
-  /* FIXME The dialog does not close when double click an item, but 
-   * the profile is selected. If the user clicks on Cancel after double
-   * click he has changed the profile.
-   */
-  //connect( mListView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem*, int ) ),
-  //   SLOT(slotOk()) );
-
-  connect( this, SIGNAL(finished()), SLOT(deleteLater()) );
-  connect( this, SIGNAL(okClicked()), SLOT( slotOk() ) );
-
-  enableButtonOk( false );
-}
-
-void ProfileDialog::slotSelectionChanged()
-{
-  enableButtonOk( mListView->currentItem() );
-}
-
-void ProfileDialog::setup() {
-  mListView->clear();
-  // find all profiles (config files named "profile-xyz-rc"):
-  const QString profileFilenameFilter = QString::fromLatin1("kmail/profile-*-rc");
-  mProfileList = KGlobal::dirs()->findAllResources( "data", profileFilenameFilter );
-
-  kDebug() << "Profile manager: found" << mProfileList.count()
-               << "profiles:";
-
-  // build the list and populate the list view:
-  QTreeWidgetItem * listItem = 0;
-  for ( QStringList::const_iterator it = mProfileList.constBegin() ;
-        it != mProfileList.constEnd() ; ++it ) {
-    KConfig _profile( *it, KConfig::NoGlobals  );
-    KConfigGroup profile(&_profile, "KMail Profile");
-    QString name = profile.readEntry( "Name" );
-    if ( name.isEmpty() ) {
-      kWarning() << "File \"" << (*it)
-                     << "\" doesn't provide a profile name!";
-      name = i18nc("Missing profile name placeholder","Unnamed");
-    }
-    QString desc = profile.readEntry( "Comment" );
-    if ( desc.isEmpty() ) {
-      kWarning() << "File \"" << (*it)
-                     << "\" doesn't provide a description!";
-      desc = i18nc("Missing profile description placeholder","Not available");
-    }
-    listItem = new QTreeWidgetItem( mListView, listItem );
-    listItem->setText( 0, name );
-    listItem->setText( 1, desc );
-  }
-}
-
-void ProfileDialog::slotOk() {
-  if ( !mListView->currentItem() )
-    return; // none selected
-
-  const int index = mListView->indexOfTopLevelItem( mListView->currentItem() );
-  if ( index < 0 )
-    return; // none selected
-
-  assert( index < mProfileList.count() );
-
-  KConfig profile( mProfileList.at( index), KConfig::NoGlobals );
-  emit profileSelected( &profile );
-}
-
-
 ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent )
   : ConfigModule( instance, parent )
 {
@@ -299,13 +197,15 @@ ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWid
   vlay->addWidget( mTabWidget );
 }
 
-void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title ) {
+void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title )
+{
   mTabWidget->addTab( tab, title );
   connect( tab, SIGNAL(changed( bool )),
            this, SIGNAL(changed( bool )) );
 }
 
-void ConfigModuleWithTabs::load() {
+void ConfigModuleWithTabs::load()
+{
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
     ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
     if ( tab )
@@ -314,7 +214,8 @@ void ConfigModuleWithTabs::load() {
   KCModule::load();
 }
 
-void ConfigModuleWithTabs::save() {
+void ConfigModuleWithTabs::save()
+{
   KCModule::save();
    for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
     ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
@@ -323,19 +224,12 @@ void ConfigModuleWithTabs::save() {
   }
 }
 
-void ConfigModuleWithTabs::defaults() {
+void ConfigModuleWithTabs::defaults()
+{
   ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->currentWidget() );
   if ( tab )
     tab->defaults();
   KCModule::defaults();
-}
-
-void ConfigModuleWithTabs::installProfile( KConfig *profile ) {
-  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
-    if ( tab )
-      tab->installProfile( profile );
-  }
 }
 
 void ConfigModuleTab::load()
@@ -355,7 +249,8 @@ void ConfigModuleTab::defaults()
   doResetToDefaultsOther();
 }
 
-void ConfigModuleTab::slotEmitChanged( void ) {
+void ConfigModuleTab::slotEmitChanged( void )
+{
    emit changed( true );
 }
 

@@ -28,7 +28,6 @@
 #include <QHideEvent>
 
 class KConfig;
-class ProfileDialog;
 namespace KMail {
     class ImapAccountBase;
 }
@@ -42,14 +41,6 @@ public:
   ~ConfigureDialog();
 
 signals:
-  /** Installs a new profile (in the dislog's widgets; to apply, the
-      user has to hit the apply button). Profiles are normal kmail
-      config files which have an additional group "KMail Profile"
-      containing keys "Name" and "Comment" for the name and description,
-      resp. Only keys that this profile is supposed to alter should be
-      included in the file.
-  */
-  void installProfile( KConfig *profile );
   void configChanged();
 protected:
   void hideEvent( QHideEvent *i );
@@ -63,14 +54,6 @@ protected slots:
    * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
    */
   void slotOk();
-
-  /** @reimplemented
-   * Brings up the profile loading/editing dialog. We can't use User1, as
-   * KCMultiDialog uses that for "Reset". */
-  void slotUser2();
-
-private:
-  QPointer<ProfileDialog>  mProfileDialog;
 };
 
 /**
