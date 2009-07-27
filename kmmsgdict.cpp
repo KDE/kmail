@@ -533,7 +533,6 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
         kDebug(5006) <<"Dict '" << filename
                       << "' cannot open with folder" << storage.label() << ":"
                       << strerror(errno) << "(" << errno << ")";
-         delete rentry;
          storage.setRDict(0);
          return 0;
       }
