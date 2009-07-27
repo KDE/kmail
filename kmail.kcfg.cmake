@@ -643,9 +643,6 @@
         <choice name="Never">
           <label>Show never</label>
         </choice>
-        <choice name="Smart">
-          <label>Show only for non-plaintext messages</label>
-        </choice>
         <choice name="Always">
           <label>Show always</label>
         </choice>

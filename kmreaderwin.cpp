@@ -1544,9 +1544,7 @@ int KMReaderWin::pointsToPixel(int pointSize) const
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::showHideMimeTree() {
-  if ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Always ||
-       ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Smart &&
-         !mIsPlainText ) )
+  if ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Always )
     mMimePartTree->show();
   else {
     // don't rely on QSplitter maintaining sizes for hidden widgets:
@@ -1556,19 +1554,12 @@ void KMReaderWin::showHideMimeTree() {
   }
   if ( mToggleMimePartTreeAction->isChecked() != mMimePartTree->isVisible() )
     mToggleMimePartTreeAction->setChecked( mMimePartTree->isVisible() );
-  mToggleMimePartTreeAction->setEnabled(
-      GlobalSettings::self()->mimeTreeMode() != GlobalSettings::EnumMimeTreeMode::Smart );
-  mToggleMimePartTreeAction->setVisible(
-      GlobalSettings::self()->mimeTreeMode() != GlobalSettings::EnumMimeTreeMode::Smart );
 }
 
 void KMReaderWin::displayMessage() {
   KMMessage * msg = message();
 
   mMimePartTree->clearAndResetSortOrder();
-  mIsPlainText = !msg || // treat no message as "text/plain"
-                 ( msg->type() == DwMime::kTypeText &&
-                   msg->subtype() == DwMime::kSubtypePlain );
   showHideMimeTree();
 
   if ( !msg )
@@ -1735,10 +1726,6 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
   }
   }
 
-  // save current main Content-Type before deleting mRootNode
-  const int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeText;
-  const int rootNodeCntSubtype = mRootNode ? mRootNode->subType() : DwMime::kSubtypePlain;
-
   // store message id to avoid endless recursions
   setIdOfLastViewedMessage( aMsg->msgId() );
 
@@ -1746,8 +1733,6 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
     kDebug() << "Invoce saving in decrypted form:";
     emit replaceMsgByUnencryptedVersion();
   } else {
-    mIsPlainText = rootNodeCntType == DwMime::kTypeText &&
-                   rootNodeCntSubtype == DwMime::kSubtypePlain;
     showHideMimeTree();
   }
 
@@ -2213,12 +2198,10 @@ void KMReaderWin::slotToggleFixedFont()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleMimePartTree()
 {
-  if ( GlobalSettings::self()->mimeTreeMode() != GlobalSettings::EnumMimeTreeMode::Smart ) {
-    if ( mToggleMimePartTreeAction->isChecked() )
-      GlobalSettings::self()->setMimeTreeMode( GlobalSettings::EnumMimeTreeMode::Always );
-    else
-      GlobalSettings::self()->setMimeTreeMode( GlobalSettings::EnumMimeTreeMode::Never );
-  }
+  if ( mToggleMimePartTreeAction->isChecked() )
+    GlobalSettings::self()->setMimeTreeMode( GlobalSettings::EnumMimeTreeMode::Always );
+  else
+    GlobalSettings::self()->setMimeTreeMode( GlobalSettings::EnumMimeTreeMode::Never );
   showHideMimeTree();
 }
 

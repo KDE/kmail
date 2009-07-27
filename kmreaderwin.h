@@ -585,7 +585,6 @@ private:
   bool mShowSignatureDetails;
   bool mShowAttachmentQuicklist;
   bool mExternalWindow;
-  bool mIsPlainText;
 };
 
 

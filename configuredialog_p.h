@@ -403,10 +403,6 @@ private:
 private: // data
   QButtonGroup  *mFolderListGroup;
   QGroupBox     *mFolderListGroupBox;
-  QButtonGroup  *mMIMETreeLocationGroup;
-  QGroupBox     *mMIMETreeLocationGroupBox;
-  QButtonGroup  *mMIMETreeModeGroup;
-  QGroupBox     *mMIMETreeModeGroupBox;
   QButtonGroup  *mReaderWindowModeGroup;
   QGroupBox     *mReaderWindowModeGroupBox;
   QCheckBox     *mFavoriteFolderViewCB;

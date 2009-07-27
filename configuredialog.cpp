@@ -1567,33 +1567,12 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   connect( mReaderWindowModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  // "Show MIME Tree" radio buttons:
-  QHBoxLayout* mimeHLayout = new QHBoxLayout();
-  populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox( this ),
-                       mMIMETreeModeGroup = new QButtonGroup( this ),
-                       Qt::Vertical, GlobalSettings::self()->mimeTreeModeItem() );
-  mimeHLayout->addWidget( mMIMETreeModeGroupBox );
-  connect( mMIMETreeModeGroup, SIGNAL ( buttonClicked( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  // "MIME Tree Location" radio buttons:
-  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox( this ),
-                       mMIMETreeLocationGroup = new QButtonGroup( this ),
-                       Qt::Vertical, GlobalSettings::self()->mimeTreeLocationItem() );
-  mimeHLayout->addWidget( mMIMETreeLocationGroupBox );
-  connect( mMIMETreeLocationGroup, SIGNAL ( buttonClicked( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  vlay->addLayout( mimeHLayout );
-
   vlay->addStretch( 10 ); // spacer
 }
 
 void AppearancePage::LayoutTab::doLoadOther()
 {
   loadWidget( mFolderListGroupBox, mFolderListGroup, GlobalSettings::self()->folderListItem() );
-  loadWidget( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, GlobalSettings::self()->mimeTreeLocationItem() );
-  loadWidget( mMIMETreeModeGroupBox, mMIMETreeModeGroup, GlobalSettings::self()->mimeTreeModeItem() );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
@@ -1607,8 +1586,6 @@ void AppearancePage::LayoutTab::doLoadOther()
 void AppearancePage::LayoutTab::save()
 {
   saveButtonGroup( mFolderListGroup, GlobalSettings::self()->folderListItem() );
-  saveButtonGroup( mMIMETreeLocationGroup, GlobalSettings::self()->mimeTreeLocationItem() );
-  saveButtonGroup( mMIMETreeModeGroup, GlobalSettings::self()->mimeTreeModeItem() );
   saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
