@@ -112,6 +112,8 @@ static const int extCommandsCount =
   sizeof( extCommands ) / sizeof( *extCommands );
 
 static const InsertCommand miscCommands[] = {
+  { I18N_NOOP2( "Inserts user signature, also known as footer, into message", "Signature" ),
+    TemplatesInsertCommand::CSignature },
   { I18N_NOOP( "Insert File Content" ), TemplatesInsertCommand::CInsert },
   { I18N_NOOP2( "All characters, up to and including the next newline, are discarded without performing any macro expansion",
     "Discard to Next Line" ), TemplatesInsertCommand::CDnl },
@@ -261,6 +263,7 @@ void TemplatesInsertCommand::slotMapped( int cmd )
   case TemplatesInsertCommand::CBodyPipe: emit insertCommand("%BODYPIPE=\"\"", -1); break;
   case TemplatesInsertCommand::CClearPipe: emit insertCommand("%CLEARPIPE=\"\"", -1); break;
   case TemplatesInsertCommand::CCursor: emit insertCommand("%CURSOR"); break;
+  case TemplatesInsertCommand::CSignature: emit insertCommand( "%SIGNATURE" ); break;
   case TemplatesInsertCommand::CInsert: emit insertCommand("%INSERT=\"\"", -1); break;
   case TemplatesInsertCommand::CDnl: emit insertCommand("%-"); break;
   case TemplatesInsertCommand::CRem: emit insertCommand("%REM=\"\"", -1); break;

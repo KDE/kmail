@@ -846,6 +846,11 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += strlen( "CURSOR" );
         mMsg->setCursorPos( body.length() );
 
+      } else if ( cmd.startsWith( QLatin1String( "SIGNATURE" ) ) ) {
+        kDebug() << "Command: SIGNATURE";
+        i += strlen( "SIGNATURE" );
+        body.append( getSignature() );
+
       } else {
         // wrong command, do nothing
         body.append( c );
@@ -866,6 +871,25 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
   }
 
   addProcessedBodyToMessage( body );
+}
+
+QString TemplateParser::getSignature() const
+{
+  const KPIMIdentities::Identity &identity =
+    kmkernel->identityManager()->identityForUoid( mIdentity );
+  if ( identity.isNull() )
+    return QString();
+
+  KPIMIdentities::Signature signature = const_cast<KPIMIdentities::Identity&>
+                                                  ( identity ).signature();
+  if ( signature.type() == KPIMIdentities::Signature::Inlined &&
+       signature.isInlinedHtml() ) {
+    // templates don't support HTML; convert to plain text
+    return signature.plainText();
+  }
+  else {
+    return signature.rawText();
+  }
 }
 
 

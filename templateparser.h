@@ -96,6 +96,12 @@ class TemplateParser : public QObject
 
     int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;
+
+  private:
+    /**
+     * Return the text signature used the by current identity.
+     */
+    QString getSignature() const;
 };
 
 } // namespace KMail
