@@ -3563,8 +3563,8 @@ KMCommand::Result CreateTodoCommand::execute()
   tf.close();
 
   KCalendarIface_stub *iface = new KCalendarIface_stub( kapp->dcopClient(), "korganizer", "CalendarIface" );
-  iface->openTodoEditor( i18n("Mail: %1").arg( msg->subject() ), txt,
-                         uri, tf.name(), QStringList(), "message/rfc822" );
+  iface->openTodoEditor( i18n("Mail: %1").arg( msg->subject() ), txt, uri,
+                         tf.name(), QStringList(), "message/rfc822", true );
   delete iface;
 
   return OK;
