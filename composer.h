@@ -34,15 +34,14 @@ class MailComposerIface;
 
 namespace KMail {
 
-class Composer;
-
-Composer *makeComposer( KMMessage *msg=0, uint identity=0 );
-
 class Composer : public KMail::SecondaryWindow
 {
   Q_OBJECT
   protected:
     Composer( const char *name=0 ) : KMail::SecondaryWindow( name ) {}
+
+  public:
+    enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };
 
   public: // mailserviceimpl
     /**
@@ -74,6 +73,16 @@ class Composer : public KMail::SecondaryWindow
      * Returns @c true while the message composing is in progress.
      */
     virtual bool isComposing() const = 0;
+
+    /**
+     * Set the text selection the message is a response to.
+     */
+    virtual void setTextSelection( const QString& selection ) = 0;
+
+    /**
+     * Set custom template to be used for the message.
+     */
+    virtual void setCustomTemplate( const QString& customTemplate ) = 0;
 
   public: // kmkernel
     /**
@@ -155,6 +164,11 @@ class Composer : public KMail::SecondaryWindow
      */
     virtual void addAttach( KMMessagePart *msgPart ) = 0;
 };
+
+Composer *makeComposer( KMMessage *msg = 0,
+                        Composer::TemplateContext context = Composer::NoTemplate,
+                        uint identity = 0, const QString & textSelection = QString(),
+                        const QString & customTemplate = QString() );
 
 }
 

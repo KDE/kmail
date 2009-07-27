@@ -118,7 +118,7 @@ void AnnotationJobs::MultiGetAnnotationJob::slotResult( KJob *job )
   GetAnnotationJob* getJob = static_cast<GetAnnotationJob *>( job );
   const AnnotationList& lst = getJob->annotations();
   for ( int i = 0 ; i < lst.size() ; ++ i ) {
-    kDebug() <<"found annotation" << lst[i].name <<" =" << lst[i].value;
+    kDebug() << "found annotation" << lst[i].name << "=" << lst[i].value;
     if ( lst[i].name.startsWith( QLatin1String("value.") ) ) { // value.priv or value.shared
       found = true;
       value = lst[i].value;
@@ -156,7 +156,7 @@ void AnnotationJobs::MultiSetAnnotationJob::slotStart()
     // So in theory we could group entries coming from our list. Bah.
     QMap<QString, QString> attributes;
     attributes.insert( attr.name, attr.value );
-    kDebug() <<" setting annotation" << attr.entry << attr.name << attr.value;
+    kDebug() << "setting annotation" << attr.entry << attr.name << attr.value;
     KIO::Job* job = setAnnotation( mSlave, mUrl, attr.entry, attributes );
     addSubjob( job );
   } else { // done!
@@ -226,7 +226,7 @@ void AnnotationJobs::MultiUrlGetAnnotationJob::slotResult( KJob *job )
   GetAnnotationJob* getJob = static_cast<GetAnnotationJob *>( job );
   const AnnotationList& lst = getJob->annotations();
   for ( int i = 0 ; i < lst.size() ; ++ i ) {
-    kDebug() <<"MultiURL: found annotation" << lst[i].name <<" =" << lst[i].value <<" for path:" << path;
+    kDebug() << "MultiURL: found annotation" << lst[i].name << "=" << lst[i].value << "for path:" << path;
     if ( lst[i].name.startsWith( QLatin1String("value.") ) ) { // value.priv or value.shared
       mAnnotations.insert( path, lst[i].value );
       break;

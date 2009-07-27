@@ -194,6 +194,13 @@ public:
     { return mDisplayMessageToolTips; };
 
   /**
+   * Sets if the display of tooltips in the View instances is enabled
+   * and false otherwise.
+   */
+  void setDisplayMessageToolTips( bool displayMessageToolTips )
+    { mDisplayMessageToolTips = displayMessageToolTips; };
+
+  /**
    * Returns the unique id of the last selected message for the specified StorageModel.
    * Returns 0 if this value isn't stored in the configuration.
    */
@@ -276,6 +283,7 @@ private:
   void loadConfiguration();
   void saveConfiguration();
   void loadGlobalConfiguration();
+  void saveGlobalConfiguration();
 
   // internal option set management
   void createDefaultAggregations();

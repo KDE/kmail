@@ -45,6 +45,7 @@ using KMail::ImapJob;
 using KPIM::ProgressManager;
 #include "kmfoldermgr.h"
 #include "listjob.h"
+#include "autoqpointer.h"
 
 #include <kdebug.h>
 #include <kconfiggroup.h>
@@ -318,15 +319,16 @@ ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
                        "access this mailbox.");
     mPasswordDialogIsActive = true;
 
-    KPasswordDialog dlg( KMKernel::self()->mainWin(),
-                         KPasswordDialog::ShowUsernameLine | KPasswordDialog::ShowKeepPassword );
-    dlg.setPrompt( msg );
-    dlg.setUsername( log );
-    dlg.setModal( true );
-    dlg.setPlainCaption( i18n("Authorization Dialog") );
-    dlg.addCommentLine( i18n("Account:"), name() );
-    int ret = dlg.exec();
-    if (ret != QDialog::Accepted ) {
+    AutoQPointer<KPasswordDialog> dlg( new KPasswordDialog( KMKernel::self()->mainWin(),
+                                                            KPasswordDialog::ShowUsernameLine |
+                                                            KPasswordDialog::ShowKeepPassword ) );
+    dlg->setPrompt( msg );
+    dlg->setUsername( log );
+    dlg->setModal( true );
+    dlg->setPlainCaption( i18n("Authorization Dialog") );
+    dlg->addCommentLine( i18n("Account:"), name() );
+    int ret = dlg->exec();
+    if ( ret != QDialog::Accepted || !dlg ) {
       mPasswordDialogIsActive = false;
       mAskAgain = false;
       mPasswordEnteredAndEmpty = false;
@@ -337,12 +339,12 @@ ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
 
     // If the user entered an empty password, we need to be able to keep apart
     // the case from the case that the user simply didn't enter a password at all.
-    mPasswordEnteredAndEmpty = dlg.password().isEmpty();
+    mPasswordEnteredAndEmpty = dlg->password().isEmpty();
 
     // The user has been given the chance to change login and
     // password, so copy both from the dialog:
-    setPasswd( dlg.password(), dlg.keepPassword() );
-    setLogin( dlg.username() );
+    setPasswd( dlg->password(), dlg->keepPassword() );
+    setLogin( dlg->username() );
     mAskAgain = false;
   }
   // already waiting for a connection?
@@ -506,7 +508,7 @@ void ImapAccountBase::slotGetUserRightsResult( KJob *_job )
     }
   } else {
 #ifndef NDEBUG
-    //kDebug() <<"User Rights:" << ACLJobs::permissionsToString( job->permissions() );
+    //kDebug() << "User Rights:" << ACLJobs::permissionsToString( job->permissions() );
 #endif
     // Store the permissions
     if ( folder->folderType() == KMFolderTypeImap ) {
@@ -676,14 +678,14 @@ void ImapAccountBase::slotSchedulerSlaveConnected( KIO::Slave *aSlave )
   KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mSlave, job );
   connect( job, SIGNAL(infoMessage(KJob*, const QString&, const QString &)),
-	   SLOT(slotCapabilitiesResult(KJob*, const QString&, const QString&)) );
+     SLOT(slotCapabilitiesResult(KJob*, const QString&, const QString&)) );
 }
 
 //-----------------------------------------------------------------------------
 void ImapAccountBase::slotCapabilitiesResult( KJob*, const QString& result, const QString & )
 {
   mCapabilities = result.toLower().split( ' ', QString::SkipEmptyParts );
-  kDebug() <<"capabilities:" << mCapabilities;
+  kDebug() << "capabilities:" << mCapabilities;
 }
 
 //-----------------------------------------------------------------------------
@@ -692,7 +694,7 @@ void ImapAccountBase::getNamespaces()
   disconnect( this, SIGNAL( connectionResult(int, const QString&) ),
               this, SLOT( getNamespaces() ) );
   if ( makeConnection() != Connected || !mSlave ) {
-    kDebug() <<"getNamespaces - wait for connection";
+    kDebug() << "getNamespaces - wait for connection";
     if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() ) {
       // when the connection is established slotSchedulerSlaveConnected notifies us
     } else {
@@ -750,14 +752,14 @@ void ImapAccountBase::slotNamespaceResult( KJob *job, const QString &str, const 
   }
   removeJob( it );
 
-  kDebug() <<"namespaces fetched";
+  kDebug() << "namespaces fetched";
   emit namespacesFetched( map );
 }
 
 //-----------------------------------------------------------------------------
 void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap &map )
 {
-  kDebug() <<"slotSaveNamespaces" << name();
+  kDebug() << "slotSaveNamespaces" << name();
   // extract the needed information
   mNamespaces.clear();
   mNamespaceToDelimiter.clear();
@@ -798,7 +800,7 @@ void ImapAccountBase::migratePrefix()
       if ( (*it).startsWith( mOldPrefix ) ) {
         // should be ok
         done = true;
-        kDebug() <<"migratePrefix - no migration needed";
+        kDebug() << "migratePrefix - no migration needed";
         break;
       }
     }
@@ -816,7 +818,7 @@ void ImapAccountBase::migratePrefix()
           mNamespaceToDelimiter.remove( QString() );
           mNamespaceToDelimiter[mOldPrefix] = delim;
         }
-        kDebug() <<"migratePrefix - replaced empty with" << mOldPrefix;
+        kDebug() << "migratePrefix - replaced empty with" << mOldPrefix;
         msg += i18n("The configuration was automatically migrated but you should check "
                     "your account configuration.");
       } else if ( list.count() == 1 ) {
@@ -830,18 +832,18 @@ void ImapAccountBase::migratePrefix()
           mNamespaceToDelimiter.remove( old );
           mNamespaceToDelimiter[mOldPrefix] = delim;
         }
-        kDebug() <<"migratePrefix - replaced single with" << mOldPrefix;
+        kDebug() << "migratePrefix - replaced single with" << mOldPrefix;
         msg += i18n("The configuration was automatically migrated but you should check "
                     "your account configuration.");
       } else {
-        kDebug() <<"migratePrefix - migration failed";
+        kDebug() << "migratePrefix - migration failed";
         msg += i18n("It was not possible to migrate your configuration automatically "
                     "so please check your account configuration.");
       }
       KMessageBox::information( kmkernel->getKMMainWidget(), msg );
     }
   } else {
-    kDebug() <<"migratePrefix - no migration needed";
+    kDebug() << "migratePrefix - no migration needed";
   }
   mOldPrefix.clear();
 }
@@ -877,7 +879,7 @@ QString ImapAccountBase::namespaceForFolder( FolderStorage* storage )
 //-----------------------------------------------------------------------------
 QString ImapAccountBase::delimiterForNamespace( const QString &prefix )
 {
-  kDebug() <<"delimiterForNamespace" << prefix;
+  kDebug() << "delimiterForNamespace" << prefix;
   // try to match exactly
   if ( mNamespaceToDelimiter.contains( prefix ) ) {
     return mNamespaceToDelimiter[prefix];
@@ -900,7 +902,7 @@ QString ImapAccountBase::delimiterForNamespace( const QString &prefix )
     return mNamespaceToDelimiter[QString()];
   }
   // well, we tried
-  kDebug() <<"delimiterForNamespace - not found";
+  kDebug() << "delimiterForNamespace - not found";
   return QString();
 }
 
@@ -1085,7 +1087,7 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
     mErrorDialogIsActive = false;
   } else {
     if ( mErrorDialogIsActive ) {
-      kDebug() <<"suppressing error:" << errorMsg;
+      kDebug() << "suppressing error:" << errorMsg;
     }
   }
   if ( job && !jobsKilled ) {
@@ -1105,7 +1107,7 @@ void ImapAccountBase::cancelMailCheck()
 {
   QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
   while ( it != mapJobData.end() ) {
-    kDebug() <<"cancelMailCheck: job is cancellable:" << (*it).cancellable;
+    kDebug() << "cancelMailCheck: job is cancellable:" << (*it).cancellable;
     if ( (*it).cancellable ) {
       it.key()->kill();
       QMap<KJob*, jobData>::Iterator rmit = it;
@@ -1226,13 +1228,13 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
     //kDebug() << "Load" << part->partSpecifier()
     //             << "(" << part->originalContentTypeStr() << ")";
     if ( part->loadHeaders() ) {
-      //kDebug() <<"load HEADER";
+      //kDebug() << "load HEADER";
       FolderJob *job =
         msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, part->partSpecifier()+".MIME" );
       job->start();
     }
     if ( part->loadPart() ) {
-      //kDebug() <<"load Part";
+      //kDebug() << "load Part";
       FolderJob *job =
         msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, part->partSpecifier() );
       job->start();
@@ -1296,7 +1298,7 @@ void ImapAccountBase::setImapStatus( KMFolder *folder, const QString &path,
                                      const QByteArray &flags )
 {
   // set the status on the server, the uids are integrated in the path
-  kDebug() <<"setImapStatus path=" << path <<" to:" << flags;
+  kDebug() << "setImapStatus path=" << path << "to:" << flags;
   KUrl url = getUrl();
   url.setPath( path );
 

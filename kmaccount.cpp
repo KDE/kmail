@@ -257,7 +257,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 
   processResult = kmkernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound,true,id());
   if (processResult == 2) {
-    perror("Critical error: Unable to collect mail (out of space?)");
+    kError() << "Critical error: Unable to collect mail (out of space?)";
     KMessageBox::information(0,(i18n("Critical error: "
       "Unable to collect mail: ")) + QString::fromLocal8Bit(strerror(errno)));
     return false;
@@ -280,7 +280,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 }
 */
       if (rc) {
-        perror("failed to add message");
+        kError() << "Failed to add message!";
         KMessageBox::information(0, i18n("Failed to add message:\n") +
                                  QString(strerror(rc)));
         return false;

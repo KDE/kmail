@@ -155,6 +155,7 @@ using KMail::TemplateParser;
 #include "messagelistview/pane.h"
 #include "messagelistview/messageset.h"
 #include "messagetree.h"
+#include "autoqpointer.h"
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
@@ -570,8 +571,6 @@ void KMMainWidget::readConfig()
 
   if ( mStartupDone )
   {
-    writeConfig();
-
     readPreConfig();
 
     layoutChanged = ( oldLongFolderList != mLongFolderList ) ||
@@ -1059,7 +1058,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     kmkernel->acctMgr()->singleCheckMail( t );
   }
   else {
-    kDebug() <<" - account with name '" << item->data().toString() <<"' not found";
+    kDebug() << "- account with name '" << item->data().toString() <<"' not found";
   }
 }
 
@@ -1152,13 +1151,13 @@ void KMMainWidget::slotCompose()
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( NULL, mFolder );
-      win = KMail::makeComposer( msg, mFolder->identity() );
+      win = KMail::makeComposer( msg, KMail::Composer::New, mFolder->identity() );
   } else {
       msg->initHeader();
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( NULL, NULL );
-      win = KMail::makeComposer( msg );
+      win = KMail::makeComposer( msg, KMail::Composer::New );
   }
 
   win->show();
@@ -1263,8 +1262,9 @@ void KMMainWidget::slotFolderShortcutCommand()
   if ( !folder )
     return;
 
-  KMail::FolderShortcutDialog shorty( folder, kmkernel->getKMMainWidget(), mMainFolderView );
-  shorty.exec();
+  AutoQPointer<KMail::FolderShortcutDialog> shorty;
+  shorty = new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mMainFolderView );
+  shorty->exec();
   //slotModifyFolder( KMMainWidget::PropsShortcut );
 }
 
@@ -1279,11 +1279,13 @@ void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
   if ( !folder )
     return;
 
-  KMFolderDialog props( folder, folder->parent(), mMainFolderView,
-                        i18n("Properties of Folder %1", folder->label() ) );
+  AutoQPointer<KMFolderDialog> props( new KMFolderDialog( folder, folder->parent(),
+                                                          mMainFolderView,
+                                                          i18n("Properties of Folder %1",
+                                                               folder->label() ) ) );
   if ( whichPage != KMMainWidget::PropsGeneral )
-    props.setPage( whichPage );
-  props.exec();
+    props->setPage( whichPage );
+  props->exec();
 
   updateFolderMenu();
   //Kolab issue 2152
@@ -1828,17 +1830,16 @@ void KMMainWidget::slotMoveSelectedMessagesToFolder( QAction * act )
 //        When changing the name also change the slot name in the QObject::connect calls all around...
 void KMMainWidget::slotMoveMsg()
 {
-  KMail::FolderSelectionDialog dlg( this, i18n( "Move Messages to Folder" ), true );
+  AutoQPointer<KMail::FolderSelectionDialog> dlg;
+  dlg = new KMail::FolderSelectionDialog( this, i18n( "Move Messages to Folder" ), true );
 
-  if ( !dlg.exec() )
-    return;
+  if ( dlg->exec() && dlg ) {
+    KMFolder * dest = dlg->folder();
 
-  KMFolder * dest = dlg.folder();
-
-  if ( !dest )
-    return; // would be a deletion!
-
-  slotMoveMsgToFolder( dest );
+    if ( dest ) {
+      slotMoveMsgToFolder( dest );
+    }
+  }
 }
 
 // FIXME: Use better name for this (slotMoveSelectedMessagesToFolder() ?)
@@ -1937,17 +1938,16 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 //        When changing the name also change the slot name in the QObject::connect calls all around...
 void KMMainWidget::slotCopyMsg()
 {
-  KMail::FolderSelectionDialog dlg( this, i18n( "Copy Messages to Folder" ), true );
+  AutoQPointer<KMail::FolderSelectionDialog> dlg;
+  dlg = new KMail::FolderSelectionDialog( this, i18n( "Copy Messages to Folder" ), true );
 
-  if ( !dlg.exec() )
-    return;
+  if ( dlg->exec() && dlg ) {
+    KMFolder * dest = dlg->folder();
 
-  KMFolder * dest = dlg.folder();
-
-  if ( !dest )
-    return; // would be a deletion!
-
-  slotCopyMsgToFolder( dest );
+    if ( dest ) {
+      slotCopyMsgToFolder( dest );
+    }
+  }
 }
 
 // FIXME: Use better name for this (slotCopySelectedMessagesToFolder() ?)
@@ -2329,7 +2329,7 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 
   QString text = mMsgView ? mMsgView->copyText() : "";
 
-  kDebug() <<"Reply with template:" << tmpl;
+  kDebug() << "Reply with template:" << tmpl;
 
   KMCommand *command = new KMCustomReplyToCommand(
       this, msg, text, tmpl
@@ -2347,7 +2347,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 
   QString text = mMsgView? mMsgView->copyText() : "";
 
-  kDebug() <<"Reply to All with template:" << tmpl;
+  kDebug() << "Reply to All with template:" << tmpl;
 
   KMCommand *command = new KMCustomReplyAllToCommand(
       this, msg, text, tmpl
@@ -2364,7 +2364,7 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
   if ( selectedMessages.isEmpty() )
     return;
 
-  kDebug() <<"Forward with template:" << tmpl;
+  kDebug() << "Forward with template:" << tmpl;
 
   KMCustomForwardCommand * command = new KMCustomForwardCommand(
       this, selectedMessages, mFolder->identity(), tmpl
@@ -2473,11 +2473,13 @@ void KMMainWidget::slotUndo()
 void KMMainWidget::slotJumpToFolder()
 {
   // can jump to anywhere, need not be read/write
-  KMail::FolderSelectionDialog dlg( this, i18n("Jump to Folder"), false );
+  AutoQPointer<KMail::FolderSelectionDialog> dlg;
+  dlg = new KMail::FolderSelectionDialog( this, i18n("Jump to Folder"), false );
 
-  if (!dlg.exec()) return;
-  // safe to accept folder==0 (means "Local Folders" root) here
-  slotSelectFolder( dlg.folder() );
+  if ( dlg->exec() && dlg ) {
+    // safe to accept folder==0 (means "Local Folders" root) here
+    slotSelectFolder( dlg->folder() );
+  }
 }
 
 
@@ -2639,7 +2641,7 @@ void KMMainWidget::slotStartCertManager()
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );
   else
-    kDebug() <<"\nslotStartCertManager(): certificate manager started.";
+    kDebug() << "\nslotStartCertManager(): certificate manager started.";
 }
 
 //-----------------------------------------------------------------------------
@@ -3385,7 +3387,7 @@ void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint 
     }
 
     urlMenuAdded = true;
-    kDebug() <<" URL is:" << aUrl;
+    kDebug() << "URL is:" << aUrl;
   }
 
   if ( mMsgView && !mMsgView->copyText().isEmpty() ) {
@@ -4952,7 +4954,7 @@ void KMMainWidget::toggleSystemTray()
   }
   else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
     // Get rid of system tray on user's request
-    kDebug() <<"deleting systray";
+    kDebug() << "deleting systray";
     delete mSystemTray;
     mSystemTray = 0;
   }

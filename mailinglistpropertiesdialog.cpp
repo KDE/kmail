@@ -208,7 +208,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
   if ( !mFolder ) return; // in case the folder was just created
   int num = mFolder->count();
 
-  kDebug()<<" Detecting mailing list";
+  kDebug()<< "Detecting mailing list";
 
   /* FIXME Till - make work without the folder tree
   // first try the currently selected message

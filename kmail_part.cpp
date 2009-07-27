@@ -133,7 +133,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
 KMailPart::~KMailPart()
 {
-  kDebug() <<"Closing last KMMainWin: stopping mail check";
+  kDebug() << "Closing last KMMainWin: stopping mail check";
   // Running KIO jobs prevent kapp from exiting, so we need to kill them
   // if they are only about checking mail (not important stuff like moving messages)
   kmkernel->abortMailCheck();

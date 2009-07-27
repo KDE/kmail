@@ -73,9 +73,14 @@ using MailTransport::Transport;
 #include "stl_util.h"
 #include "stringutil.h"
 #include "util.h"
+#include "autoqpointer.h"
+#include "kmmsgdict.h"
+#include "templateparser.h"
+#include "templatesconfiguration_kfg.h"
 
 using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
+using KMail::TemplateParser;
 
 // KDELIBS includes
 #include <kactioncollection.h>
@@ -133,27 +138,35 @@ using Sonnet::DictionaryComboBox;
 
 using namespace KMail;
 
-KMail::Composer *KMail::makeComposer( KMMessage *msg, uint identitiy ) {
-  return KMComposeWin::create( msg, identitiy );
+KMail::Composer *KMail::makeComposer( KMMessage *msg, Composer::TemplateContext context,
+                                      uint identity, const QString & textSelection,
+                                      const QString & customTemplate ) {
+  return KMComposeWin::create( msg, context, identity, textSelection, customTemplate );
 }
 
-KMail::Composer *KMComposeWin::create( KMMessage *msg, uint identitiy ) {
-  return new KMComposeWin( msg, identitiy );
+KMail::Composer *KMComposeWin::create( KMMessage *msg, Composer::TemplateContext context,
+                                       uint identity, const QString & textSelection,
+                                       const QString & customTemplate ) {
+  return new KMComposeWin( msg, context, identity, textSelection, customTemplate );
 }
 
 int KMComposeWin::s_composerNumber = 0;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
+KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, uint id,
+                            const QString & textSelection, const QString & customTemplate )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
     mAtmModified( false ),
     mMsg( 0 ),
+    mTextSelection( textSelection ),
+    mCustomTemplate( customTemplate ),
     mAttachMenu( 0 ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
     mFolder( 0 ),
     mForceDisableHtml( false ),
     mId( id ),
+    mContext( context ),
     mAttachPK( 0 ), mAttachMPK( 0 ),
     mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
     mSignAction( 0 ), mEncryptAction( 0 ), mRequestMDNAction( 0 ),
@@ -618,7 +631,7 @@ void KMComposeWin::autoSaveMessage()
   if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() ) {
     return;
   }
-  kDebug() <<"autosaving message";
+  kDebug() << "autosaving message";
 
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
@@ -641,23 +654,23 @@ void KMComposeWin::slotContinueAutoSave()
 {
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
-    kDebug() <<"Composing the message failed.";
+    kDebug() << "Composing the message failed.";
     return;
   }
   KMMessage *msg = mComposedMessages.first();
   if ( !msg ) // a bit of extra defensiveness
     return;
 
-  kDebug() <<"opening autoSaveFile" << mAutoSaveFilename;
+  kDebug() << "opening autoSaveFile" << mAutoSaveFilename;
   const QString filename =
     KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
   KSaveFile autoSaveFile( filename );
   int status = 0;
   bool opened = autoSaveFile.open();
-  kDebug() <<"autoSaveFile.open() =" << opened;
+  kDebug() << "autoSaveFile.open() =" << opened;
   if ( opened ) { // no error
     autoSaveFile.setPermissions( QFile::ReadUser|QFile::WriteUser );
-    kDebug() <<"autosaving message in" << filename;
+    kDebug() << "autosaving message in" << filename;
     int fd = autoSaveFile.handle();
     const DwString &msgStr = msg->asDwString();
     if ( ::write( fd, msgStr.data(), msgStr.length() ) == -1 ) {
@@ -665,11 +678,11 @@ void KMComposeWin::slotContinueAutoSave()
     }
   }
   if ( status == 0 ) {
-    kDebug() <<"closing autoSaveFile";
+    kDebug() << "closing autoSaveFile";
     autoSaveFile.finalize();
     mLastAutoSaveErrno = 0;
   } else {
-    kDebug() <<"autosaving failed";
+    kDebug() << "autosaving failed";
     autoSaveFile.abort();
     if ( status != mLastAutoSaveErrno ) {
       // don't show the same error message twice
@@ -722,7 +735,7 @@ void KMComposeWin::slotView( void )
     id = HDR_DICTIONARY;
   } else {
     id = 0;
-    kDebug() <<"Something is wrong (Oh, yeah?)";
+    kDebug() << "Something is wrong (Oh, yeah?)";
     return;
   }
 
@@ -971,6 +984,78 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
       aChk->hide();
     }
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::applyTemplate( uint uoid )
+{
+  const KPIMIdentities::Identity &ident =
+    kmkernel->identityManager()->identityForUoid( uoid );
+  if ( ident.isNull() )
+    return;
+
+  mMsg->setTemplates( ident.templates() );
+  TemplateParser::Mode mode;
+  switch ( mContext ) {
+    case New:
+      mode = TemplateParser::NewMessage;
+      break;
+    case Reply:
+      mode = TemplateParser::Reply;
+      break;
+    case ReplyToAll:
+      mode = TemplateParser::ReplyAll;
+      break;
+    case Forward:
+      mode = TemplateParser::Forward;
+      break;
+    default:
+      return;
+  }
+
+  TemplateParser parser( mMsg, mode, mTextSelection, GlobalSettings::self()->smartQuote(),
+                         GlobalSettings::self()->automaticDecrypt(), mTextSelection.isEmpty() );
+  if ( mode == TemplateParser::NewMessage ) {
+    if ( !mCustomTemplate.isEmpty() )
+      parser.process( mCustomTemplate, 0 );
+    else
+      parser.processWithIdentity( uoid, 0 );
+  } else {
+    // apply template to all original messages for non-New messages
+    foreach ( const QString& serNumStr,
+              mMsg->headerField( "X-KMail-Link-Message" ).split( ',' ) ) {
+      const ulong serNum = serNumStr.toULong();
+      int idx = -1;
+      KMFolder *folder;
+      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
+      if ( folder ) {
+        KMMessage *originalMessage = folder->getMsg( idx );
+        if ( !mCustomTemplate.isEmpty() )
+          parser.process( mCustomTemplate, originalMessage, folder );
+        else
+          parser.processWithIdentity( uoid, originalMessage, folder );
+      }
+    }
+  }
+  mEditor->setText( mMsg->bodyToUnicode() );
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setQuotePrefix( uint uoid )
+{
+  QString quotePrefix = mMsg->headerField( "X-KMail-QuotePrefix" );
+  if ( quotePrefix.isEmpty() ) {
+    // no quote prefix header, set quote prefix according in identity
+    if ( mCustomTemplate.isEmpty() ) {
+      const KPIMIdentities::Identity &identity =
+        kmkernel->identityManager()->identityForUoidOrDefault( uoid );
+      // Get quote prefix from template
+      // ( custom templates don't specify custom quotes prefixes )
+      ::Templates quoteTemplate( TemplatesConfiguration::configIdString( identity.uoid() ) );
+      quotePrefix = quoteTemplate.quoteString();
+    }
+  }
+  mEditor->setQuotePrefixName( StringUtil::formatString( quotePrefix, mMsg->from() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1650,12 +1735,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   }
   setCharset( mCharset );
 
-  // Restore the quote prefix. We can't just use the global quote prefix here,
-  // since the prefix is different for each message, it might for example depend
-  // on the original sender in a reply.
-  QString quotePrefix = newMsg->headerField( "X-KMail-QuotePrefix" );
-  if ( !quotePrefix.isEmpty() )
-    mEditor->setQuotePrefixName( quotePrefix );
+  setQuotePrefix( mId );
 
   /* Handle the special case of non-mime mails */
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
@@ -1786,6 +1866,18 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !newMsg->fcc().isEmpty() && ident.fcc() != newMsg->fcc() );
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setTextSelection( const QString& selection )
+{
+  mTextSelection = selection;
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setCustomTemplate( const QString& customTemplate )
+{
+  mCustomTemplate = customTemplate;
 }
 
 //-----------------------------------------------------------------------------
@@ -2266,20 +2358,20 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KEncodingFileDialog fdlg( QString(), QString(), QString(), QString(),
-                            KFileDialog::Opening, this );
-  fdlg.setOperationMode( KFileDialog::Other );
-  fdlg.setCaption( i18n("Attach File") );
-  fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
-  fdlg.setMode( KFile::Files );
-  if ( fdlg.exec() != KDialog::Accepted )
-    return;
-
-  const KUrl::List files = fdlg.selectedUrls();
-  foreach ( const KUrl& url, files ) {
-    KUrl urlWithEncoding = url;
-    urlWithEncoding.setFileEncoding( fdlg.selectedEncoding() );
-    addAttach( urlWithEncoding );
+  AutoQPointer<KEncodingFileDialog> fdlg( new KEncodingFileDialog( QString(), QString(), QString(),
+                                                                   QString(), KFileDialog::Opening,
+                                                                   this ) );
+  fdlg->setOperationMode( KFileDialog::Other );
+  fdlg->setCaption( i18n("Attach File") );
+  fdlg->okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
+  fdlg->setMode( KFile::Files );
+  if ( fdlg->exec() == KDialog::Accepted && fdlg ) {
+    const KUrl::List files = fdlg->selectedUrls();
+    foreach ( const KUrl& url, files ) {
+      KUrl urlWithEncoding = url;
+      urlWithEncoding.setFileEncoding( fdlg->selectedEncoding() );
+      addAttach( urlWithEncoding );
+    }
   }
 }
 
@@ -2649,21 +2741,19 @@ void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QB
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertPublicKey()
 {
-  Kleo::KeySelectionDialog dlg( i18n("Attach Public OpenPGP Key"),
-                                i18n("Select the public key which should "
-                                     "be attached."),
-				std::vector<GpgME::Key>(),
-				Kleo::KeySelectionDialog::PublicKeys|Kleo::KeySelectionDialog::OpenPGPKeys,
-				false /* no multi selection */,
-                                false /* no remember choice box */,
-                                this, "attach public key selection dialog" );
+  AutoQPointer<Kleo::KeySelectionDialog> dlg;
+  dlg = new Kleo::KeySelectionDialog( i18n("Attach Public OpenPGP Key"), i18n("Select the public "
+                                      "key which should be attached."), std::vector<GpgME::Key>(),
+                                      Kleo::KeySelectionDialog::PublicKeys |
+                                      Kleo::KeySelectionDialog::OpenPGPKeys,
+                                      false /* no multi selection */,
+                                      false /* no remember choice box */,
+                                      this, "attach public key selection dialog" );
 
-  if ( dlg.exec() != KDialog::Accepted ) {
-    return;
+  if ( dlg->exec() == KDialog::Accepted && dlg ) {
+    mFingerprint = dlg->fingerprint();
+    startPublicKeyExport();
   }
-
-  mFingerprint = dlg.fingerprint();
-  startPublicKeyExport();
 }
 
 //-----------------------------------------------------------------------------
@@ -2790,11 +2880,11 @@ void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
   QByteArray cDisp = "attachment;";
   QByteArray encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
                                                       KMMessage::preferredCharsets(), name );
-  kDebug() <<"encoding:" << encoding;
+  kDebug() << "encoding:" << encoding;
   if ( encoding.isEmpty() ) {
     encoding = "utf-8";
   }
-  kDebug() <<"encoding after:" << encoding;
+  kDebug() << "encoding after:" << encoding;
   QByteArray encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
@@ -3418,7 +3508,7 @@ void KMComposeWin::slotContinuePrint( bool rc )
 
   if ( rc ) {
     if ( mComposedMessages.isEmpty() ) {
-      kDebug() <<"Composing the message failed.";
+      kDebug() << "Composing the message failed.";
       return;
     }
     KMCommand *command = new KMPrintCommand( this, mComposedMessages.first() );
@@ -4019,11 +4109,14 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
                                                ( oldIdentity ).signature();
   KPIMIdentities::Signature newSig = const_cast<KPIMIdentities::Identity&>
                                                ( ident ).signature();
-  if ( !oldSig.rawText().isEmpty() ) {
-    mEditor->replaceSignature( oldSig, newSig );
+  // if unmodified, apply new template, if one is set
+  bool msgCleared = false;
+  if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) ) {
+    applyTemplate( uoid );
+    msgCleared = true;
   }
-  else {
 
+  if ( msgCleared || oldSig.rawText().isEmpty() ) {
     // Just append the signature if there is no old signature
     if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
       if ( GlobalSettings::self()->prependSignature() )
@@ -4031,6 +4124,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
       else
         newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End, true );
     }
+  } else {
+    mEditor->replaceSignature( oldSig, newSig );
   }
 
   // disable certain actions if there is no PGP user identity set
@@ -4059,7 +4154,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
 
-  setModified( true );
+  setQuotePrefix( uoid );
+
   mId = uoid;
 
   // make sure the From and BCC fields are shown if necessary
@@ -4154,7 +4250,7 @@ void KMComposeWin::cleanupAutoSave()
 {
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
   if ( !mAutoSaveFilename.isEmpty() ) {
-    kDebug() <<"deleting autosave file"
+    kDebug() << "deleting autosave file"
                  << mAutoSaveFilename;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );
@@ -4304,19 +4400,18 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
     return;
   }
 
-  ChiasmusKeySelector selectorDlg( this, i18n( "Chiasmus Encryption Key Selection" ),
-                                   keys, GlobalSettings::chiasmusKey(),
-                                   GlobalSettings::chiasmusOptions() );
+  AutoQPointer<ChiasmusKeySelector> selectorDlg;
+  selectorDlg = new ChiasmusKeySelector( this, i18n( "Chiasmus Encryption Key Selection" ),
+                                         keys, GlobalSettings::chiasmusKey(),
+                                         GlobalSettings::chiasmusOptions() );
 
-  if ( selectorDlg.exec() != KDialog::Accepted ) {
-    return;
+  if ( selectorDlg->exec() == KDialog::Accepted && selectorDlg ) {
+    GlobalSettings::setChiasmusOptions( selectorDlg->options() );
+    GlobalSettings::setChiasmusKey( selectorDlg->key() );
+    assert( !GlobalSettings::chiasmusKey().isEmpty() );
+    mEncryptWithChiasmus = true;
+    resetter.disable();
   }
-
-  GlobalSettings::setChiasmusOptions( selectorDlg.options() );
-  GlobalSettings::setChiasmusKey( selectorDlg.key() );
-  assert( !GlobalSettings::chiasmusKey().isEmpty() );
-  mEncryptWithChiasmus = true;
-  resetter.disable();
 }
 
 void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)

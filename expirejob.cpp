@@ -88,16 +88,16 @@ void ExpireJob::execute()
   int unreadDays, readDays;
   mSrcFolder->daysToExpire( unreadDays, readDays );
   if (unreadDays > 0) {
-    kDebug() <<"ExpireJob: deleting unread older than"<< unreadDays <<" days";
+    kDebug() << "ExpireJob: deleting unread older than"<< unreadDays << "days";
     mMaxUnreadTime = time(0) - unreadDays * 3600 * 24;
   }
   if (readDays > 0) {
-    kDebug() <<"ExpireJob: deleting read older than"<< readDays <<" days";
+    kDebug() << "ExpireJob: deleting read older than"<< readDays << "days";
     mMaxReadTime = time(0) - readDays * 3600 * 24;
   }
 
   if ((mMaxUnreadTime == 0) && (mMaxReadTime == 0)) {
-    kDebug() <<"ExpireJob: nothing to do";
+    kDebug() << "ExpireJob: nothing to do";
     delete this;
     return;
   }
@@ -108,7 +108,7 @@ void ExpireJob::execute()
   mOpeningFolder = false;
   mFolderOpen = true;
   mCurrentIndex = storage->count()-1;
-  kDebug() <<"ExpireJob: starting to expire in folder" << mSrcFolder->location();
+  kDebug() << "ExpireJob: starting to expire in folder" << mSrcFolder->location();
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   mTimer.start( EXPIREJOB_TIMERINTERVAL );
   slotDoWork();
@@ -121,7 +121,7 @@ void ExpireJob::slotDoWork()
   FolderStorage* storage = mSrcFolder->storage();
   int stopIndex = mImmediate ? 0 : qMax( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
 #ifdef DEBUG_SCHEDULER
-  kDebug() <<"ExpireJob: checking messages" << mCurrentIndex <<" to" << stopIndex;
+  kDebug() << "ExpireJob: checking messages" << mCurrentIndex << "to" << stopIndex;
 #endif
   for( ; mCurrentIndex >= stopIndex; --mCurrentIndex ) {
     const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
@@ -154,7 +154,7 @@ void ExpireJob::done()
     mCancellable = false;
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
       // Expire by deletion, i.e. move to null target folder
-      kDebug() <<"ExpireJob: finished expiring in folder"
+      kDebug() << "ExpireJob: finished expiring in folder"
                     << mSrcFolder->location()
                     << count << "messages to remove.";
       KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
@@ -175,7 +175,7 @@ void ExpireJob::done()
                     mSrcFolder->label(), mSrcFolder->expireToFolderId() );
         kWarning() << str;
       } else {
-        kDebug() <<"ExpireJob: finished expiring in folder"
+        kDebug() << "ExpireJob: finished expiring in folder"
                       << mSrcFolder->location()
                       << mRemovedMsgs.count() << "messages to move to"
                       << mMoveToFolder->label();

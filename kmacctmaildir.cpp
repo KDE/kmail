@@ -107,7 +107,7 @@ void KMAcctMaildir::processNewMail(bool)
   // run the precommand
   if (!runPrecommand(precommand()))
   {
-    kDebug() <<"cannot run precommand" << precommand();
+    kDebug() << "cannot run precommand" << precommand();
     checkDone( hasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
@@ -118,7 +118,7 @@ void KMAcctMaildir::processNewMail(bool)
   {
     QString aStr = i18n("<qt>Cannot open folder <b>%1</b>.</qt>", mailFolder.location() );
     KMessageBox::sorry(0, aStr);
-    kDebug() <<"cannot open folder" << mailFolder.location();
+    kDebug() << "cannot open folder" << mailFolder.location();
     checkDone( hasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;

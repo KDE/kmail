@@ -32,6 +32,7 @@
 #include "kmfilter.h"
 #include "kmfilteraction.h"
 #include "util.h"
+#include "autoqpointer.h"
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -200,9 +201,9 @@ void FilterImporterExporter::exportFilters(const QList<KMFilter *> &filters )
         return;
 
     KConfig config( saveUrl.toLocalFile() );
-    FilterSelectionDialog dlg( mParent );
-    dlg.setFilters( filters );
-    if ( dlg.exec() == QDialog::Accepted )
-        writeFiltersToConfig( dlg.selectedFilters(), &config, mPopFilter );
+    AutoQPointer<FilterSelectionDialog> dlg( new FilterSelectionDialog( mParent ) );
+    dlg->setFilters( filters );
+    if ( dlg->exec() == QDialog::Accepted && dlg )
+        writeFiltersToConfig( dlg->selectedFilters(), &config, mPopFilter );
 }
 

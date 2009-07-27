@@ -157,6 +157,13 @@ namespace StringUtil
    *    linefeeds at word boundaries to make it fit.
    */
   QString smartQuote( const QString &msg, int maxLineLength );
+
+  /**
+   * Convert wildcards into normal string
+   * @param wildString the string to be converted
+   * @fromAddr from email address to convert to displayable string
+   */
+  QString formatString( const QString &wildString, const QString &fromAddr = QString() );
 }
 
 }

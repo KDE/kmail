@@ -430,7 +430,7 @@ namespace KMail {
   {
     setObjectName( name );
     mUrl = findURL();
-    kDebug() <<"Vacation: found url \"" << mUrl.prettyUrl() <<"\"";
+    kDebug() << "Vacation: found url \"" << mUrl.prettyUrl() <<"\"";
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
     mSieveJob = SieveJob::get( mUrl );
@@ -444,7 +444,7 @@ namespace KMail {
   Vacation::~Vacation() {
     if ( mSieveJob ) mSieveJob->kill(); mSieveJob = 0;
     delete mDialog; mDialog = 0;
-    kDebug() <<"~Vacation()";
+    kDebug() << "~Vacation()";
   }
 
   static inline QString dotstuff( QString s ) { // krazy:exclude=passbyvalue
@@ -547,7 +547,7 @@ namespace KMail {
     // slave somehow omits the last \n, which results in a lone \r at
     // the end, leading to a parse error.
     const QByteArray scriptUTF8 = script.trimmed().toUtf8();
-    kDebug() <<"scriptUtf8 = \"" + scriptUTF8 +"\"";
+    kDebug() << "scriptUtf8 = \"" + scriptUTF8 +"\"";
     KSieve::Parser parser( scriptUTF8.begin(),
                            scriptUTF8.begin() + scriptUTF8.length() );
     VacationDataExtractor vdx;
@@ -689,7 +689,7 @@ namespace KMail {
     const bool active = mDialog->activateVacation();
     emit scriptActive( active );
 
-    kDebug() <<"script:" << endl << script;
+    kDebug() << "script:" << endl << script;
 
     // and commit the dialog's settings to the server:
     mSieveJob = SieveJob::put( mUrl, script, active, mWasActive );

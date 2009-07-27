@@ -267,7 +267,7 @@ int FolderStorage::expungeOldMsg(int days)
     msgTime = mb->date();
 
     if (msgTime < maxTime) {
-      //kDebug() <<"deleting msg" << i <<" :" << mb->subject() <<" -" << mb->dateStr(); //;
+      //kDebug() << "deleting msg" << i << ":" << mb->subject() << "-" << mb->dateStr(); //;
       removeMsg( i );
       msgnb++;
     }
@@ -403,7 +403,7 @@ void FolderStorage::removeMsg(int idx, bool)
       (folder() == kmkernel->outboxFolder())) {
     --mUnreadMsgs;
     if ( !mQuiet ) {
-//      kDebug() <<"FolderStorage::msgStatusChanged";
+//      kDebug() << "FolderStorage::msgStatusChanged";
       emit numUnreadMsgsChanged( folder() );
     }else{
       if ( !mEmitChangedTimer->isActive() ) {
@@ -495,7 +495,7 @@ KMMessage* FolderStorage::getMsg(int idx)
       msg = readMsg(idx);
       // sanity check
       if (mCompactable && (msg->subject().isEmpty() != mbSubject.isEmpty())) {
-        kDebug() <<"Error:" << location() <<
+        kDebug() << "Error:" << location() <<
           "Index file is inconsistent with folder file. This should never happen.";
         mCompactable = false; // Don't compact
         writeConfig();
@@ -783,7 +783,7 @@ void FolderStorage::remove()
 
   if ( mExportsSernums ) {
     KMMsgDict::mutableInstance()->removeFolderIds( *this );
-    mExportsSernums = false;	// do not writeFolderIds after removal
+    mExportsSernums = false;  // do not writeFolderIds after removal
   }
   unlink( QFile::encodeName( sortedLocation() ) );
   unlink( QFile::encodeName( indexLocation() ) );
@@ -1068,8 +1068,10 @@ void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int 
 
 void FolderStorage::setRDict( KMMsgDictREntry *rentry ) const
 {
-  if ( ! mExportsSernums )
-    kDebug() <<"WTF, this FolderStorage should be invisible to the msgdict, who is calling us?" << kBacktrace();
+  if ( !mExportsSernums ) {
+    kWarning() << "WTF, this FolderStorage should be invisible to the msgdict, who is calling us?"
+               << kBacktrace();
+  }
   assert( mExportsSernums ); // otherwise things are very wrong
   if ( rentry == mRDict )
     return;

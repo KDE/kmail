@@ -53,6 +53,8 @@
 #include "kleojobexecutor.h"
 #include "stringutil.h"
 #include "iconnamecache.h"
+#include "autoqpointer.h"
+#include "htmlquotecolorer.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -448,9 +450,9 @@ namespace KMail {
 
         // replace simple LFs by CRLSs
         // according to RfC 2633, 3.1.1 Canonicalization
-        kDebug() <<"Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
+        kDebug() << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
         cleartext = Util::lf2crlf( cleartext );
-        kDebug() <<"                                                       done.";
+        kDebug() << "                                                      done.";
       }
 
       dumpToFile( "dat_02_reader_signedtext_after_canonicalization",
@@ -562,8 +564,9 @@ namespace KMail {
     else
       messagePart.auditLogError = GpgME::Error( GPG_ERR_NOT_IMPLEMENTED );
 
-    if ( doCheck )
+    if ( doCheck ) {
       kDebug() << "returned from CRYPTPLUG";
+    }
 
     // ### only one signature supported
     if ( !signatures.empty() ) {
@@ -983,6 +986,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     {
       if ( mReader->htmlMail() ) {
 
+        HTMLQuoteColorer colorer( cssHelper() );
+        bodyText = colorer.process( bodyText );
+
         // Strip <html>, <head>, and <body>, so we don't end up having those tags
         // twice, which confuses KHTML (especially with a signed
         // multipart/alternative message, the signature bars get rendered at the
@@ -1261,6 +1267,13 @@ namespace KMail {
 
     partNode * dataHtml = child->findType( DwMime::kTypeText,
                                            DwMime::kSubtypeHtml, false, true );
+    if ( !dataHtml ) {
+      // If we didn't find the HTML part as the first child of the multipart/alternative, it might
+      // be that this is a HTML message with images, and text/plain and multipart/related are the
+      // immediate children of this multipart/alternative node.
+      // In this case, the HTML node is a child of multipart/related.
+      dataHtml = child->findType( DwMime::kTypeMultipart, DwMime::kSubtypeRelated, false, true );
+    }
     partNode * dataPlain = child->findType( DwMime::kTypeText,
                                             DwMime::kSubtypePlain, false, true );
 
@@ -1864,14 +1877,16 @@ bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& body
   }
 
   emit mReader->noDrag();
-  ChiasmusKeySelector selectorDlg( mReader, i18n( "Chiasmus Decryption Key Selection" ),
-                                   keys, GlobalSettings::chiasmusDecryptionKey(),
-                                   GlobalSettings::chiasmusDecryptionOptions() );
-  if ( selectorDlg.exec() != KDialog::Accepted )
+  AutoQPointer<ChiasmusKeySelector> selectorDlg;
+  selectorDlg = new ChiasmusKeySelector( mReader, i18n( "Chiasmus Decryption Key Selection" ),
+                                         keys, GlobalSettings::chiasmusDecryptionKey(),
+                                         GlobalSettings::chiasmusDecryptionOptions() );
+  if ( selectorDlg->exec() != KDialog::Accepted || !selectorDlg ) {
     return false;
+  }
 
-  GlobalSettings::setChiasmusDecryptionOptions( selectorDlg.options() );
-  GlobalSettings::setChiasmusDecryptionKey( selectorDlg.key() );
+  GlobalSettings::setChiasmusDecryptionOptions( selectorDlg->options() );
+  GlobalSettings::setChiasmusDecryptionKey( selectorDlg->key() );
   assert( !GlobalSettings::chiasmusDecryptionKey().isEmpty() );
 
   Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );

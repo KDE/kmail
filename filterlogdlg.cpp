@@ -30,6 +30,7 @@
 
 #include "filterlogdlg.h"
 #include "filterlog.h"
+#include "autoqpointer.h"
 
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -249,14 +250,14 @@ void FilterLogDialog::slotUser2()
 {
   QString fileName;
   KUrl url;
-  KFileDialog fdlg( url, QString(), this);
+  AutoQPointer<KFileDialog> fdlg( new KFileDialog( url, QString(), this) );
 
-  fdlg.setMode( KFile::File );
-  fdlg.setSelection( "kmail-filter.log" );
-  fdlg.setOperationMode( KFileDialog::Saving );
-  if ( fdlg.exec() == QDialog::Accepted )
+  fdlg->setMode( KFile::File );
+  fdlg->setSelection( "kmail-filter.log" );
+  fdlg->setOperationMode( KFileDialog::Saving );
+  if ( fdlg->exec() == QDialog::Accepted && fdlg )
   {
-    fileName = fdlg.selectedFile();
+    fileName = fdlg->selectedFile();
     if ( !FilterLog::instance()->saveToFile( fileName ) )
     {
       KMessageBox::error( this,

@@ -23,6 +23,7 @@
 #include "recentaddresses.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
+#include "autoqpointer.h"
 
 #include <libkdepim/kvcarddrag.h>
 #include <kpimutils/email.h>
@@ -175,15 +176,15 @@ void KMLineEdit::contextMenuEvent( QContextMenuEvent*e )
 
 void KMLineEdit::editRecentAddresses()
 {
-  KPIM::RecentAddressDialog dlg( this );
-  dlg.setAddresses( KPIM::RecentAddresses::self( KMKernel::config() )->addresses() );
-  if ( !dlg.exec() )
-    return;
-  KPIM::RecentAddresses::self( KMKernel::config() )->clear();
-  const QStringList addrList = dlg.addresses();
-  for ( QStringList::const_iterator it = addrList.begin(), end = addrList.end() ; it != end ; ++it )
-    KPIM::RecentAddresses::self( KMKernel::config() )->add( *it );
-  loadContacts();
+  AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
+  dlg->setAddresses( KPIM::RecentAddresses::self( KMKernel::config() )->addresses() );
+  if ( dlg->exec() && dlg ) {
+    KPIM::RecentAddresses::self( KMKernel::config() )->clear();
+    const QStringList addrList = dlg->addresses();
+    for ( QStringList::const_iterator it = addrList.begin(), end = addrList.end() ; it != end ; ++it )
+      KPIM::RecentAddresses::self( KMKernel::config() )->add( *it );
+    loadContacts();
+  }
 }
 
 

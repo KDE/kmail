@@ -298,8 +298,9 @@ AddressList splitAddrField( const QByteArray & str )
   if ( !scursor )
     return AddressList();
   const char * const send = str.begin() + str.length();
-  if ( !parseAddressList( scursor, send, result ) )
+  if ( !parseAddressList( scursor, send, result ) ) {
     kDebug() << "Error in address splitting: parseAddressList returned false!";
+  }
   return result;
 }
 
@@ -420,7 +421,7 @@ QString decodeMailtoUrl( const QString& url )
 
 QByteArray stripEmailAddr( const QByteArray& aStr )
 {
-  //kDebug() << "(" << aStr <<" )";
+  //kDebug() << "(" << aStr << ")";
 
   if ( aStr.isEmpty() )
     return QByteArray();
@@ -470,11 +471,11 @@ QByteArray stripEmailAddr( const QByteArray& aStr )
               comment = comment.trimmed();
               angleAddress = angleAddress.trimmed();
                    /*
-              kDebug() <<"Name    : \"" << name
+              kDebug() << "Name    : \"" << name
               << "\"";
-              kDebug() <<"Comment : \"" << comment
+              kDebug() << "Comment : \"" << comment
               << "\"";
-              kDebug() <<"Address : \"" << angleAddress
+              kDebug() << "Address : \"" << angleAddress
               << "\"";
                    */
               if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -552,9 +553,9 @@ QByteArray stripEmailAddr( const QByteArray& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kDebug() <<"Name    : \"" << name <<"\"";
-  kDebug() <<"Comment : \"" << comment <<"\"";
-  kDebug() <<"Address : \"" << angleAddress <<"\"";
+  kDebug() << "Name    : \"" << name <<"\"";
+  kDebug() << "Comment : \"" << comment <<"\"";
+  kDebug() << "Address : \"" << angleAddress <<"\"";
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -630,11 +631,11 @@ QString stripEmailAddr( const QString& aStr )
               comment = comment.trimmed();
               angleAddress = angleAddress.trimmed();
                    /*
-              kDebug() <<"Name    : \"" << name
+              kDebug() << "Name    : \"" << name
               << "\"";
-              kDebug() <<"Comment : \"" << comment
+              kDebug() << "Comment : \"" << comment
               << "\"";
-              kDebug() <<"Address : \"" << angleAddress
+              kDebug() << "Address : \"" << angleAddress
               << "\"";
                    */
               if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -712,9 +713,9 @@ QString stripEmailAddr( const QString& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kDebug() <<"Name    : \"" << name <<"\"";
-  kDebug() <<"Comment : \"" << comment <<"\"";
-  kDebug() <<"Address : \"" << angleAddress <<"\"";
+  kDebug() << "Name    : \"" << name <<"\"";
+  kDebug() << "Comment : \"" << comment <<"\"";
+  kDebug() << "Address : \"" << angleAddress <<"\"";
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -818,7 +819,7 @@ QStringList stripAddressFromAddressList( const QString& address,
         it != addresses.end(); ) {
     if ( kasciistricmp( addrSpec.toUtf8().data(),
          KPIMUtils::extractEmailAddress( *it ).toUtf8().data() ) == 0 ) {
-      kDebug() << "Removing" << *it <<" from the address list";
+      kDebug() << "Removing" << *it << "from the address list";
       it = addresses.erase( it );
     }
     else
@@ -997,6 +998,58 @@ QString smartQuote( const QString & msg, int maxLineLength )
      part.append(line);
   }
   flushPart( result, part, oldIndent, maxLineLength);
+  return result;
+}
+
+QString formatString( const QString &wildString, const QString &fromAddr )
+{
+  QString result;
+
+  if ( wildString.isEmpty() ) {
+    return wildString;
+  }
+
+  unsigned int strLength( wildString.length() );
+  for ( uint i=0; i<strLength; ) {
+    QChar ch = wildString[i++];
+    if ( ch == '%' && i<strLength ) {
+      ch = wildString[i++];
+      switch ( ch.toLatin1() ) {
+      case 'f': // sender's initals
+      {
+        QString str = stripEmailAddr( fromAddr );
+
+        uint j = 0;
+        for ( ; str[j]>' '; j++ )
+          ;
+        unsigned int strLength( str.length() );
+        for ( ; j < strLength && str[j] <= ' '; j++ )
+          ;
+        result += str[0];
+        if ( str[j] > ' ' ) {
+          result += str[j];
+        } else {
+          if ( str[1] > ' ' ) {
+            result += str[1];
+          }
+        }
+      }
+      break;
+      case '_':
+        result += ' ';
+        break;
+      case '%':
+        result += '%';
+        break;
+      default:
+        result += '%';
+        result += ch;
+        break;
+      }
+    } else {
+      result += ch;
+    }
+  }
   return result;
 }
 

@@ -149,8 +149,9 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
 }
 
 void KMMessagePart::setCharset( const QByteArray & c ) {
-  if ( type() != DwMime::kTypeText )
+  if ( type() != DwMime::kTypeText ) {
     kWarning() << "Trying to set a charset for a non-textual mimetype.";
+  }
   mCharset = c;
 }
 
@@ -175,9 +176,9 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
 #ifndef NDEBUG
   DwString dwCte;
   DwCteEnumToStr(allowedCte[0], dwCte);
-  kDebug() <<"CharFreq returned" << cf.type() <<"/"
-	    << cf.printableRatio() << "and I chose"
-	    << dwCte.c_str();
+  kDebug() << "CharFreq returned" << cf.type() <<"/"
+      << cf.printableRatio() << "and I chose"
+      << dwCte.c_str();
 #endif
 
   setCte( allowedCte[0] ); // choose best fitting
@@ -210,7 +211,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
     }
   default:
     kWarning() <<"setBodyEncodedBinary: unknown encoding '" << cteStr()
-		    << "'. Assuming binary.";
+        << "'. Assuming binary.";
     // fall through
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:

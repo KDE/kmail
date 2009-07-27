@@ -117,11 +117,15 @@ class KMComposeWin : public KMail::Composer
   friend class ::MessageComposer;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposeWin( KMMessage *msg=0, uint identity=0 );
+    explicit KMComposeWin( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+                           uint identity = 0, const QString & textSelection = QString(),
+                           const QString & customTemplate = QString() );
     ~KMComposeWin();
 
   public:
-    static Composer *create( KMMessage *msg = 0, uint identity = 0 );
+    static Composer *create( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+                             uint identity = 0, const QString & textSelection = QString(),
+                             const QString & customTemplate = QString() );
 
   QString dbusObjectPath() const;
   QString smartQuote( const QString & msg );
@@ -192,6 +196,16 @@ class KMComposeWin : public KMail::Composer
       * Returns @c true while the message composing is in progress.
       */
      bool isComposing() const { return mComposer != 0; }
+
+     /**
+      * Set the text selection the message is a response to.
+      */
+     void setTextSelection( const QString& selection );
+
+     /**
+      * Set custom template to be used for the message.
+      */
+     void setCustomTemplate( const QString& customTemplate );
 
   private: // kmedit
     /**
@@ -525,6 +539,16 @@ class KMComposeWin : public KMail::Composer
                             QLabel *lbl, QComboBox *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
 
     /**
+     * Apply template to new or unmodified message.
+     */
+    void applyTemplate( uint uoid );
+
+    /**
+     * Set the quote prefix according to identity.
+     */
+    void setQuotePrefix( uint uoid );
+
+    /**
      * Checks how many recipients are and warns if there are too many.
      * @return true, if the user accepted the warning and the message should be sent
     */
@@ -712,6 +736,8 @@ class KMComposeWin : public KMail::Composer
     KMComposerEditor *mEditor;
     QGridLayout *mGrid;
     KMMessage *mMsg;
+    QString mTextSelection;
+    QString mCustomTemplate;
     QVector<KMMessage*> mComposedMessages;
     KMail::AttachmentListView *mAtmListView;
     QList<KMAtmListViewItem*> mAtmItemList;
@@ -734,6 +760,7 @@ class KMComposeWin : public KMail::Composer
     QList<KTemporaryFile*> mAtmTempList;
     QPalette mPalette;
     uint mId;
+    TemplateContext mContext;
 
     KAction *mAttachPK, *mAttachMPK, *mAttachRemoveAction, *mAttachSaveAction,
             *mAttachPropertiesAction, *mCleanSpace;

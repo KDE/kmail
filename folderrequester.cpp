@@ -31,6 +31,7 @@
 #include "kmfolder.h"
 #include "mainfolderview.h"
 #include "folderselectiondialog.h"
+#include "autoqpointer.h"
 
 #include <kdebug.h>
 #include <klineedit.h>
@@ -77,13 +78,15 @@ void FolderRequester::slotOpenDialog()
 {
   Q_ASSERT( mFolderTree );
 
-  FolderSelectionDialog dlg( this, mFolderTree, i18n("Select Folder"),
-      mMustBeReadWrite, false );
-  dlg.setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
-  dlg.setFolder( mFolder );
+  AutoQPointer<FolderSelectionDialog> dlg( new FolderSelectionDialog( this, mFolderTree,
+                                                                      i18n("Select Folder"),
+                                                                      mMustBeReadWrite, false ) );
+  dlg->setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
+  dlg->setFolder( mFolder );
 
-  if (!dlg.exec()) return;
-  setFolder( dlg.folder() );
+  if ( dlg->exec() && dlg ) {
+    setFolder( dlg->folder() );
+  }
 }
 
 //-----------------------------------------------------------------------------

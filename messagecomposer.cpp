@@ -1513,7 +1513,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
         const QByteArray body = it->part->bodyDecodedBinary();
         QList<int> dummy;
         it->part->setBodyAndGuessCte( body, dummy, false, it->sign );
-        kDebug() <<"Changed encoding of message part from"
+        kDebug() << "Changed encoding of message part from"
                      << cte << "to" << it->part->cteStr();
       }
     }
@@ -1572,7 +1572,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
 
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
-    //kDebug() <<"Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
+    //kDebug() << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
     mEncodedBody = KMail::Util::lf2crlf( mEncodedBody );
   }
 
@@ -1587,7 +1587,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     mPerformingSignOperation = false;
 
     if ( mSignature.isEmpty() ) {
-      kDebug() <<"signature was empty";
+      kDebug() << "signature was empty";
       mRc = false;
       return;
     }
@@ -1925,9 +1925,9 @@ void MessageComposer::encryptMessage( KMMessage *msg,
     // now do the encrypting:
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
-    //kDebug() <<"Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
+    //kDebug() << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
     innerContent = KMail::Util::lf2crlf( innerContent );
-    //kDebug() <<"                                                       done.";
+    //kDebug() << "                                                      done.";
 
     QByteArray encryptedBody;
     Kpgp::Result result = pgpEncryptedMsg( encryptedBody, innerContent,
@@ -2029,7 +2029,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
 
       // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
       // according to RfC 2633, 3.1.1 Canonicalization
-      //kDebug() <<"Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
+      //kDebug() << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)";
       encodedAttachment = KMail::Util::lf2crlf( encodedAttachment );
 
       // sign this attachment
@@ -2196,7 +2196,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       }
     }
 
-    //kDebug() <<"processStructuringInfo: mainHeader=" << mainHeader;
+    //kDebug() << "processStructuringInfo: mainHeader=" << mainHeader;
 
     DwString mainDwStr = KMail::Util::dwString( mainHeader );
     mainDwStr += "\n\n";
@@ -2236,7 +2236,9 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       if ( const char *str = nestedContentDisposition( format, signing ) ) {
         codeCStr += "Content-Disposition: ";
         codeCStr += str;
-        codeCStr += '\n';
+        if  ( !codeCStr.endsWith( '\n' ) ) {
+          codeCStr += '\n';
+        }
       }
       if ( binaryHint( format ) ) {
         codeCStr += "Content-Transfer-Encoding: base64\n\n";
@@ -2258,7 +2260,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       }
       mainStr += "--\n";
 
-      //kDebug() <<"processStructuringInfo: mainStr=" << mainStr;
+      //kDebug() << "processStructuringInfo: mainStr=" << mainStr;
       resultingPart.setBodyEncoded( mainStr );
     }
 
@@ -2472,11 +2474,11 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
       kDebug() << ss.str().c_str();
   }
   if ( res.error().isCanceled() ) {
-    kDebug() <<"signing was canceled by user";
+    kDebug() << "signing was canceled by user";
     return;
   }
   if ( res.error() ) {
-    kDebug() <<"signing failed:" << res.error().asString();
+    kDebug() << "signing failed:" << res.error().asString();
     job->showErrorDialog( mComposeWin );
     return;
   }
@@ -2528,11 +2530,11 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray &encryptedBody,
       kDebug() << ss.str().c_str();
   }
   if ( res.error().isCanceled() ) {
-    kDebug() <<"encryption was canceled by user";
+    kDebug() << "encryption was canceled by user";
     return Kpgp::Canceled;
   }
   if ( res.error() ) {
-    kDebug() <<"encryption failed:" << res.error().asString();
+    kDebug() << "encryption failed:" << res.error().asString();
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }
@@ -2576,14 +2578,14 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray &encryptedBod
       kDebug() << ss.str().c_str();
   }
   if ( res.first.error().isCanceled() || res.second.error().isCanceled() ) {
-    kDebug() <<"encrypt/sign was canceled by user";
+    kDebug() << "encrypt/sign was canceled by user";
     return Kpgp::Canceled;
   }
   if ( res.first.error() || res.second.error() ) {
     if ( res.first.error() ) {
-      kDebug() <<"signing failed:" << res.first.error().asString();
+      kDebug() << "signing failed:" << res.first.error().asString();
     } else {
-      kDebug() <<"encryption failed:" << res.second.error().asString();
+      kDebug() << "encryption failed:" << res.second.error().asString();
     }
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;

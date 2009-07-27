@@ -103,7 +103,7 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
-  //kDebug() <<"killAllJobs: disconnectSlave=" << disconnectSlave << mapJobData.count() <<" jobs in map.";
+  //kDebug() << "killAllJobs: disconnectSlave=" << disconnectSlave << mapJobData.count() << "jobs in map.";
   QList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
   for( QList<KMFolderCachedImap*>::ConstIterator it = folderList.constBegin(); it != folderList.constEnd(); ++it ) {
     KMFolderCachedImap *fld = *it;
@@ -419,7 +419,7 @@ QStringList KMAcctCachedImap::deletedFolderPaths( const QString& subFolderPath )
     if ( (*it).startsWith( subFolderPath ) )
       lst.prepend( *it );
   }
-  kDebug() << "For" << subFolderPath <<" returning:" << lst;
+  kDebug() << "For" << subFolderPath << "returning:" << lst;
   Q_ASSERT( !lst.isEmpty() );
   return lst;
 }

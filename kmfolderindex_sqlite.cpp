@@ -366,7 +366,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
   if(gv)
       *gv = indexVersion;
   if (indexVersion < INDEX_VERSION) {
-      kDebug() <<"Index file" << indexLocation() <<" is out of date. Re-creating it.";
+      kDebug() << "Index file" << indexLocation() << "is out of date. Re-creating it.";
       createIndexFromContents();
       return false;
   } else if(indexVersion > INDEX_VERSION) {
@@ -421,9 +421,9 @@ bool KMFolderIndex::readIndexHeader(int *gv)
   KDE_fseek(mIndexStream, endOfHeader, SEEK_SET );
 
   if (mIndexSwapByteOrder)
-     kDebug() <<"Index File has byte order swapped!";
+     kDebug() << "Index File has byte order swapped!";
   if (mIndexSizeOfLong != sizeof(long))
-     kDebug() <<"Index File sizeOfLong is" << mIndexSizeOfLong <<" while sizeof(long) is" << sizeof(long) <<" !";
+     kDebug() << "Index File sizeOfLong is" << mIndexSizeOfLong << "while sizeof(long) is" << sizeof(long) << "!";
 */
   return true;
 }

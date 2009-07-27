@@ -116,6 +116,7 @@ Manager::~Manager()
 
   saveConfiguration();
   removeAllAggregations();
+  removeAllThemes(); 
 
   delete mHeartBeatTimer;
 
@@ -990,8 +991,15 @@ void Manager::loadConfiguration()
 
 }
 
+void Manager::saveGlobalConfiguration()
+{
+  GlobalSettings::self()->setDisplayMessageToolTips( mDisplayMessageToolTips );
+}
+
 void Manager::saveConfiguration()
 {
+  saveGlobalConfiguration();
+
   {
     // store aggregations
 

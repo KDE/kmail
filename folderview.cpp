@@ -1332,6 +1332,9 @@ void FolderView::slotHeaderContextMenuChangeToolTipDisplayPolicy( bool )
     return;
 
   setToolTipDisplayPolicy( ( ToolTipDisplayPolicy )policy );
+
+  // stay in sync with ConfigureDialog
+  writeConfig();
 }
 
 void FolderView::slotHeaderContextMenuChangeIconSize( bool )

@@ -249,6 +249,7 @@ set(kmailprivate_LIB_SRCS
    messagecomposer.cpp
    newcomposerwin.cpp
    mdnadvicedialog.cpp
+   htmlquotecolorer.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp

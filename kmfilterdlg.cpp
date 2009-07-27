@@ -244,27 +244,34 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       mAccountList->setRootIsDecorated( false );
       gl->addWidget( mAccountList, 0, 1, 4, 3 );
 
+      mApplyBeforeOut = new QCheckBox( i18n("Apply this filter &before sending messages"), mAdvOptsGroup );
+      mApplyBeforeOut->setToolTip( i18n( "<p>The filter will be triggered <b>before</b> the message is sent and it will affect both the local copy and the sent copy of the message.</p>"
+            "<p>This is required if the recipient's copy also needs to be modified.</p>" ) );
+      gl->addWidget( mApplyBeforeOut, 5, 0, 1, 4 );
+
       mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), mAdvOptsGroup );
+      mApplyOnOut->setToolTip( i18n( "<p>The filter will be triggered <b>after</b> the message is sent and it will only affect the local copy of the message.</p>"
+            "<p>If the recipient's copy also needs to be modified, please use \"Apply this filter <b>before</b> sending messages\".</p>" ) );
       gl->addWidget( mApplyOnOut, 4, 0, 1, 4 );
 
       mApplyOnCtrlJ = new QCheckBox( i18n("Apply this filter on manual &filtering"), mAdvOptsGroup );
-      gl->addWidget( mApplyOnCtrlJ, 5, 0, 1, 4 );
+      gl->addWidget( mApplyOnCtrlJ, 6, 0, 1, 4 );
 
       mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), mAdvOptsGroup );
-      gl->addWidget( mStopProcessingHere, 6, 0, 1, 4 );
+      gl->addWidget( mStopProcessingHere, 7, 0, 1, 4 );
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), mAdvOptsGroup );
-      gl->addWidget( mConfigureShortcut, 7, 0, 1, 2 );
+      gl->addWidget( mConfigureShortcut, 8, 0, 1, 2 );
       QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), mAdvOptsGroup );
       keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-      gl->addWidget( keyButtonLabel, 7, 2, 1, 1);
+      gl->addWidget( keyButtonLabel, 8, 2, 1, 1);
       mKeySeqWidget = new KKeySequenceWidget( mAdvOptsGroup );
       mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
-      gl->addWidget( mKeySeqWidget, 7, 3, 1, 1);
+      gl->addWidget( mKeySeqWidget, 8, 3, 1, 1);
       mKeySeqWidget->setEnabled( false );
       mKeySeqWidget->setCheckActionCollections(
                              kmkernel->getKMMainWidget()->actionCollections() );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
-      gl->addWidget( mConfigureToolbar, 8, 0, 1, 4 );
+      gl->addWidget( mConfigureToolbar, 9, 0, 1, 4 );
       mConfigureToolbar->setEnabled( false );
 
       KHBox *hbox = new KHBox( mAdvOptsGroup );
@@ -279,7 +286,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       mFilterActionIconButton->setIcon( "system-run" );
       mFilterActionIconButton->setEnabled( false );
 
-      gl->addWidget( hbox, 9, 0, 1, 4 );
+      gl->addWidget( hbox, 10, 0, 1, 4 );
 
       mAdvOptsGroup->setLayout( gl );
     }
@@ -310,6 +317,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     connect( mApplyOnForTraditional, SIGNAL(clicked()),
              this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnForChecked, SIGNAL(clicked()),
+             this, SLOT(slotApplicabilityChanged()) );
+    connect( mApplyBeforeOut, SIGNAL(clicked()),
              this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnOut, SIGNAL(clicked()),
              this, SLOT(slotApplicabilityChanged()) );
@@ -422,6 +431,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
   if (!bPopFilter) {
     kDebug() << "apply on inbound ==" << aFilter->applyOnInbound();
     kDebug() << "apply on outbound ==" << aFilter->applyOnOutbound();
+    kDebug() << "apply before outbound == " << aFilter->applyBeforeOutbound();
     kDebug() << "apply on explicit ==" << aFilter->applyOnExplicit();
 
     // NOTE: setting these values activates the slot that sets them in
@@ -430,6 +440,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     const bool applyOnIn = aFilter->applyOnInbound();
     const bool applyOnForAll = aFilter->applicability() == KMFilter::All;
     const bool applyOnTraditional = aFilter->applicability() == KMFilter::ButImap;
+    const bool applyBeforeOut = aFilter->applyBeforeOutbound();
     const bool applyOnOut = aFilter->applyOnOutbound();
     const bool applyOnExplicit = aFilter->applyOnExplicit();
     const bool stopHere = aFilter->stopProcessingHere();
@@ -447,6 +458,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     mApplyOnForChecked->setChecked( !applyOnForAll && !applyOnTraditional );
     mAccountList->setEnabled( mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() );
     slotUpdateAccountList();
+    mApplyBeforeOut->setChecked( applyBeforeOut );
     mApplyOnOut->setChecked( applyOnOut );
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
@@ -485,6 +497,7 @@ void KMFilterDlg::slotApplicabilityChanged()
 {
   if ( mFilter ) {
     mFilter->setApplyOnInbound( mApplyOnIn->isChecked() );
+    mFilter->setApplyBeforeOutbound( mApplyBeforeOut->isChecked() );
     mFilter->setApplyOnOutbound( mApplyOnOut->isChecked() );
     mFilter->setApplyOnExplicit( mApplyOnCtrlJ->isChecked() );
     if ( mApplyOnForAll->isChecked() )
@@ -511,6 +524,7 @@ void KMFilterDlg::slotApplicabilityChanged()
     kDebug() << "Setting filter to be applied at"
                  << ( mFilter->applyOnInbound() ? "incoming " : "" )
                  << ( mFilter->applyOnOutbound() ? "outgoing " : "" )
+                 << ( mFilter->applyBeforeOutbound() ? "before_outgoing " : "" )
                  << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" );
   }
 }
@@ -1263,7 +1277,7 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 
   int superfluousItems = (int)mActionList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
-    kDebug() <<"KMFilterActionWidgetLister: Clipping action list to"
+    kDebug() << "KMFilterActionWidgetLister: Clipping action list to"
 	      << mMaxWidgets << "items!";
 
     for ( ; superfluousItems ; superfluousItems-- )

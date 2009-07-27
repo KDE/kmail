@@ -74,7 +74,7 @@ void ListJob::execute()
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
     // We'll wait for the connectionResult signal from the account.
-    kDebug() <<"ListJob - waiting for connection";
+    kDebug() << "ListJob - waiting for connection";
     connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotConnectionResult(int, const QString&) ) );
     return;
@@ -139,7 +139,7 @@ void ListJob::execute()
       + ";TYPE=" + ltype
       + section );
   // go
-  //kDebug() <<"start listjob for" << url.path();
+  //kDebug() << "start listjob for" << url.path();
   KIO::SimpleJob *job = KIO::listDir( url, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );

@@ -63,6 +63,7 @@ using KPIM::RecentAddresses;
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
+#include "autoqpointer.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -395,20 +396,20 @@ void IdentityPage::slotNewIdentity()
   Q_ASSERT( !mIdentityDialog );
 
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  NewIdentityDialog dialog( im->shadowIdentities(), this );
-  dialog.setObjectName( "new" );
+  AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog( im->shadowIdentities(), this ) );
+  dialog->setObjectName( "new" );
 
-  if( dialog.exec() == QDialog::Accepted ) {
-    QString identityName = dialog.identityName().trimmed();
+  if ( dialog->exec() == QDialog::Accepted && dialog ) {
+    QString identityName = dialog->identityName().trimmed();
     Q_ASSERT( !identityName.isEmpty() );
 
     //
     // Construct a new Identity:
     //
-    switch ( dialog.duplicateMode() ) {
+    switch ( dialog->duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-        KPIMIdentities::Identity &dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
+        KPIMIdentities::Identity &dupThis = im->modifyIdentityForName( dialog->duplicateIdentity() );
         im->newFromExisting( dupThis, identityName );
         break;
       }
@@ -935,10 +936,12 @@ QStringList AccountsPage::ReceivingTab::occupiedNames()
 }
 
 void AccountsPage::ReceivingTab::slotAddAccount() {
-  KMAcctSelDlg accountSelectorDialog( this );
-  if( accountSelectorDialog.exec() != QDialog::Accepted ) return;
+  AutoQPointer<KMAcctSelDlg> accountSelectorDialog( new KMAcctSelDlg( this ) );
+  if ( accountSelectorDialog->exec() != QDialog::Accepted || !accountSelectorDialog ) {
+    return;
+  }
 
-  KAccount::Type accountType = accountSelectorDialog.selected();
+  KAccount::Type accountType = accountSelectorDialog->selected();
   KMAccount *account = kmkernel->acctMgr()->create( accountType );
   if ( !account ) {
     // ### FIXME: Give the user more information. Is this error
@@ -949,9 +952,9 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
 
   account->init(); // fill the account fields with good default values
 
-  AccountDialog dialog( i18n("Add Account"), account, this );
+  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Add Account"), account, this ) );
 
-  if( dialog.exec() != QDialog::Accepted ) {
+  if ( dialog->exec() != QDialog::Accepted ) {
     delete account;
     return;
   }
@@ -1010,7 +1013,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
         if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
         {
           // connect to server - the namespaces are fetched automatically
-          kDebug() <<"slotModifySelectedAccount - connect";
+          kDebug() << "slotModifySelectedAccount - connect";
           ai->makeConnection();
         }
       }
@@ -1028,9 +1031,9 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   QStringList accountNames = occupiedNames();
   accountNames.removeAll( account->name() );
 
-  AccountDialog dialog( i18n("Modify Account"), account, this );
+  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Modify Account"), account, this ) );
 
-  if( dialog.exec() != QDialog::Accepted ) return;
+  if ( dialog->exec() != QDialog::Accepted ) return;
 
   if ( accountNames.contains( account->name() ) )
     account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
@@ -1326,7 +1329,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
 
 void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 {
-  kDebug() <<"slotFontSelectorChanged() called";
+  kDebug() << "slotFontSelectorChanged() called";
   if( index < 0 || index >= mFontLocationCombo->count() )
     return; // Should never happen, but it is better to check.
 
@@ -1384,7 +1387,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
     if ( fonts.hasKey( fontNames[i].configName ) ) {
       needChange = true;
       mFont[i] = fonts.readEntry( fontNames[i].configName, QFont() );
-      kDebug() <<"got font \"" << fontNames[i].configName
+      kDebug() << "got font \"" << fontNames[i].configName
                 << "\" thusly: \"" << mFont[i].toString() << "\"";
     }
   if ( needChange && mFontLocationCombo->currentIndex() > 0 )
@@ -1499,7 +1502,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            l, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
-	   mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
+     mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
 
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1635,14 +1638,40 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  QHBoxLayout* folderCBHLayout = new QHBoxLayout();
   mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
   connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  vlay->addWidget( mFavoriteFolderViewCB );
+  folderCBHLayout->addWidget( mFavoriteFolderViewCB );
 
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  vlay->addWidget( mFolderQuickSearchCB );
-  vlay->addSpacing( KDialog::spacingHint() );		// space before next box
+  folderCBHLayout->addWidget( mFolderQuickSearchCB );
+
+  vlay->addLayout( folderCBHLayout );
+  vlay->addSpacing( KDialog::spacingHint() );   // space before next box
+
+  // "folder tooltips" radio buttons:
+  mFolderToolTipsGroupBox = new QGroupBox( this );
+  mFolderToolTipsGroupBox->setTitle( i18n( "Folder Tooltips" ) );
+  mFolderToolTipsGroupBox->setLayout( new QHBoxLayout() );
+  mFolderToolTipsGroupBox->layout()->setSpacing( KDialog::spacingHint() );
+  mFolderToolTipsGroup = new QButtonGroup( this );
+  connect( mFolderToolTipsGroup, SIGNAL( buttonClicked( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  QRadioButton* folderToolTipsAlwaysRadio = new QRadioButton( i18n( "Always" ), mFolderToolTipsGroupBox );
+  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( KMail::FolderView::DisplayAlways ) );
+  mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsAlwaysRadio );
+
+  QRadioButton* folderToolTipsElidedRadio = new QRadioButton( i18n( "When Text Obscured" ), mFolderToolTipsGroupBox );
+  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( KMail::FolderView::DisplayWhenTextElided ) );
+  mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsElidedRadio );
+
+  QRadioButton* folderToolTipsNeverRadio = new QRadioButton( i18n( "Never" ), mFolderToolTipsGroupBox );
+  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( KMail::FolderView::DisplayNever ) );
+  mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsNeverRadio );
+
+  vlay->addWidget( mFolderToolTipsGroupBox );
 
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
@@ -1651,16 +1680,19 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
+  QHBoxLayout* mimeHLayout = new QHBoxLayout();
   populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), Qt::Vertical, mimeTreeMode );
-  vlay->addWidget( mMIMETreeModeGroupBox );
+  mimeHLayout->addWidget( mMIMETreeModeGroupBox );
   connect( mMIMETreeModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
-  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), Qt::Horizontal, mimeTreeLocation );
-  vlay->addWidget( mMIMETreeLocationGroupBox );
+  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), Qt::Vertical, mimeTreeLocation );
+  mimeHLayout->addWidget( mMIMETreeLocationGroupBox );
   connect( mMIMETreeLocationGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
+
+  vlay->addLayout( mimeHLayout );
 
   vlay->addStretch( 10 ); // spacer
 }
@@ -1668,6 +1700,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
 void AppearancePage::LayoutTab::doLoadOther() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  const KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
 
   loadWidget( mFolderListGroupBox, mFolderListGroup, geometry, folderListMode );
   loadWidget( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
@@ -1675,21 +1708,29 @@ void AppearancePage::LayoutTab::doLoadOther() {
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
+  const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
+  if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
+    mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   const KConfigGroup reader( profile, "Reader" );
   const KConfigGroup geometry( profile, "Geometry" );
+  const KConfigGroup mainFolderView( profile, "MainFolderView" );
 
   loadProfile( mFolderListGroupBox, mFolderListGroup, geometry, folderListMode );
   loadProfile( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadProfile( mMIMETreeModeGroupBox, mMIMETreeModeGroup, reader, mimeTreeMode );
   loadProfile( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
+  const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
+  if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
+    mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
 }
 
 void AppearancePage::LayoutTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
 
   saveButtonGroup( mFolderListGroup, geometry, folderListMode );
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
@@ -1697,6 +1738,7 @@ void AppearancePage::LayoutTab::save() {
   saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
   GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
+  mainFolderView.writeEntry( "ToolTipDisplayPolicy", mFolderToolTipsGroup->checkedId() );
 }
 
 //
@@ -3108,11 +3150,11 @@ void ComposerPage::GeneralTab::save() {
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
 {
-  KPIM::RecentAddressDialog dlg( this );
-  dlg.setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
-  if ( dlg.exec() ) {
+  AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
+  dlg->setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
+  if ( dlg->exec() && dlg ) {
     RecentAddresses::self( KMKernel::config() )->clear();
-    const QStringList &addrList = dlg.addresses();
+    const QStringList &addrList = dlg->addresses();
     QStringList::ConstIterator it;
     for ( it = addrList.constBegin(); it != addrList.constEnd(); ++it )
       RecentAddresses::self( KMKernel::config() )->add( *it );
@@ -3523,7 +3565,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   // calling this w/o selection is a programming error:
   QTreeWidgetItem *item = mTagList->currentItem();
   if ( !item ) {
-    kDebug() <<"=================================================="
+    kDebug() << "=================================================="
                   << "Error: Remove button was pressed although no custom header was selected\n"
                   << "==================================================\n";
     return;
@@ -3532,7 +3574,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   QTreeWidgetItem *below = mTagList->itemBelow( item );
 
   if ( below ) {
-    kDebug() <<"below";
+    kDebug() << "below";
     mTagList->setCurrentItem( below );
     delete item;
     item = 0;
@@ -4738,8 +4780,9 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings()
   }
   if ( selectedAccount )
     mMGTab.mAccountCombo->setCurrentAccount( selectedAccount );
-  else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 )
-    kDebug() <<"Folder" << folderId <<" not found as an account's inbox";
+  else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 ) {
+    kDebug() << "Folder" << folderId << "not found as an account's inbox";
+  }
 }
 
 void MiscPage::GroupwareTab::save()

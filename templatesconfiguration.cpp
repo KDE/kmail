@@ -105,7 +105,7 @@ void TemplatesConfiguration::slotTextChanged()
 void TemplatesConfiguration::loadFromGlobal()
 {
   if ( !GlobalSettings::self()->phrasesConverted() ) {
-    kDebug() <<"Phrases to templates conversion";
+    kDebug() << "Phrases to templates conversion";
     importFromPhrases();
   }
 
@@ -155,7 +155,7 @@ void TemplatesConfiguration::saveToGlobal()
 
 void TemplatesConfiguration::loadFromIdentity( uint id )
 {
-  Templates t( QString("IDENTITY_%1").arg( id ) );
+  Templates t( configIdString( id ) );
 
   QString str;
 
@@ -207,8 +207,7 @@ void TemplatesConfiguration::loadFromIdentity( uint id )
 
 void TemplatesConfiguration::saveToIdentity( uint id )
 {
-  Templates t( QString("IDENTITY_%1").arg( id ) );
-
+  Templates t( configIdString( id ) );
   t.setTemplateNewMessage( strOrBlank( textEdit_new->toPlainText() ) );
   t.setTemplateReply( strOrBlank( textEdit_reply->toPlainText() ) );
   t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->toPlainText() ) );
@@ -223,7 +222,7 @@ void TemplatesConfiguration::loadFromFolder( const QString &id, uint identity )
   Templates* tid = 0;
 
   if ( identity ) {
-    tid = new Templates( QString("IDENTITY_%1").arg( identity ) );
+    tid = new Templates( configIdString( identity ) );
   }
 
   QString str;
@@ -439,11 +438,11 @@ void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCu
   } else if( toolBox1->widget( toolBox1->currentIndex() ) == page_forward ) {
     edit = textEdit_forward;
   } else {
-    kDebug() <<"Unknown current page in TemplatesConfiguration!";
+    kDebug() << "Unknown current page in TemplatesConfiguration!";
     return;
   }
 
-  // kDebug() <<"Insert command:" << cmd;
+  // kDebug() << "Insert command:" << cmd;
   QTextCursor cursor = edit->textCursor();
   cursor.insertText( cmd );
   cursor.setPosition( cursor.position() + adjustCursor );
@@ -508,6 +507,11 @@ QString TemplatesConfiguration::strOrBlank( const QString &str ) {
     return QString( "%BLANK" );
   }
   return str;
+}
+
+QString TemplatesConfiguration::configIdString( uint id )
+{
+  return QString( "IDENTITY_%1" ).arg( id );
 }
 
 #include "templatesconfiguration.moc"

@@ -37,6 +37,7 @@
 #include "kmacctcachedimap.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
+#include "autoqpointer.h"
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
@@ -147,17 +148,18 @@ static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat 
 
 void KMail::ACLEntryDialog::slotSelectAddresses()
 {
-  KPIM::AddressesDialog dlg( this );
-  dlg.setShowCC( false );
-  dlg.setShowBCC( false );
+  AutoQPointer<KPIM::AddressesDialog> dlg( new KPIM::AddressesDialog( this ) );
+  dlg->setShowCC( false );
+  dlg->setShowBCC( false );
   if ( mUserIdFormat == FullEmail ) // otherwise we have no way to go back from userid to email
-    dlg.setSelectedTo( userIds() );
-  if ( dlg.exec() != QDialog::Accepted )
+    dlg->setSelectedTo( userIds() );
+  if ( dlg->exec() != QDialog::Accepted || !dlg ) {
     return;
+  }
 
-  const QStringList distrLists = dlg.toDistributionLists();
+  const QStringList distrLists = dlg->toDistributionLists();
   QString txt = distrLists.join( ", " );
-  const KABC::Addressee::List lst = dlg.toAddresses();
+  const KABC::Addressee::List lst = dlg->toAddresses();
   if ( !lst.isEmpty() ) {
     for( QList<KABC::Addressee>::ConstIterator it = lst.constBegin(); it != lst.constEnd(); ++it ) {
       if ( !txt.isEmpty() )
@@ -262,8 +264,9 @@ void KMail::FolderDialogACLTab::ListViewItem::load( const ACLListEntry& entry )
   // since it uses space as a separator (imap4.cc, look for GETACL)
   // It's ok in distribution list names though, that's why this check is only done here
   // and also why there's no validator on the lineedit.
-  if ( entry.userId.contains( ' ' ) )
-    kWarning() <<"Userid contains a space!!!  '" << entry.userId <<"'";
+  if ( entry.userId.contains( ' ' ) ) {
+    kWarning() << "Userid contains a space:" << entry.userId;
+  }
 
   setUserId( entry.userId );
   mPermissions = entry.permissions;
@@ -553,18 +556,20 @@ void KMail::FolderDialogACLTab::slotEditACL(QTreeWidgetItem* item)
   if ( !canAdmin ) return;
 
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
-  ACLEntryDialog dlg( mUserIdFormat, i18n( "Modify Permissions" ), this );
-  dlg.setValues( ACLitem->userId(), ACLitem->permissions() );
-  if ( dlg.exec() == QDialog::Accepted ) {
-    QStringList userIds = dlg.userIds();
+  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( mUserIdFormat,
+                                                        i18n( "Modify Permissions" ),
+                                                        this ) );
+  dlg->setValues( ACLitem->userId(), ACLitem->permissions() );
+  if ( dlg->exec() == QDialog::Accepted && dlg ) {
+    QStringList userIds = dlg->userIds();
     Q_ASSERT( !userIds.isEmpty() ); // impossible, the OK button is disabled in that case
-    ACLitem->setUserId( dlg.userIds().front() );
-    ACLitem->setPermissions( dlg.permissions() );
+    ACLitem->setUserId( dlg->userIds().front() );
+    ACLitem->setPermissions( dlg->permissions() );
     ACLitem->setModified( true );
     emit changed(true);
     if ( userIds.count() > 1 ) { // more emails were added, append them
       userIds.pop_front();
-      addACLs( userIds, dlg.permissions() );
+      addACLs( userIds, dlg->permissions() );
     }
   }
 }
@@ -587,10 +592,11 @@ void KMail::FolderDialogACLTab::addACLs( const QStringList& userIds, unsigned in
 
 void KMail::FolderDialogACLTab::slotAddACL()
 {
-  ACLEntryDialog dlg( mUserIdFormat, i18n( "Add Permissions" ), this );
-  if ( dlg.exec() == QDialog::Accepted ) {
-    const QStringList userIds = dlg.userIds();
-    addACLs( dlg.userIds(), dlg.permissions() );
+  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( mUserIdFormat, i18n( "Add Permissions" ),
+                                                        this ) );
+  if ( dlg->exec() == QDialog::Accepted && dlg ) {
+    const QStringList userIds = dlg->userIds();
+    addACLs( dlg->userIds(), dlg->permissions() );
     emit changed(true);
   }
 }
@@ -787,8 +793,9 @@ void KMail::FolderDialogACLTab::slotACLChanged( const QString& userId, int permi
     uint nr = mRemovedACLs.removeAll( userId );
     ok = ( nr > 0 );
   }
-  if ( !ok )
-    kWarning() <<" no item found for userId" << userId;
+  if ( !ok ) {
+    kWarning() << "no item found for userId" << userId;
+  }
 }
 
 void KMail::FolderDialogACLTab::slotChanged( bool b )

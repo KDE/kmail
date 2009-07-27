@@ -76,7 +76,7 @@ public:
 private:
     void commandStart( const QString & identifier )
     {
-        kDebug() <<"Identifier: '" << identifier <<"'";
+        kDebug() << "Identifier: '" << identifier <<"'";
         reset();
     }
 
@@ -132,7 +132,7 @@ private:
 
     void error( const KSieve::Error & e )
     {
-        kDebug() <<"###" <<"Error:" <<
+        kDebug() << "###" <<"Error:" <<
             e.asString() << "@" << e.line() << "," << e.column();
     }
 
@@ -143,17 +143,17 @@ private:
 
     void taggedArgument( const QString & tag )
     {
-        kDebug() <<"Tag: '" << tag <<"'";
+        kDebug() << "Tag: '" << tag <<"'";
     }
 
     void stringArgument( const QString & string, bool, const QString & )
     {
-        kDebug() <<"String: '" << string <<"'";
+        kDebug() << "String: '" << string <<"'";
     }
 
     void numberArgument( unsigned long number, char )
     {
-        kDebug() <<"Number:" << number;
+        kDebug() << "Number:" << number;
     }
 
     void stringListArgumentStart()
@@ -163,7 +163,7 @@ private:
 
     void stringListEntry( const QString & string, bool, const QString & )
     {
-        kDebug() <<"String: '" << string <<"'";
+        kDebug() << "String: '" << string <<"'";
     }
 
     void stringListArgumentEnd()
@@ -335,7 +335,7 @@ void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
 void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
     const QStringList &scriptList, const QString &activeScript )
 {
-    kDebug() <<"Success:" << success <<", List:" << scriptList.join("," ) <<
+    kDebug() << "Success:" << success <<", List:" << scriptList.join("," ) <<
         ", active:" << activeScript;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 

@@ -145,7 +145,7 @@ namespace KMail {
       if ( url.protocol() == "cid" ) {
         EmbeddedPartMap::const_iterator it = mEmbeddedPartMap.constFind( url.path() );
         if ( it != mEmbeddedPartMap.constEnd() ) {
-          kDebug() <<"Replacing" << url.prettyUrl() <<" by" << it.value();
+          kDebug() << "Replacing" << url.prettyUrl() << "by" << it.value();
           image.setSrc( it.value() );
         }
       }

@@ -235,8 +235,9 @@ void DistributionListDialog::slotUser1()
       ab->releaseSaveTicket( ticket );
   }
 
-  if ( saveError )
-    kWarning() <<" Couldn't save new addresses in the distribution list just created to the address book";
+  if ( saveError ) {
+    kWarning() << "Couldn't save new addresses in the distribution list just created to the address book";
+  }
 
   close();
 }
