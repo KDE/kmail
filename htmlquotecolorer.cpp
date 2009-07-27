@@ -67,7 +67,9 @@ DOM::Node HTMLQuoteColorer::processNode( DOM::Node node )
   }
 
   const QString nodeName = node.nodeName().string().toLower();
-  if ( nodeName == "br" || nodeName == "p" ) { // FIXME: Are there more newline nodes?
+  QStringList lineBreakNodes;
+  lineBreakNodes << "br" << "p" << "div" << "ul" << "ol" << "li";
+  if ( lineBreakNodes.contains( nodeName ) ) {
     mIsFirstTextNodeInLine = true;
   }
 
