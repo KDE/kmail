@@ -1468,7 +1468,7 @@ ThemeEditor::ThemeEditor( QWidget *parent )
   mIconSizeSpinBox = new KIntSpinBox( tab );
   mIconSizeSpinBox->setMinimum( 8 );
   mIconSizeSpinBox->setMaximum( 64 );
-  mIconSizeSpinBox->setSuffix( ki18nc( "suffix in a spinbox", " pixel", " pixels" ) );
+  mIconSizeSpinBox->setSuffix( ki18ncp( "suffix in a spinbox", " pixel", " pixels" ) );
 
   QObject::connect(
       mIconSizeSpinBox, SIGNAL( valueChanged( int ) ),
