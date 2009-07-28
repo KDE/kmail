@@ -3719,26 +3719,8 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   connect( mWidget->mWarnUnsigned, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->warnUnencryptedCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  connect( mWidget->mWarnSignKeyExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( updateSpinBoxSuffix() ) );
-  connect( mWidget->mWarnSignChainCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( updateSpinBoxSuffix() ) );
-  connect( mWidget->mWarnSignRootCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( updateSpinBoxSuffix() ) );
-
-  connect( mWidget->mWarnEncrKeyExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( updateSpinBoxSuffix() ) );
-  connect( mWidget->mWarnEncrChainCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( updateSpinBoxSuffix() ) );
-  connect( mWidget->mWarnEncrRootCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( updateSpinBoxSuffix() ) );
 
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
-}
-
-void SecurityPageWarningTab::updateSpinBoxSuffix()
-{
-  mWidget->mWarnSignKeyExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnSignKeyExpiresSB->value()));
-  mWidget->mWarnSignChainCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnSignChainCertExpiresSB->value()));
-  mWidget->mWarnSignRootCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnSignRootCertExpiresSB->value()));
-  mWidget->mWarnEncrKeyExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnEncrKeyExpiresSB->value()));
-  mWidget->mWarnEncrChainCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnEncrChainCertExpiresSB->value()));
-  mWidget->mWarnEncrRootCertExpiresSB->setSuffix(i18np(" day", " days", mWidget->mWarnEncrRootCertExpiresSB->value()));
-  slotEmitChanged();
 }
 
 void SecurityPage::WarningTab::doLoadOther()
@@ -3759,19 +3741,24 @@ void SecurityPage::WarningTab::doLoadOther()
 
   mWidget->mWarnSignKeyExpiresSB->setValue(
       composer.readEntry( "crypto-warn-sign-key-near-expire-int", 14 ) );
+  mWidget->mWarnSignKeyExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnSignChainCertExpiresSB->setValue(
       composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 ) );
+  mWidget->mWarnSignChainCertExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnSignRootCertExpiresSB->setValue(
       composer.readEntry( "crypto-warn-sign-root-near-expire-int", 14 ) );
+  mWidget->mWarnSignRootCertExpiresSB->setSuffix(ki18np(" day", " days"));
 
   mWidget->mWarnEncrKeyExpiresSB->setValue(
       composer.readEntry( "crypto-warn-encr-key-near-expire-int", 14 ) );
+  mWidget->mWarnEncrKeyExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnEncrChainCertExpiresSB->setValue(
       composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 ) );
+  mWidget->mWarnEncrChainCertExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnEncrRootCertExpiresSB->setValue(
       composer.readEntry( "crypto-warn-encr-root-near-expire-int", 14 ) );
+  mWidget->mWarnEncrRootCertExpiresSB->setSuffix(ki18np(" day", " days"));
 
-  updateSpinBoxSuffix();
   mWidget->enableAllWarningsPB->setEnabled( true );
 }
 

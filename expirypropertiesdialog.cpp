@@ -7,7 +7,6 @@
 #include <QVariant>
 #include <QPushButton>
 #include <QCheckBox>
-#include <QSpinBox>
 #include <QLabel>
 #include <QRadioButton>
 #include <QLayout>
@@ -17,6 +16,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <KNumInput>
 
 using namespace KMail;
 
@@ -54,10 +54,11 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* 
            this, SLOT( slotUpdateControls() ) );
   daysBox->addWidget( expireReadMailCB, 0, 0, Qt::AlignLeft );
 
-  expireReadMailSB = new QSpinBox;
+  expireReadMailSB = new KIntSpinBox;
   expireReadMailSB->setObjectName( "expireReadMailSB" );
   expireReadMailSB->setMaximum( 999999 );
   expireReadMailSB->setValue( 30 );
+  expireReadMailSB->setSuffix( ki18ncp("Expire messages after %1", " day", " days" ) );
   daysBox->addWidget( expireReadMailSB, 0, 1 );
 
   expireUnreadMailCB = new QCheckBox;
@@ -67,15 +68,11 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* 
            this, SLOT( slotUpdateControls() ) );
   daysBox->addWidget( expireUnreadMailCB, 1, 0, Qt::AlignLeft );
 
-  expireUnreadMailSB = new QSpinBox;
+  expireUnreadMailSB = new KIntSpinBox;
   expireUnreadMailSB->setObjectName( "expireUnreadMailSB" );
   expireUnreadMailSB->setMaximum( 99999 );
   expireUnreadMailSB->setValue( 30 );
-  updateSpinBoxSuffix();
-  connect ( expireReadMailSB, SIGNAL( valueChanged( int )),
-           this, SLOT( updateSpinBoxSuffix() ) );
-  connect ( expireUnreadMailSB, SIGNAL( valueChanged( int )),
-           this, SLOT( updateSpinBoxSuffix() ) );
+  expireUnreadMailSB->setSuffix( ki18ncp("Expire messages after %1", " day", " days" ) );
   daysBox->addWidget( expireUnreadMailSB, 1, 1 );
 
   daysBox->setColumnStretch( 3, 1 );
@@ -199,12 +196,6 @@ void ExpiryPropertiesDialog::slotUpdateControls()
 
   expireReadMailSB->setEnabled( expireReadMailCB->isChecked() );
   expireUnreadMailSB->setEnabled( expireUnreadMailCB->isChecked() );
-}
-
-void ExpiryPropertiesDialog::updateSpinBoxSuffix()
-{
-  expireReadMailSB->setSuffix( i18np(" day", " days", expireReadMailSB->value() ) );
-  expireUnreadMailSB->setSuffix( i18np(" day", " days", expireUnreadMailSB->value() ) );
 }
 
 

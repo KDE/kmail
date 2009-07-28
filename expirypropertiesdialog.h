@@ -5,8 +5,8 @@
 #include <kdialog.h>
 
 class QCheckBox;
-class QSpinBox;
 class QRadioButton;
+class KIntSpinBox;
 class KMFolder;
 
 namespace KMail {
@@ -25,15 +25,14 @@ public:
 protected slots:
     void accept();
     void slotUpdateControls();
-    void updateSpinBoxSuffix();
 
 private:
     KMFolder *mFolder;
 
     QCheckBox *expireReadMailCB;
-    QSpinBox *expireReadMailSB;
+    KIntSpinBox *expireReadMailSB;
     QCheckBox *expireUnreadMailCB;
-    QSpinBox *expireUnreadMailSB;
+    KIntSpinBox *expireUnreadMailSB;
     QRadioButton *moveToRB;
     FolderRequester *folderSelector;
     QRadioButton *deletePermanentlyRB;

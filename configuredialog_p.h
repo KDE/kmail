@@ -839,7 +839,6 @@ public:
 
 private slots:
   void slotReenableAllWarningsClicked();
-  void updateSpinBoxSuffix();
 
 private:
   //virtual void doLoadFromGlobalSettings();
