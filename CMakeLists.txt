@@ -69,6 +69,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 set(kmailprivate_LIB_SRCS
    kmmessage.cpp
    kmmainwin.cpp
+   configuredialoglistview.cpp
    configuredialog.cpp
    configuredialog_p.cpp
    simplestringlisteditor.cpp
@@ -314,6 +315,7 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   ui/miscpagegroupwaretab.ui
   ui/securitypagegeneraltab.ui
   ui/identitypage.ui
+  ui/accountspagereceivingtab.ui
 )
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put

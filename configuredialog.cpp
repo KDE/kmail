@@ -25,6 +25,7 @@
 // my headers:
 #include "configuredialog.h"
 #include "configuredialog_p.h"
+#include "ui_accountspagereceivingtab.h"
 
 #include <config-kmail.h>
 
@@ -715,113 +716,46 @@ QString AccountsPage::ReceivingTab::helpAnchor() const
 AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  // temp. vars:
-  QVBoxLayout *vlay;
-  QVBoxLayout *btn_vlay;
-  QHBoxLayout *hlay;
-  QPushButton *button;
-  QGroupBox   *group;
+  mAccountsReceiving.setupUi( this );
 
-  vlay = new QVBoxLayout( this );
-  vlay->setSpacing( KDialog::spacingHint() );
-  vlay->setMargin( KDialog::marginHint() );
+  mAccountsReceiving.vlay->setSpacing( KDialog::spacingHint() );
+  mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
-  // label: zero stretch
-  vlay->addWidget( new QLabel( i18n("Incoming accounts (add at least one):"), this ) );
+  mAccountsReceiving.mAccountList->setSortingEnabled( true );
+  mAccountsReceiving.mAccountList->sortByColumn( 0, Qt::AscendingOrder );
+  mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
 
-  // hbox layout: stretch 10, spacing inherited from vlay
-  hlay = new QHBoxLayout();
-  vlay->addLayout( hlay, 10 ); // high stretch to suppress groupbox's growing
-
-  // account list: left widget in hlay; stretch 1
-  mAccountList = new ListView( this );
-  mAccountList->setObjectName( "accountList" );
-  mAccountList->setHeaderLabels( QStringList() <<
-                                 i18nc( "@title:column Mail account name", "Name" ) <<
-                                 i18nc( "@title:column Mail account type (eg. POP3)", "Type" ) <<
-                                 i18nc( "@title:column Mail account destination folder",
-                                        "Folder" ) );
-  mAccountList->setSortingEnabled( true );
-  mAccountList->sortByColumn( 0, Qt::AscendingOrder );
-
-  connect( mAccountList->selectionModel(),
+  connect( mAccountsReceiving.mAccountList->selectionModel(),
            SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection &)),
            this, SLOT(slotAccountSelected()) );
-  connect( mAccountList, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
+           connect( mAccountsReceiving.mAccountList, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
            this, SLOT(slotModifySelectedAccount()) );
-  hlay->addWidget( mAccountList, 1 );
 
-  // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
-  btn_vlay = new QVBoxLayout();
-  hlay->addLayout( btn_vlay );
-
-  // "add..." button: stretch 0
-  button = new QPushButton( i18n("A&dd..."), this );
-  button->setAutoDefault( false );
-  connect( button, SIGNAL(clicked()),
+  connect( mAccountsReceiving.mAddAccountButton, SIGNAL(clicked()),
            this, SLOT(slotAddAccount()) );
-  btn_vlay->addWidget( button );
 
-  // "modify..." button: stretch 0
-  mModifyAccountButton = new QPushButton( i18n("&Modify..."), this );
-  mModifyAccountButton->setAutoDefault( false );
-  mModifyAccountButton->setEnabled( false ); // b/c no item is selected yet
-  connect( mModifyAccountButton, SIGNAL(clicked()),
+  connect( mAccountsReceiving.mModifyAccountButton, SIGNAL(clicked()),
            this, SLOT(slotModifySelectedAccount()) );
-  btn_vlay->addWidget( mModifyAccountButton );
 
-  // "remove..." button: stretch 0
-  mRemoveAccountButton = new QPushButton( i18n("R&emove"), this );
-  mRemoveAccountButton->setAutoDefault( false );
-  mRemoveAccountButton->setEnabled( false ); // b/c no item is selected yet
-  connect( mRemoveAccountButton, SIGNAL(clicked()),
+  connect( mAccountsReceiving.mRemoveAccountButton, SIGNAL(clicked()),
            this, SLOT(slotRemoveSelectedAccount()) );
-  btn_vlay->addWidget( mRemoveAccountButton );
-  btn_vlay->addStretch( 1 ); // spacer
 
-  mCheckmailStartupCheck = new QCheckBox( i18n("Chec&k mail on startup"), this );
-  vlay->addWidget( mCheckmailStartupCheck );
-  connect( mCheckmailStartupCheck, SIGNAL( stateChanged( int ) ),
+  connect( mAccountsReceiving.mCheckmailStartupCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  // "New Mail Notification" group box: stretch 0
-  group = new QGroupBox( i18n( "New Mail Notification" ), this );
-  vlay->addWidget( group );
+  mAccountsReceiving.group->layout()->setMargin( KDialog::marginHint() );
+  mAccountsReceiving.group->layout()->setSpacing( KDialog::spacingHint() );
 
-  group->setLayout( new QVBoxLayout );
-  group->layout()->setMargin( KDialog::marginHint() );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-
-  // "beep on new mail" check box:
-  mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
-  mBeepNewMailCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
-                                                 QSizePolicy::Fixed ) );
-  connect( mBeepNewMailCheck, SIGNAL( stateChanged( int ) ),
+  connect( mAccountsReceiving.mBeepNewMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  // "Detailed new mail notification" check box
-  mVerboseNotificationCheck =
-    new QCheckBox( i18n( "Deta&iled new mail notification" ), group );
-  mVerboseNotificationCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
-                                                         QSizePolicy::Fixed ) );
-  mVerboseNotificationCheck->setToolTip(
-                 i18n( "Show for each folder the number of newly arrived "
-                       "messages" ) );
-  mVerboseNotificationCheck->setWhatsThis(
+  mAccountsReceiving.mVerboseNotificationCheck->setWhatsThis(
     GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
-  connect( mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
+  connect( mAccountsReceiving.mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  // "Other Actions" button:
-  mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns..."), group );
-  mOtherNewMailActionsButton->setSizePolicy( QSizePolicy( QSizePolicy::Fixed,
-                                                          QSizePolicy::Fixed ) );
-  connect( mOtherNewMailActionsButton, SIGNAL(clicked()),
+  connect( mAccountsReceiving.mOtherNewMailActionsButton, SIGNAL(clicked()),
            this, SLOT(slotEditNotifications()) );
-
-  group->layout()->addWidget( mBeepNewMailCheck );
-  group->layout()->addWidget( mVerboseNotificationCheck );
-  group->layout()->addWidget( mOtherNewMailActionsButton );
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
@@ -849,9 +783,9 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
 
 void AccountsPage::ReceivingTab::slotAccountSelected()
 {
-  QTreeWidgetItem *item = mAccountList->currentItem();
-  mModifyAccountButton->setEnabled( item );
-  mRemoveAccountButton->setEnabled( item );
+  QTreeWidgetItem *item = mAccountsReceiving.mAccountList->currentItem();
+  mAccountsReceiving.mModifyAccountButton->setEnabled( item );
+  mAccountsReceiving.mRemoveAccountButton->setEnabled( item );
 }
 
 QStringList AccountsPage::ReceivingTab::occupiedNames()
@@ -908,11 +842,11 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   account->deinstallTimer();
   account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
 
-  QTreeWidgetItem *after = mAccountList->topLevelItemCount() > 0 ?
-      mAccountList->topLevelItem( mAccountList->topLevelItemCount() - 1 ) :
+  QTreeWidgetItem *after = mAccountsReceiving.mAccountList->topLevelItemCount() > 0 ?
+      mAccountsReceiving.mAccountList->topLevelItem( mAccountsReceiving.mAccountList->topLevelItemCount() - 1 ) :
       0;
 
-  QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, after );
+  QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountsReceiving.mAccountList, after );
   listItem->setText( 0, account->name() );
   listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
   if( account->folder() )
@@ -926,7 +860,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
-  QTreeWidgetItem *listItem = mAccountList->currentItem();
+  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
   if( !listItem ) return;
 
   KMAccount *account = 0;
@@ -996,7 +930,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 {
-  QTreeWidgetItem *listItem = mAccountList->currentItem();
+  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
   if( !listItem ) return;
 
   KMAccount *acct = 0;
@@ -1029,12 +963,12 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
     return;
   }
 
-  QTreeWidgetItem *item = mAccountList->itemBelow( listItem );
-  if ( !item ) item = mAccountList->itemAbove( listItem );
+  QTreeWidgetItem *item = mAccountsReceiving.mAccountList->itemBelow( listItem );
+  if ( !item ) item = mAccountsReceiving.mAccountList->itemAbove( listItem );
   delete listItem;
 
   if ( item ) {
-    mAccountList->setCurrentItem( item );
+    mAccountsReceiving.mAccountList->setCurrentItem( item );
   }
 
   emit changed( true );
@@ -1050,35 +984,35 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
 
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 {
-  mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
+  mAccountsReceiving.mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
 }
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
   KConfigGroup general( KMKernel::config(), "General" );
 
-  mAccountList->clear();
+  mAccountsReceiving.mAccountList->clear();
   QTreeWidgetItem *top = 0;
 
   QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
   while ( accountIt != kmkernel->acctMgr()->end() ) {
     KMAccount *account = *accountIt;
     ++accountIt;
-    QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
+    QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountsReceiving.mAccountList, top );
     listItem->setText( 0, account->name() );
     listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
     if( account->folder() )
       listItem->setText( 2, account->folder()->label() );
     top = listItem;
   }
-  QTreeWidgetItem *listItem = mAccountList->topLevelItemCount() == 0 ?
-      0 : mAccountList->topLevelItem( 0 );
+  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->topLevelItemCount() == 0 ?
+      0 : mAccountsReceiving.mAccountList->topLevelItem( 0 );
   if ( listItem ) {
-    mAccountList->setCurrentItem( listItem );
+    mAccountsReceiving.mAccountList->setCurrentItem( listItem );
   }
 
-  mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
-  mCheckmailStartupCheck->setChecked(
+  mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
+  mAccountsReceiving.mCheckmailStartupCheck->setChecked(
       general.readEntry( "checkmail-startup", false ) );
 }
 
@@ -1115,10 +1049,10 @@ void AccountsPage::ReceivingTab::save()
 
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
-  general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
-  GlobalSettings::self()->setVerboseNewMailNotification( mVerboseNotificationCheck->isChecked() );
+  general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
+  GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
-  general.writeEntry( "checkmail-startup", mCheckmailStartupCheck->isChecked() );
+  general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
 
   // Sync new IMAP accounts ASAP:
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {

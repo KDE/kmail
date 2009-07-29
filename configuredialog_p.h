@@ -34,6 +34,7 @@
 #include "ui_miscpagegroupwaretab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_identitypage.h"
+#include "ui_accountspagereceivingtab.h"
 
 class QPushButton;
 class QLabel;
@@ -299,14 +300,7 @@ private:
   QStringList occupiedNames();
 
 private:
-  ListView      *mAccountList;
-  QPushButton   *mModifyAccountButton;
-  QPushButton   *mRemoveAccountButton;
-  QCheckBox     *mBeepNewMailCheck;
-  QCheckBox     *mVerboseNotificationCheck;
-  QCheckBox     *mCheckmailStartupCheck;
-  QPushButton   *mOtherNewMailActionsButton;
-
+  Ui_AccountsPageReceivingTab mAccountsReceiving;
   QList< QPointer<KMAccount> > mAccountsToDelete;
   QList< QPointer<KMAccount> > mNewAccounts;
   struct ModifiedAccountsType {
@@ -967,28 +961,5 @@ private:
   FolderTab * mFolderTab;
   GroupwareTab * mGroupwareTab;
 };
-
-//
-//
-// further helper classes:
-//
-//
-
-class ListView : public QTreeWidget {
-  Q_OBJECT
-public:
-  explicit ListView( QWidget *parent=0 );
-  void resizeColums();
-
-  virtual QSize sizeHint() const;
-
-protected:
-  virtual void resizeEvent( QResizeEvent *e );
-  virtual void showEvent( QShowEvent *e );
-
-private:
-  int mVisibleItem;
-};
-
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_
