@@ -21,6 +21,7 @@
 
 #include <QString>
 
+class KUrl;
 namespace KMime
 {
   class CharFreq;
@@ -164,6 +165,12 @@ namespace StringUtil
    * @fromAddr from email address to convert to displayable string
    */
   QString formatString( const QString &wildString, const QString &fromAddr = QString() );
+
+  /**
+   * Parses a mailto: url and extracts the information about to, cc, subject and body out into
+   * the QStrings given as argument.
+   */
+  void parseMailtoUrl( const KUrl &url, QString &to, QString &cc, QString &subject, QString &body );
 }
 
 }

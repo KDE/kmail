@@ -30,10 +30,10 @@ using KMail::AccountManager;
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "kmmsgdict.h"
-
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
+#include "stringutil.h"
 
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
@@ -306,8 +306,18 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     // not called with "-session foo"
     for(int i= 0; i < args->count(); i++)
     {
-      if (args->arg(i).startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive))
-        to += args->url(i).path() + ", ";
+      if ( args->arg(i).startsWith( QLatin1String( "mailto:" ), Qt::CaseInsensitive ) ) {
+        QString mailtoTo, mailtoBody, mailtoSubject, mailtoCC;
+        KMail::StringUtil::parseMailtoUrl( args->url( i ), mailtoTo, mailtoCC, mailtoSubject, mailtoBody );
+        if ( !mailtoTo.isEmpty() )
+          to += mailtoTo + ", ";
+        if ( !mailtoCC.isEmpty() )
+          cc += mailtoCC + ", ";
+        if ( !mailtoSubject.isEmpty() )
+          subj = mailtoSubject;
+        if ( !mailtoBody.isEmpty() )
+          body = mailtoBody;
+      }
       else {
         QString tmpArg = args->arg(i);
         KUrl url( tmpArg );
