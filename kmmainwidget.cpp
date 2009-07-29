@@ -698,7 +698,7 @@ void KMMainWidget::createWidgets()
   //
   // Create header view and search bar
   //
-  mMessageListView = new KMail::MessageListView::Pane( this, this );
+  mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
   mMessageListView->setObjectName( "messagelistview" );
 
   connect( mMessageListView, SIGNAL( currentFolderChanged( KMFolder * ) ),

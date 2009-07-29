@@ -29,6 +29,7 @@
 #include <KLocale>
 #include <KIcon>
 #include <KMenu>
+#include <KActionMenu>
 
 #include <QAction>
 #include <QIcon>
@@ -49,7 +50,7 @@ namespace MessageListView
 {
 
 
-Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
+Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent, KActionCollection * actionCollection )
   : KTabWidget( pParent ), mMainWidget( mainWidget ), mCurrentWidget( 0 ),
     mCurrentFolder( 0 )
 {
@@ -86,6 +87,14 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent )
 
 
   addNewWidget();
+
+
+  // Setup "View->Message List" actions.
+  KActionMenu * actActionMenu = new KActionMenu( KIcon(), i18n( "Message List" ), this );
+  actionCollection->addAction( "view_message_list", actActionMenu );
+  KMenu * childMenu = actActionMenu->menu();
+  mCurrentWidget->view()->fillViewMenu( childMenu );
+
 
   // This is a dumping ground for strings that we'll need when finishing the message
   // list. We have to add the dummy i18n calls to reserve them before the string

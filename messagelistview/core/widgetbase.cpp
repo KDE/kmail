@@ -114,51 +114,6 @@ Widget::Widget( QWidget *pParent )
            this, SIGNAL( fullSearchRequest() ) );
 
 
-  // The sort order menu
-  mSortOrderButton = new QToolButton( this );
-  mSortOrderButton->setIcon( KIcon( "view-sort-ascending" ) );
-  mSortOrderButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
-  mSortOrderButton->setText( i18n( "Change Sort Order" ) );
-  mSortOrderButton->setToolTip( mSortOrderButton->text() );
-  menu = new KMenu( this );
-
-  connect( menu, SIGNAL( aboutToShow() ),
-           SLOT( sortOrderMenuAboutToShow() ) );
-
-  mSortOrderButton->setMenu( menu );
-  mSortOrderButton->setPopupMode( QToolButton::InstantPopup );
-  g->addWidget( mSortOrderButton, 0, 3 );
-
-  // The Aggregation menu
-  mAggregationButton = new QToolButton( this );
-  mAggregationButton->setIcon( KIcon( "view-process-tree" ) ); // view-list-tree is also ok
-  mAggregationButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
-  mAggregationButton->setText( i18n( "Select Aggregation Mode" ) );
-  mAggregationButton->setToolTip( mAggregationButton->text() );
-  menu = new KMenu( this );
-
-  connect( menu, SIGNAL( aboutToShow() ),
-           SLOT( aggregationMenuAboutToShow() ) );
-
-  mAggregationButton->setMenu( menu );
-  mAggregationButton->setPopupMode( QToolButton::InstantPopup );
-  g->addWidget( mAggregationButton, 0, 4 );
-
-  // The Theme menu
-  mThemeButton = new QToolButton( this );
-  mThemeButton->setIcon( KIcon( "preferences-desktop-theme" ) );
-  mThemeButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
-  mThemeButton->setText( i18n( "Select View Appearance (Theme)" ) );
-  mThemeButton->setToolTip( mThemeButton->text() );
-  menu = new KMenu( this );
-
-  connect( menu, SIGNAL( aboutToShow() ),
-           SLOT( themeMenuAboutToShow() ) );
-
-  mThemeButton->setMenu( menu );
-  mThemeButton->setPopupMode( QToolButton::InstantPopup );
-  g->addWidget( mThemeButton, 0, 5 );
-
   mView = new View( this );
   mView->setSortOrder( &mSortOrder );
   mView->setObjectName( "messagealistview" );
@@ -170,9 +125,6 @@ Widget::Widget( QWidget *pParent )
   g->setRowStretch( 1, 1 );
   g->setColumnStretch( 0, 1 );
 
-  mSortOrderButton->setEnabled( false );
-  mAggregationButton->setEnabled( false );
-  mThemeButton->setEnabled( false );
   mSearchEdit->setEnabled( false );
   mStatusFilterButton->setEnabled( false );
 
@@ -310,9 +262,6 @@ void Widget::setStorageModel( StorageModel * storageModel, PreSelectionMode preS
   delete oldModel;
 
   mStatusFilterButton->setEnabled( mStorageModel );
-  mSortOrderButton->setEnabled( mStorageModel );
-  mAggregationButton->setEnabled( mStorageModel );
-  mThemeButton->setEnabled( mStorageModel );
   mSearchEdit->setEnabled( mStorageModel );
 }
 

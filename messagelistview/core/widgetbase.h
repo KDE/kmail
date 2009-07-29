@@ -79,9 +79,6 @@ private:
   KLineEdit * mSearchEdit;
   QTimer * mSearchTimer;
   QToolButton * mStatusFilterButton;
-  QToolButton * mSortOrderButton;
-  QToolButton * mAggregationButton;
-  QToolButton * mThemeButton;
 
   StorageModel * mStorageModel;          ///< The currently displayed storage. The storage itself
                                          ///  is owned by MessageListView::Widget.
