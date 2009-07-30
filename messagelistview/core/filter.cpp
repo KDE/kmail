@@ -45,18 +45,22 @@ bool Filter::match( const MessageItem * item ) const
 
   if ( !mSearchString.isEmpty() )
   {
+    bool searchMatches = false;
     if ( item->subject().indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
-      return true;
+      searchMatches = true;
     if ( item->sender().indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
-      return true;
+      searchMatches = true;
     if ( item->receiver().indexOf( mSearchString, 0, Qt::CaseInsensitive ) >= 0 )
-      return true;
-
-    return false;
+      searchMatches = true;
+    if ( !searchMatches )
+      return false;
   }
 
-  if ( !mTagId.isEmpty() )
-    return item->findTag( mTagId ) != 0;
+  if ( !mTagId.isEmpty() ) {
+    const bool tagMatches = item->findTag( mTagId ) != 0;
+    if ( !tagMatches )
+      return false;
+  }
 
   return true;
 }
