@@ -720,11 +720,6 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
   if ( !root ) return;
 
   isHTML = false;
-  // initialy parse the complete message to decrypt any encrypted parts
-  {
-    ObjectTreeParser otp( 0, 0, true, false, true );
-    otp.parseObjectTree( root );
-  }
   partNode * curNode = root->findType( DwMime::kTypeText,
                                DwMime::kSubtypeUnknown,
                                true,
@@ -743,15 +738,18 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
 
 //-----------------------------------------------------------------------------
 
-QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) const {
+QString KMMessage::asPlainTextFromObjectTree( partNode *root, bool aStripSignature,
+                                              bool allowDecryption ) const
+{
+  Q_ASSERT( root );
+  Q_ASSERT( root->processed() );
+
   QCString parsedString;
   bool isHTML = false;
   const QTextCodec * codec = 0;
 
-  partNode * root = partNode::fromMessage( this );
   if ( !root ) return QString::null;
   parseTextStringFromDwPart( root, parsedString, codec, isHTML );
-  delete root;
 
   if ( mOverrideCodec || !codec )
     codec = this->codec();
@@ -767,27 +765,27 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
     QPtrList<Kpgp::Block> pgpBlocks;
     QStrList nonPgpBlocks;
     if ( Kpgp::Module::prepareMessageForDecryption( parsedString,
-						    pgpBlocks,
-						    nonPgpBlocks ) ) {
+                pgpBlocks,
+                nonPgpBlocks ) ) {
       // Only decrypt/strip off the signature if there is only one OpenPGP
       // block in the message
       if ( pgpBlocks.count() == 1 ) {
-	Kpgp::Block * block = pgpBlocks.first();
-	if ( block->type() == Kpgp::PgpMessageBlock ||
-	     block->type() == Kpgp::ClearsignedBlock ) {
-	  if ( block->type() == Kpgp::PgpMessageBlock ) {
-	    // try to decrypt this OpenPGP block
-	    block->decrypt();
-	  } else {
-	    // strip off the signature
-	    block->verify();
-	    clearSigned = true;
-	  }
+        Kpgp::Block * block = pgpBlocks.first();
+        if ( block->type() == Kpgp::PgpMessageBlock ||
+             block->type() == Kpgp::ClearsignedBlock ) {
+          if ( block->type() == Kpgp::PgpMessageBlock ) {
+            // try to decrypt this OpenPGP block
+            block->decrypt();
+          } else {
+            // strip off the signature
+            block->verify();
+            clearSigned = true;
+          }
 
-	  result = codec->toUnicode( nonPgpBlocks.first() )
-	         + codec->toUnicode( block->text() )
-	         + codec->toUnicode( nonPgpBlocks.last() );
-	}
+          result = codec->toUnicode( nonPgpBlocks.first() )
+                 + codec->toUnicode( block->text() )
+                 + codec->toUnicode( nonPgpBlocks.last() );
+        }
       }
     }
   }
@@ -818,6 +816,21 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
     return stripSignature( result, clearSigned );
   else
     return result;
+}
+
+//-----------------------------------------------------------------------------
+
+QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) const
+{
+  partNode *root = partNode::fromMessage( this );
+  if ( !root )
+    return QString::null;
+
+  ObjectTreeParser otp;
+  otp.parseObjectTree( root );
+  QString result = asPlainTextFromObjectTree( root, aStripSignature, allowDecryption );
+  delete root;
+  return result;
 }
 
 QString KMMessage::asQuotedString( const QString& aHeaderStr,
@@ -1288,7 +1301,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
   msg->setSubject( forwardSubject() );
 
   TemplateParser parser( msg, TemplateParser::Forward,
-    asPlainText( false, false ),
+    QString(),
     false, false, false, false);
   if ( !tmpl.isEmpty() ) {
     parser.process( tmpl, this );
