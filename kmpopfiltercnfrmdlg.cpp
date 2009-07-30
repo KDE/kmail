@@ -62,8 +62,8 @@ KMPopHeadersView::KMPopHeadersView( QWidget *parent,
   headerItem->setToolTip( 0, i18nc("@action:button", "Download all messages now") );
   headerItem->setToolTip( 1, i18nc("@action:button", "Download all messages later") );
   headerItem->setToolTip( 2, i18nc("@action:button", "Delete all messages") );
-  headerItem->setIcon( 0, KIcon( "mail-download-now" ) );
-  headerItem->setIcon( 1, KIcon( "mail-download-later" ) );
+  headerItem->setIcon( 0, KIcon( "download" ) );
+  headerItem->setIcon( 1, KIcon( "download-later" ) );
   headerItem->setIcon( 2, KIcon( "edit-delete" ) );
   setHeaderItem( headerItem );
   header()->setResizeMode( QHeaderView::Interactive );
