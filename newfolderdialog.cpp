@@ -55,7 +55,7 @@
 using namespace KMail;
 
 NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
-  : KDialog( parent ), mFolder( folder )
+  : KDialog( parent ), mContentsComboBox( 0 ), mFolder( folder )
 {
   setCaption( i18n( "New Folder" ) );
   setButtons( Ok | Cancel );
@@ -129,7 +129,8 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   }
 
   // --- contents -----
-  if ( kmkernel->iCalIface().isEnabled() ) {
+  if ( kmkernel->iCalIface().isEnabled() &&
+       mFolder && mFolder->folderType() == KMFolderTypeCachedImap ) {
     mContentsHBox = new QHBoxLayout();
     mContentsHBox->setSpacing( 6 );
     mContentsHBox->setMargin( 0 );
