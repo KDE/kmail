@@ -771,6 +771,15 @@ public:
       converting HTML to plain text if necessary. */
   QString asPlainText( bool stripSignature, bool allowDecryption ) const;
 
+  /**
+   * Same as asPlainText(), only that this method expects an already parsed object tree as
+   * paramter.
+   * By passing an already parsed objecttree, this allows to share the objecttree and therefore
+   * reduce the amount of parsing (which can include decrypting, which can include a passphrase dialog)
+   */
+  QString asPlainTextFromObjectTree( partNode *root, bool stripSignature,
+                                     bool allowDecryption ) const;
+
   /** Get stored cursor position */
   int getCursorPos() { return mCursorPos; }
   /** Set cursor position as offset from message start */
