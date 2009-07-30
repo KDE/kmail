@@ -1021,6 +1021,7 @@ void Widget::searchEditClearButtonClicked()
   mFilter = 0;
 
   mView->model()->setFilter( mFilter );
+  mStatusFilterCombo->setCurrentIndex( 0 );
 }
 
 
