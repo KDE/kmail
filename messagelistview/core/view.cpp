@@ -667,8 +667,6 @@ void View::slotHeaderContextMenuRequested( const QPoint &pnt )
   // the menu for the columns
   KMenu menu;
 
-  menu.addTitle( i18n( "Show Columns" ) );
-
   int idx = 0;
   QAction * act;
 
