@@ -23,6 +23,7 @@
 
 #include <qobject.h>
 
+class partNode;
 class KMMessage;
 class QString;
 class KMFolder;
@@ -46,6 +47,7 @@ class TemplateParser : public QObject
     TemplateParser( KMMessage *amsg, const Mode amode, const QString &aselection,
                     bool aSmartQuote, bool aallowDecryption,
                     bool aselectionIsBody );
+    ~TemplateParser();
 
     virtual void process( KMMessage *aorig_msg, KMFolder *afolder = 0, bool append = false );
     virtual void process( const QString &tmplName, KMMessage *aorig_msg,
@@ -82,6 +84,23 @@ class TemplateParser : public QObject
     QString mQuoteString;
     bool mAppend;
     QString mTo, mCC;
+    partNode *mOrigRoot;
+
+    /**
+     * If there was a text selection set in the constructor, that will be returned.
+     * Otherwise, returns the plain text of the original message, as in KMMessage::asPlainText().
+     * The only difference is that this uses the cached object tree from parsedObjectTree()
+     *
+     * @param allowSelectionOnly if false, it will always return the complete mail text
+     */
+    QString messageText( bool allowSelectionOnly );
+
+    /**
+     * Returns the parsed object tree of the original message.
+     * The result is cached in mOrigRoot, therefore calling this multiple times will only parse
+     * the tree once.
+     */
+    partNode* parsedObjectTree();
 
     /**
      * Called by processWithTemplate(). This adds the completely processed body to

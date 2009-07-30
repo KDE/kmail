@@ -734,11 +734,6 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
     return;
 
   isHTML = false;
-  // initialy parse the complete message to decrypt any encrypted parts
-  {
-    ObjectTreeParser otp( 0, 0, true, false, true );
-    otp.parseObjectTree( root );
-  }
   partNode * curNode = root->findType( DwMime::kTypeText,
                                DwMime::kSubtypeUnknown,
                                true,
@@ -756,15 +751,18 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
 
 //-----------------------------------------------------------------------------
 
-QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) const {
+QString KMMessage::asPlainTextFromObjectTree( partNode *root, bool aStripSignature,
+                                              bool allowDecryption ) const
+{
+  Q_ASSERT( root );
+  Q_ASSERT( root->processed() );
+
   QByteArray parsedString;
   bool isHTML = false;
   const QTextCodec * codec = 0;
 
-  partNode * root = partNode::fromMessage( this );
   if ( !root ) return QString();
   parseTextStringFromDwPart( root, parsedString, codec, isHTML );
-  delete root;
 
   if ( mOverrideCodec || !codec )
     codec = this->codec();
@@ -831,6 +829,21 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
     return stripSignature( result, clearSigned );
   else
     return result;
+}
+
+//-----------------------------------------------------------------------------
+
+QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) const
+{
+  partNode *root = partNode::fromMessage( this );
+  if ( !root )
+    return QString::null;
+
+  ObjectTreeParser otp;
+  otp.parseObjectTree( root );
+  QString result = asPlainTextFromObjectTree( root, aStripSignature, allowDecryption );
+  delete root;
+  return result;
 }
 
 QString KMMessage::asQuotedString( const QString& aHeaderStr,
@@ -1294,7 +1307,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
   msg->setSubject( forwardSubject() );
 
   TemplateParser parser( msg, TemplateParser::Forward,
-                         asPlainText( false, false ),
+                         QString(),
                          false, false, false);
   if ( !tmpl.isEmpty() )
     parser.process( tmpl, this );

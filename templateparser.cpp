@@ -61,9 +61,15 @@ TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
   mMode( amode ), mFolder( 0 ), mIdentity( 0 ), mSelection( aselection ),
   mSmartQuote( asmartQuote ),
   mAllowDecryption( aallowDecryption ), mSelectionIsBody( aselectionIsBody ),
-  mDebug( false ), mQuoteString( "> " ), mAppend( false )
+  mDebug( false ), mQuoteString( "> " ), mAppend( false ), mOrigRoot( 0 )
 {
   mMsg = amsg;
+}
+
+TemplateParser::~TemplateParser()
+{
+  delete mOrigRoot;
+  mOrigRoot = 0;
 }
 
 int TemplateParser::parseQuotes( const QString &prefix, const QString &str,
@@ -295,7 +301,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         QString pipe_cmd = q;
         if ( mOrigMsg ) {
           QString str =
-              pipe( pipe_cmd, mOrigMsg->asPlainText( mSmartQuote, mAllowDecryption ) );
+              pipe( pipe_cmd, messageText( false ) );
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, str,
                                                     mSmartQuote, mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
@@ -307,7 +313,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug(5006) <<"Command: QUOTE";
         i += strlen( "QUOTE" );
         if ( mOrigMsg ) {
-          QString quote = mOrigMsg->asQuotedString( "", mQuoteString, mSelection,
+          QString quote = mOrigMsg->asQuotedString( "", mQuoteString, messageText( true ),
                                                     mSmartQuote, mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
             quote.chop( 1 );
@@ -342,8 +348,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += len;
         QString pipe_cmd = q;
         if ( mOrigMsg ) {
-          QString str =
-              pipe(pipe_cmd, mOrigMsg->asPlainText( mSmartQuote, mAllowDecryption ) );
+          QString str = pipe(pipe_cmd, messageText( false ) );
           body.append( str );
         }
 
@@ -385,7 +390,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug(5006) <<"Command: TEXT";
         i += strlen( "TEXT" );
         if ( mOrigMsg ) {
-          QString quote = mOrigMsg->asPlainText( false, mAllowDecryption );
+          QString quote = messageText( false );
           body.append( quote );
         }
 
@@ -401,7 +406,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug(5006) <<"Command: OTEXT";
         i += strlen( "OTEXT" );
         if ( mOrigMsg ) {
-          QString quote = mOrigMsg->asPlainText( false, mAllowDecryption );
+          QString quote = messageText( false );
           body.append( quote );
         }
 
@@ -869,6 +874,26 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
   addProcessedBodyToMessage( body );
 }
 
+QString TemplateParser::messageText( bool allowSelectionOnly )
+{
+  if ( !mSelection.isEmpty() && allowSelectionOnly )
+    return mSelection;
+
+  // No selection text, therefore we need to parse the object tree ourselves to get
+  partNode *root = parsedObjectTree();
+  return mMsg->asPlainTextFromObjectTree( root, true, mAllowDecryption );
+}
+
+partNode* TemplateParser::parsedObjectTree()
+{
+  if ( mOrigRoot )
+    return mOrigRoot;
+
+  mOrigRoot = partNode::fromMessage( mMsg );
+  KMail::ObjectTreeParser otp; // all defaults are ok
+  otp.parseObjectTree( mOrigRoot );
+  return mOrigRoot;
+}
 
 void TemplateParser::addProcessedBodyToMessage( const QString &body )
 {
@@ -882,9 +907,7 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
   else {
 
     // Get the attachments of the original mail
-    partNode *root = partNode::fromMessage( mMsg );
-    KMail::ObjectTreeParser otp; // all defaults are ok
-    otp.parseObjectTree( root );
+    partNode *root = parsedObjectTree();
     KMail::AttachmentCollector ac;
     ac.collectAttachmentsFrom( root );
 
@@ -932,7 +955,7 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
         // Body::AddBodyPart is very misleading here...
         attachment->dwPart()->SetNext( 0 );
 
-        mMsg->addDwBodyPart( attachment->dwPart() );
+        mMsg->addDwBodyPart( static_cast<DwBodyPart*>( attachment->dwPart()->Clone() ) );
         mMsg->assembleIfNeeded();
       }
     }
