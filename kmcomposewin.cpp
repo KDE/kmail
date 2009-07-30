@@ -183,7 +183,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
-    mCheckForRecipients( false )
+    mCheckForRecipients( true )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
