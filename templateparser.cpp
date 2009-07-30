@@ -914,9 +914,6 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     // Get the attachments of the original mail
     partNode *root = partNode::fromMessage( mMsg );
     KMail::AttachmentCollector ac;
-    ac.setDiveIntoEncryptions( true );
-    ac.setDiveIntoSignatures( true );
-    ac.setDiveIntoMessages( false );
     ac.collectAttachmentsFrom( root );
 
     // Now, delete the old content and set the new content, which
