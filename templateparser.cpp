@@ -849,7 +849,7 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
 
   // No selection text, therefore we need to parse the object tree ourselves to get
   partNode *root = parsedObjectTree();
-  return mMsg->asPlainTextFromObjectTree( root, true, mAllowDecryption );
+  return mOrigMsg->asPlainTextFromObjectTree( root, true, mAllowDecryption );
 }
 
 partNode* TemplateParser::parsedObjectTree()
@@ -857,7 +857,7 @@ partNode* TemplateParser::parsedObjectTree()
   if ( mOrigRoot )
     return mOrigRoot;
 
-  mOrigRoot = partNode::fromMessage( mMsg );
+  mOrigRoot = partNode::fromMessage( mOrigMsg );
   KMail::ObjectTreeParser otp; // all defaults are ok
   otp.parseObjectTree( mOrigRoot );
   return mOrigRoot;
