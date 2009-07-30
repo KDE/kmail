@@ -55,7 +55,7 @@
 using namespace KMail;
 
 NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
-  : KDialog( parent ), mFolder( folder )
+  : KDialog( parent ), mContentsComboBox( 0 ), mFolder( folder )
 {
   setCaption( i18n( "New Folder" ) );
   setButtons( Ok | Cancel );
