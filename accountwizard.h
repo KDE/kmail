@@ -36,11 +36,7 @@ class KLineEdit;
 class QCheckBox;
 class QLabel;
 class QPushButton;
-class QRadioButton;
-class QAbstractButton;
-class QButtonGroup;
 namespace KMail {
-  class IdentityListView;
 }
 
 class KMAccount;

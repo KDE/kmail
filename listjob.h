@@ -34,7 +34,6 @@
 #include "imapaccountbase.h"
 
 class FolderStorage;
-class KUrl;
 class KJob; 
 namespace KIO {
   class Job;

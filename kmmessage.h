@@ -40,7 +40,6 @@ class DwHeaders;
 class partNode;
 
 namespace KMime {
-  class CharFreq;
   namespace Types {
     struct AddrSpec;
     struct Address;
@@ -50,7 +49,6 @@ namespace KMime {
 }
 
 namespace KMail {
-  class HeaderStrategy;
 }
 
 

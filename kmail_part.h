@@ -35,7 +35,6 @@
 #include <QWidget>
 #include <QPixmap>
 
-class KAboutData;
 class KMailStatusBarExtension;
 class KMKernel;
 class KMMainWidget;

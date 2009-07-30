@@ -21,12 +21,9 @@
 #include <libkdepim/kmeditor.h>
 #include <ktexteditor/view.h>
 
-class QPushButton;
 class QTreeWidgetItem;
 class QContextMenuEvent;
-class SnippetDlg;
 class SnippetItem;
-class KTextEdit;
 class KConfig;
 class QWidget;
 class KActionCollection;

@@ -51,7 +51,6 @@ class KButtonGroup;
 class KUrlRequester;
 class KFontChooser;
 class KTabWidget;
-class KVBox;
 class KMAccount;
 class ListView;
 class ConfigureDialog;
@@ -72,8 +71,6 @@ namespace KMail {
   class IdentityDialog;
   class IdentityListView;
   class IdentityListViewItem;
-  class AccountComboBox;
-  class FolderRequester;
 }
 namespace Kleo {
   class BackendConfigWidget;

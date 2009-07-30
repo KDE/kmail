@@ -41,7 +41,6 @@
 class partNode;
 class KMReaderWin;
 class KMMimePartTreeItem;
-class QAction;
 
 /**
  * @short The widget that displays the message MIME tree

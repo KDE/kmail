@@ -27,7 +27,6 @@
 #include <QPointer>
 #include <QHideEvent>
 
-class KConfig;
 namespace KMail {
     class ImapAccountBase;
 }

@@ -30,10 +30,7 @@
 
 class KLineEdit;
 class QTimer;
-class QToolButton;
 class QActionGroup;
-class QHeaderView;
-class KMenu;
 class KComboBox;
 
 namespace KPIM
