@@ -348,7 +348,7 @@ protected:
   /**
    * Reimplemented from MessageListView::Core::Widget in order to fill the menu with (KMail dependant) custom tags.
    */
-  virtual QActionGroup * fillMessageTagMenu( KMenu * menu );
+  virtual void fillMessageTagCombo( KComboBox *combo );
 
   /**
    * Reimplemented from MessageListView::Core::Widget

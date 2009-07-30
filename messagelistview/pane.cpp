@@ -429,6 +429,7 @@ void Pane::slotNewTab()
 Widget * Pane::addNewWidget()
 {
   Widget * w = new Widget( mMainWidget, this );
+  w->populateStatusFilterCombo();
   addTab( w, i18nc( "@title:tab Empty messagelist", "Empty" ) );
 
   connect( w, SIGNAL( messageSelected( KMMessage * ) ),
@@ -441,6 +442,8 @@ Widget * Pane::addNewWidget()
            this, SIGNAL( messageStatusChangeRequest( KMMsgBase *, const KPIM::MessageStatus &, const KPIM::MessageStatus & ) ) );
   connect( w, SIGNAL( fullSearchRequest() ),
            this, SIGNAL( fullSearchRequest() ) );
+  connect( KMKernel::self()->msgTagMgr(), SIGNAL( msgTagListChanged() ),
+           w, SLOT( populateStatusFilterCombo() ) );
 
   updateTabControls();
   return w;

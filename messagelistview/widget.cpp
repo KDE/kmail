@@ -46,6 +46,7 @@
 #include <KActionMenu>
 #include <KApplication>
 #include <KConfigGroup>
+#include <KComboBox>
 #include <KIconEffect>
 #include <KIconLoader>
 #include <KMenu>
@@ -892,7 +893,7 @@ void Widget::viewJobBatchTerminated()
   mPane->widgetIconChangeRequest( this, mFolderIconBase );
 }
 
-QActionGroup * Widget::fillMessageTagMenu( KMenu * menu )
+void Widget::fillMessageTagCombo( KComboBox * combo )
 {
   // Used for sorting, go through this routine so that mMsgTagList is properly ordered
   KMMessageTagList sortedTags;
@@ -906,31 +907,19 @@ QActionGroup * Widget::fillMessageTagMenu( KMenu * menu )
   }
 
   if ( sortedTags.isEmpty() )
-    return 0;
+    return;
 
   sortedTags.prioritySort();
-
-  QActionGroup * grp = new QActionGroup( menu );
-
-  QAction * act;
-
-  QString currentTagId = currentFilterTagId();
 
   for ( KMMessageTagList::Iterator itl = sortedTags.begin(); itl != sortedTags.end(); ++itl )
   {
     const KMMessageTagDescription *description = kmkernel->msgTagMgr()->find( *itl );
     if ( description )
     {
-      act = menu->addAction( description->name() );
-      act->setIcon( SmallIcon( description->toolbarIconName() ) );
-      act->setCheckable( true );
-      act->setChecked( description->label() == currentTagId );
-      act->setData( QVariant( description->label() ) );
-      grp->addAction( act );
+      combo->addItem( SmallIcon( description->toolbarIconName() ), description->name(),
+                      QVariant( description->label() ) );
     }
   }
-
-  return grp;
 }
 
 
