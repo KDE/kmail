@@ -58,6 +58,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     : KDialogBase( parent, "new_folder_dialog", false, i18n( "New Folder" ),
                    KDialogBase::Ok|KDialogBase::Cancel,
                    KDialogBase::Ok, true ),
+      mContentsComboBox( 0 ),
       mFolder( folder )
 {
   setWFlags( getWFlags() | WDestructiveClose );
