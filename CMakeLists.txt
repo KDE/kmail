@@ -444,8 +444,7 @@ install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SK
 install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES KMail.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
-  replyphrases.kcfg
+  ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg  
   custommimeheader.kcfg
   customtemplates_kfg.kcfg
   templatesconfiguration_kfg.kcfg
