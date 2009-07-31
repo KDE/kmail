@@ -2063,7 +2063,9 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       if ( const char *str = nestedContentDisposition( format, signing ) ) {
         codeCStr += "Content-Disposition: ";
         codeCStr += str;
-        codeCStr += '\n';
+        if  ( !codeCStr.endsWith( '\n' ) ) {
+          codeCStr += '\n';
+        }
       }
       if ( binaryHint( format ) ) {
         codeCStr += "Content-Transfer-Encoding: base64\n\n";
