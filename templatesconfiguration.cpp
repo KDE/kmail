@@ -494,7 +494,7 @@ QString TemplatesConfiguration::defaultForward()
            "%OADDRESSEESADDR\n"
            "\n"
            "%4\n"
-           "-------------------------------------------------------",
+           "-----------------------------------------",
            "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%TEXT" );
 }
 
