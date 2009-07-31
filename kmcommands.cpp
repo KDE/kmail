@@ -2336,7 +2336,8 @@ KMCommand::Result KMUrlClickedCommand::execute()
         return Canceled;
     }
     if ( !KMail::Util::handleUrlOnMac( mUrl.pathOrUrl() ) ) {
-      KRun *runner = new KRun( mUrl, mMainWidget ); // will delete itself
+      // workaround : without showProgressInfo=false, the kiojob remain open forever with https link, see BUG: 198671
+      KRun *runner = new KRun( mUrl, mMainWidget, 0, false, false ); // will delete itself
       runner->setRunExecutables( false );
     }
   }
