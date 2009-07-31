@@ -22,6 +22,7 @@
 
 #include <dom/html_document.h>
 #include <dom/dom_element.h>
+#include <dom/dom_exception.h>
 
 namespace KMail {
 
@@ -32,16 +33,23 @@ HTMLQuoteColorer::HTMLQuoteColorer( KPIM::CSSHelper *cssHelper )
 
 QString HTMLQuoteColorer::process( const QString &htmlSource )
 {
-  // Create a DOM Document from the HTML source
-  DOM::HTMLDocument doc;
-  doc.open();
-  doc.write( htmlSource );
-  doc.close();
+  try {
+    // Create a DOM Document from the HTML source
+    DOM::HTMLDocument doc;
+    doc.open();
+    doc.write( htmlSource );
+    doc.close();
 
-  mIsQuotedLine = false;
-  mIsFirstTextNodeInLine = true;
-  processNode( doc.documentElement() );
-  return doc.toString().string();
+    mIsQuotedLine = false;
+    mIsFirstTextNodeInLine = true;
+    processNode( doc.documentElement() );
+    return doc.toString().string();
+  }
+  catch( const DOM::DOMException &exception ) {
+    kWarning() << "Got a DOM exception with code" << exception.code;
+    kWarning() << "No quote coloring for you, then.";
+    return htmlSource;
+  }
 }
 
 DOM::Node HTMLQuoteColorer::processNode( DOM::Node node )
