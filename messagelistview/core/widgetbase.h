@@ -247,6 +247,7 @@ protected slots:
   void messageSortDirectionSelected( QAction *action );
   void groupSortingSelected( QAction *action );
   void groupSortDirectionSelected( QAction *action );
+  void resetFilter();
 
   /**
    * Handles header section clicks switching the Aggregation MessageSorting on-the-fly.

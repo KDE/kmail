@@ -294,12 +294,8 @@ void Widget::setStorageModel( StorageModel * storageModel, PreSelectionMode preS
 
   mSearchEdit->setText( QString() );
 
-  if ( mFilter )
-  {
-    delete mFilter;
-    mFilter = 0;
-
-    mView->model()->setFilter( 0 );
+  if ( mFilter ) {
+    resetFilter();
   }
 
   StorageModel * oldModel = mStorageModel;
@@ -825,6 +821,14 @@ void Widget::groupSortDirectionSelected( QAction *action )
 
 }
 
+void Widget::resetFilter()
+{
+  delete mFilter;
+  mFilter = 0;
+  mView->model()->setFilter( 0 );
+  mStatusFilterCombo->setCurrentIndex( 0 );
+}
+
 void Widget::slotViewHeaderSectionClicked( int logicalIndex )
 {
   if ( !mTheme )
@@ -896,10 +900,9 @@ void Widget::tagIdSelected( QVariant data )
   {
     if ( mFilter )
     {
-      if ( mFilter->isEmpty() )
-      {
-        delete mFilter;
-        mFilter = 0;
+      if ( mFilter->isEmpty() ) {
+        resetFilter();
+        return;
       }
     }
   } else {
@@ -939,10 +942,9 @@ void Widget::statusSelected( int index )
     if ( mFilter )
     {
       mFilter->setStatusMask( 0 );
-      if ( mFilter->isEmpty() )
-      {
-        delete mFilter;
-        mFilter = 0;
+      if ( mFilter->isEmpty() ) {
+        resetFilter();
+        return;
       }
     }
   } else {
@@ -952,10 +954,9 @@ void Widget::statusSelected( int index )
       if ( mFilter )
       {
         mFilter->setStatusMask( statusMask & ~additionalStatusMask );
-        if ( mFilter->isEmpty() )
-        {
-          delete mFilter;
-          mFilter = 0;
+        if ( mFilter->isEmpty() ) {
+          resetFilter();
+          return;
         }
       } // else nothing to remove (but something weird happened in the code above...)
     } else {
@@ -1003,10 +1004,9 @@ void Widget::searchTimerFired()
   QString text = mSearchEdit->text();
 
   mFilter->setSearchString( text );
-  if ( mFilter->isEmpty() )
-  {
-    delete mFilter;
-    mFilter = 0;
+  if ( mFilter->isEmpty() ) {
+    resetFilter();
+    return;
   }
 
   mView->model()->setFilter( mFilter );
@@ -1017,11 +1017,7 @@ void Widget::searchEditClearButtonClicked()
   if ( !mFilter )
     return;
 
-  delete mFilter;
-  mFilter = 0;
-
-  mView->model()->setFilter( mFilter );
-  mStatusFilterCombo->setCurrentIndex( 0 );
+  resetFilter();
 }
 
 
