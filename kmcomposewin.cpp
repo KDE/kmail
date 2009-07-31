@@ -4126,7 +4126,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   // disable certain actions if there is no PGP user identity set
   // for this profile
   bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
-  bool bNewIdentityHasEncryptionKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+  bool bNewIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
   mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
                           !ident.pgpEncryptionKey().isEmpty() );
   // save the state of the sign and encrypt button
@@ -4138,16 +4138,21 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     mLastSignActionState = mSignAction->isChecked();
     setSigning( false );
   }
-  // restore the last state of the sign and encrypt button
+  // restore the last state of the encrypt button
   if ( bNewIdentityHasEncryptionKey && !mLastIdentityHasEncryptionKey ) {
     setEncryption( mLastEncryptActionState );
   }
+  // if the new identity has a signing key but the last had none, the signing can
+  // not be activated. Therefore set the signing to what is globally defined
   if ( bNewIdentityHasSigningKey && !mLastIdentityHasSigningKey ) {
-    setSigning( mLastSignActionState );
+    // setSigning() already uses this member as the state of the currently selected identity
+    mLastIdentityHasSigningKey = true;
+    setSigning( GlobalSettings::self()->pgpAutoSign() );
   }
 
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
+  slotUpdateSignatureAndEncrypionStateIndicators();
 
   setQuotePrefix( uoid );
 
