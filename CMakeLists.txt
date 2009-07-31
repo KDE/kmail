@@ -334,7 +334,6 @@ configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS
   globalsettings_base.kcfgc
-  replyphrases.kcfgc
   custommimeheader.kcfgc
   templatesconfiguration_kfg.kcfgc
   customtemplates_kfg.kcfgc

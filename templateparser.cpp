@@ -1008,11 +1008,6 @@ QString TemplateParser::findCustomTemplate( const QString &tmplName )
 
 QString TemplateParser::findTemplate()
 {
-  // import 'Phrases' if it not done yet
-  if ( !GlobalSettings::self()->phrasesConverted() ) {
-    TemplatesConfiguration::importFromPhrases();
-  }
-
   // kDebug() << "Trying to find template for mode" << mode;
 
   QString tmpl;

@@ -678,11 +678,6 @@
     </group>
 
   <group name="GlobalTemplates">
-    <entry name="PhrasesConverted" type="Bool" key="PhrasesConverted">
-      <label>Phrases have been converted to templates</label>
-      <whatsthis>Old phrases have been converted to templates</whatsthis>
-      <default>false</default>
-    </entry>
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
       <label>Message template for new message</label>
       <whatsthis></whatsthis>
