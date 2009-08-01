@@ -3218,16 +3218,6 @@ void KMComposeWin::slotPasteAsAttachment()
   }
 }
 
-QString KMComposeWin::addQuotesToText( const QString &inputText ) const
-{
-  QString answer = QString( inputText );
-  QString indentStr = mEditor->quotePrefixName();
-  answer.replace( '\n', '\n' + indentStr );
-  answer.prepend( indentStr );
-  answer += '\n';
-  return StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
-}
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUndo()
 {
