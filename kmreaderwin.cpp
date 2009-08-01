@@ -488,6 +488,11 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
     mSelectAllAction( 0 ),
+    mScrollUpAction( 0 ),
+    mScrollDownAction( 0 ),
+    mScrollUpMoreAction( 0 ),
+    mScrollDownMoreAction( 0 ),
+    mToggleMimePartTreeAction( 0 ),
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
@@ -1552,7 +1557,7 @@ void KMReaderWin::showHideMimeTree() {
     saveSplitterSizes( reader );
     mMimePartTree->hide();
   }
-  if ( mToggleMimePartTreeAction->isChecked() != mMimePartTree->isVisible() )
+  if ( mToggleMimePartTreeAction && ( mToggleMimePartTreeAction->isChecked() != mMimePartTree->isVisible() ) )
     mToggleMimePartTreeAction->setChecked( mMimePartTree->isVisible() );
 }
 
