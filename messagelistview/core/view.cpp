@@ -39,6 +39,7 @@
 #include <QHeaderView>
 #include <QTimer>
 #include <QPaintEvent>
+#include <QTextDocument>
 
 #include <KMenu>
 #include <KLocale>
@@ -2204,7 +2205,7 @@ bool View::event( QEvent *e )
                 "</div>" \
               "</td>" \
             "</tr>"
-        ).arg( txtColorName ).arg( bckColorName ).arg( mi->subject() );
+        ).arg( txtColorName ).arg( bckColorName ).arg( Qt::escape( mi->subject() ) );
 
       tip += QString::fromLatin1(
            "<tr>" \
