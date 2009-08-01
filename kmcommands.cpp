@@ -2367,6 +2367,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
 
     KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, mIdentity );
     win->setCharset("", true);
+    win->setFocusToSubject();
     win->show();
   }
   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
