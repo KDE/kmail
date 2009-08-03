@@ -22,6 +22,7 @@
 #define __KMAIL_MESSAGELISTVIEW_CORE_MANAGER_H__
 
 #include "messagelistview/core/sortorder.h"
+#include <ksharedconfig.h>
 #include <QList>
 #include <QHash>
 #include <QObject>
@@ -74,6 +75,7 @@ protected:
 
 private:
   static Manager * mInstance;
+  KSharedConfig::Ptr mConfig;
   QList< Widget * > mWidgetList;
   QHash< QString, Aggregation * > mAggregations;
   QHash< QString, Theme * > mThemes;
