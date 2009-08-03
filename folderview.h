@@ -36,7 +36,6 @@ class KMMainWidget;
 class KMFolder;
 class KMenu;
 
-class QAction;
 class QEvent;
 class QTimer;
 class QTime;

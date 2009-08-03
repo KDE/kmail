@@ -43,7 +43,6 @@
 class QByteArray;
 class QCheckBox;
 class QComboBox;
-class QEvent;
 class QGridLayout;
 class QLabel;
 class QPushButton;
@@ -58,8 +57,6 @@ class KMFolder;
 class KMMessage;
 class KMMessagePart;
 class KSelectAction;
-class KFontAction;
-class KFontSizeAction;
 class KSelectAction;
 class KAction;
 class KJob;
@@ -77,7 +74,6 @@ class SnippetWidget;
 class partNode;
 
 namespace KPIM {
-  class KMStyleListSelectAction;
 }
 
 namespace Sonnet {
@@ -800,7 +796,6 @@ class KMComposeWin : public KMail::Composer
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
     }
 
-    QString addQuotesToText( const QString &inputText ) const;
     // helper method for rethinkFields
     int calcColumnWidth( int which, long allShowing, int width ) const;
 

@@ -37,16 +37,9 @@
 #include <QList>
 
 class QRegExpValidator;
-class QCheckBox;
-class QPushButton;
-class QLabel;
-class QRadioButton;
-class QToolButton;
-class KIntNumInput;
 class KMAccount;
 class KMFolder;
 class QButtonGroup;
-class QGroupBox;
 
 namespace MailTransport {
 class ServerTest;

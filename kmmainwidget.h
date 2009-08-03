@@ -41,8 +41,6 @@
 class QVBoxLayout;
 class QSplitter;
 class QSignalMapper;
-class QToolBar;
-class QTabWidget;
 
 class KActionMenu;
 class KConfig;

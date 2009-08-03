@@ -53,6 +53,7 @@
 #include <KFontDialog>
 #include <KMenu>
 #include <KIconLoader>
+#include <KNumInput>
 #include <KTextEdit>
 
 #include <time.h> // for time_t
@@ -1464,10 +1465,10 @@ ThemeEditor::ThemeEditor( QWidget *parent )
   l = new QLabel( i18n( "Icon size:" ), tab );
   tabg->addWidget( l, 1, 0 );
 
-  mIconSizeSpinBox = new QSpinBox( tab );
+  mIconSizeSpinBox = new KIntSpinBox( tab );
   mIconSizeSpinBox->setMinimum( 8 );
   mIconSizeSpinBox->setMaximum( 64 );
-  mIconSizeSpinBox->setSuffix( ' ' + i18nc( "suffix in a spinbox", "Pixels" ) );
+  mIconSizeSpinBox->setSuffix( ki18ncp( "suffix in a spinbox", " pixel", " pixels" ) );
 
   QObject::connect(
       mIconSizeSpinBox, SIGNAL( valueChanged( int ) ),

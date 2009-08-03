@@ -53,7 +53,6 @@ using KMail::AccountManager;
 using KMail::UndoStack;
 using KMail::JobScheduler;
 using KPIM::ProgressDialog;
-class QLabel;
 class KMFolder;
 class KMFolderMgr;
 class KMFilterMgr;

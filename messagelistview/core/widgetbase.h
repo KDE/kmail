@@ -30,10 +30,8 @@
 
 class KLineEdit;
 class QTimer;
-class QToolButton;
 class QActionGroup;
-class QHeaderView;
-class KMenu;
+class KComboBox;
 
 namespace KPIM
 {
@@ -78,10 +76,7 @@ private:
   QString mLastThemeId;
   KLineEdit * mSearchEdit;
   QTimer * mSearchTimer;
-  QToolButton * mStatusFilterButton;
-  QToolButton * mSortOrderButton;
-  QToolButton * mAggregationButton;
-  QToolButton * mThemeButton;
+  KComboBox * mStatusFilterCombo;
 
   StorageModel * mStorageModel;          ///< The currently displayed storage. The storage itself
                                          ///  is owned by MessageListView::Widget.
@@ -92,6 +87,7 @@ private:
   bool mStorageUsesPrivateTheme;         ///< true if the current folder does not use the global theme
   bool mStorageUsesPrivateAggregation;   ///< true if the current folder does not use the global aggregation
   bool mStorageUsesPrivateSortOrder;     ///< true if the current folder does not use the global sort order
+  int mFirstTagInComboIndex;             ///< the index of the combobox where the first tag starts
 public:
   /**
    * Sets the storage model for this Widget.
@@ -135,6 +131,13 @@ public:
    */
   QString currentFilterTagId() const;
 
+public slots:
+
+  /**
+   * This is called to setup the status filter's KComboBox.
+   */
+  void populateStatusFilterCombo();
+
 protected:
   /**
    * This is called by Manager when the option sets stored within have changed.
@@ -154,7 +157,7 @@ protected:
    * the string id of the tag set as data() and the tag icon set as icon().
    * The default implementation does nothing.
    */
-  virtual QActionGroup * fillMessageTagMenu( KMenu * menu );
+  virtual void fillMessageTagCombo( KComboBox * combo );
 
   /**
    * This is called by View when a message is single-clicked (thus selected and made current)
@@ -217,6 +220,8 @@ protected:
    */
   virtual void viewJobBatchTerminated();
 
+  void tagIdSelected( QVariant data );
+
 signals:
   /**
    * Emitted when a full search is requested.
@@ -233,9 +238,7 @@ protected slots:
   void setPrivateAggregationForStorage();
   void setPrivateSortOrderForStorage();
   void aggregationSelected( bool );
-  void statusMenuAboutToShow();
-  void statusSelected( QAction *action );
-  void tagIdSelected( QAction *action );
+  void statusSelected( int index );
   void searchEditTextEdited( const QString &text );
   void searchTimerFired();
   void searchEditClearButtonClicked();
@@ -244,6 +247,7 @@ protected slots:
   void messageSortDirectionSelected( QAction *action );
   void groupSortingSelected( QAction *action );
   void groupSortDirectionSelected( QAction *action );
+  void resetFilter();
 
   /**
    * Handles header section clicks switching the Aggregation MessageSorting on-the-fly.

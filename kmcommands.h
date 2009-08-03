@@ -21,7 +21,6 @@ class KProgressDialog;
 class KMFilter;
 class KMFolder;
 class KMFolderImap;
-class KMHeaders;
 class KMMainWidget;
 class KMMessage;
 class KMMsgBase;

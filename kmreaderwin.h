@@ -160,7 +160,7 @@ public:
 
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
-  void showHideMimeTree( bool isPlainTextTopLevel );
+  void showHideMimeTree();
 
   /** Store message id of last viewed message,
       normally no need to call this function directly,
@@ -245,6 +245,7 @@ public:
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
+  KAction *toggleMimePartTreeAction() { return mToggleMimePartTreeAction; }
   // This function returns the complete data that were in this
   // message parts - *after* all encryption has been removed that
   // could be removed.
@@ -382,6 +383,8 @@ public slots:
 
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
+
+  void slotToggleMimePartTree();
 
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();
@@ -550,12 +553,9 @@ private:
   KMail::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
   bool mPrinting;
-  bool mShowColorbar;
   //bool mShowCompleteMessage;
   QStringList mTempFiles;
   QStringList mTempDirs;
-  int mMimeTreeMode;
-  bool mMimeTreeAtBottom;
   QList<int> mSplitterSizes;
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
@@ -564,7 +564,8 @@ private:
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction,
-      *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction;
+      *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction,
+      *mToggleMimePartTreeAction;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
   KUrl mUrlClicked;

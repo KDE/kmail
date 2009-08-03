@@ -51,7 +51,6 @@ using KMail::FilterImporterExporter;
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
-#include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QTreeWidget>
 
@@ -1148,11 +1147,13 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   int i;
 
-  mComboBox = new KComboBox( this );
+  QWidget *w = new QWidget( this );
+  gl = new QGridLayout( w );
+  gl->setContentsMargins( 0, 0, 0, 0 );
+  mComboBox = new KComboBox( gl );
   mComboBox->setEditable( false );
   assert( mComboBox );
-  mWidgetStack = new QStackedWidget(this);
-  assert( mWidgetStack );
+  gl->addWidget( mComboBox, 1, 1 );
 
   setSpacing( 4 );
 
@@ -1163,14 +1164,10 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
     KMFilterAction *a = (*it)->create();
     // append to the list of actions:
     mActionList.append( a );
-    // add parameter widget to widget stack:
-    mWidgetStack->insertWidget( i, a->createParamWidget( mWidgetStack ) );
     // add (i18n-ized) name to combo box
     mComboBox->addItem( (*it)->label );
   }
   // widget for the case where no action is selected.
-  mWidgetStack->insertWidget( i,new QLabel( i18n("Please select an action."), mWidgetStack ) );
-  mWidgetStack->setCurrentIndex(i);
   mComboBox->addItem( " " );
   mComboBox->setCurrentIndex(i);
 
@@ -1189,8 +1186,26 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   setFocusProxy( mComboBox );
 
   // now connect the combo box and the widget stack
-  connect( mComboBox, SIGNAL(activated(int)),
-	   mWidgetStack, SLOT(setCurrentIndex (int)) );
+  connect( mComboBox, SIGNAL( activated( int ) ),
+          this, SLOT( slotFilterTypeChanged( int ) ) );
+
+  setFilterAction();
+}
+
+void KMFilterActionWidget::setFilterAction( QWidget* w )
+{
+  if ( gl->itemAtPosition( 1, 2 ) )
+    delete gl->itemAtPosition( 1, 2 )->widget();
+
+  if ( w )
+    gl->addWidget( w, 1, 2/*, Qt::AlignTop*/ );
+  else
+    gl->addWidget( new QLabel( i18n( "Please select an action." ), this ), 1, 2 );
+}
+
+void KMFilterActionWidget::slotFilterTypeChanged( int newIdx )
+{
+  setFilterAction( newIdx < mActionList.count() ? mActionList.at( newIdx )->createParamWidget( this ) : 0 );
 }
 
 KMFilterActionWidget::~KMFilterActionWidget()
@@ -1206,23 +1221,25 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 
   // find the index of typeOf(aAction) in mComboBox
   // and clear the other widgets on the way.
-  for ( int i = 0; i < count ; i++ )
+  for ( int i = 0; i < count ; i++ ) {
     if ( aAction && mComboBox->itemText(i) == label ) {
+      setFilterAction( mActionList.at( i )->createParamWidget( this ) );
+
       //...set the parameter widget to the settings
       // of aAction...
-      aAction->setParamWidgetValue( mWidgetStack->widget(i) );
+      aAction->setParamWidgetValue( gl->itemAtPosition( 1, 2 )->widget() );
       //...and show the correct entry of
       // the combo box
       mComboBox->setCurrentIndex(i); // (mm) also raise the widget, but doesn't
-      mWidgetStack->setCurrentIndex(i);
       found = true;
-    } else // clear the parameter widget
-      mActionList.at(i)->clearParamWidget( mWidgetStack->widget(i) );
+    }
+  }
   if ( found ) return;
 
   // not found, so set the empty widget
+  setFilterAction();
+
   mComboBox->setCurrentIndex( count ); // last item
-  mWidgetStack->setCurrentIndex( count) ;
 }
 
 KMFilterAction * KMFilterActionWidget::action() const
@@ -1235,11 +1252,10 @@ KMFilterAction * KMFilterActionWidget::action() const
     KMFilterAction *fa = desc->create();
     if ( fa ) {
       // ...and apply the setting of the parameter widget.
-      fa->applyParamWidgetValue( mWidgetStack->currentWidget() );
+      fa->applyParamWidgetValue( gl->itemAtPosition( 1, 2 )->widget() );
       return fa;
     }
   }
-
   return 0;
 }
 

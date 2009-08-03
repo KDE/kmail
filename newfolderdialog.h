@@ -33,7 +33,6 @@
 
 class QVBoxLayout;
 class QHBoxLayout;
-class QGridLayout;
 class QLabel;
 class KComboBox;
 class KLineEdit;

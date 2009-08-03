@@ -30,6 +30,7 @@ class KMMessage;
 class KMMsgBase;
 class KMFolder;
 class KMMainWidget;
+class KActionCollection;
 
 class QToolButton;
 class QIcon;
@@ -76,7 +77,7 @@ public:
    * Creates a MessageListView::Pane with the specified parent
    * that must be in the children tree of the specified mainWidget.
    */
-  Pane( KMMainWidget * mainWidget, QWidget *parent );
+  Pane( KMMainWidget * mainWidget, QWidget *parent, KActionCollection * actionCollection );
   /**
    * Destroys the MessageListView::Pane
    */

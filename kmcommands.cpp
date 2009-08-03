@@ -2353,11 +2353,11 @@ KMCommand::Result KMUrlClickedCommand::execute()
     msg = new KMMessage;
     msg->initHeader(mIdentity);
     msg->setCharset("utf-8");
-    msg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
-    QString body = mUrl.queryItem( "body" );
-    QString subject = mUrl.queryItem( "subject" );
-    QString cc = mUrl.queryItem( "cc" );
+    QString to, body, subject, cc;
+    KMail::StringUtil::parseMailtoUrl( mUrl, to, cc, subject, body );
+
+    msg->setTo( to );
     if ( !subject.isEmpty() )
       msg->setSubject( subject );
     if ( !body.isEmpty() )
@@ -2367,6 +2367,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
 
     KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, mIdentity );
     win->setCharset("", true);
+    win->setFocusToSubject();
     win->show();
   }
   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
@@ -3542,8 +3543,8 @@ KMCommand::Result CreateTodoCommand::execute()
   OrgKdeKorganizerCalendarInterface *iface =
       new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
                                              QDBusConnection::sessionBus(), this );
-  iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt,
-                         uri, tf.fileName(), QStringList(), "message/rfc822" );
+  iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt, uri,
+                         tf.fileName(), QStringList(), "message/rfc822", true );
   delete iface;
   tf.close();
 

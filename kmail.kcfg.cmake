@@ -528,6 +528,35 @@
         <default>320</default>
       </entry>
 
+      <entry name="readerWindowMode" type="Enum">
+       <label>Message Preview Pane</label>
+       <choices>
+         <choice name="hide">
+           <label>Do not show a message preview pane</label>
+         </choice>
+         <choice name="below">
+           <label>Show the message preview pane below the message list</label>
+         </choice>
+         <choice name="right">
+           <label>Show the message preview pane next to the message list</label>
+         </choice>
+       </choices>
+       <default>below</default>
+      </entry>
+
+      <entry name="FolderList" type="Enum">
+       <label>Folder List</label>
+       <choices>
+         <choice name="longlist">
+           <label>Long folder list</label>
+         </choice>
+         <choice name="shortlist">
+           <label>Short folder list</label>
+         </choice>
+       </choices>
+       <default>longlist</default>
+      </entry>
+
     </group>
 
     <group name="Reader">
@@ -594,6 +623,43 @@
       <default>false</default>
       <label>Always decrypt messages when viewing or ask before decrypting</label>
      </entry>
+
+     <entry name="MimeTreeLocation" type="Enum">
+       <label>Message Structure Viewer Placement</label>
+       <choices>
+         <choice name="top">
+           <label>Above the message pane</label>
+         </choice>
+         <choice name="bottom">
+           <label>Below the message pane</label>
+         </choice>
+       </choices>
+       <default>bottom</default>
+     </entry>
+
+     <entry name="MimeTreeMode" type="Enum">
+      <label>Message Structure Viewer</label>
+      <choices>
+        <choice name="Never">
+          <label>Show never</label>
+        </choice>
+        <choice name="Always">
+          <label>Show always</label>
+        </choice>
+      </choices>
+      <default>Never</default>
+     </entry>
+
+     <entry name="showColorbar" type="Bool">
+       <label>Show HTML status bar</label>
+       <default>false</default>
+     </entry>
+
+     <entry name="showSpamStatus" type="Bool">
+       <label>Show spam status in fancy headers</label>
+       <default>true</default>
+     </entry>
+
     </group>
 
     <group name="TextIndex">
@@ -612,11 +678,6 @@
     </group>
 
   <group name="GlobalTemplates">
-    <entry name="PhrasesConverted" type="Bool" key="PhrasesConverted">
-      <label>Phrases have been converted to templates</label>
-      <whatsthis>Old phrases have been converted to templates</whatsthis>
-      <default>false</default>
-    </entry>
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
       <label>Message template for new message</label>
       <whatsthis></whatsthis>

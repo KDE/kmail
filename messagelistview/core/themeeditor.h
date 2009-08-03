@@ -33,9 +33,9 @@
 
 class QPaintDevice;
 class QCheckBox;
-class QSpinBox;
 
 class KComboBox;
+class KIntSpinBox;
 class KLineEdit;
 
 namespace KMail
@@ -204,7 +204,7 @@ private:
 
   // Advanced tab
   KComboBox * mViewHeaderPolicyCombo;
-  QSpinBox * mIconSizeSpinBox;
+  KIntSpinBox * mIconSizeSpinBox;
 public:
   /**
    * Sets the option set to be edited.

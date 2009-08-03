@@ -45,7 +45,6 @@ add_subdirectory(interfaces)
 add_subdirectory(about)
 add_subdirectory(pics)
 add_subdirectory(icons)
-add_subdirectory(profiles)
 add_subdirectory(avscripts)
 add_subdirectory(tests)
 add_subdirectory(kconf_update)
@@ -71,6 +70,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 set(kmailprivate_LIB_SRCS
    kmmessage.cpp
    kmmainwin.cpp
+   configuredialoglistview.cpp
    configuredialog.cpp
    configuredialog_p.cpp
    simplestringlisteditor.cpp
@@ -325,6 +325,7 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   ui/miscpagegroupwaretab.ui
   ui/securitypagegeneraltab.ui
   ui/identitypage.ui
+  ui/accountspagereceivingtab.ui
 )
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put
@@ -343,7 +344,6 @@ configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS
   globalsettings_base.kcfgc
-  replyphrases.kcfgc
   custommimeheader.kcfgc
   templatesconfiguration_kfg.kcfgc
   customtemplates_kfg.kcfgc
@@ -456,8 +456,7 @@ install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SK
 install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES KMail.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
-  replyphrases.kcfg
+  ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg  
   custommimeheader.kcfg
   customtemplates_kfg.kcfg
   templatesconfiguration_kfg.kcfg

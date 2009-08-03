@@ -39,11 +39,13 @@
 #include <QHeaderView>
 #include <QTimer>
 #include <QPaintEvent>
+#include <QTextDocument>
 
 #include <KMenu>
 #include <KLocale>
 #include <KDebug>
 #include <KGlobalSettings>
+#include <KIcon>
 
 namespace KMail
 {
@@ -666,8 +668,6 @@ void View::slotHeaderContextMenuRequested( const QPoint &pnt )
   // the menu for the columns
   KMenu menu;
 
-  menu.addTitle( i18n( "Show Columns" ) );
-
   int idx = 0;
   QAction * act;
 
@@ -700,6 +700,9 @@ void View::slotHeaderContextMenuRequested( const QPoint &pnt )
       &menu, SIGNAL( triggered( QAction * ) ),
       this, SLOT( slotHeaderContextMenuTriggered( QAction *  ) )
     );
+
+  menu.addSeparator();
+  fillViewMenu( &menu );
 
   menu.exec( header()->mapToGlobal( pnt ) );
 }
@@ -1495,6 +1498,27 @@ void View::selectFocusedMessageItem( bool centerItem )
     scrollTo( idx, QAbstractItemView::PositionAtCenter );
 }
 
+void View::fillViewMenu( KMenu * menu )
+{
+  KMenu* sortingMenu = new KMenu( i18n( "Sorting" ) );
+  sortingMenu->setIcon( KIcon( "view-sort-ascending" ) );
+  menu->addMenu( sortingMenu );
+  connect( sortingMenu, SIGNAL( aboutToShow() ),
+           mWidget, SLOT( sortOrderMenuAboutToShow() ) );
+
+  KMenu* aggregationMenu = new KMenu( i18n( "Aggregation" ) );
+  aggregationMenu->setIcon( KIcon( "view-process-tree" ) );
+  menu->addMenu( aggregationMenu );
+  connect( aggregationMenu, SIGNAL( aboutToShow() ),
+           mWidget, SLOT( aggregationMenuAboutToShow() ) );
+
+  KMenu* themeMenu = new KMenu( i18n( "Appearance (Theme)" ) );
+  themeMenu->setIcon( KIcon( "preferences-desktop-theme" ) );
+  menu->addMenu( themeMenu );
+  connect( themeMenu, SIGNAL( aboutToShow() ),
+           mWidget, SLOT( themeMenuAboutToShow() ) );
+}
+
 void View::applyMessagePreSelection( PreSelectionMode preSelectionMode )
 {
   mModel->applyMessagePreSelection( preSelectionMode );
@@ -2181,7 +2205,7 @@ bool View::event( QEvent *e )
                 "</div>" \
               "</td>" \
             "</tr>"
-        ).arg( txtColorName ).arg( bckColorName ).arg( mi->subject() );
+        ).arg( txtColorName ).arg( bckColorName ).arg( Qt::escape( mi->subject() ) );
 
       tip += QString::fromLatin1(
            "<tr>" \

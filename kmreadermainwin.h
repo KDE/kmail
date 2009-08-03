@@ -14,7 +14,6 @@ class KMMessage;
 class KMMessagePart;
 class KAction;
 class KActionMenu;
-class KMFolder;
 class KFontAction;
 class KFontSizeAction;
 class CustomTemplatesMenu;

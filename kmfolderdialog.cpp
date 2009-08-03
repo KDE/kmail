@@ -552,6 +552,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
 
   // folder contents
   if ( ( !mIsLocalSystemFolder || mIsResourceFolder ) &&
+       mDlg->folder() && mDlg->folder()->folderType() == KMFolderTypeCachedImap &&
        kmkernel->iCalIface().isEnabled() ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
@@ -762,7 +763,7 @@ bool FolderDialogGeneralTab::save()
   folder->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
 
   QString fldName, oldFldName;
-  if ( !mIsLocalSystemFolder )
+  if ( !mIsLocalSystemFolder || mIsResourceFolder )
   {
     QString acctName;
     oldFldName = mDlg->folder()->name();

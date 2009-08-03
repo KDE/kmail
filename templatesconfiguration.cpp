@@ -21,7 +21,6 @@
 #include "ui_templatesconfiguration_base.h"
 #include "templatesconfiguration_kfg.h"
 #include "globalsettings.h"
-#include "replyphrases.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -104,11 +103,6 @@ void TemplatesConfiguration::slotTextChanged()
 
 void TemplatesConfiguration::loadFromGlobal()
 {
-  if ( !GlobalSettings::self()->phrasesConverted() ) {
-    kDebug() << "Phrases to templates conversion";
-    importFromPhrases();
-  }
-
   QString str;
   str = GlobalSettings::self()->templateNewMessage();
   if ( str.isEmpty() ) {
@@ -149,7 +143,6 @@ void TemplatesConfiguration::saveToGlobal()
   GlobalSettings::self()->setTemplateReplyAll( strOrBlank( textEdit_reply_all->toPlainText() ) );
   GlobalSettings::self()->setTemplateForward( strOrBlank( textEdit_forward->toPlainText() ) );
   GlobalSettings::self()->setQuoteString( lineEdit_quote->text() );
-  GlobalSettings::self()->setPhrasesConverted( true );
   GlobalSettings::self()->writeConfig();
 }
 
@@ -302,129 +295,6 @@ void TemplatesConfiguration::saveToFolder( const QString &id )
   t.writeConfig();
 }
 
-void TemplatesConfiguration::importFromPhrases()
-{
-  kDebug();
-
-  int currentNr = GlobalSettings::self()->replyCurrentLanguage();
-
-  ReplyPhrases replyPhrases( QString::number( currentNr ) );
-
-  QString str;
-
-  str = replyPhrases.phraseReplySender();
-  if ( !str.isEmpty() ) {
-    GlobalSettings::self()->setTemplateReply( convertPhrases( str ) + "\n%QUOTE\n%CURSOR\n" );
-  }
-  else {
-    GlobalSettings::self()->setTemplateReply( defaultReply() );
-  }
-
-  str = replyPhrases.phraseReplyAll();
-  if ( !str.isEmpty() ) {
-    GlobalSettings::self()->setTemplateReplyAll( convertPhrases( str ) + "\n%QUOTE\n%CURSOR\n" );
-  }
-  else {
-    GlobalSettings::self()->setTemplateReplyAll( defaultReplyAll() );
-  }
-
-  str = replyPhrases.phraseForward();
-  if ( !str.isEmpty() ) {
-    GlobalSettings::self()->setTemplateForward(
-      "%REM=\"" + i18n( "Default forward template" ) + "\"%-\n" +
-      i18nc( "Default template for forwarded messages."
-             "%1: forward phrase, e.g. \"Forwarded Message\", "
-             "%2: subject of original message, %3: date of original message, "
-             "%4: mail address of sender of original message, "
-             "%5: text of original message",
-             "\n"
-             "----------  %1  ----------\n"
-             "\n"
-             "Subject: %2\n"
-             "Date: %3\n"
-             "From: %4\n"
-             "%OADDRESSEESADDR\n"
-             "\n"
-             "%5\n"
-             "-------------------------------------------------------\n",
-             convertPhrases( str ), "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%TEXT" ) );
-  }
-  else {
-    GlobalSettings::self()->setTemplateForward( defaultForward() );
-  }
-
-  str = replyPhrases.indentPrefix();
-  if ( !str.isEmpty() ) {
-    // no need to convert indentPrefix() because it is passed to KMMessage::asQuotedString() as is
-    GlobalSettings::self()->setQuoteString( str );
-  }
-  else {
-    GlobalSettings::self()->setQuoteString( defaultQuoteString() );
-  }
-
-  GlobalSettings::self()->setPhrasesConverted( true );
-  GlobalSettings::self()->writeConfig();
-}
-
-QString TemplatesConfiguration::convertPhrases( const QString &str )
-{
-  QString result;
-  QChar ch;
-
-  unsigned int strLength( str.length() );
-  for ( uint i = 0; i < strLength; ) {
-    ch = str[i++];
-    if ( ch == '%' ) {
-      ch = str[i++];
-      switch ( ch.toAscii() ) {
-      case 'D':
-        result += "%ODATE";
-        break;
-      case 'e':
-        result += "%OFROMADDR";
-        break;
-      case 'F':
-        result += "%OFROMNAME";
-        break;
-      case 'f':
-        // is this used for something like FIDO quotes, like "AB>" ?
-        // not supported right now
-        break;
-      case 'T':
-        result += "%OTONAME";
-        break;
-      case 't':
-        result += "%OTOADDR";
-        break;
-      case 'C':
-        result += "%OCCNAME";
-        break;
-      case 'c':
-        result += "%OCCADDR";
-        break;
-      case 'S':
-        result += "%OFULLSUBJECT";
-        break;
-      case '_':
-        result += ' ';
-        break;
-      case 'L':
-        result += '\n';
-        break;
-      case '%':
-        result += "%%";
-        break;
-      default:
-        result += '%';
-        result += ch;
-        break;
-      }
-    } else
-      result += ch;
-  }
-  return result;
-}
-
 void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCursor )
 {
   KTextEdit* edit;
@@ -494,7 +364,7 @@ QString TemplatesConfiguration::defaultForward()
            "%OADDRESSEESADDR\n"
            "\n"
            "%4\n"
-           "-------------------------------------------------------",
+           "-----------------------------------------",
            "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%TEXT" );
 }
 

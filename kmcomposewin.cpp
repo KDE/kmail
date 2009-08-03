@@ -184,7 +184,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
-    mCheckForRecipients( false )
+    mCheckForRecipients( true )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
@@ -1688,10 +1688,6 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   otp.parseObjectTree( root );
 
   KMail::AttachmentCollector ac;
-  ac.setDiveIntoEncryptions( true );
-  ac.setDiveIntoSignatures( true );
-  ac.setDiveIntoMessages( false );
-
   ac.collectAttachmentsFrom( root );
 
   for ( std::vector<partNode*>::const_iterator it = ac.attachments().begin();
@@ -3223,16 +3219,6 @@ void KMComposeWin::slotPasteAsAttachment()
   }
 }
 
-QString KMComposeWin::addQuotesToText( const QString &inputText ) const
-{
-  QString answer = QString( inputText );
-  QString indentStr = mEditor->quotePrefixName();
-  answer.replace( '\n', '\n' + indentStr );
-  answer.prepend( indentStr );
-  answer += '\n';
-  return StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
-}
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUndo()
 {
@@ -4131,7 +4117,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   // disable certain actions if there is no PGP user identity set
   // for this profile
   bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
-  bool bNewIdentityHasEncryptionKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+  bool bNewIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
   mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
                           !ident.pgpEncryptionKey().isEmpty() );
   // save the state of the sign and encrypt button
@@ -4143,16 +4129,21 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     mLastSignActionState = mSignAction->isChecked();
     setSigning( false );
   }
-  // restore the last state of the sign and encrypt button
+  // restore the last state of the encrypt button
   if ( bNewIdentityHasEncryptionKey && !mLastIdentityHasEncryptionKey ) {
     setEncryption( mLastEncryptActionState );
   }
+  // if the new identity has a signing key but the last had none, the signing can
+  // not be activated. Therefore set the signing to what is globally defined
   if ( bNewIdentityHasSigningKey && !mLastIdentityHasSigningKey ) {
-    setSigning( mLastSignActionState );
+    // setSigning() already uses this member as the state of the currently selected identity
+    mLastIdentityHasSigningKey = true;
+    setSigning( GlobalSettings::self()->pgpAutoSign() );
   }
 
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
+  slotUpdateSignatureAndEncrypionStateIndicators();
 
   setQuotePrefix( uoid );
 

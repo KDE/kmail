@@ -41,6 +41,8 @@
 #include <QTime>
 #include <QPointer>
 
+class KMHeaders;
+
 namespace KMail {
 
 /* A class for asynchronous filtering of messages */

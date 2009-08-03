@@ -27,6 +27,8 @@
 
 #include "messagelistview/core/enums.h"
 
+class KMenu;
+
 class QTimer;
 
 namespace KPIM
@@ -354,6 +356,11 @@ public:
    * at the center of the view, if possible.
    */
   bool selectFirstMessageItem( MessageTypeFilter messageTypeFilter, bool centerItem );
+
+  /**
+   * Fills menu by adding actions for manipulating the view.
+   */
+  void fillViewMenu( KMenu * menu );
 
 protected:
   /**

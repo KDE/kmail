@@ -31,8 +31,6 @@ class KMMessage;
 class KMMsgBase;
 class KMFolder;
 class KMMainWidget;
-class KMenu;
-class QActionGroup;
 
 class QTimer;
 
@@ -348,7 +346,7 @@ protected:
   /**
    * Reimplemented from MessageListView::Core::Widget in order to fill the menu with (KMail dependant) custom tags.
    */
-  virtual QActionGroup * fillMessageTagMenu( KMenu * menu );
+  virtual void fillMessageTagCombo( KComboBox *combo );
 
   /**
    * Reimplemented from MessageListView::Core::Widget

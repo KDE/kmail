@@ -420,6 +420,10 @@ void SnippetWidget::readConfig()
       group = new SnippetGroup(this, strNameVal, iIdVal);
       //kDebug() << "Created group " << group->getName() << " " << group->getId();
       _list.append(group);
+
+      // the assumption is that there are usually only a few groups/snippets, so better
+      // show them directly which makes accessing them simpler
+      group->setExpanded(true);
     }
   }
 

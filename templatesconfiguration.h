@@ -40,12 +40,6 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
     void loadFromFolder( const QString &id, uint identity = 0 );
     void saveToFolder( const QString &id );
 
-    /** Do import 'Phrases' settings and store them as global templates. */
-    static void importFromPhrases();
-
-    /** Convert 'Phrases'-like placeholders into 'Templates' compatible. */
-    static QString convertPhrases( const QString &str );
-
     static QString defaultNewMessage();
     static QString defaultReply();
     static QString defaultReplyAll();

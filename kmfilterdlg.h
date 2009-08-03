@@ -33,12 +33,12 @@
 #include <QMap>
 #include <QRadioButton>
 #include <QString>
+#include <QGridLayout>
 
 class KMSearchPatternEdit;
 class QLabel;
 class QListWidget;
 class QPushButton;
-class QStackedWidget;
 class QCheckBox;
 class QTreeWidget;
 class KComboBox;
@@ -185,18 +185,14 @@ private:
 /** This widgets allows to edit a single KMFilterAction (in fact
     any derived class that is registered in
     KMFilterActionDict). It consists of a combo box which allows to
-    select the type of actions this widget should act upon and a
-    QWidgetStack, which holds the parameter widgets for the different
-    rule types.
+    select the type of actions this widget should act upon.
 
     You can load a KMFilterAction into this widget with setAction,
     and retrieve the result of user action with action.
     The widget will copy it's setting into the corresponding
     parameter widget. For that, it internally creates an instance of
     every KMFilterAction in KMFilterActionDict and asks each
-    one to create a parameter widget. The parameter widgets are put on
-    the widget stack and are raised when their corresponding action
-    type is selected in the combo box.
+    one to create a parameter widget.
 
     @short A widget to edit a single KMFilterAction.
     @author Marc Mutz <Marc@Mutz.com>
@@ -221,22 +217,25 @@ public:
   /** Retrieve the action. This method is necessary because the type
       of actions can change during editing. Therefore the widget
       always creates a new action object from the data in the combo
-      box and the widget stack and returns that. */
+      box and returns that. */
   KMFilterAction *action() const;
+
+private slots:
+  void slotFilterTypeChanged( int newIdx );
 
 private:
   /** This list holds an instance of every KMFilterAction
       subclass. The only reason that these 'slave' actions exist is
-      that they are 'forced' to create parameter widgets for the
-      widget stack and to clear them on setAction. */
+      that they are 'forced' to create parameter widgets
+      and to clear them on setAction. */
   QList<KMFilterAction*> mActionList;
   /** The combo box that contains the labels of all KMFilterActions.
       It's @p activated(int) signal is internally
-      connected to the @p raiseWidget(int) slot of @p mWidgetStack. */
+      connected to the @p slotCboAction(int) slot of @p KMFilterActionWidget. */
   KComboBox      *mComboBox;
-  /** The widget stack that holds all the parameter widgets for the
-      filter actions. */
-  QStackedWidget   *mWidgetStack;
+
+  void setFilterAction( QWidget* w=0 );
+  QGridLayout *gl;
 };
 
 class KMPopFilterActionWidget : public QGroupBox
