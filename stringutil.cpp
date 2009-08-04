@@ -893,15 +893,16 @@ QString expandAliases( const QString& recipients, QStringList &distributionListE
     }
 
     // check whether the address is missing the domain part
-    // FIXME: looking for '@' might be wrong
-    if ( !receiver.contains('@') ) {
+    QByteArray displayName, addrSpec, comment;
+    KPIMUtils::splitAddress( receiver.toLatin1(), displayName, addrSpec, comment );
+    if ( !addrSpec.contains('@') ) {
       KConfigGroup general( KMKernel::config(), "General" );
       QString defaultdomain = general.readEntry( "Default domain" );
-      if( !defaultdomain.isEmpty() ) {
-        expandedRecipients += receiver + '@' + defaultdomain;
+      if ( !defaultdomain.isEmpty() ) {
+        expandedRecipients += KPIMUtils::normalizedAddress( displayName, addrSpec + '@' + defaultdomain, comment );
       }
       else {
-        expandedRecipients += guessEmailAddressFromLoginName( receiver );
+        expandedRecipients += guessEmailAddressFromLoginName( addrSpec );
       }
     }
     else
