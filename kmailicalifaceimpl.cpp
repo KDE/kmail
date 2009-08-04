@@ -2223,7 +2223,7 @@ QString KMailICalIfaceImpl::folderPixmap( KPIM::FolderTreeWidgetItem::FolderType
   if( type == KPIM::FolderTreeWidgetItem::Contacts )
     return QString::fromLatin1( "view-pim-contacts" );
   else if( type == KPIM::FolderTreeWidgetItem::Calendar )
-    return QString::fromLatin1( "view-pim-calendar" );
+    return QString::fromLatin1( "view-calendar" );
   else if( type == KPIM::FolderTreeWidgetItem::Notes )
     return QString::fromLatin1( "view-pim-notes" );
   else if( type == KPIM::FolderTreeWidgetItem::Tasks )
