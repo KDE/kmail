@@ -507,8 +507,12 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
   }
 
   if (!rentry->fp) {
+    mode_t old_umask;
+
     QString filename = getFolderIdsLocation( storage );
+    old_umask = umask( 077 );  // .ids file shall only be read/writable by owner
     FILE *fp = truncate ? 0 : KDE_fopen(QFile::encodeName(filename), "r+");
+    umask( old_umask );
     if (fp)
     {
       int version = 0;
@@ -528,7 +532,9 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
 
     if (!fp)
     {
+      old_umask = umask( 077 );  // .ids file shall only be read/writable by owner
       fp = KDE_fopen(QFile::encodeName(filename), "w+");
+      umask( old_umask );
       if (!fp)
       {
         kDebug() << "Dict '" << filename
