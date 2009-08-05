@@ -3292,6 +3292,8 @@ DwBodyPart * AttachmentModifyCommand::findPartInternal(DwEntity * root, int inde
     rv = findPartInternal( root->Body().FirstBodyPart(), index, accu );
   if ( !rv && current && current->Next() )
     rv = findPartInternal( current->Next(), index, accu );
+  if ( !rv && root->Body().Message() )
+    rv = findPartInternal( root->Body().Message(), index, accu );
   return rv;
 }
 
