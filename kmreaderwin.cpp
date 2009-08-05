@@ -2709,6 +2709,12 @@ void KMReaderWin::slotDeleteAttachment(partNode * node)
     KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( nodeId, msg, this );
     command->start();
   }
+
+  // If we are operating on a copy of parts of the message, make sure to update the copy as well.
+  if ( mSerNumOfOriginalMessage != 0 && message() ) {
+    message()->deleteBodyPart( node->nodeId() );
+    update( true );
+  }
 }
 
 void KMReaderWin::slotEditAttachment(partNode * node)
@@ -2727,6 +2733,8 @@ void KMReaderWin::slotEditAttachment(partNode * node)
     KMEditAttachmentCommand* command = new KMEditAttachmentCommand( nodeId, msg, this );
     command->start();
   }
+
+  // FIXME: If we are operating on a copy of parts of the message, make sure to update the copy as well.
 }
 
 KMail::CSSHelper* KMReaderWin::cssHelper()
