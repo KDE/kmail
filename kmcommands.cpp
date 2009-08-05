@@ -3317,6 +3317,13 @@ AttachmentModifyCommand::AttachmentModifyCommand(partNode * node, KMMessage * ms
 {
 }
 
+AttachmentModifyCommand::AttachmentModifyCommand( int nodeId, KMMessage *msg, QWidget *parent )
+  : KMCommand( parent, msg ),
+    mPartIndex( nodeId ),
+    mSernum( 0 )
+{
+}
+
 AttachmentModifyCommand::~ AttachmentModifyCommand()
 {
 }
@@ -3412,6 +3419,12 @@ KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage 
   kdDebug(5006) << k_funcinfo << endl;
 }
 
+KMDeleteAttachmentCommand::KMDeleteAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent )
+  : AttachmentModifyCommand( nodeId, msg, parent )
+{
+  kdDebug(5006) << k_funcinfo << endl;
+}
+
 KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
 {
   kdDebug(5006) << k_funcinfo << endl;
@@ -3463,6 +3476,13 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
 
 KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     AttachmentModifyCommand( node, msg, parent )
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  mTempFile.setAutoDelete( true );
+}
+
+KMEditAttachmentCommand::KMEditAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent )
+  : AttachmentModifyCommand( nodeId, msg, parent )
 {
   kdDebug(5006) << k_funcinfo << endl;
   mTempFile.setAutoDelete( true );

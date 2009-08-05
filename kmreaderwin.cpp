@@ -488,6 +488,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          const char *aName,
                          int aFlags )
   : QWidget(aParent, aName, aFlags | Qt::WDestructiveClose),
+    mSerNumOfOriginalMessage( 0 ),
+    mNodeIdOffset( -1 ),
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
@@ -1192,7 +1194,14 @@ void KMReaderWin::readGlobalOverrideCodec()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
+void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nodeIdOffset )
+{
+  mSerNumOfOriginalMessage = serNumOfOriginalMessage;
+  mNodeIdOffset = nodeIdOffset;
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 {
   if (aMsg)
       kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
@@ -2104,7 +2113,7 @@ void KMReaderWin::slotCopySelectedText()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
+void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
 {
   assert(aMsgPart!=0);
   KMMessage* msg = new KMMessage;
@@ -2116,7 +2125,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->setUID(message()->UID());
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
-  win->showMsg( overrideEncoding(), msg );
+  win->showMsg( overrideEncoding(), msg, message()->getMsgSerNum(), nodeId );
   win->show();
 }
 
@@ -2249,7 +2258,7 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
     if (pname.isEmpty()) pname="unnamed";
     // image Attachment is saved already
     if (kasciistricmp(msgPart.typeStr(), "message")==0) {
-      atmViewMsg(&msgPart);
+      atmViewMsg( &msgPart,id );
     } else if ((kasciistricmp(msgPart.typeStr(), "text")==0) &&
 	       (kasciistricmp(msgPart.subtypeStr(), "x-vcard")==0)) {
       setMsgPart( &msgPart, htmlMail(), name, pname );
@@ -2280,7 +2289,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   KMMessagePart& msgPart = node->msgPart();
   if (kasciistricmp(msgPart.typeStr(), "message")==0)
   {
-    atmViewMsg(&msgPart);
+    atmViewMsg( &msgPart, id );
     return;
   }
 
@@ -2660,6 +2669,30 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
   return false;
 }
 
+void KMReaderWin::fillCommandInfo( partNode *node, KMMessage **msg, int *nodeId )
+{
+  Q_ASSERT( msg && nodeId );
+
+  if ( mSerNumOfOriginalMessage != 0 ) {
+    KMFolder *folder = 0;
+    int index = -1;
+    KMMsgDict::instance()->getLocation( mSerNumOfOriginalMessage, &folder, &index );
+    if ( folder && index != -1 )
+      *msg = folder->getMsg( index );
+
+    if ( !( *msg ) ) {
+      kdWarning( 5006 ) << "Unable to find the original message, aborting attachment deletion!" << endl;
+      return;
+    }
+
+    *nodeId = node->nodeId() + mNodeIdOffset;
+  }
+  else {
+    *nodeId = node->nodeId();
+    *msg = message();
+  }
+}
+
 void KMReaderWin::slotDeleteAttachment(partNode * node)
 {
   if ( KMessageBox::warningContinueCancel( this,
@@ -2668,8 +2701,14 @@ void KMReaderWin::slotDeleteAttachment(partNode * node)
      != KMessageBox::Continue ) {
     return;
   }
-  KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( node, message(), this );
-  command->start();
+
+  int nodeId = -1;
+  KMMessage *msg = 0;
+  fillCommandInfo( node, &msg, &nodeId );
+  if ( msg && nodeId != -1 ) {
+    KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( nodeId, msg, this );
+    command->start();
+  }
 }
 
 void KMReaderWin::slotEditAttachment(partNode * node)
@@ -2680,8 +2719,14 @@ void KMReaderWin::slotEditAttachment(partNode * node)
         != KMessageBox::Continue ) {
     return;
   }
-  KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
-  command->start();
+
+  int nodeId = -1;
+  KMMessage *msg = 0;
+  fillCommandInfo( node, &msg, &nodeId );
+  if ( msg && nodeId != -1 ) {
+    KMEditAttachmentCommand* command = new KMEditAttachmentCommand( nodeId, msg, this );
+    command->start();
+  }
 }
 
 KMail::CSSHelper* KMReaderWin::cssHelper()
@@ -2780,6 +2825,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       label = node->msgPart().name().stripWhiteSpace();
     if( label.isEmpty() )
       label = node->msgPart().fileName();
+    // FIXME: add deleted attachments to the blacklist!
     bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
     if ( !typeBlacklisted && node->msgPart().typeStr() == "application" ) {
       typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"

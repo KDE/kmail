@@ -1036,6 +1036,7 @@ class KDE_EXPORT AttachmentModifyCommand : public KMCommand
   Q_OBJECT
   public:
     AttachmentModifyCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    AttachmentModifyCommand( int nodeId, KMMessage *msg, QWidget *parent );
     ~AttachmentModifyCommand();
 
   protected:
@@ -1064,6 +1065,7 @@ class KDE_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
   Q_OBJECT
   public:
     KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    KMDeleteAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
     ~KMDeleteAttachmentCommand();
 
   protected:
@@ -1076,6 +1078,7 @@ class KDE_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
   Q_OBJECT
   public:
     KMEditAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    KMEditAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
     ~KMEditAttachmentCommand();
 
   protected:
