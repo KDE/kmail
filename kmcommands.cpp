@@ -2299,11 +2299,11 @@ KMCommand::Result KMUrlClickedCommand::execute()
     msg = new KMMessage;
     msg->initHeader(mIdentity);
     msg->setCharset("utf-8");
-    msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
-    QString body = mUrl.queryItem( "body" );
-    QString subject = mUrl.queryItem( "subject" );
-    QString cc = mUrl.queryItem( "cc" );
+    QString to, body, subject, cc;
+    KMMessage::parseMailtoUrl( mUrl, to, cc, subject, body );
+
+    msg->setTo( to );
     if ( !subject.isEmpty() )
       msg->setSubject( subject );
     if ( !body.isEmpty() )

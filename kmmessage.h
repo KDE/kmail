@@ -26,6 +26,8 @@ class QStringList;
 class QString;
 class QTextCodec;
 
+class KUrl;
+
 class KMFolder;
 class KMMessagePart;
 class KMMsgInfo;
@@ -665,6 +667,12 @@ public:
   /** Decodes a mailto URL
     */
   static QString decodeMailtoUrl( const QString& url );
+
+  /**
+   * Parses a mailto: url and extracts the information about to, cc, subject and body out into
+   * the QStrings given as argument.
+   */
+  static void parseMailtoUrl( const KUrl &url, QString &to, QString &cc, QString &subject, QString &body );
 
   /** This function generates a displayable string from a list of email
       addresses.

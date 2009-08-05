@@ -3416,6 +3416,16 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
   return result;
 }
 
+//-----------------------------------------------------------------------------
+
+void KMMessage::parseMailtoUrl ( const KUrl& url, QString& to, QString& cc, QString& subject, QString& body )
+{
+  to = decodeMailtoUrl( url.path() );
+  body = url.queryItem( "body" );
+  subject = url.queryItem( "subject" );
+  kDebug() << url.pathOrUrl();
+  cc = url.queryItem( "cc" );
+}
 
 //-----------------------------------------------------------------------------
 QByteArray KMMessage::stripEmailAddr( const QByteArray& aStr )
