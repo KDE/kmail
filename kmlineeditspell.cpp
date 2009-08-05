@@ -24,6 +24,7 @@
 #include "kmkernel.h"
 #include "globalsettings.h"
 #include "autoqpointer.h"
+#include "stringutil.h"
 
 #include <libkdepim/kvcarddrag.h>
 #include <kpimutils/email.h>
@@ -130,7 +131,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
       // email-address.
       if ( url.protocol() == "mailto" ) {
         KABC::Addressee addressee;
-        addressee.insertEmail( url.path(), true /* preferred */ );
+        addressee.insertEmail( KMail::StringUtil::decodeMailtoUrl( url.path() ), true /* preferred */ );
         list += addressee;
       }
 
