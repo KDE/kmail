@@ -661,6 +661,12 @@ public:
   /** Delete all body parts. */
   void deleteBodyParts();
 
+  /**
+   * Delete a body part with the specified part index.
+   * A dummy body part with the text "the attachment foo was deleted" will replace the old part.
+   */
+  bool deleteBodyPart( int partIndex );
+
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
   void setStatusFields();
@@ -929,12 +935,16 @@ public:
   /** Delete this message as soon as it no longer in use. */
   void deleteWhenUnused();
 
+  DwBodyPart* findPart( int index );
+
 private:
 
   /** Initialization shared by the ctors. */
   void init( DwMessage* aMsg = 0 );
   /** Assign the values of @param other to this message. Used in the copy c'tor. */
   void assign( const KMMessage& other );
+
+  DwBodyPart* findPartInternal( DwEntity* root, int index, int &accu );
 
   QString mDrafts;
   QString mTemplates;
