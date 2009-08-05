@@ -385,7 +385,8 @@ void FolderView::restoreItemStates()
 
     KConfigGroup conf( KMKernel::config(), mit.key() );
 
-    fvi->setExpanded( conf.readEntry( mConfigPrefix + "ItemIsExpanded", false ) );
+    if ( conf.hasKey( mConfigPrefix + "ItemIsExpanded" ) )
+      fvi->setExpanded( conf.readEntry( mConfigPrefix + "ItemIsExpanded", false ) );
     fvi->setSelected( conf.readEntry( mConfigPrefix + "ItemIsSelected", false ) );
     fvi->setDndSortingKey( conf.readEntry( mConfigPrefix + "ItemDnDSortingKey", -1 ) );
   }
@@ -626,6 +627,11 @@ void FolderView::reload( bool openFoldersForUpdate )
     );
   // note that root MIGHT be 0 here (if the view filtered it out)
   addDirectory( false, &( kmkernel->folderMgr()->dir() ), root );
+
+  // make a better first impression by showing the "Local Folders" expanded per default
+  // Further down the last saved state (expanded/collapsed) will be restored
+  if ( root )
+    root->setExpanded( true );
 
   // each imap-account creates it's own root
   addDirectory( true, &( kmkernel->imapFolderMgr()->dir() ), 0);
