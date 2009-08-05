@@ -436,7 +436,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   // folder contents
   if ( ( !mIsLocalSystemFolder || mIsResourceFolder ) &&
        kmkernel->iCalIface().isEnabled() &&
-       mDlg->folder() && mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
+       mDlg->folder() && mDlg->folder()->folderType() != KMFolderTypeImap ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
     ++row;
