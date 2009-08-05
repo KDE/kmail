@@ -124,10 +124,15 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
+void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg,
+                               unsigned long serNumOfOriginalMessage, int nodeIdOffset )
 {
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsg( msg, true );
+  if ( serNumOfOriginalMessage != 0 ) {
+    Q_ASSERT( nodeIdOffset != -1 );
+    mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
+  }
   mReaderWin->slotTouchMessage();
   setCaption( msg->subject() );
   mMsg = msg;

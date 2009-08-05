@@ -3209,6 +3209,13 @@ AttachmentModifyCommand::AttachmentModifyCommand(partNode * node, KMMessage * ms
 {
 }
 
+AttachmentModifyCommand::AttachmentModifyCommand( int nodeId, KMMessage *msg, QWidget *parent )
+  : KMCommand( parent, msg ),
+    mPartIndex( nodeId ),
+    mSernum( 0 )
+{
+}
+
 AttachmentModifyCommand::~ AttachmentModifyCommand()
 {
 }
@@ -3304,6 +3311,12 @@ KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage 
   kDebug(5006) ;
 }
 
+KMDeleteAttachmentCommand::KMDeleteAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent )
+  : AttachmentModifyCommand( nodeId, msg, parent )
+{
+  kDebug();
+}
+
 KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
 {
   kDebug(5006) ;
@@ -3356,7 +3369,14 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
 KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     AttachmentModifyCommand( node, msg, parent )
 {
-  kDebug(5006) ;
+  kDebug();
+  mTempFile.setAutoRemove( true );
+}
+
+KMEditAttachmentCommand::KMEditAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent )
+  : AttachmentModifyCommand( nodeId, msg, parent )
+{
+  kDebug();
   mTempFile.setAutoRemove( true );
 }
 
