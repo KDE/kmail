@@ -168,14 +168,14 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     hbl = new QHBoxLayout( page1 );
     hbl->setObjectName( "kmfd_hbl" );
     hbl->setSpacing( spacingHint() );
-    hbl->setMargin( 0 );
+    hbl->setMargin( marginHint() );
 
     page2 = new QWidget( tabWidget );
     tabWidget->addTab( page2, i18nc("Advanced mail filter settings.","Advanced") );
     vbl2 = new QVBoxLayout( page2 );
     vbl2->setObjectName( "kmfd_vbl2" );
     vbl2->setSpacing( spacingHint() );
-    vbl2->setMargin( 0 );
+    vbl2->setMargin( marginHint() );
   }
 
   QVBoxLayout *vbl = new QVBoxLayout();
