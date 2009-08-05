@@ -520,6 +520,9 @@ private:
 
   QString renderAttachments( partNode *node, const QColor &bgColor );
 
+  /// Scrolls to the given attachment and marks it with a yellow border
+  void scrollToAttachment( partNode *node );
+
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
   int mAtmCurrent;

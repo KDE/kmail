@@ -278,7 +278,10 @@ namespace KMail {
         // Set the default display strategy for this body part relying on the
         // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
         part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
+
+        writeAttachmentMarkHeader( node );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
+        writeAttachmentMarkFooter();
 #if 0
         // done in KMReaderWin::setBodyPartMemento() now
         if ( mReader && node->bodyPartMemento() )
@@ -304,8 +307,11 @@ namespace KMail {
                               << node->typeString() << '/' << node->subTypeString()
                               << ')' << endl;
 
-        if ( bpf && !bpf->process( this, node, processResult ) )
+        writeAttachmentMarkHeader( node );
+        if ( bpf && !bpf->process( this, node, processResult ) ) {
           defaultHandling( node, processResult );
+        }
+        writeAttachmentMarkFooter();
       }
       node->setProcessed( true, false );
 
@@ -2696,6 +2702,26 @@ QString ObjectTreeParser::writeSigstatFooter( PartMetaData& block )
     }
 
     return htmlStr;
+}
+
+//-----------------------------------------------------------------------------
+
+void ObjectTreeParser::writeAttachmentMarkHeader( partNode *node )
+{
+  if ( !mReader )
+    return;
+
+  htmlWriter()->queue( QString( "<div id=\"attachmentDiv%1\">\n" ).arg( node->nodeId() ) );
+}
+
+//-----------------------------------------------------------------------------
+
+void ObjectTreeParser::writeAttachmentMarkFooter()
+{
+  if ( !mReader )
+    return;
+
+  htmlWriter()->queue( QString( "</div>" ) );
 }
 
 //-----------------------------------------------------------------------------
