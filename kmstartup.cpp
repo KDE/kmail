@@ -18,7 +18,6 @@
 
 
 #include "kmstartup.h"
-#include <kdepim-compat.h> // for KDE_signal, remove in KDEPIM 4.2
 
 #include "kmkernel.h" //control center
 #include "kcursorsaver.h"
@@ -74,7 +73,6 @@ void kmcrashHandler(int sigId)
 
 void kmsetSignalHandler(void (*handler)(int))
 {
-  KDE_signal(SIGKILL, handler);
   KDE_signal(SIGTERM, handler);
   KDE_signal(SIGHUP,  handler);
   KCrash::setEmergencySaveFunction(kmcrashHandler);

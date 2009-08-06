@@ -149,6 +149,7 @@
    </item>
   </layout>
  </widget>
+ <layoutdefault spacing="6" margin="0"/>
  <customwidgets>
   <customwidget>
    <class>ListView</class>

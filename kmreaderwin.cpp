@@ -78,6 +78,7 @@ using KMail::URLHandlerManager;
 #include "util.h"
 #include <kicon.h>
 #include "broadcaststatus.h"
+#include "attachmentdialog.h"
 
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
@@ -2437,25 +2438,15 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   KService::Ptr offer =
       KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 
-  QString open_text;
   QString filenameText = msgPart.fileName();
   if ( filenameText.isEmpty() )
     filenameText = msgPart.name();
-  if ( offer ) {
-    open_text = i18n("&Open with '%1'", offer->name() );
-  } else {
-    open_text = i18n("&Open With...");
-  }
-  const QString text = i18n("Open attachment '%1'?\n"
-                            "Note that opening an attachment may compromise "
-                            "your system's security.",
-                         filenameText );
-  const int choice = KMessageBox::questionYesNoCancel( this, text,
-      i18n("Open Attachment?"), KStandardGuiItem::saveAs(),
-      KGuiItem(open_text), KStandardGuiItem::cancel(),
-      QString::fromLatin1("askSave") + mimetype->name() );
 
-  if( choice == KMessageBox::Yes ) { // Save
+  KMail::AttachmentDialog dialog( this, filenameText, offer ? offer->name() : QString(),
+                                  QString::fromLatin1( "askSave_" ) + mimetype->name() );
+  const int choice = dialog.exec();
+
+  if ( choice == KMail::AttachmentDialog::Save ) {
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
         message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Save,
@@ -2464,9 +2455,13 @@ void KMReaderWin::openAttachment( int id, const QString & name )
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
   }
-  else if( choice == KMessageBox::No ) { // Open
-    KMHandleAttachmentCommand::AttachmentAction action = ( offer ?
-        KMHandleAttachmentCommand::Open : KMHandleAttachmentCommand::OpenWith );
+  else if ( ( choice == KMail::AttachmentDialog::Open ) ||
+            ( choice == KMail::AttachmentDialog::OpenWith ) ) {
+    KMHandleAttachmentCommand::AttachmentAction action;
+    if ( choice == KMail::AttachmentDialog::Open )
+      action = KMHandleAttachmentCommand::Open;
+    else
+      action = KMHandleAttachmentCommand::OpenWith;
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
         message(), mAtmCurrent, mAtmCurrentName, action, offer, this );

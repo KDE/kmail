@@ -51,8 +51,10 @@ class RecipientItem
     typedef QList<RecipientItem *> List;
 
     RecipientItem();
+    RecipientItem( RecipientItem *);
     void setDistributionList( KABC::DistributionList * );
     KABC::DistributionList * distributionList() const;
+    const KABC::Addressee * adressee() const;
 
     void setAddressee( const KABC::Addressee &, const QString &email );
 
@@ -69,6 +71,11 @@ class RecipientItem
 
     QString tooltip() const;
 
+    void addAlternativeEmailItem( RecipientItem *altRecipientItem );
+    const List alternativeEmailList() const;
+    bool isDistributionList() const;
+    bool operator==( const Recipient& ) const;
+
   private:
     QString createTooltip( KABC::DistributionList * ) const;
 
@@ -83,12 +90,16 @@ class RecipientItem
     QPixmap mIcon;
 
     QString mKey;
+
+    List mAlternativeEmailList;
 };
 
 class RecipientViewItem : public QTreeWidgetItem
 {
   public:
     RecipientViewItem( RecipientItem *, QTreeWidget * );
+    RecipientViewItem( RecipientItem *, RecipientViewItem * );
+    void init( RecipientItem *item );
 
     RecipientItem *recipientItem() const;
 
@@ -228,6 +239,8 @@ class RecipientsPicker : public KDialog
     RecipientsCollection *mSelectedRecipients;
 
     Recipient::Type mDefaultType;
+
+    static const QString mSeparatorString;
 };
 
 #endif

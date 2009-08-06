@@ -1106,8 +1106,8 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
 
   if (interactive && kmkernel) {
     KNotification::event( "mail-check-error",
-                          i18n( "Error while checking for new mail:\n%1",
-                                KIO::buildErrorString( error, errorMsg ) ),
+                          i18n( "Error while checking account %1 for new mail:\n%2",
+                                name(), KIO::buildErrorString( error, errorMsg ) ),
                           QPixmap(),
                           kmkernel->mainWin(),
                           KNotification::CloseOnTimeout );

@@ -955,7 +955,7 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
 
     // If we have no attachment, simply create a text/plain part and
     // set the processed template text as the body
-    if ( ac.attachments().empty() ) {
+    if ( ac.attachments().empty() || mMode != Forward ) {
       mMsg->headers().ContentType().FromString( DwString() ); // to get rid of old boundary
       mMsg->headers().ContentType().Parse();
       mMsg->headers().ContentType().SetType( DwMime::kTypeText );

@@ -1061,16 +1061,11 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
           KMessageBox::detailedError( QApplication::activeWindow(), msg,
                                       errors.join("\n").prepend("<qt>"), caption );
         } else {
-          if ( !errors.isEmpty() ) {
-            KMessageBox::detailedError( QApplication::activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
-          }
-          else {
-            KNotification::event( "mail-check-error",
-                      i18n( "Error while checking for new mail:%1", msg ),
-                      QPixmap(),
-                      QApplication::activeWindow(),
-                      KNotification::CloseOnTimeout );
-          }
+          KNotification::event( "mail-check-error",
+                    i18n( "Error while checking account %1 for new mail:%2", name(), msg ),
+                    QPixmap(),
+                    QApplication::activeWindow(),
+                    KNotification::CloseOnTimeout );
         }
       }
     } else { // i.e. we have a chance to continue, ask the user about it

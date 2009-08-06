@@ -2767,7 +2767,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
-  mEditorRequester->setUrl( KUrl( GlobalSettings::self()->externalEditor() ) );
+  mEditorRequester->setText( GlobalSettings::self()->externalEditor() );
 }
 
 void ComposerPage::GeneralTab::save()
@@ -2790,7 +2790,7 @@ void ComposerPage::GeneralTab::save()
 
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
-  GlobalSettings::self()->setExternalEditor( mEditorRequester->url().toLocalFile() );
+  GlobalSettings::self()->setExternalEditor( mEditorRequester->text() );
 }
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
