@@ -975,6 +975,8 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
 
   // otherwise stage is List Or Uidl
   QByteArray qdata = data.simplified(); // Workaround for Maillennium POP3/UNIBOX
+  if ( qdata.size() == 0 )  // data contained only whitespace
+    return;
   const int spc = qdata.indexOf( ' ' );
 
   //Get rid of the null-terminating character if that exists.
@@ -997,8 +999,14 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
     }
     else {
       slotAbortRequested();
-      KMessageBox::error( 0, i18n( "Unable to complete LIST operation." ),
-                          i18n("Invalid Response From Server") );
+      if (interactive && kmkernel) {
+        KNotification::event( "mail-check-error",
+                              i18n( "Error while checking account %1 for new mail:\n%2",
+                                    name(), i18n( "Unable to complete LIST operation." ) ),
+                              QPixmap(),
+                              kmkernel->mainWin(),
+                              KNotification::CloseOnTimeout );
+      }
       return;
     }
   }
