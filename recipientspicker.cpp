@@ -698,7 +698,7 @@ void RecipientsPicker::updateList()
     for ( int i = 0; i < mRecipientList->columnCount(); i++ )
       stdItem->setToolTip( i, stdItem->recipientItem()->tooltip() );
 
-    for( altIt = altList.begin(); altIt != altList.end(); ++altIt ) {
+    for( altIt = altList.constBegin(); altIt != altList.constEnd(); ++altIt ) {
       RecipientViewItem *newItem = new RecipientViewItem( *altIt, stdItem );
       newItem->setToolTip( 0, newItem->recipientItem()->tooltip() );
     }
