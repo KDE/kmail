@@ -3148,6 +3148,44 @@ void KMMessage::deleteBodyParts()
 }
 
 //-----------------------------------------------------------------------------
+
+bool KMMessage::deleteBodyPart( int partIndex )
+{
+  KMMessagePart part;
+  DwBodyPart *dwpart = findPart( partIndex );
+  if ( !dwpart )
+    return false;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return false;
+
+  DwBody *parentNode = dynamic_cast<DwBody*>( dwpart->Parent() );
+  if ( !parentNode )
+    return false;
+  parentNode->RemoveBodyPart( dwpart );
+
+  // add dummy part to show that a attachment has been deleted
+  KMMessagePart dummyPart;
+  dummyPart.duplicate( part );
+  QString comment = i18n("This attachment has been deleted.");
+  if ( !part.fileName().isEmpty() )
+    comment = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+  dummyPart.setContentDescription( comment );
+  dummyPart.setBodyEncodedBinary( QByteArray() );
+  QByteArray cd = dummyPart.contentDisposition();
+  if ( cd.toLower().indexOf( "inline" ) == 0 ) {
+    cd.replace( 0, 10, "attachment" );
+    dummyPart.setContentDisposition( cd );
+  } else if ( cd.isEmpty() ) {
+    dummyPart.setContentDisposition( "attachment" );
+  }
+  DwBodyPart* newDwPart = createDWBodyPart( &dummyPart );
+  parentNode->AddBodyPart( newDwPart );
+  getTopLevelPart()->Assemble();
+  return true;
+}
+
+//-----------------------------------------------------------------------------
 DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 {
   DwBodyPart* part = DwBodyPart::NewBodyPart(s->emptyString, 0);
@@ -4425,3 +4463,27 @@ void KMMessage::dump( DwEntity *entity, int level )
   }
 }
 #endif
+
+DwBodyPart* KMMessage::findPart( int index )
+{
+  int accu = 0;
+  return findPartInternal( getTopLevelPart(), index, accu );
+}
+
+DwBodyPart* KMMessage::findPartInternal(DwEntity * root, int index, int & accu)
+{
+  accu++;
+  if ( index < accu ) // should not happen
+    return 0;
+  DwBodyPart *current = dynamic_cast<DwBodyPart*>( root );
+  if ( index == accu )
+    return current;
+  DwBodyPart *rv = 0;
+  if ( root->Body().FirstBodyPart() )
+    rv = findPartInternal( root->Body().FirstBodyPart(), index, accu );
+  if ( !rv && current && current->Next() )
+    rv = findPartInternal( current->Next(), index, accu );
+  if ( !rv && root->Body().Message() )
+    rv = findPartInternal( root->Body().Message(), index, accu );
+  return rv;
+}

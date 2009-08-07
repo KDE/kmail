@@ -992,7 +992,6 @@ class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
 
   protected:
     void storeChangedMessage( KMMessage* msg );
-    DwBodyPart* findPart( KMMessage* msg, int index );
     virtual Result doAttachmentModify() = 0;
 
   protected:
@@ -1001,7 +1000,6 @@ class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
 
   private:
     Result execute();
-    DwBodyPart* findPartInternal( DwEntity* root, int index, int &accu );
 
   private slots:
     void messageStoreResult( KMFolderImap* folder, bool success );
