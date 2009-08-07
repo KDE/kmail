@@ -1852,7 +1852,9 @@ bool FolderView::selectFolderIfUnread(FolderViewItem *fvi, bool confirm)
   if (
        !(
          fvi && fvi->folder() &&
-         ( !fvi->folder()->ignoreNewMail() ) &&
+         ( !fvi->folder()->ignoreNewMail() ||     // loop only in marked folders
+           ( GlobalSettings::self()->loopOnGotoUnread() ==
+             GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders ) ) &&   // loop in all folders
          ( fvi->folder()->countUnread() > 0 )
         )
      )

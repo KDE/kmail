@@ -44,6 +44,7 @@
           <choice name="DontLoop"/>
           <choice name="LoopInCurrentFolder"/>
           <choice name="LoopInAllFolders"/>
+          <choice name="LoopInAllMarkedFolders"/>
         </choices>
         <default>DontLoop</default>
       </entry>

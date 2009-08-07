@@ -3240,8 +3240,10 @@ void KMMainWidget::slotSelectNextUnreadMessage()
     ) )
   {
     // no next unread message was found in the current folder
-    if ( GlobalSettings::self()->loopOnGotoUnread() ==
-         GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
+    if ( ( GlobalSettings::self()->loopOnGotoUnread() ==
+           GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders ) ||
+         ( GlobalSettings::self()->loopOnGotoUnread() ==
+           GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
       mGoToFirstUnreadMessageInSelectedFolder = true;
       mMainFolderView->selectNextUnreadFolder(
@@ -3282,8 +3284,10 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
     ) )
   {
     // no next unread message was found in the current folder
-    if ( GlobalSettings::self()->loopOnGotoUnread() ==
-         GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
+    if ( ( GlobalSettings::self()->loopOnGotoUnread() ==
+           GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders ) ||
+         ( GlobalSettings::self()->loopOnGotoUnread() ==
+           GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
       mGoToFirstUnreadMessageInSelectedFolder = true;
       mMainFolderView->selectPrevUnreadFolder();
@@ -4358,7 +4362,8 @@ void KMMainWidget::updateMessageActions()
 
   bool mails = mFolder && mFolder->count();
   bool enable_goto_unread = mails
-       || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders);
+       || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
+       || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
   actionCollection()->action( "go_next_message" )->setEnabled( mails );
   actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
   actionCollection()->action( "go_prev_message" )->setEnabled( mails );
