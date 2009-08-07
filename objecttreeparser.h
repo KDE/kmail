@@ -266,6 +266,9 @@ namespace KMail {
                                 const QString & filename = QString() );
     QString writeSigstatFooter( KMail::PartMetaData & part );
 
+    void writeAttachmentMarkHeader( partNode *node );
+    void writeAttachmentMarkFooter();
+
     void writeBodyStr( const QByteArray & bodyString,
                        const QTextCodec * aCodec,
                        const QString & fromAddress,

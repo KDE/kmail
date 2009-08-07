@@ -2151,8 +2151,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
     mimeData->setUrls( urls );
     QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
   } else if ( choice == KMHandleAttachmentCommand::ScrollTo ) {
-    // The anchors for this are created in ObjectTreeParser::parseObjectTree()
-    mViewer->gotoAnchor( QString::fromLatin1( "att%1" ).arg( node->nodeId() ) );
+    scrollToAttachment( node );
   }
   else {
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
@@ -2814,6 +2813,33 @@ bool KMReaderWin::decryptMessage() const
   if ( !GlobalSettings::self()->alwaysDecrypt() )
     return mDecrytMessageOverwrite;
   return true;
+}
+
+void KMReaderWin::scrollToAttachment( partNode *node )
+{
+  DOM::Document doc = mViewer->htmlDocument();
+
+  // The anchors for this are created in ObjectTreeParser::parseObjectTree()
+  mViewer->gotoAnchor( QString::fromLatin1( "att%1" ).arg( node->nodeId() ) );
+
+  // Remove any old color markings which might be there
+  const partNode *root = node->topLevelParent();
+  for ( int i = 0; i <= root->totalChildCount() + 1; i++ ) {
+    DOM::Element attachmentDiv = doc.getElementById( QString( "attachmentDiv%1" ).arg( i + 1 ) );
+    if ( !attachmentDiv.isNull() )
+      attachmentDiv.removeAttribute( "style" );
+  }
+
+  // Now, color the div of the attachment in yellow, so that the user sees what happened.
+  // We created a special marked div for this in writeAttachmentMarkHeader() in ObjectTreeParser,
+  // find and modify that now.
+  DOM::Element attachmentDiv = doc.getElementById( QString( "attachmentDiv%1" ).arg( node->nodeId() ) );
+  if ( attachmentDiv.isNull() ) {
+    kWarning() << "Could not find attachment div for attachment" << node->nodeId();
+    return;
+  }
+  attachmentDiv.setAttribute( "style", QString( "border:2px solid %1" )
+      .arg( cssHelper()->pgpWarnColor().name() ) );
 }
 
 void KMReaderWin::injectAttachments()
