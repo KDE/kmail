@@ -1146,7 +1146,6 @@ static const struct {
   { "list-unread-font", I18N_NOOP("Message List - Unread Messages"), true, false },
   { "list-important-font", I18N_NOOP("Message List - Important Messages"), true, false },
   { "list-toact-font", I18N_NOOP("Message List - Action Item Messages"), true, false },
-  { "list-date-font", I18N_NOOP("Message List - Date Field"), true, false },
   { "folder-font", I18N_NOOP("Folder List"), true, false },
   { "quote1-font", I18N_NOOP("Quoted Text - First Level"), false, false },
   { "quote2-font", I18N_NOOP("Quoted Text - Second Level"), false, false },

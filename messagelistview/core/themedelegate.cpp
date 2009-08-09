@@ -31,6 +31,7 @@
 #include <QPixmap>
 #include <QLinearGradient>
 #include <KColorScheme>
+#include <KGlobalSettings>
 
 namespace KMail
 {
@@ -50,11 +51,10 @@ static const int gMessageHorizontalMargin = 2;
 static const int gHorizontalItemSpacing = 2;
 
 
-ThemeDelegate::ThemeDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice )
+ThemeDelegate::ThemeDelegate( QAbstractItemView * parent )
   : QStyledItemDelegate( parent )
 {
   mItemView = parent;
-  mPaintDevice = paintDevice;
   mTheme = 0;
 }
 
@@ -68,12 +68,6 @@ void ThemeDelegate::setTheme( const Theme * theme )
 
   if ( !mTheme )
     return; // hum
-
-  // yep..we're violating const here
-  // But most of the QStyledItemDelegate virtual methods are const and expect
-  // const behaviour. So we need the const pointer to avoid compiler complains
-  // but on the other side we're NOT really const... well...
-  const_cast< Theme * >( mTheme )->resetCache();
 
   // Rebuild the group header background color cache
   switch( mTheme->groupHeaderBackgroundMode() )
@@ -104,14 +98,13 @@ void ThemeDelegate::setTheme( const Theme * theme )
 //        about function growth limit reached. Consider using macros
 //        or just convert to member functions.
 
-static inline void paint_right_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir )
+static inline void paint_right_aligned_elided_text( const QString &text, Theme::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir, const QFont &font )
 {
-  if ( ci->lastPaintDevice() != pd )
-    ci->updateFontMetrics( pd );
-  painter->setFont( ci->font() );
+  painter->setFont( font );
+  QFontMetrics fontMetrics( font );
   int w = right - left;
-  QString elidedText = ci->fontMetrics().elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideLeft : Qt::ElideRight, w );
-  QRect rct( left, top, w, ci->lineSpacing() );
+  QString elidedText = fontMetrics.elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideLeft : Qt::ElideRight, w );
+  QRect rct( left, top, w, fontMetrics.height() );
   QRect outRct;
 
   if ( ci->softenByBlending() )
@@ -129,15 +122,14 @@ static inline void paint_right_aligned_elided_text( const QString &text, QPaintD
     left += outRct.width() + gHorizontalItemSpacing;
 }
 
-static inline void compute_bounding_rect_for_right_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir )
+static inline void compute_bounding_rect_for_right_aligned_elided_text( const QString &text, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir, const QFont &font )
 {
-  if ( ci->lastPaintDevice() != pd )
-    ci->updateFontMetrics( pd );
+  QFontMetrics fontMetrics( font );
   int w = right - left;
-  QString elidedText = ci->fontMetrics().elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideLeft : Qt::ElideRight, w );
-  QRect rct( left, top, w, ci->lineSpacing() );
+  QString elidedText = fontMetrics.elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideLeft : Qt::ElideRight, w );
+  QRect rct( left, top, w, fontMetrics.height() );
   Qt::AlignmentFlag af = layoutDir == Qt::LeftToRight ? Qt::AlignRight : Qt::AlignLeft;
-  outRect = ci->fontMetrics().boundingRect( rct, Qt::AlignTop | af | Qt::TextSingleLine, elidedText );
+  outRect = fontMetrics.boundingRect( rct, Qt::AlignTop | af | Qt::TextSingleLine, elidedText );
   if ( layoutDir == Qt::LeftToRight )
     right -= outRect.width() + gHorizontalItemSpacing;
   else
@@ -145,14 +137,13 @@ static inline void compute_bounding_rect_for_right_aligned_elided_text( const QS
 }
 
 
-static inline void paint_left_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir )
+static inline void paint_left_aligned_elided_text( const QString &text, Theme::ContentItem * ci, QPainter * painter, int &left, int top, int &right, Qt::LayoutDirection layoutDir, const QFont &font )
 {
-  if ( ci->lastPaintDevice() != pd )
-    ci->updateFontMetrics( pd );
-  painter->setFont( ci->font() );
+  painter->setFont( font );
+  QFontMetrics fontMetrics( font );
   int w = right - left;
-  QString elidedText = ci->fontMetrics().elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideRight : Qt::ElideLeft, w );
-  QRect rct( left, top, w, ci->lineSpacing() );
+  QString elidedText = fontMetrics.elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideRight : Qt::ElideLeft, w );
+  QRect rct( left, top, w, fontMetrics.height() );
   QRect outRct;
   if ( ci->softenByBlending() )
   {
@@ -169,15 +160,14 @@ static inline void paint_left_aligned_elided_text( const QString &text, QPaintDe
     right -= outRct.width() + gHorizontalItemSpacing;
 }
 
-static inline void compute_bounding_rect_for_left_aligned_elided_text( const QString &text, QPaintDevice * pd, Theme::ContentItem * ci, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir )
+static inline void compute_bounding_rect_for_left_aligned_elided_text( const QString &text, int &left, int top, int &right, QRect &outRect, Qt::LayoutDirection layoutDir, const QFont &font )
 {
-  if ( ci->lastPaintDevice() != pd )
-    ci->updateFontMetrics( pd );
+  QFontMetrics fontMetrics( font );
   int w = right - left;
-  QString elidedText = ci->fontMetrics().elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideRight : Qt::ElideLeft, w );
-  QRect rct( left, top, w, ci->lineSpacing() );
+  QString elidedText = fontMetrics.elidedText( text, layoutDir == Qt::LeftToRight ? Qt::ElideRight : Qt::ElideLeft, w );
+  QRect rct( left, top, w, fontMetrics.height() );
   Qt::AlignmentFlag af = layoutDir == Qt::LeftToRight ? Qt::AlignLeft : Qt::AlignRight;
-  outRect = ci->fontMetrics().boundingRect( rct, Qt::AlignTop | af | Qt::TextSingleLine, elidedText );
+  outRect = fontMetrics.boundingRect( rct, Qt::AlignTop | af | Qt::TextSingleLine, elidedText );
   if ( layoutDir == Qt::LeftToRight )
     left += outRect.width() + gHorizontalItemSpacing;
   else
@@ -485,15 +475,15 @@ static inline void compute_bounding_rect_for_tag_list( QList< MessageItem::Tag *
   }
 }
 
-static inline void compute_size_hint_for_item( Theme::ContentItem * ci, QPaintDevice * pd,
-                                               int &maxh, int &totalw, int iconSize )
+static inline void compute_size_hint_for_item( Theme::ContentItem * ci,
+                                               int &maxh, int &totalw, int iconSize, const Item *item )
 {
   if ( ci->displaysText() )
   {
-    if ( ci->lastPaintDevice() != pd )
-      ci->updateFontMetrics( pd );
-    if ( ci->lineSpacing() > maxh )
-      maxh = ci->lineSpacing();
+    QFont font = ThemeDelegate::itemFont( ci, item );
+    QFontMetrics fontMetrics( font );
+    if ( fontMetrics.height() > maxh )
+      maxh = fontMetrics.height();
     totalw += ci->displaysLongText() ? 128 : 64;
     return;
   }
@@ -520,7 +510,7 @@ static inline void compute_size_hint_for_item( Theme::ContentItem * ci, QPaintDe
   totalw += gHorizontalItemSpacing;
 }
 
-static inline void compute_size_hint_for_row( const Theme::Row * r, QPaintDevice * pd, int iconSize )
+static inline QSize compute_size_hint_for_row( const Theme::Row * r, int iconSize, const Item *item )
 {
   int maxh = 8; // at least 8 pixels for a pixmap
   int totalw = 0;
@@ -530,15 +520,15 @@ static inline void compute_size_hint_for_row( const Theme::Row * r, QPaintDevice
   QList< Theme::ContentItem * >::ConstIterator itemit;
 
   for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
-    compute_size_hint_for_item( const_cast< Theme::ContentItem * >( *itemit ), pd, maxh, totalw, iconSize );
+    compute_size_hint_for_item( const_cast< Theme::ContentItem * >( *itemit ), maxh, totalw, iconSize, item );
 
   // then left aligned stuff
   items = &( r->leftItems() );
 
   for ( itemit = items->begin(); itemit != items->end() ; ++itemit )
-    compute_size_hint_for_item( const_cast< Theme::ContentItem * >( *itemit ), pd, maxh, totalw, iconSize );
+    compute_size_hint_for_item( const_cast< Theme::ContentItem * >( *itemit ), maxh, totalw, iconSize, item );
 
-  const_cast< Theme::Row * >( r )->setSizeHint( QSize( totalw, maxh ) );
+  return QSize( totalw, maxh );
 }
 
 void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
@@ -813,12 +803,7 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
 
   for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
-    QSize rowSizeHint = ( *rowit )->sizeHint();
-    if ( !rowSizeHint.isValid() )
-    {
-      compute_size_hint_for_row( ( *rowit ), mPaintDevice, mTheme->iconSize() );
-      rowSizeHint = ( *rowit )->sizeHint();
-    }
+    QSize rowSizeHint = compute_size_hint_for_row( ( *rowit ), mTheme->iconSize(), item );
 
     int bottom = top + rowSizeHint.height();
 
@@ -855,32 +840,34 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
           painter->setPen( defaultPen );
       } // otherwise setting a pen is useless at this time
 
+      QFont font = itemFont( ci, item );
+
       switch ( ci->type() )
       {
         case Theme::ContentItem::Subject:
-          paint_right_aligned_elided_text( item->subject(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_right_aligned_elided_text( item->subject(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::SenderOrReceiver:
-          paint_right_aligned_elided_text( item->senderOrReceiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_right_aligned_elided_text( item->senderOrReceiver(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Receiver:
-          paint_right_aligned_elided_text( item->receiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_right_aligned_elided_text( item->receiver(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Sender:
-          paint_right_aligned_elided_text( item->sender(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_right_aligned_elided_text( item->sender(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Date:
-          paint_right_aligned_elided_text( item->formattedDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_right_aligned_elided_text( item->formattedDate(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::MostRecentDate:
-          paint_right_aligned_elided_text( item->formattedMaxDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_right_aligned_elided_text( item->formattedMaxDate(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Size:
-          paint_right_aligned_elided_text( item->formattedSize(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_right_aligned_elided_text( item->formattedSize(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
-            paint_right_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+            paint_right_aligned_elided_text( groupHeaderItem->label(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::ReadStateIcon:
             paint_permanent_icon( get_read_state_icon( item ), ci, painter, l, top, r,
@@ -1008,32 +995,34 @@ void ThemeDelegate::paint( QPainter * painter, const QStyleOptionViewItem & opti
         }
       } // otherwise setting a pen is useless at this time
 
+      QFont font = itemFont( ci, item );
+
       switch ( ci->type() )
       {
         case Theme::ContentItem::Subject:
-          paint_left_aligned_elided_text( item->subject(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_left_aligned_elided_text( item->subject(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::SenderOrReceiver:
-          paint_left_aligned_elided_text( item->senderOrReceiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_left_aligned_elided_text( item->senderOrReceiver(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Receiver:
-          paint_left_aligned_elided_text( item->receiver(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_left_aligned_elided_text( item->receiver(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Sender:
-          paint_left_aligned_elided_text( item->sender(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_left_aligned_elided_text( item->sender(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Date:
-          paint_left_aligned_elided_text( item->formattedDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_left_aligned_elided_text( item->formattedDate(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::MostRecentDate:
-          paint_left_aligned_elided_text( item->formattedMaxDate(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_left_aligned_elided_text( item->formattedMaxDate(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::Size:
-          paint_left_aligned_elided_text( item->formattedSize(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+          paint_left_aligned_elided_text( item->formattedSize(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
-            paint_left_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, painter, l, top, r, layoutDir );
+            paint_left_aligned_elided_text( groupHeaderItem->label(), ci, painter, l, top, r, layoutDir, font );
         break;
         case Theme::ContentItem::ReadStateIcon:
             paint_permanent_icon( get_read_state_icon( item ), ci, painter, l, top, r,
@@ -1210,12 +1199,7 @@ bool ThemeDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 
   for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
-    QSize rowSizeHint = ( *rowit )->sizeHint();
-    if ( !rowSizeHint.isValid() )
-    {
-      compute_size_hint_for_row( ( *rowit ), mPaintDevice, mTheme->iconSize() );
-      rowSizeHint = ( *rowit )->sizeHint();
-    }
+    QSize rowSizeHint = compute_size_hint_for_row( ( *rowit ), mTheme->iconSize(), mHitItem );
 
     if ( ( viewportPoint.y() < top ) && ( rowIdx > 0 ) )
       break; // not this row (tough we should have already found it... probably clicked upper margin)
@@ -1253,32 +1237,34 @@ bool ThemeDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 
       mHitContentItemRect = QRect();
 
+      QFont font = itemFont( ci, mHitItem );
+
       switch ( ci->type() )
       {
         case Theme::ContentItem::Subject:
-          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->subject(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->subject(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::SenderOrReceiver:
-          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->senderOrReceiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->senderOrReceiver(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Receiver:
-          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->receiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->receiver(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Sender:
-          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->sender(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->sender(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Date:
-          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedDate(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::MostRecentDate:
-          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedMaxDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedMaxDate(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Size:
-          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedSize(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_right_aligned_elided_text( mHitItem->formattedSize(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
-            compute_bounding_rect_for_right_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+            compute_bounding_rect_for_right_aligned_elided_text( groupHeaderItem->label(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::ReadStateIcon:
           compute_bounding_rect_for_permanent_icon( ci, l, top, r, mHitContentItemRect, layoutDir == Qt::LeftToRight, mTheme->iconSize() );
@@ -1394,32 +1380,34 @@ bool ThemeDelegate::hitTest( const QPoint &viewportPoint, bool exact )
 
       mHitContentItemRect = QRect();
 
+      QFont font = itemFont( ci, mHitItem );
+
       switch ( ci->type() )
       {
         case Theme::ContentItem::Subject:
-          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->subject(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->subject(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::SenderOrReceiver:
-          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->senderOrReceiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->senderOrReceiver(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Receiver:
-          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->receiver(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->receiver(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Sender:
-          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->sender(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->sender(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Date:
-          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedDate(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::MostRecentDate:
-          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedMaxDate(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedMaxDate(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::Size:
-          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedSize(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+          compute_bounding_rect_for_left_aligned_elided_text( mHitItem->formattedSize(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::GroupHeaderLabel:
           if ( groupHeaderItem )
-            compute_bounding_rect_for_left_aligned_elided_text( groupHeaderItem->label(), mPaintDevice, ci, l, top, r, mHitContentItemRect, layoutDir );
+            compute_bounding_rect_for_left_aligned_elided_text( groupHeaderItem->label(), l, top, r, mHitContentItemRect, layoutDir, font );
         break;
         case Theme::ContentItem::ReadStateIcon:
           compute_bounding_rect_for_permanent_icon( ci, l, top, r, mHitContentItemRect, layoutDir != Qt::LeftToRight, mTheme->iconSize() );
@@ -1534,7 +1522,7 @@ bool ThemeDelegate::hitTest( const QPoint &viewportPoint, bool exact )
   return true;
 }
 
-QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column ) const
+QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column, const Item *item ) const
 {
   if ( !mTheme )
     return QSize( 16, 16 ); // bleah
@@ -1554,9 +1542,6 @@ QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column )
   {
     case Item::Message:
     {
-      QSize cached = skcolumn->messageSizeHint();
-      if ( cached.isValid() )
-        return cached;
       rows = &( skcolumn->messageRows() );
 
       marginh = gMessageVerticalMargin << 1;
@@ -1565,9 +1550,6 @@ QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column )
     break;
     case Item::GroupHeader:
     {
-      QSize cached = skcolumn->groupHeaderSizeHint();
-      if ( cached.isValid() )
-        return cached;
       rows = &( skcolumn->groupHeaderRows() );
 
       marginh = ( gGroupHeaderOuterVerticalMargin + gGroupHeaderInnerVerticalMargin ) << 1;
@@ -1584,50 +1566,14 @@ QSize ThemeDelegate::sizeHintForItemTypeAndColumn( Item::Type type, int column )
 
   for ( QList< Theme::Row * >::ConstIterator rowit = rows->begin(); rowit != rows->end(); ++rowit )
   {
-    compute_size_hint_for_row( *rowit, mPaintDevice, mTheme->iconSize() );
-
-    QSize sh = ( *rowit )->sizeHint();
+    QSize sh = compute_size_hint_for_row( ( *rowit ), mTheme->iconSize(), item );
     totalh += sh.height();
     if ( sh.width() > maxw )
       maxw = sh.width();
   }
 
-  QSize ret( maxw + marginw , totalh + marginh );
-
-  // cache it
-  switch ( type )
-  {
-    case Item::Message:
-      const_cast< Theme::Column * >( skcolumn )->setMessageSizeHint( ret );
-    break;
-    case Item::GroupHeader:
-      const_cast< Theme::Column * >( skcolumn )->setGroupHeaderSizeHint( ret );
-    break;
-    default:
-      // make gcc happy
-    break;
-  }
-
-  return ret;
+  return QSize( maxw + marginw , totalh + marginh );
 }
-
-int ThemeDelegate::maximumHeightForItemType( Item::Type type ) const
-{
-  if ( !mTheme )
-    return 16; // bleah
-
-  int count = mTheme->columns().count();
-  int maxHeight = 8; // this is the bare minimum
-  for ( int idx = 0; idx < count; idx++ )
-  {
-    int columnHeight = sizeHintForItemTypeAndColumn( type, idx ).height();
-    if ( columnHeight > maxHeight )
-      maxHeight = columnHeight;
-  }
-
-  return maxHeight;
-}
-
 
 QSize ThemeDelegate::sizeHint( const QStyleOptionViewItem &, const QModelIndex & index ) const
 {
@@ -1643,7 +1589,18 @@ QSize ThemeDelegate::sizeHint( const QStyleOptionViewItem &, const QModelIndex &
 
   //Item::Type type = item->type();
 
-  return sizeHintForItemTypeAndColumn( item->type(), index.column() );
+  return sizeHintForItemTypeAndColumn( item->type(), index.column(), item );
+}
+
+QFont ThemeDelegate::itemFont( const Theme::ContentItem *ci, const Item *item )
+{
+  if ( ci && ci->useCustomFont() )
+    return ci->font();
+
+  if ( item && ( item->type() == Item::Message ) )
+    return static_cast< const MessageItem * >( item )->font();
+
+  return KGlobalSettings::generalFont();
 }
 
 } // namespace Core

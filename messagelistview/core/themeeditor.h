@@ -73,7 +73,7 @@ class ThemePreviewDelegate : public ThemeDelegate
 {
   Q_OBJECT
 public:
-  ThemePreviewDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice );
+  ThemePreviewDelegate( QAbstractItemView * parent );
   ~ThemePreviewDelegate();
 
 private:

@@ -356,7 +356,7 @@ private:
   KFontChooser *mFontChooser;
 
   int          mActiveFontIndex;
-  QFont        mFont[14];
+  QFont        mFont[13];
 };
 
 class AppearancePageColorsTab : public ConfigModuleTab {

@@ -191,8 +191,8 @@ void ThemeContentItemSourceLabel::startDrag()
   drag->exec( Qt::CopyAction, Qt::CopyAction );
 }
 
-ThemePreviewDelegate::ThemePreviewDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice )
-  : ThemeDelegate( parent, paintDevice )
+ThemePreviewDelegate::ThemePreviewDelegate( QAbstractItemView * parent )
+  : ThemeDelegate( parent )
 {
   mRowMapper = new ModelInvariantRowMapper();
 
@@ -265,7 +265,7 @@ ThemePreviewWidget::ThemePreviewWidget( QWidget * parent )
   mSelectedThemeColumn = 0;
   mFirstShow = true;
 
-  mDelegate = new ThemePreviewDelegate( this, viewport() );
+  mDelegate = new ThemePreviewDelegate( this );
   setItemDelegate( mDelegate );
   setRootIsDecorated( false );
   viewport()->setAcceptDrops( true );

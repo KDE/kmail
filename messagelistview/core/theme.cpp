@@ -62,7 +62,7 @@ static const int gThemeDefaultIconSize = 16;
 
 
 Theme::ContentItem::ContentItem( Type type )
-  : mType( type ), mFlags( 0 ), mLastPaintDevice( 0 ), mFontMetrics( QFont() )
+  : mType( type ), mFlags( 0 )
 {
 }
 
@@ -70,10 +70,7 @@ Theme::ContentItem::ContentItem( const ContentItem &src )
   : mType( src.mType ),
     mFlags( src.mFlags ),
     mFont( src.mFont ),
-    mCustomColor( src.mCustomColor ),
-    mLastPaintDevice( src.mLastPaintDevice ),
-    mFontMetrics( src.mFontMetrics ),
-    mLineSpacing( src.mLineSpacing )
+    mCustomColor( src.mCustomColor )
 {
 }
 
@@ -164,25 +161,9 @@ bool Theme::ContentItem::applicableToGroupHeaderItems( Type type )
   return ( static_cast< int >( type ) & ApplicableToGroupHeaderItems );
 }
 
-
-void Theme::ContentItem::updateFontMetrics( QPaintDevice * device )
-{
-  if ( !( mFlags & UseCustomFont ) )
-    mFont = KGlobalSettings::generalFont();
-  mLastPaintDevice = device;
-  mFontMetrics = QFontMetrics( mFont, device );
-  mLineSpacing = mFontMetrics.lineSpacing();
-}
-
 void Theme::ContentItem::setFont( const QFont &font )
 {
   mFont = font;
-  mLastPaintDevice = 0; // will force regeneration of font metrics
-}
-
-void Theme::ContentItem::resetCache()
-{
-  mLastPaintDevice = 0; // will force regeneration of font metrics
 }
 
 void Theme::ContentItem::save( QDataStream &stream ) const
@@ -294,15 +275,6 @@ void Theme::Row::insertRightItem( int idx, ContentItem * item )
     return;
   }
   mRightItems.insert( idx, item );
-}
-
-void Theme::Row::resetCache()
-{
-  mSizeHint = QSize();
-  for ( QList< ContentItem * >::ConstIterator it = mLeftItems.constBegin(); it != mLeftItems.constEnd() ; ++it )
-    ( *it )->resetCache();
-  for ( QList< ContentItem * >::ConstIterator it = mRightItems.constBegin(); it != mRightItems.constEnd() ; ++it )
-    ( *it )->resetCache();
 }
 
 bool Theme::Row::containsTextItems() const
@@ -506,17 +478,6 @@ void Theme::Column::insertGroupHeaderRow( int idx, Row * row )
     return;
   }
   mGroupHeaderRows.insert( idx, row );
-}
-
-void Theme::Column::resetCache()
-{
-  mGroupHeaderSizeHint = QSize();
-  mMessageSizeHint = QSize();
-
-  for ( QList< Row * >::ConstIterator it = mMessageRows.constBegin(); it != mMessageRows.constEnd() ; ++it )
-    ( *it )->resetCache();
-  for ( QList< Row * >::ConstIterator it = mGroupHeaderRows.constBegin(); it != mGroupHeaderRows.constEnd() ; ++it )
-    ( *it )->resetCache();
 }
 
 bool Theme::Column::containsTextItems() const
@@ -767,12 +728,6 @@ void Theme::setIconSize( int iconSize )
   mIconSize = iconSize;
   if ( ( mIconSize < 8 ) || ( mIconSize > 64 ) )
     mIconSize = gThemeDefaultIconSize;
-}
-
-void Theme::resetCache()
-{
-  for ( QList< Column * >::ConstIterator it = mColumns.constBegin(); it != mColumns.constEnd() ; ++it )
-    ( *it )->resetCache();
 }
 
 bool Theme::load( QDataStream &stream )

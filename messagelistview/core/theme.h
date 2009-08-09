@@ -237,10 +237,6 @@ public:
 
      QFont mFont;                     ///< The font to use with this content item, meaningful only if displaysText() returns true.
      QColor mCustomColor;             ///< The color to use with this content item, meaningful only if canUseCustomColor() return true.
-     // Cache stuff
-     QPaintDevice * mLastPaintDevice; ///< The last paint device that used this content item (this is usually set only once)
-     QFontMetrics mFontMetrics;       ///< Our font metrics cache (kept updated to the last QPaintDevice that uses this ContentItem)
-     int mLineSpacing;                ///< The line spacing in mFontMetrics, this is a value we use a lot (so by caching it we can avoid a function call)
 
   public:
     /**
@@ -437,46 +433,6 @@ public:
     // so for portability we're using a public interface also here.
 
     /**
-     * The last QPaintDevice that made use of this item.
-     * This function is used by ThemeDelegate for QFontMetrics caching purposes.
-     */
-    const QPaintDevice * lastPaintDevice() const
-      { return mLastPaintDevice; };
-
-    /**
-     * Updates the font metrics cache for this item by recreating them
-     * for the currently set font and the specified QPaintDevice.
-     * This function will also reset the font to the KGlobalSettings::generalFont()
-     * if you haven't called setUseCustomFont().
-     * This function is used by ThemeDelegate, you usually don't need to care.
-     */
-    void updateFontMetrics( QPaintDevice * device );
-
-    /**
-     * Returns the cached font metrics attacched to this content item.
-     * The font metrics must be kept up-to-date by the means of the updateFontMetrics()
-     * function whenever the QPaintDevice that this ContentItem is painted
-     * on is different than lastPaintDevice(). This is done by ThemeDelegate
-     * and in fact you shouldn't care.
-     */
-    const QFontMetrics & fontMetrics() const
-      { return mFontMetrics; };
-
-    /**
-     * Returns the cached font metrics line spacing for this content item.
-     * The line spacing is used really often in ThemeDelegate so this
-     * inlineable getter will help the compiler in optimizing stuff.
-     */
-    int lineSpacing() const
-      { return mLineSpacing; };
-
-    /**
-     * Resets the cache of this content item.
-     * This is called by the Theme::Row resetCache() method.
-     */
-    void resetCache();
-
-    /**
      * Handles content item saving (used by Theme::Row::save())
      */
     void save( QDataStream &stream ) const;
@@ -502,7 +458,6 @@ public:
   private:
     QList< ContentItem * > mLeftItems;   ///< The list of left aligned items
     QList< ContentItem * > mRightItems;  ///< The list of right aligned items
-    QSize mSizeHint;                     ///< The size hint for this row: the height is the sufficient minimum, the width is a guess, invalid size when not computed
 
   public:
     /**
@@ -569,29 +524,11 @@ public:
       { mRightItems.removeAll( item ); };
 
     /**
-     * Returns the cached size hint for this row. The returned size is invalid
-     * if no cached size hint has been set yet.
-     */
-    QSize sizeHint() const
-      { return mSizeHint; };
-
-    /**
-     * Sets the cached size hint for this row.
-     */
-    void setSizeHint( const QSize &s )
-      { mSizeHint = s; };
-
-    /**
      * Returns true if this row contains text items.
      * This is useful if you want to know if the column should just get
      * its minimum allowable space or it should get more.
      */
     bool containsTextItems() const;
-
-    /**
-     * Called from the Column's resetCache() method. You shouldn't need to care.
-     */
-    void resetCache();
 
     /**
      * Handles row saving (used by Theme::Column::save())
@@ -712,9 +649,7 @@ public:
     SortOrder::MessageSorting mMessageSorting;        ///< The message sort order we switch to when clicking on this column
     QList< Row * > mGroupHeaderRows;                  ///< The list of rows we display in this column for a GroupHeaderItem
     QList< Row * > mMessageRows;                      ///< The list of rows we display in this column for a MessageItem
-    // cache
-    QSize mGroupHeaderSizeHint;                       ///< The cached size hint for group header rows: invalid if not computed yet
-    QSize mMessageSizeHint;                           ///< The cached size hint for message rows: invalid if not computed yet
+
     SharedRuntimeData * mSharedRuntimeData;           ///< A pointer to the shared runtime data: shared between all instances of a theme with the same id
   public:
     /**
@@ -870,38 +805,6 @@ public:
      * its minimum allowable space or it should get more.
      */
     bool containsTextItems() const;
-
-    /**
-     * This is called by the Theme when it's resetCache() method is called.
-     * You shouldn't need to care about this.
-     */
-    void resetCache();
-
-    /**
-     * Returns the cached size hint for group header rows in this column
-     * or an invalid QSize if the cached size hint hasn't been set yet.
-     */
-    QSize groupHeaderSizeHint() const
-      { return mGroupHeaderSizeHint; };
-
-    /**
-     * Sets the cached size hint for group header rows in this column.
-     */
-    void setGroupHeaderSizeHint( const QSize &sh )
-      { mGroupHeaderSizeHint = sh; };
-
-    /**
-     * Returns the cached size hint for message rows in this column
-     * or an invalid QSize if the cached size hint hasn't been set yet.
-     */
-    QSize messageSizeHint() const
-      { return mMessageSizeHint; };
-
-    /**
-     * Sets the cached size hint for message rows in this column.
-     */
-    void setMessageSizeHint( const QSize &sh )
-      { mMessageSizeHint = sh; };
 
     /**
      * Handles column saving (used by Theme::save())
@@ -1112,14 +1015,6 @@ public:
    * of the option value and the second item is the integer option value itself.
    */
   static QList< QPair< QString, int > > enumerateViewHeaderPolicyOptions();
-
-  /**
-   * Resets the cache for this theme. This is called by the ThemeDelegate
-   * when the theme is applied and must be called before any changes to this
-   * theme are going to be painted (that is, apply a chunk of changes, call
-   * resetCache() then repaint.
-   */
-  void resetCache();
 
 protected:
   /**

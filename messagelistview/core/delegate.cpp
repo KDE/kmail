@@ -34,7 +34,7 @@ namespace Core
 {
 
 Delegate::Delegate( View *pParent )
-  : ThemeDelegate( pParent, pParent->viewport() )
+  : ThemeDelegate( pParent )
 {
 }
 
