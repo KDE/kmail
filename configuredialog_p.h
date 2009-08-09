@@ -420,12 +420,18 @@ private: // methods
 private: // data
   QCheckBox    *mDisplayMessageToolTips;
   QCheckBox    *mHideTabBarWithSingleTab;
+  KComboBox    *mAggregationCombo;
+  KComboBox    *mThemeCombo;
   KButtonGroup *mDateDisplay;
   KLineEdit    *mCustomDateFormatEdit;
   QString       mCustomDateWhatsThis;
 
 private slots:
   void slotLinkClicked( const QString & link );
+  void slotConfigureAggregations();
+  void slotConfigureThemes();
+  void slotLoadAggregations();
+  void slotLoadThemes();
 };
 
 class AppearancePageReaderTab : public ConfigModuleTab {

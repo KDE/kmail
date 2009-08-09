@@ -1512,7 +1512,7 @@ void View::fillViewMenu( KMenu * menu )
   connect( aggregationMenu, SIGNAL( aboutToShow() ),
            mWidget, SLOT( aggregationMenuAboutToShow() ) );
 
-  KMenu* themeMenu = new KMenu( i18n( "Appearance (Theme)" ) );
+  KMenu* themeMenu = new KMenu( i18n( "Theme" ) );
   themeMenu->setIcon( KIcon( "preferences-desktop-theme" ) );
   menu->addMenu( themeMenu );
   connect( themeMenu, SIGNAL( aboutToShow() ),

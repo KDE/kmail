@@ -224,7 +224,7 @@ public:
   const QHash< QString, Aggregation * > & aggregations() const
     { return mAggregations; };
 
-  void showConfigureAggregationsDialog( Widget *requester, const QString &aggregationId = QString() );
+  void showConfigureAggregationsDialog( QWidget *requester, const QString &aggregationId = QString() );
 
   /**
    * This is called by the aggregation configuration dialog
@@ -249,7 +249,7 @@ public:
   const QHash< QString, Theme * > & themes() const
     { return mThemes; };
 
-  void showConfigureThemesDialog( Widget *requester, const QString &preselectThemeId = QString() );
+  void showConfigureThemesDialog( QWidget *requester, const QString &preselectThemeId = QString() );
 
   /**
    * This is called by the theme configuration dialog
