@@ -40,6 +40,8 @@
 #include <kdebug.h>
 #include <KFontAction>
 #include <KFontSizeAction>
+#include <kstatusbar.h>
+#include <khtml_part.h>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
@@ -96,7 +98,8 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
 
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::initKMReaderMainWin() {
+void KMReaderMainWin::initKMReaderMainWin()
+{
   setCentralWidget( mReaderWin );
   setupAccel();
   setupGUI( Keys | StatusBar | Create, "kmreadermainwin.rc" );
@@ -109,6 +112,9 @@ void KMReaderMainWin::initKMReaderMainWin() {
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
+
+  connect( mReaderWin->htmlPart(), SIGNAL( onURL( const QString& ) ),
+           statusBar(), SLOT( showMessage(const QString& ) ) );
 }
 
 //-----------------------------------------------------------------------------
