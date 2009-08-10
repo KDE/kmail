@@ -620,6 +620,8 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
 
     disconnect( mStorageModel, SIGNAL( dataChanged( const QModelIndex &, const QModelIndex & ) ),
                 this, SLOT( slotStorageModelDataChanged( const QModelIndex &, const QModelIndex & ) ) );
+    disconnect( mStorageModel, SIGNAL( headerDataChanged( Qt::Orientation, int, int ) ),
+                this, SLOT( slotStorageModelHeaderDataChanged( Qt::Orientation, int, int ) ) );
   }
 
   mRootItem->killAllChildItems();
@@ -656,6 +658,8 @@ void Model::setStorageModel( StorageModel *storageModel, PreSelectionMode preSel
 
   connect( mStorageModel, SIGNAL( dataChanged( const QModelIndex &, const QModelIndex & ) ),
            this, SLOT( slotStorageModelDataChanged( const QModelIndex &, const QModelIndex & ) ) );
+  connect( mStorageModel, SIGNAL( headerDataChanged( Qt::Orientation, int, int ) ),
+           this, SLOT( slotStorageModelHeaderDataChanged( Qt::Orientation, int, int ) ) );
 
   if ( mStorageModel->rowCount() == 0 )
     return; // folder empty: nothing to fill
@@ -2153,12 +2157,14 @@ void Model::attachMessageToParent( Item *pParent, MessageItem *mi )
     // the parent is either watched or ignored: propagate to the child
     if ( pParent->status().isWatched() )
     {
+      int row = mInvariantRowMapper->modelInvariantIndexToModelIndexRow( mi );
       mi->setStatus( KPIM::MessageStatus::statusWatched() );
-      mStorageModel->setMessageItemStatus( mi, KPIM::MessageStatus::statusWatched() );
+      mStorageModel->setMessageItemStatus( mi, row, KPIM::MessageStatus::statusWatched() );
     } else if ( pParent->status().isIgnored() )
     {
+      int row = mInvariantRowMapper->modelInvariantIndexToModelIndexRow( mi );
       mi->setStatus( KPIM::MessageStatus::statusIgnored() );
-      mStorageModel->setMessageItemStatus( mi, KPIM::MessageStatus::statusIgnored() );
+      mStorageModel->setMessageItemStatus( mi, row, KPIM::MessageStatus::statusIgnored() );
     }
   }
 
@@ -4512,6 +4518,14 @@ void Model::slotStorageModelDataChanged( const QModelIndex &fromIndex, const QMo
       mFillStepTimer.start( mViewItemJobStepIdleInterval );
   }
 
+}
+
+void Model::slotStorageModelHeaderDataChanged( Qt::Orientation, int, int )
+{
+  if ( mStorageModelContainsOutboundMessages!=mStorageModel->containsOutboundMessages() ) {
+    mStorageModelContainsOutboundMessages = mStorageModel->containsOutboundMessages();
+    emit headerDataChanged( Qt::Horizontal, 0, columnCount() );
+  }
 }
 
 Qt::ItemFlags Model::flags( const QModelIndex &index ) const

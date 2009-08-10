@@ -166,7 +166,7 @@ public:
    * to the specified message item. The new status is be stored in the folder but isn't
    * set as mi->status() itself as the caller is responsable for this.
    */
-  virtual void setMessageItemStatus( Core::MessageItem * mi, const KPIM::MessageStatus &status );
+  virtual void setMessageItemStatus( Core::MessageItem * mi, int row, const KPIM::MessageStatus &status );
 
   // When porting to Akonadi the stuff below should be already implemented by MessageModel
 

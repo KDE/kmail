@@ -627,6 +627,7 @@ protected slots:
   void slotStorageModelRowsInserted( const QModelIndex &parent, int from, int to );
   void slotStorageModelRowsRemoved( const QModelIndex &parent, int from, int to );
   void slotStorageModelDataChanged( const QModelIndex &fromIndex, const QModelIndex &toIndex );
+  void slotStorageModelHeaderDataChanged( Qt::Orientation orientation, int first, int last );
   void slotStorageModelLayoutChanged();
 };
 
