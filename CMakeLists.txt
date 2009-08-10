@@ -255,6 +255,7 @@ set(kmailprivate_LIB_SRCS
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp
    messagelistview/widget.cpp
+   messagelistview/akonadi/ak_storagemodel.cpp
    messagelistview/core/aggregation.cpp
    messagelistview/core/aggregationeditor.cpp
    messagelistview/core/comboboxutils.cpp
@@ -372,6 +373,7 @@ target_link_libraries(kmailprivate
   ${KDE4_THREADWEAVER_LIBRARY}
   ${KDE4_KMIME_LIBRARY}
   ${KDE4_AKONADI_LIBS}
+  ${KDE4_AKONADI_KMIME_LIBS}
   messagecomposer
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
   ${KDE4_PHONON_LIBRARY}
