@@ -170,12 +170,12 @@ void Manager::slotHeartBeat()
   }
 }
 
-void Manager::showConfigureAggregationsDialog( Widget *requester, const QString &preselectAggregationId )
+void Manager::showConfigureAggregationsDialog( QWidget *requester, const QString &preselectAggregationId )
 {
   ConfigureAggregationsDialog::display( requester ? requester->window() : 0, preselectAggregationId );
 }
 
-void Manager::showConfigureThemesDialog( Widget *requester, const QString &preselectThemeId )
+void Manager::showConfigureThemesDialog( QWidget *requester, const QString &preselectThemeId )
 {
   ConfigureThemesDialog::display( requester ? requester->window() : 0, preselectThemeId );
 }

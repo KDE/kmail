@@ -1,249 +1,259 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MiscMainTab</class>
- <widget class="QWidget" name="MiscMainTab" >
-  <property name="geometry" >
+ <widget class="QWidget" name="MiscMainTab">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
+    <width>606</width>
     <height>348</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QGridLayout" name="gridLayout" >
-     <item row="0" column="0" colspan="2" >
-      <widget class="QCheckBox" name="mEmptyFolderConfirmCheck" >
-       <property name="text" >
-        <string comment="Corresponds to Folder-&gt;Move All Messages to Trash" >Ask for co&amp;nfirmation before moving all messages to trash</string>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0" colspan="2">
+      <widget class="QCheckBox" name="mEmptyFolderConfirmCheck">
+       <property name="text">
+        <string comment="Corresponds to Folder-&gt;Move All Messages to Trash">Ask for co&amp;nfirmation before moving all messages to trash</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2" >
-      <widget class="QCheckBox" name="mExcludeImportantFromExpiry" >
-       <property name="text" >
+     <item row="1" column="0" colspan="2">
+      <widget class="QCheckBox" name="mExcludeImportantFromExpiry">
+       <property name="text">
         <string>E&amp;xclude important messages from expiry</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0" >
-      <widget class="QLabel" name="mLoopLabel" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+     <item row="2" column="0">
+      <widget class="QLabel" name="mLoopLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
-        <string comment="to be continued with &quot;do not loop&quot;, &quot;loop in current folder&quot;, and &quot;loop in all folders&quot;" >&amp;When trying to find unread messages:</string>
+       <property name="text">
+        <string comment="to be continued with &quot;do not loop&quot;, &quot;loop in current folder&quot;, and &quot;loop in all folders&quot;">&amp;When trying to find unread messages:</string>
        </property>
-       <property name="buddy" >
+       <property name="buddy">
         <cstring>mLoopOnGotoUnread</cstring>
        </property>
       </widget>
      </item>
-     <item row="2" column="1" >
-      <widget class="KComboBox" name="mLoopOnGotoUnread" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+     <item row="2" column="1">
+      <widget class="KComboBox" name="mLoopOnGotoUnread">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="whatsThis" >
-        <string comment="what's this help" >&lt;qt>&lt;p>When jumping to the next unread message, it may occur that no more unread messages are below the current message.&lt;/p>
-&lt;p>&lt;b>Do not loop:&lt;/b> The search will stop at the last message in the current folder.&lt;/p>
-&lt;p>&lt;b>Loop in current folder:&lt;/b> The search will continue at the top of the message list, but not go to another folder.&lt;/p>
-&lt;p>&lt;b>Loop in all folders:&lt;/b> The search will continue at the top of the message list. If no unread messages are found it will then continue to the next folder.&lt;/p>
-&lt;p>Similarly, when searching for the previous unread message, the search will start from the bottom of the message list and continue to the previous folder depending on which option is selected.&lt;/p>&lt;/qt>
-</string>
+       <property name="whatsThis">
+        <string comment="what's this help">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When jumping to the next unread message, it may occur that no more unread messages are below the current message.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not loop:&lt;/span&gt; The search will stop at the last message in the current folder.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in current folder:&lt;/span&gt; The search will continue at the top of the message list, but not go to another folder.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in all folders:&lt;/span&gt; The search will continue at the top of the message list. If no unread messages are found it will then continue to the next folder.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Similarly, when searching for the previous unread message, the search will start from the bottom of the message list and continue to the previous folder depending on which option is selected.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in all marked folders: &lt;/span&gt;This is the same as &quot;Loop in all folders&quot; except that only folders are taken into account which have been marked with the folder property &quot;Act on new/unread mail in this folder&quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>Do not Loop</string>
         </property>
        </item>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>Loop in Current Folder</string>
         </property>
        </item>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>Loop in All Folders</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Loop in All Marked Folders</string>
         </property>
        </item>
       </widget>
      </item>
-     <item row="3" column="0" >
-      <widget class="QLabel" name="mEnterFolderLabel" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+     <item row="3" column="0">
+      <widget class="QLabel" name="mEnterFolderLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
-        <string comment="to be continued with &quot;jump to first new message&quot;, &quot;jump to first unread or new message&quot;, and &quot;jump to last selected message&quot;" >When ente&amp;ring a folder:</string>
+       <property name="text">
+        <string comment="to be continued with &quot;jump to first new message&quot;, &quot;jump to first unread or new message&quot;, and &quot;jump to last selected message&quot;">When ente&amp;ring a folder:</string>
        </property>
-       <property name="buddy" >
+       <property name="buddy">
         <cstring>mActionEnterFolder</cstring>
        </property>
       </widget>
      </item>
-     <item row="3" column="1" >
-      <widget class="KComboBox" name="mActionEnterFolder" >
+     <item row="3" column="1">
+      <widget class="KComboBox" name="mActionEnterFolder">
        <item>
-        <property name="text" >
+        <property name="text">
          <string>Jump to First New Message</string>
         </property>
        </item>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>Jump to First Unread or New Message</string>
         </property>
        </item>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>Jump to Last Selected Message</string>
         </property>
        </item>
       </widget>
      </item>
-     <item row="4" column="0" >
-      <widget class="QCheckBox" name="mDelayedMarkAsRead" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+     <item row="4" column="0">
+      <widget class="QCheckBox" name="mDelayedMarkAsRead">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Mar&amp;k selected message as read after</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1" >
-      <widget class="KIntSpinBox" name="mDelayedMarkTime" >
-       <property name="enabled" >
+     <item row="4" column="1">
+      <widget class="KIntSpinBox" name="mDelayedMarkTime">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="suffix" >
+       <property name="suffix">
         <string> sec</string>
        </property>
-       <property name="maximum" >
+       <property name="maximum">
         <number>60</number>
        </property>
       </widget>
      </item>
-     <item row="5" column="0" colspan="2" >
-      <widget class="QCheckBox" name="mShowPopupAfterDnD" >
-       <property name="text" >
+     <item row="5" column="0" colspan="2">
+      <widget class="QCheckBox" name="mShowPopupAfterDnD">
+       <property name="text">
         <string>&amp;Ask for action after dragging messages to another folder</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="0" >
-      <widget class="QLabel" name="mMailBoxLabel" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+     <item row="6" column="0">
+      <widget class="QLabel" name="mMailBoxLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
-        <string comment="to be continued with &quot;flat files&quot; and &quot;directories&quot;, resp." >By default, &amp;message folders on disk are:</string>
+       <property name="text">
+        <string comment="to be continued with &quot;flat files&quot; and &quot;directories&quot;, resp.">By default, &amp;message folders on disk are:</string>
        </property>
-       <property name="buddy" >
+       <property name="buddy">
         <cstring>mMailboxPrefCombo</cstring>
        </property>
       </widget>
      </item>
-     <item row="6" column="1" >
-      <widget class="KComboBox" name="mMailboxPrefCombo" >
-       <property name="whatsThis" >
-        <string comment="what's this help" >&lt;qt>&lt;p>This selects which mailbox format will be  the default for local folders:&lt;/p>
-&lt;p>&lt;b>mbox:&lt;/b> KMail's mail folders are represented by a single file each. Individual messages are separated from each other by a                      line starting with "From ". This saves space on disk, but may be less robust, e.g. when moving messages between folders.&lt;/p>
-&lt;p>&lt;b>maildir:&lt;/b> KMail's mail folders are represented by real folders on disk. Individual messages are separate files. This may waste a bit of space on disk, but should be more robust, e.g. when moving messages between folders.&lt;/p>&lt;/qt></string>
+     <item row="6" column="1">
+      <widget class="KComboBox" name="mMailboxPrefCombo">
+       <property name="whatsThis">
+        <string comment="what's this help">&lt;qt&gt;&lt;p&gt;This selects which mailbox format will be  the default for local folders:&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;mbox:&lt;/b&gt; KMail's mail folders are represented by a single file each. Individual messages are separated from each other by a                      line starting with &quot;From &quot;. This saves space on disk, but may be less robust, e.g. when moving messages between folders.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;maildir:&lt;/b&gt; KMail's mail folders are represented by real folders on disk. Individual messages are separate files. This may waste a bit of space on disk, but should be more robust, e.g. when moving messages between folders.&lt;/p&gt;&lt;/qt&gt;</string>
        </property>
        <item>
-        <property name="text" >
-         <string>Flat Files ("mbox" format)</string>
+        <property name="text">
+         <string>Flat Files (&quot;mbox&quot; format)</string>
         </property>
        </item>
        <item>
-        <property name="text" >
-         <string>Directories ("maildir" format)</string>
+        <property name="text">
+         <string>Directories (&quot;maildir&quot; format)</string>
         </property>
        </item>
       </widget>
      </item>
-     <item row="7" column="0" >
-      <widget class="QLabel" name="mStartUpFolderLabel" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+     <item row="7" column="0">
+      <widget class="QLabel" name="mStartUpFolderLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Open this folder on &amp;startup:</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="0" colspan="2" >
-      <widget class="QCheckBox" name="mEmptyTrashCheck" >
-       <property name="text" >
+     <item row="8" column="0" colspan="2">
+      <widget class="QCheckBox" name="mEmptyTrashCheck">
+       <property name="text">
         <string>Empty local &amp;trash folder on program exit</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="0" >
-      <widget class="QLabel" name="mQuotaLabel" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+     <item row="9" column="0">
+      <widget class="QLabel" name="mQuotaLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>&amp;Quota units:</string>
        </property>
-       <property name="buddy" >
+       <property name="buddy">
         <cstring>mQuotaCmbBox</cstring>
        </property>
       </widget>
      </item>
-     <item row="9" column="1" >
-      <widget class="KComboBox" name="mQuotaCmbBox" >
+     <item row="9" column="1">
+      <widget class="KComboBox" name="mQuotaCmbBox">
        <item>
-        <property name="text" >
+        <property name="text">
          <string>KB</string>
         </property>
        </item>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>MB</string>
         </property>
        </item>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>GB</string>
         </property>
        </item>
       </widget>
      </item>
-     <item row="7" column="1" >
-      <widget class="KMail::FolderRequester" native="1" name="mOnStartupOpenFolder" />
+     <item row="7" column="1">
+      <widget class="KMail::FolderRequester" name="mOnStartupOpenFolder" native="true"/>
      </item>
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer" >
-     <property name="orientation" >
+    <spacer name="verticalSpacer">
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
        <height>0</height>
@@ -255,14 +265,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
-  <customwidget>
    <class>KIntSpinBox</class>
    <extends>QSpinBox</extends>
    <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>KMail::FolderRequester</class>

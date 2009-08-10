@@ -154,6 +154,21 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
     mColorToDoMessage = config.readEntry( "TodoMessage", mColorToDoMessage );
   }
 
+  if ( GlobalSettings::self()->useDefaultFonts() )
+  {
+    mFont = mFontImportantMessage = mFontNewMessage = mFontUnreadMessage =
+      mFontToDoMessage = KGlobalSettings::generalFont();
+  }
+  else
+  {
+    KConfigGroup fonts( KMKernel::config(), "Fonts" );
+    mFont = fonts.readEntry( "list-font",  KGlobalSettings::generalFont() );
+
+    mFontImportantMessage = fonts.readEntry( "list-important-font", mFont );
+    mFontNewMessage       = fonts.readEntry( "list-new-font",       mFont );
+    mFontUnreadMessage    = fonts.readEntry( "list-unread-font",    mFont );
+    mFontToDoMessage      = fonts.readEntry( "list-toact-font",     mFont );
+  }
 }
 
 StorageModel::~StorageModel()
@@ -423,36 +438,9 @@ bool StorageModel::initializeMessageItem( Core::MessageItem * mi, int row, bool 
   QString subject = msg->subject();
   if ( subject.isEmpty() )
     subject = '(' + noSubject + ')';
-  mi->setSubjectAndStatus(
-      subject,
-      stat
-    );
+  mi->setSubjectAndStatus( subject, stat );
 
-  setMessageItemEncryptionState( mi, msg );
-  setMessageItemSignatureState( mi, msg );
-
-  QColor clr;
-  QColor backClr;
-  QList< Core::MessageItem::Tag * > * tagList;
-  tagList = fillTagList( msg, clr, backClr );
-  mi->setTagList( tagList );
-
-  if ( !clr.isValid() )
-  {
-    if ( stat.isNew() )
-      clr = mColorNewMessage;
-    else if ( stat.isUnread() )
-      clr = mColorUnreadMessage;
-    else if ( stat.isImportant() )
-      clr = mColorImportantMessage;
-    else if ( stat.isToAct() )
-      clr = mColorToDoMessage;
-  }
-
-  if ( clr.isValid() )
-    mi->setTextColor( clr );
-  if ( backClr.isValid() )
-    mi->setBackgroundColor( backClr );
+  setMessageItemData( mi, msg );
 
   return true;
 }
@@ -474,6 +462,13 @@ void StorageModel::updateMessageItemData( Core::MessageItem * mi, int row ) cons
 
   mi->setStatus( stat );
 
+  setMessageItemData( mi, msg );
+
+  // FIXME: Handle MDN State ?
+}
+
+void StorageModel::setMessageItemData( Core::MessageItem * mi, KMMsgBase * msg ) const
+{
   setMessageItemEncryptionState( mi, msg );
   setMessageItemSignatureState( mi, msg );
 
@@ -483,14 +478,17 @@ void StorageModel::updateMessageItemData( Core::MessageItem * mi, int row ) cons
   tagList = fillTagList( msg, clr, backClr );
   mi->setTagList( tagList );
 
+  KPIM::MessageStatus stat = msg->messageStatus();
+
   if ( !clr.isValid() )
   {
-    if ( stat.isNew() )
+    // from KDE3: "important" overrides "new" overrides "unread" overrides "todo"
+    if ( stat.isImportant() )
+      clr = mColorImportantMessage;
+    else if ( stat.isNew() )
       clr = mColorNewMessage;
     else if ( stat.isUnread() )
       clr = mColorUnreadMessage;
-    else if ( stat.isImportant() )
-      clr = mColorImportantMessage;
     else if ( stat.isToAct() )
       clr = mColorToDoMessage;
   }
@@ -498,7 +496,17 @@ void StorageModel::updateMessageItemData( Core::MessageItem * mi, int row ) cons
   mi->setTextColor( clr ); // set even if invalid (->default color)
   mi->setBackgroundColor( backClr );
 
-  // FIXME: Handle MDN State ?
+  // from KDE3: "important" overrides "new" overrides "unread" overrides "todo"
+  if ( stat.isImportant() )
+    mi->setFont( mFontImportantMessage );
+  else if ( stat.isNew() )
+    mi->setFont( mFontNewMessage );
+  else if ( stat.isUnread() )
+    mi->setFont( mFontUnreadMessage );
+  else if ( stat.isToAct() )
+    mi->setFont( mFontToDoMessage );
+  else
+    mi->setFont( mFont );
 }
 
 void StorageModel::fillMessageItemThreadingData( Core::MessageItem * mi, int row, ThreadingDataSubset subset ) const

@@ -37,6 +37,7 @@
 #include <KMenu>
 #include <KMessageBox>
 #include <KPushButton>
+#include <KInputDialog>
 
 #include <QBuffer>
 #include <QClipboard>
@@ -146,6 +147,8 @@ void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 
 bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
+  if ( source->hasImage() && source->hasFormat( "image/png" ) )
+    return true;
   if ( KPIM::MailList::canDecode( source ) )
     return true;
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
@@ -158,6 +161,36 @@ bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 
 void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 {
+  // If this is a PNG image, either add it as an attachment or as an inline image
+  if ( source->hasImage() && source->hasFormat( "image/png" ) ) {
+    if ( textMode() == KRichTextEdit::Rich ) {
+      KMenu menu;
+      const QAction *addAsInlineImageAction = menu.addAction( i18n("Add as &Inline Image") );
+      /*const QAction *addAsAttachmentAction = */menu.addAction( i18n("Add as &Attachment") );
+      const QAction *selectedAction = menu.exec( QCursor::pos() );
+      if ( selectedAction == addAsInlineImageAction ) {
+        // Let the textedit from kdepimlibs handle inline images
+        KPIMTextEdit::TextEdit::insertFromMimeData( source );
+        return;
+      }
+      // else fall through
+    }
+
+    // Ok, when we reached this point, the user wants to add the image as an attachment.
+    // Ask for the filename first.
+    bool ok;
+    const QString attName =
+       KInputDialog::getText( "KMail", i18n( "Name of the attachment:" ), QString(), &ok, this );
+    if ( !ok ) {
+      return;
+    }
+
+    const QByteArray imageData = source->data( "image/png" );
+    m_composerWin->addAttachment( attName, "base64", imageData, "image", "png", QByteArray(),
+                                  QString(), QByteArray() );
+    return;
+  }
+
     // If this is a list of mails, attach those mails as forwards.
   if ( KPIM::MailList::canDecode( source ) ) {
 
@@ -213,7 +246,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     return;
   }
 
-  KPIMTextEdit::TextEdit::insertFromMimeData(source);
+  KPIMTextEdit::TextEdit::insertFromMimeData( source );
 }
 
 #include "kmcomposereditor.moc"

@@ -29,7 +29,6 @@
 #include "messagelistview/core/item.h"
 
 class QAbstractItemView;
-class QPaintDevice;
 
 namespace KMail
 {
@@ -49,13 +48,12 @@ class Item;
 class ThemeDelegate : public QStyledItemDelegate
 {
 public:
-  ThemeDelegate( QAbstractItemView * parent, QPaintDevice * paintDevice );
+  ThemeDelegate( QAbstractItemView * parent );
   ~ThemeDelegate();
 
 private:
   const Theme * mTheme; ///< Shallow pointer to the current theme
   QAbstractItemView * mItemView;
-  QPaintDevice * mPaintDevice;
 
   QColor mGroupHeaderBackgroundColor; // cache
 
@@ -71,6 +69,7 @@ private:
   bool mHitContentItemRight;
   const Theme::ContentItem * mHitContentItem;
   QRect mHitContentItemRect;
+
 public:
   const Theme * theme() const
     { return mTheme; };
@@ -80,12 +79,7 @@ public:
    * Returns a heuristic sizeHint() for the specified item type and column.
    * The hint is based on the contents of the theme (and not of any message or group header).
    */
-  QSize sizeHintForItemTypeAndColumn( Item::Type type, int column ) const;
-
-  /**
-   * Returns the maximum estimated height for the specified item type.
-   */
-  int maximumHeightForItemType( Item::Type type ) const;
+  QSize sizeHintForItemTypeAndColumn( Item::Type type, int column, const Item *item = 0) const;
 
   /**
    * Performs a hit test on the specified viewport point.
@@ -199,6 +193,9 @@ public:
    */
   QRect hitContentItemRect() const
     { return mHitContentItemRect; };
+
+  /// return the font to paint given item with, checking global kmail settings and theme settings
+  static QFont itemFont( const Theme::ContentItem *ci, const Item *item );
 
 protected:
   /**

@@ -356,7 +356,7 @@ private:
   KFontChooser *mFontChooser;
 
   int          mActiveFontIndex;
-  QFont        mFont[14];
+  QFont        mFont[13];
 };
 
 class AppearancePageColorsTab : public ConfigModuleTab {
@@ -420,12 +420,18 @@ private: // methods
 private: // data
   QCheckBox    *mDisplayMessageToolTips;
   QCheckBox    *mHideTabBarWithSingleTab;
+  KComboBox    *mAggregationCombo;
+  KComboBox    *mThemeCombo;
   KButtonGroup *mDateDisplay;
   KLineEdit    *mCustomDateFormatEdit;
   QString       mCustomDateWhatsThis;
 
 private slots:
   void slotLinkClicked( const QString & link );
+  void slotConfigureAggregations();
+  void slotConfigureThemes();
+  void slotLoadAggregations();
+  void slotLoadThemes();
 };
 
 class AppearancePageReaderTab : public ConfigModuleTab {

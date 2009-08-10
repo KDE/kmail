@@ -28,10 +28,11 @@ class KMMessage;
 class KMMsgBase;
 
 #include <QColor>
+#include <QFont>
 
 namespace KPIM
 {
-	class MessageStatus;
+  class MessageStatus;
 }
 
 namespace KMail
@@ -65,6 +66,13 @@ protected:
   QColor mColorUnreadMessage;
   QColor mColorImportantMessage;
   QColor mColorToDoMessage;
+
+  QFont mFont;
+  QFont mFontNewMessage;
+  QFont mFontUnreadMessage;
+  QFont mFontImportantMessage;
+  QFont mFontToDoMessage;
+
 public:
 
   // When porting to Akonadi the stuff below will be simply killed as it serves
@@ -246,6 +254,11 @@ private slots:
    */
   void slotMessageHeaderChanged( KMFolder *folder, int idx );
 
+private:
+  /**
+    *  set MessageItem's color and font, etc. to reflect given mail message's state
+    */
+  void setMessageItemData( Core::MessageItem * mi, KMMsgBase * msg ) const;
 };
 
 } // namespace MessageListView
