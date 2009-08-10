@@ -28,6 +28,8 @@
 #include "messagelistview/core/enums.h"
 #include "messagelistview/core/sortorder.h"
 
+#include "kmail_export.h"
+
 class KLineEdit;
 class QTimer;
 class QActionGroup;
@@ -60,7 +62,7 @@ class View;
  * Provides a widget which has the messagelist and the most important helper widgets,
  * like the search line and the comboboxes for changing status filtering, aggregation etc.
  */
-class Widget : public QWidget
+class KMAIL_EXPORT Widget : public QWidget
 {
   friend class View;
   friend class Manager;
