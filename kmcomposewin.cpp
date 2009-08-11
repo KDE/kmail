@@ -3769,7 +3769,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
-  if ( !TransportManager::self()->checkTransport( this ) )
+  if ( !TransportManager::self()->promptCreateTransportIfNoneExists( this ) )
     return;
   if ( !checkRecipientNumber() )
       return;
@@ -3822,7 +3822,7 @@ void KMComposeWin::slotSendNow()
   if ( !mEditor->checkExternalEditorFinished() ) {
     return;
   }
-  if ( !TransportManager::self()->checkTransport( this ) )
+  if ( !TransportManager::self()->promptCreateTransportIfNoneExists( this ) )
     return;
   if ( !checkRecipientNumber() )
     return;

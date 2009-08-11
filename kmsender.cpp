@@ -138,7 +138,7 @@ bool KMSender::doSend(KMMessage *aMsg, short sendNow )
     return false;
   }
 
-  if ( !TransportManager::self()->checkTransport( 0 ) ) {
+  if ( !TransportManager::self()->promptCreateTransportIfNoneExists( 0 ) ) {
     return false;
   }
 
@@ -207,7 +207,7 @@ void KMSender::outboxMsgAdded( int idx )
 //-----------------------------------------------------------------------------
 bool KMSender::doSendQueued( const QString &customTransport )
 {
-  if ( !TransportManager::self()->checkTransport( 0 ) ) {
+  if ( !TransportManager::self()->promptCreateTransportIfNoneExists( 0 ) ) {
     return false;
   }
 
