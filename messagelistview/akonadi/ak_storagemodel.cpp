@@ -105,8 +105,18 @@ StorageModel::~StorageModel()
 
 QString StorageModel::id() const
 {
-  // Just use the pointer value
-  return "0x"+QString::number(reinterpret_cast<qint64>(this), 16);
+  QStringList ids;
+  QModelIndexList indexes = mSelectionModel->selectedRows();
+
+  foreach ( const QModelIndex &index, indexes ) {
+    Collection c = index.data( EntityTreeModel::CollectionRole ).value<Collection>();
+    if ( c.isValid() ) {
+      ids << QString::number( c.id() );
+    }
+  }
+
+  ids.sort();
+  return ids.join(":");
 }
 
 bool StorageModel::containsOutboundMessages() const
