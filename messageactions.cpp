@@ -30,6 +30,7 @@
 #include <KDebug>
 #include <KLocale>
 #include <KXMLGUIClient>
+#include <KStandardDirs>
 
 #include <qwidget.h>
 
@@ -90,7 +91,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mActionCollection->addAction( "create_todo", mCreateTodoAction );
   connect( mCreateTodoAction, SIGNAL(triggered(bool)),
            this, SLOT(slotCreateTodo()) );
-
+  mKorganizerIsOnSystem = !KStandardDirs::findExe("korganizer").isEmpty();
+  mCreateTodoAction->setEnabled( mKorganizerIsOnSystem );
 
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ), this );
   mActionCollection->addAction( "set_status", mStatusMenu );
@@ -207,7 +209,7 @@ void MessageActions::updateActions()
   const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags() ||
       !((mCurrentMessage && mCurrentMessage->parent()) ? mCurrentMessage->parent()->isReadOnly() : true);
 
-  mCreateTodoAction->setEnabled( singleMsg );
+  mCreateTodoAction->setEnabled( singleMsg && mKorganizerIsOnSystem);
   mReplyActionMenu->setEnabled( singleMsg );
   mReplyAction->setEnabled( singleMsg );
   mNoQuoteReplyAction->setEnabled( singleMsg );
