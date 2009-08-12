@@ -75,7 +75,7 @@ private:
   KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
-          *mViewSourceAction, *mCopyTextAction;
+          *mViewSourceAction;
   KActionMenu *mCopyActionMenu;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;

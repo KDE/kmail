@@ -322,9 +322,6 @@ void KMReaderMainWin::setupAccel()
   updateMessageMenu();
   updateCustomTemplateMenus();
 
-  mCopyTextAction = new KAction( KStandardAction::copy(
-                   mReaderWin, SLOT( slotCopySelectedText() ), actionCollection() ) );
-
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
            this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)) );
   connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
