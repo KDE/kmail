@@ -786,6 +786,8 @@ namespace KMail {
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
       // TODO vcard
+
+      // We by design use the stripped mail address here, it is more enterprise-like.
       QString fromPart = KMail::StringUtil::emailAddrAsAnchor( fromStr, true, linkColor );
       if ( !vCardName.isEmpty() )
         fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
