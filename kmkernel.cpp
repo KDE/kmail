@@ -463,6 +463,8 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset( "", true );
+  if (!to.isEmpty())
+    cWin->setFocusToSubject();
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
   for ( KUrl::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach( (*it) );
