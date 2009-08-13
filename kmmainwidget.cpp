@@ -4400,7 +4400,6 @@ void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
   bool multiFolder = mMainFolderView->selectedFolders().count() > 1;
-  bool mailingList = mFolder && mFolder->isMailingListEnabled() && !multiFolder;
 
   mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
