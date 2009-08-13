@@ -124,12 +124,6 @@ public:
   KMFolder * folder() const;
 
   /**
-   * Returns the current MessageItem in the current folder.
-   * May return 0 if there is no current message or no current folder.
-   */
-  Core::MessageItem * currentMessageItem() const;
-
-  /**
    * Returns the current message for the current folder as KMMsgBase.
    * May return 0 if there is no current message or no current folder.
    * This may be faster than currentMsgBase() but returns headers only.
@@ -277,7 +271,7 @@ public:
    * If the set couldn't be created (probably because nothing is selected)
    * then static_cast< Core::MessageItemSetReference >( 0 ) is returned.
    * You can use the returned reference at any later stage to retrieve
-   * the list of associated messages. 
+   * the list of associated messages.
    * Persistent sets consume resources (memory AND CPU time). Be sure
    * to call deletePersistentSet() when you no longer need it.
    */

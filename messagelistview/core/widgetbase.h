@@ -119,6 +119,12 @@ public:
     { return mView; };
 
   /**
+   * Returns the current MessageItem in the current folder.
+   * May return 0 if there is no current message or no current folder.
+   */
+  Core::MessageItem * currentMessageItem() const;
+
+  /**
    * Returns the KPIM::MessageStatus in the current quicksearch field.
    */
   KPIM::MessageStatus currentFilterStatus() const;

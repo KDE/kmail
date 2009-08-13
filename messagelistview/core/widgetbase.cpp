@@ -195,6 +195,11 @@ void Widget::populateStatusFilterCombo()
            this, SLOT( statusSelected( int ) ) );
 }
 
+Core::MessageItem * Widget::currentMessageItem() const
+{
+  return view()->currentMessageItem();
+}
+
 KPIM::MessageStatus Widget::currentFilterStatus() const
 {
   if ( !mFilter )
@@ -704,7 +709,7 @@ void Widget::switchMessageSorting( SortOrder::MessageSorting messageSorting,
                  ( column->messageSorting() == SortOrder::SortMessagesBySenderOrReceiver ) ||
                  ( column->messageSorting() == SortOrder::SortMessagesByReceiver ) ||
                  ( column->messageSorting() == SortOrder::SortMessagesBySender )
-               ) && 
+               ) &&
                (
                  ( messageSorting == SortOrder::SortMessagesBySenderOrReceiver ) ||
                  ( messageSorting == SortOrder::SortMessagesByReceiver ) ||
