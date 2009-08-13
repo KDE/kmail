@@ -117,6 +117,7 @@ class MessageActions : public QObject
     KActionMenu *mForwardActionMenu;
     KToggleAction *mToggleFlagAction, *mToggleTodoAction;
     KAction *mEditAction;
+    bool mKorganizerIsOnSystem;
 };
 
 }
