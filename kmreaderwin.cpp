@@ -2920,12 +2920,12 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       QString align = "left";
       if ( headerStyle() == HeaderStyle::enterprise() )
         align = "right";
-      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+      if ( node->msgPart().typeStr().toLower() == "message" || node == mRootNode )
         html += QString::fromLatin1("<div style=\"background:%1; %2"
                 "vertical-align:middle; float:%3; %4\">").arg( bgColor.name() ).arg( margin )
                                                          .arg( align ).arg( visibility );
       html += subHtml;
-      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+      if ( node->msgPart().typeStr().toLower() == "message" || node == mRootNode )
         html += "</div>";
     }
   } else {
@@ -2936,18 +2936,22 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       label = node->msgPart().name().trimmed();
     if( label.isEmpty() )
       label = node->msgPart().fileName();
-    // FIXME: add deleted attachments to the blacklist!
-    bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
-    if ( !typeBlacklisted && node->msgPart().typeStr() == "application" ) {
-      typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
-                     || node->msgPart().subtypeStr() == "pgp-signature"
-                     || node->msgPart().subtypeStr() == "pkcs7-mime"
-                     || node->msgPart().subtypeStr() == "pkcs7-signature"
-                     || node->msgPart().subtypeStr() == "x-pkcs7-signature"
-                     || ( node->msgPart().subtypeStr() == "octet-stream" &&
-                          node->msgPart().fileName() == "msg.asc" );
+    bool typeBlacklisted = node->msgPart().typeStr().toLower() == "multipart";
+    if ( !typeBlacklisted && node->msgPart().typeStr().toLower() == "application" ) {
+      typeBlacklisted = node->msgPart().subtypeStr().toLower() == "pgp-encrypted"
+                     || node->msgPart().subtypeStr().toLower() == "pgp-signature"
+                     || node->msgPart().subtypeStr().toLower() == "pkcs7-mime"
+                     || node->msgPart().subtypeStr().toLower() == "pkcs7-signature"
+                     || node->msgPart().subtypeStr().toLower() == "x-pkcs7-signature"
+                     || ( node->msgPart().subtypeStr().toLower() == "octet-stream" &&
+                          node->msgPart().fileName().toLower() == "msg.asc" );
     }
     typeBlacklisted = typeBlacklisted || node == mRootNode;
+    bool firstTextChildOfEncapsulatedMsg = node->msgPart().typeStr().toLower() == "text" &&
+                                           node->msgPart().subtypeStr().toLower() == "plain" &&
+                                           node->parentNode() &&
+                                           node->parentNode()->msgPart().typeStr().toLower() == "message";
+    typeBlacklisted = typeBlacklisted || firstTextChildOfEncapsulatedMsg;
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
       html += "<div style=\"float:left;\">";
       html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
