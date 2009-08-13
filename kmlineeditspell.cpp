@@ -23,6 +23,7 @@
 #include "recentaddresses.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
+#include "kmmessage.h"
 
 #include <libkdepim/kvcarddrag.h>
 #include <kpimutils/email.h>
@@ -128,7 +129,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
       // email-address.
       if ( url.protocol() == "mailto" ) {
         KABC::Addressee addressee;
-        addressee.insertEmail( url.path(), true /* preferred */ );
+        addressee.insertEmail( KMMessage::decodeMailtoUrl( url.path() ), true /* preferred */ );
         list += addressee;
       }
 
