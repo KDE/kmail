@@ -103,6 +103,21 @@ StorageModel::~StorageModel()
 {
 }
 
+Akonadi::Collection::List StorageModel::displayedCollections() const
+{
+  Akonadi::Collection::List collections;
+  QModelIndexList indexes = mSelectionModel->selectedRows();
+
+  foreach ( const QModelIndex &index, indexes ) {
+    Akonadi::Collection c = index.data( EntityTreeModel::CollectionRole ).value<Collection>();
+    if ( c.isValid() ) {
+      collections << c;
+    }
+  }
+
+  return collections;
+}
+
 QString StorageModel::id() const
 {
   QStringList ids;
@@ -154,7 +169,7 @@ int StorageModel::initialUnreadRowCountGuess() const
 bool StorageModel::initializeMessageItem( KMail::MessageListView::Core::MessageItem *mi,
                                           int row, bool bUseReceiver ) const
 {
-  Item item = mModel->data( mModel->index( row, 0 ), EntityTreeModel::ItemRole ).value<Item>();
+  Item item = itemForRow( row );
   const MessagePtr mail = messageForRow( row );
   if ( !mail ) return false;
 
@@ -231,7 +246,7 @@ void StorageModel::fillMessageItemThreadingData( KMail::MessageListView::Core::M
 void StorageModel::updateMessageItemData( KMail::MessageListView::Core::MessageItem *mi,
                                           int row ) const
 {
-  Item item = mModel->data( mModel->index( row, 0 ), EntityTreeModel::ItemRole ).value<Item>();
+  Item item = itemForRow( row );
   const MessagePtr mail = messageForRow( row );
   Q_ASSERT( mail );
 
@@ -296,7 +311,7 @@ void StorageModel::updateMessageItemData( KMail::MessageListView::Core::MessageI
 void StorageModel::setMessageItemStatus( KMail::MessageListView::Core::MessageItem *mi,
                                          int row, const KPIM::MessageStatus &status )
 {
-  Item item = mModel->data( mModel->index( row, 0 ), EntityTreeModel::ItemRole ).value<Item>();
+  Item item = itemForRow( row );
   item.setFlags( status.getStatusFlags() );
   new Akonadi::ItemModifyJob( item, this );
 }
@@ -361,9 +376,14 @@ void StorageModel::onSelectionChanged()
   emit headerDataChanged( Qt::Horizontal, 0, columnCount()-1 );
 }
 
+Akonadi::Item StorageModel::itemForRow( int row ) const
+{
+  return mModel->data( mModel->index( row, 0 ), EntityTreeModel::ItemRole ).value<Item>();
+}
+
 MessagePtr StorageModel::messageForRow( int row ) const
 {
-  Item item = mModel->data( mModel->index( row, 0 ), EntityTreeModel::ItemRole ).value<Item>();
+  Item item = itemForRow( row );
 
   if ( !item.hasPayload<MessagePtr>() ) {
     kWarning() << "Not a message" << item.id() << item.remoteId() << item.mimeType();

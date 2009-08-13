@@ -21,6 +21,9 @@
 
 #include "messagelistview/core/storagemodelbase.h"
 
+#include <akonadi/collection.h>
+#include <akonadi/item.h>
+
 #include <boost/shared_ptr.hpp>
 #include <kmime/kmime_message.h>
 
@@ -64,6 +67,8 @@ public:
   explicit StorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0 );
   ~StorageModel();
 
+  Collection::List displayedCollections() const;
+
   virtual QString id() const;
   virtual bool containsOutboundMessages() const;
   virtual int initialUnreadRowCountGuess() const;
@@ -80,13 +85,14 @@ public:
 
   virtual void prepareForScan();
 
+  Item itemForRow( int row ) const;
+  MessagePtr messageForRow( int row ) const;
+
 private slots:
   void onSourceDataChanged( const QModelIndex &topLeft, const QModelIndex &bottomRight );
   void onSelectionChanged();
 
 private:
-  MessagePtr messageForRow( int row ) const;
-
   QAbstractItemModel *mModel;
   QItemSelectionModel *mSelectionModel;
 
