@@ -1137,7 +1137,7 @@ namespace KMail {
       //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
       //  ++thisDelim;
 
-      partStr = "Content-Type: message/rfc822\nContent-Description: embedded message\n";
+      partStr = "Content-Type: message/rfc822\nContent-Description: embedded message\n\n";
       partStr += str.mid( thisDelim, nextDelim-thisDelim );
       QString subject = QString::fromLatin1("embedded message");
       QString subSearch = QString::fromLatin1("\nSubject:");
