@@ -130,7 +130,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
   // --- contents -----
   if ( kmkernel->iCalIface().isEnabled() &&
-       mFolder && mFolder->folderType() == KMFolderTypeCachedImap ) {
+       mFolder && mFolder->folderType() != KMFolderTypeImap ) {
     mContentsHBox = new QHBoxLayout();
     mContentsHBox->setSpacing( 6 );
     mContentsHBox->setMargin( 0 );
