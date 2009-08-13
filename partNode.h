@@ -233,11 +233,13 @@ public:
 
     const QString& trueFromAddress() const;
 
+    const partNode * topLevelParent() const;
     partNode * parentNode() const { return mRoot; }
     partNode * nextSibling() const { return mNext; }
     partNode * firstChild() const { return mChild; }
     partNode * next( bool allowChildren=true ) const;
     int childCount() const;
+    int totalChildCount() const;
     bool processed() const { return mWasProcessed; }
 
     KMail::Interface::BodyPartMemento *bodyPartMemento( const QByteArray &which ) const;

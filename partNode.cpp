@@ -243,10 +243,26 @@ QByteArray partNode::subTypeString() const {
   return s.c_str();
 }
 
+const partNode* partNode::topLevelParent() const {
+  const partNode *ret = this;
+  while ( ret->parentNode() )
+    ret = ret->parentNode();
+  return ret;
+}
+
 int partNode::childCount() const {
   int count = 0;
   for ( partNode * child = firstChild() ; child ; child = child->nextSibling() )
     ++ count;
+  return count;
+}
+
+int partNode::totalChildCount() const {
+  int count = 0;
+  for ( partNode * child = firstChild() ; child ; child = child->nextSibling() ) {
+    ++count;
+    count += child->totalChildCount();
+  }
   return count;
 }
 
