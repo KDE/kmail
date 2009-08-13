@@ -256,6 +256,7 @@ set(kmailprivate_LIB_SRCS
    messagelistview/storagemodel.cpp
    messagelistview/widget.cpp
    messagelistview/akonadi/ak_storagemodel.cpp
+   messagelistview/akonadi/ak_widget.cpp
    messagelistview/core/aggregation.cpp
    messagelistview/core/aggregationeditor.cpp
    messagelistview/core/comboboxutils.cpp
