@@ -151,6 +151,8 @@ public:
    * message was at that original message, so that deleting and editing attachments can work on the
    * original message.
    *
+   * This is a HACK. There really shouldn't be a copy of the original mail.
+   *
    * @see slotDeleteAttachment, slotEditAttachment, fillCommandInfo
    */
   void setOriginalMsg( unsigned long serNumOfOriginalMessage, int nodeIdOffset );
