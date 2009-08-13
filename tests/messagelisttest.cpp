@@ -39,8 +39,8 @@
 #include <QtGui/QSplitter>
 #include <QtGui/QSortFilterProxyModel>
 
-#include "messagelistview/core/widgetbase.h"
 #include "messagelistview/akonadi/ak_storagemodel.h"
+#include "messagelistview/akonadi/ak_widget.h"
 
 using namespace Akonadi;
 
@@ -56,7 +56,7 @@ MainWidget::MainWidget( QWidget *parent )
   collectionView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   splitter->addWidget( collectionView );
 
-  KMail::MessageListView::Core::Widget *messageView = new KMail::MessageListView::Core::Widget( this );
+  MessageListView::Widget *messageView = new MessageListView::Widget( this );
   splitter->addWidget( messageView );
 
 
