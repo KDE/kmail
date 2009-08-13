@@ -1139,8 +1139,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
         return 0;
       default:
       case 1:
-        kFatal(5006) <<"KMMessage::createMDN(): The \"ask\" mode should"
-                                                  << "never appear here!";
+        kFatal() << "The \"ask\" mode should never appear here!";
         break;
       case 2: // deny
         d = MDN::Denied;
@@ -2238,8 +2237,9 @@ QByteArray KMMessage::body() const
 {
   DwString body = mMsg->Body().AsString();
   QByteArray str = body.c_str();
-  kWarning( str.length() != static_cast<int>( body.length() ), 5006 )
-    << "KMMessage::body(): body is binary but used as text!";
+  if ( str.length() != static_cast<int>( body.length() ) ) {
+    kWarning() << "Body is binary but used as text!";
+  }
   return str;
 }
 
@@ -2290,8 +2290,6 @@ QByteArray KMMessage::bodyDecoded() const
   }
 
   QByteArray result = Util::ByteArray( dwstr );
-  //kWarning(qstrlen(result) != dwstr.size(), 5006)
-  //  << "KMMessage::bodyDecoded(): body is binary but used as text!";
   return result;
 }
 

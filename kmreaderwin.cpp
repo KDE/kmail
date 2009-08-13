@@ -1758,10 +1758,12 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLevel)
 {
-  kFatal( !headerStyle(), 5006 )
-    << "trying to writeMsgHeader() without a header style set!";
-  kFatal( !headerStrategy(), 5006 )
-    << "trying to writeMsgHeader() without a header strategy set!";
+  if ( !headerStyle() ) {
+    kFatal() << "Trying to writeMsgHeader() without a header style set!";
+  }
+  if ( !headerStrategy() ) {
+    kFatal() << "trying to writeMsgHeader() without a header strategy set!";
+  }
   QString href;
   if (hasVCard)
     href = QString("file:") + KUrl::toPercentEncoding( mTempFiles.last() );
@@ -2008,7 +2010,9 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
 
-  kWarning( msg.isEmpty(), 5006 ) << "Unhandled URL hover!";
+  if ( msg.isEmpty() ) {
+    kWarning() << "Unhandled URL hover!";
+  }
   KPIM::BroadcastStatus::instance()->setTransientStatusMsg( msg );
 }
 

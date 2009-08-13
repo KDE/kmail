@@ -81,7 +81,9 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::end() {
-    kWarning( mState != Begun, 5006 ) <<"KHtmlPartHtmlWriter: end() called on non-begun or queued session!";
+    if ( mState != Begun ) {
+      kWarning() << "Called on non-begun or queued session!";
+    }
     mHtmlPart->end();
 
     resolveCidUrls();
@@ -104,7 +106,9 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::write( const QString & str ) {
-    kWarning( mState != Begun, 5006 ) <<"KHtmlPartHtmlWriter: write() called in Ended or Queued state!";
+    if ( mState != Begun ) {
+      kWarning() << "Called in Ended or Queued state!";
+    }
     mHtmlPart->write( str );
   }
 

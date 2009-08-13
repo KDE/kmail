@@ -422,8 +422,9 @@ void IdentityPage::slotRemoveIdentity()
   Q_ASSERT( !mIdentityDialog );
 
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  kFatal( im->shadowIdentities().count() < 2, 5006 )
-    << "Attempted to remove the last identity!";
+  if ( im->shadowIdentities().count() < 2 ) {
+    kFatal() << "Attempted to remove the last identity!";
+  }
 
   IdentityListViewItem *item = 0;
   if ( mIPage.mIdentityList->selectedItems().size() > 0 ) {

@@ -14,7 +14,7 @@
 
 int main(int argc,char **argv)
 {
-  kDebug(5006) <<"Test KMail D-Bus interface.";
+  kDebug() << "Test KMail D-Bus interface.";
 
   KAboutData aboutData( "testKMailDBUS", 0,
    ki18n("Test for KMail D-Bus interface"), "0.0" );
@@ -41,7 +41,7 @@ int main(int argc,char **argv)
                              "publish","attachement;");
   kmailComposerInterface.send(2);
 
-  kDebug(5006) <<"testDBus done.";
+  kDebug() << "testDBus done.";
 
   return 0;
 }

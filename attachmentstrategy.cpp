@@ -176,8 +176,8 @@ namespace KMail {
     case Inlined: return inlined();
     case Hidden:  return hidden();
     }
-    kFatal( 5006 ) << "Unknown attachment startegy ( type =="
-                   << (int)type << ") requested!";
+    kFatal() << "Unknown attachment startegy ( type =="
+             << (int)type << ") requested!";
     return 0; // make compiler happy
   }
 

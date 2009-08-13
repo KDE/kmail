@@ -303,8 +303,10 @@ namespace KMail {
       } else {
         const BodyPartFormatter * bpf
           = BodyPartFormatter::createFor( node->type(), node->subType() );
-        kFatal( !bpf, 5006 ) <<"THIS SHOULD NO LONGER HAPPEN ("
-                              << node->typeString() << '/' << node->subTypeString() << ')';
+        if ( !bpf ) {
+          kFatal() << "THIS SHOULD NO LONGER HAPPEN ("
+                   << node->typeString() << '/' << node->subTypeString() << ')';
+        }
 
         writeAttachmentMarkHeader( node );
         if ( bpf && !bpf->process( this, node, processResult ) ) {

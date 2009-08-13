@@ -102,6 +102,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
+  mStorageDebug = KDebug::registerArea( "Storage Debug" );
   kDebug();
   setObjectName( name );
   mySelf = this;
@@ -196,6 +197,15 @@ KMKernel::~KMKernel ()
   mWallet = 0;
   mySelf = 0;
   kDebug();
+}
+
+int KMKernel::storageDebug()
+{
+  KMKernel *theKernel = self();
+  if ( theKernel )
+    return theKernel->mStorageDebug;
+  else
+    return 0;
 }
 
 void KMKernel::setupDBus()

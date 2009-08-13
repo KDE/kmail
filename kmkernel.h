@@ -257,6 +257,7 @@ public:
 
   static KMKernel *self();
   static KConfig *config();
+  static int storageDebug();
 
   void init();
   void setupDBus();
@@ -523,6 +524,9 @@ private:
   QString               mAddMessageLastFolder;
   KMFolder             *mAddMsgCurrentFolder;
   KMail::FolderAdaptor *folderAdaptor;
+
+  // special debug area
+  int mStorageDebug;
 };
 
 #endif // _KMKERNEL_H
