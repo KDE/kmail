@@ -385,11 +385,12 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
   for (QStringList::Iterator it = encodingNames.begin();
     it != encodingNames.end(); it++)
   {
-    QTextCodec *codec = KGlobal::charsets()->codecForName(*it);
-    QString mimeName = (codec) ? QString(codec->name()).toLower() : (*it);
-    if (!mimeNames.contains(mimeName) )
+    bool ok;
+    QTextCodec *codec = KGlobal::charsets()->codecForName( *it, ok );
+    QString mimeName = codec ? QString( codec->name() ).toLower() : *it;
+    if ( ok && !mimeNames.contains( mimeName ) )
     {
-      encodings.append( KGlobal::charsets()->descriptionForEncoding(*it) );
+      encodings.append( KGlobal::charsets()->descriptionForEncoding( *it ) );
       mimeNames.insert( mimeName, true );
     }
   }
