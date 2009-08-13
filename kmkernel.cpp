@@ -2091,18 +2091,16 @@ KPIMIdentities::IdentityManager * KMKernel::identityManager() {
 
 KMainWindow* KMKernel::mainWin()
 {
-  KMainWindow *kmWin = 0;
-
   // First look for a KMMainWin.
   foreach ( KMainWindow* window, KMainWindow::memberList() )
     if ( ::qobject_cast<KMMainWin *>(window) )
-      return kmWin;
+      return window;
 
   // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
   // case we are running inside Kontact) because we anyway only need
   // it for modal message boxes and for KNotify events.
   if ( !KMainWindow::memberList().isEmpty() ) {
-    kmWin = KMainWindow::memberList().first();
+    KMainWindow *kmWin = KMainWindow::memberList().first();
     if ( kmWin )
       return kmWin;
   }
