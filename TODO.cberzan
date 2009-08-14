@@ -32,6 +32,8 @@ bugs:
   case when it's not.
 
 ===== Composer ==============================================================
-* Ask about wrapping logic.  Should drafts be wordwrapped, for instance?
-* Why kAsciiToLower when there is QByteArray::toLower()?
-* What should be in namespace KMail?
+* purpose of addAttachmentsAndSend?
+* put codec* classes in ns KMail
+* what should be inline? looking at canSignEncryptAttachments()
+Attachments:
+* need isModified

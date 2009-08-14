@@ -248,6 +248,10 @@ set(kmailprivate_LIB_SRCS
    kmcomposewin.cpp
    messagecomposer.cpp
    newcomposerwin.cpp
+   attachmentcontroller.cpp
+   attachmentmodel.cpp
+   attachmentview.cpp
+   attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
    htmlquotecolorer.cpp
    attachmentdialog.cpp

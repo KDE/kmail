@@ -1,21 +1,24 @@
-/* -*- mode: C++; c-file-style: "gnu" -*-
-  This file is part of KMail, the KDE mail client.
-  Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
+/*
+ * This file is part of KMail.
+ * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ *
+ * Based on KMail code by:
+ * Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
 #ifdef BUILD_NEW_COMPOSER
 #ifndef __KMComposeWin
@@ -36,9 +39,6 @@
 
 // LIBKDEPIM includes
 #include <libkdepim/kmeditor.h>
-
-// KDEPIMLIBS includes
-#include <messagecomposer/finalmessage.h>
 
 // Other includes
 #include "kleo/enum.h"
@@ -75,9 +75,12 @@ class KUrl;
 class KRecentFilesAction;
 class RecipientsEditor;
 class KMLineEdit;
-class KMAtmListViewItem;
 class SnippetWidget;
 class partNode;
+
+namespace boost {
+  template <typename T> class shared_ptr;
+}
 
 namespace KPIM {
   class KMStyleListSelectAction;
@@ -97,8 +100,13 @@ namespace MailTransport {
 }
 
 namespace KMail {
-  class AttachmentListView;
-  class EditorWatcher;
+  class AttachmentController;
+  class AttachmentModel;
+  class AttachmentView;
+}
+
+namespace KMime {
+  class Message;
 }
 
 namespace KIO {
@@ -111,6 +119,7 @@ namespace GpgME {
 
 namespace MessageComposer {
   class Composer;
+  class GlobalPart;
   class InfoPart;
   class TextPart;
 }
@@ -124,11 +133,15 @@ class KMComposeWin : public KMail::Composer
   friend class ::KMComposerEditor;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposeWin( KMMessage *msg=0, uint identity=0 );
+    explicit KMComposeWin( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+                           uint identity = 0, const QString & textSelection = QString(),
+                           const QString & customTemplate = QString() );
     ~KMComposeWin();
 
   public:
-    static Composer *create( KMMessage *msg = 0, uint identity = 0 );
+    static Composer *create( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+                             uint identity = 0, const QString & textSelection = QString(),
+                             const QString & customTemplate = QString() );
 
   QString dbusObjectPath() const;
   QString smartQuote( const QString & msg );
@@ -137,6 +150,7 @@ class KMComposeWin : public KMail::Composer
    * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
    * otherwise they can't be accessed.
    */
+  // TODO clean-up dbus stuff; make the adaptor a friend; etc.
   public slots:
 
     Q_SCRIPTABLE void send( int how );
@@ -160,6 +174,9 @@ class KMComposeWin : public KMail::Composer
   /**
    * End of D-Bus callable stuff
    */
+
+  signals:
+    void identityChanged( const KPIMIdentities::Identity &identity );
 
   private:
 
@@ -196,6 +213,16 @@ class KMComposeWin : public KMail::Composer
       * Returns @c true while the message composing is in progress.
       */
      bool isComposing() const { return mComposer != 0; }
+
+     /**
+      * Set the text selection the message is a response to.
+      */
+     void setTextSelection( const QString& selection );
+
+     /**
+      * Set custom template to be used for the message.
+      */
+     void setCustomTemplate( const QString& customTemplate );
 
   private: // kmedit
     /**
@@ -293,9 +320,7 @@ class KMComposeWin : public KMail::Composer
      * Actions:
      */
     void slotPrint();
-    void slotAttachFile();
     void slotInsertRecentFile( const KUrl & );
-    void slotAttachedFile( const KUrl & );
     void slotRecentListFileClear();
 
   public slots: // kmkernel, callback
@@ -326,7 +351,7 @@ class KMComposeWin : public KMail::Composer
     void slotMarkAll();
 
     void slotFolderRemoved( KMFolder * );
-    void slotEditDone( KMail::EditorWatcher* watcher );
+    //void slotEditDone( KMail::EditorWatcher* watcher );
     void slotLanguageChanged( const QString &language );
 
   public slots: // kmkernel
@@ -416,38 +441,6 @@ class KMComposeWin : public KMail::Composer
     */
     void slotInsertSignatureAtCursor();
 
-    /**
-     * Attach sender's public key.
-     */
-    void slotInsertMyPublicKey();
-
-    /**
-     * Insert arbitrary public key from public keyring in the editor.
-     */
-    void slotInsertPublicKey();
-
-    /**
-     * Enable/disable some actions in the Attach menu
-     */
-    void slotUpdateAttachActions();
-    void slotAttachEdit();
-    void slotAttachEditWith();
-
-    /**
-     * Open a popup-menu in the attachments-listbox.
-     */
-    void slotAttachPopupMenu( QTreeWidgetItem* );
-
-    /**
-     * Attachment operations.
-     */
-    void slotAttachOpen();
-    void slotAttachView();
-    void slotAttachRemove();
-    void slotAttachSave();
-    void slotAttachProperties();
-    void slotAttachmentDragStarted();
-
     void slotCleanSpace();
     void slotToggleMarkup();
     void slotTextModeChanged( KRichTextEdit::Mode );
@@ -466,34 +459,29 @@ class KMComposeWin : public KMail::Composer
      */
     void slotIdentityChanged( uint );
 
-    /**
-     * KIO slots for attachment insertion
-     */
-    void slotAttachFileData( KIO::Job *, const QByteArray & );
-    void slotAttachFileResult( KJob * );
-
     void slotCursorPositionChanged();
 
     void slotSpellCheckingStatus( const QString & status );
 
   public: // kmkernel, attachmentlistview
-    bool addAttach( const KUrl &url );
+    // FIXME we need to remove these, but they're pure virtual in Composer.
+    bool addAttach( const KUrl &url ) {}
 
   public: // kmcommand
-    /**
-     * Add an attachment to the list.
-     */
-    void addAttach( KMMessagePart *msgPart );
+    // FIXME we need to remove these, but they're pure virtual in Composer.
+    void addAttach( KMMessagePart *msgPart ) {}
+
+  public: // AttachmentController
+    const KPIMIdentities::Identity &identity() const;
+
+  public:
+    /** Don't check if there are too many recipients for a mail, eg. when sending out invitations. */
+    virtual void disableRecipientNumberCheck();
 
   private:
-    const KPIMIdentities::Identity & identity() const;
     uint identityUid() const;
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     bool encryptToSelf() const;
-
-  signals:
-    //void applyChangesDone( bool );
-    void attachmentAdded( const KUrl &, bool success );
 
   private:
     /**
@@ -505,9 +493,10 @@ class KMComposeWin : public KMail::Composer
      */
     void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false ); // TODO rename
 
+    void fillGlobalPart( MessageComposer::GlobalPart *globalPart );
     void fillTextPart( MessageComposer::TextPart *part );
     void fillInfoPart( MessageComposer::InfoPart *part );
-    void queueMessages( const MessageComposer::FinalMessage::List &messages );
+    void queueMessage( boost::shared_ptr<KMime::Message> message );
 
     /**
      * Install grid management and header fields. If fields exist that
@@ -531,6 +520,16 @@ class KMComposeWin : public KMail::Composer
 
     void rethinkHeaderLine( int value, int mask, int &row,
                             QLabel *lbl, QComboBox *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
+
+    /**
+     * Apply template to new or unmodified message.
+     */
+    void applyTemplate( uint uoid );
+
+    /**
+     * Set the quote prefix according to identity.
+     */
+    void setQuotePrefix( uint uoid );
 
     /**
      * Checks how many recipients are and warns if there are too many.
@@ -573,28 +572,6 @@ class KMComposeWin : public KMail::Composer
      */
     virtual bool queryExit();
 
-    /**
-     * Open the attachment with the given index.
-     */
-    void openAttach( int index );
-
-    /**
-     * View the attachment with the given index.
-     */
-    void viewAttach( int index );
-
-    /**
-     * Remove an attachment from the list.
-     */
-    void removeAttach( const QString &url );
-    void removeAttach( int idx );
-
-    /**
-     * Updates an item in the QListView to represnet a given message part
-     */
-    void msgPartToItem( const KMMessagePart *msgPart, KMAtmListViewItem *lvi,
-                        bool loadDefaults = true );
-
 
     /**
      * Searches the mime tree, where root is the root node, for embedded images,
@@ -610,11 +587,6 @@ class KMComposeWin : public KMail::Composer
     void setEncryption( bool encrypt, bool setByUser = false );
 
     /**
-      Edit the attachment with the given index.
-    */
-    void editAttach( int index, bool openWith );
-
-    /**
      * Turn signing on/off. If setByUser is true then a message box is shown
      * in case signing isn't possible.
      */
@@ -624,18 +596,6 @@ class KMComposeWin : public KMail::Composer
       Returns true if the user forgot to attach something.
     */
     bool userForgotAttachment();
-
-    /**
-     * Retrieve encrypt flag of an attachment
-     * ( == state of it's check box in the attachments list view )
-     */
-    bool encryptFlagOfAttachment( int idx );
-
-    /**
-     * Retrieve sign flag of an attachment
-     * ( == state of it's check box in the attachments list view )
-     */
-    bool signFlagOfAttachment( int idx );
 
     /**
      * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
@@ -685,13 +645,6 @@ class KMComposeWin : public KMail::Composer
     void cleanupAutoSave();
 
     /**
-     * Validates a list of email addresses.
-     * @return true if all addresses are valid.
-     * @return false if one or several addresses are invalid.
-     */
-    static bool validateAddresses( QWidget *parent, const QString &addresses );
-
-    /**
      * Helper to insert the signature of the current identity arbitrarily
      * in the editor, connecting slot functions to KMeditor::insertSignature().
      * @param placement the position of the signature
@@ -700,11 +653,6 @@ class KMComposeWin : public KMail::Composer
 
 
   private slots:
-    /**
-     * Compress an attachemnt with the given index
-     */
-    void compressAttach( KMAtmListViewItem *attachmentItem );
-    void uncompressAttach( KMAtmListViewItem *attachmentItem );
     void recipientEditorSizeHintChanged();
     void setMaximumHeaderSize();
 
@@ -712,7 +660,7 @@ class KMComposeWin : public KMail::Composer
     QWidget   *mMainWidget;
     MailTransport::TransportComboBox *mTransport;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
-    KPIMIdentities::IdentityCombo    *mIdentity;
+    KPIMIdentities::IdentityCombo *mIdentity;
     KMFolderComboBox *mFcc;
     KMLineEdit *mEdtFrom, *mEdtReplyTo;
     KMLineEdit *mEdtSubject;
@@ -722,16 +670,11 @@ class KMComposeWin : public KMail::Composer
     QLabel    *mDictionaryLabel;
     QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
     bool mDone;
-    bool mAtmModified;
 
     KMComposerEditor *mEditor;
     QGridLayout *mGrid;
-    //KMMessage *mMsg;
-    //QVector<KMMessage*> mComposedMessages;
-    KMail::AttachmentListView *mAtmListView;
-    QList<KMAtmListViewItem*> mAtmItemList;
-    QList<KMMessagePart*> mAtmList;
-    QMenu *mAttachMenu;
+    QString mTextSelection;
+    QString mCustomTemplate;
     QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId,
             *mEditAction, *mEditWithAction;
     bool mAutoDeleteMsg;
@@ -746,12 +689,11 @@ class KMComposeWin : public KMail::Composer
                                 // mail body.
     int mNumHeaders;
     QFont mBodyFont, mFixedFont;
-    QList<KTemporaryFile*> mAtmTempList;
     QPalette mPalette;
     uint mId;
+    TemplateContext mContext;
 
-    KAction *mAttachPK, *mAttachMPK, *mAttachRemoveAction, *mAttachSaveAction,
-            *mAttachPropertiesAction, *mCleanSpace;
+    KAction *mCleanSpace;
     KRecentFilesAction *mRecentAction;
 
     KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
@@ -778,13 +720,8 @@ class KMComposeWin : public KMail::Composer
 
     QStringList mFolderNames;
     QList<QPointer<KMFolder> > mFolderList;
-    QMap<KJob*, KUrl> mAttachJobs;
-    KUrl::List mAttachFilesPending;
-    int mAttachFilesSend;
 
   private:
-  // helper method for slotInsert(My)PublicKey()
-    void startPublicKeyExport();
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
     }
@@ -808,13 +745,6 @@ class KMComposeWin : public KMail::Composer
     void slotEncryptChiasmusToggled( bool );
 
     /**
-     * Helper method (you could call is a bottom-half :) for
-     * startPublicKeyExport()
-     */
-    void slotPublicKeyExportResult( const GpgME::Error &err,
-                                    const QByteArray &keydata );
-
-    /**
      *  toggle automatic spellchecking
      */
     void slotAutoSpellCheckingToggled( bool );
@@ -830,14 +760,9 @@ class KMComposeWin : public KMail::Composer
     QWidget* mHeadersArea;
     QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
-    struct atmLoadData
-    {
-      KUrl url;
-      QByteArray data;
-      bool insert;
-      QByteArray encoding;
-    };
-    QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
+    KMail::AttachmentController *mAttachmentController;
+    KMail::AttachmentModel *mAttachmentModel;
+    KMail::AttachmentView *mAttachmentView;
 
     // These are for passing on methods over the applyChanges calls
     KMail::MessageSender::SendMethod mSendMethod;
@@ -847,13 +772,12 @@ class KMComposeWin : public KMail::Composer
     bool mEncryptWithChiasmus;
 
     MessageComposer::Composer *mComposer;
+    MessageComposer::Composer *mDummyComposer;
     int mPendingQueueJobs;
 
     // Temp var for slotPrint:
     bool mMessageWasModified;
 
-    // Temp var for slotInsert(My)PublicKey():
-    QString mFingerprint;
 
     RecipientsEditor *mRecipientsEditor;
     int mLabelWidth;
@@ -868,8 +792,10 @@ class KMComposeWin : public KMail::Composer
     QString mdbusObjectPath;
     static int s_composerNumber;
 
+#if 0
     QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
     QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
+#endif
 
     SnippetWidget *mSnippetWidget;
     QList<KTempDir*> mTempDirs;

@@ -1,21 +1,24 @@
-/* -*- mode: C++; c-file-style: "gnu" -*-
-  This file is part of KMail, the KDE mail client.
-  Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
+/*
+ * This file is part of KMail.
+ * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ *
+ * Based on KMail code by:
+ * Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
 #ifdef BUILD_NEW_COMPOSER
 #include "newcomposerwin.h"
@@ -28,7 +31,14 @@
 #include <libkleo/ui/progressdialog.h>
 #include <libkleo/ui/keyselectiondialog.h>
 
+#include <messagecomposer/composer.h>
+#include <messagecomposer/globalpart.h>
+#include <messagecomposer/infopart.h>
+#include <messagecomposer/job.h>
+#include <messagecomposer/textpart.h>
+
 // LIBKDEPIM includes
+//#include <libkdepim/attachmentpart.h>
 #include <libkdepim/kaddrbookexternal.h>
 #include <libkdepim/recentaddresses.h>
 
@@ -38,7 +48,6 @@ using KPIM::RecentAddresses;
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimidentities/identity.h>
-#include <kpimutils/kfileio.h>
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
 using MailTransport::TransportManager;
@@ -46,20 +55,17 @@ using MailTransport::TransportManager;
 using MailTransport::Transport;
 #include <mailtransport/messagequeuejob.h>
 #include <kmime/kmime_codecs.h>
-#include <messagecomposer/composer.h>
-#include <messagecomposer/attachmentpart.h>
-#include <messagecomposer/infopart.h>
-#include <messagecomposer/job.h>
-#include <messagecomposer/textpart.h>
+#include <kmime/kmime_message.h>
+#include <boost/shared_ptr.hpp>
 
 // KMail includes
-#include "attachmentcollector.h"
-#include "attachmentlistview.h"
+#include "attachmentcontroller.h"
+#include "attachmentmodel.h"
+#include "attachmentview.h"
 #include "chiasmuskeyselector.h"
 #include "codecaction.h"
-#include "editorwatcher.h"
 #include "kleo_util.h"
-#include "kmatmlistview.h"
+//#include "kmatmlistview.h"
 #include "kmcommands.h"
 #include "kmcomposereditor.h"
 #include "kmfoldercombobox.h"
@@ -75,9 +81,12 @@ using MailTransport::Transport;
 #include "recipientseditor.h"
 #include "stl_util.h"
 #include "stringutil.h"
+#include "util.h"
+#include "kmmsgdict.h"
+#include "templateparser.h"
 
-using KMail::AttachmentListView;
 using Sonnet::DictionaryComboBox;
+using KMail::TemplateParser;
 
 // KDELIBS includes
 #include <kactioncollection.h>
@@ -120,13 +129,10 @@ using Sonnet::DictionaryComboBox;
 #include <QTextList>
 
 // System includes
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <assert.h>
 #include <memory>
 
 // MOC
@@ -136,29 +142,34 @@ using Sonnet::DictionaryComboBox;
 
 using namespace KMail;
 
-KMail::Composer *KMail::makeComposer( KMMessage *msg, uint identitiy ) {
-  return KMComposeWin::create( msg, identitiy );
+KMail::Composer *KMail::makeComposer( KMMessage *msg, Composer::TemplateContext context,
+                                      uint identity, const QString & textSelection,
+                                      const QString & customTemplate ) {
+  return KMComposeWin::create( msg, context, identity, textSelection, customTemplate );
 }
 
-KMail::Composer *KMComposeWin::create( KMMessage *msg, uint identitiy ) {
-  return new KMComposeWin( msg, identitiy );
+KMail::Composer *KMComposeWin::create( KMMessage *msg, Composer::TemplateContext context,
+                                       uint identity, const QString & textSelection,
+                                       const QString & customTemplate ) {
+  return new KMComposeWin( msg, context, identity, textSelection, customTemplate );
 }
 
 int KMComposeWin::s_composerNumber = 0;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
+KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, uint id,
+                            const QString & textSelection, const QString & customTemplate )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
-    mAtmModified( false ),
+    //mAtmModified( false ),
     //mMsg( 0 ),
-    mAttachMenu( 0 ),
+    mTextSelection( textSelection ),
+    mCustomTemplate( customTemplate ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
     mFolder( 0 ),
     mForceDisableHtml( false ),
     mId( id ),
-    mAttachPK( 0 ), mAttachMPK( 0 ),
-    mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
+    mContext( context ),
     mSignAction( 0 ), mEncryptAction( 0 ), mRequestMDNAction( 0 ),
     mUrgentAction( 0 ), mAllFieldsAction( 0 ), mFromAction( 0 ),
     mReplyToAction( 0 ), mSubjectAction( 0 ),
@@ -171,6 +182,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mEncryptChiasmusAction( 0 ),
     mEncryptWithChiasmus( false ),
     mComposer( 0 ),
+    mDummyComposer( 0 ),
     mPendingQueueJobs( 0 ),
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
@@ -230,8 +242,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mShowHeaders = GlobalSettings::self()->headers();
   mDone = false;
   mGrid = 0;
-  mAtmListView = 0;
-  mAtmModified = false;
+  //mAtmListView = 0;
+  //mAtmModified = false;
   mAutoDeleteMsg = false;
   mFolder = 0;
   //mAutoCharset = true;
@@ -316,25 +328,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mBtnFcc->setFocusPolicy( Qt::NoFocus );
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
 
-  mAtmListView = new AttachmentListView( this, mSplitter );
-  mSplitter->addWidget( mAtmListView );
-
-  connect( mAtmListView,
-           SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-           SLOT(slotAttachEdit()) );
-  connect( mAtmListView,
-           SIGNAL(rightButtonPressed(QTreeWidgetItem*)),
-           SLOT(slotAttachPopupMenu(QTreeWidgetItem*)) );
-  connect( mAtmListView,
-           SIGNAL(itemSelectionChanged()),
-           SLOT(slotUpdateAttachActions()) );
-  connect( mAtmListView,
-           SIGNAL(attachmentDeleted()),
-           SLOT(slotAttachRemove()) );
-  connect( mAtmListView,
-           SIGNAL( dragStarted() ),
-           SLOT( slotAttachmentDragStarted() ) );
-  mAttachMenu = 0;
+  mAttachmentModel = new AttachmentModel( this );
+  mAttachmentView = new AttachmentView( mAttachmentModel, mSplitter );
+  mAttachmentView->hideIfEmpty();
+  mAttachmentController = new AttachmentController( mAttachmentModel, mAttachmentView, this );
 
   readConfig();
   setupStatusBar();
@@ -386,6 +383,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mEditor->updateActionStates(); // set toolbar buttons to correct values
 
   mDone = true;
+
+  mDummyComposer = new MessageComposer::Composer( this );
+  mDummyComposer->globalPart()->setParentWidgetForGui( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -407,6 +407,7 @@ KMComposeWin::~KMComposeWin()
   }
 #endif
 
+#if 0
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.begin();
   while ( it != mMapAtmLoadData.end() ) {
     KIO::Job *job = it.key();
@@ -414,10 +415,11 @@ KMComposeWin::~KMComposeWin()
     job->kill();
     it = mMapAtmLoadData.begin();
   }
-  //deleteAll( mComposedMessages );
 
   qDeleteAll( mAtmList );
   qDeleteAll( mAtmTempList );
+#endif
+  //deleteAll( mComposedMessages );
 
   foreach ( KTempDir *const dir, mTempDirs ) {
     delete dir;
@@ -449,6 +451,8 @@ void KMComposeWin::send( int how )
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString &comment, int how )
 {
+  kDebug() << "implement me...";
+#if 0
   Q_UNUSED( comment );
   if ( urls.isEmpty() ) {
     send( how );
@@ -467,8 +471,10 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
     send( mAttachFilesSend );
     mAttachFilesSend = -1;
   }
+#endif
 }
 
+#if 0
 void KMComposeWin::slotAttachedFile( const KUrl &url )
 {
   if ( mAttachFilesPending.isEmpty() ) {
@@ -480,12 +486,13 @@ void KMComposeWin::slotAttachedFile( const KUrl &url )
     mAttachFilesSend = -1;
   }
 }
+#endif
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment( const KUrl &url, const QString &comment )
 {
   Q_UNUSED( comment );
-  addAttach( url );
+  mAttachmentController->addAttachment( url );
 }
 
 //-----------------------------------------------------------------------------
@@ -498,6 +505,8 @@ void KMComposeWin::addAttachment( const QString &name,
                                   const QString &paramValue,
                                   const QByteArray &contDisp )
 {
+  kDebug() << "implement me";
+#if 0
   Q_UNUSED( cte );
 
   if ( !data.isEmpty() ) {
@@ -514,8 +523,9 @@ void KMComposeWin::addAttachment( const QString &name,
     msgPart->setSubtypeStr( subType );
     msgPart->setParameter( paramAttr, paramValue );
     msgPart->setContentDisposition( contDisp );
-    addAttach( msgPart );
+    mAttachmentController->addAttachment( msgPart );
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -904,15 +914,17 @@ void KMComposeWin::rethinkFields( bool fromSlot )
   assert( row <= mNumHeaders + 1 );
 
 
+#if 0
   if ( !mAtmList.isEmpty() ) {
     mAtmListView->show();
   } else {
     mAtmListView->hide();
   }
+#endif
 
   mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
 
-  slotUpdateAttachActions();
+  //slotUpdateAttachActions();
   mIdentityAction->setEnabled(!mAllFieldsAction->isChecked());
   mDictionaryAction->setEnabled( !mAllFieldsAction->isChecked() );
   mTransportAction->setEnabled(!mAllFieldsAction->isChecked());
@@ -984,6 +996,84 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
       aChk->hide();
     }
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::applyTemplate( uint uoid )
+{
+  kDebug() << "Port me...";
+#if 0
+  const KPIMIdentities::Identity &ident =
+    kmkernel->identityManager()->identityForUoid( uoid );
+  if ( ident.isNull() )
+    return;
+
+  mMsg->setTemplates( ident.templates() );
+  TemplateParser::Mode mode;
+  switch ( mContext ) {
+    case New:
+      mode = TemplateParser::NewMessage;
+      break;
+    case Reply:
+      mode = TemplateParser::Reply;
+      break;
+    case ReplyToAll:
+      mode = TemplateParser::ReplyAll;
+      break;
+    case Forward:
+      mode = TemplateParser::Forward;
+      break;
+    default:
+      return;
+  }
+
+  TemplateParser parser( mMsg, mode, mTextSelection, GlobalSettings::self()->smartQuote(),
+                         GlobalSettings::self()->automaticDecrypt(), mTextSelection.isEmpty() );
+  if ( mode == TemplateParser::NewMessage ) {
+    if ( !mCustomTemplate.isEmpty() )
+      parser.process( mCustomTemplate, 0 );
+    else
+      parser.processWithIdentity( uoid, 0 );
+  } else {
+    // apply template to all original messages for non-New messages
+    foreach ( const QString& serNumStr,
+              mMsg->headerField( "X-KMail-Link-Message" ).split( ',' ) ) {
+      const ulong serNum = serNumStr.toULong();
+      int idx = -1;
+      KMFolder *folder;
+      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
+      if ( folder ) {
+        KMMessage *originalMessage = folder->getMsg( idx );
+        if ( !mCustomTemplate.isEmpty() )
+          parser.process( mCustomTemplate, originalMessage, folder );
+        else
+          parser.processWithIdentity( uoid, originalMessage, folder );
+      }
+    }
+  }
+  mEditor->setText( mMsg->bodyToUnicode() );
+#endif
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setQuotePrefix( uint uoid )
+{
+  kDebug() << "Port me...";
+#if 0
+  QString quotePrefix = mMsg->headerField( "X-KMail-QuotePrefix" );
+  if ( quotePrefix.isEmpty() ) {
+    // no quote prefix header, set quote prefix according in identity
+    if ( mCustomTemplate.isEmpty() ) {
+      const KPIMIdentities::Identity &identity =
+        kmkernel->identityManager()->identityForUoidOrDefault( uoid );
+      // Get quote prefix from template
+      // ( custom templates don't specify custom quotes prefixes )
+      ::Templates quoteTemplate( TemplatesConfiguration::configIdString( identity.uoid() ) );
+      quotePrefix = quoteTemplate.quoteString();
+    }
+  }
+  mEditor->setQuotePrefixName( StringUtil::formatString( quotePrefix, mMsg->from() ) );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1221,25 +1311,14 @@ void KMComposeWin::setupActions( void )
   action = new KAction( i18n("Insert Signature At C&ursor Position"), this );
   actionCollection()->addAction( "insert_signature_at_cursor_position", action );
   connect( action, SIGNAL( triggered(bool) ), SLOT( slotInsertSignatureAtCursor() ) );
-  mAttachPK = new KAction(i18n("Attach &Public Key..."), this);
-  actionCollection()->addAction("attach_public_key", mAttachPK );
-  connect( mAttachPK, SIGNAL(triggered(bool) ), SLOT(slotInsertPublicKey()));
-  mAttachMPK = new KAction(i18n("Attach &My Public Key"), this);
-  actionCollection()->addAction("attach_my_public_key", mAttachMPK );
-  connect( mAttachMPK, SIGNAL(triggered(bool) ), SLOT(slotInsertMyPublicKey()));
-  action = new KAction(KIcon("mail-attachment"), i18n("&Attach File..."), this);
-  action->setIconText( i18n( "Attach" ) );
-  actionCollection()->addAction("attach", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT(slotAttachFile()));
-  mAttachRemoveAction = new KAction(i18n("&Remove Attachment"), this);
-  actionCollection()->addAction("remove", mAttachRemoveAction );
-  connect( mAttachRemoveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachRemove()));
-  mAttachSaveAction = new KAction(KIcon("document-save"), i18n("&Save Attachment As..."), this);
-  actionCollection()->addAction("attach_save", mAttachSaveAction );
-  connect( mAttachSaveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachSave()));
-  mAttachPropertiesAction = new KAction(i18n("Attachment Pr&operties"), this);
-  actionCollection()->addAction("attach_properties", mAttachPropertiesAction );
-  connect( mAttachPropertiesAction, SIGNAL(triggered(bool) ), SLOT(slotAttachProperties()));
+
+
+
+  mAttachmentController->createActions();
+
+
+
+
 
   setStandardToolBarMenuEnabled( true );
 
@@ -1269,9 +1348,8 @@ void KMComposeWin::setupActions( void )
   mSignAction = new KToggleAction(KIcon("document-sign"), i18n("&Sign Message"), this);
   mSignAction->setIconText( i18n( "Sign" ) );
   actionCollection()->addAction("sign_message", mSignAction );
-  // get PGP user id for the chosen identity
-  const KPIMIdentities::Identity & ident =
-    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+  const KPIMIdentities::Identity &ident =
+    KMKernel::self()->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   // PENDING(marc): check the uses of this member and split it into
   // smime/openpgp and or enc/sign, if necessary:
   mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
@@ -1279,14 +1357,6 @@ void KMComposeWin::setupActions( void )
 
   mLastEncryptActionState = false;
   mLastSignActionState = GlobalSettings::self()->pgpAutoSign();
-
-  // "Attach public key" is only possible if OpenPGP support is available:
-  mAttachPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() );
-
-  // "Attach my public key" is only possible if OpenPGP support is
-  // available and the user specified his key for the current identity:
-  mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
-                          !ident.pgpEncryptionKey().isEmpty() );
 
   if ( !Kleo::CryptoBackendFactory::instance()->openpgp() && !Kleo::CryptoBackendFactory::instance()->smime() ) {
     // no crypto whatsoever
@@ -1799,6 +1869,18 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::setTextSelection( const QString& selection )
+{
+  mTextSelection = selection;
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setCustomTemplate( const QString& customTemplate )
+{
+  mCustomTemplate = customTemplate;
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::collectImages( partNode *root )
 {
   if ( partNode * n = root->findType( DwMime::kTypeMultipart, DwMime::kSubtypeAlternative ) ) {
@@ -1859,8 +1941,8 @@ bool KMComposeWin::isModified() const
            mEdtFrom->isModified() ||
            ( mEdtReplyTo && mEdtReplyTo->isModified() ) ||
            mRecipientsEditor->isModified() ||
-           mEdtSubject->isModified() ||
-           mAtmModified );
+           mEdtSubject->isModified() );
+           // || mAtmModified );
 }
 
 //-----------------------------------------------------------------------------
@@ -1872,7 +1954,7 @@ void KMComposeWin::setModified( bool modified )
     if ( mEdtReplyTo ) mEdtReplyTo->setModified( false );
     mRecipientsEditor->clearModified();
     mEdtSubject->setModified( false );
-    mAtmModified =  false ;
+    //mAtmModified =  false ;
   }
 }
 
@@ -1927,7 +2009,7 @@ bool KMComposeWin::userForgotAttachment()
 {
   bool checkForForgottenAttachments = GlobalSettings::self()->showForgottenAttachmentWarning();
 
-  if ( !checkForForgottenAttachments || ( mAtmList.count() > 0 ) ) {
+  if ( !checkForForgottenAttachments || ( mAttachmentModel->rowCount() > 0 ) ) {
     return false;
   }
 
@@ -1977,7 +2059,7 @@ bool KMComposeWin::userForgotAttachment()
   if ( rc == KMessageBox::Cancel )
     return true;
   if ( rc == KMessageBox::Yes ) {
-    slotAttachFile();
+    mAttachmentController->showAddAttachmentDialog();
     //preceed with editing
     return true;
   }
@@ -2012,21 +2094,30 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
   // Compose the message and queue it for sending.
   // TODO handle drafts, autosave, etc.
   mComposer = new MessageComposer::Composer;
-  mComposer->setParentWidget( this );
+  fillGlobalPart( mComposer->globalPart() );
   fillTextPart( mComposer->textPart() );
   fillInfoPart( mComposer->infoPart() );
+  mComposer->addAttachmentParts( mAttachmentModel->attachments() );
 
   connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotComposerResult(KJob*)) );
   mComposer->start();
   kDebug() << "Composer started.";
 }
 
+void KMComposeWin::fillGlobalPart( MessageComposer::GlobalPart *globalPart )
+{
+  globalPart->setParentWidgetForGui( this );
+  globalPart->setCharsets( mCodecAction->mimeCharsets() );
+}
+
 void KMComposeWin::fillTextPart( MessageComposer::TextPart *textPart )
 {
-  textPart->setCharsets( mCodecAction->mimeCharsets() );
   textPart->setCleanPlainText( mEditor->toCleanPlainText() );
   textPart->setWrappedPlainText( mEditor->toWrappedPlainText() );
-  // TODO no html for now -- assert.
+  if( mEditor->isFormattingUsed() ) {
+    textPart->setCleanHtml( mEditor->toCleanHtml() );
+    textPart->setEmbeddedImages( mEditor->embeddedImages() );
+  }
 }
 
 void KMComposeWin::fillInfoPart( MessageComposer::InfoPart *infoPart )
@@ -2061,14 +2152,13 @@ void KMComposeWin::slotComposerResult( KJob *job )
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( mComposer == job );
   //emit applyChangesDone( !job->error() ); // TODO get rid of this
-  // TODO fix save/discard warning
 
-  if( mComposer->error() == Job::NoError ) {
+  if( mComposer->error() == Composer::NoError ) {
     // The messages were composed successfully.
     // TODO handle drafts, autosave, etc.
     kDebug() << "NoError.";
-    queueMessages( mComposer->messages() );
-  } else if( mComposer->error() == Job::UserCancelledError ) {
+    queueMessage( mComposer->resultMessage() );
+  } else if( mComposer->error() == Composer::UserCancelledError ) {
     // The job warned the user about something, and the user chose to return
     // to the message.  Nothing to do.
     kDebug() << "UserCancelledError.";
@@ -2076,7 +2166,7 @@ void KMComposeWin::slotComposerResult( KJob *job )
   } else {
     kDebug() << "other Error.";
     QString msg;
-    if( mComposer->error() == Job::BugError ) {
+    if( mComposer->error() == Composer::BugError ) {
       msg = i18n( "Error composing message:\n\n%1\n\nPlease report this bug.", job->errorString() );
     } else {
       msg = i18n( "Error composing message:\n\n%1", job->errorString() );
@@ -2088,35 +2178,29 @@ void KMComposeWin::slotComposerResult( KJob *job )
   mComposer = 0;
 }
 
-void KMComposeWin::queueMessages( const MessageComposer::FinalMessage::List &messages )
+void KMComposeWin::queueMessage( KMime::Message::Ptr message )
 {
-  using MessageComposer::FinalMessage;
   using MailTransport::MessageQueueJob;
+  using MessageComposer::InfoPart;
 
   Q_ASSERT( mPendingQueueJobs == 0 );
-  foreach( const FinalMessage *msg, messages ) {
-    if( msg->hasCustomHeaders() ) {
-      // Custom headers means it should not be sent.  For example Bcc might be revealed.
-      kWarning() << "This message has custom headers.";
-      Q_ASSERT( false );
-      continue;
-    }
-    MessageQueueJob *qjob = new MessageQueueJob( this );
-    qjob->setMessage( msg->message() );
-    qjob->setTransportId( msg->transportId() );
-    // TODO dispatch mode.
-    // TODO sent-mail collection
-    qjob->setFrom( msg->from() );
-    qjob->setTo( msg->to() );
-    qjob->setCc( msg->cc() );
-    qjob->setBcc( msg->bcc() );
+  Q_ASSERT( mComposer );
+  const InfoPart *infoPart = mComposer->infoPart();
+  MessageQueueJob *qjob = new MessageQueueJob( this );
+  qjob->setMessage( message );
+  qjob->setTransportId( infoPart->transportId() );
+  // TODO dispatch mode.
+  // TODO sent-mail collection
+  qjob->setFrom( infoPart->from() );
+  qjob->setTo( infoPart->to() );
+  qjob->setCc( infoPart->cc() );
+  qjob->setBcc( infoPart->bcc() );
 
-    connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
-    mPendingQueueJobs++;
-    qjob->start();
-  }
+  connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
+  mPendingQueueJobs++;
+  qjob->start();
 
-  kDebug() << "Queued" << messages.count() << "messages.";
+  kDebug() << "Queued a message.";
 }
 
 void KMComposeWin::slotQueueResult( KJob *job )
@@ -2140,9 +2224,9 @@ void KMComposeWin::slotQueueResult( KJob *job )
   }
 }
 
-const KPIMIdentities::Identity & KMComposeWin::identity() const
+const KPIMIdentities::Identity &KMComposeWin::identity() const
 {
-  return kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+  return KMKernel::self()->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
 }
 
 uint KMComposeWin::identityUid() const {
@@ -2170,42 +2254,7 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-bool KMComposeWin::addAttach( const KUrl &aUrl )
-{
-  if ( !aUrl.isValid() ) {
-    KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
-                                    "<p>you have to specify the full path if you wish to attach a file.</p></qt>",
-                                    aUrl.prettyUrl() ) );
-    return false;
-  }
-
-  const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
-  if ( aUrl.isLocalFile() && maxAttachmentSize >= 0 && QFileInfo( aUrl.pathOrUrl() ).size() > (maxAttachmentSize*1024*1024 /*in bytes*/ ) ) {
-    KMessageBox::sorry( this,
-      i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p></qt>"
-            , maxAttachmentSize ) );
-    return false;
-  }
-
-  KIO::TransferJob *job = KIO::get(aUrl);
-  KIO::Scheduler::scheduleJob( job );
-  atmLoadData ld;
-  ld.url = aUrl;
-  ld.data = QByteArray();
-  ld.insert = false;
-  if( !aUrl.fileEncoding().isEmpty() )
-    ld.encoding = aUrl.fileEncoding().toLatin1();
-
-  mMapAtmLoadData.insert(job, ld);
-  mAttachJobs[job] = aUrl;
-  connect(job, SIGNAL(result(KJob *)),
-          this, SLOT(slotAttachFileResult(KJob *)));
-  connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
-  return true;
-}
-
-//-----------------------------------------------------------------------------
+#if 0
 void KMComposeWin::addAttach( KMMessagePart *msgPart )
 {
   mAtmList.append( msgPart );
@@ -2229,23 +2278,7 @@ void KMComposeWin::addAttach( KMMessagePart *msgPart )
 
   slotUpdateAttachActions();
 }
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotUpdateAttachActions()
-{
-  int selectedCount = 0;
-  QList<KMAtmListViewItem*>::const_iterator it = mAtmItemList.constBegin();
-  while ( it != mAtmItemList.constEnd() ) {
-    if ( (*it)->isSelected() ) {
-      ++selectedCount;
-    }
-    ++it;
-  }
-
-  mAttachRemoveAction->setEnabled( selectedCount >= 1 );
-  mAttachSaveAction->setEnabled( selectedCount == 1 );
-  mAttachPropertiesAction->setEnabled( selectedCount == 1 );
-}
+#endif
 
 //-----------------------------------------------------------------------------
 
@@ -2264,74 +2297,6 @@ QString KMComposeWin::prettyMimeType( const QString &type )
     return type;
   else
     return pretty;
-}
-
-void KMComposeWin::msgPartToItem( const KMMessagePart *msgPart,
-                                  KMAtmListViewItem *lvi, bool loadDefaults )
-{
-  assert( msgPart != 0 );
-
-  if ( !msgPart->fileName().isEmpty() ) {
-    lvi->setText( 0, msgPart->fileName() );
-  } else {
-    lvi->setText( 0, msgPart->name() );
-  }
-  lvi->setText( 1, KIO::convertSize( msgPart->decodedSize() ) );
-  lvi->setText( 2, msgPart->contentTransferEncodingStr() );
-  lvi->setText( 3, prettyMimeType( msgPart->typeStr() + '/' + msgPart->subtypeStr() ) );
-  lvi->setAttachmentSize( msgPart->decodedSize() );
-
-  if ( loadDefaults ) {
-    if( canSignEncryptAttachments() ) {
-      mAtmListView->enableCryptoCBs( true );
-      lvi->setEncrypt( mEncryptAction->isChecked() );
-      lvi->setSign(    mSignAction->isChecked() );
-    } else {
-      mAtmListView->enableCryptoCBs( false );
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::removeAttach( const QString &aUrl )
-{
-  QList<KMMessagePart*>::const_iterator it = mAtmList.constBegin();
-  for( int idx = 0; it != mAtmList.constEnd(); ++it, idx++) {
-    if ( (*it)->name() == aUrl ) {
-      removeAttach( idx );
-      return;
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::removeAttach( int idx )
-{
-  mAtmModified = true;
-  delete mAtmList.takeAt( idx );
-  delete mAtmItemList.takeAt( idx );
-
-  if ( mAtmList.empty() ) {
-    mAtmListView->hide();
-    mAtmListView->setMinimumSize( 0, 0 );
-    resize( size() );
-  }
-}
-
-//-----------------------------------------------------------------------------
-bool KMComposeWin::encryptFlagOfAttachment( int idx )
-{
-  return (int)(mAtmItemList.count()) > idx
-    ? static_cast<KMAtmListViewItem*>( mAtmItemList.at( idx ) )->isEncrypt()
-    : false;
-}
-
-//-----------------------------------------------------------------------------
-bool KMComposeWin::signFlagOfAttachment( int idx )
-{
-  return (int)(mAtmItemList.count()) > idx
-    ? ((KMAtmListViewItem*)(mAtmItemList.at( idx )))->isSign()
-    : false;
 }
 
 //-----------------------------------------------------------------------------
@@ -2384,49 +2349,10 @@ void KMComposeWin::slotAddrBook()
   KPIM::KAddrBookExternal::openAddressBook( this );
 }
 
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachFile()
-{
-  // Create File Dialog and return selected file(s)
-  // We will not care about any permissions, existence or whatsoever in
-  // this function.
-
-  KEncodingFileDialog fdlg( QString(), QString(), QString(), QString(),
-                            KFileDialog::Opening, this );
-  fdlg.setOperationMode( KFileDialog::Other );
-  fdlg.setCaption( i18n("Attach File") );
-  fdlg.okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
-  fdlg.setMode( KFile::Files );
-  if ( fdlg.exec() != KDialog::Accepted )
-    return;
-
-  const KUrl::List files = fdlg.selectedUrls();
-  foreach ( const KUrl& url, files ) {
-    KUrl urlWithEncoding = url;
-    urlWithEncoding.setFileEncoding( fdlg.selectedEncoding() );
-    addAttach( urlWithEncoding );
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachFileData( KIO::Job *job, const QByteArray &data )
-{
-  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find( job );
-  assert( it != mMapAtmLoadData.end() );
-
-  if ( data.size() > 0 ) {
-    QBuffer buff( &(*it).data );
-    buff.open( QIODevice::WriteOnly | QIODevice::Append );
-    buff.write( data.data(), data.size() );
-    buff.close();
-  }
-}
-
+#if 0
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachFileResult( KJob *job )
 {
-  kDebug() << "implement me.";
-#if 0
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(static_cast<KIO::Job*>(job));
 
   assert( it != mMapAtmLoadData.end() );
@@ -2615,8 +2541,8 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
   if ( attachURLfound ) {
     emit attachmentAdded( attachUrl, true );
   }
-#endif
 }
+#endif
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
@@ -2666,6 +2592,8 @@ void KMComposeWin::slotRecentListFileClear()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertRecentFile( const KUrl &u )
 {
+  kDebug() << "implement me...";
+#if 0
   if ( u.fileName().isEmpty() ) {
     return;
   }
@@ -2692,6 +2620,7 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
           this, SLOT(slotAttachFileResult(KJob *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2714,335 +2643,8 @@ void KMComposeWin::slotSelectCryptoModule( bool init )
   if ( !init )
     setModified( true );
 
-  mAtmListView->enableCryptoCBs( canSignEncryptAttachments() );
-}
-
-static void showExportError( QWidget * w, const GpgME::Error & err )
-{
-  assert( err );
-  const QString msg = i18n("<qt><p>An error occurred while trying to export "
-			   "the key from the backend:</p>"
-			   "<p><b>%1</b></p></qt>",
-                           QString::fromLocal8Bit( err.asString() ) );
-  KMessageBox::error( w, msg, i18n("Key Export Failed") );
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotInsertMyPublicKey()
-{
-  // get PGP user id for the chosen identity
-  mFingerprint =
-    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() ).pgpEncryptionKey();
-  if ( !mFingerprint.isEmpty() ) {
-    startPublicKeyExport();
-  }
-}
-
-void KMComposeWin::startPublicKeyExport()
-{
-  if ( mFingerprint.isEmpty() || !Kleo::CryptoBackendFactory::instance()->openpgp() )
-    return;
-  Kleo::ExportJob * job = Kleo::CryptoBackendFactory::instance()->openpgp()->publicKeyExportJob( true );
-  assert( job );
-
-  connect( job, SIGNAL(result(const GpgME::Error&,const QByteArray&)),
-	   this, SLOT(slotPublicKeyExportResult(const GpgME::Error&,const QByteArray&)) );
-
-  const GpgME::Error err = job->start( QStringList( mFingerprint ) );
-  if ( err )
-    showExportError( this, err );
-  else
-    (void)new Kleo::ProgressDialog( job, i18n("Exporting key..."), this );
-}
-
-void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QByteArray & keydata )
-{
-  if ( err ) {
-    showExportError( this, err );
-    return;
-  }
-
-  // create message part
-  KMMessagePart * msgPart = new KMMessagePart();
-  msgPart->setName( i18n("OpenPGP key 0x%1", mFingerprint ) );
-  msgPart->setTypeStr("application");
-  msgPart->setSubtypeStr("pgp-keys");
-  QList<int> dummy;
-  msgPart->setBodyAndGuessCte(keydata, dummy, false);
-  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + QByteArray( mFingerprint.toLatin1() ) + ".asc" );
-
-  // add the new attachment to the list
-  addAttach(msgPart);
-  rethinkFields(); //work around initial-size bug in Qt-1.32
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotInsertPublicKey()
-{
-  Kleo::KeySelectionDialog dlg( i18n("Attach Public OpenPGP Key"),
-                                i18n("Select the public key which should "
-                                     "be attached."),
-				std::vector<GpgME::Key>(),
-				Kleo::KeySelectionDialog::PublicKeys|Kleo::KeySelectionDialog::OpenPGPKeys,
-				false /* no multi selection */,
-                                false /* no remember choice box */,
-                                this, "attach public key selection dialog" );
-
-  if ( dlg.exec() != KDialog::Accepted ) {
-    return;
-  }
-
-  mFingerprint = dlg.fingerprint();
-  startPublicKeyExport();
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachPopupMenu( QTreeWidgetItem* )
-{
-  if ( !mAttachMenu ) {
-    mAttachMenu = new QMenu( this );
-
-    mOpenId = mAttachMenu->addAction( i18nc("to open", "Open"), this,
-                                      SLOT(slotAttachOpen()) );
-    mViewId = mAttachMenu->addAction( i18nc("to view", "View"), this,
-                                      SLOT(slotAttachView())) ;
-    mEditAction = mAttachMenu->addAction( i18n("Edit"), this, SLOT(slotAttachEdit()) );
-    mEditWithAction = mAttachMenu->addAction( i18n("Edit With..."), this,
-                                            SLOT(slotAttachEditWith()) );
-    mRemoveId = mAttachMenu->addAction( i18n("Remove"), this, SLOT(slotAttachRemove()) );
-    mSaveAsId = mAttachMenu->addAction( KIcon("document-save-as"), i18n("Save As..."), this,
-                                        SLOT( slotAttachSave() ) );
-    mPropertiesId = mAttachMenu->addAction( i18n("Properties"), this,
-                                            SLOT( slotAttachProperties() ) );
-    mAttachMenu->addSeparator();
-    mAttachMenu->addAction( i18n("Add Attachment..."), this, SLOT(slotAttachFile()) );
-  }
-
-  int selectedCount = 0;
-  QList<KMAtmListViewItem*>::const_iterator it = mAtmItemList.constBegin();
-  while ( it != mAtmItemList.constEnd() ) {
-    if ( (*it)->isSelected() ) {
-      ++selectedCount;
-    }
-    ++it;
-  }
-
-  mOpenId->setEnabled( selectedCount > 0 );
-  mViewId->setEnabled( selectedCount > 0 );
-  mEditAction->setEnabled( selectedCount == 1 );
-  mEditWithAction->setEnabled( selectedCount == 1 );
-  mRemoveId->setEnabled( selectedCount > 0 );
-  mSaveAsId->setEnabled( selectedCount == 1 );
-  mPropertiesId->setEnabled( selectedCount == 1 );
-
-  mAttachMenu->popup(QCursor::pos());
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachProperties()
-{
-  kDebug() << "implement me.";
-#if 0
-  KMAtmListViewItem *currentItem =
-      static_cast<KMAtmListViewItem*>( mAtmListView->currentItem() );
-  if ( !currentItem )
-    return;
-
-  KMMessagePart *msgPart = currentItem->attachment();
-  msgPart->setCharset( mCharset );
-
-  KMMsgPartDialogCompat dlg;
-  dlg.setMsgPart( msgPart );
-  if ( canSignEncryptAttachments() ) {
-    dlg.setCanSign( true );
-    dlg.setCanEncrypt( true );
-    dlg.setSigned( currentItem->isSign() );
-    dlg.setEncrypted( currentItem->isEncrypt() );
-  } else {
-    dlg.setCanSign( false );
-    dlg.setCanEncrypt( false );
-  }
-  if ( dlg.exec() ) {
-    mAtmModified = true;
-    // values may have changed, so recreate the listbox line
-    msgPartToItem( msgPart, currentItem );
-    if ( canSignEncryptAttachments() ) {
-      currentItem->setSign( dlg.isSigned() );
-      currentItem->setEncrypt( dlg.isEncrypted() );
-    }
-  }
-  if ( msgPart->typeStr().toLower() != "text" ) {
-    msgPart->setCharset( QByteArray() );
-  }
-#endif
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
-{
-  if ( !attachmentItem )
-    return;
-
-  KMMessagePart *msgPart = attachmentItem->attachment();
-  QByteArray array;
-  QBuffer dev( &array );
-  KZip zip( &dev );
-  QByteArray decoded = msgPart->bodyDecodedBinary();
-  if ( ! zip.open( QIODevice::WriteOnly ) ) {
-    KMessageBox::sorry(0, i18n("KMail could not compress the file.") );
-    attachmentItem->setCompress( false );
-    return;
-  }
-
-  zip.setCompression( KZip::DeflateCompression );
-  if ( ! zip.writeFile( msgPart->name(), "", "", decoded.data(), decoded.size()) ) {
-    KMessageBox::sorry (0, i18n("KMail could not compress the file.") );
-    attachmentItem->setCompress( false );
-    return;
-  }
-  zip.close();
-  if ( array.size() >= decoded.size() ) {
-    if ( KMessageBox::questionYesNo( this,
-                                     i18n( "The compressed file is larger "
-                                           "than the original. Do you want to keep the original one?" ),
-                                     QString(),
-                                     KGuiItem( i18nc("Do not compress", "Keep") ),
-                                     KGuiItem( i18n("Compress") ) ) == KMessageBox::Yes ) {
-      attachmentItem->setCompress( false );
-      return;
-    }
-  }
-  attachmentItem->setUncompressedCodec( msgPart->cteStr() );
-
-  msgPart->setCteStr( "base64" );
-  msgPart->setBodyEncodedBinary( array );
-  QString name = msgPart->name() + ".zip";
-
-  msgPart->setName( name );
-
-  QByteArray cDisp = "attachment;";
-  QByteArray encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
-                                                      KMMessage::preferredCharsets(), name );
-  kDebug() <<"encoding:" << encoding;
-  if ( encoding.isEmpty() ) {
-    encoding = "utf-8";
-  }
-  kDebug() <<"encoding after:" << encoding;
-  QByteArray encName;
-  if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
-    encName = KMMsgBase::encodeRFC2047String( name, encoding );
-  } else {
-    encName = KMMsgBase::encodeRFC2231String( name, encoding );
-  }
-
-  cDisp += "\n\tfilename";
-  if ( name != QString( encName ) ) {
-    cDisp += "*=" + encName;
-  } else {
-    cDisp += "=\"" + encName + '"';
-  }
-  msgPart->setContentDisposition( cDisp );
-
-  attachmentItem->setUncompressedMimeType( msgPart->typeStr(),
-                                           msgPart->subtypeStr() );
-  msgPart->setTypeStr( "application" );
-  msgPart->setSubtypeStr( "zip" );
-
-  msgPartToItem( msgPart, attachmentItem, false );
-}
-
-//-----------------------------------------------------------------------------
-
-void KMComposeWin::uncompressAttach( KMAtmListViewItem *attachmentItem )
-{
-  if ( !attachmentItem )
-    return;
-
-  KMMessagePart *msgPart = attachmentItem->attachment();
-  QByteArray ba = msgPart->bodyDecodedBinary();
-  QBuffer dev( &ba );
-  KZip zip( &dev );
-  QByteArray decoded;
-
-  decoded = msgPart->bodyDecodedBinary();
-  if ( ! zip.open( QIODevice::ReadOnly ) ) {
-    KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
-    attachmentItem->setCompress( true );
-    return;
-  }
-  const KArchiveDirectory *dir = zip.directory();
-
-  KZipFileEntry *entry;
-  if ( dir->entries().count() != 1 ) {
-    KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
-    attachmentItem->setCompress( true );
-    return;
-  }
-  entry = (KZipFileEntry*)dir->entry( dir->entries()[0] );
-
-  msgPart->setCteStr( attachmentItem->uncompressedCodec() );
-
-  msgPart->setBodyEncodedBinary( entry->data() );
-  QString name = entry->name();
-  msgPart->setName( name );
-
-  zip.close();
-
-  QByteArray cDisp = "attachment;";
-  QByteArray encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
-                                                      KMMessage::preferredCharsets(), name );
-  if ( encoding.isEmpty() ) {
-    encoding = "utf-8";
-  }
-
-  QByteArray encName;
-  if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
-    encName = KMMsgBase::encodeRFC2047String( name, encoding );
-  } else {
-    encName = KMMsgBase::encodeRFC2231String( name, encoding );
-  }
-
-  cDisp += "\n\tfilename";
-  if ( name != QString( encName ) ) {
-    cDisp += "*=" + encName;
-  } else {
-    cDisp += "=\"" + encName + '"';
-  }
-  msgPart->setContentDisposition( cDisp );
-
-  QByteArray type, subtype;
-  attachmentItem->uncompressedMimeType( type, subtype );
-
-  msgPart->setTypeStr( type );
-  msgPart->setSubtypeStr( subtype );
-
-  msgPartToItem( msgPart, attachmentItem, false );
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachView()
-{
-  int i = 0;
-  QList<KMAtmListViewItem*>::const_iterator it;
-  for ( it = mAtmItemList.constBegin();
-        it != mAtmItemList.constEnd(); ++it, ++i ) {
-    if ( (*it)->isSelected() ) {
-      viewAttach( i );
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachOpen()
-{
-  int i = 0;
-  QList<KMAtmListViewItem*>::const_iterator it;
-  for ( it = mAtmItemList.constBegin();
-        it != mAtmItemList.constEnd(); ++it, ++i ) {
-    if ( (*it)->isSelected() ) {
-      openAttach( i );
-    }
-  }
+  mAttachmentModel->setEncryptEnabled( canSignEncryptAttachments() );
+  mAttachmentModel->setSignEnabled( canSignEncryptAttachments() );
 }
 
 //-----------------------------------------------------------------------------
@@ -3052,173 +2654,6 @@ bool KMComposeWin::inlineSigningEncryptionSelected()
     return false;
   }
   return cryptoMessageFormat() == Kleo::InlineOpenPGPFormat;
-}
-
-void KMComposeWin::slotAttachEdit()
-{
-  int i = 0;
-  for ( QList<KMAtmListViewItem*>::ConstIterator it = mAtmItemList.constBegin();
-        it != mAtmItemList.constEnd(); ++it, ++i ) {
-    if ( (*it)->isSelected() ) {
-      editAttach( i, false );
-    }
-  }
-}
-
-void KMComposeWin::slotAttachEditWith()
-{
-  int i = 0;
-  for ( QList<KMAtmListViewItem*>::ConstIterator it = mAtmItemList.constBegin();
-        it != mAtmItemList.constEnd(); ++it, ++i ) {
-    if ( (*it)->isSelected() ) {
-      editAttach( i, true );
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::viewAttach( int index )
-{
-  kDebug() << "implement me.";
-#if 0
-  QString pname;
-  KMMessagePart *msgPart;
-  msgPart = mAtmList.at( index );
-  pname = msgPart->name().trimmed();
-  if ( pname.isEmpty() ) {
-    pname = msgPart->contentDescription();
-  }
-  if ( pname.isEmpty() ) {
-    pname = "unnamed";
-  }
-
-  KTemporaryFile *atmTempFile = new KTemporaryFile();
-  atmTempFile->open();
-  mAtmTempList.append( atmTempFile );
-  KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(),
-                               false, false, false );
-  KMReaderMainWin *win =
-    new KMReaderMainWin( msgPart, false, atmTempFile->fileName(), pname, mCharset );
-  win->show();
-#endif
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::openAttach( int index )
-{
-  KMMessagePart *msgPart = mAtmList.at( index );
-  const QString contentTypeStr =
-    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).toLower();
-
-  KTemporaryFile *atmTempFile = new KTemporaryFile();
-  atmTempFile->open();
-  mAtmTempList.append( atmTempFile );
-  const bool autoDelete = true;
-  atmTempFile->setAutoRemove( autoDelete );
-
-  KUrl url;
-  url.setPath( atmTempFile->fileName() );
-
-  KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(), false, false,
-                          false );
-  if ( ::chmod( QFile::encodeName( atmTempFile->fileName() ), S_IRUSR ) != 0) {
-    QFile::remove(url.toLocalFile());
-    return;
-  }
-
-  KMimeType::Ptr mimetype = KMimeType::mimeType( contentTypeStr );
-  KService::Ptr offer;
-  if ( !mimetype.isNull() ) {
-    offer =
-      KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
-  }
-
-  if ( !offer || mimetype.isNull() ) {
-    if ( ( !KRun::displayOpenWithDialog( url, this, autoDelete ) ) && autoDelete ) {
-      QFile::remove(url.toLocalFile());
-    }
-  } else {
-    if ( ( !KRun::run( *offer, url, this, autoDelete ) ) && autoDelete ) {
-      QFile::remove( url.toLocalFile() );
-    }
-  }
-}
-
-void KMComposeWin::editAttach(int index, bool openWith)
-{
-  KMMessagePart* msgPart = mAtmList.at(index);
-  const QString contentTypeStr =
-    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).toLower();
-
-  KTemporaryFile* atmTempFile = new KTemporaryFile();
-  if ( !atmTempFile->open() ) {
-    KMessageBox::sorry( this,
-         i18nc( "@info",
-                "KMail was unable to create the temporary file <filename>%1</filename>.\n"
-                "Because of this, editing this attachment is not possible.",
-                atmTempFile->fileName() ),
-         i18n( "Unable to edit attachment" ) );
-    return;
-  }
-  mAtmTempList.append( atmTempFile );
-  atmTempFile->setAutoRemove( true );
-  atmTempFile->write( msgPart->bodyDecodedBinary() );
-  atmTempFile->flush();
-
-  KMail::EditorWatcher *watcher =
-          new KMail::EditorWatcher( KUrl( atmTempFile->fileName() ),
-                                    contentTypeStr, openWith,
-                                    this, this );
-  connect( watcher, SIGNAL( editDone(KMail::EditorWatcher*) ),
-           SLOT( slotEditDone(KMail::EditorWatcher*) ) );
-
-  if ( watcher->start() ) {
-    mEditorMap.insert( watcher, msgPart );
-    mEditorTempFiles.insert( watcher, atmTempFile );
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachSave()
-{
-  KMAtmListViewItem *currentItem =
-      static_cast<KMAtmListViewItem*>( mAtmListView->currentItem() );
-  if ( !currentItem )
-    return;
-
-  KMMessagePart *msgPart = currentItem->attachment();
-  QString pname = msgPart->name();
-  if ( pname.isEmpty() ) {
-    pname = "unnamed";
-  }
-
-  KUrl url = KFileDialog::getSaveUrl(QString(), QString(), 0, i18n("Save Attachment As"));
-
-  if ( url.isEmpty() ) {
-    return;
-  }
-
-  kmkernel->byteArrayToRemoteFile( msgPart->bodyDecodedBinary(), url );
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachRemove()
-{
-  bool attachmentRemoved = false;
-  for ( int i = 0; i < mAtmItemList.size(); ) {
-    KMAtmListViewItem *cur = mAtmItemList[i];
-    if ( cur->isSelected() ) {
-      removeAttach( i );
-      attachmentRemoved = true;
-    }
-    else
-      i++;
-  }
-
-  if ( attachmentRemoved ) {
-    setModified( true );
-    slotUpdateAttachActions();
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3245,11 +2680,13 @@ void KMComposeWin::slotPasteAsAttachment()
     QStringList data = QApplication::clipboard()->text().split('\n', QString::SkipEmptyParts);
     for ( QStringList::Iterator it=data.begin(); it!=data.end(); ++it )
     {
-      addAttach( *it );
+      mAttachmentController->addAttachment( *it );
     }
     return;
   }
 
+  kDebug() << "port me..."; // nicify the above too
+#if 0
   const QMimeData *mimeData = QApplication::clipboard()->mimeData();
   if ( mimeData->hasText() ) {
     bool ok;
@@ -3267,6 +2704,7 @@ void KMComposeWin::slotPasteAsAttachment()
                                  dummy, kmkernel->msgSender()->sendQuotedPrintable());
     addAttach( msgPart );
   }
+#endif
 }
 
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
@@ -3448,14 +2886,8 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
   }
 
   // mark the attachments for (no) encryption
-  if ( canSignEncryptAttachments() ) {
-    QList<KMAtmListViewItem*>::const_iterator it;
-    for (it = mAtmItemList.constBegin(); it != mAtmItemList.constEnd(); ++it ) {
-      KMAtmListViewItem *entry = static_cast<KMAtmListViewItem*> (*it);
-      if ( entry ) {
-        entry->setEncrypt( encrypt );
-      }
-    }
+  if( canSignEncryptAttachments() ) {
+    mAttachmentModel->setEncryptSelected( encrypt );
   }
 }
 
@@ -3499,13 +2931,7 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 
   // mark the attachments for (no) signing
   if ( canSignEncryptAttachments() ) {
-    QList<KMAtmListViewItem*>::const_iterator it;
-    for (it = mAtmItemList.constBegin(); it != mAtmItemList.constEnd(); ++it ) {
-      KMAtmListViewItem *entry = static_cast<KMAtmListViewItem*> (*it);
-      if ( entry ) {
-        entry->setSign( sign );
-      }
-    }
+    mAttachmentModel->setSignSelected( sign );
   }
 }
 
@@ -3531,6 +2957,11 @@ void KMComposeWin::forceDisableHtml()
   disableHtml( NoConfirmationNeeded );
   markupAction->setEnabled( false );
   // FIXME: Remove the toggle toolbar action somehow
+}
+
+void KMComposeWin::disableRecipientNumberCheck()
+{
+  // mCheckForRecipients = false; // TODO composer...
 }
 
 //-----------------------------------------------------------------------------
@@ -3562,25 +2993,6 @@ void KMComposeWin::slotContinuePrint( bool rc )
     setModified( mMessageWasModified );
   }
 #endif
-}
-
-//----------------------------------------------------------------------------
-bool KMComposeWin::validateAddresses( QWidget *parent, const QString &addresses )
-{
-  QString brokenAddress;
-  KPIMUtils::EmailParseResult errorCode =
-    KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses ),
-                                   brokenAddress );
-  if ( !( errorCode == KPIMUtils::AddressOk ||
-          errorCode == KPIMUtils::AddressEmpty ) ) {
-    QString errorMsg( "<qt><p><b>" + brokenAddress +
-                      "</b></p><p>" +
-                      KPIMUtils::emailParseResultToString( errorCode ) +
-                      "</p></qt>" );
-    KMessageBox::sorry( parent, errorMsg, i18n("Invalid Email Address") );
-    return false;
-  }
-  return true;
 }
 
 //----------------------------------------------------------------------------
@@ -3632,15 +3044,15 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     }
 
     // Validate the To:, CC: and BCC fields
-    if ( !validateAddresses( this, to().trimmed() ) ) {
+    if ( !Util::validateAddresses( this, to().trimmed() ) ) {
       return;
     }
 
-    if ( !validateAddresses( this, cc().trimmed() ) ) {
+    if ( !Util::validateAddresses( this, cc().trimmed() ) ) {
       return;
     }
 
-    if ( !validateAddresses( this, bcc().trimmed() ) ) {
+    if ( !Util::validateAddresses( this, bcc().trimmed() ) ) {
       return;
     }
 
@@ -4131,6 +3543,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     return;
   }
 
+  emit identityChanged( identity() );
+
   if ( !ident.fullEmailAddr().isNull() ) {
     mEdtFrom->setText( ident.fullEmailAddr() );
   }
@@ -4201,11 +3615,14 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
                                                ( oldIdentity ).signature();
   KPIMIdentities::Signature newSig = const_cast<KPIMIdentities::Identity&>
                                                ( ident ).signature();
-  if ( !oldSig.rawText().isEmpty() ) {
-    mEditor->replaceSignature( oldSig, newSig );
+  // if unmodified, apply new template, if one is set
+  bool msgCleared = false;
+  if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) ) {
+    applyTemplate( uoid );
+    msgCleared = true;
   }
-  else {
 
+  if ( msgCleared || oldSig.rawText().isEmpty() ) {
     // Just append the signature if there is no old signature
     if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
       if ( GlobalSettings::self()->prependSignature() )
@@ -4213,14 +3630,14 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
       else
         newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End, true );
     }
+  } else {
+    mEditor->replaceSignature( oldSig, newSig );
   }
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
   bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
   bool bNewIdentityHasEncryptionKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
-  mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
-                          !ident.pgpEncryptionKey().isEmpty() );
   // save the state of the sign and encrypt button
   if ( !bNewIdentityHasEncryptionKey && mLastIdentityHasEncryptionKey ) {
     mLastEncryptActionState = mEncryptAction->isChecked();
@@ -4241,7 +3658,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
 
-  setModified( true );
   mId = uoid;
 
   // make sure the From and BCC fields are shown if necessary
@@ -4504,30 +3920,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
   resetter.disable();
 }
 
-void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
-{
-  kDebug() ;
-  KMMessagePart *part = mEditorMap[ watcher ];
-  KTemporaryFile *tf = mEditorTempFiles[ watcher ];
-  mEditorMap.remove( watcher );
-  mEditorTempFiles.remove( watcher );
-  if ( !watcher->fileChanged() )
-    return;
-
-  tf->reset();
-  QByteArray data = tf->readAll();
-  part->setBodyEncodedBinary( data );
-
-  // Find the listview item associated with this attachment and update it
-  KMAtmListViewItem *listviewItem;
-  foreach( listviewItem, mAtmItemList ) {
-    if ( listviewItem->attachment() == part ) {
-      msgPartToItem( part, listviewItem, false );
-      break;
-    }
-  }
-}
-
+#if 0
 void KMComposeWin::slotAttachmentDragStarted()
 {
   kDebug();
@@ -4556,6 +3949,7 @@ void KMComposeWin::slotAttachmentDragStarted()
   drag->setMimeData( mimeData );
   drag->exec( Qt::CopyAction );
 }
+#endif
 
 void KMComposeWin::recipientEditorSizeHintChanged()
 {
