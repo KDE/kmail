@@ -26,6 +26,7 @@
 #include "attachmentmodel.h"
 
 #include <QContextMenuEvent>
+#include <QKeyEvent>
 
 using namespace KMail;
 
@@ -47,6 +48,7 @@ AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
 
   setRootIsDecorated( false );
   setUniformRowHeights( true );
+  setSelectionMode( QAbstractItemView::ExtendedSelection );
 }
 
 AttachmentView::~AttachmentView()
@@ -58,6 +60,17 @@ void AttachmentView::contextMenuEvent( QContextMenuEvent *event )
 {
   Q_UNUSED( event );
   emit contextMenuRequested();
+}
+
+void AttachmentView::keyPressEvent( QKeyEvent *event )
+{
+  if( event->key() == Qt::Key_Delete ) {
+    QModelIndexList selection = selectionModel()->selectedRows();
+    AttachmentModel *amodel = static_cast<AttachmentModel*>( model() );
+    foreach( const QModelIndex &index, selection ) {
+      amodel->removeAttachment( index );
+    }
+  }
 }
 
 void AttachmentView::setEncryptEnabled( bool enabled )

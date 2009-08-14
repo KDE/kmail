@@ -43,6 +43,8 @@ class AttachmentView : public QTreeView
 
     /* reimpl */
     virtual void contextMenuEvent( QContextMenuEvent *event );
+    /* reimpl */
+    virtual void keyPressEvent( QKeyEvent *event );
 
   public slots:
     /// model sets these
