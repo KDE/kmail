@@ -37,3 +37,14 @@ bugs:
 * what should be inline? looking at canSignEncryptAttachments()
 Attachments:
 * need isModified
+* AttachmentView:
+  - need to center those comboboxes... That will probably
+    require a delegate
+  - disable sorting on the compress/sign/encrypt columns
+* left to port from attachmentlistview:
+  - drag and drop
+
+* report kdelibs bug:
+In file select dialog, a file containing ':'. Selecting it by itself works,
+but selecting it together with other files doesn't.  When it works, %3a is
+used instead of ':'.

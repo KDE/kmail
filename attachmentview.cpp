@@ -107,7 +107,7 @@ void AttachmentView::setSignEnabled( bool enabled )
 
 void AttachmentView::hideIfEmpty()
 {
-  setVisible( model()->rowCount() > 0 );
+  setVisible( d->model->rowCount() > 0 );
 }
 
 #include "attachmentview.moc"

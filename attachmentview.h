@@ -50,7 +50,7 @@ class AttachmentView : public QTreeView
     /// model sets these
     void setEncryptEnabled( bool enabled );
     void setSignEnabled( bool enabled );
-    void hideIfEmpty(); // TODO Move to private?
+    void hideIfEmpty();
 
   signals:
     void contextMenuRequested();
