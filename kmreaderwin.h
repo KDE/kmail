@@ -241,7 +241,7 @@ public:
   bool atBottom() const;
 
   bool isFixedFont() { return mUseFixedFont; }
-  void setUseFixedFont( bool useFixedFont ) { mUseFixedFont = useFixedFont; }
+  void setUseFixedFont( bool useFixedFont );
 
   /** Return the HtmlWriter connected to the KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }

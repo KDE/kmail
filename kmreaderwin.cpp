@@ -762,6 +762,15 @@ void KMReaderWin::createActions()
            this, SLOT( slotScrollNext() ) );
 }
 
+void KMReaderWin::setUseFixedFont( bool useFixedFont )
+{
+  mUseFixedFont = useFixedFont;
+  if ( mToggleFixFontAction )
+  {
+    mToggleFixFontAction->setChecked( mUseFixedFont );
+  }
+}
+
 // little helper function
 KToggleAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
   if ( !mActionCollection )
