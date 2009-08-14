@@ -85,7 +85,6 @@ set(kmailprivate_LIB_SRCS
    snippetwidget.cpp
    snippetitem.cpp
    kmfolder.cpp
-   kmmsgpartdlg.cpp
    kmreaderwin.cpp
    htmlstatusbar.cpp
    kmmsgdict.cpp

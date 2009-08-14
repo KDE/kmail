@@ -72,7 +72,6 @@ using MailTransport::Transport;
 #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmmainwin.h"
-#include "kmmsgpartdlg.h"
 #include "kmreadermainwin.h"
 //#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "objecttreeparser.h"
