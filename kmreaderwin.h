@@ -345,6 +345,9 @@ public:
      already, replaces (deletes) that one. */
   void setBodyPartMemento( const partNode * node, const QByteArray & which, KMail::Interface::BodyPartMemento * memento );
 
+  /// Scrolls to the given attachment and marks it with a yellow border
+  void scrollToAttachment( const partNode *node );
+
 private:
   /* deletes all BodyPartMementos. Use this when skipping to another
      message (as opposed to re-loading the same one again). */
@@ -496,7 +499,7 @@ protected:
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  QString writeMsgHeader( KMMessage* aMsg, bool hasVCard = false, bool topLevel = false );
+  QString writeMsgHeader( KMMessage* aMsg, partNode *vCardNode = 0, bool topLevel = false );
 
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString() if writing failed.
@@ -543,9 +546,6 @@ private:
   void readGlobalOverrideCodec();
 
   QString renderAttachments( partNode *node, const QColor &bgColor );
-
-  /// Scrolls to the given attachment and marks it with a yellow border
-  void scrollToAttachment( partNode *node );
 
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;

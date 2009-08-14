@@ -2,7 +2,7 @@
     urlhandlermanager.cpp
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002-2003 Klarälvdalens Datakonsult AB
+    Copyright (c) 2002-2003 Klarï¿½lvdalens Datakonsult AB
     Copyright (c) 2003      Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
@@ -124,6 +124,9 @@ namespace {
     bool handleClick( const KUrl &, KMReaderWin * ) const;
     bool handleContextMenuRequest( const KUrl &, const QPoint &, KMReaderWin * ) const;
     QString statusBarMessage( const KUrl &, KMReaderWin * ) const;
+  private:
+    partNode* partNodeForUrl( const KUrl &url, KMReaderWin *w ) const;
+    bool attachmentIsInHeader( const KUrl &url ) const;
   };
 
   class ShowAuditLogURLHandler : public KMail::URLHandler {
@@ -452,11 +455,14 @@ namespace {
       if ( url.protocol() == "kmail" && url.path() == "levelquote" )
       {
         QString query= url.query();
-        if ( query.length()>=2 )
-          if ( query[ 1 ] =='-'  )
+        if ( query.length()>=2 ) {
+          if ( query[ 1 ] =='-'  ) {
             return i18n("Expand all quoted text.");
-          else
+          }
+          else {
             return i18n("Collapse quoted text.");
+          }
+        }
       }
       return QString() ;
   }
@@ -514,34 +520,66 @@ namespace {
 }
 
 namespace {
-  bool AttachmentURLHandler::handleClick( const KUrl & url, KMReaderWin * w ) const {
+
+  partNode* AttachmentURLHandler::partNodeForUrl( const KUrl &url, KMReaderWin *w ) const
+  {
     if ( !w || !w->message() )
+      return 0;
+    if ( url.protocol() != "attachment" )
+      return 0;
+
+    bool ok;
+    int nodeId = url.path().toInt( &ok );
+    if ( !ok )
+      return 0;
+
+    partNode * node = w->partNodeForId( nodeId );
+    return node;
+  }
+
+  bool AttachmentURLHandler::attachmentIsInHeader( const KUrl &url ) const
+  {
+    bool inHeader = false;
+    const QString place = url.queryItem( "place" ).toLower();
+    if ( place != QString::null ) {
+      inHeader = ( place == "header" );
+    }
+    return inHeader;
+  }
+
+  bool AttachmentURLHandler::handleClick( const KUrl & url, KMReaderWin * w ) const
+  {
+    partNode * node = partNodeForUrl( url, w );
+    if ( !node )
       return false;
-    const int id = KMReaderWin::msgPartFromUrl( url );
-    if ( id <= 0 )
-      return false;
-    // PENDING(romain_kdab) : replace with toLocalFile() ?
-    w->openAttachment( id, url.path() );
+
+    const bool inHeader = attachmentIsInHeader( url );
+    const bool shouldShowDialog = !node->isDisplayedEmbedded() || !inHeader;
+    if ( !shouldShowDialog )
+      w->scrollToAttachment( node );
+    else
+      // PENDING(romain_kdab) : replace with toLocalFile() ?
+      w->openAttachment( node->nodeId(), w->tempFileUrlFromPartNode( node ).path() );
     return true;
   }
 
-  bool AttachmentURLHandler::handleContextMenuRequest( const KUrl & url, const QPoint & p, KMReaderWin * w ) const {
-    if ( !w || !w->message() )
+  bool AttachmentURLHandler::handleContextMenuRequest( const KUrl & url, const QPoint & p, KMReaderWin * w ) const
+  {
+    partNode * node = partNodeForUrl( url, w );
+    if ( !node )
       return false;
-    const int id = KMReaderWin::msgPartFromUrl( url );
-    if ( id <= 0 )
-      return false;
+
     // PENDING(romain_kdab) : replace with toLocalFile() ?
-    w->showAttachmentPopup( id, url.path(), p );
+    w->showAttachmentPopup( node->nodeId(), w->tempFileUrlFromPartNode( node ).path(), p );
     return true;
   }
 
-  QString AttachmentURLHandler::statusBarMessage( const KUrl & url, KMReaderWin * w ) const {
-    if ( !w || !w->message() )
-      return QString();
-    const partNode * node = w->partNodeFromUrl( url );
+  QString AttachmentURLHandler::statusBarMessage( const KUrl &url, KMReaderWin * w ) const
+  {
+    partNode * node = partNodeForUrl( url, w );
     if ( !node )
       return QString();
+
     const KMMessagePart & msgPart = node->msgPart();
     QString name = msgPart.fileName();
     if ( name.isEmpty() )
@@ -568,7 +606,8 @@ namespace {
     return true;
   }
 
-  bool ShowAuditLogURLHandler::handleContextMenuRequest( const KUrl & url, const QPoint &, KMReaderWin * w ) const {
+  bool ShowAuditLogURLHandler::handleContextMenuRequest( const KUrl & url, const QPoint &, KMReaderWin * w ) const
+  {
     Q_UNUSED( w );
     // disable RMB for my own links:
     return !extractAuditLog( url ).isEmpty();
