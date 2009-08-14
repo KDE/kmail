@@ -266,7 +266,7 @@ namespace KMail {
     QString writeSigstatHeader( KMail::PartMetaData & part,
                                 const Kleo::CryptoBackend::Protocol * cryptProto,
                                 const QString & fromAddress,
-                                const QString & filename = QString::null );
+                                partNode *node = 0 );
     QString writeSigstatFooter( KMail::PartMetaData & part );
 
     // The attachment mark is a div that is placed around the attchment. It is used for drawing

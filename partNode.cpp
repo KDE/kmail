@@ -68,7 +68,8 @@ partNode::partNode()
     mDeleteDwBodyPart( false ),
     mMimePartTreeItem( 0 ),
     mBodyPartMementoMap(),
-    mReader( 0 )
+    mReader( 0 ),
+    mDisplayedEmbedded( false )
 {
   adjustDefaultType( this );
 }
@@ -85,7 +86,8 @@ partNode::partNode( KMReaderWin * win, DwBodyPart* dwPart, int explicitType, int
     mDeleteDwBodyPart( deleteDwBodyPart ),
     mMimePartTreeItem( 0 ),
     mBodyPartMementoMap(),
-    mReader( win )
+    mReader( win ),
+    mDisplayedEmbedded( false )
 {
   if ( explicitType != DwMime::kTypeUnknown ) {
     mType    = explicitType;     // this happens e.g. for the Root Node
@@ -148,7 +150,8 @@ partNode::partNode( bool deleteDwBodyPart, DwBodyPart* dwPart )
     mDeleteDwBodyPart( deleteDwBodyPart ),
     mMimePartTreeItem( 0 ),
     mBodyPartMementoMap(),
-    mReader( 0 )
+    mReader( 0 ),
+    mDisplayedEmbedded( false )
 {
   if ( dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType() ) {
     mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
@@ -172,8 +175,8 @@ partNode::~partNode() {
 
 #ifndef NDEBUG
 void partNode::dump( int chars ) const {
-  kdDebug(5006) << QString().fill( ' ', chars ) << "+ "
-		<< typeString() << '/' << subTypeString() << endl;
+  kdDebug(5006) << nodeId() << " " << QString().fill( ' ', chars ) << "+ "
+                << typeString() << '/' << subTypeString() << " embedded:" << mDisplayedEmbedded << endl;
   if ( mChild )
     mChild->dump( chars + 1 );
   if ( mNext )
@@ -688,4 +691,19 @@ void partNode::internalSetBodyPartMemento( const QCString & which, KMail::Interf
     } else {
         mBodyPartMementoMap.insert( it, std::make_pair( which.lower(), memento ) );
     }
+}
+
+bool partNode::isDisplayedEmbedded() const
+{
+  return mDisplayedEmbedded;
+}
+
+void partNode::setDisplayedEmbedded( bool displayedEmbedded )
+{
+  mDisplayedEmbedded = displayedEmbedded;
+}
+
+QString partNode::asHREF( const QString &place ) const
+{
+  return QString( "attachment:%1?place=%2" ).arg( nodeId() ).arg( place );
 }
