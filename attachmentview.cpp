@@ -27,28 +27,41 @@
 
 #include <QContextMenuEvent>
 #include <QKeyEvent>
+#include <QSortFilterProxyModel>
+
+#include <KDebug>
+
+#include <libkdepim/attachmentpart.h>
+#include <boost/shared_ptr.hpp>
+using KPIM::AttachmentPart;
 
 using namespace KMail;
 
 class KMail::AttachmentView::Private
 {
   public:
-
+    AttachmentModel *model;
 };
 
 AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
   : QTreeView( parent )
   , d( new Private )
 {
-  setModel( model );
+  d->model = model;
   connect( model, SIGNAL(encryptEnabled(bool)), this, SLOT(setEncryptEnabled(bool)) );
   connect( model, SIGNAL(signEnabled(bool)), this, SLOT(setSignEnabled(bool)) );
   connect( model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
   connect( model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
 
+  QSortFilterProxyModel *sortModel = new QSortFilterProxyModel( this );
+  sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
+  sortModel->setSourceModel( model );
+  setModel( sortModel );
+
   setRootIsDecorated( false );
   setUniformRowHeights( true );
   setSelectionMode( QAbstractItemView::ExtendedSelection );
+  setSortingEnabled( true );
 }
 
 AttachmentView::~AttachmentView()
@@ -65,10 +78,19 @@ void AttachmentView::contextMenuEvent( QContextMenuEvent *event )
 void AttachmentView::keyPressEvent( QKeyEvent *event )
 {
   if( event->key() == Qt::Key_Delete ) {
+    Q_ASSERT( dynamic_cast<QSortFilterProxyModel*>( model() ) );
+    QSortFilterProxyModel *sortModel = static_cast<QSortFilterProxyModel*>( model() );
+
+    // Indexes are based on row numbers, and row numbers change when items are deleted.
+    // Therefore, first we need to make a list of AttachmentParts to delete.
+    AttachmentPart::List toRemove;
     QModelIndexList selection = selectionModel()->selectedRows();
-    AttachmentModel *amodel = static_cast<AttachmentModel*>( model() );
     foreach( const QModelIndex &index, selection ) {
-      amodel->removeAttachment( index );
+      const QModelIndex sourceIndex = sortModel->mapToSource( index );
+      toRemove.append( d->model->attachment( sourceIndex ) );
+    }
+    foreach( const AttachmentPart::Ptr &part, toRemove ) {
+      d->model->removeAttachment( part );
     }
   }
 }
