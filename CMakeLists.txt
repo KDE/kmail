@@ -175,7 +175,6 @@ set(kmailprivate_LIB_SRCS
    attachmentlistview.cpp
    kmcomposereditor.cpp
    kmlineeditspell.cpp
-   kmatmlistview.cpp
    composer.cpp
    isubject.cpp
    bodyvisitor.cpp

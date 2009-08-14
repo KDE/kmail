@@ -64,7 +64,6 @@ using MailTransport::Transport;
 #include "chiasmuskeyselector.h"
 #include "codecaction.h"
 #include "kleo_util.h"
-//#include "kmatmlistview.h"
 #include "kmcommands.h"
 #include "kmcomposereditor.h"
 #include "kmfoldercombobox.h"
