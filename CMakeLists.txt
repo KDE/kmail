@@ -1,7 +1,5 @@
 project(kmail)
 
-set( BUILD_NEW_COMPOSER false )
-
 include(CheckIncludeFiles)
 check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
@@ -245,8 +243,6 @@ set(kmailprivate_LIB_SRCS
    procmailparser.cpp
    stringutil.cpp
    iconnamecache.cpp
-   kmcomposewin.cpp
-   messagecomposer.cpp
    newcomposerwin.cpp
    attachmentcontroller.cpp
    attachmentmodel.cpp
@@ -287,14 +283,11 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/widgetbase.cpp
 )
 
-if( BUILD_NEW_COMPOSER )
-  add_definitions( -DBUILD_NEW_COMPOSER )
-else( BUILD_NEW_COMPOSER )
-  qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
-  qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
-  )
-endif( BUILD_NEW_COMPOSER )
+# TODO PORT
+# qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+# qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+#   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
+# )
 
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel

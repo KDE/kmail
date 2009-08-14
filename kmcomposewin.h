@@ -17,7 +17,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef BUILD_NEW_COMPOSER
+#error "Use newcomposerwin.h instead"
 #ifndef __KMComposeWin
 #define __KMComposeWin
 
@@ -886,4 +886,3 @@ class KMComposeWin : public KMail::Composer
 };
 
 #endif
-#endif // not BUILD_NEW_COMPOSER

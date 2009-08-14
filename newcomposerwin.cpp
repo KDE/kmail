@@ -20,7 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifdef BUILD_NEW_COMPOSER
 #include "newcomposerwin.h"
 
 // KDEPIM includes
@@ -75,7 +74,7 @@ using MailTransport::Transport;
 #include "kmmainwin.h"
 #include "kmmsgpartdlg.h"
 #include "kmreadermainwin.h"
-#include "mailcomposeradaptor.h"
+//#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "objecttreeparser.h"
 #include "partNode.h"
 #include "recipientseditor.h"
@@ -191,7 +190,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
 {
   //(void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
-  QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
+  //QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
   if ( kmkernel->xmlGuiInstance().isValid() ) {
     setComponentData( kmkernel->xmlGuiInstance() );
@@ -3980,5 +3979,3 @@ void KMComposeWin::slotLanguageChanged( const QString &language )
 {
   mDictionaryCombo->setCurrentByDictionary( language );
 }
-
-#endif // BUILD_NEW_COMPOSER

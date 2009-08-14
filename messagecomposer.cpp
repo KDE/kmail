@@ -28,7 +28,7 @@
  *  your version.
  */
 
-#ifndef BUILD_NEW_COMPOSER
+#error "This file belongs to the old composer"
 #include "messagecomposer.h"
 
 #include "kmmsgpart.h"
@@ -2599,5 +2599,3 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray &encryptedBod
 }
 
 #include "messagecomposer.moc"
-
-#endif // not BUILD_NEW_COMPOSER

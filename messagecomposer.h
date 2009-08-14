@@ -28,7 +28,7 @@
  *  your version.
  */
 
-#ifndef BUILD_NEW_COMPOSER
+#error "This file belongs to the old composer"
 #ifndef MESSAGECOMPOSER_H
 #define MESSAGECOMPOSER_H
 
@@ -438,4 +438,3 @@ class MessageComposer : public QObject {
 };
 
 #endif /* MESSAGECOMPOSER_H */
-#endif // not BUILD_NEW_COMPOSER

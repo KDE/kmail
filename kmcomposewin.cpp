@@ -17,7 +17,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef BUILD_NEW_COMPOSER
+#error "Use newcomposerwin.h instead"
 #define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H
@@ -4487,5 +4487,3 @@ void KMComposeWin::slotLanguageChanged( const QString &language )
 {
   mDictionaryCombo->setCurrentByDictionary( language );
 }
-
-#endif // not BUILD_NEW_COMPOSER
