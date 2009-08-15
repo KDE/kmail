@@ -31,7 +31,7 @@
 
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/exportjob.h>
-#include <kleo/ui/progressdialog.h>
+#include <libkleo/ui/progressdialog.h>
 
 using namespace KMail;
 using namespace KPIM;

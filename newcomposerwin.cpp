@@ -33,7 +33,6 @@
 #include <messagecomposer/composer.h>
 #include <messagecomposer/globalpart.h>
 #include <messagecomposer/infopart.h>
-#include <messagecomposer/job.h>
 #include <messagecomposer/textpart.h>
 
 // LIBKDEPIM includes
@@ -2144,7 +2143,6 @@ void KMComposeWin::fillInfoPart( MessageComposer::InfoPart *infoPart )
 void KMComposeWin::slotComposerResult( KJob *job )
 {
   using MessageComposer::Composer;
-  using MessageComposer::Job;
 
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( mComposer == job );
