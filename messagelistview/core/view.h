@@ -626,6 +626,10 @@ protected slots:
    */
   void applyThemeColumns();
 
+private slots:
+  /// expand the whole thread (including all child messages)
+  void expandFullThread( const QModelIndex & );
+
 }; // class View
 
 } // namespace Core
