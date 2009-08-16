@@ -452,17 +452,24 @@ QVariant Model::headerData(int section, Qt::Orientation, int role) const
   if ( !column )
     return QVariant();
 
- if ( role != Qt::DisplayRole )
-    return QVariant();
-
-  if ( mStorageModel && column->isSenderOrReceiver() )
+  if ( mStorageModel && column->isSenderOrReceiver() &&
+       ( role == Qt::DisplayRole ) )
   {
     if ( mStorageModelContainsOutboundMessages )
       return QVariant( i18n( "Receiver" ) );
     return QVariant( i18n( "Sender" ) );
   }
 
-  return QVariant( column->label() );
+  if ( ( role == Qt::DisplayRole ) && column->pixmapName().isEmpty() )
+    return QVariant( column->label() );
+
+  if ( ( role == Qt::ToolTipRole ) && !column->pixmapName().isEmpty() )
+    return QVariant( column->label() );
+
+  if ( ( role == Qt::DecorationRole ) && !column->pixmapName().isEmpty() )
+    return QVariant( SmallIcon( column->pixmapName() ) );
+
+  return QVariant();
 }
 
 QModelIndex Model::index( Item *item, int column ) const
