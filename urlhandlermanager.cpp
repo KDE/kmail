@@ -555,9 +555,9 @@ namespace {
 
     const bool inHeader = attachmentIsInHeader( url );
     const bool shouldShowDialog = !node->isDisplayedEmbedded() || !inHeader;
-    if ( !shouldShowDialog )
+    if ( inHeader )
       w->scrollToAttachment( node );
-    else
+    if ( shouldShowDialog )
       // PENDING(romain_kdab) : replace with toLocalFile() ?
       w->openAttachment( node->nodeId(), w->tempFileUrlFromPartNode( node ).path() );
     return true;
