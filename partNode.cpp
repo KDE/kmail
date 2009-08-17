@@ -243,10 +243,26 @@ QByteArray partNode::subTypeString() const {
   return s.c_str();
 }
 
+const partNode* partNode::topLevelParent() const {
+  const partNode *ret = this;
+  while ( ret->parentNode() )
+    ret = ret->parentNode();
+  return ret;
+}
+
 int partNode::childCount() const {
   int count = 0;
   for ( partNode * child = firstChild() ; child ; child = child->nextSibling() )
     ++ count;
+  return count;
+}
+
+int partNode::totalChildCount() const {
+  int count = 0;
+  for ( partNode * child = firstChild() ; child ; child = child->nextSibling() ) {
+    ++count;
+    count += child->totalChildCount();
+  }
   return count;
 }
 
@@ -610,7 +626,7 @@ bool partNode::isFirstTextPart() const {
   for ( const partNode * n = root ; n ; n = n->next() )
     if ( n->type() == DwMime::kTypeText )
       return n == this;
-  kFatal(5006) <<"partNode::isFirstTextPart(): Didn't expect to end up here...";
+  kFatal() <<"partNode::isFirstTextPart(): Didn't expect to end up here...";
   return false; // make comiler happy
 }
 

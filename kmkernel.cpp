@@ -102,6 +102,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
+  mStorageDebug = KDebug::registerArea( "Storage Debug" );
   kDebug();
   setObjectName( name );
   mySelf = this;
@@ -198,6 +199,15 @@ KMKernel::~KMKernel ()
   mWallet = 0;
   mySelf = 0;
   kDebug();
+}
+
+int KMKernel::storageDebug()
+{
+  KMKernel *theKernel = self();
+  if ( theKernel )
+    return theKernel->mStorageDebug;
+  else
+    return 0;
 }
 
 void KMKernel::setupDBus()
@@ -2093,18 +2103,16 @@ KPIMIdentities::IdentityManager * KMKernel::identityManager() {
 
 KMainWindow* KMKernel::mainWin()
 {
-  KMainWindow *kmWin = 0;
-
   // First look for a KMMainWin.
   foreach ( KMainWindow* window, KMainWindow::memberList() )
     if ( ::qobject_cast<KMMainWin *>(window) )
-      return kmWin;
+      return window;
 
   // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
   // case we are running inside Kontact) because we anyway only need
   // it for modal message boxes and for KNotify events.
   if ( !KMainWindow::memberList().isEmpty() ) {
-    kmWin = KMainWindow::memberList().first();
+    KMainWindow *kmWin = KMainWindow::memberList().first();
     if ( kmWin )
       return kmWin;
   }

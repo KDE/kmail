@@ -278,7 +278,10 @@ namespace KMail {
         // Set the default display strategy for this body part relying on the
         // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
         part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
+
+        writeAttachmentMarkHeader( node );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
+        writeAttachmentMarkFooter();
 #if 0
         // done in KMReaderWin::setBodyPartMemento() now
         if ( mReader && node->bodyPartMemento() )
@@ -300,11 +303,16 @@ namespace KMail {
       } else {
         const BodyPartFormatter * bpf
           = BodyPartFormatter::createFor( node->type(), node->subType() );
-        kFatal( !bpf, 5006 ) <<"THIS SHOULD NO LONGER HAPPEN ("
-                              << node->typeString() << '/' << node->subTypeString() << ')';
+        if ( !bpf ) {
+          kFatal() << "THIS SHOULD NO LONGER HAPPEN ("
+                   << node->typeString() << '/' << node->subTypeString() << ')';
+        }
 
-        if ( bpf && !bpf->process( this, node, processResult ) )
+        writeAttachmentMarkHeader( node );
+        if ( bpf && !bpf->process( this, node, processResult ) ) {
           defaultHandling( node, processResult );
+        }
+        writeAttachmentMarkFooter();
       }
       node->setProcessed( true, false );
 
@@ -1131,7 +1139,7 @@ namespace KMail {
       //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
       //  ++thisDelim;
 
-      partStr = "Content-Type: message/rfc822\nContent-Description: embedded message\n";
+      partStr = "Content-Type: message/rfc822\nContent-Description: embedded message\n\n";
       partStr += str.mid( thisDelim, nextDelim-thisDelim );
       QString subject = QString::fromLatin1("embedded message");
       QString subSearch = QString::fromLatin1("\nSubject:");
@@ -2760,8 +2768,28 @@ QString ObjectTreeParser::writeSigstatFooter( PartMetaData& block )
 }
 
 //-----------------------------------------------------------------------------
+
+void ObjectTreeParser::writeAttachmentMarkHeader( partNode *node )
+{
+  if ( !mReader )
+    return;
+
+  htmlWriter()->queue( QString( "<div id=\"attachmentDiv%1\">\n" ).arg( node->nodeId() ) );
+}
+
+//-----------------------------------------------------------------------------
+
+void ObjectTreeParser::writeAttachmentMarkFooter()
+{
+  if ( !mReader )
+    return;
+
+  htmlWriter()->queue( QString( "</div>" ) );
+}
+
+//-----------------------------------------------------------------------------
 void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *aCodec,
-                                const QString& fromAddress )
+                                     const QString& fromAddress )
 {
   KMMsgSignatureState dummy1;
   KMMsgEncryptionState dummy2;

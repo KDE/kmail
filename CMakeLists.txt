@@ -28,9 +28,6 @@ option(KDEPIM_FOLDEROPEN_PROFILE "Enable debug output for timing folder loading"
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h)
 
-add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5006)
-add_definitions(-DStorageDebug=5120)
-
 qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL

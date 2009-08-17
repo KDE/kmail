@@ -105,7 +105,8 @@ View::View( Widget *pParent )
   connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection &, const QItemSelection & ) ),
            this, SLOT( slotSelectionChanged( const QItemSelection &, const QItemSelection & ) ) );
 
-
+  // as in KDE3, when a root-item of a message thread is expanded, expand all children
+  connect( this, SIGNAL( expanded ( const QModelIndex & ) ), this, SLOT( expandFullThread( const QModelIndex & ) ) );
 }
 
 View::~View()
@@ -890,6 +891,20 @@ void View::setChildrenExpanded( const Item * root, bool expand )
       setExpanded( idx, false );
     }
   }
+}
+
+void View::expandFullThread( const QModelIndex & index )
+{
+  if ( ! index.isValid() )
+    return;
+
+  Item * item = static_cast< Item * >( index.internalPointer() );
+  if ( item->type() != Item::Message )
+    return;
+
+  if ( ! static_cast< MessageItem * >( item )->parent() ||
+       ( static_cast< MessageItem * >( item )->parent()->type() != Item::Message ) )
+    setChildrenExpanded( item, true );
 }
 
 void View::setCurrentThreadExpanded( bool expand )

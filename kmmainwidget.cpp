@@ -4371,8 +4371,8 @@ void KMMainWidget::updateMessageActions()
   actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
   slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
-  if (action( "edit_undo" ))
-    action( "edit_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
+  if (action( "kmail_undo" ))
+    action( "kmail_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
 
   if ( ( count == 1 ) && currentMessage )
   {
@@ -4400,7 +4400,6 @@ void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
   bool multiFolder = mMainFolderView->selectedFolders().count() > 1;
-  bool mailingList = mFolder && mFolder->isMailingListEnabled() && !multiFolder;
 
   mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
@@ -4703,8 +4702,8 @@ void KMMainWidget::removeDuplicates()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUpdateUndo()
 {
-  if ( actionCollection()->action( "edit_undo" ) ) {
-    actionCollection()->action( "edit_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
+  if ( actionCollection()->action( "kmail_undo" ) ) {
+    actionCollection()->action( "kmail_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
   }
 }
 

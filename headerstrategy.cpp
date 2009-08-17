@@ -254,8 +254,7 @@ namespace KMail {
     case Brief:  return brief();
     case Custom:  return custom();
     }
-    kFatal( 5006 ) <<"HeaderStrategy::create(): Unknown header strategy ( type =="
-		    << (int)type << ") requested!";
+    kFatal() << "Unknown header strategy ( type ==" << (int)type << ") requested!";
     return 0; // make compiler happy
   }
 

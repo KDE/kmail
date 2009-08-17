@@ -635,10 +635,11 @@ static Theme::Column * add_theme_simple_text_column( Theme * s, const QString &n
   return c;
 }
 
-static Theme::Column * add_theme_simple_icon_column( Theme * s, const QString &name, Theme::ContentItem::Type type, bool visibleByDefault, SortOrder::MessageSorting messageSorting )
+static Theme::Column * add_theme_simple_icon_column( Theme * s, const QString &name, const QString &pixmapName, Theme::ContentItem::Type type, bool visibleByDefault, SortOrder::MessageSorting messageSorting )
 {
   Theme::Column * c = new Theme::Column();
   c->setLabel( name );
+  c->setPixmapName( pixmapName );
   c->setVisibleByDefault( visibleByDefault );
   c->setMessageSorting( messageSorting );
 
@@ -711,16 +712,16 @@ void Manager::createDefaultThemes()
   add_theme_simple_text_column( s, i18nc( "Date of a message", "Date" ), Theme::ContentItem::Date, true, SortOrder::SortMessagesByDateTime, false, false );
   add_theme_simple_text_column( s, i18n( "Most Recent Date" ), Theme::ContentItem::MostRecentDate, false, SortOrder::SortMessagesByDateTimeOfMostRecent, false, true );
   add_theme_simple_text_column( s, i18nc( "Size of a message", "Size" ), Theme::ContentItem::Size, false, SortOrder::SortMessagesBySize, false, false );
-  add_theme_simple_icon_column( s, i18nc( "Attachement indication", "Attachment" ), Theme::ContentItem::AttachmentStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "New/Unread" ), Theme::ContentItem::ReadStateIcon, false, SortOrder::SortMessagesByNewUnreadStatus );
-  add_theme_simple_icon_column( s, i18n( "Replied" ), Theme::ContentItem::RepliedStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), Theme::ContentItem::ImportantStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Action Item" ), Theme::ContentItem::ActionItemStateIcon, false, SortOrder::SortMessagesByActionItemStatus );
-  add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), Theme::ContentItem::SpamHamStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Watched/Ignored" ), Theme::ContentItem::WatchedIgnoredStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Encryption" ), Theme::ContentItem::EncryptionStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Signature" ), Theme::ContentItem::SignatureStateIcon, false, SortOrder::NoMessageSorting );
-  add_theme_simple_icon_column( s, i18n( "Tag List" ), Theme::ContentItem::TagList, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18nc( "Attachement indication", "Attachment" ), "mail-attachment", Theme::ContentItem::AttachmentStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "New/Unread" ), "mail-unread-new", Theme::ContentItem::ReadStateIcon, false, SortOrder::SortMessagesByNewUnreadStatus );
+  add_theme_simple_icon_column( s, i18n( "Replied" ), "mail-replied", Theme::ContentItem::RepliedStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18nc( "Message importance indication", "Important" ), "emblem-important", Theme::ContentItem::ImportantStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Action Item" ), "mail-task", Theme::ContentItem::ActionItemStateIcon, false, SortOrder::SortMessagesByActionItemStatus );
+  add_theme_simple_icon_column( s, i18n( "Spam/Ham" ), "mail-mark-junk", Theme::ContentItem::SpamHamStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Watched/Ignored" ), "mail-thread-watch", Theme::ContentItem::WatchedIgnoredStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Encryption" ), "mail-encrypted-full", Theme::ContentItem::EncryptionStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Signature" ), "mail-signed-verified", Theme::ContentItem::SignatureStateIcon, false, SortOrder::NoMessageSorting );
+  add_theme_simple_icon_column( s, i18n( "Tag List" ), "feed-subscribe", Theme::ContentItem::TagList, false, SortOrder::NoMessageSorting );
 
   s->resetColumnState(); // so it's initially set from defaults
 

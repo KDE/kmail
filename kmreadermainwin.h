@@ -37,8 +37,16 @@ public:
 
   void setUseFixedFont( bool useFixedFont );
 
-  // take ownership of and show @param msg
-  void showMsg( const QString & encoding, KMMessage *msg );
+  /**
+   * take ownership of and show @param msg
+   *
+   * The last two paramters, serNumOfOriginalMessage and nodeIdOffset, are needed when @p msg
+   * is derived from another message, e.g. the user views an encapsulated message in this window.
+   * Then, the reader needs to know about that original message, so those to paramters are passed
+   * onto setOriginalMsg() of KMReaderWin.
+   */
+  void showMsg( const QString & encoding, KMMessage *msg,
+                unsigned long serNumOfOriginalMessage = 0, int nodeIdOffset = -1 );
 
 private slots:
   void slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint);
@@ -75,7 +83,7 @@ private:
   KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
-          *mViewSourceAction, *mCopyTextAction;
+          *mViewSourceAction;
   KActionMenu *mCopyActionMenu;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;

@@ -1003,11 +1003,11 @@ class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
   Q_OBJECT
   public:
     AttachmentModifyCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    AttachmentModifyCommand( int nodeId, KMMessage *msg, QWidget *parent );
     ~AttachmentModifyCommand();
 
   protected:
     void storeChangedMessage( KMMessage* msg );
-    DwBodyPart* findPart( KMMessage* msg, int index );
     virtual Result doAttachmentModify() = 0;
 
   protected:
@@ -1016,7 +1016,6 @@ class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
 
   private:
     Result execute();
-    DwBodyPart* findPartInternal( DwEntity* root, int index, int &accu );
 
   private slots:
     void messageStoreResult( KMFolderImap* folder, bool success );
@@ -1031,6 +1030,7 @@ class KMAIL_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
   Q_OBJECT
   public:
     KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    KMDeleteAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
     ~KMDeleteAttachmentCommand();
 
   protected:
@@ -1043,6 +1043,7 @@ class KMAIL_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
   Q_OBJECT
   public:
     KMEditAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    KMEditAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
     ~KMEditAttachmentCommand();
 
   protected:

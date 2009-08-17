@@ -29,6 +29,8 @@
 
 #include <libkdepim/messagestatus.h>
 
+#include <kmmsgbase.h>
+
 #include "messagelistview/core/model.h"
 
 // See the MessageListView::Item::insertChildItem() function below for an explaination of this macro.
@@ -731,7 +733,8 @@ class ItemSubjectComparator
 public:
   static inline bool firstGreaterOrEqual( Item * first, Item * second )
   {
-    int ret = first->subject().compare( second->subject(), Qt::CaseInsensitive );
+    int ret = KMMsgBase::stripOffPrefixes( first->subject() ).
+                compare( KMMsgBase::stripOffPrefixes( second->subject() ), Qt::CaseInsensitive );
     if ( ret < 0 )
       return false;
     // compare by date when subjects are equal

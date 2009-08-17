@@ -149,7 +149,18 @@ public:
 
   /** Set the message that shall be shown. If msg is 0, an empty page is
       displayed. */
-  virtual void setMsg(KMMessage* msg, bool force = false);
+  virtual void setMsg( KMMessage* msg, bool force = false );
+
+  /**
+   * This should be called when setting a message that was constructed from another message, which
+   * is the case when viewing encapsulated messages in the seperate reader window.
+   * We need to know the serial number of the original message, and at which part index the encapsulated
+   * message was at that original message, so that deleting and editing attachments can work on the
+   * original message.
+   *
+   * @see slotDeleteAttachment, slotEditAttachment, fillCommandInfo
+   */
+  void setOriginalMsg( unsigned long serNumOfOriginalMessage, int nodeIdOffset );
 
   /** Instead of settings a message to be shown sets a message part
       to be shown */
@@ -220,13 +231,17 @@ public:
   /** Enable the displaying of messages again after an URL was displayed */
   void enableMsgDisplay();
 
-  /** View message part of type message/RFC822 in extra viewer window. */
-  void atmViewMsg(KMMessagePart* msgPart);
+  /**
+   * View message part of type message/RFC822 in extra viewer window.
+   * @param msgPart the part to display
+   * @param nodeId the part index of the message part that is displayed
+   */
+  void atmViewMsg( KMMessagePart* msgPart, int nodeId );
 
   bool atBottom() const;
 
   bool isFixedFont() { return mUseFixedFont; }
-  void setUseFixedFont( bool useFixedFont ) { mUseFixedFont = useFixedFont; }
+  void setUseFixedFont( bool useFixedFont );
 
   /** Return the HtmlWriter connected to the KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
@@ -412,6 +427,15 @@ public slots:
   void slotLevelQuote( int l );
   void slotTouchMessage();
 
+  /**
+   * Find the node ID and the message of the attachment that should be edited or deleted.
+   * This is used when setOriginalMsg() was called before, in that case we want to operate
+   * on the original message instead of our copy.
+   *
+   * @see setOriginalMsg
+   */
+  void fillCommandInfo( partNode *node, KMMessage **msg, int *nodeId );
+
   void slotDeleteAttachment( partNode* node );
   void slotEditAttachment( partNode* node );
 
@@ -521,11 +545,19 @@ private:
 
   QString renderAttachments( partNode *node, const QColor &bgColor );
 
+  /// Scrolls to the given attachment and marks it with a yellow border
+  void scrollToAttachment( partNode *node );
+
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
   int mAtmCurrent;
   QString mAtmCurrentName;
   KMMessage *mMessage;
+
+  // See setOriginalMsg() for an explaination for those two.
+  unsigned long mSerNumOfOriginalMessage;
+  int mNodeIdOffset;
+
   // widgets:
   QSplitter * mSplitter;
   KHBox *mBox;

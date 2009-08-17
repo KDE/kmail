@@ -1139,8 +1139,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
         return 0;
       default:
       case 1:
-        kFatal(5006) <<"KMMessage::createMDN(): The \"ask\" mode should"
-                                                  << "never appear here!";
+        kFatal() << "The \"ask\" mode should never appear here!";
         break;
       case 2: // deny
         d = MDN::Denied;
@@ -2238,8 +2237,9 @@ QByteArray KMMessage::body() const
 {
   DwString body = mMsg->Body().AsString();
   QByteArray str = body.c_str();
-  kWarning( str.length() != static_cast<int>( body.length() ), 5006 )
-    << "KMMessage::body(): body is binary but used as text!";
+  if ( str.length() != static_cast<int>( body.length() ) ) {
+    kWarning() << "Body is binary but used as text!";
+  }
   return str;
 }
 
@@ -2290,8 +2290,6 @@ QByteArray KMMessage::bodyDecoded() const
   }
 
   QByteArray result = Util::ByteArray( dwstr );
-  //kWarning(qstrlen(result) != dwstr.size(), 5006)
-  //  << "KMMessage::bodyDecoded(): body is binary but used as text!";
   return result;
 }
 
@@ -2729,6 +2727,44 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
 void KMMessage::deleteBodyParts()
 {
   mMsg->Body().DeleteBodyParts();
+}
+
+//-----------------------------------------------------------------------------
+
+bool KMMessage::deleteBodyPart( int partIndex )
+{
+  KMMessagePart part;
+  DwBodyPart *dwpart = findPart( partIndex );
+  if ( !dwpart )
+    return false;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return false;
+
+  DwBody *parentNode = dynamic_cast<DwBody*>( dwpart->Parent() );
+  if ( !parentNode )
+    return false;
+  parentNode->RemoveBodyPart( dwpart );
+
+  // add dummy part to show that a attachment has been deleted
+  KMMessagePart dummyPart;
+  dummyPart.duplicate( part );
+  QString comment = i18n("This attachment has been deleted.");
+  if ( !part.fileName().isEmpty() )
+    comment = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+  dummyPart.setContentDescription( comment );
+  dummyPart.setBodyEncodedBinary( QByteArray() );
+  QByteArray cd = dummyPart.contentDisposition();
+  if ( cd.toLower().indexOf( "inline" ) == 0 ) {
+    cd.replace( 0, 10, "attachment" );
+    dummyPart.setContentDisposition( cd );
+  } else if ( cd.isEmpty() ) {
+    dummyPart.setContentDisposition( "attachment" );
+  }
+  DwBodyPart* newDwPart = createDWBodyPart( &dummyPart );
+  parentNode->AddBodyPart( newDwPart );
+  getTopLevelPart()->Assemble();
+  return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -3339,3 +3375,27 @@ void KMMessage::dump( DwEntity *entity, int level )
   }
 }
 #endif
+
+DwBodyPart* KMMessage::findPart( int index )
+{
+  int accu = 0;
+  return findPartInternal( getTopLevelPart(), index, accu );
+}
+
+DwBodyPart* KMMessage::findPartInternal(DwEntity * root, int index, int & accu)
+{
+  accu++;
+  if ( index < accu ) // should not happen
+    return 0;
+  DwBodyPart *current = dynamic_cast<DwBodyPart*>( root );
+  if ( index == accu )
+    return current;
+  DwBodyPart *rv = 0;
+  if ( root->Body().FirstBodyPart() )
+    rv = findPartInternal( root->Body().FirstBodyPart(), index, accu );
+  if ( !rv && current && current->Next() )
+    rv = findPartInternal( current->Next(), index, accu );
+  if ( !rv && root->Body().Message() )
+    rv = findPartInternal( root->Body().Message(), index, accu );
+  return rv;
+}

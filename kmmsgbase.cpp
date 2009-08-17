@@ -451,12 +451,13 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
   for (QStringList::Iterator it = encodingNames.begin();
     it != encodingNames.end(); ++it)
   {
-    QTextCodec *codec = KGlobal::charsets()->codecForName(*it);
+    bool ok;
+    QTextCodec *codec = KGlobal::charsets()->codecForName( *it, ok );
     kDebug() << "name" << *it << "codec" << codec << "name" << (codec ? codec->name() : "NULL");
-    QString mimeName = (codec) ? QString(codec->name()).toLower() : (*it);
-    if (!mimeNames.contains(mimeName) )
+    QString mimeName = codec ? QString( codec->name() ).toLower() : *it;
+    if ( ok && !mimeNames.contains( mimeName ) )
     {
-      encodings.append( KGlobal::charsets()->descriptionForEncoding(*it) );
+      encodings.append( KGlobal::charsets()->descriptionForEncoding( *it ) );
       mimeNames.insert( mimeName, true );
       kDebug() << "added" << mimeName;
     }
@@ -533,7 +534,9 @@ static const QByteArray especials = "()<>@,;:\"/[]?.= \033";
 QByteArray KMMsgBase::encodeRFC2047Quoted( const QByteArray & s, bool base64 ) {
   const char * codecName = base64 ? "b" : "q" ;
   const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
-  kFatal( !codec, 5006 ) <<"No \"" << codecName <<"\" found!?";
+  if ( !codec ) {
+    kFatal() << "No \"" << codecName <<"\" found!?";
+  }
   QByteArray in = QByteArray::fromRawData( s.data(), s.length() );
   const QByteArray result = codec->encode( in );
   in.clear();

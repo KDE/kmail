@@ -49,13 +49,15 @@ namespace Core
 //  0x1014  12.11.2008      Added runtime column data: width and column visibility
 //  0x1015  03.03.2009      Added icon size
 //  0x1016  08.03.2009      Added support for sorting by New/Unread status
+//  0x1017  16.08.2009      Added support for column icon
 //
-static const int gThemeCurrentVersion = 0x1016; // increase if you add new fields of change the meaning of some
+static const int gThemeCurrentVersion = 0x1017; // increase if you add new fields or change the meaning of some
 // you don't need to change the values below, but you might want to add new ones
 static const int gThemeMinimumSupportedVersion = 0x1013;
 static const int gThemeMinimumVersionWithColumnRuntimeData = 0x1014;
 static const int gThemeMinimumVersionWithIconSizeField = 0x1015;
 static const int gThemeMinimumVersionWithSortingByNewUnreadStatusAllowed = 0x1016;
+static const int gThemeMinimumVersionWithColumnIcon = 0x1017;
 
 // the default icon size
 static const int gThemeDefaultIconSize = 16;
@@ -416,6 +418,7 @@ Theme::Column::Column()
 Theme::Column::Column( const Column &src )
 {
   mLabel = src.mLabel;
+  mPixmapName = src.mPixmapName;
   mVisibleByDefault = src.mVisibleByDefault;
   mIsSenderOrReceiver = src.mIsSenderOrReceiver;
   mMessageSorting = src.mMessageSorting;
@@ -498,6 +501,7 @@ bool Theme::Column::containsTextItems() const
 void Theme::Column::save( QDataStream &stream ) const
 {
   stream << mLabel;
+  stream << mPixmapName;
   stream << mVisibleByDefault;
   stream << mIsSenderOrReceiver;
   stream << (int)mMessageSorting;
@@ -533,6 +537,10 @@ bool Theme::Column::load( QDataStream &stream, int themeVersion )
   removeAllMessageRows();
 
   stream >> mLabel;
+
+  if ( themeVersion >= gThemeMinimumVersionWithColumnIcon )
+    stream >> mPixmapName;
+
   stream >> mVisibleByDefault;
   stream >> mIsSenderOrReceiver;
 

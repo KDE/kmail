@@ -284,9 +284,6 @@ QByteArray KMMessagePart::bodyDecoded(void) const
 
   QByteArray result = bodyDecodedBinary();
 
-  //kWarning( qstrlen(result) != len, 5006 )
-  //  << "KMMessagePart::bodyDecoded(): body is binary but used as text!";
-
   result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
 
   return result;

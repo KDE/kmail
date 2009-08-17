@@ -466,6 +466,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
   : QWidget(aParent, aFlags ),
+    mSerNumOfOriginalMessage( 0 ),
+    mNodeIdOffset( -1 ),
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
@@ -757,6 +759,15 @@ void KMReaderWin::createActions()
   ac->addAction( "scroll_down_more", mScrollDownMoreAction );
   connect( mScrollDownMoreAction, SIGNAL( triggered( bool ) ),
            this, SLOT( slotScrollNext() ) );
+}
+
+void KMReaderWin::setUseFixedFont( bool useFixedFont )
+{
+  mUseFixedFont = useFixedFont;
+  if ( mToggleFixFontAction )
+  {
+    mToggleFixFontAction->setChecked( mUseFixedFont );
+  }
 }
 
 // little helper function
@@ -1250,7 +1261,14 @@ void KMReaderWin::readGlobalOverrideCodec()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
+void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nodeIdOffset )
+{
+  mSerNumOfOriginalMessage = serNumOfOriginalMessage;
+  mNodeIdOffset = nodeIdOffset;
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 {
   if ( aMsg ) {
     kDebug() << "(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
@@ -1748,10 +1766,12 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLevel)
 {
-  kFatal( !headerStyle(), 5006 )
-    << "trying to writeMsgHeader() without a header style set!";
-  kFatal( !headerStrategy(), 5006 )
-    << "trying to writeMsgHeader() without a header strategy set!";
+  if ( !headerStyle() ) {
+    kFatal() << "Trying to writeMsgHeader() without a header style set!";
+  }
+  if ( !headerStrategy() ) {
+    kFatal() << "trying to writeMsgHeader() without a header strategy set!";
+  }
   QString href;
   if (hasVCard)
     href = QString("file:") + KUrl::toPercentEncoding( mTempFiles.last() );
@@ -1998,7 +2018,9 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
 
-  kWarning( msg.isEmpty(), 5006 ) << "Unhandled URL hover!";
+  if ( msg.isEmpty() ) {
+    kWarning() << "Unhandled URL hover!";
+  }
   KPIM::BroadcastStatus::instance()->setTransientStatusMsg( msg );
 }
 
@@ -2173,8 +2195,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
     mimeData->setUrls( urls );
     QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
   } else if ( choice == KMHandleAttachmentCommand::ScrollTo ) {
-    // The anchors for this are created in ObjectTreeParser::parseObjectTree()
-    mViewer->gotoAnchor( QString::fromLatin1( "att%1" ).arg( node->nodeId() ) );
+    scrollToAttachment( node );
   }
   else {
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
@@ -2220,7 +2241,7 @@ void KMReaderWin::slotCopySelectedText()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
+void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
 {
   assert(aMsgPart!=0);
   KMMessage* msg = new KMMessage;
@@ -2232,7 +2253,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->setUID(message()->UID());
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
-  win->showMsg( overrideEncoding(), msg );
+  win->showMsg( overrideEncoding(), msg, message()->getMsgSerNum(), nodeId );
   win->show();
 }
 
@@ -2371,7 +2392,7 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
     if (pname.isEmpty()) pname="unnamed";
     // image Attachment is saved already
     if (kasciistricmp(msgPart.typeStr(), "message")==0) {
-      atmViewMsg(&msgPart);
+      atmViewMsg( &msgPart,id );
     } else if ((kasciistricmp(msgPart.typeStr(), "text")==0) &&
                ( (kasciistricmp(msgPart.subtypeStr(), "x-vcard")==0) ||
                  (kasciistricmp(msgPart.subtypeStr(), "directory")==0) )) {
@@ -2403,7 +2424,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   KMMessagePart& msgPart = node->msgPart();
   if (kasciistricmp(msgPart.typeStr(), "message")==0)
   {
-    atmViewMsg(&msgPart);
+    atmViewMsg( &msgPart, id );
     return;
   }
 
@@ -2760,6 +2781,30 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
   return false;
 }
 
+void KMReaderWin::fillCommandInfo( partNode *node, KMMessage **msg, int *nodeId )
+{
+  Q_ASSERT( msg && nodeId );
+
+  if ( mSerNumOfOriginalMessage != 0 ) {
+    KMFolder *folder = 0;
+    int index = -1;
+    KMMsgDict::instance()->getLocation( mSerNumOfOriginalMessage, &folder, &index );
+    if ( folder && index != -1 )
+      *msg = folder->getMsg( index );
+
+    if ( !( *msg ) ) {
+      kWarning() << "Unable to find the original message, aborting attachment deletion!";
+      return;
+    }
+
+    *nodeId = node->nodeId() + mNodeIdOffset;
+  }
+  else {
+    *nodeId = node->nodeId();
+    *msg = message();
+  }
+}
+
 void KMReaderWin::slotDeleteAttachment(partNode * node)
 {
   if ( KMessageBox::warningContinueCancel( this,
@@ -2769,8 +2814,20 @@ void KMReaderWin::slotDeleteAttachment(partNode * node)
      != KMessageBox::Continue ) {
     return;
   }
-  KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( node, message(), this );
-  command->start();
+
+  int nodeId = -1;
+  KMMessage *msg = 0;
+  fillCommandInfo( node, &msg, &nodeId );
+  if ( msg && nodeId != -1 ) {
+    KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( nodeId, msg, this );
+    command->start();
+  }
+
+  // If we are operating on a copy of parts of the message, make sure to update the copy as well.
+  if ( mSerNumOfOriginalMessage != 0 && message() ) {
+    message()->deleteBodyPart( node->nodeId() );
+    update( true );
+  }
 }
 
 void KMReaderWin::slotEditAttachment(partNode * node)
@@ -2782,8 +2839,16 @@ void KMReaderWin::slotEditAttachment(partNode * node)
         != KMessageBox::Continue ) {
     return;
   }
-  KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
-  command->start();
+
+  int nodeId = -1;
+  KMMessage *msg = 0;
+  fillCommandInfo( node, &msg, &nodeId );
+  if ( msg && nodeId != -1 ) {
+    KMEditAttachmentCommand* command = new KMEditAttachmentCommand( nodeId, msg, this );
+    command->start();
+  }
+
+  // FIXME: If we are operating on a copy of parts of the message, make sure to update the copy as well.
 }
 
 KMail::CSSHelper* KMReaderWin::cssHelper() const
@@ -2796,6 +2861,33 @@ bool KMReaderWin::decryptMessage() const
   if ( !GlobalSettings::self()->alwaysDecrypt() )
     return mDecrytMessageOverwrite;
   return true;
+}
+
+void KMReaderWin::scrollToAttachment( partNode *node )
+{
+  DOM::Document doc = mViewer->htmlDocument();
+
+  // The anchors for this are created in ObjectTreeParser::parseObjectTree()
+  mViewer->gotoAnchor( QString::fromLatin1( "att%1" ).arg( node->nodeId() ) );
+
+  // Remove any old color markings which might be there
+  const partNode *root = node->topLevelParent();
+  for ( int i = 0; i <= root->totalChildCount() + 1; i++ ) {
+    DOM::Element attachmentDiv = doc.getElementById( QString( "attachmentDiv%1" ).arg( i + 1 ) );
+    if ( !attachmentDiv.isNull() )
+      attachmentDiv.removeAttribute( "style" );
+  }
+
+  // Now, color the div of the attachment in yellow, so that the user sees what happened.
+  // We created a special marked div for this in writeAttachmentMarkHeader() in ObjectTreeParser,
+  // find and modify that now.
+  DOM::Element attachmentDiv = doc.getElementById( QString( "attachmentDiv%1" ).arg( node->nodeId() ) );
+  if ( attachmentDiv.isNull() ) {
+    kWarning() << "Could not find attachment div for attachment" << node->nodeId();
+    return;
+  }
+  attachmentDiv.setAttribute( "style", QString( "border:2px solid %1" )
+      .arg( cssHelper()->pgpWarnColor().name() ) );
 }
 
 void KMReaderWin::injectAttachments()
@@ -2866,12 +2958,12 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       QString align = "left";
       if ( headerStyle() == HeaderStyle::enterprise() )
         align = "right";
-      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+      if ( node->msgPart().typeStr().toLower() == "message" || node == mRootNode )
         html += QString::fromLatin1("<div style=\"background:%1; %2"
                 "vertical-align:middle; float:%3; %4\">").arg( bgColor.name() ).arg( margin )
                                                          .arg( align ).arg( visibility );
       html += subHtml;
-      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+      if ( node->msgPart().typeStr().toLower() == "message" || node == mRootNode )
         html += "</div>";
     }
   } else {
@@ -2882,17 +2974,22 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       label = node->msgPart().name().trimmed();
     if( label.isEmpty() )
       label = node->msgPart().fileName();
-    bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
-    if ( !typeBlacklisted && node->msgPart().typeStr() == "application" ) {
-      typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
-                     || node->msgPart().subtypeStr() == "pgp-signature"
-                     || node->msgPart().subtypeStr() == "pkcs7-mime"
-                     || node->msgPart().subtypeStr() == "pkcs7-signature"
-                     || node->msgPart().subtypeStr() == "x-pkcs7-signature"
-                     || ( node->msgPart().subtypeStr() == "octet-stream" &&
-                          node->msgPart().fileName() == "msg.asc" );
+    bool typeBlacklisted = node->msgPart().typeStr().toLower() == "multipart";
+    if ( !typeBlacklisted && node->msgPart().typeStr().toLower() == "application" ) {
+      typeBlacklisted = node->msgPart().subtypeStr().toLower() == "pgp-encrypted"
+                     || node->msgPart().subtypeStr().toLower() == "pgp-signature"
+                     || node->msgPart().subtypeStr().toLower() == "pkcs7-mime"
+                     || node->msgPart().subtypeStr().toLower() == "pkcs7-signature"
+                     || node->msgPart().subtypeStr().toLower() == "x-pkcs7-signature"
+                     || ( node->msgPart().subtypeStr().toLower() == "octet-stream" &&
+                          node->msgPart().fileName().toLower() == "msg.asc" );
     }
     typeBlacklisted = typeBlacklisted || node == mRootNode;
+    bool firstTextChildOfEncapsulatedMsg = node->msgPart().typeStr().toLower() == "text" &&
+                                           node->msgPart().subtypeStr().toLower() == "plain" &&
+                                           node->parentNode() &&
+                                           node->parentNode()->msgPart().typeStr().toLower() == "message";
+    typeBlacklisted = typeBlacklisted || firstTextChildOfEncapsulatedMsg;
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
       html += "<div style=\"float:left;\">";
       html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );

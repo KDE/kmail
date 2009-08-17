@@ -644,6 +644,7 @@ public:
 
   private:
     QString mLabel;                                   ///< The label visible in the column header
+    QString mPixmapName;                              ///< The icon's name visible in the column header if it was set
     bool mVisibleByDefault;                           ///< Is this column visible by default ?
     bool mIsSenderOrReceiver;                         ///< If this column displays the sender/receiver field then we will update its label on the fly
     SortOrder::MessageSorting mMessageSorting;        ///< The message sort order we switch to when clicking on this column
@@ -663,6 +664,18 @@ public:
      */
     void setLabel( const QString &label )
       { mLabel = label; };
+
+    /**
+     * Returns the icon's name (used in SmallIcon) set for this column
+     */
+    const QString & pixmapName() const
+      { return mPixmapName; }
+
+    /**
+     * Sets the icon's name (used in SmallIcon) for this column
+     */
+    void setPixmapName( const QString &pixmapName )
+      { mPixmapName = pixmapName; };
 
     /**
      * Returns true if this column is marked as "sender/receiver" and we should
