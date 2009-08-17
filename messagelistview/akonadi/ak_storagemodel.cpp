@@ -35,16 +35,20 @@
 #include "messagelistview/core/messageitem.h"
 
 #include <QtCore/QAbstractItemModel>
+#include <QtCore/QAtomicInt>
 #include <QtGui/QItemSelectionModel>
 
 using namespace Akonadi::MessageListView;
 using namespace KMail::MessageListView;
 
+static QAtomicInt _k_attributeInitialized;
 
 StorageModel::StorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent )
   : Core::StorageModel( parent ), mModel( 0 ), mSelectionModel( selectionModel )
 {
-  AttributeFactory::registerAttribute<MessageFolderAttribute>();
+  if ( _k_attributeInitialized.testAndSetAcquire( 0, 1 ) ) {
+    AttributeFactory::registerAttribute<MessageFolderAttribute>();
+  }
 
   SelectionProxyModel *childrenFilter = new SelectionProxyModel( mSelectionModel, this );
   childrenFilter->setSourceModel( model );
