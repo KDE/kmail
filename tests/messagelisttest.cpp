@@ -39,8 +39,7 @@
 #include <QtGui/QSplitter>
 #include <QtGui/QSortFilterProxyModel>
 
-#include "messagelistview/akonadi/ak_storagemodel.h"
-#include "messagelistview/akonadi/ak_widget.h"
+#include "messagelistview/akonadi/ak_pane.h"
 
 using namespace Akonadi;
 
@@ -55,10 +54,6 @@ MainWidget::MainWidget( QWidget *parent )
   EntityTreeView *collectionView = new EntityTreeView( 0, this );
   collectionView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   splitter->addWidget( collectionView );
-
-  MessageListView::Widget *messageView = new MessageListView::Widget( this );
-  splitter->addWidget( messageView );
-
 
   Session *session = new Session( "AkonadiConsole Browser Widget", this );
 
@@ -87,8 +82,8 @@ MainWidget::MainWidget( QWidget *parent )
   collectionView->setModel( sortModel );
 
 
-  MessageListView::StorageModel *messageModel = new MessageListView::StorageModel( entityModel, collectionView->selectionModel(), this );
-  messageView->setStorageModel( messageModel );
+  MessageListView::Pane *messagePane = new MessageListView::Pane( entityModel, collectionView->selectionModel(), this );
+  splitter->addWidget( messagePane );
 }
 
 int main( int argc, char **argv )
