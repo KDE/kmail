@@ -100,7 +100,6 @@ using MailTransport::TransportManagementWidget;
 #include <kurlrequester.h>
 #include <kseparator.h>
 #include <kiconloader.h>
-#include <kstandarddirs.h>
 #include <kwindowsystem.h>
 #include <kconfig.h>
 #include <kcmultidialog.h>
