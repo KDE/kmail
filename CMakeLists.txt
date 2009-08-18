@@ -32,7 +32,6 @@ qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
-          ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
   COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
@@ -274,7 +273,6 @@ qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
-  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
   ${CMAKE_SOURCE_DIR}/korganizer/org.kde.Korganizer.Calendar.xml
 )
 
@@ -465,6 +463,5 @@ install(TARGETS
 install(FILES
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
-  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
   DESTINATION ${KDE4_DBUS_INTERFACES_DIR}
 )

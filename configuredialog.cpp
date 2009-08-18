@@ -61,11 +61,11 @@ using KMail::ImapAccountBase;
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
-#include "messagelistview/core/manager.h"
-#include "messagelistview/core/aggregation.h"
-#include "messagelistview/core/theme.h"
-#include "messagelistview/core/configureaggregationsdialog.h"
-#include "messagelistview/core/configurethemesdialog.h"
+#include "messagelist/core/manager.h"
+#include "messagelist/core/aggregation.h"
+#include "messagelist/core/theme.h"
+#include "messagelist/core/configureaggregationsdialog.h"
+#include "messagelist/core/configurethemesdialog.h"
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
