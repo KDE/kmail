@@ -336,7 +336,8 @@ namespace KMail {
     // always show images in multipart/related when showing in html, not with an additional icon
     if ( result.isImage() &&
          node->parentNode() && node->parentNode()->subType() == DwMime::kSubtypeRelated &&
-         mReader->htmlMail() ) {
+         mReader->htmlMail() &&
+         !showOnlyOneMimePart() ) {
       QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
       QString href = "file:" + KUrl::toPercentEncoding( fileName );
       htmlWriter()->embedPart( node->msgPart().contentId(), href);
@@ -349,12 +350,7 @@ namespace KMail {
       return;
 
     bool asIcon = true;
-    if ( showOnlyOneMimePart() )
-      // ### (mmutz) this is wrong! If I click on an image part, I
-      // want the equivalent of "view...", except for the extra
-      // window!
-      asIcon = !node->hasContentDispositionInline();
-    else if ( !result.neverDisplayInline() )
+    if ( !result.neverDisplayInline() )
       if ( const AttachmentStrategy * as = attachmentStrategy() )
         asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
 
