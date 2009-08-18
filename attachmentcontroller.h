@@ -67,6 +67,7 @@ class AttachmentController : public QObject
     void attachmentProperties( KPIM::AttachmentPart::Ptr part );
     void showAddAttachmentDialog();
     void addAttachment( const KUrl &url );
+    void addAttachments( const KUrl::List &urls );
     void showAttachPublicKeyDialog();
     void attachMyPublicKey();
 

@@ -61,6 +61,8 @@ AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
   setRootIsDecorated( false );
   setUniformRowHeights( true );
   setSelectionMode( QAbstractItemView::ExtendedSelection );
+  setDragDropMode( QAbstractItemView::DragDrop );
+  setDropIndicatorShown( false );
   setSortingEnabled( true );
 }
 
@@ -95,6 +97,16 @@ void AttachmentView::keyPressEvent( QKeyEvent *event )
   }
 }
 
+void AttachmentView::dragEnterEvent( QDragEnterEvent *event )
+{
+  if( event->source() == this ) {
+    // Ignore drags from ourselves.
+    event->ignore();
+  } else {
+    QTreeView::dragEnterEvent( event );
+  }
+}
+
 void AttachmentView::setEncryptEnabled( bool enabled )
 {
   setColumnHidden( AttachmentModel::EncryptColumn, !enabled );
@@ -108,6 +120,29 @@ void AttachmentView::setSignEnabled( bool enabled )
 void AttachmentView::hideIfEmpty()
 {
   setVisible( d->model->rowCount() > 0 );
+}
+
+void AttachmentView::startDrag( Qt::DropActions supportedActions )
+{
+  Q_UNUSED( supportedActions );
+
+  Q_ASSERT( dynamic_cast<QSortFilterProxyModel*>( model() ) );
+  QSortFilterProxyModel *sortModel = static_cast<QSortFilterProxyModel*>( model() );
+  QModelIndexList selection = selectionModel()->selectedRows();
+  if( selection.isEmpty() ) {
+    return;
+  }
+
+  QModelIndexList sourceSelection;
+  foreach( const QModelIndex &index, selection ) {
+    const QModelIndex sourceIndex = sortModel->mapToSource( index );
+    sourceSelection.append( sourceIndex );
+  }
+
+  QMimeData *mimeData = d->model->mimeData( sourceSelection );
+  QDrag *drag = new QDrag( this );
+  drag->setMimeData( mimeData );
+  drag->exec( Qt::CopyAction );
 }
 
 #include "attachmentview.moc"

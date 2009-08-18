@@ -21,15 +21,22 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <QMimeData>
+#include <QUrl>
+
 #include <KDebug>
 #include <KGlobal>
 #include <KLocale>
+#include <KTempDir>
 
 #include <kmime/kmime_util.h>
 
-using KPIM::AttachmentPart;
+#include <KPIMUtils/KFileIO>
+
+#include <libkdepim/maillistdrag.h>
 
 using namespace KMail;
+using namespace KPIM;
 
 static Qt::CheckState boolToCheckState( bool checked ) // local
 {
@@ -53,6 +60,7 @@ class KMail::AttachmentModel::Private
     bool signEnabled;
     bool encryptSelected;
     bool signSelected;
+    QList<KTempDir*> tempDirs;
 };
 
 AttachmentModel::Private::Private( AttachmentModel *qq )
@@ -67,6 +75,8 @@ AttachmentModel::Private::Private( AttachmentModel *qq )
 
 AttachmentModel::Private::~Private()
 {
+  // There should be an automatic way to manage the lifetime of these...
+  qDeleteAll( tempDirs );
 }
 
 
@@ -80,6 +90,113 @@ AttachmentModel::AttachmentModel( QObject *parent )
 AttachmentModel::~AttachmentModel()
 {
   delete d;
+}
+
+bool AttachmentModel::dropMimeData( const QMimeData *data, Qt::DropAction action,
+                                    int row, int column, const QModelIndex &parent )
+{
+  Q_UNUSED( row );
+  Q_UNUSED( column );
+  Q_UNUSED( parent );
+
+  kDebug() << "data has formats" << data->formats() << "urls" << data->urls() << "action" << action;
+
+  if( action == Qt::IgnoreAction ) {
+    return true;
+  //} else if( action != Qt::CopyAction ) {
+  //  return false;
+  }
+
+  if( KPIM::MailList::canDecode( data ) ) {
+    // The dropped data is a list of messages.
+    kDebug() << "Port me to Akonadi..."; // TODO
+#if 0
+    // Decode the list of serial numbers stored as the drag data
+    QByteArray serNums = KPIM::MailList::serialsFromMimeData( md );
+    QBuffer serNumBuffer( &serNums );
+    serNumBuffer.open( QIODevice::ReadOnly );
+    QDataStream serNumStream( &serNumBuffer );
+    quint32 serNum;
+    KMFolder *folder = 0;
+    int idx;
+    QList<KMMsgBase*> messageList;
+    while( !serNumStream.atEnd() ) {
+      KMMsgBase *msgBase = 0;
+      serNumStream >> serNum;
+      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
+      if( folder )
+        msgBase = folder->getMsgBase( idx );
+      if( msgBase )
+        messageList.append( msgBase );
+    }
+    serNumBuffer.close();
+    uint identity = folder ? folder->identity() : 0;
+    KMCommand *command = new KMForwardAttachedCommand( mComposer, messageList,
+                                                       identity, mComposer );
+    command->start();
+#endif
+    return true;
+  } else {
+    // The dropped data is a list of URLs.
+    KUrl::List urls = KUrl::List::fromMimeData( data );
+    if( !urls.isEmpty() ) {
+      emit attachUrlsRequested( urls );
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+QMimeData *AttachmentModel::mimeData( const QModelIndexList &indexes ) const
+{
+  kDebug();
+  QList<QUrl> urls;
+  foreach( const QModelIndex &index, indexes ) {
+    if( index.column() != 0 ) {
+      // Avoid processing the same attachment more than once, since the entire
+      // row is selected.
+      kWarning() << "Duplicate rows passed to mimeData().";
+      continue;
+    }
+
+    const AttachmentPart::Ptr part = attachment( index );
+    QString attachmentName = part->fileName();
+    if( attachmentName.isEmpty() ) {
+      attachmentName = part->name();
+    }
+    if( attachmentName.isEmpty() ) {
+      attachmentName = i18n( "unnamed attachment" );
+    }
+
+    KTempDir *tempDir = new KTempDir; // Will remove the directory on destruction.
+    d->tempDirs.append( tempDir );
+    const QString fileName = tempDir->name() + attachmentName;
+    KPIMUtils::kByteArrayToFile( part->data(),
+                                 fileName,
+                                 false, false, false );
+    QUrl url;
+    url.setScheme( "file" );
+    url.setPath( fileName );
+    kDebug() << url;
+    urls.append( url );
+  }
+
+  QMimeData *mimeData = new QMimeData;
+  mimeData->setUrls( urls );
+  return mimeData;
+}
+
+QStringList AttachmentModel::mimeTypes() const
+{
+  QStringList types;
+  types << QString::fromLatin1( "text/uri-list" );
+  return types;
+}
+
+Qt::DropActions AttachmentModel::supportedDropActions() const
+{
+  return Qt::CopyAction | Qt::MoveAction;
 }
 
 bool AttachmentModel::isModified() const
@@ -271,29 +388,31 @@ bool AttachmentModel::removeAttachment( AttachmentPart::Ptr part )
   return removeAttachment( index( idx, 0 ) );
 }
 
-AttachmentPart::Ptr AttachmentModel::attachment( const QModelIndex &index )
+AttachmentPart::Ptr AttachmentModel::attachment( const QModelIndex &index ) const
 {
   Q_ASSERT( index.isValid() );
   return d->parts[ index.row() ];
 }
 
-AttachmentPart::List AttachmentModel::attachments()
+AttachmentPart::List AttachmentModel::attachments() const
 {
   return d->parts;
 }
 
 Qt::ItemFlags AttachmentModel::flags( const QModelIndex &index ) const
 {
+  Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+
   if( !index.isValid() ) {
-    return Qt::ItemIsEnabled;
+    return Qt::ItemIsDropEnabled | defaultFlags;
   }
 
   if( index.column() == CompressColumn ||
       index.column() == EncryptColumn ||
       index.column() == SignColumn ) {
-    return QAbstractItemModel::flags( index ) | Qt::ItemIsUserCheckable;
+    return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | Qt::ItemIsUserCheckable | defaultFlags;
   } else {
-    return QAbstractItemModel::flags( index );
+    return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
   }
 }
 

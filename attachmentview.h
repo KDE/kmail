@@ -45,12 +45,18 @@ class AttachmentView : public QTreeView
     virtual void contextMenuEvent( QContextMenuEvent *event );
     /* reimpl */
     virtual void keyPressEvent( QKeyEvent *event );
+    /** reimpl to avoid drags from ourselves */
+    virtual void dragEnterEvent( QDragEnterEvent *event );
 
   public slots:
     /// model sets these
     void setEncryptEnabled( bool enabled );
     void setSignEnabled( bool enabled );
     void hideIfEmpty();
+
+  protected:
+    /** reimpl to avoid default drag cursor */
+    virtual void startDrag( Qt::DropActions supportedActions );
 
   signals:
     void contextMenuRequested();

@@ -356,6 +356,7 @@ AttachmentController::AttachmentController( AttachmentModel *model, AttachmentVi
       this, SLOT(selectionChanged()) );
 
   d->model = model;
+  connect( model, SIGNAL(attachUrlsRequested(KUrl::List)), this, SLOT(addAttachments(KUrl::List)) );
   connect( model, SIGNAL(attachmentRemoved(KPIM::AttachmentPart::Ptr)),
       this, SLOT(attachmentRemoved(KPIM::AttachmentPart::Ptr)) );
   connect( model, SIGNAL(attachmentCompressRequested(KPIM::AttachmentPart::Ptr,bool)),
@@ -642,6 +643,13 @@ void AttachmentController::addAttachment( const KUrl &url )
   }
   connect( ajob, SIGNAL(result(KJob*)), this, SLOT(loadJobResult(KJob*)) );
   ajob->start();
+}
+
+void AttachmentController::addAttachments( const KUrl::List &urls )
+{
+  foreach( const KUrl &url, urls ) {
+    addAttachment( url );
+  }
 }
 
 void AttachmentController::showAttachPublicKeyDialog()

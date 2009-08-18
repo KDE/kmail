@@ -3915,37 +3915,6 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
   resetter.disable();
 }
 
-#if 0
-void KMComposeWin::slotAttachmentDragStarted()
-{
-  kDebug();
-  QList<QUrl> urls;
-  foreach ( KMAtmListViewItem *const item, mAtmItemList ) {
-    if ( item->isSelected() ) {
-      KMMessagePart *msgPart = item->attachment();
-      KTempDir *tempDir = new KTempDir(); // will remove the directory on destruction
-      mTempDirs.append( tempDir );
-      const QString fileName = tempDir->name() + '/' + msgPart->name();
-      KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(),
-                                   fileName,
-                                   false, false, false );
-      QUrl url;
-      url.setScheme( "file" );
-      url.setPath( fileName );
-      urls.append( url );
-    }
-  }
-  if ( urls.isEmpty() )
-    return;
-
-  QDrag *drag = new QDrag( mAtmListView );
-  QMimeData *mimeData = new QMimeData();
-  mimeData->setUrls( urls );
-  drag->setMimeData( mimeData );
-  drag->exec( Qt::CopyAction );
-}
-#endif
-
 void KMComposeWin::recipientEditorSizeHintChanged()
 {
   QTimer::singleShot( 1, this, SLOT(setMaximumHeaderSize()) );

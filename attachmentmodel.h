@@ -22,6 +22,8 @@
 
 #include <QtCore/QAbstractItemModel>
 
+#include <KDE/KUrl>
+
 #include <libkdepim/attachmentpart.h>
 
 namespace KMail {
@@ -56,6 +58,12 @@ class AttachmentModel : public QAbstractItemModel
     AttachmentModel( QObject *parent );
     ~AttachmentModel();
 
+    virtual bool dropMimeData( const QMimeData *data, Qt::DropAction action,
+                               int row, int column, const QModelIndex &parent );
+    virtual QMimeData *mimeData( const QModelIndexList &indexes ) const;
+    virtual QStringList mimeTypes() const;
+    virtual Qt::DropActions supportedDropActions() const;
+
     /// for the save/discard warning
     bool isModified() const;
     void setModified( bool modified );
@@ -79,8 +87,8 @@ class AttachmentModel : public QAbstractItemModel
     bool replaceAttachment( KPIM::AttachmentPart::Ptr oldPart, KPIM::AttachmentPart::Ptr newPart );
     bool removeAttachment( const QModelIndex &index );
     bool removeAttachment( KPIM::AttachmentPart::Ptr part );
-    KPIM::AttachmentPart::Ptr attachment( const QModelIndex &index );
-    KPIM::AttachmentPart::List attachments();
+    KPIM::AttachmentPart::Ptr attachment( const QModelIndex &index ) const;
+    KPIM::AttachmentPart::List attachments() const;
 
     Qt::ItemFlags flags( const QModelIndex &index ) const;
     QVariant headerData( int section, Qt::Orientation orientation,
@@ -94,6 +102,7 @@ class AttachmentModel : public QAbstractItemModel
   signals:
     void encryptEnabled( bool enabled );
     void signEnabled( bool enabled );
+    void attachUrlsRequested( const KUrl::List &urls );
     void attachmentRemoved( KPIM::AttachmentPart::Ptr part );
     void attachmentCompressRequested( KPIM::AttachmentPart::Ptr part, bool compress );
 
