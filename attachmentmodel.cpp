@@ -156,11 +156,11 @@ QMimeData *AttachmentModel::mimeData( const QModelIndexList &indexes ) const
     if( index.column() != 0 ) {
       // Avoid processing the same attachment more than once, since the entire
       // row is selected.
-      kWarning() << "Duplicate rows passed to mimeData().";
+      kWarning() << "column != 0. Possibly duplicate rows passed to mimeData().";
       continue;
     }
 
-    const AttachmentPart::Ptr part = attachment( index );
+    const AttachmentPart::Ptr part = d->parts[ index.row() ];
     QString attachmentName = part->fileName();
     if( attachmentName.isEmpty() ) {
       attachmentName = part->name();
@@ -291,6 +291,13 @@ QVariant AttachmentModel::data( const QModelIndex &index, int role ) const
       default:
         return QVariant();
     }
+  } else if( role == AttachmentPartRole ) {
+    if( index.column() == 0 ) {
+      return QVariant::fromValue( part );
+    } else {
+      kWarning() << "AttachmentPartRole and column != 0.";
+      return QVariant();
+    }
   } else {
     return QVariant();
   }
@@ -368,30 +375,19 @@ bool AttachmentModel::replaceAttachment( AttachmentPart::Ptr oldPart, Attachment
   return true;
 }
 
-bool AttachmentModel::removeAttachment( const QModelIndex &index )
-{
-  if( !index.isValid() ) {
-    kWarning() << "Invalid index.";
-    return false;
-  }
-
-  beginRemoveRows( QModelIndex(), index.row(), index.row() );
-  AttachmentPart::Ptr part = d->parts.takeAt( index.row() );
-  emit attachmentRemoved( part );
-  endRemoveRows();
-  return true;
-}
-
 bool AttachmentModel::removeAttachment( AttachmentPart::Ptr part )
 {
   int idx = d->parts.indexOf( part );
-  return removeAttachment( index( idx, 0 ) );
-}
+  if( idx < 0 ) {
+    kWarning() << "Attachment not found.";
+    return false;
+  }
 
-AttachmentPart::Ptr AttachmentModel::attachment( const QModelIndex &index ) const
-{
-  Q_ASSERT( index.isValid() );
-  return d->parts[ index.row() ];
+  beginRemoveRows( QModelIndex(), idx, idx );
+  d->parts.removeAt( idx );
+  endRemoveRows();
+  emit attachmentRemoved( part );
+  return true;
 }
 
 AttachmentPart::List AttachmentModel::attachments() const

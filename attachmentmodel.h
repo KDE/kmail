@@ -43,8 +43,11 @@ class AttachmentModel : public QAbstractItemModel
   Q_OBJECT
 
   public:
-    enum Column
-    {
+    enum {
+      AttachmentPartRole = Qt::UserRole
+    };
+
+    enum Column {
       NameColumn,
       SizeColumn,
       EncodingColumn,
@@ -79,25 +82,23 @@ class AttachmentModel : public QAbstractItemModel
     /// sets for all
     void setSignSelected( bool selected );
 
-    QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-    bool setData( const QModelIndex &index, const QVariant &value, int role = Qt::EditRole );
+    virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
+    virtual bool setData( const QModelIndex &index, const QVariant &value, int role = Qt::EditRole );
 
     bool addAttachment( KPIM::AttachmentPart::Ptr part );
     bool updateAttachment( KPIM::AttachmentPart::Ptr part );
     bool replaceAttachment( KPIM::AttachmentPart::Ptr oldPart, KPIM::AttachmentPart::Ptr newPart );
-    bool removeAttachment( const QModelIndex &index );
     bool removeAttachment( KPIM::AttachmentPart::Ptr part );
-    KPIM::AttachmentPart::Ptr attachment( const QModelIndex &index ) const;
     KPIM::AttachmentPart::List attachments() const;
 
-    Qt::ItemFlags flags( const QModelIndex &index ) const;
-    QVariant headerData( int section, Qt::Orientation orientation,
-                         int role = Qt::DisplayRole ) const;
-    QModelIndex index( int row, int column,
-                       const QModelIndex &parent = QModelIndex() ) const;
-    QModelIndex parent( const QModelIndex &index ) const;
-    int rowCount( const QModelIndex &parent = QModelIndex() ) const;
-    int columnCount( const QModelIndex &parent = QModelIndex() ) const;
+    virtual Qt::ItemFlags flags( const QModelIndex &index ) const;
+    virtual QVariant headerData( int section, Qt::Orientation orientation,
+                                 int role = Qt::DisplayRole ) const;
+    virtual QModelIndex index( int row, int column,
+                               const QModelIndex &parent = QModelIndex() ) const;
+    virtual QModelIndex parent( const QModelIndex &index ) const;
+    virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
+    virtual int columnCount( const QModelIndex &parent = QModelIndex() ) const;
 
   signals:
     void encryptEnabled( bool enabled );

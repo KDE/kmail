@@ -51,13 +51,13 @@ AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
   d->model = model;
   connect( model, SIGNAL(encryptEnabled(bool)), this, SLOT(setEncryptEnabled(bool)) );
   connect( model, SIGNAL(signEnabled(bool)), this, SLOT(setSignEnabled(bool)) );
-  connect( model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
-  connect( model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
 
   QSortFilterProxyModel *sortModel = new QSortFilterProxyModel( this );
   sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
   sortModel->setSourceModel( model );
   setModel( sortModel );
+  connect( sortModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
+  connect( sortModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
 
   setRootIsDecorated( false );
   setUniformRowHeights( true );
@@ -89,8 +89,10 @@ void AttachmentView::keyPressEvent( QKeyEvent *event )
     // Indexes are based on row numbers, and row numbers change when items are deleted.
     // Therefore, first we need to make a list of AttachmentParts to delete.
     AttachmentPart::List toRemove;
-    foreach( const QModelIndex &index, selectedSourceRows() ) {
-      toRemove.append( d->model->attachment( index ) );
+    foreach( const QModelIndex &index, selectionModel()->selectedRows() ) {
+      AttachmentPart::Ptr part = model()->data(
+          index, AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+      toRemove.append( part );
     }
     foreach( const AttachmentPart::Ptr &part, toRemove ) {
       d->model->removeAttachment( part );
@@ -108,20 +110,6 @@ void AttachmentView::dragEnterEvent( QDragEnterEvent *event )
   }
 }
 
-QModelIndexList AttachmentView::selectedSourceRows() const
-{
-  Q_ASSERT( dynamic_cast<QSortFilterProxyModel*>( model() ) );
-  QSortFilterProxyModel *sortModel = static_cast<QSortFilterProxyModel*>( model() );
-  QModelIndexList selection = selectionModel()->selectedRows();
-
-  QModelIndexList sourceSelection;
-  foreach( const QModelIndex &index, selection ) {
-    const QModelIndex sourceIndex = sortModel->mapToSource( index );
-    sourceSelection.append( sourceIndex );
-  }
-  return sourceSelection;
-}
-
 void AttachmentView::setEncryptEnabled( bool enabled )
 {
   setColumnHidden( AttachmentModel::EncryptColumn, !enabled );
@@ -134,16 +122,16 @@ void AttachmentView::setSignEnabled( bool enabled )
 
 void AttachmentView::hideIfEmpty()
 {
-  setVisible( d->model->rowCount() > 0 );
+  setVisible( model()->rowCount() > 0 );
 }
 
 void AttachmentView::startDrag( Qt::DropActions supportedActions )
 {
   Q_UNUSED( supportedActions );
 
-  QModelIndexList selection = selectedSourceRows();
+  const QModelIndexList selection = selectionModel()->selectedRows();
   if( !selection.isEmpty() ) {
-    QMimeData *mimeData = d->model->mimeData( selection );
+    QMimeData *mimeData = model()->mimeData( selection );
     QDrag *drag = new QDrag( this );
     drag->setMimeData( mimeData );
     drag->exec( Qt::CopyAction );

@@ -154,10 +154,12 @@ void AttachmentController::Private::identityChanged()
 
 void AttachmentController::Private::selectionChanged()
 {
-  QModelIndexList selectedRows = view->selectedSourceRows();
+  const QModelIndexList selectedRows = view->selectionModel()->selectedRows();
   selectedParts.clear();
   foreach( const QModelIndex &index, selectedRows ) {
-    selectedParts.append( model->attachment( index ) );
+    AttachmentPart::Ptr part = view->model()->data(
+        index, AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+    selectedParts.append( part );
   }
   const int selectedCount = selectedParts.count();
 

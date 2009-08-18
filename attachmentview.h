@@ -48,8 +48,6 @@ class AttachmentView : public QTreeView
     /** reimpl to avoid drags from ourselves */
     virtual void dragEnterEvent( QDragEnterEvent *event );
 
-    QModelIndexList selectedSourceRows() const;
-
   public slots:
     /// model sets these
     void setEncryptEnabled( bool enabled );
