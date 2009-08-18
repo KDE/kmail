@@ -23,12 +23,21 @@
 #define MESSAGELISTTEST_H
 
 #include <QtGui/QWidget>
+#include "messagelistview/akonadi/ak_pane.h"
+
+class KMReaderWin;
 
 class MainWidget : public QWidget
 {
     Q_OBJECT
   public:
     MainWidget( QWidget *parent=0 );
+
+  public slots:
+    void onMessageSelected( MessagePtr message );
+
+  private:
+    KMReaderWin *m_reader;
 };
 
 #endif

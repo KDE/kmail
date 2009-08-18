@@ -72,7 +72,7 @@ include_directories(
 )
 kde4_add_executable(messagelisttest TEST ${messagelisttest_SRCS})
 
-target_link_libraries(messagelisttest ${KDE4_KDEUI_LIBS} ${KDE4_AKONADI_LIBS} kmailprivate kdepim akonadi_next)
+target_link_libraries(messagelisttest ${KDE4_KDEUI_LIBS} ${KDE4_AKONADI_LIBS} kmailprivate kdepim akonadi_next mailreader)
 
 
 ###### TODO port storagelayer tests to QTestLib
