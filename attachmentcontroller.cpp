@@ -225,7 +225,7 @@ void AttachmentController::Private::loadJobResult( KJob *job )
   Q_ASSERT( dynamic_cast<AttachmentFromUrlJob*>( job ) );
   AttachmentFromUrlJob *ajob = static_cast<AttachmentFromUrlJob*>( job );
   AttachmentPart::Ptr part = ajob->attachmentPart();
-  addAttachmentPart( part );
+  q->addAttachment( part );
 }
 
 void AttachmentController::Private::openSelectedAttachments()
@@ -324,19 +324,7 @@ void AttachmentController::Private::attachPublicKeyJobResult( KJob *job )
   Q_ASSERT( dynamic_cast<AttachmentFromPublicKeyJob*>( job ) );
   AttachmentFromPublicKeyJob *ajob = static_cast<AttachmentFromPublicKeyJob*>( job );
   AttachmentPart::Ptr part = ajob->attachmentPart();
-  addAttachmentPart( part );
-}
-
-void AttachmentController::Private::addAttachmentPart( AttachmentPart::Ptr part )
-{
-  part->setEncrypted( model->isEncryptSelected() );
-  part->setSigned( model->isSignSelected() );
-  model->addAttachment( part );
-
-  // TODO I can't find this setting in the config dialog. Has it been removed?
-  if( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
-    q->attachmentProperties( part );
-  }
+  q->addAttachment( part );
 }
 
 
@@ -649,6 +637,18 @@ void AttachmentController::showAddAttachmentDialog()
     }
   }
   delete dialog;
+}
+
+void AttachmentController::addAttachment( AttachmentPart::Ptr part )
+{
+  part->setEncrypted( d->model->isEncryptSelected() );
+  part->setSigned( d->model->isSignSelected() );
+  d->model->addAttachment( part );
+
+  // TODO I can't find this setting in the config dialog. Has it been removed?
+  if( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
+    attachmentProperties( part );
+  }
 }
 
 void AttachmentController::addAttachment( const KUrl &url )

@@ -36,7 +36,7 @@
 #include <messagecomposer/textpart.h>
 
 // LIBKDEPIM includes
-//#include <libkdepim/attachmentpart.h>
+#include <libkdepim/attachmentpart.h>
 #include <libkdepim/kaddrbookexternal.h>
 #include <libkdepim/recentaddresses.h>
 
@@ -2489,37 +2489,29 @@ QString KMComposeWin::smartQuote( const QString & msg )
 
 void KMComposeWin::slotPasteAsAttachment()
 {
-  // If the clipboard contains a list of URL, attach each file.
-  if ( KUrl::List::canDecode( QApplication::clipboard()->mimeData() ) )
-  {
-    QStringList data = QApplication::clipboard()->text().split('\n', QString::SkipEmptyParts);
-    for ( QStringList::Iterator it=data.begin(); it!=data.end(); ++it )
-    {
-      mAttachmentController->addAttachment( *it );
-    }
-    return;
-  }
-
-  kDebug() << "port me..."; // nicify the above too
-#if 0
   const QMimeData *mimeData = QApplication::clipboard()->mimeData();
-  if ( mimeData->hasText() ) {
-    bool ok;
-    QString attName = KInputDialog::getText( i18n( "Insert clipboard text as attachment" ),
-                                             i18n("Name of the attachment:"),
-                                             QString(), &ok, this );
-    if ( !ok ) {
-      return;
-    }
 
-    KMMessagePart *msgPart = new KMMessagePart;
-    msgPart->setName( attName );
-    QList<int> dummy;
-    msgPart->setBodyAndGuessCte( QByteArray( QApplication::clipboard()->text().toLatin1() ),
-                                 dummy, kmkernel->msgSender()->sendQuotedPrintable());
-    addAttach( msgPart );
+  if( mimeData->hasUrls() ) {
+    // If the clipboard contains a list of URL, attach each file.
+    const KUrl::List urls = KUrl::List::fromMimeData( mimeData );
+    foreach( const KUrl &url, urls ) {
+      mAttachmentController->addAttachment( url );
+    }
+  } else if( mimeData->hasText() ) {
+    bool ok;
+    const QString attName = KInputDialog::getText(
+        i18n( "Insert clipboard text as attachment" ),
+        i18n( "Name of the attachment:" ),
+        QString(), &ok, this );
+    if( ok ) {
+      AttachmentPart::Ptr part = AttachmentPart::Ptr( new AttachmentPart );
+      part->setName( attName );
+      part->setFileName( attName );
+      part->setMimeType( "text/plain" );
+      part->setData( QApplication::clipboard()->text().toLatin1() );
+      mAttachmentController->addAttachment( part );
+    }
   }
-#endif
 }
 
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
