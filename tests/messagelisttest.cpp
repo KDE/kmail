@@ -40,7 +40,7 @@
 #include <QtGui/QSortFilterProxyModel>
 
 #include <libmailreader/kmreaderwin.h>
-#include "messagelistview/akonadi/ak_pane.h"
+#include <messagelist/pane.h>
 
 using namespace Akonadi;
 
