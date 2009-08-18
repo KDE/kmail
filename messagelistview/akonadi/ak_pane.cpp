@@ -201,7 +201,18 @@ void Pane::createNewTab()
   w->setStorageModel( m );
 
   mWidgetSelectionHash[w] = s;
+
+  connect( w, SIGNAL(messageSelected(MessagePtr)),
+           this, SIGNAL(messageSelected(MessagePtr)) );
+  connect( w, SIGNAL(messageActivated(MessagePtr)),
+           this, SIGNAL(messageActivated(MessagePtr)) );
+  connect( w, SIGNAL(selectionChanged()),
+           this, SIGNAL(selectionChanged()) );
+  connect( w, SIGNAL(messageStatusChangeRequest(MessagePtr, KPIM::MessageStatus, KPIM::MessageStatus)),
+           this, SIGNAL(messageStatusChangeRequest(MessagePtr, KPIM::MessageStatus, KPIM::MessageStatus)) );
+
   updateTabControls();
+  setCurrentWidget( w );
 }
 
 QItemSelection Pane::mapSelectionToSource( const QItemSelection &selection ) const
