@@ -1534,6 +1534,30 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
   }
 }
 
+// Checks if the mail is a HTML mail.
+// The catch here is that encapsulated messages can also have a HTML part, so we make
+// sure that only messages where the first HTML part is in the same multipart/alternative container
+// as the frist plain text part are counted as HTML mail
+static bool isHTMLMail( partNode *root )
+{
+  if ( !root )
+    return false;
+
+  partNode *firstTextPart = root->findType( DwMime::kTypeText, DwMime::kSubtypePlain );
+  partNode *firstHtmlPart = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml );
+  if ( !firstTextPart || !firstHtmlPart )
+    return false;
+
+  partNode *parent = firstTextPart->parentNode();
+  if ( !parent || parent != firstHtmlPart->parentNode() )
+    return false;
+
+  if ( parent->type() != DwMime::kTypeMultipart || parent->subType() != DwMime::kSubtypeAlternative )
+    return false;
+
+  return true;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
@@ -1697,15 +1721,17 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   mEditor->setText( otp.textualContent() );
   mCharset = otp.textualContentCharset();
 
-  if ( partNode * n = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml ) ) {
-    if ( partNode * p = n->parentNode() ) {
+  if ( isHTMLMail( root ) ) {
+    partNode *htmlNode = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml );
+    Q_ASSERT( htmlNode );
+    if ( partNode * p = htmlNode->parentNode() ) {
       if ( p->hasType( DwMime::kTypeMultipart ) &&
            p->hasSubType( DwMime::kSubtypeAlternative ) ) {
         enableHtml();
 
         // get cte decoded body part
-        mCharset = n->msgPart().charset();
-        QByteArray bodyDecoded = n->msgPart().bodyDecoded();
+        mCharset = htmlNode->msgPart().charset();
+        QByteArray bodyDecoded = htmlNode->msgPart().bodyDecoded();
 
         // respect html part charset
         const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
@@ -1716,9 +1742,9 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
         }
       }
     }
-  }
 
-  collectImages( root ); // when using html, check for embedded images
+    collectImages( root ); // when using html, check for embedded images
+  }
 
   if ( mCharset.isEmpty() ) {
     mCharset = mMsg->charset();

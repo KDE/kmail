@@ -358,7 +358,6 @@ void KMMessage::removePrivateHeaderFields() {
   removeHeaderField("X-KMail-Redirect-From");
   removeHeaderField("X-KMail-Link-Message");
   removeHeaderField("X-KMail-Link-Type");
-  removeHeaderField( "X-KMail-Markup" );
   removeHeaderField( "X-KMail-QuotePrefix" );
 }
 
