@@ -1887,31 +1887,10 @@ void KMComposeWin::collectImages( partNode *root )
       partNode *node = n->nextSibling();
       while ( node ) {
         if ( node->hasType( DwMime::kTypeImage ) ) {
-          kDebug() << "found image in multipart/related : " << node->msgPart().name();
+          kDebug() << "Found image in multipart/related :" << node->msgPart().name();
           QImage img;
           img.loadFromData( KMime::Codec::codecForName( "base64" )->decode( node->msgPart().body() )); // create image from the base64 encoded one
-          QTextBlock currentBlock = mEditor->document()->begin();
-          QTextBlock::iterator it;
-          while ( currentBlock.isValid() ) {
-            for (it = currentBlock.begin(); !(it.atEnd()); ++it) {
-              QTextFragment fragment = it.fragment();
-              if ( fragment.isValid() ) {
-                QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
-                if ( imageFormat.isValid() &&
-                     imageFormat.name() == "cid:" + node->msgPart().contentId() ) {
-                  kDebug() << "newImageFormat.Name="<< imageFormat.name();
-                  int pos = fragment.position();
-                  QTextCursor cursor( mEditor->document() );
-                  cursor.setPosition( pos );
-                  cursor.setPosition( pos + 1, QTextCursor::KeepAnchor );
-                  cursor.removeSelectedText();
-                  mEditor->document()->addResource( QTextDocument::ImageResource, QUrl( node->msgPart().name() ), QVariant( img ) );
-                  cursor.insertImage( node->msgPart().name() );
-                }
-              }
-            }
-            currentBlock = currentBlock.next();
-          }
+          mEditor->loadImage( img, "cid:" + node->msgPart().contentId(), node->msgPart().name() );
         }
         node = node->nextSibling();
       }

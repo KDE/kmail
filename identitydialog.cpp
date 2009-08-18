@@ -71,6 +71,7 @@ using MailTransport::TransportManager;
 #include <kcombobox.h>
 #include <ktabwidget.h>
 #include <sonnet/dictionarycombobox.h>
+#include <KStandardDirs>
 
 // Qt headers:
 #include <QLabel>
@@ -451,7 +452,8 @@ namespace KMail {
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( tabWidget );
+    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator(
+        KPIMIdentities::SignatureConfigurator::EnableHtmlImages, tabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
@@ -695,6 +697,8 @@ namespace KMail {
     mWidget->loadFromIdentity( identity );
 
     // "Signature" tab:
+    QString dir = QString( "emailidentities/%1/" ).arg( QString::number( ident.uoid() ) );
+    mSignatureConfigurator->setImageLocation( KStandardDirs::locateLocal( "data", dir ) );
     mSignatureConfigurator->setSignature( ident.signature() );
     mXFaceConfigurator->setXFace( ident.xface() );
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );

@@ -216,7 +216,7 @@ QList< QPair< QString, int > > Aggregation::enumerateGroupingOptions()
   ret.append( QPair< QString, int >( i18n( "By Smart Date Ranges (of Thread Leaders)" ), GroupByDateRange ) );
   ret.append( QPair< QString, int >( i18n( "By Smart Sender/Receiver" ), GroupBySenderOrReceiver ) );
   ret.append( QPair< QString, int >( i18n( "By Sender" ), GroupBySender ) );
-  ret.append( QPair< QString, int >( i18n( "By Receiver" ), GroupBySender ) );
+  ret.append( QPair< QString, int >( i18n( "By Receiver" ), GroupByReceiver ) );
   return ret;
 }
 

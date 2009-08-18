@@ -114,7 +114,7 @@ ImapAccountBase::ImapAccountBase( AccountManager *parent, const QString &name, u
 ImapAccountBase::~ImapAccountBase()
 {
   qDeleteAll (mBodyPartList );
-  if ( !mSlave ) {
+  if ( mSlave ) {
     kWarning() << "Slave should have been destroyed by subclass!";
   }
 }
