@@ -31,7 +31,7 @@
 
 #include <kmime/kmime_util.h>
 
-#include <KPIMUtils/KFileIO>
+#include <kpimutils/kfileio.h>
 
 #include <libkdepim/maillistdrag.h>
 
