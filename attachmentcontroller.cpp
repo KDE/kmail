@@ -354,6 +354,8 @@ AttachmentController::AttachmentController( AttachmentModel *model, AttachmentVi
   connect( view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()) );
   connect( view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
       this, SLOT(selectionChanged()) );
+  connect( view, SIGNAL(doubleClicked(QModelIndex)),
+      this, SLOT(editSelectedAttachment()) );
 
   d->model = model;
   connect( model, SIGNAL(attachUrlsRequested(KUrl::List)), this, SLOT(addAttachments(KUrl::List)) );

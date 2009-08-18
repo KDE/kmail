@@ -26,6 +26,7 @@
 #include "attachmentmodel.h"
 
 #include <QContextMenuEvent>
+#include <QHeaderView>
 #include <QKeyEvent>
 #include <QSortFilterProxyModel>
 
@@ -64,6 +65,11 @@ AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
   setDragDropMode( QAbstractItemView::DragDrop );
   setDropIndicatorShown( false );
   setSortingEnabled( true );
+
+  header()->setResizeMode( QHeaderView::Interactive );
+  header()->setResizeMode( AttachmentModel::MimeTypeColumn, QHeaderView::Stretch );
+  header()->setStretchLastSection( false );
+  setColumnWidth( 0, 200 );
 }
 
 AttachmentView::~AttachmentView()

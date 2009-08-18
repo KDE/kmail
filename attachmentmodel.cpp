@@ -424,19 +424,19 @@ QVariant AttachmentModel::headerData( int section, Qt::Orientation orientation, 
 
   switch( section ) {
     case NameColumn:
-      return i18nc( "Name column", "Name" );
+      return i18nc( "@title column attachment name.", "Name" );
     case SizeColumn:
-      return i18nc( "Size column", "Size" );
+      return i18nc( "@title column attachment size.", "Size" );
     case EncodingColumn:
-      return i18nc( "Encoding column", "Encoding" );
+      return i18nc( "@title column attachment encoding.", "Encoding" );
     case MimeTypeColumn:
-      return i18nc( "Type column", "Type" );
+      return i18nc( "@title column attachment type.", "Type" );
     case CompressColumn:
-      return i18nc( "Whether to compress column", "Compress" );
+      return i18nc( "@title column attachment compression checkbox.", "Compress" );
     case EncryptColumn:
-      return i18nc( "Whether to encrypt column", "Encrypt" );
+      return i18nc( "@title column attachment encryption checkbox.", "Encrypt" );
     case SignColumn:
-      return i18nc( "Whether to sign column", "Sign" );
+      return i18nc( "@title column attachment signed checkbox.", "Sign" );
     default:
       kWarning() << "Bad column" << section;
       return QVariant();
