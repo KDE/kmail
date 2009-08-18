@@ -80,16 +80,11 @@ void AttachmentView::contextMenuEvent( QContextMenuEvent *event )
 void AttachmentView::keyPressEvent( QKeyEvent *event )
 {
   if( event->key() == Qt::Key_Delete ) {
-    Q_ASSERT( dynamic_cast<QSortFilterProxyModel*>( model() ) );
-    QSortFilterProxyModel *sortModel = static_cast<QSortFilterProxyModel*>( model() );
-
     // Indexes are based on row numbers, and row numbers change when items are deleted.
     // Therefore, first we need to make a list of AttachmentParts to delete.
     AttachmentPart::List toRemove;
-    QModelIndexList selection = selectionModel()->selectedRows();
-    foreach( const QModelIndex &index, selection ) {
-      const QModelIndex sourceIndex = sortModel->mapToSource( index );
-      toRemove.append( d->model->attachment( sourceIndex ) );
+    foreach( const QModelIndex &index, selectedSourceRows() ) {
+      toRemove.append( d->model->attachment( index ) );
     }
     foreach( const AttachmentPart::Ptr &part, toRemove ) {
       d->model->removeAttachment( part );
@@ -105,6 +100,20 @@ void AttachmentView::dragEnterEvent( QDragEnterEvent *event )
   } else {
     QTreeView::dragEnterEvent( event );
   }
+}
+
+QModelIndexList AttachmentView::selectedSourceRows() const
+{
+  Q_ASSERT( dynamic_cast<QSortFilterProxyModel*>( model() ) );
+  QSortFilterProxyModel *sortModel = static_cast<QSortFilterProxyModel*>( model() );
+  QModelIndexList selection = selectionModel()->selectedRows();
+
+  QModelIndexList sourceSelection;
+  foreach( const QModelIndex &index, selection ) {
+    const QModelIndex sourceIndex = sortModel->mapToSource( index );
+    sourceSelection.append( sourceIndex );
+  }
+  return sourceSelection;
 }
 
 void AttachmentView::setEncryptEnabled( bool enabled )
@@ -126,23 +135,13 @@ void AttachmentView::startDrag( Qt::DropActions supportedActions )
 {
   Q_UNUSED( supportedActions );
 
-  Q_ASSERT( dynamic_cast<QSortFilterProxyModel*>( model() ) );
-  QSortFilterProxyModel *sortModel = static_cast<QSortFilterProxyModel*>( model() );
-  QModelIndexList selection = selectionModel()->selectedRows();
-  if( selection.isEmpty() ) {
-    return;
+  QModelIndexList selection = selectedSourceRows();
+  if( !selection.isEmpty() ) {
+    QMimeData *mimeData = d->model->mimeData( selection );
+    QDrag *drag = new QDrag( this );
+    drag->setMimeData( mimeData );
+    drag->exec( Qt::CopyAction );
   }
-
-  QModelIndexList sourceSelection;
-  foreach( const QModelIndex &index, selection ) {
-    const QModelIndex sourceIndex = sortModel->mapToSource( index );
-    sourceSelection.append( sourceIndex );
-  }
-
-  QMimeData *mimeData = d->model->mimeData( sourceSelection );
-  QDrag *drag = new QDrag( this );
-  drag->setMimeData( mimeData );
-  drag->exec( Qt::CopyAction );
 }
 
 #include "attachmentview.moc"
