@@ -1701,20 +1701,18 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     if ( partNode * p = n->parentNode() ) {
       if ( p->hasType( DwMime::kTypeMultipart ) &&
            p->hasSubType( DwMime::kSubtypeAlternative ) ) {
-        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" ) {
-          enableHtml();
+        enableHtml();
 
-          // get cte decoded body part
-          mCharset = n->msgPart().charset();
-          QByteArray bodyDecoded = n->msgPart().bodyDecoded();
+        // get cte decoded body part
+        mCharset = n->msgPart().charset();
+        QByteArray bodyDecoded = n->msgPart().bodyDecoded();
 
-          // respect html part charset
-          const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
-          if ( codec ) {
-            mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
-          } else {
-            mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
-          }
+        // respect html part charset
+        const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+        if ( codec ) {
+          mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
+        } else {
+          mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
         }
       }
     }
