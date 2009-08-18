@@ -123,7 +123,7 @@ void Widget::viewMessageSelected( KMail::MessageListView::Core::MessageItem *msg
 
   if ( !msg || !msg->isValid() || !storageModel() ) {
     mLastSelectedMessage = -1;
-    emit messageSelected( MessagePtr() );
+    emit messageSelected( Item() );
     return;
   }
 
@@ -131,8 +131,7 @@ void Widget::viewMessageSelected( KMail::MessageListView::Core::MessageItem *msg
 
   mLastSelectedMessage = row;
 
-  MessagePtr message = messageForRow( row );
-  emit messageSelected( message ); // this MAY be null
+  emit messageSelected( itemForRow( row ) ); // this MAY be null
 }
 
 void Widget::viewMessageActivated( KMail::MessageListView::Core::MessageItem *msg )
@@ -161,15 +160,14 @@ void Widget::viewMessageActivated( KMail::MessageListView::Core::MessageItem *ms
     return;
   }
 
-  MessagePtr message = messageForRow( row );
-  emit messageActivated( message ); // this MAY be null
+  emit messageActivated( itemForRow( row ) ); // this MAY be null
 }
 
 void Widget::viewSelectionChanged()
 {
   emit selectionChanged();
   if ( !currentMessageItem() ) {
-    emit messageSelected( MessagePtr() );
+    emit messageSelected( Item() );
   }
 }
 
@@ -191,10 +189,10 @@ void Widget::viewMessageStatusChangeRequest( KMail::MessageListView::Core::Messa
   int row = msg->currentModelIndexRow();
   Q_ASSERT( row >= 0 );
 
-  MessagePtr message = messageForRow( row );
-  Q_ASSERT( message );
+  Item item = itemForRow( row );
+  Q_ASSERT( item.isValid() );
 
-  emit messageStatusChangeRequest( message, set, clear );
+  emit messageStatusChangeRequest( item, set, clear );
 }
 
 void Widget::viewGroupHeaderContextPopupRequest( KMail::MessageListView::Core::GroupHeaderItem *ghi, const QPoint &globalPos )

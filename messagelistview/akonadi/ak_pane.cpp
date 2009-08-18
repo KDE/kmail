@@ -202,14 +202,14 @@ void Pane::createNewTab()
 
   mWidgetSelectionHash[w] = s;
 
-  connect( w, SIGNAL(messageSelected(MessagePtr)),
-           this, SIGNAL(messageSelected(MessagePtr)) );
-  connect( w, SIGNAL(messageActivated(MessagePtr)),
-           this, SIGNAL(messageActivated(MessagePtr)) );
+  connect( w, SIGNAL(messageSelected(Akonadi::Item)),
+           this, SIGNAL(messageSelected(Akonadi::Item)) );
+  connect( w, SIGNAL(messageActivated(Akonadi::Item)),
+           this, SIGNAL(messageActivated(Akonadi::Item)) );
   connect( w, SIGNAL(selectionChanged()),
            this, SIGNAL(selectionChanged()) );
-  connect( w, SIGNAL(messageStatusChangeRequest(MessagePtr, KPIM::MessageStatus, KPIM::MessageStatus)),
-           this, SIGNAL(messageStatusChangeRequest(MessagePtr, KPIM::MessageStatus, KPIM::MessageStatus)) );
+  connect( w, SIGNAL(messageStatusChangeRequest(Akonadi::Item, KPIM::MessageStatus, KPIM::MessageStatus)),
+           this, SIGNAL(messageStatusChangeRequest(Akonadi::Item, KPIM::MessageStatus, KPIM::MessageStatus)) );
 
   updateTabControls();
   setCurrentWidget( w );

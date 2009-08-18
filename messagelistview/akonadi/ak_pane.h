@@ -22,9 +22,6 @@
 #include <QtCore/QHash>
 #include <QtGui/QTabWidget>
 
-#include <boost/shared_ptr.hpp>
-#include <kmime/kmime_message.h>
-
 class QAbstractItemModel;
 class QAbstractProxyModel;
 class QItemSelectionModel;
@@ -33,8 +30,6 @@ class QToolButton;
 
 #include "kmail_export.h"
 
-typedef boost::shared_ptr<KMime::Message> MessagePtr;
-
 namespace KPIM
 {
   class MessageStatus;
@@ -42,6 +37,8 @@ namespace KPIM
 
 namespace Akonadi
 {
+
+class Item;
 
 namespace MessageListView
 {
@@ -75,12 +72,12 @@ signals:
    * this signal only for the last clicked message (or at all, if the last shift+clicked
    * thing is a group header...). You should handle selection changed in this case.
    */
-  void messageSelected( MessagePtr msg );
+  void messageSelected( const Akonadi::Item &item );
 
   /**
    * Emitted when a message is doubleclicked or activated by other input means
    */
-  void messageActivated( MessagePtr msg );
+  void messageActivated( const Akonadi::Item &item );
 
   /**
    * Emitted when the selection in the view changes.
@@ -90,7 +87,7 @@ signals:
   /**
    * Emitted when a message wants its status to be changed
    */
-  void messageStatusChangeRequest( MessagePtr msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus &clear );
+  void messageStatusChangeRequest( const Akonadi::Item &item, const KPIM::MessageStatus &set, const KPIM::MessageStatus &clear );
 
 private slots:
   void onSelectionChanged( const QItemSelection &selected, const QItemSelection &deselected );
