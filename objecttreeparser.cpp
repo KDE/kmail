@@ -187,7 +187,7 @@ namespace KMail {
   void ObjectTreeParser::insertAndParseNewChildNode( partNode& startNode,
                                                      const char* content,
                                                      const char* cntDesc,
-                                                     bool append )
+                                                     bool append, bool addToTextualContent )
   {
     DwBodyPart* myBody = new DwBodyPart( DwString( content ), 0 );
     myBody->Parse();
@@ -230,10 +230,12 @@ namespace KMail {
     }
     ObjectTreeParser otp( mReader, cryptoProtocol() );
     otp.parseObjectTree( newNode );
-    mRawReplyString += otp.rawReplyString();
-    mTextualContent += otp.textualContent();
-    if ( !otp.textualContentCharset().isEmpty() )
-      mTextualContentCharset = otp.textualContentCharset();
+    if ( addToTextualContent ) {
+      mRawReplyString += otp.rawReplyString();
+      mTextualContent += otp.textualContent();
+      if ( !otp.textualContentCharset().isEmpty() )
+        mTextualContentCharset = otp.textualContentCharset();
+    }
   }
 
 
@@ -1542,7 +1544,8 @@ namespace KMail {
     // display the body of the encapsulated message
     insertAndParseNewChildNode( *node,
                                 rfc822messageStr.constData(),
-                                "encapsulated message" );
+                                "encapsulated message", false /*append*/,
+                                false /*add to textual content*/ );
     if ( mReader )
       htmlWriter()->queue( writeSigstatFooter( messagePart ) );
     return true;

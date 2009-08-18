@@ -169,16 +169,24 @@ namespace KMail {
 
     void defaultHandling( partNode * node, ProcessResult & result );
 
-    /** 1. Create a new partNode using 'content' data and Content-Description
-            found in 'cntDesc'.
-        2. Make this node the child of 'node'.
-        3. Insert the respective entries in the Mime Tree Viewer.
-        3. Parse the 'node' to display the content. */
+    /**
+     *  1. Create a new partNode using 'content' data and Content-Description
+     *      found in 'cntDesc'.
+     *  2. Make this node the child of 'node'.
+     *  3. Insert the respective entries in the Mime Tree Viewer.
+     *  3. Parse the 'node' to display the content.
+     *
+     * @param addToTextualContent If true, this will add the textual content of the parsed node
+     *                            to the textual content of the current object tree parser.
+     *                            Setting this to false is useful for encapsulated messages, as we
+     *                            do not want the text in those to appear in the editor
+     */
     //  Function will be replaced once KMime is alive.
     void insertAndParseNewChildNode( partNode & node,
                                      const char * content,
                                      const char * cntDesc,
-                                     bool append=false );
+                                     bool append=false,
+                                     bool addToTextualContent = true );
     /** if data is 0:
         Feeds the HTML widget with the contents of the opaque signed
             data found in partNode 'sign'.
