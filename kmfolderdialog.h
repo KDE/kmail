@@ -55,6 +55,12 @@ class KPushButton;
 namespace KMail {
 
 class MainFolderView;
+namespace MessageListView {
+  namespace Core {
+    class AggregationComboBox;
+    class ThemeComboBox;
+  }
+}
 
 /**
  * This is the base class for tabs in the folder dialog.
@@ -164,6 +170,37 @@ private:
 
   bool mIsLocalSystemFolder;
   bool mIsResourceFolder;
+};
+
+
+/**
+ * "View" tab in the folder dialog
+ * Internal class, only used by KMFolderDialog
+ */
+class FolderDialogViewTab : public FolderDialogTab
+{
+  Q_OBJECT
+
+public:
+  FolderDialogViewTab( KMFolderDialog * dlg, QWidget * parent );
+
+  virtual void load();
+  virtual bool save();
+
+public slots:
+  void slotAggregationCheckboxChanged();
+  void slotThemeCheckboxChanged();
+  void slotSelectFolderAggregation();
+  void slotSelectFolderTheme();
+
+private:
+  void initializeWithValuesFromFolder( KMFolder * folder );
+
+private:
+  QCheckBox *mUseDefaultAggregationCheckBox;
+  MessageListView::Core::AggregationComboBox *mAggregationComboBox;
+  QCheckBox *mUseDefaultThemeCheckBox;
+  MessageListView::Core::ThemeComboBox *mThemeComboBox;
 };
 
 

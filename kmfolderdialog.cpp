@@ -45,6 +45,14 @@
 #include "globalsettings.h"
 #include "folderrequester.h"
 #include "mainfolderview.h"
+#include "messagelistview/storagemodel.h"
+#include "messagelistview/core/aggregation.h"
+#include "messagelistview/core/aggregationcombobox.h"
+#include "messagelistview/core/aggregationconfigbutton.h"
+#include "messagelistview/core/manager.h"
+#include "messagelistview/core/theme.h"
+#include "messagelistview/core/themecombobox.h"
+#include "messagelistview/core/themeconfigbutton.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -129,6 +137,11 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
   box = new KVBox;
   addPage( box, i18nc("@title:tab General settings for a folder.", "General") );
   tab = new FolderDialogGeneralTab( this, aName, box );
+  addTab( tab );
+
+  box = new KVBox;
+  addPage( box, i18nc( "@title:tab View settings for a folder.", "View" ) );
+  tab = new FolderDialogViewTab( this, box );
   addTab( tab );
 
   // Don't add template tab for special folders
@@ -855,6 +868,153 @@ bool FolderDialogGeneralTab::save()
 void FolderDialogGeneralTab::slotChangeIcon( const QString &icon )
 {
     mUnreadIconButton->setIcon( icon );
+}
+
+//----------------------------------------------------------------------------
+FolderDialogViewTab::FolderDialogViewTab( KMFolderDialog * dlg, QWidget * parent )
+: FolderDialogTab( dlg, parent, 0 )
+{
+  QVBoxLayout * topLayout = new QVBoxLayout( this );
+  topLayout->setSpacing( KDialog::spacingHint() );
+  topLayout->setMargin( 0 );
+
+  // message list
+  QGroupBox * messageListGroup = new QGroupBox( i18n( "Message List" ), this );
+  QVBoxLayout * messageListGroupLayout = new QVBoxLayout( messageListGroup );
+  messageListGroupLayout->setSpacing( KDialog::spacingHint() );
+  topLayout->addWidget( messageListGroup );
+
+  // message list aggregation
+  mUseDefaultAggregationCheckBox = new QCheckBox( i18n( "Use default aggregation" ), messageListGroup );
+  messageListGroupLayout->addWidget( mUseDefaultAggregationCheckBox );
+  connect( mUseDefaultAggregationCheckBox, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotAggregationCheckboxChanged() ) );
+
+  mAggregationComboBox = new MessageListView::Core::AggregationComboBox( messageListGroup );
+
+  QLabel * aggregationLabel = new QLabel( i18n( "Aggregation" ), messageListGroup );
+  aggregationLabel->setBuddy( mAggregationComboBox );
+
+  using MessageListView::Core::AggregationConfigButton;
+  AggregationConfigButton * aggregationConfigButton = new AggregationConfigButton( messageListGroup, mAggregationComboBox );
+  // Make sure any changes made in the aggregations configure dialog are reflected in the combo.
+  connect( aggregationConfigButton, SIGNAL( configureDialogCompleted() ),
+           this, SLOT( slotSelectFolderAggregation() ) );
+
+  QHBoxLayout * aggregationLayout = new QHBoxLayout();
+  aggregationLayout->addWidget( aggregationLabel, 1 );
+  aggregationLayout->addWidget( mAggregationComboBox, 1 );
+  aggregationLayout->addWidget( aggregationConfigButton, 0 );
+  messageListGroupLayout->addLayout( aggregationLayout );
+
+  // message list theme
+  mUseDefaultThemeCheckBox = new QCheckBox( i18n( "Use default theme" ), messageListGroup );
+  messageListGroupLayout->addWidget( mUseDefaultThemeCheckBox );
+  connect( mUseDefaultThemeCheckBox, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotThemeCheckboxChanged() ) );
+
+  mThemeComboBox = new MessageListView::Core::ThemeComboBox( messageListGroup );
+
+  QLabel * themeLabel = new QLabel( i18n( "Theme" ), messageListGroup );
+  themeLabel->setBuddy( mThemeComboBox );
+
+  using MessageListView::Core::ThemeConfigButton;
+  ThemeConfigButton * themeConfigButton = new ThemeConfigButton( messageListGroup, mThemeComboBox );
+  // Make sure any changes made in the themes configure dialog are reflected in the combo.
+  connect( themeConfigButton, SIGNAL( configureDialogCompleted() ),
+           this, SLOT( slotSelectFolderTheme() ) );
+
+  QHBoxLayout * themeLayout = new QHBoxLayout();
+  themeLayout->addWidget( themeLabel, 1 );
+  themeLayout->addWidget( mThemeComboBox, 1 );
+  themeLayout->addWidget( themeConfigButton, 0 );
+  messageListGroupLayout->addLayout( themeLayout );
+
+  topLayout->addStretch( 100 );
+
+  initializeWithValuesFromFolder( mDlg->folder() );
+}
+
+void FolderDialogViewTab::load()
+{
+  // All loading is done in the constructor.
+}
+
+bool FolderDialogViewTab::save()
+{
+  // message list aggregation
+  MessageListView::Core::Manager* messageListManager = MessageListView::Core::Manager::instance();
+  MessageListView::StorageModel messageListStorageModel( mDlg->folder() );
+  QString aggregationID;
+  const bool usePrivateAggregation = !mUseDefaultAggregationCheckBox->isChecked();
+  if ( usePrivateAggregation )
+    aggregationID = mAggregationComboBox->currentAggregation()->id();
+  // explicitly use default aggregation id when using default aggregation.
+  else
+    aggregationID = messageListManager->defaultAggregation()->id();
+  messageListManager->saveAggregationForStorageModel( &messageListStorageModel, aggregationID, usePrivateAggregation );
+  messageListManager->aggregationsConfigurationCompleted();
+
+  // message list theme
+  QString themeID;
+  const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
+  if ( usePrivateTheme )
+    themeID = mThemeComboBox->currentTheme()->id();
+  // explicitly use default theme id when using default theme.
+  else
+    themeID = messageListManager->defaultTheme()->id();
+  messageListManager->saveThemeForStorageModel( &messageListStorageModel, themeID, usePrivateTheme );
+  messageListManager->themesConfigurationCompleted();
+
+  return true;
+}
+
+void FolderDialogViewTab::slotAggregationCheckboxChanged()
+{
+  mAggregationComboBox->setEnabled( !mUseDefaultAggregationCheckBox->isChecked() );
+}
+
+void FolderDialogViewTab::slotThemeCheckboxChanged()
+{
+  mThemeComboBox->setEnabled( !mUseDefaultThemeCheckBox->isChecked() );
+}
+
+void FolderDialogViewTab::slotSelectFolderAggregation()
+{
+  using namespace KMail::MessageListView::Core;
+
+  MessageListView::StorageModel messageListStorageModel( mDlg->folder() );
+  bool usesPrivateAggregation = false;
+  const Aggregation * aggregation = Manager::instance()->aggregationForStorageModel( &messageListStorageModel, &usesPrivateAggregation );
+
+  mUseDefaultAggregationCheckBox->setChecked( !usesPrivateAggregation );
+
+  mAggregationComboBox->setCurrentAggregation( aggregation );
+}
+
+void FolderDialogViewTab::slotSelectFolderTheme()
+{
+  using namespace KMail::MessageListView::Core;
+
+  MessageListView::StorageModel messageListStorageModel( mDlg->folder() );
+  bool usesPrivateTheme = false;
+  const Theme * theme = Manager::instance()->themeForStorageModel( &messageListStorageModel, &usesPrivateTheme );
+
+  mUseDefaultThemeCheckBox->setChecked( !usesPrivateTheme );
+
+  mThemeComboBox->setCurrentTheme( theme );
+}
+
+void FolderDialogViewTab::initializeWithValuesFromFolder( KMFolder * folder )
+{
+  if ( !folder )
+    return;
+
+  // message list aggregation
+  slotSelectFolderAggregation();
+
+  // message list theme
+  slotSelectFolderTheme();
 }
 
 //----------------------------------------------------------------------------

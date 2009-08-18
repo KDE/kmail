@@ -71,6 +71,12 @@ namespace KMail {
   class IdentityDialog;
   class IdentityListView;
   class IdentityListViewItem;
+  namespace MessageListView {
+    namespace Core {
+      class AggregationComboBox;
+      class ThemeComboBox;
+    }
+  }
 }
 namespace Kleo {
   class BackendConfigWidget;
@@ -420,18 +426,16 @@ private: // methods
 private: // data
   QCheckBox    *mDisplayMessageToolTips;
   QCheckBox    *mHideTabBarWithSingleTab;
-  KComboBox    *mAggregationCombo;
-  KComboBox    *mThemeCombo;
+  KMail::MessageListView::Core::AggregationComboBox *mAggregationComboBox;
+  KMail::MessageListView::Core::ThemeComboBox *mThemeComboBox;
   KButtonGroup *mDateDisplay;
   KLineEdit    *mCustomDateFormatEdit;
   QString       mCustomDateWhatsThis;
 
 private slots:
   void slotLinkClicked( const QString & link );
-  void slotConfigureAggregations();
-  void slotConfigureThemes();
-  void slotLoadAggregations();
-  void slotLoadThemes();
+  void slotSelectDefaultAggregation();
+  void slotSelectDefaultTheme();
 };
 
 class AppearancePageReaderTab : public ConfigModuleTab {

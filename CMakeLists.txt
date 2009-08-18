@@ -249,6 +249,8 @@ set(kmailprivate_LIB_SRCS
    messagelistview/storagemodel.cpp
    messagelistview/widget.cpp
    messagelistview/core/aggregation.cpp
+   messagelistview/core/aggregationcombobox.cpp
+   messagelistview/core/aggregationconfigbutton.cpp
    messagelistview/core/aggregationeditor.cpp
    messagelistview/core/comboboxutils.cpp
    messagelistview/core/configureaggregationsdialog.cpp
@@ -266,6 +268,8 @@ set(kmailprivate_LIB_SRCS
    messagelistview/core/optionset.cpp
    messagelistview/core/optionseteditor.cpp
    messagelistview/core/theme.cpp
+   messagelistview/core/themecombobox.cpp
+   messagelistview/core/themeconfigbutton.cpp
    messagelistview/core/themedelegate.cpp
    messagelistview/core/themeeditor.cpp
    messagelistview/core/storagemodelbase.cpp
