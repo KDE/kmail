@@ -249,33 +249,6 @@ set(kmailprivate_LIB_SRCS
    messagelistview/pane.cpp
    messagelistview/storagemodel.cpp
    messagelistview/widget.cpp
-   messagelistview/akonadi/ak_pane.cpp
-   messagelistview/akonadi/ak_storagemodel.cpp
-   messagelistview/akonadi/ak_widget.cpp
-   messagelistview/core/aggregation.cpp
-   messagelistview/core/aggregationeditor.cpp
-   messagelistview/core/comboboxutils.cpp
-   messagelistview/core/configureaggregationsdialog.cpp
-   messagelistview/core/configurethemesdialog.cpp
-   messagelistview/core/delegate.cpp
-   messagelistview/core/filter.cpp
-   messagelistview/core/item.cpp
-   messagelistview/core/groupheaderitem.cpp
-   messagelistview/core/manager.cpp
-   messagelistview/core/messageitem.cpp
-   messagelistview/core/messageitemsetmanager.cpp
-   messagelistview/core/model.cpp
-   messagelistview/core/modelinvariantindex.cpp
-   messagelistview/core/modelinvariantrowmapper.cpp
-   messagelistview/core/optionset.cpp
-   messagelistview/core/optionseteditor.cpp
-   messagelistview/core/theme.cpp
-   messagelistview/core/themedelegate.cpp
-   messagelistview/core/themeeditor.cpp
-   messagelistview/core/storagemodelbase.cpp
-   messagelistview/core/sortorder.cpp
-   messagelistview/core/view.cpp
-   messagelistview/core/widgetbase.cpp
 )
 
 # TODO PORT
@@ -368,6 +341,7 @@ target_link_libraries(kmailprivate
   ${KDE4_AKONADI_LIBS}
   ${KDE4_AKONADI_KMIME_LIBS}
   messagecomposer
+  messagelist
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
   ${KDE4_PHONON_LIBRARY}
   ${KDE4_KNOTIFYCONFIG_LIBRARY}

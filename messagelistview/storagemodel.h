@@ -21,7 +21,7 @@
 #ifndef __KMAIL_MESSAGELISTVIEW_STORAGEMODEL_H__
 #define __KMAIL_MESSAGELISTVIEW_STORAGEMODEL_H__
 
-#include "messagelistview/core/storagemodelbase.h"
+#include <messagelist/core/storagemodelbase.h>
 
 class KMFolder;
 class KMMessage;

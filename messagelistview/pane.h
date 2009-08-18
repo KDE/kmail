@@ -24,7 +24,7 @@
 #include <KTabWidget>
 #include <QList>
 
-#include "messagelistview/core/enums.h"
+#include <messagelist/core/enums.h>
 
 class KMMessage;
 class KMMsgBase;

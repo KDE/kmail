@@ -20,7 +20,7 @@
 
 #include "messagelistview/storagemodel.h"
 
-#include "messagelistview/core/messageitem.h"
+#include <messagelist/core/messageitem.h>
 
 #include <config-kmail.h>
 

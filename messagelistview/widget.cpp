@@ -22,8 +22,8 @@
 #include "messagelistview/pane.h"
 #include "messagelistview/storagemodel.h"
 
-#include "messagelistview/core/view.h"
-#include "messagelistview/core/messageitem.h"
+#include <messagelist/core/view.h>
+#include <messagelist/core/messageitem.h>
 
 #include "kmmessage.h"
 #include "kmfolder.h"

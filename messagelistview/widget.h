@@ -21,8 +21,8 @@
 #ifndef __KMAIL_MESSAGELISTVIEW_WIDGET_H__
 #define __KMAIL_MESSAGELISTVIEW_WIDGET_H__
 
-#include "messagelistview/core/widgetbase.h"
-#include "messagelistview/core/enums.h"
+#include <messagelist/core/widgetbase.h>
+#include <messagelist/core/enums.h>
 
 #include <QList>
 #include <QIcon>

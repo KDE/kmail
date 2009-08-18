@@ -22,8 +22,8 @@
 #include "messagelistview/messageset.h"
 #include "messagelistview/widget.h"
 
-#include "messagelistview/core/view.h"
-#include "messagelistview/core/manager.h"
+#include <messagelist/core/view.h>
+#include <messagelist/core/manager.h>
 
 #include <KLineEdit>
 #include <KLocale>
