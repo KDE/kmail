@@ -40,6 +40,7 @@
 #include <QtGui/QSortFilterProxyModel>
 
 #include <libmailreader/kmreaderwin.h>
+#include "messagelistview/akonadi/ak_pane.h"
 
 using namespace Akonadi;
 
@@ -90,13 +91,13 @@ MainWidget::MainWidget( QWidget *parent )
   m_reader = new KMReaderWin( this );
   centralSplitter->addWidget( m_reader );
 
-  connect( messagePane, SIGNAL(messageSelected(MessagePtr)),
-           this, SLOT(onMessageSelected(MessagePtr)) );
+  connect( messagePane, SIGNAL(messageSelected(Akonadi::Item)),
+           this, SLOT(onMessageSelected(Akonadi::Item)) );
 }
 
-void MainWidget::onMessageSelected( MessagePtr message )
+void MainWidget::onMessageSelected( const Akonadi::Item &item )
 {
-  m_reader->setMessage( message.get() );
+  m_reader->setMessageItem( item );
 }
 
 int main( int argc, char **argv )

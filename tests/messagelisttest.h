@@ -23,9 +23,13 @@
 #define MESSAGELISTTEST_H
 
 #include <QtGui/QWidget>
-#include "messagelistview/akonadi/ak_pane.h"
 
 class KMReaderWin;
+
+namespace Akonadi
+{
+  class Item;
+}
 
 class MainWidget : public QWidget
 {
@@ -34,7 +38,7 @@ class MainWidget : public QWidget
     MainWidget( QWidget *parent=0 );
 
   public slots:
-    void onMessageSelected( MessagePtr message );
+    void onMessageSelected( const Akonadi::Item &item );
 
   private:
     KMReaderWin *m_reader;
