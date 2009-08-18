@@ -386,8 +386,3 @@ Akonadi::Item Widget::itemForRow( int row ) const
 {
   return static_cast<const StorageModel*>( storageModel() )->itemForRow( row );
 }
-
-MessagePtr Widget::messageForRow( int row ) const
-{
-  return static_cast<const StorageModel*>( storageModel() )->messageForRow( row );
-}

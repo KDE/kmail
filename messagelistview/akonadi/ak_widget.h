@@ -23,14 +23,9 @@
 
 #include <akonadi/item.h>
 
-#include <boost/shared_ptr.hpp>
-#include <kmime/kmime_message.h>
-
 #include "kmail_export.h"
 
 class QWidget;
-
-typedef boost::shared_ptr<KMime::Message> MessagePtr;
 
 namespace Akonadi
 {
@@ -142,7 +137,6 @@ signals:
 private:
   Item::List selectionAsItems() const;
   Item itemForRow( int row ) const;
-  MessagePtr messageForRow( int row ) const;
 
   int mLastSelectedMessage;
 };
