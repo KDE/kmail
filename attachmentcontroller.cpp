@@ -77,6 +77,7 @@ class KMail::AttachmentController::Private
     void editDone( KMail::EditorWatcher *watcher ); // slot
     void exportPublicKey( const QString &fingerprint );
     void attachPublicKeyJobResult( KJob *job ); // slot
+    void addAttachmentPart( AttachmentPart::Ptr part );
 
     AttachmentController *const q;
     bool encryptEnabled;
@@ -224,9 +225,7 @@ void AttachmentController::Private::loadJobResult( KJob *job )
   Q_ASSERT( dynamic_cast<AttachmentFromUrlJob*>( job ) );
   AttachmentFromUrlJob *ajob = static_cast<AttachmentFromUrlJob*>( job );
   AttachmentPart::Ptr part = ajob->attachmentPart();
-  part->setEncrypted( model->isEncryptSelected() );
-  part->setSigned( model->isSignSelected() );
-  model->addAttachment( part );
+  addAttachmentPart( part );
 }
 
 void AttachmentController::Private::openSelectedAttachments()
@@ -314,6 +313,9 @@ void AttachmentController::Private::exportPublicKey( const QString &fingerprint 
 
 void AttachmentController::Private::attachPublicKeyJobResult( KJob *job )
 {
+  // The only reason we can't use loadJobResult() and need a separate method
+  // is that we want to show the proper caption ("public key" instead of "file")...
+
   if( job->error() ) {
     KMessageBox::sorry( composer, job->errorString(), i18n( "Failed to attach public key" ) );
     return;
@@ -322,7 +324,19 @@ void AttachmentController::Private::attachPublicKeyJobResult( KJob *job )
   Q_ASSERT( dynamic_cast<AttachmentFromPublicKeyJob*>( job ) );
   AttachmentFromPublicKeyJob *ajob = static_cast<AttachmentFromPublicKeyJob*>( job );
   AttachmentPart::Ptr part = ajob->attachmentPart();
+  addAttachmentPart( part );
+}
+
+void AttachmentController::Private::addAttachmentPart( AttachmentPart::Ptr part )
+{
+  part->setEncrypted( model->isEncryptSelected() );
+  part->setSigned( model->isSignSelected() );
   model->addAttachment( part );
+
+  // TODO I can't find this setting in the config dialog. Has it been removed?
+  if( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
+    q->attachmentProperties( part );
+  }
 }
 
 

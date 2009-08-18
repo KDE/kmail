@@ -470,20 +470,6 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
 #endif
 }
 
-#if 0
-void KMComposeWin::slotAttachedFile( const KUrl &url )
-{
-  if ( mAttachFilesPending.isEmpty() ) {
-    return;
-  }
-  mAttachFilesPending.removeAt( mAttachFilesPending.indexOf( url ) ); // only remove one copy of url
-  if ( mAttachFilesPending.isEmpty() ) {
-    send( mAttachFilesSend );
-    mAttachFilesSend = -1;
-  }
-}
-#endif
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment( const KUrl &url, const QString &comment )
 {
@@ -920,7 +906,6 @@ void KMComposeWin::rethinkFields( bool fromSlot )
 
   mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
 
-  //slotUpdateAttachActions();
   mIdentityAction->setEnabled(!mAllFieldsAction->isChecked());
   mDictionaryAction->setEnabled( !mAllFieldsAction->isChecked() );
   mTransportAction->setEnabled(!mAllFieldsAction->isChecked());
@@ -2345,116 +2330,11 @@ void KMComposeWin::slotAddrBook()
 }
 
 #if 0
-//-----------------------------------------------------------------------------
+// TODO port me (outlook names)
+
 void KMComposeWin::slotAttachFileResult( KJob *job )
 {
-  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(static_cast<KIO::Job*>(job));
-
-  assert( it != mMapAtmLoadData.end() );
-  KUrl attachUrl;
-  QMap<KJob*, KUrl>::Iterator jit = mAttachJobs.find( job );
-  bool attachURLfound = (jit != mAttachJobs.end());
-  if ( attachURLfound ) {
-    attachUrl = jit.value();
-    mAttachJobs.erase( jit );
-  }
-  if ( job->error() ) {
-    mMapAtmLoadData.erase( it );
-    static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    if ( attachURLfound ) {
-      emit attachmentAdded( attachUrl, false );
-    }
-    return;
-  }
-
-  atmLoadData &loadData = *it;
-
-  // If we only want to insert this file into the composer and not attach it,
-  // do that now and return
-  if ( loadData.insert ) {
-
-    // Actually insert the file as text
-    const QTextCodec *fileCodec = KGlobal::charsets()->codecForName( loadData.encoding );
-    if ( fileCodec ) {
-        mEditor->textCursor().insertText( fileCodec->toUnicode( loadData.data.data() ) );
-    } else {
-        mEditor->textCursor().insertText( QString::fromLocal8Bit( loadData.data.data() ) );
-    }
-
-    mMapAtmLoadData.erase( it );
-    if ( attachURLfound ) {
-      emit attachmentAdded( attachUrl, true );
-    }
-    return;
-  }
-
-  // Determine the mime type of the attachment
-  QString mimeType = static_cast<KIO::TransferJob*>(job)->mimetype();
-  kDebug() << "Mimetype is" << mimeType;
-  int slash = mimeType.indexOf( '/' );
-  if( slash == -1 )
-    slash = mimeType.length();
-  QString type = mimeType.left( slash );
-  QString subType = mimeType.mid( slash + 1 );
-  bool isTextualType = ( type.toLower() == "text" );
-
-  //
-  // If the attachment is a textual mimetype, try to determine the charset.
-  //
-  QByteArray partCharset;
-  if ( isTextualType ) {
-    if ( !loadData.url.fileEncoding().isEmpty() ) {
-      partCharset = KMMsgBase::fixEncoding( loadData.url.fileEncoding() ).toLatin1();
-      kDebug() << "Got charset from job:" << partCharset;
-    } else {
-      KEncodingProber prober;
-      prober.feed( loadData.data );
-      kDebug() << "Autodetected(1) charset: " << prober.encoding() << " confidence: " << prober.confidence();
-
-      // The prober detects binary attachments as UTF-16LE with confidence 99%, which
-      // obviously is wrong, so work around this here (most mail clients don't understand
-      // UTF-16LE).
-      QString detectedEncoding = prober.encoding();
-      if ( prober.confidence() > 0.6 && !detectedEncoding.toLower().contains( "utf-16" ) )
-        partCharset = detectedEncoding.toAscii();
-
-      if ( partCharset.isEmpty() ) {
-        kWarning() << "No charset found, using UTF-8!";
-        partCharset = "utf-8";
-      }
-    }
-  }
-
-  KCursorSaver busy( KBusyPtr::busy() );
-
-  //
-  // Try to determine the filename and the correct encoding for that filename.
-  //
-  QString name( loadData.url.fileName() );
-
-  if ( name.isEmpty() ) {
-    // URL ends with '/' (e.g. http://www.kde.org/)
-    // guess a reasonable filename
-    if ( mimeType == "text/html" ) {
-      name = "index.html";
-    } else {
-      // try to determine a reasonable extension
-      QStringList patterns( KMimeType::mimeType( mimeType )->patterns() );
-      QString ext;
-      if ( !patterns.isEmpty() ) {
-        ext = patterns[0];
-        int i = ext.lastIndexOf( '.' );
-        if( i == -1 )
-          ext.prepend( '.' );
-        else if( i > 0 )
-          ext = ext.mid( i );
-      }
-      name = QString( "unknown" ) + ext;
-    }
-  }
-
-  name.truncate( 256 ); // is this needed?
+  // ...
 
   // For the encoding of the name, prefer the current charset of the composer first,
   // then try every other available encoding.
@@ -2475,67 +2355,7 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     RFC2231encoded = name != QString( encodedName );
   }
 
-  //
-  // Create message part
-  //
-  KMMessagePart *msgPart = new KMMessagePart;
-  msgPart->setName( name );
-  QList<int> allowedCTEs;
-  if ( mimeType == "message/rfc822" ) {
-    msgPart->setMessageBody( loadData.data );
-    allowedCTEs << DwMime::kCte7bit;
-    allowedCTEs << DwMime::kCte8bit;
-  } else {
-    msgPart->setBodyAndGuessCte( loadData.data, allowedCTEs,
-                                 !kmkernel->msgSender()->sendQuotedPrintable() );
-    kDebug() << "Autodetected CTE:" << msgPart->cteStr();
-  }
-  msgPart->setTypeStr( type.toLatin1() );
-  msgPart->setSubtypeStr( subType.toLatin1() );
-  msgPart->setContentDisposition( QByteArray( "attachment;\n\tfilename" )
-                                 + ( RFC2231encoded ? "*=" + encodedName : "=\"" + encodedName + '"' ) );
-  if ( isTextualType )
-    msgPart->setCharset( partCharset );
-
-  mMapAtmLoadData.erase( it );
-
-  //
-  // Show message part dialog, if not configured away (default):
-  //
-  if ( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
-    const KCursorSaver saver( Qt::ArrowCursor );
-    KMMsgPartDialogCompat dlg;
-    int encodings = 0;
-    for ( QList<int>::ConstIterator it = allowedCTEs.constBegin() ;
-          it != allowedCTEs.constEnd() ; ++it )
-      switch ( *it ) {
-      case DwMime::kCteBase64: encodings |= KMMsgPartDialog::Base64; break;
-      case DwMime::kCteQp: encodings |= KMMsgPartDialog::QuotedPrintable; break;
-      case DwMime::kCte7bit: encodings |= KMMsgPartDialog::SevenBit; break;
-      case DwMime::kCte8bit: encodings |= KMMsgPartDialog::EightBit; break;
-      default: ;
-      }
-    dlg.setShownEncodings( encodings );
-    dlg.setMsgPart(msgPart);
-    if ( !dlg.exec() ) {
-      delete msgPart;
-      msgPart = 0;
-      if ( attachURLfound ) {
-        emit attachmentAdded( attachUrl, false );
-      }
-      return;
-    }
-  }
-
-
-  mAtmModified = true;
-
-  // add the new attachment to the list
-  addAttach( msgPart );
-
-  if ( attachURLfound ) {
-    emit attachmentAdded( attachUrl, true );
-  }
+  // ...
 }
 #endif
 

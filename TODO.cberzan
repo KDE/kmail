@@ -41,6 +41,7 @@ Attachments:
   - need to center those comboboxes... That will probably
     require a delegate
   - disable sorting on the compress/sign/encrypt columns
+* Figure out "outlook-compatible attachment names"
 
 * report kdelibs bug:
 In file select dialog, a file containing ':'. Selecting it by itself works,

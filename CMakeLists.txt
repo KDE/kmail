@@ -169,7 +169,6 @@ set(kmailprivate_LIB_SRCS
    aboutdata.cpp
    mailserviceimpl.cpp
    mailmanagerimpl.cpp
-   attachmentlistview.cpp
    kmcomposereditor.cpp
    kmlineeditspell.cpp
    composer.cpp
