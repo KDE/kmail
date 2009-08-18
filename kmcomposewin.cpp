@@ -3870,11 +3870,11 @@ void KMComposeWin::insertSignatureHelper( KPIMIdentities::Signature::Placement p
     kDebug() << "HTML signature, turning editor into HTML mode";
     enableHtml();
     signature.insertIntoTextEdit( mEditor, placement,
-                               GlobalSettings::self()->dashDashSignature() );
+                               GlobalSettings::self()->dashDashSignature(), true );
   }
   else
     signature.insertIntoTextEdit( mEditor, placement,
-                               GlobalSettings::self()->dashDashSignature() );
+                               GlobalSettings::self()->dashDashSignature(), true );
 }
 
 //-----------------------------------------------------------------------------
@@ -4078,13 +4078,15 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     msgCleared = true;
   }
 
-  if ( msgCleared || oldSig.rawText().isEmpty() ) {
+  if ( msgCleared || oldSig.rawText().isEmpty() || mEditor->toPlainText().isEmpty() ) {
     // Just append the signature if there is no old signature
     if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
       if ( GlobalSettings::self()->prependSignature() )
-        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::Start, true );
+        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::Start,
+                                   GlobalSettings::self()->dashDashSignature(), true );
       else
-        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End, true );
+        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End,
+                                   GlobalSettings::self()->dashDashSignature(), true );
     }
   } else {
     mEditor->replaceSignature( oldSig, newSig );
