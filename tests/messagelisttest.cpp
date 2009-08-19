@@ -61,7 +61,7 @@ MainWidget::MainWidget( QWidget *parent )
   Monitor *monitor = new Monitor( this );
   monitor->setCollectionMonitored( Collection::root() );
   monitor->fetchCollection( true );
-  monitor->setAllMonitored( true );
+  monitor->setMimeTypeMonitored( "message/rfc822", true );
   monitor->itemFetchScope().fetchFullPayload(true);
 
   EntityTreeModel *entityModel = new EntityTreeModel( session, monitor, this );
