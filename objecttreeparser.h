@@ -169,16 +169,24 @@ namespace KMail {
 
     void defaultHandling( partNode * node, ProcessResult & result );
 
-    /** 1. Create a new partNode using 'content' data and Content-Description
-            found in 'cntDesc'.
-        2. Make this node the child of 'node'.
-        3. Insert the respective entries in the Mime Tree Viewer.
-        3. Parse the 'node' to display the content. */
+    /**
+     *  1. Create a new partNode using 'content' data and Content-Description
+     *      found in 'cntDesc'.
+     *  2. Make this node the child of 'node'.
+     *  3. Insert the respective entries in the Mime Tree Viewer.
+     *  3. Parse the 'node' to display the content.
+     *
+     * @param addToTextualContent If true, this will add the textual content of the parsed node
+     *                            to the textual content of the current object tree parser.
+     *                            Setting this to false is useful for encapsulated messages, as we
+     *                            do not want the text in those to appear in the editor
+     */
     //  Function will be replaced once KMime is alive.
     void insertAndParseNewChildNode( partNode & node,
                                      const char * content,
                                      const char * cntDesc,
-                                     bool append=false );
+                                     bool append=false,
+                                     bool addToTextualContent = true );
     /** if data is 0:
         Feeds the HTML widget with the contents of the opaque signed
             data found in partNode 'sign'.
@@ -304,7 +312,19 @@ namespace KMail {
     QByteArray mTextualContentCharset;
     QString mTextualContent;
     const Kleo::CryptoBackend::Protocol * mCryptoProtocol;
+
+    /// Show only one mime part means that the user has selected some node in the message structure
+    /// viewer that is not the root, which means the user wants to only see the selected node and its
+    /// children. If that is the case, this variable is set to true.
+    /// The code needs to behave differently if this is set. For example, it should not process the
+    /// siblings. Also, consider inline images: Normally, those nodes are completely hidden, as the
+    /// HTML node embedds them. However, when showing only the node of the image, one has to show them,
+    /// as their is no HTML node in which they are displayed. There are many more cases where this
+    /// variable needs to be obeyed.
+    /// This variable is set to false again when processing the children in stdChildHandling(), as
+    /// the children can be completely displayed again.
     bool mShowOnlyOneMimePart;
+
     bool mKeepEncryptions;
     bool mIncludeSignatures;
     bool mHasPendingAsyncJobs;

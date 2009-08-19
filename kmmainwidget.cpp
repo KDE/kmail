@@ -3559,7 +3559,9 @@ void KMMainWidget::setupActions()
              mFavoriteFolderView, SLOT(checkMail()) );
   }
 
-  KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-receive"), i18n("Check Ma&il"), this);
+  KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-receive"), i18n("Check Mail In"), this);
+  actActionMenu->setIconText( i18n("Check Mail") );
+  actActionMenu->setToolTip( i18n("Check Mail") );
   actionCollection()->addAction("check_mail_in", actActionMenu );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
   connect(actActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotCheckMail()));

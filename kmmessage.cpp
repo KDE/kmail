@@ -358,7 +358,6 @@ void KMMessage::removePrivateHeaderFields() {
   removeHeaderField("X-KMail-Redirect-From");
   removeHeaderField("X-KMail-Link-Message");
   removeHeaderField("X-KMail-Link-Type");
-  removeHeaderField( "X-KMail-Markup" );
   removeHeaderField( "X-KMail-QuotePrefix" );
 }
 
@@ -2751,7 +2750,7 @@ bool KMMessage::deleteBodyPart( int partIndex )
   dummyPart.duplicate( part );
   QString comment = i18n("This attachment has been deleted.");
   if ( !part.fileName().isEmpty() )
-    comment = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+    comment = i18n( "The attachment '%1' has been deleted.", part.fileName() );
   dummyPart.setContentDescription( comment );
   dummyPart.setBodyEncodedBinary( QByteArray() );
   QByteArray cd = dummyPart.contentDisposition();

@@ -1535,6 +1535,30 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
   }
 }
 
+// Checks if the mail is a HTML mail.
+// The catch here is that encapsulated messages can also have a HTML part, so we make
+// sure that only messages where the first HTML part is in the same multipart/alternative container
+// as the frist plain text part are counted as HTML mail
+static bool isHTMLMail( partNode *root )
+{
+  if ( !root )
+    return false;
+
+  partNode *firstTextPart = root->findType( DwMime::kTypeText, DwMime::kSubtypePlain );
+  partNode *firstHtmlPart = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml );
+  if ( !firstTextPart || !firstHtmlPart )
+    return false;
+
+  partNode *parent = firstTextPart->parentNode();
+  if ( !parent || parent != firstHtmlPart->parentNode() )
+    return false;
+
+  if ( parent->type() != DwMime::kTypeMultipart || parent->subType() != DwMime::kSubtypeAlternative )
+    return false;
+
+  return true;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
@@ -1698,30 +1722,30 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   mEditor->setText( otp.textualContent() );
   mCharset = otp.textualContentCharset();
 
-  if ( partNode * n = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml ) ) {
-    if ( partNode * p = n->parentNode() ) {
+  if ( isHTMLMail( root ) ) {
+    partNode *htmlNode = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml );
+    Q_ASSERT( htmlNode );
+    if ( partNode * p = htmlNode->parentNode() ) {
       if ( p->hasType( DwMime::kTypeMultipart ) &&
            p->hasSubType( DwMime::kSubtypeAlternative ) ) {
-        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" ) {
-          enableHtml();
+        enableHtml();
 
-          // get cte decoded body part
-          mCharset = n->msgPart().charset();
-          QByteArray bodyDecoded = n->msgPart().bodyDecoded();
+        // get cte decoded body part
+        mCharset = htmlNode->msgPart().charset();
+        QByteArray bodyDecoded = htmlNode->msgPart().bodyDecoded();
 
-          // respect html part charset
-          const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
-          if ( codec ) {
-            mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
-          } else {
-            mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
-          }
+        // respect html part charset
+        const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+        if ( codec ) {
+          mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
+        } else {
+          mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
         }
       }
     }
-  }
 
-  collectImages( root ); // when using html, check for embedded images
+    collectImages( root ); // when using html, check for embedded images
+  }
 
   if ( mCharset.isEmpty() ) {
     mCharset = mMsg->charset();
@@ -1753,91 +1777,6 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
       mEditor->setText( QString::fromLocal8Bit( bodyDecoded ) );
     }
   }
-
-#ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
-  const int num = mMsg->numBodyParts();
-  kDebug() << "mMsg->numBodyParts=" << mMsg->numBodyParts();
-
-  if ( num > 0 ) {
-    KMMessagePart bodyPart;
-    int firstAttachment = 0;
-
-    mMsg->bodyPart( 1, &bodyPart );
-    if ( bodyPart.typeStr().toLower() == "text" &&
-         bodyPart.subtypeStr().toLower() == "html" ) {
-      // check whether we are inside a mp/al body part
-      partNode *root = partNode::fromMessage( mMsg );
-      partNode *node = root->findType( DwMime::kTypeText,
-                                       DwMime::kSubtypeHtml );
-      if ( node && node->parentNode() &&
-           node->parentNode()->hasType( DwMime::kTypeMultipart ) &&
-           node->parentNode()->hasSubType( DwMime::kSubtypeAlternative ) ) {
-        // we have a mp/al body part with a text and an html body
-        kDebug() << "text/html found";
-        firstAttachment = 2;
-        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" ) {
-          enableHtml();
-        }
-      }
-      delete root;
-      root = 0;
-    }
-    if ( firstAttachment == 0 ) {
-      mMsg->bodyPart( 0, &bodyPart );
-      if ( bodyPart.typeStr().toLower() == "text" ) {
-        // we have a mp/mx body with a text body
-        kDebug() << "text/* found";
-        firstAttachment = 1;
-      }
-    }
-
-    if ( firstAttachment != 0 )  {
-      mCharset = bodyPart.charset();
-      if ( mCharset.isEmpty() || mCharset == "default" )
-        mCharset = mDefCharset;
-
-      QByteArray bodyDecoded = bodyPart.bodyDecoded();
-
-      if( allowDecryption )
-        decryptOrStripOffCleartextSignature( bodyDecoded );
-
-      const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
-      if (codec)
-        mEditor->setText(codec->toUnicode(bodyDecoded));
-      else
-        mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
-      //mEditor->insertLine("\n", -1); <-- why ?
-    } else mEditor->clear();
-    for( int i = firstAttachment; i < num; ++i ) {
-      KMMessagePart *msgPart = new KMMessagePart;
-      mMsg->bodyPart(i, msgPart);
-      QByteArray mimeType = msgPart->typeStr().toLower() + '/'
-        + msgPart->subtypeStr().toLower();
-      // don't add the detached signature as attachment when editting a
-      // PGP/MIME signed message
-      if( mimeType != "application/pgp-signature" ) {
-        addAttach(msgPart);
-      }
-    }
-  } else{
-    mCharset=mMsg->charset();
-    if ( mCharset.isEmpty() ||  mCharset == "default" )
-      mCharset = mDefCharset;
-
-    QByteArray bodyDecoded = mMsg->bodyDecoded();
-
-    if( allowDecryption )
-      decryptOrStripOffCleartextSignature( bodyDecoded );
-
-    const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
-    if (codec) {
-      mEditor->setText(codec->toUnicode(bodyDecoded));
-    } else
-      mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
-  }
-
-  setCharset(mCharset);
-#endif // BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
 
   if( (GlobalSettings::self()->autoTextSignature()=="auto") && mayAutoSign ) {
     //
@@ -3873,11 +3812,11 @@ void KMComposeWin::insertSignatureHelper( KPIMIdentities::Signature::Placement p
     kDebug() << "HTML signature, turning editor into HTML mode";
     enableHtml();
     signature.insertIntoTextEdit( mEditor, placement,
-                               GlobalSettings::self()->dashDashSignature() );
+                               GlobalSettings::self()->dashDashSignature(), true );
   }
   else
     signature.insertIntoTextEdit( mEditor, placement,
-                               GlobalSettings::self()->dashDashSignature() );
+                               GlobalSettings::self()->dashDashSignature(), true );
 }
 
 //-----------------------------------------------------------------------------
@@ -4081,13 +4020,15 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     msgCleared = true;
   }
 
-  if ( msgCleared || oldSig.rawText().isEmpty() ) {
+  if ( msgCleared || oldSig.rawText().isEmpty() || mEditor->toPlainText().isEmpty() ) {
     // Just append the signature if there is no old signature
     if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
       if ( GlobalSettings::self()->prependSignature() )
-        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::Start, true );
+        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::Start,
+                                   GlobalSettings::self()->dashDashSignature(), true );
       else
-        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End, true );
+        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End,
+                                   GlobalSettings::self()->dashDashSignature(), true );
     }
   } else {
     mEditor->replaceSignature( oldSig, newSig );

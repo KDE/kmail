@@ -187,7 +187,7 @@ namespace KMail {
   void ObjectTreeParser::insertAndParseNewChildNode( partNode& startNode,
                                                      const char* content,
                                                      const char* cntDesc,
-                                                     bool append )
+                                                     bool append, bool addToTextualContent )
   {
     DwBodyPart* myBody = new DwBodyPart( DwString( content ), 0 );
     myBody->Parse();
@@ -230,10 +230,12 @@ namespace KMail {
     }
     ObjectTreeParser otp( mReader, cryptoProtocol() );
     otp.parseObjectTree( newNode );
-    mRawReplyString += otp.rawReplyString();
-    mTextualContent += otp.textualContent();
-    if ( !otp.textualContentCharset().isEmpty() )
-      mTextualContentCharset = otp.textualContentCharset();
+    if ( addToTextualContent ) {
+      mRawReplyString += otp.rawReplyString();
+      mTextualContent += otp.textualContent();
+      if ( !otp.textualContentCharset().isEmpty() )
+        mTextualContentCharset = otp.textualContentCharset();
+    }
   }
 
 
@@ -336,7 +338,8 @@ namespace KMail {
     // always show images in multipart/related when showing in html, not with an additional icon
     if ( result.isImage() &&
          node->parentNode() && node->parentNode()->subType() == DwMime::kSubtypeRelated &&
-         mReader->htmlMail() ) {
+         mReader->htmlMail() &&
+         !showOnlyOneMimePart() ) {
       QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
       QString href = "file:" + KUrl::toPercentEncoding( fileName );
       htmlWriter()->embedPart( node->msgPart().contentId(), href);
@@ -349,12 +352,7 @@ namespace KMail {
       return;
 
     bool asIcon = true;
-    if ( showOnlyOneMimePart() )
-      // ### (mmutz) this is wrong! If I click on an image part, I
-      // want the equivalent of "view...", except for the extra
-      // window!
-      asIcon = !node->hasContentDispositionInline();
-    else if ( !result.neverDisplayInline() )
+    if ( !result.neverDisplayInline() )
       if ( const AttachmentStrategy * as = attachmentStrategy() )
         asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
 
@@ -1546,7 +1544,8 @@ namespace KMail {
     // display the body of the encapsulated message
     insertAndParseNewChildNode( *node,
                                 rfc822messageStr.constData(),
-                                "encapsulated message" );
+                                "encapsulated message", false /*append*/,
+                                false /*add to textual content*/ );
     if ( mReader )
       htmlWriter()->queue( writeSigstatFooter( messagePart ) );
     return true;

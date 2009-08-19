@@ -78,7 +78,7 @@ namespace {
     }
     static const KMail::BodyPartFormatter * create() {
       if ( !self )
-	self = new ImageTypeBodyPartFormatter();
+        self = new ImageTypeBodyPartFormatter();
       return self;
     }
   };
