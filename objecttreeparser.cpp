@@ -205,6 +205,7 @@ namespace KMail {
       desc.FromString( cntDesc );
       desc.SetModified();
       myBody->Headers().Parse();
+      kDebug() << "SUBJECT:" << myBody->Headers().Subject().AsString().c_str() << "FROM:" << myBody->Headers().From().AsString().c_str();
     }
 
     partNode* parentNode = &startNode;
@@ -1100,7 +1101,7 @@ namespace KMail {
     //  curNode = curNode->mRoot;
 
     // at least one message found: build a mime tree
-    digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
+    digestHeaderStr = "Content-Type: text/plain\nContent-Description: digest header\n\n";
     digestHeaderStr += str.mid( 0, thisDelim );
     insertAndParseNewChildNode( *curNode,
                                 digestHeaderStr.toLatin1(),
@@ -1127,7 +1128,7 @@ namespace KMail {
       //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
       //  ++thisDelim;
 
-      partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
+      partStr = "Content-Type: message/rfc822\nContent-Description: embedded message\n";
       partStr += str.mid( thisDelim, nextDelim-thisDelim );
       QString subject = QString::fromLatin1("embedded message");
       QString subSearch = QString::fromLatin1("\nSubject:");
@@ -1138,7 +1139,7 @@ namespace KMail {
         if ( -1 < thisEoL )
           subject.truncate( thisEoL );
       }
-      kDebug() << "        embedded message found: \"" << subject <<"\"";
+      kDebug() << "        embedded message found:" << subject;
       insertAndParseNewChildNode( *curNode,
                                   partStr.toLatin1(),
                                   subject.toLatin1(), true );
@@ -1164,7 +1165,7 @@ namespace KMail {
     }
     else
       thisDelim = thisDelim+1;
-    partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
+    partStr = "Content-Type: text/plain\nContent-Description: digest footer\n\n";
     partStr += str.mid( thisDelim );
     insertAndParseNewChildNode( *curNode,
                                 partStr.toLatin1(),
