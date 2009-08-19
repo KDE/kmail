@@ -245,6 +245,15 @@ public:
     KMail::Interface::BodyPartMemento *bodyPartMemento( const QByteArray &which ) const;
     void setBodyPartMemento( const QByteArray &which, KMail::Interface::BodyPartMemento *memento );
 
+    // A flag to remember if the node was embedded. This is useful for attachment nodes, the reader
+    // needs to know if they were displayed inline or not.
+    bool isDisplayedEmbedded() const;
+    void setDisplayedEmbedded( bool displayedEmbedded );
+
+    // Get a href in the form attachment:<nodeId>?place=<place>, used by ObjectTreeParser and
+    // UrlHandlerManager.
+    QString asHREF( const QString &place ) const;
+
 private:
     KMReaderWin *reader() const {
       return mReader ? mReader : mRoot ? mRoot->reader() : 0 ;
@@ -272,6 +281,7 @@ private:
     KMMimePartTreeItem* mMimePartTreeItem;
     std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
     KMReaderWin  *mReader;
+    bool mDisplayedEmbedded;
 };
 
 #endif
