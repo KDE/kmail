@@ -2887,6 +2887,10 @@ void KMReaderWin::scrollToAttachment( const partNode *node )
   }
   attachmentDiv.setAttribute( "style", QString( "border:2px solid %1" )
       .arg( cssHelper()->pgpWarnColor().name() ) );
+
+  // Update rendering, otherwise the rendering is not updated when the user clicks on an attachment
+  // that causes scrolling and the open attachment dialog
+  doc.updateRendering();
 }
 
 void KMReaderWin::injectAttachments()
