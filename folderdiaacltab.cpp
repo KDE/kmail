@@ -30,7 +30,7 @@
  *  your version.
  */
 
-#include <config.h>
+#include <config.h> // FOR KDEPIM_NEW_DISTRLISTS
 
 #include "folderdiaacltab.h"
 #include "acljobs.h"
