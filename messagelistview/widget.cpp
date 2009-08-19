@@ -59,6 +59,8 @@ namespace KMail
 namespace MessageListView
 {
 
+using namespace MessageList;
+
 Widget::Widget( KMMainWidget *mainWidget, Pane *pPane )
   : Core::Widget( pPane ), mPane( pPane ), mMainWidget( mainWidget )
 {

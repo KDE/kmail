@@ -47,7 +47,7 @@ namespace MessageListView
  * Provides an interface over a KMFolder. In the future
  * it's expected to wrap Akonadi::MessageModel.
  */
-class StorageModel : public Core::StorageModel
+class StorageModel : public MessageList::Core::StorageModel
 {
   Q_OBJECT
 
@@ -92,7 +92,7 @@ public:
   /**
    * Return the KMMessage belonging to the specified Core::MessageItem.
    */
-  KMMessage * message( Core::MessageItem * mi ) const;
+  KMMessage * message( MessageList::Core::MessageItem * mi ) const;
 
   /**
    * Return the KMMsgBase belonging to the specified row in the underlying folder
@@ -104,7 +104,7 @@ public:
    * Return the KMMsgBase belonging to the specified Core::MessageItem.
    * This is supposed to be less expensive than message() (?)
    */
-  KMMsgBase * msgBase( Core::MessageItem * mi ) const;
+  KMMsgBase * msgBase( MessageList::Core::MessageItem * mi ) const;
 
   /**
    * Returns the current row index of the specified msgBase or -1 if not found
@@ -145,28 +145,28 @@ public:
    * If bUseReceiver is true then the senderOrReceiver
    * field will be set to the receiver, otherwise it will be set to the sender.
    */
-  virtual bool initializeMessageItem( Core::MessageItem * mi, int row, bool bUseReceiver ) const;
+  virtual bool initializeMessageItem( MessageList::Core::MessageItem * mi, int row, bool bUseReceiver ) const;
 
   /**
    * This method uses the inner KMFolder to fill in the specified subset of
    * threading data for the specified MessageItem from the underlying storage item at
    * the specified row index. 
    */
-  virtual void fillMessageItemThreadingData( Core::MessageItem * mi, int row, ThreadingDataSubset subset ) const;
+  virtual void fillMessageItemThreadingData( MessageList::Core::MessageItem * mi, int row, ThreadingDataSubset subset ) const;
 
   /**
    * This method uses the inner KMFolder to re-fill the date, the status,
    * the encryption state, the signature state and eventually updates the min/max dates
    * for the specified MessageItem from the underlying storage slot at the specified row index. 
    */
-  virtual void updateMessageItemData( Core::MessageItem * mi, int row ) const;
+  virtual void updateMessageItemData( MessageList::Core::MessageItem * mi, int row ) const;
 
   /**
    * This method uses the inner model implementation to associate the new status
    * to the specified message item. The new status is be stored in the folder but isn't
    * set as mi->status() itself as the caller is responsable for this.
    */
-  virtual void setMessageItemStatus( Core::MessageItem * mi, int row, const KPIM::MessageStatus &status );
+  virtual void setMessageItemStatus( MessageList::Core::MessageItem * mi, int row, const KPIM::MessageStatus &status );
 
   // When porting to Akonadi the stuff below should be already implemented by MessageModel
 
@@ -258,7 +258,7 @@ private:
   /**
     *  set MessageItem's color and font, etc. to reflect given mail message's state
     */
-  void setMessageItemData( Core::MessageItem * mi, KMMsgBase * msg ) const;
+  void setMessageItemData( MessageList::Core::MessageItem * mi, KMMsgBase * msg ) const;
 };
 
 } // namespace MessageListView

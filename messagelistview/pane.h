@@ -262,7 +262,7 @@ public:
   void setCurrentFolder(
       KMFolder *fld,
       bool preferEmptyTab = false,
-      Core::PreSelectionMode preSelectionMode = Core::PreSelectLastSelected,
+      MessageList::Core::PreSelectionMode preSelectionMode = MessageList::Core::PreSelectLastSelected,
       const QString &overrideLabel = QString()
     );
 
@@ -317,8 +317,8 @@ public:
    * of the list if the end is reached, otherwise it will just stop returning false.
    */
   bool selectNextMessageItem(
-      Core::MessageTypeFilter messageTypeFilter,
-      Core::ExistingSelectionBehaviour existingSelectionBehaviour,
+      MessageList::Core::MessageTypeFilter messageTypeFilter,
+      MessageList::Core::ExistingSelectionBehaviour existingSelectionBehaviour,
       bool centerItem,
       bool loop
     );
@@ -337,8 +337,8 @@ public:
    * of the list if the beginning is reached, otherwise it will just stop returning false.
    */
   bool selectPreviousMessageItem(
-      Core::MessageTypeFilter messageTypeFilter,
-      Core::ExistingSelectionBehaviour existingSelectionBehaviour,
+      MessageList::Core::MessageTypeFilter messageTypeFilter,
+      MessageList::Core::ExistingSelectionBehaviour existingSelectionBehaviour,
       bool centerItem,
       bool loop
     );
@@ -353,7 +353,7 @@ public:
    * If loop is true then the "next" algorithm will restart from the beginning
    * of the list if the end is reached, otherwise it will just stop returning false.
    */
-  bool focusNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
+  bool focusNextMessageItem( MessageList::Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
 
   /**
    * Focuses the previous message item in the view without actually selecting it.
@@ -365,7 +365,7 @@ public:
    * If loop is true then the "previous" algorithm will restart from the end
    * of the list if the beginning is reached, otherwise it will just stop returning false.
    */
-  bool focusPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
+  bool focusPreviousMessageItem( MessageList::Core::MessageTypeFilter messageTypeFilter, bool centerItem, bool loop );
 
   /**
    * Selects the currently focused message item. May do nothing if the
@@ -390,7 +390,7 @@ public:
    *
    * The function returns true if a message was selected and false otherwise.
    */
-  bool selectFirstMessage( Core::MessageTypeFilter messageTypeFilter, bool centerItem );
+  bool selectFirstMessage( MessageList::Core::MessageTypeFilter messageTypeFilter, bool centerItem );
 
   /**
    * Selects all the items in the current folder.

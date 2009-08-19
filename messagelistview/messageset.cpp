@@ -31,6 +31,8 @@ namespace KMail
 namespace MessageListView
 {
 
+using namespace MessageList;
+
 MessageSet::MessageSet( Pane * pane, Widget * widget, KMFolder * folder, Core::MessageItemSetReference ref )
   : QObject( 0 ), mPane( pane ), mWidget( widget ), mFolder( folder ), mMessageItemSetReference( ref )
 {

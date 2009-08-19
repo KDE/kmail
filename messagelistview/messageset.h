@@ -27,10 +27,7 @@
 class KMMsgBase;
 class KMFolder;
 
-namespace KMail
-{
-
-namespace MessageListView
+namespace MessageList
 {
 
 namespace Core
@@ -38,7 +35,16 @@ namespace Core
   typedef unsigned long int MessageItemSetReference;
 
   class MessageItem;
-}
+} // Core
+
+} // namespace MessageList
+
+
+namespace KMail
+{
+
+namespace MessageListView
+{
 
 class Pane;
 class Widget;
@@ -82,7 +88,7 @@ protected:
   /**
    * Protected constructor. Use the Pane::createMessageSet* functions instead.
    */
-  MessageSet( Pane * pane, Widget * widget, KMFolder * folder, Core::MessageItemSetReference ref );
+  MessageSet( Pane * pane, Widget * widget, KMFolder * folder, MessageList::Core::MessageItemSetReference ref );
 
 public:
   /**
@@ -94,7 +100,7 @@ private:
   Pane * mPane;                                           ///< The Pane that created this MessageSet
   Widget * mWidget;                                       ///< The Widget that was current at creation time
   KMFolder * mFolder;                                     ///< The folder that the messages belong to
-  Core::MessageItemSetReference mMessageItemSetReference; ///< The "core" set reference: don't look :)
+  MessageList::Core::MessageItemSetReference mMessageItemSetReference; ///< The "core" set reference: don't look :)
 
 public:
 
@@ -147,7 +153,7 @@ protected:
   Widget * widget() const
     { return mWidget; };
 
-  Core::MessageItemSetReference messageItemSetReference() const
+  MessageList::Core::MessageItemSetReference messageItemSetReference() const
     { return mMessageItemSetReference; };
 
 private slots:

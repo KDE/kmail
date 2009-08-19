@@ -34,12 +34,7 @@ class KMMainWidget;
 
 class QTimer;
 
-namespace KMail
-{
-
-class MessageTreeCollection;
-
-namespace MessageListView
+namespace MessageList
 {
 
 namespace Core
@@ -48,7 +43,17 @@ namespace Core
 
   class GroupHeaderItem;
   class MessageItem;
-}
+} // namespace Core
+
+} // namespace MessageList
+
+namespace KMail
+{
+
+class MessageTreeCollection;
+
+namespace MessageListView
+{
 
 class Pane;
 
@@ -59,7 +64,7 @@ class Pane;
  * provides the KMail specific implementation of view*() virtual
  * handlers.
  */
-class Widget : public Core::Widget
+class Widget : public MessageList::Core::Widget
 {
   Q_OBJECT
 public:
@@ -116,7 +121,7 @@ public:
    * Pre-selection is the action of automatically selecting a message just after the folder
    * has finished loading. See Model::setStorageModel() for more information.
    */
-  void setFolder( KMFolder *fld, const QIcon &icon, Core::PreSelectionMode preSelectionMode = Core::PreSelectLastSelected );
+  void setFolder( KMFolder *fld, const QIcon &icon, MessageList::Core::PreSelectionMode preSelectionMode = MessageList::Core::PreSelectLastSelected );
 
   /**
    * Returns the current folder. May be 0.
@@ -142,14 +147,14 @@ public:
    * Please note that this function may be time consuming since it basically
    * performs a linear search.
    */
-  Core::MessageItem * messageItemFromMsgBase( KMMsgBase * msg ) const;
+  MessageList::Core::MessageItem * messageItemFromMsgBase( KMMsgBase * msg ) const;
 
   /**
    * Returns the Core::MessageItem that corresponds to the specified KMMessage.
    * Please note that this function may be time consuming since it basically
    * performs a linear search.
    */
-  Core::MessageItem * messageItemFromMessage( KMMessage * msg ) const;
+  MessageList::Core::MessageItem * messageItemFromMessage( KMMessage * msg ) const;
 
   /**
    * Returns the currently selected MessageItems in the current folder.
@@ -159,7 +164,7 @@ public:
    * If includeCollapsedChildren is true then the children of the selected but
    * collapsed items are also added to the list.
    */
-  QList< Core::MessageItem * > selectionAsMessageItemList( bool includeCollapsedChildren = true ) const;
+  QList< MessageList::Core::MessageItem * > selectionAsMessageItemList( bool includeCollapsedChildren = true ) const;
 
   /**
    * Returns the currently selected KMMsgBases in the current folder.
@@ -213,7 +218,7 @@ public:
    * The items in the returned list are guaranteed to be valid only
    * inside the context of your current stack frame. Don't keep them any longer.
    */
-  QList< Core::MessageItem * > currentThreadAsMessageItemList() const;
+  QList< MessageList::Core::MessageItem * > currentThreadAsMessageItemList() const;
 
   /**
    * Returns the KMMsgBase objects belonging to the current thread. The current
@@ -275,33 +280,33 @@ public:
    * Persistent sets consume resources (memory AND CPU time). Be sure
    * to call deletePersistentSet() when you no longer need it.
    */
-  Core::MessageItemSetReference createPersistentSetFromMessageItemList( const QList< Core::MessageItem * > &items );
+  MessageList::Core::MessageItemSetReference createPersistentSetFromMessageItemList( const QList< MessageList::Core::MessageItem * > &items );
 
   /**
    * Returns the list of messages associated to the specified MessageItemSet.
    * The returned list of messages is guaranteed to be safe: that is
    * only the messages that still exist are returned.
    */
-  QList< KMMsgBase * > persistentSetContentsAsMsgBaseList( Core::MessageItemSetReference ref ) const;
+  QList< KMMsgBase * > persistentSetContentsAsMsgBaseList( MessageList::Core::MessageItemSetReference ref ) const;
 
   /**
    * Selects the items contained in the specified set.
    * If clearSelectionFirst is true then the selection is first cleared, otherwise
    * it's retained.
    */
-  void selectPersistentSet( Core::MessageItemSetReference ref, bool clearSelectionFirst ) const;
+  void selectPersistentSet( MessageList::Core::MessageItemSetReference ref, bool clearSelectionFirst ) const;
 
   /**
    * If bMark is true this function marks the messages in the persistent set
    * as "about to be removed" so they appear dimmer and aren't selectable in the view.
    * If bMark is false then this function clears the "about to be removed" state.
    */
-  void markPersistentSetAsAboutToBeRemoved( Core::MessageItemSetReference ref, bool bMark );
+  void markPersistentSetAsAboutToBeRemoved( MessageList::Core::MessageItemSetReference ref, bool bMark );
 
   /**
    * Destroys the specified persistent MessageItemSet.
    */
-  void deletePersistentSet( Core::MessageItemSetReference ref );
+  void deletePersistentSet( MessageList::Core::MessageItemSetReference ref );
 
   /**
    * Returns true if this drag can be accepted by the underlying view
@@ -345,12 +350,12 @@ protected:
   /**
    * Reimplemented from MessageListView::Core::Widget
    */
-  virtual void viewMessageSelected( Core::MessageItem *msg );
+  virtual void viewMessageSelected( MessageList::Core::MessageItem *msg );
 
   /**
    * Reimplemented from MessageListView::Core::Widget
    */
-  virtual void viewMessageActivated( Core::MessageItem *msg );
+  virtual void viewMessageActivated( MessageList::Core::MessageItem *msg );
 
   /**
    * Reimplemented from MessageListView::Core::Widget
@@ -360,12 +365,12 @@ protected:
   /**
    * Reimplemented from MessageListView::Core::Widget
    */
-  virtual void viewMessageListContextPopupRequest( const QList< Core::MessageItem * > &selectedItems, const QPoint &globalPos );
+  virtual void viewMessageListContextPopupRequest( const QList< MessageList::Core::MessageItem * > &selectedItems, const QPoint &globalPos );
 
   /**
    * Reimplemented from MessageListView::Core::Widget
    */
-  virtual void viewGroupHeaderContextPopupRequest( Core::GroupHeaderItem *group, const QPoint &globalPos );
+  virtual void viewGroupHeaderContextPopupRequest( MessageList::Core::GroupHeaderItem *group, const QPoint &globalPos );
 
   /**
    * Reimplemented from MessageListView::Core::Widget
@@ -390,7 +395,7 @@ protected:
   /**
    * Reimplemented from MessageListView::Core::Widget
    */
-  virtual void viewMessageStatusChangeRequest( Core::MessageItem *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus &clear );
+  virtual void viewMessageStatusChangeRequest( MessageList::Core::MessageItem *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus &clear );
 
   /**
    * Reimplemented from MessageListView::Core::Widget
@@ -408,7 +413,7 @@ private:
    * given in the list. The message threads are re-built to the possible degree
    * (as list can contain even disjoint parts of multiple threads).
    */
-  MessageTreeCollection * itemListToMessageTreeCollection( const QList< Core::MessageItem * > &list ) const;
+  MessageTreeCollection * itemListToMessageTreeCollection( const QList< MessageList::Core::MessageItem * > &list ) const;
 
 private slots:
   void animateIcon();

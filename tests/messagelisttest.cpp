@@ -85,7 +85,7 @@ MainWidget::MainWidget( QWidget *parent )
   QSplitter *centralSplitter = new QSplitter( Qt::Vertical, this );
   splitter->addWidget( centralSplitter );
 
-  MessageListView::Pane *messagePane = new MessageListView::Pane( entityModel, collectionView->selectionModel(), this );
+  MessageList::Pane *messagePane = new MessageList::Pane( entityModel, collectionView->selectionModel(), this );
   centralSplitter->addWidget( messagePane );
 
   m_reader = new KMReaderWin( this );

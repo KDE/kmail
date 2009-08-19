@@ -1716,7 +1716,7 @@ void AppearancePageHeadersTab::slotLinkClicked( const QString & link )
 
 void AppearancePage::HeadersTab::slotSelectDefaultAggregation()
 {
-  using namespace KMail::MessageListView::Core;
+  using namespace MessageList::Core;
 
   // Select current default aggregation.
   const Aggregation * defaultAggregation = Manager::instance()->defaultAggregation();
@@ -1725,7 +1725,7 @@ void AppearancePage::HeadersTab::slotSelectDefaultAggregation()
 
 void AppearancePage::HeadersTab::slotSelectDefaultTheme()
 {
-  using namespace KMail::MessageListView::Core;
+  using namespace MessageList::Core;
 
   // Select current default theme.
   const Theme * defaultTheme = Manager::instance()->defaultTheme();
@@ -1784,12 +1784,12 @@ void AppearancePage::HeadersTab::save()
   // "Aggregation"
   const QString aggregationID = mAggregationComboBox->currentAggregation()->id();
   storageModelAggregations.writeEntry( QString( "DefaultSet" ), aggregationID );
-  KMail::MessageListView::Core::Manager::instance()->aggregationsConfigurationCompleted();
+  MessageList::Core::Manager::instance()->aggregationsConfigurationCompleted();
 
   // "Theme"
   const QString themeID = mThemeComboBox->currentTheme()->id();;
   storageModelThemes.writeEntry( QString( "DefaultSet" ), themeID );
-  KMail::MessageListView::Core::Manager::instance()->themesConfigurationCompleted();
+  MessageList::Core::Manager::instance()->themesConfigurationCompleted();
 
   int dateDisplayID = mDateDisplay->selected();
   // check bounds:

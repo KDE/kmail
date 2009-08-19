@@ -43,6 +43,8 @@ namespace KMail
 namespace MessageListView
 {
 
+using namespace MessageList;
+
 StorageModel::StorageModel( KMFolder * folder, QObject * parent )
   : Core::StorageModel( parent ), mFolder( folder )
 {
