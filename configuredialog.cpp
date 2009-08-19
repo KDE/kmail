@@ -1585,13 +1585,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Aggregation"
-  using KMail::MessageListView::Core::AggregationComboBox;
+  using MessageList::Core::AggregationComboBox;
   mAggregationComboBox = new AggregationComboBox( group );
 
   QLabel* aggregationLabel = new QLabel( i18n( "Aggregation" ), group );
   aggregationLabel->setBuddy( mAggregationComboBox );
 
-  using KMail::MessageListView::Core::AggregationConfigButton;
+  using MessageList::Core::AggregationConfigButton;
   AggregationConfigButton * aggregationConfigButton = new AggregationConfigButton( group, mAggregationComboBox );
 
   QHBoxLayout * aggregationLayout = new QHBoxLayout();
@@ -1606,13 +1606,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Theme"
-  using KMail::MessageListView::Core::ThemeComboBox;
+  using MessageList::Core::ThemeComboBox;
   mThemeComboBox = new ThemeComboBox( group );
 
   QLabel *themeLabel = new QLabel( i18n( "Theme" ), group );
   themeLabel->setBuddy( mThemeComboBox );
 
-  using KMail::MessageListView::Core::ThemeConfigButton;
+  using MessageList::Core::ThemeConfigButton;
   ThemeConfigButton * themeConfigButton = new ThemeConfigButton( group );
 
   QHBoxLayout * themeLayout = new QHBoxLayout();
