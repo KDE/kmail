@@ -332,6 +332,13 @@ else(KDEPIM_ENTERPRISE_BUILD)
   set(DELETE_INVITATIONS_AFTER_REPLY_DEFAULT false)
   set(ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT false)
 endif(KDEPIM_ENTERPRISE_BUILD)
+
+if(WIN32)
+  set(MAILDIR_FILENAME_SEPARATOR "!")
+else(WIN32)
+  set(MAILDIR_FILENAME_SEPARATOR ":")
+endif(WIN32)
+
 configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS

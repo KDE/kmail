@@ -156,6 +156,13 @@
         </choices>
         <default>MB</default>
       </entry>
+      <entry name="MaildirFilenameSeparator" type="String">
+        <label>
+          The filename separator for maildir files "uniq:info" - see the original maildir specification at http://cr.yp.to/proto/maildir.html
+          The default depends on the OS we're currently on. WIN='!', all others ':'.
+        </label>
+        <default>${MAILDIR_FILENAME_SEPARATOR}</default>
+      </entry>
     </group>
 <!-- General -->
 
