@@ -102,7 +102,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
-  mStorageDebug = KDebug::registerArea( "Storage Debug" );
+  mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
   kDebug();
   setObjectName( name );
   mySelf = this;
