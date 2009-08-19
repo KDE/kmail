@@ -190,7 +190,6 @@ void KMLineEdit::editRecentAddresses()
 //-----------------------------------------------------------------------------
 void KMLineEdit::loadContacts()
 {
-  // was: KABC::AddressLineEdit::loadAddresses()
   AddresseeLineEdit::loadContacts();
 
   if ( GlobalSettings::self()->showRecentAddressesInComposer() ){
@@ -199,7 +198,8 @@ void KMLineEdit::loadContacts()
         KPIM::RecentAddresses::self( KMKernel::config() )->addresses();
       QStringList::Iterator it = recent.begin();
       QString name, email;
-      int idx = addCompletionSource( i18n( "Recent Addresses" ) );
+      // FIXME: Make the 120 configureable. This is also hardcoded somewhere else!
+      int idx = addCompletionSource( i18n( "Recent Addresses" ), 120 );
       for ( ; it != recent.end(); ++it ) {
         KABC::Addressee addr;
         KPIMUtils::extractEmailAddressAndName(*it, email, name);
