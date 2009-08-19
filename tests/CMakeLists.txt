@@ -62,18 +62,6 @@ kde4_add_executable(recipienteditortest TEST ${recipienteditortest_SRCS})
 target_link_libraries(recipienteditortest  ${KDE4_KIO_LIBS} kmailprivate kdepim )
 
 
-########### messagelist test ###############
-
-set(messagelisttest_SRCS messagelisttest.cpp )
-
-include_directories(
-  ${CMAKE_SOURCE_DIR}/akonadi
-)
-kde4_add_executable(messagelisttest TEST ${messagelisttest_SRCS})
-
-target_link_libraries(messagelisttest ${KDE4_KDEUI_LIBS} ${KDE4_AKONADI_LIBS} kmailprivate kdepim akonadi_next mailreader)
-
-
 ###### TODO port storagelayer tests to QTestLib
 
 #kunittest_storagelayermodule_la_SOURCES = storagelayermodule.cpp messagedicttests.cpp ../kmdict.cpp
