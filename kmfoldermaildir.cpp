@@ -53,17 +53,6 @@ using KMail::MaildirJob;
 
 using KPIMUtils::removeDirAndContentsRecursively;
 
-// A separator for "uniq:info" (see the original maildir specification // krazy:exclude=spelling
-// at http://cr.yp.to/proto/maildir.html.
-// Windows uses '!' character instead as ':' is not supported by the OS.
-// TODO make it configurable - jstaniek
-// TODO check what the choice for Thunderbird 3 - jstaniek
-#ifdef Q_WS_WIN
-#define KMAIL_MAILDIR_FNAME_SEPARATOR "!"
-#else
-#define KMAIL_MAILDIR_FNAME_SEPARATOR ":"
-#endif
-
 #ifdef KMAIL_SQLITE_INDEX
 #include <sqlite3.h>
 #endif
@@ -572,9 +561,9 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   // messages in the 'cur' directory are Read by default.. but may
   // actually be some other state (but not New)
   if ( status.isRead() ) {
-    if ( !file.contains(KMAIL_MAILDIR_FNAME_SEPARATOR "2,") ) {
+    if ( !file.contains( GlobalSettings::maildirFilenameSeparator() + QLatin1String( "2," ) ) ) {
       status.setUnread();
-    } else if ( file.right(5) == KMAIL_MAILDIR_FNAME_SEPARATOR "2,RS" ) {
+    } else if ( file.right(5) == ( GlobalSettings::maildirFilenameSeparator() + QLatin1String( "2,RS"  ) ) ) {
       status.setReplied();
     }
   }
@@ -958,8 +947,6 @@ int KMFolderMaildir::removeContents()
   return 0;
 }
 
-K_GLOBAL_STATIC_WITH_ARGS(QRegExp, s_suffixRegExp, (KMAIL_MAILDIR_FNAME_SEPARATOR "2,?R?S?$"))
-
 //-----------------------------------------------------------------------------
 // static
 QString KMFolderMaildir::constructValidFileName( const QString & filename,
@@ -972,14 +959,15 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
     aFileName.sprintf("%ld.%d.", (long)time(0), getpid());
     aFileName += KRandom::randomString(5);
   }
-  int pos = aFileName.lastIndexOf( *s_suffixRegExp );
+  static const QRegExp SUFFIX_REGEXP( GlobalSettings::maildirFilenameSeparator() + QLatin1String( "2,?R?S?$" ) );
+  int pos = aFileName.lastIndexOf( SUFFIX_REGEXP );
   if ( pos >= 0 )
     aFileName.truncate( pos );
 
   // only add status suffix if the message is neither new nor unread
   if (! ( status.isNew() || status.isUnread() ) )
   {
-    QString suffix( KMAIL_MAILDIR_FNAME_SEPARATOR "2," );
+    QString suffix( GlobalSettings::maildirFilenameSeparator() + QLatin1String( "2," ) );
     if ( status.isReplied() )
       suffix += "RS";
     else

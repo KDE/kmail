@@ -176,6 +176,10 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       // else fall through
     }
 
+    // Get the image data before showing the dialog, since that processes events which can delete
+    // the QMimeData object behind our back
+    const QByteArray imageData = source->data( "image/png" );
+
     // Ok, when we reached this point, the user wants to add the image as an attachment.
     // Ask for the filename first.
     bool ok;
@@ -185,7 +189,6 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       return;
     }
 
-    const QByteArray imageData = source->data( "image/png" );
     m_composerWin->addAttachment( attName, "base64", imageData, "image", "png", QByteArray(),
                                   QString(), QByteArray() );
     return;

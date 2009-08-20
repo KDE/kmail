@@ -1663,7 +1663,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
-  htmlWriter()->queue( writeMsgHeader( aMsg, hasVCard, true ) );
+  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard ? vCardNode : 0, true ) );
 
   // show message content
   ObjectTreeParser otp( this );
@@ -1764,7 +1764,7 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
 
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLevel)
+QString KMReaderWin::writeMsgHeader( KMMessage* aMsg, partNode *vCardNode, bool topLevel )
 {
   if ( !headerStyle() ) {
     kFatal() << "Trying to writeMsgHeader() without a header style set!";
@@ -1773,13 +1773,11 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLeve
     kFatal() << "trying to writeMsgHeader() without a header strategy set!";
   }
   QString href;
-  if (hasVCard)
-    href = QString("file:") + KUrl::toPercentEncoding( mTempFiles.last() );
+  if ( vCardNode )
+    href = vCardNode->asHREF( "body" );
 
   return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting, topLevel );
 }
-
-
 
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
@@ -2863,7 +2861,7 @@ bool KMReaderWin::decryptMessage() const
   return true;
 }
 
-void KMReaderWin::scrollToAttachment( partNode *node )
+void KMReaderWin::scrollToAttachment( const partNode *node )
 {
   DOM::Document doc = mViewer->htmlDocument();
 
@@ -2888,6 +2886,10 @@ void KMReaderWin::scrollToAttachment( partNode *node )
   }
   attachmentDiv.setAttribute( "style", QString( "border:2px solid %1" )
       .arg( cssHelper()->pgpWarnColor().name() ) );
+
+  // Update rendering, otherwise the rendering is not updated when the user clicks on an attachment
+  // that causes scrolling and the open attachment dialog
+  doc.updateRendering();
 }
 
 void KMReaderWin::injectAttachments()
@@ -2994,7 +2996,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       html += "<div style=\"float:left;\">";
       html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
       QString fileName = writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
-      QString href = "file:" + KUrl::toPercentEncoding( fileName ) ;
+      QString href = node->asHREF( "header" );
       html += QString::fromLatin1( "<a href=\"" ) + href +
               QString::fromLatin1( "\">" );
       html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";

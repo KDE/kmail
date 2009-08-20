@@ -282,6 +282,7 @@ namespace KMail {
         part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
 
         writeAttachmentMarkHeader( node );
+        node->setDisplayedEmbedded( true );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
         writeAttachmentMarkFooter();
 #if 0
@@ -369,12 +370,16 @@ namespace KMail {
       if ( attachmentStrategy() != AttachmentStrategy::hidden()
            || showOnlyOneMimePart() )
         writePartIcon( &node->msgPart(), node->nodeId() );
-    } else if ( result.isImage() )
+    } else if ( result.isImage() ) {
+      node->setDisplayedEmbedded( true );
       writePartIcon( &node->msgPart(), node->nodeId(), true );
-    else
+    }
+    else {
+      node->setDisplayedEmbedded( true );
       writeBodyString( node->msgPart().bodyDecoded(),
                        node->trueFromAddress(),
                        codecFor( node ), result, false );
+    }
     // end of ###
   }
 
@@ -995,6 +1000,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
         HTMLQuoteColorer colorer( cssHelper() );
         bodyText = colorer.process( bodyText );
+        curNode->setDisplayedEmbedded( true );
 
         // Strip <html>, <head>, and <body>, so we don't end up having those tags
         // twice, which confuses KHTML (especially with a signed
@@ -1225,8 +1231,7 @@ namespace KMail {
       QString htmlStr = "<table cellspacing=\"1\" class=\"textAtm\">"
                  "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
       if ( !fileName.isEmpty() )
-        htmlStr += "<a href=\"" + QString("file:")
-          + KUrl::toPercentEncoding( fileName ) + "\">"
+        htmlStr += "<a href=\"" +curNode->asHREF( "body" ) + "\">"
           + label + "</a>";
       else
         htmlStr += label;
@@ -1239,9 +1244,11 @@ namespace KMail {
     // process old style not-multipart Mailman messages to
     // enable verification of the embedded messages' signatures
     if ( !isMailmanMessage( curNode ) ||
-         !processMailmanMessage( curNode ) )
+         !processMailmanMessage( curNode ) ) {
       writeBodyString( mRawReplyString, curNode->trueFromAddress(),
                        codecFor( curNode ), result, !bDrawFrame );
+      curNode->setDisplayedEmbedded( true );
+    }
     if ( bDrawFrame )
       htmlWriter()->queue( "</td></tr></table>" );
 
@@ -1529,7 +1536,7 @@ namespace KMail {
       htmlWriter()->queue( writeSigstatHeader( messagePart,
                                                cryptoProtocol(),
                                                node->trueFromAddress(),
-                                               filename ) );
+                                               node ) );
     }
     QByteArray rfc822messageStr( node->msgPart().bodyDecoded() );
     // display the headers of the encapsulated message
@@ -1546,6 +1553,7 @@ namespace KMail {
                                 rfc822messageStr.constData(),
                                 "encapsulated message", false /*append*/,
                                 false /*add to textual content*/ );
+    node->setDisplayedEmbedded( true );
     if ( mReader )
       htmlWriter()->queue( writeSigstatFooter( messagePart ) );
     return true;
@@ -1996,8 +2004,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     QString htmlStr = "<table cellspacing=\"1\" class=\"textAtm\">"
                 "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
     if ( !fileName.isEmpty() )
-      htmlStr += "<a href=\"" + QString("file:")
-        + KUrl::toPercentEncoding( fileName ) + "\">"
+      htmlStr += "<a href=\"" +node->asHREF( "body" ) + "\">"
         + label + "</a>";
     else
       htmlStr += label;
@@ -2065,7 +2072,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
       comment.clear();
 
     QString fileName = mReader->writeMessagePartToTempFile( msgPart, partNum );
-    QString href = "file:" + KUrl::toPercentEncoding( fileName ) ;
+    QString href = QString( "attachment:%1?place=body" ).arg( partNum );
 
     QString iconName;
     QByteArray contentId = msgPart->contentId();
@@ -2349,7 +2356,7 @@ static QString endVerboseSigstatHeader( const PartMetaData & pmd )
 QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const Kleo::CryptoBackend::Protocol * cryptProto,
                                               const QString & fromAddress,
-                                              const QString & filename )
+                                              partNode *node )
 {
   const bool isSMIME = cryptProto && ( cryptProto == Kleo::CryptoBackendFactory::instance()->smime() );
   QString signer = block.signer;
@@ -2361,9 +2368,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
   if ( block.isEncapsulatedRfc822Message ) {
     htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
                "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
-    if ( !filename.isEmpty() ) {
-      htmlStr += "<a href=\"" + QString("file:") +
-        KUrl::toPercentEncoding( filename ) + "\">" +
+    if ( node ) {
+      htmlStr += "<a href=\"" +node->asHREF( "body" ) + "\">" +
         i18n("Encapsulated message") + "</a>";
     } else {
       htmlStr += i18n("Encapsulated message");
