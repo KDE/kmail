@@ -37,7 +37,6 @@ add_custom_target(kmail_xml ALL
   COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
-add_subdirectory(interfaces)
 add_subdirectory(about)
 add_subdirectory(pics)
 add_subdirectory(icons)
