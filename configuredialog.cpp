@@ -1588,7 +1588,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   using KMail::MessageListView::Core::AggregationComboBox;
   mAggregationComboBox = new AggregationComboBox( group );
 
-  QLabel* aggregationLabel = new QLabel( i18n( "Aggregation" ), group );
+  QLabel* aggregationLabel = new QLabel( i18n( "Default Aggregation:" ), group );
   aggregationLabel->setBuddy( mAggregationComboBox );
 
   using KMail::MessageListView::Core::AggregationConfigButton;
@@ -1609,7 +1609,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   using KMail::MessageListView::Core::ThemeComboBox;
   mThemeComboBox = new ThemeComboBox( group );
 
-  QLabel *themeLabel = new QLabel( i18n( "Theme" ), group );
+  QLabel *themeLabel = new QLabel( i18n( "Default Theme:" ), group );
   themeLabel->setBuddy( mThemeComboBox );
 
   using KMail::MessageListView::Core::ThemeConfigButton;
