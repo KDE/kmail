@@ -1006,7 +1006,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     {
       if ( mReader->htmlMail() ) {
 
-        HTMLQuoteColorer colorer( cssHelper() );
+        HTMLQuoteColorer colorer;
+        for ( int i = 0; i < 2; i++ )
+          colorer.setQuoteColor( i, cssHelper()->quoteColor( i ) );
         bodyText = colorer.process( bodyText );
         curNode->setDisplayedEmbedded( true );
 

@@ -21,6 +21,8 @@
 
 #include <dom/dom_node.h>
 
+#include <QColor>
+
 namespace KPIM
 {
   class CSSHelper;
@@ -38,11 +40,21 @@ class HTMLQuoteColorer
 {
   public:
 
-    /** @param cssHelper the CSSHelper used for rendering, we get the quote colors from it */
-    explicit HTMLQuoteColorer( KPIM::CSSHelper *cssHelper );
+    HTMLQuoteColorer();
+
+    /**
+     * Sets the quote color of the specific leve.
+     * This class supports 3 levels, from 0 to 2.
+     * Level 2 is the most quoted, with three quote signs in front of the line, and
+     * level 0 is the least quoted, with one quote sign in front of the line.
+     *
+     * If you don't call this, the color of the quoting will be black.
+     */
+    void setQuoteColor( int level, const QColor &color );
 
     /**
      * Do the work and add nice colors to the HTML.
+     * You need to call setQuoteColor() before calling this.
      * @param htmlSource the input HTML code
      * @return the modified HTML code
      */
@@ -53,7 +65,7 @@ class HTMLQuoteColorer
     DOM::Node processNode( DOM::Node node );
     int quoteLength( const QString &line ) const;
 
-    KPIM::CSSHelper *mCSSHelper;
+    QColor mQuoteColors[3];
     bool mIsQuotedLine;
     bool mIsFirstTextNodeInLine;
     int currentQuoteLength;
