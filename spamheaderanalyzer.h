@@ -41,33 +41,49 @@ class KMMessage;
 #include <QList>
 namespace KMail {
 
+  typedef enum {
+    noError,
+    uninitializedStructUsed,
+    errorExtractingAgentString,
+    couldNotConverScoreToFloat,
+    couldNotConvertThresholdToFloatOrThresholdIsNegative,
+    couldNotFindTheScoreField,
+    couldNotFindTheThresholdField,
+    couldNotConvertConfidenceToFloat
+  } SpamError;
+  
   /**
-     @short A simple tupel of agent, score, confidence and header.
+     @short A simple tuple of error, agent, score, confidence and header.
 
      The score returned is positive if no error has occurred.
-     Negative values indicate the following errors:
-       -1.0     Unintialized struct used
-       -2.0     Error extracing agent string
-       -3.0     Couldn't convert score to float
-       -4.0     Couldn't convert threshold to float or threshold is negative
-       -5.0     Couldn't find the score field
-       -6.0     Couldn't find the threshold field
+     error values indicate the following errors:
+       noError                                               Spam Headers succesfully parsed 
+       uninitializedStructUsed                               Unintialized struct used
+       errorExtractingAgentString                            Error extracing agent string
+       couldNotConverScoreToFloat                            Couldn't convert score to float
+       couldNotConvertThresholdToFloatOrThresholdIsNegative  Couldn't convert threshold to float or threshold is negative
+       couldNotFindTheScoreField                             Couldn't find the score field
+       couldNotFindTheThresholdField                         Couldn't find the threshold field
+       couldNotConvertConfidenceToFloat                      Couldn't convert confidence to float
   */
   class SpamScore {
   public:
+
     SpamScore() : mScore( -2.0 ), mConfidence( -2.0 ) {}
-    SpamScore( const QString & agent, float score, float confidence, 
+    SpamScore( const QString & agent, SpamError error, float score, float confidence, 
         const QString & header, const QString & cheader )
-      : mAgent( agent ), mScore( score ), mConfidence( confidence ), 
+      : mAgent( agent ), mError( error ), mScore( score ), mConfidence( confidence ),
           mHeader( header ), mConfidenceHeader( cheader ) {}
     QString agent() const { return mAgent; }
     float score() const { return mScore; }
     float confidence() const { return mConfidence; }
+    SpamError error() const { return mError; }
     QString spamHeader() const { return mHeader; }
     QString confidenceHeader() const { return mConfidenceHeader; }
 
   private:
     QString mAgent;
+    SpamError mError;
     float mScore;
     float mConfidence;
     QString mHeader;
