@@ -136,7 +136,6 @@ public:
   virtual bool save();
 
 private slots:
-  void slotChangeIcon( const QString &icon );
   /*
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities
@@ -149,16 +148,10 @@ private:
   void initializeWithValuesFromFolder( KMFolder* folder );
 
 private:
-  KComboBox *mShowSenderReceiverComboBox;
   KComboBox *mContentsComboBox;
   KComboBox *mIncidencesForComboBox;
   QCheckBox *mAlarmsBlockedCheckBox;
   QCheckBox *mSharedSeenFlagsCheckBox;
-  QLabel      *mNormalIconLabel;
-  KIconButton *mNormalIconButton;
-  QLabel      *mUnreadIconLabel;
-  KIconButton *mUnreadIconButton;
-  QCheckBox   *mIconsCheckBox;
   QCheckBox   *mNewMailCheckBox;
   QCheckBox   *mNotifyOnNewMailCheckBox;
   QCheckBox   *mKeepRepliesInSameFolderCheckBox;
@@ -188,6 +181,7 @@ public:
   virtual bool save();
 
 public slots:
+  void slotChangeIcon( const QString & icon );
   void slotAggregationCheckboxChanged();
   void slotThemeCheckboxChanged();
   void slotSelectFolderAggregation();
@@ -197,6 +191,14 @@ private:
   void initializeWithValuesFromFolder( KMFolder * folder );
 
 private:
+  bool mIsLocalSystemFolder;
+  bool mIsResourceFolder;
+  QCheckBox   *mIconsCheckBox;
+  QLabel      *mNormalIconLabel;
+  KIconButton *mNormalIconButton;
+  QLabel      *mUnreadIconLabel;
+  KIconButton *mUnreadIconButton;
+  KComboBox *mShowSenderReceiverComboBox;
   QCheckBox *mUseDefaultAggregationCheckBox;
   MessageListView::Core::AggregationComboBox *mAggregationComboBox;
   QCheckBox *mUseDefaultThemeCheckBox;
