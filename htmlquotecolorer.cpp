@@ -18,16 +18,13 @@
 */
 #include "htmlquotecolorer.h"
 
-#include "csshelper.h"
-
 #include <dom/html_document.h>
 #include <dom/dom_element.h>
 #include <dom/dom_exception.h>
 
 namespace KMail {
 
-HTMLQuoteColorer::HTMLQuoteColorer( KPIM::CSSHelper *cssHelper )
-  : mCSSHelper( cssHelper )
+HTMLQuoteColorer::HTMLQuoteColorer()
 {
 }
 
@@ -88,7 +85,7 @@ DOM::Node HTMLQuoteColorer::processNode( DOM::Node node )
     // Ok, we are in a line that should be quoted, so create a font node for the color and replace
     // the current node with it.
     DOM::Element font = node.ownerDocument().createElement( QString( "font" ) );
-    font.setAttribute( QString( "color" ), mCSSHelper->quoteColor( currentQuoteLength ).name() );
+    font.setAttribute( QString( "color" ), mQuoteColors[ currentQuoteLength ].name() );
     node.parentNode().replaceChild( font, node );
     font.appendChild( node );
     returnNode = font;
@@ -116,6 +113,12 @@ int HTMLQuoteColorer::quoteLength( const QString &line ) const
   if ( simplified.startsWith( ">>" ) ) return 2;
   if ( simplified.startsWith( ">" ) ) return 1;
   return 0;
+}
+
+void HTMLQuoteColorer::setQuoteColor( int level, const QColor& color )
+{
+  if ( level < 3 )
+    mQuoteColors[level] = color;
 }
 
 }

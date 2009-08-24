@@ -353,9 +353,15 @@ namespace KMail {
       return;
 
     bool asIcon = true;
+
     if ( !result.neverDisplayInline() )
       if ( const AttachmentStrategy * as = attachmentStrategy() )
         asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
+
+    // Show it inline if showOnlyOneMimePart(), which means the user clicked the image
+    // in the message structure viewer manually, and therefore wants to see the full image
+    if ( result.isImage() && showOnlyOneMimePart() && !result.neverDisplayInline() )
+      asIcon = false;
 
     // neither image nor text -> show as icon
     if ( !result.isImage()
@@ -369,8 +375,10 @@ namespace KMail {
     if ( asIcon ) {
       if ( attachmentStrategy() != AttachmentStrategy::hidden()
            || showOnlyOneMimePart() )
+        // Write the node as icon only
         writePartIcon( &node->msgPart(), node->nodeId() );
     } else if ( result.isImage() ) {
+      // Embed the image
       node->setDisplayedEmbedded( true );
       writePartIcon( &node->msgPart(), node->nodeId(), true );
     }
@@ -998,7 +1006,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     {
       if ( mReader->htmlMail() ) {
 
-        HTMLQuoteColorer colorer( cssHelper() );
+        HTMLQuoteColorer colorer;
+        for ( int i = 0; i < 2; i++ )
+          colorer.setQuoteColor( i, cssHelper()->quoteColor( i ) );
         bodyText = colorer.process( bodyText );
         curNode->setDisplayedEmbedded( true );
 
@@ -2090,14 +2100,14 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     if ( inlineImage ) {
       // show the filename of the image below the embedded image
       htmlWriter()->queue( "<div><a href=\"" + href + "\">"
-                           "<img src=\"" + iconName + "\" border=\"0\" style=\"max-width: 100%\"></a>"
+                           "<img src=\"" + fileName + "\" border=\"0\" style=\"max-width: 100%\"></a>"
                            "</div>"
                            "<div><a href=\"" + href + "\">" + label + "</a>"
                            "</div>"
                            "<div>" + comment + "</div><br>" );
     }
     else {
-      // show the filename next to the image
+      // show the filename next to the icon
       htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
                            iconName + "\" border=\"0\" style=\"max-width: 100%\">" + label +
                            "</a></div>"

@@ -329,12 +329,12 @@ namespace KMail {
     static QString imgToDataUrl( const QImage & image );
 
   private:
-    static QString drawSpamMeter( double percent, double confidence,
+    static QString drawSpamMeter( SpamError spamError, double percent, double confidence,
         const QString & filterHeader, const QString & confidenceHeader );
 
   };
 
-  QString FancyHeaderStyle::drawSpamMeter( double percent, double confidence,
+  QString FancyHeaderStyle::drawSpamMeter( SpamError spamError, double percent, double confidence,
                                            const QString & filterHeader, const QString & confidenceHeader )
   {
     static const int meterWidth = 20;
@@ -366,7 +366,7 @@ namespace KMail {
     };
     meterBar.setColor( meterWidth + 1, qRgb( 255, 255, 255 ) );
     meterBar.setColor( meterWidth + 2, qRgb( 170, 170, 170 ) );
-    if ( percent < 0 ) // grey is for errors
+    if ( spamError != noError ) // grey is for errors
       meterBar.fill( meterWidth + 2 );
     else {
       meterBar.fill( meterWidth + 1 );
@@ -380,16 +380,41 @@ namespace KMail {
 
     QString titleText;
     QString confidenceString;
-    if ( confidence >= 0.0 ) {
+    if ( spamError == noError ) {
       confidenceString = QString::number( confidence ) + "% &nbsp;";
       titleText = i18n("%1% probability of being spam with confidence %3%.\n\n"
                        "Full report:\nProbability=%2\nConfidence=%4",
                        percent, filterHeader, confidence, confidenceHeader );
     }
     else
-      titleText = i18n("%1% probability of being spam.\n\n"
+    {
+      QString errorMsg;
+      switch ( spamError )
+      {
+        case errorExtractingAgentString:
+          errorMsg = i18n( "No Spam agent" );
+          break;
+        case couldNotConverScoreToFloat:
+          errorMsg = i18n( "Spam filter score not a number" );
+          break;
+        case couldNotConvertThresholdToFloatOrThresholdIsNegative:
+          errorMsg = i18n( "Threshold not a valid number" );
+          break;
+        case couldNotFindTheScoreField:
+          errorMsg = i18n( "Spam filter score could not be extracted from header" );
+          break;
+        case couldNotFindTheThresholdField:
+          errorMsg = i18n( "Threshold could not be extracted from header" );
+          break;
+        default:
+          errorMsg = i18n( "Error evaluating spam score" );
+          break;
+      }
+      // report the error in the spam filter
+      titleText = i18n("%1.\n\n"
                        "Full report:\n%2",
-                       percent, filterHeader );
+                       errorMsg, filterHeader );
+    }
     return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
       .arg( imgToDataUrl( meterBar ), QString::number( meterWidth ),
             QString::number( meterHeight ), titleText ) + confidenceString;
@@ -448,7 +473,7 @@ namespace KMail {
       SpamScores scores = SpamHeaderAnalyzer::getSpamScores( message );
       for ( SpamScoresIterator it = scores.begin(); it != scores.end(); ++it )
         spamHTML += (*it).agent() + ' ' +
-                    drawSpamMeter( (*it).score(), (*it).confidence(), (*it).spamHeader(), (*it).confidenceHeader() );
+                    drawSpamMeter( (*it).error(), (*it).score(), (*it).confidence(), (*it).spamHeader(), (*it).confidenceHeader() );
     }
 
     QString userHTML;

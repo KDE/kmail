@@ -3512,7 +3512,6 @@ void KMMainWidget::setupActions()
 {
   mMsgActions = new KMail::MessageActions( actionCollection(), this );
   mMsgActions->setMessageView( mMsgView );
-  mMsgActions->setupForwardingActionsList( mGUIClient );
 
   //----- File Menu
   mSaveAsAction = new KAction(KIcon("document-save"), i18n("Save &As..."), this);
@@ -4471,14 +4470,13 @@ void KMMainWidget::slotShowStartupFolder()
   connect( kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
            this, SLOT( initializeMessageTagActions() ) );
 
-  // plug shortcut filter actions now
+  // Plug various action lists. This can't be done in the constructor, as that is called before
+  // the main window or Kontact calls createGUI().
+  // This function however is called with a single shot timer.
   initializeFilterActions();
-
-  // plug folder shortcut actions
   initializeFolderShortcutActions();
-
-  // plug tag actions now
   initializeMessageTagActions();
+  messageActions()->setupForwardingActionsList( mGUIClient );
 
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
   if ( kmkernel->firstStart() ||
