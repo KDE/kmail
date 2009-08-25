@@ -164,14 +164,17 @@ void KMLineEdit::loadContacts()
         KRecentAddress::RecentAddresses::self( KMKernel::config() )->addresses();
       QStringList::Iterator it = recent.begin();
       QString name, email;
-      // FIXME: Make the 10 configureable. This is also hardcoded somewhere else!
-      int idx = addCompletionSource( i18n( "Recent Addresses" ), 10 );
+
+      KConfig config( "kpimcompletionorder" );
+      config.setGroup( "CompletionWeights" );
+      int weight = config.readEntry( "Recent Addresses", "10" ).toInt();
+      int idx = addCompletionSource( i18n( "Recent Addresses" ), weight );
       for ( ; it != recent.end(); ++it ) {
         KABC::Addressee addr;
         KPIM::getNameAndMail(*it, name, email);
         addr.setNameFromString( KPIM::quoteNameIfNecessary( name ));
         addr.insertEmail( email, true );
-        addContact( addr, 10, idx ); // more weight than kabc entries and more than ldap results
+        addContact( addr, weight, idx ); // more weight than kabc entries and more than ldap results
       }
     }
   }
