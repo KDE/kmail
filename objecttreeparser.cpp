@@ -2030,13 +2030,13 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     if( inlineImage )
       // show the filename of the image below the embedded image
       htmlWriter()->queue( "<div><a href=\"" + href + "\">"
-                           "<img src=\"" + iconName + "\" border=\"0\" style=\"max-width: 100%\"></a>"
+                           "<img src=\"" + fileName + "\" border=\"0\" style=\"max-width: 100%\"></a>"
                            "</div>"
                            "<div><a href=\"" + href + "\">" + label + "</a>"
                            "</div>"
                            "<div>" + comment + "</div><br>" );
     else
-      // show the filename next to the image
+      // show the filename next to the icon
       htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
                            iconName + "\" border=\"0\" style=\"max-width: 100%\">" + label +
                            "</a></div>"
