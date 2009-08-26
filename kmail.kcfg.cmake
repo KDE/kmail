@@ -346,7 +346,7 @@
         <label></label>
         <default>78</default>
         <min>30</min>
-        <max>255</max>
+        <max>998</max>
       </entry>
        <entry name="TooManyRecipients" type="Bool" key="too-many-recipients">
         <label>Warn if the number of recipients is larger than</label>
