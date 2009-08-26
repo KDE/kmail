@@ -145,11 +145,13 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   mActionCollection->addAction("message_forward", mForwardActionMenu );
 
-  mForwardAttachedAction  = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
-  mActionCollection->addAction("message_forward_as_attachment", mForwardAttachedAction );
-  mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
-  connect( mForwardAttachedAction, SIGNAL(triggered(bool) ),
-           parent, SLOT(slotForwardAttachedMsg()) );
+  mForwardAttachedAction = new KAction( KIcon("mail-forward"),
+                                        i18nc( "@action:inmenu Message->Forward->",
+                                               "As &Attachment..." ),
+                                        this );
+  connect( mForwardAttachedAction, SIGNAL( triggered( bool ) ),
+           parent, SLOT( slotForwardAttachedMsg() ) );
+  mActionCollection->addAction( "message_forward_as_attachment", mForwardAttachedAction );
 
   mForwardInlineAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
   mActionCollection->addAction("message_forward_inline", mForwardInlineAction );
@@ -159,11 +161,11 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
 
   setupForwardActions();
 
-  mRedirectAction  = new KAction(i18nc("Message->Forward->", "&Redirect..."), this);
-  mActionCollection->addAction("message_forward_redirect", mRedirectAction );
-  connect( mRedirectAction, SIGNAL(triggered(bool)),
-           parent, SLOT(slotRedirectMsg()));
-  mRedirectAction->setShortcut(QKeySequence(Qt::Key_E));
+  mRedirectAction  = new KAction(i18nc("Message->Forward->", "&Redirect..."), this );
+  mActionCollection->addAction( "message_forward_redirect", mRedirectAction );
+  connect( mRedirectAction, SIGNAL( triggered( bool ) ),
+           parent, SLOT( slotRedirectMsg() ) );
+  mRedirectAction->setShortcut( QKeySequence( Qt::Key_E ) );
   mForwardActionMenu->addAction( mRedirectAction );
 
   updateActions();
@@ -262,18 +264,18 @@ void MessageActions::setupForwardActions()
 
 void MessageActions::setupForwardingActionsList( KXMLGUIClient *guiClient )
 {
-  QList<QAction*> mForwardActionList;
+  QList<QAction*> forwardActionList;
   guiClient->unplugActionList( "forward_action_list" );
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
-    mForwardActionList.append( mForwardInlineAction );
-    mForwardActionList.append( mForwardAttachedAction );
+    forwardActionList.append( mForwardInlineAction );
+    forwardActionList.append( mForwardAttachedAction );
   }
   else {
-    mForwardActionList.append( mForwardAttachedAction );
-    mForwardActionList.append( mForwardInlineAction );
+    forwardActionList.append( mForwardAttachedAction );
+    forwardActionList.append( mForwardInlineAction );
   }
-  mForwardActionList.append( mRedirectAction );
-  guiClient->plugActionList( "forward_action_list", mForwardActionList );
+  forwardActionList.append( mRedirectAction );
+  guiClient->plugActionList( "forward_action_list", forwardActionList );
 }
 
 
