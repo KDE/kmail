@@ -123,6 +123,7 @@ namespace {
     ~AttachmentURLHandler() {}
 
     bool handleClick( const KUrl &, KMReaderWin * ) const;
+    bool handleShiftClick( const KUrl &url, KMReaderWin *window ) const;
     bool handleContextMenuRequest( const KUrl &, const QPoint &, KMReaderWin * ) const;
     bool handleDrag( const KUrl &url, KMReaderWin *window ) const;
     bool willHandleDrag( const KUrl &url, KMReaderWin *window ) const;
@@ -312,6 +313,14 @@ void KMail::URLHandlerManager::unregisterHandler( const Interface::BodyPartURLHa
 bool KMail::URLHandlerManager::handleClick( const KUrl & url, KMReaderWin * w ) const {
   for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( url, w ) )
+      return true;
+  return false;
+}
+
+bool KMail::URLHandlerManager::handleShiftClick( const KUrl &url, KMReaderWin *window ) const
+{
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+    if ( (*it)->handleShiftClick( url, window ) )
       return true;
   return false;
 }
@@ -579,6 +588,17 @@ namespace {
     if ( shouldShowDialog )
       // PENDING(romain_kdab) : replace with toLocalFile() ?
       w->openAttachment( node->nodeId(), w->tempFileUrlFromPartNode( node ).path() );
+    return true;
+  }
+
+  bool AttachmentURLHandler::handleShiftClick( const KUrl &url, KMReaderWin *window ) const
+  {
+    partNode * node = partNodeForUrl( url, window );
+    if ( !node )
+      return false;
+    if ( !window )
+      return false;
+    window->saveAttachment( window->tempFileUrlFromPartNode( node ) );
     return true;
   }
 
