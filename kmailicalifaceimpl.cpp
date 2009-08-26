@@ -1686,6 +1686,21 @@ void KMailICalIfaceImpl::changeResourceUIName( const QString &folderPath, const 
   }
 }
 
+// Builds a folder list from the dimap and the local folder list.
+static void createFolderList( QStringList &folderNames, QList<QPointer<KMFolder> > &folderList )
+{
+  QStringList dimapFolderNames;
+  QStringList localFolderNames;
+  QList<QPointer<KMFolder> > dimapFolderList;
+  QList<QPointer<KMFolder> > localFolderList;
+  kmkernel->dimapFolderMgr()->createFolderList( &dimapFolderNames, &dimapFolderList );
+  kmkernel->folderMgr()->createFolderList( &localFolderNames, &localFolderList );
+  folderNames += dimapFolderNames;
+  folderNames += localFolderNames;
+  folderList += dimapFolderList;
+  folderList += localFolderList;
+}
+
 /****************************
  * The config stuff
  */
@@ -1854,9 +1869,6 @@ void KMailICalIfaceImpl::readConfig()
     if ( mNotes->folderType() == KMFolderTypeCachedImap )
       static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
 
-    // BEGIN TILL TODO The below only uses the dimap folder manager, which
-    // will fail for all other folder types. Adjust.
-
     kWarning() << "mCalendar=" << mCalendar << mCalendar->location();
     kWarning() << "mContacts=" << mContacts << mContacts->location();
     kWarning() << "mNotes=" << mNotes << mNotes->location();
@@ -1864,13 +1876,15 @@ void KMailICalIfaceImpl::readConfig()
     // Find all extra folders
     QStringList folderNames;
     QList<QPointer<KMFolder> > folderList;
-    kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
+    createFolderList( folderNames, folderList );
     for(QList<QPointer<KMFolder> >::iterator it = folderList.begin();
         it != folderList.end(); ++it)
     {
-      KMFolderCachedImap* storage = dynamic_cast<KMFolderCachedImap*>( (*it)->storage() );
+      FolderStorage *storage = (*it)->storage();
+      KMFolderCachedImap* dimapStorage = dynamic_cast<KMFolderCachedImap*>( storage );
       if ( storage && storage->contentsType() != 0 ) {
-        storage->updateAnnotationFolderType();
+        if ( dimapStorage )
+          dimapStorage->updateAnnotationFolderType();
         folderContentsTypeChanged( *it, storage->contentsType() );
       }
     }
@@ -1887,8 +1901,6 @@ void KMailICalIfaceImpl::readConfig()
       delete mExtraFolders.take( mContacts->location() );
     if ( mExtraFolders.contains( mNotes->location() ) )
       delete mExtraFolders.take( mNotes->location() );
-
-    // END TILL TODO
 
     emit subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ),
                            mCalendar->location(), mCalendar->label(), true, true );
