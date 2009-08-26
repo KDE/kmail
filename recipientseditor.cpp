@@ -133,9 +133,11 @@ void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
   if ( ev->key() == Qt::Key_Backspace  &&  text().isEmpty() ) {
     ev->accept();
     emit deleteMe();
-  } else if ( ev->key() == Qt::Key_Left && cursorPosition() == 0 ) {
+  } else if ( ev->key() == Qt::Key_Left && cursorPosition() == 0 &&
+              !ev->modifiers().testFlag( Qt::ShiftModifier ) ) {  // Shift would be pressed during selection
     emit leftPressed();
-  } else if ( ev->key() == Qt::Key_Right && cursorPosition() == (int)text().length() ) {
+  } else if ( ev->key() == Qt::Key_Right && cursorPosition() == (int)text().length() &&
+              !ev->modifiers().testFlag( Qt::ShiftModifier ) ) {  // Shift would be pressed during selection
     emit rightPressed();
   } else {
     KMLineEdit::keyPressEvent( ev );
