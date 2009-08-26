@@ -138,8 +138,6 @@ public:
   /** Set the override character encoding. */
   void setOverrideEncoding( const QString & encoding );
 
-  void setPrintFont( const QFont& font );
-
   /** Get codec corresponding to the currently selected override character encoding.
       @return The override codec or 0 if auto-detection is selected. */
   const QTextCodec * overrideCodec() const;

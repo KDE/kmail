@@ -1186,13 +1186,6 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
   update( true );
 }
 
-
-void KMReaderWin::setPrintFont( const QFont& font )
-{
-
-  mCSSHelper->setPrintFont( font );
-}
-
 //-----------------------------------------------------------------------------
 const QTextCodec * KMReaderWin::overrideCodec() const
 {
