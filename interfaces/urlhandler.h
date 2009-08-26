@@ -59,6 +59,16 @@ namespace KMail {
     virtual bool handleClick( const KURL & url, KMReaderWin * w ) const = 0;
 
     /**
+     * Called when shift-clicking the link in the reader.
+     * @return true if the click was handled by this URLHandler, false otherwise
+     */
+    virtual bool handleShiftClick( const KURL &url, KMReaderWin *window ) const {
+      Q_UNUSED( url );
+      Q_UNUSED( window );
+      return false;
+    }
+
+    /**
      * @return should return true if this URLHandler will handle the drag
      */
     virtual bool willHandleDrag( const KURL &url, KMReaderWin *window ) const {

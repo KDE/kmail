@@ -2637,6 +2637,14 @@ void KMReaderWin::slotSaveAttachments()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::saveAttachment( const KURL &tempFileName )
+{
+  mAtmCurrent = msgPartFromUrl( tempFileName );
+  mAtmCurrentName = mUrlClicked.path();
+  slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveMsg()
 {
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( mMainWindow, message() );
@@ -2660,11 +2668,8 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     QMouseEvent* me = static_cast<QMouseEvent*>(e);
     if ( me->button() == LeftButton && ( me->state() & ShiftButton ) ) {
       // special processing for shift+click
-      mAtmCurrent = msgPartFromUrl( mUrlClicked );
-      if ( mAtmCurrent < 0 ) return false; // not an attachment
-      mAtmCurrentName = mUrlClicked.path();
-      slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
-      return true; // eat event
+      URLHandlerManager::instance()->handleShiftClick( mUrlClicked, this );
+      return true;
     }
 
     if ( me->button() == LeftButton ) {

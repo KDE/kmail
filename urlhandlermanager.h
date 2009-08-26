@@ -72,6 +72,7 @@ namespace KMail {
     void unregisterHandler( const Interface::BodyPartURLHandler * handler );
 
     bool handleClick( const KURL & url, KMReaderWin * w=0 ) const;
+    bool handleShiftClick( const KURL &url, KMReaderWin *window = 0 ) const;
     bool handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w=0 ) const;
     bool willHandleDrag( const KURL &url, KMReaderWin *window = 0 ) const;
     bool handleDrag( const KURL &url, KMReaderWin *window = 0 ) const;

@@ -286,6 +286,7 @@ public:
   KMMessage* message(KMFolder** folder=0) const;
 
   void openAttachment( int id, const QString & name );
+  void saveAttachment( const KURL &tempFileName );
 
   void emitUrlClicked( const KURL & url, int button ) {
     emit urlClicked( url, button );
