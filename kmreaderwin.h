@@ -578,7 +578,11 @@ private:
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction, *mSelectAllAction;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
+
   KURL mUrlClicked;
+  QPoint mLastClickPosition;
+  bool mCanStartDrag;
+
   KMail::HtmlWriter * mHtmlWriter;
   std::map<QCString,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
   // an attachment should be updated

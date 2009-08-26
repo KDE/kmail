@@ -43,9 +43,10 @@
 #include "kmreaderwin.h"
 #include "kmkernel.h"
 #include "callback.h"
-
-#include <kimproxy.h>
 #include "stl_util.h"
+
+#include <kurldrag.h>
+#include <kimproxy.h>
 #include <kurl.h>
 
 #include <algorithm>
@@ -123,6 +124,8 @@ namespace {
     ~AttachmentURLHandler() {}
 
     bool handleClick( const KURL &, KMReaderWin * ) const;
+    bool handleDrag( const KURL &url, KMReaderWin *window ) const;
+    bool willHandleDrag( const KURL &url, KMReaderWin *window ) const;
     bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const;
     QString statusBarMessage( const KURL &, KMReaderWin * ) const;
   private:
@@ -314,6 +317,22 @@ bool KMail::URLHandlerManager::handleClick( const KURL & url, KMReaderWin * w ) 
   return false;
 }
 
+bool KMail::URLHandlerManager::willHandleDrag( const KURL &url, KMReaderWin *window ) const
+{
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+    if ( (*it)->willHandleDrag( url, window ) )
+      return true;
+  return false;
+}
+
+bool KMail::URLHandlerManager::handleDrag( const KURL &url, KMReaderWin *window ) const
+{
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+    if ( (*it)->handleDrag( url, window ) )
+      return true;
+  return false;
+}
+
 bool KMail::URLHandlerManager::handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w ) const {
   for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleContextMenuRequest( url, p, w ) )
@@ -433,6 +452,10 @@ namespace {
         return i18n("Show signature details.");
       if ( url.path() == "hideSignatureDetails" )
         return i18n("Hide signature details.");
+      if ( url.path() == "hideAttachmentQuicklist" )
+        return i18n( "Hide attachment list" );
+      if ( url.path() == "showAttachmentQuicklist" )
+        return i18n( "Show attachment list" );
     }
     return QString::null ;
   }
@@ -563,6 +586,32 @@ namespace {
     if ( shouldShowDialog )
       w->openAttachment( node->nodeId(), w->tempFileUrlFromPartNode( node ).path() );
     return true;
+  }
+
+  bool AttachmentURLHandler::willHandleDrag( const KURL &url, KMReaderWin *window ) const
+  {
+    return partNodeForUrl( url, window ) != 0;
+  }
+
+  bool AttachmentURLHandler::handleDrag( const KURL &url, KMReaderWin *window ) const
+  {
+    partNode * node = partNodeForUrl( url, window );
+    if ( !node )
+      return false;
+
+    KURL file = window->tempFileUrlFromPartNode( node ).path();
+    if ( !file.isEmpty() ) {
+      QString icon = node->msgPart().iconName( KIcon::Small );
+      KURLDrag* urlDrag = new KURLDrag( file, window );
+      if ( !icon.isEmpty() ) {
+        QPixmap iconMap( icon );
+        urlDrag->setPixmap( iconMap );
+      }
+      urlDrag->drag();
+      return true;
+    }
+    else
+      return false;
   }
 
   bool AttachmentURLHandler::handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w ) const

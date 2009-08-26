@@ -515,6 +515,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSelectAllAction( 0 ),
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
+    mCanStartDrag( false ),
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
@@ -1928,7 +1929,8 @@ bool foundSMIMEData( const QString aUrl,
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   const KURL url(aUrl);
-  if ( url.protocol() == "kmail" || url.protocol() == "x-kmail"
+
+  if ( url.protocol() == "kmail" || url.protocol() == "x-kmail" || url.protocol() == "attachment"
        || (url.protocol().isEmpty() && url.path().isEmpty()) ) {
     mViewer->setDNDEnabled( false );
   } else {
@@ -1937,6 +1939,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   if ( aUrl.stripWhiteSpace().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
+    mUrlClicked = KURL();
     return;
   }
 
@@ -2663,7 +2666,30 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
       slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
       return true; // eat event
     }
+
+    if ( me->button() == LeftButton ) {
+      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mUrlClicked, this );
+      mLastClickPosition = me->pos();
+    }
   }
+
+  if ( e->type() ==  QEvent::MouseButtonRelease ) {
+    mCanStartDrag = false;
+  }
+
+  if ( e->type() == QEvent::MouseMove ) {
+    QMouseEvent* me = static_cast<QMouseEvent*>( e );
+
+    if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
+      if ( mCanStartDrag && !mUrlClicked.isEmpty() && mUrlClicked.protocol() == "attachment" ) {
+        mCanStartDrag = false;
+        URLHandlerManager::instance()->handleDrag( mUrlClicked, this );
+        slotUrlOn( QString() );
+        return true;
+      }
+    }
+  }
+
   // standard event processing
   return false;
 }

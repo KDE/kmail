@@ -57,6 +57,27 @@ namespace KMail {
 	false otherwise.
     */
     virtual bool handleClick( const KURL & url, KMReaderWin * w ) const = 0;
+
+    /**
+     * @return should return true if this URLHandler will handle the drag
+     */
+    virtual bool willHandleDrag( const KURL &url, KMReaderWin *window ) const {
+      Q_UNUSED( url );
+      Q_UNUSED( window );
+      return false;
+    }
+
+    /**
+     * Called when starting a drag with the given URL.
+     * If the drag is handled, you should create a drag object.
+     * @return true if the click was handled by this URLHandler, false otherwise
+     */
+    virtual bool handleDrag( const KURL &url, KMReaderWin *window ) const {
+      Q_UNUSED( url );
+      Q_UNUSED( window );
+      return false;
+    }
+
     /** Called when RMB-clicking on a link in the reader. Should show
 	a context menu at the specified point with the specified
 	widget as parent.
