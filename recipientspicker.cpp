@@ -338,7 +338,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   setButtons( None );
 
   QVBoxLayout *topLayout = new QVBoxLayout( mainWidget() );
-  topLayout->setSpacing( 0 );
+  topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( 0 );
 
   QFormLayout *resLayout = new QFormLayout();
@@ -387,6 +387,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   topLayout->addItem( buttonLayout );
 
   buttonLayout->addStretch( 1 );			// right align buttons
+  buttonLayout->setSpacing( KDialog::spacingHint() );
 
   mToButton = new QPushButton( i18n("Add as &To"), mainWidget() );
   buttonLayout->addWidget( mToButton );
