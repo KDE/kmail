@@ -629,6 +629,11 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
 #endif
+  } else {
+    // Always disable word wrap when we don't show the composer; otherwise,
+    // QTextEdit gets the widget size wrong and wraps much too early.
+    cWin->disableWordWrap();
+    cWin->slotSendNow();
   }
 
   return QDBusObjectPath(cWin->dbusObjectPath());
