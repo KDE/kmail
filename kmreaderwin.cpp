@@ -486,6 +486,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mScrollDownMoreAction( 0 ),
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
+    mCanStartDrag( false ),
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
@@ -1087,7 +1088,7 @@ void KMReaderWin::initHtmlWidget(void)
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
   // register our own event filter for shift-click
-  mViewer->view()->viewport()->installEventFilter( this );
+  mViewer->view()->widget()->installEventFilter( this );
 
   if ( !htmlWriter() ) {
     mPartHtmlWriter = new KHtmlPartHtmlWriter( mViewer, 0 );
@@ -1962,7 +1963,8 @@ bool foundSMIMEData( const QString aUrl,
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   const KUrl url(aUrl);
-  if ( url.protocol() == "kmail" || url.protocol() == "x-kmail"
+
+  if ( url.protocol() == "kmail" || url.protocol() == "x-kmail" || url.protocol() == "attachment"
        || (url.protocol().isEmpty() && url.path().isEmpty()) ) {
     mViewer->setDNDEnabled( false );
   } else {
@@ -1971,6 +1973,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   if ( aUrl.trimmed().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
+    mUrlClicked = KUrl();
     return;
   }
 
@@ -2730,7 +2733,30 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
       slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
       return true; // eat event
     }
+
+    if ( me->button() == Qt::LeftButton ) {
+      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mUrlClicked, this );
+      mLastClickPosition = me->pos();
+    }
   }
+
+  if ( e->type() ==  QEvent::MouseButtonRelease ) {
+    mCanStartDrag = false;
+  }
+
+  if ( e->type() == QEvent::MouseMove ) {
+    QMouseEvent* me = static_cast<QMouseEvent*>( e );
+
+    if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
+      if ( mCanStartDrag && !mUrlClicked.isEmpty() && mUrlClicked.protocol() == "attachment" ) {
+        mCanStartDrag = false;
+        URLHandlerManager::instance()->handleDrag( mUrlClicked, this );
+        slotUrlOn( QString() );
+        return true;
+      }
+    }
+  }
+
   // standard event processing
   return false;
 }
