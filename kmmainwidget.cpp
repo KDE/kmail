@@ -3106,8 +3106,6 @@ void KMMainWidget::slotSelectMessage(KMMessage* msg)
 #endif
     if (mMsgView)
       mMsgView->setMsg(msg);
-    else
-      slotMsgActivated(msg);
   }
 }
 

@@ -269,7 +269,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mSearchResultOpenBtn = new KPushButton( i18n("Open &Message"), searchWidget );
   mSearchResultOpenBtn->setEnabled( false );
   connect( mSearchResultOpenBtn, SIGNAL( clicked() ),
-           this, SLOT( slotShowSelectedMsg() ) );
+           this, SLOT( slotViewSelectedMsg() ) );
 
   hbl2->addWidget(mSearchFolderLbl);
   hbl2->addWidget(mSearchFolderEdt);
@@ -730,9 +730,9 @@ bool SearchWindow::slotShowMsg( QTreeWidgetItem *item, int )
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotShowSelectedMsg()
+void SearchWindow::slotViewSelectedMsg()
 {
-  slotShowMsg( mLbxMatches->currentItem(), 0 );
+  slotViewMsg( mLbxMatches->currentItem(), 0 );
 }
 
 //-----------------------------------------------------------------------------
