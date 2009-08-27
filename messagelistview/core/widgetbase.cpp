@@ -1018,6 +1018,8 @@ void Widget::searchEditClearButtonClicked()
     return;
 
   resetFilter();
+
+  mView->scrollTo( mView->currentIndex(), QAbstractItemView::PositionAtCenter );
 }
 
 
