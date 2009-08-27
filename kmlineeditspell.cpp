@@ -172,9 +172,14 @@ void KMLineEdit::loadContacts()
       for ( ; it != recent.end(); ++it ) {
         KABC::Addressee addr;
         KPIM::getNameAndMail(*it, name, email);
-        addr.setNameFromString( KPIM::quoteNameIfNecessary( name ));
+        name = KPIM::quoteNameIfNecessary( name );
+        if ( ( name[0] == '"' ) && ( name[name.length() - 1] == '"' ) ) {
+          name.remove( 0, 1 );
+          name.truncate( name.length() - 1 );
+        }
+        addr.setNameFromString( name );
         addr.insertEmail( email, true );
-        addContact( addr, weight, idx ); // more weight than kabc entries and more than ldap results
+        addContact( addr, weight, idx );
       }
     }
   }
