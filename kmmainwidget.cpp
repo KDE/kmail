@@ -3098,15 +3098,7 @@ void KMMainWidget::slotSelectFolder(KMFolder* folder)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSelectMessage(KMMessage* msg)
 {
-  int idx = mFolder->find(msg);
-  if (idx != -1) {
-#if 0
-    // FIXME (Pragma)
-    mHeaders->setCurrentMsg(idx);
-#endif
-    if (mMsgView)
-      mMsgView->setMsg(msg);
-  }
+  mMessageListView->activateMessage( msg );
 }
 
 //-----------------------------------------------------------------------------
