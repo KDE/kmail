@@ -2819,6 +2819,8 @@ void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
   msgPart->setSubtypeStr( "zip" );
 
   msgPartToItem( msgPart, attachmentItem, false );
+
+  setModified( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -2887,6 +2889,8 @@ void KMComposeWin::uncompressAttach( KMAtmListViewItem *attachmentItem )
   msgPart->setSubtypeStr( subtype );
 
   msgPartToItem( msgPart, attachmentItem, false );
+
+  setModified( true );
 }
 
 //-----------------------------------------------------------------------------
