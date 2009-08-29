@@ -2209,11 +2209,11 @@ KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( KMMessage* m
   QString email;
   QString name;
 
-  QMap<QString, KABC::Resource*>::const_iterator it = mResourceByName.find( mResourceName );
+  QMap<QString, KABC::Resource*>::const_iterator it = mResourceByName.constFind( mResourceName );
   KABC::Resource* res = 0;
   //if it==end(), then the resouce has been removed from addressbook
   //or default has been selected, in either case store in default resource
-  if ( it != mResourceByName.end() )
+  if ( it != mResourceByName.constEnd() )
     res = it.value();
 
   KABC::Ticket *ticket = ab->requestSaveTicket( res );
@@ -2355,8 +2355,8 @@ const QString KMFilterActionAddToAddressBook::argsAsString() const
 
   result += '\t';
 
-  QMap<QString, KABC::Resource*>::const_iterator it =  mResourceByName.find( mResourceName );
-  if ( it != mResourceByName.end() )
+  QMap<QString, KABC::Resource*>::const_iterator it =  mResourceByName.constFind( mResourceName );
+  if ( it != mResourceByName.constEnd() )
     result += it.value()->identifier();
   else
     result += mStdResourceStr;
