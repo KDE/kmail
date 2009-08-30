@@ -2513,13 +2513,13 @@ void KMReaderWin::slotJumpDown()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollPrior()
 {
-  mViewer->view()->scrollBy( 0, -(int)(height() * 0.8 ) );
+  mViewer->view()->scrollBy( 0, -(int)(mViewer->widget()->height() * 0.8 ) );
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollNext()
 {
-  mViewer->view()->scrollBy( 0, (int)(height() * 0.8 ) );
+  mViewer->view()->scrollBy( 0, (int)(mViewer->widget()->height() * 0.8 ) );
 }
 
 //-----------------------------------------------------------------------------
