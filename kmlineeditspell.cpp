@@ -99,7 +99,7 @@ void KMLineEdit::insertEmails( const QStringList & emails )
   const QAction *result = menu.exec( QCursor::pos() );
   if ( !result )
     return;
-  setText( contents + result->text() );
+  setText( contents + KGlobal::locale()->removeAcceleratorMarker( result->text() ) );
 }
 
 void KMLineEdit::dropEvent(QDropEvent *event)
@@ -192,7 +192,6 @@ void KMLineEdit::editRecentAddresses()
 //-----------------------------------------------------------------------------
 void KMLineEdit::loadContacts()
 {
-  // was: KABC::AddressLineEdit::loadAddresses()
   AddresseeLineEdit::loadContacts();
 
   if ( GlobalSettings::self()->showRecentAddressesInComposer() ){
@@ -201,13 +200,17 @@ void KMLineEdit::loadContacts()
         KPIM::RecentAddresses::self( KMKernel::config() )->addresses();
       QStringList::Iterator it = recent.begin();
       QString name, email;
-      int idx = addCompletionSource( i18n( "Recent Addresses" ) );
+
+      KConfig config( "kpimcompletionorder" );
+      KConfigGroup group( &config, "CompletionWeights" );
+      int weight = group.readEntry( "Recent Addresses", 10 );
+      int idx = addCompletionSource( i18n( "Recent Addresses" ), weight );
       for ( ; it != recent.end(); ++it ) {
         KABC::Addressee addr;
         KPIMUtils::extractEmailAddressAndName(*it, email, name);
         addr.setNameFromString( KPIMUtils::quoteNameIfNecessary( name ));
         addr.insertEmail( email, true );
-        addContact( addr, 120, idx ); // more weight than kabc entries and more than ldap results
+        addContact( addr, weight, idx );
       }
     }
   }

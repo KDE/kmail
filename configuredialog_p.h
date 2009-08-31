@@ -32,6 +32,7 @@
 #include "ui_customtemplates_base.h"
 #include "ui_miscpagemaintab.h"
 #include "ui_miscpagegroupwaretab.h"
+#include "ui_miscpageinvitetab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_identitypage.h"
 #include "ui_accountspagereceivingtab.h"
@@ -946,13 +947,29 @@ public:
 
 private slots:
   void slotStorageFormatChanged( int );
-  void slotLegacyBodyInvitesToggled( bool on );
 
 private:
   virtual void doLoadFromGlobalSettings();
 
 private:
   Ui_MiscGroupTab mMGTab;
+};
+
+class MiscPageInviteTab : public ConfigModuleTab  {
+  Q_OBJECT
+public:
+  MiscPageInviteTab( QWidget * parent=0 );
+  void save();
+  QString helpAnchor() const;
+
+private slots:
+  void slotLegacyBodyInvitesToggled( bool on );
+
+private:
+  virtual void doLoadFromGlobalSettings();
+
+private:
+  Ui_MiscInviteTab mMITab;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
@@ -963,10 +980,12 @@ public:
 
   typedef MiscPageFolderTab FolderTab;
   typedef MiscPageGroupwareTab GroupwareTab;
+  typedef MiscPageInviteTab InviteTab;
 
 private:
   FolderTab * mFolderTab;
   GroupwareTab * mGroupwareTab;
+  InviteTab * mInviteTab;
 };
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_

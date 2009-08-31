@@ -2302,6 +2302,7 @@ bool MessageComposer::autoDetectCharset()
       KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(),
                                     mComposeWin->mEditor->textOrHtml() );
   if ( charset.isEmpty() ) {
+    KCursorSaver idle( KBusyPtr::idle() );
     KMessageBox::sorry( mComposeWin,
                         i18n( "No suitable encoding could be found for "
                               "your message.\nPlease set an encoding "
@@ -2371,10 +2372,11 @@ bool MessageComposer::breakLinesAndApplyCodec()
     bool loseChars = ( KMessageBox::warningYesNo(
                        mComposeWin,
                        i18n("<qt>Not all characters fit into the chosen"
-                            " encoding.<br /><br />Send the message anyway?</qt>"),
+                            " encoding '%1'.<br /><br />Send the message anyway and lose some characters"
+                            " or let Kmail try to automatically find a suitable encoding?</qt>", QLatin1String( mCharset) ),
                        i18n("Some Characters Will Be Lost"),
-                       KGuiItem ( i18n("Lose Characters") ),
-                       KGuiItem( i18n("Change Encoding") ) ) == KMessageBox::Yes );
+                       KGuiItem ( i18n("Send Anyway") ),
+                       KGuiItem( i18n("Auto-Detect Encoding") ) ) == KMessageBox::Yes );
     if ( loseChars ) {
       const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
       mComposeWin->mEditor->replaceUnknownChars( codec );

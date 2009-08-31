@@ -106,7 +106,7 @@ protected slots:
   void openSearchFolder();
   void folderInvalidated(KMFolder *);
   virtual bool slotShowMsg(QTreeWidgetItem *,int);
-  void slotShowSelectedMsg();
+  void slotViewSelectedMsg();
   virtual bool slotViewMsg( QTreeWidgetItem *, int );
   void slotCurrentChanged(QTreeWidgetItem *);
   virtual void updateContextMenuActions();

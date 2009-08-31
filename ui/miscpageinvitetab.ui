@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MiscInviteTab</class>
+ <widget class="QWidget" name="MiscInviteTab">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>572</width>
+    <height>266</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Groupware Compatibility &amp;&amp; Legacy Options</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="mLegacyMangleFromTo">
+        <property name="toolTip">
+         <string>Turn this option on in order to make Outlook(tm) understand your answers to invitation replies</string>
+        </property>
+        <property name="text">
+         <string>&amp;Mangle From:/To: headers in replies to invitations</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mLegacyBodyInvites">
+        <property name="toolTip">
+         <string>Turn this option on in order to make Outlook(tm) understand your answers to invitations</string>
+        </property>
+        <property name="text">
+         <string>Send &amp;invitations in the mail body</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mExchangeCompatibleInvitations">
+        <property name="toolTip">
+         <string>Microsoft Outlook, when used in combination with a Microsoft Exchange server,
+has a problem understanding standards-compliant groupware email.
+Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</string>
+        </property>
+        <property name="text">
+         <string>Exchange-compatible invitation &amp;naming</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mOutlookCompatibleInvitationComments">
+        <property name="toolTip">
+         <string>Send invitation reply comments in a way that Microsoft Outlook(tm) understands.</string>
+        </property>
+        <property name="text">
+         <string>Outlook compatible invitation reply comments</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mAutomaticSending">
+        <property name="toolTip">
+         <string>When this is on, the user will not see the mail composer window. Invitation mails are sent automatically.</string>
+        </property>
+        <property name="text">
+         <string>&amp;Automatic invitation sending</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Options</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="mDeleteInvitations">
+        <property name="text">
+         <string>Delete invitation emails after the reply to them has been sent</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -2130,10 +2130,11 @@ public:
   virtual void argsFromString( const QString &argsStr );
 
 private:
-  void updateResourceMaps();
+  void updateResourceMaps( bool force = true ) const;
   QString mCategory, mResourceName;
-  QMap<QString, KABC::Resource*> mResourceByName, mResourceByID;
+  mutable QMap<QString, KABC::Resource*> mResourceByName, mResourceByID;
   const QString mStdResourceStr, mFromStr, mToStr, mCCStr, mBCCStr;
+  mutable bool mResourceMapsInitalized;
 };
 
 KMFilterAction* KMFilterActionAddToAddressBook::newAction()
@@ -2144,7 +2145,8 @@ KMFilterAction* KMFilterActionAddToAddressBook::newAction()
 KMFilterActionAddToAddressBook::KMFilterActionAddToAddressBook()
   : KMFilterActionWithStringList( "add to address book", i18n( "Add to Address Book" ) ),
     mStdResourceStr( i18n( "<placeholder>Default</placeholder>" ) ), mFromStr( i18nc( "Email sender", "From" ) ),
-    mToStr( i18nc( "Email recipient", "To" ) ), mCCStr( i18n( "CC" ) ), mBCCStr( i18n( "BCC" ) )
+    mToStr( i18nc( "Email recipient", "To" ) ), mCCStr( i18n( "CC" ) ), mBCCStr( i18n( "BCC" ) ),
+    mResourceMapsInitalized( false )
 {
   mParameterList.append( mFromStr );
   mParameterList.append( mToStr );
@@ -2153,13 +2155,18 @@ KMFilterActionAddToAddressBook::KMFilterActionAddToAddressBook()
 
   mParameter = mParameterList.at( 0 );
 
-  updateResourceMaps();
   mResourceName = mStdResourceStr;
   mCategory = i18n( "KMail Filter" );
 }
 
-void KMFilterActionAddToAddressBook::updateResourceMaps()
+void KMFilterActionAddToAddressBook::updateResourceMaps( bool force ) const
 {
+  if ( force )
+    mResourceMapsInitalized = false;
+
+  if ( mResourceMapsInitalized )
+    return;
+
   //find resources in standard addressbook
   //and prepare lookups
   mResourceByID.clear();
@@ -2172,6 +2179,8 @@ void KMFilterActionAddToAddressBook::updateResourceMaps()
       mResourceByName.insert( res->resourceName(), res );
     }
   }
+
+  mResourceMapsInitalized = true;
 }
 
 KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( KMMessage* msg ) const
@@ -2193,14 +2202,18 @@ KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( KMMessage* m
   // by other programs are loaded
   ab->load();
 
+  // We update the resource maps here, and not in the constructor, since that could create D-Bus
+  // lockups when using IMAP addressbooks
+  updateResourceMaps( false /* don't force reload */ );
+
   QString email;
   QString name;
 
-  QMap<QString, KABC::Resource*>::const_iterator it = mResourceByName.find( mResourceName );
+  QMap<QString, KABC::Resource*>::const_iterator it = mResourceByName.constFind( mResourceName );
   KABC::Resource* res = 0;
   //if it==end(), then the resouce has been removed from addressbook
   //or default has been selected, in either case store in default resource
-  if ( it != mResourceByName.end() )
+  if ( it != mResourceByName.constEnd() )
     res = it.value();
 
   KABC::Ticket *ticket = ab->requestSaveTicket( res );
@@ -2342,8 +2355,8 @@ const QString KMFilterActionAddToAddressBook::argsAsString() const
 
   result += '\t';
 
-  QMap<QString, KABC::Resource*>::const_iterator it =  mResourceByName.find( mResourceName );
-  if ( it != mResourceByName.end() )
+  QMap<QString, KABC::Resource*>::const_iterator it =  mResourceByName.constFind( mResourceName );
+  if ( it != mResourceByName.constEnd() )
     result += it.value()->identifier();
   else
     result += mStdResourceStr;

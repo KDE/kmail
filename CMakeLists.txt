@@ -288,6 +288,7 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   ui/popsettings.ui
   ui/miscpagemaintab.ui
   ui/miscpagegroupwaretab.ui
+  ui/miscpageinvitetab.ui
   ui/securitypagegeneraltab.ui
   ui/identitypage.ui
   ui/accountspagereceivingtab.ui
