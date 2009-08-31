@@ -61,11 +61,8 @@ using KMail::ImapAccountBase;
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
-#include "messagelist/core/manager.h"
-#include "messagelist/core/aggregation.h"
 #include "messagelist/core/aggregationcombobox.h"
 #include "messagelist/core/aggregationconfigbutton.h"
-#include "messagelist/core/theme.h"
 #include "messagelist/core/themecombobox.h"
 #include "messagelist/core/themeconfigbutton.h"
 
@@ -1716,20 +1713,14 @@ void AppearancePageHeadersTab::slotLinkClicked( const QString & link )
 
 void AppearancePage::HeadersTab::slotSelectDefaultAggregation()
 {
-  using namespace MessageList::Core;
-
   // Select current default aggregation.
-  const Aggregation * defaultAggregation = Manager::instance()->defaultAggregation();
-  mAggregationComboBox->setCurrentAggregation( defaultAggregation );
+  mAggregationComboBox->selectDefault();
 }
 
 void AppearancePage::HeadersTab::slotSelectDefaultTheme()
 {
-  using namespace MessageList::Core;
-
   // Select current default theme.
-  const Theme * defaultTheme = Manager::instance()->defaultTheme();
-  mThemeComboBox->setCurrentTheme( defaultTheme );
+  mThemeComboBox->selectDefault();
 }
 
 void AppearancePage::HeadersTab::doLoadOther()
@@ -1775,21 +1766,15 @@ void AppearancePage::HeadersTab::save()
 {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  KConfigGroup storageModelAggregations( KMKernel::config(), "MessageListView::StorageModelAggregations" );
-  KConfigGroup storageModelThemes( KMKernel::config(), "MessageListView::StorageModelThemes" );
 
   GlobalSettings::self()->setDisplayMessageToolTips( mDisplayMessageToolTips->isChecked() );
   GlobalSettings::self()->setHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
 
   // "Aggregation"
-  const QString aggregationID = mAggregationComboBox->currentAggregation()->id();
-  storageModelAggregations.writeEntry( QString( "DefaultSet" ), aggregationID );
-  MessageList::Core::Manager::instance()->aggregationsConfigurationCompleted();
+  mAggregationComboBox->writeDefaultConfig();
 
   // "Theme"
-  const QString themeID = mThemeComboBox->currentTheme()->id();;
-  storageModelThemes.writeEntry( QString( "DefaultSet" ), themeID );
-  MessageList::Core::Manager::instance()->themesConfigurationCompleted();
+  mThemeComboBox->writeDefaultConfig();
 
   int dateDisplayID = mDateDisplay->selected();
   // check bounds:
