@@ -244,12 +244,14 @@ ConfigureDialog::~ConfigureDialog()
 
 void ConfigureDialog::slotApply()
 {
+  slotApplyClicked();
   GlobalSettings::self()->writeConfig();
   emit configChanged();
 }
 
 void ConfigureDialog::slotOk()
 {
+  slotOkClicked();
   GlobalSettings::self()->writeConfig();
   emit configChanged();
 }

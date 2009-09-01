@@ -199,7 +199,7 @@ public:
    *
    * If includeCollapsedChildren is true then the children of the selected but
    * collapsed items are also added to the set.
-   * 
+   *
    * At any later stage you can retrieve the messages still contained in
    * the set. You are responsable of deleting the returned object when
    * you no longer need it. The returned pointer is in fact a QObject so you
@@ -211,7 +211,7 @@ public:
    * Creates a persistent message set from the current thread in the currently
    * active Widget. Returns 0 if there is no currently active widget
    * or if has no selected folder.
-   * 
+   *
    * At any later stage you can retrieve the messages still contained in
    * the set. You are responsable of deleting the returned object when
    * you no longer need it. The returned pointer is in fact a QObject so you
@@ -469,7 +469,7 @@ protected:
 
   /**
    * Returns the currently active Widget (tab).
-   * 
+   *
    * You shouldn't mess with this as we appear to KMMainWidget as a single folder view:
    * use the public wrappers above.
    */
@@ -523,6 +523,7 @@ protected:
    */
   void widgetIconChangeRequest( Widget * w, const QIcon &icon );
 
+protected slots:
   /**
    * Hides/shows the tab bar (if the proper global option is enabled).
    * Enables or disables the "close tab" button.

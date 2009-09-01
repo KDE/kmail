@@ -24,6 +24,7 @@
 
 #include <messagelist/core/view.h>
 #include <messagelist/core/manager.h>
+#include <messagelist/core/settings.h>
 
 #include <KLineEdit>
 #include <KLocale>
@@ -128,6 +129,10 @@ Pane::Pane( KMMainWidget * mainWidget, QWidget *pParent, KActionCollection * act
   i18n( "Default Theme" );
   i18n( "Default Aggregation" );
   i18n( "Default Sort Order" );
+
+  connect( Core::Settings::self(), SIGNAL(configChanged()),
+           this, SLOT(updateTabControls()) );
+  reloadGlobalConfiguration();
 }
 
 Pane::~Pane()
@@ -416,7 +421,7 @@ void Pane::updateTabControls()
 
   mCloseTabButton->setEnabled( moreThanOneTab );
 
-  if ( GlobalSettings::self()->hideTabBarWithSingleTab() )
+  if ( Core::Settings::self()->autoHideTabBarWithSingleTab() )
     setTabBarHidden( !moreThanOneTab );
   else
     setTabBarHidden( false );
@@ -862,7 +867,16 @@ void Pane::messageSetDestroyed( MessageSet *set )
 
 void Pane::reloadGlobalConfiguration()
 {
-  updateTabControls();
+  // Synchronize both configurations
+  Core::Settings::self()->setMessageToolTipEnabled(
+    GlobalSettings::self()->displayMessageToolTips()
+  );
+
+  Core::Settings::self()->setAutoHideTabBarWithSingleTab(
+    GlobalSettings::self()->hideTabBarWithSingleTab()
+  );
+
+  Core::Settings::self()->writeConfig();
 }
 
 void Pane::focusQuickSearch()
