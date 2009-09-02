@@ -1612,7 +1612,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   themeLabel->setBuddy( mThemeComboBox );
 
   using MessageList::Utils::ThemeConfigButton;
-  ThemeConfigButton * themeConfigButton = new ThemeConfigButton( group );
+  ThemeConfigButton * themeConfigButton = new ThemeConfigButton( group, mThemeComboBox );
 
   QHBoxLayout * themeLayout = new QHBoxLayout();
   themeLayout->addWidget( themeLabel, 1 );
