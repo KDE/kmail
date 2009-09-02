@@ -475,7 +475,8 @@ QVariant Model::headerData(int section, Qt::Orientation, int role) const
 
 QModelIndex Model::index( Item *item, int column ) const
 {
-  Q_ASSERT( mModelForItemFunctions ); // should be never called with disconnected UI
+  if ( !mModelForItemFunctions )
+    return QModelIndex(); // called with disconnected UI: the item isn't known on the Qt side, yet
 
   // FIXME: This function is a bottleneck
   Item * par = item->parent();
@@ -500,7 +501,7 @@ QModelIndex Model::index( Item *item, int column ) const
 QModelIndex Model::index( int row, int column, const QModelIndex &parent ) const
 {
   if ( !mModelForItemFunctions )
-    return QModelIndex(); // called with disconnected UI
+    return QModelIndex(); // called with disconnected UI: the Qt side of the view has no items yet
 
 #ifdef READD_THIS_IF_YOU_WANT_TO_PASS_MODEL_TEST
   if ( column < 0 )
@@ -892,6 +893,47 @@ void Model::applyMessagePreSelection( PreSelectionMode preSelectionMode )
       kWarning() << "Unrecognized pre-selection mode " << (int)preSelectionMode;
     break;
   }
+}
+
+
+void Model::activateMessageAfterLoading( unsigned long uniqueIdOfMessage, int row )
+{
+  Q_ASSERT( mLoading ); // you did it: read the docs in the header.
+
+  // Ok. we're still loading.
+  // We can have three cases now.
+
+  // 1) The message hasn't been read from the storage yet. We don't have a MessageItem for it.
+  //    We must then use the pre-selection mechanism to activate the message when loading finishes.
+  // 2) The message has already been read from the storage.
+  //    2a) We're in "disconnected UI" state or the message item is not viewable.
+  //        The Qt side of the model/view framework doesn't know about the MessageItem yet.
+  //        That is, we can't get a valid QModelIndex for the message.
+  //        We again must use the pre-selection method.
+  //    2b) No disconnected UI and MessageItem is viewable. Qt knows about it and we can
+  //        get the QModelIndex. We can select it NOW.
+
+  MessageItem * mi = messageItemByStorageRow( row );
+
+  if( mi )
+  {
+    if( mi->isViewable() && mModelForItemFunctions )
+    {
+      // No disconnected UI and the MessageItem is viewable. Activate it now.
+      mView->setCurrentMessageItem( mi );
+
+      // Also abort any pending pre-selection.
+      abortMessagePreSelection();
+      return;
+    }
+  }
+
+  // Use the pre-selection method.
+
+  mPreSelectionMode = PreSelectLastSelected;
+
+  mUniqueIdOfLastSelectedMessageInFolder = mi ? 0 : uniqueIdOfMessage;
+  mLastSelectedMessageInFolder = mi;
 }
 
 
@@ -4554,6 +4596,7 @@ MessageItem * Model::messageItemByStorageRow( int row ) const
 {
   if ( !mStorageModel )
     return 0;
+
   ModelInvariantIndex * idx = mInvariantRowMapper->modelIndexRowToModelInvariantIndex( row );
   if ( !idx )
     return 0;
