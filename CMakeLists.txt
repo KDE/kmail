@@ -48,6 +48,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/mimelib
   ${CMAKE_SOURCE_DIR}/libkleo
+  ${CMAKE_SOURCE_DIR}/messagelist
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
  )
