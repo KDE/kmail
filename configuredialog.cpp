@@ -61,10 +61,10 @@ using KMail::ImapAccountBase;
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
-#include "messagelist/core/aggregationcombobox.h"
-#include "messagelist/core/aggregationconfigbutton.h"
-#include "messagelist/core/themecombobox.h"
-#include "messagelist/core/themeconfigbutton.h"
+#include "messagelist/utils/aggregationcombobox.h"
+#include "messagelist/utils/aggregationconfigbutton.h"
+#include "messagelist/utils/themecombobox.h"
+#include "messagelist/utils/themeconfigbutton.h"
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
@@ -1584,13 +1584,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Aggregation"
-  using MessageList::Core::AggregationComboBox;
+  using MessageList::Utils::AggregationComboBox;
   mAggregationComboBox = new AggregationComboBox( group );
 
   QLabel* aggregationLabel = new QLabel( i18n( "Default Aggregation:" ), group );
   aggregationLabel->setBuddy( mAggregationComboBox );
 
-  using MessageList::Core::AggregationConfigButton;
+  using MessageList::Utils::AggregationConfigButton;
   AggregationConfigButton * aggregationConfigButton = new AggregationConfigButton( group, mAggregationComboBox );
 
   QHBoxLayout * aggregationLayout = new QHBoxLayout();
@@ -1605,13 +1605,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Theme"
-  using MessageList::Core::ThemeComboBox;
+  using MessageList::Utils::ThemeComboBox;
   mThemeComboBox = new ThemeComboBox( group );
 
   QLabel *themeLabel = new QLabel( i18n( "Default Theme:" ), group );
   themeLabel->setBuddy( mThemeComboBox );
 
-  using MessageList::Core::ThemeConfigButton;
+  using MessageList::Utils::ThemeConfigButton;
   ThemeConfigButton * themeConfigButton = new ThemeConfigButton( group );
 
   QHBoxLayout * themeLayout = new QHBoxLayout();

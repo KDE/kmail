@@ -53,7 +53,7 @@ class TemplatesConfiguration;
 class KPushButton;
 
 namespace MessageList {
-  namespace Core {
+  namespace Utils {
     class AggregationComboBox;
     class ThemeComboBox;
   }
@@ -201,9 +201,9 @@ private:
   KIconButton *mUnreadIconButton;
   KComboBox *mShowSenderReceiverComboBox;
   QCheckBox *mUseDefaultAggregationCheckBox;
-  MessageList::Core::AggregationComboBox *mAggregationComboBox;
+  MessageList::Utils::AggregationComboBox *mAggregationComboBox;
   QCheckBox *mUseDefaultThemeCheckBox;
-  MessageList::Core::ThemeComboBox *mThemeComboBox;
+  MessageList::Utils::ThemeComboBox *mThemeComboBox;
 };
 
 

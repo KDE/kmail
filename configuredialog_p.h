@@ -69,7 +69,7 @@ class KKeySequenceWidget;
 class KComboBox;
 
 namespace MessageList {
-  namespace Core {
+  namespace Utils {
     class AggregationComboBox;
     class ThemeComboBox;
   }
@@ -427,8 +427,8 @@ private: // methods
 private: // data
   QCheckBox    *mDisplayMessageToolTips;
   QCheckBox    *mHideTabBarWithSingleTab;
-  MessageList::Core::AggregationComboBox *mAggregationComboBox;
-  MessageList::Core::ThemeComboBox *mThemeComboBox;
+  MessageList::Utils::AggregationComboBox *mAggregationComboBox;
+  MessageList::Utils::ThemeComboBox *mThemeComboBox;
   KButtonGroup *mDateDisplay;
   KLineEdit    *mCustomDateFormatEdit;
   QString       mCustomDateWhatsThis;

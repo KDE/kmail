@@ -46,10 +46,10 @@
 #include "folderrequester.h"
 #include "mainfolderview.h"
 #include "messagelistview/storagemodel.h"
-#include "messagelist/core/aggregationcombobox.h"
-#include "messagelist/core/aggregationconfigbutton.h"
-#include "messagelist/core/themecombobox.h"
-#include "messagelist/core/themeconfigbutton.h"
+#include "messagelist/utils/aggregationcombobox.h"
+#include "messagelist/utils/aggregationconfigbutton.h"
+#include "messagelist/utils/themecombobox.h"
+#include "messagelist/utils/themeconfigbutton.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -834,12 +834,12 @@ FolderDialogViewTab::FolderDialogViewTab( KMFolderDialog * dlg, QWidget * parent
   connect( mUseDefaultAggregationCheckBox, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotAggregationCheckboxChanged() ) );
 
-  mAggregationComboBox = new MessageList::Core::AggregationComboBox( messageListGroup );
+  mAggregationComboBox = new MessageList::Utils::AggregationComboBox( messageListGroup );
 
   QLabel * aggregationLabel = new QLabel( i18n( "Aggregation" ), messageListGroup );
   aggregationLabel->setBuddy( mAggregationComboBox );
 
-  using MessageList::Core::AggregationConfigButton;
+  using MessageList::Utils::AggregationConfigButton;
   AggregationConfigButton * aggregationConfigButton = new AggregationConfigButton( messageListGroup, mAggregationComboBox );
   // Make sure any changes made in the aggregations configure dialog are reflected in the combo.
   connect( aggregationConfigButton, SIGNAL( configureDialogCompleted() ),
@@ -857,12 +857,12 @@ FolderDialogViewTab::FolderDialogViewTab( KMFolderDialog * dlg, QWidget * parent
   connect( mUseDefaultThemeCheckBox, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotThemeCheckboxChanged() ) );
 
-  mThemeComboBox = new MessageList::Core::ThemeComboBox( messageListGroup );
+  mThemeComboBox = new MessageList::Utils::ThemeComboBox( messageListGroup );
 
   QLabel * themeLabel = new QLabel( i18n( "Theme" ), messageListGroup );
   themeLabel->setBuddy( mThemeComboBox );
 
-  using MessageList::Core::ThemeConfigButton;
+  using MessageList::Utils::ThemeConfigButton;
   ThemeConfigButton * themeConfigButton = new ThemeConfigButton( messageListGroup, mThemeComboBox );
   // Make sure any changes made in the themes configure dialog are reflected in the combo.
   connect( themeConfigButton, SIGNAL( configureDialogCompleted() ),
