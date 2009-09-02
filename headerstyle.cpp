@@ -794,10 +794,10 @@ namespace KMail {
 	    headerParts << KMMessage::emailAddrAsAnchor( message->to(), false, linkColor );
 
 	if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-	    headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor );
+	    headerParts << KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor );
 
 	if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
-	    headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor );
+	    headerParts << KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor );
 
 	// remove all empty (modulo whitespace) entries and joins them via ", \n"
 	QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ", " );
