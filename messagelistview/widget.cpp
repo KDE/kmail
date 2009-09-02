@@ -248,6 +248,7 @@ Core::MessageItem * Widget::messageItemFromMsgBase( KMMsgBase * msg ) const
   if ( !storageModel() )
     return 0;
 
+  // The call below is expensive: it's a linear search.
   int row = static_cast< StorageModel * >( storageModel() )->msgBaseRow( msg );
   if ( row < 0 )
     return 0;
@@ -258,11 +259,26 @@ Core::MessageItem * Widget::messageItemFromMsgBase( KMMsgBase * msg ) const
 void Widget::activateMessageItemByMsgBase( KMMsgBase * msg )
 {
   // This function may be expensive since it needs to perform a linear search
-  // in the storage. We want to avoid that so we use some tricks.
+  // in the storage. We want to avoid that as much as possible so we use some tricks.
 
   if ( !storageModel() )
     return;
 
+  if( view()->model()->isLoading() ) // unlikely
+  {
+    // Strange things may happen if this function is called while
+    // the view is still loading. This isn't very likely but may happen
+    // with the search dialog in certain conditions.
+    //
+    // We must ask the model to do the job later.
+
+    int row = static_cast< StorageModel * >( storageModel() )->msgBaseRow( msg );
+    if ( row < 0 )
+      return; // not in this Folder...err...StorageModel ?
+
+    view()->model()->activateMessageAfterLoading( msg->getMsgSerNum(), row );
+    return;
+  }
 
   Core::MessageItem * mi = 0;
 

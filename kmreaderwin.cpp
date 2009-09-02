@@ -705,6 +705,11 @@ void KMReaderWin::createActions()
   ac->addAction( "copy_url", mCopyURLAction );
   connect( mCopyURLAction, SIGNAL(triggered(bool)), SLOT(slotUrlCopy()) );
 
+  // find text
+  KAction *action = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
+  ac->addAction("find_in_messages", action );
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
+
   // open URL
   mUrlOpenAction = new KAction( KIcon( "document-open" ), i18n( "Open URL" ), this );
   ac->addAction( "open_url", mUrlOpenAction );

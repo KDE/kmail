@@ -413,9 +413,9 @@ bool KMAccount::runPrecommand(const QString &precommand)
 //-----------------------------------------------------------------------------
 void KMAccount::precommandExited(bool success)
 {
-  Q_ASSERT( mPrecommandEventLoop != 0 );
   mPrecommandSuccess = success;
-  mPrecommandEventLoop->exit();
+  if ( mPrecommandEventLoop )  // don't crash when kmail exits while mPrecommandEventLoop runs
+    mPrecommandEventLoop->exit();
 }
 
 //-----------------------------------------------------------------------------
