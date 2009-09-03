@@ -748,11 +748,11 @@ namespace KMail {
     }
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() ) {
-      headerParts << i18n("CC: ") + KMail::StringUtil::emailAddrAsAnchor( message->cc(), true, linkColor );
+      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->cc(), true, linkColor );
     }
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() ) {
-      headerParts << i18n("BCC: ") + KMail::StringUtil::emailAddrAsAnchor( message->bcc(), true, linkColor );
+      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->bcc(), true, linkColor );
     }
 
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
