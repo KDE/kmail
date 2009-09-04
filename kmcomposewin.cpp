@@ -210,9 +210,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 
   mEdtReplyTo = new KMLineEdit(true,mHeadersArea, "replyToLine");
   mLblReplyTo = new QLabel(mHeadersArea);
-  mBtnReplyTo = new QPushButton("...",mHeadersArea);
-  mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
-  connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
 
@@ -236,7 +233,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     QToolTip::add( mBtnTo, tip );
     QToolTip::add( mBtnCc, tip );
     QToolTip::add( mBtnBcc, tip );
-    QToolTip::add( mBtnReplyTo, tip );
 
     mBtnTo->setFocusPolicy(QWidget::NoFocus);
     mBtnCc->setFocusPolicy(QWidget::NoFocus);
@@ -992,7 +988,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
-                  mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
+                  mLblReplyTo, mEdtReplyTo, 0);
   if ( showHeaders & HDR_REPLY_TO ) {
     prevFocus = connectFocusMoving( prevFocus, mEdtReplyTo );
   }
