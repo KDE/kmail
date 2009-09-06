@@ -288,6 +288,7 @@ Model::Model( View *pParent )
   mCachedTwoWeeksAgoLabel = i18n( "Two Weeks Ago" );
   mCachedThreeWeeksAgoLabel = i18n( "Three Weeks Ago" );
   mCachedFourWeeksAgoLabel = i18n( "Four Weeks Ago" );
+  mCachedFiveWeeksAgoLabel = i18n( "Five Weeks Ago" );
 
   mCachedWatchedOrIgnoredStatusBits = KPIM::MessageStatus::statusIgnored().toQInt32() | KPIM::MessageStatus::statusWatched().toQInt32();
   mCachedNewStatusBits = KPIM::MessageStatus::statusNew().toQInt32();
@@ -1331,6 +1332,10 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
       {
         // yesterday
         groupLabel = mCachedYesterdayLabel;
+      } else if ( dDate.daysTo( mTodayDate) > 1 && dDate.daysTo( mTodayDate ) < 7 )
+      {
+        // Within last seven days
+        groupLabel = get_capitalized_long_day_name( dDate.dayOfWeek() );
       } else if(
           ( dDate.month() == mTodayDate.month() ) &&
           ( dDate.year() == mTodayDate.year() )
@@ -1360,6 +1365,9 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
             break;
             case 4:
               groupLabel = mCachedFourWeeksAgoLabel;
+            break;
+            case 5:
+              groupLabel = mCachedFiveWeeksAgoLabel;
             break;
             default:
               groupLabel = mCachedUnknownLabel; // should never happen
