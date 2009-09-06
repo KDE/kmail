@@ -71,6 +71,11 @@ public:
   */
   Result result() const;
 
+  /** cleans a filename by replacing characters not allowed or wanted on the filesystem
+      e.g. ':', '/', '\' with '_'
+  */
+  static QString cleanFileName( const QString &fileName );
+
 public slots:
   // Retrieve messages then calls execute
   void start();
