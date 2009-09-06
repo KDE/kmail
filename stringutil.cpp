@@ -1066,6 +1066,8 @@ void parseMailtoUrl ( const KUrl& url, QString& to, QString& cc, QString& subjec
   cc = url.queryItem( "cc" );
 }
 
+#endif
+
 bool isCryptoPart( const QString &type, const QString &subType, const QString &fileName )
 {
   return ( type.toLower() == "application" &&
@@ -1077,8 +1079,6 @@ bool isCryptoPart( const QString &type, const QString &subType, const QString &f
              ( subType.toLower() == "octet-stream" &&
                fileName.toLower() == "msg.asc" ) ) );
 }
-
-#endif
 
 }
 
