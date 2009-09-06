@@ -927,15 +927,9 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     return -1;
 
   int retval;
-  bool createNewFolder = false;
 
   QString _foldername = foldername.trimmed();
   _foldername = _foldername.remove( '\\' ); //try to prevent ESCAPE Sequences
-
-  if ( foldername != mAddMessageLastFolder ) {
-    createNewFolder = true;
-    mAddMessageLastFolder = foldername;
-  }
 
   KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
@@ -947,7 +941,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     KMMessage *msg = new KMMessage();
     msg->fromString( messageText );
 
-    if (createNewFolder) {
+    if ( foldername != mAddMessageLastFolder ) {
       if ( foldername.contains("/")) {
         QString tmp_fname = "";
         KMFolder *folder = NULL;
@@ -985,6 +979,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
       else {
         mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
       }
+      mAddMessageLastFolder = foldername;
     }
 
     if ( mAddMsgCurrentFolder ) {
