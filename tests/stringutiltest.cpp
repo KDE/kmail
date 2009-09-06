@@ -16,7 +16,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "signaturetest.h"
+#include "stringutiltest.h"
 
 #include "stringutil.h"
 
@@ -25,9 +25,9 @@
 
 using namespace KMail;
 
-QTEST_KDEMAIN_CORE( SignatureTester )
+QTEST_KDEMAIN_CORE( StringUtilTest )
 
-void SignatureTester::test_signatureStripping()
+void StringUtilTest::test_signatureStripping()
 {
   //QStringList tests;
   const QString test1 =

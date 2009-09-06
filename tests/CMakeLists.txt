@@ -43,12 +43,12 @@ target_link_libraries(mimelibtests mimelib
   ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
 )
 
-########### signaturetest ###############
+########### stringutiltest ###############
 
-set(signaturetest_SRCS signaturetest.cpp ../stringutil.cpp)
+set(stringutiltest_SRCS stringutiltest.cpp ../stringutil.cpp)
 add_definitions(-DKMAIL_UNITTESTS=YES)
-kde4_add_unit_test(signaturetest TESTNAME kmail-signaturetest ${signaturetest_SRCS})
-target_link_libraries(signaturetest
+kde4_add_unit_test(stringutiltest TESTNAME kmail-stringutiltest ${stringutiltest_SRCS})
+target_link_libraries(stringutiltest
   ${QT_QTTEST_LIBRARY}
   ${QT_QTCORE_LIBRARY}
   ${KDE4_KIO_LIBS}
