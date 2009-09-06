@@ -3191,18 +3191,17 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::updateAttachmentState( DwBodyPart *part )
+void KMMessage::updateAttachmentState( DwBodyPart *partGiven )
 {
+  DwEntity *part = partGiven;
+  DwBodyPart *firstPart = partGiven;
+
   if ( !part ) {
-    part = getFirstDwBodyPart();
+    part = firstPart = getFirstDwBodyPart();
   }
 
   if ( !part ) {
-    // kDebug() << "updateAttachmentState - no part!";
-    if ( mStatus.hasAttachment() ) {
-      toggleStatus( MessageStatus::statusHasAttachment() );
-    }
-    return;
+    part = mMsg;  // no part, use message itself
   }
 
   bool filenameEmpty = true;
@@ -3251,8 +3250,8 @@ void KMMessage::updateAttachmentState( DwBodyPart *part )
   }
 
   // next part
-  if ( part->Next() ) {
-    updateAttachmentState( part->Next() );
+  if ( firstPart && firstPart->Next() ) {
+    updateAttachmentState( firstPart->Next() );
   } else if ( attachmentState() == KMMsgAttachmentUnknown &&
               mStatus.hasAttachment() ) {
     toggleStatus( MessageStatus::statusHasAttachment() );
