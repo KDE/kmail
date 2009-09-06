@@ -1335,7 +1335,7 @@ void Model::attachMessageToGroupHeader( MessageItem *mi )
       } else if ( dDate.daysTo( mTodayDate) > 1 && dDate.daysTo( mTodayDate ) < 7 )
       {
         // Within last seven days
-        groupLabel = get_capitalized_long_day_name( dDate.dayOfWeek() );
+        groupLabel = KGlobal::locale()->calendar()->weekDayName( dDate.dayOfWeek() );
       } else if(
           ( dDate.month() == mTodayDate.month() ) &&
           ( dDate.year() == mTodayDate.year() )
