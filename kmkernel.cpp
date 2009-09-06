@@ -748,6 +748,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
                               const QString & messageFile,
                               const QString & MsgStatusFlags)
 {
+  // FIXME: Remove code duplication between this method and dbusAddMessage_fastImport()!
   kDebug();
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
@@ -761,7 +762,6 @@ int KMKernel::dbusAddMessage( const QString & foldername,
   if ( foldername != mAddMessageLastFolder ) {
     mAddMessageMsgIds.clear();
     readFolderMsgIds = true;
-    mAddMessageLastFolder = foldername;
   }
 
   KUrl msgUrl( messageFile );
@@ -814,6 +814,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,
       else {
         mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
       }
+
+      mAddMessageLastFolder = foldername;
     }
 
     if ( mAddMsgCurrentFolder ) {
