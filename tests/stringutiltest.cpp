@@ -169,3 +169,16 @@ void StringUtilTest::test_signatureStripping()
   // Again, no actual signature in here
   QCOMPARE( StringUtil::stripSignature( test6, false ), test6 );
 }
+
+void StringUtilTest::test_isCryptoPart()
+{
+  QVERIFY( StringUtil::isCryptoPart( "application", "pgp-encrypted", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "pgp-signature", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "pkcs7-mime", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "pkcs7-signature", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "x-pkcs7-signature", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "octet-stream", "msg.asc" ) );
+  QVERIFY( !StringUtil::isCryptoPart( "application", "octet-stream", "bla.foo" ) );
+  QVERIFY( !StringUtil::isCryptoPart( "application", "foo", QString() ) );
+  QVERIFY( !StringUtil::isCryptoPart( "application", "foo", "msg.asc" ) );
+}
