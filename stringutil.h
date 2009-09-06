@@ -171,6 +171,17 @@ namespace StringUtil
    * the QStrings given as argument.
    */
   void parseMailtoUrl( const KUrl &url, QString &to, QString &cc, QString &subject, QString &body );
+
+  /**
+   * Determines if the MIME part with the specified type and subtype is a crypto part.
+   * For example, this function returns true for type "application" and subtype "pgp-encrypted".
+   * The filename is needed if the part is named "msg.asc", in which case it is also a crypto part.
+   *
+   * This function is useful for finding out if the part should be handled as attachment or not.
+   *
+   * All strings are handled case-insensitive.
+   */
+  bool isCryptoPart( const QString &type, const QString &subType, const QString &fileName );
 }
 
 }

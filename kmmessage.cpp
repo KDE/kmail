@@ -3226,8 +3226,11 @@ void KMMessage::updateAttachmentState( DwBodyPart *part )
     // now blacklist certain ContentTypes
     if ( !part->Headers().HasContentType() ||
          ( part->Headers().HasContentType() &&
-           part->Headers().ContentType().Subtype() != DwMime::kSubtypePgpSignature &&
-           part->Headers().ContentType().Subtype() != DwMime::kSubtypePkcs7Signature ) ) {
+           !( StringUtil::isCryptoPart( part->Headers().ContentType().TypeStr().c_str(),
+                                        part->Headers().ContentType().SubtypeStr().c_str(),
+                                        part->Headers().HasContentDisposition() ?
+                                          part->Headers().ContentDisposition().Filename().c_str() :
+                                          QString() ) ) ) ) {
       setStatus( MessageStatus::statusHasAttachment() );
     }
     return;

@@ -79,6 +79,7 @@ using KMail::URLHandlerManager;
 #include <kicon.h>
 #include "broadcaststatus.h"
 #include "attachmentdialog.h"
+#include "stringutil.h"
 
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
@@ -159,6 +160,8 @@ using KMail::TeeHtmlWriter;
 #include <kvbox.h>
 #include <QTextDocument>
 #endif
+
+using namespace KMail;
 
 // This function returns the complete data that were in this
 // message parts - *after* all encryption has been removed that
@@ -2976,14 +2979,9 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     if( label.isEmpty() )
       label = node->msgPart().fileName();
     bool typeBlacklisted = node->msgPart().typeStr().toLower() == "multipart";
-    if ( !typeBlacklisted && node->msgPart().typeStr().toLower() == "application" ) {
-      typeBlacklisted = node->msgPart().subtypeStr().toLower() == "pgp-encrypted"
-                     || node->msgPart().subtypeStr().toLower() == "pgp-signature"
-                     || node->msgPart().subtypeStr().toLower() == "pkcs7-mime"
-                     || node->msgPart().subtypeStr().toLower() == "pkcs7-signature"
-                     || node->msgPart().subtypeStr().toLower() == "x-pkcs7-signature"
-                     || ( node->msgPart().subtypeStr().toLower() == "octet-stream" &&
-                          node->msgPart().fileName().toLower() == "msg.asc" );
+    if ( !typeBlacklisted ) {
+      typeBlacklisted = StringUtil::isCryptoPart( node->msgPart().typeStr(), node->msgPart().subtypeStr(),
+                                                  node->msgPart().fileName() );
     }
     typeBlacklisted = typeBlacklisted || node == mRootNode;
     bool firstTextChildOfEncapsulatedMsg = node->msgPart().typeStr().toLower() == "text" &&
