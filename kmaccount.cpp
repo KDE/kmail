@@ -28,6 +28,7 @@ using KMail::FolderJob;
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kstringhandler.h>
+#include <knotification.h>
 
 #include <QList>
 #include <QEventLoop>
@@ -66,9 +67,11 @@ bool KMPrecommand::start()
 {
   mPrecommandProcess.start();
   const bool ok = mPrecommandProcess.waitForStarted();
-  if ( !ok )
-    KMessageBox::error( 0, i18n("Could not execute precommand '%1'.",
-                        mPrecommand) );
+  if ( !ok ) {
+    KNotification::event( "mail-check-error",
+                          i18n( "Could not execute precommand '%1'.", mPrecommand ) );
+  }
+
   return ok;
 }
 
@@ -76,9 +79,12 @@ bool KMPrecommand::start()
 //-----------------------------------------------------------------------------
 void KMPrecommand::precommandExited(int exitCode, QProcess::ExitStatus)
 {
-  if (exitCode != 0)
-    KMessageBox::error(0, i18n("The precommand exited with code %1:\n%2",
-       exitCode, strerror(exitCode)));
+  if (exitCode != 0) {
+    KNotification::event( "mail-check-error",
+                          i18n( "The precommand exited with code %1:\n%2",
+                                 exitCode, strerror( exitCode ) ) );
+  }
+
   emit finished(exitCode == 0);
 }
 
