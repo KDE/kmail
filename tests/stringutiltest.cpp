@@ -16,7 +16,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "signaturetest.h"
+#include "stringutiltest.h"
 
 #include "stringutil.h"
 
@@ -25,9 +25,9 @@
 
 using namespace KMail;
 
-QTEST_KDEMAIN_CORE( SignatureTester )
+QTEST_KDEMAIN_CORE( StringUtilTest )
 
-void SignatureTester::test_signatureStripping()
+void StringUtilTest::test_signatureStripping()
 {
   //QStringList tests;
   const QString test1 =
@@ -168,4 +168,17 @@ void SignatureTester::test_signatureStripping()
 
   // Again, no actual signature in here
   QCOMPARE( StringUtil::stripSignature( test6, false ), test6 );
+}
+
+void StringUtilTest::test_isCryptoPart()
+{
+  QVERIFY( StringUtil::isCryptoPart( "application", "pgp-encrypted", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "pgp-signature", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "pkcs7-mime", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "pkcs7-signature", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "x-pkcs7-signature", QString() ) );
+  QVERIFY( StringUtil::isCryptoPart( "application", "octet-stream", "msg.asc" ) );
+  QVERIFY( !StringUtil::isCryptoPart( "application", "octet-stream", "bla.foo" ) );
+  QVERIFY( !StringUtil::isCryptoPart( "application", "foo", QString() ) );
+  QVERIFY( !StringUtil::isCryptoPart( "application", "foo", "msg.asc" ) );
 }

@@ -1902,7 +1902,7 @@ bool FolderView::selectFolderIfUnread(FolderViewItem *fvi, bool confirm)
            i18n( "Go to Next Unread Message" ),
            KGuiItem( i18n( "Go To" ) ),
            KGuiItem( i18n( "Do Not Go To" ) ), // defaults
-           "AskNextFolder",
+           ":kmail_AskNextFolder",
            false
          ) == KMessageBox::No
      )

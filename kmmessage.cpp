@@ -3192,18 +3192,17 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::updateAttachmentState( DwBodyPart *part )
+void KMMessage::updateAttachmentState( DwBodyPart *partGiven )
 {
+  DwEntity *part = partGiven;
+  DwBodyPart *firstPart = partGiven;
+
   if ( !part ) {
-    part = getFirstDwBodyPart();
+    part = firstPart = getFirstDwBodyPart();
   }
 
   if ( !part ) {
-    // kDebug() << "updateAttachmentState - no part!";
-    if ( mStatus.hasAttachment() ) {
-      toggleStatus( MessageStatus::statusHasAttachment() );
-    }
-    return;
+    part = mMsg;  // no part, use message itself
   }
 
   bool filenameEmpty = true;
@@ -3227,8 +3226,11 @@ void KMMessage::updateAttachmentState( DwBodyPart *part )
     // now blacklist certain ContentTypes
     if ( !part->Headers().HasContentType() ||
          ( part->Headers().HasContentType() &&
-           part->Headers().ContentType().Subtype() != DwMime::kSubtypePgpSignature &&
-           part->Headers().ContentType().Subtype() != DwMime::kSubtypePkcs7Signature ) ) {
+           !( StringUtil::isCryptoPart( part->Headers().ContentType().TypeStr().c_str(),
+                                        part->Headers().ContentType().SubtypeStr().c_str(),
+                                        part->Headers().HasContentDisposition() ?
+                                          part->Headers().ContentDisposition().Filename().c_str() :
+                                          QString() ) ) ) ) {
       setStatus( MessageStatus::statusHasAttachment() );
     }
     return;
@@ -3249,8 +3251,8 @@ void KMMessage::updateAttachmentState( DwBodyPart *part )
   }
 
   // next part
-  if ( part->Next() ) {
-    updateAttachmentState( part->Next() );
+  if ( firstPart && firstPart->Next() ) {
+    updateAttachmentState( firstPart->Next() );
   } else if ( attachmentState() == KMMsgAttachmentUnknown &&
               mStatus.hasAttachment() ) {
     toggleStatus( MessageStatus::statusHasAttachment() );

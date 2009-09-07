@@ -307,7 +307,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
   mainLayout->setMargin( 0 );
 
   QLabel *infoLabel = new QLabel(
-            i18nc( "@info/plain", "<title>Messages to filter found on POP Account: <emphasis>%1</emphasis></title>"
+            i18nc( "@info", "<title>Messages to filter found on POP Account: <emphasis>%1</emphasis></title>"
                   "<para>The messages shown exceed the maximum size limit you defined "
                   "for this account.</para><para>You can select what you want to do "
                   "with them by checking the appropriate button.</para>",

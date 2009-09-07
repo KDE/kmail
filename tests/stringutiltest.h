@@ -16,18 +16,19 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef SIGNATURETEST_H
-#define SIGNATURETEST_H
+#ifndef STRINGUTILTEST_H
+#define STRINGUTILTEST_H
 
 
 #include <qobject.h>
 
-class SignatureTester : public QObject
+class StringUtilTest : public QObject
 {
   Q_OBJECT
 
   private slots:
     void test_signatureStripping();
+    void test_isCryptoPart();
 };
 
 #endif

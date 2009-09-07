@@ -750,6 +750,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
                               const QString & messageFile,
                               const QString & MsgStatusFlags)
 {
+  // FIXME: Remove code duplication between this method and dbusAddMessage_fastImport()!
   kDebug();
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
@@ -763,7 +764,6 @@ int KMKernel::dbusAddMessage( const QString & foldername,
   if ( foldername != mAddMessageLastFolder ) {
     mAddMessageMsgIds.clear();
     readFolderMsgIds = true;
-    mAddMessageLastFolder = foldername;
   }
 
   KUrl msgUrl( messageFile );
@@ -816,6 +816,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,
       else {
         mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
       }
+
+      mAddMessageLastFolder = foldername;
     }
 
     if ( mAddMsgCurrentFolder ) {
@@ -929,15 +931,9 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     return -1;
 
   int retval;
-  bool createNewFolder = false;
 
   QString _foldername = foldername.trimmed();
   _foldername = _foldername.remove( '\\' ); //try to prevent ESCAPE Sequences
-
-  if ( foldername != mAddMessageLastFolder ) {
-    createNewFolder = true;
-    mAddMessageLastFolder = foldername;
-  }
 
   KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
@@ -949,8 +945,8 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     KMMessage *msg = new KMMessage();
     msg->fromString( messageText );
 
-    if (createNewFolder) {
-      if ( foldername.contains("/")) {
+    if ( foldername != mAddMessageLastFolder ) {
+      if ( foldername.contains( '/' ) ) {
         QString tmp_fname = "";
         KMFolder *folder = NULL;
         KMFolderDir *subfolder;
@@ -960,33 +956,37 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
-          if(_newFolder.startsWith('.')) return -1;
+          if( _newFolder.startsWith( '.' ) )
+            return -1;
 
-          if(root) {
-            folder = the_folderMgr->findOrCreate(*it, false);
-            if (folder) {
+          if( root ) {
+            folder = the_folderMgr->findOrCreate( *it, false );
+            if ( folder ) {
               root = false;
               tmp_fname = '/' + *it;
             }
-            else return -1;
+            else
+              return -1;
           }
           else {
             subfolder = folder->createChildFolder();
             tmp_fname += '/' + *it;
-            if(!the_folderMgr->getFolderByURL( tmp_fname )) {
-              folder = the_folderMgr->createFolder(*it, false, folder->folderType(), subfolder);
+            if( !the_folderMgr->getFolderByURL( tmp_fname ) ) {
+              folder = the_folderMgr->createFolder( *it, false, folder->folderType(), subfolder );
             }
-            if(!(folder = the_folderMgr->getFolderByURL( tmp_fname ))) return -1;
+            if( !( folder = the_folderMgr->getFolderByURL( tmp_fname ) ) )
+              return -1;
           }
         }
 
-      mAddMsgCurrentFolder = the_folderMgr->getFolderByURL( tmp_fname );
-      if(!folder) return -1;
-
+        mAddMsgCurrentFolder = the_folderMgr->getFolderByURL( tmp_fname );
+        if( !folder )
+          return -1;
       }
       else {
-        mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
+        mAddMsgCurrentFolder = the_folderMgr->findOrCreate( _foldername, false );
       }
+      mAddMessageLastFolder = foldername;
     }
 
     if ( mAddMsgCurrentFolder ) {
