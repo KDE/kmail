@@ -3532,7 +3532,9 @@ QValueList< Q_UINT32 > KMHeaders::selectedSernums()
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem* item = static_cast<HeaderItem*>( it.current() );
       KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
-      list.append( msgBase->getMsgSerNum() );
+      if ( msgBase ) {
+        list.append( msgBase->getMsgSerNum() );
+      }
     }
   }
   return list;
