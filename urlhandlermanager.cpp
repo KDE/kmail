@@ -404,6 +404,34 @@ namespace {
         w->update( true );
         return true;
       }
+
+      if ( url.path() == "showFullToAddressList" ) {
+        w->saveRelativePosition();
+        w->setShowFullToAddressList( true );
+        w->update( true );
+        return true;
+      }
+
+      if ( url.path() == "hideFullToAddressList" ) {
+        w->saveRelativePosition();
+        w->setShowFullToAddressList( false );
+        w->update( true );
+        return true;
+      }
+
+      if ( url.path() == "showFullCcAddressList" ) {
+        w->saveRelativePosition();
+        w->setShowFullCcAddressList( true );
+        w->update( true );
+        return true;
+      }
+
+      if ( url.path() == "hideFullCcAddressList" ) {
+        w->saveRelativePosition();
+        w->setShowFullCcAddressList( false );
+        w->update( true );
+        return true;
+      }
     }
     return false;
   }
@@ -427,6 +455,14 @@ namespace {
         return i18n( "Show attachment list." );
       if ( url.path() == "hideAttachmentQuicklist" )
         return i18n( "Hide attachment list." );
+      if ( url.path() == "showFullToAddressList" )
+        return i18n( "Show full \"To\" list" );
+      if ( url.path() == "hideFullToAddressList" )
+        return i18n( "Hide full \"To\" list" );
+      if ( url.path() == "showFullCcAddressList" )
+        return i18n( "Show full \"Cc\" list" );
+      if ( url.path() == "hideFullCcAddressList" )
+        return i18n( "Hide full \"Cc\" list" );
     }
     return QString() ;
   }

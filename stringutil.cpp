@@ -774,8 +774,8 @@ QString quoteHtmlChars( const QString& str, bool removeLineBreaks )
 }
 
 #ifndef KMAIL_UNITTESTS
-QString emailAddrAsAnchor( const QString& aEmail, bool stripped, const QString& cssStyle,
-                           bool aLink )
+QString emailAddrAsAnchor( const QString& aEmail, Display display, const QString& cssStyle,
+                             Link link, AddressMode expandable, const QString& fieldName )
 {
   if( aEmail.isEmpty() )
     return aEmail;
@@ -783,28 +783,41 @@ QString emailAddrAsAnchor( const QString& aEmail, bool stripped, const QString& 
   const QStringList addressList = KPIMUtils::splitAddressList( aEmail );
 
   QString result;
+  int numberAddresses = 0;
+  bool expandableInserted = false;
 
   for( QStringList::ConstIterator it = addressList.constBegin();
        ( it != addressList.constEnd() );
        ++it ) {
     if( !(*it).isEmpty() ) {
+      numberAddresses++;
+
       QString address = *it;
-      if( aLink ) {
+      if( expandable == ExpandableAddresses && !expandableInserted && numberAddresses > GlobalSettings::self()->numberOfAddressesToShow() ) {
+        Q_ASSERT( !fieldName.isEmpty() );
+        result = "<span id=\"icon" + fieldName + "\"></span>" + result;
+        result += "<span id=\"dots" + fieldName + "\">...</span><span id=\"hidden" + fieldName +"\">";
+        expandableInserted = true;
+      }
+      if( link == ShowLink ) {
         result += "<a href=\"mailto:"
                 + encodeMailtoUrl( address )
                 + "\" "+cssStyle+">";
       }
-      if( stripped )
+      if( display == DisplayNameOnly )
         address = stripEmailAddr( address );
       result += quoteHtmlChars( address, true );
-      if( aLink ) {
+      if( link == ShowLink ) {
         result += "</a>, ";
       }
     }
   }
   // cut of the trailing ", "
-  if( aLink ) {
+  if( link == ShowLink ) {
     result.truncate( result.length() - 2 );
+  }
+  if( expandableInserted ) {
+    result += "</span>";
   }
 
   //kDebug() << "('" << aEmail << "') returns:\n-->" << result << "<--";

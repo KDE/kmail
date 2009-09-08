@@ -112,13 +112,31 @@ namespace StringUtil
                           bool removeLineBreaks = false );
 
   /**
-   * Converts the email address(es) to (a) nice HTML mailto: anchor(s).
-   * If stripped is true then the visible part of the anchor contains
-   * only the name part and not the given emailAddr.
+   * Used to determine if the visible part of the anchor contains
+   * only the name part and not the given emailAddr or the full address.
    */
+  enum Display {
+    DisplayNameOnly,
+    DisplayFullAddress
+  };
+
+  /** Used to determine if the address should be a link or not */
+  enum Link {
+    ShowLink,
+    HideLink
+  };
+
+  /** Used to determine if the address field should be expandable/collapsable */
+  enum AddressMode {
+    ExpandableAddresses,
+    FullAddresses
+  };
+
+  /** Converts the email address(es) to (a) nice HTML mailto: anchor(s). */
   QString emailAddrAsAnchor( const QString& emailAddr,
-                             bool stripped = true, const QString& cssStyle = QString(),
-                             bool link = true );
+                             Display display = DisplayNameOnly, const QString& cssStyle = QString(),
+                             Link link = ShowLink, AddressMode expandable = ExpandableAddresses,
+                             const QString& fieldName = QString() );
 
   /**
    * Strips an address from an address list. This is for example used

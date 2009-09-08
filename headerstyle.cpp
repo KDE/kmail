@@ -149,17 +149,17 @@ namespace KMail {
       QString fromStr = message->from();
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
-      QString fromPart = KMail::StringUtil::emailAddrAsAnchor( fromStr, true );
+      QString fromPart = KMail::StringUtil::emailAddrAsAnchor( fromStr, StringUtil::DisplayNameOnly );
       if ( !vCardName.isEmpty() )
         fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
       headerParts << fromPart;
     }
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-      headerParts << i18n("CC: ") + KMail::StringUtil::emailAddrAsAnchor( message->cc(), true );
+      headerParts << i18n("CC: ") + KMail::StringUtil::emailAddrAsAnchor( message->cc(), StringUtil::DisplayNameOnly );
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
-      headerParts << i18n("BCC: ") + KMail::StringUtil::emailAddrAsAnchor( message->bcc(), true );
+      headerParts << i18n("BCC: ") + KMail::StringUtil::emailAddrAsAnchor( message->bcc(), StringUtil::DisplayNameOnly );
 
     if ( strategy->showHeader( "date" ) )
       headerParts << strToHtml(message->dateShortStr());
@@ -262,7 +262,7 @@ namespace KMail {
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
       headerStr.append( i18n("From: ") +
-                        KMail::StringUtil::emailAddrAsAnchor( fromStr, false, "", true ) );
+                        KMail::StringUtil::emailAddrAsAnchor( fromStr, StringUtil::DisplayFullAddress, QString(), StringUtil::ShowLink ) );
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
@@ -276,19 +276,19 @@ namespace KMail {
 
     if ( strategy->showHeader( "to" ) )
       headerStr.append(i18nc("To-field of the mailheader.", "To: ")+
-                       KMail::StringUtil::emailAddrAsAnchor(message->to(),false) + "<br/>\n");
+                       KMail::StringUtil::emailAddrAsAnchor(message->to(), StringUtil::DisplayFullAddress) + "<br/>\n");
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
       headerStr.append(i18n("CC: ")+
-                       KMail::StringUtil::emailAddrAsAnchor(message->cc(),false) + "<br/>\n");
+                       KMail::StringUtil::emailAddrAsAnchor(message->cc(), StringUtil::DisplayFullAddress) + "<br/>\n");
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
       headerStr.append(i18n("BCC: ")+
-                       KMail::StringUtil::emailAddrAsAnchor(message->bcc(),false) + "<br/>\n");
+                       KMail::StringUtil::emailAddrAsAnchor(message->bcc(), StringUtil::DisplayFullAddress) + "<br/>\n");
 
     if ( strategy->showHeader( "reply-to" ) && !message->replyTo().isEmpty())
       headerStr.append(i18n("Reply to: ")+
-                     KMail::StringUtil::emailAddrAsAnchor(message->replyTo(),false) + "<br/>\n");
+                     KMail::StringUtil::emailAddrAsAnchor(message->replyTo(), StringUtil::DisplayFullAddress) + "<br/>\n");
 
     headerStr += "</div>\n";
 
@@ -599,11 +599,11 @@ namespace KMail {
       headerStr += QString("<tr><th>%1</th>\n"
                            "<td>")
                            .arg(i18n("From: "))
-                 + KMail::StringUtil::emailAddrAsAnchor( fromStr, false )
+                 + KMail::StringUtil::emailAddrAsAnchor( fromStr, StringUtil::DisplayFullAddress )
                  + ( !message->headerField( "Resent-From" ).isEmpty() ? "&nbsp;"
                                 + i18n("(resent from %1)",
                                     KMail::StringUtil::emailAddrAsAnchor(
-                                    message->headerField( "Resent-From" ),false) )
+                                    message->headerField( "Resent-From" ), StringUtil::DisplayFullAddress) )
                               : QString("") )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
@@ -620,21 +620,21 @@ namespace KMail {
       headerStr.append(QString("<tr><th>%1</th>\n"
                    "<td>%2</td></tr>\n")
                             .arg(i18nc("To-field of the mail header.","To: "))
-                            .arg(KMail::StringUtil::emailAddrAsAnchor(message->to(),false)));
+                            .arg(KMail::StringUtil::emailAddrAsAnchor(message->to(), StringUtil::DisplayFullAddress, QString(), StringUtil::ShowLink, StringUtil::ExpandableAddresses, "FullToAddressList" )));
 
     // cc line, if any
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                    "<td>%2</td></tr>\n")
                               .arg(i18n("CC: "))
-                              .arg(KMail::StringUtil::emailAddrAsAnchor(message->cc(),false)));
+                              .arg(KMail::StringUtil::emailAddrAsAnchor(message->cc(), StringUtil::DisplayFullAddress, QString(), StringUtil::ShowLink, StringUtil::ExpandableAddresses, "FullCcAddressList")));
 
     // Bcc line, if any
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                    "<td>%2</td></tr>\n")
                               .arg(i18n("BCC: "))
-                              .arg(KMail::StringUtil::emailAddrAsAnchor(message->bcc(),false)));
+                              .arg(KMail::StringUtil::emailAddrAsAnchor(message->bcc(), StringUtil::DisplayFullAddress)));
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
@@ -744,15 +744,15 @@ namespace KMail {
 
     QStringList headerParts;
     if ( strategy->showHeader( "to" ) ) {
-      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->to(), false, linkColor );
+      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->to(), StringUtil::DisplayFullAddress, linkColor );
     }
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() ) {
-      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->cc(), true, linkColor );
+      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->cc(), StringUtil::DisplayNameOnly, linkColor );
     }
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() ) {
-      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->bcc(), true, linkColor );
+      headerParts << KMail::StringUtil::emailAddrAsAnchor( message->bcc(), StringUtil::DisplayNameOnly, linkColor );
     }
 
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
@@ -813,7 +813,7 @@ namespace KMail {
       // TODO vcard
 
       // We by design use the stripped mail address here, it is more enterprise-like.
-      QString fromPart = KMail::StringUtil::emailAddrAsAnchor( fromStr, true, linkColor );
+      QString fromPart = KMail::StringUtil::emailAddrAsAnchor( fromStr, StringUtil::DisplayNameOnly, linkColor );
       if ( !vCardName.isEmpty() )
         fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
       //TDDO strategy date

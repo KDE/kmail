@@ -505,7 +505,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
     mShowSignatureDetails( false ),
-    mShowAttachmentQuicklist( true )
+    mShowAttachmentQuicklist( true ),
+    mShowFullToAddressList( false ),
+    mShowFullCcAddressList( false )
 {
   mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
@@ -1610,6 +1612,10 @@ void KMReaderWin::displayMessage() {
   htmlWriter()->queue("</body></html>");
   htmlWriter()->flush();
 
+  // For some reason the DOM is not complete at this moment.
+  // But if the below functions are called using a singleShot timer
+  // everything just seems to work.
+  QTimer::singleShot( 1, this, SLOT( toggleFullAddressList() ) );
   QTimer::singleShot( 1, this, SLOT(injectAttachments()) );
 }
 
@@ -2894,6 +2900,59 @@ void KMReaderWin::scrollToAttachment( const partNode *node )
   doc.updateRendering();
 }
 
+void KMReaderWin::toggleFullAddressList()
+{
+  toggleFullAddressList( "To" );
+  toggleFullAddressList( "Cc" );
+}
+
+DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
+{
+  Q_ASSERT( !id.isNull() );
+  Q_ASSERT( !id.isEmpty() );
+  DOM::Document doc = mViewer->htmlDocument();
+  return static_cast<DOM::HTMLElement>( doc.getElementById( id ) );
+}
+
+void KMReaderWin::toggleFullAddressList( const QString &field )
+{
+  // First inject the corrent icon
+  DOM::HTMLElement tag = getHTMLElementById( "iconFull" + field + "AddressList" );
+  if ( tag.isNull() )
+    return;
+  Q_ASSERT( tag.tagName() == "span" );
+
+  QString imgpath( KStandardDirs::locate( "data","kmail/pics/" ) );
+  QString urlHandle;
+  QString imgSrc;
+  bool doShow = ( field == "To" && showFullToAddressList() ) || ( field == "Cc" && showFullCcAddressList() );
+  if ( doShow ) {
+    urlHandle.append( "kmail:hideFull" + field + "AddressList" );
+    imgSrc.append( "quicklistOpened.png" );
+  } else {
+    urlHandle.append( "kmail:showFull" + field + "AddressList" );
+    imgSrc.append( "quicklistClosed.png" );
+  }
+
+  QString link = "<span style=\"text-align: right;\"><a href=\"" + urlHandle + "\"><img src=\"" + imgpath + imgSrc + "\"/></a></span>";
+  tag.setInnerHTML( link );
+
+  // Then show/hide the full address list
+  DOM::HTMLElement dotsTag = getHTMLElementById( "dotsFull" + field + "AddressList" );
+  Q_ASSERT( dotsTag.tagName() == "span" );
+
+  tag = getHTMLElementById( "hiddenFull" + field + "AddressList" );
+  Q_ASSERT( tag.tagName() == "span" );
+
+  if (doShow ) {
+    dotsTag.addCSSProperty( "display", "none" );
+    tag.removeCSSProperty( "display" );
+  } else {
+    tag.addCSSProperty( "display", "none" );
+    dotsTag.removeCSSProperty( "display" );
+  }
+}
+
 void KMReaderWin::injectAttachments()
 {
   // inject attachments in header view
@@ -2909,10 +2968,10 @@ void KMReaderWin::injectAttachments()
   QString imgSrc;
   if( !showAttachmentQuicklist() ) {
     urlHandle.append( "kmail:showAttachmentQuicklist" );
-    imgSrc.append( "attachmentQuicklistClosed.png" );
+    imgSrc.append( "quicklistClosed.png" );
   } else {
     urlHandle.append( "kmail:hideAttachmentQuicklist" );
-    imgSrc.append( "attachmentQuicklistOpened.png" );
+    imgSrc.append( "quicklistOpened.png" );
   }
 
   QColor background = KColorScheme( QPalette::Active, KColorScheme::View ).background().color();
@@ -3068,6 +3127,26 @@ void KMReaderWin::clearBodyPartMementos()
     delete it->second;
   }
   mBodyPartMementoMap.clear();
+}
+
+bool KMReaderWin::showFullToAddressList() const
+{
+  return mShowFullToAddressList;
+}
+
+void KMReaderWin::setShowFullToAddressList( bool showFullToAddressList )
+{
+  mShowFullToAddressList = showFullToAddressList;
+}
+
+bool KMReaderWin::showFullCcAddressList() const
+{
+  return mShowFullCcAddressList;
+}
+
+void KMReaderWin::setShowFullCcAddressList( bool showFullCcAddressList )
+{
+  mShowFullCcAddressList = showFullCcAddressList;
 }
 
 #include "kmreaderwin.moc"
