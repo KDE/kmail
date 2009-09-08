@@ -1,8 +1,6 @@
 set(pics
-	#attachmentQuicklistClosed.png  
-enterprise_sp_right.png
-        #attachmentQuicklistOpened.png  
-enterprise_s_right.png    mail-encrypted-full.png
+quicklistClosed.png            enterprise_sp_right.png
+quicklistOpened.png            enterprise_s_right.png    mail-encrypted-full.png
 enterprise_bottom_left.png     enterprise_sw.png         mail-encrypted-part.png
 enterprise_bottom.png          enterprise_top_left.png   mail-encrypted.png
 enterprise_bottom_right.png    enterprise_top.png        mail-thread-ignored.png
