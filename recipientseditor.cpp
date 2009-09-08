@@ -934,8 +934,8 @@ void RecipientsEditor::setRecipientString( const QString &str,
     if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
         i18nc("@info:status", "Truncating recipients list to %1 of %2 entries.",
-          GlobalSettings::self()->maximumRecipients(),
-          r.count() ) );
+              GlobalSettings::self()->maximumRecipients(),
+              r.count() ) );
       break;
     }
     addRecipient( *it, type );
@@ -947,14 +947,15 @@ QString RecipientsEditor::recipientString( Recipient::Type type )
   QString str;
 
   Recipient::List recipients = mRecipientsView->recipients();
-  Recipient::List::ConstIterator it;
-  for( it = recipients.constBegin(); it != recipients.constEnd(); ++it ) {
-    if ( (*it).type() == type ) {
-      if ( !str.isEmpty() ) str += ", ";
-      str.append( (*it).email() );
+  if ( !recipients.isEmpty() ) {
+    Recipient::List::ConstIterator it;
+    for( it = recipients.constBegin(); it != recipients.constEnd(); ++it ) {
+      if ( (*it).type() == type ) {
+        if ( !str.isEmpty() ) str += ", ";
+        str.append( (*it).email() );
+      }
     }
   }
-
   return str;
 }
 

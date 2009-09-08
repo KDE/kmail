@@ -668,6 +668,11 @@
        <default>true</default>
      </entry>
 
+     <entry name="numberOfAddressesToShow" type="Int">
+       <label>Number of addresses to show before collapsing</label>
+       <default>4</default>
+       <min>1</min>
+     </entry>
     </group>
 
     <group name="TextIndex">

@@ -78,6 +78,10 @@ namespace KParts {
   class OpenUrlArguments;
 }
 
+namespace DOM {
+  class HTMLElement;
+}
+
 /**
    This class implements a "reader window", that is a window
    used for reading or viewing messages.
@@ -336,6 +340,21 @@ public:
   /* show or hide the list that points to the attachments */
   void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true ) { mShowAttachmentQuicklist = showAttachmentQuicklist; }
 
+  /** Get the HTMLElement with id id */
+  DOM::HTMLElement getHTMLElementById( const QString &id );
+
+  /** Return weather to show or hide the full list of "To" addresses */
+  bool showFullToAddressList() const;
+
+  /** Show or hide the full list of "To" addresses */
+  void setShowFullToAddressList( bool showFullToAddressList = true );
+
+  /** Return weather to show or hide the full list of "To" addresses */
+  bool showFullCcAddressList() const;
+
+  /** Show or hide the full list of "To" addresses */
+  void setShowFullCcAddressList( bool showFullCcAddressList = true );
+
   /* retrieve BodyPartMemento of id \a which for partNode \a node */
   KMail::Interface::BodyPartMemento * bodyPartMemento( const partNode * node, const QByteArray & which ) const;
 
@@ -534,6 +553,9 @@ private slots:
   void slotSetEncoding();
   void injectAttachments();
 
+  /** Show hide all fields specified inside this function */
+  void toggleFullAddressList();
+
 private:
   void adjustLayout();
   void createWidgets();
@@ -547,6 +569,9 @@ private:
   void readGlobalOverrideCodec();
 
   QString renderAttachments( partNode *node, const QColor &bgColor );
+
+  /** Show/Hide the field with id "field" */
+  void toggleFullAddressList(const QString& field);
 
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
@@ -617,6 +642,8 @@ private:
   bool mShowSignatureDetails;
   bool mShowAttachmentQuicklist;
   bool mExternalWindow;
+  bool mShowFullToAddressList;
+  bool mShowFullCcAddressList;
 };
 
 

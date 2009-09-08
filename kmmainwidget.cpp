@@ -3696,7 +3696,7 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(i18n("Select &All Messages"), this);
     actionCollection()->addAction("mark_all_messages", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
-    action->setShortcut(KStandardShortcut::selectAll());
+    action->setShortcut( QKeySequence( Qt::CTRL+Qt::SHIFT+Qt::Key_A ) );
   }
 
   //----- Folder Menu
