@@ -1081,9 +1081,9 @@ void PopAccount::slotResult( KJob* )
       }
       if (stage == Head && job->error() == KIO::ERR_COULD_NOT_READ)
       {
-        KMessageBox::error(0, i18n("Your server does not support the "
+        KMessageBox::error( 0, i18n( "Your POP3 server (Account: %1) does not support the "
           "TOP command. Therefore it is not possible to fetch the headers "
-          "of large emails first, before downloading them."));
+          "of large emails first, before downloading them.", NetworkAccount::name() ) );
         slotCancel();
         return;
       }
