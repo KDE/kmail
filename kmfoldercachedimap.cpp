@@ -525,6 +525,11 @@ KMMessage *KMFolderCachedImap::take( int idx )
   return KMFolderMaildir::take( idx );
 }
 
+void KMFolderCachedImap::takeTemporarily( int idx )
+{
+  KMFolderMaildir::take( idx );
+}
+
 int KMFolderCachedImap::addMsgInternal( KMMessage *msg, bool newMail, int *index_return )
 {
   // Possible optimization: Only dirty if not filtered below
