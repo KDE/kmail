@@ -783,7 +783,7 @@ namespace KMail {
         "background-image: url("+imgpath+"shadow_right.png); width: 10px; min-height: 100%;\">&nbsp;</div>";
 
     headerStr +=
-      "<div style=\"margin-left: 8px; top: 0px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
+      "<div style=\"margin-left: 10px; top: 0px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
       // #0057ae
       "<table style=\"background: "+activeColorDark.name()+"; border-collapse:collapse; top: 14px; min-width: 200px; \" cellpadding=0> \n"
       "  <tr> \n"
@@ -863,7 +863,13 @@ namespace KMail {
         "</div>\n";
     }
 
-    headerStr += "<div style=\"padding: 6px;\">";
+    if ( printing ) {
+      //provide a bit more left padding when printing
+      //kolab/issue3254 (printed mail cut at the left side)
+      headerStr += "<div style=\"padding: 6px; padding-left: 10px;\">";
+    } else {
+      headerStr += "<div style=\"padding: 6px;\">";
+    }
 
     // TODO
     // spam status
