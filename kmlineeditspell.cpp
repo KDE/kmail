@@ -97,7 +97,7 @@ void KMLineEdit::insertEmails( const QStringList & emails )
   const QAction *result = menu.exec( QCursor::pos() );
   if ( !result )
     return;
-  setText( contents + result->text() );
+  setText( contents + KGlobal::locale()->removeAcceleratorMarker( result->text() ) );
 }
 
 void KMLineEdit::dropEvent(QDropEvent *event)
