@@ -395,7 +395,6 @@ bool KMAccount::runPrecommand(const QString &precommand)
           SLOT(precommandExited(bool)));
 
   kDebug(5006) << "Running precommand" << precommand;
-  mPrecommandEventLoop = new QEventLoop();
   if ( !precommandProcess.start() )
     return false;
 
@@ -403,9 +402,10 @@ bool KMAccount::runPrecommand(const QString &precommand)
   // the precommand is running (which may take a while).
   // The exec call will block until the event loop is exited, which happens in
   // precommandExited().
-  if ( mPrecommandEventLoop ) { // yes it can be 0 due to races with precommandProcess.start()
-    mPrecommandEventLoop->exec();
-  }
+  mPrecommandEventLoop = new QEventLoop();
+  mPrecommandEventLoop->exec();
+  delete mPrecommandEventLoop;
+  mPrecommandEventLoop = 0;
 
   return mPrecommandSuccess;
 }
@@ -413,18 +413,12 @@ bool KMAccount::runPrecommand(const QString &precommand)
 //-----------------------------------------------------------------------------
 void KMAccount::precommandExited(bool success)
 {
-  Q_ASSERT( mPrecommandEventLoop != 0 );
   mPrecommandSuccess = success;
-
-  // Exit and delete the event loop. This makes sure the execution continues
-  // in runPrecommand(), where the event loop was entered.
-  mPrecommandEventLoop->exit();
-
-  // Use deleteLater, because we are called inside of this very eventloop
-  mPrecommandEventLoop->deleteLater();
-  mPrecommandEventLoop = 0;
+  if ( mPrecommandEventLoop )  // don't crash when kmail exits while mPrecommandEventLoop runs
+    mPrecommandEventLoop->exit();
 }
 
+//-----------------------------------------------------------------------------
 void KMAccount::slotIdentitiesChanged()
 {
   // Fall back to the default identity if the one used currently is invalid
