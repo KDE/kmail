@@ -499,12 +499,16 @@ void KMFolderCachedImap::reloadUidMap()
   uidMapDirty = false;
 }
 
-/* Reimplemented from KMFolderMaildir */
 KMMessage* KMFolderCachedImap::take(int idx)
 {
   uidMapDirty = true;
   rememberDeletion( idx );
   return KMFolderMaildir::take(idx);
+}
+
+void KMFolderCachedImap::takeTemporarily( int idx )
+{
+  KMFolderMaildir::take( idx );
 }
 
 // Add a message without clearing it's X-UID field.

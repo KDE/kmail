@@ -185,8 +185,20 @@ public:
   /* Reimplemented from KMFolder. Moving is not supported, so aParent must be 0 */
   virtual int rename(const QString& aName, KMFolderDir *aParent=0);
 
-  /* Reimplemented from KMFolderMaildir */
+  /**
+   * Reimplemented from KMFolderMaildir
+   * This deletes the message permanently, also from the server. For this, rememberDeletion() is
+   * called, so that the message can be deleted from the server on the next sync.
+   */
   virtual KMMessage* take(int idx);
+
+  /**
+   * Like take(), only that the deletion is not remembered, i.e. the message will not be deleted
+   * from the server.
+   * Calling this can cause inconsistencies, so make sure you re-add the message later!
+   */
+  void takeTemporarily( int idx );
+
   /* Reimplemented from KMFolderMaildir */
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
   /* internal version that doesn't remove the X-UID header */
