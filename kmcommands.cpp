@@ -2879,6 +2879,9 @@ KMCommand::Result KMResendMessageCommand::execute()
   newMsg->setHeaderField( "X-KMail-Identity", QString::number( originalIdentity ) );
   newMsg->applyIdentity( originalIdentity );
 
+  // Restore the original bcc field as this is overwritten in applyIdentity
+  newMsg->setBcc( msg->bcc() );
+  
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();
