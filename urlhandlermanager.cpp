@@ -40,14 +40,16 @@
 #include "kmreaderwin.h"
 #include "kmkernel.h"
 #include "callback.h"
-
 #include "stringutil.h"
 #include "stl_util.h"
-#include <kurl.h>
-#include <QProcess>
-#include <algorithm>
 
+#include <kurl.h>
+
+#include <QProcess>
+#include <QDrag>
 #include <QScrollArea>
+
+#include <algorithm>
 
 using std::for_each;
 using std::remove;
@@ -124,6 +126,8 @@ namespace {
 
     bool handleClick( const KUrl &, KMReaderWin * ) const;
     bool handleContextMenuRequest( const KUrl &, const QPoint &, KMReaderWin * ) const;
+    bool handleDrag( const KUrl &url, KMReaderWin *window ) const;
+    bool willHandleDrag( const KUrl &url, KMReaderWin *window ) const;
     QString statusBarMessage( const KUrl &, KMReaderWin * ) const;
   private:
     partNode* partNodeForUrl( const KUrl &url, KMReaderWin *w ) const;
@@ -310,6 +314,22 @@ void KMail::URLHandlerManager::unregisterHandler( const Interface::BodyPartURLHa
 bool KMail::URLHandlerManager::handleClick( const KUrl & url, KMReaderWin * w ) const {
   for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( url, w ) )
+      return true;
+  return false;
+}
+
+bool KMail::URLHandlerManager::willHandleDrag( const KUrl &url, KMReaderWin *window ) const
+{
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+    if ( (*it)->willHandleDrag( url, window ) )
+      return true;
+  return false;
+}
+
+bool KMail::URLHandlerManager::handleDrag( const KUrl &url, KMReaderWin *window ) const
+{
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+    if ( (*it)->handleDrag( url, window ) )
       return true;
   return false;
 }
@@ -598,6 +618,34 @@ namespace {
       // PENDING(romain_kdab) : replace with toLocalFile() ?
       w->openAttachment( node->nodeId(), w->tempFileUrlFromPartNode( node ).path() );
     return true;
+  }
+
+  bool AttachmentURLHandler::willHandleDrag( const KUrl &url, KMReaderWin *window ) const
+  {
+    return partNodeForUrl( url, window ) != 0;
+  }
+
+  bool AttachmentURLHandler::handleDrag( const KUrl &url, KMReaderWin *window ) const
+  {
+    partNode * node = partNodeForUrl( url, window );
+    if ( !node )
+      return false;
+
+    KUrl file = window->tempFileUrlFromPartNode( node ).path();
+    if ( !file.isEmpty() ) {
+      QString icon = node->msgPart().iconName( KIconLoader::Small );
+      QDrag *drag = new QDrag( window );
+      QMimeData *mimeData = new QMimeData();
+      mimeData->setUrls( QList<QUrl>() << file );
+      drag->setMimeData( mimeData );
+      if ( !icon.isEmpty() ) {
+        drag->setPixmap( QPixmap( icon ) );
+      }
+      drag->start();
+      return true;
+    }
+    else
+      return false;
   }
 
   bool AttachmentURLHandler::handleContextMenuRequest( const KUrl & url, const QPoint & p, KMReaderWin * w ) const

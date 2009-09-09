@@ -625,7 +625,11 @@ private:
       *mToggleMimePartTreeAction;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
+
   KUrl mUrlClicked;
+  QPoint mLastClickPosition;
+  bool mCanStartDrag;
+
   KMail::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
