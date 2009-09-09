@@ -393,6 +393,18 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( quote );
         }
 
+      } else if ( cmd.startsWith( "OADDRESSEESADDR" ) ) {
+        kdDebug() << "Command: OADDRESSEESADDR";
+        i += strlen( "OADDRESSEESADDR" );
+        const QString to = mOrigMsg->to();
+        const QString cc = mOrigMsg->cc();
+        if ( !to.isEmpty() )
+          body.append( i18n( "To:" ) + ' ' + to );
+        if ( !to.isEmpty() && !cc.isEmpty() )
+          body.append( '\n' );
+        if ( !cc.isEmpty() )
+          body.append( i18n( "CC:" ) + ' ' +  cc );
+
       } else if ( cmd.startsWith( "CCADDR" ) ) {
         kdDebug() << "Command: CCADDR" << endl;
         i += strlen( "CCADDR" );

@@ -139,6 +139,9 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COFromLName );
   menu->insert( action );
+  action = new KAction( i18n( "Addresses of all original recipients" ),
+                        0, mapper, SLOT( map() ), menu );
+  mapper->setMapping( action, COAddresseesAddr );
   action = new KAction( i18n( "Subject" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COFullSubject );
@@ -365,6 +368,7 @@ void TemplatesInsertCommand::slotMapped( int cmd )
   case TemplatesInsertCommand::CTime: emit insertCommand("%TIME"); break;
   case TemplatesInsertCommand::CTimeLong: emit insertCommand("%TIMELONG"); break;
   case TemplatesInsertCommand::CTimeLongEn: emit insertCommand("%TIMELONGEN"); break;
+  case TemplatesInsertCommand::COAddresseesAddr: emit insertCommand("%OADDRESSEESADDR"); break;
   case TemplatesInsertCommand::CToAddr: emit insertCommand("%TOADDR"); break;
   case TemplatesInsertCommand::CToName: emit insertCommand("%TONAME"); break;
   case TemplatesInsertCommand::CToFName: emit insertCommand("%TOFNAME"); break;

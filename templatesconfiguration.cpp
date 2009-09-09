@@ -396,7 +396,7 @@ void TemplatesConfiguration::importFromPhrases()
     "Subject: %OFULLSUBJECT\n"
     "Date: %ODATE\n"
     "From: %OFROMADDR\n"
-    "To: %OTOADDR\n"
+    "%OADDRESSEESADDR\n"
     "\n"
     "%TEXT\n"
     "-------------------------------------------------------\n"
@@ -535,7 +535,8 @@ QString TemplatesConfiguration::defaultReplyAll() {
     );
 }
 
-QString TemplatesConfiguration::defaultForward() {
+QString TemplatesConfiguration::defaultForward()
+{
   return i18n(
     "%REM=\"Default forward template\"%-\n"
     "\n"
@@ -544,7 +545,7 @@ QString TemplatesConfiguration::defaultForward() {
     "Subject: %OFULLSUBJECT\n"
     "Date: %ODATE\n"
     "From: %OFROMADDR\n"
-    "To: %OTOADDR\n"
+    "%OADDRESSEESADDR\n"
     "\n"
     "%TEXT\n"
     "-------------------------------------------------------\n"
