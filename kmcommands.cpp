@@ -767,11 +767,16 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   return OK;
 }
 
-static KUrl subjectToUrl( const QString &subject ) {
+static KUrl subjectToUrl( const QString &subject )
+{
+  QString fileName = KMCommand::cleanFileName( subject.trimmed() );
 
-  return KFileDialog::getSaveUrl( KUrl::fromPath( subject.trimmed()
-                                  .replace( QDir::separator(), '_' ) ),
-                                  "*.mbox" );
+  // avoid stripping off the last part of the subject after a "."
+  // by KFileDialog, which thinks it's an extension
+  if ( !fileName.endsWith( ".mbox" ) )
+    fileName += ".mbox";
+
+  return KFileDialog::getSaveUrl( KUrl::fromPath( fileName ), "*.mbox" );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage *msg )
@@ -2451,17 +2456,15 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   else {
     // only one item, get the desired filename
     partNode *node = mAttachmentMap.begin().key();
-    // replace all ':' with '_' because ':' isn't allowed on FAT volumes
-    QString s =
-      node->msgPart().fileName().trimmed().replace( ':', '_' );
+    QString s = node->msgPart().fileName().trimmed();
     if ( s.isEmpty() )
-      s = node->msgPart().name().trimmed().replace( ':', '_' );
+      s = node->msgPart().name().trimmed();
     if ( s.isEmpty() )
       s = i18nc("filename for an unnamed attachment", "attachment.1");
-    else { // better not use a dir-delimiter in a filename
-      s = s.replace( '/', '_' );
-      s = s.replace( '\\', '_' );
+    else {
+      s = cleanFileName( s );
     }
+
     url = KFileDialog::getSaveUrl( KUrl::fromPath( s ), QString(),
                                    parentWidget(), QString() );
     if ( url.isEmpty() ) {
@@ -2483,20 +2486,18 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     KUrl curUrl;
     if ( !dirUrl.isEmpty() ) {
       curUrl = dirUrl;
-      QString s =
-        it.key()->msgPart().fileName().trimmed().replace( ':', '_' );
+      QString s = it.key()->msgPart().fileName().trimmed();
       if ( s.isEmpty() )
-        s = it.key()->msgPart().name().trimmed().replace( ':', '_' );
+        s = it.key()->msgPart().name().trimmed();
       if ( s.isEmpty() ) {
         ++unnamedAtmCount;
         s = i18nc("filename for the %1-th unnamed attachment",
                  "attachment.%1",
               unnamedAtmCount );
       }
-      else {  // better not use a dir-delimiter in a filename
-        s = s.replace( '/', '_' );
-        s = s.replace( '\\', '_' );
-      }
+      else
+        s = cleanFileName( s );
+
       curUrl.setFileName( s );
     } else {
       curUrl = url;
@@ -2562,6 +2563,18 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   setResult( globalResult );
   emit completed( this );
   deleteLater();
+}
+
+QString KMCommand::cleanFileName( const QString &name )
+{
+  QString fileName = name.trimmed();
+  // replace all ':' with '_' because ':' isn't allowed on FAT volumes
+  fileName.replace( ':', '_' );
+  // better not use a dir-delimiter in a filename
+  fileName.replace( '/', '_' );
+  fileName.replace( '\\', '_' );
+
+  return fileName;
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
