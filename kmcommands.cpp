@@ -2458,6 +2458,10 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       s = node->msgPart().name().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
       s = i18nc("filename for an unnamed attachment", "attachment.1");
+    else { // better not use a dir-delimiter in a filename
+      s = s.replace( '/', '_' );
+      s = s.replace( '\\', '_' );
+    }
     url = KFileDialog::getSaveUrl( KUrl::fromPath( s ), QString(),
                                    parentWidget(), QString() );
     if ( url.isEmpty() ) {
@@ -2488,6 +2492,10 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         s = i18nc("filename for the %1-th unnamed attachment",
                  "attachment.%1",
               unnamedAtmCount );
+      }
+      else {  // better not use a dir-delimiter in a filename
+        s = s.replace( '/', '_' );
+        s = s.replace( '\\', '_' );
       }
       curUrl.setFileName( s );
     } else {
