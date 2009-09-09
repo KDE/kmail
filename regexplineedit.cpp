@@ -73,6 +73,7 @@ namespace KMail {
     hlay->setMargin( 0 );
 
     mLineEdit = new KLineEdit( str, this );
+    mLineEdit->setClearButtonShown( true );
     setFocusProxy( mLineEdit );
     hlay->addWidget( mLineEdit );
 
