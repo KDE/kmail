@@ -53,9 +53,6 @@ KMPopHeadersView::KMPopHeadersView( QWidget *parent,
   headerNames << "" << "" << "" << i18n("Subject") << i18n("Sender")
               << i18n("Receiver") << i18n("Date") << i18n("Size");
   QTreeWidgetItem *headerItem = new QTreeWidgetItem( headerNames );
-  headerItem->setTextAlignment( 0, Qt::AlignHCenter );
-  headerItem->setTextAlignment( 1, Qt::AlignHCenter );
-  headerItem->setTextAlignment( 2, Qt::AlignHCenter );
   headerItem->setTextAlignment( 7, Qt::AlignRight );
   headerItem->setToolTip( 0, i18nc("@action:button", "Download all messages now") );
   headerItem->setToolTip( 1, i18nc("@action:button", "Download all messages later") );
@@ -74,9 +71,9 @@ KMPopHeadersView::KMPopHeadersView( QWidget *parent,
   //    Disable it for now.
   //header()->setResizeMode( 3, QHeaderView::Stretch );
   header()->setStretchLastSection( false );
-  setColumnWidth( 0, 22 );    // Download Now icon
-  setColumnWidth( 1, 22 );    // Download Later icon
-  setColumnWidth( 2, 22 );    // Delete icon
+  setColumnWidth( 0, IconSize( KIconLoader::Small ) + 6 );    // Download Now icon
+  setColumnWidth( 1, IconSize( KIconLoader::Small ) + 6 );    // Download Later icon
+  setColumnWidth( 2, IconSize( KIconLoader::Small ) + 6 );    // Delete icon
   setColumnWidth( 3, 180 );   // Subject
   setColumnWidth( 4, 140 );   // Sender
   setColumnWidth( 5, 140);    // Receiver
@@ -148,7 +145,8 @@ void KMPopHeadersView::keyPressEvent( QKeyEvent *e )
   }
 }
 
-void KMPopHeadersView::slotRadioButtonClicked( QTreeWidgetItem* item, int column ) {
+void KMPopHeadersView::slotRadioButtonClicked( QTreeWidgetItem* item, int column )
+{
   assert( item && column >= 0 && column < NoAction );
   mDialog->setAction( item, mapToAction( column ) );
 
