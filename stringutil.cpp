@@ -793,7 +793,8 @@ QString emailAddrAsAnchor( const QString& aEmail, Display display, const QString
       numberAddresses++;
 
       QString address = *it;
-      if( expandable == ExpandableAddresses && !expandableInserted && numberAddresses > GlobalSettings::self()->numberOfAddressesToShow() ) {
+      if( expandable == ExpandableAddresses &&
+          !expandableInserted && numberAddresses > GlobalSettings::self()->numberOfAddressesToShow() ) {
         Q_ASSERT( !fieldName.isEmpty() );
         result = "<span id=\"icon" + fieldName + "\"></span>" + result;
         result += "<span id=\"dots" + fieldName + "\">...</span><span id=\"hidden" + fieldName +"\">";
