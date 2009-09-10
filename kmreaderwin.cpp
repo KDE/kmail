@@ -1557,9 +1557,8 @@ void KMReaderWin::updateReaderWin()
   }
 
   if ( mSavedRelativePosition ) {
-    QScrollArea *scrollview = mViewer->view();
-    scrollview->widget()->move( 0,
-      qRound( scrollview->widget()->size().height() * mSavedRelativePosition ) );
+    QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
+    scrollBar->setValue( scrollBar->maximum() * mSavedRelativePosition );
     mSavedRelativePosition = 0;
   }
 }
@@ -2601,9 +2600,11 @@ bool KMReaderWin::htmlLoadExternal()
 //-----------------------------------------------------------------------------
 void KMReaderWin::saveRelativePosition()
 {
-  const QScrollArea *scrollview = mViewer->view();
-  mSavedRelativePosition = static_cast<float>( scrollview->widget()->pos().y() ) /
-                           scrollview->widget()->size().height();
+  const QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
+  if ( scrollBar->maximum() )
+    mSavedRelativePosition = static_cast<float>( scrollBar->value() ) / scrollBar->maximum();
+  else
+    mSavedRelativePosition = 0;
 }
 
 
