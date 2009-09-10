@@ -580,7 +580,8 @@ private:
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
 
-  KURL mUrlClicked;
+  KURL mHoveredUrl;
+  KURL mClickedUrl;
   QPoint mLastClickPosition;
   bool mCanStartDrag;
 
