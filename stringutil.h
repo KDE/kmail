@@ -135,7 +135,7 @@ namespace StringUtil
   /** Converts the email address(es) to (a) nice HTML mailto: anchor(s). */
   QString emailAddrAsAnchor( const QString& emailAddr,
                              Display display = DisplayNameOnly, const QString& cssStyle = QString(),
-                             Link link = ShowLink, AddressMode expandable = ExpandableAddresses,
+                             Link link = ShowLink, AddressMode expandable = FullAddresses,
                              const QString& fieldName = QString() );
 
   /**

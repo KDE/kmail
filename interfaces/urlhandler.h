@@ -70,6 +70,36 @@ namespace KMail {
     virtual bool handleContextMenuRequest( const KUrl & url, const QPoint & p, KMReaderWin * w ) const = 0;
 
     /**
+     * Called when shift-clicking the link in the reader.
+     * @return true if the click was handled by this URLHandler, false otherwise
+     */
+    virtual bool handleShiftClick( const KUrl &url, KMReaderWin *window ) const {
+      Q_UNUSED( url );
+      Q_UNUSED( window );
+      return false;
+    }
+
+    /**
+     * @return should return true if this URLHandler will handle the drag
+     */
+    virtual bool willHandleDrag( const KUrl &url, KMReaderWin *window ) const {
+      Q_UNUSED( url );
+      Q_UNUSED( window );
+      return false;
+    }
+
+    /**
+     * Called when starting a drag with the given URL.
+     * If the drag is handled, you should create a drag object.
+     * @return true if the click was handled by this URLHandler, false otherwise
+     */
+    virtual bool handleDrag( const KUrl &url, KMReaderWin *window ) const {
+      Q_UNUSED( url );
+      Q_UNUSED( window );
+      return false;
+    }
+
+    /**
      * Called when hovering over a link.
      *
      * @return a string to be shown in the status bar while hoverin

@@ -295,6 +295,7 @@ public:
   KMMessage* message(KMFolder** folder=0) const;
 
   void openAttachment( int id, const QString & name );
+  void saveAttachment( const KUrl &tempFileName );
 
   void emitUrlClicked( const KUrl & url, int button ) {
     emit urlClicked( url, button );
@@ -625,7 +626,11 @@ private:
       *mToggleMimePartTreeAction;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
+
   KUrl mUrlClicked;
+  QPoint mLastClickPosition;
+  bool mCanStartDrag;
+
   KMail::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
