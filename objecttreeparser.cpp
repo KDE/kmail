@@ -344,6 +344,7 @@ namespace KMail {
       QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
       QString href = "file:" + KUrl::toPercentEncoding( fileName );
       htmlWriter()->embedPart( node->msgPart().contentId(), href);
+      node->setDisplayedEmbedded( true );
       return;
    }
 
