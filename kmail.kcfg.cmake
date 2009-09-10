@@ -132,13 +132,6 @@
         <default>false</default>
       </entry>
       <entry name="CustHeaderCount" type="Int" key="mime-header-count" />
-      <entry name="ReplyCurrentLanguage" type="Int" key="reply-current-language">
-        <default>0</default>
-      </entry>
-      <entry name="ReplyLanguagesCount" type="Int" key="reply-languages" >
-        <default>0</default>
-	<min>0</min>
-      </entry>
       <entry name="FolderLoadingTimeout" type="Int" hidden="true">
          <default>1000</default>
       </entry>
