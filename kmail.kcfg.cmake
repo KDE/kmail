@@ -557,10 +557,23 @@
        </choices>
        <default>longlist</default>
       </entry>
-
     </group>
 
     <group name="Reader">
+     <entry name="MimePaneHeight" type="Int">
+      <default>100</default>
+     </entry>
+     <entry name="MessagePaneHeight" type="Int">
+      <default>180</default>
+     </entry>
+      <entry name="headerStyle" type="String" key="header-style">
+        <label>What style of headers should be displayed</label>
+        <default>fancy</default>
+      </entry>
+      <entry name="headerSetDisplayed" type="String" key="header-set-displayed">
+        <label>How much of headers should be displayed</label>
+        <default>rich</default>
+      </entry>
      <entry name="UseDefaultColors" type="Bool" key="defaultColors">
        <default>true</default>
      </entry>
@@ -666,6 +679,20 @@
        <default>4</default>
        <min>1</min>
      </entry>
+
+      <entry name="htmlMail" type="Bool">
+        <label>Prefer HTML to plain text</label>
+        <default>false</default>
+      </entry>
+      <entry name="htmlLoadExternal" type="Bool">
+        <label>Allow messages to load external references from the Internet</label>
+        <default>false</default>
+      </entry>
+
+      <entry name="attachmentStrategy" type="String" key="attachment-strategy">
+        <label>How attachments are shown</label>
+        <default>Smart</default>
+      </entry>
     </group>
 
     <group name="TextIndex">
@@ -676,6 +703,10 @@
     </group>
 
     <group name="MDN">
+      <entry name="notSendWhenEncrypted" type="Bool" key="not-send-when-encrypted">
+        <label>Do not send MDNs in response to encrypted messages</label>
+        <default>true</default>
+      </entry>
       <entry name="SendMDNsWithEmptySender" type="Bool">
         <default>false</default>
         <label>Send Message Disposition Notifications with an empty sender.</label>

@@ -561,7 +561,7 @@ private:
   void adjustLayout();
   void createWidgets();
   void createActions();
-  void saveSplitterSizes( KConfigGroup & c ) const;
+  void saveSplitterSizes() const;
 
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );

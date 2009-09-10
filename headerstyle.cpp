@@ -429,8 +429,6 @@ namespace KMail {
     if ( !strategy )
       strategy = HeaderStrategy::rich();
 
-    KConfigGroup configReader( KMKernel::config(), "Reader" );
-
     // ### from kmreaderwin begin
     // The direction of the header is determined according to the direction
     // of the application layout.
@@ -469,7 +467,7 @@ namespace KMail {
 
     QString spamHTML;
 
-    if ( configReader.readEntry( "showSpamStatus", true ) ) {
+    if ( GlobalSettings::self()->showSpamStatus() ) {
       SpamScores scores = SpamHeaderAnalyzer::getSpamScores( message );
       for ( SpamScoresIterator it = scores.begin(); it != scores.end(); ++it )
         spamHTML += (*it).agent() + ' ' +
