@@ -1975,11 +1975,11 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   if ( aUrl.trimmed().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
-    mUrlClicked = KUrl();
+    mHoveredUrl = KUrl();
     return;
   }
 
-  mUrlClicked = url;
+  mHoveredUrl = url;
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
 
@@ -1991,7 +1991,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)
 {
-  mUrlClicked = aUrl;
+  mClickedUrl = aUrl;
 
   if ( URLHandlerManager::instance()->handleClick( aUrl, this ) )
     return;
@@ -2004,7 +2004,7 @@ void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
   const KUrl url( aUrl );
-  mUrlClicked = url;
+  mClickedUrl = url;
 
   if ( URLHandlerManager::instance()->handleContextMenuRequest( url, aPos, this ) )
     return;
@@ -2597,7 +2597,7 @@ void KMReaderWin::slotUrlClicked()
     identity = message()->parent()->identity();
   }
 
-  KMCommand *command = new KMUrlClickedCommand( mUrlClicked, identity, this,
+  KMCommand *command = new KMUrlClickedCommand( mClickedUrl, identity, this,
                                                 false, mainWidget );
   command->start();
 }
@@ -2605,14 +2605,14 @@ void KMReaderWin::slotUrlClicked()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
-  KMCommand *command = new KMMailtoComposeCommand( mUrlClicked, message() );
+  KMCommand *command = new KMMailtoComposeCommand( mHoveredUrl, message() );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoForward()
 {
-  KMCommand *command = new KMMailtoForwardCommand( mMainWindow, mUrlClicked,
+  KMCommand *command = new KMMailtoForwardCommand( mMainWindow, mClickedUrl,
                                                    message() );
   command->start();
 }
@@ -2620,7 +2620,7 @@ void KMReaderWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
-  KMCommand *command = new KMMailtoAddAddrBookCommand( mUrlClicked,
+  KMCommand *command = new KMMailtoAddAddrBookCommand( mClickedUrl,
                                                        mMainWindow);
   command->start();
 }
@@ -2628,7 +2628,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
-  KMCommand *command = new KMMailtoOpenAddrBookCommand( mUrlClicked,
+  KMCommand *command = new KMMailtoOpenAddrBookCommand( mClickedUrl,
                                                         mMainWindow );
   command->start();
 }
@@ -2639,7 +2639,7 @@ void KMReaderWin::slotUrlCopy()
   // we don't necessarily need a mainWidget for KMUrlCopyCommand so
   // it doesn't matter if the dynamic_cast fails.
   KMCommand *command =
-    new KMUrlCopyCommand( mUrlClicked,
+    new KMUrlCopyCommand( mClickedUrl,
                           dynamic_cast<KMMainWidget*>( mMainWindow ) );
   command->start();
 }
@@ -2648,30 +2648,30 @@ void KMReaderWin::slotUrlCopy()
 void KMReaderWin::slotUrlOpen( const KUrl &url )
 {
   if ( !url.isEmpty() )
-    mUrlClicked = url;
-  KMCommand *command = new KMUrlOpenCommand( mUrlClicked, this );
+    mClickedUrl = url;
+  KMCommand *command = new KMUrlOpenCommand( mClickedUrl, this );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAddBookmarks()
 {
-    KMCommand *command = new KMAddBookmarksCommand( mUrlClicked, this );
+    KMCommand *command = new KMAddBookmarksCommand( mClickedUrl, this );
     command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlSave()
 {
-  KMCommand *command = new KMUrlSaveCommand( mUrlClicked, mMainWindow );
+  KMCommand *command = new KMUrlSaveCommand( mClickedUrl, mMainWindow );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
-  KMCommand *command = new KMMailtoReplyCommand( mMainWindow, mUrlClicked,
-    message(), copyText() );
+  KMCommand *command = new KMMailtoReplyCommand( mMainWindow, mClickedUrl,
+                                                 message(), copyText() );
   command->start();
 }
 
@@ -2715,7 +2715,7 @@ void KMReaderWin::slotSaveAttachments()
 void KMReaderWin::saveAttachment( const KUrl &tempFileName )
 {
   mAtmCurrent = msgPartFromUrl( tempFileName );
-  mAtmCurrentName = mUrlClicked.toLocalFile();
+  mAtmCurrentName = mClickedUrl.toLocalFile();
   slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
 }
 
@@ -2737,12 +2737,12 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     QMouseEvent* me = static_cast<QMouseEvent*>(e);
     if ( me->button() == Qt::LeftButton && ( me->modifiers() & Qt::ShiftModifier ) ) {
       // special processing for shift+click
-      URLHandlerManager::instance()->handleShiftClick( mUrlClicked, this );
+      URLHandlerManager::instance()->handleShiftClick( mHoveredUrl, this );
       return true;
     }
 
     if ( me->button() == Qt::LeftButton ) {
-      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mUrlClicked, this );
+      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mHoveredUrl, this );
       mLastClickPosition = me->pos();
     }
   }
@@ -2755,9 +2755,9 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     QMouseEvent* me = static_cast<QMouseEvent*>( e );
 
     if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
-      if ( mCanStartDrag && !mUrlClicked.isEmpty() && mUrlClicked.protocol() == "attachment" ) {
+      if ( mCanStartDrag && !mHoveredUrl.isEmpty() && mHoveredUrl.protocol() == "attachment" ) {
         mCanStartDrag = false;
-        URLHandlerManager::instance()->handleDrag( mUrlClicked, this );
+        URLHandlerManager::instance()->handleDrag( mHoveredUrl, this );
         slotUrlOn( QString() );
         return true;
       }
