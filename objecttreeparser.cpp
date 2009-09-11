@@ -1721,26 +1721,26 @@ namespace KMail {
                           messagePart.errorText,
                           messagePart.auditLogError,
                           messagePart.auditLog );
+        if ( decryptionStarted ) {
+          writeDecryptionInProgressBlock();
+          return true;
+        }
         if ( bOkDecrypt ) {
           kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
           isEncrypted = true;
           node->setEncryptionState( KMMsgFullyEncrypted );
           signTestNode = 0;
-          if ( decryptionStarted ) {
-            writeDecryptionInProgressBlock();
-          } else {
-            // paint the frame
-            messagePart.isDecryptable = true;
-            if ( mReader )
-              htmlWriter()->queue( writeSigstatHeader( messagePart,
-                                                       cryptoProtocol(),
-                                                       node->trueFromAddress() ) );
-            insertAndParseNewChildNode( *node,
-                                        &*decryptedData,
-                                        "encrypted data" );
-            if ( mReader )
-              htmlWriter()->queue( writeSigstatFooter( messagePart ) );
-          }
+          // paint the frame
+          messagePart.isDecryptable = true;
+          if ( mReader )
+            htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                     cryptoProtocol(),
+                                                     node->trueFromAddress() ) );
+          insertAndParseNewChildNode( *node,
+                                      &*decryptedData,
+                                      "encrypted data" );
+          if ( mReader )
+            htmlWriter()->queue( writeSigstatFooter( messagePart ) );
         } else {
           // decryption failed, which could be because the part was encrypted but
           // decryption failed, or because we didn't know if it was encrypted, tried,
