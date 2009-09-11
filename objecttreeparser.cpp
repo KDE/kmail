@@ -1768,6 +1768,7 @@ namespace KMail {
       if ( mReader && !mReader->decryptMessage() ) {
         writeDeferredDecryptionBlock();
         isEncrypted = true;
+        signTestNode = 0; // PENDING(marc) to be abs. sure, we'd need to have to look at the content
       } else if ( okDecryptMIME( *node,
                           decryptedData,
                           signatureFound,
