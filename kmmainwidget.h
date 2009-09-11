@@ -685,7 +685,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     bool          mStartupDone;
     bool          mWasEverShown;
     int copyId, moveId, htmlId, threadId;
-    bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
+    bool mHtmlPref, mHtmlLoadExtPref,
       mFolderHtmlPref, mFolderHtmlLoadExtPref,
       mReaderWindowActive, mReaderWindowBelow;
     bool mEnableFavoriteFolderView;

@@ -561,7 +561,7 @@ private:
   void adjustLayout();
   void createWidgets();
   void createActions();
-  void saveSplitterSizes( KConfigGroup & c ) const;
+  void saveSplitterSizes() const;
 
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
@@ -627,7 +627,8 @@ private:
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
 
-  KUrl mUrlClicked;
+  KUrl mHoveredUrl;
+  KUrl mClickedUrl;
   QPoint mLastClickPosition;
   bool mCanStartDrag;
 

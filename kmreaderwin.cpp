@@ -868,10 +868,7 @@ void KMReaderWin::slotAllHeaders() {
 
 void KMReaderWin::slotLevelQuote( int l )
 {
-  kDebug() << "Old Level:" << mLevelQuote << "New Level:" << l;
-
   mLevelQuote = l;
-  saveRelativePosition();
   update( true );
 }
 
@@ -961,6 +958,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
 {
   if ( !mAtmUpdate ) {
     // reparse the msg
+    saveRelativePosition();
     updateReaderWin();
     return;
   }
@@ -1035,32 +1033,29 @@ bool KMReaderWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
-  const KConfigGroup mdnGroup( KMKernel::config(), "MDN" );
-  /*should be: const*/ KConfigGroup reader( KMKernel::config(), "Reader" );
-
   delete mCSSHelper;
   mCSSHelper = new KMail::CSSHelper( mViewer->view() );
 
-  mNoMDNsWhenEncrypted = mdnGroup.readEntry( "not-send-when-encrypted", true );
+  mNoMDNsWhenEncrypted = GlobalSettings::self()->notSendWhenEncrypted();
 
-  mUseFixedFont = reader.readEntry( "useFixedFont", false );
+  mUseFixedFont = GlobalSettings::self()->useFixedFont();
   if ( mToggleFixFontAction )
     mToggleFixFontAction->setChecked( mUseFixedFont );
 
-  mHtmlMail = reader.readEntry( "htmlMail", false );
-  mHtmlLoadExternal = reader.readEntry( "htmlLoadExternal", false );
+  mHtmlMail = GlobalSettings::self()->htmlMail();
+  mHtmlLoadExternal = GlobalSettings::self()->htmlLoadExternal();
 
   KToggleAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
   if ( raction )
     raction->setChecked( true );
 
-  setAttachmentStrategy( AttachmentStrategy::create( reader.readEntry( "attachment-strategy", "smart" ) ) );
+  setAttachmentStrategy( AttachmentStrategy::create( GlobalSettings::self()->attachmentStrategy() ) );
   raction = actionForAttachmentStrategy( attachmentStrategy() );
   if ( raction )
     raction->setChecked( true );
 
-  const int mimeH = reader.readEntry( "MimePaneHeight", 100 );
-  const int messageH = reader.readEntry( "MessagePaneHeight", 180 );
+  const int mimeH = GlobalSettings::self()->mimePaneHeight();
+  const int messageH = GlobalSettings::self()->messagePaneHeight();
   mSplitterSizes.clear();
   if ( GlobalSettings::self()->mimeTreeLocation() == GlobalSettings::EnumMimeTreeLocation::bottom )
     mSplitterSizes << messageH << mimeH;
@@ -1073,8 +1068,8 @@ void KMReaderWin::readConfig(void)
 
   // Note that this call triggers an update, see this call has to be at the
   // bottom when all settings are already est.
-  setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
-                             HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
+  setHeaderStyleAndStrategy( HeaderStyle::create( GlobalSettings::self()->headerStyle() ),
+                             HeaderStrategy::create( GlobalSettings::self()->headerSetDisplayed() ) );
 
   if (message())
     update();
@@ -1103,30 +1098,28 @@ void KMReaderWin::adjustLayout() {
 }
 
 
-void KMReaderWin::saveSplitterSizes( KConfigGroup & c ) const {
+void KMReaderWin::saveSplitterSizes() const {
   if ( !mSplitter || !mMimePartTree )
     return;
   if ( mMimePartTree->isHidden() )
     return; // don't rely on QSplitter maintaining sizes for hidden widgets.
 
   const bool mimeTreeAtBottom = GlobalSettings::self()->mimeTreeLocation() == GlobalSettings::EnumMimeTreeLocation::bottom;
-  c.writeEntry( "MimePaneHeight", mSplitter->sizes()[ mimeTreeAtBottom ? 1 : 0 ] );
-  c.writeEntry( "MessagePaneHeight", mSplitter->sizes()[ mimeTreeAtBottom ? 0 : 1 ] );
+  GlobalSettings::self()->setMimePaneHeight( mSplitter->sizes()[ mimeTreeAtBottom ? 1 : 0 ] );
+  GlobalSettings::self()->setMessagePaneHeight( mSplitter->sizes()[ mimeTreeAtBottom ? 0 : 1 ] );
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeConfig( bool sync ) const {
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-
-  reader.writeEntry( "useFixedFont", mUseFixedFont );
+  GlobalSettings::self()->setUseFixedFont( mUseFixedFont );
   if ( headerStyle() )
-    reader.writeEntry( "header-style", headerStyle()->name() );
+    GlobalSettings::self()->setHeaderStyle( headerStyle()->name() );
   if ( headerStrategy() )
-    reader.writeEntry( "header-set-displayed", headerStrategy()->name() );
+    GlobalSettings::self()->setHeaderSetDisplayed( headerStrategy()->name() );
   if ( attachmentStrategy() )
-    reader.writeEntry( "attachment-strategy", attachmentStrategy()->name() );
+    GlobalSettings::self()->setAttachmentStrategy( attachmentStrategy()->name() );
 
-  saveSplitterSizes( reader );
+  saveSplitterSizes();
 
   if ( sync )
     kmkernel->slotRequestConfigSync();
@@ -1556,9 +1549,8 @@ void KMReaderWin::updateReaderWin()
   }
 
   if ( mSavedRelativePosition ) {
-    QScrollArea *scrollview = mViewer->view();
-    scrollview->widget()->move( 0,
-      qRound( scrollview->widget()->size().height() * mSavedRelativePosition ) );
+    QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
+    scrollBar->setValue( scrollBar->maximum() * mSavedRelativePosition );
     mSavedRelativePosition = 0;
   }
 }
@@ -1575,8 +1567,7 @@ void KMReaderWin::showHideMimeTree() {
     mMimePartTree->show();
   else {
     // don't rely on QSplitter maintaining sizes for hidden widgets:
-    KConfigGroup reader( KMKernel::config(), "Reader" );
-    saveSplitterSizes( reader );
+    saveSplitterSizes();
     mMimePartTree->hide();
   }
   if ( mToggleMimePartTreeAction && ( mToggleMimePartTreeAction->isChecked() != mMimePartTree->isVisible() ) )
@@ -2018,11 +2009,11 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   if ( aUrl.trimmed().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
-    mUrlClicked = KUrl();
+    mHoveredUrl = KUrl();
     return;
   }
 
-  mUrlClicked = url;
+  mHoveredUrl = url;
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
 
@@ -2036,7 +2027,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)
 {
-  mUrlClicked = aUrl;
+  mClickedUrl = aUrl;
 
   if ( URLHandlerManager::instance()->handleClick( aUrl, this ) )
     return;
@@ -2049,7 +2040,7 @@ void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
   const KUrl url( aUrl );
-  mUrlClicked = url;
+  mClickedUrl = url;
 
   if ( URLHandlerManager::instance()->handleContextMenuRequest( url, aPos, this ) )
     return;
@@ -2225,7 +2216,6 @@ void KMReaderWin::slotFind()
 void KMReaderWin::slotToggleFixedFont()
 {
   mUseFixedFont = !mUseFixedFont;
-  saveRelativePosition();
   update( true );
 }
 
@@ -2600,9 +2590,11 @@ bool KMReaderWin::htmlLoadExternal()
 //-----------------------------------------------------------------------------
 void KMReaderWin::saveRelativePosition()
 {
-  const QScrollArea *scrollview = mViewer->view();
-  mSavedRelativePosition = static_cast<float>( scrollview->widget()->pos().y() ) /
-                           scrollview->widget()->size().height();
+  const QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
+  if ( scrollBar->maximum() )
+    mSavedRelativePosition = static_cast<float>( scrollBar->value() ) / scrollBar->maximum();
+  else
+    mSavedRelativePosition = 0;
 }
 
 
@@ -2611,6 +2603,7 @@ void KMReaderWin::update( bool force )
 {
   KMMessage *msg = message();
   if ( msg ) {
+    saveRelativePosition();
     setMsg( msg, force );
   }
 }
@@ -2646,7 +2639,7 @@ void KMReaderWin::slotUrlClicked()
     identity = message()->parent()->identity();
   }
 
-  KMCommand *command = new KMUrlClickedCommand( mUrlClicked, identity, this,
+  KMCommand *command = new KMUrlClickedCommand( mClickedUrl, identity, this,
                                                 false, mainWidget );
   command->start();
 }
@@ -2654,14 +2647,14 @@ void KMReaderWin::slotUrlClicked()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
-  KMCommand *command = new KMMailtoComposeCommand( mUrlClicked, message() );
+  KMCommand *command = new KMMailtoComposeCommand( mHoveredUrl, message() );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoForward()
 {
-  KMCommand *command = new KMMailtoForwardCommand( mMainWindow, mUrlClicked,
+  KMCommand *command = new KMMailtoForwardCommand( mMainWindow, mClickedUrl,
                                                    message() );
   command->start();
 }
@@ -2669,15 +2662,15 @@ void KMReaderWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
-  KMCommand *command = new KMMailtoAddAddrBookCommand( mUrlClicked,
-                                                       mMainWindow);
+  KMCommand *command = new KMMailtoAddAddrBookCommand( mClickedUrl,
+                                                       mMainWindow );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
-  KMCommand *command = new KMMailtoOpenAddrBookCommand( mUrlClicked,
+  KMCommand *command = new KMMailtoOpenAddrBookCommand( mClickedUrl,
                                                         mMainWindow );
   command->start();
 }
@@ -2688,7 +2681,7 @@ void KMReaderWin::slotUrlCopy()
   // we don't necessarily need a mainWidget for KMUrlCopyCommand so
   // it doesn't matter if the dynamic_cast fails.
   KMCommand *command =
-    new KMUrlCopyCommand( mUrlClicked,
+    new KMUrlCopyCommand( mClickedUrl,
                           dynamic_cast<KMMainWidget*>( mMainWindow ) );
   command->start();
 }
@@ -2697,30 +2690,30 @@ void KMReaderWin::slotUrlCopy()
 void KMReaderWin::slotUrlOpen( const KUrl &url )
 {
   if ( !url.isEmpty() )
-    mUrlClicked = url;
-  KMCommand *command = new KMUrlOpenCommand( mUrlClicked, this );
+    mClickedUrl = url;
+  KMCommand *command = new KMUrlOpenCommand( mClickedUrl, this );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAddBookmarks()
 {
-    KMCommand *command = new KMAddBookmarksCommand( mUrlClicked, this );
+    KMCommand *command = new KMAddBookmarksCommand( mClickedUrl, this );
     command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlSave()
 {
-  KMCommand *command = new KMUrlSaveCommand( mUrlClicked, mMainWindow );
+  KMCommand *command = new KMUrlSaveCommand( mClickedUrl, mMainWindow );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
-  KMCommand *command = new KMMailtoReplyCommand( mMainWindow, mUrlClicked,
-    message(), copyText() );
+  KMCommand *command = new KMMailtoReplyCommand( mMainWindow, mClickedUrl,
+                                                 message(), copyText() );
   command->start();
 }
 
@@ -2764,7 +2757,7 @@ void KMReaderWin::slotSaveAttachments()
 void KMReaderWin::saveAttachment( const KUrl &tempFileName )
 {
   mAtmCurrent = msgPartFromUrl( tempFileName );
-  mAtmCurrentName = mUrlClicked.toLocalFile();
+  mAtmCurrentName = mClickedUrl.toLocalFile();
   slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
 }
 
@@ -2786,12 +2779,12 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     QMouseEvent* me = static_cast<QMouseEvent*>(e);
     if ( me->button() == Qt::LeftButton && ( me->modifiers() & Qt::ShiftModifier ) ) {
       // special processing for shift+click
-      URLHandlerManager::instance()->handleShiftClick( mUrlClicked, this );
+      URLHandlerManager::instance()->handleShiftClick( mHoveredUrl, this );
       return true;
     }
 
     if ( me->button() == Qt::LeftButton ) {
-      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mUrlClicked, this );
+      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mHoveredUrl, this );
       mLastClickPosition = me->pos();
     }
   }
@@ -2804,9 +2797,9 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     QMouseEvent* me = static_cast<QMouseEvent*>( e );
 
     if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
-      if ( mCanStartDrag && !mUrlClicked.isEmpty() && mUrlClicked.protocol() == "attachment" ) {
+      if ( mCanStartDrag && !mHoveredUrl.isEmpty() && mHoveredUrl.protocol() == "attachment" ) {
         mCanStartDrag = false;
-        URLHandlerManager::instance()->handleDrag( mUrlClicked, this );
+        URLHandlerManager::instance()->handleDrag( mHoveredUrl, this );
         slotUrlOn( QString() );
         return true;
       }

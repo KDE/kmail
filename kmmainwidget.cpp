@@ -310,17 +310,12 @@ void KMMainWidget::destruct()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig()
 {
-  const KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  const KConfigGroup general( KMKernel::config(), "General" );
-  const KConfigGroup reader( KMKernel::config(), "Reader" );
-
   mLongFolderList = GlobalSettings::self()->folderList() == GlobalSettings::EnumFolderList::longlist;
   mReaderWindowActive = GlobalSettings::self()->readerWindowMode() != GlobalSettings::EnumReaderWindowMode::hide;
   mReaderWindowBelow = GlobalSettings::self()->readerWindowMode() == GlobalSettings::EnumReaderWindowMode::below;
-  mThreadPref = geometry.readEntry( "nestedMessages", false );
 
-  mHtmlPref = reader.readEntry( "htmlMail", false );
-  mHtmlLoadExtPref = reader.readEntry( "htmlLoadExternal", false );
+  mHtmlPref = GlobalSettings::self()->htmlMail();
+  mHtmlLoadExtPref = GlobalSettings::self()->htmlLoadExternal();
   mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteFolderView();
   mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
 }
@@ -2664,8 +2659,7 @@ void KMMainWidget::slotPrintMsg()
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
   bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
   KConfigGroup reader( KMKernel::config(), "Reader" );
-  bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
-                               : reader.readEntry( "useFixedFont", false );
+  bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
 
   KMCommand *command =
     new KMPrintCommand( this, msg,
@@ -3318,8 +3312,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   assert( msg != 0 );
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   KConfigGroup reader( KMKernel::config(), "Reader" );
-  bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
-                               : reader.readEntry( "useFixedFont", false );
+  bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
   win->setUseFixedFont( useFixedFont );
   KMMessage *newMessage = new KMMessage(*msg);
   newMessage->setParent( msg->parent() );
