@@ -869,10 +869,7 @@ void KMReaderWin::slotAllHeaders() {
 
 void KMReaderWin::slotLevelQuote( int l )
 {
-  kDebug() << "Old Level:" << mLevelQuote << "New Level:" << l;
-
   mLevelQuote = l;
-  saveRelativePosition();
   update( true );
 }
 
@@ -962,6 +959,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
 {
   if ( !mAtmUpdate ) {
     // reparse the msg
+    saveRelativePosition();
     updateReaderWin();
     return;
   }
@@ -2219,7 +2217,6 @@ void KMReaderWin::slotFind()
 void KMReaderWin::slotToggleFixedFont()
 {
   mUseFixedFont = !mUseFixedFont;
-  saveRelativePosition();
   update( true );
 }
 
@@ -2607,6 +2604,7 @@ void KMReaderWin::update( bool force )
 {
   KMMessage *msg = message();
   if ( msg ) {
+    saveRelativePosition();
     setMsg( msg, force );
   }
 }
