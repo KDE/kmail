@@ -1117,13 +1117,15 @@ void ImapAccountBase::cancelMailCheck()
   }
 
   QList<FolderJob*>::iterator jt;
-  for ( jt = mJobList.begin(); jt != mJobList.end(); ++jt ) {
+  for ( jt = mJobList.begin(); jt != mJobList.end(); ) {
     if ( (*jt)->isCancellable() ) {
       FolderJob* job = (*jt);
       job->setPassiveDestructor( true );
-      mJobList.erase( jt );
+      jt = mJobList.erase( jt );
       delete job;
     }
+    else
+      ++jt;
   }
 }
 
