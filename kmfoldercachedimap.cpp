@@ -1679,6 +1679,11 @@ bool KMFolderCachedImap::deleteMessages()
     job->start();
     return true;
   } else {
+
+    // Nothing to delete on the server, make sure the map is clear again.
+    // Normally this wouldn't be necessary, but there can be stale maps because of
+    // https://issues.kolab.org/issue3833.
+    mDeletedUIDsSinceLastSync.clear();
     return false;
   }
 }
