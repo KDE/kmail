@@ -1121,10 +1121,8 @@ void ImapAccountBase::cancelMailCheck()
     if ( (*jt)->isCancellable() ) {
       FolderJob* job = (*jt);
       job->setPassiveDestructor( true );
-      jt = mJobList.erase( jt );
+      mJobList.erase( jt );
       delete job;
-    } else {
-      ++jt;
     }
   }
 }
