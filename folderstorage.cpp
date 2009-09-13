@@ -1115,10 +1115,9 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
     if ( !(*it)->msgList().isEmpty() && (*it)->msgList().first() == msg )
     {
       FolderJob* job = (*it);
-      it = mJobList.erase( it );
+      mJobList.erase( it );
       delete job;
-    } else
-      ++it;
+    }
   }
 }
 
