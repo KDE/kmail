@@ -340,13 +340,15 @@ void KMAccount::ignoreJobsForMessage( KMMessage* msg )
 {
   //FIXME: remove, make folders handle those
   QList<FolderJob*>::iterator it;
-  for( it = mJobList.begin(); it != mJobList.end(); ++it ) {
+  for( it = mJobList.begin(); it != mJobList.end(); ) {
     if ( (*it)->msgList().first() == msg) {
       FolderJob *job = (*it);
       it = mJobList.erase( it );
       delete job;
       break;
     }
+    else
+      ++it;
   }
 }
 

@@ -381,7 +381,7 @@ namespace KMail {
     QString titleText;
     QString confidenceString;
     if ( spamError == noError ) {
-      confidenceString = QString::number( confidence ) + "% &nbsp;";
+      confidenceString = ( confidence >= 0 ? QString::number( confidence ) + "% " : QString() ) + "&nbsp;";
       titleText = i18n("%1% probability of being spam with confidence %3%.\n\n"
                        "Full report:\nProbability=%2\nConfidence=%4",
                        percent, filterHeader, confidence, confidenceHeader );
