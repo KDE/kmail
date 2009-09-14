@@ -380,7 +380,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
 
   mDone = true;
 
-  mDummyComposer = new MessageComposer::Composer( this );
+  mDummyComposer = new Message::Composer( this );
   mDummyComposer->globalPart()->setParentWidgetForGui( this );
 }
 
@@ -2074,7 +2074,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 
   // Compose the message and queue it for sending.
   // TODO handle drafts, autosave, etc.
-  mComposer = new MessageComposer::Composer;
+  mComposer = new Message::Composer;
   fillGlobalPart( mComposer->globalPart() );
   fillTextPart( mComposer->textPart() );
   fillInfoPart( mComposer->infoPart() );
@@ -2085,13 +2085,13 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
   kDebug() << "Composer started.";
 }
 
-void KMComposeWin::fillGlobalPart( MessageComposer::GlobalPart *globalPart )
+void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
 {
   globalPart->setParentWidgetForGui( this );
   globalPart->setCharsets( mCodecAction->mimeCharsets() );
 }
 
-void KMComposeWin::fillTextPart( MessageComposer::TextPart *textPart )
+void KMComposeWin::fillTextPart( Message::TextPart *textPart )
 {
   textPart->setCleanPlainText( mEditor->toCleanPlainText() );
   textPart->setWrappedPlainText( mEditor->toWrappedPlainText() );
@@ -2101,7 +2101,7 @@ void KMComposeWin::fillTextPart( MessageComposer::TextPart *textPart )
   }
 }
 
-void KMComposeWin::fillInfoPart( MessageComposer::InfoPart *infoPart )
+void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
 {
   QStringList to, cc, bcc;
   foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
@@ -2127,7 +2127,7 @@ void KMComposeWin::fillInfoPart( MessageComposer::InfoPart *infoPart )
 
 void KMComposeWin::slotComposerResult( KJob *job )
 {
-  using MessageComposer::Composer;
+  using Message::Composer;
 
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( mComposer == job );
@@ -2161,7 +2161,7 @@ void KMComposeWin::slotComposerResult( KJob *job )
 void KMComposeWin::queueMessage( KMime::Message::Ptr message )
 {
   using MailTransport::MessageQueueJob;
-  using MessageComposer::InfoPart;
+  using Message::InfoPart;
 
   Q_ASSERT( mPendingQueueJobs == 0 );
   Q_ASSERT( mComposer );

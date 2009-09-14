@@ -116,7 +116,7 @@ namespace GpgME {
   class Error;
 }
 
-namespace MessageComposer {
+namespace Message {
   class Composer;
   class GlobalPart;
   class InfoPart;
@@ -492,9 +492,9 @@ class KMComposeWin : public KMail::Composer
      */
     void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false ); // TODO rename
 
-    void fillGlobalPart( MessageComposer::GlobalPart *globalPart );
-    void fillTextPart( MessageComposer::TextPart *part );
-    void fillInfoPart( MessageComposer::InfoPart *part );
+    void fillGlobalPart( Message::GlobalPart *globalPart );
+    void fillTextPart( Message::TextPart *part );
+    void fillInfoPart( Message::InfoPart *part );
     void queueMessage( boost::shared_ptr<KMime::Message> message );
 
     /**
@@ -770,8 +770,8 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mEncryptChiasmusAction;
     bool mEncryptWithChiasmus;
 
-    MessageComposer::Composer *mComposer;
-    MessageComposer::Composer *mDummyComposer;
+    Message::Composer *mComposer;
+    Message::Composer *mDummyComposer;
     int mPendingQueueJobs;
 
     // Temp var for slotPrint:
