@@ -1089,8 +1089,15 @@ void PopAccount::slotResult( KJob* )
       }
       // force the dialog to be shown next time the account is checked
       if (!mStorePasswd) mPasswd = "";
-	  job->ui()->setWindow( 0 );
-	  job->ui()->showErrorMessage();
+      if ( job->error() == KIO::ERR_COULD_NOT_CONNECT ) {
+        KNotification::event( "mail-check-error",
+                              i18n( "Error while checking account %1 for new mail:\n%2",
+                                    name(), job->errorString() ) );
+      }
+      else {
+        job->ui()->setWindow( 0 );
+        job->ui()->showErrorMessage();
+      }
     }
     slotCancel();
   }
