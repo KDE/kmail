@@ -243,7 +243,8 @@ void insertLibraryCataloguesAndIcons() {
     "libkdepim",
     "libksieve",
     "libkleopatra",
-    "libkmime"
+    "libkmime",
+    "libmessagelist"
   };
 
   KLocale * l = KGlobal::locale();
