@@ -31,6 +31,7 @@
 #include <kpimutils/kfileio.h>
 #include "kmfolderindex.h"
 #include "kmcommands.h"
+#include "kmmsgpartdlg.h"
 #include "mailsourceviewer.h"
 #include <QByteArray>
 #include <QImageReader>

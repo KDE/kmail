@@ -28,7 +28,6 @@
  *  your version.
  */
 
-#error "This file belongs to the old composer"
 #include "messagecomposer.h"
 
 #include "kmmsgpart.h"
@@ -1434,7 +1433,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   // mOldBodyPart is the main body part which we create here. mNewBodyPart is the main body
   // part plus signatures / encryption and late attachments.
   // mNewBodyPart is first created later in this function, when doing signing, and expanded
-  // when the EncryptMessageJob is executed.
+  // when the EncyptMessageJob is executed.
   //
   // theMessage is a copy of the reference message from the composer window. Below,
   // we delete all body parts from it, and therefore only care about its header fields.
@@ -2350,7 +2349,7 @@ bool MessageComposer::getSourceText( QByteArray &plainTextEncoded, QByteArray &h
     newPlainText = codec->toUnicode( plainTextEncoded );
   }
 
-  // Check if we didn't lose any characters during encoding.
+  // Check if we didn't loose any characters during encoding.
   // This can be checked by decoding the encoded text and comparing it with the
   // original, it should be the same.
   if ( !newPlainText.isEmpty() && ( newPlainText != plainText ) )

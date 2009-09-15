@@ -57,4 +57,4 @@ namespace KMail {
 
 } // namespace KMail
 
-#endif // __KMAIL_ATTACHMENTCOLLECTOR_H__
+#endif // __KMAIL_BODYPARTFORMATTER_H__

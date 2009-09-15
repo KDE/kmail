@@ -52,7 +52,6 @@ class EditorWatcher : public QObject
 
     bool start();
     bool fileChanged() const { return mFileModified; }
-    KUrl url() { return mUrl;}
   signals:
     void editDone( KMail::EditorWatcher* watcher );
 

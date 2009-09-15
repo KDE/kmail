@@ -17,7 +17,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#error "Use newcomposerwin.h instead"
 #define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H

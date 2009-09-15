@@ -413,13 +413,10 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 //-----------------------------------------------------------------------------
 const QTextCodec* KMMsgBase::codecForName(const QByteArray& _str)
 {
-  // cberzan: kill this
   if (_str.isEmpty())
     return 0;
   QByteArray codec = _str;
-  kAsciiToLower(codec.data()); // TODO cberzan: I don't think this is needed anymore
-                               // (see kdelibs/kdecore/localization/kcharsets.cpp:
-                               // it already toLowers stuff).
+  kAsciiToLower(codec.data());
   return KGlobal::charsets()->codecForName(codec);
 }
 
@@ -444,7 +441,6 @@ QByteArray KMMsgBase::toUsAscii(const QString& _str, bool *ok)
 //-----------------------------------------------------------------------------
 QStringList KMMsgBase::supportedEncodings(bool usAscii)
 {
-  // cberzan: replaced by KCodecAction in CodecManager
   QStringList encodingNames = KGlobal::charsets()->availableEncodingNames();
   QStringList encodings;
   QMap<QString,bool> mimeNames;
@@ -453,13 +449,11 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
   {
     bool ok;
     QTextCodec *codec = KGlobal::charsets()->codecForName( *it, ok );
-    kDebug() << "name" << *it << "codec" << codec << "name" << (codec ? codec->name() : "NULL");
     QString mimeName = codec ? QString( codec->name() ).toLower() : *it;
     if ( ok && !mimeNames.contains( mimeName ) )
     {
       encodings.append( KGlobal::charsets()->descriptionForEncoding( *it ) );
       mimeNames.insert( mimeName, true );
-      kDebug() << "added" << mimeName;
     }
   }
   encodings.sort();
@@ -809,7 +803,6 @@ QByteArray KMMsgBase::autoDetectCharset(const QByteArray &_encoding, const QStri
        charsets.prepend(currentCharset);
     }
 
-    // cberzan: moved this crap to CodecManager ==================================
     QStringList::ConstIterator it = charsets.constBegin();
     for (; it != charsets.constEnd(); ++it)
     {
@@ -838,7 +831,6 @@ QByteArray KMMsgBase::autoDetectCharset(const QByteArray &_encoding, const QStri
          }
        }
     }
-    // cberzan: till here =====================================================
     return 0;
 }
 

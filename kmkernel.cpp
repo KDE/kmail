@@ -17,9 +17,9 @@ using KPIM::BroadcastStatus;
 #include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
-#define REALLY_WANT_AKONADISENDER
-#include "akonadisender.h"
-#undef REALLY_WANT_AKONADISENDER
+#define REALLY_WANT_KMSENDER
+#include "kmsender.h"
+#undef REALLY_WANT_KMSENDER
 #include "undostack.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
@@ -144,7 +144,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mXmlGuiInstance = KComponentData();
 
 
-  // cberzan: this crap moved to CodecManager ======================
   netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
 
   // In the case of Japan. Japanese locale name is "eucjp" but
@@ -166,7 +165,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     // QTextCodec::setCodecForLocale(cdc);
     // KGlobal::locale()->setEncoding(cdc->mibEnum());
   }
-  // till here ================================================
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
@@ -1491,7 +1489,7 @@ void KMKernel::init()
   the_popFilterMgr->readConfig();
   cleanupImapFolders();
 
-  the_msgSender = new AkonadiSender;
+  the_msgSender = new KMSender;
   the_server_is_ready = true;
   { // area for config group "Composer"
     KConfigGroup group(cfg, "Composer");

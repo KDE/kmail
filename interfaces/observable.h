@@ -44,6 +44,7 @@ namespace KMail {
     class Observable {
     public:
       virtual ~Observable() {}
+
       virtual void attach( Observer * obs ) = 0;
       virtual void detach( Observer * obs ) = 0;
       virtual void notify() = 0;

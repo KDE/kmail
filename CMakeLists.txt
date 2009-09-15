@@ -29,9 +29,11 @@ configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h)
 
 qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
+qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
+          ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
   COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
@@ -77,10 +79,12 @@ set(kmailprivate_LIB_SRCS
    favoritefolderview.cpp
    kmaccount.cpp
    listjob.cpp
+   kmcomposewin.cpp
    snippetdlg.cpp
    snippetwidget.cpp
    snippetitem.cpp
    kmfolder.cpp
+   kmmsgpartdlg.cpp
    kmreaderwin.cpp
    htmlstatusbar.cpp
    kmmsgdict.cpp
@@ -99,7 +103,7 @@ set(kmailprivate_LIB_SRCS
    kmfolderdir.cpp
    kmfoldermgr.cpp
    kmfoldernode.cpp
-   akonadisender.cpp
+   kmsender.cpp
    kmacctseldlg.cpp
    kmfiltermgr.cpp
    filterimporterexporter.cpp
@@ -168,8 +172,10 @@ set(kmailprivate_LIB_SRCS
    aboutdata.cpp
    mailserviceimpl.cpp
    mailmanagerimpl.cpp
+   attachmentlistview.cpp
    kmcomposereditor.cpp
    kmlineeditspell.cpp
+   kmatmlistview.cpp
    composer.cpp
    isubject.cpp
    bodyvisitor.cpp
@@ -178,8 +184,7 @@ set(kmailprivate_LIB_SRCS
    secondarywindow.cpp
    filterlog.cpp
    filterlogdlg.cpp
-   codecaction.cpp
-   codecmanager.cpp
+   messagecomposer.cpp
    keyresolver.cpp
    globalsettings.cpp
    regexplineedit.cpp
@@ -236,11 +241,6 @@ set(kmailprivate_LIB_SRCS
    procmailparser.cpp
    stringutil.cpp
    iconnamecache.cpp
-   newcomposerwin.cpp
-   attachmentcontroller.cpp
-   attachmentmodel.cpp
-   attachmentview.cpp
-   attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
    htmlquotecolorer.cpp
    attachmentdialog.cpp
@@ -250,14 +250,11 @@ set(kmailprivate_LIB_SRCS
    messagelistview/widget.cpp
 )
 
-# TODO PORT
-# qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
-# qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
-#   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
-# )
-
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
+)
+qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
 )
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl
@@ -273,6 +270,7 @@ qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
   ${CMAKE_SOURCE_DIR}/korganizer/org.kde.Korganizer.Calendar.xml
 )
 
@@ -344,9 +342,6 @@ target_link_libraries(kmailprivate
   ${KDE4_KHTML_LIBRARY}
   ${KDE4_THREADWEAVER_LIBRARY}
   ${KDE4_KMIME_LIBRARY}
-  ${KDE4_AKONADI_LIBS}
-  ${KDE4_AKONADI_KMIME_LIBS}
-  messagecomposer
   messagelist
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
   ${KDE4_PHONON_LIBRARY}
@@ -471,5 +466,6 @@ install(TARGETS
 install(FILES
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
   DESTINATION ${KDE4_DBUS_INTERFACES_DIR}
 )
