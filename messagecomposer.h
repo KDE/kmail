@@ -28,6 +28,7 @@
  *  your version.
  */
 
+#error "This file belongs to the old composer"
 #ifndef MESSAGECOMPOSER_H
 #define MESSAGECOMPOSER_H
 
@@ -87,7 +88,7 @@ class MessageComposer : public QObject {
     /*
       Applies the user changes to the message object of the composer
       and signs/encrypts the message if activated. Returns false in
-      case of an error (e.g. if PGP encryption fails).
+      case of an error (e.g. if PGP encryption fails). (huh? void)
       If backgroundMode is true then no functions which might require
       user interaction (like signing/encrypting) are performed
     */

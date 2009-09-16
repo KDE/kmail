@@ -57,7 +57,7 @@ class KMFolder;
 class KMFolderMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
-class KMSender;
+class AkonadiSender;
 namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
@@ -464,7 +464,7 @@ private:
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
-  KMSender *the_msgSender;
+  AkonadiSender *the_msgSender;
   KMMessageTagMgr *the_msgTagMgr;
   struct putData
   {

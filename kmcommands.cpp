@@ -84,7 +84,6 @@ using KMail::ActionScheduler;
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "messagesender.h"
-#include "kmmsgpartdlg.h"
 #include "undostack.h"
 #include "kcursorsaver.h"
 #include "partNode.h"
@@ -3157,10 +3156,13 @@ void KMHandleAttachmentCommand::atmSave()
 
 void KMHandleAttachmentCommand::atmProperties()
 {
+  kDebug() << "port me to AttachmentPropertiesDialog";
+#if 0
   KMMsgPartDialogCompat dlg( 0, true );
   KMMessagePart& msgPart = mNode->msgPart();
   dlg.setMsgPart( &msgPart );
   dlg.exec();
+#endif
 }
 
 void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
