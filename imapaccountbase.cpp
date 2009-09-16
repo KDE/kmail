@@ -804,7 +804,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::delimiterForNamespace( const QString& prefix )
   {
-    kdDebug(5006) << "delimiterForNamespace " << prefix << endl;
+    //kdDebug(5006) << "delimiterForNamespace " << prefix << endl;
     // try to match exactly
     if ( mNamespaceToDelimiter.contains(prefix) ) {
       return mNamespaceToDelimiter[prefix];
@@ -828,7 +828,7 @@ namespace KMail {
       return mNamespaceToDelimiter[""];
     }
     // well, we tried
-    kdDebug(5006) << "delimiterForNamespace - not found" << endl;
+    //kdDebug(5006) << "delimiterForNamespace - not found" << endl;
     return QString::null;
   }
 

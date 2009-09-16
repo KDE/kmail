@@ -2657,7 +2657,9 @@ void KMHeaders::folderCleared()
 
 void KMHeaders::folderClosed()
 {
-    mFolder->open( "kmheaders" );
+  if ( mFolder->open( "kmheaders" ) == 0 )
+    updateMessageList();
+  else
     folderCleared();
 }
 
