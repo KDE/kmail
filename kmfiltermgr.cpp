@@ -68,7 +68,7 @@ void KMFilterMgr::readConfig(void)
 
   if ( bPopFilter ) {
     KConfigGroup group = config->group( "General" );
-    mShowLater = group.readEntry( "popshowDLmsgs", 0 );
+    mShowLater = group.readEntry( "popshowDLmsgs", false );
   } 
   mFilters = FilterImporterExporter::readFiltersFromConfig( config, bPopFilter );
 }
