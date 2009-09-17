@@ -480,7 +480,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( msg );
+  KMail::Composer * cWin = KMail::makeComposer( msg, KMail::Composer::New );
   cWin->setCharset( "", true );
   if (!to.isEmpty())
     cWin->setFocusToSubject();
@@ -575,7 +575,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer();
+  KMail::Composer * cWin = KMail::makeComposer( 0, KMail::Composer::New );
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && GlobalSettings::self()->legacyBodyInvites() );
@@ -639,7 +639,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
     parser.process( NULL, NULL );
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( msg );
+  KMail::Composer * cWin = KMail::makeComposer( msg, KMail::Composer::New );
   cWin->setCharset("", true);
   if ( !hidden ) {
     cWin->show();
