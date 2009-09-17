@@ -1,7 +1,12 @@
 [Misc]
 Name=Application Octet Stream
 Name[da]=Programmet Octet Stream
+Name[de]=Application Octet Stream
+Name[el]=Application Octet Stream
+Name[en_GB]=Application Octet Stream
 Name[es]=Flujo de octetos de la aplicación
+Name[et]=Application Octet Stream
+Name[ga]=Application Octet Stream
 Name[gl]=Aplicación Octet Stream
 Name[it]=Application Octetstream
 Name[ja]=アプリケーション/オクテットストリーム
@@ -28,6 +33,7 @@ Comment[cs]=Modul formátovače těla pro application/octet-stream
 Comment[da]=Et bodypart formateringsplugin for application/octet-stream
 Comment[de]=Ein Bodypart-Formatiermodul für application/octet-stream
 Comment[el]=Ένας μορφοποιητής για application/octet-stream
+Comment[en_GB]=A bodypart formatter plugin for application/octet-stream
 Comment[es]=Un complemento de formateo para el cuerpo de application/octet-stream
 Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
 Comment[eu]=Gorputz-zati formateatzaile plugin bat aplikazio/zortikote-jarioentzat

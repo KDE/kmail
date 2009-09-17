@@ -13,6 +13,7 @@ X-KDE-CfgDlgHierarchy=KMail
 X-KDE-Weight=300
 
 Name=Appearance
+Name[af]=Appearance
 Name[be]=Вонкавы выгляд
 Name[bg]=Външен вид
 Name[br]=Neuziadur
@@ -22,6 +23,7 @@ Name[cy]=Golwg
 Name[da]=Udseende
 Name[de]=Erscheinungsbild
 Name[el]=Εμφάνιση
+Name[en_GB]=Appearance
 Name[eo]=Prezentado
 Name[es]=Apariencia
 Name[et]=Välimus
