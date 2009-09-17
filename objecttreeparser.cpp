@@ -1781,7 +1781,9 @@ namespace KMail {
       if ( mReader && !mReader->decryptMessage() ) {
         writeDeferredDecryptionBlock();
         isEncrypted = true;
-      } else if ( okDecryptMIME( *node,
+        signTestNode = 0; // PENDING(marc) to be abs. sure, we'd need to have to look at the content
+      } else {
+        const bool bOkDecrypt = okDecryptMIME( *node,
                           decryptedData,
                           signatureFound,
                           signatures,
@@ -1791,14 +1793,16 @@ namespace KMail {
                           decryptionStarted,
                           messagePart.errorText,
                           messagePart.auditLogError,
-                          messagePart.auditLog ) ) {
-        kDebug() << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !";
-        isEncrypted = true;
-        node->setEncryptionState( KMMsgFullyEncrypted );
-        signTestNode = 0;
+                          messagePart.auditLog );
         if ( decryptionStarted ) {
           writeDecryptionInProgressBlock();
-        } else {
+          return true;
+        }
+        if ( bOkDecrypt ) {
+          kDebug() << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !";
+          isEncrypted = true;
+          node->setEncryptionState( KMMsgFullyEncrypted );
+          signTestNode = 0;
           // paint the frame
           messagePart.isDecryptable = true;
           if ( mReader )
@@ -1810,31 +1814,31 @@ namespace KMail {
                                       "encrypted data" );
           if ( mReader )
             htmlWriter()->queue( writeSigstatFooter( messagePart ) );
-        }
-      } else {
+        } else {
           // decryption failed, which could be because the part was encrypted but
           // decryption failed, or because we didn't know if it was encrypted, tried,
           // and failed. If the message was not actually encrypted, we continue
           // assuming it's signed
-        if ( passphraseError || ( smimeType.isEmpty() && actuallyEncrypted ) ) {
-          isEncrypted = true;
-          signTestNode = 0;
-        }
-
-        if ( isEncrypted ) {
-          kDebug() << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !";
-          // paint the frame
-          messagePart.isDecryptable = false;
-          if ( mReader ) {
-            htmlWriter()->queue( writeSigstatHeader( messagePart,
-                                                     cryptoProtocol(),
-                                                     node->trueFromAddress() ) );
-            assert( mReader->decryptMessage() ); // handled above
-            writePartIcon( &node->msgPart(), node->nodeId() );
-            htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+          if ( passphraseError || ( smimeType.isEmpty() && actuallyEncrypted ) ) {
+            isEncrypted = true;
+            signTestNode = 0;
           }
-        } else {
-          kDebug() << "pkcs7 mime  -  NO encryption found";
+
+          if ( isEncrypted ) {
+            kDebug() << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !";
+            // paint the frame
+            messagePart.isDecryptable = false;
+            if ( mReader ) {
+              htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                       cryptoProtocol(),
+                                                       node->trueFromAddress() ) );
+              assert( mReader->decryptMessage() ); // handled above
+              writePartIcon( &node->msgPart(), node->nodeId() );
+              htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+            }
+          } else {
+            kDebug() << "pkcs7 mime  -  NO encryption found";
+          }
         }
       }
       if ( isEncrypted )

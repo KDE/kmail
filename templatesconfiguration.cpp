@@ -353,19 +353,20 @@ QString TemplatesConfiguration::defaultForward()
     "%REM=\"" + i18n( "Default forward template" ) + "\"%-\n" +
     i18nc( "Default forward template: %1: subject of original message, "
            "%2: date of original message, "
-           "%3: mail address of original sender, "
-           "%4: original message text",
+           "%3: time of original message, "
+           "%4: mail address of original sender, "
+           "%5: original message text",
            "\n"
            "----------  Forwarded Message  ----------\n"
            "\n"
            "Subject: %1\n"
-           "Date: %2\n"
-           "From: %3\n"
+           "Date: %2, %3\n"
+           "From: %4\n"
            "%OADDRESSEESADDR\n"
            "\n"
-           "%4\n"
+           "%5\n"
            "-----------------------------------------",
-           "%OFULLSUBJECT", "%ODATE", "%OFROMADDR", "%TEXT" );
+           "%OFULLSUBJECT", "%ODATE", "%OTIMELONG", "%OFROMADDR", "%TEXT" );
 }
 
 QString TemplatesConfiguration::defaultQuoteString() {
