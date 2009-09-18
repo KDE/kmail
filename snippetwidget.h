@@ -20,11 +20,11 @@
 
 #include <libkdepim/kmeditor.h>
 #include <ktexteditor/view.h>
+#include <KSharedConfig>
 
 class QTreeWidgetItem;
 class QContextMenuEvent;
 class SnippetItem;
-class KConfig;
 class QWidget;
 class KActionCollection;
 using KPIM::KMeditor;
@@ -64,7 +64,7 @@ private:
     QMap<QString, QString> _mapSaved;
     KMeditor *mEditor;
     KActionCollection* mActionCollection;
-    KConfig * _cfg;
+    KSharedConfig::Ptr _cfg;
 
 public slots:
     void slotRemove();

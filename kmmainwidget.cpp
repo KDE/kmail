@@ -168,7 +168,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
-                            KActionCollection *actionCollection, KConfig *config ) :
+                            KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
     QWidget( parent ),
     mFavoritesCheckMailAction( 0 ),
     mFavoriteFolderView( 0 ),
@@ -327,7 +327,7 @@ void KMMainWidget::readFolderConfig()
   if ( !mFolder )
     return;
 
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, "Folder-" + mFolder->idString() );
   mFolderHtmlPref =
       group.readEntry( "htmlMailOverride", false );
@@ -342,7 +342,7 @@ void KMMainWidget::writeFolderConfig()
   if ( !mFolder )
     return;
 
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, "Folder-" + mFolder->idString() );
   group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
   group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
@@ -553,7 +553,7 @@ void KMMainWidget::layoutSplitters()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readConfig()
 {
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
 
   bool oldLongFolderList = mLongFolderList;
   bool oldReaderWindowActive = mReaderWindowActive;
@@ -625,7 +625,7 @@ void KMMainWidget::readConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeConfig()
 {
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup geometry( config, "Geometry" );
   KConfigGroup general( config, "General" );
 
@@ -1309,7 +1309,7 @@ void KMMainWidget::slotExpireFolder()
     KMessageBox::information(this, str);
     return;
   }
-  KConfig           *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group(config, "General");
 
   if (group.readEntry("warn-before-expire", true ) ) {
@@ -1537,10 +1537,11 @@ void KMMainWidget::slotInvalidateIMAPFolders() {
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotExpireAll() {
-  KConfig    *config = KMKernel::config();
-  int        ret = 0;
+void KMMainWidget::slotExpireAll()
+{
+  int ret = 0;
 
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group(config, "General");
 
   if (group.readEntry("warn-before-expire", true ) ) {

@@ -100,7 +100,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
                  KActionCollection *actionCollection,
-                 KConfig *config = KMKernel::config() );
+                 KSharedConfig::Ptr config = KMKernel::config() );
     virtual ~KMMainWidget();
     void destruct();
 
@@ -369,7 +369,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       the mainWidget is a KPart or a KMMainWindow.
       When dealing with geometries, use this pointer
     */
-    KConfig *config();
+    KSharedConfig::Ptr config();
 
   protected slots:
     void slotCheckOneAccount( QAction* );
@@ -725,7 +725,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QSignalMapper *mMessageTagToggleMapper;
 
     KMSystemTray *mSystemTray;
-    KConfig *mConfig;
+    KSharedConfig::Ptr mConfig;
     KXMLGUIClient *mGUIClient;
 
     KMail::MessageActions *mMsgActions;

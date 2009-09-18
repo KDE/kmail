@@ -793,7 +793,7 @@ void FolderStorage::remove()
   needsCompact = false; //we are dead - no need to compact us
 
   // Erase settings, otherwise they might interfere when recreating the folder
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   config->deleteGroup( folder()->configGroupName() );
 
   emit closed( folder() );
@@ -946,7 +946,7 @@ void FolderStorage::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 void FolderStorage::readConfig()
 {
   //kDebug()<<"#### READING CONFIG  ="<< name();
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group(config, folder()->configGroupName());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = group.readEntry("UnreadMsgs", -1 );
@@ -966,7 +966,7 @@ void FolderStorage::readConfig()
 //-----------------------------------------------------------------------------
 void FolderStorage::writeConfig()
 {
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, folder()->configGroupName() );
   group.writeEntry( "UnreadMsgs",
                     mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);

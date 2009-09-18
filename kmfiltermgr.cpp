@@ -64,7 +64,7 @@ void KMFilterMgr::clear()
 //-----------------------------------------------------------------------------
 void KMFilterMgr::readConfig(void)
 {
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   clear();
 
   if ( bPopFilter ) {
@@ -77,7 +77,7 @@ void KMFilterMgr::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::writeConfig(bool withSync)
 {
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
 
   // Now, write out the new stuff:  
   FilterImporterExporter::writeFiltersToConfig( mFilters, config, bPopFilter );

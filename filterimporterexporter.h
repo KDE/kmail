@@ -32,8 +32,9 @@
 
 #include <QList>
 
+#include <KSharedConfig>
+
 class KMFilter;
-class KConfig;
 class QWidget;
 
 namespace KMail
@@ -59,8 +60,8 @@ public:
       QList<KMFilter *> importFilters();
 
       static void writeFiltersToConfig( const QList<KMFilter *> &filters,
-                                        KConfig *config, bool bPopFilter );
-      static QList<KMFilter *> readFiltersFromConfig( KConfig *config,
+                                        KSharedConfig::Ptr config, bool bPopFilter );
+      static QList<KMFilter *> readFiltersFromConfig( KSharedConfig::Ptr config,
                                                       bool bPopFilter );
 private:
       QWidget *mParent;

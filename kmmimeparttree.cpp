@@ -95,7 +95,7 @@ static const char configEntry[] = "State";
 
 KMMimePartTree::~KMMimePartTree()
 {
-  saveLayout( KMKernel::config(), configGroup, configEntry );
+  saveLayout( KMKernel::config().data(), configGroup, configEntry );
 }
 
 void KMMimePartTree::clearAndResetSortOrder()
@@ -108,7 +108,7 @@ void KMMimePartTree::clearAndResetSortOrder()
 
 void KMMimePartTree::restoreLayoutIfPresent()
 {
-  if ( restoreLayout( KMKernel::config(), configGroup, configEntry ) )
+  if ( restoreLayout( KMKernel::config().data(), configGroup, configEntry ) )
     return;
   // No configGroup or no configEntry.
   // Provide nice defaults on first show

@@ -52,6 +52,7 @@ using KMail::MailManagerImpl;
 #include "templateparser.h"
 using KMail::TemplateParser;
 #include "mainfolderview.h"
+#include "messagelist/core/configprovider.h"
 
 #include <kmessagebox.h>
 #include <knotification.h>
@@ -1336,7 +1337,7 @@ void KMKernel::recoverDeadLetters()
 }
 
 //-----------------------------------------------------------------------------
-void KMKernel::initFolders(KConfig* cfg)
+void KMKernel::initFolders(KSharedConfig::Ptr cfg)
 {
   QString name;
   KConfigGroup group(cfg,"General");
@@ -1421,7 +1422,7 @@ void KMKernel::init()
   the_shuttingDown = false;
   the_server_is_ready = false;
 
-  KConfig* cfg = KMKernel::config();
+  KSharedConfig::Ptr cfg = KMKernel::config();
 
   QDir dir;
 
@@ -1692,7 +1693,7 @@ void KMKernel::cleanup(void)
   delete the_weaver;
   the_weaver = 0;
 
-  KConfig* config =  KMKernel::config();
+  KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");
 
   if ( the_trashFolder ) {
@@ -1751,7 +1752,7 @@ void KMKernel::cleanup(void)
   mWin = 0;
 
   if ( RecentAddresses::exists() )
-    RecentAddresses::self( config )->save( config );
+    RecentAddresses::self( config.data() )->save( config.data() );
   config->sync();
 }
 
@@ -2161,7 +2162,7 @@ KMKernel* KMKernel::self()
   return mySelf;
 }
 
-KConfig* KMKernel::config()
+KSharedConfig::Ptr KMKernel::config()
 {
   assert( mySelf );
   if ( !mySelf->mConfig )
@@ -2169,8 +2170,9 @@ KConfig* KMKernel::config()
     mySelf->mConfig = KSharedConfig::openConfig( "kmailrc" );
     // Check that all updates have been run on the config file:
     KMail::checkConfigUpdates();
+    MessageList::Core::ConfigProvider::self()->setConfig( mySelf->mConfig );
   }
-  return mySelf->mConfig.data();
+  return mySelf->mConfig;
 }
 
 KMailICalIfaceImpl& KMKernel::iCalIface()

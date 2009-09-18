@@ -2505,7 +2505,7 @@ void KMComposeWin::slotInsertFile()
   mRecentAction->addUrl( u );
   // Prevent race condition updating list when multiple composers are open
   {
-    KConfig *config = KMKernel::config();
+    KSharedConfig::Ptr config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
     QString encoding = KMMsgBase::encodingForName( u.fileEncoding() ).toLatin1();
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
@@ -2534,7 +2534,7 @@ void KMComposeWin::slotInsertFile()
 
 void KMComposeWin::slotRecentListFileClear()
 {
-   KConfig *config = KMKernel::config();
+   KSharedConfig::Ptr config = KMKernel::config();
    KConfigGroup group( config, "Composer" );
    group.deleteEntry("recent-urls");
    group.deleteEntry("recent-encodings");
@@ -2554,7 +2554,7 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
   ld.insert = true;
   // Get the encoding previously used when inserting this file
   {
-    KConfig *config = KMKernel::config();
+    KSharedConfig::Ptr config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
@@ -3677,9 +3677,9 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     *it = 0; // don't kill it later...
   }
 
-  RecentAddresses::self( KMKernel::config() )->add( bcc() );
-  RecentAddresses::self( KMKernel::config() )->add( cc() );
-  RecentAddresses::self( KMKernel::config() )->add( to() );
+  RecentAddresses::self( KMKernel::config().data() )->add( bcc() );
+  RecentAddresses::self( KMKernel::config().data() )->add( cc() );
+  RecentAddresses::self( KMKernel::config().data() )->add( to() );
 
   setModified( false );
   mAutoDeleteMsg = false;

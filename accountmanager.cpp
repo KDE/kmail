@@ -48,7 +48,7 @@ QStringList AccountManager::accountGroups() const
 //-----------------------------------------------------------------------------
 void AccountManager::writeConfig( bool withSync )
 {
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
 
   QStringList accountGroupsInConfig = accountGroups();
   QStringList accountGroupsToKeep;
@@ -86,7 +86,7 @@ void AccountManager::readConfig(void)
   mAcctList.clear();
 
   // Now loop over all account groups and load the accounts in them
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   QStringList accountGroupNames = accountGroups();
   int accountNum = 1;
   foreach( const QString &accountGroupName, accountGroupNames ) {

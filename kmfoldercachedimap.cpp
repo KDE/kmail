@@ -264,7 +264,7 @@ void KMFolderCachedImap::initializeFrom( KMFolderCachedImap *parent )
 
 void KMFolderCachedImap::readConfig()
 {
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, folder()->configGroupName() );
   if ( mImapPath.isEmpty() ) {
     mImapPath = group.readEntry( "ImapPath" );

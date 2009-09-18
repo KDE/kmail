@@ -48,8 +48,7 @@
 SnippetWidget::SnippetWidget(KMeditor* editor, KActionCollection* actionCollection, QWidget* parent)
  : QTreeWidget( parent ),
    mEditor( editor ),
-   mActionCollection( actionCollection ),
-   _cfg( 0 )
+   mActionCollection( actionCollection )
 {
     setObjectName("snippet widget");
     // init the QTreeWidget
@@ -78,7 +77,6 @@ SnippetWidget::SnippetWidget(KMeditor* editor, KActionCollection* actionCollecti
 SnippetWidget::~SnippetWidget()
 {
   writeConfig();
-  delete _cfg;
 
   /* We need to delete the child items before the parent items
      otherwise KMail would crash on exiting */
@@ -389,8 +387,8 @@ void SnippetWidget::writeConfig()
  */
 void SnippetWidget::readConfig()
 {
-  if (!_cfg)
-    _cfg = new KConfig("kmailsnippetrc", KConfig::NoGlobals);
+  if ( !_cfg )
+    _cfg = KSharedConfig::openConfig( "kmailsnippetrc", KConfig::NoGlobals );
 
   KConfigGroup kcg = _cfg->group("SnippetPart");
 

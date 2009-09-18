@@ -2028,7 +2028,7 @@ void KMailICalIfaceImpl::readConfig()
                            mNotes->location(), mNotes->label(), true, false );
   }
 
-  KConfig *config = kmkernel->config();
+  KSharedConfig::Ptr config = kmkernel->config();
   KConfigGroup cf = config->group( "Resource UINames" );
   *KMailICalIfaceImpl::mSubResourceUINamesMap = cf.entryMap();
 

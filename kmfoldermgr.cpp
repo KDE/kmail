@@ -56,7 +56,7 @@ KMFolderMgr::~KMFolderMgr()
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::expireAll() {
-  KConfig             *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup   group(config, "General");
   int                 ret = KMessageBox::Continue;
 
@@ -307,7 +307,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr,
     if (know_type == false)
     {
       know_type = true;
-      KConfig *config = KMKernel::config();
+      KSharedConfig::Ptr config = KMKernel::config();
       KConfigGroup group(config, "General");
       if (group.hasKey("default-mailbox-format"))
       {

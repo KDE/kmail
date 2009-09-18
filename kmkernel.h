@@ -256,7 +256,7 @@ public:
   /** normal control stuff */
 
   static KMKernel *self();
-  static KConfig *config();
+  static KSharedConfig::Ptr config();
   static int storageDebug();
 
   void init();
@@ -265,7 +265,7 @@ public:
   void cleanupImapFolders();
   void testDir(const char *_name);
   void recoverDeadLetters();
-  void initFolders(KConfig* cfg);
+  void initFolders(KSharedConfig::Ptr cfg);
   void closeAllKMailWindows();
   void cleanup(void);
   void quit();
