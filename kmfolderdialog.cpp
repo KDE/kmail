@@ -692,11 +692,13 @@ bool FolderDialogGeneralTab::save()
   folder->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
 
   QString fldName, oldFldName;
+  KMFolderCachedImap* dimap = 0;
+  if ( folder->folderType() == KMFolderTypeCachedImap )
+    dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+
   if ( !mIsLocalSystemFolder || mIsResourceFolder )
   {
-    QString acctName;
     oldFldName = mDlg->folder()->name();
-
     if (!mNameEdit->text().isEmpty())
       fldName = mNameEdit->text();
     else
@@ -734,8 +736,7 @@ bool FolderDialogGeneralTab::save()
       folder->storage()->setContentsType( type );
     }
 
-    if ( folder->folderType() == KMFolderTypeCachedImap ) {
-      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+    if ( dimap ) {
       if ( mIncidencesForComboBox ) {
         KMFolderCachedImap::IncidencesFor incfor =
                static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentIndex() );
@@ -748,10 +749,6 @@ bool FolderDialogGeneralTab::save()
         dimap->setAlarmsBlocked( mAlarmsBlockedCheckBox->isChecked() );
         dimap->writeConfig();
       }
-      if ( mSharedSeenFlagsCheckBox && mSharedSeenFlagsCheckBox->isChecked() != dimap->sharedSeenFlags() ) {
-        dimap->setSharedSeenFlags( mSharedSeenFlagsCheckBox->isChecked() );
-        dimap->writeConfig();
-      }
     }
 
     if( folder->folderType() == KMFolderTypeImap )
@@ -760,22 +757,30 @@ bool FolderDialogGeneralTab::save()
       imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
     }
-    // make sure everything is on disk, connected slots will call readConfig()
-    // when creating a new folder.
-    folder->storage()->writeConfig();
-    // Renamed an existing folder? We don't check for oldName == newName on
-    // purpose here. The folder might be pending renaming on the next dimap
-    // sync already, in which case the old name would still be around and
-    // something like Calendar -> CalendarFoo -> Calendar inbetween syncs would
-    // fail. Therefor let the folder sort it out itself, whether the rename is
-    // a noop or not.
-    if ( !oldFldName.isEmpty() )
-    {
-      kmkernel->folderMgr()->renameFolder( folder, fldName );
-    } else {
-      kmkernel->folderMgr()->contentsChanged();
-    }
   }
+
+  if ( dimap && mSharedSeenFlagsCheckBox &&
+       mSharedSeenFlagsCheckBox->isChecked() != dimap->sharedSeenFlags() ) {
+    dimap->setSharedSeenFlags( mSharedSeenFlagsCheckBox->isChecked() );
+    dimap->writeConfig();
+  }
+
+  // make sure everything is on disk, connected slots will call readConfig()
+  // when creating a new folder.
+  folder->storage()->writeConfig();
+  // Renamed an existing folder? We don't check for oldName == newName on
+  // purpose here. The folder might be pending renaming on the next dimap
+  // sync already, in which case the old name would still be around and
+  // something like Calendar -> CalendarFoo -> Calendar inbetween syncs would
+  // fail. Therefor let the folder sort it out itself, whether the rename is
+  // a noop or not.
+  if ( !oldFldName.isEmpty() )
+  {
+    kmkernel->folderMgr()->renameFolder( folder, fldName );
+  } else {
+    kmkernel->folderMgr()->contentsChanged();
+  }
+
   return true;
 }
 
