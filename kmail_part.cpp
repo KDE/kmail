@@ -109,7 +109,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   kmkernel->inboxFolder()->close();
 #else
   mainWidget = new KMMainWidget( canvas, this, actionCollection(),
-                                 KGlobal::config().data());
+                                 KGlobal::config() );
   mainWidget->setObjectName( "partmainwidget" );
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);

@@ -206,7 +206,7 @@ void RenameJob::folderCopyComplete(bool success)
   // move complete or not necessary
   // save our settings
   QString oldconfig = mStorage->folder()->configGroupName();
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   QMap<QString, QString> entries = config->entryMap( oldconfig );
   KConfigGroup saver(config, mNewFolder->configGroupName());
   for ( QMap<QString, QString>::Iterator it = entries.begin();

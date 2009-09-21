@@ -2867,13 +2867,13 @@ void ComposerPage::GeneralTab::save()
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
 {
   AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
-  dlg->setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
+  dlg->setAddresses( RecentAddresses::self( KMKernel::config().data() )->addresses() );
   if ( dlg->exec() && dlg ) {
-    RecentAddresses::self( KMKernel::config() )->clear();
+    RecentAddresses::self( KMKernel::config().data() )->clear();
     const QStringList &addrList = dlg->addresses();
     QStringList::ConstIterator it;
     for ( it = addrList.constBegin(); it != addrList.constEnd(); ++it )
-      RecentAddresses::self( KMKernel::config() )->add( *it );
+      RecentAddresses::self( KMKernel::config().data() )->add( *it );
   }
 }
 

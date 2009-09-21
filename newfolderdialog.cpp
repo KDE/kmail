@@ -118,7 +118,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     // does the below make any sense?
     //  mFormatComboBox->insertItem(2, "search");
     {
-      KConfig *config = KMKernel::config();
+      KSharedConfig::Ptr config = KMKernel::config();
       KConfigGroup group(config, "General");
       int type = group.readEntry("default-mailbox-format", 1 );
       if ( type < 0 || type > 1 ) type = 1;

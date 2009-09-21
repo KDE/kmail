@@ -185,7 +185,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
 bool CopyFolderJob::createTargetDir()
 {
   // get the default mailbox type
-  KConfig * const config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup saver(config, "General");
   int deftype = saver.readEntry("default-mailbox-format", 1);
   if ( deftype < 0 || deftype > 1 ) deftype = 1;

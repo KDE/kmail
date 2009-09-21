@@ -101,18 +101,8 @@ QString KMail::HtmlStatusBar::message() const {
   }
 }
 
-namespace {
-  inline KConfig * config() {
-#ifndef KMAIL_TESTING
-    return KMKernel::config();
-#else
-    return kApp->config();
-#endif
-  }
-}
-
 QColor KMail::HtmlStatusBar::fgColor() const {
-  KConfigGroup conf( config(), "Reader" );
+  KConfigGroup conf( KMKernel::config(), "Reader" );
   QColor defaultColor, color;
   switch ( mode() ) {
   case Html:
@@ -136,7 +126,7 @@ QColor KMail::HtmlStatusBar::fgColor() const {
 }
 
 QColor KMail::HtmlStatusBar::bgColor() const {
-  KConfigGroup conf( config(), "Reader" );
+  KConfigGroup conf( KMKernel::config(), "Reader" );
 
   QColor defaultColor, color;
   switch ( mode() ) {

@@ -113,7 +113,7 @@ void checkConfigUpdates() {
   static const int numUpdates = sizeof updates / sizeof *updates;
   // Warning: do not remove entries in the above array, or the update-level check below will break
 
-  KConfig * config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup startup( config, "Startup" );
   const int configUpdateLevel = startup.readEntry( "update-level", 0 );
   if ( configUpdateLevel == numUpdates ) // Optimize for the common case that everything is OK

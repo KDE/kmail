@@ -96,7 +96,7 @@ private:
 };
 
 /* static */
-QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KConfig *config,
+QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KSharedConfig::Ptr config,
                                                                  bool bPopFilter )
 {
     KConfigGroup group = config->group( "General" );
@@ -126,7 +126,7 @@ QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KConfig *config
 
 /* static */
 void FilterImporterExporter::writeFiltersToConfig( const QList<KMFilter *> &filters,
-                                                   KConfig *config, bool bPopFilter )
+                                                   KSharedConfig::Ptr config, bool bPopFilter )
 {
     // first, delete all filter groups:
     QStringList filterGroups =
@@ -185,8 +185,8 @@ QList<KMFilter *> FilterImporterExporter::importFilters()
         }
     }
 
-    KConfig config( fileName );
-    QList<KMFilter *> imported = readFiltersFromConfig( &config, mPopFilter );
+    KSharedConfig::Ptr config = KSharedConfig::openConfig( fileName );
+    QList<KMFilter *> imported = readFiltersFromConfig( config, mPopFilter );
     FilterSelectionDialog dlg( mParent );
     dlg.setFilters( imported );
     return dlg.exec() == QDialog::Accepted ? dlg.selectedFilters() : QList<KMFilter *>();
@@ -200,10 +200,10 @@ void FilterImporterExporter::exportFilters(const QList<KMFilter *> &filters )
     if ( saveUrl.isEmpty() || !Util::checkOverwrite( saveUrl, mParent ) )
         return;
 
-    KConfig config( saveUrl.toLocalFile() );
+    KSharedConfig::Ptr config = KSharedConfig::openConfig( saveUrl.toLocalFile() );
     AutoQPointer<FilterSelectionDialog> dlg( new FilterSelectionDialog( mParent ) );
     dlg->setFilters( filters );
     if ( dlg->exec() == QDialog::Accepted && dlg )
-        writeFiltersToConfig( dlg->selectedFilters(), &config, mPopFilter );
+        writeFiltersToConfig( dlg->selectedFilters(), config, mPopFilter );
 }
 

@@ -178,12 +178,12 @@ void KMLineEdit::contextMenuEvent( QContextMenuEvent*e )
 void KMLineEdit::editRecentAddresses()
 {
   AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
-  dlg->setAddresses( KPIM::RecentAddresses::self( KMKernel::config() )->addresses() );
+  dlg->setAddresses( KPIM::RecentAddresses::self( KMKernel::config().data() )->addresses() );
   if ( dlg->exec() && dlg ) {
-    KPIM::RecentAddresses::self( KMKernel::config() )->clear();
+    KPIM::RecentAddresses::self( KMKernel::config().data() )->clear();
     const QStringList addrList = dlg->addresses();
     for ( QStringList::const_iterator it = addrList.begin(), end = addrList.end() ; it != end ; ++it )
-      KPIM::RecentAddresses::self( KMKernel::config() )->add( *it );
+      KPIM::RecentAddresses::self( KMKernel::config().data() )->add( *it );
     loadContacts();
   }
 }
@@ -197,12 +197,12 @@ void KMLineEdit::loadContacts()
   if ( GlobalSettings::self()->showRecentAddressesInComposer() ){
     if ( KMKernel::self() ) {
       QStringList recent =
-        KPIM::RecentAddresses::self( KMKernel::config() )->addresses();
+        KPIM::RecentAddresses::self( KMKernel::config().data() )->addresses();
       QStringList::Iterator it = recent.begin();
       QString name, email;
 
-      KConfig config( "kpimcompletionorder" );
-      KConfigGroup group( &config, "CompletionWeights" );
+      KSharedConfig::Ptr config = KSharedConfig::openConfig( "kpimcompletionorder" );
+      KConfigGroup group( config, "CompletionWeights" );
       int weight = group.readEntry( "Recent Addresses", 10 );
       int idx = addCompletionSource( i18n( "Recent Addresses" ), weight );
       for ( ; it != recent.end(); ++it ) {

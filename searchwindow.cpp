@@ -33,13 +33,13 @@
 #include <QVBoxLayout>
 
 #include <KActionMenu>
-#include <KConfig>
 #include <KConfigGroup>
 #include <KDebug>
 #include <KIcon>
 #include <KIconLoader>
 #include <KLineEdit>
 #include <KPushButton>
+#include <KSharedConfig>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <KStatusBar>
@@ -131,7 +131,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
                                IconSize( KIconLoader::Small ),
                                IconSize( KIconLoader::Small ) ) );
 
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );
 
   QWidget* searchWidget = new QWidget(this);
@@ -384,7 +384,7 @@ SearchWindow::~SearchWindow()
     (*fit)->close( "searchwindow" );
   }
 
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );
   group.writeEntry( "SubjectWidth", mLbxMatches->columnWidth( 0 ) );
   group.writeEntry( "SenderWidth", mLbxMatches->columnWidth( 1 ) );

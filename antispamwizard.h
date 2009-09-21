@@ -29,9 +29,8 @@
 #ifndef KMAIL_ANTISPAMWIZARD_H
 #define KMAIL_ANTISPAMWIZARD_H
 
-#include <kconfig.h>
-
 #include <KAssistantDialog>
+#include <KSharedConfig>
 
 #include <QCheckBox>
 #include <QLayout>
@@ -231,7 +230,7 @@ namespace KMail {
 
         private:
           QList<SpamToolConfig> & mToolList;
-          KConfig *mConfig;
+          KSharedConfig::Ptr mConfig;
           WizardMode mMode;
 
           SpamToolConfig readToolConfig( KConfigGroup & configGroup );

@@ -263,7 +263,7 @@ void FolderView::readConfig()
   else
     setFont( KGlobalSettings::generalFont() );
 
-  if ( !restoreLayout( KMKernel::config(), "Geometry", mConfigPrefix + "Layout" ) )
+  if ( !restoreLayout( KMKernel::config().data(), "Geometry", mConfigPrefix + "Layout" ) )
   {
     // hide all the columns but the first (the default)
     setColumnHidden( DataSizeColumn, true );
@@ -291,7 +291,7 @@ void FolderView::readConfig()
 void FolderView::writeConfig()
 {
   saveItemStates();
-  saveLayout( KMKernel::config(), "Geometry", mConfigPrefix + "Layout" );
+  saveLayout( KMKernel::config().data(), "Geometry", mConfigPrefix + "Layout" );
 
   KConfigGroup myGroup( KMKernel::config(), mConfigPrefix );
   myGroup.writeEntry( "IconSize", iconSize().width() );
@@ -400,7 +400,7 @@ void FolderView::cleanupConfigFile()
   if ( topLevelItemCount() == 0 )
     return; // just in case reload wasn't called before
 
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   FolderViewItem * fvi;
   QHash<QString,bool> folderMap;
 

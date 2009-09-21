@@ -193,7 +193,7 @@ void KMFolderImap::setAccount(KMAcctImap *aAccount)
 //-----------------------------------------------------------------------------
 void KMFolderImap::readConfig()
 {
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group(config, folder()->configGroupName());
   mCheckMail = group.readEntry( "checkmail", true );
 
@@ -217,7 +217,7 @@ void KMFolderImap::readConfig()
 //-----------------------------------------------------------------------------
 void KMFolderImap::writeConfig()
 {
-  KConfig* config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group(config, folder()->configGroupName());
   group.writeEntry("checkmail", mCheckMail);
   group.writeEntry("UidValidity", mUidValidity);

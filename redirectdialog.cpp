@@ -137,7 +137,7 @@ void RedirectDialog::slotAddrBook()
       dlg->setSelectedTo( lst );
   }
 
-  dlg->setRecentAddresses( RecentAddresses::self( KMKernel::config() )->kabcAddresses() );
+  dlg->setRecentAddresses( RecentAddresses::self( KMKernel::config().data() )->kabcAddresses() );
 
   // Make it impossible to specify Cc or Bcc addresses as we support
   // only the Redirect-To header!

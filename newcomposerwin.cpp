@@ -2369,7 +2369,7 @@ void KMComposeWin::slotInsertFile()
   mRecentAction->addUrl( u );
   // Prevent race condition updating list when multiple composers are open
   {
-    KConfig *config = KMKernel::config();
+    KSharedConfig::Ptr config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
     QString encoding = KMMsgBase::encodingForName( u.fileEncoding() ).toLatin1();
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
@@ -2398,7 +2398,7 @@ void KMComposeWin::slotInsertFile()
 
 void KMComposeWin::slotRecentListFileClear()
 {
-   KConfig *config = KMKernel::config();
+   KSharedConfig::Ptr config = KMKernel::config();
    KConfigGroup group( config, "Composer" );
    group.deleteEntry("recent-urls");
    group.deleteEntry("recent-encodings");

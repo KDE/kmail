@@ -248,7 +248,7 @@ void KMMessageTagMgr::addTag( KMMessageTagDescription *aDesc, bool emitChange )
 
 void KMMessageTagMgr::readConfig() 
 {
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   int numTags = 0;
   QString grpName;
 
@@ -286,7 +286,7 @@ void KMMessageTagMgr::readConfig()
 
 void KMMessageTagMgr::writeConfig( bool withSync ) 
 {
-  KConfig *config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::config();
 
   //first, delete all groups:
   QStringList tagGroups 

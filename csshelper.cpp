@@ -46,7 +46,7 @@ namespace KMail {
   CSSHelper::CSSHelper( const QPaintDevice *pd ) :
     KPIM::CSSHelper( pd )
   {
-    KConfig * config = KMKernel::config();
+    KSharedConfig::Ptr config = KMKernel::config();
 
     KConfigGroup reader( config, "Reader" );
     KConfigGroup fonts( config, "Fonts" );

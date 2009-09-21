@@ -700,14 +700,13 @@ AntiSpamWizard::ConfigReader::ConfigReader( WizardMode mode,
     mMode( mode )
 {
   if ( mMode == AntiSpam )
-    mConfig = new KConfig( "kmail.antispamrc" );
+    mConfig = KSharedConfig::openConfig( "kmail.antispamrc" );
   else
-    mConfig = new KConfig( "kmail.antivirusrc" );
+    mConfig = KSharedConfig::openConfig( "kmail.antivirusrc" );
 }
 
 AntiSpamWizard::ConfigReader::~ConfigReader( )
 {
-  delete mConfig;
 }
 
 
