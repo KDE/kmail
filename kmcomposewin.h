@@ -165,6 +165,17 @@ public: // kmkernel, kmcommands, callback
    */
   void disableRecipientNumberCheck();
 
+  /**
+   * Ignore the "sticky" setting of the transport combo box and prefer the X-KMail-Transport
+   * header field of the message instead.
+   * Do the same for the identity combo box, don't obey the "sticky" setting but use the
+   * X-KMail-Identity header field instead.
+   *
+   * This is useful when sending out invitations, since you don't see the GUI and want the
+   * identity and transport to be set to the values stored in the messages.
+   */
+  void ignoreStickyFields();
+
    /**
     * Returns @c true while the message composing is in progress.
     */
@@ -927,6 +938,7 @@ private:
 
   bool mPreventFccOverwrite;
   bool mCheckForRecipients;
+  bool mIgnoreStickyFields;
 };
 
 #endif

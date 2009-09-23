@@ -185,7 +185,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreserveUserCursorPosition( false ),
     mPreventFccOverwrite( false ),
-    mCheckForRecipients( true )
+    mCheckForRecipients( true ),
+    mIgnoreStickyFields( false )
 {
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -1823,7 +1824,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   }
   mEdtSubject->setText(mMsg->subject());
 
-  const bool stickyIdentity = mBtnIdentity->isChecked();
+  const bool stickyIdentity = mBtnIdentity->isChecked() && !mIgnoreStickyFields;
   const bool messageHasIdentity = !newMsg->headerField("X-KMail-Identity").isEmpty();
   if (!stickyIdentity && messageHasIdentity)
     mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
@@ -1935,7 +1936,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 			  !ident.pgpEncryptionKey().isEmpty() );
 
   QString transport = newMsg->headerField("X-KMail-Transport");
-  if (!mBtnTransport->isChecked() && !transport.isEmpty())
+  const bool stickyTransport = mBtnTransport->isChecked() && !mIgnoreStickyFields;
+  if (!stickyTransport && !transport.isEmpty())
     setTransport( transport );
 
   if (!mBtnFcc->isChecked())
@@ -3978,6 +3980,11 @@ void KMComposeWin::disableWordWrap()
 void KMComposeWin::disableRecipientNumberCheck()
 {
   mCheckForRecipients = false;
+}
+
+void KMComposeWin::ignoreStickyFields()
+{
+  mIgnoreStickyFields = true;
 }
 
 //-----------------------------------------------------------------------------

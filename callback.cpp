@@ -112,6 +112,7 @@ bool Callback::mailICal( const QString& to, const QString &iCal,
   cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
   cWin->disableWordWrap();
+  cWin->ignoreStickyFields();
   cWin->setSigningAndEncryptionDisabled( true );
 
   if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
