@@ -60,6 +60,9 @@ Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
 QString Callback::askForTransport( bool nullIdentity ) const
 {
   const QStringList transports = KMail::TransportManager::transportNames();
+  if ( transports.size() == 1 )
+    return transports.first();
+
   const QString defaultTransport = GlobalSettings::self()->defaultTransport();
   const int defaultIndex = QMAX( 0, transports.findIndex( defaultTransport ) );
 
