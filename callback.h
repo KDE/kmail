@@ -81,6 +81,8 @@ public:
   bool outlookCompatibleInvitationReplyComments() const;
 
 private:
+  QString askForTransport( bool nullIdentity ) const;
+
   KMMessage* mMsg;
   KMReaderWin* mReaderWin;
   mutable QString mReceiver;

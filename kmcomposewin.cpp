@@ -4776,7 +4776,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     }
   }
 
-  if ( !mBtnTransport->isChecked() ) {
+  if ( !mBtnTransport->isChecked() && !mIgnoreStickyFields ) {
     QString transp = ident.transport();
     if ( transp.isEmpty() )
     {

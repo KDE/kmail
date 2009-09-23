@@ -41,6 +41,7 @@
 #include "composer.h"
 #include "kmreaderwin.h"
 #include "secondarywindow.h"
+#include "transportmanager.h"
 
 #include <mimelib/enum.h>
 
@@ -54,6 +55,29 @@ using namespace KMail;
 Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
   : mMsg( msg ), mReaderWin( readerWin ), mReceiverSet( false )
 {
+}
+
+QString Callback::askForTransport( bool nullIdentity ) const
+{
+  const QStringList transports = KMail::TransportManager::transportNames();
+  const QString defaultTransport = GlobalSettings::self()->defaultTransport();
+  const int defaultIndex = QMAX( 0, transports.findIndex( defaultTransport ) );
+
+  QString text;
+  if ( nullIdentity )
+    text = i18n( "<qt>The receiver of this invitation doesn't match any of your identities.<br>"
+                 "Please select the transport which should be used to send your reply.</qt>" );
+  else
+    text = i18n( "<qt>The identity matching the receiver of this invitation doesn't have an "
+                 "associated transport configured.<br>"
+                 "Please select the transport which should be used to send your reply.</qt>");
+  bool ok;
+  const QString transport = KInputDialog::getItem( i18n( "Select Transport" ), text,
+                                        transports, defaultIndex, FALSE, &ok, kmkernel->mainWin() );
+  if ( !ok )
+    return QString();
+
+  return transport;
 }
 
 bool Callback::mailICal( const QString& to, const QString &iCal,
@@ -93,9 +117,20 @@ bool Callback::mailICal( const QString& to, const QString &iCal,
   // Setting the identity here is important, as that is used to select the correct
   // transport later
   const KPIM::Identity& identity = kmkernel->identityManager()->identityForAddress( receiver() );
-  if ( identity != KPIM::Identity::null() ) {
+  const bool nullIdentity = ( identity == KPIM::Identity::null() );
+  if ( !nullIdentity ) {
     msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
   }
+
+  const bool identityHasTransport = !identity.transport().isEmpty();
+  if ( nullIdentity || ( !identity.isDefault() && !identityHasTransport ) ) {
+    const QString transport = askForTransport( nullIdentity );
+    if ( transport.isEmpty() )
+      return false; // user canceled transport selection dialog
+    msg->setHeaderField( "X-KMail-Transport", transport );
+  }
+  else if ( identityHasTransport )
+    msg->setHeaderField( "X-KMail-Transport", identity.transport() );
 
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
