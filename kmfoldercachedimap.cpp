@@ -2670,6 +2670,16 @@ void KMFolderCachedImap::setImapPath( const QString &path )
   mImapPath = path;
 }
 
+static bool isFolderTypeKnownToUs( const QString &type )
+{
+  for ( uint i = 0 ; i <= ContentsTypeLast; ++i ) {
+    FolderContentsType contentsType = static_cast<KMail::FolderContentsType>( i );
+    if ( type == KMailICalIfaceImpl::annotationForContentsType( contentsType ) )
+      return true;
+  }
+  return false;
+}
+
 // mAnnotationFolderType is the annotation as known to the server (and stored in kmailrc)
 // It is updated from the folder contents type and whether it's a standard resource folder.
 // This happens during the syncing phase and during initFolder for a new folder.
@@ -2696,7 +2706,13 @@ void KMFolderCachedImap::updateAnnotationFolderType()
     }
   }
 
-  if ( newType != oldType || newSubType != oldSubType ) {
+  // We do not want to overwrite custom folder types (which we treat as mail folders).
+  // So only overwrite custom folder types if the user changed the folder type himself to something
+  // other than mail.
+  const bool changingTypeAllowed = isFolderTypeKnownToUs( oldType ) ||
+                                   ( mContentsType != ContentsTypeMail );
+
+  if ( ( newType != oldType || newSubType != oldSubType ) && changingTypeAllowed ) {
     mAnnotationFolderType = newType + ( newSubType.isEmpty() ? QString() : '.'+newSubType );
     mAnnotationFolderTypeChanged = true; // force a "set annotation" on next sync
     kDebug() << mImapPath <<": updateAnnotationFolderType: '"
@@ -2779,15 +2795,21 @@ void KMFolderCachedImap::slotAnnotationResult( const QString &entry,
             markUnreadAsRead();
           }
 
-          // Ensure that further readConfig()s don't lose mAnnotationFolderType
-          writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
           break;
         }
       }
-      if ( !foundKnownType && !mReadOnly ) {
-        // Case 4: server has strange content-type, set it to what we need
-        mAnnotationFolderTypeChanged = true;
+      if ( !foundKnownType ) {
+        //kdDebug(5006) << "slotGetAnnotationResult: no known type of annotation found, leaving it untouched" << endl;
+
+        // Case 4: Server has strange content-type. We must not overwrite it, see https://issues.kolab.org/issue2069.
+        //         Treat the content-type as mail until we change it ourselves.
+        mAnnotationFolderTypeChanged = false;
+        mAnnotationFolderType = value;
+        setContentsType( ContentsTypeMail );
       }
+
+      // Ensure that further readConfig()s don't lose mAnnotationFolderType
+      writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
       // TODO handle subtype (inbox, drafts, sentitems, junkemail)
     } else if ( !mReadOnly ) {
       // Case 1: server doesn't have content-type, set it
