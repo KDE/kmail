@@ -606,7 +606,7 @@ void KMMainWidget::readConfig()
       mMsgView->readConfig();
 
     mHeaders->readConfig();
-    mHeaders->restoreLayout( KMKernel::config(), "Header-Geometry" );
+    mHeaders->restoreColumnLayout( KMKernel::config(), "Header-Geometry" );
 
     mFolderTree->readConfig();
     mFolderTree->reload();
