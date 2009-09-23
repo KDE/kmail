@@ -93,7 +93,8 @@ QPixmap* KMHeaders::pixReadFwdReplied = 0;
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
                      const char *name) :
-  KListView(parent, name)
+  KListView( parent, name ),
+  mIgnoreSortOrderChanges( false )
 {
   static bool pixmapsLoaded = false;
   //qInitImageIO();
@@ -538,6 +539,16 @@ void KMHeaders::readConfig (void)
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMHeaders::restoreColumnLayout( KConfig *config, const QString &group )
+{
+  // KListView::restoreLayout() will call setSorting(), which is reimplemented by us.
+  // We don't want to change the sort order, so we set a flag here that is checked in
+  // setSorting().
+  mIgnoreSortOrderChanges = true;
+  restoreLayout( config, group );
+  mIgnoreSortOrderChanges = false;
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::reset()
@@ -2575,6 +2586,9 @@ const KMMsgBase* KMHeaders::getMsgBaseForItem( const QListViewItem *item ) const
 //-----------------------------------------------------------------------------
 void KMHeaders::setSorting( int column, bool ascending )
 {
+  if ( mIgnoreSortOrderChanges )
+    return;
+
   if (column != -1) {
   // carsten: really needed?
 //    if (column != mSortCol)

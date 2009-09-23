@@ -441,7 +441,7 @@ void KMMainWidget::readConfig(void)
     mMsgView->readConfig();
 
   mHeaders->readConfig();
-  mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
+  mHeaders->restoreColumnLayout( KMKernel::config(), "Header-Geometry" );
 
   if ( mFolderViewSplitter && !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() ) {
     mFolderViewSplitter->setSizes( GlobalSettings::self()->folderViewSplitterPosition() );

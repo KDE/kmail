@@ -133,6 +133,15 @@ public:
   /** Read color options and set palette. */
   virtual void readColorConfig(void);
 
+  /**
+   * Same as KListView::restoreLayout(), only that this does _not_ restore the sort order.
+   * This is useful since restoreLayout() doesn't restore the sort order correctly, as
+   * KListView doesn't know about our extended sort order like date of arrival.
+   *
+   * Note that if you want to restore the sort order correctly, call readConfig().
+   */
+  void restoreColumnLayout( KConfig *config, const QString &group );
+
   /** Return the current message */
   virtual KMMessage* currentMsg();
   /** Return the current list view item */
@@ -389,6 +398,7 @@ private:
   NestingPolicy nestingPolicy;
   int mSortCol;
   bool mSortDescending;
+  bool mIgnoreSortOrderChanges;
 
   struct {
       uint ascending : 1;
