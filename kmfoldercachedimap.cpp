@@ -947,7 +947,7 @@ void KMFolderCachedImap::serverSyncInternal()
       newState( mProgress, i18n("Renaming folder") );
       CachedImapJob *job = new CachedImapJob( newName, CachedImapJob::tRenameFolder, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
-      connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+      connect( job, SIGNAL( finished() ), this, SLOT( slotRenameFolderFinished() ) );
       job->start();
       break;
     }
@@ -3274,6 +3274,15 @@ void KMFolderCachedImap::slotRescueDone(KMCommand * command)
     kmkernel->dimapFolderMgr()->remove( *it );
   }
   mToBeDeletedAfterRescue.clear();
+  serverSyncInternal();
+}
+
+void KMFolderCachedImap::slotRenameFolderFinished()
+{
+  // The syncing code assumes the folder was opened by us, and later closes it. So better
+  // make sure the reference count is correct, since the folder was force-closed by the rename.
+  // Otherwise bad things can happen, see https://issues.kolab.org/issue3853.
+  open( "cachedimap" );
   serverSyncInternal();
 }
 

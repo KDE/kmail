@@ -526,6 +526,7 @@ public slots:
     void slotUpdateLastUid();
     void slotFolderDeletionOnServerFinished();
   void slotRescueDone( KMCommand* command );
+  void slotRenameFolderFinished();
 
   signals:
     void folderComplete( KMFolderCachedImap *folder, bool success );

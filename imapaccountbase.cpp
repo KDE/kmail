@@ -880,7 +880,7 @@ QString ImapAccountBase::namespaceForFolder( FolderStorage* storage )
 //-----------------------------------------------------------------------------
 QString ImapAccountBase::delimiterForNamespace( const QString &prefix )
 {
-  kDebug() << "delimiterForNamespace" << prefix;
+  //kDebug() << "delimiterForNamespace" << prefix;
   // try to match exactly
   if ( mNamespaceToDelimiter.contains( prefix ) ) {
     return mNamespaceToDelimiter[prefix];
