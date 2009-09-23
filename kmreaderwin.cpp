@@ -2605,7 +2605,7 @@ void KMReaderWin::slotUrlClicked()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
-  KMCommand *command = new KMMailtoComposeCommand( mHoveredUrl, message() );
+  KMCommand *command = new KMMailtoComposeCommand( mClickedUrl, message() );
   command->start();
 }
 
