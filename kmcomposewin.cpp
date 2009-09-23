@@ -736,11 +736,13 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
 void KMComposeWin::writeConfig(void)
 {
   GlobalSettings::self()->setHeaders( mShowHeaders );
-  GlobalSettings::self()->setStickyTransport( mBtnTransport->isChecked() );
-  GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
   GlobalSettings::self()->setStickyFcc( mBtnFcc->isChecked() );
-  GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
-  GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
+  if ( !mIgnoreStickyFields ) {
+    GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
+    GlobalSettings::self()->setStickyTransport( mBtnTransport->isChecked() );
+    GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
+    GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
+  }
   GlobalSettings::self()->setPreviousFcc( mFcc->getFolder()->idString() );
   GlobalSettings::self()->setAutoSpellChecking(
                         mAutoSpellCheckingAction->isChecked() );
@@ -3985,6 +3987,10 @@ void KMComposeWin::disableRecipientNumberCheck()
 void KMComposeWin::ignoreStickyFields()
 {
   mIgnoreStickyFields = true;
+  mBtnTransport->setChecked( false );
+  mBtnIdentity->setChecked( false );
+  mBtnTransport->setEnabled( false );
+  mBtnIdentity->setEnabled( false );
 }
 
 //-----------------------------------------------------------------------------
