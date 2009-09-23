@@ -89,17 +89,20 @@ bool Callback::mailICal( const QString& to, const QString &iCal,
     * has been sent successfully. Set a link header which accomplishes that. */
     msg->link( mMsg, KMMsgStatusDeleted );
 
+  // Try and match the receiver with an identity.
+  // Setting the identity here is important, as that is used to select the correct
+  // transport later
+  const KPIM::Identity& identity = kmkernel->identityManager()->identityForAddress( receiver() );
+  if ( identity != KPIM::Identity::null() ) {
+    msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
+  }
+
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
   KConfigGroup options( KMKernel::config(), "Groupware" );
   if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) ) {
-    // Try and match the receiver with an identity
-    const KPIM::Identity& identity =
-      kmkernel->identityManager()->identityForAddress( receiver() );
     if( identity != KPIM::Identity::null() ) {
-      // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
-      msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
     }
     // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
     msg->setBcc( "" );
