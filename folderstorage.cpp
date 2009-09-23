@@ -1096,7 +1096,7 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
     return;
 
   QList<FolderJob*>::iterator it;
-  for ( it = mJobList.begin(); it != mJobList.end(); ++it )
+  for ( it = mJobList.begin(); it != mJobList.end(); )
   {
     //FIXME: the questions is : should we iterate through all
     //messages in jobs? I don't think so, because it would
