@@ -834,7 +834,7 @@ KToggleAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrateg
   else
     return 0;
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::slotEnterpriseHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
                              HeaderStrategy::rich() );
@@ -875,13 +875,13 @@ void KMReaderWin::slotAllHeaders() {
   if( !mExternalWindow )
     writeConfig();
 }
-
+#endif
 void KMReaderWin::slotLevelQuote( int l )
 {
   mLevelQuote = l;
   update( true );
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::slotCycleHeaderStyles() {
   const HeaderStrategy * strategy = headerStrategy();
   const HeaderStyle * style = headerStyle();
@@ -937,7 +937,7 @@ void KMReaderWin::slotCycleAttachmentStrategy() {
   assert( action );
   action->setChecked( true );
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
@@ -2509,7 +2509,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     kDebug() << "Canceled opening attachment";
   }
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()
 {
@@ -2546,7 +2546,7 @@ void KMReaderWin::slotScrollNext()
 {
   mViewer->view()->scrollBy( 0, (int)(mViewer->widget()->height() * 0.8 ) );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDocumentChanged()
 {

@@ -409,7 +409,7 @@ public slots:
 
   /** Refresh the reader window */
   void updateReaderWin();
-
+#ifndef USE_AKONADI_VIEWER
   /** HTML Widget scrollbar and layout handling. */
   void slotScrollUp();
   void slotScrollDown();
@@ -419,7 +419,7 @@ public slots:
   void slotDocumentChanged();
   void slotDocumentDone();
   void slotTextSelected(bool);
-
+#endif
   /** An URL has been activate with a click. */
   void slotUrlOpen(const KUrl &url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
 
@@ -488,20 +488,21 @@ public slots:
   void slotHandleAttachment( int action );
 
 protected slots:
+#ifndef USE_AKONADI_VIEWER
   void slotCycleHeaderStyles();
   void slotBriefHeaders();
+
   void slotFancyHeaders();
   void slotEnterpriseHeaders();
   void slotStandardHeaders();
   void slotLongHeaders();
   void slotAllHeaders();
-
   void slotCycleAttachmentStrategy();
   void slotIconicAttachments();
   void slotSmartAttachments();
   void slotInlineAttachments();
   void slotHideAttachments();
-
+#endif
   /** Some attachment operations. */
   void slotAtmView( int id, const QString& name );
   void slotDelayedResize();
