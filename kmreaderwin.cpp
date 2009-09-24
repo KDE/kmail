@@ -89,6 +89,12 @@ using KMail::FileHtmlWriter;
 using KMail::TeeHtmlWriter;
 #endif
 
+
+#ifdef USE_AKONADI_VIEWER
+using namespace Message;
+#include "viewer.h"
+#endif
+
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
@@ -468,7 +474,10 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
-  : QWidget(aParent, aFlags ),
+  :
+#ifndef USE_AKONADI_VIEWER
+  QWidget(aParent, aFlags ),
+#endif
     mSerNumOfOriginalMessage( 0 ),
     mNodeIdOffset( -1 ),
     mAttachmentStrategy( 0 ),
@@ -695,10 +704,11 @@ void KMReaderWin::createActions()
   connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoOpenAddrBook()) );
 
+#ifndef USE_AKONADI_VIEWER
   // copy selected text to clipboard
   mCopyAction = ac->addAction( KStandardAction::Copy, "kmail_copy", this,
                                SLOT(slotCopySelectedText()) );
-
+#endif
   // copy all text to clipboard
   mSelectAllAction  = new KAction(i18n("Select All Text"), this);
   ac->addAction("mark_all_text", mSelectAllAction );
@@ -1124,7 +1134,7 @@ void KMReaderWin::writeConfig( bool sync ) const {
   if ( sync )
     kmkernel->slotRequestConfigSync();
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
@@ -1182,6 +1192,7 @@ void KMReaderWin::initHtmlWidget(void)
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
 }
+#endif
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
   mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart();
@@ -1403,9 +1414,10 @@ QString KMReaderWin::newFeaturesMD5()
 //-----------------------------------------------------------------------------
 void KMReaderWin::displaySplashPage( const QString &info )
 {
+#ifndef USE_AKONADI_VIEWER
   mMsgDisplay = false;
   adjustLayout();
-
+#endif
   QString location = KStandardDirs::locate("data", "kmail/about/main.html");
   QString content = KPIMUtils::kFileToByteArray( location );
   content = content.arg( KStandardDirs::locate( "data", "kdeui/about/kde_infopage.css" ) );
@@ -1414,15 +1426,20 @@ void KMReaderWin::displaySplashPage( const QString &info )
                            "kdeui/about/kde_infopage_rtl.css" ) +  "\";");
   else
     content = content.arg( "" );
-
+#ifndef USE_AKONADI_VIEWER
   mViewer->begin(KUrl::fromPath( location ));
-
+#endif
   QString fontSize = QString::number( pointsToPixel( mCSSHelper->bodyFont().pointSize() ) );
   QString appTitle = i18n("KMail");
   QString catchPhrase = ""; //not enough space for a catch phrase at default window size i18n("Part of the Kontact Suite");
   QString quickDescription = i18n("The email client for the K Desktop Environment.");
+#ifndef USE_AKONADI_VIEWER
   mViewer->write(content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
   mViewer->end();
+#else
+  mViewer->displaySplashPage( content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
+#endif
+
 }
 
 void KMReaderWin::displayBusyPage()
@@ -2206,12 +2223,13 @@ void KMReaderWin::slotHandleAttachment( int choice )
   }
 }
 
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
 {
   mViewer->findText();
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
@@ -2230,13 +2248,14 @@ void KMReaderWin::slotToggleMimePartTree()
 }
 
 //-----------------------------------------------------------------------------
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::slotCopySelectedText()
 {
   QString selection = mViewer->selectedText();
   selection.replace( QChar::Nbsp, ' ' );
   QApplication::clipboard()->setText( selection );
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )

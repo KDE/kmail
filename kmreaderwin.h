@@ -20,6 +20,8 @@
 #ifndef KMREADERWIN_H
 #define KMREADERWIN_H
 
+//#define USE_AKONADI_VIEWER 1
+
 #include <QWidget>
 #include <QTimer>
 #include <QStringList>
@@ -82,12 +84,23 @@ namespace DOM {
   class HTMLElement;
 }
 
+#ifdef USE_AKONADI_VIEWER
+namespace Message {
+  class Viewer;
+}
+
+#endif
+
 /**
    This class implements a "reader window", that is a window
    used for reading or viewing messages.
 */
 
-class KMReaderWin: public QWidget, public KMail::Interface::Observer {
+class KMReaderWin:
+#ifndef USE_AKONADI_VIEWER
+  public QWidget,
+#endif
+  public KMail::Interface::Observer {
   Q_OBJECT
 
   friend void KMMimePartTree::slotItemClicked( QTreeWidgetItem* );
@@ -286,11 +299,11 @@ public:
   static int msgPartFromUrl(const KUrl &url);
 
   void setUpdateAttachment( bool update = true ) { mAtmUpdate = update; }
-
+#ifndef USE_AKONADI_VIEWER
   /** Access to the KHTMLPart used for the viewer. Use with
       care! */
   KHTMLPart * htmlPart() const { return mViewer; }
-
+#endif
   /** Returns the current message or 0 if none. */
   KMMessage* message(KMFolder** folder=0) const;
 
@@ -416,17 +429,20 @@ public slots:
   /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const QString &, const QPoint& mousePos);
 
+#ifndef USE_AKONADI_VIEWER
   /** The user selected "Find" from the menu. */
   void slotFind();
+#endif
 
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
 
   void slotToggleMimePartTree();
+#ifndef USE_AKONADI_VIEWER
 
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();
-
+#endif
    void slotUrlClicked();
 
   /** Operations on mailto: URLs. */
@@ -536,10 +552,11 @@ protected:
 
   /** show window containing information about a vCard. */
   void showVCard(KMMessagePart *msgPart);
+#ifndef USE_AKONADI_VIEWER
 
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
-
+#endif
   /** Some necessary event handling. */
   virtual void closeEvent(QCloseEvent *);
   virtual void resizeEvent(QResizeEvent *);
@@ -589,7 +606,9 @@ private:
   KHBox *mBox;
   KMail::HtmlStatusBar *mColorBar;
   KMMimePartTree* mMimePartTree;
+#ifndef USE_AKONADI_VIEWER
   KHTMLPart *mViewer;
+#endif
 
   const KMail::AttachmentStrategy * mAttachmentStrategy;
   const KMail::HeaderStrategy * mHeaderStrategy;
@@ -631,6 +650,9 @@ private:
   KUrl mClickedUrl;
   QPoint mLastClickPosition;
   bool mCanStartDrag;
+#ifdef USE_AKONADI_VIEWER
+  Message::Viewer *mViewer;
+#endif
 
   KMail::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal

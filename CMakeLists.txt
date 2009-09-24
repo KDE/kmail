@@ -49,6 +49,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/mimelib
   ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/messagelist
+  ${CMAKE_SOURCE_DIR}/libmessageviewer/
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
  )
@@ -368,6 +369,7 @@ target_link_libraries(kmailprivate
   ${KDEPIMLIBS_KPIMUTILS_LIBS}
   ${KDEPIMLIBS_KPIMTEXTEDIT_LIBS}
   ${QT_QT3SUPPORT_LIBRARY}
+  messageviewer
 )
 
 if(KMAIL_SQLITE_INDEX)
