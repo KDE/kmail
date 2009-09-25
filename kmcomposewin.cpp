@@ -4058,7 +4058,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   // If the transport sticky checkbox is not checked, set the transport
   // from the new identity
-  if ( !mBtnTransport->isChecked() ) {
+  if ( !mBtnTransport->isChecked() && !mIgnoreStickyFields ) {
     QString transportName = ident.transport();
     Transport *transport =
         TransportManager::self()->transportByName( transportName, false );
