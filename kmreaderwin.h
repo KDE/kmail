@@ -96,11 +96,7 @@ namespace Message {
    used for reading or viewing messages.
 */
 
-class KMReaderWin:
-#ifndef USE_AKONADI_VIEWER
-  public QWidget,
-#endif
-  public KMail::Interface::Observer {
+class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   Q_OBJECT
 
   friend void KMMimePartTree::slotItemClicked( QTreeWidgetItem* );
@@ -516,12 +512,13 @@ protected slots:
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
+#ifndef USE_AKONADI_VIEWER
   void styleChange( QStyle& oldStyle );
 
   /** Set the width of the frame to a reasonable value for the current GUI
       style */
   void setStyleDependantFrameWidth();
-
+#endif
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
@@ -578,12 +575,15 @@ private slots:
 private:
   void adjustLayout();
   void createWidgets();
+#ifndef USE_AKONADI_VIEWER
   void createActions();
+#endif
   void saveSplitterSizes() const;
-
+#ifndef USE_AKONADI_VIEWER
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
   KToggleAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
+#endif
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
 

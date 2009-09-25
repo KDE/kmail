@@ -92,7 +92,7 @@ using KMail::TeeHtmlWriter;
 
 #ifdef USE_AKONADI_VIEWER
 using namespace Message;
-#include "viewer.h"
+#include "libmessageviewer/viewer.h"
 #endif
 
 #include <mimelib/mimepp.h>
@@ -452,8 +452,12 @@ void KMReaderWin::createWidgets() {
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox );
   mColorBar->setObjectName( "mColorBar" );
+#ifndef USE_AKONADI_VIEWER
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
+#else
+  mViewer = new Message::Viewer( mBox/*TODO*/ );
+#endif
   // Remove the shortcut for the selectAll action from khtml part. It's redefined to
   // CTRL-SHIFT-A in kmail and clashes with kmails CTRL-A action.
   KAction *selectAll = qobject_cast<KAction*>(
@@ -474,10 +478,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
-  :
-#ifndef USE_AKONADI_VIEWER
-  QWidget(aParent, aFlags ),
-#endif
+  : QWidget(aParent, aFlags ),
     mSerNumOfOriginalMessage( 0 ),
     mNodeIdOffset( -1 ),
     mAttachmentStrategy( 0 ),
@@ -534,8 +535,10 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mAtmUpdate = false;
 
   createWidgets();
+#ifndef USE_AKONADI_VIEWER
   createActions();
   initHtmlWidget();
+#endif
   readConfig();
 
   mHtmlOverride = false;
@@ -557,7 +560,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 
   setMsg( 0, false );
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::createActions()
 {
   KActionCollection *ac = mActionCollection;
@@ -781,6 +784,7 @@ void KMReaderWin::createActions()
   connect( mScrollDownMoreAction, SIGNAL( triggered( bool ) ),
            this, SLOT( slotScrollNext() ) );
 }
+#endif
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
 {
@@ -791,6 +795,7 @@ void KMReaderWin::setUseFixedFont( bool useFixedFont )
   }
 }
 
+#ifndef USE_AKONADI_VIEWER
 // little helper function
 KToggleAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
   if ( !mActionCollection )
@@ -834,7 +839,7 @@ KToggleAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrateg
   else
     return 0;
 }
-#ifndef USE_AKONADI_VIEWER
+
 void KMReaderWin::slotEnterpriseHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
                              HeaderStrategy::rich() );
@@ -1957,7 +1962,13 @@ void KMReaderWin::slotTouchMessage()
                                                    MDN::Displayed,
                                                    true /* allow GUI */ ) )
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
-      KMessageBox::error( this, i18n("Could not send MDN.") );
+      KMessageBox::error(
+#ifndef USE_AKONADI_VIEWER
+                         this
+#else
+                         mViewer
+#endif
+                         , i18n("Could not send MDN.") );
 }
 
 
@@ -2160,7 +2171,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->exec( p );
   delete menu;
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::setStyleDependantFrameWidth()
 {
@@ -2186,7 +2197,7 @@ void KMReaderWin::styleChange( QStyle& oldStyle )
   setStyleDependantFrameWidth();
   QWidget::styleChange( oldStyle );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotHandleAttachment( int choice )
 {
