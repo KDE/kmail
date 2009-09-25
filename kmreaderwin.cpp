@@ -91,7 +91,6 @@ using KMail::TeeHtmlWriter;
 
 
 #ifdef USE_AKONADI_VIEWER
-using namespace Message;
 #include "libmessageviewer/viewer.h"
 #endif
 
@@ -1962,13 +1961,7 @@ void KMReaderWin::slotTouchMessage()
                                                    MDN::Displayed,
                                                    true /* allow GUI */ ) )
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
-      KMessageBox::error(
-#ifndef USE_AKONADI_VIEWER
-                         this
-#else
-                         mViewer
-#endif
-                         , i18n("Could not send MDN.") );
+      KMessageBox::error( this, i18n("Could not send MDN.") );
 }
 
 
@@ -2557,13 +2550,12 @@ void KMReaderWin::slotScrollNext()
 {
   mViewer->view()->scrollBy( 0, (int)(mViewer->widget()->height() * 0.8 ) );
 }
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDocumentChanged()
 {
 
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTextSelected(bool)
 {
