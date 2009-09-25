@@ -117,6 +117,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   }
 
   KMail::Composer *cWin = KMail::makeComposer();
+  cWin->ignoreStickyFields();
   cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
   cWin->disableWordWrap();
