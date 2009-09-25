@@ -118,7 +118,7 @@ void AnnotationJobs::MultiGetAnnotationJob::slotResult( KJob *job )
   GetAnnotationJob* getJob = static_cast<GetAnnotationJob *>( job );
   const AnnotationList& lst = getJob->annotations();
   for ( int i = 0 ; i < lst.size() ; ++ i ) {
-    kDebug() << "found annotation" << lst[i].name << "=" << lst[i].value;
+    //kDebug() << "found annotation" << lst[i].name << "=" << lst[i].value;
     if ( lst[i].name.startsWith( QLatin1String("value.") ) ) { // value.priv or value.shared
       found = true;
       value = lst[i].value;

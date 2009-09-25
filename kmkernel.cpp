@@ -433,6 +433,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
                             const QStringList &customHeaders )
 {
   kDebug();
+  KMail::Composer::TemplateContext context = KMail::Composer::New;
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
@@ -450,6 +451,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
     QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.toLocalFile(), true, false );
     if( !str.isEmpty() ) {
+      context = KMail::Composer::NoTemplate;
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
     else {
@@ -459,6 +461,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     }
   }
   else if ( !body.isEmpty() ) {
+    context = KMail::Composer::NoTemplate;
     msg->setBody( body.toUtf8() );
   }
   else {
@@ -483,7 +486,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( msg, KMail::Composer::New );
+  KMail::Composer * cWin = KMail::makeComposer( msg, context );
   cWin->setCharset( "", true );
   if (!to.isEmpty())
     cWin->setFocusToSubject();
@@ -516,7 +519,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             unsigned int identity )
 {
   kDebug();
-
+  KMail::Composer::TemplateContext context = KMail::Composer::New;
   KMMessage *msg = new KMMessage;
   KMMessagePart *msgPart = 0;
   msg->initHeader();
@@ -528,6 +531,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( identity > 0 ) msg->setHeaderField( "X-KMail-Identity", QString::number( identity ) );
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
+    context = KMail::Composer::NoTemplate;
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
@@ -550,6 +554,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         GlobalSettings::self()->legacyBodyInvites() ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
+      context = KMail::Composer::NoTemplate;
       msg->setHeaderField( "Content-Type",
                            QString( "text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
@@ -578,7 +583,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( 0, KMail::Composer::New );
+  KMail::Composer * cWin = KMail::makeComposer( 0, context );
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && GlobalSettings::self()->legacyBodyInvites() );
@@ -642,7 +647,9 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
     parser.process( NULL, NULL );
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( msg, KMail::Composer::New );
+  const KMail::Composer::TemplateContext context = body.isEmpty() ? KMail::Composer::New :
+                                                   KMail::Composer::NoTemplate;
+  KMail::Composer * cWin = KMail::makeComposer( msg, context );
   cWin->setCharset("", true);
   if ( !hidden ) {
     cWin->show();

@@ -44,6 +44,7 @@ struct InsertCommand
 };
 
 static const InsertCommand originalCommands[] = {
+  { I18N_NOOP( "Quoted Message Text" ), TemplatesInsertCommand::CQuote },
   { I18N_NOOP( "Message Text as Is" ), TemplatesInsertCommand::CText },
   { I18N_NOOP( "Message Id" ), TemplatesInsertCommand::COMsgId },
   { I18N_NOOP( "Date" ), TemplatesInsertCommand::CODate },
