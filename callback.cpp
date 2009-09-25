@@ -68,6 +68,8 @@ QString Callback::askForTransport( bool nullIdentity ) const
   QStringList transports;
   foreach( const Transport *transport, TransportManager::self()->transports() )
     transports << transport->name();
+  if ( transports.size() == 1 )
+    return transports.first();
   const QString defaultTransport = TransportManager::self()->defaultTransportName();
   const int defaultIndex = qMax( 0, transports.indexOf( defaultTransport ) );
 
