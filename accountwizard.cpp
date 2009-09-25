@@ -116,7 +116,9 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
     mAccount( 0 ), mTransport( 0 ), mServerTest( 0 )
 {
   showButton( Help, false );
-  button( KDialog::Cancel )->setText( i18n( "Create an Account Later" ) );
+  if ( kmkernel->firstStart() ) {
+    button( KDialog::Cancel )->setText( i18n( "Create an Account Later" ) );
+  }
 
   setupWelcomePage();
   setupAccountTypePage();
