@@ -3191,8 +3191,14 @@ void KMComposeWin::slotCopy()
   if ( !fw ) {
     return;
   }
-  QKeyEvent k( QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier );
-  qApp->notify( fw, &k );
+  static bool recursionFlag = false;
+
+  if ( !recursionFlag ) {
+    recursionFlag = true;
+    QKeyEvent k( QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier );
+    qApp->notify( fw, &k );
+    recursionFlag = false;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3206,8 +3212,14 @@ void KMComposeWin::slotPaste()
     mEditor->paste();
   }
   else {
-    QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
-    qApp->notify( fw, &k );
+    static bool recursionFlag = false;
+
+    if ( !recursionFlag ) {
+      recursionFlag = true;
+      QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
+      qApp->notify( fw, &k );
+      recursionFlag = false;
+    }
   }
 }
 
