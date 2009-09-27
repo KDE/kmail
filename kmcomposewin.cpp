@@ -388,7 +388,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
   if ( aMsg ) {
     setMsg( aMsg );
   }
-  mRecipientsEditor->setFocus();
+  mRecipientsEditor->setFocusBottom();
   mEditor->updateActionStates(); // set toolbar buttons to correct values
 
   mDone = true;
