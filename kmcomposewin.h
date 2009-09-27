@@ -798,6 +798,10 @@ class KMComposeWin : public KMail::Composer
     // helper method for rethinkFields
     int calcColumnWidth( int which, long allShowing, int width ) const;
 
+    // Sends a key event with the control modifier and the specified key to
+    // the given widget. This function is protected against recursion.
+    void sendControlKeyEvent( QWidget *receiver, Qt::Key key );
+
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();

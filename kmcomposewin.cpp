@@ -3185,20 +3185,26 @@ void KMComposeWin::slotCut()
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::sendControlKeyEvent( QWidget *receiver, Qt::Key key )
+{
+  static bool recursionFlag = false;
+
+  if ( !recursionFlag ) {
+    recursionFlag = true;
+    QKeyEvent k( QEvent::KeyPress, key, Qt::ControlModifier );
+    qApp->notify( receiver, &k );
+    recursionFlag = false;
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::slotCopy()
 {
   QWidget *fw = focusWidget();
   if ( !fw ) {
     return;
   }
-  static bool recursionFlag = false;
-
-  if ( !recursionFlag ) {
-    recursionFlag = true;
-    QKeyEvent k( QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier );
-    qApp->notify( fw, &k );
-    recursionFlag = false;
-  }
+  sendControlKeyEvent( fw, Qt::Key_C );
 }
 
 //-----------------------------------------------------------------------------
@@ -3212,14 +3218,7 @@ void KMComposeWin::slotPaste()
     mEditor->paste();
   }
   else {
-    static bool recursionFlag = false;
-
-    if ( !recursionFlag ) {
-      recursionFlag = true;
-      QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
-      qApp->notify( fw, &k );
-      recursionFlag = false;
-    }
+    sendControlKeyEvent( fw, Qt::Key_V );
   }
 }
 
