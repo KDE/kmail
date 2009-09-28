@@ -488,7 +488,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mResizeTimer( 0 ),
 #endif
     mDelayedMarkTimer( 0 ),
+#ifndef USE_AKONADI_VIEWER
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
+#endif
     mCSSHelper( 0 ),
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
@@ -1274,8 +1276,10 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
       }
     }
   }
-#endif
   update( true );
+#else
+  mViewer->setOverrideEncoding( encoding );
+#endif
 }
 #ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
@@ -2326,7 +2330,13 @@ void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
   msg->setUID(message()->UID());
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
-  win->showMsg( overrideEncoding(), msg, message()->getMsgSerNum(), nodeId );
+  QString encodeStr;
+#ifndef USE_AKONADI_VIEWER
+  encodeStr = overrideEncoding();
+#else
+  encodeStr = mViewer->overrideEncoding();
+#endif
+  win->showMsg( encodeStr, msg, message()->getMsgSerNum(), nodeId );
   win->show();
 }
 
@@ -3350,6 +3360,15 @@ const AttachmentStrategy * KMReaderWin::attachmentStrategy() const
   return mAttachmentStrategy;
 #else
   return mViewer->attachmentStrategy();
+#endif
+}
+
+QString KMReaderWin::overrideEncoding() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mOverrideEncoding;
+#else
+  return mViewer->overrideEncoding();
 #endif
 }
 #include "kmreaderwin.moc"

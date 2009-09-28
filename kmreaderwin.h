@@ -148,8 +148,7 @@ public:
   /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
-  QString overrideEncoding() const { return mOverrideEncoding; }
-
+  QString overrideEncoding() const;
   /** Set the override character encoding. */
   void setOverrideEncoding( const QString & encoding );
 #ifndef USE_AKONADI_VIEWER
@@ -616,8 +615,6 @@ private:
   KMail::HtmlStatusBar *mColorBar;
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
-#endif
-#ifndef USE_AKONADI_VIEWER
   const Message::AttachmentStrategy * mAttachmentStrategy;
 #endif
   const KMail::HeaderStrategy * mHeaderStrategy;
@@ -631,8 +628,10 @@ private:
   QTimer mResizeTimer;
 #endif
   QTimer mDelayedMarkTimer;
+#ifndef USE_AKONADI_VIEWER
   QString mOverrideEncoding;
   QString mOldGlobalOverrideEncoding; // used to detect changes of the global override character encoding
+#endif
   bool mMsgDisplay;
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
