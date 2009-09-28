@@ -389,7 +389,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
   if ( aMsg ) {
     setMsg( aMsg );
   }
-  mRecipientsEditor->setFocus();
+  mRecipientsEditor->setFocusBottom();
   mEditor->updateActionStates(); // set toolbar buttons to correct values
 
   mDone = true;
@@ -3186,14 +3186,26 @@ void KMComposeWin::slotCut()
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::sendControlKeyEvent( QWidget *receiver, Qt::Key key )
+{
+  static bool recursionFlag = false;
+
+  if ( !recursionFlag ) {
+    recursionFlag = true;
+    QKeyEvent k( QEvent::KeyPress, key, Qt::ControlModifier );
+    qApp->notify( receiver, &k );
+    recursionFlag = false;
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::slotCopy()
 {
   QWidget *fw = focusWidget();
   if ( !fw ) {
     return;
   }
-  QKeyEvent k( QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier );
-  qApp->notify( fw, &k );
+  sendControlKeyEvent( fw, Qt::Key_C );
 }
 
 //-----------------------------------------------------------------------------
@@ -3207,8 +3219,7 @@ void KMComposeWin::slotPaste()
     mEditor->paste();
   }
   else {
-    QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
-    qApp->notify( fw, &k );
+    sendControlKeyEvent( fw, Qt::Key_V );
   }
 }
 
