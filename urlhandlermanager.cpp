@@ -232,10 +232,12 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KUr
   KMMessage *msg = w->message();
   if ( !msg ) return false;
   Callback callback( msg, w );
+#ifndef USE_AKONADI_VIEWER
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( &part, path, callback ) )
       return true;
+#endif  
   return false;
 }
 
@@ -244,11 +246,12 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleContextMenuReque
   partNode * node = partNodeFromXKMailUrl( url, w, &path );
   if ( !node )
     return false;
-
+#ifndef USE_AKONADI_VIEWER
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleContextMenuRequest( &part, path, p ) )
       return true;
+#endif  
   return false;
 }
 
@@ -257,13 +260,14 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
   partNode * node = partNodeFromXKMailUrl( url, w, &path );
   if ( !node )
     return QString();
-
+#ifndef USE_AKONADI_VIEWER
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it ) {
     const QString msg = (*it)->statusBarMessage( &part, path );
     if ( !msg.isEmpty() )
       return msg;
   }
+#endif
   return QString();
 }
 

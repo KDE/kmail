@@ -3170,8 +3170,10 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 
   const QTextCodec * ObjectTreeParser::codecFor( partNode * node ) const {
     assert( node );
+#ifndef USE_AKONADI_VIEWER 
     if ( mReader && mReader->overrideCodec() )
       return mReader->overrideCodec();
+#endif    
     return node->msgPart().codec();
   }
 

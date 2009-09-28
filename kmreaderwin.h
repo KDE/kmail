@@ -152,11 +152,11 @@ public:
 
   /** Set the override character encoding. */
   void setOverrideEncoding( const QString & encoding );
-
+#ifndef USE_AKONADI_VIEWER
   /** Get codec corresponding to the currently selected override character encoding.
       @return The override codec or 0 if auto-detection is selected. */
   const QTextCodec * overrideCodec() const;
-
+#endif
   /** Set printing mode */
   virtual void setPrinting(bool enable) { mPrinting = enable; }
 

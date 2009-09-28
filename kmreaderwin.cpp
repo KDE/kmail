@@ -1277,7 +1277,7 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
 #endif
   update( true );
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 const QTextCodec * KMReaderWin::overrideCodec() const
 {
@@ -1286,7 +1286,7 @@ const QTextCodec * KMReaderWin::overrideCodec() const
   else
     return KMMsgBase::codecForName( mOverrideEncoding.toLatin1() );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSetEncoding()
 {
@@ -1373,7 +1373,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
   }
 
   if (aMsg) {
+#ifndef USE_AKONADI_VIEWER	  
     aMsg->setOverrideCodec( overrideCodec() );
+#endif    
     aMsg->setDecodeHTML( htmlMail() );
     mLastStatus = aMsg->status();
     // FIXME: workaround to disable DND for IMAP load-on-demand
