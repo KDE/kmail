@@ -220,11 +220,11 @@ public:
   void setAutoDelete(bool f) { mAutoDelete=f; }
 
   /** Override default html mail setting */
-  bool htmlOverride() const { return mHtmlOverride; }
+  bool htmlOverride() const;
   void setHtmlOverride( bool override );
 
   /** Override default load external references setting */
-  bool htmlLoadExtOverride() const { return mHtmlLoadExtOverride; }
+  bool htmlLoadExtOverride() const;
   void setHtmlLoadExtOverride( bool override );
 
   /** Is html mail to be supported? Takes into account override */
@@ -598,7 +598,11 @@ private:
   void toggleFullAddressList(const QString& field);
 
 private:
-  bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
+  bool mHtmlMail,
+    mHtmlLoadExternal;
+#ifndef USE_AKONADI_VIEWER
+  bool  mHtmlOverride, mHtmlLoadExtOverride;
+#endif
   int mAtmCurrent;
   QString mAtmCurrentName;
   KMMessage *mMessage;

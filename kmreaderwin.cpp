@@ -553,8 +553,10 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 #endif
   readConfig();
 
+#ifndef USE_AKONADI_VIEWER
   mHtmlOverride = false;
   mHtmlLoadExtOverride = false;
+#endif
 
   mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
 #ifndef USE_AKONADI_VIEWER
@@ -2639,16 +2641,33 @@ void KMReaderWin::slotDocumentDone()
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlOverride( bool override )
 {
+#ifndef USE_AKONADI_VIEWER
   mHtmlOverride = override;
   if ( message() ) {
     message()->setDecodeHTML( htmlMail() );
   }
+#else
+  mViewer->setHtmlOverride( override );
+#endif
+}
+
+bool KMReaderWin::htmlOverride() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mHtmlOverride;
+#else
+  return mViewer->htmlOverride();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlLoadExtOverride( bool override )
 {
+#ifndef USE_AKONADI_VIEWER
   mHtmlLoadExtOverride = override;
+#else
+  mViewer->setHtmlLoadExtOverride( override );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2664,8 +2683,14 @@ bool KMReaderWin::htmlMail()
 //-----------------------------------------------------------------------------
 bool KMReaderWin::htmlLoadExternal()
 {
+#ifndef USE_AKONADI_VIEWER
   return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
           (!mHtmlLoadExternal && mHtmlLoadExtOverride));
+#else
+  bool mHtmlLoadExtOverride = mViewer->htmlOverride();
+  return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
+          (!mHtmlLoadExternal && mHtmlLoadExtOverride));
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3297,6 +3322,16 @@ void KMReaderWin::setShowAttachmentQuicklist( bool showAttachmentQuicklist )
   mViewer->setShowAttachmentQuicklist( showAttachmentQuicklist );
 #endif
 }
+
+bool KMReaderWin::htmlLoadExtOverride() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mHtmlLoadExtOverride;
+#else
+  return mViewer->htmlLoadExtOverride();
+#endif
+}
+
 #include "kmreaderwin.moc"
 
 
