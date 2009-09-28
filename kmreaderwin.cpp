@@ -507,12 +507,16 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
     mSelectAllAction( 0 ),
+#ifndef USE_AKONADI_VIEWER
     mScrollUpAction( 0 ),
     mScrollDownAction( 0 ),
     mScrollUpMoreAction( 0 ),
     mScrollDownMoreAction( 0 ),
+#endif
     mToggleMimePartTreeAction( 0 ),
+#ifndef USE_AKONADI_VIEWER
     mSelectEncodingAction( 0 ),
+#endif
     mToggleFixFontAction( 0 ),
     mCanStartDrag( false ),
     mHtmlWriter( 0 ),
@@ -711,11 +715,9 @@ void KMReaderWin::createActions()
   connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoOpenAddrBook()) );
 
-#ifndef USE_AKONADI_VIEWER
   // copy selected text to clipboard
   mCopyAction = ac->addAction( KStandardAction::Copy, "kmail_copy", this,
                                SLOT(slotCopySelectedText()) );
-#endif
   // copy all text to clipboard
   mSelectAllAction  = new KAction(i18n("Select All Text"), this);
   ac->addAction("mark_all_text", mSelectAllAction );
@@ -1222,6 +1224,7 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
 //-----------------------------------------------------------------------------
 void KMReaderWin::setOverrideEncoding( const QString & encoding )
 {
+#ifndef USE_AKONADI_VIEWER //TODO port it
   if ( encoding == mOverrideEncoding )
     return;
 
@@ -1248,6 +1251,7 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
       }
     }
   }
+#endif
   update( true );
 }
 
@@ -1263,11 +1267,13 @@ const QTextCodec * KMReaderWin::overrideCodec() const
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSetEncoding()
 {
+#ifndef USE_AKONADI_VIEWER //TODO port it
   if ( mSelectEncodingAction->currentItem() == 0 ) // Auto
     mOverrideEncoding.clear();
   else
     mOverrideEncoding = KMMsgBase::encodingForName( mSelectEncodingAction->currentText() );
   update( true );
+#endif
 }
 
 //-----------------------------------------------------------------------------

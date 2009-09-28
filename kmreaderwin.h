@@ -636,14 +636,15 @@ private:
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;
-  KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
-      *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
-      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction,
-      *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction,
-      *mToggleMimePartTreeAction;
-  KSelectAction *mSelectEncodingAction;
-  KToggleAction *mToggleFixFontAction;
 
+  KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+    *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
+    *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction, *mToggleMimePartTreeAction;
+#ifndef USE_AKONADI_VIEWER
+  KAction *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction;
+  KSelectAction *mSelectEncodingAction;
+#endif
+  KToggleAction *mToggleFixFontAction;
   KUrl mHoveredUrl;
   KUrl mClickedUrl;
   QPoint mLastClickPosition;
