@@ -237,7 +237,7 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KUr
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( &part, path, callback ) )
       return true;
-#endif  
+#endif
   return false;
 }
 
@@ -251,7 +251,7 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleContextMenuReque
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleContextMenuRequest( &part, path, p ) )
       return true;
-#endif  
+#endif
   return false;
 }
 
@@ -513,8 +513,10 @@ namespace {
       QString levelStr= url.query().mid( 1,url.query().length() );
       bool isNumber;
       int levelQuote= levelStr.toInt(&isNumber);
+#ifndef USE_AKONADI_VIEWER
       if ( isNumber )
         w->slotLevelQuote( levelQuote );
+#endif
       return true;
     }
     return false;

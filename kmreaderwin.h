@@ -464,8 +464,9 @@ public slots:
   void slotSaveAttachments();
 
   void slotMessageArrived( KMMessage *msg );
-
+#ifndef USE_AKONADI_VIEWER
   void slotLevelQuote( int l );
+#endif
   void slotTouchMessage();
 
   /**
