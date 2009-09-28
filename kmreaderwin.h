@@ -509,13 +509,12 @@ protected slots:
   void slotAtmView( int id, const QString& name );
 #ifndef USE_AKONADI_VIEWER
   void slotDelayedResize();
-#endif
   /** Print message. Called on as a response of finished() signal of mPartHtmlWriter
       after rendering is finished.
       In the very end it deletes the KMReaderWin window that was created
       for the purpose of rendering. */
   void slotPrintMsg();
-
+#endif
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */

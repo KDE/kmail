@@ -1373,9 +1373,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
   }
 
   if (aMsg) {
-#ifndef USE_AKONADI_VIEWER	  
+#ifndef USE_AKONADI_VIEWER
     aMsg->setOverrideCodec( overrideCodec() );
-#endif    
+#endif
     aMsg->setDecodeHTML( htmlMail() );
     mLastStatus = aMsg->status();
     // FIXME: workaround to disable DND for IMAP load-on-demand
@@ -1935,19 +1935,16 @@ void KMReaderWin::printMsg( KMMessage* aMsg )
   connect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
   setMsg( aMsg, true );
 }
-#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotPrintMsg()
 {
-#ifndef USE_AKONADI_VIEWER
   disconnect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
   if (!message()) return;
   mViewer->view()->print();
   deleteLater();
-#endif
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
