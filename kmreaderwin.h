@@ -596,10 +596,10 @@ private:
   void toggleFullAddressList(const QString& field);
 
 private:
-  bool mHtmlMail,
-    mHtmlLoadExternal;
 #ifndef USE_AKONADI_VIEWER
+  bool mHtmlMail;
   bool  mHtmlOverride, mHtmlLoadExtOverride;
+  bool mHtmlLoadExternal;
 #endif
   int mAtmCurrent;
   QString mAtmCurrentName;

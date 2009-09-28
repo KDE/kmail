@@ -2698,9 +2698,7 @@ bool KMReaderWin::htmlLoadExternal()
   return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
           (!mHtmlLoadExternal && mHtmlLoadExtOverride));
 #else
-  bool mHtmlLoadExtOverride = mViewer->htmlOverride();
-  return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
-          (!mHtmlLoadExternal && mHtmlLoadExtOverride));
+  return mViewer->htmlLoadExternal();
 #endif
 }
 
