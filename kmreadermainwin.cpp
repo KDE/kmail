@@ -96,7 +96,6 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
   initKMReaderMainWin();
 }
 
-
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::initKMReaderMainWin()
 {
@@ -112,9 +111,10 @@ void KMReaderMainWin::initKMReaderMainWin()
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
-
+#ifndef USE_AKONADI_VIEWER
   connect( mReaderWin->htmlPart(), SIGNAL( onURL( const QString& ) ),
            statusBar(), SLOT( showMessage(const QString& ) ) );
+#endif
 }
 
 //-----------------------------------------------------------------------------

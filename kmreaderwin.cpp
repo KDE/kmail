@@ -91,6 +91,7 @@ using KMail::TeeHtmlWriter;
 
 
 #ifdef USE_AKONADI_VIEWER
+using namespace Message;
 #include "libmessageviewer/viewer.h"
 #endif
 
@@ -447,7 +448,9 @@ void KMReaderWin::createWidgets() {
   mMimePartTree = new KMMimePartTree( this, mSplitter );
   mMimePartTree->setObjectName( "mMimePartTree" );
   mBox = new KHBox( mSplitter );
+#ifndef USE_AKONADI_VIEWER
   setStyleDependantFrameWidth();
+#endif
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox );
   mColorBar->setObjectName( "mColorBar" );
@@ -455,10 +458,11 @@ void KMReaderWin::createWidgets() {
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
 #else
-  mViewer = new Message::Viewer( mBox/*TODO*/ );
+  mViewer = new Viewer( mBox/*TODO*/ );
 #endif
   // Remove the shortcut for the selectAll action from khtml part. It's redefined to
   // CTRL-SHIFT-A in kmail and clashes with kmails CTRL-A action.
+#ifndef USE_AKONADI_VIEWER
   KAction *selectAll = qobject_cast<KAction*>(
           mViewer->actionCollection()->action( "selectAll" ) );
   if ( selectAll ) {
@@ -466,6 +470,7 @@ void KMReaderWin::createWidgets() {
   } else {
     kDebug() << "Failed to find khtml's selectAll action to remove it's shortcut";
   }
+#endif
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
@@ -1031,6 +1036,7 @@ void KMReaderWin::removeTempFiles()
 //-----------------------------------------------------------------------------
 bool KMReaderWin::event(QEvent *e)
 {
+#ifndef USE_AKONADI_VIEWER  //TODO port or remove this part
   if (e->type() == QEvent::PaletteChange)
   {
     delete mCSSHelper;
@@ -1040,6 +1046,7 @@ bool KMReaderWin::event(QEvent *e)
     update( true ); // Force update
     return true;
   }
+#endif
   return QWidget::event(e);
 }
 
@@ -1047,6 +1054,7 @@ bool KMReaderWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
+#ifndef USE_AKONADI_VIEWER
   delete mCSSHelper;
   mCSSHelper = new KMail::CSSHelper( mViewer->view() );
 
@@ -1089,6 +1097,7 @@ void KMReaderWin::readConfig(void)
     update();
   mColorBar->update();
   KMMessage::readConfig();
+#endif
 }
 
 
@@ -1198,8 +1207,8 @@ void KMReaderWin::initHtmlWidget(void)
 }
 #endif
 
-void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
-  mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart();
+void KMReaderWin::setAttachmentStrategy( const KMail::AttachmentStrategy * strategy ) {
+  mAttachmentStrategy = strategy ? strategy : KMail::AttachmentStrategy::smart();
   update( true );
 }
 
@@ -1339,10 +1348,12 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     aMsg->setDecodeHTML( htmlMail() );
     mLastStatus = aMsg->status();
     // FIXME: workaround to disable DND for IMAP load-on-demand
+#ifndef USE_AKONADI_VIEWER
     if ( !aMsg->isComplete() )
       mViewer->setDNDEnabled( false );
     else
       mViewer->setDNDEnabled( true );
+#endif
   } else {
     mLastStatus.clear();
   }
@@ -1546,9 +1557,9 @@ void KMReaderWin::updateReaderWin()
   if ( !mMsgDisplay ) {
     return;
   }
-
+#ifndef USE_AKONADI_VIEWER
   mViewer->setOnlyLocalReferences( !htmlLoadExternal() );
-
+#endif
   htmlWriter()->reset();
 
   KMFolder* folder = 0;
@@ -1568,18 +1579,23 @@ void KMReaderWin::updateReaderWin()
     htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
   }
-
+#ifndef USE_AKONADI_VIEWER
   if ( mSavedRelativePosition ) {
     QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
     scrollBar->setValue( scrollBar->maximum() * mSavedRelativePosition );
     mSavedRelativePosition = 0;
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
 int KMReaderWin::pointsToPixel(int pointSize) const
 {
+#ifndef USE_AKONADI_VIEWER //TODO port
   return (pointSize * mViewer->view()->logicalDpiY() + 36) / 72;
+#else
+  return 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1887,10 +1903,12 @@ void KMReaderWin::printMsg( KMMessage* aMsg )
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotPrintMsg()
 {
+#ifndef USE_AKONADI_VIEWER
   disconnect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
   if (!message()) return;
   mViewer->view()->print();
   deleteLater();
+#endif
 }
 
 
@@ -2020,14 +2038,14 @@ bool foundSMIMEData( const QString aUrl,
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   const KUrl url(aUrl);
-
+#ifndef USE_AKONADI_VIEWER
   if ( url.protocol() == "kmail" || url.protocol() == "x-kmail" || url.protocol() == "attachment"
        || (url.protocol().isEmpty() && url.path().isEmpty()) ) {
     mViewer->setDNDEnabled( false );
   } else {
     mViewer->setDNDEnabled( true );
   }
-
+#endif
   if ( aUrl.trimmed().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
     mHoveredUrl = KUrl();
@@ -2121,7 +2139,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(i18nc("to view something", "View") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::View );
-
+#ifndef USE_AKONADI_VIEWER //TODO port
   const bool attachmentInHeader = hasParentDivWithId( mViewer->nodeUnderMouse(), "attachmentInjectionPoint" );
   const bool hasScrollbar = mViewer->view()->verticalScrollBar()->isVisible();
   if ( attachmentInHeader && hasScrollbar ) {
@@ -2129,7 +2147,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
     connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
     attachmentMapper->setMapping( action, KMHandleAttachmentCommand::ScrollTo );
   }
-
+#endif
   action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
@@ -2555,18 +2573,20 @@ void KMReaderWin::slotDocumentChanged()
 {
 
 }
-#endif
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTextSelected(bool)
 {
   QString temp = mViewer->selectedText();
   QApplication::clipboard()->setText(temp);
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::selectAll()
 {
+#ifndef USE_AKONADI_VIEWER
   mViewer->selectAll();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2576,11 +2596,12 @@ QString KMReaderWin::copyText()
   return temp;
 }
 
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDocumentDone()
 {
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlOverride( bool override )
 {
@@ -2612,11 +2633,13 @@ bool KMReaderWin::htmlLoadExternal()
 //-----------------------------------------------------------------------------
 void KMReaderWin::saveRelativePosition()
 {
+#ifndef USE_AKONADI_VIEWER
   const QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
   if ( scrollBar->maximum() )
     mSavedRelativePosition = static_cast<float>( scrollBar->value() ) / scrollBar->maximum();
   else
     mSavedRelativePosition = 0;
+#endif
 }
 
 
@@ -2916,6 +2939,7 @@ bool KMReaderWin::decryptMessage() const
 
 void KMReaderWin::scrollToAttachment( const partNode *node )
 {
+#ifndef USE_AKONADI_VIEWER //TODO port
   DOM::Document doc = mViewer->htmlDocument();
 
   // The anchors for this are created in ObjectTreeParser::parseObjectTree()
@@ -2943,6 +2967,7 @@ void KMReaderWin::scrollToAttachment( const partNode *node )
   // Update rendering, otherwise the rendering is not updated when the user clicks on an attachment
   // that causes scrolling and the open attachment dialog
   doc.updateRendering();
+#endif
 }
 
 void KMReaderWin::toggleFullAddressList()
@@ -2953,10 +2978,14 @@ void KMReaderWin::toggleFullAddressList()
 
 DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
 {
+#ifndef USE_AKONADI_VIEWER   //TODO port
   Q_ASSERT( !id.isNull() );
   Q_ASSERT( !id.isEmpty() );
   DOM::Document doc = mViewer->htmlDocument();
   return static_cast<DOM::HTMLElement>( doc.getElementById( id ) );
+#else
+  return DOM::HTMLElement();
+#endif
 }
 
 void KMReaderWin::toggleFullAddressList( const QString &field )
@@ -3000,6 +3029,7 @@ void KMReaderWin::toggleFullAddressList( const QString &field )
 
 void KMReaderWin::injectAttachments()
 {
+#ifndef USE_AKONADI_VIEWER  //PORT IT
   // inject attachments in header view
   // we have to do that after the otp has run so we also see encrypted parts
   DOM::Document doc = mViewer->htmlDocument();
@@ -3036,6 +3066,7 @@ void KMReaderWin::injectAttachments()
 
   assert( injectionPoint.tagName() == "div" );
   static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+#endif
 }
 
 static QColor nextColor( const QColor & c )

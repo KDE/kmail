@@ -974,13 +974,14 @@ void KMMainWidget::slotSearchClosed()
 {
   mSearchWin = 0;
 }
-
-
+#include "kmreaderwin.h" //REMOVE ME but define USE_AKONADI_VIEWER
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFind()
 {
+#ifndef   USE_AKONADI_VIEWER
   if( mMsgView )
     mMsgView->slotFind();
+#endif
 }
 
 
@@ -4122,17 +4123,17 @@ void KMMainWidget::slotEditKeys()
   KShortcutsDialog::configure( actionCollection(),
                                KShortcutsEditor::LetterShortcutsAllowed );
 }
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReadOn()
 {
     if ( !mMsgView )
         return;
-
+#ifndef USE_AKONADI_VIEWER
     if ( !mMsgView->atBottom() ) {
         mMsgView->slotJumpDown();
         return;
     }
+#endif
     slotSelectNextUnreadMessage();
 }
 

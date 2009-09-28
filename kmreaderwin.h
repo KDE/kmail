@@ -36,7 +36,6 @@
 using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
-
 #include <map>
 
 class QSplitter;
@@ -86,9 +85,8 @@ namespace DOM {
 
 #ifdef USE_AKONADI_VIEWER
 namespace Message {
-  class Viewer;
+   class Viewer;
 }
-
 #endif
 
 /**

@@ -566,13 +566,14 @@ namespace {
     return i18n("Show certificate 0x%1", keyId );
   }
 }
-
 namespace {
   bool HtmlAnchorHandler::handleClick( const KUrl & url, KMReaderWin * w ) const {
     if ( url.hasHost() || url.path() != "/" || !url.hasRef() )
       return false;
+#ifndef USE_AKONADI_VIEWER
     if ( w && !w->htmlPart()->gotoAnchor( url.ref() ) )
       static_cast<QScrollArea*>( w->htmlPart()->widget() )->ensureVisible( 0, 0 );
+#endif
     return true;
   }
 }
