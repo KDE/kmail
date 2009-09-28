@@ -259,7 +259,7 @@ public:
 
   bool atBottom() const;
 
-  bool isFixedFont() { return mUseFixedFont; }
+  bool isFixedFont() const;
   void setUseFixedFont( bool useFixedFont );
 
   /** Return the HtmlWriter connected to the KHTMLPart we use */
@@ -346,18 +346,18 @@ public:
   void setDecryptMessageOverwrite( bool overwrite = true ) { mDecrytMessageOverwrite = overwrite; }
 
   /** Show signature details. */
-  bool showSignatureDetails() const { return mShowSignatureDetails; }
+  bool showSignatureDetails() const;
 
   /** Show signature details. */
-  void setShowSignatureDetails( bool showDetails = true ) { mShowSignatureDetails = showDetails; }
+  void setShowSignatureDetails( bool showDetails = true );
 
   Message::CSSHelper* cssHelper() const;
 
   /* show or hide the list that points to the attachments */
-  bool showAttachmentQuicklist() const { return mShowAttachmentQuicklist; }
+  bool showAttachmentQuicklist() const;
 
   /* show or hide the list that points to the attachments */
-  void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true ) { mShowAttachmentQuicklist = showAttachmentQuicklist; }
+  void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true );
 
   /** Get the HTMLElement with id id */
   DOM::HTMLElement getHTMLElementById( const QString &id );
@@ -508,8 +508,9 @@ protected slots:
 #endif
   /** Some attachment operations. */
   void slotAtmView( int id, const QString& name );
+#ifndef USE_AKONADI_VIEWER
   void slotDelayedResize();
-
+#endif
   /** Print message. Called on as a response of finished() signal of mPartHtmlWriter
       after rendering is finished.
       In the very end it deletes the KMReaderWin window that was created
@@ -623,7 +624,9 @@ private:
   QString mSaveAttachDir;
   static const int delay;
   QTimer mUpdateReaderWinTimer;
+#ifndef USE_AKONADI_VIEWER
   QTimer mResizeTimer;
+#endif
   QTimer mDelayedMarkTimer;
   QString mOverrideEncoding;
   QString mOldGlobalOverrideEncoding; // used to detect changes of the global override character encoding
@@ -633,7 +636,9 @@ private:
   MessageStatus mLastStatus;
 
   Message::CSSHelper * mCSSHelper;
+#ifndef USE_AKONADI_VIEWER
   bool mUseFixedFont;
+#endif
   bool mPrinting;
   //bool mShowCompleteMessage;
   QStringList mTempFiles;
@@ -658,6 +663,7 @@ private:
   KUrl mClickedUrl;
   QPoint mLastClickPosition;
   bool mCanStartDrag;
+
 #ifdef USE_AKONADI_VIEWER
   Message::Viewer *mViewer;
 
@@ -675,9 +681,12 @@ private:
   float mSavedRelativePosition;
   int mLevelQuote;
   bool mDecrytMessageOverwrite;
+#ifndef USE_AKONADI_VIEWER
   bool mShowSignatureDetails;
   bool mShowAttachmentQuicklist;
   bool mExternalWindow;
+#endif
+
   bool mShowFullToAddressList;
   bool mShowFullCcAddressList;
 };

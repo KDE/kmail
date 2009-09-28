@@ -482,7 +482,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
     mUpdateReaderWinTimer( 0 ),
+#ifndef USE_AKONADI_VIEWER
     mResizeTimer( 0 ),
+#endif
     mDelayedMarkTimer( 0 ),
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
@@ -517,17 +519,18 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 #endif
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
+#ifndef USE_AKONADI_VIEWER
     mShowSignatureDetails( false ),
     mShowAttachmentQuicklist( true ),
+#endif
     mShowFullToAddressList( false ),
     mShowFullCcAddressList( false )
 {
   mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
-  mResizeTimer.setObjectName( "mResizeTimer" );
-
-  mExternalWindow  = ( aParent == mainWindow );
 #ifndef USE_AKONADI_VIEWER
+  mResizeTimer.setObjectName( "mResizeTimer" );
+  mExternalWindow  = ( aParent == mainWindow );
   mSplitterSizes << 180 << 100;
 #endif
   mAutoDelete = false;
@@ -554,11 +557,11 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mHtmlLoadExtOverride = false;
 
   mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
-
+#ifndef USE_AKONADI_VIEWER
   mResizeTimer.setSingleShot( true );
   connect( &mResizeTimer, SIGNAL(timeout()),
            this, SLOT(slotDelayedResize()) );
-
+#endif
   mDelayedMarkTimer.setSingleShot( true );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
@@ -803,6 +806,15 @@ void KMReaderWin::setUseFixedFont( bool useFixedFont )
   }
 #else
   mViewer->setUseFixedFont( useFixedFont );
+#endif
+}
+
+bool KMReaderWin::isFixedFont() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mUseFixedFont;
+#else
+  return mViewer->isFixedFont();
 #endif
 }
 
@@ -1947,6 +1959,7 @@ int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
 //-----------------------------------------------------------------------------
 void KMReaderWin::resizeEvent( QResizeEvent * )
 {
+#ifndef USE_AKONADI_VIEWER
   if( !mResizeTimer.isActive() )
   {
     //
@@ -1955,17 +1968,16 @@ void KMReaderWin::resizeEvent( QResizeEvent * )
     //
     mResizeTimer.start( 100 );
   }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotDelayedResize()
-{
-#ifndef USE_AKONADI_VIEWER
-  mSplitter->setGeometry( 0, 0, width(), height() );
 #endif
 }
 
+#ifndef USE_AKONADI_VIEWER
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotDelayedResize()
+{
+  mSplitter->setGeometry( 0, 0, width(), height() );
+}
+#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTouchMessage()
@@ -3251,6 +3263,40 @@ void KMReaderWin::setShowFullCcAddressList( bool showFullCcAddressList )
   mShowFullCcAddressList = showFullCcAddressList;
 }
 
+bool KMReaderWin::showSignatureDetails() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mShowSignatureDetails;
+#else
+  return mViewer->showSignatureDetails();
+#endif
+}
+
+void KMReaderWin::setShowSignatureDetails( bool showDetails )
+{
+#ifndef USE_AKONADI_VIEWER
+  mShowSignatureDetails = showDetails;
+#else
+  mViewer->setShowSignatureDetails( showDetails );
+#endif
+}
+bool KMReaderWin::showAttachmentQuicklist() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mShowAttachmentQuicklist;
+#else
+  return mViewer->showAttachmentQuicklist();
+#endif
+}
+
+void KMReaderWin::setShowAttachmentQuicklist( bool showAttachmentQuicklist )
+{
+#ifndef USE_AKONADI_VIEWER
+  mShowAttachmentQuicklist = showAttachmentQuicklist;
+#else
+  mViewer->setShowAttachmentQuicklist( showAttachmentQuicklist );
+#endif
+}
 #include "kmreaderwin.moc"
 
 
