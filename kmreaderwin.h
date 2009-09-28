@@ -670,10 +670,11 @@ private:
 
 #ifdef USE_AKONADI_VIEWER
   Message::Viewer *mViewer;
-
+#endif
   KMail::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
+#ifndef USE_AKONADI_VIEWER
   QPointer<KMail::KHtmlPartHtmlWriter> mPartHtmlWriter;
 #endif
 
