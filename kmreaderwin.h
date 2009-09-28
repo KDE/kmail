@@ -253,8 +253,9 @@ public:
    * @param nodeId the part index of the message part that is displayed
    */
   void atmViewMsg( KMMessagePart* msgPart, int nodeId );
-
+#ifndef USE_AKONADI_VIEWER
   bool atBottom() const;
+#endif
 
   bool isFixedFont() const;
   void setUseFixedFont( bool useFixedFont );
