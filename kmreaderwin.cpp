@@ -506,8 +506,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mUrlOpenAction( 0 ),
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
-    mSelectAllAction( 0 ),
 #ifndef USE_AKONADI_VIEWER
+    mSelectAllAction( 0 ),
     mScrollUpAction( 0 ),
     mScrollDownAction( 0 ),
     mScrollUpMoreAction( 0 ),
@@ -737,12 +737,12 @@ void KMReaderWin::createActions()
                                 i18n( "Copy Link Address" ), this );
   ac->addAction( "copy_url", mCopyURLAction );
   connect( mCopyURLAction, SIGNAL(triggered(bool)), SLOT(slotUrlCopy()) );
-
+#ifndef USE_AKONADI_VIEWER
   // find text
   KAction *action = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
   ac->addAction("find_in_messages", action );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
-
+#endif
   // open URL
   mUrlOpenAction = new KAction( KIcon( "document-open" ), i18n( "Open URL" ), this );
   ac->addAction( "open_url", mUrlOpenAction );

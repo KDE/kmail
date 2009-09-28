@@ -655,7 +655,7 @@ private:
 
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
     *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
-    *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction, *mToggleMimePartTreeAction;
+    *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mToggleMimePartTreeAction, *mSelectAllAction;
 #ifndef USE_AKONADI_VIEWER
   KAction *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction;
   KSelectAction *mSelectEncodingAction;
