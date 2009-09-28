@@ -343,7 +343,7 @@ public:
   bool decryptMessage() const;
 
   /** Enforce message decryption. */
-  void setDecryptMessageOverwrite( bool overwrite = true ) { mDecrytMessageOverwrite = overwrite; }
+  void setDecryptMessageOverwrite( bool overwrite = true );
 
   /** Show signature details. */
   bool showSignatureDetails() const;
@@ -405,9 +405,10 @@ signals:
   void noDrag(void);
 
 public slots:
-
+#ifndef USE_AKONADI_VIEWER
   /** Select message body. */
   void selectAll();
+#endif
 
   /** Force update even if message is the same */
   void clearCache();
@@ -685,8 +686,8 @@ private:
   unsigned long mWaitingForSerNum;
   float mSavedRelativePosition;
   int mLevelQuote;
-  bool mDecrytMessageOverwrite;
 #ifndef USE_AKONADI_VIEWER
+  bool mDecrytMessageOverwrite;
   bool mShowSignatureDetails;
   bool mShowAttachmentQuicklist;
   bool mExternalWindow;

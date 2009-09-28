@@ -518,8 +518,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mHtmlWriter( 0 ),
 #endif
     mSavedRelativePosition( 0 ),
-    mDecrytMessageOverwrite( false ),
 #ifndef USE_AKONADI_VIEWER
+    mDecrytMessageOverwrite( false ),
     mShowSignatureDetails( false ),
     mShowAttachmentQuicklist( true ),
 #endif
@@ -2616,15 +2616,12 @@ void KMReaderWin::slotTextSelected(bool)
   QString temp = mViewer->selectedText();
   QApplication::clipboard()->setText(temp);
 }
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::selectAll()
 {
-#ifndef USE_AKONADI_VIEWER
   mViewer->selectAll();
-#endif
 }
-
+#endif
 //-----------------------------------------------------------------------------
 QString KMReaderWin::copyText()
 {
@@ -2995,9 +2992,13 @@ CSSHelper* KMReaderWin::cssHelper() const
 
 bool KMReaderWin::decryptMessage() const
 {
+#ifndef USE_AKONADI_VIEWER
   if ( !GlobalSettings::self()->alwaysDecrypt() )
     return mDecrytMessageOverwrite;
   return true;
+#else
+  return mViewer->decryptMessage();
+#endif
 }
 
 void KMReaderWin::scrollToAttachment( const partNode *node )
@@ -3329,6 +3330,14 @@ bool KMReaderWin::htmlLoadExtOverride() const
   return mHtmlLoadExtOverride;
 #else
   return mViewer->htmlLoadExtOverride();
+#endif
+}
+void KMReaderWin::setDecryptMessageOverwrite( bool overwrite )
+{
+#ifndef USE_AKONADI_VIEWER
+  mDecrytMessageOverwrite = overwrite;
+#else
+  mViewer->setDecryptMessageOverwrite( overwrite );
 #endif
 }
 
