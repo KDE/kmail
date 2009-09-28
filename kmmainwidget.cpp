@@ -664,7 +664,9 @@ void KMMainWidget::writeConfig()
     if ( mMsgView ) {
       if ( !mReaderWindowBelow )
         GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
+#ifndef USE_AKONADI_VIEWER
       mMsgView->writeConfig();
+#endif
       GlobalSettings::self()->setReaderWindowHeight( mMsgView->width() );
     }
   }

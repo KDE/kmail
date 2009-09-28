@@ -438,7 +438,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
 
 
 
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::createWidgets() {
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
@@ -449,21 +449,14 @@ void KMReaderWin::createWidgets() {
   mMimePartTree = new KMMimePartTree( this, mSplitter );
   mMimePartTree->setObjectName( "mMimePartTree" );
   mBox = new KHBox( mSplitter );
-#ifndef USE_AKONADI_VIEWER
   setStyleDependantFrameWidth();
-#endif
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox );
   mColorBar->setObjectName( "mColorBar" );
-#ifndef USE_AKONADI_VIEWER
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
-#else
-  mViewer = new Viewer( mBox/*TODO*/,KSharedConfigPtr(),mMainWindow,mActionCollection );
-#endif
   // Remove the shortcut for the selectAll action from khtml part. It's redefined to
   // CTRL-SHIFT-A in kmail and clashes with kmails CTRL-A action.
-#ifndef USE_AKONADI_VIEWER
   KAction *selectAll = qobject_cast<KAction*>(
           mViewer->actionCollection()->action( "selectAll" ) );
   if ( selectAll ) {
@@ -471,11 +464,10 @@ void KMReaderWin::createWidgets() {
   } else {
     kDebug() << "Failed to find khtml's selectAll action to remove it's shortcut";
   }
-#endif
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
-
+#endif
 const int KMReaderWin::delay = 150;
 
 //-----------------------------------------------------------------------------
@@ -542,11 +534,15 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mMsgDisplay = true;
   mPrinting = false;
   mAtmUpdate = false;
-
-  createWidgets();
 #ifndef USE_AKONADI_VIEWER
+  createWidgets();
   createActions();
   initHtmlWidget();
+#else
+  QVBoxLayout * vlay = new QVBoxLayout( this );
+  vlay->setMargin( 0 );
+  mViewer = new Viewer( this/*TODO*/,KSharedConfigPtr(),mMainWindow,mActionCollection );
+  vlay->addWidget( mViewer );
 #endif
   readConfig();
 
@@ -1103,7 +1099,7 @@ void KMReaderWin::readConfig(void)
 #endif
 }
 
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::adjustLayout() {
   if ( GlobalSettings::self()->mimeTreeLocation() == GlobalSettings::EnumMimeTreeLocation::bottom )
     mSplitter->addWidget( mMimePartTree );
@@ -1122,8 +1118,6 @@ void KMReaderWin::adjustLayout() {
   else
     mColorBar->hide();
 }
-
-
 void KMReaderWin::saveSplitterSizes() const {
   if ( !mSplitter || !mMimePartTree )
     return;
@@ -1150,7 +1144,7 @@ void KMReaderWin::writeConfig( bool sync ) const {
   if ( sync )
     kmkernel->slotRequestConfigSync();
 }
-#ifndef USE_AKONADI_VIEWER
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
@@ -1552,7 +1546,9 @@ void KMReaderWin::displayAboutPage()
 
 void KMReaderWin::enableMsgDisplay() {
   mMsgDisplay = true;
+#ifndef USE_AKONADI_VIEWER
   adjustLayout();
+#endif
 }
 
 
@@ -1602,6 +1598,7 @@ int KMReaderWin::pointsToPixel(int pointSize) const
 #endif
 }
 
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::showHideMimeTree() {
   if ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Always )
@@ -1614,7 +1611,7 @@ void KMReaderWin::showHideMimeTree() {
   if ( mToggleMimePartTreeAction && ( mToggleMimePartTreeAction->isChecked() != mMimePartTree->isVisible() ) )
     mToggleMimePartTreeAction->setChecked( mMimePartTree->isVisible() );
 }
-#ifndef USE_AKONADI_VIEWER
+
 void KMReaderWin::displayMessage() {
   KMMessage * msg = message();
 
@@ -1796,7 +1793,9 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
     kDebug() << "Invoce saving in decrypted form:";
     emit replaceMsgByUnencryptedVersion();
   } else {
+#ifndef USE_AKONADI_VIEWER //TODO ?
     showHideMimeTree();
+#endif
   }
 
   aMsg->setIsBeingParsed( false );
@@ -1949,7 +1948,9 @@ void KMReaderWin::resizeEvent( QResizeEvent * )
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
+#ifndef USE_AKONADI_VIEWER
   mSplitter->setGeometry( 0, 0, width(), height() );
+#endif
 }
 
 
@@ -1991,7 +1992,9 @@ void KMReaderWin::slotTouchMessage()
 void KMReaderWin::closeEvent( QCloseEvent *e )
 {
   QWidget::closeEvent( e );
+#ifndef USE_AKONADI_VIEWER  //TODO necessary yet ?
   writeConfig();
+#endif
 }
 
 

@@ -121,8 +121,10 @@ public:
   /** Read settings from app's config file. */
   void readConfig();
 
+#ifndef USE_AKONADI_VIEWER
   /** Write settings to app's config file. Calls sync() if withSync is true. */
   void writeConfig( bool withSync=true ) const;
+#endif
 
   const KMail::HeaderStyle * headerStyle() const {
     return mHeaderStyle;
@@ -186,7 +188,9 @@ public:
 
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
+#ifndef USE_AKONADI_VIEWER
   void showHideMimeTree();
+#endif
 
   /** Store message id of last viewed message,
       normally no need to call this function directly,
@@ -574,13 +578,11 @@ private slots:
   void toggleFullAddressList();
 
 private:
+#ifndef USE_AKONADI_VIEWER
   void adjustLayout();
   void createWidgets();
-#ifndef USE_AKONADI_VIEWER
   void createActions();
-#endif
   void saveSplitterSizes() const;
-#ifndef USE_AKONADI_VIEWER
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
   KToggleAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
