@@ -637,13 +637,11 @@ private:
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
   MessageStatus mLastStatus;
-
-  Message::CSSHelper * mCSSHelper;
 #ifndef USE_AKONADI_VIEWER
+  Message::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
 #endif
   bool mPrinting;
-  //bool mShowCompleteMessage;
   QStringList mTempFiles;
   QStringList mTempDirs;
 #ifndef USE_AKONADI_VIEWER

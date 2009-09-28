@@ -490,8 +490,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mDelayedMarkTimer( 0 ),
 #ifndef USE_AKONADI_VIEWER
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
-#endif
     mCSSHelper( 0 ),
+#endif
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
     mActionCollection( actionCollection ),
@@ -977,8 +977,8 @@ KMReaderWin::~KMReaderWin()
   clearBodyPartMementos();
 #ifndef USE_AKONADI_VIEWER
   delete mHtmlWriter; mHtmlWriter = 0;
-#endif
   delete mCSSHelper;
+#endif
   if (mAutoDelete) delete message();
   delete mRootNode; mRootNode = 0;
   removeTempFiles();
@@ -1479,7 +1479,7 @@ void KMReaderWin::displaySplashPage( const QString &info )
 #ifndef USE_AKONADI_VIEWER
   mViewer->begin(KUrl::fromPath( location ));
 #endif
-  QString fontSize = QString::number( pointsToPixel( mCSSHelper->bodyFont().pointSize() ) );
+  QString fontSize = QString::number( pointsToPixel( cssHelper()->bodyFont().pointSize() ) );
   QString appTitle = i18n("KMail");
   QString catchPhrase = ""; //not enough space for a catch phrase at default window size i18n("Part of the Kontact Suite");
   QString quickDescription = i18n("The email client for the K Desktop Environment.");
@@ -1611,8 +1611,8 @@ void KMReaderWin::updateReaderWin()
     mColorBar->hide();
     mMimePartTree->hide();
     mMimePartTree->clearAndResetSortOrder();
-    htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
-    htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
+    htmlWriter()->begin( cssHelper()->cssDefinitions( isFixedFont() ) );
+    htmlWriter()->write( cssHelper()->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
   }
   if ( mSavedRelativePosition ) {
@@ -2999,7 +2999,11 @@ void KMReaderWin::slotEditAttachment(partNode * node)
 
 CSSHelper* KMReaderWin::cssHelper() const
 {
+#ifndef USE_AKONADI_VIEWER
   return mCSSHelper;
+#else
+  return mViewer->cssHelper();
+#endif
 }
 
 bool KMReaderWin::decryptMessage() const
@@ -3209,7 +3213,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
               QString::fromLatin1( "\">" );
       html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
       if ( headerStyle() == HeaderStyle::enterprise() ) {
-        QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
+        QFont bodyFont = cssHelper()->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
         html += fm.elidedText( label, Qt::ElideRight, 180 );
       } else {

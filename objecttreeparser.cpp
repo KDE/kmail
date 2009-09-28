@@ -166,7 +166,7 @@ namespace KMail {
       mHtmlWriter = reader->htmlWriter();
 #endif
     if ( reader && !this->cssHelper() )
-      mCSSHelper = reader->mCSSHelper;
+      mCSSHelper = reader->cssHelper();
 
   }
 
@@ -3170,10 +3170,10 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 
   const QTextCodec * ObjectTreeParser::codecFor( partNode * node ) const {
     assert( node );
-#ifndef USE_AKONADI_VIEWER 
+#ifndef USE_AKONADI_VIEWER
     if ( mReader && mReader->overrideCodec() )
       return mReader->overrideCodec();
-#endif    
+#endif
     return node->msgPart().codec();
   }
 
