@@ -1207,7 +1207,6 @@ void KMReaderWin::initHtmlWidget(void)
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
 }
-#endif
 
 void KMReaderWin::setAttachmentStrategy( const KMail::AttachmentStrategy * strategy ) {
   mAttachmentStrategy = strategy ? strategy : KMail::AttachmentStrategy::smart();
@@ -1220,7 +1219,7 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
   mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich();
   update( true );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::setOverrideEncoding( const QString & encoding )
 {
@@ -2121,6 +2120,7 @@ void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
   mAtmCurrentName = fileName;
 }
 
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint &p )
 {
@@ -2143,7 +2143,6 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(i18nc("to view something", "View") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::View );
-#ifndef USE_AKONADI_VIEWER //TODO port
   const bool attachmentInHeader = hasParentDivWithId( mViewer->nodeUnderMouse(), "attachmentInjectionPoint" );
   const bool hasScrollbar = mViewer->view()->verticalScrollBar()->isVisible();
   if ( attachmentInHeader && hasScrollbar ) {
@@ -2151,7 +2150,6 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
     connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
     attachmentMapper->setMapping( action, KMHandleAttachmentCommand::ScrollTo );
   }
-#endif
   action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
@@ -2186,7 +2184,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->exec( p );
   delete menu;
 }
-#ifndef USE_AKONADI_VIEWER
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::setStyleDependantFrameWidth()
 {
@@ -2255,14 +2253,12 @@ void KMReaderWin::slotFind()
 {
   mViewer->findText();
 }
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
   mUseFixedFont = !mUseFixedFont;
   update( true );
 }
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleMimePartTree()
 {
@@ -2274,7 +2270,6 @@ void KMReaderWin::slotToggleMimePartTree()
 }
 
 //-----------------------------------------------------------------------------
-#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::slotCopySelectedText()
 {
   QString selection = mViewer->selectedText();

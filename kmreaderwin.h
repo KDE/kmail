@@ -124,11 +124,12 @@ public:
   const KMail::HeaderStyle * headerStyle() const {
     return mHeaderStyle;
   }
+#ifndef USE_AKONADI_VIEWER
   /** Set the header style and strategy. We only want them to be set
       together. */
   void setHeaderStyleAndStrategy( const KMail::HeaderStyle * style,
                                   const KMail::HeaderStrategy * strategy );
-
+#endif
   /** Getthe message header strategy. */
   const KMail::HeaderStrategy * headerStrategy() const {
     return mHeaderStrategy;
@@ -138,8 +139,9 @@ public:
   const KMail::AttachmentStrategy * attachmentStrategy() const {
     return mAttachmentStrategy;
   }
+#ifndef USE_AKONADI_VIEWER
   void setAttachmentStrategy( const KMail::AttachmentStrategy * strategy );
-
+#endif
   /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
@@ -319,8 +321,9 @@ public:
    */
   void prepareHandleAttachment( int id, const QString& fileName );
 
+#ifndef USE_AKONADI_VIEWER
   void showAttachmentPopup( int id, const QString & name, const QPoint & p );
-
+#endif
   /** Set the serial number of the message this reader window is currently
    *  waiting for. Used to discard updates for already deselected messages. */
   void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
@@ -425,13 +428,11 @@ public slots:
 #ifndef USE_AKONADI_VIEWER
   /** The user selected "Find" from the menu. */
   void slotFind();
-#endif
 
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
 
   void slotToggleMimePartTree();
-#ifndef USE_AKONADI_VIEWER
 
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();

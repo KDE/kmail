@@ -1624,8 +1624,10 @@ KMCommand::Result KMPrintCommand::execute()
   KMReaderWin *printerWin = new KMReaderWin( kmkernel->mainWin(), 0, 0 );
   printerWin->setPrinting( true );
   printerWin->readConfig();
+#ifndef   USE_AKONADI_VIEWER //TODO port it
   if ( mHeaderStyle != 0 && mHeaderStrategy != 0 )
     printerWin->setHeaderStyleAndStrategy( mHeaderStyle, mHeaderStrategy );
+#endif
   printerWin->setHtmlOverride( mHtmlOverride );
   printerWin->setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printerWin->setUseFixedFont( mUseFixedFont );
@@ -2880,7 +2882,7 @@ KMCommand::Result KMResendMessageCommand::execute()
 
   // Restore the original bcc field as this is overwritten in applyIdentity
   newMsg->setBcc( msg->bcc() );
-  
+
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();

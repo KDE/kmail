@@ -674,9 +674,10 @@ namespace {
     partNode * node = partNodeForUrl( url, w );
     if ( !node )
       return false;
-
+#ifndef USE_AKONADI_VIEWER //TODO port it
     // PENDING(romain_kdab) : replace with toLocalFile() ?
     w->showAttachmentPopup( node->nodeId(), w->tempFileUrlFromPartNode( node ).path(), p );
+#endif
     return true;
   }
 
