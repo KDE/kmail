@@ -795,11 +795,15 @@ void KMReaderWin::createActions()
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
 {
+#ifndef USE_AKONADI_VIEWER
   mUseFixedFont = useFixedFont;
   if ( mToggleFixFontAction )
   {
     mToggleFixFontAction->setChecked( mUseFixedFont );
   }
+#else
+  mViewer->setUseFixedFont( useFixedFont );
+#endif
 }
 
 #ifndef USE_AKONADI_VIEWER
@@ -1275,7 +1279,7 @@ void KMReaderWin::slotSetEncoding()
   update( true );
 #endif
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::readGlobalOverrideCodec()
 {
@@ -1286,7 +1290,7 @@ void KMReaderWin::readGlobalOverrideCodec()
   setOverrideEncoding( GlobalSettings::self()->overrideCharacterEncoding() );
   mOldGlobalOverrideEncoding = GlobalSettings::self()->overrideCharacterEncoding();
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nodeIdOffset )
 {
@@ -2638,7 +2642,11 @@ void KMReaderWin::setHtmlLoadExtOverride( bool override )
 //-----------------------------------------------------------------------------
 bool KMReaderWin::htmlMail()
 {
+#ifdef USE_AKONADI_VIEWER
+  return mViewer->htmlMail();
+#else
   return ((mHtmlMail && !mHtmlOverride) || (!mHtmlMail && mHtmlOverride));
+#endif
 }
 
 //-----------------------------------------------------------------------------

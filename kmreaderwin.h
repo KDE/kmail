@@ -587,9 +587,9 @@ private:
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
   KToggleAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
-#endif
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
+#endif
 
   QString renderAttachments( partNode *node, const QColor &bgColor );
 
