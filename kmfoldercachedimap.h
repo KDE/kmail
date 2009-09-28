@@ -56,11 +56,13 @@ class KMCommand;
 class QRadioButton;
 
 namespace KMail {
-  class AttachmentStrategy;
   class ImapAccountBase;
   struct ACLListEntry;
 }
-using KMail::AttachmentStrategy;
+namespace Message {
+  class AttachmentStrategy;
+}
+
 
 class DImapTroubleShootDialog : public KDialog
 {
@@ -474,7 +476,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     virtual FolderJob *doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                                     KMFolder *folder,
                                     const QString &partSpecifier,
-                                    const AttachmentStrategy *as ) const;
+                                    const Message::AttachmentStrategy *as ) const;
     virtual FolderJob *doCreateJob( QList<KMMessage*> &msgList,
                                     const QString &sets, FolderJob::JobType jt,
                                     KMFolder *folder ) const;

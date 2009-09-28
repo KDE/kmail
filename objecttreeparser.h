@@ -51,11 +51,11 @@ namespace GpgME {
 
 namespace Message {
   class CSSHelper;
+  class AttachmentStrategy;
 }
 
 namespace KMail {
 
-  class AttachmentStrategy;
   class HtmlWriter;
   class PartMetaData;
 
@@ -111,7 +111,7 @@ namespace KMail {
     explicit ObjectTreeParser( KMReaderWin * reader=0, const Kleo::CryptoBackend::Protocol * protocol=0,
                       bool showOneMimePart=false, bool keepEncryptions=false,
                       bool includeSignatures=true,
-                      const KMail::AttachmentStrategy * attachmentStrategy=0,
+                      const Message::AttachmentStrategy * attachmentStrategy=0,
                       KMail::HtmlWriter * htmlWriter=0,
                       Message::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
@@ -151,7 +151,7 @@ namespace KMail {
       mIncludeSignatures = include;
     }
 
-    const KMail::AttachmentStrategy * attachmentStrategy() const {
+    const Message::AttachmentStrategy * attachmentStrategy() const {
       return mAttachmentStrategy;
     }
 
@@ -335,7 +335,7 @@ namespace KMail {
     bool mIncludeSignatures;
     bool mHasPendingAsyncJobs;
     bool mAllowAsync;
-    const KMail::AttachmentStrategy * mAttachmentStrategy;
+    const Message::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
     Message::CSSHelper * mCSSHelper;
     // DataUrl Icons cache

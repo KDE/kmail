@@ -177,7 +177,7 @@ void AkonadiSender::queueMessage( KMMessage *msg )
 
   // Translate message to KMime.
   MessageQueueJob *qjob = new MessageQueueJob( this );
-  Message::Ptr message = Message::Ptr( new Message );
+  KMime::Message::Ptr message = KMime::Message::Ptr( new KMime::Message );
   message->setContent( msg->asSendableString() );
   kDebug() << "KMime::Message: \n[\n" << message->encodedContent().left( 1000 ) << "\n]\n";
   qjob->setMessage( message );

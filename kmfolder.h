@@ -37,7 +37,7 @@ typedef QList<KMAccount*> AccountList;
 
 #include "mimelib/string.h"
 #include <kshortcut.h>
-
+#include "libmessageviewer/attachmentstrategy.h"
 #include <QList>
 
 
@@ -52,10 +52,9 @@ class KMFolderDir;
 class FolderStorage;
 class KMFolderJob;
 
-namespace KMail {
-   class AttachmentStrategy;
-}
-using KMail::AttachmentStrategy;
+//namespace Message {
+//   class AttachmentStrategy;
+//}
 
 typedef QList<quint32> SerNumList;
 
@@ -223,7 +222,7 @@ public:
    */
   FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0, const QString &partSpecifier = QString(),
-                        const AttachmentStrategy *as = 0 ) const;
+                        const Message::AttachmentStrategy *as = 0 ) const;
   FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
                         FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0 ) const;

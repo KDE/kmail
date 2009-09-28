@@ -11,12 +11,14 @@ class KMFolderMaildir;
 namespace KMail {
   class FolderJob;
   class MaildirJob;
+}
+
+namespace Message {
   class AttachmentStrategy;
 }
 
 using KMail::FolderJob;
 using KMail::MaildirJob;
-using KMail::AttachmentStrategy;
 
 class KMFolderMaildir : public KMFolderIndex
 {
@@ -110,7 +112,7 @@ public:
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                  const QString &partSpecifier, const AttachmentStrategy *as ) const;
+                                  const QString &partSpecifier, const Message::AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0

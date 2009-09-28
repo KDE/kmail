@@ -2465,7 +2465,7 @@ FolderJob *KMFolderCachedImap::doCreateJob( KMMessage *msg,
                                             FolderJob::JobType jt,
                                             KMFolder *folder,
                                             const QString &partSpecifier,
-                                            const AttachmentStrategy* ) const
+                                            const Message::AttachmentStrategy* ) const
 {
   Q_UNUSED( partSpecifier );
 

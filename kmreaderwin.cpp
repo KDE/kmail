@@ -54,8 +54,6 @@ using KMail::VCardViewer;
 using KMail::ObjectTreeParser;
 #include "partmetadata.h"
 using KMail::PartMetaData;
-#include "attachmentstrategy.h"
-using KMail::AttachmentStrategy;
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
 #include "headerstyle.h"
@@ -94,7 +92,9 @@ using KMail::TeeHtmlWriter;
 #ifdef USE_AKONADI_VIEWER
 using namespace Message;
 #include "libmessageviewer/viewer.h"
+
 #endif
+#include "libmessageviewer/attachmentstrategy.h"
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
@@ -516,9 +516,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mCanStartDrag( false ),
 #ifndef USE_AKONADI_VIEWER
     mHtmlWriter( 0 ),
-#endif
     mSavedRelativePosition( 0 ),
-#ifndef USE_AKONADI_VIEWER
     mDecrytMessageOverwrite( false ),
     mShowSignatureDetails( false ),
     mShowAttachmentQuicklist( true ),
@@ -846,17 +844,17 @@ KToggleAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, con
     return 0;
 }
 
-KToggleAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy * as ) {
+KToggleAction *KMReaderWin::actionForAttachmentStrategy( const Message::AttachmentStrategy * as ) {
   if ( !mActionCollection )
     return 0;
   const char * actionName = 0;
-  if ( as == AttachmentStrategy::iconic() )
+  if ( as == Message::AttachmentStrategy::iconic() )
     actionName = "view_attachments_as_icons";
-  else if ( as == AttachmentStrategy::smart() )
+  else if ( as == Message::AttachmentStrategy::smart() )
     actionName = "view_attachments_smart";
-  else if ( as == AttachmentStrategy::inlined() )
+  else if ( as == Message::AttachmentStrategy::inlined() )
     actionName = "view_attachments_inline";
-  else if ( as == AttachmentStrategy::hidden() )
+  else if ( as == Message::AttachmentStrategy::hidden() )
     actionName = "view_attachments_hide";
 
   if ( actionName )
@@ -946,19 +944,19 @@ void KMReaderWin::slotCycleHeaderStyles() {
 
 
 void KMReaderWin::slotIconicAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::iconic() );
+  setAttachmentStrategy( Message::AttachmentStrategy::iconic() );
 }
 
 void KMReaderWin::slotSmartAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::smart() );
+  setAttachmentStrategy( Message::AttachmentStrategy::smart() );
 }
 
 void KMReaderWin::slotInlineAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::inlined() );
+  setAttachmentStrategy( Message::AttachmentStrategy::inlined() );
 }
 
 void KMReaderWin::slotHideAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::hidden() );
+  setAttachmentStrategy( Message::AttachmentStrategy::hidden() );
 }
 
 void KMReaderWin::slotCycleAttachmentStrategy() {
@@ -1094,7 +1092,7 @@ void KMReaderWin::readConfig(void)
   if ( raction )
     raction->setChecked( true );
 
-  setAttachmentStrategy( AttachmentStrategy::create( GlobalSettings::self()->attachmentStrategy() ) );
+  setAttachmentStrategy( Message::AttachmentStrategy::create( GlobalSettings::self()->attachmentStrategy() ) );
   raction = actionForAttachmentStrategy( attachmentStrategy() );
   if ( raction )
     raction->setChecked( true );
@@ -1226,12 +1224,17 @@ void KMReaderWin::initHtmlWidget(void)
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
 }
+#endif
 
-void KMReaderWin::setAttachmentStrategy( const KMail::AttachmentStrategy * strategy ) {
-  mAttachmentStrategy = strategy ? strategy : KMail::AttachmentStrategy::smart();
+void KMReaderWin::setAttachmentStrategy( const Message::AttachmentStrategy * strategy ) {
+#ifndef USE_AKONADI_VIEWER
+  mAttachmentStrategy = strategy ? strategy : Message::AttachmentStrategy::smart();
   update( true );
+#else
+  mViewer->setAttachmentStrategy( strategy );
+#endif
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
                                              const HeaderStrategy * strategy ) {
   mHeaderStyle = style ? style : HeaderStyle::fancy();
@@ -3340,7 +3343,14 @@ void KMReaderWin::setDecryptMessageOverwrite( bool overwrite )
   mViewer->setDecryptMessageOverwrite( overwrite );
 #endif
 }
-
+const Message::AttachmentStrategy * KMReaderWin::attachmentStrategy() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mAttachmentStrategy;
+#else
+  return mViewer->attachmentStrategy();
+#endif
+}
 #include "kmreaderwin.moc"
 
 

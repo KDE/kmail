@@ -28,11 +28,13 @@
 namespace KMail {
   class FolderJob;
   class MboxJob;
-  class AttachmentStrategy;
 }
 using KMail::FolderJob;
 using KMail::MboxJob;
-using KMail::AttachmentStrategy;
+
+namespace Message {
+  class AttachmentStrategy;
+}
 
 /* Mail folder.
  * (description will be here).
@@ -117,7 +119,7 @@ public:
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                  const QString &partSpecifier, const AttachmentStrategy *as ) const;
+                                  const QString &partSpecifier, const Message::AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0

@@ -53,12 +53,15 @@ namespace KPIM {
   class ProgressItem;
 }
 
+namespace Message {
+  class AttachmentStrategy;
+}
+
 namespace KMail {
   struct ACLListEntry;
   class QuotaInfo;
   typedef QVector<KMail::ACLListEntry> ACLList;
 
-  class AttachmentStrategy;
 
   class ImapAccountBase : public KMail::NetworkAccount {
     Q_OBJECT
@@ -284,7 +287,7 @@ namespace KMail {
      * Handles the result from a BODYSTRUCTURE fetch
      */
     void handleBodyStructure( QDataStream & stream, KMMessage * msg,
-                              const AttachmentStrategy *as );
+                              const Message::AttachmentStrategy *as );
 
     /**
      * Reimplemented. Additionally set the folder label

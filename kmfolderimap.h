@@ -43,15 +43,16 @@ class KMMessage;
 namespace KMail {
   class FolderJob;
   class ImapJob;
-  class AttachmentStrategy;
   class ImapAccountBase;
 }
 namespace KPIM {
   class ProgressItem;
 }
+namespace Message {
+  class AttachmentStrategy;
+}
 using KMail::FolderJob;
 using KMail::ImapJob;
-using KMail::AttachmentStrategy;
 using KMail::ImapAccountBase;
 using KPIM::ProgressItem;
 using KPIM::MessageStatus;
@@ -410,7 +411,7 @@ void slotSearchDone( quint32 serNum, const KMSearchPattern* pattern, bool matche
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                                   KMFolder *folder, const QString &partSpecifier,
-                                  const AttachmentStrategy *as ) const;
+                                  const Message::AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
 

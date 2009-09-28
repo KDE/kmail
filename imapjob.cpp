@@ -53,7 +53,7 @@ namespace KMail {
 
 //-----------------------------------------------------------------------------
 ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
-    const QString &partSpecifier, const AttachmentStrategy *as )
+    const QString &partSpecifier, const Message::AttachmentStrategy *as )
   : FolderJob( msg, jt, folder? folder->folder() : 0, partSpecifier ),
     mAttachmentStrategy( as ), mParentProgressItem(0)
 {

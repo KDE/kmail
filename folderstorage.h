@@ -51,7 +51,7 @@ using KMail::FolderJob;
 
 #include <sys/types.h>
 #include <stdio.h>
-
+#include "libmessageviewer/attachmentstrategy.h"
 class KMMessage;
 class KMAccount;
 class KMFolderDir;
@@ -60,10 +60,10 @@ class KMMsgDictREntry;
 class QTimer;
 class KMSearchPattern;
 
-namespace KMail {
+namespace Message {
    class AttachmentStrategy;
 }
-using KMail::AttachmentStrategy;
+//using Message::AttachmentStrategy;
 
 typedef QList<quint32> SerNumList;
 
@@ -170,7 +170,7 @@ public:
    */
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0, const QString &partSpecifier = QString(),
-                                const AttachmentStrategy *as = 0 ) const;
+                                const Message::AttachmentStrategy *as = 0 ) const;
   virtual FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0 ) const;
@@ -553,7 +553,7 @@ protected:
    * @see createJob
    */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                  const QString &partSpecifier, const AttachmentStrategy *as ) const = 0;
+                                  const QString &partSpecifier, const Message::AttachmentStrategy *as ) const = 0;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const = 0;
 

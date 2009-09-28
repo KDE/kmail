@@ -61,16 +61,11 @@ namespace KMail {
     class BodyPartMemento;
   }
   class ObjectTreeParser;
-  class AttachmentStrategy;
   class HeaderStrategy;
   class HeaderStyle;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
   class HtmlStatusBar;
-}
-
-namespace Message {
-  class CSSHelper;
 }
 
 class partNode; // might be removed when KMime is used instead of mimelib
@@ -90,6 +85,11 @@ namespace Message {
    class Viewer;
 }
 #endif
+
+namespace Message {
+  class CSSHelper;
+  class AttachmentStrategy;
+}
 
 /**
    This class implements a "reader window", that is a window
@@ -141,12 +141,10 @@ public:
   }
 
   /** Get/set the message attachment strategy. */
-  const KMail::AttachmentStrategy * attachmentStrategy() const {
-    return mAttachmentStrategy;
-  }
-#ifndef USE_AKONADI_VIEWER
-  void setAttachmentStrategy( const KMail::AttachmentStrategy * strategy );
-#endif
+  const Message::AttachmentStrategy * attachmentStrategy() const;
+
+  void setAttachmentStrategy( const Message::AttachmentStrategy * strategy );
+
   /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
@@ -261,10 +259,10 @@ public:
 
   bool isFixedFont() const;
   void setUseFixedFont( bool useFixedFont );
-
+#ifndef USE_AKONADI_VIEWER
   /** Return the HtmlWriter connected to the KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
-
+#endif
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
@@ -588,7 +586,7 @@ private:
   void saveSplitterSizes() const;
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
-  KToggleAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
+  KToggleAction * actionForAttachmentStrategy( const Message::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
 #endif
@@ -621,7 +619,7 @@ private:
   KHTMLPart *mViewer;
 #endif
 
-  const KMail::AttachmentStrategy * mAttachmentStrategy;
+  const Message::AttachmentStrategy * mAttachmentStrategy;
   const KMail::HeaderStrategy * mHeaderStrategy;
   const KMail::HeaderStyle * mHeaderStyle;
   bool mAutoDelete;
@@ -684,9 +682,9 @@ private:
   bool mAtmUpdate;
   int mChoice;
   unsigned long mWaitingForSerNum;
-  float mSavedRelativePosition;
   int mLevelQuote;
 #ifndef USE_AKONADI_VIEWER
+  float mSavedRelativePosition;
   bool mDecrytMessageOverwrite;
   bool mShowSignatureDetails;
   bool mShowAttachmentQuicklist;

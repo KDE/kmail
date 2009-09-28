@@ -29,20 +29,19 @@
  */
 #include "bodyvisitor.h"
 #include "kmmsgpart.h"
-#include "attachmentstrategy.h"
+#include "libmessageviewer/attachmentstrategy.h"
 #include <kdebug.h>
-
 using namespace KMail;
 
-BodyVisitor *BodyVisitorFactory::getVisitor( const AttachmentStrategy *strategy )
+BodyVisitor *BodyVisitorFactory::getVisitor( const Message::AttachmentStrategy *strategy )
 {
-  if ( strategy == AttachmentStrategy::smart() ) {
+  if ( strategy == Message::AttachmentStrategy::smart() ) {
     return new BodyVisitorSmart();
-  } else if ( strategy == AttachmentStrategy::iconic() ) {
+  } else if ( strategy == Message::AttachmentStrategy::iconic() ) {
     return new BodyVisitorHidden();
-  } else if ( strategy == AttachmentStrategy::inlined() ) {
+  } else if ( strategy == Message::AttachmentStrategy::inlined() ) {
     return new BodyVisitorInline();
-  } else if ( strategy == AttachmentStrategy::hidden()) {
+  } else if ( strategy == Message::AttachmentStrategy::hidden()) {
     return new BodyVisitorHidden();
   }
   // default

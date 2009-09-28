@@ -123,8 +123,8 @@ using KMail::Vacation;
 using KMail::SubscriptionDialog;
 #include "localsubscriptiondialog.h"
 using KMail::LocalSubscriptionDialog;
-#include "attachmentstrategy.h"
-using KMail::AttachmentStrategy;
+#include "libmessageviewer/attachmentstrategy.h"
+using Message::AttachmentStrategy;
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
 #include "headerstyle.h"

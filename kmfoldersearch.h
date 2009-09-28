@@ -35,10 +35,9 @@ class KMFolderSearchJob;
 class KMIndexSearchTarget;
 class QTimer;
 
-namespace KMail {
+namespace Message {
    class AttachmentStrategy;
 }
-using KMail::AttachmentStrategy;
 
 /** A search folder is a folder that shows the result of evaluating a
     search expression. This folder is dynamically updated as the
@@ -191,7 +190,7 @@ public:
 protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
                                  KMFolder *folder, const QString &partSpecifier,
-                                 const AttachmentStrategy *as ) const;
+                                 const Message::AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob(QList<KMMessage*>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder) const;
   virtual KMMessage* readMsg(int idx);

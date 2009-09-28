@@ -40,10 +40,11 @@
 #include "partNode.h"
 #include <kpimutils/email.h>
 #include "partmetadata.h"
-#include "attachmentstrategy.h"
+//#include "attachmentstrategy.h"
 #include "interfaces/htmlwriter.h"
 #include "htmlstatusbar.h"
 #include "libmessageviewer/csshelper.h"
+#include "libmessageviewer/attachmentstrategy.h"
 #include "bodypartformatter.h"
 #include "bodypartformatterfactory.h"
 #include "partnodebodypart.h"
@@ -143,7 +144,7 @@ namespace KMail {
   ObjectTreeParser::ObjectTreeParser( KMReaderWin * reader, const Kleo::CryptoBackend::Protocol * protocol,
                                       bool showOnlyOneMimePart, bool keepEncryptions,
                                       bool includeSignatures,
-                                      const AttachmentStrategy * strategy,
+                                      const Message::AttachmentStrategy * strategy,
                                       HtmlWriter * htmlWriter,
                                       CSSHelper * cssHelper )
     : mReader( reader ),
@@ -160,8 +161,10 @@ namespace KMail {
     if ( !attachmentStrategy() )
       mAttachmentStrategy = reader ? reader->attachmentStrategy()
                                    : AttachmentStrategy::smart();
+#ifndef USE_AKONADI_VIEWER
     if ( reader && !this->htmlWriter() )
       mHtmlWriter = reader->htmlWriter();
+#endif
     if ( reader && !this->cssHelper() )
       mCSSHelper = reader->mCSSHelper;
 
@@ -279,8 +282,9 @@ namespace KMail {
         PartNodeBodyPart part( *node, codecFor( node ) );
         // Set the default display strategy for this body part relying on the
         // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
-        part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
-
+#if 0 //TODO port it
+	part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
+#endif
         writeAttachmentMarkHeader( node );
         node->setDisplayedEmbedded( true );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
@@ -356,8 +360,11 @@ namespace KMail {
     bool asIcon = true;
 
     if ( !result.neverDisplayInline() )
-      if ( const AttachmentStrategy * as = attachmentStrategy() )
+      if ( const AttachmentStrategy * as = attachmentStrategy() ) {
+#if 0 //TODO laurent Port it
         asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
+#endif
+      }
 
     // Show it inline if showOnlyOneMimePart(), which means the user clicked the image
     // in the message structure viewer manually, and therefore wants to see the full image
@@ -1002,7 +1009,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       bodyText = StringUtil::html2source( partBody );
 
     if ( curNode->isFirstTextPart() ||
+#if 0 //TODO port it
          attachmentStrategy()->defaultDisplay( curNode ) == AttachmentStrategy::Inline ||
+#endif
          showOnlyOneMimePart() )
     {
       if ( mReader->htmlMail() ) {
@@ -1212,7 +1221,9 @@ namespace KMail {
     }
 
     if ( !curNode->isFirstTextPart() &&
+#if 0 //TODO port it
          attachmentStrategy()->defaultDisplay( curNode ) != AttachmentStrategy::Inline &&
+#endif
          !showOnlyOneMimePart() )
       return false;
 
