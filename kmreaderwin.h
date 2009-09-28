@@ -578,10 +578,10 @@ private slots:
   void toggleFullAddressList();
 
 private:
+  void createActions();
 #ifndef USE_AKONADI_VIEWER
   void adjustLayout();
   void createWidgets();
-  void createActions();
   void saveSplitterSizes() const;
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );

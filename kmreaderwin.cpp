@@ -545,9 +545,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mAtmUpdate = false;
 #ifndef USE_AKONADI_VIEWER
   createWidgets();
-  createActions();
   initHtmlWidget();
 #else
+  createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
   mViewer = new Viewer( this/*TODO*/,KGlobal::config(),mMainWindow,mActionCollection );
@@ -576,7 +576,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 
   setMsg( 0, false );
 }
-#ifndef USE_AKONADI_VIEWER
+
 void KMReaderWin::createActions()
 {
   KActionCollection *ac = mActionCollection;
@@ -585,7 +585,7 @@ void KMReaderWin::createActions()
   }
 
   KToggleAction *raction = 0;
-
+#ifndef USE_AKONADI_VIEWER
   // header style
   KActionMenu *headerMenu  = new KActionMenu(i18nc("View->", "&Headers"), this);
   ac->addAction("view_headers", headerMenu );
@@ -672,7 +672,6 @@ void KMReaderWin::createActions()
   raction->setHelpText( i18n("Do not show attachments in the message viewer") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
-
   // Set Encoding submenu
   mSelectEncodingAction  = new KSelectAction(KIcon("character-set"), i18n("&Set Encoding"), this);
   mSelectEncodingAction->setToolBarMode( KSelectAction::MenuMode );
@@ -683,7 +682,7 @@ void KMReaderWin::createActions()
   encodings.prepend( i18n( "Auto" ) );
   mSelectEncodingAction->setItems( encodings );
   mSelectEncodingAction->setCurrentItem( 0 );
-
+#endif
   //
   // Message Menu
   //
@@ -764,7 +763,7 @@ void KMReaderWin::createActions()
   ac->addAction( "toggle_fixedfont", mToggleFixFontAction );
   connect( mToggleFixFontAction, SIGNAL(triggered(bool)), SLOT(slotToggleFixedFont()) );
   mToggleFixFontAction->setShortcut( QKeySequence( Qt::Key_X ) );
-
+#ifndef USE_AKONADI_VIEWER
   // Show message structure viewer
   mToggleMimePartTreeAction = new KToggleAction( i18n( "Show Message Structure" ), this );
   ac->addAction( "toggle_mimeparttree", mToggleMimePartTreeAction );
@@ -797,8 +796,8 @@ void KMReaderWin::createActions()
   ac->addAction( "scroll_down_more", mScrollDownMoreAction );
   connect( mScrollDownMoreAction, SIGNAL( triggered( bool ) ),
            this, SLOT( slotScrollNext() ) );
-}
 #endif
+}
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
 {
