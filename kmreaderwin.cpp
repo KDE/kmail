@@ -96,6 +96,7 @@ using namespace Message;
 
 #endif
 #include "libmessageviewer/attachmentstrategy.h"
+using Message::AttachmentStrategy;
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
