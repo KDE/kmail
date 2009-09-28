@@ -458,7 +458,7 @@ void KMReaderWin::createWidgets() {
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
 #else
-  mViewer = new Viewer( mBox/*TODO*/ );
+  mViewer = new Viewer( mBox/*TODO*/,KSharedConfigPtr(),mMainWindow,mActionCollection );
 #endif
   // Remove the shortcut for the selectAll action from khtml part. It's redefined to
   // CTRL-SHIFT-A in kmail and clashes with kmails CTRL-A action.
@@ -1554,14 +1554,13 @@ void KMReaderWin::enableMsgDisplay() {
 
 void KMReaderWin::updateReaderWin()
 {
+  //TODO remove this function
+#ifndef USE_AKONADI_VIEWER
   if ( !mMsgDisplay ) {
     return;
   }
-#ifndef USE_AKONADI_VIEWER
   mViewer->setOnlyLocalReferences( !htmlLoadExternal() );
-#endif
   htmlWriter()->reset();
-
   KMFolder* folder = 0;
   if (message(&folder))
   {
@@ -1579,7 +1578,6 @@ void KMReaderWin::updateReaderWin()
     htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
   }
-#ifndef USE_AKONADI_VIEWER
   if ( mSavedRelativePosition ) {
     QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
     scrollBar->setValue( scrollBar->maximum() * mSavedRelativePosition );
@@ -1610,7 +1608,7 @@ void KMReaderWin::showHideMimeTree() {
   if ( mToggleMimePartTreeAction && ( mToggleMimePartTreeAction->isChecked() != mMimePartTree->isVisible() ) )
     mToggleMimePartTreeAction->setChecked( mMimePartTree->isVisible() );
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::displayMessage() {
   KMMessage * msg = message();
 
@@ -1646,7 +1644,7 @@ void KMReaderWin::displayMessage() {
   QTimer::singleShot( 1, this, SLOT( toggleFullAddressList() ) );
   QTimer::singleShot( 1, this, SLOT(injectAttachments()) );
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)

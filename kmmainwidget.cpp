@@ -21,7 +21,7 @@
 //#define TEST_DOCKWIDGETS 1
 
 #include <config-kmail.h>
-
+#include "kmail-akonadi.h"
 #include <assert.h>
 
 #include <QByteArray>
@@ -974,7 +974,7 @@ void KMMainWidget::slotSearchClosed()
 {
   mSearchWin = 0;
 }
-#include "kmreaderwin.h" //REMOVE ME but define USE_AKONADI_VIEWER
+
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFind()
 {

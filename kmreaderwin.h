@@ -20,8 +20,7 @@
 #ifndef KMREADERWIN_H
 #define KMREADERWIN_H
 
-//#define USE_AKONADI_VIEWER 1
-
+#include "kmail-akonadi.h"
 #include <QWidget>
 #include <QTimer>
 #include <QStringList>
@@ -522,11 +521,11 @@ protected:
 
   /** Calculate the pixel size */
   int pointsToPixel(int pointSize) const;
-
+#ifndef USE_AKONADI_VIEWER
   /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
   void displayMessage();
-
+#endif
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg( KMMessage* msg  );
 
