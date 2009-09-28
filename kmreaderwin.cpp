@@ -478,7 +478,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   : QWidget(aParent, aFlags ),
     mSerNumOfOriginalMessage( 0 ),
     mNodeIdOffset( -1 ),
+#ifndef USE_AKONADI_VIEWER
     mAttachmentStrategy( 0 ),
+#endif
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
     mUpdateReaderWinTimer( 0 ),
@@ -1226,7 +1228,7 @@ void KMReaderWin::initHtmlWidget(void)
 }
 #endif
 
-void KMReaderWin::setAttachmentStrategy( const Message::AttachmentStrategy * strategy ) {
+void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
 #ifndef USE_AKONADI_VIEWER
   mAttachmentStrategy = strategy ? strategy : Message::AttachmentStrategy::smart();
   update( true );
@@ -3343,7 +3345,7 @@ void KMReaderWin::setDecryptMessageOverwrite( bool overwrite )
   mViewer->setDecryptMessageOverwrite( overwrite );
 #endif
 }
-const Message::AttachmentStrategy * KMReaderWin::attachmentStrategy() const
+const AttachmentStrategy * KMReaderWin::attachmentStrategy() const
 {
 #ifndef USE_AKONADI_VIEWER
   return mAttachmentStrategy;

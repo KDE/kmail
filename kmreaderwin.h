@@ -618,8 +618,9 @@ private:
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
 #endif
-
+#ifndef USE_AKONADI_VIEWER
   const Message::AttachmentStrategy * mAttachmentStrategy;
+#endif
   const KMail::HeaderStrategy * mHeaderStrategy;
   const KMail::HeaderStyle * mHeaderStyle;
   bool mAutoDelete;
