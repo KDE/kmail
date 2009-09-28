@@ -208,10 +208,10 @@ public:
 
   /** Re-parse the current message. */
   void update(bool force = false);
-
+#ifndef USE_AKONADI_VIEWER
   /** Print message. */
   virtual void printMsg(  KMMessage* aMsg );
-
+#endif
   /** Return selected text */
   QString copyText();
 
@@ -308,8 +308,10 @@ public:
 #endif
   /** Returns the current message or 0 if none. */
   KMMessage* message(KMFolder** folder=0) const;
+#ifndef USE_AKONADI_VIEWER
 
   void openAttachment( int id, const QString & name );
+#endif
   void saveAttachment( const KUrl &tempFileName );
 
   void emitUrlClicked( const KUrl & url, int button ) {
@@ -536,11 +538,11 @@ protected:
 #endif
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg( KMMessage* msg  );
-
+#ifndef USE_AKONADI_VIEWER
   /** Creates a nice mail header depending on the current selected
     header style. */
   QString writeMsgHeader( KMMessage* aMsg, partNode *vCardNode = 0, bool topLevel = false );
-
+#endif
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString() if writing failed.
   */
@@ -552,10 +554,9 @@ protected:
     @param param Optional part of the directory name.
   */
   QString createTempDir( const QString &param = QString() );
-
+#ifndef USE_AKONADI_VIEWER
   /** show window containing information about a vCard. */
   void showVCard(KMMessagePart *msgPart);
-#ifndef USE_AKONADI_VIEWER
 
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
@@ -637,7 +638,9 @@ private:
   //bool mShowCompleteMessage;
   QStringList mTempFiles;
   QStringList mTempDirs;
+#ifndef USE_AKONADI_VIEWER
   QList<int> mSplitterSizes;
+#endif
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
@@ -657,12 +660,12 @@ private:
   bool mCanStartDrag;
 #ifdef USE_AKONADI_VIEWER
   Message::Viewer *mViewer;
-#endif
 
   KMail::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
   QPointer<KMail::KHtmlPartHtmlWriter> mPartHtmlWriter;
+#endif
 
   std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
   // an attachment should be updated

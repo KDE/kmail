@@ -1634,8 +1634,9 @@ KMCommand::Result KMPrintCommand::execute()
   printerWin->setOverrideEncoding( mEncoding );
   printerWin->cssHelper()->setPrintFont( mOverrideFont );
   printerWin->setDecryptMessageOverwrite( true );
+#ifndef USE_AKONADI_VIEWER  //PORT ME
   printerWin->printMsg( retrievedMessage() );
-
+#endif
   return OK;
 }
 

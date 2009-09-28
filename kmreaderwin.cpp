@@ -512,7 +512,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 #endif
     mToggleFixFontAction( 0 ),
     mCanStartDrag( false ),
+#ifndef USE_AKONADI_VIEWER
     mHtmlWriter( 0 ),
+#endif
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
     mShowSignatureDetails( false ),
@@ -525,7 +527,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mResizeTimer.setObjectName( "mResizeTimer" );
 
   mExternalWindow  = ( aParent == mainWindow );
+#ifndef USE_AKONADI_VIEWER
   mSplitterSizes << 180 << 100;
+#endif
   mAutoDelete = false;
   mLastSerNum = 0;
   mWaitingForSerNum = 0;
@@ -951,7 +955,9 @@ void KMReaderWin::slotCycleAttachmentStrategy() {
 KMReaderWin::~KMReaderWin()
 {
   clearBodyPartMementos();
+#ifndef USE_AKONADI_VIEWER
   delete mHtmlWriter; mHtmlWriter = 0;
+#endif
   delete mCSSHelper;
   if (mAutoDelete) delete message();
   delete mRootNode; mRootNode = 0;
@@ -1803,7 +1809,7 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
 #endif
 }
 
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader( KMMessage* aMsg, partNode *vCardNode, bool topLevel )
 {
@@ -1819,7 +1825,7 @@ QString KMReaderWin::writeMsgHeader( KMMessage* aMsg, partNode *vCardNode, bool 
 
   return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting, topLevel );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
                                                  int aPartNum )
@@ -1887,7 +1893,7 @@ QString KMReaderWin::createTempDir( const QString &param )
   mTempDirs.append( fname );
   return fname;
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::showVCard( KMMessagePart * msgPart ) {
   const QByteArray vCard = msgPart->bodyDecodedBinary();
@@ -1904,6 +1910,7 @@ void KMReaderWin::printMsg( KMMessage* aMsg )
   connect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
   setMsg( aMsg, true );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotPrintMsg()
@@ -2454,7 +2461,7 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
   }
 #endif
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::openAttachment( int id, const QString & name )
 {
@@ -2542,7 +2549,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     kDebug() << "Canceled opening attachment";
   }
 }
-#ifndef USE_AKONADI_VIEWER
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()
 {
