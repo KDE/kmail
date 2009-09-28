@@ -1070,7 +1070,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       htmlWriter()->queue( "<div style=\"position: relative\">\n" );
       htmlWriter()->queue( bodyText );
       htmlWriter()->queue( "</div>\n" );
+#ifndef USE_AKONADI_VIEWER
       mReader->mColorBar->setHtmlMode();
+#endif
       return true;
     }
     return false;

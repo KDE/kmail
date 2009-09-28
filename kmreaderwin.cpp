@@ -1652,6 +1652,7 @@ void KMReaderWin::displayMessage() {
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
+#ifndef USE_AKONADI_VIEWER
   KMMessagePart msgPart;
 
   assert(aMsg!=0);
@@ -1799,6 +1800,7 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
   }
 
   aMsg->setIsBeingParsed( false );
+#endif
 }
 
 
@@ -2301,6 +2303,7 @@ void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
 
 
 void KMReaderWin::setMsgPart( partNode * node ) {
+#ifndef USE_AKONADI_VIEWER
   htmlWriter()->reset();
   mColorBar->hide();
   htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
@@ -2313,12 +2316,14 @@ void KMReaderWin::setMsgPart( partNode * node ) {
   // ### this, too
   htmlWriter()->queue( "</body></html>" );
   htmlWriter()->flush();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
                               const QString& aFileName, const QString& pname )
 {
+#ifndef  USE_AKONADI_VIEWER
   // Cancel scheduled updates of the reader window, as that would stop the
   // timer of the HTML writer, which would make viewing attachment not work
   // anymore as not all HTML is written to the HTML part.
@@ -2414,12 +2419,14 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
     htmlWriter()->flush();
     mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
   }
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmView( int id, const QString& name )
 {
+#ifndef USE_AKONADI_VIEWER
   partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
   if( node ) {
     mAtmCurrent = id;
@@ -2445,6 +2452,7 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
       win->show();
     }
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------

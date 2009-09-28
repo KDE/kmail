@@ -606,11 +606,11 @@ private:
   int mNodeIdOffset;
 
   // widgets:
+#ifndef USE_AKONADI_VIEWER
   QSplitter * mSplitter;
   KHBox *mBox;
   KMail::HtmlStatusBar *mColorBar;
   KMMimePartTree* mMimePartTree;
-#ifndef USE_AKONADI_VIEWER
   KHTMLPart *mViewer;
 #endif
 
