@@ -88,7 +88,7 @@ using KMail::ActionScheduler;
 #include "kcursorsaver.h"
 #include "partNode.h"
 #include "objecttreeparser.h"
-#include "csshelper.h"
+#include "libmessageviewer/csshelper.h"
 using KMail::ObjectTreeParser;
 using KMail::FolderJob;
 #include "chiasmuskeyselector.h"

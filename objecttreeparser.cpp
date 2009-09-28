@@ -43,7 +43,7 @@
 #include "attachmentstrategy.h"
 #include "interfaces/htmlwriter.h"
 #include "htmlstatusbar.h"
-#include "csshelper.h"
+#include "libmessageviewer/csshelper.h"
 #include "bodypartformatter.h"
 #include "bodypartformatterfactory.h"
 #include "partnodebodypart.h"
@@ -118,7 +118,7 @@ using KPIMUtils::LinkLocator;
 #include <unistd.h>
 #include <cassert>
 #include "chiasmuskeyselector.h"
-
+using namespace Message;
 namespace KMail {
 
   // A small class that eases temporary CryptPlugWrapper changes:

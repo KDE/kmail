@@ -67,8 +67,9 @@ using KMail::KHtmlPartHtmlWriter;
 using KMail::HtmlStatusBar;
 #include "folderjob.h"
 using KMail::FolderJob;
-#include "csshelper.h"
-using KMail::CSSHelper;
+
+#include "libmessageviewer/csshelper.h"
+using Message::CSSHelper;
 #include "isubject.h"
 using KMail::ISubject;
 #include "urlhandlermanager.h"
@@ -1042,7 +1043,7 @@ bool KMReaderWin::event(QEvent *e)
   if (e->type() == QEvent::PaletteChange)
   {
     delete mCSSHelper;
-    mCSSHelper = new KMail::CSSHelper( mViewer->view() );
+    mCSSHelper = new Message::CSSHelper( mViewer->view() );
     if (message())
       message()->readConfig();
     update( true ); // Force update
@@ -1058,7 +1059,7 @@ void KMReaderWin::readConfig(void)
 {
 #ifndef USE_AKONADI_VIEWER
   delete mCSSHelper;
-  mCSSHelper = new KMail::CSSHelper( mViewer->view() );
+  mCSSHelper = new Message::CSSHelper( mViewer->view() );
 
   mNoMDNsWhenEncrypted = GlobalSettings::self()->notSendWhenEncrypted();
 
@@ -2924,7 +2925,7 @@ void KMReaderWin::slotEditAttachment(partNode * node)
   // FIXME: If we are operating on a copy of parts of the message, make sure to update the copy as well.
 }
 
-KMail::CSSHelper* KMReaderWin::cssHelper() const
+CSSHelper* KMReaderWin::cssHelper() const
 {
   return mCSSHelper;
 }

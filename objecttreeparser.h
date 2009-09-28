@@ -49,12 +49,15 @@ namespace GpgME {
   class Error;
 }
 
+namespace Message {
+  class CSSHelper;
+}
+
 namespace KMail {
 
   class AttachmentStrategy;
   class HtmlWriter;
   class PartMetaData;
-  class CSSHelper;
 
   class ProcessResult {
   public:
@@ -110,7 +113,7 @@ namespace KMail {
                       bool includeSignatures=true,
                       const KMail::AttachmentStrategy * attachmentStrategy=0,
                       KMail::HtmlWriter * htmlWriter=0,
-                      KMail::CSSHelper * cssHelper=0 );
+                      Message::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
     void setAllowAsync( bool allow ) { assert( !mHasPendingAsyncJobs ); mAllowAsync = allow; }
@@ -154,7 +157,7 @@ namespace KMail {
 
     KMail::HtmlWriter * htmlWriter() const { return mHtmlWriter; }
 
-    KMail::CSSHelper * cssHelper() const { return mCSSHelper; }
+    Message::CSSHelper * cssHelper() const { return mCSSHelper; }
 
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
@@ -334,7 +337,7 @@ namespace KMail {
     bool mAllowAsync;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
-    KMail::CSSHelper * mCSSHelper;
+    Message::CSSHelper * mCSSHelper;
     // DataUrl Icons cache
     QString mCollapseIcon;
     QString mExpandIcon;

@@ -67,6 +67,9 @@ namespace KMail {
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
   class HtmlStatusBar;
+}
+
+namespace Message {
   class CSSHelper;
 }
 
@@ -342,7 +345,7 @@ public:
   /** Show signature details. */
   void setShowSignatureDetails( bool showDetails = true ) { mShowSignatureDetails = showDetails; }
 
-  KMail::CSSHelper* cssHelper() const;
+  Message::CSSHelper* cssHelper() const;
 
   /* show or hide the list that points to the attachments */
   bool showAttachmentQuicklist() const { return mShowAttachmentQuicklist; }
@@ -626,7 +629,7 @@ private:
   unsigned long mLastSerNum;
   MessageStatus mLastStatus;
 
-  KMail::CSSHelper * mCSSHelper;
+  Message::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
   bool mPrinting;
   //bool mShowCompleteMessage;

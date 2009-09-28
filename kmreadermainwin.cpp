@@ -47,7 +47,7 @@
 #include "kmenu.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
-#include "csshelper.h"
+#include "libmessageviewer/csshelper.h"
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "kmmsgdict.h"

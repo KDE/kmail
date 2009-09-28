@@ -87,7 +87,6 @@ set(kmailprivate_LIB_SRCS
    kmmsgdict.cpp
    kmgroupware.cpp
    folderstorage.cpp
-   csshelper.cpp
    actionscheduler.cpp
    messageproperty.cpp
    kmmsgpart.cpp
