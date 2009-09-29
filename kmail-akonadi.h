@@ -20,6 +20,6 @@
 #ifndef KMAIL_AKONADI_H
 #define KMAIL_AKONADI_H
 
-//#define USE_AKONADI_VIEWER 1
+#define USE_AKONADI_VIEWER 1
 
 #endif /* KMAIL-AKONADI_H */
