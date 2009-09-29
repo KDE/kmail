@@ -438,9 +438,8 @@ public slots:
 
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();
-#endif
    void slotUrlClicked();
-
+#endif
   /** Operations on mailto: URLs. */
   void slotMailtoReply();
   void slotMailtoCompose();
@@ -520,11 +519,9 @@ protected:
   /** Set the width of the frame to a reasonable value for the current GUI
       style */
   void setStyleDependantFrameWidth();
-#endif
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
-#ifndef USE_AKONADI_VIEWER
   /** Calculate the pixel size */
   int pointsToPixel(int pointSize) const;
   /** Feeds the HTML viewer with the contents of the given message.
@@ -568,12 +565,10 @@ protected:
 private slots:
 #ifndef USE_AKONADI_VIEWER
   void slotSetEncoding();
-#endif
   void injectAttachments();
-
   /** Show hide all fields specified inside this function */
   void toggleFullAddressList();
-
+#endif
 private:
   void createActions();
 #ifndef USE_AKONADI_VIEWER
@@ -588,10 +583,10 @@ private:
 #endif
 
   QString renderAttachments( partNode *node, const QColor &bgColor );
-
+#ifndef USE_AKONADI_VIEWER
   /** Show/Hide the field with id "field" */
   void toggleFullAddressList(const QString& field);
-
+#endif
 private:
 #ifndef USE_AKONADI_VIEWER
   bool mHtmlMail;

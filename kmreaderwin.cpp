@@ -1052,11 +1052,10 @@ void KMReaderWin::removeTempFiles()
   mTempDirs.clear();
 }
 
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 bool KMReaderWin::event(QEvent *e)
 {
-#ifndef USE_AKONADI_VIEWER  //TODO port or remove this part
   if (e->type() == QEvent::PaletteChange)
   {
     delete mCSSHelper;
@@ -1066,10 +1065,9 @@ bool KMReaderWin::event(QEvent *e)
     update( true ); // Force update
     return true;
   }
-#endif
   return QWidget::event(e);
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
@@ -2752,7 +2750,7 @@ KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
   }
   return 0;
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlClicked()
 {
@@ -2766,7 +2764,7 @@ void KMReaderWin::slotUrlClicked()
                                                 false, mainWidget );
   command->start();
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
@@ -3054,13 +3052,13 @@ void KMReaderWin::scrollToAttachment( const partNode *node )
   doc.updateRendering();
 #endif
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::toggleFullAddressList()
 {
   toggleFullAddressList( "To" );
   toggleFullAddressList( "Cc" );
 }
-
+#endif
 DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
 {
 #ifndef USE_AKONADI_VIEWER   //TODO port
@@ -3072,7 +3070,7 @@ DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
   return DOM::HTMLElement();
 #endif
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::toggleFullAddressList( const QString &field )
 {
   // First inject the corrent icon
@@ -3114,7 +3112,6 @@ void KMReaderWin::toggleFullAddressList( const QString &field )
 
 void KMReaderWin::injectAttachments()
 {
-#ifndef USE_AKONADI_VIEWER  //PORT IT
   // inject attachments in header view
   // we have to do that after the otp has run so we also see encrypted parts
   DOM::Document doc = mViewer->htmlDocument();
@@ -3151,9 +3148,8 @@ void KMReaderWin::injectAttachments()
 
   assert( injectionPoint.tagName() == "div" );
   static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
-#endif
 }
-
+#endif
 static QColor nextColor( const QColor & c )
 {
   int h, s, v;
