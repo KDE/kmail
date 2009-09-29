@@ -465,8 +465,9 @@ void KMReaderWin::createWidgets() {
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
-#endif
+
 const int KMReaderWin::delay = 150;
+#endif
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent,
@@ -1330,7 +1331,7 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     message->parse();
 
     mViewer->setMessage( message /*TODO*/);
-    return;
+    //return;
   }
 #endif
 

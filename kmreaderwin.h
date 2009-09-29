@@ -621,8 +621,8 @@ private:
   bool mAutoDelete;
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
-  static const int delay;
 #ifndef USE_AKONADI_VIEWER
+  static const int delay;
   QTimer mUpdateReaderWinTimer;
   QTimer mResizeTimer;
 #endif
