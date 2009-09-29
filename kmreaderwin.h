@@ -51,8 +51,6 @@ class KToggleAction;
 class KToggleAction;
 class KHTMLPart;
 class KUrl;
-class HeaderStrategy;
-class HeaderStyle;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
@@ -66,7 +64,10 @@ namespace KMail {
   class KHtmlPartHtmlWriter;
   class HtmlStatusBar;
 }
-
+namespace Message {
+  class HeaderStrategy;
+  class HeaderStyle;
+}
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
@@ -125,14 +126,14 @@ public:
   void writeConfig( bool withSync=true ) const;
 #endif
 
-  const HeaderStyle * headerStyle() const;
+  const Message::HeaderStyle * headerStyle() const;
 
   /** Set the header style and strategy. We only want them to be set
       together. */
-  void setHeaderStyleAndStrategy( const HeaderStyle * style,
-                                  const HeaderStrategy * strategy );
+  void setHeaderStyleAndStrategy( const Message::HeaderStyle * style,
+                                  const Message::HeaderStrategy * strategy );
   /** Getthe message header strategy. */
-  const HeaderStrategy * headerStrategy() const;
+  const Message::HeaderStrategy * headerStrategy() const;
 
   /** Get/set the message attachment strategy. */
   const Message::AttachmentStrategy * attachmentStrategy() const;
@@ -577,8 +578,8 @@ private:
   void adjustLayout();
   void createWidgets();
   void saveSplitterSizes() const;
-  KToggleAction * actionForHeaderStyle( const HeaderStyle *,
-                                       const HeaderStrategy * );
+  KToggleAction * actionForHeaderStyle( const Message::HeaderStyle *,
+                                        const Message::HeaderStrategy * );
   KToggleAction * actionForAttachmentStrategy( const Message::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
@@ -611,8 +612,8 @@ private:
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
   const Message::AttachmentStrategy * mAttachmentStrategy;
-  const HeaderStrategy * mHeaderStrategy;
-  const HeaderStyle * mHeaderStyle;
+  const Message::HeaderStrategy * mHeaderStrategy;
+  const Message::HeaderStyle * mHeaderStyle;
 #endif
   bool mAutoDelete;
   /** where did the user save the attachment last time */

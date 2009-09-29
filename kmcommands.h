@@ -28,8 +28,10 @@ class KMReaderWin;
 class partNode;
 class DwBodyPart;
 class DwEntity;
-class HeaderStrategy;
-class HeaderStyle;
+namespace Message {
+  class HeaderStrategy;
+  class HeaderStyle;
+}
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
@@ -582,8 +584,8 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
 
 public:
   KMPrintCommand( QWidget *parent, KMMessage *msg,
-                  const HeaderStyle *headerStyle = 0,
-                  const HeaderStrategy *headerStrategy = 0,
+                  const Message::HeaderStyle *headerStyle = 0,
+                  const Message::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
                   bool htmlLoadExtOverride = false,
                   bool useFixedFont = false,
@@ -594,8 +596,8 @@ public:
 private:
   virtual Result execute();
 
-  const HeaderStyle *mHeaderStyle;
-  const HeaderStrategy *mHeaderStrategy;
+  const Message::HeaderStyle *mHeaderStyle;
+  const Message::HeaderStrategy *mHeaderStrategy;
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;

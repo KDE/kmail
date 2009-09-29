@@ -821,22 +821,22 @@ bool KMReaderWin::isFixedFont() const
 
 #ifndef USE_AKONADI_VIEWER
 // little helper function
-KToggleAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
+KToggleAction *KMReaderWin::actionForHeaderStyle( const Message::HeaderStyle * style, const Message::HeaderStrategy * strategy ) {
   if ( !mActionCollection )
     return 0;
   const char * actionName = 0;
-  if ( style == HeaderStyle::enterprise() )
+  if ( style == Message::HeaderStyle::enterprise() )
     actionName = "view_headers_enterprise";
-  if ( style == HeaderStyle::fancy() )
+  if ( style == Message::HeaderStyle::fancy() )
     actionName = "view_headers_fancy";
-  else if ( style == HeaderStyle::brief() )
+  else if ( style == Message::HeaderStyle::brief() )
     actionName = "view_headers_brief";
-  else if ( style == HeaderStyle::plain() ) {
-    if ( strategy == HeaderStrategy::standard() )
+  else if ( style == Message::HeaderStyle::plain() ) {
+    if ( strategy == Message::HeaderStrategy::standard() )
       actionName = "view_headers_standard";
-    else if ( strategy == HeaderStrategy::rich() )
+    else if ( strategy == Message::HeaderStrategy::rich() )
       actionName = "view_headers_long";
-    else if ( strategy == HeaderStrategy::all() )
+    else if ( strategy == Message::HeaderStrategy::all() )
       actionName = "view_headers_all";
   }
   if ( actionName )
@@ -865,42 +865,42 @@ KToggleAction *KMReaderWin::actionForAttachmentStrategy( const Message::Attachme
 }
 
 void KMReaderWin::slotEnterpriseHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
-                             HeaderStrategy::rich() );
+  setHeaderStyleAndStrategy( Message::HeaderStyle::enterprise(),
+                             Message::HeaderStrategy::rich() );
   if( !mExternalWindow )
     writeConfig();
 }
 
 void KMReaderWin::slotFancyHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::fancy(),
-                             HeaderStrategy::rich() );
+  setHeaderStyleAndStrategy( Message::HeaderStyle::fancy(),
+                             Message::HeaderStrategy::rich() );
   if( !mExternalWindow )
     writeConfig();
 }
 
 void KMReaderWin::slotBriefHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::brief(),
-                             HeaderStrategy::brief() );
+  setHeaderStyleAndStrategy( Message::HeaderStyle::brief(),
+                             Message::HeaderStrategy::brief() );
   if( !mExternalWindow )
     writeConfig();
 }
 
 void KMReaderWin::slotStandardHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::plain(),
-                             HeaderStrategy::standard());
+  setHeaderStyleAndStrategy( Message::HeaderStyle::plain(),
+                             Message::HeaderStrategy::standard());
   writeConfig();
 }
 
 void KMReaderWin::slotLongHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::plain(),
-                             HeaderStrategy::rich() );
+  setHeaderStyleAndStrategy( Message::HeaderStyle::plain(),
+                             Message::HeaderStrategy::rich() );
   if( !mExternalWindow )
     writeConfig();
 }
 
 void KMReaderWin::slotAllHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::plain(),
-                             HeaderStrategy::all() );
+  setHeaderStyleAndStrategy( Message::HeaderStyle::plain(),
+                             Message::HeaderStrategy::all() );
   if( !mExternalWindow )
     writeConfig();
 }
@@ -911,28 +911,28 @@ void KMReaderWin::slotLevelQuote( int l )
 }
 
 void KMReaderWin::slotCycleHeaderStyles() {
-  const HeaderStrategy * strategy = headerStrategy();
-  const HeaderStyle * style = headerStyle();
+  const Message::HeaderStrategy * strategy = headerStrategy();
+  const Message::HeaderStyle * style = headerStyle();
 
   const char * actionName = 0;
-  if ( style == HeaderStyle::enterprise() ) {
+  if ( style == Message::HeaderStyle::enterprise() ) {
     slotFancyHeaders();
     actionName = "view_headers_fancy";
   }
-  if ( style == HeaderStyle::fancy() ) {
+  if ( style == Message::HeaderStyle::fancy() ) {
     slotBriefHeaders();
     actionName = "view_headers_brief";
-  } else if ( style == HeaderStyle::brief() ) {
+  } else if ( style == Message::HeaderStyle::brief() ) {
     slotStandardHeaders();
     actionName = "view_headers_standard";
-  } else if ( style == HeaderStyle::plain() ) {
-    if ( strategy == HeaderStrategy::standard() ) {
+  } else if ( style == Message::HeaderStyle::plain() ) {
+    if ( strategy == Message::HeaderStrategy::standard() ) {
       slotLongHeaders();
       actionName = "view_headers_long";
-    } else if ( strategy == HeaderStrategy::rich() ) {
+    } else if ( strategy == Message::HeaderStrategy::rich() ) {
       slotAllHeaders();
       actionName = "view_headers_all";
-    } else if ( strategy == HeaderStrategy::all() ) {
+    } else if ( strategy == Message::HeaderStrategy::all() ) {
       slotEnterpriseHeaders();
       actionName = "view_headers_enterprise";
     }
@@ -1111,8 +1111,8 @@ void KMReaderWin::readConfig(void)
 
   // Note that this call triggers an update, see this call has to be at the
   // bottom when all settings are already est.
-  setHeaderStyleAndStrategy( HeaderStyle::create( GlobalSettings::self()->headerStyle() ),
-                             HeaderStrategy::create( GlobalSettings::self()->headerSetDisplayed() ) );
+  setHeaderStyleAndStrategy( Message::HeaderStyle::create( GlobalSettings::self()->headerStyle() ),
+                             Message::HeaderStrategy::create( GlobalSettings::self()->headerSetDisplayed() ) );
 
   if (message())
     update();
@@ -1238,8 +1238,8 @@ void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
 void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
                                              const HeaderStrategy * strategy ) {
 #ifndef USE_AKONADI_VIEWER
-  mHeaderStyle = style ? style : HeaderStyle::fancy();
-  mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich();
+  mHeaderStyle = style ? style : Message::HeaderStyle::fancy();
+  mHeaderStrategy = strategy ? strategy : Message::HeaderStrategy::rich();
   update( true );
 #else
   mViewer->setHeaderStyleAndStrategy( style, strategy );
@@ -3133,7 +3133,7 @@ void KMReaderWin::injectAttachments()
     return;
 
   QString link;
-  if ( headerStyle() == HeaderStyle::fancy() ) {
+  if ( headerStyle() == Message::HeaderStyle::fancy() ) {
     link += "<div style=\"text-align: left;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
     html.prepend( link );
     html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );

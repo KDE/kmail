@@ -1593,8 +1593,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent, KMMessage *msg,
-                                const HeaderStyle *headerStyle,
-                                const HeaderStrategy *headerStrategy,
+                                const Message::HeaderStyle *headerStyle,
+                                const Message::HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
   : KMCommand( parent, msg ),
