@@ -580,10 +580,8 @@ private:
   KToggleAction * actionForAttachmentStrategy( const Message::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
-#endif
 
   QString renderAttachments( partNode *node, const QColor &bgColor );
-#ifndef USE_AKONADI_VIEWER
   /** Show/Hide the field with id "field" */
   void toggleFullAddressList(const QString& field);
 #endif

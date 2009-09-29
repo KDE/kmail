@@ -3149,7 +3149,7 @@ void KMReaderWin::injectAttachments()
   assert( injectionPoint.tagName() == "div" );
   static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
 }
-#endif
+
 static QColor nextColor( const QColor & c )
 {
   int h, s, v;
@@ -3227,7 +3227,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
   html += renderAttachments( node->nextSibling(), nextColor ( bgColor ) );
   return html;
 }
-
+#endif
 using namespace KMail::Interface;
 
 void KMReaderWin::setBodyPartMemento( const partNode *node,
