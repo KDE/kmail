@@ -535,7 +535,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mLastSerNum = 0;
   mWaitingForSerNum = 0;
   mMessage = 0;
+#ifndef USE_AKONADI_VIEWER
   mLastStatus.clear();
+#endif
   mMsgDisplay = true;
   mPrinting = false;
   mAtmUpdate = false;
@@ -1378,7 +1380,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     aMsg->setOverrideCodec( overrideCodec() );
 #endif
     aMsg->setDecodeHTML( htmlMail() );
+#ifndef USE_AKONADI_VIEWER
     mLastStatus = aMsg->status();
+#endif
     // FIXME: workaround to disable DND for IMAP load-on-demand
 #ifndef USE_AKONADI_VIEWER
     if ( !aMsg->isComplete() )
@@ -1387,7 +1391,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
       mViewer->setDNDEnabled( true );
 #endif
   } else {
+#ifndef USE_AKONADI_VIEWER
     mLastStatus.clear();
+#endif
   }
 
   // only display the msg if it is complete

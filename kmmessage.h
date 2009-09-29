@@ -48,9 +48,6 @@ namespace KMime {
   }
 }
 
-namespace KMail {
-}
-
 
 // Real code starts here :)
 

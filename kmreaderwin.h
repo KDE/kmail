@@ -632,8 +632,8 @@ private:
   bool mMsgDisplay;
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
-  MessageStatus mLastStatus;
 #ifndef USE_AKONADI_VIEWER
+  MessageStatus mLastStatus;
   Message::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
 #endif
