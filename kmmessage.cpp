@@ -20,9 +20,9 @@ using KMail::ObjectTreeParser;
 #include "kmversion.h"
 #include <version-kmail.h>
 #include "kmmessagetag.h"
-#include "headerstrategy.h"
+#include "libmessageviewer/headerstrategy.h"
 #include "globalsettings.h"
-using KMail::HeaderStrategy;
+//using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
 #include "templateparser.h"
@@ -1004,7 +1004,7 @@ static const struct {
 
 static const int numMdnMessageBoxes
       = sizeof mdnMessageBoxes / sizeof *mdnMessageBoxes;
-      
+
 static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) ) {

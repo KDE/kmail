@@ -125,8 +125,8 @@ using KMail::SubscriptionDialog;
 using KMail::LocalSubscriptionDialog;
 #include "libmessageviewer/attachmentstrategy.h"
 using Message::AttachmentStrategy;
-#include "headerstrategy.h"
-using KMail::HeaderStrategy;
+#include "libmessageviewer/headerstrategy.h"
+//using HeaderStrategy;
 #include "headerstyle.h"
 using KMail::HeaderStyle;
 #include "folderjob.h"

@@ -28,14 +28,13 @@ class KMReaderWin;
 class partNode;
 class DwBodyPart;
 class DwEntity;
-
+class HeaderStrategy;
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
   class FolderJob;
   class EditorWatcher;
   class HeaderStyle;
-  class HeaderStrategy;
 }
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
@@ -584,7 +583,7 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
 public:
   KMPrintCommand( QWidget *parent, KMMessage *msg,
                   const KMail::HeaderStyle *headerStyle = 0,
-                  const KMail::HeaderStrategy *headerStrategy = 0,
+                  const HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
                   bool htmlLoadExtOverride = false,
                   bool useFixedFont = false,
@@ -596,7 +595,7 @@ private:
   virtual Result execute();
 
   const KMail::HeaderStyle *mHeaderStyle;
-  const KMail::HeaderStrategy *mHeaderStrategy;
+  const HeaderStrategy *mHeaderStrategy;
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;

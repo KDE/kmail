@@ -51,7 +51,7 @@ class KToggleAction;
 class KToggleAction;
 class KHTMLPart;
 class KUrl;
-
+class HeaderStrategy;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
@@ -61,7 +61,6 @@ namespace KMail {
     class BodyPartMemento;
   }
   class ObjectTreeParser;
-  class HeaderStrategy;
   class HeaderStyle;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
@@ -133,10 +132,10 @@ public:
   /** Set the header style and strategy. We only want them to be set
       together. */
   void setHeaderStyleAndStrategy( const KMail::HeaderStyle * style,
-                                  const KMail::HeaderStrategy * strategy );
+                                  const HeaderStrategy * strategy );
 #endif
   /** Getthe message header strategy. */
-  const KMail::HeaderStrategy * headerStrategy() const {
+  const HeaderStrategy * headerStrategy() const {
     return mHeaderStrategy;
   }
 
@@ -585,7 +584,7 @@ private:
   void createWidgets();
   void saveSplitterSizes() const;
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
-                                       const KMail::HeaderStrategy * );
+                                       const HeaderStrategy * );
   KToggleAction * actionForAttachmentStrategy( const Message::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
@@ -619,7 +618,7 @@ private:
   KHTMLPart *mViewer;
   const Message::AttachmentStrategy * mAttachmentStrategy;
 #endif
-  const KMail::HeaderStrategy * mHeaderStrategy;
+  const HeaderStrategy * mHeaderStrategy;
   const KMail::HeaderStyle * mHeaderStyle;
   bool mAutoDelete;
   /** where did the user save the attachment last time */

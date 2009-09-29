@@ -31,7 +31,7 @@
 
 #include "headerstyle.h"
 
-#include "headerstrategy.h"
+#include "libmessageviewer/headerstrategy.h"
 #include "kmkernel.h"
 #include <kpimutils/linklocator.h>
 using KPIMUtils::LinkLocator;

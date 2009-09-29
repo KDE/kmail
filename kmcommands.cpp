@@ -1594,7 +1594,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
 KMPrintCommand::KMPrintCommand( QWidget *parent, KMMessage *msg,
                                 const KMail::HeaderStyle *headerStyle,
-                                const KMail::HeaderStrategy *headerStrategy,
+                                const HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
   : KMCommand( parent, msg ),

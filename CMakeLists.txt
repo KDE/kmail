@@ -139,7 +139,6 @@ set(kmailprivate_LIB_SRCS
    kmmimeparttree.cpp
    mailinglist-magic.cpp
    kmacctmaildir.cpp
-   headerstrategy.cpp
    headerstyle.cpp
    khtmlparthtmlwriter.cpp
    filehtmlwriter.cpp

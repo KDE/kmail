@@ -34,10 +34,9 @@
 
 class QString;
 class KMMessage;
-
+class HeaderStrategy;
 namespace KMail {
 
-  class HeaderStrategy;
 
   /** This class encapsulates the visual appearance of message
       headers. Together with HeaderStrategy, which determines
@@ -78,7 +77,7 @@ namespace KMail {
     // HeaderStyle interface:
     //
     virtual QString format( const KMMessage * message,
-			    const KMail::HeaderStrategy * strategy,
+			    const HeaderStrategy * strategy,
 			    const QString & vCardName,
 			    bool printing = false, bool topLevel = false ) const = 0;
   };

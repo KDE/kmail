@@ -55,8 +55,8 @@ using KMail::VCardViewer;
 using KMail::ObjectTreeParser;
 #include "partmetadata.h"
 using KMail::PartMetaData;
-#include "headerstrategy.h"
-using KMail::HeaderStrategy;
+#include "libmessageviewer/headerstrategy.h"
+//using KMail::HeaderStrategy;
 #include "headerstyle.h"
 using KMail::HeaderStyle;
 #include "khtmlparthtmlwriter.h"
