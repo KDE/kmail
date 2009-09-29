@@ -265,7 +265,7 @@ public:
 #endif
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
-  KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
+  KToggleAction *toggleFixFontAction();
   KAction *mailToComposeAction() { return mMailToComposeAction; }
   KAction *mailToReplyAction() { return mMailToReplyAction; }
   KAction *mailToForwardAction() { return mMailToForwardAction; }
@@ -277,7 +277,7 @@ public:
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
-  KAction *toggleMimePartTreeAction() { return mToggleMimePartTreeAction; }
+  KAction *toggleMimePartTreeAction();
   // This function returns the complete data that were in this
   // message parts - *after* all encryption has been removed that
   // could be removed.
@@ -655,12 +655,13 @@ private:
 
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
     *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
-    *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mToggleMimePartTreeAction, *mSelectAllAction;
+    *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
 #ifndef USE_AKONADI_VIEWER
   KAction *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction;
   KSelectAction *mSelectEncodingAction;
-#endif
+  KAction *mToggleMimePartTreeAction;
   KToggleAction *mToggleFixFontAction;
+#endif
   KUrl mHoveredUrl;
   KUrl mClickedUrl;
   QPoint mLastClickPosition;

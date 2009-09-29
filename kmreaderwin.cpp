@@ -96,7 +96,7 @@ using namespace Message;
 
 #endif
 #include "libmessageviewer/attachmentstrategy.h"
-using Message::AttachmentStrategy;
+//using Message::AttachmentStrategy;
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
@@ -513,12 +513,10 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mScrollDownAction( 0 ),
     mScrollUpMoreAction( 0 ),
     mScrollDownMoreAction( 0 ),
-#endif
     mToggleMimePartTreeAction( 0 ),
-#ifndef USE_AKONADI_VIEWER
     mSelectEncodingAction( 0 ),
-#endif
     mToggleFixFontAction( 0 ),
+#endif
     mCanStartDrag( false ),
 #ifndef USE_AKONADI_VIEWER
     mHtmlWriter( 0 ),
@@ -759,13 +757,12 @@ void KMReaderWin::createActions()
   mUrlSaveAsAction = new KAction( i18n( "Save Link As..." ), this );
   ac->addAction( "saveas_url", mUrlSaveAsAction );
   connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
-
+#ifndef USE_AKONADI_VIEWER
   // use fixed font
   mToggleFixFontAction = new KToggleAction( i18n( "Use Fi&xed Font" ), this );
   ac->addAction( "toggle_fixedfont", mToggleFixFontAction );
   connect( mToggleFixFontAction, SIGNAL(triggered(bool)), SLOT(slotToggleFixedFont()) );
   mToggleFixFontAction->setShortcut( QKeySequence( Qt::Key_X ) );
-#ifndef USE_AKONADI_VIEWER
   // Show message structure viewer
   mToggleMimePartTreeAction = new KToggleAction( i18n( "Show Message Structure" ), this );
   ac->addAction( "toggle_mimeparttree", mToggleMimePartTreeAction );
@@ -3373,6 +3370,25 @@ QString KMReaderWin::overrideEncoding() const
   return mViewer->overrideEncoding();
 #endif
 }
+
+
+KToggleAction *KMReaderWin::toggleFixFontAction()
+{
+#ifndef USE_AKONADI_VIEWER
+  return mToggleFixFontAction;
+#else
+  return mViewer->toggleFixFontAction();
+#endif
+}
+KAction *KMReaderWin::toggleMimePartTreeAction()
+{
+#ifndef USE_AKONADI_VIEWER
+  return mToggleMimePartTreeAction;
+#else
+  return mViewer->toggleMimePartTreeAction();
+#endif
+}
+
 #include "kmreaderwin.moc"
 
 
