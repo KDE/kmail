@@ -299,8 +299,9 @@ void KMMimePartTree::startHandleAttachmentCommand( int action )
 
   partNode *node = static_cast<KMMimePartTreeItem *>( selected.first() )->node();
   QString name = mReaderWin->tempFileUrlFromPartNode( node ).toLocalFile();
-
+#ifndef USE_AKONADI_VIEWER
   mReaderWin->prepareHandleAttachment( node->nodeId(), name );
+#endif
   mReaderWin->slotHandleAttachment( action );
 }
 

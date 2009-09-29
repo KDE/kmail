@@ -314,7 +314,7 @@ public:
     if ( message() )
       emit popupMenu( *message(), url, p );
   }
-
+#ifndef USE_AKONADI_VIEWER
   /**
    * Sets the current attachment ID and the current attachment temporary filename
    * to the given values.
@@ -322,7 +322,6 @@ public:
    */
   void prepareHandleAttachment( int id, const QString& fileName );
 
-#ifndef USE_AKONADI_VIEWER
   void showAttachmentPopup( int id, const QString & name, const QPoint & p );
 #endif
   /** Set the serial number of the message this reader window is currently

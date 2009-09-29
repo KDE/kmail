@@ -2150,7 +2150,7 @@ static bool hasParentDivWithId( const DOM::Node &start, const QString &id )
     return hasParentDivWithId( start.parentNode(), id );
   else return false;
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
 {
@@ -2158,7 +2158,6 @@ void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
   mAtmCurrentName = fileName;
 }
 
-#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint &p )
 {
