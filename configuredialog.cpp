@@ -45,7 +45,7 @@ using KMail::AccountDialog;
 #include "identitylistview.h"
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
-#include "kcursorsaver.h"
+#include "libmessageviewer/kcursorsaver.h"
 #include "accountmanager.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;

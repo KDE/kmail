@@ -55,7 +55,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include "kmmsgdict.h"
-#include "kcursorsaver.h"
+#include "libmessageviewer/kcursorsaver.h"
 
 // We define functions as kmail_swap_NN so that we don't get compile errors
 // on platforms where bswap_NN happens to be a function instead of a define.

@@ -36,7 +36,7 @@
 
 #include "keyresolver.h"
 
-#include "kcursorsaver.h"
+#include "libmessageviewer/kcursorsaver.h"
 #include "kleo_util.h"
 
 #include <kpimutils/email.h>

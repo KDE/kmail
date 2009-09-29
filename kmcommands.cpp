@@ -85,7 +85,7 @@ using KMail::ActionScheduler;
 #include "kmmsgdict.h"
 #include "messagesender.h"
 #include "undostack.h"
-#include "kcursorsaver.h"
+#include "libmessageviewer/kcursorsaver.h"
 #include "partNode.h"
 #include "objecttreeparser.h"
 #include "libmessageviewer/csshelper.h"

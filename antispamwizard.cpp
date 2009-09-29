@@ -29,7 +29,7 @@
 
 
 #include "antispamwizard.h"
-#include "kcursorsaver.h"
+#include "libmessageviewer/kcursorsaver.h"
 #include "accountmanager.h"
 #include "kmfilter.h"
 #include "kmfilteraction.h"

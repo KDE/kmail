@@ -87,7 +87,7 @@ using KMail::TemplateParser;
 #include <kactionmenu.h>
 #include <kapplication.h>
 #include <kcharsets.h>
-#include <kcursorsaver.h>
+#include <libmessageviewer/kcursorsaver.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kencodingfiledialog.h>

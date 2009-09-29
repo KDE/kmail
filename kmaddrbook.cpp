@@ -18,7 +18,7 @@
  *
  */
 #include "kmaddrbook.h"
-#include "kcursorsaver.h"
+#include "libmessageviewer/kcursorsaver.h"
 
 #include <kabc/stdaddressbook.h>
 #include <kabc/vcardconverter.h>

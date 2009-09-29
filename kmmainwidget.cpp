@@ -85,7 +85,7 @@ using KMime::Types::AddrSpecList;
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 #include "globalsettings.h"
-#include "kcursorsaver.h"
+#include "libmessageviewer/kcursorsaver.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
