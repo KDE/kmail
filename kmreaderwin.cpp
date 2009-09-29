@@ -56,9 +56,7 @@ using KMail::ObjectTreeParser;
 #include "partmetadata.h"
 using KMail::PartMetaData;
 #include "libmessageviewer/headerstrategy.h"
-//using KMail::HeaderStrategy;
-#include "headerstyle.h"
-using KMail::HeaderStyle;
+#include "libmessageviewer/headerstyle.h"
 #include "khtmlparthtmlwriter.h"
 using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
@@ -482,9 +480,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mNodeIdOffset( -1 ),
 #ifndef USE_AKONADI_VIEWER
     mAttachmentStrategy( 0 ),
-#endif
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
+#endif
     mUpdateReaderWinTimer( 0 ),
 #ifndef USE_AKONADI_VIEWER
     mResizeTimer( 0 ),
@@ -3400,6 +3398,20 @@ KAction *KMReaderWin::selectAllAction()
 #endif
 }
 
+const HeaderStrategy * KMReaderWin::headerStrategy() const {
+#ifndef USE_AKONADI_VIEWER
+  return mHeaderStrategy;
+#else
+  return mViewer->headerStrategy();
+#endif
+}
+const HeaderStyle * KMReaderWin::headerStyle() const {
+#ifndef USE_AKONADI_VIEWER
+  return mHeaderStyle;
+#else
+  return mViewer->headerStyle();
+#endif
+}
 #include "kmreaderwin.moc"
 
 

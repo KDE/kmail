@@ -52,6 +52,7 @@ class KToggleAction;
 class KHTMLPart;
 class KUrl;
 class HeaderStrategy;
+class HeaderStyle;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
@@ -61,7 +62,6 @@ namespace KMail {
     class BodyPartMemento;
   }
   class ObjectTreeParser;
-  class HeaderStyle;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
   class HtmlStatusBar;
@@ -125,19 +125,16 @@ public:
   void writeConfig( bool withSync=true ) const;
 #endif
 
-  const KMail::HeaderStyle * headerStyle() const {
-    return mHeaderStyle;
-  }
+  const HeaderStyle * headerStyle() const;
+
 #ifndef USE_AKONADI_VIEWER
   /** Set the header style and strategy. We only want them to be set
       together. */
-  void setHeaderStyleAndStrategy( const KMail::HeaderStyle * style,
+  void setHeaderStyleAndStrategy( const HeaderStyle * style,
                                   const HeaderStrategy * strategy );
 #endif
   /** Getthe message header strategy. */
-  const HeaderStrategy * headerStrategy() const {
-    return mHeaderStrategy;
-  }
+  const HeaderStrategy * headerStrategy() const;
 
   /** Get/set the message attachment strategy. */
   const Message::AttachmentStrategy * attachmentStrategy() const;
@@ -583,7 +580,7 @@ private:
   void adjustLayout();
   void createWidgets();
   void saveSplitterSizes() const;
-  KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
+  KToggleAction * actionForHeaderStyle( const HeaderStyle *,
                                        const HeaderStrategy * );
   KToggleAction * actionForAttachmentStrategy( const Message::AttachmentStrategy * );
   /** Read override codec from configuration */
@@ -617,9 +614,9 @@ private:
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
   const Message::AttachmentStrategy * mAttachmentStrategy;
-#endif
   const HeaderStrategy * mHeaderStrategy;
-  const KMail::HeaderStyle * mHeaderStyle;
+  const HeaderStyle * mHeaderStyle;
+#endif
   bool mAutoDelete;
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
