@@ -555,11 +555,10 @@ protected:
 
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
-#endif
   /** Some necessary event handling. */
   virtual void closeEvent(QCloseEvent *);
   virtual void resizeEvent(QResizeEvent *);
-
+#endif
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 

@@ -1976,11 +1976,10 @@ int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
   return ( ok ) ? res : -1;
 }
 
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::resizeEvent( QResizeEvent * )
 {
-#ifndef USE_AKONADI_VIEWER
   if( !mResizeTimer.isActive() )
   {
     //
@@ -1989,10 +1988,8 @@ void KMReaderWin::resizeEvent( QResizeEvent * )
     //
     mResizeTimer.start( 100 );
   }
-#endif
 }
 
-#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
@@ -2034,15 +2031,14 @@ void KMReaderWin::slotTouchMessage()
 }
 
 
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::closeEvent( QCloseEvent *e )
 {
   QWidget::closeEvent( e );
-#ifndef USE_AKONADI_VIEWER  //TODO necessary yet ?
   writeConfig();
-#endif
 }
-
+#endif
 
 bool foundSMIMEData( const QString aUrl,
                      QString& displayName,
