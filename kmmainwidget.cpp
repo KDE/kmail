@@ -439,8 +439,12 @@ void KMMainWidget::layoutSplitters()
       mFolderViewSplitter->setChildrenCollapsible( false );
       folderTreeParent = mFolderViewSplitter;
       mFolderViewSplitter->addWidget( mFavoriteFolderView );
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+      mFavoriteCollectionsView->setParent( mFolderViewSplitter );
+#endif
       mFavoriteFolderView->setParent( mFolderViewSplitter );
       folderViewParent->insertWidget( 0, mFolderViewSplitter );
+
       folderTreePosition = 1;
     } else
       folderTreeParent = folderViewParent;
@@ -839,7 +843,14 @@ void KMMainWidget::createWidgets()
     }
 
     mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewManager, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ) );
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+    mFavoriteCollectionsView = new Akonadi::FavoriteCollectionsView( mGUIClient, this );
+#if 0 //TODO
+    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mBrowserModel, this );
+    mFavoriteCollectionsView->setModel( favoritesModel );
+#endif
 
+#endif
     if ( bUseDockWidgets )
     {
       dw->setWidget( mFavoriteFolderView );
