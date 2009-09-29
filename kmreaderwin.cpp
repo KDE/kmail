@@ -2866,7 +2866,7 @@ KUrl KMReaderWin::tempFileUrlFromPartNode( const partNode *node )
   }
   return KUrl();
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveAttachments()
 {
@@ -2883,7 +2883,6 @@ void KMReaderWin::saveAttachment( const KUrl &tempFileName )
   mAtmCurrentName = mClickedUrl.toLocalFile();
   slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
 }
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveMsg()
 {
@@ -2894,7 +2893,7 @@ void KMReaderWin::slotSaveMsg()
   else
     saveCommand->start();
 }
-
+#endif
 //-----------------------------------------------------------------------------
 bool KMReaderWin::eventFilter( QObject *, QEvent *e )
 {

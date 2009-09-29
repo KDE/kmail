@@ -645,7 +645,9 @@ namespace {
       return false;
     if ( !window )
       return false;
+#ifndef USE_AKONADI_VIEWER
     window->saveAttachment( window->tempFileUrlFromPartNode( node ) );
+#endif
     return true;
   }
 

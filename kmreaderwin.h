@@ -305,9 +305,8 @@ public:
 #ifndef USE_AKONADI_VIEWER
 
   void openAttachment( int id, const QString & name );
-#endif
   void saveAttachment( const KUrl &tempFileName );
-
+#endif
   void emitUrlClicked( const KUrl & url, int button ) {
     emit urlClicked( url, button );
   }
@@ -455,9 +454,10 @@ public slots:
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
+#ifndef USE_AKONADI_VIEWER
   void slotSaveMsg();
   void slotSaveAttachments();
-
+#endif
   void slotMessageArrived( KMMessage *msg );
 #ifndef USE_AKONADI_VIEWER
   void slotLevelQuote( int l );
