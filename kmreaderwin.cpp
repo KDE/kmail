@@ -1635,10 +1635,10 @@ void KMReaderWin::updateReaderWin()
 //-----------------------------------------------------------------------------
 int KMReaderWin::pointsToPixel(int pointSize) const
 {
-#ifndef USE_AKONADI_VIEWER //TODO port
+#ifndef USE_AKONADI_VIEWER
   return (pointSize * mViewer->view()->logicalDpiY() + 36) / 72;
 #else
-  return 0;
+  return mViewer->pointsToPixel( pointSize );
 #endif
 }
 
