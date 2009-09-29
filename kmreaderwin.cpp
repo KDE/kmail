@@ -1287,19 +1287,15 @@ const QTextCodec * KMReaderWin::overrideCodec() const
   else
     return KMMsgBase::codecForName( mOverrideEncoding.toLatin1() );
 }
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSetEncoding()
 {
-#ifndef USE_AKONADI_VIEWER //TODO port it
   if ( mSelectEncodingAction->currentItem() == 0 ) // Auto
     mOverrideEncoding.clear();
   else
     mOverrideEncoding = KMMsgBase::encodingForName( mSelectEncodingAction->currentText() );
   update( true );
-#endif
 }
-#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::readGlobalOverrideCodec()
 {

@@ -567,7 +567,9 @@ protected:
   bool eventFilter( QObject *obj, QEvent *ev );
 
 private slots:
+#ifndef USE_AKONADI_VIEWER
   void slotSetEncoding();
+#endif
   void injectAttachments();
 
   /** Show hide all fields specified inside this function */
@@ -594,7 +596,7 @@ private:
 private:
 #ifndef USE_AKONADI_VIEWER
   bool mHtmlMail;
-  bool  mHtmlOverride, mHtmlLoadExtOverride;
+  bool mHtmlOverride, mHtmlLoadExtOverride;
   bool mHtmlLoadExternal;
 #endif
   int mAtmCurrent;
