@@ -1313,7 +1313,6 @@ void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nod
   mSerNumOfOriginalMessage = serNumOfOriginalMessage;
   mNodeIdOffset = nodeIdOffset;
 }
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 {
@@ -1321,6 +1320,16 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     kDebug() << "(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
              << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
   }
+#ifdef USE_AKONADI_VIEWER
+  //TEMPORARY
+  if ( aMsg ) {
+    KMime::Message *message = new KMime::Message;
+    message->setContent( aMsg->asSendableString() );
+    mViewer->setMessage( message /*TODO*/);
+    return;
+  }
+#endif
+
 #ifndef USE_AKONADI_VIEWER
   // Reset message-transient state
   if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
