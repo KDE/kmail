@@ -1234,14 +1234,17 @@ void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
   mViewer->setAttachmentStrategy( strategy );
 #endif
 }
-#ifndef USE_AKONADI_VIEWER
+
 void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
                                              const HeaderStrategy * strategy ) {
+#ifndef USE_AKONADI_VIEWER
   mHeaderStyle = style ? style : HeaderStyle::fancy();
   mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich();
   update( true );
-}
+#else
+  mViewer->setHeaderStyleAndStrategy( style, strategy );
 #endif
+}
 //-----------------------------------------------------------------------------
 void KMReaderWin::setOverrideEncoding( const QString & encoding )
 {

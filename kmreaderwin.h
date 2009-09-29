@@ -127,12 +127,10 @@ public:
 
   const HeaderStyle * headerStyle() const;
 
-#ifndef USE_AKONADI_VIEWER
   /** Set the header style and strategy. We only want them to be set
       together. */
   void setHeaderStyleAndStrategy( const HeaderStyle * style,
                                   const HeaderStrategy * strategy );
-#endif
   /** Getthe message header strategy. */
   const HeaderStrategy * headerStrategy() const;
 

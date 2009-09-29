@@ -1624,10 +1624,8 @@ KMCommand::Result KMPrintCommand::execute()
   KMReaderWin *printerWin = new KMReaderWin( kmkernel->mainWin(), 0, 0 );
   printerWin->setPrinting( true );
   printerWin->readConfig();
-#ifndef   USE_AKONADI_VIEWER //TODO port it
   if ( mHeaderStyle != 0 && mHeaderStrategy != 0 )
     printerWin->setHeaderStyleAndStrategy( mHeaderStyle, mHeaderStrategy );
-#endif
   printerWin->setHtmlOverride( mHtmlOverride );
   printerWin->setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printerWin->setUseFixedFont( mUseFixedFont );
