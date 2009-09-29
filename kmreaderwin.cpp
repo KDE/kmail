@@ -1327,6 +1327,7 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     KMime::Message *message = new KMime::Message;
     message->setContent( aMsg->asString() );
     std::cout<<" test :"<<QString( aMsg->asString() ).toAscii().data()<<std::endl;
+    message->parse();
 
     mViewer->setMessage( message /*TODO*/);
     return;
