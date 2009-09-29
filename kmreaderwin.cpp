@@ -1313,6 +1313,7 @@ void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nod
   mSerNumOfOriginalMessage = serNumOfOriginalMessage;
   mNodeIdOffset = nodeIdOffset;
 }
+#include <iostream>
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 {
@@ -1324,7 +1325,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
   //TEMPORARY
   if ( aMsg ) {
     KMime::Message *message = new KMime::Message;
-    message->setContent( aMsg->asSendableString() );
+    message->setContent( aMsg->asString() );
+    std::cout<<" test :"<<QString( aMsg->asString() ).toAscii().data()<<std::endl;
+
     mViewer->setMessage( message /*TODO*/);
     return;
   }
@@ -1479,7 +1482,6 @@ void KMReaderWin::displaySplashPage( const QString &info )
 #ifndef USE_AKONADI_VIEWER
   mMsgDisplay = false;
   adjustLayout();
-#endif
   QString location = KStandardDirs::locate("data", "kmail/about/main.html");
   QString content = KPIMUtils::kFileToByteArray( location );
   content = content.arg( KStandardDirs::locate( "data", "kdeui/about/kde_infopage.css" ) );
@@ -1488,18 +1490,15 @@ void KMReaderWin::displaySplashPage( const QString &info )
                            "kdeui/about/kde_infopage_rtl.css" ) +  "\";");
   else
     content = content.arg( "" );
-#ifndef USE_AKONADI_VIEWER
   mViewer->begin(KUrl::fromPath( location ));
-#endif
   QString fontSize = QString::number( pointsToPixel( cssHelper()->bodyFont().pointSize() ) );
   QString appTitle = i18n("KMail");
   QString catchPhrase = ""; //not enough space for a catch phrase at default window size i18n("Part of the Kontact Suite");
   QString quickDescription = i18n("The email client for the K Desktop Environment.");
-#ifndef USE_AKONADI_VIEWER
   mViewer->write(content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
   mViewer->end();
 #else
-  mViewer->displaySplashPage( content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
+  mViewer->displaySplashPage( info );
 #endif
 
 }
