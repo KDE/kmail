@@ -480,9 +480,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
-#endif
     mUpdateReaderWinTimer( 0 ),
-#ifndef USE_AKONADI_VIEWER
     mResizeTimer( 0 ),
 #endif
     mDelayedMarkTimer( 0 ),
@@ -524,7 +522,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mShowFullToAddressList( false ),
     mShowFullCcAddressList( false )
 {
+#ifndef USE_AKONADI_VIEWER
   mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
+#endif
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
 #ifndef USE_AKONADI_VIEWER
   mResizeTimer.setObjectName( "mResizeTimer" );
@@ -567,11 +567,11 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mDelayedMarkTimer.setSingleShot( true );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
-
+#ifndef USE_AKONADI_VIEWER
   mUpdateReaderWinTimer.setSingleShot( true );
   connect( &mUpdateReaderWinTimer, SIGNAL(timeout()),
            this, SLOT(updateReaderWin()) );
-
+#endif
   setMsg( 0, false );
 }
 
@@ -1403,14 +1403,18 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     // Avoid flicker, somewhat of a cludge
     if (force) {
       // stop the timer to avoid calling updateReaderWin twice
+#ifndef USE_AKONADI_VIEWER
       mUpdateReaderWinTimer.stop();
+#endif
       updateReaderWin();
     }
+#ifndef USE_AKONADI_VIEWER
     else if (mUpdateReaderWinTimer.isActive()) {
       mUpdateReaderWinTimer.setInterval( delay );
     } else {
       mUpdateReaderWinTimer.start( 0 );
     }
+#endif
   }
 
   if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
@@ -1425,7 +1429,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
+#ifndef USE_AKONADI_VIEWER
   mUpdateReaderWinTimer.stop();
+#endif
   clear();
   mDelayedMarkTimer.stop();
   mLastSerNum = 0;

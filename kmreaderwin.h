@@ -620,8 +620,8 @@ private:
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
   static const int delay;
-  QTimer mUpdateReaderWinTimer;
 #ifndef USE_AKONADI_VIEWER
+  QTimer mUpdateReaderWinTimer;
   QTimer mResizeTimer;
 #endif
   QTimer mDelayedMarkTimer;
