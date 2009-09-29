@@ -524,9 +524,9 @@ protected:
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
+#ifndef USE_AKONADI_VIEWER
   /** Calculate the pixel size */
   int pointsToPixel(int pointSize) const;
-#ifndef USE_AKONADI_VIEWER
   /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
   void displayMessage();

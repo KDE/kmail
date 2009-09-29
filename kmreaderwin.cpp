@@ -1635,18 +1635,13 @@ void KMReaderWin::updateReaderWin()
   }
 #endif
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 int KMReaderWin::pointsToPixel(int pointSize) const
 {
-#ifndef USE_AKONADI_VIEWER
   return (pointSize * mViewer->view()->logicalDpiY() + 36) / 72;
-#else
-  return mViewer->pointsToPixel( pointSize );
-#endif
 }
 
-#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::showHideMimeTree() {
   if ( GlobalSettings::self()->mimeTreeMode() == GlobalSettings::EnumMimeTreeMode::Always )
