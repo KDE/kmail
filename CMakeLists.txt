@@ -52,6 +52,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libmessageviewer/
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
+  ${CMAKE_SOURCE_DIR}/akonadi/
  )
 if(Nepomuk_FOUND)
   include_directories( ${NEPOMUK_INCLUDES} )

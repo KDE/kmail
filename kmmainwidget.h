@@ -37,6 +37,10 @@
 #include <QMenu>
 #include <QHash>
 #include <QPointer>
+#include "kmail-akonadi.h"
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+#include <akonadi_next/favoritecollectionsview.h>
+#endif
 
 class QVBoxLayout;
 class QSplitter;
@@ -662,6 +666,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
     KMail::FavoriteFolderView    *mFavoriteFolderView;
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+  Akonadi::FavoriteCollectionsView *mFavoriteCollectionsView;
+#endif
     QPointer<KMFolder> mFolder;
     QWidget      *mSearchAndTree;
     KTreeWidgetSearchLine *mFolderQuickSearch;

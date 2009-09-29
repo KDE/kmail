@@ -170,6 +170,9 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     QWidget( parent ),
     mFavoritesCheckMailAction( 0 ),
     mFavoriteFolderView( 0 ),
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+    mFavoriteCollectionsView( 0 ),
+#endif
     mMsgView( 0 ),
     mSplitter1( 0 ),
     mSplitter2( 0 ),
