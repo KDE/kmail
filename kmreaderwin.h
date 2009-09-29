@@ -54,6 +54,8 @@ class KUrl;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
+//Remove it when we remove old code
+class HtmlStatusBar;
 namespace KMail {
   namespace Interface {
     class Observable;
@@ -62,7 +64,6 @@ namespace KMail {
   class ObjectTreeParser;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
-  class HtmlStatusBar;
 }
 namespace Message {
   class HeaderStrategy;
@@ -608,7 +609,7 @@ private:
 #ifndef USE_AKONADI_VIEWER
   QSplitter * mSplitter;
   KHBox *mBox;
-  KMail::HtmlStatusBar *mColorBar;
+  HtmlStatusBar *mColorBar;
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
   const Message::AttachmentStrategy * mAttachmentStrategy;

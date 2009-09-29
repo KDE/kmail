@@ -83,7 +83,6 @@ set(kmailprivate_LIB_SRCS
    snippetitem.cpp
    kmfolder.cpp
    kmreaderwin.cpp
-   htmlstatusbar.cpp
    kmmsgdict.cpp
    kmgroupware.cpp
    folderstorage.cpp
