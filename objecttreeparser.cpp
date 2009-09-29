@@ -3075,12 +3075,12 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 
     bool actHidden = false;
     QString textExpand;
-
+#ifndef USE_AKONADI_VIEWER
     // This quoted line needs be hidden
     if (GlobalSettings::self()->showExpandQuotesMark() && mReader->mLevelQuote >= 0
         && mReader->mLevelQuote <= ( actQuoteLevel ) )
       actHidden = true;
-
+#endif
     if ( actQuoteLevel != currQuoteLevel ) {
       /* finish last quotelevel */
       if (currQuoteLevel == -1)

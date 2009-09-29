@@ -677,8 +677,8 @@ private:
   bool mAtmUpdate;
   int mChoice;
   unsigned long mWaitingForSerNum;
-  int mLevelQuote;
 #ifndef USE_AKONADI_VIEWER
+  int mLevelQuote;
   float mSavedRelativePosition;
   bool mDecrytMessageOverwrite;
   bool mShowSignatureDetails;

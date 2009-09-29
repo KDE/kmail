@@ -556,10 +556,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 #ifndef USE_AKONADI_VIEWER
   mHtmlOverride = false;
   mHtmlLoadExtOverride = false;
-#endif
 
   mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
-#ifndef USE_AKONADI_VIEWER
   mResizeTimer.setSingleShot( true );
   connect( &mResizeTimer, SIGNAL(timeout()),
            this, SLOT(slotDelayedResize()) );
@@ -1327,7 +1325,7 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     kDebug() << "(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
              << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
   }
-
+#ifndef USE_AKONADI_VIEWER
   // Reset message-transient state
   if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
     mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin()-1;
@@ -1335,7 +1333,7 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
   }
   if ( mPrinting )
     mLevelQuote = -1;
-
+#endif
   bool complete = true;
   if ( aMsg &&
        !aMsg->readyToShow() &&
