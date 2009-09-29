@@ -272,7 +272,7 @@ public:
   KAction *addAddrBookAction() { return mAddAddrBookAction; }
   KAction *openAddrBookAction() { return mOpenAddrBookAction; }
   KAction *copyAction() { return mCopyAction; }
-  KAction *selectAllAction() { return mSelectAllAction; }
+  KAction *selectAllAction();
   KAction *copyURLAction() { return mCopyURLAction; }
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }

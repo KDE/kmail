@@ -725,12 +725,13 @@ void KMReaderWin::createActions()
   // copy selected text to clipboard
   mCopyAction = ac->addAction( KStandardAction::Copy, "kmail_copy", this,
                                SLOT(slotCopySelectedText()) );
+#ifndef USE_AKONADI_VIEWER
   // copy all text to clipboard
   mSelectAllAction  = new KAction(i18n("Select All Text"), this);
   ac->addAction("mark_all_text", mSelectAllAction );
   connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
   mSelectAllAction->setShortcut( KStandardShortcut::selectAll() );
-
+#endif
   // copy Email address to clipboard
   mCopyURLAction = new KAction( KIcon( "edit-copy" ),
                                 i18n( "Copy Link Address" ), this );
@@ -3380,12 +3381,22 @@ KToggleAction *KMReaderWin::toggleFixFontAction()
   return mViewer->toggleFixFontAction();
 #endif
 }
+
 KAction *KMReaderWin::toggleMimePartTreeAction()
 {
 #ifndef USE_AKONADI_VIEWER
   return mToggleMimePartTreeAction;
 #else
   return mViewer->toggleMimePartTreeAction();
+#endif
+}
+
+KAction *KMReaderWin::selectAllAction()
+{
+#ifndef USE_AKONADI_VIEWER
+  return mSelectAllAction;
+#else
+  return mViewer->selectAllAction();
 #endif
 }
 
