@@ -56,6 +56,7 @@
 #include <kconfiggroup.h>
 
 using namespace KMail;
+using namespace MailTransport;
 
 Callback::Callback( KMMessage *msg, KMReaderWin *readerWin )
   : mMsg( msg ), mReaderWin( readerWin ), mReceiverSet( false )
@@ -64,7 +65,6 @@ Callback::Callback( KMMessage *msg, KMReaderWin *readerWin )
 
 QString Callback::askForTransport( bool nullIdentity ) const
 {
-  using namespace MailTransport;
   QStringList transports;
   foreach( const Transport *transport, TransportManager::self()->transports() )
     transports << transport->name();
@@ -135,14 +135,16 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   }
 
   const bool identityHasTransport = !identity.transport().isEmpty();
-  if ( nullIdentity || ( !identity.isDefault() && !identityHasTransport ) ) {
+  if ( !nullIdentity && identityHasTransport )
+    msg->setHeaderField( "X-KMail-Transport", identity.transport() );
+  else if ( !nullIdentity && identity.isDefault() )
+    msg->setHeaderField( "X-KMail-Transport", TransportManager::self()->defaultTransportName() );
+  else {
     const QString transport = askForTransport( nullIdentity );
     if ( transport.isEmpty() )
       return false; // user canceled transport selection dialog
     msg->setHeaderField( "X-KMail-Transport", transport );
   }
-  else if ( identityHasTransport )
-    msg->setHeaderField( "X-KMail-Transport", identity.transport() );
 
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
