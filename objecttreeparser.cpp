@@ -39,8 +39,7 @@
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include <kpimutils/email.h>
-#include "partmetadata.h"
-//#include "attachmentstrategy.h"
+#include "libmessageviewer/partmetadata.h"
 #include "interfaces/htmlwriter.h"
 #include "libmessageviewer/htmlstatusbar.h"
 #include "libmessageviewer/csshelper.h"

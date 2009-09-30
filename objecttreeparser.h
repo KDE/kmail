@@ -53,11 +53,10 @@ namespace Message {
   class CSSHelper;
   class AttachmentStrategy;
 }
-
+class PartMetaData;
 namespace KMail {
 
   class HtmlWriter;
-  class PartMetaData;
 
   class ProcessResult {
   public:
@@ -271,11 +270,11 @@ namespace KMail {
                                GpgME::Signature::Summary summary,
                                int & frameColor,
                                bool & showKeyInfos );
-    QString writeSigstatHeader( KMail::PartMetaData & part,
+    QString writeSigstatHeader( PartMetaData & part,
                                 const Kleo::CryptoBackend::Protocol * cryptProto,
                                 const QString & fromAddress,
                                 partNode *node = 0 );
-    QString writeSigstatFooter( KMail::PartMetaData & part );
+    QString writeSigstatFooter( PartMetaData & part );
 
     // The attachment mark is a div that is placed around the attchment. It is used for drawing
     // a yellow border around the attachment when scrolling to it. When scrolling to it, the border

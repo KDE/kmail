@@ -52,8 +52,6 @@
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #endif
-#include "partmetadata.h"
-using KMail::PartMetaData;
 #include "libmessageviewer/headerstrategy.h"
 #include "libmessageviewer/headerstyle.h"
 #include "khtmlparthtmlwriter.h"
