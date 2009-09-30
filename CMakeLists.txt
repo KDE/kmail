@@ -238,7 +238,6 @@ set(kmailprivate_LIB_SRCS
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
-   htmlquotecolorer.cpp
    attachmentdialog.cpp
    messagelistview/messageset.cpp
    messagelistview/pane.cpp

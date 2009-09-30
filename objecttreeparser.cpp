@@ -42,7 +42,7 @@
 #include "partmetadata.h"
 //#include "attachmentstrategy.h"
 #include "interfaces/htmlwriter.h"
-#include "htmlstatusbar.h"
+#include "libmessageviewer/htmlstatusbar.h"
 #include "libmessageviewer/csshelper.h"
 #include "libmessageviewer/attachmentstrategy.h"
 #include "bodypartformatter.h"
@@ -55,7 +55,7 @@
 #include "stringutil.h"
 #include "iconnamecache.h"
 #include "autoqpointer.h"
-#include "htmlquotecolorer.h"
+#include "libmessageviewer/htmlquotecolorer.h"
 
 // other module headers
 #include <mimelib/enum.h>
