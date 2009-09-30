@@ -102,7 +102,7 @@ using KMail::AccountManager;
 #include "folderselectiondialog.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
-#include "kmaddrbook.h"
+#include "libmessageviewer/kmaddrbook.h"
 #include "kmversion.h"
 #include "searchwindow.h"
 using KMail::SearchWindow;

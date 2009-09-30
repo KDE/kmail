@@ -74,7 +74,7 @@
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
-#include "kmaddrbook.h"
+#include "libmessageviewer/kmaddrbook.h"
 #include <kaddrbookexternal.h>
 #include "composer.h"
 #include "kmfiltermgr.h"

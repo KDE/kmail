@@ -375,7 +375,7 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
 
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
-#include "kmaddrbook.h"
+#include "libmessageviewer/kmaddrbook.h"
 #include "kmsearchpattern.h"
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;

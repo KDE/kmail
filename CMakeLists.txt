@@ -112,7 +112,6 @@ set(kmailprivate_LIB_SRCS
    kmfilterdlg.cpp
    kmmsgbase.cpp
    kmmsglist.cpp
-   kmaddrbook.cpp
    xfaceconfigurator.cpp
    networkaccount.cpp
    imapaccountbase.cpp
