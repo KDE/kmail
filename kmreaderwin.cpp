@@ -32,7 +32,6 @@
 #include <kpimutils/kfileio.h>
 #include "kmfolderindex.h"
 #include "kmcommands.h"
-#include "mailsourceviewer.h"
 #include <QByteArray>
 #include <QImageReader>
 #include <QCloseEvent>
@@ -43,7 +42,6 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QSignalMapper>
-using KMail::MailSourceViewer;
 #include "partNode.h"
 #include "kmmsgdict.h"
 #include "messagesender.h"

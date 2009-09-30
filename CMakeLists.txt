@@ -147,7 +147,6 @@ set(kmailprivate_LIB_SRCS
    bodypartformatter.cpp
    bodypartformatterfactory.cpp
    partNode.cpp
-   mailsourceviewer.cpp
    kmcommands.cpp
    kmreadermainwin.cpp
    kmstartup.cpp

@@ -92,8 +92,7 @@ using KMail::ActionScheduler;
 using KMail::ObjectTreeParser;
 using KMail::FolderJob;
 #include "chiasmuskeyselector.h"
-#include "mailsourceviewer.h"
-using KMail::MailSourceViewer;
+#include "libmessageviewer/mailsourceviewer.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
@@ -748,7 +747,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   }
   QString str = QString::fromAscii( msg->asString() );
 
-  MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
+  Message::MailSourceViewer *viewer = new Message::MailSourceViewer(); // deletes itself upon close
   viewer->setWindowTitle( i18n("Message as Plain Text") );
   viewer->setText( str );
   if( mFixedFont ) {
