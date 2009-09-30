@@ -434,9 +434,10 @@ public slots:
   void slotToggleFixedFont();
 
   void slotToggleMimePartTree();
-
+#endif
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();
+#ifndef USE_AKONADI_VIEWER
    void slotUrlClicked();
 #endif
   /** Operations on mailto: URLs. */

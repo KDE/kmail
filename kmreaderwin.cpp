@@ -2311,7 +2311,7 @@ void KMReaderWin::slotToggleMimePartTree()
     GlobalSettings::self()->setMimeTreeMode( GlobalSettings::EnumMimeTreeMode::Never );
   showHideMimeTree();
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotCopySelectedText()
 {
@@ -2319,7 +2319,6 @@ void KMReaderWin::slotCopySelectedText()
   selection.replace( QChar::Nbsp, ' ' );
   QApplication::clipboard()->setText( selection );
 }
-#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
