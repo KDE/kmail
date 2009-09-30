@@ -38,7 +38,7 @@
 using namespace MailTransport;
 #include "globalsettings.h"
 #include "procmailparser.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <KComboBox>
 #include <KGlobalSettings>

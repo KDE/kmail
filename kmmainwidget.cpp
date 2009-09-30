@@ -153,7 +153,7 @@ using KMail::TemplateParser;
 #include "messagelistview/pane.h"
 #include "messagelistview/messageset.h"
 #include "messagetree.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>

@@ -54,7 +54,7 @@
 #include "kleojobexecutor.h"
 #include "stringutil.h"
 #include "iconnamecache.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 #include "libmessageviewer/htmlquotecolorer.h"
 
 // other module headers

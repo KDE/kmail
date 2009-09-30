@@ -68,7 +68,7 @@ using KPIM::RecentAddresses;
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;

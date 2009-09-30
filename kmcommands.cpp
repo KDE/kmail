@@ -106,7 +106,7 @@ using KMail::TemplateParser;
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 #include "stringutil.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <kpimutils/kfileio.h>
 #include "calendarinterface.h"

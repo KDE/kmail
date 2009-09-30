@@ -31,7 +31,7 @@
 #include "kmfolder.h"
 #include "mainfolderview.h"
 #include "folderselectiondialog.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <kdebug.h>
 #include <klineedit.h>

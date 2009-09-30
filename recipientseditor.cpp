@@ -29,7 +29,7 @@
 #include "kwindowpositioner.h"
 #include "distributionlistdialog.h"
 #include "globalsettings.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <kpimutils/email.h>
 

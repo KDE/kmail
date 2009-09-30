@@ -41,7 +41,7 @@ using KMail::AccountManager;
 #include "kpimidentities/identity.h"
 #include "kpimidentities/identitymanager.h"
 #include "protocols.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>

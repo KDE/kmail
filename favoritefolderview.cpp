@@ -31,7 +31,7 @@
 #include "kmmainwidget.h"
 #include "korghelper.h"
 #include "mainfolderview.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <kicon.h>
 #include <kinputdialog.h>

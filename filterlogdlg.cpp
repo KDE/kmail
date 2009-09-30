@@ -30,7 +30,7 @@
 
 #include "filterlogdlg.h"
 #include "filterlog.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <kdebug.h>
 #include <kfiledialog.h>

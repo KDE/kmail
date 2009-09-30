@@ -73,7 +73,7 @@ using MailTransport::Transport;
 #include "stl_util.h"
 #include "stringutil.h"
 #include "util.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 #include "kmmsgdict.h"
 #include "templateparser.h"
 #include "templatesconfiguration_kfg.h"

@@ -17,7 +17,7 @@
 */
 
 #include "editorwatcher.h"
-#include "autoqpointer.h"
+#include "libmessageviewer/autoqpointer.h"
 
 #include <config-kmail.h>
 
