@@ -89,6 +89,8 @@ class KMAIL_EXPORT Callback {
     void closeIfSecondaryWindow() const;
 
   private:
+    QString askForTransport( bool nullIdentity ) const;
+
     KMMessage *mMsg;
     KMReaderWin *mReaderWin;
     mutable QString mReceiver;
