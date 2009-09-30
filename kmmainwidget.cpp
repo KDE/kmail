@@ -1009,10 +1009,8 @@ void KMMainWidget::slotSearchClosed()
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFind()
 {
-#ifndef   USE_AKONADI_VIEWER
   if( mMsgView )
     mMsgView->slotFind();
-#endif
 }
 
 

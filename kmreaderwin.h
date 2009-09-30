@@ -427,10 +427,9 @@ public slots:
   /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const QString &, const QPoint& mousePos);
 
-#ifndef USE_AKONADI_VIEWER
   /** The user selected "Find" from the menu. */
   void slotFind();
-
+#ifndef USE_AKONADI_VIEWER
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
 

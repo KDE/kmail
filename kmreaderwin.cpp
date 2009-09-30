@@ -2286,12 +2286,16 @@ void KMReaderWin::slotHandleAttachment( int choice )
   }
 }
 
-#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
 {
+#ifndef USE_AKONADI_VIEWER
   mViewer->findText();
+#else
+  mViewer->slotFind();
+#endif
 }
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
