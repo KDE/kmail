@@ -70,7 +70,7 @@ using MailTransport::Transport;
 #include "objecttreeparser.h"
 #include "partNode.h"
 #include "recipientseditor.h"
-#include "stl_util.h"
+#include "libmessageviewer/stl_util.h"
 #include "stringutil.h"
 #include "util.h"
 #include "libmessageviewer/autoqpointer.h"

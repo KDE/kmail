@@ -41,7 +41,7 @@
 #include "kmkernel.h"
 #include "callback.h"
 #include "stringutil.h"
-#include "stl_util.h"
+#include "libmessageviewer/stl_util.h"
 
 #include <kurl.h>
 

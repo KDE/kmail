@@ -34,7 +34,7 @@
 #include "rulewidgethandlermanager.h"
 
 #include "interfaces/rulewidgethandler.h"
-#include "stl_util.h"
+#include "libmessageviewer/stl_util.h"
 
 #include <kdebug.h>
 #include <kiconloader.h>
