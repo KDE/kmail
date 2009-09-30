@@ -51,7 +51,7 @@
 #include "interfaces/bodypartformatter.h"
 #include "globalsettings.h"
 #include "util.h"
-#include "kleojobexecutor.h"
+#include "libmessageviewer/kleojobexecutor.h"
 #include "stringutil.h"
 #include "iconnamecache.h"
 #include "libmessageviewer/autoqpointer.h"
