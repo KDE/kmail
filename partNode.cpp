@@ -176,7 +176,8 @@ partNode::~partNode() {
 #ifndef NDEBUG
 void partNode::dump( int chars ) const {
   kdDebug(5006) << nodeId() << " " << QString().fill( ' ', chars ) << "+ "
-                << typeString() << '/' << subTypeString() << " embedded:" << mDisplayedEmbedded << endl;
+                << typeString() << '/' << subTypeString() << " embedded:" << mDisplayedEmbedded
+                << " address:" << this << endl;
   if ( mChild )
     mChild->dump( chars + 1 );
   if ( mNext )

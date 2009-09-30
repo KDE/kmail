@@ -211,7 +211,7 @@ public:
         mMimePartTreeItem = item;
     }
 
-    KMMimePartTreeItem* mimePartTreeItem() {
+    KMMimePartTreeItem* mimePartTreeItem() const {
         return mMimePartTreeItem;
     }
 
