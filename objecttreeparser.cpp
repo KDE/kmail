@@ -52,7 +52,7 @@
 #include "util.h"
 #include "libmessageviewer/kleojobexecutor.h"
 #include "stringutil.h"
-#include "iconnamecache.h"
+#include "libmessageviewer/iconnamecache.h"
 #include "libmessageviewer/autoqpointer.h"
 #include "libmessageviewer/htmlquotecolorer.h"
 
@@ -3034,11 +3034,11 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     // Cache Icons
     if ( mCollapseIcon.isEmpty() ) {
       mCollapseIcon= LinkLocator::pngToDataUrl(
-          KMail::IconNameCache::instance()->iconPath( "quotecollapse", 0 ));
+          Message::IconNameCache::instance()->iconPath( "quotecollapse", 0 ));
     }
     if ( (mExpandIcon).isEmpty() )
       mExpandIcon= LinkLocator::pngToDataUrl(
-          KMail::IconNameCache::instance()->iconPath( "quoteexpand", 0 ));
+          Message::IconNameCache::instance()->iconPath( "quoteexpand", 0 ));
   }
 
   while (beg<length)

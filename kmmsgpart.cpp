@@ -5,7 +5,7 @@
 #include "kmmessage.h"
 #include "globalsettings.h"
 #include "stringutil.h"
-#include "iconnamecache.h"
+#include "libmessageviewer/iconnamecache.h"
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>
@@ -326,7 +326,7 @@ QString KMMessagePart::iconName( int size ) const
     }
   }
 
-  return IconNameCache::instance()->iconPath( fileName, size );
+  return Message::IconNameCache::instance()->iconPath( fileName, size );
 }
 
 //-----------------------------------------------------------------------------

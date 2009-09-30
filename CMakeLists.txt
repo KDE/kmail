@@ -227,7 +227,6 @@ set(kmailprivate_LIB_SRCS
    messagetree.cpp
    procmailparser.cpp
    stringutil.cpp
-   iconnamecache.cpp
    newcomposerwin.cpp
    attachmentcontroller.cpp
    attachmentmodel.cpp
