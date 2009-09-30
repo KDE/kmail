@@ -128,7 +128,6 @@ set(kmailprivate_LIB_SRCS
    kmkernel.cpp
    accountdialog.cpp
    searchwindow.cpp
-   vcardviewer.cpp
    vacationdialog.cpp
    vacation.cpp
    sievedebugdialog.cpp

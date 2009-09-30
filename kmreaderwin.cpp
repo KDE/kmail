@@ -49,9 +49,8 @@ using KMail::MailSourceViewer;
 #include "messagesender.h"
 #include "libmessageviewer/kcursorsaver.h"
 #include "kmfolder.h"
-#include "vcardviewer.h"
-using KMail::VCardViewer;
 #ifndef USE_AKONADI_VIEWER
+#include "libmessageviewer/vcardviewer.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #endif
