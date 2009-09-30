@@ -73,7 +73,7 @@ using KMail::URLHandlerManager;
 #include "util.h"
 #include <kicon.h>
 #include "broadcaststatus.h"
-#include "attachmentdialog.h"
+#include "libmessageviewer/attachmentdialog.h"
 #include "stringutil.h"
 
 #include <kmime/kmime_mdn.h>
@@ -2553,11 +2553,11 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   if ( filenameText.isEmpty() )
     filenameText = msgPart.name();
 
-  KMail::AttachmentDialog dialog( this, filenameText, offer ? offer->name() : QString(),
+  AttachmentDialog dialog( this, filenameText, offer ? offer->name() : QString(),
                                   QString::fromLatin1( "askSave_" ) + mimetype->name() );
   const int choice = dialog.exec();
 
-  if ( choice == KMail::AttachmentDialog::Save ) {
+  if ( choice == AttachmentDialog::Save ) {
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
         message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Save,
@@ -2566,10 +2566,10 @@ void KMReaderWin::openAttachment( int id, const QString & name )
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
   }
-  else if ( ( choice == KMail::AttachmentDialog::Open ) ||
-            ( choice == KMail::AttachmentDialog::OpenWith ) ) {
+  else if ( ( choice == AttachmentDialog::Open ) ||
+            ( choice == AttachmentDialog::OpenWith ) ) {
     KMHandleAttachmentCommand::AttachmentAction action;
-    if ( choice == KMail::AttachmentDialog::Open )
+    if ( choice == AttachmentDialog::Open )
       action = KMHandleAttachmentCommand::Open;
     else
       action = KMHandleAttachmentCommand::OpenWith;
