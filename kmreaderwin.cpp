@@ -3416,6 +3416,17 @@ const HeaderStyle * KMReaderWin::headerStyle() const {
   return mViewer->headerStyle();
 #endif
 }
+
+
+KHTMLPart * KMReaderWin::htmlPart() const
+{
+#ifndef USE_AKONADI_VIEWER
+  return mViewer;
+#else
+  return mViewer->htmlPart();
+#endif
+}
+
 #include "kmreaderwin.moc"
 
 

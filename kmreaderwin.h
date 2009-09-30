@@ -295,11 +295,10 @@ public:
   static int msgPartFromUrl(const KUrl &url);
 
   void setUpdateAttachment( bool update = true ) { mAtmUpdate = update; }
-#ifndef USE_AKONADI_VIEWER
   /** Access to the KHTMLPart used for the viewer. Use with
       care! */
-  KHTMLPart * htmlPart() const { return mViewer; }
-#endif
+  KHTMLPart * htmlPart() const;
+
   /** Returns the current message or 0 if none. */
   KMMessage* message(KMFolder** folder=0) const;
 #ifndef USE_AKONADI_VIEWER
