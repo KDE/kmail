@@ -611,8 +611,6 @@ private:
   const Message::HeaderStyle * mHeaderStyle;
 #endif
   bool mAutoDelete;
-  /** where did the user save the attachment last time */
-  QString mSaveAttachDir;
 #ifndef USE_AKONADI_VIEWER
   static const int delay;
   QTimer mUpdateReaderWinTimer;
