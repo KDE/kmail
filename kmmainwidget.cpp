@@ -160,6 +160,14 @@ using KMail::TemplateParser;
 
 #include <errno.h> // ugh
 
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+#include <akonadi/monitor.h>
+#include <akonadi/session.h>
+#include <akonadi/entitytreemodel.h>
+#include <akonadi/favoritecollectionsmodel.h>
+#include <akonadi/itemfetchscope.h>
+#endif
+
 #include "kmmainwidget.moc"
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
@@ -845,11 +853,20 @@ void KMMainWidget::createWidgets()
     mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewManager, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ) );
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
     mFavoriteCollectionsView = new Akonadi::FavoriteCollectionsView( mGUIClient, this );
-#if 0 //TODO
-    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mBrowserModel, this );
-    mFavoriteCollectionsView->setModel( favoritesModel );
-#endif
+    Akonadi::Session *session = new Akonadi::Session( "KMail favorite collection", this );
 
+    // monitor collection changes
+    Akonadi::Monitor *monitor = new Akonadi::Monitor( this );
+    monitor->setCollectionMonitored( Akonadi::Collection::root() );
+    monitor->fetchCollection( true );
+    monitor->setAllMonitored( true );
+    // TODO: Only fetch the envelope etc if possible.
+    monitor->itemFetchScope().fetchFullPayload(true);
+
+    Akonadi::EntityTreeModel *entity = new Akonadi::EntityTreeModel( session, monitor, this );
+
+    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( entity, this );
+    mFavoriteCollectionsView->setModel( favoritesModel );
 #endif
     if ( bUseDockWidgets )
     {
