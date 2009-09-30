@@ -51,8 +51,10 @@ using KMail::MailSourceViewer;
 #include "kmfolder.h"
 #include "vcardviewer.h"
 using KMail::VCardViewer;
+#ifndef USE_AKONADI_VIEWER
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
+#endif
 #include "partmetadata.h"
 using KMail::PartMetaData;
 #include "libmessageviewer/headerstrategy.h"
@@ -92,7 +94,6 @@ using KMail::TeeHtmlWriter;
 #endif
 using namespace Message;
 #include "libmessageviewer/attachmentstrategy.h"
-//using Message::AttachmentStrategy;
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
