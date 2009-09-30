@@ -181,7 +181,8 @@ partNode::~partNode()
 #ifndef NDEBUG
 void partNode::dump( int chars ) const {
   kDebug(5006) << QString().fill( ' ', chars ) <<"+"
-               << typeString() << '/' << subTypeString() << " embedded:" << mDisplayedEmbedded;
+               << typeString() << '/' << subTypeString() << " embedded:" << mDisplayedEmbedded
+               << " address:" << this;
   if ( mChild )
     mChild->dump( chars + 1 );
   if ( mNext )
