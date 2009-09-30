@@ -53,7 +53,7 @@ using MailTransport::Transport;
 #include "attachmentcollector.h"
 #include "attachmentlistview.h"
 #include "chiasmuskeyselector.h"
-#include "editorwatcher.h"
+#include "libmessageviewer/editorwatcher.h"
 #include "kleo_util.h"
 #include "kmatmlistview.h"
 #include "kmcommands.h"
@@ -3037,12 +3037,12 @@ void KMComposeWin::editAttach(int index, bool openWith)
   atmTempFile->write( msgPart->bodyDecodedBinary() );
   atmTempFile->flush();
 
-  KMail::EditorWatcher *watcher =
-          new KMail::EditorWatcher( KUrl( atmTempFile->fileName() ),
+  Message::EditorWatcher *watcher =
+          new Message::EditorWatcher( KUrl( atmTempFile->fileName() ),
                                     contentTypeStr, openWith,
                                     this, this );
-  connect( watcher, SIGNAL( editDone(KMail::EditorWatcher*) ),
-           SLOT( slotEditDone(KMail::EditorWatcher*) ) );
+  connect( watcher, SIGNAL( editDone(Message::EditorWatcher*) ),
+           SLOT( slotEditDone(Message::EditorWatcher*) ) );
 
   if ( watcher->start() ) {
     mEditorMap.insert( watcher, msgPart );
@@ -4340,7 +4340,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
   }
 }
 
-void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
+void KMComposeWin::slotEditDone(Message::EditorWatcher * watcher)
 {
   kDebug() ;
   KMMessagePart *part = mEditorMap[ watcher ];

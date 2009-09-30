@@ -31,12 +31,12 @@ class DwEntity;
 namespace Message {
   class HeaderStrategy;
   class HeaderStyle;
+  class EditorWatcher;
 }
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
   class FolderJob;
-  class EditorWatcher;
 }
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
@@ -1056,7 +1056,7 @@ class KMAIL_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
     Result doAttachmentModify();
 
   private slots:
-    void editDone( KMail::EditorWatcher *watcher );
+    void editDone( Message::EditorWatcher *watcher );
 
   private:
     KTemporaryFile mTempFile;

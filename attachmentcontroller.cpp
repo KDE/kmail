@@ -25,7 +25,7 @@
 #include "attachmentmodel.h"
 #include "attachmentview.h"
 #include "attachmentfrompublickeyjob.h"
-#include "editorwatcher.h"
+#include "libmessageviewer/editorwatcher.h"
 #include "globalsettings.h"
 #include "kmkernel.h"
 #include "newcomposerwin.h"
@@ -74,7 +74,7 @@ class KMail::AttachmentController::Private
     void removeSelectedAttachments(); // slot
     void saveSelectedAttachmentAs(); // slot
     void selectedAttachmentProperties(); // slot
-    void editDone( KMail::EditorWatcher *watcher ); // slot
+    void editDone( Message::EditorWatcher *watcher ); // slot
     void exportPublicKey( const QString &fingerprint );
     void attachPublicKeyJobResult( KJob *job ); // slot
     void addAttachmentPart( AttachmentPart::Ptr part );
@@ -85,8 +85,8 @@ class KMail::AttachmentController::Private
     AttachmentModel *model;
     AttachmentView *view;
     KMComposeWin *composer;
-    QHash<EditorWatcher*,AttachmentPart::Ptr> editorPart;
-    QHash<EditorWatcher*,KTemporaryFile*> editorTempFile;
+    QHash<Message::EditorWatcher*,AttachmentPart::Ptr> editorPart;
+    QHash<Message::EditorWatcher*,KTemporaryFile*> editorTempFile;
 
     QMenu *contextMenu;
     AttachmentPart::List selectedParts;
@@ -279,7 +279,7 @@ void AttachmentController::Private::selectedAttachmentProperties()
   q->attachmentProperties( selectedParts.first() );
 }
 
-void AttachmentController::Private::editDone( EditorWatcher *watcher )
+void AttachmentController::Private::editDone( Message::EditorWatcher *watcher )
 {
   AttachmentPart::Ptr part = editorPart.take( watcher );
   Q_ASSERT( part );
@@ -562,12 +562,12 @@ void AttachmentController::editAttachment( AttachmentPart::Ptr part, bool openWi
     return;
   }
 
-  EditorWatcher *watcher = new KMail::EditorWatcher(
+  Message::EditorWatcher *watcher = new Message::EditorWatcher(
       KUrl::fromPath( tempFile->fileName() ),
       part->mimeType(), openWith,
       this, d->composer );
-  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)),
-           this, SLOT(editDone(KMail::EditorWatcher*)) );
+  connect( watcher, SIGNAL(editDone(Message::EditorWatcher*)),
+           this, SLOT(editDone(Message::EditorWatcher*)) );
 
   if( watcher->start() ) {
     // The attachment is being edited.

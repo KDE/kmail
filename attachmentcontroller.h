@@ -89,7 +89,7 @@ class AttachmentController : public QObject
     Q_PRIVATE_SLOT( d, void removeSelectedAttachments() )
     Q_PRIVATE_SLOT( d, void saveSelectedAttachmentAs() )
     Q_PRIVATE_SLOT( d, void selectedAttachmentProperties() )
-    Q_PRIVATE_SLOT( d, void editDone( KMail::EditorWatcher* ) )
+    Q_PRIVATE_SLOT( d, void editDone( Message::EditorWatcher* ) )
     Q_PRIVATE_SLOT( d, void attachPublicKeyJobResult( KJob* ) )
 };
 

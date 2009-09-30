@@ -101,7 +101,7 @@ using KMail::RedirectDialog;
 #include "util.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
-#include "editorwatcher.h"
+#include "libmessageviewer/editorwatcher.h"
 #include "korghelper.h"
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -3462,12 +3462,12 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   mTempFile.write( part.bodyDecodedBinary() );
   mTempFile.flush();
 
-  KMail::EditorWatcher *watcher =
-      new KMail::EditorWatcher( KUrl( mTempFile.fileName() ),
+  Message::EditorWatcher *watcher =
+      new Message::EditorWatcher( KUrl( mTempFile.fileName() ),
                                 part.typeStr() + '/' + part.subtypeStr(),
                                 false, this, parentWidget() );
 
-  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
+  connect( watcher, SIGNAL(editDone(Message::EditorWatcher*)), SLOT(editDone(Message::EditorWatcher*)) );
   if ( !watcher->start() )
     return Failed;
   setEmitsCompletedItself( true );
@@ -3475,7 +3475,7 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   return OK;
 }
 
-void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
+void KMEditAttachmentCommand::editDone(Message::EditorWatcher * watcher)
 {
   kDebug() ;
   // anything changed?
