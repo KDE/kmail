@@ -494,7 +494,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAddAddrBookAction( 0 ),
     mOpenAddrBookAction( 0 ),
     mCopyAction( 0 ),
+#ifndef USE_AKONADI_VIEWER
     mCopyURLAction( 0 ),
+#endif
     mUrlOpenAction( 0 ),
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
@@ -724,13 +726,11 @@ void KMReaderWin::createActions()
   ac->addAction("mark_all_text", mSelectAllAction );
   connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
   mSelectAllAction->setShortcut( KStandardShortcut::selectAll() );
-#endif
   // copy Email address to clipboard
   mCopyURLAction = new KAction( KIcon( "edit-copy" ),
                                 i18n( "Copy Link Address" ), this );
   ac->addAction( "copy_url", mCopyURLAction );
   connect( mCopyURLAction, SIGNAL(triggered(bool)), SLOT(slotUrlCopy()) );
-#ifndef USE_AKONADI_VIEWER
   // find text
   KAction *action = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
   ac->addAction("find_in_messages", action );
@@ -2794,7 +2794,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
                                                         mMainWindow );
   command->start();
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlCopy()
 {
@@ -2805,7 +2805,7 @@ void KMReaderWin::slotUrlCopy()
                           dynamic_cast<KMMainWidget*>( mMainWindow ) );
   command->start();
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen( const KUrl &url )
 {
@@ -3426,6 +3426,16 @@ KHTMLPart * KMReaderWin::htmlPart() const
   return mViewer->htmlPart();
 #endif
 }
+
+KAction *KMReaderWin::copyURLAction()
+{
+#ifndef USE_AKONADI_VIEWER
+  return mCopyURLAction;
+#else
+  return mViewer->copyURLAction();
+#endif
+}
+
 
 #include "kmreaderwin.moc"
 

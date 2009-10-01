@@ -269,7 +269,7 @@ public:
   KAction *openAddrBookAction() { return mOpenAddrBookAction; }
   KAction *copyAction() { return mCopyAction; }
   KAction *selectAllAction();
-  KAction *copyURLAction() { return mCopyURLAction; }
+  KAction *copyURLAction();
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
@@ -447,7 +447,9 @@ public slots:
   void slotMailtoOpenAddrBook();
   /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
+#ifndef USE_AKONADI_VIEWER
   void slotUrlCopy();
+#endif
   void slotUrlOpen( const KUrl &url = KUrl() );
   /** Save the page to a file */
   void slotUrlSave();
@@ -640,9 +642,10 @@ private:
   KActionCollection *mActionCollection;
 
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
-    *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
+    *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction,
     *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
 #ifndef USE_AKONADI_VIEWER
+  KAction *mCopyURLAction;
   KAction *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction;
   KSelectAction *mSelectEncodingAction;
   KAction *mToggleMimePartTreeAction;
