@@ -332,12 +332,15 @@ void KMReaderMainWin::setupAccel()
 #ifndef USE_AKONADI_VIEWER
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
            this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)) );
+  connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
+           mReaderWin, SLOT(slotUrlClicked()) );
 #else
   connect( mReaderWin->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
-#endif
-  connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
+  //TODO fix me !!
+  connect( mReaderWin->viewer(), SIGNAL(urlClicked(const KUrl&,int)),
            mReaderWin, SLOT(slotUrlClicked()) );
+#endif
 
   setStandardToolBarMenuEnabled(true);
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
