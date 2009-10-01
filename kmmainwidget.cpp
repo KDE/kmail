@@ -167,7 +167,9 @@ using KMail::TemplateParser;
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 #endif
-
+#ifdef USE_AKONADI_VIEWER
+#include <libmessageviewer/viewer.h>
+#endif
 #include "kmmainwidget.moc"
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
@@ -765,7 +767,7 @@ void KMMainWidget::createWidgets()
     connect( mMsgView, SIGNAL( popupMenu(KMMessage&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMsgPopup(KMMessage&,const KUrl&,const QPoint&) ) );
 #else
-    connect( mMsgView, SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
+    connect( mMsgView->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
 #endif
     connect( mMsgView, SIGNAL( urlClicked(const KUrl&,int) ),

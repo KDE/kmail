@@ -259,6 +259,9 @@ public:
   /** Return the HtmlWriter connected to the KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
 #endif
+#ifdef USE_AKONADI_VIEWER
+  MessageViewer::Viewer *viewer() { return mViewer; }
+#endif
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction();
