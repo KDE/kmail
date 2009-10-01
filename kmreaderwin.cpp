@@ -215,10 +215,15 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
     partNode* dataNode = curNode;
     partNode * child = node->firstChild();
     const bool bIsMultipart = node->type() == DwMime::kTypeMultipart ;
+    bool bKeepPartAsIs = false;
 
     switch( curNode->type() ){
       case DwMime::kTypeMultipart: {
           switch( curNode->subType() ){
+          case DwMime::kSubtypeSigned: {
+              bKeepPartAsIs = true;
+            }
+            break;
           case DwMime::kSubtypeEncrypted: {
               if ( child )
                   dataNode = child;
@@ -242,6 +247,12 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
           case DwMime::kSubtypeOctetStream: {
               if ( child )
                 dataNode = child;
+            }
+            break;
+          case DwMime::kSubtypePkcs7Signature: {
+              // note: subtype Pkcs7Signature specifies a signature part
+              //       which we do NOT want to remove!
+              bKeepPartAsIs = true;
             }
             break;
           case DwMime::kSubtypePkcs7Mime: {
@@ -291,6 +302,10 @@ kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   
         }
       }
 
+      if ( bKeepPartAsIs ) {
+          resultingData += dataNode->encodedBody();
+      } else {
+
       // B) Store the body of this part.
       if( headers && bIsMultipart && dataNode->firstChild() )  {
 kdDebug(5006) << "is valid Multipart, processing children:" << endl;
@@ -325,6 +340,7 @@ kdDebug(5006) << "Multipart processing children - DONE" << endl;
         // store simple part
 kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE" << endl;
         resultingData += part->Body().AsString().c_str();
+      }
       }
     } else {
 kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
