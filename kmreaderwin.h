@@ -151,9 +151,9 @@ public:
   /** Get codec corresponding to the currently selected override character encoding.
       @return The override codec or 0 if auto-detection is selected. */
   const QTextCodec * overrideCodec() const;
-#endif
   /** Set printing mode */
-  virtual void setPrinting(bool enable) { mPrinting = enable; }
+#endif
+  virtual void setPrinting(bool enable );
 
   /** Set the message that shall be shown. If msg is 0, an empty page is
       displayed. */
@@ -416,10 +416,8 @@ public slots:
   void slotDocumentChanged();
   void slotDocumentDone();
   void slotTextSelected(bool);
-#endif
   /** An URL has been activate with a click. */
   void slotUrlOpen(const KUrl &url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
-#ifndef USE_AKONADI_VIEWER
   /** The mouse has moved on or off an URL. */
   void slotUrlOn(const QString &url);
 #endif
@@ -475,7 +473,7 @@ public slots:
 
   void slotDeleteAttachment( partNode* node );
   void slotEditAttachment( partNode* node );
-
+#ifndef USE_AKONADI_VIEWER
   /**
    * Does an action for the current attachment.
    * The action is defined by the KMHandleAttachmentCommand::AttachmentAction
@@ -484,7 +482,7 @@ public slots:
    * correct attachment ID.
    */
   void slotHandleAttachment( int action );
-
+#endif
 protected slots:
 #ifndef USE_AKONADI_VIEWER
   void slotCycleHeaderStyles();
@@ -629,8 +627,8 @@ private:
   MessageStatus mLastStatus;
   Message::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
-#endif
   bool mPrinting;
+#endif
   QStringList mTempFiles;
   QStringList mTempDirs;
 #ifndef USE_AKONADI_VIEWER

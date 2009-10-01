@@ -536,9 +536,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mMessage = 0;
 #ifndef USE_AKONADI_VIEWER
   mLastStatus.clear();
+  mPrinting = false;
 #endif
   mMsgDisplay = true;
-  mPrinting = false;
   mAtmUpdate = false;
 #ifndef USE_AKONADI_VIEWER
   createWidgets();
@@ -1850,11 +1850,7 @@ QString KMReaderWin::writeMsgHeader( KMMessage* aMsg, partNode *vCardNode, bool 
   QString href;
   if ( vCardNode )
     href = vCardNode->asHREF( "body" );
-#if 0 //Port me
   return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting, topLevel );
-#else
-  return "";
-#endif
 }
 #endif
 //-----------------------------------------------------------------------------
@@ -2099,7 +2095,6 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
   }
   KPIM::BroadcastStatus::instance()->setTransientStatusMsg( msg );
 }
-#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)
@@ -2112,7 +2107,7 @@ void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &
   kWarning() << "Unhandled URL click!";
   emit urlClicked( aUrl, Qt::LeftButton );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
@@ -2127,7 +2122,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     emit popupMenu( *message(), url, aPos );
   }
 }
-
+#ifndef USE_AKONADI_VIEWER
 // Checks if the given node has a parent node that is a DIV which has an ID attribute
 // with the value specified here
 static bool hasParentDivWithId( const DOM::Node &start, const QString &id )
@@ -2147,7 +2142,6 @@ static bool hasParentDivWithId( const DOM::Node &start, const QString &id )
     return hasParentDivWithId( start.parentNode(), id );
   else return false;
 }
-#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
 {
@@ -2244,7 +2238,6 @@ void KMReaderWin::styleChange( QStyle& oldStyle )
   setStyleDependantFrameWidth();
   QWidget::styleChange( oldStyle );
 }
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotHandleAttachment( int choice )
 {
@@ -2280,7 +2273,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
     command->start();
   }
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
 {
@@ -3449,7 +3442,14 @@ KAction *KMReaderWin::urlOpenAction()
   return mViewer->urlOpenAction();
 #endif
 }
-
+void KMReaderWin::setPrinting(bool enable)
+{
+#ifndef USE_AKONADI_VIEWER
+  mPrinting = enable;
+#else
+  mViewer->setPrinting( enable );
+#endif
+}
 
 #include "kmreaderwin.moc"
 

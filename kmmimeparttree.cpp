@@ -301,8 +301,8 @@ void KMMimePartTree::startHandleAttachmentCommand( int action )
   QString name = mReaderWin->tempFileUrlFromPartNode( node ).toLocalFile();
 #ifndef USE_AKONADI_VIEWER
   mReaderWin->prepareHandleAttachment( node->nodeId(), name );
-#endif
   mReaderWin->slotHandleAttachment( action );
+#endif
 }
 
 void KMMimePartTree::slotCopy()
