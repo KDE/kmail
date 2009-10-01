@@ -183,7 +183,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
-    mPreventFccOverwrite( false )
+    mPreventFccOverwrite( false ),
+    mIgnoreStickyFields( false )
 {
   //(void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
@@ -589,11 +590,13 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
 void KMComposeWin::writeConfig( void )
 {
   GlobalSettings::self()->setHeaders( mShowHeaders );
-  GlobalSettings::self()->setStickyTransport( mBtnTransport->isChecked() );
-  GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
   GlobalSettings::self()->setStickyFcc( mBtnFcc->isChecked() );
-  GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
-  GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
+  if ( !mIgnoreStickyFields ) {
+    GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
+    GlobalSettings::self()->setStickyTransport( mBtnTransport->isChecked() );
+    GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
+    GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
+  }
   GlobalSettings::self()->setPreviousFcc( mFcc->getFolder()->idString() );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
@@ -1529,7 +1532,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   mRecipientsEditor->setFocusBottom();
   mEdtSubject->setText( mMsg->subject() );
 
-  const bool stickyIdentity = mBtnIdentity->isChecked();
+  const bool stickyIdentity = mBtnIdentity->isChecked() && !mIgnoreStickyFields;
   const bool messageHasIdentity = !newMsg->headerField("X-KMail-Identity").isEmpty();
   if ( !stickyIdentity && messageHasIdentity )
     mId = newMsg->headerField( "X-KMail-Identity" ).simplified().toUInt();
@@ -1640,7 +1643,8 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
                           !ident.pgpEncryptionKey().isEmpty() );
 
   QString transportName = newMsg->headerField("X-KMail-Transport");
-  if ( !mBtnTransport->isChecked() && !transportName.isEmpty() ) {
+  const bool stickyTransport = mBtnTransport->isChecked() && !mIgnoreStickyFields;
+  if ( !stickyTransport && !transportName.isEmpty() ) {
     Transport *transport =
         TransportManager::self()->transportByName( transportName );
     if ( transport )
@@ -2771,6 +2775,15 @@ void KMComposeWin::disableRecipientNumberCheck()
   // mCheckForRecipients = false; // TODO composer...
 }
 
+void KMComposeWin::ignoreStickyFields()
+{
+  mIgnoreStickyFields = true;
+  mBtnTransport->setChecked( false );
+  mBtnIdentity->setChecked( false );
+  mBtnTransport->setEnabled( false );
+  mBtnIdentity->setEnabled( false );
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
@@ -3395,7 +3408,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   // If the transport sticky checkbox is not checked, set the transport
   // from the new identity
-  if ( !mBtnTransport->isChecked() ) {
+  if ( !mBtnTransport->isChecked() && !mIgnoreStickyFields ) {
     QString transportName = ident.transport();
     Transport *transport =
         TransportManager::self()->transportByName( transportName, false );
