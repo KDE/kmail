@@ -161,7 +161,7 @@ using KMail::TemplateParser;
 #include <errno.h> // ugh
 
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
-#include <akonadi/monitor.h>
+#include <akonadi/changerecorder.h>
 #include <akonadi/session.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/favoritecollectionsmodel.h>
@@ -856,7 +856,7 @@ void KMMainWidget::createWidgets()
     Akonadi::Session *session = new Akonadi::Session( "KMail favorite collection", this );
 
     // monitor collection changes
-    Akonadi::Monitor *monitor = new Akonadi::Monitor( this );
+    Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
     monitor->setCollectionMonitored( Akonadi::Collection::root() );
     monitor->fetchCollection( true );
     monitor->setAllMonitored( true );
