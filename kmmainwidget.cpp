@@ -769,15 +769,17 @@ void KMMainWidget::createWidgets()
 
     connect( mMsgView, SIGNAL( replaceMsgByUnencryptedVersion() ),
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
+    connect( mMsgView, SIGNAL( urlClicked(const KUrl&,int) ),
+             mMsgView, SLOT( slotUrlClicked() ) );
 #else
 
     connect( mMsgView->viewer(), SIGNAL( replaceMsgByUnencryptedVersion() ),
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
     connect( mMsgView->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
+    connect( mMsgView->viewer(), SIGNAL( urlClicked(const KUrl&,int) ),
+             mMsgView->viewer(), SLOT( slotUrlClicked() ) );
 #endif
-    connect( mMsgView, SIGNAL( urlClicked(const KUrl&,int) ),
-             mMsgView, SLOT( slotUrlClicked() ) );
 #if 0
     // FIXME (Pragma)
     connect( mMsgView, SIGNAL( noDrag() ),

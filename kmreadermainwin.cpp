@@ -337,9 +337,8 @@ void KMReaderMainWin::setupAccel()
 #else
   connect( mReaderWin->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
-  //TODO fix me !!
   connect( mReaderWin->viewer(), SIGNAL(urlClicked(const KUrl&,int)),
-           mReaderWin, SLOT(slotUrlClicked()) );
+           mReaderWin->viewer(), SLOT(slotUrlClicked()) );
 #endif
 
   setStandardToolBarMenuEnabled(true);
