@@ -59,7 +59,7 @@ namespace KMail {
   class ImapAccountBase;
   struct ACLListEntry;
 }
-namespace Message {
+namespace MessageViewer {
   class AttachmentStrategy;
 }
 
@@ -476,7 +476,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     virtual FolderJob *doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                                     KMFolder *folder,
                                     const QString &partSpecifier,
-                                    const Message::AttachmentStrategy *as ) const;
+                                    const MessageViewer::AttachmentStrategy *as ) const;
     virtual FolderJob *doCreateJob( QList<KMMessage*> &msgList,
                                     const QString &sets, FolderJob::JobType jt,
                                     KMFolder *folder ) const;

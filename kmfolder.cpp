@@ -393,7 +393,7 @@ void KMFolder::ignoreJobsForMessage( KMMessage* m )
 
 FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
                                 KMFolder *folder, const QString &partSpecifier,
-                                const Message::AttachmentStrategy *as ) const
+                                const MessageViewer::AttachmentStrategy *as ) const
 {
   return mStorage->createJob( msg, jt, folder, partSpecifier, as );
 }

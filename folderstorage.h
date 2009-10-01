@@ -60,10 +60,10 @@ class KMMsgDictREntry;
 class QTimer;
 class KMSearchPattern;
 
-namespace Message {
+namespace MessageViewer {
    class AttachmentStrategy;
 }
-//using Message::AttachmentStrategy;
+//using MessageViewer::AttachmentStrategy;
 
 typedef QList<quint32> SerNumList;
 
@@ -170,7 +170,7 @@ public:
    */
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0, const QString &partSpecifier = QString(),
-                                const Message::AttachmentStrategy *as = 0 ) const;
+                                const MessageViewer::AttachmentStrategy *as = 0 ) const;
   virtual FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0 ) const;
@@ -553,7 +553,7 @@ protected:
    * @see createJob
    */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                  const QString &partSpecifier, const Message::AttachmentStrategy *as ) const = 0;
+                                  const QString &partSpecifier, const MessageViewer::AttachmentStrategy *as ) const = 0;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const = 0;
 

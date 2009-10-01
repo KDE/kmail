@@ -36,7 +36,7 @@
 
 class KMMessagePart;
 
-namespace Message {
+namespace MessageViewer {
 class AttachmentStrategy;
 }
 namespace KMail {
@@ -76,7 +76,7 @@ class BodyVisitor
 class BodyVisitorFactory
 {
   public:
-    static BodyVisitor *getVisitor( const Message::AttachmentStrategy *strategy );
+    static BodyVisitor *getVisitor( const MessageViewer::AttachmentStrategy *strategy );
 };
 
 // Visitor for smart attachment display

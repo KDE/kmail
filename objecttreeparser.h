@@ -49,7 +49,7 @@ namespace GpgME {
   class Error;
 }
 
-namespace Message {
+namespace MessageViewer {
   class CSSHelper;
   class AttachmentStrategy;
 }
@@ -110,9 +110,9 @@ namespace KMail {
     explicit ObjectTreeParser( KMReaderWin * reader=0, const Kleo::CryptoBackend::Protocol * protocol=0,
                       bool showOneMimePart=false, bool keepEncryptions=false,
                       bool includeSignatures=true,
-                      const Message::AttachmentStrategy * attachmentStrategy=0,
+                      const MessageViewer::AttachmentStrategy * attachmentStrategy=0,
                       KMail::HtmlWriter * htmlWriter=0,
-                      Message::CSSHelper * cssHelper=0 );
+                      MessageViewer::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
     void setAllowAsync( bool allow ) { assert( !mHasPendingAsyncJobs ); mAllowAsync = allow; }
@@ -150,13 +150,13 @@ namespace KMail {
       mIncludeSignatures = include;
     }
 
-    const Message::AttachmentStrategy * attachmentStrategy() const {
+    const MessageViewer::AttachmentStrategy * attachmentStrategy() const {
       return mAttachmentStrategy;
     }
 
     KMail::HtmlWriter * htmlWriter() const { return mHtmlWriter; }
 
-    Message::CSSHelper * cssHelper() const { return mCSSHelper; }
+    MessageViewer::CSSHelper * cssHelper() const { return mCSSHelper; }
 
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
@@ -334,9 +334,9 @@ namespace KMail {
     bool mIncludeSignatures;
     bool mHasPendingAsyncJobs;
     bool mAllowAsync;
-    const Message::AttachmentStrategy * mAttachmentStrategy;
+    const MessageViewer::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
-    Message::CSSHelper * mCSSHelper;
+    MessageViewer::CSSHelper * mCSSHelper;
     // DataUrl Icons cache
     QString mCollapseIcon;
     QString mExpandIcon;

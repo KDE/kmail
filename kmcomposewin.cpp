@@ -3041,12 +3041,12 @@ void KMComposeWin::editAttach(int index, bool openWith)
   atmTempFile->write( msgPart->bodyDecodedBinary() );
   atmTempFile->flush();
 
-  Message::EditorWatcher *watcher =
-          new Message::EditorWatcher( KUrl( atmTempFile->fileName() ),
+  MessageViewer::EditorWatcher *watcher =
+          new MessageViewer::EditorWatcher( KUrl( atmTempFile->fileName() ),
                                     contentTypeStr, openWith,
                                     this, this );
-  connect( watcher, SIGNAL( editDone(Message::EditorWatcher*) ),
-           SLOT( slotEditDone(Message::EditorWatcher*) ) );
+  connect( watcher, SIGNAL( editDone(MessageViewer::EditorWatcher*) ),
+           SLOT( slotEditDone(MessageViewer::EditorWatcher*) ) );
 
   if ( watcher->start() ) {
     mEditorMap.insert( watcher, msgPart );
@@ -4353,7 +4353,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
   }
 }
 
-void KMComposeWin::slotEditDone(Message::EditorWatcher * watcher)
+void KMComposeWin::slotEditDone(MessageViewer::EditorWatcher * watcher)
 {
   kDebug() ;
   KMMessagePart *part = mEditorMap[ watcher ];

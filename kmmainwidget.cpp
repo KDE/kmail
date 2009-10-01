@@ -124,7 +124,7 @@ using KMail::SubscriptionDialog;
 #include "localsubscriptiondialog.h"
 using KMail::LocalSubscriptionDialog;
 #include "libmessageviewer/attachmentstrategy.h"
-using Message::AttachmentStrategy;
+using MessageViewer::AttachmentStrategy;
 #include "libmessageviewer/headerstrategy.h"
 #include "libmessageviewer/headerstyle.h"
 #include "folderjob.h"
@@ -761,8 +761,13 @@ void KMMainWidget::createWidgets()
 
     connect( mMsgView, SIGNAL( replaceMsgByUnencryptedVersion() ),
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
+#ifndef USE_AKONADI_VIEWER
     connect( mMsgView, SIGNAL( popupMenu(KMMessage&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMsgPopup(KMMessage&,const KUrl&,const QPoint&) ) );
+#else
+    connect( mMsgView, SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
+             this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
+#endif
     connect( mMsgView, SIGNAL( urlClicked(const KUrl&,int) ),
              mMsgView, SLOT( slotUrlClicked() ) );
 #if 0
@@ -3359,6 +3364,116 @@ void KMMainWidget::slotMarkAll()
   mMessageListView->selectAll();
   updateMessageActions();
 }
+#ifdef USE_AKONADI_VIEWER
+void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QPoint& aPoint)
+{
+#if 0 //TODO port it
+  mMessageListView->activateMessage( &msg ); // make sure that this message is the active one
+
+  // If this assertion fails then our current KMReaderWin is displaying a
+  // message from a folder that is not the current in mMessageListView.
+  // This should never happen as all the actions are messed up in this case.
+  Q_ASSERT( &msg == mMessageListView->currentMessage() );
+
+  updateMessageMenu();
+#endif
+  KMenu *menu = new KMenu;
+  mUrlCurrent = aUrl;
+
+  bool urlMenuAdded = false;
+
+  if ( !aUrl.isEmpty() ) {
+    if ( aUrl.protocol() == "mailto" ) {
+      // popup on a mailto URL
+      menu->addAction( mMsgView->mailToComposeAction() );
+      menu->addAction( mMsgView->mailToReplyAction() );
+      menu->addAction( mMsgView->mailToForwardAction() );
+
+      menu->addSeparator();
+
+      QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+      KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
+      KABC::Addressee::List addresseeList = addressBook->findByEmail( email );
+
+      if ( addresseeList.count() == 0 ) {
+        menu->addAction( mMsgView->addAddrBookAction() );
+      } else {
+        menu->addAction( mMsgView->openAddrBookAction() );
+      }
+      menu->addAction( mMsgView->copyURLAction() );
+    } else {
+      // popup on a not-mailto URL
+      menu->addAction( mMsgView->urlOpenAction() );
+      menu->addAction( mMsgView->addBookmarksAction() );
+      menu->addAction( mMsgView->urlSaveAsAction() );
+      menu->addAction( mMsgView->copyURLAction() );
+    }
+
+    urlMenuAdded = true;
+    kDebug() << "URL is:" << aUrl;
+  }
+
+  if ( mMsgView && !mMsgView->copyText().isEmpty() ) {
+    if ( urlMenuAdded ) {
+      menu->addSeparator();
+    }
+    menu->addAction( mMsgActions->replyMenu() );
+    menu->addSeparator();
+
+    menu->addAction( mMsgView->copyAction() );
+    menu->addAction( mMsgView->selectAllAction() );
+  } else if ( !urlMenuAdded ) {
+    // popup somewhere else (i.e., not a URL) on the message
+
+    if (!mMessageListView->currentMessage()) {
+      // no messages
+      delete menu;
+      return;
+    }
+
+    if ( mFolder->isTemplates() ) {
+      menu->addAction( mUseAction );
+    } else {
+      menu->addAction( mMsgActions->replyMenu() );
+      menu->addAction( mMsgActions->forwardMenu() );
+    }
+    menu->addAction(editAction());
+    menu->addSeparator();
+
+    menu->addAction( mCopyActionMenu );
+    menu->addAction( mMoveActionMenu );
+
+    menu->addSeparator();
+
+    menu->addAction( mMsgActions->messageStatusMenu() );
+    menu->addSeparator();
+
+    menu->addAction( viewSourceAction() );
+    if ( mMsgView ) {
+      menu->addAction( mMsgView->toggleFixFontAction() );
+      menu->addAction( mMsgView->toggleMimePartTreeAction() );
+    }
+    menu->addSeparator();
+    menu->addAction( mPrintAction );
+    menu->addAction( mSaveAsAction );
+    menu->addAction( mSaveAttachmentsAction );
+
+    menu->addSeparator();
+    if ( mFolder->isTrash() ) {
+      menu->addAction( mDeleteAction );
+    } else {
+      menu->addAction( mTrashAction );
+    }
+
+    menu->addSeparator();
+    menu->addAction( mMsgActions->createTodoAction() );
+  }
+  KAcceleratorManager::manage(menu);
+  menu->exec( aPoint, 0 );
+  delete menu;
+
+}
+#else
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint &aPoint )
@@ -3467,7 +3582,7 @@ void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint 
   menu->exec( aPoint, 0 );
   delete menu;
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMMainWidget::getAccountMenu()
 {

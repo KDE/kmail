@@ -493,7 +493,7 @@ int KMFolderMbox::lock()
 //-------------------------------------------------------------
 FolderJob*
 KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                           KMFolder *folder, const QString&, const Message::AttachmentStrategy* ) const
+                           KMFolder *folder, const QString&, const MessageViewer::AttachmentStrategy* ) const
 {
   MboxJob *job = new MboxJob( msg, jt, folder );
   job->setParent( this );

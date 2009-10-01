@@ -1172,7 +1172,7 @@ bool ImapAccountBase::checkingMail( KMFolder *folder )
 
 //-----------------------------------------------------------------------------
 void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
-                                           const Message::AttachmentStrategy *as )
+                                           const MessageViewer::AttachmentStrategy *as )
 {
   mBodyPartList.clear();
   mCurrentMsg = msg;

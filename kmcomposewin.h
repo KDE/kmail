@@ -93,7 +93,7 @@ namespace KMail {
   class AttachmentListView;
 }
 
-namespace Message {
+namespace MessageViewer {
   class EditorWatcher;
 }
 
@@ -346,7 +346,7 @@ class KMComposeWin : public KMail::Composer
     void slotMarkAll();
 
     void slotFolderRemoved( KMFolder * );
-    void slotEditDone( Message::EditorWatcher* watcher );
+    void slotEditDone( MessageViewer::EditorWatcher* watcher );
     void slotLanguageChanged( const QString &language );
 
   public slots: // kmkernel
@@ -890,8 +890,8 @@ class KMComposeWin : public KMail::Composer
     QString mdbusObjectPath;
     static int s_composerNumber;
 
-    QMap<Message::EditorWatcher*, KMMessagePart*> mEditorMap;
-    QMap<Message::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
+    QMap<MessageViewer::EditorWatcher*, KMMessagePart*> mEditorMap;
+    QMap<MessageViewer::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
 
     SnippetWidget *mSnippetWidget;
     QList<KTempDir*> mTempDirs;

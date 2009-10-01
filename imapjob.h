@@ -47,7 +47,7 @@ namespace KPIM {
   class ProgressItem;
 }
 
-namespace Message {
+namespace MessageViewer {
   class AttachmentStrategy;
 }
 
@@ -61,7 +61,7 @@ class ImapJob : public FolderJob
 
 public:
   explicit ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
-           const QString &partSpecifier = QString(), const Message::AttachmentStrategy *as = 0 );
+           const QString &partSpecifier = QString(), const MessageViewer::AttachmentStrategy *as = 0 );
   ImapJob( QList<KMMessage*>& msgList, const QString &sets,
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
@@ -89,7 +89,7 @@ private:
              QList<KMMessage*>& msgList );
   KIO::Job *mJob;
   QByteArray mData;
-  const Message::AttachmentStrategy *mAttachmentStrategy;
+  const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
   KMFolderImap *mParentFolder;
   KPIM::ProgressItem *mParentProgressItem;
 };

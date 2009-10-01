@@ -53,7 +53,7 @@ namespace KPIM {
   class ProgressItem;
 }
 
-namespace Message {
+namespace MessageViewer {
   class AttachmentStrategy;
 }
 
@@ -287,7 +287,7 @@ namespace KMail {
      * Handles the result from a BODYSTRUCTURE fetch
      */
     void handleBodyStructure( QDataStream & stream, KMMessage * msg,
-                              const Message::AttachmentStrategy *as );
+                              const MessageViewer::AttachmentStrategy *as );
 
     /**
      * Reimplemented. Additionally set the folder label

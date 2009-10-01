@@ -22,7 +22,7 @@ using KMail::ObjectTreeParser;
 #include "kmmessagetag.h"
 #include "libmessageviewer/headerstrategy.h"
 #include "globalsettings.h"
-using Message::HeaderStrategy;
+using MessageViewer::HeaderStrategy;
 #include "libmessageviewer/kmaddrbook.h"
 #include "libmessageviewer/kcursorsaver.h"
 #include "templateparser.h"

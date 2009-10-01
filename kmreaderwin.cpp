@@ -62,7 +62,7 @@ using KMail::KHtmlPartHtmlWriter;
 using KMail::FolderJob;
 
 #include "libmessageviewer/csshelper.h"
-using Message::CSSHelper;
+using MessageViewer::CSSHelper;
 #include "isubject.h"
 using KMail::ISubject;
 #include "urlhandlermanager.h"
@@ -87,7 +87,7 @@ using KMail::TeeHtmlWriter;
 #ifdef USE_AKONADI_VIEWER
 #include "libmessageviewer/viewer.h"
 #endif
-using namespace Message;
+using namespace MessageViewer;
 #include "libmessageviewer/attachmentstrategy.h"
 
 #include <mimelib/mimepp.h>

@@ -93,6 +93,7 @@ using KMail::ObjectTreeParser;
 using KMail::FolderJob;
 #include "chiasmuskeyselector.h"
 #include "libmessageviewer/mailsourceviewer.h"
+using namespace MessageViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
@@ -748,7 +749,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   }
   QString str = QString::fromAscii( msg->asString() );
 
-  Message::MailSourceViewer *viewer = new Message::MailSourceViewer(); // deletes itself upon close
+  MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
   viewer->setWindowTitle( i18n("Message as Plain Text") );
   viewer->setText( str );
   if( mFixedFont ) {
@@ -1593,8 +1594,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent, KMMessage *msg,
-                                const Message::HeaderStyle *headerStyle,
-                                const Message::HeaderStrategy *headerStrategy,
+                                const HeaderStyle *headerStyle,
+                                const HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
   : KMCommand( parent, msg ),
@@ -3463,12 +3464,12 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   mTempFile.write( part.bodyDecodedBinary() );
   mTempFile.flush();
 
-  Message::EditorWatcher *watcher =
-      new Message::EditorWatcher( KUrl( mTempFile.fileName() ),
+  EditorWatcher *watcher =
+      new EditorWatcher( KUrl( mTempFile.fileName() ),
                                 part.typeStr() + '/' + part.subtypeStr(),
                                 false, this, parentWidget() );
 
-  connect( watcher, SIGNAL(editDone(Message::EditorWatcher*)), SLOT(editDone(Message::EditorWatcher*)) );
+  connect( watcher, SIGNAL(editDone(MessageViewer::EditorWatcher*)), SLOT(editDone(MessageViewer::EditorWatcher*)) );
   if ( !watcher->start() )
     return Failed;
   setEmitsCompletedItself( true );
@@ -3476,7 +3477,7 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   return OK;
 }
 
-void KMEditAttachmentCommand::editDone(Message::EditorWatcher * watcher)
+void KMEditAttachmentCommand::editDone(EditorWatcher * watcher)
 {
   kDebug() ;
   // anything changed?

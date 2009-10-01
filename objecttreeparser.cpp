@@ -118,7 +118,7 @@ using KPIMUtils::LinkLocator;
 #include <unistd.h>
 #include <cassert>
 #include "chiasmuskeyselector.h"
-using namespace Message;
+using namespace MessageViewer;
 namespace KMail {
 
   // A small class that eases temporary CryptPlugWrapper changes:
@@ -143,7 +143,7 @@ namespace KMail {
   ObjectTreeParser::ObjectTreeParser( KMReaderWin * reader, const Kleo::CryptoBackend::Protocol * protocol,
                                       bool showOnlyOneMimePart, bool keepEncryptions,
                                       bool includeSignatures,
-                                      const Message::AttachmentStrategy * strategy,
+                                      const MessageViewer::AttachmentStrategy * strategy,
                                       HtmlWriter * htmlWriter,
                                       CSSHelper * cssHelper )
     : mReader( reader ),
@@ -3034,11 +3034,11 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     // Cache Icons
     if ( mCollapseIcon.isEmpty() ) {
       mCollapseIcon= LinkLocator::pngToDataUrl(
-          Message::IconNameCache::instance()->iconPath( "quotecollapse", 0 ));
+          MessageViewer::IconNameCache::instance()->iconPath( "quotecollapse", 0 ));
     }
     if ( (mExpandIcon).isEmpty() )
       mExpandIcon= LinkLocator::pngToDataUrl(
-          Message::IconNameCache::instance()->iconPath( "quoteexpand", 0 ));
+          MessageViewer::IconNameCache::instance()->iconPath( "quoteexpand", 0 ));
   }
 
   while (beg<length)

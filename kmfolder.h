@@ -52,7 +52,7 @@ class KMFolderDir;
 class FolderStorage;
 class KMFolderJob;
 
-//namespace Message {
+//namespace MessageViewer {
 //   class AttachmentStrategy;
 //}
 
@@ -222,7 +222,7 @@ public:
    */
   FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0, const QString &partSpecifier = QString(),
-                        const Message::AttachmentStrategy *as = 0 ) const;
+                        const MessageViewer::AttachmentStrategy *as = 0 ) const;
   FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
                         FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0 ) const;

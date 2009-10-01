@@ -5,7 +5,10 @@
 
 #include "kmail_export.h"
 #include "kmmsgbase.h"
-
+#include "libmessageviewer/editorwatcher.h"
+#include "libmessageviewer/headerstrategy.h"
+#include "libmessageviewer/headerstyle.h"
+using MessageViewer::EditorWatcher;
 #include <mimelib/string.h>
 #include <messagestatus.h>
 using KPIM::MessageStatus;
@@ -28,11 +31,13 @@ class KMReaderWin;
 class partNode;
 class DwBodyPart;
 class DwEntity;
-namespace Message {
+#if 0
+namespace MessageViewer {
   class HeaderStrategy;
   class HeaderStyle;
   class EditorWatcher;
 }
+#endif
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
@@ -584,8 +589,8 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
 
 public:
   KMPrintCommand( QWidget *parent, KMMessage *msg,
-                  const Message::HeaderStyle *headerStyle = 0,
-                  const Message::HeaderStrategy *headerStrategy = 0,
+                  const MessageViewer::HeaderStyle *headerStyle = 0,
+                  const MessageViewer::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
                   bool htmlLoadExtOverride = false,
                   bool useFixedFont = false,
@@ -596,8 +601,8 @@ public:
 private:
   virtual Result execute();
 
-  const Message::HeaderStyle *mHeaderStyle;
-  const Message::HeaderStrategy *mHeaderStrategy;
+  const MessageViewer::HeaderStyle *mHeaderStyle;
+  const MessageViewer::HeaderStrategy *mHeaderStrategy;
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;
@@ -1056,7 +1061,7 @@ class KMAIL_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
     Result doAttachmentModify();
 
   private slots:
-    void editDone( Message::EditorWatcher *watcher );
+    void editDone( EditorWatcher *watcher );
 
   private:
     KTemporaryFile mTempFile;

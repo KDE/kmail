@@ -65,7 +65,7 @@ namespace KMail {
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
 }
-namespace Message {
+namespace MessageViewer {
   class HeaderStrategy;
   class HeaderStyle;
 }
@@ -82,12 +82,12 @@ namespace DOM {
 }
 
 #ifdef USE_AKONADI_VIEWER
-namespace Message {
+namespace MessageViewer {
    class Viewer;
 }
 #endif
 
-namespace Message {
+namespace MessageViewer {
   class CSSHelper;
   class AttachmentStrategy;
 }
@@ -127,19 +127,19 @@ public:
   void writeConfig( bool withSync=true ) const;
 #endif
 
-  const Message::HeaderStyle * headerStyle() const;
+  const MessageViewer::HeaderStyle * headerStyle() const;
 
   /** Set the header style and strategy. We only want them to be set
       together. */
-  void setHeaderStyleAndStrategy( const Message::HeaderStyle * style,
-                                  const Message::HeaderStrategy * strategy );
+  void setHeaderStyleAndStrategy( const MessageViewer::HeaderStyle * style,
+                                  const MessageViewer::HeaderStrategy * strategy );
   /** Getthe message header strategy. */
-  const Message::HeaderStrategy * headerStrategy() const;
+  const MessageViewer::HeaderStrategy * headerStrategy() const;
 
   /** Get/set the message attachment strategy. */
-  const Message::AttachmentStrategy * attachmentStrategy() const;
+  const MessageViewer::AttachmentStrategy * attachmentStrategy() const;
 
-  void setAttachmentStrategy( const Message::AttachmentStrategy * strategy );
+  void setAttachmentStrategy( const MessageViewer::AttachmentStrategy * strategy );
 
   /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
@@ -342,7 +342,7 @@ public:
   /** Show signature details. */
   void setShowSignatureDetails( bool showDetails = true );
 
-  Message::CSSHelper* cssHelper() const;
+  MessageViewer::CSSHelper* cssHelper() const;
 
   /* show or hide the list that points to the attachments */
   bool showAttachmentQuicklist() const;
@@ -574,9 +574,9 @@ private:
   void adjustLayout();
   void createWidgets();
   void saveSplitterSizes() const;
-  KToggleAction * actionForHeaderStyle( const Message::HeaderStyle *,
-                                        const Message::HeaderStrategy * );
-  KToggleAction * actionForAttachmentStrategy( const Message::AttachmentStrategy * );
+  KToggleAction * actionForHeaderStyle( const MessageViewer::HeaderStyle *,
+                                        const MessageViewer::HeaderStrategy * );
+  KToggleAction * actionForAttachmentStrategy( const MessageViewer::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
 
@@ -605,9 +605,9 @@ private:
   HtmlStatusBar *mColorBar;
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
-  const Message::AttachmentStrategy * mAttachmentStrategy;
-  const Message::HeaderStrategy * mHeaderStrategy;
-  const Message::HeaderStyle * mHeaderStyle;
+  const MessageViewer::AttachmentStrategy * mAttachmentStrategy;
+  const MessageViewer::HeaderStrategy * mHeaderStrategy;
+  const MessageViewer::HeaderStyle * mHeaderStyle;
 #endif
   bool mAutoDelete;
 #ifndef USE_AKONADI_VIEWER
@@ -654,7 +654,7 @@ private:
   bool mCanStartDrag;
 
 #ifdef USE_AKONADI_VIEWER
-  Message::Viewer *mViewer;
+  MessageViewer::Viewer *mViewer;
 #endif
   KMail::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal

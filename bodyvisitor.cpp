@@ -33,15 +33,15 @@
 #include <kdebug.h>
 using namespace KMail;
 
-BodyVisitor *BodyVisitorFactory::getVisitor( const Message::AttachmentStrategy *strategy )
+BodyVisitor *BodyVisitorFactory::getVisitor( const MessageViewer::AttachmentStrategy *strategy )
 {
-  if ( strategy == Message::AttachmentStrategy::smart() ) {
+  if ( strategy == MessageViewer::AttachmentStrategy::smart() ) {
     return new BodyVisitorSmart();
-  } else if ( strategy == Message::AttachmentStrategy::iconic() ) {
+  } else if ( strategy == MessageViewer::AttachmentStrategy::iconic() ) {
     return new BodyVisitorHidden();
-  } else if ( strategy == Message::AttachmentStrategy::inlined() ) {
+  } else if ( strategy == MessageViewer::AttachmentStrategy::inlined() ) {
     return new BodyVisitorInline();
-  } else if ( strategy == Message::AttachmentStrategy::hidden()) {
+  } else if ( strategy == MessageViewer::AttachmentStrategy::hidden()) {
     return new BodyVisitorHidden();
   }
   // default

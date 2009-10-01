@@ -42,6 +42,13 @@
 #include <akonadi_next/favoritecollectionsview.h>
 #endif
 
+#ifdef USE_AKONADI_VIEWER
+//#include <kmime/kmime_message.h>
+namespace KMime {
+  class Message;
+}
+#endif
+
 class QVBoxLayout;
 class QSplitter;
 class QSignalMapper;
@@ -438,7 +445,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSendQueuedVia( QAction* item );
     void slotOnlineStatus();
     void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
-    void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
+  //(Laurent) remove this function in the future
+#ifndef USE_AKONADI_VIEWER
+  void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
+#else
+    void slotMessagePopup(KMime::Message& ,const KUrl&,const QPoint& );
+#endif
     void slotMarkAll();
     void slotFocusQuickSearch();
     void slotSearch();

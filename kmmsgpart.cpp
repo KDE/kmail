@@ -326,7 +326,7 @@ QString KMMessagePart::iconName( int size ) const
     }
   }
 
-  return Message::IconNameCache::instance()->iconPath( fileName, size );
+  return MessageViewer::IconNameCache::instance()->iconPath( fileName, size );
 }
 
 //-----------------------------------------------------------------------------

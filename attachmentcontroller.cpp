@@ -74,7 +74,7 @@ class KMail::AttachmentController::Private
     void removeSelectedAttachments(); // slot
     void saveSelectedAttachmentAs(); // slot
     void selectedAttachmentProperties(); // slot
-    void editDone( Message::EditorWatcher *watcher ); // slot
+    void editDone( MessageViewer::EditorWatcher *watcher ); // slot
     void exportPublicKey( const QString &fingerprint );
     void attachPublicKeyJobResult( KJob *job ); // slot
     void addAttachmentPart( AttachmentPart::Ptr part );
@@ -85,8 +85,8 @@ class KMail::AttachmentController::Private
     AttachmentModel *model;
     AttachmentView *view;
     KMComposeWin *composer;
-    QHash<Message::EditorWatcher*,AttachmentPart::Ptr> editorPart;
-    QHash<Message::EditorWatcher*,KTemporaryFile*> editorTempFile;
+    QHash<MessageViewer::EditorWatcher*,AttachmentPart::Ptr> editorPart;
+    QHash<MessageViewer::EditorWatcher*,KTemporaryFile*> editorTempFile;
 
     QMenu *contextMenu;
     AttachmentPart::List selectedParts;
@@ -279,7 +279,7 @@ void AttachmentController::Private::selectedAttachmentProperties()
   q->attachmentProperties( selectedParts.first() );
 }
 
-void AttachmentController::Private::editDone( Message::EditorWatcher *watcher )
+void AttachmentController::Private::editDone( MessageViewer::EditorWatcher *watcher )
 {
   AttachmentPart::Ptr part = editorPart.take( watcher );
   Q_ASSERT( part );
@@ -562,12 +562,12 @@ void AttachmentController::editAttachment( AttachmentPart::Ptr part, bool openWi
     return;
   }
 
-  Message::EditorWatcher *watcher = new Message::EditorWatcher(
+  MessageViewer::EditorWatcher *watcher = new MessageViewer::EditorWatcher(
       KUrl::fromPath( tempFile->fileName() ),
       part->mimeType(), openWith,
       this, d->composer );
-  connect( watcher, SIGNAL(editDone(Message::EditorWatcher*)),
-           this, SLOT(editDone(Message::EditorWatcher*)) );
+  connect( watcher, SIGNAL(editDone(MessageViewer::EditorWatcher*)),
+           this, SLOT(editDone(MessageViewer::EditorWatcher*)) );
 
   if( watcher->start() ) {
     // The attachment is being edited.

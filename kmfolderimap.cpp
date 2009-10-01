@@ -1714,7 +1714,7 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
 FolderJob*
 KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                            KMFolder *folder, const QString &partSpecifier,
-                           const Message::AttachmentStrategy *as ) const
+                           const MessageViewer::AttachmentStrategy *as ) const
 {
   KMFolderImap* kmfi = folder? dynamic_cast<KMFolderImap*>(folder->storage()) : 0;
   if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
