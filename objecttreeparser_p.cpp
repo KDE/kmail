@@ -123,7 +123,7 @@ void DecryptVerifyBodyPartMemento::slotResult( const DecryptionResult & dr,
 {
   saveResult( dr, vr, plainText );
   m_job = 0;
-  QTimer::singleShot( 100, this, SLOT(notify()) );
+  notify();
 }
 
 
@@ -210,7 +210,7 @@ void VerifyDetachedBodyPartMemento::slotResult( const VerificationResult & vr )
     m_keylistjob->deleteLater();
   m_keylistjob = 0;
   setRunning( false );
-  QTimer::singleShot( 100, this, SLOT(notify()) );
+  notify();
 }
 
 bool VerifyDetachedBodyPartMemento::startKeyListJob()
@@ -233,7 +233,7 @@ void VerifyDetachedBodyPartMemento::slotKeyListJobDone()
 {
   m_keylistjob = 0;
   setRunning( false );
-  QTimer::singleShot( 100, this, SLOT(notify()) );
+  notify();
 }
 
 
@@ -320,7 +320,7 @@ void VerifyOpaqueBodyPartMemento::slotResult( const VerificationResult & vr,
     m_keylistjob->deleteLater();
   m_keylistjob = 0;
   setRunning( false );
-  QTimer::singleShot( 100, this, SLOT(notify()) );
+  notify();
 }
 
 bool VerifyOpaqueBodyPartMemento::startKeyListJob()
@@ -343,7 +343,7 @@ void VerifyOpaqueBodyPartMemento::slotKeyListJobDone()
 {
   m_keylistjob = 0;
   setRunning( false );
-  QTimer::singleShot( 100, this, SLOT(notify()) );
+  notify();
 }
 
 
