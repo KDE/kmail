@@ -578,7 +578,6 @@ private:
   bool mMsgDisplay;
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
-  MessageStatus mLastStatus;
 
   KMail::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
