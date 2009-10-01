@@ -1238,7 +1238,7 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
 //-----------------------------------------------------------------------------
 void KMReaderWin::setOverrideEncoding( const QString & encoding )
 {
-#ifndef USE_AKONADI_VIEWER //TODO port it
+#ifndef USE_AKONADI_VIEWER
   if ( encoding == mOverrideEncoding )
     return;
 
@@ -2307,7 +2307,7 @@ void KMReaderWin::slotCopySelectedText()
   selection.replace( QChar::Nbsp, ' ' );
   QApplication::clipboard()->setText( selection );
 }
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
 {
@@ -2330,7 +2330,7 @@ void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
   win->showMsg( encodeStr, msg, message()->getMsgSerNum(), nodeId );
   win->show();
 }
-
+#endif
 
 void KMReaderWin::setMsgPart( partNode * node ) {
 #ifndef USE_AKONADI_VIEWER

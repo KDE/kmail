@@ -242,14 +242,14 @@ public:
 
   /** Enable the displaying of messages again after an URL was displayed */
   void enableMsgDisplay();
-
+#ifndef USE_AKONADI_VIEWER
   /**
    * View message part of type message/RFC822 in extra viewer window.
    * @param msgPart the part to display
    * @param nodeId the part index of the message part that is displayed
    */
   void atmViewMsg( KMMessagePart* msgPart, int nodeId );
-#ifndef USE_AKONADI_VIEWER
+
   bool atBottom() const;
 #endif
 
