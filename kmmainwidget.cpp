@@ -3681,16 +3681,15 @@ void KMMainWidget::setupActions()
   mFindInMessageAction = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
   actionCollection()->addAction("find_in_messages", mFindInMessageAction );
   connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
-  //FIXME: this causes ambiguous Ctrl-F problems and the shortcut fails
-  //unfortunately, this has the side-effect of having a blank Ctrl-F shortcut
-  //string on the Find menu.
-  //mFindInMessageAction->setShortcut(KStandardShortcut::find());
+  mFindInMessageAction->setShortcut(KStandardShortcut::find());
+  //For this shortcut to work, the same shortcut from khtml must be disabled in
+  //kmreaderwin.cpp
 
   {
     KAction *action = new KAction(i18n("Select &All Messages"), this);
     actionCollection()->addAction("mark_all_messages", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
-    action->setShortcut( QKeySequence( Qt::CTRL+Qt::SHIFT+Qt::Key_A ) );
+    action->setShortcut( QKeySequence( Qt::CTRL+Qt::ALT+Qt::Key_A ) );
   }
 
   //----- Folder Menu
