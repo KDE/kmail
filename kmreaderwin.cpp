@@ -578,9 +578,8 @@ void KMReaderWin::createActions()
   if ( !ac ) {
     return;
   }
-
-  KToggleAction *raction = 0;
 #ifndef USE_AKONADI_VIEWER
+  KToggleAction *raction = 0;
   // header style
   KActionMenu *headerMenu  = new KActionMenu(i18nc("View->", "&Headers"), this);
   ac->addAction("view_headers", headerMenu );
@@ -2074,19 +2073,17 @@ bool foundSMIMEData( const QString aUrl,
   return !keyId.isEmpty();
 }
 
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   const KUrl url(aUrl);
-#ifndef USE_AKONADI_VIEWER
   if ( url.protocol() == "kmail" || url.protocol() == "x-kmail" || url.protocol() == "attachment"
        || (url.protocol().isEmpty() && url.path().isEmpty()) ) {
     mViewer->setDNDEnabled( false );
   } else {
     mViewer->setDNDEnabled( true );
   }
-#endif
   if ( aUrl.trimmed().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
     mHoveredUrl = KUrl();
@@ -2102,7 +2099,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
   }
   KPIM::BroadcastStatus::instance()->setTransientStatusMsg( msg );
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)
@@ -2917,7 +2914,9 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
       if ( mCanStartDrag && !mHoveredUrl.isEmpty() && mHoveredUrl.protocol() == "attachment" ) {
         mCanStartDrag = false;
         URLHandlerManager::instance()->handleDrag( mHoveredUrl, this );
+#ifndef USE_AKONADI_VIEWER
         slotUrlOn( QString() );
+#endif
         return true;
       }
     }

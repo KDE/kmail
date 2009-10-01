@@ -419,10 +419,10 @@ public slots:
 #endif
   /** An URL has been activate with a click. */
   void slotUrlOpen(const KUrl &url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
-
+#ifndef USE_AKONADI_VIEWER
   /** The mouse has moved on or off an URL. */
   void slotUrlOn(const QString &url);
-
+#endif
   /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const QString &, const QPoint& mousePos);
 
