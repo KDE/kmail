@@ -16,8 +16,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef _HTMLQUOTECOLERER_H
-#define _HTMLQUOTECOLERER_H
+#ifndef HTMLQUOTECOLORER_H
+#define HTMLQUOTECOLORER_H
 
 #include <dom/dom_node.h>
 

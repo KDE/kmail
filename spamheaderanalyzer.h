@@ -57,7 +57,7 @@ namespace KMail {
 
      The score returned is positive if no error has occurred.
      error values indicate the following errors:
-       noError                                               Spam Headers succesfully parsed 
+       noError                                               Spam Headers successfully parsed 
        uninitializedStructUsed                               Unintialized struct used
        errorExtractingAgentString                            Error extracing agent string
        couldNotConverScoreToFloat                            Couldn't convert score to float

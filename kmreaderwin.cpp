@@ -2950,7 +2950,7 @@ DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
 
 void KMReaderWin::toggleFullAddressList( const QString &field )
 {
-  // First inject the corrent icon
+  // First inject the current icon
   DOM::HTMLElement tag = getHTMLElementById( "iconFull" + field + "AddressList" );
   if ( tag.isNull() )
     return;

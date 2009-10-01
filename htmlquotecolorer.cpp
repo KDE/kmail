@@ -52,7 +52,7 @@ QString HTMLQuoteColorer::process( const QString &htmlSource )
 DOM::Node HTMLQuoteColorer::processNode( DOM::Node node )
 {
   // Below, we determine if the current text node should be quote colored by keeping track of
-  // linebreaks and wether this text node is the first one.
+  // linebreaks and whether this text node is the first one.
   const QString textContent = node.textContent().string();
   const bool isTextNode = !textContent.isEmpty() && !node.hasChildNodes();
   if ( isTextNode ) {
@@ -111,7 +111,7 @@ int HTMLQuoteColorer::quoteLength( const QString &line ) const
                          .replace( QLatin1Char( '|' ), QLatin1Char( '>' ) );
   if ( simplified.startsWith( ">>>" ) ) return 3;
   if ( simplified.startsWith( ">>" ) ) return 2;
-  if ( simplified.startsWith( ">" ) ) return 1;
+  if ( simplified.startsWith( '>' ) ) return 1;
   return 0;
 }
 
