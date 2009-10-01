@@ -349,10 +349,10 @@ public:
 
   /* show or hide the list that points to the attachments */
   void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true );
-
+#ifndef USE_AKONADI_VIEWER
   /** Get the HTMLElement with id id */
   DOM::HTMLElement getHTMLElementById( const QString &id );
-
+#endif
   /** Return weather to show or hide the full list of "To" addresses */
   bool showFullToAddressList() const;
 
@@ -372,10 +372,10 @@ public:
      partNode \a node. If there was a BodyPartMemento registered
      already, replaces (deletes) that one. */
   void setBodyPartMemento( const partNode * node, const QByteArray & which, KMail::Interface::BodyPartMemento * memento );
-
+#ifndef USE_AKONADI_VIEWER
   /// Scrolls to the given attachment and marks it with a yellow border
   void scrollToAttachment( const partNode *node );
-
+#endif
 private:
   /* deletes all BodyPartMementos. Use this when skipping to another
      message (as opposed to re-loading the same one again). */

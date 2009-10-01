@@ -3008,10 +3008,9 @@ bool KMReaderWin::decryptMessage() const
   return mViewer->decryptMessage();
 #endif
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::scrollToAttachment( const partNode *node )
 {
-#ifndef USE_AKONADI_VIEWER //TODO port
   DOM::Document doc = mViewer->htmlDocument();
 
   // The anchors for this are created in ObjectTreeParser::parseObjectTree()
@@ -3039,27 +3038,21 @@ void KMReaderWin::scrollToAttachment( const partNode *node )
   // Update rendering, otherwise the rendering is not updated when the user clicks on an attachment
   // that causes scrolling and the open attachment dialog
   doc.updateRendering();
-#endif
 }
-#ifndef USE_AKONADI_VIEWER
+
 void KMReaderWin::toggleFullAddressList()
 {
   toggleFullAddressList( "To" );
   toggleFullAddressList( "Cc" );
 }
-#endif
 DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
 {
-#ifndef USE_AKONADI_VIEWER   //TODO port
   Q_ASSERT( !id.isNull() );
   Q_ASSERT( !id.isEmpty() );
   DOM::Document doc = mViewer->htmlDocument();
   return static_cast<DOM::HTMLElement>( doc.getElementById( id ) );
-#else
-  return DOM::HTMLElement();
-#endif
 }
-#ifndef USE_AKONADI_VIEWER
+
 void KMReaderWin::toggleFullAddressList( const QString &field )
 {
   // First inject the corrent icon

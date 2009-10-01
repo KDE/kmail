@@ -628,9 +628,9 @@ namespace {
 
     const bool inHeader = attachmentIsInHeader( url );
     const bool shouldShowDialog = !node->isDisplayedEmbedded() || !inHeader;
+#ifndef USE_AKONADI_VIEWER
     if ( inHeader )
       w->scrollToAttachment( node );
-#ifndef USE_AKONADI_VIEWER
     if ( shouldShowDialog )
       // PENDING(romain_kdab) : replace with toLocalFile() ?
       w->openAttachment( node->nodeId(), w->tempFileUrlFromPartNode( node ).path() );
