@@ -761,12 +761,16 @@ void KMMainWidget::createWidgets()
       mMsgActions->setMessageView( mMsgView );
     }
 
-    connect( mMsgView, SIGNAL( replaceMsgByUnencryptedVersion() ),
-             this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
 #ifndef USE_AKONADI_VIEWER
     connect( mMsgView, SIGNAL( popupMenu(KMMessage&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMsgPopup(KMMessage&,const KUrl&,const QPoint&) ) );
+
+    connect( mMsgView, SIGNAL( replaceMsgByUnencryptedVersion() ),
+             this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
 #else
+
+    connect( mMsgView->viewer(), SIGNAL( replaceMsgByUnencryptedVersion() ),
+             this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
     connect( mMsgView->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
 #endif
