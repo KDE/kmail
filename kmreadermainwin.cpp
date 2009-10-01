@@ -55,6 +55,11 @@
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
+#include <kmime/kmime_message.h>
+
+#ifdef USE_AKONADI_VIEWER
+#include <libmessageviewer/viewer.h>
+#endif
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
@@ -324,9 +329,13 @@ void KMReaderMainWin::setupAccel()
 
   updateMessageMenu();
   updateCustomTemplateMenus();
-
+#ifndef USE_AKONADI_VIEWER
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
            this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)) );
+#else
+  connect( mReaderWin->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
+             this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
+#endif
   connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
            mReaderWin, SLOT(slotUrlClicked()) );
 
@@ -366,7 +375,7 @@ void KMReaderMainWin::updateMessageMenu()
                                                   mCopyActionMenu->menu() );
 }
 
-
+#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPoint &aPoint )
 {
@@ -451,7 +460,93 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
   menu->exec( aPoint, 0 );
   delete menu;
 }
+#else
+void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
+{
+  KMenu *menu = new KMenu;
+  mUrl = aUrl;
+#if 0 //TODO port me !!!
+  mMsg = &aMsg;
+#endif
+  bool urlMenuAdded = false;
+  bool copyAdded = false;
+  if ( !aUrl.isEmpty() ) {
+    if ( aUrl.protocol() == "mailto" ) {
+      // popup on a mailto URL
+      menu->addAction( mReaderWin->mailToComposeAction() );
+      if ( mMsg ) {
+        menu->addAction( mReaderWin->mailToReplyAction() );
+        menu->addAction( mReaderWin->mailToForwardAction() );
+        menu->addSeparator();
+      }
+      QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+      KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
+      KABC::Addressee::List addresseeList = addressBook->findByEmail( email );
 
+      if ( addresseeList.count() == 0 ) {
+        menu->addAction( mReaderWin->addAddrBookAction() );
+      } else {
+        menu->addAction( mReaderWin->openAddrBookAction() );
+      }
+      menu->addAction( mReaderWin->copyAction() );
+      copyAdded = true;
+    } else {
+      // popup on a not-mailto URL
+      menu->addAction( mReaderWin->urlOpenAction() );
+      menu->addAction( mReaderWin->addBookmarksAction() );
+      menu->addAction( mReaderWin->urlSaveAsAction() );
+      menu->addAction( mReaderWin->copyURLAction() );
+    }
+    urlMenuAdded = true;
+  }
+  if ( !mReaderWin->copyText().isEmpty() ) {
+    if ( urlMenuAdded ) {
+      menu->addSeparator();
+    }
+    menu->addAction( mMsgActions->replyMenu() );
+    menu->addSeparator();
+    if( !copyAdded )
+      menu->addAction( mReaderWin->copyAction() );
+    menu->addAction( mReaderWin->selectAllAction() );
+  } else if ( !urlMenuAdded ) {
+    // popup somewhere else (i.e., not a URL) on the message
+
+    if (!mMsg) {
+      // no message
+      delete menu;
+      return;
+    }
+#if 0 //TODO port it
+    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
+                                aMsg.parent()->isDrafts() ||
+                                aMsg.parent()->isTemplates() ) ) ) {
+      // add the reply and forward actions only if we are not in a sent-mail,
+      // templates or drafts folder
+      //
+      // FIXME: needs custom templates added to menu
+      // (see KMMainWidget::updateCustomTemplateMenus)
+      menu->addAction( mMsgActions->replyMenu() );
+      menu->addAction( mMsgActions->forwardMenu() );
+      menu->addSeparator();
+    }
+#endif
+    updateMessageMenu();
+    menu->addAction( mCopyActionMenu );
+
+    menu->addSeparator();
+    menu->addAction( mViewSourceAction );
+    menu->addAction( mReaderWin->toggleFixFontAction() );
+    menu->addAction( mReaderWin->toggleMimePartTreeAction() );
+    menu->addSeparator();
+    menu->addAction( mPrintAction );
+    menu->addAction( mSaveAsAction );
+    menu->addAction( mSaveAtmAction );
+    menu->addAction( mMsgActions->createTodoAction() );
+  }
+  menu->exec( aPoint, 0 );
+  delete menu;
+}
+#endif
 void KMReaderMainWin::slotCopySelectedMessagesToFolder( QAction* act )
 {
   KMFolder * f = static_cast<KMFolder *>( act->data().value<void *>() );

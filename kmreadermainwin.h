@@ -8,7 +8,7 @@
 #include <kurl.h>
 
 #include <boost/scoped_ptr.hpp>
-
+#include "kmail-akonadi.h"
 class KMReaderWin;
 class KMMessage;
 class KMMessagePart;
@@ -22,6 +22,11 @@ template <typename T, typename S> class QMap;
 namespace KMail {
 class MessageActions;
 }
+#ifdef USE_AKONADI_VIEWER
+namespace KMime {
+  class Message;
+}
+#endif
 
 class KMReaderMainWin : public KMail::SecondaryWindow
 {
@@ -49,8 +54,12 @@ public:
                 unsigned long serNumOfOriginalMessage = 0, int nodeIdOffset = -1 );
 
 private slots:
+  //(Laurent) remove this function in the future
+#ifndef USE_AKONADI_VIEWER
   void slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint);
-
+#else
+    void slotMessagePopup(KMime::Message& ,const KUrl&,const QPoint& );
+#endif
   /** Copy selected messages to folder with corresponding to given QAction */
   void slotCopySelectedMessagesToFolder( QAction* );
   void slotTrashMsg();

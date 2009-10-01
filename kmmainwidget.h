@@ -43,7 +43,6 @@
 #endif
 
 #ifdef USE_AKONADI_VIEWER
-//#include <kmime/kmime_message.h>
 namespace KMime {
   class Message;
 }
