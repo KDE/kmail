@@ -1486,6 +1486,12 @@ void KMReaderWin::displayMessage() {
   QTimer::singleShot( 1, this, SLOT(injectAttachments()) );
 }
 
+static bool message_was_saved_decrypted_before( const KMMessage * msg ) {
+  if ( !msg )
+    return false;
+  kdDebug(5006) << "msgId = " << msg->msgId() << endl;
+  return msg->msgId().stripWhiteSpace().startsWith( "<DecryptedMsg." );
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)
@@ -1580,22 +1586,23 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
 kDebug(5006) <<"\n\n\nSpecial post-encryption handling:\n1.";
 kDebug(5006) <<"(aMsg == msg) ="                      << (aMsg == message());
-kDebug(5006) <<"   mLastStatus.isOfUnknownStatus() =" << mLastStatus.isOfUnknownStatus();
-kDebug(5006) <<"|| mLastStatus.isNew() ="             << mLastStatus.isNew();
-kDebug(5006) <<"|| mLastStatus.isUnread) ="           << mLastStatus.isUnread();
-kDebug(5006) <<"(mIdOfLastViewedMessage != aMsg->msgId()) ="       << (mIdOfLastViewedMessage != aMsg->msgId());
-kDebug(5006) <<"   (KMMsgFullyEncrypted == encryptionState) ="     << (KMMsgFullyEncrypted == encryptionState);
+kDebug(5006) << "aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder() = " << (aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder());
+kDebug(5006) << "message_was_saved_decrypted_before( aMsg ) = " << message_was_saved_decrypted_before( aMsg );
+kDebug(5006) << "this->decryptMessage() = " << decryptMessage();
+kDebug(5006) << "otp.hasPendingAsyncJobs() = " << otp.hasPendingAsyncJobs();
+kDebug(5006) << "   (KMMsgFullyEncrypted == encryptionState) = "     << (KMMsgFullyEncrypted == encryptionState);
 kDebug(5006) <<"|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartiallyEncrypted == encryptionState);
          // only proceed if we were called the normal way - not by
          // double click on the message (==not running in a separate window)
   if(    (aMsg == message())
+         // don't remove encryption in the outbox folder :)
+      && ( aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder() )
          // only proceed if this message was not saved encryptedly before
-         // to make sure only *new* messages are saved in decrypted form
-      && (    mLastStatus.isOfUnknownStatus()
-           || mLastStatus.isNew()
-           || mLastStatus.isUnread() )
-         // avoid endless recursions
-      && (mIdOfLastViewedMessage != aMsg->msgId())
+      && !message_was_saved_decrypted_before( aMsg )
+         // only proceed if the message has actually been decrypted
+      && decryptMessage()
+         // only proceed if no pending async jobs are running:
+      && !otp.hasPendingAsyncJobs()
          // only proceed if this message is (at least partially) encrypted
       && (    (KMMsgFullyEncrypted == encryptionState)
            || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
