@@ -267,10 +267,10 @@ public:
   KAction *mailToForwardAction() { return mMailToForwardAction; }
   KAction *addAddrBookAction() { return mAddAddrBookAction; }
   KAction *openAddrBookAction() { return mOpenAddrBookAction; }
-  KAction *copyAction() { return mCopyAction; }
+  KAction *copyAction();
   KAction *selectAllAction();
   KAction *copyURLAction();
-  KAction *urlOpenAction() { return mUrlOpenAction; }
+  KAction *urlOpenAction();
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
@@ -642,10 +642,9 @@ private:
   KActionCollection *mActionCollection;
 
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
-    *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction,
-    *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
+    *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
 #ifndef USE_AKONADI_VIEWER
-  KAction *mCopyURLAction;
+  KAction *mCopyURLAction, *mCopyAction,*mUrlOpenAction;
   KAction *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction;
   KSelectAction *mSelectEncodingAction;
   KAction *mToggleMimePartTreeAction;

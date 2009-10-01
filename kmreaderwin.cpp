@@ -493,11 +493,11 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mMailToForwardAction( 0 ),
     mAddAddrBookAction( 0 ),
     mOpenAddrBookAction( 0 ),
-    mCopyAction( 0 ),
 #ifndef USE_AKONADI_VIEWER
+    mCopyAction( 0 ),
     mCopyURLAction( 0 ),
-#endif
     mUrlOpenAction( 0 ),
+#endif
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
 #ifndef USE_AKONADI_VIEWER
@@ -716,11 +716,10 @@ void KMReaderWin::createActions()
   ac->addAction( "openin_addr_book", mOpenAddrBookAction );
   connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoOpenAddrBook()) );
-
+#ifndef USE_AKONADI_VIEWER
   // copy selected text to clipboard
   mCopyAction = ac->addAction( KStandardAction::Copy, "kmail_copy", this,
                                SLOT(slotCopySelectedText()) );
-#ifndef USE_AKONADI_VIEWER
   // copy all text to clipboard
   mSelectAllAction  = new KAction(i18n("Select All Text"), this);
   ac->addAction("mark_all_text", mSelectAllAction );
@@ -735,12 +734,11 @@ void KMReaderWin::createActions()
   KAction *action = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
   ac->addAction("find_in_messages", action );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
-#endif
   // open URL
   mUrlOpenAction = new KAction( KIcon( "document-open" ), i18n( "Open URL" ), this );
   ac->addAction( "open_url", mUrlOpenAction );
   connect( mUrlOpenAction, SIGNAL(triggered(bool)), SLOT(slotUrlOpen()) );
-
+#endif
   // bookmark message
   mAddBookmarksAction = new KAction( KIcon( "bookmark-new" ), i18n( "Bookmark This Link" ), this );
   ac->addAction( "add_bookmarks", mAddBookmarksAction );
@@ -3433,6 +3431,23 @@ KAction *KMReaderWin::copyURLAction()
   return mCopyURLAction;
 #else
   return mViewer->copyURLAction();
+#endif
+}
+
+KAction *KMReaderWin::copyAction()
+{
+#ifndef USE_AKONADI_VIEWER
+  return mCopyAction;
+#else
+  return mViewer->copyAction();
+#endif
+}
+KAction *KMReaderWin::urlOpenAction()
+{
+#ifndef USE_AKONADI_VIEWER
+  return mUrlOpenAction;
+#else
+  return mViewer->urlOpenAction();
 #endif
 }
 
