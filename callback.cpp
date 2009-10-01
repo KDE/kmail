@@ -43,9 +43,10 @@
 #include "kmcommands.h"
 
 #include <kpimutils/email.h>
-
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
+#include <mailtransport/transportmanager.h>
+#include <mailtransport/transport.h>
 
 #include <mimelib/enum.h>
 
@@ -55,10 +56,38 @@
 #include <kconfiggroup.h>
 
 using namespace KMail;
+using namespace MailTransport;
 
 Callback::Callback( KMMessage *msg, KMReaderWin *readerWin )
   : mMsg( msg ), mReaderWin( readerWin ), mReceiverSet( false )
 {
+}
+
+QString Callback::askForTransport( bool nullIdentity ) const
+{
+  QStringList transports;
+  foreach( const Transport *transport, TransportManager::self()->transports() )
+    transports << transport->name();
+  if ( transports.size() == 1 )
+    return transports.first();
+  const QString defaultTransport = TransportManager::self()->defaultTransportName();
+  const int defaultIndex = qMax( 0, transports.indexOf( defaultTransport ) );
+
+  QString text;
+  if ( nullIdentity )
+    text = i18n( "<qt>The receiver of this invitation doesn't match any of your identities.<br>"
+                 "Please select the transport which should be used to send your reply.</qt>" );
+  else
+    text = i18n( "<qt>The identity matching the receiver of this invitation doesn't have an "
+                 "associated transport configured.<br>"
+                 "Please select the transport which should be used to send your reply.</qt>");
+  bool ok;
+  const QString transport = KInputDialog::getItem( i18n( "Select Transport" ), text,
+                                        transports, defaultIndex, false, &ok, kmkernel->mainWin() );
+  if ( !ok )
+    return QString();
+
+  return transport;
 }
 
 bool Callback::mailICal( const QString &to, const QString &iCal,
@@ -98,22 +127,39 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
     * has been sent successfully. Set a link header which accomplishes that. */
     msg->link( mMsg, MessageStatus::statusDeleted() );
 
+  // Try and match the receiver with an identity.
+  // Setting the identity here is important, as that is used to select the correct
+  // transport later
+  const KPIMIdentities::Identity &identity = kmkernel->identityManager()->identityForAddress( receiver() );
+  const bool nullIdentity = ( identity == KPIMIdentities::Identity::null() );
+  if ( !nullIdentity ) {
+    msg->setHeaderField( "X-KMail-Identity", QString::number( identity.uoid() ) );
+  }
+
+  const bool identityHasTransport = !identity.transport().isEmpty();
+  if ( !nullIdentity && identityHasTransport )
+    msg->setHeaderField( "X-KMail-Transport", identity.transport() );
+  else if ( !nullIdentity && identity.isDefault() )
+    msg->setHeaderField( "X-KMail-Transport", TransportManager::self()->defaultTransportName() );
+  else {
+    const QString transport = askForTransport( nullIdentity );
+    if ( transport.isEmpty() )
+      return false; // user canceled transport selection dialog
+    msg->setHeaderField( "X-KMail-Transport", transport );
+  }
+
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
   if ( !GlobalSettings::self()->legacyMangleFromToHeaders() ) {
-    // Try and match the receiver with an identity
-    const KPIMIdentities::Identity &identity =
-      kmkernel->identityManager()->identityForAddress( receiver() );
     if ( identity != KPIMIdentities::Identity::null() ) {
-      // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
-      msg->setHeaderField( "X-KMail-Identity", QString::number( identity.uoid() ) );
     }
     // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
     msg->setBcc( "" );
   }
 
   KMail::Composer *cWin = KMail::makeComposer();
+  cWin->ignoreStickyFields();
   cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
   cWin->disableWordWrap();
