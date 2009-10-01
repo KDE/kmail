@@ -681,6 +681,8 @@ void KMMainWidget::writeConfig()
         GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
 #ifndef USE_AKONADI_VIEWER
       mMsgView->writeConfig();
+#else
+      mMsgView->viewer()->writeConfig();
 #endif
       GlobalSettings::self()->setReaderWindowHeight( mMsgView->width() );
     }
@@ -4282,6 +4284,11 @@ void KMMainWidget::slotReadOn()
     if ( !mMsgView->atBottom() ) {
         mMsgView->slotJumpDown();
         return;
+    }
+#else
+    if ( !mMsgView->viewer()->atBottom() ) {
+      mMsgView->viewer()->slotJumpDown();
+      return;
     }
 #endif
     slotSelectNextUnreadMessage();
