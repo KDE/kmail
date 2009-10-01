@@ -18,7 +18,7 @@
  *
  */
 
-#include <libkdepim/pimapplication.h>
+#include <kontactinterface/pimuniqueapplication.h>
 #include <kglobal.h>
 #include "kmkernel.h" //control center
 #include "kmail_options.h"
@@ -38,10 +38,10 @@
 
 //-----------------------------------------------------------------------------
 
-class KMailApplication : public KPIM::PimApplication
+class KMailApplication : public KontactInterface::PimUniqueApplication
 {
 public:
-  KMailApplication() : KPIM::PimApplication(),
+  KMailApplication() : KontactInterface::PimUniqueApplication(),
                        mDelayedInstanceCreation( false ),
                        mEventLoopReached( false ) { }
   virtual int newInstance();
