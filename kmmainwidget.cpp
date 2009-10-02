@@ -3447,6 +3447,9 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMarkAll()
 {
+#ifdef USE_AKONADI_PANE
+  mMessagePane->selectAll();
+#endif
   mMessageListView->selectAll();
   updateMessageActions();
 }
