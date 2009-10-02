@@ -5276,3 +5276,10 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
 {
   return mVacationScriptIndicator;
 }
+
+#ifdef USE_AKONADI_PANE
+void KMMainWidget::slotMessageSelected(Akonadi::Item)
+{
+  //TODO
+}
+#endif

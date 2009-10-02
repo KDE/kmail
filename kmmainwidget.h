@@ -651,7 +651,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMessageListViewCurrentFolderChanged( KMFolder * fld );
     void slotFolderViewManagerFolderActivated( KMFolder * fld, bool middleClick );
     void slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus & clear );
-
+#ifdef USE_AKONADI_PANE
+  void slotMessageSelected(Akonadi::Item);
+#endif
   private:
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
