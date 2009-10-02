@@ -5322,6 +5322,7 @@ void KMMainWidget::showEvent( QShowEvent *event )
 
 void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
+  //TODO adapt to mMessagePane
   slotSearch();
   assert( mSearchWin );
   KMSearchPattern pattern;
