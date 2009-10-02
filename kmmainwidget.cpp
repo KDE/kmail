@@ -3289,6 +3289,12 @@ void KMMainWidget::slotSelectNextMessage()
       true,  // center item
       false  // don't loop in folder
     );
+
+#ifdef USE_AKONADI_PANE
+  mMessagePane->selectNextMessageItem( MessageList::Core::MessageTypeAny,
+                                       MessageList::Core::ClearExistingSelection,
+                                       true, true );
+#endif
 }
 
 void KMMainWidget::slotExtendSelectionToNextMessage()
@@ -3343,6 +3349,11 @@ void KMMainWidget::slotSelectPreviousMessage()
       true,  // center item
       false  // don't loop in folder
     );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->selectPreviousMessageItem( MessageList::Core::MessageTypeAny,
+                                           MessageList::Core::ClearExistingSelection,
+                                           true, true );
+#endif
 }
 
 void KMMainWidget::slotExtendSelectionToPreviousMessage()
