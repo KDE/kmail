@@ -234,6 +234,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     monitor->setCollectionMonitored( Akonadi::Collection::root() );
     monitor->fetchCollection( true );
     monitor->setAllMonitored( true );
+    monitor->setMimeTypeMonitored( "message/rfc822" );
     // TODO: Only fetch the envelope etc if possible.
     monitor->itemFetchScope().fetchFullPayload(true);
     mEntityModel = new Akonadi::EntityTreeModel( session, monitor, this );
