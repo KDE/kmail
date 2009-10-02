@@ -182,6 +182,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mFavoriteFolderView( 0 ),
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
     mFavoriteCollectionsView( 0 ),
+    mEntityModel( 0 ),
 #endif
     mMsgView( 0 ),
     mSplitter1( 0 ),
@@ -217,6 +218,19 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+    Akonadi::Session *session = new Akonadi::Session( "KMail favorite collection", this );
+
+    // monitor collection changes
+    Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
+    monitor->setCollectionMonitored( Akonadi::Collection::root() );
+    monitor->fetchCollection( true );
+    monitor->setAllMonitored( true );
+    // TODO: Only fetch the envelope etc if possible.
+    monitor->itemFetchScope().fetchFullPayload(true);
+    mEntityModel = new Akonadi::EntityTreeModel( session, monitor, this );
+#endif
+
 
   // Create the FolderViewManager that will handle the views for this widget.
   // We need it to be created before all the FolderView instances are created
@@ -712,6 +726,9 @@ void KMMainWidget::createWidgets()
   //
   // Create header view and search bar
   //
+#ifdef USE_AKONADI_PANE
+
+#endif
   mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
   mMessageListView->setObjectName( "messagelistview" );
 
@@ -868,19 +885,8 @@ void KMMainWidget::createWidgets()
     mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewManager, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ) );
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
     mFavoriteCollectionsView = new Akonadi::FavoriteCollectionsView( mGUIClient, this );
-    Akonadi::Session *session = new Akonadi::Session( "KMail favorite collection", this );
 
-    // monitor collection changes
-    Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
-    monitor->setCollectionMonitored( Akonadi::Collection::root() );
-    monitor->fetchCollection( true );
-    monitor->setAllMonitored( true );
-    // TODO: Only fetch the envelope etc if possible.
-    monitor->itemFetchScope().fetchFullPayload(true);
-
-    Akonadi::EntityTreeModel *entity = new Akonadi::EntityTreeModel( session, monitor, this );
-
-    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( entity, this );
+    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mEntityModel, this );
     mFavoriteCollectionsView->setModel( favoritesModel );
 #endif
     if ( bUseDockWidgets )

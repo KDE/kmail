@@ -40,6 +40,7 @@
 #include "kmail-akonadi.h"
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
 #include <akonadi_next/favoritecollectionsview.h>
+#include <akonadi/entitytreemodel.h>
 #endif
 
 #ifdef USE_AKONADI_VIEWER
@@ -748,7 +749,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KMail::MessageActions *mMsgActions;
     KMail::MessageListView::Pane *mMessageListView;
-
+#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+  Akonadi::EntityTreeModel *mEntityModel;
+#endif
     bool mOpenedImapFolder;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;
