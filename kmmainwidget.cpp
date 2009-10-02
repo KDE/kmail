@@ -767,7 +767,7 @@ void KMMainWidget::createWidgets()
   mMessagePane = new MessageList::Pane( mEntityModel, mCollectionFolderView->selectionModel(), this );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
            this, SLOT(slotMessageSelected(Akonadi::Item)) );
-
+  connect( mMessagePane, SIGNAL( fullSearchRequest() ), this,SLOT( slotSearch() ) );
 
 #endif
   mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
