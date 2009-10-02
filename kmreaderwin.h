@@ -36,7 +36,7 @@ using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 #include <map>
-
+#include <libmessageviewer/viewer.h>
 class QSplitter;
 class KHBox;
 class QTreeWidgetItem;
@@ -86,6 +86,10 @@ namespace MessageViewer {
    class Viewer;
 }
 #endif
+
+namespace Akonadi {
+  class Item;
+}
 
 namespace MessageViewer {
   class CSSHelper;
@@ -158,6 +162,8 @@ public:
   /** Set the message that shall be shown. If msg is 0, an empty page is
       displayed. */
   virtual void setMsg( KMMessage* msg, bool force = false );
+
+  void setMessage( Akonadi::Item item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
   /**
    * This should be called when setting a message that was constructed from another message, which

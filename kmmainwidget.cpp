@@ -5359,8 +5359,35 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
 }
 
 #ifdef USE_AKONADI_PANE
-void KMMainWidget::slotMessageSelected(Akonadi::Item)
+void KMMainWidget::slotMessageSelected(Akonadi::Item item)
 {
+#if 0 //Port it
+  if ( msg && msg->parent() && !msg->isComplete() )
+  {
+    if ( msg->transferInProgress() )
+      return;
+    mMsgView->clear();
+    mMsgView->setWaitingForSerNum( msg->getMsgSerNum() );
+
+    if ( mJob ) {
+       disconnect( mJob, 0, mMsgView, 0 );
+       delete mJob;
+    }
+    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, msg->parent(),
+          "STRUCTURE", mMsgView->attachmentStrategy() );
+    connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
+            mMsgView, SLOT(slotMessageArrived(KMMessage*)));
+    mJob->start();
+  } else {
+    mMsgView->setMsg(msg);
+  }
+#endif
+  mMsgView->setMessage( item );
+  // reset HTML override to the folder setting
+  mMsgView->setHtmlOverride(mFolderHtmlPref);
+  mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
+  mMsgView->setDecryptMessageOverwrite( false );
+  mMsgView->setShowSignatureDetails( false );
   //TODO
 }
 #endif

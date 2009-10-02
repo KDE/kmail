@@ -3465,7 +3465,12 @@ void KMReaderWin::clear(bool force )
 #endif
 }
 
-
+void KMReaderWin::setMessage( Akonadi::Item item, Viewer::UpdateMode updateMode)
+{
+#ifdef USE_AKONADI_VIEWER
+  mViewer->setMessageItem( item, updateMode );
+#endif
+}
 
 #include "kmreaderwin.moc"
 
