@@ -768,7 +768,7 @@ void KMMainWidget::createWidgets()
   mMessagePane = new MessageList::Pane( mEntityModel, mCollectionFolderView->selectionModel(), this );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
            this, SLOT(slotMessageSelected(Akonadi::Item)) );
-  connect( mMessagePane, SIGNAL( fullSearchRequest() ), this,SLOT( slotSearch() ) );
+  connect( mMessagePane, SIGNAL( fullSearchRequest() ), this,SLOT( slotRequestFullSearchFromQuickSearch() ) );
   connect( mMessagePane, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
 
@@ -3417,9 +3417,41 @@ void KMMainWidget::slotDisplayCurrentMessage()
 
 
 #ifdef USE_AKONADI_PANE
-void KMMainWidget::slotMessageActivated( const Akonadi::Item & )
+void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 {
-  //TODO
+#if 0//Laurent port it
+  if ( !msg ) return;
+  if (msg->parent() && !msg->isComplete())
+  {
+    FolderJob *job = msg->parent()->createJob(msg);
+    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            SLOT(slotMsgActivated(KMMessage*)));
+    job->start();
+    return;
+  }
+
+  if (kmkernel->folderIsDraftOrOutbox(mFolder))
+  {
+    mMsgActions->editCurrentMessage();
+    return;
+  }
+  if ( kmkernel->folderIsTemplates( mFolder ) ) {
+    slotUseTemplate();
+    return;
+  }
+
+  assert( msg != 0 );
+  KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+  bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
+  win->setUseFixedFont( useFixedFont );
+  KMMessage *newMessage = new KMMessage(*msg);
+  newMessage->setParent( msg->parent() );
+  newMessage->setMsgSerNum( msg->getMsgSerNum() );
+  newMessage->setReadyToShow( true );
+  win->showMsg( overrideEncoding(), newMessage );
+  win->show();
+#endif
 }
 
 void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & )
