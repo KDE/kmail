@@ -161,7 +161,7 @@ public:
 
   /**
    * This should be called when setting a message that was constructed from another message, which
-   * is the case when viewing encapsulated messages in the seperate reader window.
+   * is the case when viewing encapsulated messages in the separate reader window.
    * We need to know the serial number of the original message, and at which part index the encapsulated
    * message was at that original message, so that deleting and editing attachments can work on the
    * original message.

@@ -338,6 +338,7 @@ target_link_libraries(kmailprivate
   messagecomposer
   messagelist
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
+  ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
   ${KDE4_PHONON_LIBRARY}
   ${KDE4_KNOTIFYCONFIG_LIBRARY}
   ${KDE4_KTNEF_LIBRARY}
@@ -413,6 +414,7 @@ kde4_add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
   ${KDE4_KDEUI_LIBS}
   ${KDE4_KDECORE_LIBS}
+  ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
   kmailprivate
   kdepim
 )

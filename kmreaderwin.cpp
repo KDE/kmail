@@ -458,6 +458,16 @@ void KMReaderWin::createWidgets() {
   } else {
     kDebug() << "Failed to find khtml's selectAll action to remove it's shortcut";
   }
+  // Remove the shortcut for the find action from khtml part. It's redefined to
+  // CTRL-F in kmail and clashes with khtml CTRL-F action.
+  KAction *afind = qobject_cast<KAction*>(
+          mViewer->actionCollection()->action( "find" ) );
+  if ( afind ) {
+    afind->setShortcut( KShortcut() );
+  } else {
+    kDebug() << "Failed to find khtml's find action to remove it's shortcut";
+  }
+ 
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
@@ -3055,7 +3065,7 @@ DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
 
 void KMReaderWin::toggleFullAddressList( const QString &field )
 {
-  // First inject the corrent icon
+  // First inject the current icon
   DOM::HTMLElement tag = getHTMLElementById( "iconFull" + field + "AddressList" );
   if ( tag.isNull() )
     return;

@@ -45,9 +45,9 @@ public:
   /**
    * take ownership of and show @param msg
    *
-   * The last two paramters, serNumOfOriginalMessage and nodeIdOffset, are needed when @p msg
+   * The last two parameters, serNumOfOriginalMessage and nodeIdOffset, are needed when @p msg
    * is derived from another message, e.g. the user views an encapsulated message in this window.
-   * Then, the reader needs to know about that original message, so those to paramters are passed
+   * Then, the reader needs to know about that original message, so those to parameters are passed
    * onto setOriginalMsg() of KMReaderWin.
    */
   void showMsg( const QString & encoding, KMMessage *msg,
