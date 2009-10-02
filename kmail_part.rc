@@ -183,9 +183,18 @@
    <Action name="help_kmail_welcomepage"/>
   </Menu>
  </MenuBar>
+
  <Menu name="akonadi_favoriteview_contextmenu">
-   <Action name="favorite_check_mail"/>
+  <Action name="mark_all_as_read" />
+  <Action name="search_messages" />
+  <Action name="move_to_trash" />
+  <Separator/>
+  <Action name="akonadi_collection_remove_from_favorites"/> 
+  <Action name="akonadi_collection_rename_favorite"/>
+  <Separator/>
+  <Action name="akonadi_collection_properties"/> 
  </Menu>
+
  <Menu name="akonadi_collectionview_contextmenu">
   <Action name="akonadi_collection_create"/>
   <Separator/>
