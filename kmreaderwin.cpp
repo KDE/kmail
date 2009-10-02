@@ -1331,7 +1331,7 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     std::cout<<" test :"<<QString( aMsg->asString() ).toAscii().data()<<std::endl;
     message->parse();
 
-    mViewer->setMessage( message /*TODO*/);
+    mViewer->setMessage( message , force ? Viewer::Force : Viewer::Delayed);
     //return;
   }
 #endif
@@ -2712,6 +2712,8 @@ void KMReaderWin::saveRelativePosition()
     mSavedRelativePosition = static_cast<float>( scrollBar->value() ) / scrollBar->maximum();
   else
     mSavedRelativePosition = 0;
+#else
+  mViewer->saveRelativePosition();
 #endif
 }
 
