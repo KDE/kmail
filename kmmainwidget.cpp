@@ -175,6 +175,7 @@ using KMail::TemplateParser;
 #include "akonadi_next/entitytreeview.h"
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/statisticstooltipproxymodel.h>
+#include <akonadi/standardactionmanager.h>
 #endif
 
 #include "kmmainwidget.moc"
@@ -236,6 +237,9 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     // TODO: Only fetch the envelope etc if possible.
     monitor->itemFetchScope().fetchFullPayload(true);
     mEntityModel = new Akonadi::EntityTreeModel( session, monitor, this );
+
+
+
 #endif
 
 
@@ -755,7 +759,7 @@ void KMMainWidget::createWidgets()
   sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
   sortModel->setSourceModel( statisticsProxyModel );
 
-  Akonadi::EntityTreeView *mCollectionFolderView = new Akonadi::EntityTreeView( 0, this );
+  Akonadi::EntityTreeView *mCollectionFolderView = new Akonadi::EntityTreeView( mGUIClient, this );
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   // Use the model
   mCollectionFolderView->setModel( sortModel );
@@ -763,6 +767,7 @@ void KMMainWidget::createWidgets()
   mMessagePane = new MessageList::Pane( mEntityModel, mCollectionFolderView->selectionModel(), this );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
            this, SLOT(slotMessageSelected(Akonadi::Item)) );
+
 
 #endif
   mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
@@ -928,6 +933,15 @@ void KMMainWidget::createWidgets()
 
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mEntityModel, this );
     mFavoriteCollectionsView->setModel( favoritesModel );
+
+  Akonadi::StandardActionManager
+    *mStdActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
+  mStdActionManager->setCollectionSelectionModel( mCollectionFolderView->selectionModel() );
+  mStdActionManager->setFavoriteCollectionsModel( favoritesModel );
+  mStdActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
+    mStdActionManager->createAllActions();
+
+
 #endif
     if ( bUseDockWidgets )
     {
