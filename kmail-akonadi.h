@@ -26,6 +26,4 @@
 
 //#define USE_AKONADI_PANE 1
 
-//#define USE_AKONADI_LISTMESSAGE 1
-
 #endif /* KMAIL-AKONADI_H */

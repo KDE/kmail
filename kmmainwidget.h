@@ -42,6 +42,14 @@
 #include <akonadi_next/favoritecollectionsview.h>
 #include <akonadi/entitytreemodel.h>
 #endif
+#ifdef USE_AKONADI_PANE
+namespace MessageList {
+  class Pane;
+}
+namespace Akonadi {
+  class EntityTreeView;
+}
+#endif
 
 #ifdef USE_AKONADI_VIEWER
 namespace KMime {
@@ -751,6 +759,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMail::MessageListView::Pane *mMessageListView;
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
   Akonadi::EntityTreeModel *mEntityModel;
+#endif
+#ifdef USE_AKONADI_PANE
+  MessageList::Pane *mMessagePane;
+  Akonadi::EntityTreeView *mCollectionFolderView;
 #endif
     bool mOpenedImapFolder;
 

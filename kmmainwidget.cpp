@@ -170,6 +170,13 @@ using KMail::TemplateParser;
 #ifdef USE_AKONADI_VIEWER
 #include <libmessageviewer/viewer.h>
 #endif
+#ifdef USE_AKONADI_PANE
+#include <messagelist/pane.h>
+#include "akonadi_next/entitytreeview.h"
+#include <akonadi/entityfilterproxymodel.h>
+#include <akonadi/statisticstooltipproxymodel.h>
+#endif
+
 #include "kmmainwidget.moc"
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
@@ -475,6 +482,9 @@ void KMMainWidget::layoutSplitters()
 
     folderTreeParent->insertWidget( folderTreePosition, mSearchAndTree );
     mSplitter2->addWidget( mMessageListView );
+#ifdef USE_AKONADI_PANE
+    mSplitter2->addWidget( mMessagePane );
+#endif
   }
 
   if ( bUseDockWidgets )
@@ -728,6 +738,32 @@ void KMMainWidget::createWidgets()
   //
 #ifdef USE_AKONADI_PANE
 
+
+  // Setup the message folders collection...
+  Akonadi::EntityFilterProxyModel *collectionFilter = new Akonadi::EntityFilterProxyModel( this );
+  collectionFilter->setSourceModel( mEntityModel );
+  collectionFilter->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
+  collectionFilter->setHeaderSet( Akonadi::EntityTreeModel::CollectionTreeHeaders );
+
+  // ... with statistics...
+  Akonadi::StatisticsToolTipProxyModel *statisticsProxyModel = new Akonadi::StatisticsToolTipProxyModel( this );
+  statisticsProxyModel->setSourceModel( collectionFilter );
+
+  // ... and sortable
+  QSortFilterProxyModel *sortModel = new QSortFilterProxyModel( this );
+  sortModel->setDynamicSortFilter( true );
+  sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
+  sortModel->setSourceModel( statisticsProxyModel );
+
+  Akonadi::EntityTreeView *mCollectionFolderView = new Akonadi::EntityTreeView( 0, this );
+  mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+  // Use the model
+  mCollectionFolderView->setModel( sortModel );
+
+  mMessagePane = new MessageList::Pane( mEntityModel, mCollectionFolderView->selectionModel(), this );
+  connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
+           this, SLOT(slotMessageSelected(Akonadi::Item)) );
+
 #endif
   mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
   mMessageListView->setObjectName( "messagelistview" );
@@ -856,8 +892,12 @@ void KMMainWidget::createWidgets()
   {
     dw->setWidget( mMainFolderView );
     mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
+    //TODO add mCollectionFolderView
   } else {
     vboxlayout->addWidget( mMainFolderView );
+#ifdef USE_AKONADI_PANE
+    vboxlayout->addWidget( mCollectionFolderView );
+#endif
   }
 
   if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
