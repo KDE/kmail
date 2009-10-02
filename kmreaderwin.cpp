@@ -467,7 +467,7 @@ void KMReaderWin::createWidgets() {
   } else {
     kDebug() << "Failed to find khtml's find action to remove it's shortcut";
   }
- 
+
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
@@ -3453,6 +3453,17 @@ void KMReaderWin::setPrinting(bool enable)
   mViewer->setPrinting( enable );
 #endif
 }
+
+void KMReaderWin::clear(bool force )
+{
+#ifndef USE_AKONADI_VIEWER
+  setMsg(0, force);
+#else
+  mViewer->clear( force ? Viewer::Force : Viewer::Delayed );
+#endif
+}
+
+
 
 #include "kmreaderwin.moc"
 

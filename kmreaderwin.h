@@ -193,7 +193,7 @@ public:
     { mIdOfLastViewedMessage = msgId; }
 
   /** Clear the reader and discard the current message. */
-  void clear(bool force = false) { setMsg(0, force); }
+  void clear(bool force = false);
 
   /** Saves the relative position of the scroll view. Call this before calling update()
       if you want to preserve the current view. */

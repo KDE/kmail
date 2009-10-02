@@ -1630,6 +1630,7 @@ void KMMainWidget::slotOverrideHtml()
   mFolderHtmlPref = !mFolderHtmlPref;
   if (mMsgView) {
     mMsgView->setHtmlOverride(mFolderHtmlPref);
+    //(Laurent) Verify it.
     mMsgView->update( true );
   }
 }
@@ -2948,7 +2949,11 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
       || ( !isNewImapFolder && mShowBusySplashTimer )
       || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
     if ( mMsgView ) {
+#ifndef USE_AKONADI_VIEWER
       mMsgView->enableMsgDisplay();
+#else
+      mMsgView->viewer()->enableMessageDisplay();
+#endif
       mMsgView->clear( true );
     }
     if ( mMessageListView )
