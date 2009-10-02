@@ -768,7 +768,13 @@ void KMMainWidget::createWidgets()
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
            this, SLOT(slotMessageSelected(Akonadi::Item)) );
   connect( mMessagePane, SIGNAL( fullSearchRequest() ), this,SLOT( slotSearch() ) );
+  connect( mMessagePane, SIGNAL( selectionChanged() ),
+           SLOT( startUpdateMessageActionsTimer() ) );
 
+  connect( mMessagePane, SIGNAL( messageActivated(  const Akonadi::Item & ) ),
+           this, SLOT( slotMessageActivated( const Akonadi::Item & ) ) );
+  connect( mMessagePane, SIGNAL(messageStatusChangeRequest( const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus &) ),
+           SLOT( slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & ) ) );
 #endif
   mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
   mMessageListView->setObjectName( "messagelistview" );
@@ -3407,6 +3413,19 @@ void KMMainWidget::slotDisplayCurrentMessage()
   if ( mMessageListView->currentMessage() )
     slotMsgActivated( mMessageListView->currentMessage() );
 }
+
+
+#ifdef USE_AKONADI_PANE
+void KMMainWidget::slotMessageActivated( const Akonadi::Item & )
+{
+  //TODO
+}
+
+void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & )
+{
+  //TODO
+}
+#endif
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
