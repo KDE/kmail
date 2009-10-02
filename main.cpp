@@ -21,7 +21,9 @@
 #include <kontactinterface/pimuniqueapplication.h>
 #include <kglobal.h>
 #include "kmkernel.h" //control center
+#include "kmmainwidget.h"
 #include "kmail_options.h"
+#include <akonadi/control.h>
 
 #include <kdebug.h>
 
@@ -98,8 +100,8 @@ int main(int argc, char *argv[])
   // a debugger. In gdb you can do this by typing "set args --nofork" before
   // typing "run".
 #if 0 // for testing KUniqueAppliaction on Windows
-  MessageBoxA(NULL, 
-             QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(), 
+  MessageBoxA(NULL,
+             QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(),
              QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
 #endif
   KMail::AboutData about;
@@ -142,11 +144,11 @@ int main(int argc, char *argv[])
   app.setEventLoopReached();
   app.delayedInstanceCreation();
 
+  Akonadi::Control::start( kmailKernel.getKMMainWidget() );
   // Go!
   int ret = qApp->exec();
   // clean up
   kmailKernel.cleanup();
-
   KMail::cleanup(); // pid file (see kmstartup.cpp)
   return ret;
 }
