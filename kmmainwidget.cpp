@@ -3284,6 +3284,9 @@ void KMMainWidget::slotFocusOnNextMessage()
       true,  // center item
       false  // don't loop
     );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->focusNextMessageItem(MessageList::Core::MessageTypeAny, true,false );
+#endif
 }
 
 void KMMainWidget::slotFocusOnPrevMessage()
@@ -3293,6 +3296,9 @@ void KMMainWidget::slotFocusOnPrevMessage()
       true,  // center item
       false  // don't loop
     );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->focusPreviousMessageItem( MessageList::Core::MessageTypeAny, true, false );
+#endif
 }
 
 void KMMainWidget::slotSelectFocusedMessage()
@@ -3300,6 +3306,9 @@ void KMMainWidget::slotSelectFocusedMessage()
   mMessageListView->selectFocusedMessageItem(
       true   // center item
     );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->selectFocusedMessageItem(true );
+#endif
 }
 
 void KMMainWidget::slotSelectNextMessage()
