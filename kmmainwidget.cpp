@@ -3335,6 +3335,14 @@ void KMMainWidget::slotExtendSelectionToNextMessage()
       true,  // center item
       false  // don't loop in folder
     );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->selectNextMessageItem(
+                                      MessageList::Core::MessageTypeAny,
+                                      MessageList::Core::GrowOrShrinkExistingSelection,
+                                      true,  // center item
+                                      false  // don't loop in folder
+    );
+#endif
 }
 
 void KMMainWidget::slotSelectNextUnreadMessage()
@@ -3394,10 +3402,19 @@ void KMMainWidget::slotExtendSelectionToPreviousMessage()
       true,  // center item
       false  // don't loop in folder
     );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->selectPreviousMessageItem(
+      MessageList::Core::MessageTypeAny,
+      MessageList::Core::GrowOrShrinkExistingSelection,
+      true,  // center item
+      false  // don't loop in folder
+    );
+#endif
 }
 
 void KMMainWidget::slotSelectPreviousUnreadMessage()
 {
+  //TODO port it (laurent)
   if ( !mMessageListView->selectPreviousMessageItem(
       MessageList::Core::MessageTypeNewOrUnreadOnly,
       MessageList::Core::ClearExistingSelection,
