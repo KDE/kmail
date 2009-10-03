@@ -3025,6 +3025,10 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
     }
     if ( mMessageListView )
       mMessageListView->show();
+#ifdef USE_AKONADI_PANE
+    if ( mMessagePane )
+      mMessagePane->show();
+#endif
     mShowingOfflineScreen = false;
   }
 
@@ -3158,6 +3162,10 @@ void KMMainWidget::slotShowBusySplash()
     // hide widgets that are in the way:
     if ( mMessageListView && mLongFolderList )
       mMessageListView->hide();
+#ifdef USE_AKONADI_PANE
+    if ( mMessagePane && mLongFolderList )
+      mMessagePane->hide();
+#endif
   }
 }
 
@@ -3170,6 +3178,10 @@ void KMMainWidget::showOfflinePage()
   // hide widgets that are in the way:
   if ( mMessageListView && mLongFolderList )
     mMessageListView->hide();
+#ifdef USE_AKONADI_PANE
+    if ( mMessagePane && mLongFolderList )
+      mMessagePane->hide();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4759,7 +4771,10 @@ void KMMainWidget::slotIntro()
   // hide widgets that are in the way:
   if ( mMessageListView && mLongFolderList )
     mMessageListView->hide();
-
+#ifdef USE_AKONADI_PANE
+  if ( mMessagePane && mLongFolderList )
+    mMessagePane->hide();
+#endif
   mMsgView->displayAboutPage();
 
   closeFolder();
