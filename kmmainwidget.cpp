@@ -4473,11 +4473,17 @@ void KMMainWidget::slotPrevUnreadFolder()
 void KMMainWidget::slotExpandThread()
 {
   mMessageListView->setCurrentThreadExpanded( true );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->setCurrentThreadExpanded( true );
+#endif
 }
 
 void KMMainWidget::slotCollapseThread()
 {
   mMessageListView->setCurrentThreadExpanded( false );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->setCurrentThreadExpanded( false );
+#endif
 }
 
 void KMMainWidget::slotExpandAllThreads()
@@ -4485,6 +4491,9 @@ void KMMainWidget::slotExpandAllThreads()
   // TODO: Make this asynchronous ? (if there is enough demand)
   KCursorSaver busy( KBusyPtr::busy() );
   mMessageListView->setAllThreadsExpanded( true );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->setAllThreadsExpanded( true );
+#endif
 }
 
 void KMMainWidget::slotCollapseAllThreads()
@@ -4492,6 +4501,9 @@ void KMMainWidget::slotCollapseAllThreads()
   // TODO: Make this asynchronous ? (if there is enough demand)
   KCursorSaver busy( KBusyPtr::busy() );
   mMessageListView->setAllThreadsExpanded( false );
+#ifdef USE_AKONADI_PANE
+  mMessagePane->setAllThreadsExpanded( false );
+#endif
 }
 
 //-----------------------------------------------------------------------------
