@@ -315,6 +315,7 @@ public:
   void openAttachment( int id, const QString & name );
   void saveAttachment( const KUrl &tempFileName );
 #endif
+  //need for urlhandlermanager.cpp
   void emitUrlClicked( const KUrl & url, int button ) {
     emit urlClicked( url, button );
   }
