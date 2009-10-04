@@ -3492,9 +3492,28 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 #endif
 }
 
-void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & )
+void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, const KPIM::MessageStatus & set, const KPIM::MessageStatus &clear )
 {
-  //TODO
+  if ( !item.isValid() )
+    return;
+  kDebug()<<" item.id() :"<<item.id();
+#if 0
+
+  SerNumList serNums;
+  serNums.append( msg->getMsgSerNum() );
+
+  if ( clear.toQInt32() != KPIM::MessageStatus().toQInt32() )
+  {
+    KMCommand *command = new KMSetStatusCommand( clear, serNums, true );
+    command->start();
+  }
+
+  if ( set.toQInt32() != KPIM::MessageStatus().toQInt32() )
+  {
+    KMCommand *command = new KMSetStatusCommand( set, serNums, false );
+    command->start();
+  }
+#endif
 }
 #endif
 
