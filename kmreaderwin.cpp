@@ -2117,7 +2117,6 @@ void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &
   kWarning() << "Unhandled URL click!";
   emit urlClicked( aUrl, Qt::LeftButton );
 }
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
@@ -2132,7 +2131,6 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     emit popupMenu( *message(), url, aPos );
   }
 }
-#ifndef USE_AKONADI_VIEWER
 // Checks if the given node has a parent node that is a DIV which has an ID attribute
 // with the value specified here
 static bool hasParentDivWithId( const DOM::Node &start, const QString &id )
