@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE kpartgui>
-<kpartgui version="441" name="kmmainwin" >
+<kpartgui version="442" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -201,20 +201,18 @@
  </Menu>
 
  <Menu name="akonadi_collectionview_contextmenu">
-  <Action name="akonadi_collection_create"/>
+  <Action name="mark_all_as_read" />
+  <Action name="search_messages" />
+  <Action name="move_to_trash" />
+  <Separator/>
+  <Action name="new_folder" />
+  <Action name="akonadi_collection_copy_to_menu"/>
   <Separator/>
   <Action name="akonadi_collection_add_to_favorites"/>
   <Separator/>
-  <Action name="akonadi_collection_copy"/>
-  <Action name="akonadi_collection_copy_to_menu"/>
-  <Action name="akonadi_paste"/>
-  <Separator/>
-  <Action name="akonadi_collection_delete"/>
-  <Separator/>
-  <Action name="akonadi_collection_sync"/>
-  <Action name="akonadiconsole_akonadi2xml"/>
-  <Separator/>
-  <Action name="akonadi_collection_properties"/>
+  <Action name="expire"/>
+  <Action name="folder_shortcut_command"/>
+  <Action name="modify"/>
  </Menu>
 
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
