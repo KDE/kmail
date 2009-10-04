@@ -192,7 +192,9 @@
   <Action name="akonadi_collection_remove_from_favorites"/> 
   <Action name="akonadi_collection_rename_favorite"/>
   <Separator/>
-  <Action name="akonadi_collection_properties"/> 
+  <Action name="expire"/>
+  <Action name="folder_shortcut_command"/>
+  <Action name="modify"/>
  </Menu>
 
  <Menu name="akonadi_collectionview_contextmenu">
