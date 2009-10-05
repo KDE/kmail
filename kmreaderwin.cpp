@@ -547,8 +547,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 #ifndef USE_AKONADI_VIEWER
   mLastStatus.clear();
   mPrinting = false;
-#endif
   mMsgDisplay = true;
+#endif
   mAtmUpdate = false;
 #ifndef USE_AKONADI_VIEWER
   createWidgets();
@@ -1315,7 +1315,7 @@ void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nod
   mSerNumOfOriginalMessage = serNumOfOriginalMessage;
   mNodeIdOffset = nodeIdOffset;
 }
-#include <iostream>
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 {
@@ -1328,9 +1328,7 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
   if ( aMsg ) {
     KMime::Message *message = new KMime::Message;
     message->setContent( aMsg->asString() );
-    std::cout<<" test :"<<QString( aMsg->asString() ).toAscii().data()<<std::endl;
     message->parse();
-
     mViewer->setMessage( message , force ? Viewer::Force : Viewer::Delayed);
     //return;
   }
@@ -1592,14 +1590,12 @@ void KMReaderWin::displayAboutPage()
 
   displaySplashPage( info.toString() );
 }
-
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::enableMsgDisplay() {
   mMsgDisplay = true;
-#ifndef USE_AKONADI_VIEWER
   adjustLayout();
-#endif
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 

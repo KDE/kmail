@@ -245,10 +245,9 @@ public:
   void displayBusyPage();
   /** Display the 'we are currently in offline mode' page instead of a message */
   void displayOfflinePage();
-
+#ifndef USE_AKONADI_VIEWER
   /** Enable the displaying of messages again after an URL was displayed */
   void enableMsgDisplay();
-#ifndef USE_AKONADI_VIEWER
   /**
    * View message part of type message/RFC822 in extra viewer window.
    * @param msgPart the part to display
@@ -628,8 +627,8 @@ private:
 #ifndef USE_AKONADI_VIEWER
   QString mOverrideEncoding;
   QString mOldGlobalOverrideEncoding; // used to detect changes of the global override character encoding
-#endif
   bool mMsgDisplay;
+#endif
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
 #ifndef USE_AKONADI_VIEWER
