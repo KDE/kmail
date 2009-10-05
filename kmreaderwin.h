@@ -284,12 +284,13 @@ public:
   // message parts - *after* all encryption has been removed that
   // could be removed.
   // - This is used to store the message in decrypted form.
+#ifndef USE_AKONADI_VIEWER
   void objectTreeToDecryptedMsg( partNode* node,
                                  QByteArray& resultingData,
                                  KMMessage& theMessage,
                                  bool weAreReplacingTheRootNode = false,
                                  int recCount = 0 );
-
+#endif
   /** Returns message part from given URL or null if invalid. */
   partNode* partNodeFromUrl(const KUrl &url);
 

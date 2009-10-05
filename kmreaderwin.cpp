@@ -167,6 +167,7 @@ using namespace KMail;
 // message parts - *after* all encryption has been removed that
 // could be removed.
 // - This is used to store the message in decrypted form.
+#ifndef USE_AKONADI_VIEWER
 void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                             QByteArray& resultingData,
                                             KMMessage& theMessage,
@@ -411,7 +412,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
   }
   kDebug() << "END" << "(" << recCount << ")";
 }
-
+#endif
 
 /*
  ===========================================================================
