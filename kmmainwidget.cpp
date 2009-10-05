@@ -3457,6 +3457,8 @@ void KMMainWidget::slotDisplayCurrentMessage()
 #ifdef USE_AKONADI_PANE
 void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 {
+  if ( !msg.isValid() )
+    return;
 #if 0//Laurent port it
   if ( !msg ) return;
   if (msg->parent() && !msg->isComplete())
@@ -3479,10 +3481,12 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   }
 
   assert( msg != 0 );
+#endif
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
   win->setUseFixedFont( useFixedFont );
+#if 0 //Port
   KMMessage *newMessage = new KMMessage(*msg);
   newMessage->setParent( msg->parent() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
