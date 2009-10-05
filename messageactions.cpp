@@ -187,6 +187,19 @@ void MessageActions::setCurrentMessage(KMMessage * msg)
   updateActions();
 }
 
+void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
+{
+  mCurrentItem = msg;
+#if 0 //Port it
+  if ( !msg ) {
+    mSelectedSernums.clear();
+    mVisibleSernums.clear();
+  }
+#endif
+  updateActions();
+}
+
+
 void MessageActions::setSelectedSernums(const QList< quint32 > & sernums)
 {
   mSelectedSernums = sernums;

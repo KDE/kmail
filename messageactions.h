@@ -32,6 +32,10 @@ class KActionCollection;
 class KMMessage;
 class KXMLGUIClient;
 
+namespace Akonadi {
+class Item;
+}
+
 namespace KMail {
 
 /**
@@ -57,6 +61,7 @@ class MessageActions : public QObject
     void setupForwardingActionsList( KXMLGUIClient *guiClient );
 
     void setCurrentMessage( KMMessage *msg );
+  void setCurrentMessage( const Akonadi::Item &item );
     void setSelectedSernums( const QList<quint32> &sernums );
     void setSelectedVisibleSernums( const QList<quint32> &sernums );
 
@@ -104,6 +109,7 @@ class MessageActions : public QObject
     QWidget *mParent;
     KActionCollection *mActionCollection;
     KMMessage* mCurrentMessage;
+  Akonadi::Item mCurrentItem;
     QList<quint32> mSelectedSernums;
     QList<quint32> mVisibleSernums;
     KMReaderWin *mMessageView;

@@ -168,8 +168,8 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mReaderWin->slotTouchMessage();
   setCaption( msg->subject() );
   mMsg = msg;
-  mMsgActions->setCurrentMessage( msg );
 #endif
+  mMsgActions->setCurrentMessage( msg );
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
 #if 0 //Port
