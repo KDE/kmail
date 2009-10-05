@@ -55,7 +55,7 @@ using KMail::ObjectTreeParser;
 #include "libmessageviewer/headerstrategy.h"
 #include "libmessageviewer/headerstyle.h"
 #include "khtmlparthtmlwriter.h"
-using KMail::HtmlWriter;
+using MessageViewer::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
 #include "libmessageviewer/htmlstatusbar.h"
 #include "folderjob.h"

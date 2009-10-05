@@ -45,7 +45,7 @@ class KHTMLPart;
 
 namespace KMail {
 
-  class KHtmlPartHtmlWriter : public QObject, public HtmlWriter {
+  class KHtmlPartHtmlWriter : public QObject, public MessageViewer::HtmlWriter {
     Q_OBJECT
   public:
     // Key is Content-Id, value is URL

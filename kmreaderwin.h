@@ -62,7 +62,6 @@ namespace KMail {
     class BodyPartMemento;
   }
   class ObjectTreeParser;
-  class HtmlWriter;
   class KHtmlPartHtmlWriter;
 }
 namespace MessageViewer {
@@ -81,11 +80,10 @@ namespace DOM {
   class HTMLElement;
 }
 
-#ifdef USE_AKONADI_VIEWER
 namespace MessageViewer {
    class Viewer;
+   class HtmlWriter;
 }
-#endif
 
 namespace Akonadi {
   class Item;
@@ -262,7 +260,7 @@ public:
   void setUseFixedFont( bool useFixedFont );
 #ifndef USE_AKONADI_VIEWER
   /** Return the HtmlWriter connected to the KHTMLPart we use */
-  KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
+  MessageViewer::HtmlWriter * htmlWriter() { return mHtmlWriter; }
 #endif
 #ifdef USE_AKONADI_VIEWER
   MessageViewer::Viewer *viewer() { return mViewer; }
@@ -662,7 +660,7 @@ private:
 #ifdef USE_AKONADI_VIEWER
   MessageViewer::Viewer *mViewer;
 #endif
-  KMail::HtmlWriter * mHtmlWriter;
+  MessageViewer::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
 #ifndef USE_AKONADI_VIEWER

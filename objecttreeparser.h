@@ -52,11 +52,10 @@ namespace GpgME {
 namespace MessageViewer {
   class CSSHelper;
   class AttachmentStrategy;
+  class HtmlWriter;
 }
 class PartMetaData;
 namespace KMail {
-
-  class HtmlWriter;
 
   class ProcessResult {
   public:
@@ -111,7 +110,7 @@ namespace KMail {
                       bool showOneMimePart=false, bool keepEncryptions=false,
                       bool includeSignatures=true,
                       const MessageViewer::AttachmentStrategy * attachmentStrategy=0,
-                      KMail::HtmlWriter * htmlWriter=0,
+                      MessageViewer::HtmlWriter * htmlWriter=0,
                       MessageViewer::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
@@ -154,7 +153,7 @@ namespace KMail {
       return mAttachmentStrategy;
     }
 
-    KMail::HtmlWriter * htmlWriter() const { return mHtmlWriter; }
+    MessageViewer::HtmlWriter * htmlWriter() const { return mHtmlWriter; }
 
     MessageViewer::CSSHelper * cssHelper() const { return mCSSHelper; }
 
@@ -335,7 +334,7 @@ namespace KMail {
     bool mHasPendingAsyncJobs;
     bool mAllowAsync;
     const MessageViewer::AttachmentStrategy * mAttachmentStrategy;
-    KMail::HtmlWriter * mHtmlWriter;
+    MessageViewer::HtmlWriter * mHtmlWriter;
     MessageViewer::CSSHelper * mCSSHelper;
     // DataUrl Icons cache
     QString mCollapseIcon;

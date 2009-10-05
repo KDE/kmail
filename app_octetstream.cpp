@@ -39,7 +39,7 @@ namespace {
 
   class Formatter : public KMail::Interface::BodyPartFormatter {
   public:
-    Result format( KMail::Interface::BodyPart *, KMail::HtmlWriter * ) const { return AsIcon; }
+    Result format( KMail::Interface::BodyPart *, MessageViewer::HtmlWriter * ) const { return AsIcon; }
   };
 
   class Plugin : public KMail::Interface::BodyPartFormatterPlugin {

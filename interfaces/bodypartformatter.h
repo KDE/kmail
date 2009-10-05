@@ -34,9 +34,11 @@
 #ifndef __KMAIL_INTERFACE_BODYPARTFORMATTER_H__
 #define __KMAIL_INTERFACE_BODYPARTFORMATTER_H__
 
+namespace MessageViewer {
+  class HtmlWriter;
+}
 namespace KMail {
 
-  class HtmlWriter;
 
   namespace Interface {
 
@@ -61,7 +63,7 @@ namespace KMail {
 
 	 @return the result code (see above)
       */
-      virtual Result format( BodyPart * part, KMail::HtmlWriter * writer ) const = 0;
+      virtual Result format( BodyPart * part, MessageViewer::HtmlWriter * writer ) const = 0;
     };
 
     /**

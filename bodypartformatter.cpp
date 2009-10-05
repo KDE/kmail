@@ -50,7 +50,7 @@ namespace {
       public KMail::Interface::BodyPartFormatter {
     static const AnyTypeBodyPartFormatter * self;
   public:
-    Result format( KMail::Interface::BodyPart *, KMail::HtmlWriter * ) const {
+    Result format( KMail::Interface::BodyPart *, MessageViewer::HtmlWriter * ) const {
       kDebug() << "Acting as a KMail::Interface::BodyPartFormatter!";
       return AsIcon;
     }

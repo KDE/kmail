@@ -144,7 +144,7 @@ namespace KMail {
                                       bool showOnlyOneMimePart, bool keepEncryptions,
                                       bool includeSignatures,
                                       const MessageViewer::AttachmentStrategy * strategy,
-                                      HtmlWriter * htmlWriter,
+                                      MessageViewer::HtmlWriter * htmlWriter,
                                       CSSHelper * cssHelper )
     : mReader( reader ),
       mCryptoProtocol( protocol ),
