@@ -1833,9 +1833,7 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
     kDebug() << "Invoce saving in decrypted form:";
     emit replaceMsgByUnencryptedVersion();
   } else {
-#ifndef USE_AKONADI_VIEWER //TODO ?
     showHideMimeTree();
-#endif
   }
 
   aMsg->setIsBeingParsed( false );
