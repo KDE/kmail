@@ -190,7 +190,6 @@ set(kmailprivate_LIB_SRCS
    foldershortcutdialog.cpp
    folderrequester.cpp
    spamheaderanalyzer.cpp
-   antispamconfig.cpp
    recipientseditor.cpp
    recipientspicker.cpp
    kwindowpositioner.cpp

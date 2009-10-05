@@ -34,12 +34,11 @@
 
 #include "spamheaderanalyzer.h"
 
-#include "antispamconfig.h"
+#include "libmessageviewer/antispamconfig.h"
+using namespace MessageViewer;
 #include "kmmessage.h"
-
-#include <kdebug.h>
-
 using namespace KMail;
+#include <kdebug.h>
 
 // static
 SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
