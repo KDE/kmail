@@ -172,7 +172,7 @@ using KMail::TemplateParser;
 #endif
 #ifdef USE_AKONADI_PANE
 #include <messagelist/pane.h>
-#include "akonadi_next/entitytreeview.h"
+#include <akonadi/entitytreeview.h>
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/statisticstooltipproxymodel.h>
 #include <akonadi/standardactionmanager.h>

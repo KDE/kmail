@@ -39,7 +39,7 @@
 #include <QPointer>
 #include "kmail-akonadi.h"
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
-#include <akonadi_next/favoritecollectionsview.h>
+#include <akonadi/favoritecollectionsview.h>
 #include <akonadi/entitytreemodel.h>
 #endif
 #ifdef USE_AKONADI_PANE
