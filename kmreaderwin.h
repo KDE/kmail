@@ -534,10 +534,8 @@ protected:
   /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
   void displayMessage();
-#endif
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg( KMMessage* msg  );
-#ifndef USE_AKONADI_VIEWER
   /** Creates a nice mail header depending on the current selected
     header style. */
   QString writeMsgHeader( KMMessage* aMsg, partNode *vCardNode = 0, bool topLevel = false );

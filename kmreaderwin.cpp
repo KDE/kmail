@@ -1687,12 +1687,10 @@ void KMReaderWin::displayMessage() {
   QTimer::singleShot( 1, this, SLOT( toggleFullAddressList() ) );
   QTimer::singleShot( 1, this, SLOT(injectAttachments()) );
 }
-#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
-#ifndef USE_AKONADI_VIEWER
   KMMessagePart msgPart;
 
   assert(aMsg!=0);
@@ -1840,10 +1838,8 @@ kDebug() << "|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPartial
   }
 
   aMsg->setIsBeingParsed( false );
-#endif
 }
 
-#ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader( KMMessage* aMsg, partNode *vCardNode, bool topLevel )
 {
@@ -2715,11 +2711,15 @@ void KMReaderWin::saveRelativePosition()
 //-----------------------------------------------------------------------------
 void KMReaderWin::update( bool force )
 {
+#ifndef USE_AKONADI_VIEWER
   KMMessage *msg = message();
   if ( msg ) {
     saveRelativePosition();
     setMsg( msg, force );
   }
+#else
+  //TODO
+#endif
 }
 
 //-----------------------------------------------------------------------------
