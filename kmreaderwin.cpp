@@ -76,13 +76,14 @@ using KMail::URLHandlerManager;
 
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
+#ifndef USE_AKONADI_VIEWER
 #ifdef KMAIL_READER_HTML_DEBUG
-#include "filehtmlwriter.h"
+#include "libmessageviewer/filehtmlwriter.h"
 using KMail::FileHtmlWriter;
-#include "teehtmlwriter.h"
+#include "libmessageviewer/teehtmlwriter.h"
 using KMail::TeeHtmlWriter;
 #endif
-
+#endif
 
 #ifdef USE_AKONADI_VIEWER
 #include "libmessageviewer/viewer.h"
