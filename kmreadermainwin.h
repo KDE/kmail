@@ -26,6 +26,9 @@ class MessageActions;
 namespace KMime {
   class Message;
 }
+namespace Akonadi {
+  class Item;
+}
 #endif
 
 class KMReaderMainWin : public KMail::SecondaryWindow
@@ -52,7 +55,9 @@ public:
    */
   void showMsg( const QString & encoding, KMMessage *msg,
                 unsigned long serNumOfOriginalMessage = 0, int nodeIdOffset = -1 );
-
+#ifdef USE_AKONADI_VIEWER
+  void showMessage( const QString & encoding, const Akonadi::Item &msg );
+#endif
 private slots:
   //(Laurent) remove this function in the future
 #ifndef USE_AKONADI_VIEWER

@@ -59,6 +59,7 @@
 
 #ifdef USE_AKONADI_VIEWER
 #include <libmessageviewer/viewer.h>
+#include <akonadi/item.h>
 #endif
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
@@ -152,6 +153,30 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg,
   connect ( msg->parent(), SIGNAL( destroyed( QObject* ) ), this, SLOT( slotFolderRemoved( QObject* ) ) );
 
 }
+
+#ifdef USE_AKONADI_VIEWER
+
+void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item &msg )
+{
+  mReaderWin->setOverrideEncoding( encoding );
+  mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
+#if 0 //TODO port it
+  if ( serNumOfOriginalMessage != 0 ) {
+    Q_ASSERT( nodeIdOffset != -1 );
+    mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
+  }
+  mReaderWin->slotTouchMessage();
+  setCaption( msg->subject() );
+  mMsg = msg;
+  mMsgActions->setCurrentMessage( msg );
+#endif
+  menuBar()->show();
+  toolBar( "mainToolBar" )->show();
+#if 0 //Port
+  connect ( msg->parent(), SIGNAL( destroyed( QObject* ) ), this, SLOT( slotFolderRemoved( QObject* ) ) );
+#endif
+}
+#endif
 
 void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
 {

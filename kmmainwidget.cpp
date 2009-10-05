@@ -3491,9 +3491,9 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   newMessage->setParent( msg->parent() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
   newMessage->setReadyToShow( true );
-  win->showMsg( overrideEncoding(), newMessage );
-  win->show();
 #endif
+  win->showMessage( overrideEncoding(), msg );
+  win->show();
 }
 
 void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, const KPIM::MessageStatus & set, const KPIM::MessageStatus &clear )
