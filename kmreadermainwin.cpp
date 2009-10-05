@@ -165,10 +165,11 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
     Q_ASSERT( nodeIdOffset != -1 );
     mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
   }
+  setCaption( msg.subject() );
   mReaderWin->slotTouchMessage();
-  setCaption( msg->subject() );
   mMsg = msg;
 #endif
+
   mMsgActions->setCurrentMessage( msg );
   menuBar()->show();
   toolBar( "mainToolBar" )->show();

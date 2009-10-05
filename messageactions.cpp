@@ -190,12 +190,10 @@ void MessageActions::setCurrentMessage(KMMessage * msg)
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 {
   mCurrentItem = msg;
-#if 0 //Port it
-  if ( !msg ) {
+  if ( !msg.isValid() ) {
     mSelectedSernums.clear();
     mVisibleSernums.clear();
   }
-#endif
   updateActions();
 }
 
