@@ -172,7 +172,6 @@ set(kmailprivate_LIB_SRCS
    codecaction.cpp
    codecmanager.cpp
    keyresolver.cpp
-   globalsettings.cpp
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
    acljobs.cpp
