@@ -62,12 +62,12 @@ namespace KMail {
     class BodyPartMemento;
   }
   class ObjectTreeParser;
-  class KHtmlPartHtmlWriter;
 }
 namespace MessageViewer {
   class HeaderStrategy;
   class HeaderStyle;
 }
+class KHtmlPartHtmlWriter;
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
@@ -108,7 +108,7 @@ class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   friend void KMMimePartTree::startDrag( Qt::DropActions actions );
 
   friend class KMail::ObjectTreeParser;
-  friend class KMail::KHtmlPartHtmlWriter;
+  friend class KHtmlPartHtmlWriter;
 
 public:
   KMReaderWin( QWidget *parent, QWidget *mainWindow,
@@ -664,7 +664,7 @@ private:
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
 #ifndef USE_AKONADI_VIEWER
-  QPointer<KMail::KHtmlPartHtmlWriter> mPartHtmlWriter;
+  QPointer<KHtmlPartHtmlWriter> mPartHtmlWriter;
 #endif
 
   std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;

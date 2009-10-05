@@ -137,7 +137,6 @@ set(kmailprivate_LIB_SRCS
    kmmimeparttree.cpp
    mailinglist-magic.cpp
    kmacctmaildir.cpp
-   khtmlparthtmlwriter.cpp
    objecttreeparser_p.cpp
    objecttreeparser.cpp
    attachmentcollector.cpp
