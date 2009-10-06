@@ -159,13 +159,12 @@ using KMail::TemplateParser;
 
 #include <errno.h> // ugh
 
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
 #include <akonadi/changerecorder.h>
 #include <akonadi/session.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
-#endif
+
 #ifdef USE_AKONADI_VIEWER
 #include <libmessageviewer/viewer.h>
 #endif
@@ -182,14 +181,12 @@ using KMail::TemplateParser;
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 //-----------------------------------------------------------------------------
-KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
-                            KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
+  KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
+                              KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
     QWidget( parent ),
     mFavoritesCheckMailAction( 0 ),
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
     mFavoriteCollectionsView( 0 ),
     mEntityModel( 0 ),
-#endif
     mMsgView( 0 ),
     mSplitter1( 0 ),
     mSplitter2( 0 ),
@@ -224,22 +221,17 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
-    Akonadi::Session *session = new Akonadi::Session( "KMail favorite collection", this );
+  Akonadi::Session *session = new Akonadi::Session( "KMail favorite collection", this );
 
-    // monitor collection changes
-    Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
-    monitor->setCollectionMonitored( Akonadi::Collection::root() );
-    monitor->fetchCollection( true );
-    monitor->setAllMonitored( true );
-    monitor->setMimeTypeMonitored( "message/rfc822" );
-    // TODO: Only fetch the envelope etc if possible.
-    monitor->itemFetchScope().fetchFullPayload(true);
-    mEntityModel = new Akonadi::EntityTreeModel( session, monitor, this );
-
-
-
-#endif
+  // monitor collection changes
+  Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
+  monitor->setCollectionMonitored( Akonadi::Collection::root() );
+  monitor->fetchCollection( true );
+  monitor->setAllMonitored( true );
+  monitor->setMimeTypeMonitored( "message/rfc822" );
+  // TODO: Only fetch the envelope etc if possible.
+  monitor->itemFetchScope().fetchFullPayload(true);
+  mEntityModel = new Akonadi::EntityTreeModel( session, monitor, this );
 
 
   // Create the FolderViewManager that will handle the views for this widget.
@@ -472,10 +464,8 @@ void KMMainWidget::layoutSplitters()
       mFolderViewSplitter->setOpaqueResize( opaqueResize );
       mFolderViewSplitter->setChildrenCollapsible( false );
       folderTreeParent = mFolderViewSplitter;
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
       mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
       mFavoriteCollectionsView->setParent( mFolderViewSplitter );
-#endif
       folderViewParent->insertWidget( 0, mFolderViewSplitter );
 
       folderTreePosition = 1;
@@ -928,7 +918,6 @@ void KMMainWidget::createWidgets()
 //      dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
     }
 
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
     mFavoriteCollectionsView = new Akonadi::FavoriteCollectionsView( mGUIClient, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ));
 
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mEntityModel, this );
@@ -942,7 +931,6 @@ void KMMainWidget::createWidgets()
     mStdActionManager->createAllActions();
 
 
-#endif
     if ( bUseDockWidgets )
     {
       dw->setWidget( mFavoriteCollectionsView );
@@ -5460,6 +5448,5 @@ void KMMainWidget::slotMessageSelected(Akonadi::Item item)
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   mMsgView->setDecryptMessageOverwrite( false );
   mMsgView->setShowSignatureDetails( false );
-  //TODO
 }
 #endif

@@ -38,10 +38,8 @@
 #include <QHash>
 #include <QPointer>
 #include "kmail-akonadi.h"
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
 #include <akonadi/favoritecollectionsview.h>
 #include <akonadi/entitytreemodel.h>
-#endif
 #ifdef USE_AKONADI_PANE
 namespace MessageList {
   class Pane;
@@ -692,9 +690,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
   Akonadi::FavoriteCollectionsView *mFavoriteCollectionsView;
-#endif
     QPointer<KMFolder> mFolder;
     QWidget      *mSearchAndTree;
     KTreeWidgetSearchLine *mFolderQuickSearch;
@@ -763,9 +759,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KMail::MessageActions *mMsgActions;
     KMail::MessageListView::Pane *mMessageListView;
-#ifdef USE_AKONADI_FAVORITEFOLDERVIEW
   Akonadi::EntityTreeModel *mEntityModel;
-#endif
+
 #ifdef USE_AKONADI_PANE
   MessageList::Pane *mMessagePane;
   Akonadi::EntityTreeView *mCollectionFolderView;
