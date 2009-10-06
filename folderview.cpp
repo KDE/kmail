@@ -36,7 +36,6 @@
 #include "accountmanager.h"
 #include "acljobs.h"
 #include "expirypropertiesdialog.h"
-#include "favoritefolderview.h" // ugly, derived class: should be moved from here :/
 #include "mainfolderview.h" // ugly, derived class: should be moved from here :/
 #include "foldershortcutdialog.h"
 #include "folderstorage.h"
