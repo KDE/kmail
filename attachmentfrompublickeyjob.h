@@ -21,7 +21,7 @@
 #ifndef KMAIL_ATTACHMENTFROMPUBLICKEY_H
 #define KMAIL_ATTACHMENTFROMPUBLICKEY_H
 
-#include <libkdepim/attachmentloadjob.h>
+#include <messagecore/attachmentloadjob.h>
 
 namespace KMail {
 

@@ -32,7 +32,7 @@
 
 #include <KDebug>
 
-#include <libkdepim/attachmentpart.h>
+#include <messagecore/attachmentpart.h>
 #include <boost/shared_ptr.hpp>
 using KPIM::AttachmentPart;
 

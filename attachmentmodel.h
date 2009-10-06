@@ -24,7 +24,7 @@
 
 #include <KDE/KUrl>
 
-#include <libkdepim/attachmentpart.h>
+#include <messagecore/attachmentpart.h>
 
 namespace KMail {
 

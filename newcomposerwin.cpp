@@ -36,7 +36,7 @@
 #include <messagecomposer/textpart.h>
 
 // LIBKDEPIM includes
-#include <libkdepim/attachmentpart.h>
+#include <messagecore/attachmentpart.h>
 #include <libkdepim/kaddrbookexternal.h>
 #include <libkdepim/recentaddresses.h>
 

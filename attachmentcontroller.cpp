@@ -48,10 +48,10 @@
 #include <libkleo/kleo/cryptobackendfactory.h>
 #include <libkleo/ui/keyselectiondialog.h>
 
-#include <libkdepim/attachmentcompressjob.h>
-#include <libkdepim/attachmentfrommimecontentjob.h>
-#include <libkdepim/attachmentfromurljob.h>
-#include <libkdepim/attachmentpropertiesdialog.h>
+#include <messagecore/attachmentcompressjob.h>
+#include <messagecore/attachmentfrommimecontentjob.h>
+#include <messagecore/attachmentfromurljob.h>
+#include <messagecore/attachmentpropertiesdialog.h>
 
 using namespace KMail;
 using namespace KPIM;

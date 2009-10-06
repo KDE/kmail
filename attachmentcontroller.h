@@ -29,7 +29,7 @@
 
 #include <KPIMIdentities/Identity>
 
-#include <libkdepim/attachmentpart.h>
+#include <messagecore/attachmentpart.h>
 
 class KActionCollection;
 

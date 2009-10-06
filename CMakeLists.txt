@@ -330,6 +330,7 @@ target_link_libraries(kmailprivate
   ${KDE4_KMIME_LIBRARY}
   ${KDE4_AKONADI_LIBS}
   ${KDE4_AKONADI_KMIME_LIBS}
+  messagecore
   messagecomposer
   messagelist
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
