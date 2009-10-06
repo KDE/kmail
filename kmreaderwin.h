@@ -183,11 +183,6 @@ public:
 
   void setMsgPart( partNode * node );
 
-  /** Show or hide the Mime Tree Viewer if configuration
-      is set to smart mode.  */
-#ifndef USE_AKONADI_VIEWER
-  void showHideMimeTree();
-#endif
 
   /** Store message id of last viewed message,
       normally no need to call this function directly,
@@ -243,28 +238,10 @@ public:
   void displayBusyPage();
   /** Display the 'we are currently in offline mode' page instead of a message */
   void displayOfflinePage();
-#ifndef USE_AKONADI_VIEWER
-  /** Enable the displaying of messages again after an URL was displayed */
-  void enableMsgDisplay();
-  /**
-   * View message part of type message/RFC822 in extra viewer window.
-   * @param msgPart the part to display
-   * @param nodeId the part index of the message part that is displayed
-   */
-  void atmViewMsg( KMMessagePart* msgPart, int nodeId );
-
-  bool atBottom() const;
-#endif
 
   bool isFixedFont() const;
   void setUseFixedFont( bool useFixedFont );
-#ifndef USE_AKONADI_VIEWER
-  /** Return the HtmlWriter connected to the KHTMLPart we use */
-  MessageViewer::HtmlWriter * htmlWriter() { return mHtmlWriter; }
-#endif
-#ifdef USE_AKONADI_VIEWER
   MessageViewer::Viewer *viewer() { return mViewer; }
-#endif
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction();
@@ -280,17 +257,6 @@ public:
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
-  // This function returns the complete data that were in this
-  // message parts - *after* all encryption has been removed that
-  // could be removed.
-  // - This is used to store the message in decrypted form.
-#ifndef USE_AKONADI_VIEWER
-  void objectTreeToDecryptedMsg( partNode* node,
-                                 QByteArray& resultingData,
-                                 KMMessage& theMessage,
-                                 bool weAreReplacingTheRootNode = false,
-                                 int recCount = 0 );
-#endif
   /** Returns message part from given URL or null if invalid. */
   partNode* partNodeFromUrl(const KUrl &url);
 
@@ -357,10 +323,6 @@ public:
 
   /* show or hide the list that points to the attachments */
   void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true );
-#ifndef USE_AKONADI_VIEWER
-  /** Get the HTMLElement with id id */
-  DOM::HTMLElement getHTMLElementById( const QString &id );
-#endif
   /** Return weather to show or hide the full list of "To" addresses */
   bool showFullToAddressList() const;
 
@@ -380,10 +342,6 @@ public:
      partNode \a node. If there was a BodyPartMemento registered
      already, replaces (deletes) that one. */
   void setBodyPartMemento( const partNode * node, const QByteArray & which, KMail::Interface::BodyPartMemento * memento );
-#ifndef USE_AKONADI_VIEWER
-  /// Scrolls to the given attachment and marks it with a yellow border
-  void scrollToAttachment( const partNode *node );
-#endif
 private:
   /* deletes all BodyPartMementos. Use this when skipping to another
      message (as opposed to re-loading the same one again). */
@@ -404,46 +362,15 @@ signals:
   void noDrag(void);
 
 public slots:
-#ifndef USE_AKONADI_VIEWER
-  /** Select message body. */
-  void selectAll();
-#endif
-
   /** Force update even if message is the same */
   void clearCache();
 
   /** Refresh the reader window */
   void updateReaderWin();
-#ifndef USE_AKONADI_VIEWER
-  /** HTML Widget scrollbar and layout handling. */
-  void slotScrollUp();
-  void slotScrollDown();
-  void slotScrollPrior();
-  void slotScrollNext();
-  void slotJumpDown();
-  void slotDocumentChanged();
-  void slotDocumentDone();
-  void slotTextSelected(bool);
-  /** An URL has been activate with a click. */
-  void slotUrlOpen(const KUrl &url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
-  /** The mouse has moved on or off an URL. */
-  void slotUrlOn(const QString &url);
-  /** The user presses the right mouse button on an URL. */
-  void slotUrlPopup(const QString &, const QPoint& mousePos);
-#endif
   /** The user selected "Find" from the menu. */
   void slotFind();
-#ifndef USE_AKONADI_VIEWER
-  /** The user toggled the "Fixed Font" flag from the view menu. */
-  void slotToggleFixedFont();
-
-  void slotToggleMimePartTree();
-#endif
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();
-#ifndef USE_AKONADI_VIEWER
-   void slotUrlClicked();
-#endif
   /** Operations on mailto: URLs. */
   void slotMailtoReply();
   void slotMailtoCompose();
@@ -452,21 +379,11 @@ public slots:
   void slotMailtoOpenAddrBook();
   /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
-#ifndef USE_AKONADI_VIEWER
-  void slotUrlCopy();
-#endif
   void slotUrlOpen( const KUrl &url = KUrl() );
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
-#ifndef USE_AKONADI_VIEWER
-  void slotSaveMsg();
-  void slotSaveAttachments();
-#endif
   void slotMessageArrived( KMMessage *msg );
-#ifndef USE_AKONADI_VIEWER
-  void slotLevelQuote( int l );
-#endif
   void slotTouchMessage();
 
   /**
@@ -491,21 +408,6 @@ public slots:
   void slotHandleAttachment( int action );
 #endif
 protected slots:
-#ifndef USE_AKONADI_VIEWER
-  void slotCycleHeaderStyles();
-  void slotBriefHeaders();
-
-  void slotFancyHeaders();
-  void slotEnterpriseHeaders();
-  void slotStandardHeaders();
-  void slotLongHeaders();
-  void slotAllHeaders();
-  void slotCycleAttachmentStrategy();
-  void slotIconicAttachments();
-  void slotSmartAttachments();
-  void slotInlineAttachments();
-  void slotHideAttachments();
-#endif
   /** Some attachment operations. */
   void slotAtmView( int id, const QString& name );
 #ifndef USE_AKONADI_VIEWER
@@ -519,26 +421,6 @@ protected slots:
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
-#ifndef USE_AKONADI_VIEWER
-  void styleChange( QStyle& oldStyle );
-
-  /** Set the width of the frame to a reasonable value for the current GUI
-      style */
-  void setStyleDependantFrameWidth();
-  /** Watch for palette changes */
-  virtual bool event(QEvent *e);
-
-  /** Calculate the pixel size */
-  int pointsToPixel(int pointSize) const;
-  /** Feeds the HTML viewer with the contents of the given message.
-    HTML begin/end parts are written around the message. */
-  void displayMessage();
-  /** Parse given message and add it's contents to the reader window. */
-  virtual void parseMsg( KMMessage* msg  );
-  /** Creates a nice mail header depending on the current selected
-    header style. */
-  QString writeMsgHeader( KMMessage* aMsg, partNode *vCardNode = 0, bool topLevel = false );
-#endif
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString() if writing failed.
   */
@@ -550,45 +432,14 @@ protected:
     @param param Optional part of the directory name.
   */
   QString createTempDir( const QString &param = QString() );
-#ifndef USE_AKONADI_VIEWER
-  /** show window containing information about a vCard. */
-  void showVCard(KMMessagePart *msgPart);
-
-  /** HTML initialization. */
-  virtual void initHtmlWidget(void);
-  /** Some necessary event handling. */
-  virtual void closeEvent(QCloseEvent *);
-  virtual void resizeEvent(QResizeEvent *);
-#endif
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
   /** Event filter */
   bool eventFilter( QObject *obj, QEvent *ev );
 
-private slots:
-#ifndef USE_AKONADI_VIEWER
-  void slotSetEncoding();
-  void injectAttachments();
-  /** Show hide all fields specified inside this function */
-  void toggleFullAddressList();
-#endif
 private:
   void createActions();
-#ifndef USE_AKONADI_VIEWER
-  void adjustLayout();
-  void createWidgets();
-  void saveSplitterSizes() const;
-  KToggleAction * actionForHeaderStyle( const MessageViewer::HeaderStyle *,
-                                        const MessageViewer::HeaderStrategy * );
-  KToggleAction * actionForAttachmentStrategy( const MessageViewer::AttachmentStrategy * );
-  /** Read override codec from configuration */
-  void readGlobalOverrideCodec();
-
-  QString renderAttachments( partNode *node, const QColor &bgColor );
-  /** Show/Hide the field with id "field" */
-  void toggleFullAddressList(const QString& field);
-#endif
 private:
   int mAtmCurrent;
   QString mAtmCurrentName;
@@ -601,11 +452,6 @@ private:
   // widgets:
   bool mAutoDelete;
   QTimer mDelayedMarkTimer;
-#ifndef USE_AKONADI_VIEWER
-  QString mOverrideEncoding;
-  QString mOldGlobalOverrideEncoding; // used to detect changes of the global override character encoding
-  bool mMsgDisplay;
-#endif
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
   QStringList mTempFiles;
@@ -627,10 +473,6 @@ private:
   MessageViewer::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
-#ifndef USE_AKONADI_VIEWER
-  QPointer<KHtmlPartHtmlWriter> mPartHtmlWriter;
-#endif
-
   std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
   // an attachment should be updated
   bool mAtmUpdate;
