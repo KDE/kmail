@@ -776,6 +776,10 @@ void KMMainWidget::createWidgets()
            this, SLOT( slotMessageActivated( const Akonadi::Item & ) ) );
   connect( mMessagePane, SIGNAL(messageStatusChangeRequest( const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus &) ),
            SLOT( slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & ) ) );
+
+  connect( mMessagePane, SIGNAL(statusMessage(QString)),
+           BroadcastStatus::instance(), SLOT(setStatusMsg(QString)) );
+
 #endif
   mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
   mMessageListView->setObjectName( "messagelistview" );

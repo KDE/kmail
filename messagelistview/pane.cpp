@@ -36,6 +36,7 @@
 #include <QIcon>
 #include <QToolButton>
 
+#include <libkdepim/broadcaststatus.h>
 #include <messagecore/messagestatus.h>
 
 #include "globalsettings.h"
@@ -450,6 +451,10 @@ Widget * Pane::addNewWidget()
            this, SIGNAL( fullSearchRequest() ) );
   connect( KMKernel::self()->msgTagMgr(), SIGNAL( msgTagListChanged() ),
            w, SLOT( populateStatusFilterCombo() ) );
+
+  connect( w, SIGNAL(statusMessage(QString)),
+           KPIM::BroadcastStatus::instance(), SLOT(setStatusMsg(QString)) );
+
 
   updateTabControls();
   return w;
