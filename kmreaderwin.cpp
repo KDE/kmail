@@ -484,18 +484,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   : QWidget(aParent, aFlags ),
     mSerNumOfOriginalMessage( 0 ),
     mNodeIdOffset( -1 ),
-#ifndef USE_AKONADI_VIEWER
-    mAttachmentStrategy( 0 ),
-    mHeaderStrategy( 0 ),
-    mHeaderStyle( 0 ),
-    mUpdateReaderWinTimer( 0 ),
-    mResizeTimer( 0 ),
-#endif
     mDelayedMarkTimer( 0 ),
-#ifndef USE_AKONADI_VIEWER
-    mOldGlobalOverrideEncoding( "---" ), // init with dummy value
-    mCSSHelper( 0 ),
-#endif
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
     mActionCollection( actionCollection ),
@@ -504,82 +493,28 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mMailToForwardAction( 0 ),
     mAddAddrBookAction( 0 ),
     mOpenAddrBookAction( 0 ),
-#ifndef USE_AKONADI_VIEWER
-    mCopyAction( 0 ),
-    mCopyURLAction( 0 ),
-    mUrlOpenAction( 0 ),
-#endif
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
-#ifndef USE_AKONADI_VIEWER
-    mSelectAllAction( 0 ),
-    mScrollUpAction( 0 ),
-    mScrollDownAction( 0 ),
-    mScrollUpMoreAction( 0 ),
-    mScrollDownMoreAction( 0 ),
-    mToggleMimePartTreeAction( 0 ),
-    mSelectEncodingAction( 0 ),
-    mToggleFixFontAction( 0 ),
-#endif
     mCanStartDrag( false ),
-#ifndef USE_AKONADI_VIEWER
-    mHtmlWriter( 0 ),
-    mSavedRelativePosition( 0 ),
-    mDecrytMessageOverwrite( false ),
-    mShowSignatureDetails( false ),
-    mShowAttachmentQuicklist( true ),
-#endif
     mShowFullToAddressList( false ),
     mShowFullCcAddressList( false )
 {
-#ifndef USE_AKONADI_VIEWER
-  mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
-#endif
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
-#ifndef USE_AKONADI_VIEWER
-  mResizeTimer.setObjectName( "mResizeTimer" );
-  mExternalWindow  = ( aParent == mainWindow );
-  mSplitterSizes << 180 << 100;
-#endif
   mAutoDelete = false;
   mLastSerNum = 0;
   mWaitingForSerNum = 0;
   mMessage = 0;
-#ifndef USE_AKONADI_VIEWER
-  mLastStatus.clear();
-  mPrinting = false;
-  mMsgDisplay = true;
-#endif
   mAtmUpdate = false;
-#ifndef USE_AKONADI_VIEWER
-  createWidgets();
-  initHtmlWidget();
-#else
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
   mViewer = new Viewer( this/*TODO*/,KGlobal::config(),mMainWindow,mActionCollection );
   vlay->addWidget( mViewer );
-#endif
   readConfig();
 
-#ifndef USE_AKONADI_VIEWER
-  mHtmlOverride = false;
-  mHtmlLoadExtOverride = false;
-
-  mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
-  mResizeTimer.setSingleShot( true );
-  connect( &mResizeTimer, SIGNAL(timeout()),
-           this, SLOT(slotDelayedResize()) );
-#endif
   mDelayedMarkTimer.setSingleShot( true );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
-#ifndef USE_AKONADI_VIEWER
-  mUpdateReaderWinTimer.setSingleShot( true );
-  connect( &mUpdateReaderWinTimer, SIGNAL(timeout()),
-           this, SLOT(updateReaderWin()) );
-#endif
   setMsg( 0, false );
 }
 
@@ -589,105 +524,6 @@ void KMReaderWin::createActions()
   if ( !ac ) {
     return;
   }
-#ifndef USE_AKONADI_VIEWER
-  KToggleAction *raction = 0;
-  // header style
-  KActionMenu *headerMenu  = new KActionMenu(i18nc("View->", "&Headers"), this);
-  ac->addAction("view_headers", headerMenu );
-  headerMenu->setHelpText( i18n("Choose display style of message headers") );
-
-  connect( headerMenu, SIGNAL(triggered(bool)),
-           this, SLOT(slotCycleHeaderStyles()) );
-
-  QActionGroup *group = new QActionGroup( this );
-  raction = new KToggleAction( i18nc("View->headers->", "&Enterprise Headers"), this);
-  ac->addAction( "view_headers_enterprise", raction );
-  connect( raction, SIGNAL(triggered(bool)), SLOT(slotEnterpriseHeaders()) );
-  raction->setHelpText( i18n("Show the list of headers in Enterprise style") );
-  group->addAction( raction );
-  headerMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->headers->", "&Fancy Headers"), this);
-  ac->addAction("view_headers_fancy", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotFancyHeaders()));
-  raction->setHelpText( i18n("Show the list of headers in a fancy format") );
-  group->addAction( raction );
-  headerMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->headers->", "&Brief Headers"), this);
-  ac->addAction("view_headers_brief", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotBriefHeaders()));
-  raction->setHelpText( i18n("Show brief list of message headers") );
-  group->addAction( raction );
-  headerMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->headers->", "&Standard Headers"), this);
-  ac->addAction("view_headers_standard", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotStandardHeaders()));
-  raction->setHelpText( i18n("Show standard list of message headers") );
-  group->addAction( raction );
-  headerMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->headers->", "&Long Headers"), this);
-  ac->addAction("view_headers_long", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotLongHeaders()));
-  raction->setHelpText( i18n("Show long list of message headers") );
-  group->addAction( raction );
-  headerMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->headers->", "&All Headers"), this);
-  ac->addAction("view_headers_all", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotAllHeaders()));
-  raction->setHelpText( i18n("Show all message headers") );
-  group->addAction( raction );
-  headerMenu->addAction( raction );
-
-  // attachment style
-  KActionMenu *attachmentMenu  = new KActionMenu(i18nc("View->", "&Attachments"), this);
-  ac->addAction("view_attachments", attachmentMenu );
-  attachmentMenu->setHelpText( i18n("Choose display style of attachments") );
-  connect( attachmentMenu, SIGNAL(triggered(bool)),
-           this, SLOT(slotCycleAttachmentStrategy()) );
-
-  group = new QActionGroup( this );
-  raction  = new KToggleAction(i18nc("View->attachments->", "&As Icons"), this);
-  ac->addAction("view_attachments_as_icons", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotIconicAttachments()));
-  raction->setHelpText( i18n("Show all attachments as icons. Click to see them.") );
-  group->addAction( raction );
-  attachmentMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->attachments->", "&Smart"), this);
-  ac->addAction("view_attachments_smart", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotSmartAttachments()));
-  raction->setHelpText( i18n("Show attachments as suggested by sender.") );
-  group->addAction( raction );
-  attachmentMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->attachments->", "&Inline"), this);
-  ac->addAction("view_attachments_inline", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotInlineAttachments()));
-  raction->setHelpText( i18n("Show all attachments inline (if possible)") );
-  group->addAction( raction );
-  attachmentMenu->addAction( raction );
-
-  raction  = new KToggleAction(i18nc("View->attachments->", "&Hide"), this);
-  ac->addAction("view_attachments_hide", raction );
-  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotHideAttachments()));
-  raction->setHelpText( i18n("Do not show attachments in the message viewer") );
-  group->addAction( raction );
-  attachmentMenu->addAction( raction );
-  // Set Encoding submenu
-  mSelectEncodingAction  = new KSelectAction(KIcon("character-set"), i18n("&Set Encoding"), this);
-  mSelectEncodingAction->setToolBarMode( KSelectAction::MenuMode );
-  ac->addAction("encoding", mSelectEncodingAction );
-  connect(mSelectEncodingAction,SIGNAL( triggered(int)),
-          SLOT( slotSetEncoding() ));
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
-  encodings.prepend( i18n( "Auto" ) );
-  mSelectEncodingAction->setItems( encodings );
-  mSelectEncodingAction->setCurrentItem( 0 );
-#endif
   //
   // Message Menu
   //
@@ -759,225 +595,22 @@ void KMReaderWin::createActions()
   mUrlSaveAsAction = new KAction( i18n( "Save Link As..." ), this );
   ac->addAction( "saveas_url", mUrlSaveAsAction );
   connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
-#ifndef USE_AKONADI_VIEWER
-  // use fixed font
-  mToggleFixFontAction = new KToggleAction( i18n( "Use Fi&xed Font" ), this );
-  ac->addAction( "toggle_fixedfont", mToggleFixFontAction );
-  connect( mToggleFixFontAction, SIGNAL(triggered(bool)), SLOT(slotToggleFixedFont()) );
-  mToggleFixFontAction->setShortcut( QKeySequence( Qt::Key_X ) );
-  // Show message structure viewer
-  mToggleMimePartTreeAction = new KToggleAction( i18n( "Show Message Structure" ), this );
-  ac->addAction( "toggle_mimeparttree", mToggleMimePartTreeAction );
-  connect( mToggleMimePartTreeAction, SIGNAL(toggled(bool)),
-           SLOT(slotToggleMimePartTree()));
-
-  //
-  // Scroll actions
-  //
-  mScrollUpAction = new KAction( i18n("Scroll Message Up"), this );
-  mScrollUpAction->setShortcut( QKeySequence( Qt::Key_Up ) );
-  ac->addAction( "scroll_up", mScrollUpAction );
-  connect( mScrollUpAction, SIGNAL( triggered( bool ) ),
-           this, SLOT( slotScrollUp() ) );
-
-  mScrollDownAction = new KAction( i18n("Scroll Message Down"), this );
-  mScrollDownAction->setShortcut( QKeySequence( Qt::Key_Down ) );
-  ac->addAction( "scroll_down", mScrollDownAction );
-  connect( mScrollDownAction, SIGNAL( triggered( bool ) ),
-           this, SLOT( slotScrollDown() ) );
-
-  mScrollUpMoreAction = new KAction( i18n("Scroll Message Up (More)"), this );
-  mScrollUpMoreAction->setShortcut( QKeySequence( Qt::Key_PageUp ) );
-  ac->addAction( "scroll_up_more", mScrollUpMoreAction );
-  connect( mScrollUpMoreAction, SIGNAL( triggered( bool ) ),
-           this, SLOT( slotScrollPrior() ) );
-
-  mScrollDownMoreAction = new KAction( i18n("Scroll Message Down (More)"), this );
-  mScrollDownMoreAction->setShortcut( QKeySequence( Qt::Key_PageDown ) );
-  ac->addAction( "scroll_down_more", mScrollDownMoreAction );
-  connect( mScrollDownMoreAction, SIGNAL( triggered( bool ) ),
-           this, SLOT( slotScrollNext() ) );
-#endif
 }
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
 {
-#ifndef USE_AKONADI_VIEWER
-  mUseFixedFont = useFixedFont;
-  if ( mToggleFixFontAction )
-  {
-    mToggleFixFontAction->setChecked( mUseFixedFont );
-  }
-#else
   mViewer->setUseFixedFont( useFixedFont );
-#endif
 }
 
 bool KMReaderWin::isFixedFont() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mUseFixedFont;
-#else
   return mViewer->isFixedFont();
-#endif
 }
-
-#ifndef USE_AKONADI_VIEWER
-// little helper function
-KToggleAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
-  if ( !mActionCollection )
-    return 0;
-  const char * actionName = 0;
-  if ( style == HeaderStyle::enterprise() )
-    actionName = "view_headers_enterprise";
-  if ( style == HeaderStyle::fancy() )
-    actionName = "view_headers_fancy";
-  else if ( style == HeaderStyle::brief() )
-    actionName = "view_headers_brief";
-  else if ( style == HeaderStyle::plain() ) {
-    if ( strategy == HeaderStrategy::standard() )
-      actionName = "view_headers_standard";
-    else if ( strategy == HeaderStrategy::rich() )
-      actionName = "view_headers_long";
-    else if ( strategy == HeaderStrategy::all() )
-      actionName = "view_headers_all";
-  }
-  if ( actionName )
-    return static_cast<KToggleAction*>(mActionCollection->action(actionName));
-  else
-    return 0;
-}
-
-KToggleAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy * as ) {
-  if ( !mActionCollection )
-    return 0;
-  const char * actionName = 0;
-  if ( as == AttachmentStrategy::iconic() )
-    actionName = "view_attachments_as_icons";
-  else if ( as == AttachmentStrategy::smart() )
-    actionName = "view_attachments_smart";
-  else if ( as == AttachmentStrategy::inlined() )
-    actionName = "view_attachments_inline";
-  else if ( as == AttachmentStrategy::hidden() )
-    actionName = "view_attachments_hide";
-
-  if ( actionName )
-    return static_cast<KToggleAction*>(mActionCollection->action(actionName));
-  else
-    return 0;
-}
-
-void KMReaderWin::slotEnterpriseHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
-                             HeaderStrategy::rich() );
-  if( !mExternalWindow )
-    writeConfig();
-}
-
-void KMReaderWin::slotFancyHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::fancy(),
-                             HeaderStrategy::rich() );
-  if( !mExternalWindow )
-    writeConfig();
-}
-
-void KMReaderWin::slotBriefHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::brief(),
-                             HeaderStrategy::brief() );
-  if( !mExternalWindow )
-    writeConfig();
-}
-
-void KMReaderWin::slotStandardHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::plain(),
-                             HeaderStrategy::standard());
-  writeConfig();
-}
-
-void KMReaderWin::slotLongHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::plain(),
-                             HeaderStrategy::rich() );
-  if( !mExternalWindow )
-    writeConfig();
-}
-
-void KMReaderWin::slotAllHeaders() {
-  setHeaderStyleAndStrategy( HeaderStyle::plain(),
-                             HeaderStrategy::all() );
-  if( !mExternalWindow )
-    writeConfig();
-}
-void KMReaderWin::slotLevelQuote( int l )
-{
-  mLevelQuote = l;
-  update( true );
-}
-
-void KMReaderWin::slotCycleHeaderStyles() {
-  const HeaderStrategy * strategy = headerStrategy();
-  const HeaderStyle * style = headerStyle();
-
-  const char * actionName = 0;
-  if ( style == HeaderStyle::enterprise() ) {
-    slotFancyHeaders();
-    actionName = "view_headers_fancy";
-  }
-  if ( style == HeaderStyle::fancy() ) {
-    slotBriefHeaders();
-    actionName = "view_headers_brief";
-  } else if ( style == HeaderStyle::brief() ) {
-    slotStandardHeaders();
-    actionName = "view_headers_standard";
-  } else if ( style == HeaderStyle::plain() ) {
-    if ( strategy == HeaderStrategy::standard() ) {
-      slotLongHeaders();
-      actionName = "view_headers_long";
-    } else if ( strategy == HeaderStrategy::rich() ) {
-      slotAllHeaders();
-      actionName = "view_headers_all";
-    } else if ( strategy == HeaderStrategy::all() ) {
-      slotEnterpriseHeaders();
-      actionName = "view_headers_enterprise";
-    }
-  }
-
-  if ( actionName )
-    static_cast<KToggleAction*>( mActionCollection->action( actionName ) )->setChecked( true );
-}
-
-
-void KMReaderWin::slotIconicAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::iconic() );
-}
-
-void KMReaderWin::slotSmartAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::smart() );
-}
-
-void KMReaderWin::slotInlineAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::inlined() );
-}
-
-void KMReaderWin::slotHideAttachments() {
-  setAttachmentStrategy( AttachmentStrategy::hidden() );
-}
-
-void KMReaderWin::slotCycleAttachmentStrategy() {
-  setAttachmentStrategy( attachmentStrategy()->next() );
-  KToggleAction * action = actionForAttachmentStrategy( attachmentStrategy() );
-  assert( action );
-  action->setChecked( true );
-}
-#endif
 
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
   clearBodyPartMementos();
-#ifndef USE_AKONADI_VIEWER
-  delete mHtmlWriter; mHtmlWriter = 0;
-  delete mCSSHelper;
-#endif
   if (mAutoDelete) delete message();
   delete mRootNode; mRootNode = 0;
   removeTempFiles();
@@ -1056,22 +689,6 @@ void KMReaderWin::removeTempFiles()
   mTempDirs.clear();
 }
 
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-bool KMReaderWin::event(QEvent *e)
-{
-  if (e->type() == QEvent::PaletteChange)
-  {
-    delete mCSSHelper;
-    mCSSHelper = new CSSHelper( mViewer->view() );
-    if (message())
-      message()->readConfig();
-    update( true ); // Force update
-    return true;
-  }
-  return QWidget::event(e);
-}
-#endif
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
@@ -1228,23 +845,12 @@ void KMReaderWin::initHtmlWidget(void)
 #endif
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
-#ifndef USE_AKONADI_VIEWER
-  mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart();
-  update( true );
-#else
   mViewer->setAttachmentStrategy( strategy );
-#endif
 }
 
 void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
                                              const HeaderStrategy * strategy ) {
-#ifndef USE_AKONADI_VIEWER
-  mHeaderStyle = style ? style : HeaderStyle::fancy();
-  mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich();
-  update( true );
-#else
   mViewer->setHeaderStyleAndStrategy( style, strategy );
-#endif
 }
 //-----------------------------------------------------------------------------
 void KMReaderWin::setOverrideEncoding( const QString & encoding )
@@ -1481,28 +1087,7 @@ QString KMReaderWin::newFeaturesMD5()
 //-----------------------------------------------------------------------------
 void KMReaderWin::displaySplashPage( const QString &info )
 {
-#ifndef USE_AKONADI_VIEWER
-  mMsgDisplay = false;
-  adjustLayout();
-  QString location = KStandardDirs::locate("data", "kmail/about/main.html");
-  QString content = KPIMUtils::kFileToByteArray( location );
-  content = content.arg( KStandardDirs::locate( "data", "kdeui/about/kde_infopage.css" ) );
-  if ( QApplication::isRightToLeft() )
-    content = content.arg( "@import \"" + KStandardDirs::locate( "data",
-                           "kdeui/about/kde_infopage_rtl.css" ) +  "\";");
-  else
-    content = content.arg( "" );
-  mViewer->begin(KUrl::fromPath( location ));
-  QString fontSize = QString::number( pointsToPixel( cssHelper()->bodyFont().pointSize() ) );
-  QString appTitle = i18n("KMail");
-  QString catchPhrase = ""; //not enough space for a catch phrase at default window size i18n("Part of the Kontact Suite");
-  QString quickDescription = i18n("The email client for the K Desktop Environment.");
-  mViewer->write(content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
-  mViewer->end();
-#else
   mViewer->displaySplashPage( info );
-#endif
-
 }
 
 void KMReaderWin::displayBusyPage()
@@ -2571,60 +2156,6 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     kDebug() << "Canceled opening attachment";
   }
 }
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotScrollUp()
-{
-  mViewer->view()->scrollBy( 0, -10 );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotScrollDown()
-{
-  mViewer->view()->scrollBy( 0, 10 );
-}
-
-bool KMReaderWin::atBottom() const
-{
-  KHTMLView *view = mViewer->view();
-  return view->contentsY() + view->visibleHeight() >= view->contentsHeight();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotJumpDown()
-{
-  mViewer->view()->scrollBy( 0, mViewer->view()->visibleHeight() );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotScrollPrior()
-{
-  mViewer->view()->scrollBy( 0, -(int)(mViewer->widget()->height() * 0.8 ) );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotScrollNext()
-{
-  mViewer->view()->scrollBy( 0, (int)(mViewer->widget()->height() * 0.8 ) );
-}
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotDocumentChanged()
-{
-
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotTextSelected(bool)
-{
-  QString temp = mViewer->selectedText();
-  QApplication::clipboard()->setText(temp);
-}
-//-----------------------------------------------------------------------------
-void KMReaderWin::selectAll()
-{
-  mViewer->selectAll();
-}
 #endif
 //-----------------------------------------------------------------------------
 QString KMReaderWin::copyText()
@@ -2642,68 +2173,36 @@ void KMReaderWin::slotDocumentDone()
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlOverride( bool override )
 {
-#ifndef USE_AKONADI_VIEWER
-  mHtmlOverride = override;
-  if ( message() ) {
-    message()->setDecodeHTML( htmlMail() );
-  }
-#else
   mViewer->setHtmlOverride( override );
-#endif
 }
 
 bool KMReaderWin::htmlOverride() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mHtmlOverride;
-#else
   return mViewer->htmlOverride();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlLoadExtOverride( bool override )
 {
-#ifndef USE_AKONADI_VIEWER
-  mHtmlLoadExtOverride = override;
-#else
   mViewer->setHtmlLoadExtOverride( override );
-#endif
 }
 
 //-----------------------------------------------------------------------------
 bool KMReaderWin::htmlMail()
 {
-#ifdef USE_AKONADI_VIEWER
   return mViewer->htmlMail();
-#else
-  return ((mHtmlMail && !mHtmlOverride) || (!mHtmlMail && mHtmlOverride));
-#endif
 }
 
 //-----------------------------------------------------------------------------
 bool KMReaderWin::htmlLoadExternal()
 {
-#ifndef USE_AKONADI_VIEWER
-  return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
-          (!mHtmlLoadExternal && mHtmlLoadExtOverride));
-#else
   return mViewer->htmlLoadExternal();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::saveRelativePosition()
 {
-#ifndef USE_AKONADI_VIEWER
-  const QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
-  if ( scrollBar->maximum() )
-    mSavedRelativePosition = static_cast<float>( scrollBar->value() ) / scrollBar->maximum();
-  else
-    mSavedRelativePosition = 0;
-#else
   mViewer->saveRelativePosition();
-#endif
 }
 
 
@@ -2996,22 +2495,12 @@ void KMReaderWin::slotEditAttachment(partNode * node)
 
 CSSHelper* KMReaderWin::cssHelper() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mCSSHelper;
-#else
   return mViewer->cssHelper();
-#endif
 }
 
 bool KMReaderWin::decryptMessage() const
 {
-#ifndef USE_AKONADI_VIEWER
-  if ( !GlobalSettings::self()->alwaysDecrypt() )
-    return mDecrytMessageOverwrite;
-  return true;
-#else
   return mViewer->decryptMessage();
-#endif
 }
 #ifndef USE_AKONADI_VIEWER
 void KMReaderWin::scrollToAttachment( const partNode *node )
@@ -3295,174 +2784,96 @@ void KMReaderWin::setShowFullCcAddressList( bool showFullCcAddressList )
 
 bool KMReaderWin::showSignatureDetails() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mShowSignatureDetails;
-#else
   return mViewer->showSignatureDetails();
-#endif
 }
 
 void KMReaderWin::setShowSignatureDetails( bool showDetails )
 {
-#ifndef USE_AKONADI_VIEWER
-  mShowSignatureDetails = showDetails;
-#else
   mViewer->setShowSignatureDetails( showDetails );
-#endif
 }
 bool KMReaderWin::showAttachmentQuicklist() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mShowAttachmentQuicklist;
-#else
   return mViewer->showAttachmentQuicklist();
-#endif
 }
 
 void KMReaderWin::setShowAttachmentQuicklist( bool showAttachmentQuicklist )
 {
-#ifndef USE_AKONADI_VIEWER
-  mShowAttachmentQuicklist = showAttachmentQuicklist;
-#else
   mViewer->setShowAttachmentQuicklist( showAttachmentQuicklist );
-#endif
 }
 
 bool KMReaderWin::htmlLoadExtOverride() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mHtmlLoadExtOverride;
-#else
   return mViewer->htmlLoadExtOverride();
-#endif
 }
 void KMReaderWin::setDecryptMessageOverwrite( bool overwrite )
 {
-#ifndef USE_AKONADI_VIEWER
-  mDecrytMessageOverwrite = overwrite;
-#else
   mViewer->setDecryptMessageOverwrite( overwrite );
-#endif
 }
 const AttachmentStrategy * KMReaderWin::attachmentStrategy() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mAttachmentStrategy;
-#else
   return mViewer->attachmentStrategy();
-#endif
 }
 
 QString KMReaderWin::overrideEncoding() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mOverrideEncoding;
-#else
   return mViewer->overrideEncoding();
-#endif
 }
 
 
 KToggleAction *KMReaderWin::toggleFixFontAction()
 {
-#ifndef USE_AKONADI_VIEWER
-  return mToggleFixFontAction;
-#else
   return mViewer->toggleFixFontAction();
-#endif
 }
 
 KAction *KMReaderWin::toggleMimePartTreeAction()
 {
-#ifndef USE_AKONADI_VIEWER
-  return mToggleMimePartTreeAction;
-#else
   return mViewer->toggleMimePartTreeAction();
-#endif
 }
 
 KAction *KMReaderWin::selectAllAction()
 {
-#ifndef USE_AKONADI_VIEWER
-  return mSelectAllAction;
-#else
   return mViewer->selectAllAction();
-#endif
 }
 
 const HeaderStrategy * KMReaderWin::headerStrategy() const {
-#ifndef USE_AKONADI_VIEWER
-  return mHeaderStrategy;
-#else
   return mViewer->headerStrategy();
-#endif
 }
 const HeaderStyle * KMReaderWin::headerStyle() const {
-#ifndef USE_AKONADI_VIEWER
-  return mHeaderStyle;
-#else
   return mViewer->headerStyle();
-#endif
 }
 
 
 KHTMLPart * KMReaderWin::htmlPart() const
 {
-#ifndef USE_AKONADI_VIEWER
-  return mViewer;
-#else
   return mViewer->htmlPart();
-#endif
 }
 
 KAction *KMReaderWin::copyURLAction()
 {
-#ifndef USE_AKONADI_VIEWER
-  return mCopyURLAction;
-#else
   return mViewer->copyURLAction();
-#endif
 }
 
 KAction *KMReaderWin::copyAction()
 {
-#ifndef USE_AKONADI_VIEWER
-  return mCopyAction;
-#else
   return mViewer->copyAction();
-#endif
 }
 KAction *KMReaderWin::urlOpenAction()
 {
-#ifndef USE_AKONADI_VIEWER
-  return mUrlOpenAction;
-#else
   return mViewer->urlOpenAction();
-#endif
 }
 void KMReaderWin::setPrinting(bool enable)
 {
-#ifndef USE_AKONADI_VIEWER
-  mPrinting = enable;
-#else
   mViewer->setPrinting( enable );
-#endif
 }
 
 void KMReaderWin::clear(bool force )
 {
-#ifndef USE_AKONADI_VIEWER
-  setMsg(0, force);
-#else
   mViewer->clear( force ? Viewer::Force : Viewer::Delayed );
-#endif
 }
 
 void KMReaderWin::setMessage( Akonadi::Item item, Viewer::UpdateMode updateMode)
 {
-#ifdef USE_AKONADI_VIEWER
   mViewer->setMessageItem( item, updateMode );
-#endif
 }
 
 #include "kmreaderwin.moc"

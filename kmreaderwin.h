@@ -590,11 +590,6 @@ private:
   void toggleFullAddressList(const QString& field);
 #endif
 private:
-#ifndef USE_AKONADI_VIEWER
-  bool mHtmlMail;
-  bool mHtmlOverride, mHtmlLoadExtOverride;
-  bool mHtmlLoadExternal;
-#endif
   int mAtmCurrent;
   QString mAtmCurrentName;
   KMMessage *mMessage;
@@ -604,22 +599,7 @@ private:
   int mNodeIdOffset;
 
   // widgets:
-#ifndef USE_AKONADI_VIEWER
-  QSplitter * mSplitter;
-  KHBox *mBox;
-  HtmlStatusBar *mColorBar;
-  KMMimePartTree* mMimePartTree;
-  KHTMLPart *mViewer;
-  const MessageViewer::AttachmentStrategy * mAttachmentStrategy;
-  const MessageViewer::HeaderStrategy * mHeaderStrategy;
-  const MessageViewer::HeaderStyle * mHeaderStyle;
-#endif
   bool mAutoDelete;
-#ifndef USE_AKONADI_VIEWER
-  static const int delay;
-  QTimer mUpdateReaderWinTimer;
-  QTimer mResizeTimer;
-#endif
   QTimer mDelayedMarkTimer;
 #ifndef USE_AKONADI_VIEWER
   QString mOverrideEncoding;
@@ -628,17 +608,8 @@ private:
 #endif
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
-#ifndef USE_AKONADI_VIEWER
-  MessageStatus mLastStatus;
-  Message::CSSHelper * mCSSHelper;
-  bool mUseFixedFont;
-  bool mPrinting;
-#endif
   QStringList mTempFiles;
   QStringList mTempDirs;
-#ifndef USE_AKONADI_VIEWER
-  QList<int> mSplitterSizes;
-#endif
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
@@ -646,21 +617,13 @@ private:
 
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
     *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
-#ifndef USE_AKONADI_VIEWER
-  KAction *mCopyURLAction, *mCopyAction,*mUrlOpenAction;
-  KAction *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction;
-  KSelectAction *mSelectEncodingAction;
-  KAction *mToggleMimePartTreeAction;
-  KToggleAction *mToggleFixFontAction;
-#endif
   KUrl mHoveredUrl;
   KUrl mClickedUrl;
   QPoint mLastClickPosition;
   bool mCanStartDrag;
 
-#ifdef USE_AKONADI_VIEWER
   MessageViewer::Viewer *mViewer;
-#endif
+
   MessageViewer::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
@@ -673,14 +636,6 @@ private:
   bool mAtmUpdate;
   int mChoice;
   unsigned long mWaitingForSerNum;
-#ifndef USE_AKONADI_VIEWER
-  int mLevelQuote;
-  float mSavedRelativePosition;
-  bool mDecrytMessageOverwrite;
-  bool mShowSignatureDetails;
-  bool mShowAttachmentQuicklist;
-  bool mExternalWindow;
-#endif
 
   bool mShowFullToAddressList;
   bool mShowFullCcAddressList;
