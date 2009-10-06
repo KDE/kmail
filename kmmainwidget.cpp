@@ -3609,19 +3609,19 @@ void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QP
     menu->addAction( mMsgView->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-
+#if 0 //Port it
     if (!mMessageListView->currentMessage()) {
       // no messages
       delete menu;
       return;
     }
-
     if ( mFolder->isTemplates() ) {
       menu->addAction( mUseAction );
     } else {
       menu->addAction( mMsgActions->replyMenu() );
       menu->addAction( mMsgActions->forwardMenu() );
     }
+#endif
     menu->addAction(editAction());
     menu->addSeparator();
 
@@ -3644,12 +3644,13 @@ void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QP
     menu->addAction( mSaveAttachmentsAction );
 
     menu->addSeparator();
+#if 0 //Port it
     if ( mFolder->isTrash() ) {
       menu->addAction( mDeleteAction );
     } else {
       menu->addAction( mTrashAction );
     }
-
+#endif
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
   }
