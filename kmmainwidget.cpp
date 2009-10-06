@@ -631,13 +631,6 @@ void KMMainWidget::readConfig()
     mMainFolderView->readConfig();
     mMainFolderView->reload();
 
-    if ( mFavoriteCollectionsView )
-    {
-#if 0  //Port it
-      mFavoriteFolderView->readConfig();
-      mFavoriteFolderView->reload();
-#endif
-    }
     mFavoritesCheckMailAction->setEnabled( GlobalSettings::self()->enableFavoriteFolderView() );
   }
 
@@ -691,9 +684,6 @@ void KMMainWidget::writeConfig()
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mMainFolderView->height() );
-#if 0 //Port it
-      mFavoriteCollectionsView->writeConfig();
-#endif
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
     }
