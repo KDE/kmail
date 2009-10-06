@@ -1051,7 +1051,9 @@ void KMMainWidget::createWidgets()
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFocusQuickSearch()
 {
-  mMessageListView->focusQuickSearch();
+#ifdef USE_AKONADI_PANE
+  mMessagePane->focusQuickSearch();
+#endif
 }
 
 //-------------------------------------------------------------------------
@@ -3494,7 +3496,7 @@ void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, c
   if ( !item.isValid() )
     return;
   kDebug()<<" item.id() :"<<item.id();
-#if 0
+#if 0 //Port it
 
   SerNumList serNums;
   serNums.append( msg->getMsgSerNum() );
