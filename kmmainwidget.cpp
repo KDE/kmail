@@ -117,7 +117,6 @@ using KMail::SearchWindow;
 using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
-#include "favoritefolderview.h"
 
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
@@ -187,7 +186,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                             KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
     QWidget( parent ),
     mFavoritesCheckMailAction( 0 ),
-    mFavoriteFolderView( 0 ),
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
     mFavoriteCollectionsView( 0 ),
     mEntityModel( 0 ),
@@ -469,16 +467,15 @@ void KMMainWidget::layoutSplitters()
 
   if ( !bUseDockWidgets )
   {
-    if ( mFavoriteFolderView ) {
+    if ( mFavoriteCollectionsView ) {
       mFolderViewSplitter = new QSplitter( Qt::Vertical, folderViewParent );
       mFolderViewSplitter->setOpaqueResize( opaqueResize );
       mFolderViewSplitter->setChildrenCollapsible( false );
       folderTreeParent = mFolderViewSplitter;
-      mFolderViewSplitter->addWidget( mFavoriteFolderView );
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
+      mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
       mFavoriteCollectionsView->setParent( mFolderViewSplitter );
 #endif
-      mFavoriteFolderView->setParent( mFolderViewSplitter );
       folderViewParent->insertWidget( 0, mFolderViewSplitter );
 
       folderTreePosition = 1;
@@ -516,7 +513,7 @@ void KMMainWidget::layoutSplitters()
 
   if ( !bUseDockWidgets )
   {
-    if ( mFavoriteFolderView ) {
+    if ( mFavoriteCollectionsView ) {
       mFolderViewSplitter->setStretchFactor( 0, 0 );
       mFolderViewSplitter->setStretchFactor( 1, 1 );
     }
@@ -634,10 +631,12 @@ void KMMainWidget::readConfig()
     mMainFolderView->readConfig();
     mMainFolderView->reload();
 
-    if ( mFavoriteFolderView )
+    if ( mFavoriteCollectionsView )
     {
+#if 0  //Port it
       mFavoriteFolderView->readConfig();
       mFavoriteFolderView->reload();
+#endif
     }
     mFavoritesCheckMailAction->setEnabled( GlobalSettings::self()->enableFavoriteFolderView() );
   }
@@ -689,10 +688,12 @@ void KMMainWidget::writeConfig()
     GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessageListView->width() );
 
-    if ( mFavoriteFolderView ) {
-      GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteFolderView->height() );
+    if ( mFavoriteCollectionsView ) {
+      GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mMainFolderView->height() );
-      mFavoriteFolderView->writeConfig();
+#if 0 //Port it
+      mFavoriteCollectionsView->writeConfig();
+#endif
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
     }
@@ -726,7 +727,6 @@ void KMMainWidget::deleteWidgets()
   delete mSplitter1;
   mMsgView = 0;
   mSearchAndTree = 0;
-  mFavoriteFolderView = 0;
   mFolderViewSplitter = 0;
   mSplitter1 = 0;
   mSplitter2 = 0;
@@ -938,9 +938,8 @@ void KMMainWidget::createWidgets()
 //      dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
     }
 
-    mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewManager, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ) );
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
-    mFavoriteCollectionsView = new Akonadi::FavoriteCollectionsView( mGUIClient, this );
+    mFavoriteCollectionsView = new Akonadi::FavoriteCollectionsView( mGUIClient, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ));
 
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mEntityModel, this );
     mFavoriteCollectionsView->setModel( favoritesModel );
@@ -956,20 +955,20 @@ void KMMainWidget::createWidgets()
 #endif
     if ( bUseDockWidgets )
     {
-      dw->setWidget( mFavoriteFolderView );
+      dw->setWidget( mFavoriteCollectionsView );
       mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
     }
 
-
+#if 0 //Port it
     if ( mFavoritesCheckMailAction )
       connect( mFavoritesCheckMailAction, SIGNAL(triggered(bool)),
                mFavoriteFolderView, SLOT( checkMail() ) );
-
      // FIXME: These signals should be emitted by the manager, probably
      connect( mFavoriteFolderView, SIGNAL( folderDrop( KMFolder * ) ),
              SLOT( slotMoveMsgToFolder( KMFolder * ) ) );
      connect( mFavoriteFolderView, SIGNAL( folderDropCopy( KMFolder * ) ),
              SLOT( slotCopyMsgToFolder( KMFolder * ) ) );
+#endif
   }
 
   //
@@ -3888,11 +3887,12 @@ void KMMainWidget::setupActions()
                                            i18n( "Check Mail in Favorite Folders" ), this );
   actionCollection()->addAction( "favorite_check_mail", mFavoritesCheckMailAction );
   mFavoritesCheckMailAction->setShortcut( QKeySequence( Qt::CTRL+Qt::SHIFT+Qt::Key_L ) );
+#if 0  //Port it
   if ( mFavoriteFolderView ) {
     connect( mFavoritesCheckMailAction, SIGNAL(triggered(bool)),
              mFavoriteFolderView, SLOT(checkMail()) );
   }
-
+#endif
   KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-receive"), i18n("Check Mail In"), this);
   actActionMenu->setIconText( i18n("Check Mail") );
   actActionMenu->setToolTip( i18n("Check Mail") );

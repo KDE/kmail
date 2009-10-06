@@ -76,7 +76,6 @@ set(kmailprivate_LIB_SRCS
    kmfoldercombobox.cpp
    folderview.cpp
    mainfolderview.cpp
-   favoritefolderview.cpp
    kmaccount.cpp
    listjob.cpp
    snippetdlg.cpp

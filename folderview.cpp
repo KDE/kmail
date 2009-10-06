@@ -1059,11 +1059,13 @@ void FolderView::notifyFolderActivated( KMFolder *folder )
 
 void FolderView::slotAddToFavorites()
 {
+#if 0	
   KMail::FavoriteFolderView *favView = mMainWidget->favoriteFolderView();
   if ( !favView )
     return; // ugh :/
   foreach ( const QPointer<KMFolder> &f, selectedFolders() )
     favView->addFolder( f );
+#endif
 }
 
 void FolderView::updateCopyActions()

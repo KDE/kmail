@@ -143,8 +143,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KMail::MainFolderView * mainFolderView() const
       { return mMainFolderView; }
-    KMail::FavoriteFolderView * favoriteFolderView() const
-      { return mFavoriteFolderView; }
     KMail::FolderViewManager * folderViewManager() const
       { return mFolderViewManager; }
     KMail::MessageListView::Pane * messageListView() const
@@ -694,7 +692,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
-    KMail::FavoriteFolderView    *mFavoriteFolderView;
 #ifdef USE_AKONADI_FAVORITEFOLDERVIEW
   Akonadi::FavoriteCollectionsView *mFavoriteCollectionsView;
 #endif
