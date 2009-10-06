@@ -165,9 +165,8 @@ using KMail::TemplateParser;
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 
-#ifdef USE_AKONADI_VIEWER
 #include <libmessageviewer/viewer.h>
-#endif
+
 #ifdef USE_AKONADI_PANE
 #include <messagelist/pane.h>
 #include <akonadi/entitytreeview.h>
@@ -689,11 +688,7 @@ void KMMainWidget::writeConfig()
     if ( mMsgView ) {
       if ( !mReaderWindowBelow )
         GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
-#ifndef USE_AKONADI_VIEWER
-      mMsgView->writeConfig();
-#else
       mMsgView->viewer()->writeConfig();
-#endif
       GlobalSettings::self()->setReaderWindowHeight( mMsgView->width() );
     }
   }

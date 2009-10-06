@@ -1020,69 +1020,6 @@ void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
   mAtmCurrentName = fileName;
 }
 
-//-----------------------------------------------------------------------------
-void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint &p )
-{
-  prepareHandleAttachment( id, name );
-  KMenu *menu = new KMenu();
-  QAction *action;
-
-  QSignalMapper *attachmentMapper = new QSignalMapper( menu );
-  connect( attachmentMapper, SIGNAL( mapped( int ) ),
-           this, SLOT( slotHandleAttachment( int ) ) );
-
-  action = menu->addAction(SmallIcon("document-open"),i18nc("to open", "Open"));
-  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Open );
-
-  action = menu->addAction(i18n("Open With..."));
-  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::OpenWith );
-
-  action = menu->addAction(i18nc("to view something", "View") );
-  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::View );
-  const bool attachmentInHeader = hasParentDivWithId( mViewer->nodeUnderMouse(), "attachmentInjectionPoint" );
-  const bool hasScrollbar = mViewer->view()->verticalScrollBar()->isVisible();
-  if ( attachmentInHeader && hasScrollbar ) {
-    action = menu->addAction( i18n( "Scroll To" ) );
-    connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::ScrollTo );
-  }
-  action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
-  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
-
-  action = menu->addAction(SmallIcon("edit-copy"), i18n("Copy") );
-  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Copy );
-
-  const bool canChange = message()->parent() ? !message()->parent()->isReadOnly() : false;
-
-  if ( GlobalSettings::self()->allowAttachmentEditing() ) {
-    action = menu->addAction(SmallIcon("document-properties"), i18n("Edit Attachment") );
-    connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
-    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Edit );
-    action->setEnabled( canChange );
-  }
-  if ( GlobalSettings::self()->allowAttachmentDeletion() ) {
-    action = menu->addAction(SmallIcon("edit-delete"), i18n("Delete Attachment") );
-    connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
-    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Delete );
-    action->setEnabled( canChange );
-  }
-  if ( name.endsWith( QLatin1String(".xia"), Qt::CaseInsensitive ) &&
-       Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
-    action = menu->addAction( i18n( "Decrypt With Chiasmus..." ) );
-    connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::ChiasmusEncrypt );
-  }
-  action = menu->addAction(i18n("Properties") );
-  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Properties );
-  menu->exec( p );
-  delete menu;
-}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotHandleAttachment( int choice )
@@ -1123,11 +1060,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
 {
-#ifndef USE_AKONADI_VIEWER
-  mViewer->findText();
-#else
   mViewer->slotFind();
-#endif
 }
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotCopySelectedText()
@@ -1409,12 +1342,6 @@ QString KMReaderWin::copyText()
   return temp;
 }
 
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotDocumentDone()
-{
-}
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlOverride( bool override )
 {
