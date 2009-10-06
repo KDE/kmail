@@ -892,7 +892,7 @@ void KMMainWidget::createWidgets()
     dw->setWidget( mSearchAndTree );
     mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
     dw = new QDockWidget( i18n( "Folders" ), mw );
-    dw->setObjectName( i18n( "Folders" ) );
+    dw->setObjectName( i18n( "Folders" ) ); //It's really not a good idea to use i18n here
     dw->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
 //    dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   }
