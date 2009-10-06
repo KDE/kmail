@@ -438,6 +438,7 @@ protected:
   /** Event filter */
   bool eventFilter( QObject *obj, QEvent *ev );
 
+  KUrl urlClicked() const;
 private:
   void createActions();
 private:
@@ -464,7 +465,6 @@ private:
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
     *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
   KUrl mHoveredUrl;
-  KUrl mClickedUrl;
   QPoint mLastClickPosition;
   bool mCanStartDrag;
 

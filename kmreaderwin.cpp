@@ -981,17 +981,6 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)
-{
-  mClickedUrl = aUrl;
-
-  if ( URLHandlerManager::instance()->handleClick( aUrl, this ) )
-    return;
-
-  kWarning() << "Unhandled URL click!";
-  emit urlClicked( aUrl, Qt::LeftButton );
-}
-//-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
   const KUrl url( aUrl );
@@ -1095,31 +1084,6 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   delete menu;
 }
 
-//-----------------------------------------------------------------------------
-void KMReaderWin::setStyleDependantFrameWidth()
-{
-  if ( !mBox )
-    return;
-  // set the width of the frame to a reasonable value for the current GUI style
-  int frameWidth;
-#if 0 // is this hack still needed with kde4?
-  if( !qstrcmp( style()->metaObject()->className(), "KeramikStyle" ) )
-    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
-  else
-#endif
-    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
-  if ( frameWidth < 0 )
-    frameWidth = 0;
-  if ( frameWidth != mBox->lineWidth() )
-    mBox->setLineWidth( frameWidth );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::styleChange( QStyle& oldStyle )
-{
-  setStyleDependantFrameWidth();
-  QWidget::styleChange( oldStyle );
-}
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotHandleAttachment( int choice )
 {
@@ -1540,14 +1504,14 @@ void KMReaderWin::slotUrlClicked()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
-  KMCommand *command = new KMMailtoComposeCommand( mClickedUrl, message() );
+  KMCommand *command = new KMMailtoComposeCommand( urlClicked(), message() );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoForward()
 {
-  KMCommand *command = new KMMailtoForwardCommand( mMainWindow, mClickedUrl,
+  KMCommand *command = new KMMailtoForwardCommand( mMainWindow, urlClicked(),
                                                    message() );
   command->start();
 }
@@ -1555,7 +1519,7 @@ void KMReaderWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
-  KMCommand *command = new KMMailtoAddAddrBookCommand( mClickedUrl,
+  KMCommand *command = new KMMailtoAddAddrBookCommand( urlClicked(),
                                                        mMainWindow );
   command->start();
 }
@@ -1563,7 +1527,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
-  KMCommand *command = new KMMailtoOpenAddrBookCommand( mClickedUrl,
+  KMCommand *command = new KMMailtoOpenAddrBookCommand( urlClicked(),
                                                         mMainWindow );
   command->start();
 }
@@ -1574,7 +1538,7 @@ void KMReaderWin::slotUrlCopy()
   // we don't necessarily need a mainWidget for KMUrlCopyCommand so
   // it doesn't matter if the dynamic_cast fails.
   KMCommand *command =
-    new KMUrlCopyCommand( mClickedUrl,
+    new KMUrlCopyCommand( urlClicked(),
                           dynamic_cast<KMMainWidget*>( mMainWindow ) );
   command->start();
 }
@@ -1582,30 +1546,32 @@ void KMReaderWin::slotUrlCopy()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen( const KUrl &url )
 {
+#if 0 //port it
   if ( !url.isEmpty() )
     mClickedUrl = url;
   KMCommand *command = new KMUrlOpenCommand( mClickedUrl, this );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAddBookmarks()
 {
-    KMCommand *command = new KMAddBookmarksCommand( mClickedUrl, this );
+    KMCommand *command = new KMAddBookmarksCommand( urlClicked(), this );
     command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlSave()
 {
-  KMCommand *command = new KMUrlSaveCommand( mClickedUrl, mMainWindow );
+  KMCommand *command = new KMUrlSaveCommand( urlClicked(), mMainWindow );
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
-  KMCommand *command = new KMMailtoReplyCommand( mMainWindow, mClickedUrl,
+  KMCommand *command = new KMMailtoReplyCommand( mMainWindow, urlClicked(),
                                                  message(), copyText() );
   command->start();
 }
@@ -1652,16 +1618,6 @@ void KMReaderWin::saveAttachment( const KUrl &tempFileName )
   mAtmCurrent = msgPartFromUrl( tempFileName );
   mAtmCurrentName = mClickedUrl.toLocalFile();
   slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
-}
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotSaveMsg()
-{
-  KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( mMainWindow, message() );
-
-  if (saveCommand->url().isEmpty())
-    delete saveCommand;
-  else
-    saveCommand->start();
 }
 #endif
 //-----------------------------------------------------------------------------
@@ -1783,208 +1739,6 @@ bool KMReaderWin::decryptMessage() const
 {
   return mViewer->decryptMessage();
 }
-#ifndef USE_AKONADI_VIEWER
-void KMReaderWin::scrollToAttachment( const partNode *node )
-{
-  DOM::Document doc = mViewer->htmlDocument();
-
-  // The anchors for this are created in ObjectTreeParser::parseObjectTree()
-  mViewer->gotoAnchor( QString::fromLatin1( "att%1" ).arg( node->nodeId() ) );
-
-  // Remove any old color markings which might be there
-  const partNode *root = node->topLevelParent();
-  for ( int i = 0; i <= root->totalChildCount() + 1; i++ ) {
-    DOM::Element attachmentDiv = doc.getElementById( QString( "attachmentDiv%1" ).arg( i + 1 ) );
-    if ( !attachmentDiv.isNull() )
-      attachmentDiv.removeAttribute( "style" );
-  }
-
-  // Now, color the div of the attachment in yellow, so that the user sees what happened.
-  // We created a special marked div for this in writeAttachmentMarkHeader() in ObjectTreeParser,
-  // find and modify that now.
-  DOM::Element attachmentDiv = doc.getElementById( QString( "attachmentDiv%1" ).arg( node->nodeId() ) );
-  if ( attachmentDiv.isNull() ) {
-    kWarning() << "Could not find attachment div for attachment" << node->nodeId();
-    return;
-  }
-  attachmentDiv.setAttribute( "style", QString( "border:2px solid %1" )
-      .arg( cssHelper()->pgpWarnColor().name() ) );
-
-  // Update rendering, otherwise the rendering is not updated when the user clicks on an attachment
-  // that causes scrolling and the open attachment dialog
-  doc.updateRendering();
-}
-
-void KMReaderWin::toggleFullAddressList()
-{
-  toggleFullAddressList( "To" );
-  toggleFullAddressList( "Cc" );
-}
-DOM::HTMLElement KMReaderWin::getHTMLElementById( const QString &id )
-{
-  Q_ASSERT( !id.isNull() );
-  Q_ASSERT( !id.isEmpty() );
-  DOM::Document doc = mViewer->htmlDocument();
-  return static_cast<DOM::HTMLElement>( doc.getElementById( id ) );
-}
-
-void KMReaderWin::toggleFullAddressList( const QString &field )
-{
-  // First inject the current icon
-  DOM::HTMLElement tag = getHTMLElementById( "iconFull" + field + "AddressList" );
-  if ( tag.isNull() )
-    return;
-  Q_ASSERT( tag.tagName() == "span" );
-
-  QString imgpath( KStandardDirs::locate( "data","kmail/pics/" ) );
-  QString urlHandle;
-  QString imgSrc;
-  bool doShow = ( field == "To" && showFullToAddressList() ) || ( field == "Cc" && showFullCcAddressList() );
-  if ( doShow ) {
-    urlHandle.append( "kmail:hideFull" + field + "AddressList" );
-    imgSrc.append( "quicklistOpened.png" );
-  } else {
-    urlHandle.append( "kmail:showFull" + field + "AddressList" );
-    imgSrc.append( "quicklistClosed.png" );
-  }
-
-  QString link = "<span style=\"text-align: right;\"><a href=\"" + urlHandle + "\"><img src=\"" + imgpath + imgSrc + "\"/></a></span>";
-  tag.setInnerHTML( link );
-
-  // Then show/hide the full address list
-  DOM::HTMLElement dotsTag = getHTMLElementById( "dotsFull" + field + "AddressList" );
-  Q_ASSERT( dotsTag.tagName() == "span" );
-
-  tag = getHTMLElementById( "hiddenFull" + field + "AddressList" );
-  Q_ASSERT( tag.tagName() == "span" );
-
-  if (doShow ) {
-    dotsTag.addCSSProperty( "display", "none" );
-    tag.removeCSSProperty( "display" );
-  } else {
-    tag.addCSSProperty( "display", "none" );
-    dotsTag.removeCSSProperty( "display" );
-  }
-}
-
-void KMReaderWin::injectAttachments()
-{
-  // inject attachments in header view
-  // we have to do that after the otp has run so we also see encrypted parts
-  DOM::Document doc = mViewer->htmlDocument();
-  DOM::Element injectionPoint = doc.getElementById( "attachmentInjectionPoint" );
-  if ( injectionPoint.isNull() )
-    return;
-
-  QString imgpath( KStandardDirs::locate("data","kmail/pics/") );
-  QString visibility;
-  QString urlHandle;
-  QString imgSrc;
-  if( !showAttachmentQuicklist() ) {
-    urlHandle.append( "kmail:showAttachmentQuicklist" );
-    imgSrc.append( "quicklistClosed.png" );
-  } else {
-    urlHandle.append( "kmail:hideAttachmentQuicklist" );
-    imgSrc.append( "quicklistOpened.png" );
-  }
-
-  QColor background = KColorScheme( QPalette::Active, KColorScheme::View ).background().color();
-  QString html = renderAttachments( mRootNode, background );
-  if ( html.isEmpty() )
-    return;
-
-  QString link;
-  if ( headerStyle() == HeaderStyle::fancy() ) {
-    link += "<div style=\"text-align: left;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
-    html.prepend( link );
-    html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
-  } else {
-    link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
-    html.prepend( link );
-  }
-
-  assert( injectionPoint.tagName() == "div" );
-  static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
-}
-
-static QColor nextColor( const QColor & c )
-{
-  int h, s, v;
-  c.getHsv( &h, &s, &v );
-  return QColor::fromHsv( (h + 50) % 360, qMax(s, 64), v );
-}
-
-QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
-{
-  if ( !node )
-    return QString();
-
-  QString html;
-  if ( node->firstChild() ) {
-    QString subHtml = renderAttachments( node->firstChild(), nextColor( bgColor ) );
-    if ( !subHtml.isEmpty() ) {
-
-      QString visibility;
-      if( !showAttachmentQuicklist() ) {
-        visibility.append( "display:none;" );
-      }
-
-      QString margin;
-      if ( node != mRootNode || headerStyle() != HeaderStyle::enterprise() )
-        margin = "padding:2px; margin:2px; ";
-      QString align = "left";
-      if ( headerStyle() == HeaderStyle::enterprise() )
-        align = "right";
-      if ( node->msgPart().typeStr().toLower() == "message" || node == mRootNode )
-        html += QString::fromLatin1("<div style=\"background:%1; %2"
-                "vertical-align:middle; float:%3; %4\">").arg( bgColor.name() ).arg( margin )
-                                                         .arg( align ).arg( visibility );
-      html += subHtml;
-      if ( node->msgPart().typeStr().toLower() == "message" || node == mRootNode )
-        html += "</div>";
-    }
-  } else {
-    QString label, icon;
-    icon = node->msgPart().iconName( KIconLoader::Small );
-    label = node->msgPart().contentDescription();
-    if( label.isEmpty() )
-      label = node->msgPart().name().trimmed();
-    if( label.isEmpty() )
-      label = node->msgPart().fileName();
-    bool typeBlacklisted = node->msgPart().typeStr().toLower() == "multipart";
-    if ( !typeBlacklisted ) {
-      typeBlacklisted = StringUtil::isCryptoPart( node->msgPart().typeStr(), node->msgPart().subtypeStr(),
-                                                  node->msgPart().fileName() );
-    }
-    typeBlacklisted = typeBlacklisted || node == mRootNode;
-    bool firstTextChildOfEncapsulatedMsg = node->msgPart().typeStr().toLower() == "text" &&
-                                           node->msgPart().subtypeStr().toLower() == "plain" &&
-                                           node->parentNode() &&
-                                           node->parentNode()->msgPart().typeStr().toLower() == "message";
-    typeBlacklisted = typeBlacklisted || firstTextChildOfEncapsulatedMsg;
-    if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
-      html += "<div style=\"float:left;\">";
-      html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
-      QString fileName = writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
-      QString href = node->asHREF( "header" );
-      html += QString::fromLatin1( "<a href=\"" ) + href +
-              QString::fromLatin1( "\">" );
-      html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
-      if ( headerStyle() == HeaderStyle::enterprise() ) {
-        QFont bodyFont = cssHelper()->bodyFont( isFixedFont() );
-        QFontMetrics fm( bodyFont );
-        html += fm.elidedText( label, Qt::ElideRight, 180 );
-      } else {
-        html += label;
-      }
-      html += "</a></span></div> ";
-    }
-  }
-
-  html += renderAttachments( node->nextSibling(), nextColor ( bgColor ) );
-  return html;
-}
-#endif
 using namespace KMail::Interface;
 
 void KMReaderWin::setBodyPartMemento( const partNode *node,
@@ -2155,6 +1909,11 @@ void KMReaderWin::clear(bool force )
 void KMReaderWin::setMessage( Akonadi::Item item, Viewer::UpdateMode updateMode)
 {
   mViewer->setMessageItem( item, updateMode );
+}
+
+KUrl KMReaderWin::urlClicked() const
+{
+  return mViewer->urlClicked();
 }
 
 #include "kmreaderwin.moc"
