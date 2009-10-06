@@ -21,7 +21,7 @@
 #define _kmsearchpattern_h_
 
 #include <klocale.h>
-#include <messagestatus.h>
+#include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
 
 #include <QList>

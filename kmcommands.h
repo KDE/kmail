@@ -10,7 +10,7 @@
 #include "libmessageviewer/headerstyle.h"
 using MessageViewer::EditorWatcher;
 #include <mimelib/string.h>
-#include <messagestatus.h>
+#include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
 #include <kservice.h>
 #include <ktemporaryfile.h>

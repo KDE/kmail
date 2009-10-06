@@ -30,7 +30,7 @@
 #include <QResizeEvent>
 #include <kurl.h>
 #include <kservice.h>
-#include <messagestatus.h>
+#include <messagecore/messagestatus.h>
 #include <kvbox.h>
 using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
