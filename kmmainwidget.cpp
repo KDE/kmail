@@ -4244,9 +4244,7 @@ void KMMainWidget::setupActions()
     new KActionMenu( KIcon( "go-jump" ), i18n( "&Move To" ), this );
   actionCollection()->addAction( "move_to", mMoveActionMenu );
 
-  mCopyActionMenu =
-    new KActionMenu( KIcon( "edit-copy" ), i18n( "&Copy To" ), this );
-  actionCollection()->addAction( "copy_to", mCopyActionMenu );
+  mCopyActionMenu = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItemToMenu);
 
   mApplyAllFiltersAction =
     new KAction( KIcon( "view-filter" ), i18n( "Appl&y All Filters" ), this );
@@ -4540,7 +4538,6 @@ void KMMainWidget::slotShowMsgSrc()
 void KMMainWidget::updateMessageMenu()
 {
   mMainFolderView->folderToPopupMenu( KMail::MainFolderView::MoveMessage, this, mMoveActionMenu->menu() );
-  mMainFolderView->folderToPopupMenu( KMail::MainFolderView::CopyMessage, this, mCopyActionMenu->menu() );
   updateMessageActions();
 }
 

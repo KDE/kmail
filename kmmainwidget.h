@@ -174,7 +174,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
     KActionMenu *moveActionMenu() const{ return mMoveActionMenu; }
-    KActionMenu *mopyActionMenu() const { return mCopyActionMenu; }
+    KAction *mopyActionMenu() const { return mCopyActionMenu; }
     KActionMenu *applyFilterActionsMenu() const { return mApplyFilterActionsMenu; }
 
     KToggleAction *watchThreadAction() const { return mWatchThreadAction; }
@@ -681,7 +681,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     CustomTemplatesMenu *mCustomTemplateMenus;
 
     KActionMenu *mThreadStatusMenu,
-      *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
+      *mMoveActionMenu, *mApplyFilterActionsMenu;
+    KAction *mCopyActionMenu;
     KAction *mMarkThreadAsNewAction;
     KAction *mMarkThreadAsReadAction;
     KAction *mMarkThreadAsUnreadAction;

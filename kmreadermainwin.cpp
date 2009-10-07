@@ -389,7 +389,7 @@ KAction *KMReaderMainWin::copyActionMenu()
 {
   KMMainWidget* mainwin = kmkernel->getKMMainWidget();
   if ( mainwin )
-    return mainwin->akonadiStandardAction(  Akonadi::StandardActionManager::CopyCollectionToMenu );
+    return mainwin->akonadiStandardAction(  Akonadi::StandardActionManager::CopyItemToMenu );
   return 0;
 }
 
