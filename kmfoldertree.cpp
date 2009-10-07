@@ -1101,7 +1101,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     QString createChild = i18n("&New Subfolder...");
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
-    if (fti->folder() || (fti->text(0) != i18n("Searches")) && !multiFolder)
+    if ( ( fti->folder() || (fti->text(0) != i18n("Searches")) ) && !multiFolder)
         folderMenu->addAction( KIcon("folder-new"),
                                createChild, this,
                                SLOT(addChildFolder()));
