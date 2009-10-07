@@ -40,6 +40,7 @@
 #include "kmail-akonadi.h"
 #include <akonadi/favoritecollectionsview.h>
 #include <akonadi/entitytreemodel.h>
+#include <akonadi/standardactionmanager.h>
 #ifdef USE_AKONADI_PANE
 namespace MessageList {
   class Pane;
@@ -365,6 +366,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
     void slotModifyFolder( KMMainWidget::PropsPage whichPage = KMMainWidget::PropsGeneral );
 
+    KAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );
@@ -760,7 +762,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMail::MessageActions *mMsgActions;
     KMail::MessageListView::Pane *mMessageListView;
   Akonadi::EntityTreeModel *mEntityModel;
-
+  Akonadi::StandardActionManager *mAkonadiStandardActionManager;
 #ifdef USE_AKONADI_PANE
   MessageList::Pane *mMessagePane;
   Akonadi::EntityTreeView *mCollectionFolderView;

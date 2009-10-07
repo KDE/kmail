@@ -83,7 +83,7 @@ private slots:
 private:
   void initKMReaderMainWin();
   void setupAccel();
-  void updateMessageMenu();
+  KAction *copyActionMenu();
   void updateCustomTemplateMenus();
 
   KMReaderWin *mReaderWin;
@@ -92,7 +92,6 @@ private:
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
           *mViewSourceAction;
-  KActionMenu *mCopyActionMenu;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
   KMail::MessageActions *mMsgActions;

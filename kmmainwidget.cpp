@@ -172,7 +172,6 @@ using KMail::TemplateParser;
 #include <akonadi/entitytreeview.h>
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/statisticstooltipproxymodel.h>
-#include <akonadi/standardactionmanager.h>
 #endif
 
 #include "kmmainwidget.moc"
@@ -918,12 +917,11 @@ void KMMainWidget::createWidgets()
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mEntityModel, this );
     mFavoriteCollectionsView->setModel( favoritesModel );
 
-  Akonadi::StandardActionManager
-    *mStdActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
-  mStdActionManager->setCollectionSelectionModel( mCollectionFolderView->selectionModel() );
-  mStdActionManager->setFavoriteCollectionsModel( favoritesModel );
-  mStdActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
-    mStdActionManager->createAllActions();
+    mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
+    mAkonadiStandardActionManager->setCollectionSelectionModel( mCollectionFolderView->selectionModel() );
+    mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
+    mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
+    mAkonadiStandardActionManager->createAllActions();
 
 
     if ( bUseDockWidgets )
@@ -5446,3 +5444,8 @@ void KMMainWidget::slotMessageSelected(Akonadi::Item item)
   mMsgView->setShowSignatureDetails( false );
 }
 #endif
+
+KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Type type )
+{
+  return mAkonadiStandardActionManager->action( type );
+}

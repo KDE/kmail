@@ -350,10 +350,6 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
-  mCopyActionMenu = new KActionMenu(i18n("&Copy To"), this);
-  actionCollection()->addAction("copy_to", mCopyActionMenu );
-
-  updateMessageMenu();
   updateCustomTemplateMenus();
 
   connect( mReaderWin->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
@@ -389,12 +385,12 @@ void KMReaderMainWin::updateCustomTemplateMenus()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::updateMessageMenu()
+KAction *KMReaderMainWin::copyActionMenu()
 {
   KMMainWidget* mainwin = kmkernel->getKMMainWidget();
   if ( mainwin )
-    mainwin->mainFolderView()->folderToPopupMenu( KMail::MainFolderView::CopyMessage, this,
-                                                  mCopyActionMenu->menu() );
+    return mainwin->akonadiStandardAction(  Akonadi::StandardActionManager::CopyCollectionToMenu );
+  return 0;
 }
 
 void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
@@ -465,8 +461,7 @@ void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,cons
       menu->addSeparator();
     }
 #endif
-    updateMessageMenu();
-    menu->addAction( mCopyActionMenu );
+    menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
