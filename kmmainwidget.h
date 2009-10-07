@@ -144,8 +144,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       { return mMainFolderView; }
     KMail::FolderViewManager * folderViewManager() const
       { return mFolderViewManager; }
+#ifdef OLD_MESSAGELIST
     KMail::MessageListView::Pane * messageListView() const
       { return mMessageListView; }
+#endif
     /**
      * Returns the currently selected folder in messageListView().
      */
@@ -752,7 +754,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KXMLGUIClient *mGUIClient;
 
     KMail::MessageActions *mMsgActions;
+#ifdef OLD_MESSAGELIST
     KMail::MessageListView::Pane *mMessageListView;
+#endif
   Akonadi::EntityTreeModel *mEntityModel;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
 #ifdef USE_AKONADI_PANE

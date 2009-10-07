@@ -1699,6 +1699,7 @@ void KMReaderWin::clear(bool force )
 
 void KMReaderWin::setMessage( Akonadi::Item item, Viewer::UpdateMode updateMode)
 {
+  kDebug()<<" item.storageCollectionId :"<<item.storageCollectionId();
   mViewer->setMessageItem( item, updateMode );
 }
 

@@ -621,7 +621,7 @@ KMUrlOpenCommand::KMUrlOpenCommand( const KUrl &url, KMReaderWin *readerWin )
 
 KMCommand::Result KMUrlOpenCommand::execute()
 {
-#ifndef USE_AKONADI_VIEWER	
+#ifndef USE_AKONADI_VIEWER
   if ( !mUrl.isEmpty() )
     mReaderWin->slotUrlOpen( mUrl, KParts::OpenUrlArguments(), KParts::BrowserArguments() );
 #endif
@@ -1840,17 +1840,20 @@ void KMMetaFilterActionCommand::start()
     scheduler->setAlwaysMatch( true );
     scheduler->setAutoDestruct( true );
     scheduler->setIgnoreFilterSet( true );
-
+#ifdef OLD_MESSAGELIST
     QList<KMMsgBase*> msgList = mMainWidget->messageListView()->selectionAsMsgBaseList();
 
     KMMsgBase *msg;
     foreach( msg, msgList )
       scheduler->execFilters( msg );
+#endif
   } else {
+#ifdef OLD_MESSAGELIST
     KMCommand *filterCommand = new KMFilterActionCommand(
         mMainWidget, mMainWidget->messageListView()->selectionAsMsgBaseList(), mFilter
       );
     filterCommand->start();
+#endif
   }
 }
 
