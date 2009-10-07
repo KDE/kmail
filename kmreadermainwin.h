@@ -22,14 +22,13 @@ template <typename T, typename S> class QMap;
 namespace KMail {
 class MessageActions;
 }
-#ifdef USE_AKONADI_VIEWER
+
 namespace KMime {
   class Message;
 }
 namespace Akonadi {
   class Item;
 }
-#endif
 
 class KMReaderMainWin : public KMail::SecondaryWindow
 {
@@ -59,12 +58,7 @@ public:
   void showMessage( const QString & encoding, const Akonadi::Item &msg );
 #endif
 private slots:
-  //(Laurent) remove this function in the future
-#ifndef USE_AKONADI_VIEWER
-  void slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint);
-#else
     void slotMessagePopup(KMime::Message& ,const KUrl&,const QPoint& );
-#endif
   /** Copy selected messages to folder with corresponding to given QAction */
   void slotCopySelectedMessagesToFolder( QAction* );
   void slotTrashMsg();
