@@ -370,50 +370,7 @@ void KMReaderWin::removeTempFiles()
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
-#ifndef USE_AKONADI_VIEWER
-  delete mCSSHelper;
-  mCSSHelper = new CSSHelper( mViewer->view() );
-
-  mNoMDNsWhenEncrypted = GlobalSettings::self()->notSendWhenEncrypted();
-
-  mUseFixedFont = GlobalSettings::self()->useFixedFont();
-  if ( mToggleFixFontAction )
-    mToggleFixFontAction->setChecked( mUseFixedFont );
-
-  mHtmlMail = GlobalSettings::self()->htmlMail();
-  mHtmlLoadExternal = GlobalSettings::self()->htmlLoadExternal();
-
-  KToggleAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
-  if ( raction )
-    raction->setChecked( true );
-
-  setAttachmentStrategy( AttachmentStrategy::create( GlobalSettings::self()->attachmentStrategy() ) );
-  raction = actionForAttachmentStrategy( attachmentStrategy() );
-  if ( raction )
-    raction->setChecked( true );
-
-  const int mimeH = GlobalSettings::self()->mimePaneHeight();
-  const int messageH = GlobalSettings::self()->messagePaneHeight();
-  mSplitterSizes.clear();
-  if ( GlobalSettings::self()->mimeTreeLocation() == GlobalSettings::EnumMimeTreeLocation::bottom )
-    mSplitterSizes << messageH << mimeH;
-  else
-    mSplitterSizes << mimeH << messageH;
-
-  adjustLayout();
-
-  readGlobalOverrideCodec();
-
-  // Note that this call triggers an update, see this call has to be at the
-  // bottom when all settings are already est.
-  setHeaderStyleAndStrategy( HeaderStyle::create( GlobalSettings::self()->headerStyle() ),
-                             HeaderStrategy::create( GlobalSettings::self()->headerSetDisplayed() ) );
-
-  if (message())
-    update();
-  mColorBar->update();
-  KMMessage::readConfig();
-#endif
+  //TODO remove it
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
@@ -531,18 +488,8 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     // Avoid flicker, somewhat of a cludge
     if (force) {
       // stop the timer to avoid calling updateReaderWin twice
-#ifndef USE_AKONADI_VIEWER
-      mUpdateReaderWinTimer.stop();
-#endif
       updateReaderWin();
     }
-#ifndef USE_AKONADI_VIEWER
-    else if (mUpdateReaderWinTimer.isActive()) {
-      mUpdateReaderWinTimer.setInterval( delay );
-    } else {
-      mUpdateReaderWinTimer.start( 0 );
-    }
-#endif
   }
 
   if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
@@ -557,9 +504,6 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
-#ifndef USE_AKONADI_VIEWER
-  mUpdateReaderWinTimer.stop();
-#endif
   clear();
   mDelayedMarkTimer.stop();
   mLastSerNum = 0;
@@ -1701,7 +1645,6 @@ QString KMReaderWin::overrideEncoding() const
 {
   return mViewer->overrideEncoding();
 }
-
 
 KToggleAction *KMReaderWin::toggleFixFontAction()
 {
