@@ -740,6 +740,7 @@ void KMMainWidget::createWidgets()
   mCollectionFolderView->setModel( sortModel );
 
   mMessagePane = new MessageList::Pane( mEntityModel, mCollectionFolderView->selectionModel(), this );
+  mMessagePane->setXmlGuiClient( mGUIClient );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
            this, SLOT(slotMessageSelected(Akonadi::Item)) );
   connect( mMessagePane, SIGNAL( fullSearchRequest() ), this,SLOT( slotRequestFullSearchFromQuickSearch() ) );

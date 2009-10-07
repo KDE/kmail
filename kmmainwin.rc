@@ -218,6 +218,20 @@
   <Action name="modify"/>
  </Menu>
 
+ <Menu name="akonadi_messagelist_contextmenu">
+  <Action name="message_reply_menu"/>
+  <Action name="message_forward"/>
+  <Action name="send_again"/>
+  <Separator/>
+  <Action name="copy_to"/>
+  <Action name="file_print"/>
+  <Action name="file_saveas"/>
+  <Separator/>
+  <Action name="move_to_trash"/>
+  <Separator/>
+  <Action name="create_todo"/>
+ </Menu>
+
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
   <text>Main Toolbar</text>
   <Action name="new_message" />
