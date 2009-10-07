@@ -2393,7 +2393,7 @@ bool KMFolderImap::isMoveable() const
 }
 
 //-----------------------------------------------------------------------------
-const ulong KMFolderImap::serNumForUID( ulong uid )
+ulong KMFolderImap::serNumForUID( ulong uid )
 {
   if ( mUidMetaDataMap.find( uid ) ) {
     KMMsgMetaData *md = mUidMetaDataMap[uid];

@@ -51,9 +51,9 @@ class TreeBase : public KListView
     void reload( bool mustBeReadWrite, bool showOutbox, bool showImapFolders,
                    const QString& preSelection = QString::null );
 
-    const int folderColumn() const {  return mFolderColumn; }
+    int folderColumn() const {  return mFolderColumn; }
     void setFolderColumn( const int folderCol ) { mFolderColumn = folderCol; }
-    const int pathColumn() const { return mPathColumn; }
+    int pathColumn() const { return mPathColumn; }
     void setPathColumn( const int pathCol ) { mPathColumn = pathCol; }
 
     public slots:

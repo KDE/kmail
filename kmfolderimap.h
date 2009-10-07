@@ -65,8 +65,8 @@ public:
   KMMsgMetaData(KMMsgStatus aStatus, Q_UINT32 aSerNum)
     :mStatus(aStatus), mSerNum(aSerNum) {}
   ~KMMsgMetaData() {};
-  const KMMsgStatus status() const { return mStatus; }
-  const Q_UINT32 serNum() const { return mSerNum; }
+  KMMsgStatus status() const { return mStatus; }
+  Q_UINT32 serNum() const { return mSerNum; }
 private:
   KMMsgStatus mStatus;
   Q_UINT32 mSerNum;
@@ -250,7 +250,7 @@ public:
   /**
    * Get the serial number for the given UID (if available)
    */
-   const ulong serNumForUID( ulong uid );
+   ulong serNumForUID( ulong uid );
 
   /**
    * Save the metadata for the UID

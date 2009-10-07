@@ -31,6 +31,8 @@ TreeBase::TreeBase( QWidget *parent, KMFolderTree *folderTree,
         const QString &preSelection, bool mustBeReadWrite )
        : KListView( parent ), mFolderTree( folderTree )
 {
+     Q_UNUSED( preSelection );
+     Q_UNUSED( mustBeReadWrite );
      kdDebug(5006) << k_funcinfo << endl;
 
      connect(this, SIGNAL(collapsed(QListViewItem*)), SLOT(recolorRows()));

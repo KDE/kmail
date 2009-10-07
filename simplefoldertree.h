@@ -65,8 +65,9 @@ static int recurseFilter( QListViewItem * item, const QString& filter, int colum
 class TreeItemBase 
 {
    public :
-   TreeItemBase( QListView *parent = 0 ): mFolder( 0 ) {
-
+   TreeItemBase()
+     : mFolder( 0 )
+   {
      kdDebug(5006) << k_funcinfo << endl;
    }
    virtual ~TreeItemBase() { }
@@ -89,12 +90,12 @@ template <class T> class SimpleFolderTreeItem : public T, public TreeItemBase
 {
   public:
     SimpleFolderTreeItem( QListView * listView ) : 
-        T( listView ), TreeItemBase( listView) 
+        T( listView ), TreeItemBase() 
     {
      kdDebug(5006) << k_funcinfo << endl;
     }
     SimpleFolderTreeItem( QListView * listView, QListViewItem * afterListViewItem ) :
-            T( listView, afterListViewItem ) , TreeItemBase( listView) 
+            T( listView, afterListViewItem ) , TreeItemBase() 
     {
      kdDebug(5006) << k_funcinfo << endl;
     }
@@ -115,9 +116,9 @@ template <> class SimpleFolderTreeItem<QCheckListItem> : public QCheckListItem, 
 {
   public:
     SimpleFolderTreeItem( QListView * listView ) :
-        QCheckListItem( listView, QString(), CheckBox ), TreeItemBase( listView )  {}
+        QCheckListItem( listView, QString(), CheckBox ), TreeItemBase()  {}
     SimpleFolderTreeItem( QListView * listView, QListViewItem * afterListViewItem ) :
-            QCheckListItem( listView, afterListViewItem, QString(), CheckBox ), TreeItemBase( listView )  {}
+            QCheckListItem( listView, afterListViewItem, QString(), CheckBox ), TreeItemBase()  {}
     SimpleFolderTreeItem( QListViewItem * listViewItem ) :
             QCheckListItem( listViewItem, QString(), CheckBox ) {}
     SimpleFolderTreeItem( QListViewItem * listViewItem, QListViewItem * afterListViewItem ) :
