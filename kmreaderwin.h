@@ -208,8 +208,8 @@ public:
   QString copyText();
 
   /** Get/set auto-delete msg flag. */
-  bool autoDelete(void) const { return mAutoDelete; }
-  void setAutoDelete(bool f) { mAutoDelete=f; }
+  bool autoDelete(void) const;
+  void setAutoDelete(bool f);
 
   /** Override default html mail setting */
   bool htmlOverride() const;
@@ -450,8 +450,6 @@ private:
   unsigned long mSerNumOfOriginalMessage;
   int mNodeIdOffset;
 
-  // widgets:
-  bool mAutoDelete;
   QTimer mDelayedMarkTimer;
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;

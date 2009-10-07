@@ -187,7 +187,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mShowFullCcAddressList( false )
 {
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
-  mAutoDelete = false;
   mLastSerNum = 0;
   mWaitingForSerNum = 0;
   mMessage = 0;
@@ -298,7 +297,9 @@ bool KMReaderWin::isFixedFont() const
 KMReaderWin::~KMReaderWin()
 {
   clearBodyPartMementos();
+#if 0
   if (mAutoDelete) delete message();
+#endif
   delete mRootNode; mRootNode = 0;
   removeTempFiles();
 }
@@ -1842,6 +1843,17 @@ KUrl KMReaderWin::urlClicked() const
 {
   return mViewer->urlClicked();
 }
+
+bool KMReaderWin::autoDelete(void) const
+{
+  return mViewer->autoDelete();
+}
+
+void KMReaderWin::setAutoDelete(bool f)
+{
+  mViewer->setAutoDelete( f );
+}
+
 
 #include "kmreaderwin.moc"
 
