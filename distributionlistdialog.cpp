@@ -244,11 +244,14 @@ void DistributionListDialog::slotUser1()
   // FIXME: Ask the user which resource to save to instead of the default
   bool saveError = true;
   KABC::Ticket *ticket = ab->requestSaveTicket( 0 /*default resource */ );
-  if ( ticket )
-    if ( ab->save( ticket ) )
+  if ( ticket ) {
+    if ( ab->save( ticket ) ) {
       saveError = false;
-    else
+    }
+    else {
       ab->releaseSaveTicket( ticket );
+    }
+  }
 
   if ( saveError )
     kdWarning(5006) << k_funcinfo << " Couldn't save new addresses in the distribution list just created to the address book" << endl;

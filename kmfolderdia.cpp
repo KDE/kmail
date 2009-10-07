@@ -663,11 +663,11 @@ bool FolderDiaGeneralTab::save()
         folder->setIconPaths( "", "" );
       }
     }
-    if ( folder->useCustomIcons() &&
+    if ( folder->useCustomIcons() && (
         (( mNormalIconButton->icon() != folder->normalIconPath() ) &&
          ( !mNormalIconButton->icon().isEmpty())) ||
         (( mUnreadIconButton->icon() != folder->unreadIconPath() ) &&
-         ( !mUnreadIconButton->icon().isEmpty())) ) {
+         ( !mUnreadIconButton->icon().isEmpty())) ) ) {
       folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
     }
 

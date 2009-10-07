@@ -1056,9 +1056,10 @@ Kpgp::Result Kleo::KeyResolver::resolveAllKeys( bool& signingRequested, bool& en
     result = resolveEncryptionKeys( signingRequested );
   if ( result != Kpgp::Ok )
     return result;
-  if ( signingRequested )
-    if ( encryptionRequested )
+  if ( signingRequested ) {
+    if ( encryptionRequested ) {
       result = resolveSigningKeysForEncryption();
+    }
     else {
       result = resolveSigningKeysForSigningOnly();
       if ( result == Kpgp::Failure ) {
@@ -1066,6 +1067,7 @@ Kpgp::Result Kleo::KeyResolver::resolveAllKeys( bool& signingRequested, bool& en
         return Kpgp::Ok;
       }
     }
+  }
   return result;
 }
 

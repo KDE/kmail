@@ -94,6 +94,7 @@ KMFolderMbox::~KMFolderMbox()
 //-----------------------------------------------------------------------------
 int KMFolderMbox::open(const char *owner)
 {
+  Q_UNUSED( owner );
   int rc = 0;
 
   mOpenCount++;
@@ -258,6 +259,7 @@ int KMFolderMbox::create()
 //-----------------------------------------------------------------------------
 void KMFolderMbox::reallyDoClose(const char* owner)
 {
+  Q_UNUSED( owner );
   if (mAutoCreateIndex)
   {
       if (KMFolderIndex::IndexOk != indexStatus()) {

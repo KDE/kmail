@@ -547,6 +547,7 @@ void KMFolderSearch::sync()
 
 void KMFolderSearch::reallyDoClose(const char* owner)
 {
+    Q_UNUSED( owner );
     if (mAutoCreateIndex) {
         if (mSearch)
             mSearch->write(location());

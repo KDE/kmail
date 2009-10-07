@@ -4384,7 +4384,7 @@ void KMComposeWin::slotSendNow() {
 //----------------------------------------------------------------------------
 bool KMComposeWin::checkRecipientNumber() const
 {
-  int thresHold = GlobalSettings::self()->recipientThreshold();
+  uint thresHold = GlobalSettings::self()->recipientThreshold();
   if ( mCheckForRecipients &&
        GlobalSettings::self()->tooManyRecipients() &&
        mRecipientsEditor->recipients().count() > thresHold ) {

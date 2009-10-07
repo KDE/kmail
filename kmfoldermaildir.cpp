@@ -224,6 +224,7 @@ int KMFolderMaildir::create()
 //-----------------------------------------------------------------------------
 void KMFolderMaildir::reallyDoClose(const char* owner)
 {
+  Q_UNUSED( owner );
   if (mAutoCreateIndex)
   {
       updateIndex();
@@ -743,7 +744,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
     }
 
     // Is this a long header line?
-    if (inHeader && line[0] == '\t' || line[0] == ' ')
+    if (inHeader && ( line[0] == '\t' || line[0] == ' ' ) )
     {
       int i = 0;
       while (line[i] == '\t' || line[i] == ' ')

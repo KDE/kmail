@@ -1920,8 +1920,8 @@ void KMHeaders::findUnreadAux( HeaderItem*& item,
       if (!msgBase) continue;
       if (msgBase->isUnread() || msgBase->isNew())
         foundUnreadMessage = true;
-      if (!onlyNew && (msgBase->isUnread() || msgBase->isNew())
-          || onlyNew && msgBase->isNew())
+      if ( ( !onlyNew && (msgBase->isUnread() || msgBase->isNew()) )
+          || ( onlyNew && msgBase->isNew() ) )
         lastUnread = newItem;
       if (newItem == item) break;
       newItem = static_cast<HeaderItem*>(newItem->itemBelow());
@@ -1952,11 +1952,14 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
     if (!item)
       return -1;
 
-    if ( !acceptCurrent )
-        if (aDirNext)
+    if ( !acceptCurrent ) {
+        if (aDirNext) {
             item = static_cast<HeaderItem*>(item->itemBelow());
-        else
+        }
+        else {
             item = static_cast<HeaderItem*>(item->itemAbove());
+        }
+    }
   }
 
   pitem =  item;
