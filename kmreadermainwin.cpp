@@ -452,7 +452,6 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-
     if (!mMsg) {
       // no message
       delete menu;
@@ -471,7 +470,6 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
       menu->addAction( mMsgActions->forwardMenu() );
       menu->addSeparator();
     }
-
     updateMessageMenu();
     menu->addAction( mCopyActionMenu );
 
@@ -538,13 +536,12 @@ void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,cons
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-
+#if 0
     if (!mMsg) {
       // no message
       delete menu;
       return;
     }
-#if 0 //TODO port it
     if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
                                 aMsg.parent()->isDrafts() ||
                                 aMsg.parent()->isTemplates() ) ) ) {
