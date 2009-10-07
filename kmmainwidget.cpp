@@ -882,7 +882,6 @@ void KMMainWidget::createWidgets()
   {
     dw->setWidget( mMainFolderView );
     mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
-    //TODO add mCollectionFolderView
   } else {
     vboxlayout->addWidget( mMainFolderView );
 #ifdef USE_AKONADI_PANE
@@ -3321,6 +3320,12 @@ void KMMainWidget::slotExtendSelectionToNextMessage()
 
 void KMMainWidget::slotSelectNextUnreadMessage()
 {
+  //Laurent port it
+
+
+
+
+
   // The looping logic is: "Don't loop" just never loops, "Loop in current folder"
   // loops just in current folder, "Loop in all folders" loops in the current folder
   // first and then after confirmation jumps to the next folder.
@@ -4508,15 +4513,17 @@ void KMMainWidget::slotShowMsgSrc()
 {
   if ( mMsgView )
     mMsgView->setUpdateAttachment( false );
-
-  KMMessage *msg = mMessageListView->currentMessage();
+  MessagePtr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
+#if 0 //Port it Needs to port kmcommand to kmime::message
+
   KMCommand *command = new KMShowMsgSrcCommand( this, msg,
                                                 mMsgView
                                                 ? mMsgView->isFixedFont()
                                                 : false );
   command->start();
+#endif
 }
 
 
@@ -4635,7 +4642,7 @@ void KMMainWidget::updateMessageActions()
 
   mMoveActionMenu->setEnabled( mass_actions && mFolder->canDeleteMessages() );
   mMoveMsgToFolderAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
-  mCopyActionMenu->setEnabled( mass_actions );
+  //mCopyActionMenu->setEnabled( mass_actions );
   mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
   mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
   mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
