@@ -11,7 +11,7 @@
      <Action name="new_message" />
      <Action name="new_from_template" />
      <Separator/>
-     <Action name="new_folder" />
+     <Action name="akonadi_collection_create" />
      <Separator/>
      <Action name="new_mail_client" />
    </Menu>
@@ -95,7 +95,7 @@
   </Menu>
   <Menu noMerge="1" name="folder" >
    <text>F&amp;older</text>
-   <Action name="new_folder" />
+   <Action name="akonadi_collection_create" />
    <Separator/>
    <Action name="mark_all_as_read" />
    <Separator/>

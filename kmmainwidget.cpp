@@ -4109,11 +4109,6 @@ void KMMainWidget::setupActions()
   }
 
   //----- Folder Menu
-  mNewFolderAction = new KAction( KIcon("folder-new"), i18n("&New Folder..."), this );
-  actionCollection()->addAction( "new_folder", mNewFolderAction );
-#ifdef OLD_FOLDERVIEW
-  connect( mNewFolderAction, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotAddChildFolder()) );
-#endif
   mModifyFolderAction = new KAction(KIcon("document-properties"), i18n("&Properties"), this);
   actionCollection()->addAction("modify", mModifyFolderAction );
   connect(mModifyFolderAction, SIGNAL(triggered(bool)), SLOT(slotModifyFolder()));
@@ -4864,8 +4859,9 @@ void KMMainWidget::updateFolderMenu()
 #endif
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
-
+#ifdef OLD_FOLDERVIEW
   mNewFolderAction->setEnabled( !multiFolder && ( mFolder && mFolder->folderType() != KMFolderTypeSearch ));
+#endif
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mFolder && mFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder );
 }
