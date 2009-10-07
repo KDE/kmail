@@ -2056,20 +2056,6 @@ void KMMainWidget::slotCopyMsgToFolder( KMFolder *dest )
   copyMessageSet( set, dest );
 }
 
-void KMMainWidget::slotCopySelectedMessagesToFolder( QAction * act )
-{
-  KMFolder * folder = static_cast< KMFolder * >( act->data().value< void * >() );
-
-  if ( !folder )
-    return; // would be a deletion
-
-  // FIXME: Test for folder validity in some quick and elegant way ?
-  //        Actually we ASSUME that the folder is valid...
-
-  slotCopyMsgToFolder( folder );
-}
-
-
 //-----------------------------------------------------------------------------
 // Message trashing
 //

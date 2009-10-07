@@ -59,8 +59,6 @@ public:
 #endif
 private slots:
     void slotMessagePopup(KMime::Message& ,const KUrl&,const QPoint& );
-  /** Copy selected messages to folder with corresponding to given QAction */
-  void slotCopySelectedMessagesToFolder( QAction* );
   void slotTrashMsg();
   void slotPrintMsg();
   void slotForwardInlineMsg();

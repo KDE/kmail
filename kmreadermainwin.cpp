@@ -477,16 +477,6 @@ void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,cons
   delete menu;
 }
 
-void KMReaderMainWin::slotCopySelectedMessagesToFolder( QAction* act )
-{
-  KMFolder * f = static_cast<KMFolder *>( act->data().value<void *>() );
-  if ( !f )
-    return;
-
-  KMCommand *command = new KMCopyCommand( f, mMsg );
-  command->start();
-}
-
 void KMReaderMainWin::slotFontAction( const QString& font)
 {
   QFont f( mReaderWin->cssHelper()->bodyFont() );
