@@ -2935,12 +2935,12 @@ void FolderViewItem::slotShowExpiryProperties()
   MainFolderView *mfv = 0;
 #ifdef OLD_FOLDERVIEW
     fv->mainWidget()->mainFolderView();
-#endif
   if ( !mfv )
     return;
 
   KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( mfv, folder() );
   dlg->show();
+#endif  
   //fv->mainWidget()->slotModifyFolder( KMMainWidget::PropsExpire );
 }
 
