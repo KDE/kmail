@@ -172,7 +172,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mOpenAddrBookAction( 0 ),
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
-    mCanStartDrag( false ),
     mShowFullToAddressList( false ),
     mShowFullCcAddressList( false )
 {
@@ -1508,45 +1507,6 @@ void KMReaderWin::saveAttachment( const KUrl &tempFileName )
   slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
 }
 #endif
-//-----------------------------------------------------------------------------
-bool KMReaderWin::eventFilter( QObject *, QEvent *e )
-{
-  if ( e->type() == QEvent::MouseButtonPress ) {
-    QMouseEvent* me = static_cast<QMouseEvent*>(e);
-    if ( me->button() == Qt::LeftButton && ( me->modifiers() & Qt::ShiftModifier ) ) {
-      // special processing for shift+click
-      URLHandlerManager::instance()->handleShiftClick( mHoveredUrl, this );
-      return true;
-    }
-
-    if ( me->button() == Qt::LeftButton ) {
-      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mHoveredUrl, this );
-      mLastClickPosition = me->pos();
-    }
-  }
-
-  if ( e->type() ==  QEvent::MouseButtonRelease ) {
-    mCanStartDrag = false;
-  }
-
-  if ( e->type() == QEvent::MouseMove ) {
-    QMouseEvent* me = static_cast<QMouseEvent*>( e );
-
-    if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
-      if ( mCanStartDrag && !mHoveredUrl.isEmpty() && mHoveredUrl.protocol() == "attachment" ) {
-        mCanStartDrag = false;
-        URLHandlerManager::instance()->handleDrag( mHoveredUrl, this );
-#ifndef USE_AKONADI_VIEWER
-        slotUrlOn( QString() );
-#endif
-        return true;
-      }
-    }
-  }
-
-  // standard event processing
-  return false;
-}
 
 void KMReaderWin::fillCommandInfo( partNode *node, KMMessage **msg, int *nodeId )
 {

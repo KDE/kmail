@@ -435,8 +435,6 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
-  /** Event filter */
-  bool eventFilter( QObject *obj, QEvent *ev );
 
   KUrl urlClicked() const;
 private:
@@ -462,9 +460,6 @@ private:
 
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
     *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
-  KUrl mHoveredUrl;
-  QPoint mLastClickPosition;
-  bool mCanStartDrag;
 
   MessageViewer::Viewer *mViewer;
 
