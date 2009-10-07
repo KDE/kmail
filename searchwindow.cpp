@@ -150,7 +150,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mChkbxSpecificFolders->setChecked(true);
 
   mCbxFolders = new FolderRequester( searchWidget );
+#ifdef OLD_FOLDERVIEW
   mCbxFolders->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
+#endif
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
 
@@ -854,14 +856,14 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
         return;
     QMenu *menu = new QMenu(this);
     updateContextMenuActions();
-
+#ifdef OLD_FOLDERVIEW
     QMenu *msgMoveMenu = new QMenu(menu);
     mKMMainWidget->mainFolderView()->folderToPopupMenu( MainFolderView::MoveMessage,
         this, msgMoveMenu );
     QMenu *msgCopyMenu = new QMenu(menu);
     mKMMainWidget->mainFolderView()->folderToPopupMenu( MainFolderView::CopyMessage,
         this, msgCopyMenu );
-
+#endif
     // show most used actions
     menu->addAction( mReplyAction );
     menu->addAction( mReplyAllAction );
@@ -870,12 +872,15 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
     menu->addSeparator();
     menu->addAction( mCopyAction );
     menu->addAction( mCutAction );
+#ifdef OLD_FOLDERVIEW
     msgCopyMenu->setTitle( i18n( "&Copy To" ) );
     msgCopyMenu->setIcon( KIcon( "edit-copy" ) );
     menu->addMenu( msgCopyMenu );
+
     msgMoveMenu->setTitle( i18n( "&Move To" ) );
     msgMoveMenu->setIcon( KIcon( "go-jump" ) );
     menu->addMenu( msgMoveMenu );
+#endif
     menu->addSeparator();
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtchAction );

@@ -4161,7 +4161,9 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   mMMTab.setupUi( this );
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );
   mMMTab.gridLayout->setMargin( KDialog::marginHint() );
+#ifdef OLD_FOLDERVIEW
   mMMTab.mOnStartupOpenFolder->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
+#endif
   mMMTab.mStartUpFolderLabel->setBuddy( mMMTab.mOnStartupOpenFolder );
   mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
       i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
@@ -4278,8 +4280,9 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   QString toolTip = i18n( "Set the parent of the resource folders" );
   whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().toUtf8() );
   mMGTab.mFolderComboLabel->setWhatsThis( whatsThis );
-
+#ifdef OLD_FOLDERVIEW
   mMGTab.mFolderCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
+#endif
   mMGTab.mFolderCombo->setToolTip( toolTip );
   mMGTab.mFolderCombo->setWhatsThis( whatsThis );
   connect( mMGTab.mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),

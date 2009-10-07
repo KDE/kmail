@@ -41,7 +41,9 @@ FolderSelectionDialog::FolderSelectionDialog( KMMainWidget * parent, const QStri
     mUseGlobalSettings( useGlobalSettings )
 {
   setCaption( caption );
+#ifdef OLD_FOLDERVIEW
   init( parent->mainFolderView(), mustBeReadWrite );
+#endif
 }
 
 FolderSelectionDialog::FolderSelectionDialog( QWidget * parent, MainFolderView * tree,
@@ -131,7 +133,7 @@ void FolderSelectionDialog::readConfig()
   else
     resize( 500, 300 );
 
-  if ( !mTreeView->restoreLayout( group ) ) 
+  if ( !mTreeView->restoreLayout( group ) )
   {
     int colWidth = width() / 2;
     mTreeView->setColumnWidth( mTreeView->nameColumnIndex(), colWidth );

@@ -195,7 +195,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mStartupDone = false;
   mWasEverShown = false;
   mSearchWin = 0;
+#ifdef OLD_FOLDERVIEW
   mMainFolderView = 0;
+#endif
 #ifdef OLD_MESSAGELIST
   mMessageListView = 0;
 #endif
@@ -621,9 +623,10 @@ void KMMainWidget::readConfig()
 #ifdef OLD_MESSAGELIST
     mMessageListView->reloadGlobalConfiguration();
 #endif
+#ifdef OLD_FOLDERVIEW
     mMainFolderView->readConfig();
     mMainFolderView->reload();
-
+#endif
     mFavoritesCheckMailAction->setEnabled( GlobalSettings::self()->enableFavoriteFolderView() );
   }
 
@@ -681,17 +684,19 @@ void KMMainWidget::writeConfig()
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
-      GlobalSettings::self()->setFolderTreeHeight( mMainFolderView->height() );
+      GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
     }
-    else if ( !mLongFolderList && mMainFolderView )
-      GlobalSettings::self()->setFolderTreeHeight( mMainFolderView->height() );
+    else if ( !mLongFolderList && mCollectionFolderView )
+      GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
 
-    if ( mMainFolderView )
+    if ( mCollectionFolderView )
     {
-      GlobalSettings::self()->setFolderViewWidth( mMainFolderView->width() );
+      GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
+#ifdef OLD_FOLDERVIEW
       mMainFolderView->writeConfig();
+#endif
     }
 
     if ( mMsgView ) {
@@ -886,28 +891,33 @@ void KMMainWidget::createWidgets()
     dw->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
 //    dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   }
-
+#ifdef OLD_FOLDERVIEW
   mMainFolderView = new KMail::MainFolderView( this, mFolderViewManager, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( mSearchAndTree ), "folderTree" );
   mFolderQuickSearch->addTreeWidget( mMainFolderView );
-
+#endif
   if ( bUseDockWidgets )
   {
+#ifdef OLD_FOLDERVIEW
     dw->setWidget( mMainFolderView );
+#endif
+    dw->setWidget( mCollectionFolderView );
     mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
   } else {
+#ifdef OLD_FOLDERVIEW
     vboxlayout->addWidget( mMainFolderView );
+#endif
     vboxlayout->addWidget( mCollectionFolderView );
   }
 
   if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
     mFolderQuickSearch->hide();
   }
-
+#ifdef OLD_FOLDERVIEW
   connect( mMainFolderView, SIGNAL( folderDrop(KMFolder*) ),
            this, SLOT( slotMoveMsgToFolder(KMFolder*) ) );
   connect( mMainFolderView, SIGNAL( folderDropCopy(KMFolder*) ),
            this, SLOT( slotCopyMsgToFolder(KMFolder*) ) );
-
+#endif
   //
   // Create the favorite folder view
   //
@@ -992,22 +1002,28 @@ void KMMainWidget::createWidgets()
   {
     KAction *action = new KAction(i18n("Focus on Next Folder"), this);
     actionCollection()->addAction("inc_current_folder", action );
+#ifdef OLD_FOLDERVIEW
     connect( action, SIGNAL( triggered( bool ) ),
              mMainFolderView, SLOT( slotFocusNextFolder() ) );
+#endif
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Right ) );
   }
   {
     KAction *action = new KAction(i18n("Focus on Previous Folder"), this);
     actionCollection()->addAction("dec_current_folder", action );
+#ifdef OLD_FOLDERVIEW
     connect( action, SIGNAL( triggered( bool ) ),
              mMainFolderView, SLOT( slotFocusPrevFolder() ) );
+#endif
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Left ) );
   }
   {
     KAction *action = new KAction(i18n("Select Folder with Focus"), this);
     actionCollection()->addAction("select_current_folder", action );
+#ifdef OLD_FOLDERVIEW
     connect( action, SIGNAL( triggered( bool ) ),
              mMainFolderView, SLOT( slotSelectFocusedFolder() ) );
+#endif
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Space ) );
   }
   {
@@ -1333,6 +1349,7 @@ void KMMainWidget::slotPostToML()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderMailingListProperties()
 {
+#ifdef OLD_FOLDERVIEW
   if ( !mMainFolderView )
     return;
 
@@ -1342,11 +1359,13 @@ void KMMainWidget::slotFolderMailingListProperties()
 
   ( new KMail::MailingListFolderPropertiesDialog( this, folder ) )->show();
   //slotModifyFolder( KMMainWidget::PropsMailingList );
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderShortcutCommand()
 {
+#ifdef OLD_FOLDERVIEW
   if (!mMainFolderView)
     return;
 
@@ -1358,12 +1377,14 @@ void KMMainWidget::slotFolderShortcutCommand()
   shorty = new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mMainFolderView );
   shorty->exec();
   //slotModifyFolder( KMMainWidget::PropsShortcut );
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
 {
+#ifdef OLD_FOLDERVIEW
   if (!mMainFolderView)
     return;
 
@@ -1383,6 +1404,7 @@ void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
   //Kolab issue 2152
   if ( mSystemTray )
     mSystemTray->foldersChanged();
+#endif
 }
 
 
@@ -2960,17 +2982,19 @@ void KMMainWidget::folderSelected()
 
   folderSelected( mFolder );
   updateFolderMenu();
-
+#ifdef OLD_FOLDERVIEW
   // update the caption (useful if the name changed)
   emit captionChangeRequest( mMainFolderView->currentItemFullPath() );
+#endif
 }
 
 void KMMainWidget::slotMessageListViewCurrentFolderChanged( KMFolder * fld )
 {
   if ( fld == mFolder )
     return;
-
+#ifdef OLD_FOLDERVIEW
   mMainFolderView->setCurrentFolder( fld );
+#endif
 }
 
 void KMMainWidget::slotFolderViewManagerFolderActivated( KMFolder * fld, bool middleClick )
@@ -3240,7 +3264,9 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSelectFolder(KMFolder* folder)
 {
+#ifdef OLD_FOLDERVIEW
   mMainFolderView->setCurrentFolder( folder );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4081,8 +4107,9 @@ void KMMainWidget::setupActions()
   //----- Folder Menu
   mNewFolderAction = new KAction( KIcon("folder-new"), i18n("&New Folder..."), this );
   actionCollection()->addAction( "new_folder", mNewFolderAction );
+#ifdef OLD_FOLDERVIEW
   connect( mNewFolderAction, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotAddChildFolder()) );
-
+#endif
   mModifyFolderAction = new KAction(KIcon("document-properties"), i18n("&Properties"), this);
   actionCollection()->addAction("modify", mModifyFolderAction );
   connect(mModifyFolderAction, SIGNAL(triggered(bool)), SLOT(slotModifyFolder()));
@@ -4149,19 +4176,25 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Folder"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
     actionCollection()->addAction("copy_folder", action);
+#ifdef OLD_FOLDERVIEW
     connect(action, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotCopyFolder()));
+#endif
   }
   {
     KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Folder"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_X));
     actionCollection()->addAction("cut_folder", action);
+#ifdef OLD_FOLDERVIEW
     connect(action, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotCutFolder()));
+#endif
   }
   {
     KAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Folder"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_V));
     actionCollection()->addAction("paste_folder", action);
+#ifdef OLD_FOLDERVIEW
     connect(action, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotPasteFolder()));
+#endif
   }
   {
     KAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Messages"), this);
@@ -4526,20 +4559,24 @@ void KMMainWidget::slotReadOn()
 
 void KMMainWidget::slotNextUnreadFolder()
 {
+#ifdef OLD_FOLDERVIEW
   if ( !mMainFolderView )
     return;
   mGoToFirstUnreadMessageInSelectedFolder = true;
   mMainFolderView->selectNextUnreadFolder();
   mGoToFirstUnreadMessageInSelectedFolder = false;
+#endif
 }
 
 void KMMainWidget::slotPrevUnreadFolder()
 {
+#ifdef OLD_FOLDERVIEW
   if ( !mMainFolderView )
     return;
   mGoToFirstUnreadMessageInSelectedFolder = true;
   mMainFolderView->selectPrevUnreadFolder();
   mGoToFirstUnreadMessageInSelectedFolder = false;
+#endif
 }
 
 void KMMainWidget::slotExpandThread()
@@ -4600,8 +4637,10 @@ void KMMainWidget::slotShowMsgSrc()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateMessageMenu()
 {
+#ifdef OLD_FOLDERVIEW
   mMainFolderView->folderToPopupMenu( KMail::MainFolderView::MoveMessage, this, mMoveActionMenu->menu() );
   updateMessageActions();
+#endif
 }
 
 void KMMainWidget::startUpdateMessageActionsTimer()
@@ -4787,8 +4826,10 @@ void KMMainWidget::updateMarkAsReadAction()
 void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
-  bool multiFolder = mMainFolderView->selectedFolders().count() > 1;
-
+  bool multiFolder = false;
+#ifdef OLD_FOLDERVIEW
+    mMainFolderView->selectedFolders().count() > 1;
+#endif
   mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
                                                   !mFolder->isSystemFolder() );
@@ -4848,6 +4889,7 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
+#ifdef OLD_FOLDERVIEW
   if ( mMainFolderView )
   {
     mMainFolderView->readConfig();
@@ -4888,6 +4930,7 @@ void KMMainWidget::slotShowStartupFolder()
 
   if ( mMainFolderView )
     mMainFolderView->setCurrentFolder( startup );
+#endif
 }
 
 void KMMainWidget::slotShowTip()
@@ -5262,8 +5305,9 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   // The shortcut set in the shortcut dialog would not be saved back to
   // the folder settings correctly.
   action->setShortcutConfigurable( false );
-
+#ifdef OLD_FOLDERVIEW
   mMainFolderView->addAction( action ); // <-- FIXME: why this is added to the folder view ?
+#endif
   action->setText( actionlabel );
   connect( action, SIGNAL( triggered(bool) ), c, SLOT( start() ) );
   action->setShortcuts( folder->shortcut() );
@@ -5366,15 +5410,19 @@ void KMMainWidget::toggleSystemTray()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiSpamWizard()
 {
+#ifdef OLD_FOLDERVIEW
   AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this, mainFolderView() );
   wiz.exec();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiVirusWizard()
 {
+#ifdef OLD_FOLDERVIEW
   AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this, mainFolderView() );
   wiz.exec();
+#endif
 }
 
 //-----------------------------------------------------------------------------

@@ -287,7 +287,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
   }
 
   mImap.trashCombo = new FolderRequester( page );
+#ifdef OLD_FOLDERVIEW
   mImap.trashCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
+#endif
   mImap.trashCombo->setShowOutbox( false );
   mImap.ui.trashLabel->setBuddy( mImap.trashCombo );
   mImap.ui.trashLayout->addWidget( mImap.trashCombo, 1 );

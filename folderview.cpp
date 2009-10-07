@@ -1058,7 +1058,7 @@ void FolderView::notifyFolderActivated( KMFolder *folder )
 
 void FolderView::slotAddToFavorites()
 {
-#if 0	
+#if 0
   KMail::FavoriteFolderView *favView = mMainWidget->favoriteFolderView();
   if ( !favView )
     return; // ugh :/
@@ -2930,7 +2930,10 @@ void FolderViewItem::slotShowExpiryProperties()
   if ( !fv )
     return;
 
-  MainFolderView *mfv = fv->mainWidget()->mainFolderView();
+  MainFolderView *mfv = 0;
+#ifdef OLD_FOLDERVIEW
+    fv->mainWidget()->mainFolderView();
+#endif
   if ( !mfv )
     return;
 

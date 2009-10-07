@@ -130,9 +130,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
-
+#ifdef OLD_FOLDERVIEW
     KMail::MainFolderView * mainFolderView() const
       { return mMainFolderView; }
+#endif
     KMail::FolderViewManager * folderViewManager() const
       { return mFolderViewManager; }
 #ifdef OLD_MESSAGELIST
@@ -682,7 +683,9 @@ private:
     QPointer<KMFolder> mFolder;
     QWidget      *mSearchAndTree;
     KTreeWidgetSearchLine *mFolderQuickSearch;
+#ifdef OLD_FOLDERVIEW
     KMail::MainFolderView *mMainFolderView;
+#endif
     KMail::FolderViewManager *mFolderViewManager;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;

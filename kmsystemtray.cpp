@@ -303,7 +303,7 @@ void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
   }
 }
 
-void KMSystemTray::slotContextMenuAboutToShow() 
+void KMSystemTray::slotContextMenuAboutToShow()
 {
   // Rebuild popup menu before show to minimize race condition if
   // the base KMainWidget is closed.
@@ -573,10 +573,11 @@ void KMSystemTray::selectedAccount(int id)
   /** Select folder */
   KMFolder * fldr = mPopupFolders.at(id);
   if(!fldr) return;
-
+#ifdef OLD_FOLDERVIEW
   KMail::MainFolderView * ftw = mainWidget->mainFolderView();
   if ( !ftw ) return;
   ftw->setCurrentFolder( fldr );
+#endif
 }
 
 bool KMSystemTray::hasUnreadMail() const

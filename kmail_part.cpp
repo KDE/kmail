@@ -120,11 +120,13 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   connect( mainWidget->folderViewManager(), SIGNAL(folderActivated(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
+#ifdef OLD_FOLDERVIEW
+
   connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(FolderViewItem*)),
            this, SLOT(slotIconChanged(FolderViewItem*)) );
   connect( mainWidget->mainFolderView(), SIGNAL(nameChanged(FolderViewItem*)),
            this, SLOT(slotNameChanged(FolderViewItem*)) );
-
+#endif
   setXMLFile( "kmail_part.rc", true );
 #endif
 
@@ -155,6 +157,7 @@ bool KMailPart::openFile()
 
 void KMailPart::exportFolder( KMFolder *folder )
 {
+#ifdef OLD_FOLDERVIEW
   FolderViewItem* fti = static_cast<FolderViewItem *>( mainWidget->mainFolderView()->currentItem() );
 
   if ( folder != 0 )
@@ -162,6 +165,7 @@ void KMailPart::exportFolder( KMFolder *folder )
 
   if ( fti )
     emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
+#endif
 }
 
 void KMailPart::slotIconChanged( FolderViewItem *fti )

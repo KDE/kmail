@@ -2206,8 +2206,9 @@ void KMKernel::selectFolder( const QString &folderPath )
   Q_ASSERT( widget );
   if ( !widget )
     return;
-
+#ifdef OLD_FOLDERVIEW
   widget->mainFolderView()->setCurrentFolder( folder );
+#endif
 }
 
 KMMainWidget *KMKernel::getKMMainWidget()
@@ -2374,9 +2375,11 @@ QList< QPointer<KMFolder> > KMKernel::allFolders()
 KMFolder *KMKernel::currentFolder() {
   KMMainWidget *widget = getKMMainWidget();
   KMFolder *folder = 0;
+#ifdef OLD_FOLDERVIEW
   if ( widget && widget->mainFolderView() ) {
     folder = widget->mainFolderView()->currentFolder();
   }
+#endif
   return folder;
 }
 
