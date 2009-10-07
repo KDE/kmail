@@ -142,8 +142,6 @@ using namespace KMime;
 
 #include <memory>
 
-#include "messagelistview/pane.h"
-
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
 {
 public:

@@ -227,10 +227,6 @@ set(kmailprivate_LIB_SRCS
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
-   messagelistview/messageset.cpp
-   messagelistview/pane.cpp
-   messagelistview/storagemodel.cpp
-   messagelistview/widget.cpp
 )
 
 # TODO PORT

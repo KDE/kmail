@@ -149,8 +149,6 @@ using KMail::TemplateParser;
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
 #include "mainfolderview.h"
-#include "messagelistview/pane.h"
-#include "messagelistview/messageset.h"
 #include "messagetree.h"
 #include "libmessageviewer/autoqpointer.h"
 
@@ -1784,7 +1782,7 @@ void KMMainWidget::slotResendMsg()
 //-----------------------------------------------------------------------------
 // Message moving and permanent deletion
 //
-
+#ifdef OLD_MESSAGELIST
 void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMFolder * destination, bool confirmOnDeletion )
 {
   Q_ASSERT( set );
@@ -1855,11 +1853,11 @@ void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMF
   else
     BroadcastStatus::instance()->setStatusMsg( i18n( "Deleting messages..." ) );
 }
-
+#endif
 void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
 {
   Q_ASSERT( command );
-
+#ifdef OLD_MESSAGELIST
   // We have given our persistent set a nice name when it has been created.
   // We have also attacched it as the command child.
   KMail::MessageListView::MessageSet * set = \
@@ -1893,7 +1891,7 @@ void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
         BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages canceled." ) );
     }
   }
-
+#endif
   // The command will autodelete itself and will also kill the set.
 }
 
@@ -1976,7 +1974,7 @@ void KMMainWidget::slotMoveMsgToFolder( KMFolder *dest )
 // Message copying
 // FIXME: Couldn't parts of it be merged with moving code ?
 //
-
+#ifdef OLD_MESSAGELIST
 void KMMainWidget::copyMessageSet( KMail::MessageListView::MessageSet * set, KMFolder * destination )
 {
   Q_ASSERT( set );
@@ -2017,11 +2015,11 @@ void KMMainWidget::copyMessageSet( KMail::MessageListView::MessageSet * set, KMF
 
   BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages..." ) );
 }
-
+#endif
 void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 {
   Q_ASSERT( command );
-
+#ifdef OLD_MESSAGELIST
   // We have given our persistent set a nice name when it has been created.
   // We have also attacched it as the command child.
   KMail::MessageListView::MessageSet * set = \
@@ -2038,7 +2036,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
     else
       BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages canceled." ) );
   }
-
+#endif
   // The command will autodelete itself and will also kill the set.
 }
 
@@ -2084,7 +2082,7 @@ void KMMainWidget::slotCopyMsgToFolder( KMFolder *dest )
 //-----------------------------------------------------------------------------
 // Message trashing
 //
-
+#ifdef OLD_MESSAGELIST
 void KMMainWidget::trashMessageSet( KMail::MessageListView::MessageSet * set )
 {
   Q_ASSERT( set );
@@ -2130,11 +2128,11 @@ void KMMainWidget::trashMessageSet( KMail::MessageListView::MessageSet * set )
 
   BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash..." ) );
 }
-
+#endif
 void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
 {
   Q_ASSERT( command );
-
+#ifdef OLD_MESSAGELIST
   // We have given our persistent set a nice name when it has been created.
   // We have also attacched it as the command child.
   KMail::MessageListView::MessageSet * set = \
@@ -2154,7 +2152,7 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
     else
       BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash canceled." ) );
   }
-
+#endif
   // The command will autodelete itself and will also kill the set.
 }
 
@@ -2187,7 +2185,7 @@ void KMMainWidget::slotTrashThread()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-
+#ifdef OLD_MESSAGELIST
 void KMMainWidget::toggleMessageSetTag(
     KMail::MessageListView::MessageSet * set,
     const QString &taglabel
@@ -2211,7 +2209,7 @@ void KMMainWidget::toggleMessageSetTag(
   set->setParent( command ); // so it will be deleted when the command finishes
   command->start();
 }
-
+#endif
 void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 {
 #ifdef OLD_MESSAGELIST
@@ -2230,7 +2228,7 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-
+#ifdef OLD_MESSAGELIST
 void KMMainWidget::setMessageSetStatus(
     KMail::MessageListView::MessageSet * set,
     const KPIM::MessageStatus &status, bool toggle
@@ -2275,7 +2273,7 @@ void KMMainWidget::setMessageSetStatus(
 
   command->start();
 }
-
+#endif
 void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle )
 {
 #ifdef OLD_MESSAGELIST
