@@ -89,7 +89,6 @@ namespace KMail {
   class FavoriteFolderView;
   class StatusBarLabel;
   class MainFolderView;
-  class FolderViewManager;
 }
 
 class KMAIL_EXPORT KMMainWidget : public QWidget
@@ -133,9 +132,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 #ifdef OLD_FOLDERVIEW
     KMail::MainFolderView * mainFolderView() const
       { return mMainFolderView; }
-#endif
-    KMail::FolderViewManager * folderViewManager() const
+
+  KMail::FolderViewManager * folderViewManager() const
       { return mFolderViewManager; }
+#endif
 #ifdef OLD_MESSAGELIST
     KMail::MessageListView::Pane * messageListView() const
       { return mMessageListView; }
@@ -685,8 +685,8 @@ private:
     KTreeWidgetSearchLine *mFolderQuickSearch;
 #ifdef OLD_FOLDERVIEW
     KMail::MainFolderView *mMainFolderView;
-#endif
     KMail::FolderViewManager *mFolderViewManager;
+#endif
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     KMFolder     *mTemplateFolder;

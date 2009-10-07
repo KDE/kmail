@@ -32,7 +32,7 @@
 #include "aboutdata.h"
 #include "kmfolder.h"
 #include "accountmanager.h"
-#include "mainfolderview.h"
+
 #include <QPixmap>
 #include <QVBoxLayout>
 using KMail::AccountManager;
@@ -119,8 +119,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-  connect( mainWidget->folderViewManager(), SIGNAL(folderActivated(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
 #ifdef OLD_FOLDERVIEW
+  connect( mainWidget->folderViewManager(), SIGNAL(folderActivated(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
 
   connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(FolderViewItem*)),
            this, SLOT(slotIconChanged(FolderViewItem*)) );
@@ -167,7 +167,7 @@ void KMailPart::exportFolder( KMFolder *folder )
     emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
 #endif
 }
-
+#ifdef OLD_FOLDERVIEW
 void KMailPart::slotIconChanged( FolderViewItem *fti )
 {
   emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
@@ -177,7 +177,7 @@ void KMailPart::slotNameChanged( FolderViewItem *fti )
 {
   emit textChanged( fti->folder()->label() );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)

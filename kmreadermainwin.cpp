@@ -51,7 +51,7 @@
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "kmmsgdict.h"
-#include "mainfolderview.h"
+
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>

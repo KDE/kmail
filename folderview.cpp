@@ -36,7 +36,7 @@
 #include "accountmanager.h"
 #include "acljobs.h"
 #include "expirypropertiesdialog.h"
-#include "mainfolderview.h" // ugly, derived class: should be moved from here :/
+ // ugly, derived class: should be moved from here :/
 #include "foldershortcutdialog.h"
 #include "folderstorage.h"
 #include "messagecopyhelper.h"
@@ -247,8 +247,10 @@ FolderView::~FolderView()
 {
   // We don't use mManager here since we want to be really sure
   // that KMMainWidget didn't delete it yet (may happen at shutdown).
+#ifdef OLD_FOLDERVIEW
   if ( mainWidget()->folderViewManager() )
     mainWidget()->folderViewManager()->detachView( this );
+#endif
 }
 
 void FolderView::readConfig()

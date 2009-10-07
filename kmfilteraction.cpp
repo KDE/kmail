@@ -14,7 +14,7 @@
 #include "kmmainwidget.h"
 #include "kmfawidgets.h"
 #include "folderrequester.h"
-#include "mainfolderview.h"
+
 using KMail::FolderRequester;
 #include "kmmsgbase.h"
 #include "templateparser.h"

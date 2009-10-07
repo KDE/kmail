@@ -27,7 +27,7 @@
 using KMail::AccountManager;
 #include "globalsettings.h"
 
-#include "mainfolderview.h"
+
 
 #include <kxmlguiwindow.h>
 #include <kglobalsettings.h>

@@ -2,7 +2,7 @@
 #include "expirypropertiesdialog.h"
 #include "folderrequester.h"
 #include "kmfolder.h"
-#include "mainfolderview.h"
+
 
 #include <QVariant>
 #include <QPushButton>

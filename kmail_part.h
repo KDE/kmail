@@ -68,9 +68,10 @@ class KMailPart: public KParts::ReadOnlyPart
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
     void exportFolder( KMFolder* folder );
+#ifdef OLD_FOLDERVIEW
     void slotIconChanged( FolderViewItem *fti );
     void slotNameChanged( FolderViewItem *fti );
-
+#endif
   signals:
     void textChanged( const QString& );
     void iconChanged( const QPixmap& );

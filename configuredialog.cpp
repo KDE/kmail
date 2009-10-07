@@ -56,7 +56,7 @@ using KMail::ImapAccountBase;
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "kmmessagetag.h"
-#include "mainfolderview.h"
+
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
@@ -87,7 +87,7 @@ using KMime::DateFormatter;
 
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
-
+#include "folderview.h"
 // other KDE headers:
 #include <klineedit.h>
 #include <klocale.h>

@@ -72,10 +72,14 @@ set(kmailprivate_LIB_SRCS
    simplestringlisteditor.cpp
    identitylistview.cpp
    identitydialog.cpp
-   kmfolderdialog.cpp
+
+   kmfolderdialog.cpp  
+
    kmfoldercombobox.cpp
    folderview.cpp
-   mainfolderview.cpp
+
+   #mainfolderview.cpp
+   
    kmaccount.cpp
    listjob.cpp
    snippetdlg.cpp
@@ -105,8 +109,11 @@ set(kmailprivate_LIB_SRCS
    kmsearchpatternedit.cpp
    kmfilteraction.cpp
    kmsearchpattern.cpp
+   
    folderselectiontreewidget.cpp
+
    folderselectiondialog.cpp
+
    kmfilter.cpp
    kmfilterdlg.cpp
    kmmsgbase.cpp
@@ -192,7 +199,7 @@ set(kmailprivate_LIB_SRCS
    recipientspicker.cpp
    kwindowpositioner.cpp
    distributionlistdialog.cpp
-   expirypropertiesdialog.cpp
+   #expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
    newfolderdialog.cpp
    accountwizard.cpp

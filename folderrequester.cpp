@@ -29,7 +29,7 @@
 
 #include "folderrequester.h"
 #include "kmfolder.h"
-#include "mainfolderview.h"
+
 #include "folderselectiondialog.h"
 #include "libmessageviewer/autoqpointer.h"
 

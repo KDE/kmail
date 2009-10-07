@@ -148,7 +148,7 @@ using KMail::TemplateParser;
 #include "messagecopyhelper.h"
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
-#include "mainfolderview.h"
+
 #include "messagetree.h"
 #include "libmessageviewer/autoqpointer.h"
 
@@ -235,8 +235,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   // Create the FolderViewManager that will handle the views for this widget.
   // We need it to be created before all the FolderView instances are created
   // and destroyed after they are destroyed.
+#ifdef OLD_FOLDERVIEW
   mFolderViewManager = new KMail::FolderViewManager( this, "FolderViewManager" );
-
+#endif
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
   mToolbarActionSeparator = new QAction( this );
@@ -256,9 +257,10 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   QTimer::singleShot( 0, this, SLOT( slotShowStartupFolder() ));
 
+#ifdef OLD_FOLDERVIEW
   connect( mFolderViewManager, SIGNAL( folderActivated( KMFolder *, bool ) ),
            this, SLOT( slotFolderViewManagerFolderActivated( KMFolder *, bool ) ) );
-
+#endif
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            this, SLOT( slotMailChecked( bool, bool, const QMap<QString, int> & ) ) );
 
@@ -326,8 +328,10 @@ void KMMainWidget::destruct()
   delete mCustomTemplateMenus;
   mSystemTray = 0;
   mCustomTemplateMenus = 0;
+#ifdef OLD_FOLDERVIEW
   delete mFolderViewManager;
   mFolderViewManager = 0;
+#endif
   mDestructed = true;
 }
 

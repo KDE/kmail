@@ -28,7 +28,7 @@
 #include "kmfoldermgr.h"
 #include "protocols.h"
 #include "folderrequester.h"
-#include "mainfolderview.h"
+
 #include "kmmainwidget.h"
 #include "kmfolder.h"
 #include <kpimidentities/identitymanager.h>

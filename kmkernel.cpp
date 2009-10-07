@@ -51,7 +51,7 @@ using KMail::MailManagerImpl;
 #include "jobscheduler.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
-#include "mainfolderview.h"
+
 #include "messagelist/core/configprovider.h"
 
 #include <kmessagebox.h>

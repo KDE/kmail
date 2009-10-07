@@ -36,7 +36,7 @@
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "kmfoldermgr.h"
-#include "mainfolderview.h"
+
 #include "kleo_util.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"

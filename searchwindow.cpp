@@ -53,7 +53,7 @@
 #include "kmmsgdict.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
-#include "mainfolderview.h"
+
 #include "messagecopyhelper.h"
 #include "regexplineedit.h"
 #include "textsource.h"
