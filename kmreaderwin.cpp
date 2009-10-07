@@ -75,18 +75,8 @@ using KMail::URLHandlerManager;
 
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
-#ifndef USE_AKONADI_VIEWER
-#ifdef KMAIL_READER_HTML_DEBUG
-#include "libmessageviewer/filehtmlwriter.h"
-using KMail::FileHtmlWriter;
-#include "libmessageviewer/teehtmlwriter.h"
-using KMail::TeeHtmlWriter;
-#endif
-#endif
 
-#ifdef USE_AKONADI_VIEWER
 #include "libmessageviewer/viewer.h"
-#endif
 using namespace MessageViewer;
 #include "libmessageviewer/attachmentstrategy.h"
 
@@ -438,37 +428,7 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
 //-----------------------------------------------------------------------------
 void KMReaderWin::setOverrideEncoding( const QString & encoding )
 {
-#ifndef USE_AKONADI_VIEWER
-  if ( encoding == mOverrideEncoding )
-    return;
-
-  mOverrideEncoding = encoding;
-  if ( mSelectEncodingAction ) {
-    if ( encoding.isEmpty() ) {
-      mSelectEncodingAction->setCurrentItem( 0 );
-    }
-    else {
-      QStringList encodings = mSelectEncodingAction->items();
-      int i = 0;
-      for ( QStringList::const_iterator it = encodings.constBegin(), end = encodings.constEnd(); it != end; ++it, ++i ) {
-        if ( KMMsgBase::encodingForName( *it ) == encoding ) {
-          mSelectEncodingAction->setCurrentItem( i );
-          break;
-        }
-      }
-      if ( i == encodings.size() ) {
-        // the value of encoding is unknown => use Auto
-        kWarning() <<"Unknown override character encoding \"" << encoding
-                       << "\". Using Auto instead.";
-        mSelectEncodingAction->setCurrentItem( 0 );
-        mOverrideEncoding.clear();
-      }
-    }
-  }
-  update( true );
-#else
   mViewer->setOverrideEncoding( encoding );
-#endif
 }
 
 //-----------------------------------------------------------------------------
