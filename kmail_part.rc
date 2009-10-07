@@ -202,8 +202,9 @@
   <Action name="search_messages" />
   <Action name="move_to_trash" />
   <Separator/>
-  <Action name="new_folder" />
+  <Action name="akonadi_collection_create" />
   <Action name="akonadi_collection_copy_to_menu"/>
+  <Action name="akonadi_collection_delete"/>
   <Separator/>
   <Action name="akonadi_collection_add_to_favorites"/>
   <Separator/>
