@@ -167,12 +167,10 @@ using KMail::TemplateParser;
 
 #include <libmessageviewer/viewer.h>
 
-#ifdef USE_AKONADI_PANE
 #include <messagelist/pane.h>
 #include <akonadi/entitytreeview.h>
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/statisticstooltipproxymodel.h>
-#endif
 
 #include "kmmainwidget.moc"
 
@@ -476,18 +474,14 @@ void KMMainWidget::layoutSplitters()
 #ifdef OLD_MESSAGELIST
     mSplitter2->addWidget( mMessageListView );
 #endif
-#ifdef USE_AKONADI_PANE
     mSplitter2->addWidget( mMessagePane );
-#endif
   }
 #ifdef OLD_MESSAGELIST
   if ( bUseDockWidgets )
     mMessageListView->setParent( mSplitter2 );
 #endif
-#ifdef USE_AKONADI_PANE
   if ( bUseDockWidgets )
     mMessagePane->setParent( mSplitter2 );
-#endif
 
   if ( mMsgView ) {
     messageViewerParent->addWidget( mMsgView );
@@ -500,9 +494,7 @@ void KMMainWidget::layoutSplitters()
 #ifdef OLD_MESSAGELIST
     mMessageListView->setParent( mSplitter2 );
 #endif
-#ifdef USE_AKONADI_PANE
     mMessagePane->setParent( mSplitter2 );
-#endif
   }
 
   //
@@ -680,9 +672,7 @@ void KMMainWidget::writeConfig()
 #ifdef OLD_MESSAGELIST
     int headersHeight = mMessageListView->height();
 #endif
-#ifdef USE_AKONADI_PANE
     int headersHeight = mMessagePane->height();
-#endif
     if ( headersHeight == 0 )
       headersHeight = height() / 2;
 
@@ -690,9 +680,7 @@ void KMMainWidget::writeConfig()
 #ifdef OLD_MESSAGELIST
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessageListView->width() );
 #endif
-#ifdef USE_AKONADI_PANE
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
-#endif
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mMainFolderView->height() );
@@ -739,7 +727,6 @@ void KMMainWidget::createWidgets()
   //
   // Create header view and search bar
   //
-#ifdef USE_AKONADI_PANE
 
 
   // Setup the message folders collection...
@@ -779,7 +766,6 @@ void KMMainWidget::createWidgets()
   connect( mMessagePane, SIGNAL(statusMessage(QString)),
            BroadcastStatus::instance(), SLOT(setStatusMsg(QString)) );
 
-#endif
 #ifdef OLD_MESSAGELIST
   mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
   mMessageListView->setObjectName( "messagelistview" );
@@ -912,9 +898,7 @@ void KMMainWidget::createWidgets()
     mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
   } else {
     vboxlayout->addWidget( mMainFolderView );
-#ifdef USE_AKONADI_PANE
     vboxlayout->addWidget( mCollectionFolderView );
-#endif
   }
 
   if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
@@ -1059,9 +1043,7 @@ void KMMainWidget::createWidgets()
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFocusQuickSearch()
 {
-#ifdef USE_AKONADI_PANE
   mMessagePane->focusQuickSearch();
-#endif
 }
 
 //-------------------------------------------------------------------------
@@ -3069,10 +3051,8 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
     }
     if ( mMessageListView )
       mMessageListView->show();
-#ifdef USE_AKONADI_PANE
     if ( mMessagePane )
       mMessagePane->show();
-#endif
     mShowingOfflineScreen = false;
   }
 
@@ -3201,19 +3181,17 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowBusySplash()
 {
-#ifdef OLD_MESSAGELIST
   if ( mReaderWindowActive )
   {
     mMsgView->displayBusyPage();
     // hide widgets that are in the way:
+#ifdef OLD_MESSAGELIST
     if ( mMessageListView && mLongFolderList )
       mMessageListView->hide();
-#ifdef USE_AKONADI_PANE
+#endif
     if ( mMessagePane && mLongFolderList )
       mMessagePane->hide();
-#endif
   }
-#endif
 }
 
 void KMMainWidget::showOfflinePage()
@@ -3228,10 +3206,8 @@ void KMMainWidget::showOfflinePage()
   if ( mMessageListView && mLongFolderList )
     mMessageListView->hide();
 #endif
-#ifdef USE_AKONADI_PANE
     if ( mMessagePane && mLongFolderList )
       mMessagePane->hide();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3352,9 +3328,7 @@ void KMMainWidget::slotFocusOnNextMessage()
       false  // don't loop
     );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->focusNextMessageItem(MessageList::Core::MessageTypeAny, true,false );
-#endif
 }
 
 void KMMainWidget::slotFocusOnPrevMessage()
@@ -3366,9 +3340,7 @@ void KMMainWidget::slotFocusOnPrevMessage()
       false  // don't loop
     );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->focusPreviousMessageItem( MessageList::Core::MessageTypeAny, true, false );
-#endif
 }
 
 void KMMainWidget::slotSelectFocusedMessage()
@@ -3378,9 +3350,7 @@ void KMMainWidget::slotSelectFocusedMessage()
       true   // center item
     );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->selectFocusedMessageItem(true );
-#endif
 }
 
 void KMMainWidget::slotSelectNextMessage()
@@ -3393,11 +3363,9 @@ void KMMainWidget::slotSelectNextMessage()
       false  // don't loop in folder
     );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->selectNextMessageItem( MessageList::Core::MessageTypeAny,
                                        MessageList::Core::ClearExistingSelection,
                                        true, true );
-#endif
 }
 
 void KMMainWidget::slotExtendSelectionToNextMessage()
@@ -3410,14 +3378,12 @@ void KMMainWidget::slotExtendSelectionToNextMessage()
       false  // don't loop in folder
     );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->selectNextMessageItem(
                                       MessageList::Core::MessageTypeAny,
                                       MessageList::Core::GrowOrShrinkExistingSelection,
                                       true,  // center item
                                       false  // don't loop in folder
     );
-#endif
 }
 
 void KMMainWidget::slotSelectNextUnreadMessage()
@@ -3471,11 +3437,9 @@ void KMMainWidget::slotSelectPreviousMessage()
       false  // don't loop in folder
     );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->selectPreviousMessageItem( MessageList::Core::MessageTypeAny,
                                            MessageList::Core::ClearExistingSelection,
                                            true, true );
-#endif
 }
 
 void KMMainWidget::slotExtendSelectionToPreviousMessage()
@@ -3488,14 +3452,12 @@ void KMMainWidget::slotExtendSelectionToPreviousMessage()
       false  // don't loop in folder
     );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->selectPreviousMessageItem(
       MessageList::Core::MessageTypeAny,
       MessageList::Core::GrowOrShrinkExistingSelection,
       true,  // center item
       false  // don't loop in folder
     );
-#endif
 }
 
 void KMMainWidget::slotSelectPreviousUnreadMessage()
@@ -3532,7 +3494,6 @@ void KMMainWidget::slotDisplayCurrentMessage()
 }
 
 
-#ifdef USE_AKONADI_PANE
 void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 {
   if ( !msg.isValid() )
@@ -3597,7 +3558,6 @@ void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, c
   }
 #endif
 }
-#endif
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
@@ -3638,9 +3598,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMarkAll()
 {
-#ifdef USE_AKONADI_PANE
   mMessagePane->selectAll();
-#endif
 #ifdef OLD_MESSAGELIST
   mMessageListView->selectAll();
 #endif
@@ -4591,9 +4549,7 @@ void KMMainWidget::slotExpandThread()
 #ifdef OLD_MESSAGELIST
   mMessageListView->setCurrentThreadExpanded( true );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->setCurrentThreadExpanded( true );
-#endif
 }
 
 void KMMainWidget::slotCollapseThread()
@@ -4601,9 +4557,7 @@ void KMMainWidget::slotCollapseThread()
 #ifdef OLD_MESSAGELIST
   mMessageListView->setCurrentThreadExpanded( false );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->setCurrentThreadExpanded( false );
-#endif
 }
 
 void KMMainWidget::slotExpandAllThreads()
@@ -4613,9 +4567,7 @@ void KMMainWidget::slotExpandAllThreads()
 #ifdef OLD_MESSAGELIST
   mMessageListView->setAllThreadsExpanded( true );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->setAllThreadsExpanded( true );
-#endif
 }
 
 void KMMainWidget::slotCollapseAllThreads()
@@ -4625,9 +4577,7 @@ void KMMainWidget::slotCollapseAllThreads()
 #ifdef OLD_MESSAGELIST
   mMessageListView->setAllThreadsExpanded( false );
 #endif
-#ifdef USE_AKONADI_PANE
   mMessagePane->setAllThreadsExpanded( false );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4890,10 +4840,8 @@ void KMMainWidget::slotIntro()
   if ( mMessageListView && mLongFolderList )
     mMessageListView->hide();
 #endif
-#ifdef USE_AKONADI_PANE
   if ( mMessagePane && mLongFolderList )
     mMessagePane->hide();
-#endif
   mMsgView->displayAboutPage();
 
   closeFolder();
@@ -5537,7 +5485,6 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
   return mVacationScriptIndicator;
 }
 
-#ifdef USE_AKONADI_PANE
 void KMMainWidget::slotMessageSelected(Akonadi::Item item)
 {
 #if 0 //Port it
@@ -5568,7 +5515,6 @@ void KMMainWidget::slotMessageSelected(Akonadi::Item item)
   mMsgView->setDecryptMessageOverwrite( false );
   mMsgView->setShowSignatureDetails( false );
 }
-#endif
 
 KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Type type )
 {

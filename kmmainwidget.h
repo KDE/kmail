@@ -41,20 +41,16 @@
 #include <akonadi/favoritecollectionsview.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/standardactionmanager.h>
-#ifdef USE_AKONADI_PANE
 namespace MessageList {
   class Pane;
 }
 namespace Akonadi {
   class EntityTreeView;
 }
-#endif
 
-#ifdef USE_AKONADI_VIEWER
 namespace KMime {
   class Message;
 }
-#endif
 
 class QVBoxLayout;
 class QSplitter;
@@ -269,10 +265,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       Open a separate viewer window containing the specified message.
     */
     void slotMsgActivated( KMMessage * );
-#ifdef USE_AKONADI_PANE
   void slotMessageActivated( const Akonadi::Item & );
   void slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & );
-#endif
 
 
 
@@ -649,10 +643,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMessageListViewCurrentFolderChanged( KMFolder * fld );
     void slotFolderViewManagerFolderActivated( KMFolder * fld, bool middleClick );
     void slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus & clear );
-#ifdef USE_AKONADI_PANE
   void slotMessageSelected(Akonadi::Item);
-#endif
-  private:
+private:
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
@@ -759,10 +751,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 #endif
   Akonadi::EntityTreeModel *mEntityModel;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
-#ifdef USE_AKONADI_PANE
   MessageList::Pane *mMessagePane;
   Akonadi::EntityTreeView *mCollectionFolderView;
-#endif
     bool mOpenedImapFolder;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;
