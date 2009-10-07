@@ -199,7 +199,7 @@ set(kmailprivate_LIB_SRCS
    recipientspicker.cpp
    kwindowpositioner.cpp
    distributionlistdialog.cpp
-   #expirypropertiesdialog.cpp
+   expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
    newfolderdialog.cpp
    accountwizard.cpp
