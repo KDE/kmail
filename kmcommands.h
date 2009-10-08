@@ -7,7 +7,7 @@
 #include "kmmsgbase.h"
 
 #include <mimelib/string.h>
-#include <messagestatus.h>
+#include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
 #include <kservice.h>
 #include <ktemporaryfile.h>

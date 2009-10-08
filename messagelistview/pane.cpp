@@ -36,7 +36,7 @@
 #include <QIcon>
 #include <QToolButton>
 
-#include <libkdepim/messagestatus.h>
+#include <messagecore/messagestatus.h>
 #include <libkdepim/broadcaststatus.h>
 
 #include "globalsettings.h"

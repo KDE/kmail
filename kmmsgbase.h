@@ -20,7 +20,7 @@
 #ifndef kmmsgbase_h
 #define kmmsgbase_h
 
-#include "messagestatus.h"
+#include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
 
 // for large file support flags

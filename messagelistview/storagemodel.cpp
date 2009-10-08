@@ -24,7 +24,7 @@
 
 #include <config-kmail.h>
 
-#include <libkdepim/messagestatus.h>
+#include <messagecore/messagestatus.h>
 
 #include <KDebug>
 #include <KIconLoader>
