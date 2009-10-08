@@ -31,13 +31,12 @@ class KAction;
 
 namespace KMail {
 
-class MainFolderView;
 class FolderViewItem;
 class FolderSelectionTreeWidgetItem;
 
 /**
  * @brief A simple tree of folders useful for a "quick selection"
- * 
+ *
  * This widget displays a two column tree of folders with the folder
  * name on the left and its full path on the right. The tree is filled
  * by fetching data from a FolderTreeWiget.
@@ -171,7 +170,9 @@ signals:
 private:
   int mNameColumnIndex;                 ///< The index of the folder name column
   int mPathColumnIndex;                 ///< The index of the path column
+#ifdef OLD_FOLDERVIEW
   KMail::MainFolderView* mFolderTree;   ///< The MainFolderView to fetch the data from
+#endif
   QString mFilter;                      ///< The current folder path filter string
 
   bool mLastMustBeReadWrite;            ///< Internal state for reload()

@@ -43,8 +43,9 @@ class KMFolder;
 class QLabel;
 
 namespace KMail {
-
+#ifdef OLD_FOLDERVIEW
   class FolderSelectionTreeWidget;
+#endif
   class MainFolderView;
   class FolderRequester;
 
@@ -380,7 +381,9 @@ namespace KMail {
     private:
       QCheckBox * mPipeRules;
       QCheckBox * mMoveRules;
+#ifdef OLD_FOLDERVIEW
       FolderSelectionTreeWidget *mFolderTree;
+#endif
       QCheckBox * mMarkRules;
   };
 

@@ -35,7 +35,9 @@
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmkernel.h"
+#ifdef OLD_FOLDERVIEW
 #include "folderselectiontreewidget.h"
+#endif
 #include "kmmainwin.h"
 #include "networkaccount.h"
 #include "folderrequester.h"
@@ -1131,11 +1133,11 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
             "virus-infected as read, as well as moving them "
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
-
+#ifdef OLD_FOLDERVIEW
   mFolderTree = new FolderSelectionTreeWidget( this, mainFolderTree );
   mFolderTree->reload( true, true, true, QString( "trash" ) );
   grid->addWidget( mFolderTree, 3, 0 );
-
+#endif
   connect( mPipeRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
   connect( mMoveRules, SIGNAL(clicked()),
@@ -1166,10 +1168,14 @@ bool ASWizVirusRulesPage::markReadRulesSelected() const
 
 QString ASWizVirusRulesPage::selectedFolderName() const
 {
+#ifdef OLD_FOLDERVIEW
   QString name = "trash";
   if ( mFolderTree->folder() )
     name = mFolderTree->folder()->idString();
   return name;
+#else
+  return "";
+#endif
 }
 
 void ASWizVirusRulesPage::processSelectionChange()

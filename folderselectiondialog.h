@@ -31,7 +31,9 @@ class KMMainWidget;
 
 namespace KMail {
 
+#ifdef OLD_FOLDERVIEW
 class FolderSelectionTreeWidget;
+#endif
 class MainFolderView;
 
 
@@ -119,7 +121,9 @@ protected:
   void init( MainFolderView *tree, bool mustBeReadWrite );
 
 private:
+#ifdef OLD_FOLDERVIEW
   FolderSelectionTreeWidget * mTreeView;
+#endif
   bool mUseGlobalSettings;
 
 };

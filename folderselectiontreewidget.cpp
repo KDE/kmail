@@ -22,7 +22,6 @@
  *****************************************************************************/
 
 #include "folderselectiontreewidget.h"
-#include "mainfolderview.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
 #include "util.h"
@@ -82,8 +81,15 @@ private:
 };
 
 
-FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent, ::KMail::MainFolderView * folderTree )
-  : KPIM::FolderTreeWidget( parent ), mFolderTree( folderTree )
+FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent
+#ifdef OLD_FOLDERVIEW
+                                                      , ::KMail::MainFolderView * folderTree
+#endif
+  )
+  : KPIM::FolderTreeWidget( parent )
+#ifdef OLD_FOLDERVIEW
+  , mFolderTree( folderTree )
+#endif
 {
   setSelectionMode( QTreeWidget::SingleSelection );
 
@@ -149,7 +155,7 @@ void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSele
 
   int cc = fti->childCount();
   int i = 0;
-
+#ifdef OLD_FOLDERVIEW
   while ( i < cc )
   {
     FolderViewItem *child = dynamic_cast<FolderViewItem *>( ( ( QTreeWidgetItem * )fti)->child( i ) );
@@ -157,6 +163,7 @@ void FolderSelectionTreeWidget::recursiveReload( FolderViewItem *fti, FolderSele
       recursiveReload( child, item );
     i++;
   }
+#endif
 }
 
 void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
@@ -173,9 +180,11 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
     selected = folder()->idString();
 
   mFilter.clear();
-
+#ifdef OLD_FOLDERVIEW
   int cc = mFolderTree->topLevelItemCount();
-
+#else
+  int cc = 0;
+#endif
   int i = 0;
 
   // Calling setUpdatesEnabled() here causes weird effects (including crashes)
@@ -183,7 +192,7 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
   // So disable it for now, this makes the folderselection dialog appear much
   // slower though :(
   //setUpdatesEnabled( false );
-
+#ifdef OLD_FOLDERVIEW
   while ( i < cc )
   {
     FolderViewItem *child = dynamic_cast<FolderViewItem *>( mFolderTree->topLevelItem( i ) );
@@ -191,7 +200,7 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
       recursiveReload( child, 0 );
     i++;
   }
-
+#endif
   // we do this here in one go after all items have been created, as that is
   // faster than expanding each item, which triggers a lot of updates
   expandAll();
@@ -238,7 +247,9 @@ void FolderSelectionTreeWidget::addChildFolder()
            this, SLOT( slotFolderAdded(KMFolder*) ) );
   reconnectSignalSlotPair( kmkernel->dimapFolderMgr(), SIGNAL( folderAdded(KMFolder*) ),
            this, SLOT( slotFolderAdded(KMFolder*) ) );
+#ifdef OLD_FOLDERVIEW
   mFolderTree->addChildFolder( folder(), parentWidget() );
+#endif
 }
 
 void FolderSelectionTreeWidget::slotContextMenuRequested( const QPoint &p )

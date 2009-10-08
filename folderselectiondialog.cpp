@@ -22,7 +22,9 @@
  *****************************************************************************/
 
 #include "folderselectiondialog.h"
+#ifdef OLD_FOLDERVIEW
 #include "folderselectiontreewidget.h"
+#endif
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "globalsettings.h"
@@ -67,6 +69,7 @@ void FolderSelectionDialog::init( MainFolderView *tree, bool mustBeReadWrite )
   QWidget *vbox = new KVBox( this );
   setMainWidget( vbox );
   new QLabel( i18n("You can start typing to filter the list of folders."), vbox );
+#ifdef OLD_FOLDERVIEW
   mTreeView = new KMail::FolderSelectionTreeWidget( vbox, tree );
   mTreeView->setSortingEnabled( false );
   mTreeView->reload( mustBeReadWrite, true, true, preSelection );
@@ -78,6 +81,7 @@ void FolderSelectionDialog::init( MainFolderView *tree, bool mustBeReadWrite )
   connect(this, SIGNAL( user1Clicked() ), mTreeView, SLOT( addChildFolder() ) );
   readConfig();
   mTreeView->resizeColumnToContents(0);
+#endif
 }
 
 FolderSelectionDialog::~FolderSelectionDialog()
@@ -93,12 +97,18 @@ FolderSelectionDialog::~FolderSelectionDialog()
 
 KMFolder * FolderSelectionDialog::folder( void ) const
 {
+#ifdef OLD_FOLDERVIEW
   return mTreeView->folder();
+#else
+  return 0;
+#endif
 }
 
 void FolderSelectionDialog::setFolder( KMFolder* folder )
 {
+#ifdef OLD_FOLDERVIEW
   mTreeView->setFolder( folder );
+#endif
 }
 
 void FolderSelectionDialog::slotSelect()
@@ -117,7 +127,9 @@ void FolderSelectionDialog::slotUpdateBtnStatus( bool allowOk, bool allowCreate 
 void FolderSelectionDialog::setFlags( bool mustBeReadWrite, bool showOutbox,
                                bool showImapFolders )
 {
+#ifdef OLD_FOLDERVIEW
   mTreeView->reload( mustBeReadWrite, showOutbox, showImapFolders );
+#endif
 }
 
 static const char * myConfigGroupName = "FolderSelectionDialog";
@@ -132,13 +144,14 @@ void FolderSelectionDialog::readConfig()
     resize( size );
   else
     resize( 500, 300 );
-
+#ifdef OLD_FOLDERVIEW
   if ( !mTreeView->restoreLayout( group ) )
   {
     int colWidth = width() / 2;
     mTreeView->setColumnWidth( mTreeView->nameColumnIndex(), colWidth );
     mTreeView->setColumnWidth( mTreeView->pathColumnIndex(), colWidth );
   }
+#endif
 }
 
 void FolderSelectionDialog::writeConfig()
@@ -146,8 +159,9 @@ void FolderSelectionDialog::writeConfig()
   KSharedConfig::Ptr config = KGlobal::config();
   KConfigGroup group( config, myConfigGroupName );
   group.writeEntry( "Size", size() );
-
+#ifdef OLD_FOLDERVIEW
   mTreeView->saveLayout( group ); // assume success (there's nothing we can do anyway)
+#endif
 }
 
 } // namespace KMail
