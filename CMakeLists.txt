@@ -192,7 +192,6 @@ set(kmailprivate_LIB_SRCS
    distributionlistdialog.cpp
    expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
-   newfolderdialog.cpp
    accountwizard.cpp
    textsource.cpp
    managesievescriptsdialog.cpp
