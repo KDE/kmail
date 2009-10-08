@@ -4464,7 +4464,7 @@ void KMMainWidget::slotShowMsgSrc()
 {
   if ( mMsgView )
     mMsgView->setUpdateAttachment( false );
-  MessagePtr msg = mMessagePane->currentMessage();
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
 #if 0 //Port it Needs to port kmcommand to kmime::message
