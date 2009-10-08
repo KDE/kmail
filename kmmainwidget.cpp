@@ -1,6 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
+  Copyright (c) 2009 Montel Laurent <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -162,6 +163,7 @@ using KMail::TemplateParser;
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
+#include <akonadi/entitytreeviewstatesaver.h>
 
 #include <messageviewer/viewer.h>
 
@@ -613,10 +615,7 @@ void KMMainWidget::readConfig()
 #ifdef OLD_MESSAGELIST
     mMessageListView->reloadGlobalConfiguration();
 #endif
-#ifdef OLD_FOLDERVIEW
-    mMainFolderView->readConfig();
-    mMainFolderView->reload();
-#endif
+
     mFavoritesCheckMailAction->setEnabled( GlobalSettings::self()->enableFavoriteFolderView() );
   }
 
@@ -684,9 +683,11 @@ void KMMainWidget::writeConfig()
     if ( mCollectionFolderView )
     {
       GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
-#ifdef OLD_FOLDERVIEW
-      mMainFolderView->writeConfig();
-#endif
+      KSharedConfig::Ptr config = KMKernel::config();
+      KConfigGroup group(config, "CollectionFolderView");
+      Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView );
+      saver.saveState( group );
+      group.sync();
     }
 
     if ( mMsgView ) {
@@ -742,6 +743,9 @@ void KMMainWidget::createWidgets()
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   // Use the model
   mCollectionFolderView->setModel( sortModel );
+  const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
+  Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView );
+  saver.restoreState( cfg );
 
   mMessagePane = new MessageList::Pane( mEntityModel, mCollectionFolderView->selectionModel(), this );
   mMessagePane->setXmlGuiClient( mGUIClient );
@@ -867,10 +871,6 @@ void KMMainWidget::createWidgets()
     dw->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
 //    dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   }
-#ifdef OLD_FOLDERVIEW
-  mMainFolderView = new KMail::MainFolderView( this, mFolderViewManager, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( mSearchAndTree ), "folderTree" );
-  mFolderQuickSearch->addTreeWidget( mMainFolderView );
-#endif
   if ( bUseDockWidgets )
   {
     dw->setWidget( mCollectionFolderView );
