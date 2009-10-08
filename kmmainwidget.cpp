@@ -3629,12 +3629,9 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 void KMMainWidget::slotMarkAll()
 {
   mMessagePane->selectAll();
-#ifdef OLD_MESSAGELIST
-  mMessageListView->selectAll();
-#endif
   updateMessageActions();
 }
-#ifdef USE_AKONADI_VIEWER
+
 void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QPoint& aPoint)
 {
 #if 0 //TODO port it
@@ -3744,117 +3741,6 @@ void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QP
   delete menu;
 
 }
-#else
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint &aPoint )
-{
-
-  mMessageListView->activateMessage( &msg ); // make sure that this message is the active one
-
-  // If this assertion fails then our current KMReaderWin is displaying a
-  // message from a folder that is not the current in mMessageListView.
-  // This should never happen as all the actions are messed up in this case.
-  Q_ASSERT( &msg == mMessageListView->currentMessage() );
-
-  updateMessageMenu();
-
-  KMenu *menu = new KMenu;
-  mUrlCurrent = aUrl;
-
-  bool urlMenuAdded = false;
-
-  if ( !aUrl.isEmpty() ) {
-    if ( aUrl.protocol() == "mailto" ) {
-      // popup on a mailto URL
-      menu->addAction( mMsgView->mailToComposeAction() );
-      menu->addAction( mMsgView->mailToReplyAction() );
-      menu->addAction( mMsgView->mailToForwardAction() );
-
-      menu->addSeparator();
-
-      QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
-      KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-      KABC::Addressee::List addresseeList = addressBook->findByEmail( email );
-
-      if ( addresseeList.count() == 0 ) {
-        menu->addAction( mMsgView->addAddrBookAction() );
-      } else {
-        menu->addAction( mMsgView->openAddrBookAction() );
-      }
-      menu->addAction( mMsgView->copyURLAction() );
-    } else {
-      // popup on a not-mailto URL
-      menu->addAction( mMsgView->urlOpenAction() );
-      menu->addAction( mMsgView->addBookmarksAction() );
-      menu->addAction( mMsgView->urlSaveAsAction() );
-      menu->addAction( mMsgView->copyURLAction() );
-    }
-
-    urlMenuAdded = true;
-    kDebug() << "URL is:" << aUrl;
-  }
-
-  if ( mMsgView && !mMsgView->copyText().isEmpty() ) {
-    if ( urlMenuAdded ) {
-      menu->addSeparator();
-    }
-    menu->addAction( mMsgActions->replyMenu() );
-    menu->addSeparator();
-
-    menu->addAction( mMsgView->copyAction() );
-    menu->addAction( mMsgView->selectAllAction() );
-  } else if ( !urlMenuAdded ) {
-    // popup somewhere else (i.e., not a URL) on the message
-
-    if (!mMessageListView->currentMessage()) {
-      // no messages
-      delete menu;
-      return;
-    }
-
-    if ( mFolder->isTemplates() ) {
-      menu->addAction( mUseAction );
-    } else {
-      menu->addAction( mMsgActions->replyMenu() );
-      menu->addAction( mMsgActions->forwardMenu() );
-    }
-    menu->addAction(editAction());
-    menu->addSeparator();
-
-    menu->addAction( mCopyActionMenu );
-    menu->addAction( mMoveActionMenu );
-
-    menu->addSeparator();
-
-    menu->addAction( mMsgActions->messageStatusMenu() );
-    menu->addSeparator();
-
-    menu->addAction( viewSourceAction() );
-    if ( mMsgView ) {
-      menu->addAction( mMsgView->toggleFixFontAction() );
-      menu->addAction( mMsgView->toggleMimePartTreeAction() );
-    }
-    menu->addSeparator();
-    menu->addAction( mPrintAction );
-    menu->addAction( mSaveAsAction );
-    menu->addAction( mSaveAttachmentsAction );
-
-    menu->addSeparator();
-    if ( mFolder->isTrash() ) {
-      menu->addAction( mDeleteAction );
-    } else {
-      menu->addAction( mTrashAction );
-    }
-
-    menu->addSeparator();
-    menu->addAction( mMsgActions->createTodoAction() );
-  }
-  KAcceleratorManager::manage(menu);
-  menu->exec( aPoint, 0 );
-  delete menu;
-}
-#endif
 //-----------------------------------------------------------------------------
 void KMMainWidget::getAccountMenu()
 {
@@ -4540,17 +4426,10 @@ void KMMainWidget::slotReadOn()
 {
     if ( !mMsgView )
         return;
-#ifndef USE_AKONADI_VIEWER
-    if ( !mMsgView->atBottom() ) {
-        mMsgView->slotJumpDown();
-        return;
-    }
-#else
     if ( !mMsgView->viewer()->atBottom() ) {
       mMsgView->viewer()->slotJumpDown();
       return;
     }
-#endif
     slotSelectNextUnreadMessage();
 }
 
@@ -4578,17 +4457,11 @@ void KMMainWidget::slotPrevUnreadFolder()
 
 void KMMainWidget::slotExpandThread()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->setCurrentThreadExpanded( true );
-#endif
   mMessagePane->setCurrentThreadExpanded( true );
 }
 
 void KMMainWidget::slotCollapseThread()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->setCurrentThreadExpanded( false );
-#endif
   mMessagePane->setCurrentThreadExpanded( false );
 }
 
@@ -4596,9 +4469,6 @@ void KMMainWidget::slotExpandAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
   KCursorSaver busy( KBusyPtr::busy() );
-#ifdef OLD_MESSAGELIST
-  mMessageListView->setAllThreadsExpanded( true );
-#endif
   mMessagePane->setAllThreadsExpanded( true );
 }
 
@@ -4606,9 +4476,6 @@ void KMMainWidget::slotCollapseAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
   KCursorSaver busy( KBusyPtr::busy() );
-#ifdef OLD_MESSAGELIST
-  mMessageListView->setAllThreadsExpanded( false );
-#endif
   mMessagePane->setAllThreadsExpanded( false );
 }
 
