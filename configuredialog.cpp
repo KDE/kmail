@@ -45,7 +45,7 @@ using KMail::AccountDialog;
 #include "identitylistview.h"
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
-#include "libmessageviewer/kcursorsaver.h"
+#include "messageviewer/kcursorsaver.h"
 #include "accountmanager.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
@@ -68,7 +68,7 @@ using KPIM::RecentAddresses;
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;

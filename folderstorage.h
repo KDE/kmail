@@ -51,7 +51,7 @@ using KMail::FolderJob;
 
 #include <sys/types.h>
 #include <stdio.h>
-#include "libmessageviewer/attachmentstrategy.h"
+#include "messageviewer/attachmentstrategy.h"
 class KMMessage;
 class KMAccount;
 class KMFolderDir;

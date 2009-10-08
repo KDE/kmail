@@ -45,7 +45,7 @@ using KMail::ImapJob;
 using KPIM::ProgressManager;
 #include "kmfoldermgr.h"
 #include "listjob.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 #include <kdebug.h>
 #include <kconfiggroup.h>

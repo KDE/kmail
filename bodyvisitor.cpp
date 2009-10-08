@@ -29,7 +29,7 @@
  */
 #include "bodyvisitor.h"
 #include "kmmsgpart.h"
-#include "libmessageviewer/attachmentstrategy.h"
+#include "messageviewer/attachmentstrategy.h"
 #include <kdebug.h>
 using namespace KMail;
 

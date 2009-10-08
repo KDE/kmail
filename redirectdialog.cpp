@@ -38,7 +38,7 @@
 using KPIM::AddressesDialog;
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 #include <kiconloader.h>
 #include <klocale.h>

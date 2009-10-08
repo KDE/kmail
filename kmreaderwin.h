@@ -36,7 +36,7 @@ using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 #include <map>
-#include <libmessageviewer/viewer.h>
+#include <messageviewer/viewer.h>
 class QSplitter;
 class KHBox;
 class QTreeWidgetItem;

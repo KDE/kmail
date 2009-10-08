@@ -32,7 +32,7 @@
 #include "kmfilter.h"
 #include "kmfilteraction.h"
 #include "util.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 #include <kconfig.h>
 #include <kdebug.h>

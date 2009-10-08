@@ -47,7 +47,7 @@
 #include "kmenu.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
-#include "libmessageviewer/csshelper.h"
+#include "messageviewer/csshelper.h"
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "kmmsgdict.h"
@@ -58,7 +58,7 @@
 #include <kmime/kmime_message.h>
 
 #ifdef USE_AKONADI_VIEWER
-#include <libmessageviewer/viewer.h>
+#include <messageviewer/viewer.h>
 #include <akonadi/item.h>
 #endif
 

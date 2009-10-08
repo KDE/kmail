@@ -75,7 +75,7 @@ using MailTransport::Transport;
 #include "objecttreeparser.h"
 #include "partNode.h"
 #include "recipientseditor.h"
-#include "libmessageviewer/stl_util.h"
+#include "messageviewer/stl_util.h"
 #include "stringutil.h"
 #include "util.h"
 #include "kmmsgdict.h"
@@ -90,7 +90,7 @@ using KMail::TemplateParser;
 #include <kapplication.h>
 //#include <kcharsets.h>
 //#include <kcodecaction.h>
-#include <libmessageviewer/kcursorsaver.h>
+#include <messageviewer/kcursorsaver.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kencodingfiledialog.h>

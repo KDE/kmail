@@ -17,7 +17,7 @@
 #include "kmail_export.h"
 #include "kmmsgbase.h"
 #include "kmmessagetag.h"
-#include "libmessageviewer/globalsettings.h"
+#include "messageviewer/globalsettings.h"
 #include <kcomponentdata.h>
 
 #define kmkernel KMKernel::self()

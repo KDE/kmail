@@ -20,7 +20,7 @@
 
 #ifndef KMAIL_UNITTESTS
 
-#include "libmessageviewer/kmaddrbook.h"
+#include "messageviewer/kmaddrbook.h"
 #include "kmkernel.h"
 
 #include <libkdepim/kaddrbookexternal.h>

@@ -18,7 +18,7 @@
 */
 
 #include "kmsearchpattern.h"
-#include "libmessageviewer/kmaddrbook.h"
+#include "messageviewer/kmaddrbook.h"
 #include "kmmsgdict.h"
 #include "filterlog.h"
 using KMail::FilterLog;

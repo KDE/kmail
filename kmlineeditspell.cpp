@@ -23,7 +23,7 @@
 #include "recentaddresses.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 #include "stringutil.h"
 
 #include <libkdepim/kvcarddrag.h>

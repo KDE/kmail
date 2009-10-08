@@ -5,9 +5,9 @@
 
 #include "kmail_export.h"
 #include "kmmsgbase.h"
-#include "libmessageviewer/editorwatcher.h"
-#include "libmessageviewer/headerstrategy.h"
-#include "libmessageviewer/headerstyle.h"
+#include "messageviewer/editorwatcher.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
 using MessageViewer::EditorWatcher;
 #include <mimelib/string.h>
 #include <messagecore/messagestatus.h>

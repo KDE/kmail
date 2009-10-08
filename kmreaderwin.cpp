@@ -45,22 +45,22 @@
 #include "partNode.h"
 #include "kmmsgdict.h"
 #include "messagesender.h"
-#include "libmessageviewer/kcursorsaver.h"
+#include "messageviewer/kcursorsaver.h"
 #include "kmfolder.h"
 #ifndef USE_AKONADI_VIEWER
-#include "libmessageviewer/vcardviewer.h"
+#include "messageviewer/vcardviewer.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #endif
-#include "libmessageviewer/headerstrategy.h"
-#include "libmessageviewer/headerstyle.h"
-#include "libmessageviewer/khtmlparthtmlwriter.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
+#include "messageviewer/khtmlparthtmlwriter.h"
 using MessageViewer::HtmlWriter;
-#include "libmessageviewer/htmlstatusbar.h"
+#include "messageviewer/htmlstatusbar.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 
-#include "libmessageviewer/csshelper.h"
+#include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "isubject.h"
 using KMail::ISubject;
@@ -70,15 +70,15 @@ using KMail::URLHandlerManager;
 #include "util.h"
 #include <kicon.h>
 #include "broadcaststatus.h"
-#include "libmessageviewer/attachmentdialog.h"
+#include "messageviewer/attachmentdialog.h"
 #include "stringutil.h"
 
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
 
-#include "libmessageviewer/viewer.h"
+#include "messageviewer/viewer.h"
 using namespace MessageViewer;
-#include "libmessageviewer/attachmentstrategy.h"
+#include "messageviewer/attachmentstrategy.h"
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>

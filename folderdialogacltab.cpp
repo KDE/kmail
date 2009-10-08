@@ -37,7 +37,7 @@
 #include "kmacctcachedimap.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>

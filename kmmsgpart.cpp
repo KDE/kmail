@@ -5,7 +5,7 @@
 #include "kmmessage.h"
 #include "globalsettings.h"
 #include "stringutil.h"
-#include "libmessageviewer/iconnamecache.h"
+#include "messageviewer/iconnamecache.h"
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>

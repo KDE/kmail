@@ -34,7 +34,7 @@
 
 #include "spamheaderanalyzer.h"
 
-#include "libmessageviewer/antispamconfig.h"
+#include "messageviewer/antispamconfig.h"
 using namespace MessageViewer;
 #include "kmmessage.h"
 using namespace KMail;

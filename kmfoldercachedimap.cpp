@@ -56,7 +56,7 @@ using KMail::ListJob;
 #include "annotationjobs.h"
 #include "quotajobs.h"
 #include "groupwareadaptor.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 using namespace KMail;
 
 #include <kio/jobuidelegate.h>

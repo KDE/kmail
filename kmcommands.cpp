@@ -74,7 +74,7 @@
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
-#include "libmessageviewer/kmaddrbook.h"
+#include "messageviewer/kmaddrbook.h"
 #include <kaddrbookexternal.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
@@ -85,14 +85,14 @@ using KMail::ActionScheduler;
 #include "kmmsgdict.h"
 #include "messagesender.h"
 #include "undostack.h"
-#include "libmessageviewer/kcursorsaver.h"
+#include "messageviewer/kcursorsaver.h"
 #include "partNode.h"
 #include "objecttreeparser.h"
-#include "libmessageviewer/csshelper.h"
+#include "messageviewer/csshelper.h"
 using KMail::ObjectTreeParser;
 using KMail::FolderJob;
 #include "chiasmuskeyselector.h"
-#include "libmessageviewer/mailsourceviewer.h"
+#include "messageviewer/mailsourceviewer.h"
 using namespace MessageViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
@@ -102,12 +102,12 @@ using KMail::RedirectDialog;
 #include "util.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
-#include "libmessageviewer/editorwatcher.h"
+#include "messageviewer/editorwatcher.h"
 #include "korghelper.h"
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 #include "stringutil.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 #include <kpimutils/kfileio.h>
 #include "calendarinterface.h"

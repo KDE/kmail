@@ -25,7 +25,7 @@
 #include "attachmentmodel.h"
 #include "attachmentview.h"
 #include "attachmentfrompublickeyjob.h"
-#include "libmessageviewer/editorwatcher.h"
+#include "messageviewer/editorwatcher.h"
 #include "globalsettings.h"
 #include "kmkernel.h"
 #include "newcomposerwin.h"

@@ -30,7 +30,7 @@
 #include "kmkernel.h"
 #include "kmmsgdict.h"
 #include "undostack.h"
-#include "libmessageviewer/kcursorsaver.h"
+#include "messageviewer/kcursorsaver.h"
 #include "jobscheduler.h"
 #include "compactionjob.h"
 #include "util.h"

@@ -85,7 +85,7 @@ using KMime::Types::AddrSpecList;
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 #include "globalsettings.h"
-#include "libmessageviewer/kcursorsaver.h"
+#include "messageviewer/kcursorsaver.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
@@ -102,7 +102,7 @@ using KMail::AccountManager;
 #include "folderselectiondialog.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
-#include "libmessageviewer/kmaddrbook.h"
+#include "messageviewer/kmaddrbook.h"
 #include "kmversion.h"
 #include "searchwindow.h"
 using KMail::SearchWindow;
@@ -122,10 +122,10 @@ using KMail::Vacation;
 using KMail::SubscriptionDialog;
 #include "localsubscriptiondialog.h"
 using KMail::LocalSubscriptionDialog;
-#include "libmessageviewer/attachmentstrategy.h"
+#include "messageviewer/attachmentstrategy.h"
 using MessageViewer::AttachmentStrategy;
-#include "libmessageviewer/headerstrategy.h"
-#include "libmessageviewer/headerstyle.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 #include "mailinglist-magic.h"
@@ -150,7 +150,7 @@ using KMail::TemplateParser;
 #include "customtemplatesmenu.h"
 
 #include "messagetree.h"
-#include "libmessageviewer/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
@@ -163,7 +163,7 @@ using KMail::TemplateParser;
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 
-#include <libmessageviewer/viewer.h>
+#include <messageviewer/viewer.h>
 
 #include <messagelist/pane.h>
 #include <akonadi/entitytreeview.h>

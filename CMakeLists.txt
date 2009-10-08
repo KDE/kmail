@@ -49,7 +49,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/mimelib
   ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/messagelist
-  ${CMAKE_SOURCE_DIR}/libmessageviewer/
+  ${CMAKE_SOURCE_DIR}/messageviewer/
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
   ${CMAKE_SOURCE_DIR}/akonadi/

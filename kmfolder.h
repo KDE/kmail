@@ -37,7 +37,7 @@ typedef QList<KMAccount*> AccountList;
 
 #include "mimelib/string.h"
 #include <kshortcut.h>
-#include "libmessageviewer/attachmentstrategy.h"
+#include "messageviewer/attachmentstrategy.h"
 #include <QList>
 
 

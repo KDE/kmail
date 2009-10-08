@@ -14,7 +14,7 @@
 #include "kmfolder.h"
 #include "undostack.h"
 #include "maildirjob.h"
-#include "libmessageviewer/kcursorsaver.h"
+#include "messageviewer/kcursorsaver.h"
 #include "jobscheduler.h"
 using KMail::MaildirJob;
 #include "compactionjob.h"

@@ -20,11 +20,11 @@ using KMail::ObjectTreeParser;
 #include "kmversion.h"
 #include <version-kmail.h>
 #include "kmmessagetag.h"
-#include "libmessageviewer/headerstrategy.h"
+#include "messageviewer/headerstrategy.h"
 #include "globalsettings.h"
 using MessageViewer::HeaderStrategy;
-#include "libmessageviewer/kmaddrbook.h"
-#include "libmessageviewer/kcursorsaver.h"
+#include "messageviewer/kmaddrbook.h"
+#include "messageviewer/kcursorsaver.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
 #include "stringutil.h"
