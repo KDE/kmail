@@ -250,15 +250,15 @@ qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interf
 
 kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui snippetdlgbase.ui imapsettings.ui localsettings.ui maildirsettings.ui popsettings.ui)
 
-if(ENTERPRISE_BUILD)
+if(KDEPIM_ENTERPRISE_BUILD)
   set(WARN_TOOMANY_RECIPIENTS_DEFAULT true)
   set(DELETE_INVITATIONS_AFTER_REPLY_DEFAULT true)
   set(ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT true)
-else(ENTERPRISE_BUILD)
+else(KDEPIM_ENTERPRISE_BUILD)
   set(WARN_TOOMANY_RECIPIENTS_DEFAULT false)
   set(DELETE_INVITATIONS_AFTER_REPLY_DEFAULT false)
   set(ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT false)
-endif(ENTERPRISE_BUILD)
+endif(KDEPIM_ENTERPRISE_BUILD)
 configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS
