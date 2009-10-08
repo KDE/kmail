@@ -129,15 +129,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
-#ifdef OLD_FOLDERVIEW
-    KMail::MainFolderView * mainFolderView() const
-      { return mMainFolderView; }
-
-#endif
-#ifdef OLD_MESSAGELIST
-    KMail::MessageListView::Pane * messageListView() const
-      { return mMessageListView; }
-#endif
     /**
      * Returns the currently selected folder in messageListView().
      */
@@ -570,7 +561,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
 #ifdef OLD_MESSAGELIST
     void trashMessageSet( KMail::MessageListView::MessageSet * set );
-#endif
     /**
      * Move the messages referenced by the specified set to the specified destination folder.
      * If folder is 0 then the messages are permanently deleted. If folder is 0 and
@@ -579,49 +569,42 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * The set parameter must not be null and the ownership is passed
      * to this function.
      */
-#ifdef OLD_MESSAGELIST
     void moveMessageSet(
         KMail::MessageListView::MessageSet * set,
         KMFolder * destination,
         bool confirmOnDeletion = true
       );
-#endif
     /**
      * Copy the messages referenced by the specified set to the specified destination folder.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-#ifdef OLD_MESSAGELIST
     void copyMessageSet(
         KMail::MessageListView::MessageSet * set,
         KMFolder * destination
       );
-#endif
     /**
      * Set the status of the messages referenced by the specified set, eventually toggling it.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-#ifdef OLD_MESSAGELIST
     void setMessageSetStatus(
         KMail::MessageListView::MessageSet * set,
         const KPIM::MessageStatus &status,
         bool toggle
       );
-#endif
-    /**
-     * This applies setMessageSetStatus() on the current thread.
-     */
-    void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
 
     /**
      * Toggles a tag for the messages referenced by the specified set.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-#ifdef OLD_MESSAGELIST
     void toggleMessageSetTag(
         KMail::MessageListView::MessageSet * set,
         const QString &taglabel
       );
 #endif
+  /**
+   * This applies setMessageSetStatus() on the current thread.
+   */
+  void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
   private slots:
     /**
      * Called when a "move to trash" operation is completed
@@ -680,9 +663,6 @@ private:
     QPointer<KMFolder> mFolder;
     QWidget      *mSearchAndTree;
     KTreeWidgetSearchLine *mFolderQuickSearch;
-#ifdef OLD_FOLDERVIEW
-    KMail::MainFolderView *mMainFolderView;
-#endif
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     KMFolder     *mTemplateFolder;
@@ -745,9 +725,6 @@ private:
     KXMLGUIClient *mGUIClient;
 
     KMail::MessageActions *mMsgActions;
-#ifdef OLD_MESSAGELIST
-    KMail::MessageListView::Pane *mMessageListView;
-#endif
   Akonadi::EntityTreeModel *mEntityModel;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
   MessageList::Pane *mMessagePane;
