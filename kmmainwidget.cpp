@@ -670,19 +670,20 @@ void KMMainWidget::writeConfig()
 #ifdef OLD_MESSAGELIST
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessageListView->width() );
 #endif
-    GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
+    //GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
-      GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
+      //GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
     }
     else if ( !mLongFolderList && mCollectionFolderView )
-      GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
-
+      {
+      //GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
+      }
     if ( mCollectionFolderView )
     {
-      GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
+      //GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
       KSharedConfig::Ptr config = KMKernel::config();
       KConfigGroup group(config, "CollectionFolderView");
       Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView );
