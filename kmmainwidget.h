@@ -133,8 +133,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMail::MainFolderView * mainFolderView() const
       { return mMainFolderView; }
 
-  KMail::FolderViewManager * folderViewManager() const
-      { return mFolderViewManager; }
 #endif
 #ifdef OLD_MESSAGELIST
     KMail::MessageListView::Pane * messageListView() const
@@ -642,7 +640,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotRequestFullSearchFromQuickSearch();
     void slotMessageListViewCurrentFolderChanged( KMFolder * fld );
-    void slotFolderViewManagerFolderActivated( KMFolder * fld, bool middleClick );
     void slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus & clear );
   void slotMessageSelected(Akonadi::Item);
 private:
@@ -685,7 +682,6 @@ private:
     KTreeWidgetSearchLine *mFolderQuickSearch;
 #ifdef OLD_FOLDERVIEW
     KMail::MainFolderView *mMainFolderView;
-    KMail::FolderViewManager *mFolderViewManager;
 #endif
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
