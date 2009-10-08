@@ -4172,12 +4172,8 @@ void KMMainWidget::setupActions()
   connect(mPreferHtmlLoadExtAction, SIGNAL(triggered(bool) ), SLOT(slotOverrideHtmlLoadExt()));
 
   {
-    KAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Folder"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
-    actionCollection()->addAction("copy_folder", action);
-#ifdef OLD_FOLDERVIEW
-    connect(action, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotCopyFolder()));
-#endif
+    KAction *action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyCollections);
+    action->setText( i18n("Copy Folder") );
   }
   {
     KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Folder"), this);
@@ -4848,6 +4844,8 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
+
+  //TODO (laurent) use akonadi action. Perhaps we must change text in akonadi.
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
   updateMarkAsReadAction();

@@ -38,7 +38,7 @@
    <Separator/>
    <Action name="kmail_copy" />
    <Separator/>
-   <Action name="copy_folder"/>
+   <Action name="akonadi_collection_copy"/>
    <Action name="cut_folder"/>
    <Action name="paste_folder"/>
    <Separator/>
