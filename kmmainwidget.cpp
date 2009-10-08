@@ -789,10 +789,6 @@ void KMMainWidget::createWidgets()
     connect( action, SIGNAL( triggered( bool ) ),
              SLOT( slotFocusQuickSearch() ) );
   }
-#ifdef OLD_MESSAGELIST
-  connect( mMessageListView, SIGNAL( fullSearchRequest() ),
-           this, SLOT( slotRequestFullSearchFromQuickSearch() ) );
-#endif
 #if 0
   // FIXME!
   if ( !GlobalSettings::self()->quickSearchActive() )
@@ -825,29 +821,19 @@ void KMMainWidget::createWidgets()
     if ( mMsgActions ) {
       mMsgActions->setMessageView( mMsgView );
     }
-
-#ifndef USE_AKONADI_VIEWER
-    connect( mMsgView, SIGNAL( popupMenu(KMMessage&,const KUrl&,const QPoint&) ),
-             this, SLOT( slotMsgPopup(KMMessage&,const KUrl&,const QPoint&) ) );
-
-    connect( mMsgView, SIGNAL( replaceMsgByUnencryptedVersion() ),
-             this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
-    connect( mMsgView, SIGNAL( urlClicked(const KUrl&,int) ),
-             mMsgView, SLOT( slotUrlClicked() ) );
-#else
-
     connect( mMsgView->viewer(), SIGNAL( replaceMsgByUnencryptedVersion() ),
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
     connect( mMsgView->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
     connect( mMsgView->viewer(), SIGNAL( urlClicked(const KUrl&,int) ),
              mMsgView->viewer(), SLOT( slotUrlClicked() ) );
-#endif
+
 #if 0
     // FIXME (Pragma)
     connect( mMsgView, SIGNAL( noDrag() ),
              mHeaders, SLOT( slotNoDrag() ) );
 #endif
+
 #ifdef OLD_MESSAGELIST
     connect( mMessageListView, SIGNAL( messageSelected( KMMessage * ) ),
              this, SLOT( slotMsgSelected( KMMessage * ) ) );
@@ -901,15 +887,9 @@ void KMMainWidget::createWidgets()
 #endif
   if ( bUseDockWidgets )
   {
-#ifdef OLD_FOLDERVIEW
-    dw->setWidget( mMainFolderView );
-#endif
     dw->setWidget( mCollectionFolderView );
     mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
   } else {
-#ifdef OLD_FOLDERVIEW
-    vboxlayout->addWidget( mMainFolderView );
-#endif
     vboxlayout->addWidget( mCollectionFolderView );
   }
 

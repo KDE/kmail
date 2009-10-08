@@ -19,7 +19,13 @@ class ExpiryPropertiesDialog : public KDialog
     Q_OBJECT
 
 public:
-    ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* folder );
+    ExpiryPropertiesDialog(
+#ifdef OLD_FOLDERVIEW
+      MainFolderView* tree,
+#else
+      QWidget *tree,
+#endif
+      KMFolder* folder );
     ~ExpiryPropertiesDialog();
 
 protected slots:
