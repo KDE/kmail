@@ -114,7 +114,9 @@ namespace KMail {
     virtual ~ObjectTreeParser();
 
     void setAllowAsync( bool allow ) { assert( !mHasPendingAsyncJobs ); mAllowAsync = allow; }
-    bool allowAsync() const { return mAllowAsync; }
+
+    // ### disabled async mode because of crashes, see bug 208353
+    bool allowAsync() const { return /*mAllowAsync*/false; }
 
     bool hasPendingAsyncJobs() const { return mHasPendingAsyncJobs; }
 
