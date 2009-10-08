@@ -514,7 +514,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotToFilter();
     void slotPrintMsg();
     void slotCreateTodo();
-    void slotCopyMessages();
+  //void slotCopyMessages();
     void slotCutMessages();
     void slotPasteMessages();
 

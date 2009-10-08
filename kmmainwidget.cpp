@@ -2394,6 +2394,7 @@ void KMMainWidget::setMessageClipboardContents( const QList< quint32 > &msgs, bo
   mMessageClipboardInCutMode = move;
 }
 
+#if 0 //Done by akonadi now
 void KMMainWidget::slotCopyMessages()
 {
   fillMessageClipboard();
@@ -2402,6 +2403,7 @@ void KMMainWidget::slotCopyMessages()
 
   updateCutCopyPasteActions();
 }
+#endif
 
 void KMMainWidget::slotCutMessages()
 {
@@ -4174,6 +4176,7 @@ void KMMainWidget::setupActions()
   {
     KAction *action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyCollections);
     action->setText( i18n("Copy Folder") );
+    action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
   }
   {
     KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Folder"), this);
@@ -4192,10 +4195,9 @@ void KMMainWidget::setupActions()
 #endif
   }
   {
-    KAction *action = new KAction(KIcon("edit-copy"), i18n("Copy Messages"), this);
+    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItems);
+    action->setText( i18n("Copy Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
-    actionCollection()->addAction("copy_messages", action);
-    connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCopyMessages()));
   }
   {
     KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Messages"), this);

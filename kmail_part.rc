@@ -42,7 +42,7 @@
    <Action name="cut_folder"/>
    <Action name="paste_folder"/>
    <Separator/>
-   <Action name="copy_messages"/>
+   <Action name="akonadi_item_copy"/>
    <Action name="cut_messages"/>
    <Action name="paste_messages"/>
    <Separator/>
