@@ -72,14 +72,8 @@ set(kmailprivate_LIB_SRCS
    simplestringlisteditor.cpp
    identitylistview.cpp
    identitydialog.cpp
-
    #kmfolderdialog.cpp  
-
    kmfoldercombobox.cpp
-   folderview.cpp
-
-   #mainfolderview.cpp
-   
    kmaccount.cpp
    listjob.cpp
    snippetdlg.cpp
@@ -109,11 +103,8 @@ set(kmailprivate_LIB_SRCS
    kmsearchpatternedit.cpp
    kmfilteraction.cpp
    kmsearchpattern.cpp
-   
    #folderselectiontreewidget.cpp
-
    folderselectiondialog.cpp
-
    kmfilter.cpp
    kmfilterdlg.cpp
    kmmsgbase.cpp

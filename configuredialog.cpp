@@ -87,7 +87,6 @@ using KMime::DateFormatter;
 
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
-#include "folderview.h"
 // other KDE headers:
 #include <klineedit.h>
 #include <klocale.h>
@@ -1485,15 +1484,28 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   QRadioButton* folderToolTipsAlwaysRadio = new QRadioButton( i18n( "Always" ), mFolderToolTipsGroupBox );
+#ifdef OLD_FOLDERVIEW
   mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( KMail::FolderView::DisplayAlways ) );
+#else
+  //TODO (laurent) port it
+  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, 0);
+#endif
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsAlwaysRadio );
 
   QRadioButton* folderToolTipsElidedRadio = new QRadioButton( i18n( "When Text Obscured" ), mFolderToolTipsGroupBox );
+#ifdef OLD_FOLDERVIEW
   mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( KMail::FolderView::DisplayWhenTextElided ) );
+#else
+  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, 1 );
+#endif
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsElidedRadio );
 
   QRadioButton* folderToolTipsNeverRadio = new QRadioButton( i18n( "Never" ), mFolderToolTipsGroupBox );
+#ifdef OLD_FOLDERVIEW
   mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( KMail::FolderView::DisplayNever ) );
+#else
+  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, 2);
+#endif
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsNeverRadio );
 
   vlay->addWidget( mFolderToolTipsGroupBox );
