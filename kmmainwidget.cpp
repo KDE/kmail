@@ -197,12 +197,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mStartupDone = false;
   mWasEverShown = false;
   mSearchWin = 0;
-#ifdef OLD_FOLDERVIEW
-  mMainFolderView = 0;
-#endif
-#ifdef OLD_MESSAGELIST
-  mMessageListView = 0;
-#endif
   mIntegrated  = true;
   mFolder = 0;
   mTemplateFolder = 0;
@@ -463,15 +457,8 @@ void KMMainWidget::layoutSplitters()
       folderTreeParent = folderViewParent;
 
     folderTreeParent->insertWidget( folderTreePosition, mSearchAndTree );
-#ifdef OLD_MESSAGELIST
-    mSplitter2->addWidget( mMessageListView );
-#endif
     mSplitter2->addWidget( mMessagePane );
   }
-#ifdef OLD_MESSAGELIST
-  if ( bUseDockWidgets )
-    mMessageListView->setParent( mSplitter2 );
-#endif
   if ( bUseDockWidgets )
     mMessagePane->setParent( mSplitter2 );
 
@@ -483,9 +470,6 @@ void KMMainWidget::layoutSplitters()
   if ( !bUseDockWidgets )
   {
     mSearchAndTree->setParent( folderTreeParent );
-#ifdef OLD_MESSAGELIST
-    mMessageListView->setParent( mSplitter2 );
-#endif
     mMessagePane->setParent( mSplitter2 );
   }
 
@@ -659,9 +643,6 @@ void KMMainWidget::writeConfig()
     // The height of the header widget can be 0, this happens when the user
     // did not switch to the header widget onced and the "Welcome to KMail"
     // HTML widget was shown the whole time
-#ifdef OLD_MESSAGELIST
-    int headersHeight = mMessageListView->height();
-#endif
     int headersHeight = mMessagePane->height();
     if ( headersHeight == 0 )
       headersHeight = height() / 2;
@@ -4701,12 +4682,8 @@ void KMMainWidget::slotIntro()
     return;
 
   mMsgView->clear( true );
-#ifdef OLD_MESSAGELIST
 
   // hide widgets that are in the way:
-  if ( mMessageListView && mLongFolderList )
-    mMessageListView->hide();
-#endif
   if ( mMessagePane && mLongFolderList )
     mMessagePane->hide();
   mMsgView->displayAboutPage();
