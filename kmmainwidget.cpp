@@ -743,9 +743,6 @@ void KMMainWidget::createWidgets()
 #ifdef OLD_MESSAGELIST
   connect( mMessageListView, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
-
-  connect( mMessageListView, SIGNAL( messageActivated( KMMessage * ) ),
-           this, SLOT( slotMsgActivated( KMMessage * ) ) );
 #endif
   mPreviousMessageAction = new KAction( i18n( "Extend Selection to Previous Message" ), this );
   mPreviousMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
@@ -3437,42 +3434,6 @@ void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, c
     command->start();
   }
 #endif
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotMsgActivated(KMMessage *msg)
-{
-  if ( !msg ) return;
-  if (msg->parent() && !msg->isComplete())
-  {
-    FolderJob *job = msg->parent()->createJob(msg);
-    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            SLOT(slotMsgActivated(KMMessage*)));
-    job->start();
-    return;
-  }
-
-  if (kmkernel->folderIsDraftOrOutbox(mFolder))
-  {
-    mMsgActions->editCurrentMessage();
-    return;
-  }
-  if ( kmkernel->folderIsTemplates( mFolder ) ) {
-    slotUseTemplate();
-    return;
-  }
-
-  assert( msg != 0 );
-  KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-  bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
-  win->setUseFixedFont( useFixedFont );
-  KMMessage *newMessage = new KMMessage(*msg);
-  newMessage->setParent( msg->parent() );
-  newMessage->setMsgSerNum( msg->getMsgSerNum() );
-  newMessage->setReadyToShow( true );
-  win->showMsg( overrideEncoding(), newMessage );
-  win->show();
 }
 
 //-----------------------------------------------------------------------------

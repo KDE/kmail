@@ -745,7 +745,10 @@ bool SearchWindow::slotViewMsg( QTreeWidgetItem *item, int )
 {
   KMMessage *message = indexToMessage( item );
   if ( message ) {
+    //TODO port to new API => KMime::Message
+#ifdef OLD_FOLDERVIEW	  
     mKMMainWidget->slotMsgActivated( message );
+#endif    
     return true;
   }
   return false;
