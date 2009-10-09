@@ -171,6 +171,7 @@ using KMail::TemplateParser;
 #include <akonadi/entitytreeview.h>
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/statisticstooltipproxymodel.h>
+#include <akonadi/collectiondialog.h>
 
 #include "kmmainwidget.moc"
 
@@ -2568,6 +2569,15 @@ void KMMainWidget::slotUndo()
 void KMMainWidget::slotJumpToFolder()
 {
   // can jump to anywhere, need not be read/write
+  AutoQPointer<Akonadi::CollectionDialog> dlg;
+  dlg = new Akonadi::CollectionDialog( this );
+  dlg->setMimeTypeFilter( QStringList()<<"message/rfc822" );
+  dlg->setCaption( i18n( "Jump to Folder") );
+  if ( dlg->exec() && dlg ) {
+    //TODO
+  }
+#if 0
+  // can jump to anywhere, need not be read/write
   AutoQPointer<KMail::FolderSelectionDialog> dlg;
   dlg = new KMail::FolderSelectionDialog( this, i18n("Jump to Folder"), false );
 
@@ -2575,6 +2585,7 @@ void KMMainWidget::slotJumpToFolder()
     // safe to accept folder==0 (means "Local Folders" root) here
     slotSelectFolder( dlg->folder() );
   }
+#endif
 }
 
 
