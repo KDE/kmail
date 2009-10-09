@@ -1702,11 +1702,10 @@ void KMMainWidget::slotUseTemplate()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotResendMsg()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage * msg = mMessageListView->currentMessage();
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-
+#ifdef OLD_MESSAGELIST
   KMCommand *command = new KMResendMessageCommand( this, msg );
 
   command->start();
@@ -2358,10 +2357,10 @@ void KMMainWidget::updateCutCopyPasteActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage * msg = mMessageListView->currentMessage();
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   KMCommand *command = new KMRedirectCommand( this, msg );
   command->start();
@@ -2372,10 +2371,10 @@ void KMMainWidget::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage * msg = mMessageListView->currentMessage();
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   QString text = mMsgView ? mMsgView->copyText() : "";
 
@@ -2392,10 +2391,10 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage * msg = mMessageListView->currentMessage();
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   QString text = mMsgView? mMsgView->copyText() : "";
 
@@ -2432,10 +2431,10 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNoQuoteReplyToMsg()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage * msg = mMessageListView->currentMessage();
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   KMCommand *command = new KMNoQuoteReplyToCommand( this, msg );
   command->start();
@@ -2445,10 +2444,10 @@ void KMMainWidget::slotNoQuoteReplyToMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubjectFilter()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage *msg = mMessageListView->currentMessage();
-  if (!msg)
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
+  if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   KMCommand *command = new KMFilterCommand( "Subject", msg->subject() );
   command->start();
@@ -2458,10 +2457,10 @@ void KMMainWidget::slotSubjectFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMailingListFilter()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage *msg = mMessageListView->currentMessage();
-  if (!msg)
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
+  if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   KMCommand *command = new KMMailingListFilterCommand( this, msg );
   command->start();
@@ -2471,10 +2470,10 @@ void KMMainWidget::slotMailingListFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFromFilter()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage *msg = mMessageListView->currentMessage();
-  if (!msg)
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
+  if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   AddrSpecList al = msg->extractAddrSpecs( "From" );
   KMCommand *command;
@@ -2489,11 +2488,10 @@ void KMMainWidget::slotFromFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotToFilter()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage *msg = mMessageListView->currentMessage();
-  if (!msg)
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
+  if ( !msg )
     return;
-
+#ifdef OLD_MESSAGELIST
   KMCommand *command = new KMFilterCommand( "To",  msg->to() );
   command->start();
 #endif
@@ -2505,13 +2503,12 @@ void KMMainWidget::updateListFilterAction()
   //Proxy the mListFilterAction to update the action text
 
   mListFilterAction->setText( i18n("Filter on Mailing-List...") );
-#ifdef OLD_MESSAGELIST
-  KMMessage * msg = mMessageListView->currentMessage();
-  if ( !msg )
-  {
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
+  if ( !msg ) {
     mListFilterAction->setEnabled( false );
     return;
   }
+#ifdef OLD_MESSAGELIST
 
   QByteArray name;
   QString value;
@@ -2725,10 +2722,10 @@ void KMMainWidget::slotStartWatchGnuPG()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPrintMsg()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage *msg = mMessageListView->currentMessage();
-  if (!msg)
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
+  if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
 
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
   bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
@@ -3502,12 +3499,12 @@ void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QP
     menu->addAction( mMsgView->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-#if 0 //Port it
-    if (!mMessageListView->currentMessage()) {
+    if (!mMessagePane->currentMessage()) {
       // no messages
       delete menu;
       return;
     }
+#if 0 //port it
     if ( mFolder->isTemplates() ) {
       menu->addAction( mUseAction );
     } else {
@@ -5147,10 +5144,10 @@ QString KMMainWidget::overrideEncoding() const
 
 void KMMainWidget::slotCreateTodo()
 {
-#ifdef OLD_MESSAGELIST
-  KMMessage *msg = mMessageListView->currentMessage();
+  KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
+#ifdef OLD_MESSAGELIST
   KMCommand *command = new CreateTodoCommand( this, msg );
   command->start();
 #endif
