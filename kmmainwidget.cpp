@@ -100,7 +100,6 @@ using KMail::AccountManager;
 #include "foldershortcutdialog.h"
 #include "kmacctcachedimap.h"
 #include "composer.h"
-#include "folderselectiondialog.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
 #include "messageviewer/kmaddrbook.h"

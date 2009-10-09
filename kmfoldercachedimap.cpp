@@ -50,7 +50,6 @@ using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
 #include "listjob.h"
 using KMail::ListJob;
-#include "folderselectiondialog.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "annotationjobs.h"
@@ -3231,12 +3230,14 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
           "<p>Do you want to move these messages to another folder now?</p>", folder()->prettyUrl() ) );
     if ( KMessageBox::warningYesNo( 0, msg, QString(), KGuiItem( i18n("Move") ), KGuiItem( i18n("Do Not Move") ) )
           == KMessageBox::Yes ) {
+#if 0	    
       AutoQPointer<KMail::FolderSelectionDialog> dlg;
       dlg = new KMail::FolderSelectionDialog( kmkernel->getKMMainWidget(),
                                               i18n("Move Messages to Folder"), true );
       if ( dlg->exec() && dlg ) {
         dest = dlg->folder();
       }
+#endif      
     }
   }
   if ( dest ) {

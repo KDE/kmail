@@ -30,7 +30,6 @@
 #include "folderrequester.h"
 #include "kmfolder.h"
 
-#include "folderselectiondialog.h"
 #include "messageviewer/autoqpointer.h"
 
 #include <kdebug.h>
@@ -77,7 +76,7 @@ void FolderRequester::setFolderTree( MainFolderView *tree )
 void FolderRequester::slotOpenDialog()
 {
   Q_ASSERT( mFolderTree );
-
+#if 0
   AutoQPointer<FolderSelectionDialog> dlg( new FolderSelectionDialog( this, mFolderTree,
                                                                       i18n("Select Folder"),
                                                                       mMustBeReadWrite, false ) );
@@ -87,6 +86,7 @@ void FolderRequester::slotOpenDialog()
   if ( dlg->exec() && dlg ) {
     setFolder( dlg->folder() );
   }
+#endif  
 }
 
 //-----------------------------------------------------------------------------
