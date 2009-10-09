@@ -153,6 +153,8 @@ using KMail::TemplateParser;
 #include "messagetree.h"
 #include "messageviewer/autoqpointer.h"
 
+#include "folderselectiontreeviewdialog.h"
+
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
 
@@ -2569,9 +2571,8 @@ void KMMainWidget::slotUndo()
 void KMMainWidget::slotJumpToFolder()
 {
   // can jump to anywhere, need not be read/write
-  AutoQPointer<Akonadi::CollectionDialog> dlg;
-  dlg = new Akonadi::CollectionDialog( this );
-  dlg->setMimeTypeFilter( QStringList()<<"message/rfc822" );
+  AutoQPointer<FolderSelectionTreeViewDialog> dlg;
+  dlg = new FolderSelectionTreeViewDialog( this );
   dlg->setCaption( i18n( "Jump to Folder") );
   if ( dlg->exec() && dlg ) {
     //TODO
