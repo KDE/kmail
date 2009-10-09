@@ -2974,11 +2974,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
       || ( !isNewImapFolder && mShowBusySplashTimer )
       || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
     if ( mMsgView ) {
-#ifndef USE_AKONADI_VIEWER
-      mMsgView->enableMsgDisplay();
-#else
       mMsgView->viewer()->enableMessageDisplay();
-#endif
       mMsgView->clear( true );
     }
     if ( mMessageListView )
@@ -3238,13 +3234,6 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 
 void KMMainWidget::slotFocusOnNextMessage()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->focusNextMessageItem(
-      MessageList::Core::MessageTypeAny,
-      true,  // center item
-      false  // don't loop
-    );
-#endif
   mMessagePane->focusNextMessageItem(MessageList::Core::MessageTypeAny, true,false );
 }
 
@@ -5160,13 +5149,11 @@ void KMMainWidget::showEvent( QShowEvent *event )
 
 void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
-#ifdef OLD_MESSAGELIST
-  //TODO adapt to mMessagePane
   slotSearch();
   assert( mSearchWin );
   KMSearchPattern pattern;
-  pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mMessageListView->currentFilterSearchString() ) );
-  MessageStatus status = mMessageListView->currentFilterStatus();
+  pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mMessagePane->currentFilterSearchString() ) );
+  MessageStatus status = mMessagePane->currentFilterStatus();
   if ( status.hasAttachment() )
   {
     pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncHasAttachment ) );
@@ -5177,7 +5164,6 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     pattern.append( new KMSearchRuleStatus( status ) );
   }
   mSearchWin->setSearchPattern( pattern );
-#endif
 }
 
 void KMMainWidget::updateVactionScriptStatus( bool active )
