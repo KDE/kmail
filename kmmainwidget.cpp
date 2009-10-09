@@ -864,12 +864,6 @@ void KMMainWidget::createWidgets()
   if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
     mFolderQuickSearch->hide();
   }
-#ifdef OLD_FOLDERVIEW
-  connect( mMainFolderView, SIGNAL( folderDrop(KMFolder*) ),
-           this, SLOT( slotMoveMsgToFolder(KMFolder*) ) );
-  connect( mMainFolderView, SIGNAL( folderDropCopy(KMFolder*) ),
-           this, SLOT( slotCopyMsgToFolder(KMFolder*) ) );
-#endif
   //
   // Create the favorite folder view
   //
@@ -905,11 +899,6 @@ void KMMainWidget::createWidgets()
     if ( mFavoritesCheckMailAction )
       connect( mFavoritesCheckMailAction, SIGNAL(triggered(bool)),
                mFavoriteFolderView, SLOT( checkMail() ) );
-     // FIXME: These signals should be emitted by the manager, probably
-     connect( mFavoriteFolderView, SIGNAL( folderDrop( KMFolder * ) ),
-             SLOT( slotMoveMsgToFolder( KMFolder * ) ) );
-     connect( mFavoriteFolderView, SIGNAL( folderDropCopy( KMFolder * ) ),
-             SLOT( slotCopyMsgToFolder( KMFolder * ) ) );
 #endif
   }
 
