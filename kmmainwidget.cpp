@@ -1180,6 +1180,82 @@ void KMMainWidget::slotEmptyFolder()
   mEmptyFolderAction->setEnabled( false );
 }
 
+//-----------------------------------------------------------------------------
+KURL mMailArchivePath;
+void KMMainWidget::slotArchiveFolder()
+{
+  // TODO: multi folder support?
+  // TODO: extract this into a job class!
+  // TODO: support other formats in addtion to tar.gz. portable ones.
+  // TODO: pick a portable format as the default
+  if ( !mFolder )
+    return;
+
+  if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
+    if ( !mFolder->storage() )
+      // TODO; What now!? Search folders etc
+      return;
+
+    KMFolderCachedImap *storage = dynamic_cast<KMFolderCachedImap*>( mFolder->storage() );
+    Q_ASSERT( storage );
+    QStringList pathsToSave;
+    pathsToSave << storage->uidCacheLocation() << mFolder->indexLocation() << mFolder->location()
+                << mFolder->subdirLocation();
+    // TODO: spaces in path??
+    kdDebug(5006) << "Going to back up: " << pathsToSave << endl;
+
+    //TODO: check if file exists and ask for overwrite
+    //TODO: if overwrite selected, will need to remove the archive first
+    //TODO: save/restore directory will user likes to keep their archive
+    //TODO: give user option on which archive format they want
+    //TODO: give user option to compress archive if they want
+    QString process = "/usr/bin/ark"; //TODO: use the ark from locateExe
+    mMailArchivePath = KFileDialog::getSaveURL( KGlobalSettings::desktopPath(),
+                                                QString( "*.tar.gz" ),
+                                                this,
+                                                i18n( "Select a Mail Archive Location" ) );
+    KProcess *proc = new KProcess( this ); // TODO: where is this deleted
+    *proc << process /*<< "-f tar.bz2"*/ << "--changetofirstpath"
+          << "--add-to" << mMailArchivePath.path() << pathsToSave;
+    connect( proc, SIGNAL( processExited( KProcess* ) ),
+             this, SLOT( slotArchiveProcessFinished( KProcess* ) ) );
+    proc->start( KProcess::NotifyOnExit, KProcess::NoCommunication );
+  }
+  // TODO: search, mbox, maildir, online imap!
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotArchiveProcessFinished( KProcess *proc )
+{
+  // TODO: add error code
+  if ( proc->normalExit() ) {
+    if ( QFile::exists( KURL::decode_string( mMailArchivePath.path() ) ) ) {
+      //TODO: check size of archive!?
+      //TODO: provide some stats (size of archive, number of files.. etc)
+      KMessageBox::information( this,
+                                i18n( "Your mail has been archived to: %1" ).
+                                arg( mMailArchivePath.prettyURL() ),
+                                i18n( "Mail Archive Successful!" ),
+                                QString::null,
+                                KMessageBox::Notify );
+    } else {
+      KMessageBox::information( this,
+                                i18n( "There was an error archiving your mail." ),
+                                i18n( "Mail Archive Failed" ),
+                                QString::null,
+                                KMessageBox::Notify );
+    }
+  } else {
+    KMessageBox::information( this,
+                              i18n( "There was a fatal failure encountered "
+                                    "attempting to run the archive program." ),
+                              i18n( "Mail Archive Failed" ),
+                              QString::null,
+                              KMessageBox::Notify );
+  }
+
+  delete proc;
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRemoveFolder()
@@ -2804,6 +2880,10 @@ void KMMainWidget::setupActions()
   mRemoveFolderAction = new KAction( "foo" /*set in updateFolderMenu*/, "editdelete", 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
 
+  mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), "filesave", 0, this,
+                                      SLOT( slotArchiveFolder() ), actionCollection(),
+                                      "archive_folder" );
+
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
 
@@ -3376,9 +3456,9 @@ void KMMainWidget::updateMessageActions()
     viewSourceAction()->setEnabled( single_actions );
 
     mSendAgainAction->setEnabled( single_actions
-          && ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
-          || ( mFolder && mHeaders->currentMsg() &&
-               kmkernel->folderIsSentMailFolder( mFolder ) ) );
+          && ( ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
+          ||   ( mFolder && mHeaders->currentMsg() &&
+                 kmkernel->folderIsSentMailFolder( mFolder ) ) ) );
     mSaveAsAction->setEnabled( mass_actions );
     bool mails = mFolder && mFolder->count();
     bool enable_goto_unread = mails
@@ -3439,6 +3519,7 @@ void KMMainWidget::updateFolderMenu()
   mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch
         ? i18n("&Delete Search") : i18n("&Delete Folder") );
+  mArchiveFolderAction->setEnabled( mFolder && !multiFolder );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
