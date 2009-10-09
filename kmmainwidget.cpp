@@ -4540,10 +4540,7 @@ void KMMainWidget::updateMarkAsReadAction()
 void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
-  bool multiFolder = false;
-#ifdef OLD_FOLDERVIEW
-    mMainFolderView->selectedFolders().count() > 1;
-#endif
+  bool multiFolder = mCollectionFolderView->selectedCollections().count()>1;
   mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
                                                   !mFolder->isSystemFolder() );
