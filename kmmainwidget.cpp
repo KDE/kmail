@@ -1899,6 +1899,8 @@ void KMMainWidget::slotMoveSelectedMessagesToFolder( QAction * act )
 //        When changing the name also change the slot name in the QObject::connect calls all around...
 void KMMainWidget::slotMoveMsg()
 {
+  //TODO  needs to re-implement it.
+#if 0
   AutoQPointer<KMail::FolderSelectionDialog> dlg;
   dlg = new KMail::FolderSelectionDialog( this, i18n( "Move Messages to Folder" ), true );
 
@@ -1909,6 +1911,7 @@ void KMMainWidget::slotMoveMsg()
       slotMoveMsgToFolder( dest );
     }
   }
+#endif
 }
 
 // FIXME: Use better name for this (slotMoveSelectedMessagesToFolder() ?)
@@ -2008,6 +2011,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 //        When changing the name also change the slot name in the QObject::connect calls all around...
 void KMMainWidget::slotCopyMsg()
 {
+#if 0 //TODO reimplement it
   AutoQPointer<KMail::FolderSelectionDialog> dlg;
   dlg = new KMail::FolderSelectionDialog( this, i18n( "Copy Messages to Folder" ), true );
 
@@ -2018,6 +2022,7 @@ void KMMainWidget::slotCopyMsg()
       slotCopyMsgToFolder( dest );
     }
   }
+#endif
 }
 
 // FIXME: Use better name for this (slotCopySelectedMessagesToFolder() ?)
