@@ -990,7 +990,6 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   layout->addWidget( mMoveSpamRules );
 
   mFolderReqForSpamFolder = new FolderRequester( this );
-  mFolderReqForSpamFolder->setFolderTree( mainFolderTree );
   mFolderReqForSpamFolder->setFolder( "trash" );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
@@ -1010,7 +1009,6 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   layout->addWidget( mMoveUnsureRules );
 
   mFolderReqForUnsureFolder = new FolderRequester( this );
-  mFolderReqForUnsureFolder->setFolderTree( mainFolderTree );
   mFolderReqForUnsureFolder->setFolder( "inbox" );
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );

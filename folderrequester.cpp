@@ -36,7 +36,7 @@
 #include <klineedit.h>
 #include <kiconloader.h>
 #include <kdialog.h>
-
+#include "folderselectiontreeviewdialog.h"
 #include <QLayout>
 #include <QToolButton>
 #include <QHBoxLayout>
@@ -45,7 +45,7 @@
 namespace KMail {
 
 FolderRequester::FolderRequester( QWidget *parent )
-  : QWidget( parent ), mFolder( 0 ), mFolderTree( 0 ),
+  : QWidget( parent ), mFolder( 0 ),
     mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this );
@@ -67,15 +67,16 @@ FolderRequester::FolderRequester( QWidget *parent )
   setFocusPolicy( Qt::StrongFocus );
 }
 
-void FolderRequester::setFolderTree( MainFolderView *tree )
-{
-  mFolderTree = tree;
-}
-
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
-  Q_ASSERT( mFolderTree );
+  AutoQPointer<FolderSelectionTreeViewDialog> dlg( new FolderSelectionTreeViewDialog( this ) );
+  dlg->setCaption( i18n("Select Folder") );
+  dlg->setModal( false );
+
+  if ( dlg->exec() && dlg ) {
+  }
+
 #if 0
   AutoQPointer<FolderSelectionDialog> dlg( new FolderSelectionDialog( this, mFolderTree,
                                                                       i18n("Select Folder"),
@@ -86,7 +87,7 @@ void FolderRequester::slotOpenDialog()
   if ( dlg->exec() && dlg ) {
     setFolder( dlg->folder() );
   }
-#endif  
+#endif
 }
 
 //-----------------------------------------------------------------------------
