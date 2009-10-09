@@ -2540,7 +2540,9 @@ void KMMainWidget::slotJumpToFolder()
   dlg->setCaption( i18n( "Jump to Folder") );
   if ( dlg->exec() && dlg ) {
     Akonadi::Collection collection = dlg->selectedCollection();
-    //TODO fix me
+    if ( collection.isValid() ) {
+      kDebug()<<" collection.name() :"<<collection.name();
+    }
     //mCollectionFolderView->setCurrentIndex( mEntityModel->indexForCollection( collection ) );
   }
 }

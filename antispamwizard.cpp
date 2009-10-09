@@ -35,9 +35,6 @@
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmkernel.h"
-#ifdef OLD_FOLDERVIEW
-#include "folderselectiontreewidget.h"
-#endif
 #include "kmmainwin.h"
 #include "networkaccount.h"
 #include "folderrequester.h"
