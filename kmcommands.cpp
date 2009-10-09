@@ -1871,7 +1871,9 @@ FolderShortcutCommand::~FolderShortcutCommand()
 
 void FolderShortcutCommand::start()
 {
+#ifdef OLD_MESSAGELIST	
   mMainWidget->slotSelectFolder( mFolder );
+#endif
 }
 
 void FolderShortcutCommand::setAction( QAction* action )

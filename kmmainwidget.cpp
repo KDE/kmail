@@ -2576,18 +2576,10 @@ void KMMainWidget::slotJumpToFolder()
   dlg = new FolderSelectionTreeViewDialog( this );
   dlg->setCaption( i18n( "Jump to Folder") );
   if ( dlg->exec() && dlg ) {
-    //TODO
+    Akonadi::Collection collection = dlg->selectedCollection();
+    //TODO fix me
+    //mCollectionFolderView->setCurrentIndex( mEntityModel->indexForCollection( collection ) );
   }
-#if 0
-  // can jump to anywhere, need not be read/write
-  AutoQPointer<KMail::FolderSelectionDialog> dlg;
-  dlg = new KMail::FolderSelectionDialog( this, i18n("Jump to Folder"), false );
-
-  if ( dlg->exec() && dlg ) {
-    // safe to accept folder==0 (means "Local Folders" root) here
-    slotSelectFolder( dlg->folder() );
-  }
-#endif
 }
 
 
@@ -3214,14 +3206,6 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   mMsgView->setDecryptMessageOverwrite( false );
   mMsgView->setShowSignatureDetails( false );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSelectFolder(KMFolder* folder)
-{
-#ifdef OLD_FOLDERVIEW
-  mMainFolderView->setCurrentFolder( folder );
-#endif
 }
 
 //-----------------------------------------------------------------------------

@@ -683,7 +683,9 @@ void SearchWindow::openSearchFolder()
 {
   Q_ASSERT( mFolder );
   renameSearchFolder();
+#ifdef OLD_FOLDERVIEW  
   mKMMainWidget->slotSelectFolder( mFolder->folder() );
+#endif  
   slotClose();
 }
 
@@ -715,8 +717,9 @@ KMMessage *SearchWindow::indexToMessage( QTreeWidgetItem *item )
   if ( !folder || msgIndex < 0 ) {
     return 0;
   }
-
+#ifdef OLD_FOLDERVIEW
   mKMMainWidget->slotSelectFolder( folder );
+#endif  
   return folder->getMsg( msgIndex );
 }
 

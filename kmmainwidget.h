@@ -259,7 +259,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
       Change the current folder, select a message in the current folder
     */
-    void slotSelectFolder(KMFolder*);
     void slotSelectMessage(KMMessage*);
 
     void slotReplaceMsgByUnencryptedVersion();
