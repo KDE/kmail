@@ -80,7 +80,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent )
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
   d->collectionFolderView->setModel( d->filterModel );
-
+  d->collectionFolderView->expandAll();
   lay->addWidget( d->collectionFolderView );
 
 }
