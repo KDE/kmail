@@ -17,21 +17,27 @@
 */
 
 #include "foldertreeview.h"
-
+#include <KLocale>
 
 FolderTreeView::FolderTreeView(QWidget *parent )
   : Akonadi::EntityTreeView( parent )
 {
+  init();
 }
 
 
 FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent )
   :Akonadi::EntityTreeView( xmlGuiClient, parent )
 {
+  init();
 }
 
 
 FolderTreeView::~FolderTreeView()
+{
+}
+
+void FolderTreeView::init()
 {
 }
 

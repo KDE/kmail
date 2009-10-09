@@ -30,6 +30,8 @@ public:
   explicit FolderTreeView( KXMLGUIClient *xmlGuiClient, QWidget *parent = 0 );
 
   virtual ~FolderTreeView();
+protected:
+  void init();
 };
 
 
