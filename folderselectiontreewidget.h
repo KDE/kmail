@@ -68,7 +68,7 @@ public:
    * Reload the tree and select which folders to show and which not
    *
    * @param mustBeReadWrite If true, the read-only folders become non selectable
-   * @param showOutbox If trye, the otbox folder is shown
+   * @param showOutbox If true, the outbox folder is shown
    * @param showImapFolders Whether to show the IMAP folder hierarchy
    * @param preSelection The initial folder to select
    */
