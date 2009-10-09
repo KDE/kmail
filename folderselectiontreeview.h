@@ -22,12 +22,18 @@
 #include <QWidget>
 #include <QAbstractItemView>
 #include <akonadi/collection.h>
+class KXMLGUIClient;
 class QItemSelectionModel;
+class FolderTreeView;
+
+namespace Akonadi {
+   class EntityTreeModel;
+}
 class FolderSelectionTreeView : public QWidget
 {
   Q_OBJECT
 public:
-  FolderSelectionTreeView( QWidget *parent = 0 );
+  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0 );
   ~FolderSelectionTreeView();
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );
@@ -41,6 +47,9 @@ public:
   Akonadi::Collection selectedCollection() const;
 
   Akonadi::Collection::List selectedCollections() const;
+
+  FolderTreeView *folderTreeView();
+  Akonadi::EntityTreeModel *entityModel();
 
 private:
   class FolderSelectionTreeViewPrivate;

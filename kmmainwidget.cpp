@@ -153,6 +153,7 @@ using KMail::TemplateParser;
 #include "messageviewer/autoqpointer.h"
 
 #include "folderselectiontreeviewdialog.h"
+#include "folderselectiontreeview.h"
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
@@ -186,7 +187,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     QWidget( parent ),
     mFavoritesCheckMailAction( 0 ),
     mFavoriteCollectionsView( 0 ),
-    mEntityModel( 0 ),
     mMsgView( 0 ),
     mSplitter1( 0 ),
     mSplitter2( 0 ),
@@ -219,17 +219,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
-  Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );
-
-  // monitor collection changes
-  Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
-  monitor->setCollectionMonitored( Akonadi::Collection::root() );
-  monitor->fetchCollection( true );
-  monitor->setAllMonitored( true );
-  monitor->setMimeTypeMonitored( "message/rfc822" );
-  // TODO: Only fetch the envelope etc if possible.
-  monitor->itemFetchScope().fetchFullPayload(true);
-  mEntityModel = new Akonadi::EntityTreeModel( session, monitor, this );
+  mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
 
 
   // FIXME This should become a line separator as soon as the API
@@ -671,7 +661,7 @@ void KMMainWidget::writeConfig()
       //GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
       KSharedConfig::Ptr config = KMKernel::config();
       KConfigGroup group(config, "CollectionFolderView");
-      Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView );
+      Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView->folderTreeView() );
       saver.saveState( group );
       group.sync();
     }
@@ -708,32 +698,12 @@ void KMMainWidget::createWidgets()
   // Create header view and search bar
   //
 
-
-  // Setup the message folders collection...
-  Akonadi::EntityFilterProxyModel *collectionFilter = new Akonadi::EntityFilterProxyModel( this );
-  collectionFilter->setSourceModel( mEntityModel );
-  collectionFilter->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
-  collectionFilter->setHeaderSet( Akonadi::EntityTreeModel::CollectionTreeHeaders );
-
-  // ... with statistics...
-  Akonadi::StatisticsToolTipProxyModel *statisticsProxyModel = new Akonadi::StatisticsToolTipProxyModel( this );
-  statisticsProxyModel->setSourceModel( collectionFilter );
-
-  // ... and sortable
-  QSortFilterProxyModel *sortModel = new QSortFilterProxyModel( this );
-  sortModel->setDynamicSortFilter( true );
-  sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
-  sortModel->setSourceModel( statisticsProxyModel );
-
-  FolderTreeView *mCollectionFolderView = new FolderTreeView( mGUIClient, this );
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
-  // Use the model
-  mCollectionFolderView->setModel( sortModel );
   const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
-  Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView );
+  Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView->folderTreeView() );
   saver.restoreState( cfg );
 
-  mMessagePane = new MessageList::Pane( mEntityModel, mCollectionFolderView->selectionModel(), this );
+  mMessagePane = new MessageList::Pane( mCollectionFolderView->entityModel(), mCollectionFolderView->folderTreeView()->selectionModel(), this );
   mMessagePane->setXmlGuiClient( mGUIClient );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
            this, SLOT(slotMessageSelected(Akonadi::Item)) );
@@ -883,11 +853,11 @@ void KMMainWidget::createWidgets()
 
     mFavoriteCollectionsView = new Akonadi::FavoriteCollectionsView( mGUIClient, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ));
 
-    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mEntityModel, this );
+    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mCollectionFolderView->entityModel(), this );
     mFavoriteCollectionsView->setModel( favoritesModel );
 
     mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
-    mAkonadiStandardActionManager->setCollectionSelectionModel( mCollectionFolderView->selectionModel() );
+    mAkonadiStandardActionManager->setCollectionSelectionModel( mCollectionFolderView->folderTreeView()->selectionModel() );
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
     mAkonadiStandardActionManager->createAllActions();
@@ -3154,10 +3124,6 @@ void KMMainWidget::slotShowBusySplash()
   {
     mMsgView->displayBusyPage();
     // hide widgets that are in the way:
-#ifdef OLD_MESSAGELIST
-    if ( mMessageListView && mLongFolderList )
-      mMessageListView->hide();
-#endif
     if ( mMessagePane && mLongFolderList )
       mMessagePane->hide();
   }
@@ -3170,11 +3136,6 @@ void KMMainWidget::showOfflinePage()
   mShowingOfflineScreen = true;
 
   mMsgView->displayOfflinePage();
-#ifdef OLD_MESSAGELIST
-  // hide widgets that are in the way:
-  if ( mMessageListView && mLongFolderList )
-    mMessageListView->hide();
-#endif
     if ( mMessagePane && mLongFolderList )
       mMessagePane->hide();
 }
@@ -3296,36 +3257,16 @@ void KMMainWidget::slotFocusOnNextMessage()
 
 void KMMainWidget::slotFocusOnPrevMessage()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->focusPreviousMessageItem(
-      MessageList::Core::MessageTypeAny,
-      true,  // center item
-      false  // don't loop
-    );
-#endif
   mMessagePane->focusPreviousMessageItem( MessageList::Core::MessageTypeAny, true, false );
 }
 
 void KMMainWidget::slotSelectFocusedMessage()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->selectFocusedMessageItem(
-      true   // center item
-    );
-#endif
   mMessagePane->selectFocusedMessageItem(true );
 }
 
 void KMMainWidget::slotSelectNextMessage()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->selectNextMessageItem(
-      MessageList::Core::MessageTypeAny,
-      MessageList::Core::ClearExistingSelection,
-      true,  // center item
-      false  // don't loop in folder
-    );
-#endif
   mMessagePane->selectNextMessageItem( MessageList::Core::MessageTypeAny,
                                        MessageList::Core::ClearExistingSelection,
                                        true, true );
@@ -3333,14 +3274,6 @@ void KMMainWidget::slotSelectNextMessage()
 
 void KMMainWidget::slotExtendSelectionToNextMessage()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->selectNextMessageItem(
-      MessageList::Core::MessageTypeAny,
-      MessageList::Core::GrowOrShrinkExistingSelection,
-      true,  // center item
-      false  // don't loop in folder
-    );
-#endif
   mMessagePane->selectNextMessageItem(
                                       MessageList::Core::MessageTypeAny,
                                       MessageList::Core::GrowOrShrinkExistingSelection,
@@ -3392,14 +3325,6 @@ void KMMainWidget::slotSelectNextUnreadMessage()
 
 void KMMainWidget::slotSelectPreviousMessage()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->selectPreviousMessageItem(
-      MessageList::Core::MessageTypeAny,
-      MessageList::Core::ClearExistingSelection,
-      true,  // center item
-      false  // don't loop in folder
-    );
-#endif
   mMessagePane->selectPreviousMessageItem( MessageList::Core::MessageTypeAny,
                                            MessageList::Core::ClearExistingSelection,
                                            true, true );
@@ -3407,14 +3332,6 @@ void KMMainWidget::slotSelectPreviousMessage()
 
 void KMMainWidget::slotExtendSelectionToPreviousMessage()
 {
-#ifdef OLD_MESSAGELIST
-  mMessageListView->selectPreviousMessageItem(
-      MessageList::Core::MessageTypeAny,
-      MessageList::Core::GrowOrShrinkExistingSelection,
-      true,  // center item
-      false  // don't loop in folder
-    );
-#endif
   mMessagePane->selectPreviousMessageItem(
       MessageList::Core::MessageTypeAny,
       MessageList::Core::GrowOrShrinkExistingSelection,

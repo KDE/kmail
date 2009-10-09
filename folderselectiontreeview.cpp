@@ -46,12 +46,12 @@ public:
 
 
 
-FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent )
+FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient )
   : QWidget( parent ), d( new FolderSelectionTreeViewPrivate() )
 {
   QHBoxLayout *lay = new QHBoxLayout( this );
   lay->setMargin( 0 );
-  Akonadi::Session *session = new Akonadi::Session( "Folder Selection TreeView", this );
+  Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );
 
   // monitor collection changes
   Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
@@ -78,7 +78,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent )
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
   d->filterModel->setSourceModel( statisticsProxyModel );
 
-  d->collectionFolderView = new FolderTreeView( 0, this );
+  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
@@ -144,5 +144,14 @@ Akonadi::Collection::List FolderSelectionTreeView::selectedCollections() const
   return collections;
 }
 
+FolderTreeView* FolderSelectionTreeView::folderTreeView()
+{
+  return d->collectionFolderView;
+}
+
+Akonadi::EntityTreeModel *FolderSelectionTreeView::entityModel()
+{
+  return d->entityModel;
+}
 
 #include "folderselectiontreeview.moc"

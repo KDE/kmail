@@ -91,6 +91,8 @@ namespace KMail {
   class MainFolderView;
 }
 
+class FolderSelectionTreeView;
+
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
   Q_OBJECT
@@ -724,10 +726,9 @@ private:
     KXMLGUIClient *mGUIClient;
 
     KMail::MessageActions *mMsgActions;
-  Akonadi::EntityTreeModel *mEntityModel;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
   MessageList::Pane *mMessagePane;
-  Akonadi::EntityTreeView *mCollectionFolderView;
+  FolderSelectionTreeView *mCollectionFolderView;
     bool mOpenedImapFolder;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;
