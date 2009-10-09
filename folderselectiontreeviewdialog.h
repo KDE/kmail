@@ -42,6 +42,11 @@ public:
 
 private slots:
   void slotSelectionChanged();
+  void slotAddChildFolder();
+
+protected:
+  void readConfig();
+  void writeConfig();
 
 private:
   FolderSelectionTreeView *treeview;

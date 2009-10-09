@@ -28,6 +28,8 @@
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/entityfilterproxymodel.h>
+#include <akonadi/collection.h>
+
 
 class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
 {
@@ -112,5 +114,34 @@ QModelIndex FolderSelectionTreeView::currentIndex() const
 {
   return d->collectionFolderView->currentIndex();
 }
+
+
+Akonadi::Collection FolderSelectionTreeView::selectedCollection() const
+{
+  if ( d->collectionFolderView->selectionMode() == QAbstractItemView::SingleSelection ) {
+    const QModelIndex index = d->collectionFolderView->currentIndex();
+    if ( index.isValid() )
+      return index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+  }
+
+  return Akonadi::Collection();
+}
+
+Akonadi::Collection::List FolderSelectionTreeView::selectedCollections() const
+{
+  Akonadi::Collection::List collections;
+  const QItemSelectionModel *selectionModel = d->collectionFolderView->selectionModel();
+  const QModelIndexList selectedIndexes = selectionModel->selectedIndexes();
+  foreach ( const QModelIndex &index, selectedIndexes ) {
+    if ( index.isValid() ) {
+      const Akonadi::Collection collection = index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+      if ( collection.isValid() )
+        collections.append( collection );
+    }
+  }
+
+  return collections;
+}
+
 
 #include "folderselectiontreeview.moc"

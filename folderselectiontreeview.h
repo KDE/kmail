@@ -21,9 +21,8 @@
 
 #include <QWidget>
 #include <QAbstractItemView>
-
+#include <akonadi/collection.h>
 class QItemSelectionModel;
-
 class FolderSelectionTreeView : public QWidget
 {
   Q_OBJECT
@@ -39,6 +38,9 @@ public:
 
   QModelIndex currentIndex() const;
 
+  Akonadi::Collection selectedCollection() const;
+
+  Akonadi::Collection::List selectedCollections() const;
 
 private:
   class FolderSelectionTreeViewPrivate;
