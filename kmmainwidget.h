@@ -44,7 +44,6 @@ class KRadioAction;
 class KToggleAction;
 class KMenuBar;
 class KStatusBarLabel;
-class KProcess;
 
 class KMFolder;
 class KMFolderDir;
@@ -284,8 +283,6 @@ protected slots:
   void slotExpireAll();
   void slotInvalidateIMAPFolders();
   void slotMarkAllAsRead();
-  void slotArchiveFolder();
-  void slotArchiveProcessFinished( KProcess *proc );
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
@@ -535,7 +532,7 @@ private:
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
       *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mFolderShortCutCommandAction, *mTroubleshootFolderAction,
-      *mRemoveDuplicatesAction, *mArchiveFolderAction;
+      *mRemoveDuplicatesAction;
   KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction, *mThreadMessagesAction;
   KToggleAction *mThreadBySubjectAction;
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
