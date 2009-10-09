@@ -176,57 +176,18 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
   kDebug() << "-------------------------------------------------";
   kDebug() << "START" << "(" << recCount << ")";
   if( node ) {
+
+    kDebug(5006) << node->typeString() << '/' << node->subTypeString();
+
     partNode* curNode = node;
     partNode* dataNode = curNode;
     partNode * child = node->firstChild();
-    bool bIsMultipart = false;
+    const bool bIsMultipart = node->type() == DwMime::kTypeMultipart;
 
-    switch( curNode->type() ){
-      case DwMime::kTypeText: {
-          kDebug() << "* text *";
-          switch( curNode->subType() ){
-          case DwMime::kSubtypeHtml:
-            kDebug() << "html";
-            break;
-          case DwMime::kSubtypeXVCard:
-            kDebug() << "v-card";
-            break;
-          case DwMime::kSubtypeRichtext:
-            kDebug() << "rich text";
-            break;
-          case DwMime::kSubtypeEnriched:
-            kDebug() << "enriched";
-            break;
-          case DwMime::kSubtypePlain:
-            kDebug() << "plain";
-            break;
-          default:
-            kDebug() << "default";
-            break;
-          }
-        }
-        break;
+    switch( curNode->type() ) {
       case DwMime::kTypeMultipart: {
-          kDebug() << "* multipart *";
-          bIsMultipart = true;
-          switch( curNode->subType() ){
-          case DwMime::kSubtypeMixed:
-            kDebug() << "mixed";
-            break;
-          case DwMime::kSubtypeAlternative:
-            kDebug() << "alternative";
-            break;
-          case DwMime::kSubtypeDigest:
-            kDebug() << "digest";
-            break;
-          case DwMime::kSubtypeParallel:
-            kDebug() << "parallel";
-            break;
-          case DwMime::kSubtypeSigned:
-            kDebug() << "signed";
-            break;
+          switch( curNode->subType() ) {
           case DwMime::kSubtypeEncrypted: {
-              kDebug() << "encrypted";
               if ( child ) {
                 /*
                     ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
@@ -240,17 +201,12 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
               }
             }
             break;
-          default :
-            kDebug() << "(  unknown subtype  )";
-            break;
           }
         }
         break;
       case DwMime::kTypeMessage: {
-          kDebug() << "* message *";
-          switch( curNode->subType() ){
+          switch( curNode->subType() ) {
           case DwMime::kSubtypeRfc822: {
-              kDebug() << "RfC 822";
               if ( child )
                 dataNode = child;
             }
@@ -259,25 +215,13 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
         }
         break;
       case DwMime::kTypeApplication: {
-          kDebug() << "* application *";
-          switch( curNode->subType() ){
-          case DwMime::kSubtypePostscript:
-            kDebug() << "postscript";
-            break;
+          switch( curNode->subType() ) {
           case DwMime::kSubtypeOctetStream: {
-              kDebug() << "octet stream";
               if ( child )
                 dataNode = child;
             }
             break;
-          case DwMime::kSubtypePgpEncrypted:
-            kDebug() << "pgp encrypted";
-            break;
-          case DwMime::kSubtypePgpSignature:
-            kDebug() << "pgp signed";
-            break;
           case DwMime::kSubtypePkcs7Mime: {
-              kDebug() << "pkcs7 mime";
               // note: subtype Pkcs7Mime can also be signed
               //       and we do NOT want to remove the signature!
               if ( child && curNode->encryptionState() != KMMsgNotEncrypted )
@@ -286,39 +230,6 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
             break;
           }
         }
-        break;
-      case DwMime::kTypeImage: {
-          kDebug() << "* image *";
-          switch( curNode->subType() ){
-          case DwMime::kSubtypeJpeg:
-            kDebug() << "JPEG";
-            break;
-          case DwMime::kSubtypeGif:
-            kDebug() << "GIF";
-            break;
-          }
-        }
-        break;
-      case DwMime::kTypeAudio: {
-          kDebug() << "* audio *";
-          switch( curNode->subType() ){
-          case DwMime::kSubtypeBasic:
-            kDebug() << "basic";
-            break;
-          }
-        }
-        break;
-      case DwMime::kTypeVideo: {
-          kDebug() << "* video *";
-          switch( curNode->subType() ){
-          case DwMime::kSubtypeMpeg:
-            kDebug() << "mpeg";
-            break;
-          }
-        }
-        break;
-      case DwMime::kTypeModel:
-          kDebug() << "* model *";
         break;
     }
 
