@@ -21,6 +21,7 @@
 
 #include <QAbstractItemView>
 #include <KDialog>
+#include <akonadi/collection.h>
 
 class FolderSelectionTreeView;
 
@@ -33,6 +34,11 @@ public:
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );
   QAbstractItemView::SelectionMode selectionMode() const;
+
+  Akonadi::Collection selectedCollection() const;
+
+  Akonadi::Collection::List selectedCollections() const;
+
 
 private slots:
   void slotSelectionChanged();

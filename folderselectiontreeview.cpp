@@ -108,4 +108,9 @@ QItemSelectionModel * FolderSelectionTreeView::selectionModel () const
   return d->collectionFolderView->selectionModel();
 }
 
+QModelIndex FolderSelectionTreeView::currentIndex() const
+{
+  return d->collectionFolderView->currentIndex();
+}
+
 #include "folderselectiontreeview.moc"

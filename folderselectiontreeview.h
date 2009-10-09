@@ -30,10 +30,16 @@ class FolderSelectionTreeView : public QWidget
 public:
   FolderSelectionTreeView( QWidget *parent = 0 );
   ~FolderSelectionTreeView();
+
   void setSelectionMode( QAbstractItemView::SelectionMode mode );
+
   QAbstractItemView::SelectionMode selectionMode() const;
 
   QItemSelectionModel * selectionModel () const;
+
+  QModelIndex currentIndex() const;
+
+
 private:
   class FolderSelectionTreeViewPrivate;
   FolderSelectionTreeViewPrivate * const d;

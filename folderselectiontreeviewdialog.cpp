@@ -19,6 +19,8 @@
 #include "folderselectiontreeviewdialog.h"
 #include <QVBoxLayout>
 #include "folderselectiontreeview.h"
+#include <akonadi/collection.h>
+#include <akonadi/entitytreemodel.h>
 
 FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent )
   :KDialog( parent )
@@ -48,6 +50,34 @@ void FolderSelectionTreeViewDialog::setSelectionMode( QAbstractItemView::Selecti
 QAbstractItemView::SelectionMode FolderSelectionTreeViewDialog::selectionMode() const
 {
   return treeview->selectionMode();
+}
+
+
+Akonadi::Collection FolderSelectionTreeViewDialog::selectedCollection() const
+{
+  if ( treeview->selectionMode() == QAbstractItemView::SingleSelection ) {
+    const QModelIndex index = treeview->currentIndex();
+    if ( index.isValid() )
+      return index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+  }
+
+  return Akonadi::Collection();
+}
+
+Akonadi::Collection::List FolderSelectionTreeViewDialog::selectedCollections() const
+{
+  Akonadi::Collection::List collections;
+  const QItemSelectionModel *selectionModel = treeview->selectionModel();
+  const QModelIndexList selectedIndexes = selectionModel->selectedIndexes();
+  foreach ( const QModelIndex &index, selectedIndexes ) {
+    if ( index.isValid() ) {
+      const Akonadi::Collection collection = index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+      if ( collection.isValid() )
+        collections.append( collection );
+    }
+  }
+
+  return collections;
 }
 
 #include "folderselectiontreeviewdialog.moc"
