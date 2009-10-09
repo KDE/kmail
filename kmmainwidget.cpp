@@ -1286,7 +1286,7 @@ void KMMainWidget::slotFolderShortcutCommand()
     return;
 
   AutoQPointer<KMail::FolderShortcutDialog> shorty;
-  shorty = new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mMainFolderView );
+  shorty = new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mCollectionFolderView );
   shorty->exec();
   //slotModifyFolder( KMMainWidget::PropsShortcut );
 #endif
@@ -1616,7 +1616,6 @@ void KMMainWidget::slotOverrideHtml()
   mFolderHtmlPref = !mFolderHtmlPref;
   if (mMsgView) {
     mMsgView->setHtmlOverride(mFolderHtmlPref);
-    //(Laurent) Verify it.
     mMsgView->update( true );
   }
 }
@@ -1694,7 +1693,7 @@ void KMMainWidget::slotForwardAttachedMsg()
 void KMMainWidget::slotUseTemplate()
 {
 #ifdef OLD_MESSAGELIST
-  newFromTemplate( mMessageListView->currentMessage() );
+  newFromTemplate( mMessagePane->currentMessage() );
 #endif
 }
 
