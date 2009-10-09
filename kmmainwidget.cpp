@@ -159,6 +159,8 @@ using KMail::TemplateParser;
 
 #include <errno.h> // ugh
 
+#include "foldertreeview.h"
+
 #include <akonadi/changerecorder.h>
 #include <akonadi/session.h>
 #include <akonadi/entitytreemodel.h>
@@ -723,7 +725,7 @@ void KMMainWidget::createWidgets()
   sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
   sortModel->setSourceModel( statisticsProxyModel );
 
-  Akonadi::EntityTreeView *mCollectionFolderView = new Akonadi::EntityTreeView( mGUIClient, this );
+  FolderTreeView *mCollectionFolderView = new FolderTreeView( mGUIClient, this );
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   // Use the model
   mCollectionFolderView->setModel( sortModel );

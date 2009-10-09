@@ -66,6 +66,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 set(kmailprivate_LIB_SRCS
    folderselectiontreeview.cpp
    folderselectiontreeviewdialog.cpp
+   foldertreeview.cpp
    kmmessage.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp
@@ -106,7 +107,6 @@ set(kmailprivate_LIB_SRCS
    kmfilteraction.cpp
    kmsearchpattern.cpp
    #folderselectiontreewidget.cpp
-   #folderselectiondialog.cpp
    kmfilter.cpp
    kmfilterdlg.cpp
    kmmsgbase.cpp

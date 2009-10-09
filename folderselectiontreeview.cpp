@@ -17,6 +17,7 @@
 */
 
 #include "folderselectiontreeview.h"
+#include "foldertreeview.h"
 #include <QSortFilterProxyModel>
 #include <QHBoxLayout>
 
@@ -39,7 +40,7 @@ public:
   {
   }
   QSortFilterProxyModel *filterModel;
-  Akonadi::EntityTreeView *collectionFolderView;
+  FolderTreeView *collectionFolderView;
   Akonadi::EntityTreeModel *entityModel;
 };
 
@@ -77,7 +78,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent )
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
   d->filterModel->setSourceModel( statisticsProxyModel );
 
-  d->collectionFolderView = new Akonadi::EntityTreeView( 0, this );
+  d->collectionFolderView = new FolderTreeView( 0, this );
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
