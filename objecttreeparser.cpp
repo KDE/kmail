@@ -215,6 +215,11 @@ namespace KMail {
 
     partNode* parentNode = &startNode;
     partNode* newNode = new partNode(false, myBody);
+
+    // Build the object tree of the new node before setting the parent, as otherwise
+    // buildObjectTree() would erronously modify the parents as well
+    newNode->buildObjectTree( false );
+
     if ( append && parentNode->firstChild() ) {
       parentNode = parentNode->firstChild();
       while( parentNode->nextSibling() )
@@ -222,8 +227,6 @@ namespace KMail {
       parentNode->setNext( newNode );
     } else
       parentNode->setFirstChild( newNode );
-
-    newNode->buildObjectTree( false );
 
     if ( startNode.mimePartTreeItem() ) {
       newNode->fillMimePartTree( startNode.mimePartTreeItem(), 0,
