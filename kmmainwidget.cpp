@@ -777,10 +777,6 @@ void KMMainWidget::createWidgets()
              mHeaders, SLOT( slotNoDrag() ) );
 #endif
 
-#ifdef OLD_MESSAGELIST
-    connect( mMessageListView, SIGNAL( messageSelected( KMMessage * ) ),
-             this, SLOT( slotMsgSelected( KMMessage * ) ) );
-#endif
   }
 
   //
@@ -3351,10 +3347,8 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
 
 void KMMainWidget::slotDisplayCurrentMessage()
 {
-#ifdef OLD_MESSAGELIST
-  if ( mMessageListView->currentMessage() )
-    slotMsgActivated( mMessageListView->currentMessage() );
-#endif
+  if ( mMessagePane->currentItem().isValid() )
+    slotMessageActivated( mMessagePane->currentItem() );
 }
 
 
