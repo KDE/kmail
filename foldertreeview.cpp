@@ -17,6 +17,7 @@
 */
 
 #include "foldertreeview.h"
+#include <kdebug.h>
 #include <QDebug>
 #include <KLocale>
 
@@ -78,6 +79,16 @@ void FolderTreeView::slotFocusPrevFolder()
     QModelIndex above = indexAbove( current );
     selectModelIndex( above );
   }
+}
+
+void FolderTreeView::selectNextUnreadFolder()
+{
+  kDebug()<<"Need to implement  FolderTreeView::selectNextUnreadFolder() ";
+}
+
+void FolderTreeView::selectPrevUnreadFolder()
+{
+  kDebug()<<" Need to implement FolderTreeView::selectPrevUnreadFolder()";
 }
 
 #include "foldertreeview.moc"

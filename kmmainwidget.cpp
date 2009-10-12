@@ -4190,24 +4190,20 @@ void KMMainWidget::slotReadOn()
 
 void KMMainWidget::slotNextUnreadFolder()
 {
-#ifdef OLD_FOLDERVIEW
-  if ( !mMainFolderView )
+  if ( !mCollectionFolderView )
     return;
   mGoToFirstUnreadMessageInSelectedFolder = true;
-  mMainFolderView->selectNextUnreadFolder();
+  mCollectionFolderView->folderTreeView()->selectNextUnreadFolder();
   mGoToFirstUnreadMessageInSelectedFolder = false;
-#endif
 }
 
 void KMMainWidget::slotPrevUnreadFolder()
 {
-#ifdef OLD_FOLDERVIEW
-  if ( !mMainFolderView )
+  if ( !mCollectionFolderView )
     return;
   mGoToFirstUnreadMessageInSelectedFolder = true;
-  mMainFolderView->selectPrevUnreadFolder();
+  mCollectionFolderView->folderTreeView()->selectPrevUnreadFolder();
   mGoToFirstUnreadMessageInSelectedFolder = false;
-#endif
 }
 
 void KMMainWidget::slotExpandThread()

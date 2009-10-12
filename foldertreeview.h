@@ -30,6 +30,9 @@ public:
   explicit FolderTreeView( KXMLGUIClient *xmlGuiClient, QWidget *parent = 0 );
 
   virtual ~FolderTreeView();
+
+  void selectNextUnreadFolder();
+  void selectPrevUnreadFolder();
 protected:
   void init();
   void selectModelIndex( const QModelIndex & );
