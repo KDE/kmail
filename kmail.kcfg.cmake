@@ -152,7 +152,7 @@
       <entry name="MaildirFilenameSeparator" type="String">
         <label>
           The filename separator for maildir files "uniq:info" - see the original maildir specification at http://cr.yp.to/proto/maildir.html
-          The default depends on the OS we're currently on. WIN='!', all others ':'.
+          The default depends on the current operating system. WIN='!', all others ':'.
         </label>
         <default>${MAILDIR_FILENAME_SEPARATOR}</default>
       </entry>
@@ -307,7 +307,7 @@
       </entry>
       <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
         <default>${ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT}</default>
-        <label>Allow the semicolon charactor (';') to be used as separator in the message composer.</label>
+        <label>Allow the semicolon character (';') to be used as separator in the message composer.</label>
       </entry>
       <entry name="ForceReplyCharset" type="Bool" key="force-reply-charset">
         <label>Keep original charset when replying or forwarding if possible</label>

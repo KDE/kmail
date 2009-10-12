@@ -443,8 +443,8 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   mHideInSelectionDialogCheckBox =
       new QCheckBox( i18n( "Hide this folder in the folder selection dialog" ), this );
   mHideInSelectionDialogCheckBox->setWhatsThis(
-                  i18nc( "@info:whatsthis", "Check this option if you do not want that this folder "
-                         "is shown in the folder selection dialogs, like the <interface>"
+                  i18nc( "@info:whatsthis", "Check this option if you do not want this folder "
+                         "to be shown in folder selection dialogs, such as the <interface>"
                           "Jump to Folder</interface> dialog." ) );
   hbl->addWidget( mHideInSelectionDialogCheckBox );
   hbl->addStretch( 1 );

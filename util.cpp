@@ -140,7 +140,7 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
     KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses,distributionListEmpty ),
                                    brokenAddress );
   if ( !distributionListEmpty.isEmpty() ) {
-    QString errorMsg = i18n( "Distribution list \"%1\" is empty. You can not use it.", distributionListEmpty.join( ", " ) );
+    QString errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.", distributionListEmpty.join( ", " ) );
     KMessageBox::sorry( parent , errorMsg, i18n("Invalid Email Address") );
     return false;
   }

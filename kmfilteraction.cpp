@@ -2237,11 +2237,11 @@ KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( KMMessage* m
     }
 
     if ( !ab->save( ticket ) ) {
-      ab->error( i18n( "Can't save new addresses to address book." ) );
+      ab->error( i18n( "Cannot save new addresses to address book." ) );
       return ErrorButGoOn;
     }
   } else {
-    ab->error( i18n( "Can't save to address book. Address book is locked." ) );
+    ab->error( i18n( "Cannot save to address book: address book is locked." ) );
     return ErrorButGoOn;
   }
 
@@ -2265,13 +2265,13 @@ QWidget* KMFilterActionAddToAddressBook::createParamWidget( QWidget* parent ) co
   le->setObjectName( "ledit" );
   gridlayout->addWidget( le, 0, 2 );
 
-  l = new QLabel( i18n( "in addressbook" ), w );
+  l = new QLabel( i18n( "in address book" ), w );
   gridlayout->addWidget( l, 1, 1 );
 
   KComboBox *cbAdressBook = new KComboBox( w );
   cbAdressBook->setObjectName( "AddressBookCombo" );
-  cbAdressBook->setToolTip( i18n( "<p>This defines the preferred addressbook.<br />"
-        "If it is not accessible, the filter will fallback to the default addressbook.</p>" ) );
+  cbAdressBook->setToolTip( i18n( "<p>This defines the preferred address book.<br />"
+        "If it is not accessible, the filter will fallback to the default address book.</p>" ) );
   cbAdressBook->setInsertPolicy( QComboBox::InsertAtBottom );
   gridlayout->addWidget( cbAdressBook, 1, 2 );
 
