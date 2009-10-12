@@ -43,7 +43,7 @@
    <Separator/>
    <Action name="akonadi_collection_copy"/>
    <Action name="cut_folder"/>
-   <Action name="paste_folder"/>
+   <Action name="akonadi_paste"/>
    <Separator/>
    <Action name="akonadi_item_copy"/>
    <Action name="cut_messages"/>
@@ -209,6 +209,7 @@
   <Separator/>
   <Action name="akonadi_collection_create" />
   <Action name="akonadi_collection_copy_to_menu"/>
+  <Action name="akonadi_collection_move_to_menu"/>
   <Action name="akonadi_collection_delete"/>
   <Separator/>
   <Action name="akonadi_collection_add_to_favorites"/>
@@ -228,6 +229,8 @@
   <Action name="file_saveas"/>
   <Separator/>
   <Action name="move_to_trash"/>
+  <Action name="akonadi_item_move_to_menu"/>
+  <Action name="akonadi_item_copy_to_menu"/>
   <Separator/>
   <Action name="create_todo"/>
  </Menu>

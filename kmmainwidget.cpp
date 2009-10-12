@@ -3865,12 +3865,8 @@ void KMMainWidget::setupActions()
 #endif
   }
   {
-    KAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Folder"), this);
+    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::Paste);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_V));
-    actionCollection()->addAction("paste_folder", action);
-#ifdef OLD_FOLDERVIEW
-    connect(action, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotPasteFolder()));
-#endif
   }
   {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItems);
