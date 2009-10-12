@@ -75,19 +75,15 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   statisticsProxyModel->setSourceModel( collectionModel );
 
 
-  Akonadi::StatisticsProxyModel *proxy = new Akonadi::StatisticsProxyModel(this);
-  proxy->setSourceModel( statisticsProxyModel );
-
-  d->filterModel = new QSortFilterProxyModel( this );
+  d->filterModel = new Akonadi::StatisticsProxyModel(this);
+  d->filterModel->setSourceModel( statisticsProxyModel );
   d->filterModel->setDynamicSortFilter( true );
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
-  d->filterModel->setSourceModel( proxy );
 
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
-
   d->collectionFolderView->setModel( d->filterModel );
   d->collectionFolderView->expandAll();
   lay->addWidget( d->collectionFolderView );
