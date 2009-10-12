@@ -71,4 +71,13 @@ void FolderTreeView::slotFocusNextFolder()
   }
 }
 
+void FolderTreeView::slotFocusPrevFolder()
+{
+  QModelIndex current = currentIndex();
+  if ( current.isValid() ) {
+    QModelIndex above = indexAbove( current );
+    selectModelIndex( above );
+  }
+}
+
 #include "foldertreeview.moc"

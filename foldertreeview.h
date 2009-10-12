@@ -35,7 +35,7 @@ protected:
   void selectModelIndex( const QModelIndex & );
 public slots:
   void slotFocusNextFolder();
-
+  void slotFocusPrevFolder();
 };
 
 

@@ -913,10 +913,8 @@ void KMMainWidget::createWidgets()
   {
     KAction *action = new KAction(i18n("Focus on Previous Folder"), this);
     actionCollection()->addAction("dec_current_folder", action );
-#ifdef OLD_FOLDERVIEW
     connect( action, SIGNAL( triggered( bool ) ),
-             mMainFolderView, SLOT( slotFocusPrevFolder() ) );
-#endif
+             mCollectionFolderView->folderTreeView(), SLOT( slotFocusPrevFolder() ) );
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Left ) );
   }
   {
