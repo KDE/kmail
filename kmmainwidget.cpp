@@ -1654,11 +1654,10 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardInlineMsg()
 {
-#ifdef OLD_MESSAGELIST
-  QList< KMMsgBase * > selectedMessages = mMessageListView->selectionAsMsgBaseList();
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
   if ( selectedMessages.isEmpty() )
     return;
-
+#ifdef OLD_MESSAGELIST
   KMForwardCommand * command = new KMForwardCommand(
       this, selectedMessages, mFolder->identity()
     );
@@ -1671,11 +1670,10 @@ void KMMainWidget::slotForwardInlineMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardAttachedMsg()
 {
-#ifdef OLD_MESSAGELIST
-  QList< KMMsgBase * > selectedMessages = mMessageListView->selectionAsMsgBaseList();
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
   if ( selectedMessages.isEmpty() )
     return;
-
+#ifdef OLD_MESSAGELIST
   KMForwardAttachedCommand * command = new KMForwardAttachedCommand(
       this, selectedMessages, mFolder->identity()
     );
@@ -2283,11 +2281,10 @@ void KMMainWidget::slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::M
 
 void KMMainWidget::fillMessageClipboard()
 {
-#ifdef OLD_MESSAGELIST
-  QList< KMMsgBase * > selected = mMessageListView->selectionAsMsgBaseList();
-  if ( selected.isEmpty() )
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  if ( selectedMessages.isEmpty() )
     return;
-
+#ifdef OLD_MESSAGELIST
   mMessageClipboard.clear();
 
   for ( QList< KMMsgBase * >::Iterator it = selected.begin(); it != selected.end(); ++it )
@@ -2407,10 +2404,10 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 {
-#ifdef OLD_MESSAGELIST
-  QList< KMMsgBase * > selectedMessages = mMessageListView->selectionAsMsgBaseList();
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
   if ( selectedMessages.isEmpty() )
     return;
+#ifdef OLD_MESSAGELIST
 
   kDebug() << "Forward with template:" << tmpl;
 
@@ -2546,9 +2543,8 @@ void KMMainWidget::slotJumpToFolder()
 
 void KMMainWidget::slotApplyFilters()
 {
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
 #ifdef OLD_MESSAGELIST
-  QList< KMMsgBase * > msgList = mMessageListView->selectionAsMsgBaseList();
-
   if (KMail::ActionScheduler::isEnabled() || kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget())
   {
     // uses action scheduler
@@ -2749,11 +2745,10 @@ void KMMainWidget::slotConfigChanged()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveMsg()
 {
-#ifdef OLD_MESSAGELIST
-  QList< KMMsgBase * > selectedMessages = mMessageListView->selectionAsMsgBaseList();
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
   if ( selectedMessages.isEmpty() )
     return;
-
+#ifdef OLD_MESSAGELIST
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( this, selectedMessages );
 
   if ( saveCommand->url().isEmpty() )
@@ -2774,11 +2769,10 @@ void KMMainWidget::slotOpenMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveAttachments()
 {
-#ifdef OLD_MESSAGELIST
-  QList< KMMsgBase * > selectedMessages = mMessageListView->selectionAsMsgBaseList();
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
   if ( selectedMessages.isEmpty() )
     return;
-
+#ifdef OLD_MESSAGELIST
   KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand( this, selectedMessages );
 
   saveCommand->start();
