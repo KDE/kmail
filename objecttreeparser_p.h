@@ -72,11 +72,6 @@ namespace KMail {
     const QString & auditLogAsHtml() const { return m_auditLog; }
     GpgME::Error auditLogError() const { return m_auditLogError; }
 
-  protected slots:
-    void notify() {
-      ISubject::notify();
-    }
-
   protected:
     void setAuditLog( const GpgME::Error & err, const QString & log );
     void setRunning( bool running );
