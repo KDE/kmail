@@ -3252,11 +3252,6 @@ void KMMainWidget::slotExtendSelectionToNextMessage()
 void KMMainWidget::slotSelectNextUnreadMessage()
 {
   //Laurent port it
-
-#ifdef OLD_MESSAGELIST
-
-
-
   // The looping logic is: "Don't loop" just never loops, "Loop in current folder"
   // loops just in current folder, "Loop in all folders" loops in the current folder
   // first and then after confirmation jumps to the next folder.
@@ -3266,7 +3261,7 @@ void KMMainWidget::slotSelectNextUnreadMessage()
   // for bug-to-bug backward compatibility, the masters decided to keep it b0rken :D
   // If nobody complains, it stays like it is: if you complain enough maybe the masters will
   // decide to reconsider :)
-  if ( !mMessageListView->selectNextMessageItem(
+  if ( !mMessagePane->selectNextMessageItem(
       MessageList::Core::MessageTypeNewOrUnreadOnly,
       MessageList::Core::ClearExistingSelection,
       true,  // center item
@@ -3280,14 +3275,13 @@ void KMMainWidget::slotSelectNextUnreadMessage()
          ( GlobalSettings::self()->loopOnGotoUnread() ==
            GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
+#ifdef OLD_MESSAGELIST
       mGoToFirstUnreadMessageInSelectedFolder = true;
-      mMainFolderView->selectNextUnreadFolder(
-          true // confirm
-        );
+      mMainFolderView->selectNextUnreadFolder(true // confirm );
       mGoToFirstUnreadMessageInSelectedFolder = false;
+#endif
     }
   }
-#endif
 }
 
 void KMMainWidget::slotSelectPreviousMessage()
@@ -3309,9 +3303,8 @@ void KMMainWidget::slotExtendSelectionToPreviousMessage()
 
 void KMMainWidget::slotSelectPreviousUnreadMessage()
 {
-#ifdef OLD_MESSAGELIST
   //TODO port it (laurent)
-  if ( !mMessageListView->selectPreviousMessageItem(
+  if ( !mMessagePane->selectPreviousMessageItem(
       MessageList::Core::MessageTypeNewOrUnreadOnly,
       MessageList::Core::ClearExistingSelection,
       true,  // center item
@@ -3324,12 +3317,13 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
          ( GlobalSettings::self()->loopOnGotoUnread() ==
            GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
+#ifdef OLD_MESSAGELIST
       mGoToFirstUnreadMessageInSelectedFolder = true;
       mMainFolderView->selectPrevUnreadFolder();
       mGoToFirstUnreadMessageInSelectedFolder = false;
+#endif
     }
   }
-#endif
 }
 
 void KMMainWidget::slotDisplayCurrentMessage()
