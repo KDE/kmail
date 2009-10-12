@@ -55,21 +55,29 @@ void FolderTreeView::selectModelIndex( const QModelIndex & index )
 
 void FolderTreeView::slotFocusNextFolder()
 {
-  QModelIndex current = currentIndex();
+  QModelIndex nextFolder = selectNextFolder( currentIndex() );
+
+  if ( nextFolder.isValid() ) {
+    expand( nextFolder );
+    selectModelIndex( nextFolder );
+  }
+}
+
+QModelIndex FolderTreeView::selectNextFolder( const QModelIndex & current )
+{
+  QModelIndex below;
   if ( current.isValid() ) {
     model()->fetchMore( current );
     if ( model()->hasChildren( current ) ) {
       expand( current );
-      QModelIndex below = indexBelow( current );
-      selectModelIndex( below );
+      below = indexBelow( current );
     } else if ( current.row() < model()->rowCount( model()->parent( current ) ) -1 ) {
-      QModelIndex item = model()->index( current.row()+1, current.column(), model()->parent( current ) );
-      selectModelIndex( item );
+      below = model()->index( current.row()+1, current.column(), model()->parent( current ) );
     } else {
-      QModelIndex below = indexBelow( current );
-      selectModelIndex( below );
+      below = indexBelow( current );
     }
   }
+  return below;
 }
 
 void FolderTreeView::slotFocusPrevFolder()
@@ -84,11 +92,19 @@ void FolderTreeView::slotFocusPrevFolder()
 void FolderTreeView::selectNextUnreadFolder()
 {
   kDebug()<<"Need to implement  FolderTreeView::selectNextUnreadFolder() ";
+  QModelIndex current = currentIndex();
+  if ( current.isValid() ) {
+
+  }
 }
 
 void FolderTreeView::selectPrevUnreadFolder()
 {
   kDebug()<<" Need to implement FolderTreeView::selectPrevUnreadFolder()";
+  QModelIndex current = currentIndex();
+  if ( current.isValid() ) {
+
+  }
 }
 
 #include "foldertreeview.moc"

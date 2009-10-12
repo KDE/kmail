@@ -36,6 +36,8 @@ public:
 protected:
   void init();
   void selectModelIndex( const QModelIndex & );
+  QModelIndex selectNextFolder( const QModelIndex & current );
+
 public slots:
   void slotFocusNextFolder();
   void slotFocusPrevFolder();
