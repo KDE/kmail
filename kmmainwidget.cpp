@@ -2722,13 +2722,12 @@ void KMMainWidget::slotPrintMsg()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
 
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
   bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
-
+#ifdef OLD_MESSAGELIST
   KMCommand *command =
     new KMPrintCommand( this, msg,
                         mMsgView ? mMsgView->headerStyle() : 0,
