@@ -61,6 +61,7 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/mail-check-error]
 Name=Error While Checking Mail
+Name[en_GB]=Error While Checking Mail
 Name[es]=Error al comprobar el correo
 Name[gl]=Produciuse un erro ao comprobar o correo
 Name[nb]=Feil under sjekking av e-post
@@ -75,6 +76,7 @@ Name[uk]=Помилка під час спроби отримання пошти
 Name[x-test]=xxError While Checking Mailxx
 Name[zh_TW]=檢查郵件時發生錯誤
 Comment=There was an error while checking for new mail
+Comment[en_GB]=There was an error while checking for new mail
 Comment[es]=Ha ocurrido un error mientras se comprobaba el correo nuevo
 Comment[gl]=Aconteceu un erro cando se comprobaba o correo novo
 Comment[nb]=Det oppsto en feil mens det ble sett etter ny e-post

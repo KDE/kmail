@@ -122,7 +122,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>Show for each  folder the number of newly arrived messages</string>
+           <string>Show for each folder the number of newly arrived messages</string>
           </property>
           <property name="text">
            <string>Deta&amp;iled new mail notification</string>

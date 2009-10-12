@@ -75,10 +75,10 @@ QString Callback::askForTransport( bool nullIdentity ) const
 
   QString text;
   if ( nullIdentity )
-    text = i18n( "<qt>The receiver of this invitation doesn't match any of your identities.<br>"
+    text = i18n( "<qt>The receiver of this invitation does not match any of your identities.<br>"
                  "Please select the transport which should be used to send your reply.</qt>" );
   else
-    text = i18n( "<qt>The identity matching the receiver of this invitation doesn't have an "
+    text = i18n( "<qt>The identity matching the receiver of this invitation does not have an "
                  "associated transport configured.<br>"
                  "Please select the transport which should be used to send your reply.</qt>");
   bool ok;
