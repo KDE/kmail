@@ -465,19 +465,12 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     aMsg->setOverrideCodec( overrideCodec() );
 #endif
     aMsg->setDecodeHTML( htmlMail() );
-#ifndef USE_AKONADI_VIEWER
-    mLastStatus = aMsg->status();
-#endif
     // FIXME: workaround to disable DND for IMAP load-on-demand
 #ifndef USE_AKONADI_VIEWER
     if ( !aMsg->isComplete() )
       mViewer->setDNDEnabled( false );
     else
       mViewer->setDNDEnabled( true );
-#endif
-  } else {
-#ifndef USE_AKONADI_VIEWER
-    mLastStatus.clear();
 #endif
   }
 
