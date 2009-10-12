@@ -185,7 +185,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                               KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
     QWidget( parent ),
-    mFavoritesCheckMailAction( 0 ),
     mFavoriteCollectionsView( 0 ),
     mMsgView( 0 ),
     mSplitter1( 0 ),
@@ -594,7 +593,6 @@ void KMMainWidget::readConfig()
     mMessageListView->reloadGlobalConfiguration();
 #endif
 
-    mFavoritesCheckMailAction->setEnabled( GlobalSettings::self()->enableFavoriteFolderView() );
   }
 
   { // area for config group "General"
@@ -704,6 +702,7 @@ void KMMainWidget::createWidgets()
   saver.restoreState( cfg );
 
   mMessagePane = new MessageList::Pane( mCollectionFolderView->entityModel(), mCollectionFolderView->folderTreeView()->selectionModel(), this );
+
   mMessagePane->setXmlGuiClient( mGUIClient );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
            this, SLOT(slotMessageSelected(Akonadi::Item)) );
@@ -853,6 +852,8 @@ void KMMainWidget::createWidgets()
     mAkonadiStandardActionManager->setCollectionSelectionModel( mCollectionFolderView->folderTreeView()->selectionModel() );
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
+    mAkonadiStandardActionManager->setItemSelectionModel(mCollectionFolderView->folderTreeView()->selectionModel() );
+
     mAkonadiStandardActionManager->createAllActions();
 
 
@@ -862,11 +863,6 @@ void KMMainWidget::createWidgets()
       mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
     }
 
-#if 0 //Port it
-    if ( mFavoritesCheckMailAction )
-      connect( mFavoritesCheckMailAction, SIGNAL(triggered(bool)),
-               mFavoriteFolderView, SLOT( checkMail() ) );
-#endif
   }
 
   //
@@ -1501,6 +1497,7 @@ void KMMainWidget::slotCompactFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRefreshFolder()
 {
+#if 0 //Use akonadi but perhaps we need to use this code in the future
   if (mFolder)
   {
     if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap ) {
@@ -1518,6 +1515,7 @@ void KMMainWidget::slotRefreshFolder()
       f->account()->processNewMailInFolder( mFolder );
     }
   }
+#endif
 }
 
 void KMMainWidget::slotTroubleshootFolder()
@@ -3621,16 +3619,6 @@ void KMMainWidget::setupActions()
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_L));
   }
 
-  mFavoritesCheckMailAction = new KAction( KIcon( "mail-receive"),
-                                           i18n( "Check Mail in Favorite Folders" ), this );
-  actionCollection()->addAction( "favorite_check_mail", mFavoritesCheckMailAction );
-  mFavoritesCheckMailAction->setShortcut( QKeySequence( Qt::CTRL+Qt::SHIFT+Qt::Key_L ) );
-#if 0  //Port it
-  if ( mFavoriteFolderView ) {
-    connect( mFavoritesCheckMailAction, SIGNAL(triggered(bool)),
-             mFavoriteFolderView, SLOT(checkMail()) );
-  }
-#endif
   KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-receive"), i18n("Check Mail In"), this);
   actActionMenu->setIconText( i18n("Check Mail") );
   actActionMenu->setToolTip( i18n("Check Mail") );
@@ -3816,10 +3804,6 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("compact", mCompactFolderAction );
   connect(mCompactFolderAction, SIGNAL(triggered(bool) ), SLOT(slotCompactFolder()));
 
-  mRefreshFolderAction = new KAction(KIcon("view-refresh"), i18n("Check Mail &in This Folder"), this);
-  actionCollection()->addAction("refresh_folder", mRefreshFolderAction );
-  connect(mRefreshFolderAction, SIGNAL(triggered(bool) ), SLOT(slotRefreshFolder()));
-  mRefreshFolderAction->setShortcut(KStandardShortcut::reload());
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
   mTroubleshootMaildirAction = new KAction( KIcon("tools-wizard"), i18n("Rebuild Index..."), this );
@@ -4482,8 +4466,10 @@ void KMMainWidget::updateFolderMenu()
   bool cachedImap = mFolder && mFolder->folderType() == KMFolderTypeCachedImap;
   // For dimap, check that the imap path is known before allowing "check mail in this folder".
   bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
+#if 0 //We use akonadi
   mRefreshFolderAction->setEnabled( folderWithContent && ( imap
                                                            || ( cachedImap && knownImapPath ) ) && !multiFolder );
+#endif
   if ( mTroubleshootFolderAction )
     mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
   mTroubleshootMaildirAction->setVisible( mFolder && mFolder->folderType() == KMFolderTypeMaildir );
@@ -5086,7 +5072,6 @@ void KMMainWidget::updateFileMenu()
 
   actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
   actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
-  actionCollection()->action("favorite_check_mail")->setEnabled( actList.size() > 0 );
 }
 
 //-----------------------------------------------------------------------------

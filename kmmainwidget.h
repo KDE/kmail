@@ -631,8 +631,7 @@ private:
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-      *mFavoritesCheckMailAction, *mRefreshImapCacheAction,
-      *mMoveMsgToFolderAction;
+      *mRefreshImapCacheAction, *mMoveMsgToFolderAction;
     // Composition actions
     KAction *mPrintAction;
     // Filter actions
@@ -691,7 +690,7 @@ private:
     KMail::SearchWindow *mSearchWin;
 
     KAction *mModifyFolderAction, *mRemoveFolderAction,
-      *mExpireFolderAction, *mCompactFolderAction, *mRefreshFolderAction,
+      *mExpireFolderAction, *mCompactFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mFolderShortCutCommandAction, *mTroubleshootFolderAction, *mRemoveDuplicatesAction,
       *mTroubleshootMaildirAction, *mPostToMailinglistAction;
