@@ -32,6 +32,10 @@ public:
   virtual ~FolderTreeView();
 protected:
   void init();
+  void selectModelIndex( const QModelIndex & );
+public slots:
+  void slotFocusNextFolder();
+
 };
 
 

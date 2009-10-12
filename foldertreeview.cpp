@@ -17,6 +17,7 @@
 */
 
 #include "foldertreeview.h"
+#include <QDebug>
 #include <KLocale>
 
 FolderTreeView::FolderTreeView(QWidget *parent )
@@ -39,6 +40,35 @@ FolderTreeView::~FolderTreeView()
 
 void FolderTreeView::init()
 {
+}
+
+void FolderTreeView::selectModelIndex( const QModelIndex & index )
+{
+  if ( index.isValid() ) {
+    clearSelection();
+    scrollTo( index );
+    setCurrentIndex(index);
+  }
+}
+
+
+void FolderTreeView::slotFocusNextFolder()
+{
+  QModelIndex current = currentIndex();
+  if ( current.isValid() ) {
+    model()->fetchMore( current );
+    if ( model()->hasChildren( current ) ) {
+      expand( current );
+      QModelIndex below = indexBelow( current );
+      selectModelIndex( below );
+    } else if ( current.row() < model()->rowCount( model()->parent( current ) ) -1 ) {
+      QModelIndex item = model()->index( current.row()+1, current.column(), model()->parent( current ) );
+      selectModelIndex( item );
+    } else {
+      QModelIndex below = indexBelow( current );
+      selectModelIndex( below );
+    }
+  }
 }
 
 #include "foldertreeview.moc"
