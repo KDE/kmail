@@ -30,7 +30,7 @@
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/collection.h>
-
+#include <akonadi/statisticsproxymodel.h>
 
 class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
 {
@@ -63,6 +63,8 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   monitor->itemFetchScope().fetchFullPayload(true);
   d->entityModel = new Akonadi::EntityTreeModel( session, monitor, this );
 
+
+
   Akonadi::EntityFilterProxyModel *collectionModel = new Akonadi::EntityFilterProxyModel( this );
   collectionModel->setSourceModel( d->entityModel );
   collectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
@@ -73,15 +75,19 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   statisticsProxyModel->setSourceModel( collectionModel );
 
 
+  Akonadi::StatisticsProxyModel *proxy = new Akonadi::StatisticsProxyModel(this);
+  proxy->setSourceModel( statisticsProxyModel );
+
   d->filterModel = new QSortFilterProxyModel( this );
   d->filterModel->setDynamicSortFilter( true );
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
-  d->filterModel->setSourceModel( statisticsProxyModel );
+  d->filterModel->setSourceModel( proxy );
 
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
+
   d->collectionFolderView->setModel( d->filterModel );
   d->collectionFolderView->expandAll();
   lay->addWidget( d->collectionFolderView );
