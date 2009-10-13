@@ -210,7 +210,6 @@ set(kmailprivate_LIB_SRCS
    #folderdialogquotatab.cpp
    folderdialogquotatab_p.cpp
    folderadaptor.cpp
-   copyfolderjob.cpp
    messagecopyhelper.cpp
    korghelper.cpp
    localsubscriptiondialog.cpp

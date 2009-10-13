@@ -28,9 +28,7 @@
 #include "kmfolder.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
-#include "copyfolderjob.h"
 
-using KMail::CopyFolderJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
@@ -585,11 +583,13 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
 //-----------------------------------------------------------------------------
 void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 {
+#if 0 //Done by akonadi	
   kDebug() << "Copy folder:" << folder->prettyUrl();
   CopyFolderJob* job = new CopyFolderJob( folder->storage(), newParent );
   connect( job, SIGNAL( folderCopyComplete( bool ) ),
 	   this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
   job->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
