@@ -1844,18 +1844,6 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 #endif
 }
 
-void KMMainWidget::slotMoveSelectedMessagesToFolder( QAction * act )
-{
-  KMFolder * folder = static_cast< KMFolder * >( act->data().value< void * >() );
-
-  if ( !folder )
-    return; // would be a deletion
-
-  // FIXME: Test for folder validity in some quick and elegant way ?
-  //        Actually we ASSUME that the folder is valid...
-
-  slotMoveMsgToFolder( folder );
-}
 
 // FIXME: Use better name for this (slotMoveSelectedMessagesToFolder() ?)
 //        When changing the name also change the slot name in the QObject::connect calls all around...

@@ -201,14 +201,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
     void slotMoveMsgToFolder( KMFolder *dest );
 
-    /**
-     * This will move the currently selected
-     * messages (in MessageListView) into the folder specified
-     * by static_cast< KMFolder * >( act->data().value< void * >() ).
-     * Note that this function TRUSTS the returned folder to be valid.
-     * Useful for connecting popup menus.
-     */
-    void slotMoveSelectedMessagesToFolder( QAction * act );
 
     // Copying messages around
 
