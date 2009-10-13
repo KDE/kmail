@@ -1261,14 +1261,14 @@ void KMMainWidget::slotPostToML()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderMailingListProperties()
 {
+  if ( !mCollectionFolderView )
+    return;
+
+  Akonadi::Collection folder = mCollectionFolderView->folderTreeView()->currentFolder();
+  if ( !folder.isValid() )
+    return;
+
 #ifdef OLD_FOLDERVIEW
-  if ( !mMainFolderView )
-    return;
-
-  KMFolder * folder = mMainFolderView->currentFolder();
-  if ( !folder )
-    return;
-
   ( new KMail::MailingListFolderPropertiesDialog( this, folder ) )->show();
   //slotModifyFolder( KMMainWidget::PropsMailingList );
 #endif
@@ -1277,14 +1277,13 @@ void KMMainWidget::slotFolderMailingListProperties()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderShortcutCommand()
 {
+  if (!mCollectionFolderView)
+    return;
+
+  Akonadi::Collection folder = mCollectionFolderView->folderTreeView()->currentFolder();
+  if ( !folder.isValid() )
+    return;
 #ifdef OLD_FOLDERVIEW
-  if (!mMainFolderView)
-    return;
-
-  KMFolder * folder = mMainFolderView->currentFolder();
-  if ( !folder )
-    return;
-
   AutoQPointer<KMail::FolderShortcutDialog> shorty;
   shorty = new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mCollectionFolderView );
   shorty->exec();
@@ -4448,12 +4447,10 @@ void KMMainWidget::updateFolderMenu()
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
   updateMarkAsReadAction();
-#ifdef OLD_MESSAGELIST
   // the visual ones only make sense if we are showing a message list
-  mPreferHtmlAction->setEnabled( mMessageListView->currentFolder() ? true : false );
+  mPreferHtmlAction->setEnabled( mCollectionFolderView->folderTreeView()->currentFolder().isValid() ? true : false );
 
-  mPreferHtmlLoadExtAction->setEnabled( mMessageListView->currentFolder() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
-#endif
+  mPreferHtmlLoadExtAction->setEnabled( mCollectionFolderView->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mFolder && mFolder->canDeleteMessages() );
