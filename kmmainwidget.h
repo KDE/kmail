@@ -616,7 +616,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCopyMessagesCompleted( KMCommand *command );
 
     void slotRequestFullSearchFromQuickSearch();
-    void slotMessageListViewCurrentFolderChanged( KMFolder * fld );
+  void slotFolderChanged( const Akonadi::Collection& );
+
     void slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus & clear );
   void slotMessageSelected(Akonadi::Item);
 private:
@@ -653,6 +654,7 @@ private:
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
   Akonadi::FavoriteCollectionsView *mFavoriteCollectionsView;
+  //Remove it
     QPointer<KMFolder> mFolder;
     QWidget      *mSearchAndTree;
     KTreeWidgetSearchLine *mFolderQuickSearch;
@@ -720,6 +722,8 @@ private:
     KMail::MessageActions *mMsgActions;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
   MessageList::Pane *mMessagePane;
+  Akonadi::Collection mCurrentFolder;
+
   FolderSelectionTreeView *mCollectionFolderView;
     bool mOpenedImapFolder;
 

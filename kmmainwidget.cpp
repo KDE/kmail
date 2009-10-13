@@ -230,6 +230,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mCustomTemplateMenus = 0;
   mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
 
+  connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
+
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
@@ -323,6 +325,12 @@ void KMMainWidget::destruct()
   mDestructed = true;
 }
 
+
+void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
+{
+  kDebug()<<" active col :"<<col;
+  mCurrentFolder = col;
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig()
@@ -2899,15 +2907,6 @@ void KMMainWidget::folderSelected()
 #ifdef OLD_FOLDERVIEW
   // update the caption (useful if the name changed)
   emit captionChangeRequest( mMainFolderView->currentItemFullPath() );
-#endif
-}
-
-void KMMainWidget::slotMessageListViewCurrentFolderChanged( KMFolder * fld )
-{
-  if ( fld == mFolder )
-    return;
-#ifdef OLD_FOLDERVIEW
-  mMainFolderView->setCurrentFolder( fld );
 #endif
 }
 
