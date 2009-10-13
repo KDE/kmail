@@ -200,7 +200,7 @@
   <Separator/>
   <Action name="expire"/>
   <Action name="folder_shortcut_command"/>
-  <Action name="modify"/>
+  <Action name="akonadi_collection_properties"/>
  </Menu>
 
  <Menu name="akonadi_collectionview_contextmenu">
@@ -217,7 +217,7 @@
   <Separator/>
   <Action name="expire"/>
   <Action name="folder_shortcut_command"/>
-  <Action name="modify"/>
+  <Action name="akonadi_collection_properties"/>
  </Menu>
 
  <Menu name="akonadi_messagelist_contextmenu">
