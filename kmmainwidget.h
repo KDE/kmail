@@ -497,12 +497,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCutMessages();
     void slotPasteMessages();
 
-    void slotConfigChanged();
+  void slotConfigChanged();
 
     /**
       Remove the shortcut actions associated with a folder.
     */
     void slotFolderRemoved( KMFolder *folder );
+  void slotCollectionRemoved( const Akonadi::Collection& );
 
     /**
      * Reopens the folder if it was closed because of a rename

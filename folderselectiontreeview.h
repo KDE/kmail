@@ -27,7 +27,8 @@ class QItemSelectionModel;
 class FolderTreeView;
 
 namespace Akonadi {
-   class EntityTreeModel;
+  class EntityTreeModel;
+  class ChangeRecorder;
 }
 class FolderSelectionTreeView : public QWidget
 {
@@ -35,6 +36,10 @@ class FolderSelectionTreeView : public QWidget
 public:
   FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0 );
   ~FolderSelectionTreeView();
+
+
+  Akonadi::ChangeRecorder *monitorFolders();
+
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );
 

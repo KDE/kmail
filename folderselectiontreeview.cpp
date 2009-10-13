@@ -36,12 +36,13 @@ class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
 {
 public:
   FolderSelectionTreeViewPrivate()
-    :filterModel( 0 ), collectionFolderView( 0 ), entityModel( 0 )
+    :filterModel( 0 ), collectionFolderView( 0 ), entityModel( 0 ), monitor( 0 )
   {
   }
   QSortFilterProxyModel *filterModel;
   FolderTreeView *collectionFolderView;
   Akonadi::EntityTreeModel *entityModel;
+  Akonadi::ChangeRecorder *monitor;
 };
 
 
@@ -54,14 +55,14 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );
 
   // monitor collection changes
-  Akonadi::ChangeRecorder *monitor = new Akonadi::ChangeRecorder( this );
-  monitor->setCollectionMonitored( Akonadi::Collection::root() );
-  monitor->fetchCollection( true );
-  monitor->setAllMonitored( true );
-  monitor->setMimeTypeMonitored( "message/rfc822" );
+  d->monitor = new Akonadi::ChangeRecorder( this );
+  d->monitor->setCollectionMonitored( Akonadi::Collection::root() );
+  d->monitor->fetchCollection( true );
+  d->monitor->setAllMonitored( true );
+  d->monitor->setMimeTypeMonitored( "message/rfc822" );
   // TODO: Only fetch the envelope etc if possible.
-  monitor->itemFetchScope().fetchFullPayload(true);
-  d->entityModel = new Akonadi::EntityTreeModel( session, monitor, this );
+  d->monitor->itemFetchScope().fetchFullPayload(true);
+  d->entityModel = new Akonadi::EntityTreeModel( session, d->monitor, this );
 
 
 
@@ -96,6 +97,11 @@ FolderSelectionTreeView::~FolderSelectionTreeView()
   delete d;
 }
 
+
+Akonadi::ChangeRecorder * FolderSelectionTreeView::monitorFolders()
+{
+  return d->monitor;
+}
 
 void FolderSelectionTreeView::setSelectionMode( QAbstractItemView::SelectionMode mode )
 {

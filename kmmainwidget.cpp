@@ -231,6 +231,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
 
   connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
+  connect( mCollectionFolderView->monitorFolders(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
 
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
@@ -265,9 +266,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
-
-  connect( kmkernel->folderMgr(), SIGNAL( folderRemoved(KMFolder*) ),
-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
 
   connect( kmkernel->imapFolderMgr(), SIGNAL( folderRemoved(KMFolder*) ),
            this, SLOT( slotFolderRemoved(KMFolder*) ) );
@@ -4831,8 +4829,15 @@ void KMMainWidget::initializeFilterActions()
   updateMessageActions();
 }
 
+void KMMainWidget::slotCollectionRemoved( const Akonadi::Collection& )
+{
+  //TODO
+  //delete mFolderShortcutCommands.take( folder->idString() );
+}
+
 void KMMainWidget::slotFolderRemoved( KMFolder *folder )
 {
+  //TODO remove it
   delete mFolderShortcutCommands.take( folder->idString() );
 }
 
