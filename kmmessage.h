@@ -155,13 +155,26 @@ public:
   /** Touch the message - mark it as read */
   void touch() { setStatus( MessageStatus::statusOld() ); }
 
-  /** Create a new message that is a reply to this message, filling all
-      required header fields with the proper values. The returned message
-      is not stored in any folder. Marks this message as replied. */
-  KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                          const QString &selection=QString(), bool noQuote=false,
-                          bool allowDecryption=true, bool selectionIsBody=false,
-                          const QString &tmpl = QString() );
+  /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
+  /// the reply mode
+  struct MessageReply
+  {
+    KMMessage *msg;  ///< The actual reply message
+    bool replyAll;   ///< If true, the "reply all" template was used, otherwise the normal reply
+                     ///  template
+  };
+
+  /**
+   * Create a new message that is a reply to this message, filling all
+   * required header fields with the proper values. The returned message
+   * is not stored in any folder. Marks this message as replied.
+   *
+   * @return the reply created, including the reply mode
+   */
+  MessageReply createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
+                            const QString &selection=QString(), bool noQuote=false,
+                            bool allowDecryption=true, bool selectionIsBody=false,
+                            const QString &tmpl = QString() );
 
 
   /** Create a new message that is a redirect to this message, filling all

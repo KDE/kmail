@@ -163,6 +163,14 @@ private:
   KMCommand::Result m_result;
 };
 
+/// Small helper function to get the composer context from a reply
+static KMail::Composer::TemplateContext replyContext( KMMessage::MessageReply reply )
+{
+  if ( reply.replyAll )
+    return KMail::Composer::ReplyToAll;
+  else
+    return KMail::Composer::Reply;
+}
 
 KMCommand::KMCommand( QWidget *parent )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
@@ -504,10 +512,10 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage *rmsg = msg->createReply( KMail::ReplyNone, mSelection );
-  rmsg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyNone, mSelection );
+  reply.msg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
 
-  KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
+  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -1107,8 +1115,8 @@ KMCommand::Result KMReplyToCommand::execute()
   if ( !msg ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::Reply, 0, mSelection );
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplySmart, mSelection );
+  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
@@ -1130,8 +1138,8 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   if ( !msg ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplySmart, "", true);
-  KMail::Composer *win = KMail::makeComposer( reply, KMail::Composer::Reply );
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplySmart, "", true);
+  KMail::Composer *win = KMail::makeComposer( reply.msg, replyContext( reply ) );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus( false );
   win->show();
@@ -1153,8 +1161,8 @@ KMCommand::Result KMReplyListCommand::execute()
   if ( !msg ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::ReplyToAll,
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyList, mSelection );
+  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ),
                                                0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus( false );
@@ -1177,8 +1185,8 @@ KMCommand::Result KMReplyToAllCommand::execute()
   if ( !msg ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::ReplyToAll, 0,
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection );
+  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
@@ -1201,8 +1209,8 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   if ( !msg ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
-  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::Reply, 0,
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyAuthor, mSelection );
+  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
@@ -1475,9 +1483,9 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
-                                       false, true, false, mTemplate );
-  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::Reply, 0,
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplySmart, mSelection,
+                                                    false, true, false, mTemplate );
+  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
@@ -1501,9 +1509,9 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
-                                       false, true, false, mTemplate );
-  KMail::Composer * win = KMail::makeComposer( reply, KMail::Composer::ReplyToAll, 0,
+  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection,
+                                                    false, true, false, mTemplate );
+  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();

@@ -580,12 +580,12 @@ QString KMMessage::asQuotedString( const QString& aIndentStr,
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
-                                   const QString &selection /*.clear() */,
-                                   bool noQuote /* = false */,
-                                   bool allowDecryption /* = true */,
-                                   bool selectionIsBody /* = false */,
-                                   const QString &tmpl /* = QString() */ )
+KMMessage::MessageReply KMMessage::createReply( ReplyStrategy replyStrategy,
+                                                const QString &selection /*.clear() */,
+                                                bool noQuote /* = false */,
+                                                bool allowDecryption /* = true */,
+                                                bool selectionIsBody /* = false */,
+                                                const QString &tmpl /* = QString() */ )
 {
   KMMessage* msg = new KMMessage;
   QString str, mailingListStr, replyToStr, toStr;
@@ -594,7 +594,6 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
   bool replyAll = true;
 
   msg->initFromMessage(this);
-
   MailingList::name(this, headerName, mailingListStr);
   replyToStr = replyTo();
 
@@ -794,7 +793,10 @@ KMMessage* KMMessage::createReply( ReplyStrategy replyStrategy,
     msg->setEncryptionState( KMMsgFullyEncrypted );
   }
 
-  return msg;
+  MessageReply reply;
+  reply.msg = msg;
+  reply.replyAll = replyAll;
+  return reply;
 }
 
 
