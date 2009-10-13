@@ -49,7 +49,7 @@ CopyFolderJob::CopyFolderJob( FolderStorage* const storage, KMFolderDir* const n
    mStorage( storage ), mNewParent( newParent ),
    mNewFolder( 0 ), mNextChildFolder( 0 )
 {
-  if ( mStorage->folder()->child() && 
+  if ( mStorage->folder()->child() &&
        mStorage->folder()->child()->size() > 0 ) {
     mHasChildFolders = true;
     mChildFolderNodeIterator = mStorage->folder()->child()->begin();
@@ -101,10 +101,12 @@ void CopyFolderJob::copyMessagesToTargetDir()
     // (including mStorage) might already be deleted!
     slotCopyNextChild(); // no contents, check subfolders
   } else {
+#ifdef OLD_COMMAND
     KMCommand *command = new KMCopyCommand( mNewFolder, msgList );
     connect( command, SIGNAL( completed( KMCommand * ) ),
         this, SLOT( slotCopyCompleted( KMCommand * ) ) );
     command->start();
+#endif
   }
 }
 

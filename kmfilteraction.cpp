@@ -1540,11 +1540,12 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( KMMessage *msg ) const
 void KMFilterActionCopy::processAsync( KMMessage *msg ) const
 {
   ActionScheduler *handler = MessageProperty::filterHandler( msg );
-
+#ifdef OLD_COMMAND
   KMCommand *cmd = new KMCopyCommand( mFolder, msg );
   QObject::connect( cmd, SIGNAL( completed( KMCommand * ) ),
                     handler, SLOT( copyMessageFinished( KMCommand * ) ) );
   cmd->start();
+#endif
 }
 
 bool KMFilterActionCopy::requiresBody( KMMsgBase *msg ) const

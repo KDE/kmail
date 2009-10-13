@@ -197,9 +197,10 @@ void FolderStorage::markUnreadAsRead()
   }
   if (serNums.empty())
     return;
-
+#ifdef OLD_COMMAND
   KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------

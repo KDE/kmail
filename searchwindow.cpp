@@ -683,9 +683,9 @@ void SearchWindow::openSearchFolder()
 {
   Q_ASSERT( mFolder );
   renameSearchFolder();
-#ifdef OLD_FOLDERVIEW  
+#ifdef OLD_FOLDERVIEW
   mKMMainWidget->slotSelectFolder( mFolder->folder() );
-#endif  
+#endif
   slotClose();
 }
 
@@ -719,7 +719,7 @@ KMMessage *SearchWindow::indexToMessage( QTreeWidgetItem *item )
   }
 #ifdef OLD_FOLDERVIEW
   mKMMainWidget->slotSelectFolder( folder );
-#endif  
+#endif
   return folder->getMsg( msgIndex );
 }
 
@@ -746,9 +746,9 @@ bool SearchWindow::slotViewMsg( QTreeWidgetItem *item, int )
   KMMessage *message = indexToMessage( item );
   if ( message ) {
     //TODO port to new API => KMime::Message
-#ifdef OLD_FOLDERVIEW	  
+#ifdef OLD_FOLDERVIEW
     mKMMainWidget->slotMsgActivated( message );
-#endif    
+#endif
     return true;
   }
   return false;
@@ -814,16 +814,18 @@ void SearchWindow::slotMoveSelectedMessagesToFolder( QAction* act )
   KMFolder *dest = static_cast<KMFolder *>( act->data().value<void *>() );
   if ( !dest )
     return;
-
+#ifdef OLD_COMMAND
   // Fixme: isn't this already handled by KMHeaders ?
   QList<KMMsgBase*> msgList = selectedMessages();
   KMCommand *command = new KMMoveCommand( dest, msgList );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotCopySelectedMessagesToFolder( QAction* act )
 {
+#ifdef OLD_COMMAND
   KMFolder *dest = static_cast<KMFolder *>( act->data().value<void *>() );
   if ( !dest )
     return;
@@ -832,6 +834,7 @@ void SearchWindow::slotCopySelectedMessagesToFolder( QAction* act )
   QList<KMMsgBase*> msgList = selectedMessages();
   KMCommand *command = new KMCopyCommand( dest, msgList );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -906,62 +909,78 @@ void SearchWindow::slotClearSelection()
 //-----------------------------------------------------------------------------
 void SearchWindow::slotReplyToMsg()
 {
+#ifdef OLD_COMMAND
     KMCommand *command = new KMReplyToCommand(this, message());
     command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotReplyAllToMsg()
 {
+#ifdef OLD_COMMAND
     KMCommand *command = new KMReplyToAllCommand(this, message());
     command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotReplyListToMsg()
 {
+#ifdef OLD_COMMAND
     KMCommand *command = new KMReplyListCommand(this, message());
     command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotForwardMsg()
 {
+#ifdef OLD_COMMAND
     KMCommand *command = new KMForwardCommand(this, selectedMessages());
     command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotForwardAttachedMsg()
 {
+#ifdef OLD_COMMAND
     KMCommand *command = new KMForwardAttachedCommand(this, selectedMessages());
     command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotSaveMsg()
 {
+#ifdef OLD_COMMAND
     KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand(this,
                                                          selectedMessages());
     if (saveCommand->url().isEmpty())
         delete saveCommand;
     else
         saveCommand->start();
+#endif
 }
 //-----------------------------------------------------------------------------
 void SearchWindow::slotSaveAttachments()
 {
+#ifdef OLD_COMMAND
     KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand(this,
                                                                          selectedMessages());
     saveCommand->start();
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotPrintMsg()
 {
+#ifdef OLD_COMMAND
     KMCommand *command = new KMPrintCommand(this, message());
     command->start();
+#endif
 }
 
 void SearchWindow::slotCopyMsgs()

@@ -231,10 +231,11 @@ void KMMimePartTree::saveSelectedBodyParts( bool encoded )
     parts.append( static_cast<KMMimePartTreeItem *>( *it )->node() );
 
   mReaderWin->setUpdateAttachment();
-
+#ifdef OLD_COMMAND
   KMSaveAttachmentsCommand *command =
     new KMSaveAttachmentsCommand( this, parts, mReaderWin->message(), encoded );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -244,10 +245,11 @@ void KMMimePartTree::slotSaveAll()
     return;
 
   mReaderWin->setUpdateAttachment();
-
+#ifdef OLD_COMMAND
   KMCommand *command =
     new KMSaveAttachmentsCommand( this, mReaderWin->message() );
   command->start();
+#endif
 }
 
 

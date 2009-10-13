@@ -246,8 +246,10 @@ void MessageActions::slotCreateTodo()
 {
   if ( !mCurrentMessage )
     return;
+#ifdef OLD_COMMAND
   KMCommand *command = new CreateTodoCommand( mParent, mCurrentMessage );
   command->start();
+#endif
 }
 
 void MessageActions::setMessageView(KMReaderWin * msgView)
@@ -320,8 +322,10 @@ void MessageActions::slotNoQuoteReplyToMsg()
 {
   if ( !mCurrentMessage )
     return;
+#ifdef OLD_COMMAND
   KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentMessage );
   command->start();
+#endif
 }
 
 void MessageActions::slotSetMsgStatusNew()
@@ -364,6 +368,7 @@ void MessageActions::editCurrentMessage()
 {
   if ( !mCurrentMessage )
     return;
+#ifdef OLD_COMMAND
   KMCommand *command = 0;
   KMFolder *folder = mCurrentMessage->parent();
   // edit, unlike send again, removes the message from the folder
@@ -374,6 +379,7 @@ void MessageActions::editCurrentMessage()
   else
     command = new KMResendMessageCommand( mParent, mCurrentMessage );
   command->start();
+#endif
 }
 
 #include "messageactions.moc"

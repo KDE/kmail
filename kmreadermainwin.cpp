@@ -199,9 +199,11 @@ void KMReaderMainWin::slotTrashMsg()
   if (parent) {
     KMMessage *msg = parent->getMsg( index );
     if (msg) {
+#ifdef OLD_COMMAND
       // now delete the msg and close this window
       KMTrashMsgCommand *command = new KMTrashMsgCommand( parent, msg );
       command->start();
+#endif
       close();
     }
   }
@@ -210,17 +212,20 @@ void KMReaderMainWin::slotTrashMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotPrintMsg()
 {
+#ifdef OLD_COMMAND
   KMPrintCommand *command = new KMPrintCommand( this, mReaderWin->message(),
       mReaderWin->headerStyle(), mReaderWin->headerStrategy(),
       mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
       mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
   command->setOverrideFont( mReaderWin->cssHelper()->bodyFont( mReaderWin->isFixedFont(), true /*printing*/ ) );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardInlineMsg()
 {
+#ifdef OLD_COMMAND
    KMCommand *command = 0;
    if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
     command = new KMForwardCommand( this, mReaderWin->message(),
@@ -229,11 +234,13 @@ void KMReaderMainWin::slotForwardInlineMsg()
     command = new KMForwardCommand( this, mReaderWin->message() );
    }
    command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
+#ifdef OLD_COMMAND
    KMCommand *command = 0;
    if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
      command = new KMForwardAttachedCommand( this, mReaderWin->message(),
@@ -242,56 +249,67 @@ void KMReaderMainWin::slotForwardAttachedMsg()
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
    command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotRedirectMsg()
 {
+#ifdef OLD_COMMAND
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
+#ifdef OLD_COMMAND
   kDebug() << "Reply with template:" << tmpl;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
                                                    tmpl );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
+#ifdef OLD_COMMAND
   kDebug() << "Reply to All with template:" << tmpl;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
                                                       tmpl );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
+#ifdef OLD_COMMAND
   kDebug() << "Forward with template:" << tmpl;
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotShowMsgSrc()
 {
+#ifdef OLD_COMMAND
   KMMessage *msg = mReaderWin->message();
   if ( !msg )
     return;
   KMCommand *command = new KMShowMsgSrcCommand( this, msg,
                                                 mReaderWin->isFixedFont() );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -501,8 +519,10 @@ void KMReaderMainWin::slotCreateTodo()
 {
   if ( !mMsg )
     return;
+#ifdef OLD_COMMAND
   KMCommand *command = new CreateTodoCommand( this, mMsg );
   command->start();
+#endif
 }
 
 void KMReaderMainWin::slotEditToolbars()

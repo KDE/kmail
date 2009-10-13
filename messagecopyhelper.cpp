@@ -54,7 +54,7 @@ MessageCopyHelper::MessageCopyHelper( const QList<quint32> & msgs,
 
   if ( list.isEmpty() )
     return; // nothing to do
-
+#ifdef OLD_COMMAND
   KMCommand *command;
   if ( move ) {
     command = new KMMoveCommand( dest, list );
@@ -64,6 +64,7 @@ MessageCopyHelper::MessageCopyHelper( const QList<quint32> & msgs,
 
   connect( command, SIGNAL(completed(KMCommand*)), SLOT(copyCompleted(KMCommand*)) );
   command->start();
+#endif
 }
 
 void MessageCopyHelper::copyCompleted(KMCommand * cmd)

@@ -1242,20 +1242,24 @@ void KMMainWidget::newFromTemplate( KMMessage *msg )
 {
   if ( !msg )
     return;
+#ifdef OLD_COMMAND
   KMCommand *command = new KMUseTemplateCommand( this, msg );
   command->start();
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPostToML()
 {
+#ifdef OLD_COMMAND
   if ( mFolder && mFolder->isMailingListEnabled() ) {
     KMCommand *command = new KMMailingListPostCommand( this, mFolder );
     command->start();
   }
   else
     slotCompose();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1759,6 +1763,7 @@ void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMF
   }
 
   // And stuff them into a KMMoveCommand :)
+#ifdef OLD_COMMAND
   KMCommand *command = new KMMoveCommand( destination, selectedMessages );
 
   // Reparent the set to the command so it's deleted even if the command
@@ -1778,7 +1783,7 @@ void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMF
   set->markAsAboutToBeRemoved( true );
 
   command->start();
-
+#endif
   if ( destination )
     BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages..." ) );
   else
@@ -2766,9 +2771,11 @@ void KMMainWidget::slotSaveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOpenMsg()
 {
+#ifdef OLD_COMMAND
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, KUrl(), overrideEncoding() );
 
   openCommand->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------

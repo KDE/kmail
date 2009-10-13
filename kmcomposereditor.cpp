@@ -127,7 +127,7 @@ QString KMComposerEditor::quotePrefixName() const
   else
     return ">";
 }
- 
+
 void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 {
   QTextCursor cursor( document() );
@@ -219,9 +219,11 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     }
     serNumBuffer.close();
     uint identity = folder ? folder->identity() : 0;
+#ifdef OLD_COMMAND
     KMCommand *command = new KMForwardAttachedCommand( m_composerWin, messageList,
                                                        identity, m_composerWin );
     command->start();
+#endif
     return;
   }
 

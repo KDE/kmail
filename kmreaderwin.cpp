@@ -884,6 +884,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
     scrollToAttachment( node );
   }
   else {
+
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
         node, message(), mAtmCurrent, mAtmCurrentName,
         KMHandleAttachmentCommand::AttachmentAction( choice ), KService::Ptr( 0 ), this );
@@ -1267,32 +1268,40 @@ void KMReaderWin::slotUrlClicked()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
+#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoComposeCommand( urlClicked(), message() );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoForward()
 {
+#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoForwardCommand( mMainWindow, urlClicked(),
                                                    message() );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
+#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoAddAddrBookCommand( urlClicked(),
                                                        mMainWindow );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
+#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoOpenAddrBookCommand( urlClicked(),
                                                         mMainWindow );
   command->start();
+#endif
 }
 #ifndef USE_AKONADI_VIEWER
 //-----------------------------------------------------------------------------
@@ -1334,9 +1343,11 @@ void KMReaderWin::slotUrlSave()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
+#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoReplyCommand( mMainWindow, urlClicked(),
                                                  message(), copyText() );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1422,8 +1433,10 @@ void KMReaderWin::slotDeleteAttachment(partNode * node)
   KMMessage *msg = 0;
   fillCommandInfo( node, &msg, &nodeId );
   if ( msg && nodeId != -1 ) {
+#ifdef OLD_COMMAND
     KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( nodeId, msg, this );
     command->start();
+#endif
   }
 
   // If we are operating on a copy of parts of the message, make sure to update the copy as well.
@@ -1447,8 +1460,10 @@ void KMReaderWin::slotEditAttachment(partNode * node)
   KMMessage *msg = 0;
   fillCommandInfo( node, &msg, &nodeId );
   if ( msg && nodeId != -1 ) {
+#ifdef OLD_COMMAND
     KMEditAttachmentCommand* command = new KMEditAttachmentCommand( nodeId, msg, this );
     command->start();
+#endif
   }
 
   // FIXME: If we are operating on a copy of parts of the message, make sure to update the copy as well.

@@ -157,10 +157,12 @@ void ExpireJob::done()
       kDebug() << "ExpireJob: finished expiring in folder"
                     << mSrcFolder->location()
                     << count << "messages to remove.";
+#ifdef OLD_COMMAND
       KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
       connect( cmd, SIGNAL( completed( KMCommand * ) ),
                this, SLOT( slotMessagesMoved( KMCommand * ) ) );
       cmd->start();
+#endif
       moving = true;
       str = i18np( "Removing 1 old message from folder %2...",
                   "Removing %1 old messages from folder %2...", count,
@@ -179,10 +181,12 @@ void ExpireJob::done()
                       << mSrcFolder->location()
                       << mRemovedMsgs.count() << "messages to move to"
                       << mMoveToFolder->label();
+#ifdef OLD_COMMAND
         KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs );
         connect( cmd, SIGNAL( completed( KMCommand * ) ),
                  this, SLOT( slotMessagesMoved( KMCommand * ) ) );
         cmd->start();
+#endif
         moving = true;
         str = i18np( "Moving 1 old message from folder %2 to folder %3...",
                      "Moving %1 old messages from folder %2 to folder %3...",

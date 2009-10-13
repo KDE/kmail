@@ -719,10 +719,11 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 
 int KMKernel::viewMessage( const KUrl & messageFile )
 {
+#ifdef OLD_COMMAND
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
 
   openCommand->start();
-
+#endif
   return 1;
 }
 

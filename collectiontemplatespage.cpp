@@ -82,8 +82,6 @@ void CollectionTemplatesPage::init()
 #if 0 //TODO port it
   initializeWithValuesFromFolder( mDlg->folder() );
 
-  connect( mWidget, SIGNAL(changed()),
-           this, SLOT(slotEmitChanged( void )) );
 #endif
 }
 
