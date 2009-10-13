@@ -479,8 +479,11 @@ class KMComposeWin : public KMail::Composer
 
     /**
      * Update composer field to reflect new identity
+     * @param initalChange if true, don't apply the template. This is useful when calling
+     *                     this function from setMsg(), because there, the message already has the
+     *                     template, and we want to avoid calling the template parser unnecessarily.
      */
-    void slotIdentityChanged( uint );
+    void slotIdentityChanged( uint uoid, bool initalChange = false );
 
     /**
      * KIO slots for attachment insertion

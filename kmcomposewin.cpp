@@ -1610,7 +1610,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   // manually load the identity's value into the fields; either the one from the
   // messge, where appropriate, or the one from the sticky identity. What's in
   // mId might have changed meanwhile, thus the save value
-  slotIdentityChanged( idToApply );
+  slotIdentityChanged( idToApply, true /*initalChange*/ );
 
   const KPIMIdentities::Identity &ident = im->identityForUoid( mIdentity->currentIdentity() );
 
@@ -3964,7 +3964,7 @@ void KMComposeWin::slotSpellcheckDoneClearStatus()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotIdentityChanged( uint uoid )
+void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 {
   const KPIMIdentities::Identity &ident =
     kmkernel->identityManager()->identityForUoid( uoid );
@@ -4042,7 +4042,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
                                                ( ident ).signature();
   // if unmodified, apply new template, if one is set
   bool msgCleared = false;
-  if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) ) {
+  if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
+       !initalChange ) {
     applyTemplate( uoid );
     msgCleared = true;
   }
