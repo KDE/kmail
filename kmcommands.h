@@ -31,13 +31,7 @@ class KMReaderWin;
 class partNode;
 class DwBodyPart;
 class DwEntity;
-#if 0
-namespace MessageViewer {
-  class HeaderStrategy;
-  class HeaderStyle;
-  class EditorWatcher;
-}
-#endif
+
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
@@ -1005,66 +999,6 @@ private:
   KService::Ptr mOffer;
   Kleo::SpecialJob *mJob;
 
-};
-
-
-/** Base class for commands modifying attachements of existing messages. */
-class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
-{
-  Q_OBJECT
-  public:
-    AttachmentModifyCommand( partNode *node, KMMessage *msg, QWidget *parent );
-    AttachmentModifyCommand( int nodeId, KMMessage *msg, QWidget *parent );
-    ~AttachmentModifyCommand();
-
-  protected:
-    void storeChangedMessage( KMMessage* msg );
-    virtual Result doAttachmentModify() = 0;
-
-  protected:
-    int mPartIndex;
-    quint32 mSernum;
-
-  private:
-    Result execute();
-
-  private slots:
-    void messageStoreResult( KMFolderImap* folder, bool success );
-    void messageTrashResult( KMCommand *cmd );
-
-  private:
-    QPointer<KMFolder> mFolder;
-};
-
-class KMAIL_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
-{
-  Q_OBJECT
-  public:
-    KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
-    KMDeleteAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
-    ~KMDeleteAttachmentCommand();
-
-  protected:
-    Result doAttachmentModify();
-};
-
-
-class KMAIL_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
-{
-  Q_OBJECT
-  public:
-    KMEditAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
-    KMEditAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
-    ~KMEditAttachmentCommand();
-
-  protected:
-    Result doAttachmentModify();
-
-  private slots:
-    void editDone( EditorWatcher *watcher );
-
-  private:
-    KTemporaryFile mTempFile;
 };
 
 class KMAIL_EXPORT CreateTodoCommand : public KMCommand
