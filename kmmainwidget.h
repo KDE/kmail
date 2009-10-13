@@ -332,12 +332,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
     void setMessageClipboardContents( const QList< quint32 > &msgs, bool move );
 
-    /**
-     * Open the "Folder Properties" dialogue.
-     * @param whichPage The page (tab) of the dialogue to initially show.
-     */
-    void slotModifyFolder( KMMainWidget::PropsPage whichPage = KMMainWidget::PropsGeneral );
-
     KAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
   signals:
     void messagesTransfered( bool );
@@ -689,7 +683,7 @@ private:
     //  QPopupMenu *mMessageMenu;
     KMail::SearchWindow *mSearchWin;
 
-    KAction *mModifyFolderAction, *mRemoveFolderAction,
+    KAction *mRemoveFolderAction,
       *mExpireFolderAction, *mCompactFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mFolderShortCutCommandAction, *mTroubleshootFolderAction, *mRemoveDuplicatesAction,

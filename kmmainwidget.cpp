@@ -1280,7 +1280,7 @@ void KMMainWidget::slotFolderShortcutCommand()
 #endif
 }
 
-
+#if 0
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
 {
@@ -1306,7 +1306,7 @@ void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
     mSystemTray->foldersChanged();
 #endif
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireFolder()
@@ -3760,9 +3760,6 @@ void KMMainWidget::setupActions()
   }
 
   //----- Folder Menu
-  mModifyFolderAction = new KAction(KIcon("document-properties"), i18n("&Properties"), this);
-  actionCollection()->addAction("modify", mModifyFolderAction );
-  connect(mModifyFolderAction, SIGNAL(triggered(bool)), SLOT(slotModifyFolder()));
 
   mFolderMailingListPropertiesAction = new KAction(i18n("&Mailing List Management..."), this);
   actionCollection()->addAction("folder_mailinglist_properties", mFolderMailingListPropertiesAction );
@@ -4442,7 +4439,6 @@ void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
   bool multiFolder = mCollectionFolderView->selectedCollections().count()>1;
-  mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
                                                   !mFolder->isSystemFolder() );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
