@@ -28,10 +28,8 @@
 #include "kmfolder.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
-#include "renamejob.h"
 #include "copyfolderjob.h"
 
-using KMail::RenameJob;
 using KMail::CopyFolderJob;
 
 //-----------------------------------------------------------------------------
@@ -573,6 +571,7 @@ void KMFolderMgr::moveFolder( KMFolder* folder, KMFolderDir *newParent )
 void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
                                 KMFolderDir *newParent )
 {
+#if 0 //Done by akonadi	
   RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
   connect( job, SIGNAL( renameDone( const QString&, bool ) ),
       this, SLOT( slotRenameDone( const QString&, bool ) ) );
@@ -580,6 +579,7 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
            this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
 
   job->start();
+#endif  
 }
 
 //-----------------------------------------------------------------------------

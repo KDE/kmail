@@ -40,8 +40,6 @@ using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "searchjob.h"
 using KMail::SearchJob;
-#include "renamejob.h"
-using KMail::RenameJob;
 #include "acljobs.h"
 
 #include <kdebug.h>
