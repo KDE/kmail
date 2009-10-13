@@ -34,6 +34,12 @@ CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
   init();
 }
 
+bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
+{
+  //TODO it
+  return true;
+}
+
 void CollectionTemplatesPage::init()
 {
 #if 0
