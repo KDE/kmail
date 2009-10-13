@@ -179,12 +179,15 @@ using KMail::TemplateParser;
 
 #include "collectiontemplatespage.h"
 #include "collectionmaintenancepage.h"
+#include "collectiongeneralpage.h"
 #include <akonadi/collectionpropertiesdialog.h>
 #include "kmmainwidget.moc"
 using namespace Akonadi;
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionGeneralPageFactory, CollectionGeneralPage )
+
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
@@ -227,6 +230,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mCustomTemplateMenus = 0;
   mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
 
+  CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
 
