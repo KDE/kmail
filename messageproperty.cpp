@@ -1,5 +1,5 @@
 /*  Message Property
-    
+
     This file is part of KMail, the KDE mail client.
     Copyright (c) Don Sanders <sanders@kde.org>
 
@@ -36,6 +36,7 @@
 using namespace KMail;
 
 QMap<Q_UINT32, QGuardedPtr<KMFolder> > MessageProperty::sFolders;
+QMap<Q_UINT32, bool> MessageProperty::sKeepSerialNumber;
 QMap<Q_UINT32, QGuardedPtr<ActionScheduler> > MessageProperty::sHandlers;
 QMap<Q_UINT32, int > MessageProperty::sTransfers;
 QMap<const KMMsgBase*, long > MessageProperty::sSerialCache;
@@ -66,14 +67,13 @@ void MessageProperty::setFiltering( const KMMsgBase *msgBase, bool filter )
 
 KMFolder* MessageProperty::filterFolder( Q_UINT32 serNum )
 {
-  if (sFolders.contains(serNum))
-    return sFolders[serNum].operator->();
-  return 0;
+  QMap<Q_UINT32, QGuardedPtr<KMFolder> >::const_iterator it = sFolders.find( serNum );
+  return it == sFolders.constEnd() ? 0 : (*it).operator->();
 }
 
 void MessageProperty::setFilterFolder( Q_UINT32 serNum, KMFolder* folder )
 {
-  sFolders.replace(serNum, QGuardedPtr<KMFolder>(folder) );
+  sFolders.insert(serNum, QGuardedPtr<KMFolder>(folder) );
 }
 
 KMFolder* MessageProperty::filterFolder( const KMMsgBase *msgBase )
@@ -88,15 +88,14 @@ void MessageProperty::setFilterFolder( const KMMsgBase *msgBase, KMFolder* folde
 
 ActionScheduler* MessageProperty::filterHandler( Q_UINT32 serNum )
 {
-  if ( sHandlers.contains( serNum ))
-    return sHandlers[serNum].operator->();
-  return 0;
+  QMap<Q_UINT32, QGuardedPtr<ActionScheduler> >::const_iterator it = sHandlers.find( serNum );
+  return it == sHandlers.constEnd() ? 0 : (*it).operator->();
 }
 
 void MessageProperty::setFilterHandler( Q_UINT32 serNum, ActionScheduler* handler )
 {
   if (handler)
-    sHandlers.replace( serNum, QGuardedPtr<ActionScheduler>(handler) );
+    sHandlers.insert( serNum, QGuardedPtr<ActionScheduler>(handler) );
   else
     sHandlers.remove( serNum );
 }
@@ -113,16 +112,16 @@ void MessageProperty::setFilterHandler( const KMMsgBase *msgBase, ActionSchedule
 
 bool MessageProperty::transferInProgress( Q_UINT32 serNum )
 {
-  if (sTransfers.contains(serNum))
-    return sTransfers[serNum];
-  return false;
+  QMap<Q_UINT32, int >::const_iterator it = sTransfers.find( serNum );
+  return it == sTransfers.constEnd() ? false : *it;
 }
 
 void MessageProperty::setTransferInProgress( Q_UINT32 serNum, bool transfer, bool force )
 {
   int transferInProgress = 0;
-  if (sTransfers.contains(serNum))
-    transferInProgress = sTransfers[serNum];
+  QMap<Q_UINT32, int >::const_iterator it = sTransfers.find( serNum );
+  if (it != sTransfers.constEnd())
+    transferInProgress = *it;
   if ( force && !transfer )
     transferInProgress = 0;
   else
@@ -130,7 +129,7 @@ void MessageProperty::setTransferInProgress( Q_UINT32 serNum, bool transfer, boo
   if ( transferInProgress < 0 )
     transferInProgress = 0;
   if (transferInProgress)
-    sTransfers.replace( serNum, transferInProgress );
+    sTransfers.insert( serNum, transferInProgress );
   else
     sTransfers.remove( serNum );
 }
@@ -147,17 +146,34 @@ void MessageProperty::setTransferInProgress( const KMMsgBase *msgBase, bool tran
 
 Q_UINT32 MessageProperty::serialCache( const KMMsgBase *msgBase )
 {
-  if (sSerialCache.contains( msgBase ))
-    return sSerialCache[msgBase];
-  return 0;
+  QMap<const KMMsgBase*, long >::const_iterator it = sSerialCache.find( msgBase );
+  return it == sSerialCache.constEnd() ? 0 : *it;
 }
 
 void MessageProperty::setSerialCache( const KMMsgBase *msgBase, Q_UINT32 serNum )
 {
   if (serNum)
-    sSerialCache.replace( msgBase, serNum );
+    sSerialCache.insert( msgBase, serNum );
   else
     sSerialCache.remove( msgBase );
+}
+
+void MessageProperty::setKeepSerialNumber( Q_UINT32 serialNumber, bool keepForMoving )
+{
+  if ( serialNumber ) {
+    if ( sKeepSerialNumber.contains( serialNumber ) )
+      sKeepSerialNumber[ serialNumber ] = keepForMoving;
+    else
+      sKeepSerialNumber.insert( serialNumber, keepForMoving );
+  }
+}
+
+bool MessageProperty::keepSerialNumber( Q_UINT32 serialNumber )
+{
+  if ( sKeepSerialNumber.contains( serialNumber ) )
+    return sKeepSerialNumber[ serialNumber ];
+  else
+    return false;
 }
 
 void MessageProperty::forget( const KMMsgBase *msgBase )
@@ -167,6 +183,7 @@ void MessageProperty::forget( const KMMsgBase *msgBase )
     Q_ASSERT( !transferInProgress( serNum ) );
     sTransfers.remove( serNum );
     sSerialCache.remove( msgBase );
+    sKeepSerialNumber.remove( serNum );
   }
 }
 
