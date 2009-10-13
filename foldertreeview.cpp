@@ -20,7 +20,7 @@
 #include <kdebug.h>
 #include <QDebug>
 #include <KLocale>
-
+#include <akonadi/entitytreemodel.h>
 FolderTreeView::FolderTreeView(QWidget *parent )
   : Akonadi::EntityTreeView( parent )
 {
@@ -105,6 +105,16 @@ void FolderTreeView::selectPrevUnreadFolder()
   if ( current.isValid() ) {
 
   }
+}
+
+Akonadi::Collection FolderTreeView::currentFolder()
+{
+  QModelIndex current = currentIndex();
+  if ( current.isValid() ) {
+    Akonadi::Collection collection = current.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    return collection;
+  }
+  return Akonadi::Collection();
 }
 
 #include "foldertreeview.moc"

@@ -739,15 +739,6 @@ void KMMainWidget::createWidgets()
   connect( mMessagePane, SIGNAL(statusMessage(QString)),
            BroadcastStatus::instance(), SLOT(setStatusMsg(QString)) );
 
-#ifdef OLD_MESSAGELIST
-  mMessageListView = new KMail::MessageListView::Pane( this, this, actionCollection() );
-  mMessageListView->setObjectName( "messagelistview" );
-
-  connect( mMessageListView, SIGNAL( currentFolderChanged( KMFolder * ) ),
-           SLOT( slotMessageListViewCurrentFolderChanged( KMFolder * ) ) );
-  connect( mMessageListView, SIGNAL( messageStatusChangeRequest( KMMsgBase *, const KPIM::MessageStatus &, const KPIM::MessageStatus &  ) ),
-           SLOT( slotMessageStatusChangeRequest( KMMsgBase *, const KPIM::MessageStatus &, const KPIM::MessageStatus &  ) ) );
-#endif
   {
     KAction *action = new KAction( i18n("Set Focus to Quick Search"), this );
     action->setShortcut( QKeySequence( Qt::ALT + Qt::Key_Q ) );
@@ -3345,7 +3336,6 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   if ( !msg.isValid() )
     return;
 #if 0//Laurent port it
-  if ( !msg ) return;
   if (msg->parent() && !msg->isComplete())
   {
     FolderJob *job = msg->parent()->createJob(msg);
@@ -4446,10 +4436,6 @@ void KMMainWidget::updateFolderMenu()
   bool cachedImap = mFolder && mFolder->folderType() == KMFolderTypeCachedImap;
   // For dimap, check that the imap path is known before allowing "check mail in this folder".
   bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
-#if 0 //We use akonadi
-  mRefreshFolderAction->setEnabled( folderWithContent && ( imap
-                                                           || ( cachedImap && knownImapPath ) ) && !multiFolder );
-#endif
   if ( mTroubleshootFolderAction )
     mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
   mTroubleshootMaildirAction->setVisible( mFolder && mFolder->folderType() == KMFolderTypeMaildir );
@@ -4470,9 +4456,6 @@ void KMMainWidget::updateFolderMenu()
 #endif
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
-#ifdef OLD_FOLDERVIEW
-  mNewFolderAction->setEnabled( !multiFolder && ( mFolder && mFolder->folderType() != KMFolderTypeSearch ));
-#endif
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mFolder && mFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder );
 }

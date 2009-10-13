@@ -20,7 +20,7 @@
 #define FOLDERTREEVIEW_H
 
 #include <akonadi/entitytreeview.h>
-
+#include <akonadi/collection.h>
 class FolderTreeView : public Akonadi::EntityTreeView
 {
   Q_OBJECT
@@ -33,6 +33,9 @@ public:
 
   void selectNextUnreadFolder();
   void selectPrevUnreadFolder();
+
+
+  Akonadi::Collection currentFolder();
 protected:
   void init();
   void selectModelIndex( const QModelIndex & );
