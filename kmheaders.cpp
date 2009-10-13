@@ -2035,8 +2035,8 @@ void KMHeaders::findUnreadAux( HeaderItem*& item,
       MessageStatus status = msgBase->status();
       if ( status.isUnread() || status.isNew() )
         foundUnreadMessage = true;
-      if ( !onlyNew && ( status.isUnread() || status.isNew() )
-          || onlyNew && status.isNew())
+      if ( ( !onlyNew && ( status.isUnread() || status.isNew() ) )
+           || ( onlyNew && status.isNew() ) )
         lastUnread = newItem;
       if (newItem == item) break;
       newItem = static_cast<HeaderItem*>(newItem->itemBelow());
@@ -2054,24 +2054,27 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
   if (!mFolder) return -1;
   if (mFolder->count() == -1) return -1;
 
-  if ((aStartAt >= 0) && (aStartAt < (int)mItems.size()))
+  if ((aStartAt >= 0) && (aStartAt < (int)mItems.size())) {
     item = mItems[aStartAt];
-  else {
+  } else {
     item = currentHeaderItem();
-    if (!item) {
-      if (aDirNext)
-        item = static_cast<HeaderItem*>(firstChild());
-      else
-        item = static_cast<HeaderItem*>(lastChild());
+    if ( !item ) {
+      if ( aDirNext ) {
+        item = static_cast<HeaderItem*>( firstChild() );
+      } else {
+        item = static_cast<HeaderItem*>( lastChild() );
+      }
     }
     if (!item)
       return -1;
 
-    if ( !acceptCurrent )
-        if (aDirNext)
-            item = static_cast<HeaderItem*>(item->itemBelow());
-        else
-            item = static_cast<HeaderItem*>(item->itemAbove());
+    if ( !acceptCurrent ) {
+      if ( aDirNext ) {
+        item = static_cast<HeaderItem*>( item->itemBelow() );
+      } else {
+        item = static_cast<HeaderItem*>( item->itemAbove() );
+      }
+    }
   }
 
   pitem =  item;
@@ -2843,7 +2846,8 @@ bool KMHeaders::writeSortOrder()
         } else if( i->nextSibling()) {
           i = i->nextSibling();
         } else {
-            for(i=0; !i && s.count(); i = s.pop()->nextSibling());
+            for(i=0; !i && s.count(); i = s.pop()->nextSibling())
+              ;
         }
       }
     }
