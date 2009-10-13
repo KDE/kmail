@@ -3373,12 +3373,6 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
   win->setUseFixedFont( useFixedFont );
-#if 0 //Port
-  KMMessage *newMessage = new KMMessage(*msg);
-  newMessage->setParent( msg->parent() );
-  newMessage->setMsgSerNum( msg->getMsgSerNum() );
-  newMessage->setReadyToShow( true );
-#endif
   win->showMessage( overrideEncoding(), msg );
   win->show();
 }
@@ -3387,11 +3381,9 @@ void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, c
 {
   if ( !item.isValid() )
     return;
-  kDebug()<<" item.id() :"<<item.id();
-#if 0 //Port it
 
   SerNumList serNums;
-  serNums.append( msg->getMsgSerNum() );
+  serNums.append( item.id() );
 
   if ( clear.toQInt32() != KPIM::MessageStatus().toQInt32() )
   {
@@ -3404,7 +3396,6 @@ void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, c
     KMCommand *command = new KMSetStatusCommand( set, serNums, false );
     command->start();
   }
-#endif
 }
 
 //-----------------------------------------------------------------------------
