@@ -165,10 +165,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KToggleAction *watchThreadAction() const { return mWatchThreadAction; }
     KToggleAction *ignoreThreadAction() const { return mIgnoreThreadAction; }
 
-    /**
-     * Returns the currently active folder (may be 0 => root or searches active)
-     */
-    KMFolder *activeFolder() const;
 
     void toggleSystemTray();
 

@@ -2875,11 +2875,6 @@ void KMMainWidget::closeFolder()
   mOpenedImapFolder = false;
 }
 
-KMFolder * KMMainWidget::activeFolder() const
-{
-  return mFolder;
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderClosed( KMFolder *folder )
 {
