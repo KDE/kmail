@@ -68,6 +68,7 @@ set(kmailprivate_LIB_SRCS
    folderselectiontreeviewdialog.cpp
    foldertreeview.cpp
    collectiontemplatespage.cpp
+   collectionmaintenancepage.cpp
    kmmessage.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp

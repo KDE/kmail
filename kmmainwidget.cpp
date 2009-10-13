@@ -178,11 +178,14 @@ using KMail::TemplateParser;
 #include <akonadi/collectiondialog.h>
 
 #include "collectiontemplatespage.h"
+#include "collectionmaintenancepage.h"
 #include <akonadi/collectionpropertiesdialog.h>
 #include "kmmainwidget.moc"
 using namespace Akonadi;
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage )
+
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 //-----------------------------------------------------------------------------
@@ -225,6 +228,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
 
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
+  CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
