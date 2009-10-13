@@ -47,11 +47,6 @@
 #include "messagesender.h"
 #include "messageviewer/kcursorsaver.h"
 #include "kmfolder.h"
-#ifndef USE_AKONADI_VIEWER
-#include "messageviewer/vcardviewer.h"
-#include "objecttreeparser.h"
-using KMail::ObjectTreeParser;
-#endif
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/khtmlparthtmlwriter.h"
@@ -632,36 +627,7 @@ void KMReaderWin::displayAboutPage()
 
 void KMReaderWin::updateReaderWin()
 {
-  //TODO remove this function
-#ifndef USE_AKONADI_VIEWER
-  if ( !mMsgDisplay ) {
-    return;
-  }
-  mViewer->setOnlyLocalReferences( !htmlLoadExternal() );
-  htmlWriter()->reset();
-  KMFolder* folder = 0;
-  if (message(&folder))
-  {
-    if ( GlobalSettings::self()->showColorbar() ) {
-      mColorBar->show();
-    } else {
-      mColorBar->hide();
-    }
-    displayMessage();
-  } else {
-    mColorBar->hide();
-    mMimePartTree->hide();
-    mMimePartTree->clearAndResetSortOrder();
-    htmlWriter()->begin( cssHelper()->cssDefinitions( isFixedFont() ) );
-    htmlWriter()->write( cssHelper()->htmlHead( isFixedFont() ) + "</body></html>" );
-    htmlWriter()->end();
-  }
-  if ( mSavedRelativePosition ) {
-    QScrollBar *scrollBar = mViewer->view()->verticalScrollBar();
-    scrollBar->setValue( scrollBar->maximum() * mSavedRelativePosition );
-    mSavedRelativePosition = 0;
-  }
-#endif
+  //TODO remove it
 }
 
 //-----------------------------------------------------------------------------
@@ -731,33 +697,6 @@ QString KMReaderWin::createTempDir( const QString &param )
   mTempDirs.append( fname );
   return fname;
 }
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-void KMReaderWin::showVCard( KMMessagePart * msgPart ) {
-  const QByteArray vCard = msgPart->bodyDecodedBinary();
-
-  VCardViewer *vcv = new VCardViewer(this, vCard );
-  vcv->setObjectName( "vCardDialog" );
-  vcv->show();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::printMsg( KMMessage* aMsg )
-{
-  disconnect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
-  connect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
-  setMsg( aMsg, true );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotPrintMsg()
-{
-  disconnect( mPartHtmlWriter, SIGNAL( finished() ), this, SLOT( slotPrintMsg() ) );
-  if (!message()) return;
-  mViewer->view()->print();
-  deleteLater();
-}
-#endif
 
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
