@@ -32,13 +32,12 @@ public:
 
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
-#if 0
-  public slots:
-  void slotEmitChanged(); // do nothing for now
 
+public slots:
   void slotCopyGlobal();
 
 private:
+#if 0
   void initializeWithValuesFromFolder( KMFolder* folder );
 #endif
 protected:

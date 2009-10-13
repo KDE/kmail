@@ -73,7 +73,7 @@ void CollectionTemplatesPage::init()
 
   connect( mCopyGlobal, SIGNAL(clicked()),
            this, SLOT(slotCopyGlobal()) );
-#if 0
+#if 0 //TODO port it
   initializeWithValuesFromFolder( mDlg->folder() );
 
   connect( mWidget, SIGNAL(changed()),
@@ -90,7 +90,7 @@ void CollectionTemplatesPage::save(Collection & col)
 {
 }
 
-#if 0
+#if 0 //TODO port it.
 void FolderDialogTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !folder )
     return;
@@ -125,10 +125,8 @@ bool FolderDialogTemplatesTab::save()
   return true;
 }
 
-
-void FolderDialogTemplatesTab::slotEmitChanged() {}
-
-void FolderDialogTemplatesTab::slotCopyGlobal() {
+#endif
+void CollectionTemplatesPage::slotCopyGlobal() {
   if ( mIdentity ) {
     mWidget->loadFromIdentity( mIdentity );
   }
@@ -136,7 +134,5 @@ void FolderDialogTemplatesTab::slotCopyGlobal() {
     mWidget->loadFromGlobal();
   }
 }
-
-#endif
 
 #include "collectiontemplatespage.moc"
