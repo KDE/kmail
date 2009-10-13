@@ -314,9 +314,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, 
 
   mSplitter->setOpaqueResize( true );
 
-  mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
-  mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
-  mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
+  //Laurent comment it. It crashs don't understand why
+  //mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
+  //mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
+  //mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
 
   setCaption( i18n("Composer") );
   setMinimumSize( 200, 200 );
