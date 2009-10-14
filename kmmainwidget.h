@@ -243,13 +243,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   void slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & );
 
 
-
-
-    /**
-      Change the current folder, select a message in the current folder
-    */
-    void slotSelectMessage(KMMessage*);
-
     void slotReplaceMsgByUnencryptedVersion();
 
     /**

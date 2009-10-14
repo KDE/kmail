@@ -726,11 +726,13 @@ KMMessage *SearchWindow::indexToMessage( QTreeWidgetItem *item )
 //-----------------------------------------------------------------------------
 bool SearchWindow::slotShowMsg( QTreeWidgetItem *item, int )
 {
+#ifdef OLD_FOLDERVIEW
   KMMessage *message = indexToMessage( item );
   if ( message ) {
     mKMMainWidget->slotSelectMessage( message );
     return true;
   }
+#endif
   return false;
 }
 

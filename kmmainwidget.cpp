@@ -233,6 +233,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
   connect( mCollectionFolderView->monitorFolders(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
 
+  CollectionPropertiesDialog::useDefaultPage( false );
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
@@ -739,10 +740,6 @@ void KMMainWidget::createWidgets()
   // FIXME!
   if ( !GlobalSettings::self()->quickSearchActive() )
     mSearchToolBar->hide();
-#endif
-#ifdef OLD_MESSAGELIST
-  connect( mMessageListView, SIGNAL( selectionChanged() ),
-           SLOT( startUpdateMessageActionsTimer() ) );
 #endif
   mPreviousMessageAction = new KAction( i18n( "Extend Selection to Previous Message" ), this );
   mPreviousMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
@@ -3122,14 +3119,6 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   mMsgView->setDecryptMessageOverwrite( false );
   mMsgView->setShowSignatureDetails( false );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSelectMessage(KMMessage* msg)
-{
-#ifdef OLD_MESSAGELIST
-  mMessageListView->activateMessage( msg );
-#endif
 }
 
 //-----------------------------------------------------------------------------
