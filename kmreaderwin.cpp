@@ -232,29 +232,6 @@ void KMReaderWin::createActions()
   ac->addAction( "openin_addr_book", mOpenAddrBookAction );
   connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoOpenAddrBook()) );
-#ifndef USE_AKONADI_VIEWER
-  // copy selected text to clipboard
-  mCopyAction = ac->addAction( KStandardAction::Copy, "kmail_copy", this,
-                               SLOT(slotCopySelectedText()) );
-  // copy all text to clipboard
-  mSelectAllAction  = new KAction(i18n("Select All Text"), this);
-  ac->addAction("mark_all_text", mSelectAllAction );
-  connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
-  mSelectAllAction->setShortcut( KStandardShortcut::selectAll() );
-  // copy Email address to clipboard
-  mCopyURLAction = new KAction( KIcon( "edit-copy" ),
-                                i18n( "Copy Link Address" ), this );
-  ac->addAction( "copy_url", mCopyURLAction );
-  connect( mCopyURLAction, SIGNAL(triggered(bool)), SLOT(slotUrlCopy()) );
-  // find text
-  KAction *action = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
-  ac->addAction("find_in_messages", action );
-  connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
-  // open URL
-  mUrlOpenAction = new KAction( KIcon( "document-open" ), i18n( "Open URL" ), this );
-  ac->addAction( "open_url", mUrlOpenAction );
-  connect( mUrlOpenAction, SIGNAL(triggered(bool)), SLOT(slotUrlOpen()) );
-#endif
   // bookmark message
   mAddBookmarksAction = new KAction( KIcon( "bookmark-new" ), i18n( "Bookmark This Link" ), this );
   ac->addAction( "add_bookmarks", mAddBookmarksAction );
@@ -1376,24 +1353,6 @@ KUrl KMReaderWin::tempFileUrlFromPartNode( const partNode *node )
   }
   return KUrl();
 }
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotSaveAttachments()
-{
-  mAtmUpdate = true;
-  KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand( mMainWindow,
-                                                                        message() );
-  saveCommand->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::saveAttachment( const KUrl &tempFileName )
-{
-  mAtmCurrent = msgPartFromUrl( tempFileName );
-  mAtmCurrentName = mClickedUrl.toLocalFile();
-  slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
-}
-#endif
 
 void KMReaderWin::fillCommandInfo( partNode *node, KMMessage **msg, int *nodeId )
 {
@@ -1646,7 +1605,6 @@ void KMReaderWin::clear(bool force )
 
 void KMReaderWin::setMessage( Akonadi::Item item, Viewer::UpdateMode updateMode)
 {
-  kDebug()<<" item.storageCollectionId :"<<item.storageCollectionId();
   mViewer->setMessageItem( item, updateMode );
 }
 
