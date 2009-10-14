@@ -57,6 +57,7 @@ public:
   Akonadi::EntityTreeModel *entityModel();
 
   void quotaWarningParameters( const QColor &color, qreal threshold );
+  void readQuotaParameter();
 
 private:
   class FolderSelectionTreeViewPrivate;

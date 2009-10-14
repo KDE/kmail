@@ -33,6 +33,8 @@
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
 
+#include "globalsettings.h"
+#include "kmkernel.h"
 
 class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
 {
@@ -86,8 +88,8 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 
 
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
-  d->quotaModel->setWarningThreshold( 80.0 );
   d->quotaModel->setSourceModel( d->filterModel );
+  readQuotaParameter();
 
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
@@ -174,6 +176,18 @@ void FolderSelectionTreeView::quotaWarningParameters( const QColor &color, qreal
 {
   d->quotaModel->setWarningThreshold( threshold );
   d->quotaModel->setWarningColor( threshold );
+}
+
+void FolderSelectionTreeView::readQuotaParameter()
+{
+  QColor quotaColor;
+  qreal threshold = 100;
+  if ( !GlobalSettings::self()->useDefaultColors() ) {
+    KConfigGroup readerConfig( KMKernel::config(), "Reader" );
+    quotaColor = readerConfig.readEntry( "CloseToQuotaColor", quotaColor  );
+    threshold = GlobalSettings::closeToQuotaThreshold();
+  }
+  quotaWarningParameters( quotaColor, threshold );
 }
 
 #include "folderselectiontreeview.moc"
