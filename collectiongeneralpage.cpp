@@ -27,6 +27,7 @@
 #include <QCheckBox>
 #include <KDialog>
 #include <kpimidentities/identitycombo.h>
+#include <kmkernel.h>
 
 using namespace Akonadi;
 
@@ -176,8 +177,7 @@ void CollectionGeneralPage::init()
   ++row;
   label = new QLabel( i18n("&Sender identity:"), this );
   gl->addWidget( label, row, 0 );
-#if 0
-  mIdentityComboBox = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), this );
+  mIdentityComboBox = new KPIMIdentities::IdentityCombo( KMKernel::self()->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
   gl->addWidget( mIdentityComboBox, row, 1 );
   mIdentityComboBox->setWhatsThis(
@@ -187,7 +187,7 @@ void CollectionGeneralPage::init()
         "sender email address, signature and signing or encryption keys "
         "automatically. Identities can be set up in the main configuration "
         "dialog. (Settings -> Configure KMail)") );
-
+#if 0
   // folder contents
   if ( ( !mIsLocalSystemFolder || mIsResourceFolder ) &&
        mDlg->folder() && mDlg->folder()->folderType() != KMFolderTypeImap &&
