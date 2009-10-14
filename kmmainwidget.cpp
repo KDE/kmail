@@ -4199,10 +4199,7 @@ void KMMainWidget::slotShowMsgSrc()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateMessageMenu()
 {
-#ifdef OLD_FOLDERVIEW
-  mMainFolderView->folderToPopupMenu( KMail::MainFolderView::MoveMessage, this, mMoveActionMenu->menu() );
   updateMessageActions();
-#endif
 }
 
 void KMMainWidget::startUpdateMessageActionsTimer()
