@@ -349,6 +349,7 @@ target_link_libraries(kmailprivate
   ${KDEPIMLIBS_KPIMTEXTEDIT_LIBS}
   ${QT_QT3SUPPORT_LIBRARY}
   messageviewer
+  akonadi_next
 )
 
 if(KMAIL_SQLITE_INDEX)

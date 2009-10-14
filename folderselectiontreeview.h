@@ -56,6 +56,8 @@ public:
   FolderTreeView *folderTreeView();
   Akonadi::EntityTreeModel *entityModel();
 
+  void quotaWarningParameters( const QColor &color, qreal threshold );
+
 private:
   class FolderSelectionTreeViewPrivate;
   FolderSelectionTreeViewPrivate * const d;

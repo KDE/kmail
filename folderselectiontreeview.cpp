@@ -31,18 +31,21 @@
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/collection.h>
 #include <akonadi/statisticsproxymodel.h>
+#include <akonadi_next/quotacolorproxymodel.h>
+
 
 class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
 {
 public:
   FolderSelectionTreeViewPrivate()
-    :filterModel( 0 ), collectionFolderView( 0 ), entityModel( 0 ), monitor( 0 )
+    :filterModel( 0 ), collectionFolderView( 0 ), entityModel( 0 ), monitor( 0 ), quotaModel( 0 )
   {
   }
   QSortFilterProxyModel *filterModel;
   FolderTreeView *collectionFolderView;
   Akonadi::EntityTreeModel *entityModel;
   Akonadi::ChangeRecorder *monitor;
+  Akonadi::QuotaColorProxyModel *quotaModel;
 };
 
 
@@ -80,6 +83,11 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->filterModel->setSourceModel( statisticsProxyModel );
   d->filterModel->setDynamicSortFilter( true );
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
+
+
+  d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
+  d->quotaModel->setWarningThreshold( 80.0 );
+  d->quotaModel->setSourceModel( d->filterModel );
 
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
@@ -160,6 +168,12 @@ FolderTreeView* FolderSelectionTreeView::folderTreeView()
 Akonadi::EntityTreeModel *FolderSelectionTreeView::entityModel()
 {
   return d->entityModel;
+}
+
+void FolderSelectionTreeView::quotaWarningParameters( const QColor &color, qreal threshold )
+{
+  d->quotaModel->setWarningThreshold( threshold );
+  d->quotaModel->setWarningColor( threshold );
 }
 
 #include "folderselectiontreeview.moc"
