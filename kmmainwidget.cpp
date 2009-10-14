@@ -1293,27 +1293,9 @@ void KMMainWidget::slotFolderShortcutCommand()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
 {
-#ifdef OLD_FOLDERVIEW
-  if (!mMainFolderView)
-    return;
-
-  KMFolder * folder = mMainFolderView->currentFolder();
-  if ( !folder )
-    return;
-
-  AutoQPointer<KMFolderDialog> props( new KMFolderDialog( folder, folder->parent(),
-                                                          mMainFolderView,
-                                                          i18n("Properties of Folder %1",
-                                                               folder->label() ) ) );
-  if ( whichPage != KMMainWidget::PropsGeneral )
-    props->setPage( whichPage );
-  props->exec();
-
-  updateFolderMenu();
-  //Kolab issue 2152
+  //TODO port to akonadi.
   if ( mSystemTray )
     mSystemTray->foldersChanged();
-#endif
 }
 #endif
 
