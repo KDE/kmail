@@ -88,10 +88,12 @@ void CollectionTemplatesPage::init()
 
 void CollectionTemplatesPage::load(const Collection & col)
 {
+  //Nothing
 }
 
 void CollectionTemplatesPage::save(Collection & col)
 {
+  //Nothing
 }
 
 #if 0 //TODO port it.
