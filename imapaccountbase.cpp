@@ -563,7 +563,7 @@ void ImapAccountBase::getStorageQuotaInfo( KMFolder *parent, const QString &imap
   }
   KUrl url = getUrl();
   url.setPath( imapPath );
-
+#if 0
   QuotaJobs::GetStorageQuotaJob *job = QuotaJobs::getStorageQuota( mSlave, url );
   jobData jd( url.url(), parent );
   jd.cancellable = true;
@@ -571,10 +571,12 @@ void ImapAccountBase::getStorageQuotaInfo( KMFolder *parent, const QString &imap
 
   connect( job, SIGNAL(result(KJob *)),
            SLOT(slotGetStorageQuotaInfoResult(KJob *)) );
+#endif
 }
 
 void ImapAccountBase::slotGetStorageQuotaInfoResult( KJob *_job )
 {
+#if 0	
   QuotaJobs::GetStorageQuotaJob *job = static_cast<QuotaJobs::GetStorageQuotaJob *>( _job );
   JobIterator it = findJob( job );
   if ( it == jobsEnd() ) {
@@ -589,6 +591,7 @@ void ImapAccountBase::slotGetStorageQuotaInfoResult( KJob *_job )
   if ( mSlave ) {
     removeJob( job );
   }
+#endif  
 }
 
 void ImapAccountBase::slotNoopTimeout()
@@ -972,6 +975,7 @@ bool ImapAccountBase::handlePutError( KIO::Job* job, jobData& jd, KMFolder* fold
 
 QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * job )
 {
+#if 0	
   QString error = _error;
   if ( !error.contains( "quota", Qt::CaseInsensitive ) ) return error;
   // this is a quota error, prettify it a bit
@@ -994,6 +998,7 @@ QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * j
             "please ask the owner of the folder to free up some space in it.");
   }
   return error;
+#endif  
 }
 
 //-----------------------------------------------------------------------------

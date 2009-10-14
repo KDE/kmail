@@ -38,7 +38,6 @@
 #include "kmfoldertype.h"
 #include "folderjob.h"
 #include "cachedimapjob.h"
-#include "quotajobs.h"
 
 #include <kdialog.h>
 #include <kstandarddirs.h>
@@ -49,7 +48,6 @@
 #include <QTimerEvent>
 
 using KMail::FolderJob;
-using KMail::QuotaInfo;
 class KComboBox;
 class KMCommand;
 
@@ -311,8 +309,9 @@ class KMFolderCachedImap : public KMFolderMaildir
       @return 0 when not known yet, -1 if there was an error fetching them
     */
     int userRights() const { return mUserRights; }
+#if 0
   void setQuotaInfo( const QuotaInfo & );
-
+#endif
     /**
       Sets the user's rights on this folder.
     */
@@ -327,8 +326,9 @@ class KMFolderCachedImap : public KMFolderMaildir
       on the folder, the return info will be valid, but empty.
       @see QuotaInfo::isEmpty(), QuotaInfo::isValid()
     */
+#if 0
     const QuotaInfo quotaInfo() const { return mQuotaInfo; }
-
+#endif
     /**
       Returns the list of ACL for this folder.
     */
@@ -428,7 +428,9 @@ class KMFolderCachedImap : public KMFolderMaildir
                                 const QString &value );
     void slotDeleteMessagesResult( KMail::FolderJob *job );
     void slotImapStatusChanged( KMFolder *folder, const QString&, bool );
+#if 0
     void slotStorageQuotaResult( const QuotaInfo &info );
+#endif    
     void slotQuotaResult( KJob *job );
 
   protected:
@@ -684,8 +686,9 @@ public slots:
     int mNamespacesToCheck;
     bool mPersonalNamespacesCheckDone;
     QString mImapPathCreation;
-
+#if 0
     QuotaInfo mQuotaInfo;
+#endif
     bool mAlarmsBlocked;
 
     QList<KMFolder*> mToBeDeletedAfterRescue;

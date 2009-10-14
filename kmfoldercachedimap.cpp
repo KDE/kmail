@@ -53,7 +53,6 @@ using KMail::ListJob;
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "annotationjobs.h"
-#include "quotajobs.h"
 #include "groupwareadaptor.h"
 #include "messageviewer/autoqpointer.h"
 using namespace KMail;
@@ -214,7 +213,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
     mIncidencesForChanged( false ),
     mSharedSeenFlagsChanged( false ),
     mPersonalNamespacesCheckDone( true ),
-    mQuotaInfo(), mAlarmsBlocked( false ),
+    mAlarmsBlocked( false ),
     mRescueCommandCount( 0 ),
     mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
 {
@@ -299,6 +298,7 @@ void KMFolderCachedImap::readConfig()
   int storageQuotaUsage = group.readEntry( "StorageQuotaUsage", -1 );
   int storageQuotaLimit = group.readEntry( "StorageQuotaLimit", -1 );
   QString storageQuotaRoot = group.readEntry( "StorageQuotaRoot", QString() );
+#if 0
   if ( !storageQuotaRoot.isNull() ) { // isEmpty() means we know there is no quota set
     mQuotaInfo.setName( "STORAGE" );
     mQuotaInfo.setRoot( storageQuotaRoot );
@@ -310,7 +310,7 @@ void KMFolderCachedImap::readConfig()
       mQuotaInfo.setMax( storageQuotaLimit );
     }
   }
-
+#endif
   KMFolderMaildir::readConfig();
 
   mStatusChangedLocally = group.readEntry( "StatusChangedLocally", false );
@@ -395,7 +395,7 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.deleteEntry( "StorageQuotaUsage");
     configGroup.deleteEntry( "StorageQuotaRoot");
     configGroup.deleteEntry( "StorageQuotaLimit");
-
+#if 0
     if ( mQuotaInfo.isValid() ) {
       if ( mQuotaInfo.current().isValid() ) {
         configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.current().toInt() );
@@ -405,6 +405,7 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
       }
       configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root() );
     }
+#endif
   }
 }
 
@@ -1288,6 +1289,7 @@ void KMFolderCachedImap::serverSyncInternal()
       newState( mProgress, i18n("Getting quota information"));
       KUrl url = mAccount->getUrl();
       url.setPath( imapPath() );
+#if 0
       KIO::Job *job = KMail::QuotaJobs::getStorageQuota( mAccount->slave(), url );
       ImapAccountBase::jobData jd( url.url(), folder() );
       mAccount->insertJob(job, jd);
@@ -1295,6 +1297,7 @@ void KMFolderCachedImap::serverSyncInternal()
                SLOT( slotStorageQuotaResult( const QuotaInfo& ) ) );
       connect( job, SIGNAL(result(KJob *)),
                SLOT(slotQuotaResult(KJob *)) );
+#endif      
       break;
     }
   case SYNC_STATE_FIND_SUBFOLDERS:
@@ -2531,7 +2534,7 @@ void KMFolderCachedImap::slotReceivedACL( KMFolder *folder,
     serverSyncInternal();
   }
 }
-
+#if 0
 void KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo &info )
 {
   setQuotaInfo( info );
@@ -2545,7 +2548,7 @@ void KMFolderCachedImap::setQuotaInfo( const QuotaInfo & info )
       emit folderSizeChanged();
     }
 }
-
+#endif
 void
 KMFolderCachedImap::setACLList( const ACLList& arr )
 {
@@ -2945,7 +2948,7 @@ void KMFolderCachedImap::slotQuotaResult( KJob *job )
   if ( (*it).parent != folder() ) {
     return; // Shouldn't happen
   }
-
+#if 0
   QuotaJobs::GetStorageQuotaJob *quotajob = static_cast<QuotaJobs::GetStorageQuotaJob *>( job );
   QuotaInfo empty;
   if ( quotajob->error() ) {
@@ -2957,7 +2960,7 @@ void KMFolderCachedImap::slotQuotaResult( KJob *job )
       kWarning() <<"slotGetQuotaResult:" << job->errorString();
     }
   }
-
+#endif
   if ( mAccount->slave() ) {
     mAccount->removeJob( static_cast<KIO::Job*>( job ) );
   }
@@ -3138,6 +3141,7 @@ bool KMFolderCachedImap::alarmsBlocked() const
 
 bool KMFolderCachedImap::isCloseToQuota() const
 {
+#if 0	
   bool closeToQuota = false;
   if ( mQuotaInfo.isValid() && mQuotaInfo.max().toInt() > 0 ) {
     const int ratio = mQuotaInfo.current().toInt() * 100  / mQuotaInfo.max().toInt();
@@ -3146,6 +3150,7 @@ bool KMFolderCachedImap::isCloseToQuota() const
   }
   //kDebug() << "Folder:" << folder()->prettyUrl() << "is over quota:" << closeToQuota;
   return closeToQuota;
+#endif
 }
 
 KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()

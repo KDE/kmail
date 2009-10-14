@@ -38,7 +38,6 @@
 #include <qprogressbar.h>
 #include <qwhatsthis.h>
 
-#include "quotajobs.h"
 
 namespace KMail {
 
@@ -48,7 +47,7 @@ class QuotaWidget : public QWidget {
 public:
     explicit QuotaWidget( QWidget* parent, const char* name = 0 );
     virtual ~QuotaWidget() { }
-    void setQuotaInfo( const KMail::QuotaInfo& info );
+    //void setQuotaInfo( const KMail::QuotaInfo& info );
 
 private:
     QLabel* mInfoLabel;

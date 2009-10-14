@@ -72,7 +72,7 @@ QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
       box->addWidget( stuff );
       box->addStretch( 2 );
 }
-
+#if 0
 void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
 {
       // we are assuming only to get STORAGE type info here, thus
@@ -84,6 +84,6 @@ void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
       mInfoLabel->setText( info.toString() );
       mRootLabel->setText( info.root() );
 }
-
+#endif
 
 #include "folderdialogquotatab_p.moc"
