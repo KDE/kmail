@@ -1,8 +1,8 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * folderdialogquotatab.cpp
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
+ * Copyright (c) 2009 Laurent Montel <montel@kde.org>
  *
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,30 +30,24 @@
  *  your version.
  */
 
-#include "folderdialogquotatab.h"
-#include "folderdialogquotatab_p.h"
-
-#include "kmfolder.h"
-#include "kmfoldertype.h"
-#include "kmfolderimap.h"
-#include "kmfoldercachedimap.h"
-#include "kmacctcachedimap.h"
-#include "imapaccountbase.h"
+#include "collectionquotapage.h"
+//#include "folderdialogquotatab_p.h"
 
 #include <qstackedwidget.h>
+
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qprogressbar.h>
 #include <qwhatsthis.h>
-
+#include <KLocale>
 #include <assert.h>
 
-using namespace KMail;
 
-KMail::FolderDialogQuotaTab::FolderDialogQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
-  : FolderDialogTab( dlg, parent, name ),
-    mImapAccount( 0 )
+CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
+  : CollectionPropertiesPage( parent )
 {
+  setPageTitle( i18n("Quota") );
+#if 0
   QVBoxLayout* topLayout = new QVBoxLayout( this );
   // We need a widget stack to show either a label ("no qutoa support", "please wait"...)
   // or quota info
@@ -67,9 +61,19 @@ KMail::FolderDialogQuotaTab::FolderDialogQuotaTab( KMFolderDialog* dlg, QWidget*
 
   mQuotaWidget = new KMail::QuotaWidget( mStack );
   mStack->addWidget( mQuotaWidget );
+#endif
+}
+
+void CollectionQuotaPage::load( const Akonadi::Collection & col )
+{
+}
+
+void CollectionQuotaPage::save( Akonadi::Collection & col )
+{
 }
 
 
+#if 0
 void KMail::FolderDialogQuotaTab::initializeWithValuesFromFolder( KMFolder* folder )
 {
   // This can be simplified once KMFolderImap and KMFolderCachedImap have a common base class
@@ -212,5 +216,4 @@ bool KMail::FolderDialogQuotaTab::supports( KMFolder* refFolder )
     imapAccount = static_cast<KMFolderCachedImap*>( refFolder->storage() )->account();
   return imapAccount && imapAccount->hasQuotaSupport(); // support for Quotas (or not tried connecting yet)
 }
-
-#include "folderdialogquotatab.moc"
+#endif

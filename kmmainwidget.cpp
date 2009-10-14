@@ -181,6 +181,8 @@ using KMail::TemplateParser;
 #include "collectionmaintenancepage.h"
 #include "collectiongeneralpage.h"
 #include "collectionviewpage.h"
+#include "collectionquotapage.h"
+
 #include <akonadi/collectionpropertiesdialog.h>
 #include "kmmainwidget.moc"
 using namespace Akonadi;
@@ -189,6 +191,8 @@ AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, Colle
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionGeneralPageFactory, CollectionGeneralPage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionQuotaPageFactory, CollectionQuotaPage )
+
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
@@ -238,6 +242,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
+  CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
 
   // FIXME This should become a line separator as soon as the API

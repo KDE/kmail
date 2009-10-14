@@ -1,8 +1,8 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * folderdialogquotatab.h
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
+ * Copyright (c) 2009 Laurent Montel <montel@kde.org>
  *
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -29,35 +29,29 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef FOLDERDIALOGQUOTATAB_H
-#define FOLDERDIALOGQUOTATAB_H
-
-#include "kmfolderdialog.h"
-#include "kmfoldertype.h"
-#include "quotajobs.h"
+#ifndef COLLECTIONQUOTAPAGE_H
+#define COLLECTIONQUOTAPAGE_H
+#include <akonadi/collectionpropertiespage.h>
 
 namespace KMail {
   class QuotaWidget;
 }
 class QStackedWidget;
 
-namespace KMail {
-
-class ImapAccountBase;
 
 /**
  * "Quota" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
  */
-class FolderDialogQuotaTab : public FolderDialogTab
+class CollectionQuotaPage : public Akonadi::CollectionPropertiesPage
 {
   Q_OBJECT
 
 public:
-  FolderDialogQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name = 0 );
-
-  virtual void load();
-  virtual bool save();
+  CollectionQuotaPage( QWidget* parent = 0 );
+  void load( const Akonadi::Collection & col );
+  void save( Akonadi::Collection & col );
+#if 0
   virtual AcceptStatus accept();
 
   static bool supports( KMFolder* refFolder );
@@ -81,9 +75,9 @@ private:
 
   QuotaInfo mQuotaInfo;
   KMFolderType mFolderType;
+#endif
 };
 
-} // end of namespace KMail
 
-#endif /* FOLDERDIALOGQUOTATAB_H */
+#endif /* COLLECTIONQUOTAPAGE_H */
 
