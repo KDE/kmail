@@ -73,6 +73,7 @@ set(kmailprivate_LIB_SRCS
    collectionviewpage.cpp
    collectionquotapage.cpp
    collectionquotapage_p.cpp
+   collectionaclpage.cpp
    kmmessage.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp
@@ -81,7 +82,6 @@ set(kmailprivate_LIB_SRCS
    simplestringlisteditor.cpp
    identitylistview.cpp
    identitydialog.cpp
-   #kmfolderdialog.cpp  
    kmfoldercombobox.cpp
    kmaccount.cpp
    listjob.cpp
@@ -179,7 +179,6 @@ set(kmailprivate_LIB_SRCS
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
    acljobs.cpp
-   #folderdialogacltab.cpp
    partnodebodypart.cpp
    expirejob.cpp
    compactionjob.cpp

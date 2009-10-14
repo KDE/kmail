@@ -90,7 +90,6 @@ using KPIM::ProgressManager;
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
-#include "kmfolderdialog.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmfilter.h"
@@ -182,6 +181,7 @@ using KMail::TemplateParser;
 #include "collectiongeneralpage.h"
 #include "collectionviewpage.h"
 #include "collectionquotapage.h"
+#include "collectionaclpage.h"
 
 #include <akonadi/collectionpropertiesdialog.h>
 #include "kmmainwidget.moc"
@@ -192,7 +192,7 @@ AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, Col
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionGeneralPageFactory, CollectionGeneralPage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionQuotaPageFactory, CollectionQuotaPage )
-
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionAclPageFactory, CollectionAclPage )
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
@@ -242,6 +242,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
+  CollectionPropertiesDialog::registerPage( new CollectionAclPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
 

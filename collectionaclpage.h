@@ -29,11 +29,11 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef FOLDERDIALOGACLTAB_H
-#define FOLDERDIALOGACLTAB_H
+#ifndef COLLECTIONACLPAGE_H
+#define COLLECTIONACLPAGE_H
 
-#include "kmfolderdialog.h"
-#include "kmfoldertype.h"
+#include <akonadi/collectionpropertiespage.h>
+#include <KDialog>
 class KJob;
 class KMFolderImap;
 class KPushButton;
@@ -44,27 +44,28 @@ class QButtonGroup;
 class QTreeWidget;
 class QTreeWidgetItem;
 class QLabel;
-namespace KIO { class Job; }
 
-namespace KMail {
+class KLineEdit;
+namespace KIO { class Job; }
 
 enum IMAPUserIdFormat { FullEmail, UserName };
 
 struct ACLListEntry;
-typedef QVector<KMail::ACLListEntry> ACLList;
+typedef QVector<ACLListEntry> ACLList;
 
 class ImapAccountBase;
 
 /**
  * "New Access Control Entry" dialog.
- * Internal class, only used by FolderDialogACLTab
+ * Internal class, only used by CollectionAclPage
  */
+#if 0
 class ACLEntryDialog :public KDialog {
   Q_OBJECT
 
 public:
   ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent );
-
+#if 0
   void setValues( const QString& userId, unsigned int permissions );
 
   QString userId() const;
@@ -79,19 +80,24 @@ private:
   QButtonGroup* mButtonGroup;
   KLineEdit* mUserIdLineEdit;
   IMAPUserIdFormat mUserIdFormat;
+#endif
 };
-
+#endif
 /**
  * "Access Control" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
  */
-class FolderDialogACLTab : public FolderDialogTab
+class CollectionAclPage : public Akonadi::CollectionPropertiesPage
 {
   Q_OBJECT
 
 public:
-  FolderDialogACLTab( KMFolderDialog* dlg, QWidget* parent );
-
+  CollectionAclPage( QWidget* parent = 0 );
+  void load( const Akonadi::Collection & col );
+  void save( Akonadi::Collection & col );
+protected:
+  void init();
+#if 0
   virtual void load();
   virtual bool save();
   virtual AcceptStatus accept();
@@ -151,9 +157,8 @@ private:
   bool mChanged;
   bool mAccepting; // i.e. close when done
   bool mSaving;
+#endif
 };
 
-} // end of namespace KMail
-
-#endif /* FOLDERDIALOGACLTAB_H */
+#endif /* COLLECTIONACLPAGE_H */
 
