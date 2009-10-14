@@ -33,11 +33,10 @@
 #define COLLECTIONQUOTAPAGE_H
 #include <akonadi/collectionpropertiespage.h>
 
-namespace KMail {
-  class QuotaWidget;
-}
+class QuotaWidget;
 class QStackedWidget;
-
+class QLabel;
+class QStackedWidget;
 
 /**
  * "Quota" tab in the folder dialog
@@ -51,6 +50,9 @@ public:
   CollectionQuotaPage( QWidget* parent = 0 );
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
+protected:
+  void init();
+
 #if 0
   virtual AcceptStatus accept();
 
@@ -63,16 +65,16 @@ private slots:
   // Network (KIO) slots
   void slotConnectionResult( int, const QString& );
   void slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& );
-
+#endif
 
 private:
 
   QLabel* mLabel;
-  KMail::QuotaWidget* mQuotaWidget;
+  QuotaWidget* mQuotaWidget;
   QStackedWidget* mStack;
-  ImapAccountBase* mImapAccount;
   QString mImapPath;
-
+#if 0
+  ImapAccountBase* mImapAccount;
   QuotaInfo mQuotaInfo;
   KMFolderType mFolderType;
 #endif

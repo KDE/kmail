@@ -31,7 +31,7 @@
  */
 
 #include "collectionquotapage.h"
-//#include "folderdialogquotatab_p.h"
+#include "collectionquotapage_p.h"
 
 #include <qstackedwidget.h>
 
@@ -47,7 +47,11 @@ CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
   : CollectionPropertiesPage( parent )
 {
   setPageTitle( i18n("Quota") );
-#if 0
+  init();
+}
+
+void CollectionQuotaPage::init()
+{
   QVBoxLayout* topLayout = new QVBoxLayout( this );
   // We need a widget stack to show either a label ("no qutoa support", "please wait"...)
   // or quota info
@@ -59,9 +63,8 @@ CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
   mLabel->setWordWrap( true );
   mStack->addWidget( mLabel );
 
-  mQuotaWidget = new KMail::QuotaWidget( mStack );
+  mQuotaWidget = new QuotaWidget( mStack );
   mStack->addWidget( mQuotaWidget );
-#endif
 }
 
 void CollectionQuotaPage::load( const Akonadi::Collection & col )

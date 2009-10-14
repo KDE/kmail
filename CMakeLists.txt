@@ -72,6 +72,7 @@ set(kmailprivate_LIB_SRCS
    collectiongeneralpage.cpp
    collectionviewpage.cpp
    collectionquotapage.cpp
+   collectionquotapage_p.cpp
    kmmessage.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp
@@ -208,7 +209,6 @@ set(kmailprivate_LIB_SRCS
    templatesinsertcommand.cpp
    customtemplates.cpp
    customtemplatesmenu.cpp
-   #folderdialogquotatab_p.cpp
    folderadaptor.cpp
    messagecopyhelper.cpp
    korghelper.cpp

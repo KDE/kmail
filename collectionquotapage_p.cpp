@@ -1,5 +1,4 @@
 /**
- * folderdialogquotatab_p.cpp
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
  *
@@ -29,7 +28,7 @@
  *  your version.
  */
 
-#include "folderdialogquotatab_p.h"
+#include "collectionquotapage_p.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -45,11 +44,7 @@
 #include "kdebug.h"
 #include "kdialog.h"
 #include "globalsettings.h"
-#include "quotajobs.h"
 
-namespace KMail { class QuotaInfo; }
-
-using namespace KMail;
 
 QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
         :QWidget( parent )
@@ -86,4 +81,4 @@ void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
 }
 #endif
 
-#include "folderdialogquotatab_p.moc"
+#include "collectionquotapage_p.moc"

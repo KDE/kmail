@@ -30,16 +30,14 @@
  */
 
 
-#ifndef FOLDERDIALOGQUOTATAB_P_H
-#define FOLDERDIALOGQUOTATAB_P_H
+#ifndef COLLECTIONQUOTAPAGE_P_H
+#define COLLECTIONQUOTAPAGE_P_H
 
 
 #include <qlabel.h>
 #include <qprogressbar.h>
 #include <qwhatsthis.h>
 
-
-namespace KMail {
 
 class QuotaWidget : public QWidget {
 
@@ -57,6 +55,4 @@ private:
     int mFactor;
 };
 
-}//end of namespace KMail
-
-#endif /* FOLDERDIALOGQUOTATAB_P_H */
+#endif /* COLLECTIONQUOTAPAGE_P_H */
