@@ -27,6 +27,8 @@
 #include <QCheckBox>
 #include <KDialog>
 #include <kpimidentities/identitycombo.h>
+#include <akonadi/collection.h>
+#include <akonadi/entitydisplayattribute.h>
 #include <kmkernel.h>
 
 using namespace Akonadi;
@@ -450,12 +452,28 @@ bool FolderDialogGeneralTab::save()
 }
 #endif
 
-void CollectionGeneralPage::load(const Collection & col)
+void CollectionGeneralPage::load(const Akonadi::Collection & col)
 {
+  QString displayName;
+  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
+    displayName = col.attribute<Akonadi::EntityDisplayAttribute>()->displayName();
+  }
+
+  if ( displayName.isEmpty() )
+    mNameEdit->setText( col.name() );
+  else
+    mNameEdit->setText( displayName );
+
 }
 
 void CollectionGeneralPage::save(Collection & col)
 {
+  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
+       !col.attribute<Akonadi::EntityDisplayAttribute>()->displayName().isEmpty() )
+    col.attribute<Akonadi::EntityDisplayAttribute>()->setDisplayName( mNameEdit->text() );
+  else
+    col.setName( mNameEdit->text() );
+
 }
 
 
