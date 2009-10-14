@@ -25,6 +25,13 @@ class QLabel;
 class KComboBox;
 class KIconButton;
 
+namespace MessageList {
+  namespace Utils {
+    class AggregationComboBox;
+    class ThemeComboBox;
+  }
+}
+
 class CollectionViewPage : public Akonadi::CollectionPropertiesPage
 {
   Q_OBJECT
@@ -45,8 +52,9 @@ public slots:
 
 private:
   void initializeWithValuesFromFolder( KMFolder * folder );
-
+#endif
 private:
+
   bool mIsLocalSystemFolder;
   bool mIsResourceFolder;
   QCheckBox   *mIconsCheckBox;
@@ -59,7 +67,7 @@ private:
   MessageList::Utils::AggregationComboBox *mAggregationComboBox;
   QCheckBox *mUseDefaultThemeCheckBox;
   MessageList::Utils::ThemeComboBox *mThemeComboBox;
-#endif
+
 };
 
 

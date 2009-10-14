@@ -18,6 +18,7 @@
 
 
 #include "collectionviewpage.h"
+#include <QGroupBox>
 #include <QHBoxLayout>
 #include <kicondialog.h>
 #include <QLabel>
@@ -25,6 +26,12 @@
 #include <QVBoxLayout>
 #include <KLocale>
 #include <KDialog>
+#include "messagelist/utils/aggregationcombobox.h"
+#include "messagelist/utils/aggregationconfigbutton.h"
+#include "messagelist/utils/themecombobox.h"
+#include "messagelist/utils/themeconfigbutton.h"
+
+
 
 CollectionViewPage::CollectionViewPage(QWidget * parent) :
     CollectionPropertiesPage( parent )
@@ -38,6 +45,7 @@ void CollectionViewPage::init()
 #if 0
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
   mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
+#endif
 
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
@@ -168,7 +176,7 @@ void CollectionViewPage::init()
   messageListGroupLayout->addLayout( themeLayout );
 
   topLayout->addStretch( 100 );
-
+#if 0
   initializeWithValuesFromFolder( mDlg->folder() );
 #endif
 }
