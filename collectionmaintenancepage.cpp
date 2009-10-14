@@ -17,6 +17,8 @@
 */
 
 #include "collectionmaintenancepage.h"
+#include <akonadi/collectionstatistics.h>
+#include <akonadi/collection.h>
 #include <klineedit.h>
 #include <QLabel>
 #include <QHBoxLayout>
@@ -41,21 +43,6 @@ void CollectionMaintenancePage::init()
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setMargin( 0 );
   topLayout->setSpacing( KDialog::spacingHint() );
-#if 0
-  mFolder = dlg->folder();
-#endif
-  //kDebug() << "        folder:" << mFolder->name();
-  //kDebug() << "          type:" << mFolder->folderType();
-  //kDebug() << "   storagetype:" << mFolder->storage()->folderType();
-  //kDebug() << "  contentstype:" << mFolder->storage()->contentsType();
-  //kDebug() << "      filename:" << mFolder->fileName();
-  //kDebug() << "      location:" << mFolder->location();
-  //kDebug() << "      indexloc:" << mFolder->indexLocation() ;
-  //kDebug() << "     subdirloc:" << mFolder->subdirLocation();
-  //kDebug() << "         count:" << mFolder->count();
-  //kDebug() << "        unread:" << mFolder->countUnread();
-  //kDebug() << "  needscompact:" << mFolder->needsCompacting();
-  //kDebug() << "   compactable:" << mFolder->storage()->compactable();
 
   QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
   QFormLayout *box = new QFormLayout( filesGroup );
@@ -78,18 +65,15 @@ void CollectionMaintenancePage::init()
   label = new QLabel( folderDesc, filesGroup );
   box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
 
-  //Port
-  KLineEdit *label2 = new KLineEdit( /*mFolder->location()*/"", filesGroup );
-  label2->setReadOnly( true );
-  box->addRow( i18n("Location:"), label2 );
+  mCollectionLocation = new KLineEdit( "", filesGroup );
+  mCollectionLocation->setReadOnly( true );
+  box->addRow( i18n("Location:"), mCollectionLocation );
 
   mFolderSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
   box->addRow( new QLabel( i18n("Size:"), filesGroup ), mFolderSizeLabel );
-#if 0
-  connect( mFolder, SIGNAL(folderSizeChanged( KMFolder * )),SLOT(updateFolderIndexSizes()) );
-#endif
+
   //Port
-  label2 = new KLineEdit( /*mFolder->indexLocation()*/"", filesGroup );
+  KLineEdit *label2 = new KLineEdit( /*mFolder->indexLocation()*/"", filesGroup );
   label2->setReadOnly( true );
   box->addRow( i18n("Index:"), label2 );
 
@@ -124,13 +108,11 @@ void CollectionMaintenancePage::init()
   box = new QFormLayout( messagesGroup );
   box->setSpacing( KDialog::spacingHint() );
 
-  //Port
-  label = new QLabel( /*QString::number( mFolder->count() )*/"", messagesGroup );
-  box->addRow( new QLabel( i18n("Total messages:"), messagesGroup ), label );
+  mCollectionCount = new QLabel( messagesGroup );
+  box->addRow( new QLabel( i18n("Total messages:"), messagesGroup ), mCollectionCount );
 
-  //Port
-  label = new QLabel( /*QString::number( mFolder->countUnread() )*/"", messagesGroup );
-  box->addRow( new QLabel( i18n("Unread messages:"), messagesGroup ), label );
+  mCollectionUnread = new QLabel( messagesGroup );
+  box->addRow( new QLabel( i18n("Unread messages:"), messagesGroup ), mCollectionUnread );
 
   // Compaction is only sensible and currently supported for mbox folders.
   //
@@ -159,26 +141,7 @@ void CollectionMaintenancePage::init()
 }
 
 
-// What happened to KIO::convertSizeWithBytes? - that would be really useful here
-static QString convertSizeWithBytes( qint64 size )
-{
-  QString s1 = KIO::convertSize( size );
-  QString s2 = i18nc( "File size in bytes", "%1 B", size );
-  return ( s1 == s2 ) ? s1 : i18n( "%1 (%2)", s1, s2 );
-}
-
 #if 0
-void Fold::load()
-{
-  updateControls();
-  updateFolderIndexSizes();
-}
-
-
-bool FolderDialogMaintenanceTab::save()
-{
-  return true;
-}
 
 void FolderDialogMaintenanceTab::updateControls()
 {
@@ -271,9 +234,16 @@ void CollectionMaintenancePage::slotRebuildImap()
 
 void CollectionMaintenancePage::load(const Collection & col)
 {
+  if ( col.isValid() ) {
+    mCollectionLocation->setText( col.url().path() );
+    mCollectionCount->setText( QString::number( col.statistics().count() ) );
+    mCollectionUnread->setText( QString::number( col.statistics().unreadCount() ));
+    mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( col.statistics().size() ) );
+  }
 }
 
-void CollectionMaintenancePage::save(Collection & col)
+void CollectionMaintenancePage::save(Collection & )
 {
+  //Nothing (read only)
 }
 

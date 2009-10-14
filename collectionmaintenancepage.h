@@ -21,6 +21,7 @@
 #include <akonadi/collectionpropertiespage.h>
 class QLabel;
 class QPushButton;
+class KLineEdit;
 
 class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage
 {
@@ -40,15 +41,15 @@ private slots:
 protected:
   void init();
 private:
-#if 0
-  KMFolder* mFolder;
-#endif
   QLabel *mFolderSizeLabel;
   QLabel *mIndexSizeLabel;
   QPushButton *mRebuildIndexButton;
   QPushButton *mRebuildImapButton;
   QLabel *mCompactStatusLabel;
   QPushButton *mCompactNowButton;
+  KLineEdit *mCollectionLocation;
+  QLabel *mCollectionCount;
+  QLabel *mCollectionUnread;
 };
 
 
