@@ -21,7 +21,7 @@
 
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
-
+#include <akonadi/private/collectionutils_p.h>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <kicondialog.h>
@@ -315,7 +315,7 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
   }
 
   if ( iconName.isEmpty() ) {
-    //mNormalIconButton->setIcon( CollectionUtils::defaultIconName( col );
+    mNormalIconButton->setIcon( Akonadi::CollectionUtils::defaultIconName( col ) );
   }
   else {
     mNormalIconButton->setIcon( iconName );
