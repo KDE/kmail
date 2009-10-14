@@ -18,6 +18,10 @@
 
 
 #include "collectionviewpage.h"
+
+#include <akonadi/collection.h>
+#include <akonadi/entitydisplayattribute.h>
+
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <kicondialog.h>
@@ -305,6 +309,18 @@ void FolderDialogViewTab::initializeWithValuesFromFolder( KMFolder * folder )
 #endif
 void CollectionViewPage::load( const Akonadi::Collection & col )
 {
+  QString iconName;
+  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
+    iconName = col.attribute<Akonadi::EntityDisplayAttribute>()->iconName();
+  }
+
+  if ( iconName.isEmpty() ) {
+    //mNormalIconButton->setIcon( CollectionUtils::defaultIconName( col );
+  }
+  else {
+    mNormalIconButton->setIcon( iconName );
+  }
+  mIconsCheckBox->setChecked( !iconName.isEmpty() );
 }
 
 void CollectionViewPage::save( Akonadi::Collection & col )
