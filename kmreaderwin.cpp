@@ -1227,21 +1227,7 @@ KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
   }
   return 0;
 }
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlClicked()
-{
-  KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>(mMainWindow);
-  uint identity = 0;
-  if ( message() && message()->parent() ) {
-    identity = message()->parent()->identity();
-  }
 
-  KMCommand *command = new KMUrlClickedCommand( mClickedUrl, identity, this,
-                                                false, mainWidget );
-  command->start();
-}
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
@@ -1280,18 +1266,6 @@ void KMReaderWin::slotMailtoOpenAddrBook()
   command->start();
 #endif
 }
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlCopy()
-{
-  // we don't necessarily need a mainWidget for KMUrlCopyCommand so
-  // it doesn't matter if the dynamic_cast fails.
-  KMCommand *command =
-    new KMUrlCopyCommand( urlClicked(),
-                          dynamic_cast<KMMainWidget*>( mMainWindow ) );
-  command->start();
-}
-#endif
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen( const KUrl &url )
 {
@@ -1567,10 +1541,13 @@ KAction *KMReaderWin::selectAllAction()
   return mViewer->selectAllAction();
 }
 
-const HeaderStrategy * KMReaderWin::headerStrategy() const {
+const HeaderStrategy * KMReaderWin::headerStrategy() const
+{
   return mViewer->headerStrategy();
 }
-const HeaderStyle * KMReaderWin::headerStyle() const {
+
+const HeaderStyle * KMReaderWin::headerStyle() const
+{
   return mViewer->headerStyle();
 }
 
