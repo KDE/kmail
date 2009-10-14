@@ -33,6 +33,8 @@
 #include "collectionquotapage.h"
 #include "collectionquotapage_p.h"
 
+#include <akonadi/collection.h>
+
 #include <qstackedwidget.h>
 
 #include <qlayout.h>
@@ -48,6 +50,11 @@ CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
 {
   setPageTitle( i18n("Quota") );
   init();
+}
+
+bool CollectionQuotaPage::canHandle( const Akonadi::Collection &collection ) const
+{
+  return collection.attribute( "collectionquota" );
 }
 
 void CollectionQuotaPage::init()

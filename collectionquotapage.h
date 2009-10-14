@@ -50,6 +50,7 @@ public:
   CollectionQuotaPage( QWidget* parent = 0 );
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
+  bool canHandle( const Akonadi::Collection &collection ) const;
 protected:
   void init();
 
