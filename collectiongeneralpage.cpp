@@ -26,6 +26,7 @@
 #include <KComboBox>
 #include <QCheckBox>
 #include <KDialog>
+#include <kpimidentities/identitycombo.h>
 
 using namespace Akonadi;
 
@@ -34,6 +35,17 @@ CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
 {
   setPageTitle(  i18nc("@title:tab General settings for a folder.", "General"));
   init();
+}
+
+static void addLine( QWidget *parent, QVBoxLayout* layout )
+{
+   QFrame *line = new QFrame( parent );
+   line->setObjectName( "line" );
+   line->setGeometry( QRect( 80, 150, 250, 20 ) );
+   line->setFrameShape( QFrame::HLine );
+   line->setFrameShadow( QFrame::Sunken );
+   line->setFrameShape( QFrame::HLine );
+   layout->addWidget( line );
 }
 
 void CollectionGeneralPage::init()
@@ -145,7 +157,7 @@ void CollectionGeneralPage::init()
                           "Jump to Folder</interface> dialog." ) );
   hbl->addWidget( mHideInSelectionDialogCheckBox );
   hbl->addStretch( 1 );
-#if 0
+
   addLine( this, topLayout );
   // use grid layout for the following combobox settings
   QGridLayout *gl = new QGridLayout();
@@ -164,6 +176,7 @@ void CollectionGeneralPage::init()
   ++row;
   label = new QLabel( i18n("&Sender identity:"), this );
   gl->addWidget( label, row, 0 );
+#if 0
   mIdentityComboBox = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
   gl->addWidget( mIdentityComboBox, row, 1 );

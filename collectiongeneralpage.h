@@ -25,6 +25,10 @@ class KComboBox;
 class QCheckBox;
 class KLineEdit;
 
+namespace KPIMIdentities {
+  class IdentityCombo;
+}
+
 class CollectionGeneralPage : public Akonadi::CollectionPropertiesPage
 {
   Q_OBJECT
@@ -47,9 +51,7 @@ private:
   QCheckBox   *mHideInSelectionDialogCheckBox;
   QCheckBox   *mUseDefaultIdentityCheckBox;
   KLineEdit   *mNameEdit;
-#if 0 //Port
   KPIMIdentities::IdentityCombo *mIdentityComboBox;
-#endif
   bool mIsLocalSystemFolder;
   bool mIsResourceFolder;
 
