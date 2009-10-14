@@ -18,8 +18,14 @@
 
 
 #include "collectiongeneralpage.h"
+#include <klineedit.h>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLabel>
 #include <KLocale>
-
+#include <KComboBox>
+#include <QCheckBox>
+#include <KDialog>
 
 using namespace Akonadi;
 
@@ -35,7 +41,7 @@ void CollectionGeneralPage::init()
 #if 0
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
   mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
-
+#endif
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
@@ -53,6 +59,7 @@ void CollectionGeneralPage::init()
     hl->addWidget( label );
 
     mNameEdit = new KLineEdit( this );
+#if 0
     if( !mDlg->folder() )
       mNameEdit->setFocus();
     mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
@@ -71,6 +78,7 @@ void CollectionGeneralPage::init()
     }
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
+#endif
     connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
                     this, SLOT( slotFolderNameChanged( const QString & ) ) );
   }
@@ -93,7 +101,7 @@ void CollectionGeneralPage::init()
             "messages. This is useful for ignoring any new/unread mail in "
             "your trash and spam folder.</p></qt>" ) );
   hbl->addWidget( mNotifyOnNewMailCheckBox );
-
+#if 0
   if ( mDlg->folder()->folderType() == KMFolderTypeImap ) {
     // should this folder be included in new-mail-checks?
 
@@ -111,7 +119,7 @@ void CollectionGeneralPage::init()
     nml->addWidget( mNewMailCheckBox );
     nml->addStretch( 1 );
   }
-
+#endif
   // should replies to mails in this folder be kept in this same folder?
   hbl = new QHBoxLayout();
   topLayout->addItem( hbl );
@@ -137,9 +145,8 @@ void CollectionGeneralPage::init()
                           "Jump to Folder</interface> dialog." ) );
   hbl->addWidget( mHideInSelectionDialogCheckBox );
   hbl->addStretch( 1 );
-
+#if 0
   addLine( this, topLayout );
-
   // use grid layout for the following combobox settings
   QGridLayout *gl = new QGridLayout();
   topLayout->addItem( gl );
@@ -261,7 +268,6 @@ void CollectionGeneralPage::init()
         "own unread state." ) );
   }
   topLayout->addStretch( 100 ); // eat all superfluous space
-
   initializeWithValuesFromFolder( mDlg->folder() );
 #endif
 }

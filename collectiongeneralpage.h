@@ -21,6 +21,9 @@
 #define COLLECTIONGENERALPAGE_H
 
 #include <akonadi/collectionpropertiespage.h>
+class KComboBox;
+class QCheckBox;
+class KLineEdit;
 
 class CollectionGeneralPage : public Akonadi::CollectionPropertiesPage
 {
@@ -33,6 +36,23 @@ public:
 
 protected:
   void init();
+private:
+  KComboBox *mContentsComboBox;
+  KComboBox *mIncidencesForComboBox;
+  QCheckBox *mAlarmsBlockedCheckBox;
+  QCheckBox *mSharedSeenFlagsCheckBox;
+  QCheckBox   *mNewMailCheckBox;
+  QCheckBox   *mNotifyOnNewMailCheckBox;
+  QCheckBox   *mKeepRepliesInSameFolderCheckBox;
+  QCheckBox   *mHideInSelectionDialogCheckBox;
+  QCheckBox   *mUseDefaultIdentityCheckBox;
+  KLineEdit   *mNameEdit;
+#if 0 //Port
+  KPIMIdentities::IdentityCombo *mIdentityComboBox;
+#endif
+  bool mIsLocalSystemFolder;
+  bool mIsResourceFolder;
+
 };
 
 

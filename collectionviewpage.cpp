@@ -18,7 +18,13 @@
 
 
 #include "collectionviewpage.h"
+#include <QHBoxLayout>
+#include <kicondialog.h>
+#include <QLabel>
+#include <QCheckBox>
+#include <QVBoxLayout>
 #include <KLocale>
+#include <KDialog>
 
 CollectionViewPage::CollectionViewPage(QWidget * parent) :
     CollectionPropertiesPage( parent )

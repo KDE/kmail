@@ -20,6 +20,10 @@
 #define COLLECTIONVIEWPAGE_H
 
 #include <akonadi/collectionpropertiespage.h>
+class QCheckBox;
+class QLabel;
+class KComboBox;
+class KIconButton;
 
 class CollectionViewPage : public Akonadi::CollectionPropertiesPage
 {
