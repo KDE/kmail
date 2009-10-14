@@ -180,6 +180,7 @@ using KMail::TemplateParser;
 #include "collectiontemplatespage.h"
 #include "collectionmaintenancepage.h"
 #include "collectiongeneralpage.h"
+#include "collectionviewpage.h"
 #include <akonadi/collectionpropertiesdialog.h>
 #include "kmmainwidget.moc"
 using namespace Akonadi;
@@ -187,7 +188,7 @@ using namespace Akonadi;
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionGeneralPageFactory, CollectionGeneralPage )
-
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage )
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
@@ -235,6 +236,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   CollectionPropertiesDialog::useDefaultPage( false );
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
+  CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
   CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
 

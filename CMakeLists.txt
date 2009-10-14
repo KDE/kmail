@@ -70,6 +70,7 @@ set(kmailprivate_LIB_SRCS
    collectiontemplatespage.cpp
    collectionmaintenancepage.cpp
    collectiongeneralpage.cpp
+   collectionviewpage.cpp
    kmmessage.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp
