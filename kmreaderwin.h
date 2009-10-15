@@ -82,7 +82,6 @@ namespace DOM {
 
 namespace MessageViewer {
    class Viewer;
-   class HtmlWriter;
 }
 
 namespace Akonadi {
@@ -463,7 +462,6 @@ private:
 
   MessageViewer::Viewer *mViewer;
 
-  MessageViewer::HtmlWriter * mHtmlWriter;
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
   std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;

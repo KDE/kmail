@@ -86,12 +86,12 @@ void CollectionTemplatesPage::init()
 }
 
 
-void CollectionTemplatesPage::load(const Collection & col)
+void CollectionTemplatesPage::load(const Collection &)
 {
   //Nothing
 }
 
-void CollectionTemplatesPage::save(Collection & col)
+void CollectionTemplatesPage::save(Collection &)
 {
   //Nothing
 }
