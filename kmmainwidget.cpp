@@ -659,23 +659,20 @@ void KMMainWidget::writeConfig()
       headersHeight = height() / 2;
 
     GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
-#ifdef OLD_MESSAGELIST
-    GlobalSettings::self()->setSearchAndHeaderWidth( mMessageListView->width() );
-#endif
-    //GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
+    GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
-      //GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
+      GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
     }
     else if ( !mLongFolderList && mCollectionFolderView )
       {
-      //GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
+        GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
       }
     if ( mCollectionFolderView )
     {
-      //GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
+      GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
       KSharedConfig::Ptr config = KMKernel::config();
       KConfigGroup group(config, "CollectionFolderView");
       Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView->folderTreeView() );
@@ -4271,7 +4268,7 @@ void KMMainWidget::updateMessageActions()
   // can we apply "mass" actions to the selection ? (this is actually always true if the selection is non-empty)
   bool mass_actions = count >= 1;
   // does the selection identify a single thread ?
-  bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessageListView->isThreaded();
+  bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessagePane->isThreaded();
   // can we apply flags to the selected messages ?
   bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
 
