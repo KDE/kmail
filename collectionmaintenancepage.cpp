@@ -65,7 +65,7 @@ void CollectionMaintenancePage::init()
   label = new QLabel( folderDesc, filesGroup );
   box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
 
-  mCollectionLocation = new KLineEdit( "", filesGroup );
+  mCollectionLocation = new KLineEdit( filesGroup );
   mCollectionLocation->setReadOnly( true );
   box->addRow( i18n("Location:"), mCollectionLocation );
 
@@ -235,10 +235,12 @@ void CollectionMaintenancePage::slotRebuildImap()
 void CollectionMaintenancePage::load(const Collection & col)
 {
   if ( col.isValid() ) {
-    mCollectionLocation->setText( col.url().path() );
     mCollectionCount->setText( QString::number( col.statistics().count() ) );
     mCollectionUnread->setText( QString::number( col.statistics().unreadCount() ));
     mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( col.statistics().size() ) );
+
+    mCollectionLocation->setText( col.remoteId() );
+
   }
 }
 
