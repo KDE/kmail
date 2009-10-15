@@ -315,8 +315,6 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
   if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
     iconName = col.attribute<Akonadi::EntityDisplayAttribute>()->iconName();
     unreadIconName = col.attribute<Akonadi::EntityDisplayAttribute>()->activeIconName();
-    qDebug()<<" iconName :"<<iconName;
-    qDebug()<<" unreadIconName :"<<unreadIconName;
   }
 
   if ( iconName.isEmpty() ) {
