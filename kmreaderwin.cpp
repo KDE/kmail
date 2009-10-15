@@ -2840,8 +2840,13 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
         html += KStringHandler::rPixelSqueeze( label, fm, 140 );
-      } else
+      } else if ( headerStyle() == HeaderStyle::fancy() ) {
+        QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
+        QFontMetrics fm( bodyFont );
+        html += KStringHandler::rPixelSqueeze( label, fm, 300 );
+      } else {
         html += label;
+      }
       html += "</a></span></div> ";
     }
   }
