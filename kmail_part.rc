@@ -39,7 +39,7 @@
    <Action name="kmail_copy" />
    <Separator/>
    <Action name="akonadi_collection_copy"/>
-   <Action name="cut_folder"/>
+   <Action name="akonadi_collection_cut"/>
    <Action name="akonadi_paste"/>
    <Separator/>
    <Action name="akonadi_item_copy"/>
