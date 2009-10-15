@@ -3771,14 +3771,6 @@ void KMMainWidget::setupActions()
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
   }
   {
-    KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Folder"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_X));
-    actionCollection()->addAction("cut_folder", action);
-#ifdef OLD_FOLDERVIEW
-    connect(action, SIGNAL(triggered(bool)), mMainFolderView, SLOT(slotCutFolder()));
-#endif
-  }
-  {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::Paste);
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_V));
   }
