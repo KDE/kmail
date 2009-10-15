@@ -1485,7 +1485,7 @@ void KMReaderWin::displayMessage() {
 static bool message_was_saved_decrypted_before( const KMMessage * msg ) {
   if ( !msg )
     return false;
-  kdDebug(5006) << "msgId = " << msg->msgId() << endl;
+  kDebug(5006) << "msgId = " << msg->msgId();
   return msg->msgId().stripWhiteSpace().startsWith( "<DecryptedMsg." );
 }
 
@@ -2914,6 +2914,10 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
         html += fm.elidedText( label, Qt::ElideRight, 180 );
+      } else if ( headerStyle() == HeaderStyle::fancy() ) {
+        QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
+        QFontMetrics fm( bodyFont );
+        html += fm.elidedText( label, Qt::ElideRight, 300 );
       } else {
         html += label;
       }
