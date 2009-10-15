@@ -2307,14 +2307,14 @@ void KMMainWidget::slotPasteMessages()
 
 void KMMainWidget::updateCutCopyPasteActions()
 {
-#ifdef OLD_MESSAGELIST
   QAction *copy = action( "copy_messages" );
   QAction *cut = action( "cut_messages" );
   QAction *paste = action( "paste_messages" );
 
-  bool haveSelection = !mMessageListView->selectionEmpty();
+  bool haveSelection = !mMessagePane->selectionEmpty();
 
   copy->setEnabled( haveSelection );
+#ifdef OLD_MESSAGELIST
   cut->setEnabled( haveSelection && folder() && ( folder()->canDeleteMessages() ) );
   paste->setEnabled( ( !mMessageClipboard.isEmpty() ) && folder() && ( !folder()->isReadOnly() ) );
 #endif
