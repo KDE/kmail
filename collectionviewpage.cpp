@@ -310,20 +310,41 @@ void FolderDialogViewTab::initializeWithValuesFromFolder( KMFolder * folder )
 void CollectionViewPage::load( const Akonadi::Collection & col )
 {
   QString iconName;
+  QString unreadIconName;
+  bool iconWasEmpty = false;
   if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
     iconName = col.attribute<Akonadi::EntityDisplayAttribute>()->iconName();
+    unreadIconName = col.attribute<Akonadi::EntityDisplayAttribute>()->activeIconName();
+    qDebug()<<" iconName :"<<iconName;
+    qDebug()<<" unreadIconName :"<<unreadIconName;
   }
 
   if ( iconName.isEmpty() ) {
-    mNormalIconButton->setIcon( Akonadi::CollectionUtils::defaultIconName( col ) );
+    iconName = Akonadi::CollectionUtils::defaultIconName( col );
+    iconWasEmpty = true;
+  }
+  mNormalIconButton->setIcon( iconName );
+
+  if ( unreadIconName.isEmpty() ) {
+    mUnreadIconButton->setIcon( iconName );
   }
   else {
-    mNormalIconButton->setIcon( iconName );
+    mUnreadIconButton->setIcon( unreadIconName );
   }
-  mIconsCheckBox->setChecked( !iconName.isEmpty() );
+
+  mIconsCheckBox->setChecked( !iconWasEmpty );
 }
 
 void CollectionViewPage::save( Akonadi::Collection & col )
 {
+
+  if ( mIconsCheckBox->isChecked() ) {
+    col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setIconName( mNormalIconButton->icon() );
+    col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setActiveIconName( mUnreadIconButton->icon() );
+  }
+  else if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
+    col.attribute<Akonadi::EntityDisplayAttribute>()->setIconName( QString() );
+    col.attribute<Akonadi::EntityDisplayAttribute>()->setActiveIconName( QString() );
+  }
 }
 
