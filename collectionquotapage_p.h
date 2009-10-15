@@ -41,18 +41,19 @@
 
 class QuotaWidget : public QWidget {
 
- Q_OBJECT
+  Q_OBJECT
 public:
-    explicit QuotaWidget( QWidget* parent, const char* name = 0 );
-    virtual ~QuotaWidget() { }
-    //void setQuotaInfo( const KMail::QuotaInfo& info );
+  explicit QuotaWidget( QWidget* parent);
+  virtual ~QuotaWidget() { }
+
+  void setQuotaInfo( qint64 currentValue, qint64 maxValue );
 
 private:
-    QLabel* mInfoLabel;
-    QLabel* mRootLabel;
-    QProgressBar* mProgressBar;
-    QString mUnits;
-    int mFactor;
+  QLabel* mInfoLabel;
+  QLabel* mRootLabel;
+  QProgressBar* mProgressBar;
+  QString mUnits;
+  int mFactor;
 };
 
 #endif /* COLLECTIONQUOTAPAGE_P_H */

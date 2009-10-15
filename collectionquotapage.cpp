@@ -32,7 +32,7 @@
 
 #include "collectionquotapage.h"
 #include "collectionquotapage_p.h"
-
+#include <akonadi/collectionquotaattribute.h>
 #include <akonadi/collection.h>
 
 #include <qstackedwidget.h>
@@ -76,10 +76,20 @@ void CollectionQuotaPage::init()
 
 void CollectionQuotaPage::load( const Akonadi::Collection & col )
 {
+  if ( col.hasAttribute<Akonadi::CollectionQuotaAttribute>() ) {
+    mStack->setCurrentWidget( mQuotaWidget );
+    qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue();
+    qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue();
+    mQuotaWidget->setQuotaInfo( currentValue, maximumValue );
+  }
+  else
+     mLabel->setText( i18n( "This account does not have support for quota information." ) );
+
 }
 
-void CollectionQuotaPage::save( Akonadi::Collection & col )
+void CollectionQuotaPage::save( Akonadi::Collection & )
 {
+  // nothing to do, we are read-only
 }
 
 
@@ -209,12 +219,6 @@ KMail::FolderDialogTab::AcceptStatus KMail::FolderDialogQuotaTab::accept()
   else
     assert(0);
   return Canceled;
-}
-
-bool KMail::FolderDialogQuotaTab::save()
-{
-  // nothing to do, we are read-only
-  return true;
 }
 
 bool KMail::FolderDialogQuotaTab::supports( KMFolder* refFolder )

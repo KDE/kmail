@@ -46,10 +46,9 @@
 #include "globalsettings.h"
 
 
-QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
+QuotaWidget::QuotaWidget( QWidget* parent )
         :QWidget( parent )
 {
-      setObjectName( name );
       QVBoxLayout *box = new QVBoxLayout( this );
       QWidget *stuff = new QWidget( this );
       QGridLayout* layout = new QGridLayout( stuff );
@@ -66,6 +65,12 @@ QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
       layout->addWidget( mProgressBar, 2, 1 );
       box->addWidget( stuff );
       box->addStretch( 2 );
+}
+
+void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
+{
+  mProgressBar->setMaximum( maxValue );
+  mProgressBar->setValue( current );
 }
 #if 0
 void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
