@@ -54,7 +54,7 @@ CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
 
 bool CollectionQuotaPage::canHandle( const Akonadi::Collection &collection ) const
 {
-  return collection.attribute( "collectionquota" );
+  return collection.hasAttribute<Akonadi::CollectionQuotaAttribute>();
 }
 
 void CollectionQuotaPage::init()
