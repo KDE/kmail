@@ -82,9 +82,10 @@ void CollectionQuotaPage::load( const Akonadi::Collection & col )
     qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue();
     mQuotaWidget->setQuotaInfo( currentValue, maximumValue );
   }
-  else
-     mLabel->setText( i18n( "This account does not have support for quota information." ) );
-
+  else {
+    mLabel->setText( i18n( "This account does not have support for quota information." ) );
+    mStack->setCurrentWidget( mLabel );
+  }
 }
 
 void CollectionQuotaPage::save( Akonadi::Collection & )

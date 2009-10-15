@@ -131,17 +131,18 @@ private:
   void loadListView( const KMail::ACLList& aclList );
   void loadFinished( const KMail::ACLList& aclList );
   void addACLs( const QStringList& userIds, unsigned int permissions );
-
+#endif
 private:
   // The widget containing the ACL widgets (listview and buttons)
   KHBox* mACLWidget;
   //class ListView;
   class ListViewItem;
   QTreeWidget* mListView;
+
   KPushButton* mAddACL;
   KPushButton* mEditACL;
   KPushButton* mRemoveACL;
-
+#if 0
   QStringList mRemovedACLs;
   QString mImapPath;
   ImapAccountBase* mImapAccount;
@@ -150,14 +151,13 @@ private:
   ACLList mInitialACLList;
   ACLList mACLList; // to be set
   IMAPUserIdFormat mUserIdFormat;
-
+#endif
   QLabel* mLabel;
   QStackedWidget* mStack;
 
   bool mChanged;
   bool mAccepting; // i.e. close when done
   bool mSaving;
-#endif
 };
 
 #endif /* COLLECTIONACLPAGE_H */

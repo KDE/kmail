@@ -30,6 +30,8 @@
  */
 
 #include "collectionaclpage.h"
+#include <khbox.h>
+#include <QStackedWidget>
 #include "messageviewer/autoqpointer.h"
 
 #include <addressesdialog.h>
@@ -319,7 +321,6 @@ CollectionAclPage::CollectionAclPage( QWidget* parent )
 
 void CollectionAclPage::init()
 {
-#if 0
   QVBoxLayout* topLayout = new QVBoxLayout( this );
   // We need a widget stack to show either a label ("no acl support", "please wait"...)
   // or a listview.
@@ -349,7 +350,6 @@ void CollectionAclPage::init()
        SLOT( slotEditACL( QTreeWidgetItem* ) ) );
   connect( mListView, SIGNAL( itemSelectionChanged() ),
        SLOT( slotSelectionChanged() ) );
-
   KVBox* buttonBox = new KVBox( mACLWidget );
   buttonBox->setSpacing( KDialog::spacingHint() );
   mAddACL = new KPushButton( i18n( "Add Entry..." ), buttonBox );
@@ -363,9 +363,8 @@ void CollectionAclPage::init()
   connect( mRemoveACL, SIGNAL( clicked() ), SLOT( slotRemoveACL() ) );
   mEditACL->setEnabled( false );
   mRemoveACL->setEnabled( false );
-
+  mStack->setCurrentWidget( mACLWidget );
   connect( this, SIGNAL( changed(bool) ), SLOT( slotChanged(bool) ) );
-#endif
 }
 
 void CollectionAclPage::load(const Akonadi::Collection & col)
