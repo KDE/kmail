@@ -23,7 +23,7 @@
 #include <QVBoxLayout>
 
 #include "folderselectiontreeview.h"
-
+#include "readablecollectionproxymodel.h"
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/collectioncreatejob.h>
@@ -41,6 +41,7 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent )
   QWidget *widget = mainWidget();
   QVBoxLayout *layout = new QVBoxLayout( widget );
   treeview = new FolderSelectionTreeView( this );
+  treeview->readableCollectionProxyModel()->setEnabledCheck( true );
   layout->addWidget( treeview );
   enableButton( KDialog::Ok, false );
   enableButton( KDialog::User1, false );

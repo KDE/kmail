@@ -25,6 +25,7 @@
 class KXMLGUIClient;
 class QItemSelectionModel;
 class FolderTreeView;
+class ReadableCollectionProxyModel;
 
 namespace Akonadi {
   class EntityTreeModel;
@@ -68,6 +69,8 @@ public:
   Akonadi::EntityTreeModel *entityModel();
 
   Akonadi::StatisticsToolTipProxyModel * statisticsToolTipProxyModel();
+
+  ReadableCollectionProxyModel *readableCollectionProxyModel();
 
   void quotaWarningParameters( const QColor &color, qreal threshold );
   void readQuotaConfig();

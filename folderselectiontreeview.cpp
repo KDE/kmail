@@ -33,6 +33,8 @@
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
 
+#include "readablecollectionproxymodel.h"
+
 #include "globalsettings.h"
 #include "kmkernel.h"
 
@@ -45,7 +47,8 @@ public:
      entityModel( 0 ),
      monitor( 0 ),
      quotaModel( 0 ),
-     statisticsToolTipProxyModel( 0 )
+     statisticsToolTipProxyModel( 0 ),
+     readableproxy( 0 )
   {
   }
   QSortFilterProxyModel *filterModel;
@@ -54,6 +57,7 @@ public:
   Akonadi::ChangeRecorder *monitor;
   Akonadi::QuotaColorProxyModel *quotaModel;
   Akonadi::StatisticsToolTipProxyModel *statisticsToolTipProxyModel;
+  ReadableCollectionProxyModel *readableproxy;
 };
 
 
@@ -96,11 +100,14 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
   d->quotaModel->setSourceModel( d->filterModel );
 
+  d->readableproxy = new ReadableCollectionProxyModel( this );
+  d->readableproxy->setSourceModel( d->quotaModel );
+
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
-  d->collectionFolderView->setModel( d->filterModel );
+  d->collectionFolderView->setModel( d->readableproxy );
   d->collectionFolderView->expandAll();
   lay->addWidget( d->collectionFolderView );
 
@@ -215,6 +222,11 @@ void FolderSelectionTreeView::readQuotaConfig()
 Akonadi::StatisticsToolTipProxyModel * FolderSelectionTreeView::statisticsToolTipProxyModel()
 {
   return d->statisticsToolTipProxyModel;
+}
+
+ReadableCollectionProxyModel *FolderSelectionTreeView::readableCollectionProxyModel()
+{
+  return d->readableproxy;
 }
 
 #include "folderselectiontreeview.moc"
