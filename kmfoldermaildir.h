@@ -10,7 +10,6 @@ class KJob;
 class KMFolderMaildir;
 namespace KMail {
   class FolderJob;
-  class MaildirJob;
 }
 
 namespace MessageViewer {
@@ -18,12 +17,10 @@ namespace MessageViewer {
 }
 
 using KMail::FolderJob;
-using KMail::MaildirJob;
 
 class KMFolderMaildir : public KMFolderIndex
 {
   Q_OBJECT
-  friend class ::KMail::MaildirJob;
 public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder

@@ -39,7 +39,6 @@
 #include "kmailicalifaceimpl.h"
 #include "kmacctcachedimap.h"
 #include "kmmsgdict.h"
-#include "maildirjob.h"
 #include "util.h"
 #include "scalix.h"
 

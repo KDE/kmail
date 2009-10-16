@@ -13,10 +13,8 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "undostack.h"
-#include "maildirjob.h"
 #include "messageviewer/kcursorsaver.h"
 #include "jobscheduler.h"
-using KMail::MaildirJob;
 #include "compactionjob.h"
 #include "kmmsgdict.h"
 #include "util.h"
@@ -301,9 +299,12 @@ FolderJob*
 KMFolderMaildir::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                               KMFolder *folder,  const QString&, const MessageViewer::AttachmentStrategy* ) const
 {
+#if 0	
   MaildirJob *job = new MaildirJob( msg, jt, folder );
-  job->setParentFolder( this );
+  job->setParentFolder( this );  
   return job;
+#endif
+return 0;  
 }
 
 //-------------------------------------------------------------
@@ -311,9 +312,12 @@ FolderJob*
 KMFolderMaildir::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                               FolderJob::JobType jt, KMFolder *folder ) const
 {
+#if 0	
   MaildirJob *job = new MaildirJob( msgList, sets, jt, folder );
   job->setParentFolder( this );
   return job;
+#endif
+return 0;  
 }
 
 //-------------------------------------------------------------
