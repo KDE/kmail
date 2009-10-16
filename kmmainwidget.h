@@ -533,27 +533,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
 #ifdef OLD_MESSAGELIST
     void trashMessageSet( KMail::MessageListView::MessageSet * set );
-    /**
-     * Move the messages referenced by the specified set to the specified destination folder.
-     * If folder is 0 then the messages are permanently deleted. If folder is 0 and
-     * confirmOnDeletion is true then a confirmation dialog is shown before deleting
-     * the messages. If folder is nonzero then the confirmOnDeletion value is ignored.
-     * The set parameter must not be null and the ownership is passed
-     * to this function.
-     */
-    void moveMessageSet(
-        KMail::MessageListView::MessageSet * set,
-        KMFolder * destination,
-        bool confirmOnDeletion = true
-      );
-    /**
-     * Copy the messages referenced by the specified set to the specified destination folder.
-     * The set parameter must not be null and the ownership is passed to this function.
-     */
-    void copyMessageSet(
-        KMail::MessageListView::MessageSet * set,
-        KMFolder * destination
-      );
+
     /**
      * Set the status of the messages referenced by the specified set, eventually toggling it.
      * The set parameter must not be null and the ownership is passed to this function.
