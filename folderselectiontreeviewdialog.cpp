@@ -17,6 +17,8 @@
 */
 
 #include "folderselectiontreeviewdialog.h"
+#include <kinputdialog.h>
+#include <kmessagebox.h>
 
 #include <QVBoxLayout>
 
@@ -24,6 +26,7 @@
 
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
+#include <akonadi/collectioncreatejob.h>
 
 #include <KLocale>
 
@@ -52,17 +55,50 @@ FolderSelectionTreeViewDialog::~FolderSelectionTreeViewDialog()
   writeConfig();
 }
 
+bool FolderSelectionTreeViewDialog::canCreateCollection( Akonadi::Collection & parentCol )
+{
+  parentCol = selectedCollection();
+  if ( !parentCol.isValid() )
+    return false;
+ if ( ( parentCol.rights() & Akonadi::Collection::CanCreateCollection )
+       && parentCol.contentMimeTypes().contains( Akonadi::Collection::mimeType() ) ) {
+   return true;
+ }
+ return false;
+}
 
 void FolderSelectionTreeViewDialog::slotAddChildFolder()
 {
-  //TODO implement it.
+  Akonadi::Collection parentCol;
+  if ( canCreateCollection( parentCol ) ){
+    const QString name = KInputDialog::getText( i18nc( "@title:window", "New Folder"),
+                                                i18nc( "@label:textbox, name of a thing", "Name"),
+                                                QString(), 0, this );
+    if ( name.isEmpty() )
+      return;
+
+    Akonadi::Collection col;
+    col.setName( name );
+    col.parentCollection().setId( parentCol.id() );
+    Akonadi::CollectionCreateJob *job = new Akonadi::CollectionCreateJob( col );
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(collectionCreationResult(KJob*)) );
+  }
+}
+
+void FolderSelectionTreeViewDialog::collectionCreationResult(KJob* job)
+{
+  if ( job->error() ) {
+    KMessageBox::error( this, i18n("Could not create folder: %1", job->errorString()),
+                        i18n("Folder creation failed") );
+  }
 }
 
 void FolderSelectionTreeViewDialog::slotSelectionChanged()
 {
   const bool enablebuttons = ( treeview->selectionModel()->selectedIndexes().count() > 0 );
   enableButton(KDialog::Ok, enablebuttons);
-  enableButton(KDialog::User1, enablebuttons );
+  Akonadi::Collection parent;
+  enableButton(KDialog::User1, canCreateCollection( parent ) );
 }
 
 void FolderSelectionTreeViewDialog::setSelectionMode( QAbstractItemView::SelectionMode mode )

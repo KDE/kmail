@@ -22,7 +22,7 @@
 #include <QAbstractItemView>
 #include <KDialog>
 #include <akonadi/collection.h>
-
+class KJob;
 class FolderSelectionTreeView;
 
 class FolderSelectionTreeViewDialog : public KDialog
@@ -43,10 +43,12 @@ public:
 private slots:
   void slotSelectionChanged();
   void slotAddChildFolder();
+  void collectionCreationResult(KJob*);
 
 protected:
   void readConfig();
   void writeConfig();
+  bool canCreateCollection( Akonadi::Collection & parentCol );
 
 private:
   FolderSelectionTreeView *treeview;
