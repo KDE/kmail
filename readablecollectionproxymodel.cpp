@@ -31,10 +31,12 @@ class ReadableCollectionProxyModel::Private
 {
 public:
   Private( ReadableCollectionProxyModel *parent )
-    : mParent( parent ), enableCheck( false )
+    : necessaryRight( Akonadi::Collection::AllRights ),
+      mParent( parent ),
+      enableCheck( false )
     {
     }
-
+  Akonadi::Collection::Rights necessaryRight;
   ReadableCollectionProxyModel *mParent;
   bool enableCheck;
 };
@@ -57,7 +59,7 @@ Qt::ItemFlags ReadableCollectionProxyModel::flags( const QModelIndex & index ) c
   {
     const QModelIndex sourceIndex = mapToSource( index.sibling( index.row(), 0 ) );
     Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
-    if ( !( collection.rights() & Akonadi::Collection::CanCreateCollection )) {
+    if ( !( collection.rights() & d->necessaryRight )) {
       return Qt::NoItemFlags;
     }
   }
@@ -75,6 +77,15 @@ bool ReadableCollectionProxyModel::isEnabledCheck() const
   return d->enableCheck;
 }
 
+void ReadableCollectionProxyModel::setNecessaryRight( Akonadi::Collection::Rights right )
+{
+  d->necessaryRight = right;
+}
+
+Akonadi::Collection::Rights ReadableCollectionProxyModel::necessaryRight() const
+{
+  return d->necessaryRight;
+}
 
 bool ReadableCollectionProxyModel::dropMimeData( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {

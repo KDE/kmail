@@ -42,6 +42,7 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent )
   QVBoxLayout *layout = new QVBoxLayout( widget );
   treeview = new FolderSelectionTreeView( this );
   treeview->readableCollectionProxyModel()->setEnabledCheck( true );
+  treeview->readableCollectionProxyModel()->setNecessaryRight( Akonadi::Collection::CanCreateCollection );
   layout->addWidget( treeview );
   enableButton( KDialog::Ok, false );
   enableButton( KDialog::User1, false );

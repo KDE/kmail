@@ -22,7 +22,7 @@
 
 
 #include <QtGui/QSortFilterProxyModel>
-
+#include <akonadi/collection.h>
 class ReadableCollectionProxyModel : public QSortFilterProxyModel
 {
   Q_OBJECT
@@ -41,6 +41,11 @@ public:
 
   void setEnabledCheck( bool enable );
   bool isEnabledCheck() const;
+
+  void setNecessaryRight( Akonadi::Collection::Rights right );
+
+  Akonadi::Collection::Rights necessaryRight() const;
+
 
 private:
   class Private;
