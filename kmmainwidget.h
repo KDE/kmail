@@ -188,12 +188,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
   public slots:
     // Moving messages around
-
     /**
      * This will ask for a destination folder and move the currently selected
      * messages (in MessageListView) into it.
      */
-    void slotMoveMsg();
+    void slotMoveSelectedMessageToFolder();
 
     /**
      * This will move the currently selected
@@ -326,7 +325,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void showMsg( KMReaderWin *win, KMMessage *msg );
     void updateFileMenu();
     void newFromTemplate( KMMessage *msg );
-
+    void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
     // helper functions for keeping reference to mFolder
     void openFolder();
     void closeFolder();
@@ -530,11 +529,16 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Update the custom template menus. */
     void updateCustomTemplateMenus();
 
+
+    void moveMessageSelected( const Akonadi::Collection &src, const Akonadi::Collection &dest, bool confirmOnDeletion = true );
+
     /**
      * Move the messages referenced by the specified set to trash.
      * The set parameter must not be null and the ownership is passed
      * to this function.
      */
+
+
 #ifdef OLD_MESSAGELIST
     void trashMessageSet( KMail::MessageListView::MessageSet * set );
     /**

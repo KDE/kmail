@@ -883,7 +883,7 @@ void KMMainWidget::createWidgets()
     mMoveMsgToFolderAction->setShortcut( QKeySequence( Qt::Key_M ) );
     actionCollection()->addAction( "move_message_to_folder", mMoveMsgToFolderAction );
     connect( mMoveMsgToFolderAction, SIGNAL( triggered( bool ) ),
-             SLOT( slotMoveMsg() ) );
+             SLOT( slotMoveSelectedMessageToFolder() ) );
   }
   {
     KAction *action = new KAction( i18n("Copy Message to Folder"), this );
@@ -1690,6 +1690,40 @@ void KMMainWidget::slotResendMsg()
 //-----------------------------------------------------------------------------
 // Message moving and permanent deletion
 //
+
+void KMMainWidget::moveMessageSelected( const Akonadi::Collection &src, const Akonadi::Collection &dest, bool confirmOnDeletion )
+{
+  //TODO port
+  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+
+  // If this is a deletion, ask for confirmation
+  if ( !dest.isValid() && confirmOnDeletion )
+  {
+    int ret = KMessageBox::warningContinueCancel(
+        this,
+        i18np(
+            "<qt>Do you really want to delete the selected message?<br />"
+            "Once deleted, it cannot be restored.</qt>",
+            "<qt>Do you really want to delete the %1 selected messages?<br />"
+            "Once deleted, they cannot be restored.</qt>",
+            lstMsg.count()
+          ),
+        lstMsg.count() > 1 ? i18n( "Delete Messages" ) : i18n( "Delete Message" ),
+        KStandardGuiItem::del(),
+        KStandardGuiItem::cancel(),
+        "NoConfirmDelete"
+      );
+    if ( ret == KMessageBox::Cancel )
+    {
+      return;  // user canceled the action
+    }
+  }
+
+  //TODO code to move item
+  if ( dest.isValid() )
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages..." ) );
+  else
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Deleting messages..." ) );
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMFolder * destination, bool confirmOnDeletion )
 {
@@ -1763,6 +1797,8 @@ void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMF
     BroadcastStatus::instance()->setStatusMsg( i18n( "Deleting messages..." ) );
 }
 #endif
+}
+
 void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
 {
   Q_ASSERT( command );
@@ -1829,24 +1865,29 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 }
 
 
-// FIXME: Use better name for this (slotMoveSelectedMessagesToFolder() ?)
-//        When changing the name also change the slot name in the QObject::connect calls all around...
-void KMMainWidget::slotMoveMsg()
+void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
-  //TODO  needs to re-implement it.
-#if 0
-  AutoQPointer<KMail::FolderSelectionDialog> dlg;
-  dlg = new KMail::FolderSelectionDialog( this, i18n( "Move Messages to Folder" ), true );
-
+  AutoQPointer<FolderSelectionTreeViewDialog> dlg;
+  dlg = new FolderSelectionTreeViewDialog( this );
+  dlg->setModal( true );
+  dlg->setCaption(  i18n( "Move Messages to Folder" ) );
   if ( dlg->exec() && dlg ) {
-    KMFolder * dest = dlg->folder();
-
-    if ( dest ) {
-      slotMoveMsgToFolder( dest );
+    Akonadi::Collection dest = dlg->selectedCollection();
+    if ( dest.isValid() ) {
+      moveSelectedMessagesToFolder( dest );
     }
   }
-#endif
 }
+
+void KMMainWidget::moveSelectedMessagesToFolder( const Akonadi::Collection & dest )
+{
+  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+  if ( !lstMsg.isEmpty() ) {
+    //Need to verify if dest == src ??? akonadi do it for us.
+    moveMessageSelected( mCurrentFolder, dest, false );
+  }
+}
+
 
 // FIXME: Use better name for this (slotMoveSelectedMessagesToFolder() ?)
 //        When changing the name also change the slot name in the QObject::connect calls all around...
