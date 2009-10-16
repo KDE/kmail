@@ -495,9 +495,12 @@ FolderJob*
 KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                            KMFolder *folder, const QString&, const MessageViewer::AttachmentStrategy* ) const
 {
+#if 0	
   MboxJob *job = new MboxJob( msg, jt, folder );
   job->setParent( this );
   return job;
+#endif
+  return 0;
 }
 
 //-------------------------------------------------------------
@@ -505,9 +508,12 @@ FolderJob*
 KMFolderMbox::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                            FolderJob::JobType jt, KMFolder *folder ) const
 {
+#if 0	
   MboxJob *job = new MboxJob( msgList, sets, jt, folder );
   job->setParent( this );
   return job;
+#endif
+return 0;  
 }
 
 //-----------------------------------------------------------------------------

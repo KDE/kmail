@@ -21,16 +21,13 @@
 #define kmfoldermbox_h
 
 #include "kmfolderindex.h"
-#include "mboxjob.h"
 
 #include <QList>
 
 namespace KMail {
   class FolderJob;
-  class MboxJob;
 }
 using KMail::FolderJob;
-using KMail::MboxJob;
 
 namespace MessageViewer {
   class AttachmentStrategy;
@@ -49,7 +46,6 @@ namespace MessageViewer {
 class KMFolderMbox : public KMFolderIndex
 {
   Q_OBJECT
-  friend class ::KMail::MboxJob;
 public:
 
 
