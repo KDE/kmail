@@ -29,6 +29,7 @@ class FolderTreeView;
 namespace Akonadi {
   class EntityTreeModel;
   class ChangeRecorder;
+  class StatisticsToolTipProxyModel;
 }
 class FolderSelectionTreeView : public QWidget
 {
@@ -36,6 +37,16 @@ class FolderSelectionTreeView : public QWidget
 public:
   FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0 );
   ~FolderSelectionTreeView();
+
+  /**
+   * The possible tooltip display policies.
+   */
+  enum ToolTipDisplayPolicy
+  {
+    DisplayAlways,           ///< Always display a tooltip when hovering over an item
+    DisplayWhenTextElided,   ///< Display the tooltip if the item text is actually elided
+    DisplayNever             ///< Nevery display tooltips
+  };
 
 
   Akonadi::ChangeRecorder *monitorFolders();
@@ -56,8 +67,13 @@ public:
   FolderTreeView *folderTreeView();
   Akonadi::EntityTreeModel *entityModel();
 
+  Akonadi::StatisticsToolTipProxyModel * statisticsToolTipProxyModel();
+
   void quotaWarningParameters( const QColor &color, qreal threshold );
-  void readQuotaParameter();
+  void readQuotaConfig();
+
+
+  void readConfig();
 
 private:
   class FolderSelectionTreeViewPrivate;

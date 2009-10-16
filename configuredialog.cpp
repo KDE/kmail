@@ -57,6 +57,8 @@ using KMail::ImapAccountBase;
 #include "kmmainwidget.h"
 #include "kmmessagetag.h"
 
+#include "folderselectiontreeview.h"
+
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
@@ -1485,28 +1487,16 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   QRadioButton* folderToolTipsAlwaysRadio = new QRadioButton( i18n( "Always" ), mFolderToolTipsGroupBox );
-#ifdef OLD_FOLDERVIEW
-  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( KMail::FolderView::DisplayAlways ) );
-#else
-  //TODO (laurent) port it
-  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, 0);
-#endif
+  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( FolderSelectionTreeView::DisplayAlways ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsAlwaysRadio );
 
   QRadioButton* folderToolTipsElidedRadio = new QRadioButton( i18n( "When Text Obscured" ), mFolderToolTipsGroupBox );
-#ifdef OLD_FOLDERVIEW
-  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( KMail::FolderView::DisplayWhenTextElided ) );
-#else
-  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, 1 );
-#endif
+  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( FolderSelectionTreeView::DisplayWhenTextElided ) );
+  folderToolTipsElidedRadio->setEnabled( false ); //Disable it until we reimplement it.
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsElidedRadio );
 
   QRadioButton* folderToolTipsNeverRadio = new QRadioButton( i18n( "Never" ), mFolderToolTipsGroupBox );
-#ifdef OLD_FOLDERVIEW
-  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( KMail::FolderView::DisplayNever ) );
-#else
-  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, 2);
-#endif
+  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( FolderSelectionTreeView::DisplayNever ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsNeverRadio );
 
   vlay->addWidget( mFolderToolTipsGroupBox );

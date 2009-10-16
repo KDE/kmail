@@ -40,7 +40,12 @@ class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
 {
 public:
   FolderSelectionTreeViewPrivate()
-    :filterModel( 0 ), collectionFolderView( 0 ), entityModel( 0 ), monitor( 0 ), quotaModel( 0 )
+    :filterModel( 0 ),
+     collectionFolderView( 0 ),
+     entityModel( 0 ),
+     monitor( 0 ),
+     quotaModel( 0 ),
+     statisticsToolTipProxyModel( 0 )
   {
   }
   QSortFilterProxyModel *filterModel;
@@ -48,6 +53,7 @@ public:
   Akonadi::EntityTreeModel *entityModel;
   Akonadi::ChangeRecorder *monitor;
   Akonadi::QuotaColorProxyModel *quotaModel;
+  Akonadi::StatisticsToolTipProxyModel *statisticsToolTipProxyModel;
 };
 
 
@@ -77,19 +83,18 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   collectionModel->setHeaderSet( Akonadi::EntityTreeModel::CollectionTreeHeaders );
 
   // ... with statistics...
-  Akonadi::StatisticsToolTipProxyModel *statisticsProxyModel = new Akonadi::StatisticsToolTipProxyModel( this );
-  statisticsProxyModel->setSourceModel( collectionModel );
+  d->statisticsToolTipProxyModel = new Akonadi::StatisticsToolTipProxyModel( this );
+  d->statisticsToolTipProxyModel->setSourceModel( collectionModel );
 
 
   d->filterModel = new Akonadi::StatisticsProxyModel(this);
-  d->filterModel->setSourceModel( statisticsProxyModel );
+  d->filterModel->setSourceModel( d->statisticsToolTipProxyModel );
   d->filterModel->setDynamicSortFilter( true );
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
 
 
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
   d->quotaModel->setSourceModel( d->filterModel );
-  readQuotaParameter();
 
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
@@ -99,6 +104,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->collectionFolderView->expandAll();
   lay->addWidget( d->collectionFolderView );
 
+  readConfig();
 }
 
 
@@ -172,13 +178,29 @@ Akonadi::EntityTreeModel *FolderSelectionTreeView::entityModel()
   return d->entityModel;
 }
 
+void FolderSelectionTreeView::readConfig()
+{
+  KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
+  const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
+  switch( checkedFolderToolTipsPolicy ){
+  case DisplayAlways:
+  case DisplayWhenTextElided: //Need to implement in the future
+    d->statisticsToolTipProxyModel->setToolTipEnabled( true );
+    break;
+  case DisplayNever:
+    d->statisticsToolTipProxyModel->setToolTipEnabled( false );
+  }
+
+  readQuotaConfig();
+}
+
 void FolderSelectionTreeView::quotaWarningParameters( const QColor &color, qreal threshold )
 {
   d->quotaModel->setWarningThreshold( threshold );
-  d->quotaModel->setWarningColor( threshold );
+  d->quotaModel->setWarningColor( color );
 }
 
-void FolderSelectionTreeView::readQuotaParameter()
+void FolderSelectionTreeView::readQuotaConfig()
 {
   QColor quotaColor;
   qreal threshold = 100;
@@ -188,6 +210,11 @@ void FolderSelectionTreeView::readQuotaParameter()
     threshold = GlobalSettings::closeToQuotaThreshold();
   }
   quotaWarningParameters( quotaColor, threshold );
+}
+
+Akonadi::StatisticsToolTipProxyModel * FolderSelectionTreeView::statisticsToolTipProxyModel()
+{
+  return d->statisticsToolTipProxyModel;
 }
 
 #include "folderselectiontreeview.moc"
