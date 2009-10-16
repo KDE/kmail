@@ -205,7 +205,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
      * Implements the "move to trash" action
      */
-    void slotTrashMsg();
+    void slotTrashSelectedMessages();
 
     void slotCheckMail();
 
@@ -524,16 +524,14 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void copyMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest );
 
 
-  /**
+    /**
      * Move the messages referenced by the specified set to trash.
      * The set parameter must not be null and the ownership is passed
      * to this function.
      */
-
+    void trashMessageSelected( const QList<Akonadi::Item> &select );
 
 #ifdef OLD_MESSAGELIST
-    void trashMessageSet( KMail::MessageListView::MessageSet * set );
-
     /**
      * Set the status of the messages referenced by the specified set, eventually toggling it.
      * The set parameter must not be null and the ownership is passed to this function.

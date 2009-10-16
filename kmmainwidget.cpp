@@ -1356,7 +1356,7 @@ void KMMainWidget::slotEmptyFolder()
     slotDeleteMsg( false );
   }
   else
-    slotTrashMsg();
+    slotTrashSelectedMessages();
 
   if (mMsgView) mMsgView->clearCache();
 
@@ -1990,6 +1990,12 @@ void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest
 //-----------------------------------------------------------------------------
 // Message trashing
 //
+void KMMainWidget::trashMessageSelected( const QList<Akonadi::Item> & select )
+{
+  //TODO
+  BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash..." ) );
+}
+
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::trashMessageSet( KMail::MessageListView::MessageSet * set )
 {
@@ -2064,16 +2070,12 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
   // The command will autodelete itself and will also kill the set.
 }
 
-void KMMainWidget::slotTrashMsg()
+void KMMainWidget::slotTrashSelectedMessages()
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent message set from the current selection
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
-  if ( !set ) // no selection
-    return;
-
-  trashMessageSet( set );
-#endif
+  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+  if ( !lstMsg.isEmpty() ) {
+    trashMessageSelected( lstMsg );
+  }
 }
 
 void KMMainWidget::slotTrashThread()
@@ -2084,7 +2086,7 @@ void KMMainWidget::slotTrashThread()
   if ( !set ) // no current thread
     return;
 
-  trashMessageSet( set );
+  trashMessageSelected( set );
 #endif
 }
 
@@ -3668,7 +3670,7 @@ void KMMainWidget::setupActions()
   mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
   mTrashAction->setShortcut(QKeySequence(Qt::Key_Delete));
   mTrashAction->setHelpText(i18n("Move message to trashcan"));
-  connect(mTrashAction, SIGNAL(triggered(bool)), SLOT(slotTrashMsg()));
+  connect(mTrashAction, SIGNAL(triggered(bool)), SLOT(slotTrashSelectedMessages()));
 
   /* The delete action is nowhere in the gui, by default, so we need to make
    * sure it is plugged into the KAccel now, since that won't happen on
