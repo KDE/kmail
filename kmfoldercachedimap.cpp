@@ -52,7 +52,6 @@ using KMail::ImapAccountBase;
 using KMail::ListJob;
 #include "kmcommands.h"
 #include "kmmainwidget.h"
-#include "annotationjobs.h"
 #include "groupwareadaptor.h"
 #include "messageviewer/autoqpointer.h"
 using namespace KMail;
@@ -1132,6 +1131,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
       KUrl url = mAccount->getUrl();
       url.setPath( imapPath() );
+#if 0
       KMail::AnnotationList annotations; // to be set
 
       KMail::AnnotationAttribute attr( KOLAB_FOLDERTEST, "value.shared", "true" );
@@ -1145,6 +1145,7 @@ void KMFolderCachedImap::serverSyncInternal()
       mAccount->insertJob( job, jd );
       connect( job, SIGNAL( result( KJob * ) ),
                SLOT( slotTestAnnotationResult( KJob * ) ) );
+#endif      
       break;
     }
 
@@ -1185,6 +1186,7 @@ void KMFolderCachedImap::serverSyncInternal()
         newState( mProgress, i18n("Retrieving annotations"));
         KUrl url = mAccount->getUrl();
         url.setPath( imapPath() );
+#if 0	
         AnnotationJobs::MultiGetAnnotationJob *job =
           AnnotationJobs::multiGetAnnotation( mAccount->slave(), url, annotations );
         ImapAccountBase::jobData jd( url.url(), folder() );
@@ -1195,12 +1197,13 @@ void KMFolderCachedImap::serverSyncInternal()
                  SLOT(slotAnnotationResult(const QString&, const QString&, bool)) );
         connect( job, SIGNAL(result(KJob *)),
                  SLOT(slotGetAnnotationResult(KJob *)) );
+#endif	
         break;
       }
     }
   } // case
   case SYNC_STATE_SET_ANNOTATIONS:
-
+#if 0
     mSyncState = SYNC_STATE_SET_ACLS;
     if ( !noContent() && mAccount->hasAnnotationSupport() &&
          ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
@@ -1244,7 +1247,7 @@ void KMFolderCachedImap::serverSyncInternal()
         break;
       }
     }
-
+#endif
   case SYNC_STATE_SET_ACLS:
     mSyncState = SYNC_STATE_GET_ACLS;
 
@@ -2353,7 +2356,7 @@ void KMFolderCachedImap::listDirectory2()
     for ( int i = 0; i < foldersNewOnServer.count(); ++i ) {
       paths << mSubfolderPaths[ foldersNewOnServer[i] ];
     }
-
+#if 0
     AnnotationJobs::MultiUrlGetAnnotationJob *job =
       AnnotationJobs::multiUrlGetAnnotation(
         mAccount->slave(), mAccount->getUrl(), paths, KOLAB_FOLDERTYPE );
@@ -2363,7 +2366,7 @@ void KMFolderCachedImap::listDirectory2()
     mAccount->insertJob( job, jd );
     connect( job, SIGNAL( result( KJob * ) ),
              SLOT( slotMultiUrlGetAnnotationResult( KJob * ) ) );
-
+#endif
   } else {
     createFoldersNewOnServerAndFinishListing( foldersNewOnServer );
   }
@@ -2842,7 +2845,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KJob *job )
   if ( (*it).parent != folder() ) {
     return; // Shouldn't happen
   }
-
+#if 0
   AnnotationJobs::GetAnnotationJob *annjob =
     static_cast<AnnotationJobs::GetAnnotationJob *>( job );
   if ( annjob->error() ) {
@@ -2862,7 +2865,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KJob *job )
       kWarning() <<"slotGetAnnotationResult:" << job->errorString();
     }
   }
-
+#endif
   if ( mAccount->slave() ) {
     mAccount->removeJob( static_cast<KIO::Job*>( job ) );
   }
@@ -2881,7 +2884,7 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob *job )
   if ( (*it).parent != folder() ) {
     return; // Shouldn't happen
   }
-
+#if 0
   QVector<int> folders;
   AnnotationJobs::MultiUrlGetAnnotationJob *annjob =
     static_cast<AnnotationJobs::MultiUrlGetAnnotationJob *>( job );
@@ -2935,6 +2938,7 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob *job )
     mAccount->removeJob( static_cast<KIO::Job*>( job ) );
   }
   createFoldersNewOnServerAndFinishListing( folders );
+#endif  
 }
 
 void KMFolderCachedImap::slotQuotaResult( KJob *job )

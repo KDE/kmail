@@ -183,7 +183,6 @@ set(kmailprivate_LIB_SRCS
    jobscheduler.cpp
    callback.cpp
    searchjob.cpp
-   annotationjobs.cpp
    accountcombobox.cpp
    redirectdialog.cpp
    foldershortcutdialog.cpp
