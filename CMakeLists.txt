@@ -59,7 +59,7 @@ if(Nepomuk_FOUND)
 endif(Nepomuk_FOUND)
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS} -DUSE_AKONADI_VIEWER")
 
 ########### kmailprivate ###############
 
