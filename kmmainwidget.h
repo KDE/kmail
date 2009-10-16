@@ -194,26 +194,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
     void slotMoveSelectedMessageToFolder();
 
-    /**
-     * This will move the currently selected
-     * messages (in MessageListView) into the specified folder.
-     */
-    void slotMoveMsgToFolder( KMFolder *dest );
-
-
     // Copying messages around
 
     /**
      * This will ask for a destination folder and copy the currently selected
      * messages (in MessageListView) into it.
      */
-    void slotCopyMsg();
-
-    /**
-     * This will copy the currently selected
-     * messages (in MessageListView) into the specified folder.
-     */
-    void slotCopyMsgToFolder( KMFolder *dest );
+    void slotCopySelectedMessagesToFolder();
 
     /**
      * Implements the "move to trash" action
@@ -326,6 +313,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateFileMenu();
     void newFromTemplate( KMMessage *msg );
     void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
+    void copySelectedMessagesToFolder( const Akonadi::Collection& dest );
+
     // helper functions for keeping reference to mFolder
     void openFolder();
     void closeFolder();
@@ -530,9 +519,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateCustomTemplateMenus();
 
 
-    void moveMessageSelected( const Akonadi::Collection &src, const Akonadi::Collection &dest, bool confirmOnDeletion = true );
+    void moveMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest, bool confirmOnDeletion = true );
 
-    /**
+    void copyMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest );
+
+
+  /**
      * Move the messages referenced by the specified set to trash.
      * The set parameter must not be null and the ownership is passed
      * to this function.

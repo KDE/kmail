@@ -889,7 +889,7 @@ void KMMainWidget::createWidgets()
     KAction *action = new KAction( i18n("Copy Message to Folder"), this );
     actionCollection()->addAction( "copy_message_to_folder", action );
     connect( action, SIGNAL( triggered( bool ) ),
-             SLOT( slotCopyMsg() ) );
+             SLOT( slotCopySelectedMessagesToFolder() ) );
     action->setShortcut( QKeySequence( Qt::Key_C ) );
   }
   {
@@ -1691,11 +1691,8 @@ void KMMainWidget::slotResendMsg()
 // Message moving and permanent deletion
 //
 
-void KMMainWidget::moveMessageSelected( const Akonadi::Collection &src, const Akonadi::Collection &dest, bool confirmOnDeletion )
+void KMMainWidget::moveMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest, bool confirmOnDeletion )
 {
-  //TODO port
-  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
-
   // If this is a deletion, ask for confirmation
   if ( !dest.isValid() && confirmOnDeletion )
   {
@@ -1706,9 +1703,9 @@ void KMMainWidget::moveMessageSelected( const Akonadi::Collection &src, const Ak
             "Once deleted, it cannot be restored.</qt>",
             "<qt>Do you really want to delete the %1 selected messages?<br />"
             "Once deleted, they cannot be restored.</qt>",
-            lstMsg.count()
+            selectMsg.count()
           ),
-        lstMsg.count() > 1 ? i18n( "Delete Messages" ) : i18n( "Delete Message" ),
+        selectMsg.count() > 1 ? i18n( "Delete Messages" ) : i18n( "Delete Message" ),
         KStandardGuiItem::del(),
         KStandardGuiItem::cancel(),
         "NoConfirmDelete"
@@ -1884,31 +1881,17 @@ void KMMainWidget::moveSelectedMessagesToFolder( const Akonadi::Collection & des
   QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
   if ( !lstMsg.isEmpty() ) {
     //Need to verify if dest == src ??? akonadi do it for us.
-    moveMessageSelected( mCurrentFolder, dest, false );
+    moveMessageSelected( lstMsg, dest, false );
   }
 }
 
 
-// FIXME: Use better name for this (slotMoveSelectedMessagesToFolder() ?)
-//        When changing the name also change the slot name in the QObject::connect calls all around...
-void KMMainWidget::slotMoveMsgToFolder( KMFolder *dest )
+void KMMainWidget::copyMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest )
 {
-  Q_ASSERT( dest );
-#ifdef OLD_MESSAGELIST
-  // Create a persistent message set from the current selection
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
-  if ( !set ) // no selection
+  if ( selectMsg.isEmpty() )
     return;
-
-  // Check for senseless move attempts
-  if ( dest == set->folder() )
-  {
-    delete set;
-    return;
-  }
-
-  moveMessageSet( set, dest, false );
-#endif
+  //TODO
+  BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages..." ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1981,45 +1964,27 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
   // The command will autodelete itself and will also kill the set.
 }
 
-
-// FIXME: Use better name for this (slotCopySelectedMessagesToFolder() ?)
-//        When changing the name also change the slot name in the QObject::connect calls all around...
-void KMMainWidget::slotCopyMsg()
+void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
-#if 0 //TODO reimplement it
-  AutoQPointer<KMail::FolderSelectionDialog> dlg;
-  dlg = new KMail::FolderSelectionDialog( this, i18n( "Copy Messages to Folder" ), true );
+  AutoQPointer<FolderSelectionTreeViewDialog> dlg;
+  dlg = new FolderSelectionTreeViewDialog( this );
+  dlg->setModal( true );
+  dlg->setCaption( i18n( "Copy Messages to Folder" ) );
 
   if ( dlg->exec() && dlg ) {
-    KMFolder * dest = dlg->folder();
-
-    if ( dest ) {
-      slotCopyMsgToFolder( dest );
+    Akonadi::Collection dest = dlg->selectedCollection();
+    if ( dest.isValid() ) {
+      copySelectedMessagesToFolder( dest );
     }
   }
-#endif
 }
 
-// FIXME: Use better name for this (slotCopySelectedMessagesToFolder() ?)
-//        When changing the name also change the slot name in the QObject::connect calls all around...
-void KMMainWidget::slotCopyMsgToFolder( KMFolder *dest )
+void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest )
 {
-  Q_ASSERT( dest );
-#ifdef OLD_MESSAGELIST
-  // Create a persistent message set from the current selection
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
-  if ( !set ) // no selection
-    return;
-
-  // Check for senseless move attempts
-  if ( dest == set->folder() )
-  {
-    delete set;
-    return;
+  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+  if ( !lstMsg.isEmpty() ) {
+    copyMessageSelected( lstMsg, dest );
   }
-
-  copyMessageSet( set, dest );
-#endif
 }
 
 //-----------------------------------------------------------------------------
