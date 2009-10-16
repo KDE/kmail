@@ -86,9 +86,11 @@ class MessageActions : public QObject
     {
       if ( !mCurrentMessage )
         return;
+#ifdef OLD_COMMAND
       const QString text = mMessageView ? mMessageView->copyText() : "";
       KMCommand *command = new T( mParent, mCurrentMessage, text );
       command->start();
+#endif
     }
     void setMessageStatus( KPIM::MessageStatus status, bool toggle = false );
 
