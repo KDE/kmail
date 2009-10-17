@@ -125,7 +125,11 @@ KMMsgBase::KMMsgBase( const KMMsgBase& other )
 //-----------------------------------------------------------------------------
 KMMsgBase::~KMMsgBase()
 {
+#if 0 //TODO port to akonadi
   MessageProperty::forget( this );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   delete mTagList;
 #ifdef KMAIL_SQLITE_INDEX
   free( mData );
@@ -846,6 +850,7 @@ QByteArray KMMsgBase::autoDetectCharset(const QByteArray &_encoding, const QStri
 //-----------------------------------------------------------------------------
 unsigned long KMMsgBase::getMsgSerNum() const
 {
+#if 0 //TODO port to akonadi
   unsigned long msn = MessageProperty::serialCache( this );
   if (msn)
     return msn;
@@ -856,6 +861,10 @@ unsigned long KMMsgBase::getMsgSerNum() const
       MessageProperty::setSerialCache( this, msn );
   }
   return msn;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
 

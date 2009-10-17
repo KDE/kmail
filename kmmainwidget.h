@@ -370,7 +370,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotStartCertManager();
     void slotStartWatchGnuPG();
     void slotApplyFilters();
-    int slotFilterMsg(KMMessage *msg);
+    int slotFilterMsg(KMime::Message *msg);
     void slotExpandThread();
     void slotExpandAllThreads();
     void slotCollapseThread();

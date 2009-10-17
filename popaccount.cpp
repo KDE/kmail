@@ -310,6 +310,7 @@ void PopAccount::slotCancel()
 //-----------------------------------------------------------------------------
 void PopAccount::slotProcessPendingMsgs()
 {
+#if 0 //TODO port to akonadi
   if (mProcessing) // not reentrant
     return;
   mProcessing = true;
@@ -341,6 +342,9 @@ void PopAccount::slotProcessPendingMsgs()
   msgIdsAwaitingProcessing.clear();
   msgUidsAwaitingProcessing.clear();
   mProcessing = false;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
@@ -571,6 +575,7 @@ void PopAccount::slotJobFinished() {
     // if set the action of the filter
     KMPopFilterAction action;
     bool dlgPopup = false;
+#if 0 //TODO port to akonadi
     for ( int i = 0; i < mHeadersOnServer.count(); ++i ) {
       KMPopHeaders *header = mHeadersOnServer[i];
       action = (KMPopFilterAction)kmkernel->popFilterMgr()->process( header->header() );
@@ -607,6 +612,9 @@ void PopAccount::slotJobFinished() {
           break;
       }
     }
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
     // if there are some messages which are not coverd by a filter
     // show the dialog

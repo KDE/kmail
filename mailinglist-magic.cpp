@@ -2,8 +2,7 @@
 
 #include "mailinglist-magic.h"
 
-#include "kmmessage.h"
-
+#include <kmime/kmime_message.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kurl.h>
@@ -14,14 +13,14 @@
 
 using namespace KMail;
 
-typedef QString (*MagicDetectorFunc) (const KMMessage *, QByteArray &, QString &);
+typedef QString (*MagicDetectorFunc) (KMime::Message *, QByteArray &, QString &);
 
 /* Sender: (owner-([^@]+)|([^@+]-owner)@ */
-static QString check_sender(const KMMessage  *message,
+static QString check_sender(KMime::Message  *message,
                             QByteArray &header_name,
                             QString &header_value )
 {
-  QString header = message->headerField( "Sender" );
+  QString header = message->sender()->asUnicodeString();
 
   if ( header.isEmpty() )
     return QString();
@@ -46,11 +45,11 @@ static QString check_sender(const KMMessage  *message,
 }
 
 /* X-BeenThere: ([^@]+) */
-static QString check_x_beenthere(const KMMessage  *message,
+static QString check_x_beenthere(KMime::Message  *message,
                                  QByteArray &header_name,
                                  QString &header_value )
 {
-  QString header = message->headerField( "X-BeenThere" );
+  QString header = message->headerByType( "X-BeenThere" ) ?message->headerByType( "X-BeenThere" )->asUnicodeString() : "";
   if ( header.isNull() || header.indexOf( '@' ) == -1 )
     return QString();
 
@@ -61,12 +60,12 @@ static QString check_x_beenthere(const KMMessage  *message,
 }
 
 /* Delivered-To:: <([^@]+) */
-static QString check_delivered_to(const KMMessage  *message,
+static QString check_delivered_to(KMime::Message  *message,
                                   QByteArray &header_name,
                                   QString &header_value )
 {
-  QString header = message->headerField( "Delivered-To" );
-  if ( header.isNull() || header.left(13 ) != "mailing list"
+   QString header = message->headerByType( "Delivered-To" ) ?message->headerByType( "Delivered-To" )->asUnicodeString() : "";
+ if ( header.isNull() || header.left(13 ) != "mailing list"
        || header.indexOf( '@' ) == -1 )
     return QString();
 
@@ -77,11 +76,11 @@ static QString check_delivered_to(const KMMessage  *message,
 }
 
 /* X-Mailing-List: <?([^@]+) */
-static QString check_x_mailing_list(const KMMessage  *message,
+static QString check_x_mailing_list( KMime::Message  *message,
                                     QByteArray &header_name,
                                     QString &header_value )
 {
-  QString header = message->headerField( "X-Mailing-List");
+  QString header = message->headerByType( "X-Mailing-List" ) ?message->headerByType( "X-Mailing-List" )->asUnicodeString() : "";
   if ( header.isEmpty() )
     return QString();
 
@@ -98,12 +97,12 @@ static QString check_x_mailing_list(const KMMessage  *message,
 }
 
 /* List-Id: [^<]* <([^.]+) */
-static QString check_list_id(const KMMessage  *message,
+static QString check_list_id(KMime::Message  *message,
 			     QByteArray &header_name,
 			     QString &header_value )
 {
   int lAnglePos, firstDotPos;
-  QString header = message->headerField( "List-Id" );
+  QString header = message->headerByType( "List-Id" ) ?message->headerByType( "List-Id" )->asUnicodeString() : "";
   if ( header.isEmpty() )
     return QString();
 
@@ -123,11 +122,11 @@ static QString check_list_id(const KMMessage  *message,
 
 
 /* List-Post: <mailto:[^< ]*>) */
-static QString check_list_post(const KMMessage  *message,
+static QString check_list_post(KMime::Message  *message,
                                QByteArray &header_name,
                                QString &header_value )
 {
-  QString header = message->headerField( "List-Post" );
+  QString header = message->headerByType( "List-Post" ) ?message->headerByType( "List-Post" )->asUnicodeString() : "";
   if ( header.isEmpty() )
     return QString();
 
@@ -143,11 +142,11 @@ static QString check_list_post(const KMMessage  *message,
 }
 
 /* Mailing-List: list ([^@]+) */
-static QString check_mailing_list(const KMMessage  *message,
+static QString check_mailing_list(KMime::Message  *message,
                                   QByteArray &header_name,
                                   QString &header_value )
 {
-  QString header = message->headerField( "Mailing-List");
+  QString header = message->headerByType( "Mailing-List" ) ?message->headerByType( "Mailing-List" )->asUnicodeString() : "";
   if ( header.isEmpty() )
     return QString();
 
@@ -162,10 +161,10 @@ static QString check_mailing_list(const KMMessage  *message,
 
 
 /* X-Loop: ([^@]+) */
-static QString check_x_loop(const KMMessage  *message,
+static QString check_x_loop(KMime::Message  *message,
                             QByteArray &header_name,
                             QString &header_value ){
-  QString header = message->headerField( "X-Loop");
+  QString header = message->headerByType( "X-Loop" ) ?message->headerByType( "X-Loop" )->asUnicodeString() : "";
   if ( header.isEmpty() )
     return QString();
 
@@ -179,10 +178,10 @@ static QString check_x_loop(const KMMessage  *message,
 }
 
 /* X-ML-Name: (.+) */
-static QString check_x_ml_name(const KMMessage  *message,
+static QString check_x_ml_name(KMime::Message  *message,
                                QByteArray &header_name,
                                QString &header_value ){
-  QString header = message->headerField( "X-ML-Name");
+  QString header = message->headerByType( "X-ML-Name" ) ?message->headerByType( "X-ML-Name" )->asUnicodeString() : "";
   if ( header.isEmpty() )
     return QString();
 
@@ -229,27 +228,27 @@ headerToAddress( const QString& header )
 }
 
 MailingList
-MailingList::detect( const KMMessage *message )
+MailingList::detect( KMime::Message *message )
 {
   MailingList mlist;
 
   mlist.setPostURLS( headerToAddress(
-                       message->headerField( "List-Post" ) ) );
+                       message->headerByType( "List-Post" ) ? message->headerByType( "List-Post" )->asUnicodeString() : "" ) );
   mlist.setHelpURLS( headerToAddress(
-                       message->headerField( "List-Help" ) ) );
+                       message->headerByType( "List-Help" ) ? message->headerByType( "List-Help" )->asUnicodeString() : "" ) );
   mlist.setSubscribeURLS( headerToAddress(
-                            message->headerField( "List-Subscribe" ) ) );
+                          message->headerByType( "List-Subscribe" ) ? message->headerByType( "List-Subscribe" )->asUnicodeString() : ""));
   mlist.setUnsubscribeURLS( headerToAddress(
-                              message->headerField( "List-Unsubscribe" ) ) );
+                          message->headerByType( "List-Unsubscribe" ) ? message->headerByType( "List-Unsubscribe" )->asUnicodeString() : ""));
   mlist.setArchiveURLS( headerToAddress(
-                          message->headerField( "List-Archive" ) ) );
-  mlist.setId( message->headerField( "List-Id" ) );
+                          message->headerByType( "List-Arhive" ) ? message->headerByType( "List-Archive" )->asUnicodeString() : "" ) );
+  mlist.setId( message->headerByType( "List-Id" ) ? message->headerByType( "List-Id" )->asUnicodeString() : ""  );
 
   return mlist;
 }
 
 QString
-MailingList::name( const KMMessage  *message, QByteArray &header_name,
+MailingList::name( KMime::Message  *message, QByteArray &header_name,
                    QString &header_value )
 {
   QString mlist;

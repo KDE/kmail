@@ -34,7 +34,9 @@
 #define __KMAIL_MESSAGESENDER_H__
 #include <QString>
 
-class KMMessage;
+namespace KMime {
+  class Message;
+}
 
 namespace KMail {
 
@@ -62,7 +64,7 @@ public:
 
      @return true on success.
   */
-  bool send( KMMessage * msg, SendMethod method=SendDefault ) { return doSend( msg, method ); }
+  bool send( KMime::Message * msg, SendMethod method=SendDefault ) { return doSend( msg, method ); }
 
   /**
      Start sending all queued messages.
@@ -85,7 +87,7 @@ public:
   virtual bool sendQuotedPrintable() const = 0;
   virtual void setSendQuotedPrintable( bool qp ) = 0;
 protected:
-  virtual bool doSend( KMMessage * msg, short sendNow ) = 0;
+  virtual bool doSend( KMime::Message * msg, short sendNow ) = 0;
   virtual bool doSendQueued( const QString& transport ) = 0;
 };
 

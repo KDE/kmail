@@ -22,6 +22,8 @@ using KMail::MessageProperty;
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
+#include <kmime/kmime_message.h>
+
 // other Qt headers
 #include <QRegExp>
 
@@ -88,15 +90,19 @@ void KMFilterMgr::writeConfig(bool withSync)
   if ( withSync ) group.sync();
 }
 
-int KMFilterMgr::processPop( KMMessage * msg ) const {
+int KMFilterMgr::processPop( KMime::Message * msg ) const {
+#if 0 //TODO port to akonadi
   for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
         it != mFilters.end() ; ++it )
     if ( (*it)->pattern()->matches( msg ) )
       return (*it)->action();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return NoAction;
 }
 
-bool KMFilterMgr::beginFiltering(KMMsgBase *msgBase) const
+bool KMFilterMgr::beginFiltering(KMime::Content *msgBase) const
 {
   if (MessageProperty::filtering( msgBase ))
     return false;
@@ -108,8 +114,9 @@ bool KMFilterMgr::beginFiltering(KMMsgBase *msgBase) const
   return true;
 }
 
-int KMFilterMgr::moveMessage(KMMessage *msg) const
+int KMFilterMgr::moveMessage(KMime::Message *msg) const
 {
+#if 0 //TODO port to akonadi
   if (MessageProperty::filterFolder(msg)->moveMsg( msg ) == 0) {
     if ( kmkernel->folderIsTrash( MessageProperty::filterFolder( msg )))
       KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
@@ -117,11 +124,15 @@ int KMFilterMgr::moveMessage(KMMessage *msg) const
     kDebug() << "KMfilterAction - couldn't move msg";
     return 2;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return 0;
 }
 
-void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
+void KMFilterMgr::endFiltering(KMime::Content *msgBase) const
 {
+#if 0 //TODO port to akonadi
   KMFolder *parent = msgBase->parent();
   if ( parent ) {
     if ( parent == MessageProperty::filterFolder( msgBase ) ) {
@@ -134,12 +145,16 @@ void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
       parent->addMsgKeepUID( msg );
     }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   MessageProperty::setFiltering( msgBase, false );
 }
 
-int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
-  bool stopIt = false;
+int KMFilterMgr::process( KMime::Message * msg, const KMFilter * filter ) {
   int result = 1;
+#if 0 //TODO port to akonadi
+ bool stopIt = false;
 
   if ( !msg || !filter || !beginFiltering( msg ))
     return 1;
@@ -159,6 +174,9 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
     endFiltering( msg );
     result = 1;
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return result;
 }
 
@@ -169,6 +187,7 @@ int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
   if ( !filter)
     return 1;
 
+#if 0 //TODO port to akonadi
   if ( isMatching( serNum, filter ) ) {
     KMFolder *folder = 0;
     int idx = -1;
@@ -213,10 +232,13 @@ int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
   } else {
     result = 1;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return result;
 }
 
-int KMFilterMgr::process( KMMessage * msg, FilterSet set,
+int KMFilterMgr::process( KMime::Message * msg, FilterSet set,
                           bool account, uint accountId ) {
   if ( bPopFilter )
     return processPop( msg );
@@ -231,6 +253,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
 
   if (!beginFiltering( msg ))
     return 1;
+#if 0 //TODO port to akonadi
   for ( QList<KMFilter*>::const_iterator it = mFilters.constBegin();
         !stopIt && it != mFilters.constEnd() ; ++it ) {
 
@@ -265,10 +288,13 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
     folder->moveMsg(msg);
     return 0;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return 1;
 }
 
-bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
+bool KMFilterMgr::isMatching( KMime::Message * msg, const KMFilter * filter )
 {
   bool result = false;
   if ( FilterLog::instance()->isLogging() ) {
@@ -276,6 +302,7 @@ bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
     logText.append( filter->pattern()->asString() );
     FilterLog::instance()->add( logText, FilterLog::patternDesc );
   }
+#if 0 //TODO port to akonadi
   if ( filter->pattern()->matches( msg ) ) {
     if ( FilterLog::instance()->isLogging() ) {
       FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
@@ -283,6 +310,9 @@ bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
     }
     result = true;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return result;
 }
 

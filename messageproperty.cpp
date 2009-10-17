@@ -30,13 +30,15 @@
 
 #include "messageproperty.h"
 #include "actionscheduler.h"
+
+#include <kmime/kmime_content.h>
 using namespace KMail;
 
 QMap<quint32, QPointer<KMFolder> > MessageProperty::sFolders;
 QMap<quint32, bool> MessageProperty::sKeepSerialNumber;
 QMap<quint32, QPointer<ActionScheduler> > MessageProperty::sHandlers;
 QMap<quint32, int > MessageProperty::sTransfers;
-QMap<const KMMsgBase*, long > MessageProperty::sSerialCache;
+QMap<KMime::Content*, long > MessageProperty::sSerialCache;
 
 bool MessageProperty::filtering( quint32 serNum )
 {
@@ -52,14 +54,24 @@ void MessageProperty::setFiltering( quint32 serNum, bool filter )
     sFolders.remove(serNum);
 }
 
-bool MessageProperty::filtering( const KMMsgBase *msgBase )
+bool MessageProperty::filtering( KMime::Content *msgBase )
 {
+#if 0 //TODO port to akonadi
   return filtering( msgBase->getMsgSerNum() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
+  
 }
 
-void MessageProperty::setFiltering( const KMMsgBase *msgBase, bool filter )
+void MessageProperty::setFiltering( KMime::Content *msgBase, bool filter )
 {
+#if 0 //TODO port to akonadi
   setFiltering( msgBase->getMsgSerNum(), filter );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMFolder* MessageProperty::filterFolder( quint32 serNum )
@@ -73,14 +85,23 @@ void MessageProperty::setFilterFolder( quint32 serNum, KMFolder* folder )
   sFolders.insert(serNum, QPointer<KMFolder>(folder) );
 }
 
-KMFolder* MessageProperty::filterFolder( const KMMsgBase *msgBase )
+KMFolder* MessageProperty::filterFolder( KMime::Content *msgBase )
 {
+#if 0 //TODO port to akonadi
   return filterFolder( msgBase->getMsgSerNum() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
-void MessageProperty::setFilterFolder( const KMMsgBase *msgBase, KMFolder* folder )
+void MessageProperty::setFilterFolder( KMime::Content *msgBase, KMFolder* folder )
 {
+#if 0 //TODO port to akonadi
   setFilterFolder( msgBase->getMsgSerNum(), folder );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 ActionScheduler* MessageProperty::filterHandler( quint32 serNum )
@@ -97,14 +118,23 @@ void MessageProperty::setFilterHandler( quint32 serNum, ActionScheduler* handler
     sHandlers.remove( serNum );
 }
 
-ActionScheduler* MessageProperty::filterHandler( const KMMsgBase *msgBase )
+ActionScheduler* MessageProperty::filterHandler( KMime::Content *msgBase )
 {
+#if 0 //TODO port to akonadi
   return filterHandler( msgBase->getMsgSerNum() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
-void MessageProperty::setFilterHandler( const KMMsgBase *msgBase, ActionScheduler* handler )
+void MessageProperty::setFilterHandler( KMime::Content *msgBase, ActionScheduler* handler )
 {
+#if 0 //TODO port to akonadi
   setFilterHandler( msgBase->getMsgSerNum(), handler );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool MessageProperty::transferInProgress( quint32 serNum )
@@ -131,23 +161,33 @@ void MessageProperty::setTransferInProgress( quint32 serNum, bool transfer, bool
     sTransfers.remove( serNum );
 }
 
-bool MessageProperty::transferInProgress( const KMMsgBase *msgBase )
+bool MessageProperty::transferInProgress( KMime::Content *msgBase )
 {
+#if 0 //TODO port to akonadi
   return transferInProgress( msgBase->getMsgSerNum() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
 }
 
-void MessageProperty::setTransferInProgress( const KMMsgBase *msgBase, bool transfer, bool force )
+void MessageProperty::setTransferInProgress( KMime::Content *msgBase, bool transfer, bool force )
 {
+#if 0 //TODO port to akonadi
   setTransferInProgress( msgBase->getMsgSerNum(), transfer, force );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
 }
 
-quint32 MessageProperty::serialCache( const KMMsgBase *msgBase )
+quint32 MessageProperty::serialCache( KMime::Content *msgBase )
 {
-  QMap<const KMMsgBase*, long >::ConstIterator it = sSerialCache.constFind( msgBase );
+  QMap<KMime::Content*, long >::ConstIterator it = sSerialCache.constFind( msgBase );
   return it == sSerialCache.constEnd() ? 0 : *it;
 }
 
-void MessageProperty::setSerialCache( const KMMsgBase *msgBase, quint32 serNum )
+void MessageProperty::setSerialCache( KMime::Content *msgBase, quint32 serNum )
 {
   if (serNum)
     sSerialCache.insert( msgBase, serNum );
@@ -173,7 +213,7 @@ bool MessageProperty::keepSerialNumber( quint32 serialNumber )
     return false;
 }
  
-void MessageProperty::forget( const KMMsgBase *msgBase )
+void MessageProperty::forget( KMime::Content *msgBase )
 {
   quint32 serNum = serialCache( msgBase );
   if (serNum) {

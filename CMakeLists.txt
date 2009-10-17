@@ -75,7 +75,8 @@ set(kmailprivate_LIB_SRCS
    collectionquotapage.cpp
    collectionquotapage_p.cpp
    collectionaclpage.cpp
-   kmmessage.cpp
+   messagehelper.cpp
+   messageinfo.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp
    configuredialog.cpp
@@ -139,15 +140,9 @@ set(kmailprivate_LIB_SRCS
    sievejob.cpp
    kmpopheaders.cpp
    kmpopfiltercnfrmdlg.cpp
-   kmmimeparttree.cpp
    mailinglist-magic.cpp
    kmacctmaildir.cpp
-   objecttreeparser_p.cpp
-   objecttreeparser.cpp
    attachmentcollector.cpp
-   bodypartformatter.cpp
-   bodypartformatterfactory.cpp
-   partNode.cpp
    kmcommands.cpp
    kmreadermainwin.cpp
    kmstartup.cpp
@@ -168,7 +163,6 @@ set(kmailprivate_LIB_SRCS
    isubject.cpp
    bodyvisitor.cpp
    antispamwizard.cpp
-   urlhandlermanager.cpp
    secondarywindow.cpp
    filterlog.cpp
    filterlogdlg.cpp
@@ -178,7 +172,6 @@ set(kmailprivate_LIB_SRCS
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
    acljobs.cpp
-   partnodebodypart.cpp
    expirejob.cpp
    compactionjob.cpp
    jobscheduler.cpp
@@ -188,7 +181,6 @@ set(kmailprivate_LIB_SRCS
    redirectdialog.cpp
    foldershortcutdialog.cpp
    folderrequester.cpp
-   spamheaderanalyzer.cpp
    recipientseditor.cpp
    recipientspicker.cpp
    kwindowpositioner.cpp
@@ -222,6 +214,9 @@ set(kmailprivate_LIB_SRCS
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
+#remove once the akonadi/kmime port is done
+#   kmmessage.cpp
+#   partNode.cpp
 )
 
 # TODO PORT

@@ -94,8 +94,8 @@ public:
 
   /** Queue a message for filtering */
   void execFilters(const QList<quint32> serNums);
-  void execFilters(const QList<KMMsgBase*> msgList);
-  void execFilters(KMMsgBase* msgBase);
+  void execFilters(const QList<KMime::Content*> msgList);
+  void execFilters(KMime::Content* msgBase);
   void execFilters(quint32 serNum);
 
   static QString debug();
@@ -119,8 +119,8 @@ public slots:
   void copyMessageFinished( KMCommand *command );
 
 private slots:
-  KMMsgBase* messageBase(quint32 serNum);
-  KMMessage* message(quint32 serNum);
+  KMime::Content* messageBase(quint32 serNum);
+  KMime::Message* message(quint32 serNum);
   void finish();
 
   void folderClosedOrExpunged();
@@ -130,13 +130,13 @@ private slots:
 
   //Fetching slots
   void fetchMessage();
-  void messageFetched( KMMessage *msg );
+  void messageFetched( KMime::Message *msg );
   void msgAdded( KMFolder*, quint32 );
   void enqueue(quint32 serNum);
 
   //Filtering slots
   void processMessage();
-  void messageRetrieved(KMMessage*);
+  void messageRetrieved(KMime::Message*);
   void filterMessage();
   void moveMessage();
   void moveMessageFinished( KMCommand *command );

@@ -170,6 +170,7 @@ bool KMAcctLocal::preProcess()
 //-----------------------------------------------------------------------------
 bool KMAcctLocal::fetchMsg()
 {
+#if 0 //TODO port to akonadi
   KMMessage* msg;
 
   /* This causes mail eating
@@ -215,6 +216,9 @@ bool KMAcctLocal::fetchMsg()
 
     return mAddedOk;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return true;
 }
 

@@ -22,6 +22,8 @@
 
 #include "newcomposerwin.h"
 
+#include "messagehelper.h"
+
 // KDEPIM includes
 #include "kleo/cryptobackendfactory.h"
 #include "kleo/exportjob.h"
@@ -73,13 +75,13 @@ using MailTransport::Transport;
 #include "kmreadermainwin.h"
 //#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "objecttreeparser.h"
-#include "partNode.h"
 #include "recipientseditor.h"
 #include "messageviewer/stl_util.h"
 #include "stringutil.h"
 #include "util.h"
 #include "kmmsgdict.h"
 #include "templateparser.h"
+#include "messagehelper.h"
 
 using Sonnet::DictionaryComboBox;
 using KMail::TemplateParser;
@@ -90,7 +92,11 @@ using KMail::TemplateParser;
 #include <kapplication.h>
 //#include <kcharsets.h>
 //#include <kcodecaction.h>
+
 #include <messageviewer/kcursorsaver.h>
+#include <messageviewer/objecttreeparser.h>
+#include <messageviewer/nodehelper.h>
+
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kencodingfiledialog.h>
@@ -138,13 +144,13 @@ using KMail::TemplateParser;
 
 using namespace KMail;
 
-KMail::Composer *KMail::makeComposer( KMMessage *msg, Composer::TemplateContext context,
+KMail::Composer *KMail::makeComposer( KMime::Message *msg, Composer::TemplateContext context,
                                       uint identity, const QString & textSelection,
                                       const QString & customTemplate ) {
   return KMComposeWin::create( msg, context, identity, textSelection, customTemplate );
 }
 
-KMail::Composer *KMComposeWin::create( KMMessage *msg, Composer::TemplateContext context,
+KMail::Composer *KMComposeWin::create( KMime::Message *msg, Composer::TemplateContext context,
                                        uint identity, const QString & textSelection,
                                        const QString & customTemplate ) {
   return new KMComposeWin( msg, context, identity, textSelection, customTemplate );
@@ -153,7 +159,7 @@ KMail::Composer *KMComposeWin::create( KMMessage *msg, Composer::TemplateContext
 int KMComposeWin::s_composerNumber = 0;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( KMMessage *aMsg, Composer::TemplateContext context, uint id,
+KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext context, uint id,
                             const QString & textSelection, const QString & customTemplate )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
@@ -1513,7 +1519,7 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
+void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
   kDebug() << "implement me!!!";
@@ -1867,19 +1873,19 @@ void KMComposeWin::setCustomTemplate( const QString& customTemplate )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::collectImages( partNode *root )
+void KMComposeWin::collectImages( KMime::Content *root )
 {
-  if ( partNode * n = root->findType( DwMime::kTypeMultipart, DwMime::kSubtypeAlternative ) ) {
-    partNode *parentnode = n->parentNode();
+  if ( KMime::Content * n = MessageViewer::ObjectTreeParser::findType( root, "multipart/alternative", true, true ) ) {
+    KMime::Content *parentnode = n->parent();
     if ( parentnode &&
-         parentnode->hasType( DwMime::kTypeMultipart ) &&
-         parentnode->hasSubType( DwMime::kSubtypeRelated ) ) {
-      partNode *node = n->nextSibling();
+         parentnode->contentType()->isMultipart() &&
+         parentnode->contentType()->subType() == "related" ) {
+      KMime::Content *node = MessageViewer::NodeHelper::nextSibling( n );
       while ( node ) {
-        if ( node->hasType( DwMime::kTypeImage ) ) {
-          kDebug() << "found image in multipart/related : " << node->msgPart().name();
+        if ( node->contentType()->isImage() ) {
+          kDebug() << "found image in multipart/related : " << node->contentType()->name();
           QImage img;
-          img.loadFromData( KMime::Codec::codecForName( "base64" )->decode( node->msgPart().body() )); // create image from the base64 encoded one
+          img.loadFromData( KMime::Codec::codecForName( "base64" )->decode( node->body() )); // create image from the base64 encoded one
           QTextBlock currentBlock = mEditor->document()->begin();
           QTextBlock::iterator it;
           while ( currentBlock.isValid() ) {
@@ -1888,22 +1894,22 @@ void KMComposeWin::collectImages( partNode *root )
               if ( fragment.isValid() ) {
                 QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
                 if ( imageFormat.isValid() &&
-                     imageFormat.name() == "cid:" + node->msgPart().contentId() ) {
+                     imageFormat.name() == "cid:" + node->contentID()->asUnicodeString() ) {
                   kDebug() << "newImageFormat.Name="<< imageFormat.name();
                   int pos = fragment.position();
                   QTextCursor cursor( mEditor->document() );
                   cursor.setPosition( pos );
                   cursor.setPosition( pos + 1, QTextCursor::KeepAnchor );
                   cursor.removeSelectedText();
-                  mEditor->document()->addResource( QTextDocument::ImageResource, QUrl( node->msgPart().name() ), QVariant( img ) );
-                  cursor.insertImage( node->msgPart().name() );
+                  mEditor->document()->addResource( QTextDocument::ImageResource, QUrl( node->contentType()->name() ), QVariant( img ) );
+                  cursor.insertImage( node->contentType()->name() );
                 }
               }
             }
             currentBlock = currentBlock.next();
           }
         }
-        node = node->nextSibling();
+        node = MessageViewer::NodeHelper::nextSibling( node );
       }
     }
   }
@@ -2014,7 +2020,7 @@ bool KMComposeWin::userForgotAttachment()
   // check whether the subject contains one of the attachment key words
   // unless the message is a reply or a forwarded message
   QString subj = subject();
-  gotMatch = ( KMMessage::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
+  gotMatch = ( MessageHelper::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
 
   if ( !gotMatch ) {
     // check whether the non-quoted text contains one of the attachment key
@@ -2625,9 +2631,9 @@ void KMComposeWin::slotClose()
 void KMComposeWin::slotNewComposer()
 {
   KMComposeWin *win;
-  KMMessage *msg = new KMMessage;
+  KMime::Message *msg = new KMime::Message;
 
-  msg->initHeader();
+  MessageHelper::initHeader( msg );
   win = new KMComposeWin( msg );
   win->show();
 }
@@ -2975,7 +2981,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
 }
 
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
-                                        KMMessage *msg )
+                                        KMime::Message *msg )
 {
   KMFolder *theFolder = 0, *imapTheFolder = 0;
   // get the draftsFolder
@@ -2990,7 +2996,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
       imapTheFolder = kmkernel->imapFolderMgr()->findIdString( folderName );
     }
     if ( !theFolder && !imapTheFolder ) {
-      const KPIMIdentities::Identity &id = kmkernel->identityManager()->identityForUoidOrDefault( msg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
+      const KPIMIdentities::Identity &id = kmkernel->identityManager()->identityForUoidOrDefault( msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed().toUInt() : 0 );
       KMessageBox::information( 0,
                                 i18n("The custom drafts or templates folder for "
                                      "identify \"%1\" does not exist (anymore); "
@@ -3014,6 +3020,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     kDebug() << "imapTheFolder=" << imapTheFolder->name();
   }
 
+#if 0 //TODO port to akonadi
   bool sentOk = !( theFolder->addMsg( msg ) );
 
   // Ensure the message is correctly and fully parsed
@@ -3026,9 +3033,12 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     imapTheFolder->moveMsg( msg );
     (static_cast<KMFolderImap*>( imapTheFolder->storage() ))->getFolder();
   }
-
   theFolder->close( "composer" );
   return sentOk;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
 }
 
 #if 0
@@ -3771,3 +3781,4 @@ void KMComposeWin::slotLanguageChanged( const QString &language )
 {
   mDictionaryCombo->setCurrentByDictionary( language );
 }
+

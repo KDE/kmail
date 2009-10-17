@@ -184,6 +184,15 @@ namespace MessageHelper {
    *  reference = original first reference + original last reference + original msg-id
    */
   QByteArray getRefStr( KMime::Message *msg );
+
+  QString ccStrip( KMime::Message *msg );
+  QString toStrip( KMime::Message *msg );
+  QString fromStrip( KMime::Message *msg );
+
+    /** Returns @p str with all "forward" and "reply" prefixes stripped off.
+    **/
+    QString stripOffPrefixes( const QString& str );
+
 }
   
 }

@@ -32,6 +32,11 @@ class KMFolder;
 class KMMessagePart;
 class MailComposerIface;
 
+namespace KMime {
+  class Message;
+  class Content;
+}
+
 namespace KMail {
 
 class Composer : public KMail::SecondaryWindow
@@ -66,7 +71,7 @@ class Composer : public KMail::SecondaryWindow
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    virtual void setMsg( KMMessage *newMsg, bool mayAutoSign=true,
+    virtual void setMsg( KMime::Message *newMsg, bool mayAutoSign=true,
                          bool allowDecryption=false, bool isModified=false ) = 0;
 
     /**
@@ -164,10 +169,10 @@ class Composer : public KMail::SecondaryWindow
     /**
      * Add an attachment to the list.
      */
-    virtual void addAttach( KMMessagePart *msgPart ) = 0;
+    virtual void addAttach( KMime::Content *msgPart ) = 0;
 };
 
-Composer *makeComposer( KMMessage *msg = 0,
+Composer *makeComposer( KMime::Message *msg = 0,
                         Composer::TemplateContext context = Composer::NoTemplate,
                         uint identity = 0, const QString & textSelection = QString(),
                         const QString & customTemplate = QString() );

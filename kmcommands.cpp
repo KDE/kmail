@@ -69,6 +69,8 @@
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 
+#include <kmime/kmime_message.h>
+
 #include <kpimidentities/identitymanager.h>
 
 #include "actionscheduler.h"
@@ -86,8 +88,7 @@ using KMail::ActionScheduler;
 #include "messagesender.h"
 #include "undostack.h"
 #include "messageviewer/kcursorsaver.h"
-#include "partNode.h"
-#include "objecttreeparser.h"
+#include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
 using KMail::ObjectTreeParser;
 using KMail::FolderJob;
@@ -108,6 +109,8 @@ using KMail::TemplateParser;
 #include "globalsettings.h"
 #include "stringutil.h"
 #include "messageviewer/autoqpointer.h"
+
+#include "messagehelper.h"
 
 #include <kpimutils/kfileio.h>
 #include "calendarinterface.h"
@@ -477,15 +480,15 @@ KMMailtoComposeCommand::KMMailtoComposeCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoComposeCommand::execute()
 {
-  KMMessage *msg = new KMMessage;
+  KMime::Message *msg = new KMime::Message;
   uint id = 0;
 
   if ( mMessage && mMessage->parent() )
     id = mMessage->parent()->identity();
 
-  msg->initHeader(id);
-  msg->setCharset("utf-8");
-  msg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
+  KMail::MessageHelper::initHeader(msg, id);
+  msg->contentType()->setCharset("utf-8");
+  msg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" );
 
   KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, id );
   win->setCharset("", true);
@@ -505,15 +508,17 @@ KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
 KMCommand::Result KMMailtoReplyCommand::execute()
 {
   //TODO : consider factoring createReply into this method.
-  KMMessage *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
+  KMime::Message *msg = 0; //FIXME / TODO Port retrievedMessage(); to KMime!
+  if ( !msg /*TODO Port || !msg->codec() */) { //TODO Reuse codec() from libmessageviewer/nodehelper
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyNone, mSelection );
-  reply.msg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
+  KMime::Message *rmsg = KMail::MessageHelper::createReply( msg, KMail::ReplyNone, mSelection );
+  rmsg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
-  KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
+  KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
+  /** TODO Port it to KMime
   win->setCharset( msg->codec()->name(), true );
+  */
   win->setReplyFocus();
   win->show();
 
@@ -530,15 +535,19 @@ KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
 KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = 0;//FIXME / TODO port retrievedMessage(); to KMime
+  /** TODO Port to KMime
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage *fmsg = msg->createForward();
-  fmsg->setTo( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ) );
+  */
+  KMime::Message *fmsg = KMail::MessageHelper::createForward( msg );
+  fmsg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
+  /** TODO Port to KMime
   win->setCharset( msg->codec()->name(), true );
+  */
   win->show();
 
   return OK;
@@ -683,6 +692,7 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMessage *msg )
 
 KMCommand::Result KMEditMsgCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KMMessage *msg = retrievedMessage();
   if (!msg || !msg->parent() ||
       ( !kmkernel->folderIsDraftOrOutbox( msg->parent() ) &&
@@ -705,6 +715,10 @@ KMCommand::Result KMEditMsgCommand::execute()
   win->show();
 
   return OK;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  return Failed;
 }
 
 KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMMessage *msg )
@@ -714,6 +728,7 @@ KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMMessage *msg )
 
 KMCommand::Result KMUseTemplateCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->parent() ||
        !kmkernel->folderIsTemplates( msg->parent() ) ) {
@@ -732,7 +747,9 @@ KMCommand::Result KMUseTemplateCommand::execute()
   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
   win->setMsg( newMsg, false, true );
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1108,17 +1125,20 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMessage *msg,
 
 KMCommand::Result KMReplyToCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplySmart, mSelection );
+  KMMessage::MessageReply reply = KMail::MessageHelper::createReply( msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1131,6 +1151,7 @@ KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
 
 KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   if ( !msg ) {
@@ -1141,7 +1162,9 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus( false );
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1154,6 +1177,7 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
 
 KMCommand::Result KMReplyListCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
   KMMessage *msg = retrievedMessage();
   if ( !msg ) {
@@ -1165,7 +1189,9 @@ KMCommand::Result KMReplyListCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus( false );
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1178,6 +1204,7 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
 
 KMCommand::Result KMReplyToAllCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
   KMMessage *msg = retrievedMessage();
   if ( !msg ) {
@@ -1189,7 +1216,9 @@ KMCommand::Result KMReplyToAllCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1202,6 +1231,7 @@ KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, KMMessage *msg,
 
 KMCommand::Result KMReplyAuthorCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   if ( !msg ) {
@@ -1213,7 +1243,9 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1234,6 +1266,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
 
 KMCommand::Result KMForwardCommand::execute()
 {
+#if 0 //TODO port to akonadi
   QList<KMMessage*> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) {
@@ -1365,7 +1398,9 @@ KMCommand::Result KMForwardCommand::execute()
     win->setCharset( fwdMsg->codec()->name(), true );
     win->show();
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1386,6 +1421,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
+#if 0 //TODO port to akonadi
   QList<KMMessage*> msgList = retrievedMsgs();
   KMMessage *fwdMsg = new KMMessage;
 
@@ -1429,7 +1465,9 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   }
 
   mWin->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1442,6 +1480,7 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 
 KMCommand::Result KMRedirectCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
     return Failed;
@@ -1463,6 +1502,9 @@ KMCommand::Result KMRedirectCommand::execute()
     kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
     return Failed; // error: couldn't send
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1476,6 +1518,7 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMMessage *msg,
 
 KMCommand::Result KMCustomReplyToCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
@@ -1488,7 +1531,9 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1502,6 +1547,7 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, KMMessage
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
@@ -1514,7 +1560,9 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1535,6 +1583,7 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
 
 KMCommand::Result KMCustomForwardCommand::execute()
 {
+#if 0 //TODO port to akonadi
   QList<KMMessage*> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) { // Multiple forward
@@ -1595,6 +1644,9 @@ KMCommand::Result KMCustomForwardCommand::execute()
       win->show();
     }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1639,8 +1691,10 @@ KMCommand::Result KMPrintCommand::execute()
   printerWin->setOverrideEncoding( mEncoding );
   printerWin->cssHelper()->setPrintFont( mOverrideFont );
   printerWin->setDecryptMessageOverwrite( true );
-#ifndef USE_AKONADI_VIEWER  //PORT ME
+#if 0 //TODO port to akonadi
   printerWin->printMsg( retrievedMessage() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   return OK;
 }
@@ -1654,6 +1708,7 @@ KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
 
 KMCommand::Result KMSetStatusCommand::execute()
 {
+#if 0 //TODO port to akonadi
   QList<quint32>::Iterator it;
   int idx = -1;
   KMFolder *folder = 0;
@@ -1704,6 +1759,9 @@ KMCommand::Result KMSetStatusCommand::execute()
   QDBusMessage message =
     QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
   QDBusConnection::sessionBus().send( message );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1715,6 +1773,7 @@ KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList< unsigned
 
 KMCommand::Result KMSetTagCommand::execute()
 {
+#if 0 //TODO port to akonadi
 #ifdef Nepomuk_FOUND
   //Set the visible name for the tag
   const KMMessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
@@ -1760,7 +1819,9 @@ KMCommand::Result KMSetTagCommand::execute()
       msg->setTagList( tagList );
     }
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -1897,6 +1958,7 @@ KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
 
 KMCommand::Result KMMailingListFilterCommand::execute()
 {
+#if 0 //TODO port to akonadi
   QByteArray name;
   QString value;
   KMMessage *msg = retrievedMessage();
@@ -1909,6 +1971,10 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   } else {
     return Failed;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return OK;
+#endif
 }
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
@@ -1927,6 +1993,7 @@ KMCopyCommand::KMCopyCommand( KMFolder* destFolder, KMMessage * msg )
 
 KMCommand::Result KMCopyCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KMMsgBase *msgBase;
   KMMessage *msg, *newMsg;
   int idx = -1;
@@ -2047,7 +2114,9 @@ KMCommand::Result KMCopyCommand::execute()
     emit completed( this );
     deleteLater();
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -2114,6 +2183,7 @@ KMMoveCommand::KMMoveCommand( quint32 )
 
 KMCommand::Result KMMoveCommand::execute()
 {
+#if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   setDeletesItself( true );
   typedef QMap< KMFolder*, QList<KMMessage*>* > FolderToMessageListMap;
@@ -2239,7 +2309,9 @@ KMCommand::Result KMMoveCommand::execute()
       completeMove( OK );
     }
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -2369,6 +2441,7 @@ KMUrlClickedCommand::KMUrlClickedCommand( const KUrl &url, uint identity,
 
 KMCommand::Result KMUrlClickedCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KMMessage* msg;
 
   if (mUrl.protocol() == "mailto")
@@ -2420,7 +2493,9 @@ KMCommand::Result KMUrlClickedCommand::execute()
   }
   else
     return Failed;
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -2446,6 +2521,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QList<partN
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
+#if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   if ( mImplicitAttachments ) {
     QList<KMMessage*> msgList = retrievedMsgs();
@@ -2468,12 +2544,15 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
   connect( command, SIGNAL( partsRetrieved() ),
            this, SLOT( slotSaveAll() ) );
   command->start();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
 void KMSaveAttachmentsCommand::slotSaveAll()
 {
+#if 0 //TODO port to akonadi
   // now that all message parts have been retrieved, remove all parts which
   // don't represent an attachment if they were not explicitly passed in the
   // c'tor
@@ -2627,6 +2706,9 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
   }
   setResult( globalResult );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   emit completed( this );
   deleteLater();
 }
@@ -2646,6 +2728,7 @@ QString KMCommand::cleanFileName( const QString &name )
 KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
                                                       const KUrl& url )
 {
+#if 0 //TODO port to akonadi
   bool bSaveEncrypted = false;
   bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
   if( bEncryptedParts )
@@ -2782,6 +2865,9 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     }
   } else
     file.close();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -2807,6 +2893,7 @@ KMLoadPartsCommand::KMLoadPartsCommand( PartNodeMessageMap& partMap )
 
 void KMLoadPartsCommand::slotStart()
 {
+#if 0 //TODO port to akonadi
   for ( PartNodeMessageMap::const_iterator it = mPartMap.constBegin();
         it != mPartMap.constEnd();
         ++it ) {
@@ -2829,11 +2916,15 @@ void KMLoadPartsCommand::slotStart()
   }
   if ( mNeedsRetrieval == 0 )
     execute();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
                                             const QString &partSpecifier )
 {
+#if 0 //TODO port to akonadi
   DwBodyPart *part =
     msg->findDwBodyPart( msg->getFirstDwBodyPart(), partSpecifier );
   if ( part ) {
@@ -2849,6 +2940,9 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
   --mNeedsRetrieval;
   if ( mNeedsRetrieval == 0 )
     execute();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMCommand::Result KMLoadPartsCommand::execute()
@@ -2868,6 +2962,7 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 
 KMCommand::Result KMResendMessageCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
     return Failed;
@@ -2897,7 +2992,9 @@ KMCommand::Result KMResendMessageCommand::execute()
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
@@ -2995,6 +3092,7 @@ KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
 
 void KMHandleAttachmentCommand::slotStart()
 {
+#if 0 //TODO port to akonadi
   if ( !mNode->msgPart().isComplete() )
   {
     // load the part
@@ -3007,6 +3105,9 @@ void KMHandleAttachmentCommand::slotStart()
   {
     execute();
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMHandleAttachmentCommand::slotPartComplete()
@@ -3049,6 +3150,7 @@ KMCommand::Result KMHandleAttachmentCommand::execute()
 
 QString KMHandleAttachmentCommand::createAtmFileLink() const
 {
+#if 0 //TODO port to akonadi
   QFileInfo atmFileInfo( mAtmName );
 
   if ( atmFileInfo.size() == 0 )
@@ -3074,11 +3176,15 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
   if ( ::link(QFile::encodeName( mAtmName ), QFile::encodeName( linkName )) == 0 ) {
     return linkName; // success
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return QString();
 }
 
 KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
 {
+#if 0 //TODO port to akonadi
   KMMessagePart& msgPart = mNode->msgPart();
   const QString contentTypeStr =
     ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).toLower();
@@ -3104,6 +3210,9 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
     mimetype = KMimeType::findByFileContent( mAtmName );
   }
   return KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMHandleAttachmentCommand::atmOpen()
@@ -3180,6 +3289,7 @@ void KMHandleAttachmentCommand::atmProperties()
 
 void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
 {
+#if 0 //TODO port to akonadi
   const partNode * node = mNode;
   Q_ASSERT( node );
   if ( !node )
@@ -3267,6 +3377,9 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
   mJob = job;
   connect( job, SIGNAL(result(const GpgME::Error&,const QVariant&)),
            this, SLOT(slotAtmDecryptWithChiasmusResult(const GpgME::Error&,const QVariant&)) );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 static const QString chomp( const QString & base, const QString & suffix, bool cs ) {

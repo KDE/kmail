@@ -7,7 +7,10 @@
 #include <QString>
 #include <QByteArray>
 
-class KMMessage;
+namespace KMime {
+  class Message;
+}
+
 class KConfigGroup;
 
 namespace KMail
@@ -40,8 +43,8 @@ public:
     Id           = 1 << 5
   };
 public:
-  static MailingList detect( const KMMessage* msg );
-  static QString name( const KMMessage  *message, QByteArray &header_name,
+  static MailingList detect(  KMime::Message* msg );
+  static QString name(  KMime::Message  *message, QByteArray &header_name,
                        QString &header_value );
 public:
   MailingList();

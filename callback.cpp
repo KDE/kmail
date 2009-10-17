@@ -94,6 +94,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
                          const QString &subject, const QString &status,
                          bool delMessage ) const
 {
+#if 0 //TODO port to akonadi
   kDebug() << "Mailing message:" << iCal;
 
   KMMessage *msg = new KMMessage;
@@ -187,7 +188,9 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   } else {
     cWin->show();
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return true;
 }
 

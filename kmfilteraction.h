@@ -27,10 +27,13 @@
 #include <QPointer>
 #include <QStringList>
 
-class KMMsgBase;
-class KMMessage;
 class KMFolder;
 class KTemporaryFile;
+
+namespace KMime {
+  class Message;
+  class Content;
+}
 
 class QWidget;
 
@@ -90,16 +93,16 @@ public:
       is required, @p GoOn if the message shall be processed by
       further filters and @p Ok otherwise.
   */
-  virtual ReturnCode process(KMMessage* msg) const = 0;
+  virtual ReturnCode process(KMime::Message* msg) const = 0;
 
   /** Execute an action on given message asynchronously.
       Emits a result signal on completion.
   */
-  virtual void processAsync(KMMessage* msg) const;
+  virtual void processAsync(KMime::Message* msg) const;
 
   /** Determines if the action depends on the body of the message
   */
-  virtual bool requiresBody(KMMsgBase* msgBase) const;
+  virtual bool requiresBody(KMime::Content* msgBase) const;
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter
@@ -147,7 +150,7 @@ public:
   static int tempOpenFolder(KMFolder* aFolder);
 
   /** Automates the sending of MDNs from filter actions. */
-  static void sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
+  static void sendMDN( KMime::Message * msg, KMime::MDN::DispositionType d,
 		       const QList<KMime::MDN::DispositionModifier> & m
 		       = QList<KMime::MDN::DispositionModifier>() );
 
@@ -583,9 +586,9 @@ public:
       supported, where n in an integer >= 0. %n gets substituted for
       the name of a tempfile holding the n'th message part, with n=0
       meaning the body of the message. */
-  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
+  virtual QString substituteCommandLineArgsFor( KMime::Message *aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
 
-  virtual ReturnCode genericProcess( KMMessage * aMsg, bool filtering ) const;
+  virtual ReturnCode genericProcess( KMime::Message * aMsg, bool filtering ) const;
 };
 
 

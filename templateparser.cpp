@@ -19,19 +19,26 @@
  */
 
 #include "templateparser.h"
-#include "kmmessage.h"
-#include "kmmsgbase.h"
 #include "kmfolder.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
 #include "customtemplates_kfg.h"
 #include "globalsettings_base.h"
 #include "kmkernel.h"
-#include "partNode.h"
 #include "attachmentcollector.h"
-#include "objecttreeparser.h"
+#include "stringutil.h"
 
-#include <mimelib/bodypart.h>
+#include "messageviewer/objecttreeparser.h"
+#include "messageviewer/objecttreeemptysource.h"
+#include "messageviewer/nodehelper.h"
+#include "messagehelper.h"
+
+#include <libkpgp/kpgpblock.h>
+
+#include <khtml_part.h>
+
+#include <kmime/kmime_message.h>
+#include <kmime/kmime_content.h>
 
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
@@ -54,7 +61,7 @@ namespace KMail {
 
 static const int PipeTimeout = 15 * 1000;
 
-TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
+TemplateParser::TemplateParser( KMime::Message *amsg, const Mode amode,
                                 const QString &aselection,
                                 bool asmartQuote, bool aallowDecryption,
                                 bool aselectionIsBody ) :
@@ -192,7 +199,7 @@ QString TemplateParser::getLName( const QString &str )
   return res;
 }
 
-void TemplateParser::process( KMMessage *aorig_msg, KMFolder *afolder, bool append )
+void TemplateParser::process( KMime::Message *aorig_msg, KMFolder *afolder, bool append )
 {
   mAppend = append;
   mOrigMsg = aorig_msg;
@@ -201,7 +208,7 @@ void TemplateParser::process( KMMessage *aorig_msg, KMFolder *afolder, bool appe
   return processWithTemplate( tmpl );
 }
 
-void TemplateParser::process( const QString &tmplName, KMMessage *aorig_msg,
+void TemplateParser::process( const QString &tmplName, KMime::Message *aorig_msg,
                               KMFolder *afolder, bool append )
 {
   mAppend = append;
@@ -211,7 +218,7 @@ void TemplateParser::process( const QString &tmplName, KMMessage *aorig_msg,
   return processWithTemplate( tmpl );
 }
 
-void TemplateParser::processWithIdentity( uint uoid, KMMessage *aorig_msg,
+void TemplateParser::processWithIdentity( uint uoid, KMime::Message *aorig_msg,
                                           KMFolder *afolder, bool append )
 {
   mIdentity = uoid;
@@ -309,8 +316,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QString str =
               pipe( pipe_cmd, messageText( false ) );
-          QString quote = mOrigMsg->asQuotedString( mQuoteString, str,
-                                                    mSmartQuote, mAllowDecryption );
+          QString quote = asQuotedString( mOrigMsg, mQuoteString, str,
+                                          mSmartQuote, mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
             quote.chop( 1 );
           body.append( quote );
@@ -320,7 +327,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: QUOTE";
         i += strlen( "QUOTE" );
         if ( mOrigMsg ) {
-          QString quote = mOrigMsg->asQuotedString( mQuoteString, messageText( true ),
+          QString quote = asQuotedString( mOrigMsg, mQuoteString, messageText( true ),
                                                     mSmartQuote, mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
             quote.chop( 1 );
@@ -331,8 +338,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: QHEADERS";
         i += strlen( "QHEADERS" );
         if ( mOrigMsg ) {
-          QString quote = mOrigMsg->asQuotedString( mQuoteString,
-                                                    mOrigMsg->headerAsSendableString(),
+          QString quote = asQuotedString( mOrigMsg, mQuoteString,
+                                                    MessageHelper::headerAsSendableString( mOrigMsg ),
                                                     mSmartQuote, false );
           if ( quote.endsWith( '\n' ) )
                quote.chop( 1 );
@@ -343,7 +350,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: HEADERS";
         i += strlen( "HEADERS" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->headerAsSendableString();
+          QString str = MessageHelper::headerAsSendableString( mOrigMsg );
           body.append( str );
         }
 
@@ -367,7 +374,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += len;
         QString pipe_cmd = q;
         if ( mOrigMsg ) {
-          QString str = pipe(pipe_cmd, mOrigMsg->asString() );
+          QString str = pipe(pipe_cmd, mOrigMsg->encodedContent() );
           body.append( str );
         }
 
@@ -391,8 +398,11 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         QString pipe_cmd = q;
         QString str = pipe( pipe_cmd, body );
         body = str;
+#if 0 //TODO port to akonadi
         mMsg->setCursorPos( 0 );
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       } else if ( cmd.startsWith( QLatin1String("TEXT") ) ) {
         kDebug() << "Command: TEXT";
         i += strlen( "TEXT" );
@@ -420,8 +430,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( QLatin1String("OADDRESSEESADDR") ) ) {
         kDebug() << "Command: OADDRESSEESADDR";
         i += strlen( "OADDRESSEESADDR" );
-        const QString to = mOrigMsg->to();
-        const QString cc = mOrigMsg->cc();
+        const QString to = mOrigMsg->to()->asUnicodeString();
+        const QString cc = mOrigMsg->cc()->asUnicodeString();
         if ( !to.isEmpty() )
           body.append( i18n( "To:" ) + QLatin1Char( ' ' ) + to );
         if ( !to.isEmpty() && !cc.isEmpty() )
@@ -432,97 +442,97 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( QLatin1String("CCADDR") ) ) {
         kDebug() << "Command: CCADDR";
         i += strlen( "CCADDR" );
-        QString str = mMsg->cc();
+        QString str = mMsg->cc()->asUnicodeString();
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("CCNAME") ) ) {
         kDebug() << "Command: CCNAME";
         i += strlen( "CCNAME" );
-        QString str = mMsg->ccStrip();
+        QString str = MessageHelper::ccStrip( mMsg );
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("CCFNAME") ) ) {
         kDebug() << "Command: CCFNAME";
         i += strlen( "CCFNAME" );
-        QString str = mMsg->ccStrip();
+        QString str = MessageHelper::ccStrip( mMsg );
         body.append( getFName( str ) );
 
       } else if ( cmd.startsWith( QLatin1String("CCLNAME") ) ) {
         kDebug() << "Command: CCLNAME";
         i += strlen( "CCLNAME" );
-        QString str = mMsg->ccStrip();
+        QString str = MessageHelper::ccStrip( mMsg );
         body.append( getLName( str ) );
 
       } else if ( cmd.startsWith( QLatin1String("TOADDR") ) ) {
         kDebug() << "Command: TOADDR";
         i += strlen( "TOADDR" );
-        QString str = mMsg->to();
+        QString str = mMsg->to()->asUnicodeString();
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("TONAME") ) ) {
         kDebug() << "Command: TONAME";
         i += strlen( "TONAME" );
-        QString str = mMsg->toStrip();
+        QString str = MessageHelper::toStrip( mMsg );
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("TOFNAME") ) ) {
         kDebug() << "Command: TOFNAME";
         i += strlen( "TOFNAME" );
-        QString str = mMsg->toStrip();
+        QString str = MessageHelper::toStrip( mMsg );
         body.append( getFName( str ) );
 
       } else if ( cmd.startsWith( QLatin1String("TOLNAME") ) ) {
         kDebug() << "Command: TOLNAME";
         i += strlen( "TOLNAME" );
-        QString str = mMsg->toStrip();
+        QString str = MessageHelper::toStrip( mMsg );
         body.append( getLName( str ) );
 
       } else if ( cmd.startsWith( QLatin1String("TOLIST") ) ) {
         kDebug() << "Command: TOLIST";
         i += strlen( "TOLIST" );
-        QString str = mMsg->to();
+        QString str = mMsg->to()->asUnicodeString();
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("FROMADDR") ) ) {
         kDebug() << "Command: FROMADDR";
         i += strlen( "FROMADDR" );
-        QString str = mMsg->from();
+        QString str = mMsg->from()->asUnicodeString();
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("FROMNAME") ) ) {
         kDebug() << "Command: FROMNAME";
         i += strlen( "FROMNAME" );
-        QString str = mMsg->fromStrip();
+        QString str = MessageHelper::fromStrip( mMsg );
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("FROMFNAME") ) ) {
         kDebug() << "Command: FROMFNAME";
         i += strlen( "FROMFNAME" );
-        QString str = mMsg->fromStrip();
+        QString str = MessageHelper::fromStrip( mMsg );
         body.append( getFName( str ) );
 
       } else if ( cmd.startsWith( QLatin1String("FROMLNAME") ) ) {
         kDebug() << "Command: FROMLNAME";
         i += strlen( "FROMLNAME" );
-        QString str = mMsg->fromStrip();
+        QString str = MessageHelper::fromStrip( mMsg );
         body.append( getLName( str ) );
 
       } else if ( cmd.startsWith( QLatin1String("FULLSUBJECT") ) ) {
         kDebug() << "Command: FULLSUBJECT";
         i += strlen( "FULLSUBJECT" );
-        QString str = mMsg->subject();
+        QString str = mMsg->subject()->asUnicodeString();
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("FULLSUBJ") ) ) {
         kDebug() << "Command: FULLSUBJ";
         i += strlen( "FULLSUBJ" );
-        QString str = mMsg->subject();
+        QString str = mMsg->subject()->asUnicodeString();
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("MSGID") ) ) {
         kDebug() << "Command: MSGID";
         i += strlen( "MSGID" );
-        QString str = mMsg->id();
+        QString str = mMsg->messageID()->asUnicodeString();
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("OHEADER=") ) ) {
@@ -533,7 +543,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += len;
         if ( mOrigMsg ) {
           QString hdr = q;
-          QString str = mOrigMsg->headerFields(hdr.toLocal8Bit() ).join( ", " );
+          QString str = mOrigMsg->headerByType(hdr.toLocal8Bit() ) ? mOrigMsg->headerByType(hdr.toLocal8Bit() )->asUnicodeString() : "";
           body.append( str );
         }
 
@@ -544,7 +554,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         int len = parseQuotes( "HEADER=", cmd, q );
         i += len;
         QString hdr = q;
-        QString str = mMsg->headerFields(hdr.toLocal8Bit() ).join( ", " );
+        QString str = mMsg->headerByType(hdr.toLocal8Bit() ) ? mMsg->headerByType(hdr.toLocal8Bit() )->asUnicodeString() : "";
         body.append( str );
 
       } else if ( cmd.startsWith( QLatin1String("HEADER( ") ) ) {
@@ -559,7 +569,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         } else {
           i += re.matchedLength();
           QString hdr = re.cap( 1 );
-          QString str = mMsg->headerFields( hdr.toLocal8Bit() ).join( ", " );
+          QString str = mMsg->headerByType( hdr.toLocal8Bit() ) ? mMsg->headerByType( hdr.toLocal8Bit() )->asUnicodeString() : "";
           body.append( str );
         }
 
@@ -567,7 +577,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OCCADDR";
         i += strlen( "OCCADDR" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->cc();
+          QString str = mOrigMsg->cc()->asUnicodeString();
           body.append( str );
         }
 
@@ -575,7 +585,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OCCNAME";
         i += strlen( "OCCNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->ccStrip();
+          QString str = MessageHelper::ccStrip( mOrigMsg );
           body.append( str );
         }
 
@@ -583,7 +593,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OCCFNAME";
         i += strlen( "OCCFNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->ccStrip();
+          QString str = MessageHelper::ccStrip( mOrigMsg );
           body.append( getFName( str ) );
         }
 
@@ -591,7 +601,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OCCLNAME";
         i += strlen( "OCCLNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->ccStrip();
+          QString str = MessageHelper::ccStrip( mOrigMsg );
           body.append( getLName( str ) );
         }
 
@@ -599,7 +609,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTOADDR";
         i += strlen( "OTOADDR" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->to();
+          QString str = mOrigMsg->to()->asUnicodeString();
           body.append( str );
         }
 
@@ -607,7 +617,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTONAME";
         i += strlen( "OTONAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->toStrip();
+          QString str = MessageHelper::toStrip( mOrigMsg );
           body.append( str );
         }
 
@@ -615,7 +625,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTOFNAME";
         i += strlen( "OTOFNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->toStrip();
+          QString str = MessageHelper::toStrip( mOrigMsg );
           body.append( getFName( str ) );
         }
 
@@ -623,7 +633,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTOLNAME";
         i += strlen( "OTOLNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->toStrip();
+          QString str = MessageHelper::toStrip( mOrigMsg );
           body.append( getLName( str ) );
         }
 
@@ -631,7 +641,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTOLIST";
         i += strlen( "OTOLIST" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->to();
+          QString str = mOrigMsg->to()->asUnicodeString();
           body.append( str );
         }
 
@@ -639,7 +649,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTO";
         i += strlen( "OTO" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->to();
+          QString str = mOrigMsg->to()->asUnicodeString();
           body.append( str );
         }
 
@@ -647,7 +657,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OFROMADDR";
         i += strlen( "OFROMADDR" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->from();
+          QString str = mOrigMsg->from()->asUnicodeString();
           body.append( str );
         }
 
@@ -655,7 +665,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OFROMNAME";
         i += strlen( "OFROMNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->fromStrip();
+          QString str = MessageHelper::fromStrip( mOrigMsg );
           body.append( str );
         }
 
@@ -663,7 +673,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OFROMFNAME";
         i += strlen( "OFROMFNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->fromStrip();
+          QString str = MessageHelper::fromStrip( mOrigMsg );
           body.append( getFName( str ) );
         }
 
@@ -671,7 +681,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OFROMLNAME";
         i += strlen( "OFROMLNAME" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->fromStrip();
+          QString str = MessageHelper::fromStrip( mOrigMsg );
           body.append( getLName( str ) );
         }
 
@@ -679,7 +689,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OFULLSUBJECT";
         i += strlen( "OFULLSUBJECT" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->subject();
+          QString str = mOrigMsg->subject()->asUnicodeString();
           body.append( str );
         }
 
@@ -687,7 +697,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OFULLSUBJ";
         i += strlen( "OFULLSUBJ" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->subject();
+          QString str = mOrigMsg->subject()->asUnicodeString();
           body.append( str );
         }
 
@@ -695,7 +705,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OMSGID";
         i += strlen( "OMSGID" );
         if ( mOrigMsg ) {
-          QString str = mOrigMsg->id();
+          QString str = mOrigMsg->messageID()->asUnicodeString();
           body.append( str );
         }
 
@@ -755,8 +765,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: ODATEEN";
         i += strlen( "ODATEEN" );
         if ( mOrigMsg ) {
-          QDateTime date;
-          date.setTime_t( mOrigMsg->date() );
+          QDateTime date = mOrigMsg->date()->dateTime().dateTime();
           KLocale locale( "C");
           QString str = locale.formatDate( date.date(), KLocale::LongDate );
           body.append( str );
@@ -766,8 +775,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: ODATESHORT";
         i += strlen( "ODATESHORT");
         if ( mOrigMsg ) {
-          QDateTime date;
-          date.setTime_t( mOrigMsg->date() );
+          QDateTime date = mOrigMsg->date()->dateTime().dateTime();
           QString str = KGlobal::locale()->formatDate( date.date(), KLocale::ShortDate );
           body.append( str );
         }
@@ -776,8 +784,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: ODATE";
         i += strlen( "ODATE");
         if ( mOrigMsg ) {
-          QDateTime date;
-          date.setTime_t( mOrigMsg->date() );
+          QDateTime date = mOrigMsg->date()->dateTime().dateTime();
           QString str = KGlobal::locale()->formatDate( date.date(), KLocale::LongDate );
           body.append( str );
         }
@@ -786,8 +793,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: ODOW";
         i += strlen( "ODOW");
         if ( mOrigMsg ) {
-          QDateTime date;
-          date.setTime_t( mOrigMsg->date() );
+          QDateTime date = mOrigMsg->date()->dateTime().dateTime();
           QString str = KGlobal::locale()->calendar()->weekDayName( date.date(),
                         KCalendarSystem::LongDayName );
           body.append( str );
@@ -797,8 +803,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTIMELONGEN";
         i += strlen( "OTIMELONGEN");
         if ( mOrigMsg ) {
-          QDateTime date;
-          date.setTime_t( mOrigMsg->date() );
+          QDateTime date = mOrigMsg->date()->dateTime().dateTime();
           KLocale locale( "C");
           QString str = locale.formatTime( date.time(), true );
           body.append( str );
@@ -808,8 +813,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTIMELONG";
         i += strlen( "OTIMELONG");
         if ( mOrigMsg ) {
-          QDateTime date;
-          date.setTime_t( mOrigMsg->date() );
+          QDateTime date = mOrigMsg->date()->dateTime().dateTime();
           QString str = KGlobal::locale()->formatTime( date.time(), true );
           body.append( str );
         }
@@ -818,8 +822,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: OTIME";
         i += strlen( "OTIME");
         if ( mOrigMsg ) {
-          QDateTime date;
-          date.setTime_t( mOrigMsg->date() );
+          QDateTime date = mOrigMsg->date()->dateTime().dateTime();
           QString str = KGlobal::locale()->formatTime( date.time(), false );
           body.append( str );
         }
@@ -839,7 +842,6 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: CLEAR";
         i += strlen( "CLEAR" );
         body = "";
-        mMsg->setCursorPos( 0 );
 
       } else if ( cmd.startsWith( QLatin1String("DEBUGOFF") ) ) {
         // turn off debug
@@ -857,7 +859,6 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         // turn on debug
         kDebug() << "Command: CURSOR";
         i += strlen( "CURSOR" );
-        mMsg->setCursorPos( body.length() );
 
       } else if ( cmd.startsWith( QLatin1String( "SIGNATURE" ) ) ) {
         kDebug() << "Command: SIGNATURE";
@@ -909,20 +910,26 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
 {
   if ( !mSelection.isEmpty() && allowSelectionOnly )
     return mSelection;
-
   // No selection text, therefore we need to parse the object tree ourselves to get
-  partNode *root = parsedObjectTree();
-  return mOrigMsg->asPlainTextFromObjectTree( root, true, mAllowDecryption );
+  KMime::Content *root = parsedObjectTree();
+
+  MessageViewer::EmptySource emptySource;
+  MessageViewer::ObjectTreeParser otp(&emptySource); // all defaults are ok
+
+  return asPlainTextFromObjectTree( mOrigMsg, root, /*TODO Review, fix*/&otp,  true, mAllowDecryption );
 }
 
-partNode* TemplateParser::parsedObjectTree()
+KMime::Content* TemplateParser::parsedObjectTree()
 {
   if ( mOrigRoot )
     return mOrigRoot;
+  mOrigRoot = new KMime::Content;
+  mOrigRoot->setContent( mMsg->encodedContent() );
 
-  mOrigRoot = partNode::fromMessage( mOrigMsg );
-  KMail::ObjectTreeParser otp; // all defaults are ok
+  MessageViewer::EmptySource emptySource;
+  MessageViewer::ObjectTreeParser otp(&emptySource); // all defaults are ok
   otp.parseObjectTree( mOrigRoot );
+
   return mOrigRoot;
 }
 
@@ -938,47 +945,45 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
   else {
 
     // Get the attachments of the original mail
-    partNode *root = parsedObjectTree();
+    KMime::Content *root = parsedObjectTree();
     KMail::AttachmentCollector ac;
     ac.collectAttachmentsFrom( root );
 
+#if 0 //TODO port to akonadi
     // Now, delete the old content and set the new content, which
     // is either only the new text or the new text with some attachments.
     mMsg->deleteBodyParts();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     // Set To and CC from the template
     if ( !mTo.isEmpty() ) {
-      mMsg->setTo( mMsg->to() + ',' + mTo );
+      mMsg->to()->fromUnicodeString( mMsg->to()->asUnicodeString() + ',' + mTo, "utf-8" );
     }
     if ( !mCC.isEmpty() )
-      mMsg->setCc( mMsg->cc() + ',' + mCC );
+      mMsg->cc()->fromUnicodeString( mMsg->cc()->asUnicodeString() + ',' + mCC, "utf-8" );
 
     // If we have no attachment, simply create a text/plain part and
     // set the processed template text as the body
     if ( ac.attachments().empty() || mMode != Forward ) {
-      mMsg->headers().ContentType().FromString( DwString() ); // to get rid of old boundary
-      mMsg->headers().ContentType().Parse();
-      mMsg->headers().ContentType().SetType( DwMime::kTypeText );
-      mMsg->headers().ContentType().SetSubtype( DwMime::kSubtypePlain );
-      mMsg->headers().Assemble();
-      mMsg->setBodyFromUnicode( body );
-      mMsg->assembleIfNeeded();
+      mMsg->contentType()->clear(); // to get rid of old boundary
+      mMsg->contentType()->setMimeType( "text/plain" );
+      mMsg->setBody( body.toUtf8() );
+      mMsg->assemble();
     }
 
     // If we have some attachments, create a multipart/mixed mail and
     // add the normal body as well as the attachments
     else
     {
-      mMsg->headers().ContentType().SetType( DwMime::kTypeMultipart );
-      mMsg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
-      mMsg->headers().ContentType().CreateBoundary( 0 );
+      mMsg->contentType()->setMimeType( "multipart/mixed" );
 
-      KMMessagePart textPart;
-      textPart.setBodyFromUnicode( body );
-      mMsg->addDwBodyPart( mMsg->createDWBodyPart( &textPart ) );
-      mMsg->assembleIfNeeded();
-
-      foreach( const partNode *attachment, ac.attachments() ) {
+      KMime::Content *textPart = new KMime::Content( mMsg );
+      textPart->setBody( body.toUtf8() );
+      mMsg->addContent( textPart );
+      mMsg->assemble();
+#if 0 //TODO port to akonadi
+      foreach( KMime::Content *attachment, ac.attachments() ) {
 
         // When adding this body part, make sure to _not_ add the next bodypart
         // as well, which mimelib would do, therefore creating a mail with many
@@ -989,6 +994,9 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
         mMsg->addDwBodyPart( static_cast<DwBodyPart*>( attachment->dwPart()->Clone() ) );
         mMsg->assembleIfNeeded();
       }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
   }
 }
@@ -1008,6 +1016,7 @@ QString TemplateParser::findCustomTemplate( const QString &tmplName )
 
 QString TemplateParser::findTemplate()
 {
+#if 0 //TODO port to akonadi
   // kDebug() << "Trying to find template for mode" << mode;
 
   QString tmpl;
@@ -1119,6 +1128,9 @@ QString TemplateParser::findTemplate()
 
   mQuoteString = GlobalSettings::self()->quoteString();
   return tmpl;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 QString TemplateParser::pipe( const QString &cmd, const QString &buf )
@@ -1167,6 +1179,158 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
     return QString();
 }
 
+void TemplateParser::parseTextStringFromContent( KMime::Content * root,
+                                           QByteArray& parsedString,
+                                           const QTextCodec*& codec,
+                                           bool& isHTML ) const
+{
+  if ( !root )
+    return;
+
+  isHTML = false;
+  KMime::Content * curNode = MessageViewer::ObjectTreeParser::findType( root, "text", "", true, false );
+  kDebug() << ( curNode ? "text part found!\n" : "sorry, no text node!\n" );
+  if( curNode ) {
+    isHTML = curNode->contentType()->isHTMLText();
+    // now parse the TEXT message part we want to quote
+    MessageViewer::ObjectTreeParser otp( 0, 0, 0, true, false, true );
+    otp.parseObjectTree( curNode );
+    parsedString = otp.rawReplyString();
+    codec = otp.nodeHelper()->codec( curNode );
+  }
+}
+
+QString TemplateParser::asPlainTextFromObjectTree( KMime::Message *msg, KMime::Content *root, MessageViewer::ObjectTreeParser *otp, bool aStripSignature,
+                                              bool allowDecryption )
+{
+  Q_ASSERT( root );
+  Q_ASSERT( otp->nodeHelper()->nodeProcessed( root ) );
+
+  QByteArray parsedString;
+  bool isHTML = false;
+  const QTextCodec * codec = 0;
+
+  if ( !root ) return QString();
+  parseTextStringFromContent( root, parsedString, codec, isHTML );
+
+#if 0 //TODO port to akonadi
+  if ( mOverrideCodec || !codec )
+    codec = otp->nodeHelper()->codec( msg );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  if ( parsedString.isEmpty() )
+    return QString();
+
+  bool clearSigned = false;
+  QString result;
+
+  // decrypt
+  if ( allowDecryption ) {
+    QList<Kpgp::Block> pgpBlocks;
+    QList<QByteArray>  nonPgpBlocks;
+    if ( Kpgp::Module::prepareMessageForDecryption( parsedString,
+                                                    pgpBlocks,
+                                                    nonPgpBlocks ) ) {
+      // Only decrypt/strip off the signature if there is only one OpenPGP
+      // block in the message
+      if ( pgpBlocks.count() == 1 ) {
+        Kpgp::Block &block = pgpBlocks.first();
+        if ( block.type() == Kpgp::PgpMessageBlock ||
+             block.type() == Kpgp::ClearsignedBlock ) {
+          if ( block.type() == Kpgp::PgpMessageBlock ) {
+            // try to decrypt this OpenPGP block
+            block.decrypt();
+          } else {
+            // strip off the signature
+            block.verify();
+            clearSigned = true;
+          }
+
+          result = codec->toUnicode( nonPgpBlocks.first() )
+              + codec->toUnicode( block.text() )
+              + codec->toUnicode( nonPgpBlocks.last() );
+        }
+      }
+    }
+  }
+
+  if ( result.isEmpty() ) {
+    result = codec->toUnicode( parsedString );
+    if ( result.isEmpty() )
+      return result;
+  }
+
+  // html -> plaintext conversion, if necessary:
+  if ( isHTML /* TODO port it && mDecodeHTML*/ ) {
+    KHTMLPart htmlPart;
+    htmlPart.setOnlyLocalReferences( true );
+    htmlPart.setMetaRefreshEnabled( false );
+    htmlPart.setPluginsEnabled( false );
+    htmlPart.setJScriptEnabled( false );
+    htmlPart.setJavaEnabled( false );
+    htmlPart.begin();
+    htmlPart.write( result );
+    htmlPart.end();
+    htmlPart.selectAll();
+    result = htmlPart.selectedText();
+  }
+
+  // strip the signature (footer):
+  if ( aStripSignature )
+    return StringUtil::stripSignature( result, clearSigned );
+  else
+    return result;
+}
+
+
+QString TemplateParser::asPlainText( KMime::Message* msg, bool aStripSignature, bool allowDecryption )
+{
+  if ( !msg )
+    return QString();
+
+  KMime::Content *root = new KMime::Content;
+  root->setContent( msg->encodedContent() );
+  MessageViewer::EmptySource emptySource;
+  MessageViewer::ObjectTreeParser otp(&emptySource);
+  otp.parseObjectTree( root );
+  QString result = asPlainTextFromObjectTree( msg, root, &otp, aStripSignature, allowDecryption );
+  delete root;
+  return result;
+}
+
+
+
+QString TemplateParser::asQuotedString( KMime::Message* msg, const QString& aIndentStr,
+                                   const QString& selection /*.clear() */,
+                                   bool aStripSignature /* = true */,
+                                   bool allowDecryption /* = true */)
+{
+  if ( !msg )
+    return QString();
+
+  QString content = selection.isEmpty() ?
+    asPlainText( msg, aStripSignature, allowDecryption ) : selection ;
+
+  // Remove blank lines at the beginning:
+  const int firstNonWS = content.indexOf( QRegExp( "\\S" ) );
+  const int lineStart = content.lastIndexOf( '\n', firstNonWS );
+  if ( lineStart >= 0 )
+    content.remove( 0, static_cast<unsigned int>( lineStart ) );
+
+  const QString indentStr = StringUtil::formatString( aIndentStr, msg->from()->asUnicodeString() );
+#if 0 //TODO port to akonadi
+  if ( TODO port it to akonadi s->smartQuote && s->wordWrap )
+    content = StringUtil::smartQuote( content, s->wrapCol - indentStr.length() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  content.replace( '\n', '\n' + indentStr );
+  content.prepend( indentStr );
+  content += '\n';
+
+  return content;
+}
 } // namespace KMail
 
 #include "templateparser.moc"

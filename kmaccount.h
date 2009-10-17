@@ -20,7 +20,6 @@
 #ifndef kmaccount_h
 #define kmaccount_h
 
-#include "kmmessage.h"
 #include "kmacctfolder.h"
 
 #include <kprocess.h>
@@ -47,6 +46,10 @@ using KMail::FolderJob;
 namespace KPIM { class ProgressItem; }
 using KPIM::ProgressItem;
 using KPIM::KAccount;
+
+namespace KMime {
+  class Message;
+}
 
 class KMAccount;
 typedef QList< ::KMAccount* > AccountList;
@@ -165,7 +168,7 @@ public:
   /**
    * delete jobs associated with this message
    */
-  virtual void ignoreJobsForMessage( KMMessage* );
+  virtual void ignoreJobsForMessage( KMime::Message* );
   /**
    * Set/get whether account should be part of the accounts checked
    * with "Check Mail".
@@ -278,15 +281,15 @@ protected:
    * Shall be called from within processNewMail() to process the new
    * messages. Returns false if failed to add new message.
    */
-  virtual bool processNewMsg(KMMessage* msg);
+  virtual bool processNewMsg(KMime::Message* msg);
 
   /**
    * Send receipt of message back to sender (confirming
    *   delivery). Checks the config settings, calls
-   *   @see KMMessage::createDeliveryReceipt and queues the resulting
+   *   @see MessageHelper::createDeliveryReceipt and queues the resulting
    *   message in @p mReceipts.
    */
-  virtual void sendReceipt(KMMessage* msg);
+  virtual void sendReceipt(KMime::Message* msg);
 
   /**
    * Install/deinstall automatic new-mail checker timer.
@@ -317,7 +320,7 @@ protected:
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;
   bool mUseDefaultIdentity;
-  QList<KMMessage*> mReceipts;
+  QList<KMime::Message*> mReceipts;
   QList<FolderJob*>  mJobList;
   bool mHasInbox : 1;
   ProgressItem *mMailCheckProgressItem;

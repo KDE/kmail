@@ -144,10 +144,13 @@ using KMail::TemplateParser;
     using KMail::SieveDebugDialog;
 #endif
 
+#include "messagecopyhelper.h"
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
 
 #include "messagetree.h"
+#include "messagehelper.h"
+
 #include "messageviewer/autoqpointer.h"
 
 #include "folderselectiontreeviewdialog.h"
@@ -1152,16 +1155,16 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 void KMMainWidget::slotCompose()
 {
   KMail::Composer * win;
-  KMMessage* msg = new KMMessage;
+  KMime::Message* msg = new KMime::Message;
 
   if ( mFolder ) {
-      msg->initHeader( mFolder->identity() );
+      KMail::MessageHelper::initHeader( msg, mFolder->identity() );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( NULL, mFolder );
       win = KMail::makeComposer( msg, KMail::Composer::New, mFolder->identity() );
   } else {
-      msg->initHeader();
+      KMail::MessageHelper::initHeader( msg );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( NULL, NULL );
@@ -1838,20 +1841,26 @@ void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotDeleteMsg( bool confirmDelete )
 {
-  QList<Akonadi::Item> select = mMessagePane->selectionAsMessageItemList();
-  if ( select.isEmpty() ) // no selection
+#ifdef OLD_MESSAGELIST
+  // Create a persistent message set from the current selection
+  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
+  if ( !set ) // no selection
     return;
 
-  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
+  moveMessageSet( set, 0, confirmDelete );
+#endif
 }
 
 void KMMainWidget::slotDeleteThread( bool confirmDelete )
 {
-  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
-  if ( select.isEmpty() ) // no current thread
+#ifdef OLD_MESSAGELIST
+  // Create a persistent set from the current thread.
+  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
+  if ( !set ) // no current thread
     return;
 
-  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
+  moveMessageSet( set, 0, confirmDelete );
+#endif
 }
 
 
@@ -2073,11 +2082,14 @@ void KMMainWidget::slotTrashSelectedMessages()
 
 void KMMainWidget::slotTrashThread()
 {
-  QList<Akonadi::Item> lstMsg = mMessagePane->currentThreadAsMessageList();
-  if ( lstMsg.isEmpty() ) // no current thread
+#ifdef OLD_MESSAGELIST
+  // Create a persistent set from the current thread.
+  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
+  if ( !set ) // no current thread
     return;
 
-  trashMessageSelected( lstMsg );
+  trashMessageSelected( set );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2085,12 +2097,6 @@ void KMMainWidget::slotTrashThread()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel )
-{
-  if ( select.isEmpty() )
-    return;
-
-}
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::toggleMessageSetTag(
     KMail::MessageListView::MessageSet * set,
@@ -2118,11 +2124,14 @@ void KMMainWidget::toggleMessageSetTag(
 #endif
 void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 {
-  QList<Akonadi::Item> select = mMessagePane->selectionAsMessageItemList();
-  if ( select.isEmpty() ) // no current thread
+#ifdef OLD_MESSAGELIST
+  // Create a persistent set from the current thread.
+  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
+  if ( !set ) // no current thread
     return;
 
-  toggleMessageSetTag( select, taglabel );
+  toggleMessageSetTag( set, taglabel );
+#endif
 }
 
 
@@ -2131,14 +2140,6 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-
-void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select, const KPIM::MessageStatus &status, bool toggle )
-{
-  if ( select.isEmpty() )
-    return;
-  //TODO implement it
-}
-
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::setMessageSetStatus(
     KMail::MessageListView::MessageSet * set,
@@ -2187,11 +2188,14 @@ void KMMainWidget::setMessageSetStatus(
 #endif
 void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle )
 {
-  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
-  if ( select.isEmpty() ) // no current thread
+#ifdef OLD_MESSAGELIST
+  // Create a persistent set from the current thread.
+  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
+  if ( !set ) // no current thread
     return;
 
-  setMessageSetStatus( select, status, toggle );
+  setMessageSetStatus( set, status, toggle );
+#endif
 }
 
 void KMMainWidget::slotSetThreadStatusNew()
@@ -2251,6 +2255,76 @@ void KMMainWidget::slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::M
     KMCommand *command = new KMSetStatusCommand( set, serNums, false );
     command->start();
   }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Message clipboard management
+
+void KMMainWidget::fillMessageClipboard()
+{
+  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  if ( selectedMessages.isEmpty() )
+    return;
+#ifdef OLD_MESSAGELIST
+  mMessageClipboard.clear();
+
+  for ( QList< KMMsgBase * >::Iterator it = selected.begin(); it != selected.end(); ++it )
+    mMessageClipboard.append( ( *it )->getMsgSerNum() );
+#endif
+}
+
+void KMMainWidget::setMessageClipboardContents( const QList< quint32 > &msgs, bool move )
+{
+  mMessageClipboard = msgs;
+  mMessageClipboardInCutMode = move;
+}
+
+#if 0 //Done by akonadi now
+void KMMainWidget::slotCopyMessages()
+{
+  fillMessageClipboard();
+
+  mMessageClipboardInCutMode = false;
+
+  updateCutCopyPasteActions();
+}
+#endif
+
+void KMMainWidget::slotCutMessages()
+{
+  fillMessageClipboard();
+
+  mMessageClipboardInCutMode = true;
+
+  updateCutCopyPasteActions();
+}
+
+void KMMainWidget::slotPasteMessages()
+{
+  if ( mMessageClipboard.isEmpty() )
+    return; // nothing to do
+
+  new KMail::MessageCopyHelper( mMessageClipboard, folder(), mMessageClipboardInCutMode );
+
+  if ( mMessageClipboardInCutMode )
+    mMessageClipboard.clear(); // moved messages can't be pasted again (FIXME: should re-copied!)
+
+  updateCutCopyPasteActions();
+}
+
+void KMMainWidget::updateCutCopyPasteActions()
+{
+  QAction *copy = action( "copy_messages" );
+  QAction *cut = action( "cut_messages" );
+  QAction *paste = action( "paste_messages" );
+
+  bool haveSelection = !mMessagePane->selectionEmpty();
+
+  copy->setEnabled( haveSelection );
+#ifdef OLD_MESSAGELIST
+  cut->setEnabled( haveSelection && folder() && ( folder()->canDeleteMessages() ) );
+  paste->setEnabled( ( !mMessageClipboard.isEmpty() ) && folder() && ( !folder()->isReadOnly() ) );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2526,17 +2600,22 @@ void KMMainWidget::slotApplyFilters()
 #endif
 }
 
-int KMMainWidget::slotFilterMsg(KMMessage *msg)
+int KMMainWidget::slotFilterMsg(KMime::Message *msg)
 {
   if ( !msg ) return 2; // messageRetrieve(0) is always possible
+#if 0 //TODO port to akonadi
   msg->setTransferInProgress(false);
-  int filterResult = kmkernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  int filterResult = kmkernel->filterMgr()->process(msg, KMFilterMgr::Explicit);
   if (filterResult == 2)
   {
     // something went horribly wrong (out of space?)
     kmkernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
     return 2;
   }
+#if 0 //TODO port to akonadi
   if (msg->parent())
   { // unGet this msg
     int idx = -1;
@@ -2545,7 +2624,9 @@ int KMMainWidget::slotFilterMsg(KMMessage *msg)
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return filterResult;
 }
 
@@ -3297,8 +3378,9 @@ void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QP
   // message from a folder that is not the current in mMessageListView.
   // This should never happen as all the actions are messed up in this case.
   Q_ASSERT( &msg == mMessageListView->currentMessage() );
-#endif
+
   updateMessageMenu();
+#endif
   KMenu *menu = new KMenu;
   mUrlCurrent = aUrl;
 
@@ -3712,9 +3794,16 @@ void KMMainWidget::setupActions()
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
   }
   {
-    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CutItems );
-    action->setText( i18n("Cut Messages") );
+    KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Messages"), this);
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
+    actionCollection()->addAction("cut_messages", action);
+    connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCutMessages()));
+  }
+  {
+    KAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Messages"), this);
+    action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_V));
+    actionCollection()->addAction("paste_messages", action);
+    connect(action, SIGNAL(triggered(bool)), this, SLOT(slotPasteMessages()));
   }
 
   //----- Message Menu
@@ -4129,21 +4218,25 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 
 void KMMainWidget::updateMessageActions()
 {
+#ifdef OLD_MESSAGELIST
   int count;
+
+  updateCutCopyPasteActions();
 
   QList< quint32 > selectedSernums;
   QList< quint32 > selectedVisibleSernums;
   bool allSelectedBelongToSameThread = false;
 
-  Akonadi::Item currentMessage;
-#ifdef OLD_MESSAGELIST
-  if (mCurrentFolder.isValid() &&
-       mMessagePane->getSelectionStats( selectedSernums, selectedVisibleSernums, &allSelectedBelongToSameThread )
+  KMMessage * currentMessage;
+
+  if (
+       mFolder &&
+       mMessageListView->getSelectionStats( selectedSernums, selectedVisibleSernums, &allSelectedBelongToSameThread )
      )
   {
     count = selectedSernums.count();
 
-    currentMessage = mMessagePane->currentItem();
+    currentMessage = mMessageListView->currentMessage();
 
     mMsgActions->setCurrentMessage( currentMessage );
     mMsgActions->setSelectedSernums( selectedSernums );
@@ -4151,8 +4244,8 @@ void KMMainWidget::updateMessageActions()
 
   } else {
     count = 0;
-    currentMessage = Akonadi::Item();
-    mMsgActions->setCurrentMessage( Akonadi::Item() );
+    currentMessage = 0;
+    mMsgActions->setCurrentMessage( 0 );
   }
 
   //
@@ -4211,7 +4304,7 @@ void KMMainWidget::updateMessageActions()
 
   if ( currentMessage )
   {
-    MessageStatus status = currentMessage->flags();
+    MessageStatus status = currentMessage->status();
     updateMessageTagActions( count );
     if (thread_actions)
     {

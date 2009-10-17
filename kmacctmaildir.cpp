@@ -67,6 +67,7 @@ void KMAcctMaildir::pseudoAssign( const KMAccount * a )
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::processNewMail(bool)
 {
+#if 0 //TODO port to akonadi
   QTime t;
   hasNewMail = false;
 
@@ -193,7 +194,9 @@ void KMAcctMaildir::processNewMail(bool)
 
   checkDone( hasNewMail, CheckOK );
 
-  return;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 

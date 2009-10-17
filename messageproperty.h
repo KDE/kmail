@@ -38,6 +38,10 @@
 
 class KMFilter;
 
+namespace KMime {
+  class Content;
+}
+
 namespace KMail {
 
 class ActionScheduler;
@@ -60,27 +64,27 @@ public:
   /** If the message is being filtered  */
   static bool filtering( quint32 );
   static void setFiltering( quint32, bool filtering );
-  static bool filtering( const KMMsgBase* );
-  static void setFiltering( const KMMsgBase*, bool filtering );
+  static bool filtering( KMime::Content* );
+  static void setFiltering( KMime::Content*, bool filtering );
   /** The folder this message is to be moved into once
       filtering is finished, or null if the message is not
       scheduled to be moved */
   static KMFolder* filterFolder( quint32 );
   static void setFilterFolder( quint32, KMFolder* folder );
-  static KMFolder* filterFolder( const KMMsgBase* );
-  static void setFilterFolder( const KMMsgBase*, KMFolder* folder );
+  static KMFolder* filterFolder( KMime::Content* );
+  static void setFilterFolder( KMime::Content*, KMFolder* folder );
   /* Set the filterHandler for a message */
   static ActionScheduler* filterHandler( quint32 );
   static void setFilterHandler( quint32, ActionScheduler* filterHandler );
-  static ActionScheduler* filterHandler( const KMMsgBase* );
-  static void setFilterHandler( const KMMsgBase*, ActionScheduler* filterHandler );
+  static ActionScheduler* filterHandler( KMime::Content* );
+  static void setFilterHandler( KMime::Content*, ActionScheduler* filterHandler );
 
   /* Caches the serial number for a message, or more correctly for a
      KMMsgBase based instance representing a message.
      This property becomes invalid when the message is destructed or
      assigned a new value */
-  static void setSerialCache( const KMMsgBase*, quint32 );
-  static quint32 serialCache( const KMMsgBase* );
+  static void setSerialCache( KMime::Content*, quint32 );
+  static quint32 serialCache( KMime::Content* );
 
   /**
    * Set the transferInProgress for a message.
@@ -94,8 +98,8 @@ public:
    * This property becomes invalid when the message is destructed or
    * assigned a new value.
    */
-  static void setTransferInProgress( const KMMsgBase*, bool, bool = false );
-  static bool transferInProgress( const KMMsgBase* );
+  static void setTransferInProgress( KMime::Content*, bool, bool = false );
+  static bool transferInProgress( KMime::Content* );
   static void setTransferInProgress( quint32, bool, bool = false );
   static bool transferInProgress( quint32 );
 
@@ -112,7 +116,7 @@ public:
   /** Some properties, namely complete, transferInProgress, and
       serialCache must be forgotten when a message class instance is
       destructed or assigned a new value */
-  static void forget( const KMMsgBase* );
+  static void forget( KMime::Content* );
 
 private:
 
@@ -133,7 +137,7 @@ private:
   static QMap<quint32, int > sTransfers;
 
   // The cached serial number of a message if any.
-  static QMap<const KMMsgBase*, long> sSerialCache;
+  static QMap<KMime::Content*, long> sSerialCache;
 };
 
 }

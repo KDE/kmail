@@ -47,6 +47,8 @@ using KMail::AccountManager;
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
 
+#include <kmime/kmime_message.h>
+
 #include <QTimer>
 
 using namespace KMail;
@@ -252,17 +254,25 @@ void ActionScheduler::execFilters( const QList<quint32> serNums )
   }
 }
 
-void ActionScheduler::execFilters( const QList<KMMsgBase*> msgList )
+void ActionScheduler::execFilters( const QList<KMime::Content*> msgList )
 {
-  KMMsgBase *msgBase;
+  KMime::Content *msgBase;
   foreach ( msgBase, msgList ) {
+#if 0 //TODO port to akonadi
     execFilters( msgBase->getMsgSerNum() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
-void ActionScheduler::execFilters( KMMsgBase *msgBase )
+void ActionScheduler::execFilters( KMime::Content *msgBase )
 {
+#if 0 //TODO port to akonadi
   execFilters( msgBase->getMsgSerNum() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ActionScheduler::execFilters(quint32 serNum)
@@ -302,11 +312,12 @@ void ActionScheduler::execFilters(quint32 serNum)
   }
 }
 
-KMMsgBase *ActionScheduler::messageBase(quint32 serNum)
+KMime::Content *ActionScheduler::messageBase(quint32 serNum)
 {
   int idx = -1;
   KMFolder *folder = 0;
-  KMMsgBase *msg = 0;
+  KMime::Content *msg = 0;
+#if 0 //TODO port to akonadi
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
   // different folder
@@ -319,14 +330,18 @@ KMMsgBase *ActionScheduler::messageBase(quint32 serNum)
     mResult = ResultError;
     finishTimer->start( 0 );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return msg;
 }
 
-KMMessage *ActionScheduler::message(quint32 serNum)
+KMime::Message *ActionScheduler::message(quint32 serNum)
 {
   int idx = -1;
   KMFolder *folder = 0;
-  KMMessage *msg = 0;
+  KMime::Message *msg = 0;
+#if 0 //TODO port to akonadi
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
   // different folder
@@ -339,6 +354,9 @@ KMMessage *ActionScheduler::message(quint32 serNum)
     mResult = ResultError;
     finishTimer->start( 0 );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return msg;
 }
 
@@ -374,14 +392,14 @@ void ActionScheduler::finish()
       processMessageTimer->start( 0 );
       return;
     }
-
+#if 0 //TODO port to akonadi
     // If an error has occurred and a permanent source folder has
     // been set then move all the messages left in the source folder
     // to the inbox. If no permanent source folder has been set
     // then abandon filtering of queued messages.
     if (!mDeleteSrcFolder && !mDestFolder.isNull() ) {
       while ( mSrcFolder->count() > 0 ) {
-        KMMessage *msg = mSrcFolder->getMsg( 0 );
+        KMime::Message *msg = mSrcFolder->getMsg( 0 );
         mDestFolder->moveMsg( msg );
       }
 
@@ -389,6 +407,10 @@ void ActionScheduler::finish()
       // new messages arrive for filtering.
       tempCloseFoldersTimer->start( 60*1000 );
     }
+
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     mSerNums.clear(); //abandon
     mFetchSerNums.clear(); //abandon
 
@@ -410,6 +432,7 @@ void ActionScheduler::finish()
 
 void ActionScheduler::fetchMessage()
 {
+#if 0 //TODO port to akonadi
   QList<quint32>::Iterator mFetchMessageIt = mFetchSerNums.begin();
   while (mFetchMessageIt != mFetchSerNums.end()) {
     if (!MessageProperty::transferInProgress(*mFetchMessageIt))
@@ -433,14 +456,14 @@ void ActionScheduler::fetchMessage()
   }
 
   //If we got this far then there's a valid message to work with
-  KMMsgBase *msgBase = messageBase( *mFetchMessageIt );
+  KMime::Content *msgBase = messageBase( *mFetchMessageIt );
 
   if ( !msgBase || mResult != ResultOk ) {
     mFetchExecuting = false;
     return;
   }
   mFetchUnget = msgBase->isMessage();
-  KMMessage *msg = message( *mFetchMessageIt );
+  KMime::Message *msg = message( *mFetchMessageIt );
   if (mResult != ResultOk) {
     mFetchExecuting = false;
     return;
@@ -452,8 +475,8 @@ void ActionScheduler::fetchMessage()
     fetchTimeOutTime = QTime::currentTime();
     fetchTimeOutTimer->start( 60 * 1000 );
     FolderJob *job = msg->parent()->createJob( msg );
-    connect( job, SIGNAL(messageRetrieved( KMMessage* )),
-             SLOT(messageFetched( KMMessage* )) );
+    connect( job, SIGNAL(messageRetrieved( KMime::Message* )),
+             SLOT(messageFetched( KMime::Message* )) );
     lastJob = job;
     job->start();
   } else {
@@ -462,10 +485,14 @@ void ActionScheduler::fetchMessage()
     finishTimer->start( 0 );
     return;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
-void ActionScheduler::messageFetched( KMMessage *msg )
+void ActionScheduler::messageFetched( KMime::Message *msg )
 {
+#if 0 //TODO port to akonadi
   fetchTimeOutTimer->stop();
   if (!msg) {
       // Should never happen, but sometimes does;
@@ -482,7 +509,7 @@ void ActionScheduler::messageFetched( KMMessage *msg )
       (msg->headerField( "X-KMail-Filtered" ).isEmpty())) {
     QString serNumS;
     serNumS.setNum( msg->getMsgSerNum() );
-    KMMessage *newMsg = new KMMessage;
+    KMime::Message *newMsg = new KMime::Message;
     newMsg->fromDwString(msg->asDwString());
     newMsg->setStatus(msg->status());
     newMsg->setComplete(msg->isComplete());
@@ -496,6 +523,9 @@ void ActionScheduler::messageFetched( KMMessage *msg )
   if (mFetchUnget && msg->parent())
     msg->parent()->unGetMsg( msg->parent()->find( msg ));
   return;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ActionScheduler::msgAdded( KMFolder*, quint32 serNum )
@@ -559,7 +589,7 @@ void ActionScheduler::processMessage()
   }
 
   //If we got this far then there's a valid message to work with
-  KMMsgBase *msgBase = messageBase( *mMessageIt );
+  KMime::Content *msgBase = messageBase( *mMessageIt );
   if (mResult != ResultOk) {
     mExecuting = false;
     return;
@@ -572,14 +602,16 @@ void ActionScheduler::processMessage()
     FilterLog::instance()->addSeparator();
   }
   mFilterIt = mFilters.begin();
-
+#if 0 //TODO port to akonadi
   mUnget = msgBase->isMessage();
-  KMMessage *msg = message( *mMessageIt );
+  KMime::Message *msg = message( *mMessageIt );
   if (mResult != ResultOk) {
     mExecuting = false;
     return;
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   bool mdnEnabled = true;
   {
     KConfigGroup mdnConfig( kmkernel->config(), "MDN" );
@@ -588,7 +620,7 @@ void ActionScheduler::processMessage()
       mdnEnabled = false;
   }
   mdnEnabled = true; // For 3.2 force all mails to be complete
-
+#if 0 //TODO port to akonadi
   if ((msg && msg->isComplete()) ||
       (msg && !(*mFilterIt)->requiresBody(msg) && !mdnEnabled))
   {
@@ -601,8 +633,8 @@ void ActionScheduler::processMessage()
   }
   if (msg) {
     FolderJob *job = msg->parent()->createJob( msg );
-    connect( job, SIGNAL(messageRetrieved( KMMessage* )),
-	     SLOT(messageRetrieved( KMMessage* )) );
+    connect( job, SIGNAL(messageRetrieved( KMime::Message* )),
+	     SLOT(messageRetrieved( KMime::Message* )) );
     job->start();
   } else {
     mExecuting = false;
@@ -610,17 +642,25 @@ void ActionScheduler::processMessage()
     finishTimer->start( 0 );
     return;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
-void ActionScheduler::messageRetrieved(KMMessage* msg)
+void ActionScheduler::messageRetrieved(KMime::Message* msg)
 {
+#if 0 //TODO port to akonadi
   // Get a write lock on the message while it's being filtered
   msg->setTransferInProgress( true );
   filterMessageTimer->start( 0 );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ActionScheduler::filterMessage()
 {
+#if 0 //TODO port to akonadi
   if (mFilterIt == mFilters.end()) {
     moveMessage();
     return;
@@ -651,16 +691,20 @@ void ActionScheduler::filterMessage()
   }
   ++mFilterIt;
   filterMessageTimer->start( 0 );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
 {
+#if 0 //TODO port to akonadi
   if (res == KMFilterAction::CriticalError) {
     mResult = ResultCriticalError;
     finish(); //must handle critical errors immediately
   }
   if (mFilterAction) {
-    KMMessage *msg = message( *mMessageIt );
+    KMime::Message *msg = message( *mMessageIt );
     if (msg) {
       if ( FilterLog::instance()->isLogging() ) {
         QString logText( i18n( "<b>Applying filter action:</b> %1",
@@ -682,16 +726,20 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
       ++mFilterIt;
     filterMessageTimer->start( 0 );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ActionScheduler::moveMessage()
 {
-  KMMsgBase *msgBase = messageBase( *mMessageIt );
+#if 0 //TODO port to akonadi
+  KMime::Content *msgBase = messageBase( *mMessageIt );
   if (!msgBase)
     return;
 
   MessageProperty::setTransferInProgress( *mMessageIt, false, true );
-  KMMessage *msg = message( *mMessageIt );
+  KMime::Message *msg = message( *mMessageIt );
   KMFolder *folder = MessageProperty::filterFolder( *mMessageIt );
   QString serNumS = msg->headerField( "X-KMail-Filtered" );
   if (!serNumS.isEmpty())
@@ -703,7 +751,7 @@ void ActionScheduler::moveMessage()
 
   mSerNums.removeAll( *mMessageIt );
 
-  KMMessage *orgMsg = 0;
+  KMime::Message *orgMsg = 0;
   ReturnCode mOldReturnCode = mResult;
   if (mOriginalSerNum)
     orgMsg = message( mOriginalSerNum );
@@ -745,6 +793,9 @@ void ActionScheduler::moveMessage()
   // and move onto the next message
   lastCommand = cmd;
   timeOutTimer->start( 60 * 1000 );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ActionScheduler::moveMessageFinished( KMCommand *command )
@@ -774,7 +825,7 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   if (!mSrcFolder->count())
     mSrcFolder->expunge();
 
-  KMMessage *msg = 0;
+  KMime::Message *msg = 0;
   ReturnCode mOldReturnCode = mResult;
   if (mOriginalSerNum) {
     msg = message( mOriginalSerNum );
@@ -782,7 +833,7 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   }
 
   mResult = mOldReturnCode; // ignore errors in deleting original message
-
+#if 0 //TODO port to akonadi
   // Delete the original message, because we have just moved the filtered message
   // from the temporary filtering folder to the target folder, and don't need the
   // old unfiltered message there anymore.
@@ -790,7 +841,6 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   if ( msg && msg->parent() && !movingFailed ) {
     cmd = new KMMoveCommand( 0, msg );
   }
-
   // When the above deleting is finished, filtering that single mail is complete.
   // The next state is processMessage(), which will start filtering the next
   // message if we still have mails in the temporary filter folder.
@@ -812,6 +862,9 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   }
   else
     processMessageTimer->start( 0 );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ActionScheduler::copyMessageFinished( KMCommand *command )
@@ -843,8 +896,8 @@ void ActionScheduler::fetchTimeOut()
   if( !lastJob )
     return;
   // sometimes imap jobs seem to just stall so give up and move on
-  disconnect( lastJob, SIGNAL(messageRetrieved( KMMessage* )),
-              this, SLOT(messageFetched( KMMessage* )) );
+  disconnect( lastJob, SIGNAL(messageRetrieved( KMime::Message* )),
+              this, SLOT(messageFetched( KMime::Message* )) );
   lastJob->kill();
   lastJob = 0;
   fetchMessageTimer->start( 0 );

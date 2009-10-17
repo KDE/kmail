@@ -34,6 +34,7 @@ using KPIM::RecentAddresses;
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "stringutil.h"
+#include "messagehelper.h"
 
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
@@ -67,6 +68,9 @@ using KMail::TemplateParser;
 #include <kio/netaccess.h>
 #include <kwallet.h>
 using KWallet::Wallet;
+
+#include <kmime/kmime_message.h>
+
 #include "actionscheduler.h"
 
 #include <QByteArray>
@@ -434,18 +438,18 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
-  KMMessage *msg = new KMMessage;
-  msg->initHeader();
-  msg->setCharset("utf-8");
+  KMime::Message *msg = new KMime::Message;
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset("utf-8");
   // tentatively decode to, cc and bcc because invokeMailer calls us with
   // RFC 2047 encoded addresses in order to protect non-ASCII email addresses
   if (!to.isEmpty())
-    msg->setTo( KMMsgBase::decodeRFC2047String( to.toLocal8Bit() ) );
+    msg->to()->fromUnicodeString( KMime::decodeRFC2047String( to.toLocal8Bit() ), "utf-8" );
   if (!cc.isEmpty())
-    msg->setCc( KMMsgBase::decodeRFC2047String( cc.toLocal8Bit() ) );
+    msg->cc()->fromUnicodeString( KMime::decodeRFC2047String( cc.toLocal8Bit() ), "utf-8" );
   if (!bcc.isEmpty())
-    msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLocal8Bit() ) );
-  if (!subject.isEmpty()) msg->setSubject(subject);
+    msg->bcc()->fromUnicodeString( KMMsgBase::decodeRFC2047String( bcc.toLocal8Bit() ), "utf-8"  );
+  if (!subject.isEmpty()) msg->subject()->fromUnicodeString(subject, "utf-8" );
 
   KUrl messageUrl = KUrl( messageFile );
   if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
@@ -480,8 +484,10 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
         {
           QString header = (*it).left( pos ).trimmed();
           QString value = (*it).mid( pos+1 ).trimmed();
-          if ( !header.isEmpty() && !value.isEmpty() )
-            msg->setHeaderField( header.toUtf8(), value );
+          if ( !header.isEmpty() && !value.isEmpty() ) {
+            KMime::Headers::Generic *h = new KMime::Headers::Generic( header.toUtf8(), msg, value.toUtf8() );
+            msg->setHeader( h );
+          }
         }
       }
   }
@@ -520,15 +526,18 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
-  KMMessage *msg = new KMMessage;
-  KMMessagePart *msgPart = 0;
-  msg->initHeader();
-  msg->setCharset( "utf-8" );
-  if ( !cc.isEmpty() ) msg->setCc(cc);
-  if ( !bcc.isEmpty() ) msg->setBcc(bcc);
-  if ( !subject.isEmpty() ) msg->setSubject(subject);
-  if ( !to.isEmpty() ) msg->setTo(to);
-  if ( identity > 0 ) msg->setHeaderField( "X-KMail-Identity", QString::number( identity ) );
+  KMime::Message *msg = new KMime::Message;
+  KMime::Content *msgPart = 0;
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset( "utf-8" );
+  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+  if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
+  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
+  if ( identity > 0 ) {
+    KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity", msg, QByteArray::number( identity ) );
+    msg->setHeader( h );
+  }
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
     context = KMail::Composer::NoTemplate;
@@ -549,34 +558,33 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       attachParamAttr == "method";
     // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
     if ( isICalInvitation && bcc.isEmpty() )
-      msg->setBcc( "" );
+      msg->bcc()->clear();
     if ( isICalInvitation &&
         GlobalSettings::self()->legacyBodyInvites() ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       context = KMail::Composer::NoTemplate;
-      msg->setHeaderField( "Content-Type",
+      msg->contentType()->from7BitString(
                            QString( "text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
-                           arg( attachParamValue ) );
+                           arg( attachParamValue ).toLatin1() );
 
       iCalAutoSend = true; // no point in editing raw ICAL
       noWordWrap = true; // we shant word wrap inline invitations
     } else {
       // Just do what we're told to do
-      msgPart = new KMMessagePart;
-      msgPart->setName( attachName );
-      msgPart->setCteStr( attachCte );
-      msgPart->setBodyEncoded( attachData );
-      msgPart->setTypeStr( attachType );
-      msgPart->setSubtypeStr( attachSubType );
-      msgPart->setParameter( attachParamAttr, attachParamValue );
+      msgPart = new KMime::Content;
+      msgPart->contentType()->setName( attachName, "utf-8" );
+      msgPart->contentTransferEncoding()->fromUnicodeString(attachCte, "utf-8" );
+      msgPart->setBody( attachData ); //TODO: check if was setBodyEncoded
+      msgPart->contentType()->setMimeType( attachType + "/" +  attachSubType );
+      msgPart->contentDisposition()->setParameter( attachParamAttr, attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
        if( ! GlobalSettings::self()->exchangeCompatibleInvitations() ) {
-        msgPart->setContentDisposition( attachContDisp );
+        msgPart->contentDisposition()->fromUnicodeString(attachContDisp, "utf-8" );
       }
       if( !attachCharset.isEmpty() ) {
         // kDebug() << "Set attachCharset to" << attachCharset;
-        msgPart->setCharset( attachCharset );
+        msgPart->contentType()->setCharset( attachCharset );
       }
       // Don't show the composer window if the automatic sending is checked
       iCalAutoSend = GlobalSettings::self()->automaticSending();
@@ -632,13 +640,13 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
                                         const QString &subject,
                                         const QString &body, bool hidden )
 {
-  KMMessage *msg = new KMMessage;
-  msg->initHeader();
-  msg->setCharset("utf-8");
-  if (!cc.isEmpty()) msg->setCc(cc);
-  if (!bcc.isEmpty()) msg->setBcc(bcc);
-  if (!subject.isEmpty()) msg->setSubject(subject);
-  if (!to.isEmpty()) msg->setTo(to);
+  KMime::Message *msg = new KMime::Message;
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset("utf-8");
+  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+  if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
+  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
   } else {
@@ -677,7 +685,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
                                       const QString &_attachURL)
 {
   KUrl attachURL( _attachURL );
-  KMMessage *msg = new KMMessage;
+  KMime::Message *msg = new KMime::Message;
   KMFolder *folder = 0;
   uint id = 0;
 
@@ -686,18 +694,12 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
     folder = currentFolder();
     id = folder ? folder->identity() : 0;
   }
-  msg->initHeader( id );
-  msg->setCharset( "utf-8" );
+  KMail::MessageHelper::initHeader( msg, id );
+  msg->contentType()->setCharset( "utf-8" );
   //set basic headers
-  if ( !to.isEmpty() ) {
-    msg->setTo( to );
-  }
-  if ( !cc.isEmpty() ) {
-    msg->setCc( cc );
-  }
-  if ( !bcc.isEmpty() ) {
-    msg->setBcc( bcc );
-  }
+  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
 
   TemplateParser parser( msg, TemplateParser::NewMessage,
                          QString(), false, false, false );
@@ -729,11 +731,11 @@ int KMKernel::viewMessage( const KUrl & messageFile )
 
 int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 {
-  KMMessage *msg = new KMMessage;
-  msg->initHeader();
-  msg->setCharset("utf-8");
-  msg->setSubject( i18n( "Certificate Signature Request" ) );
-  if (!to.isEmpty()) msg->setTo(to);
+  KMime::Message *msg = new KMime::Message;
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset("utf-8");
+  msg->subject()->fromUnicodeString(i18n( "Certificate Signature Request" ), "utf-8" );
+  if (!to.isEmpty()) msg->to()->fromUnicodeString(to, "utf-8");
   // ### Make this message customizable via KIOSK
   msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).toUtf8() );
 
@@ -741,13 +743,12 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   cWin->setCharset("", true);
   cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
-    KMMessagePart *msgPart = new KMMessagePart;
-    msgPart->setName("smime.p10");
-    msgPart->setCteStr("base64");
-    msgPart->setBodyEncodedBinary(certData);
-    msgPart->setTypeStr("application");
-    msgPart->setSubtypeStr("pkcs10");
-    msgPart->setContentDisposition("attachment; filename=smime.p10");
+    KMime::Content *msgPart = new KMime::Content;
+    msgPart->contentType()->setName("smime.p10", "utf-8");
+    msgPart->contentTransferEncoding()->from7BitString("base64");
+    msgPart->setBody(certData); // TODO Check: was setBodyEncodedBinary
+    msgPart->contentType()->setMimeType("application/pkcs10");
+    msgPart->contentDisposition()->from7BitString("attachment; filename=smime.p10");
     cWin->addAttach(msgPart);
   }
 
@@ -1322,6 +1323,7 @@ void KMKernel::testDir( const char *_name )
 // Open a composer for each message found in the dead.letter folder
 void KMKernel::recoverDeadLetters()
 {
+#if 0 //TODO port to akonadi
   const QString pathName = localDataPath();
   QDir dir( pathName );
   if ( !dir.exists( "autosave" ) )
@@ -1344,6 +1346,9 @@ void KMKernel::recoverDeadLetters()
       win->show();
     }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------

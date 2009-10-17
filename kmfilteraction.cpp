@@ -6,7 +6,6 @@
 #include "customtemplates.h"
 #include "customtemplates_kfg.h"
 #include "kmcommands.h"
-#include "kmmsgpart.h"
 #include "kmfiltermgr.h"
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
@@ -16,7 +15,6 @@
 #include "folderrequester.h"
 
 using KMail::FolderRequester;
-#include "kmmsgbase.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
 #include "messageproperty.h"
@@ -28,12 +26,14 @@ using KMail::RegExpLineEdit;
 #include "stringutil.h"
 #include "kmmessagetag.h"
 
+#include "messagehelper.h"
+#include "messageinfo.h"
+
 // KDE PIM libs headers
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimutils/kfileio.h>
-#include <mimelib/message.h>
 
 // KDE headers
 #include <kcombobox.h>
@@ -50,6 +50,8 @@ using KMail::RegExpLineEdit;
 #ifdef Nepomuk_FOUND
   #include <nepomuk/tag.h>
 #endif
+
+#include <kmime/kmime_message.h>
 
 // Qt headers:
 #include <QTextCodec>
@@ -75,7 +77,7 @@ KMFilterAction::~KMFilterAction()
 {
 }
 
-void KMFilterAction::processAsync(KMMessage* msg) const
+void KMFilterAction::processAsync(KMime::Message* msg) const
 {
   ActionScheduler *handler = MessageProperty::filterHandler( msg );
   ReturnCode result = process( msg );
@@ -83,7 +85,7 @@ void KMFilterAction::processAsync(KMMessage* msg) const
     handler->actionMessage( result );
 }
 
-bool KMFilterAction::requiresBody(KMMsgBase*) const
+bool KMFilterAction::requiresBody(KMime::Content *) const
 {
   return true;
 }
@@ -120,7 +122,7 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
   return kmkernel->filterMgr()->tempOpenFolder(aFolder);
 }
 
-void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
+void KMFilterAction::sendMDN( KMime::Message * msg, KMime::MDN::DispositionType d,
                               const QList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
 
@@ -128,14 +130,18 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
    * if it is not set in the message we assume that the notification should go to the
    * sender
    */
-  const QString returnPath = msg->headerField( "Return-Path" );
-  const QString dispNoteTo = msg->headerField( "Disposition-Notification-To" );
-  if ( returnPath.isEmpty() )
-    msg->setHeaderField( "Return-Path", msg->from() );
-  if ( dispNoteTo.isEmpty() )
-    msg->setHeaderField( "Disposition-Notification-To", msg->from() );
+  const QString returnPath = msg->headerByType( "Return-Path" ) ? msg->headerByType( "Return-Path ")->asUnicodeString() : "";
+  const QString dispNoteTo = msg->headerByType( "Disposition-Notification-To" )? msg->headerByType( "Disposition-Notification-To ")->asUnicodeString() : "";
+  if ( returnPath.isEmpty() ) {
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Return-Path", msg, msg->from()->asUnicodeString(), "utf-8" );
+    msg->setHeader( header );
+  }
+  if ( dispNoteTo.isEmpty() ) {
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Disposition-Notification-To", msg, msg->from()->asUnicodeString(), "utf-8" );
+    msg->setHeader( header );
+  }
 
-  KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
+  KMime::Message * mdn = KMail::MessageHelper::createMDN( msg, KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
     kDebug() << "Sending failed.";
     //delete mdn;
@@ -143,9 +149,9 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
 
   //restore orignial header
   if ( returnPath.isEmpty() )
-    msg->removeHeaderField( "Return-Path" );
+    msg->removeHeader( "Return-Path" );
   if ( dispNoteTo.isEmpty() )
-    msg->removeHeaderField( "Disposition-Notification-To" );
+    msg->removeHeader( "Disposition-Notification-To" );
 }
 
 
@@ -439,7 +445,7 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
   KMFilterActionWithUrl::clearParamWidget( paramWidget );
 }
 
-QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTemporaryFile*> & aTempFileList ) const
+QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMime::Message *aMsg, QList<KTemporaryFile*> & aTempFileList ) const
 {
   QString result = mParameter;
   QList<int> argList;
@@ -474,16 +480,20 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       aTempFileList.append( tf );
       tempFileName = tf->fileName();
       if ((*it) == -1)
-        KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
+        KPIMUtils::kByteArrayToFile( aMsg->encodedContent(), tempFileName, //###
                           false, false, false );
-      else if (aMsg->numBodyParts() == 0)
-        KPIMUtils::kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
+      else if (aMsg->contents().size() == 0)
+        KPIMUtils::kByteArrayToFile( aMsg->decodedContent(), tempFileName,
                           false, false, false );
       else {
-        KMMessagePart msgPart;
+        KMime::Content content;
+#if 0 //TODO port to akonadi
         aMsg->bodyPart( (*it), &msgPart );
         KPIMUtils::kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
                           false, false, false );
+#else
+        kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       }
       tf->close();
     }
@@ -499,7 +509,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   QRegExp header_rx( "%\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
   int idx = 0;
   while ( ( idx = header_rx.indexIn( result, idx ) ) != -1 ) {
-    QString replacement = KShell::quoteArg( aMsg->headerField( header_rx.cap(1).toLatin1() ) );
+    QString replacement = KShell::quoteArg( aMsg->headerByType( header_rx.cap(1).toLatin1() ) ? aMsg->headerByType( header_rx.cap(1).toLatin1() )->as7BitString(): "");
     result.replace( idx, header_rx.matchedLength(), replacement );
     idx += replacement.length();
   }
@@ -508,7 +518,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
 }
 
 
-KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* aMsg, bool withOutput) const
+KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMime::Message* aMsg, bool withOutput) const
 {
   Q_ASSERT( aMsg );
 
@@ -542,7 +552,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   // write message to file
   QString tempFileName = inFile->fileName();
-  if ( !KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
+  if ( !KPIMUtils::kByteArrayToFile( aMsg->encodedContent(), tempFileName, //###
                                      false, false, false ) ) {
     qDeleteAll( atmList );
     atmList.clear();
@@ -571,9 +581,11 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
        unfortunate, as we need to removed the original from the folder
        using that, and look it up in the message. When the (new) message
        is uploaded, the header is stripped anyhow. */
-      QString uid = aMsg->headerField( "X-UID", KMMessage::NoEncoding );
-      aMsg->fromString( msgText );
-      aMsg->setHeaderField( "X-UID", uid, KMMessage::Unstructured, false, KMMessage::NoEncoding );
+      QString uid = aMsg->headerByType( "X-UID" ) ?aMsg->headerByType( "X-UID")->asUnicodeString() : "" ;
+      aMsg->setContent( msgText );
+      
+      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-UID", aMsg, uid, "utf-8" );
+      aMsg->setHeader( header );
     }
     else {
       qDeleteAll( atmList );
@@ -601,7 +613,7 @@ class KMFilterActionSendReceipt : public KMFilterActionWithNone
 {
 public:
   KMFilterActionSendReceipt();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -615,9 +627,9 @@ KMFilterActionSendReceipt::KMFilterActionSendReceipt()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionSendReceipt::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionSendReceipt::process(KMime::Message* msg) const
 {
-  KMMessage *receipt = msg->createDeliveryReceipt();
+  KMime::Message *receipt = KMail::MessageHelper::createDeliveryReceipt( msg );
   if ( !receipt ) return ErrorButGoOn;
 
   // Queue message. This is a) so that the user can check
@@ -638,7 +650,7 @@ class KMFilterActionTransport: public KMFilterActionWithString
 {
 public:
   KMFilterActionTransport();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -652,11 +664,12 @@ KMFilterActionTransport::KMFilterActionTransport()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionTransport::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionTransport::process(KMime::Message* msg) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
-  msg->setHeaderField( "X-KMail-Transport", mParameter );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", msg, mParameter, "utf-8");
+  msg->setHeader( header );
   return GoOn;
 }
 
@@ -669,7 +682,7 @@ class KMFilterActionReplyTo: public KMFilterActionWithString
 {
 public:
   KMFilterActionReplyTo();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -684,9 +697,10 @@ KMFilterActionReplyTo::KMFilterActionReplyTo()
   mParameter = "";
 }
 
-KMFilterAction::ReturnCode KMFilterActionReplyTo::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionReplyTo::process(KMime::Message* msg) const
 {
-  msg->setHeaderField( "Reply-To", mParameter );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "Reply-To", msg, mParameter, "utf-8");
+  msg->setHeader( header );
   return GoOn;
 }
 
@@ -700,7 +714,7 @@ class KMFilterActionIdentity: public KMFilterActionWithUOID
 {
 public:
   KMFilterActionIdentity();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   static KMFilterAction* newAction();
 
   QWidget * createParamWidget( QWidget * parent ) const;
@@ -720,9 +734,10 @@ KMFilterActionIdentity::KMFilterActionIdentity()
   mParameter = kmkernel->identityManager()->defaultIdentity().uoid();
 }
 
-KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMime::Message* msg) const
 {
-  msg->setHeaderField( "X-KMail-Identity", QString::number( mParameter ) );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg, QString::number(mParameter), "utf-8");
+  msg->setHeader( header );
   return GoOn;
 }
 
@@ -763,7 +778,7 @@ class KMFilterActionSetStatus: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionSetStatus();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   virtual bool requiresBody(KMMsgBase*) const;
 
   static KMFilterAction* newAction();
@@ -820,12 +835,16 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMime::Message* msg) const
 {
+#if 0 //TODO port to akonadi
   int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
   msg->setStatus( stati[idx-1] );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return GoOn;
 }
 
@@ -874,7 +893,7 @@ class KMFilterActionAddTag: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionAddTag();
-  virtual ReturnCode process( KMMessage* msg ) const;
+  virtual ReturnCode process( KMime::Message* msg ) const;
   virtual bool requiresBody( KMMsgBase* ) const;
 
   static KMFilterAction* newAction();
@@ -906,8 +925,9 @@ KMFilterActionAddTag::KMFilterActionAddTag()
   }
 }
 
-KMFilterAction::ReturnCode KMFilterActionAddTag::process( KMMessage* msg ) const
+KMFilterAction::ReturnCode KMFilterActionAddTag::process( KMime::Message* msg ) const
 {
+#if 0 //TODO port to akonadi
   const int idx = mParameterList.indexOf( mParameter );
   if ( idx == -1 ) return ErrorButGoOn;
 
@@ -924,7 +944,9 @@ KMFilterAction::ReturnCode KMFilterActionAddTag::process( KMMessage* msg ) const
 #endif
     msg->setTagList( tagList );
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return GoOn;
 }
 
@@ -965,7 +987,7 @@ class KMFilterActionFakeDisposition: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionFakeDisposition();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   static KMFilterAction* newAction() {
     return (new KMFilterActionFakeDisposition);
   }
@@ -1009,13 +1031,13 @@ KMFilterActionFakeDisposition::KMFilterActionFakeDisposition()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process(KMime::Message* msg) const
 {
   int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
   if ( idx == 1 ) // ignore
-    msg->setMDNSentState( KMMsgMDNIgnore );
+    KMail::MessageInfo::instance()->setMDNSentState( msg, KMMsgMDNIgnore );
   else // send
     sendMDN( msg, mdns[idx-2] ); // skip first two entries: "" and "ignore"
   return GoOn;
@@ -1060,7 +1082,7 @@ class KMFilterActionRemoveHeader: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionRemoveHeader();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   virtual QWidget* createParamWidget( QWidget* parent ) const;
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
 
@@ -1093,12 +1115,12 @@ QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
   return cb;
 }
 
-KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMime::Message* msg) const
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
-  while ( !msg->headerField( mParameter.toLatin1() ).isEmpty() )
-    msg->removeHeaderField( mParameter.toLatin1() );
+  while ( msg->headerByType( mParameter.toLatin1() ) )
+    msg->removeHeader( mParameter.toLatin1() );
   return GoOn;
 }
 
@@ -1127,7 +1149,7 @@ class KMFilterActionAddHeader: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionAddHeader();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   virtual QWidget* createParamWidget( QWidget* parent ) const;
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
   virtual void applyParamWidgetValue( QWidget* paramWidget );
@@ -1158,11 +1180,12 @@ KMFilterActionAddHeader::KMFilterActionAddHeader()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionAddHeader::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionAddHeader::process(KMime::Message* msg) const
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
-  msg->setHeaderField( mParameter.toLatin1(), mValue );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( mParameter.toLatin1(), msg, mValue, "utf-8" );
+  msg->setHeader( header );
   return GoOn;
 }
 
@@ -1272,7 +1295,7 @@ class KMFilterActionRewriteHeader: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionRewriteHeader();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   virtual QWidget* createParamWidget( QWidget* parent ) const;
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
   virtual void applyParamWidgetValue( QWidget* paramWidget );
@@ -1305,13 +1328,16 @@ KMFilterActionRewriteHeader::KMFilterActionRewriteHeader()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMime::Message* msg) const
 {
   if ( mParameter.isEmpty() || !mRegExp.isValid() )
     return ErrorButGoOn;
   // QString::replace is not const.
-  QString value = msg->headerField( mParameter.toLatin1() );
-  msg->setHeaderField( mParameter.toLatin1(), value.replace( mRegExp, mReplacementString ) );
+  QString value = msg->headerByType( mParameter.toLatin1() ) ? msg->headerByType( mParameter.toLatin1() )->asUnicodeString(): "";
+
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( mParameter.toLatin1(), msg, value.replace( mRegExp, mReplacementString ), "utf-8" );
+  msg->setHeader( header );
+
   return GoOn;
 }
 
@@ -1447,7 +1473,7 @@ class KMFilterActionMove: public KMFilterActionWithFolder
 {
 public:
   KMFilterActionMove();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 };
@@ -1462,7 +1488,7 @@ KMFilterActionMove::KMFilterActionMove()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionMove::process(KMime::Message* msg) const
 {
   if ( !mFolder )
     return ErrorButGoOn;
@@ -1496,8 +1522,8 @@ class KMFilterActionCopy: public KMFilterActionWithFolder
 {
 public:
   KMFilterActionCopy();
-  virtual ReturnCode process(KMMessage* msg) const;
-  virtual void processAsync(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
+  virtual void processAsync(KMime::Message* msg) const;
   virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 };
@@ -1512,7 +1538,7 @@ KMFilterActionCopy::KMFilterActionCopy()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionCopy::process( KMMessage *msg ) const
+KMFilterAction::ReturnCode KMFilterActionCopy::process( KMime::Message *msg ) const
 {
   // TODO opening and closing the folder is a trade off.
   // Perhaps Copy is a seldomly used action for now,
@@ -1522,19 +1548,22 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( KMMessage *msg ) const
   }
 
   // copy the message 1:1
-  KMMessage* msgCopy = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
-
+  KMime::Message* msgCopy = new KMime::Message;
+  msgCopy->setContent( msg->encodedContent() );
+#if 0 //TODO port to akonadi
   int index;
   int rc = mFolder->addMsg( msgCopy, &index );
   if ( rc == 0 && index != -1 ) {
     mFolder->unGetMsg( index );
   }
   mFolder->close( "filtercopy" );
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return GoOn;
 }
 
-void KMFilterActionCopy::processAsync( KMMessage *msg ) const
+void KMFilterActionCopy::processAsync( KMime::Message *msg ) const
 {
   ActionScheduler *handler = MessageProperty::filterHandler( msg );
 #ifdef OLD_COMMAND
@@ -1560,7 +1589,7 @@ class KMFilterActionForward: public KMFilterActionWithAddress
   public:
     KMFilterActionForward();
     static KMFilterAction* newAction( void );
-    virtual ReturnCode process( KMMessage *msg ) const;
+    virtual ReturnCode process( KMime::Message *msg ) const;
     virtual QWidget* createParamWidget( QWidget* parent ) const;
     virtual void applyParamWidgetValue( QWidget* paramWidget );
     virtual void setParamWidgetValue( QWidget* paramWidget ) const;
@@ -1584,20 +1613,20 @@ KMFilterActionForward::KMFilterActionForward()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionForward::process( KMMessage *msg ) const
+KMFilterAction::ReturnCode KMFilterActionForward::process( KMime::Message *msg ) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
   // avoid endless loops when this action is used in a filter
   // which applies to sent messages
-  if ( KMail::StringUtil::addressIsInAddressList( mParameter, QStringList( msg->to() ) ) ) {
+  if ( KMail::StringUtil::addressIsInAddressList( mParameter, QStringList( msg->to()->asUnicodeString() ) ) ) {
     kWarning() << "Attempt to forward to receipient of original message, ignoring.";
     return ErrorButGoOn;
   }
 
-  KMMessage *fwdMsg = msg->createForward( mTemplate );
-  fwdMsg->setTo( fwdMsg->to() + ',' + mParameter );
+  KMime::Message *fwdMsg = KMail::MessageHelper::createForward( msg, mTemplate );
+  fwdMsg->to()->fromUnicodeString( fwdMsg->to()->asUnicodeString() + ',' + mParameter, "utf-8" );
 
   if ( !kmkernel->msgSender()->send( fwdMsg, KMail::MessageSender::SendDefault ) ) {
     kWarning() << "KMFilterAction: could not forward message (sending failed)";
@@ -1736,7 +1765,7 @@ class KMFilterActionRedirect: public KMFilterActionWithAddress
 {
 public:
   KMFilterActionRedirect();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1750,13 +1779,13 @@ KMFilterActionRedirect::KMFilterActionRedirect()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) const
+KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMime::Message* aMsg) const
 {
-  KMMessage* msg;
+  KMime::Message* msg;
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  msg = aMsg->createRedirect( mParameter );
+  msg = KMail::MessageHelper::createRedirect( aMsg, mParameter );
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
@@ -1776,7 +1805,7 @@ class KMFilterActionExec : public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExec();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1790,7 +1819,7 @@ KMFilterActionExec::KMFilterActionExec()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
+KMFilterAction::ReturnCode KMFilterActionExec::process(KMime::Message *aMsg) const
 {
   return KMFilterActionWithCommand::genericProcess( aMsg, false ); // ignore output
 }
@@ -1809,7 +1838,7 @@ class PipeJob : public ThreadWeaver::Job
   Q_OBJECT
 
   public:
-    PipeJob(QObject* parent = 0, KMMessage* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
+    PipeJob(QObject* parent = 0, KMime::Message* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
       : ThreadWeaver::Job ( parent ),
         mTempFileName( tempFileName ),
         mCmd( cmd ),
@@ -1837,7 +1866,7 @@ class PipeJob : public ThreadWeaver::Job
       QByteArray ba;
 
       // backup the serial number in case the header gets lost
-      QString origSerNum = mMsg->headerField( "X-KMail-Filtered" );
+      QString origSerNum = mMsg->headerByType( "X-KMail-Filtered" ) ?  mMsg->headerByType( "X-KMail-Filtered" )->asUnicodeString() : "";
 
       p = popen(QFile::encodeName(mCmd), "r");
       int len =100;
@@ -1851,6 +1880,7 @@ class PipeJob : public ThreadWeaver::Job
       }
       pclose(p);
       if ( !ba.isEmpty() ) {
+#if 0 //TODO port to akonadi
         ThreadWeaver::debug (1, "PipeJob::run: %s", ba.constData() );
         KMFolder *filterFolder =  mMsg->parent();
         ActionScheduler *handler = MessageProperty::filterHandler( mMsg->getMsgSerNum() );
@@ -1860,10 +1890,10 @@ class PipeJob : public ThreadWeaver::Job
         // unfortunate, as we need to removed the original from the folder
         // using that, and look it up in the message. When the (new) message
         // is uploaded, the header is stripped anyhow. */
-        const QString uid = mMsg->headerField( "X-UID", KMMessage::NoEncoding );
+        const QString uid = mMsg->headerField( "X-UID", KMime::Message::NoEncoding );
         mMsg->fromString( ba );
         if ( !uid.isEmpty() )
-          mMsg->setHeaderField( "X-UID", uid, KMMessage::Unstructured, false, KMMessage::NoEncoding );
+          mMsg->setHeaderField( "X-UID", uid, KMime::Message::Unstructured, false, KMime::Message::NoEncoding );
 
         if ( !origSerNum.isEmpty() )
           mMsg->setHeaderField( "X-KMail-Filtered", origSerNum );
@@ -1874,6 +1904,9 @@ class PipeJob : public ThreadWeaver::Job
         } else {
           kDebug() << "Warning: Cannot refresh the message from the external filter.";
         }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       }
 
       ThreadWeaver::debug (1, "PipeJob::run: done.\n" );
@@ -1883,15 +1916,15 @@ class PipeJob : public ThreadWeaver::Job
 
     QString mTempFileName;
     QString mCmd;
-    KMMessage *mMsg;
+    KMime::Message *mMsg;
 };
 
 class KMFilterActionExtFilter: public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExtFilter();
-  virtual ReturnCode process(KMMessage* msg) const;
-  virtual void processAsync(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
+  virtual void processAsync(KMime::Message* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1904,14 +1937,14 @@ KMFilterActionExtFilter::KMFilterActionExtFilter()
   : KMFilterActionWithCommand( "filter app", i18n("Pipe Through") )
 {
 }
-KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) const
+KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMime::Message* aMsg) const
 {
   return KMFilterActionWithCommand::genericProcess( aMsg, true ); // use output
 }
 
-void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
+void KMFilterActionExtFilter::processAsync(KMime::Message* aMsg) const
 {
-
+#if 0 //TODO port to akonadi
   ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
   KTemporaryFile *inFile = new KTemporaryFile;
   inFile->setAutoRemove(false);
@@ -1956,6 +1989,9 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   QObject::connect ( job, SIGNAL( done( ThreadWeaver::Job* ) ),
                      handler, SLOT( actionMessage() ) );
   kmkernel->weaver()->enqueue(job);
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //=============================================================================
@@ -1967,7 +2003,7 @@ class KMFilterActionExecSound : public KMFilterActionWithTest
 public:
   KMFilterActionExecSound();
   ~KMFilterActionExecSound();
-  virtual ReturnCode process(KMMessage* msg) const;
+  virtual ReturnCode process(KMime::Message* msg) const;
   virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 private:
@@ -2040,7 +2076,7 @@ KMFilterAction* KMFilterActionExecSound::newAction(void)
   return (new KMFilterActionExecSound());
 }
 
-KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage*) const
+KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMime::Message*) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
@@ -2116,7 +2152,7 @@ class KMFilterActionAddToAddressBook: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionAddToAddressBook();
-  virtual ReturnCode process( KMMessage* msg ) const;
+  virtual ReturnCode process( KMime::Message* msg ) const;
   static KMFilterAction* newAction();
 
   virtual bool isEmpty() const { return false; }
@@ -2183,17 +2219,17 @@ void KMFilterActionAddToAddressBook::updateResourceMaps( bool force ) const
   mResourceMapsInitalized = true;
 }
 
-KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( KMMessage* msg ) const
+KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( KMime::Message* msg ) const
 {
   QString headerLine;
   if ( mParameter == mFromStr )
-    headerLine = msg->from();
+    headerLine = msg->from()->asUnicodeString();
   else if ( mParameter == mToStr )
-    headerLine = msg->to();
+    headerLine = msg->to()->asUnicodeString();
   else if ( mParameter == mCCStr )
-    headerLine = msg->cc();
+    headerLine = msg->cc()->asUnicodeString();
   else if ( mParameter == mBCCStr )
-    headerLine = msg->bcc();
+    headerLine = msg->bcc()->asUnicodeString();
 
   const QStringList emails = KPIMUtils::splitAddressList( headerLine );
 

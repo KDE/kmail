@@ -198,6 +198,7 @@ int KMFolderIndex::createInternal()
 
 void KMFolderIndex::addToSerialCache() const
 {
+#if 0 //TODO port to akonadi
   Q_ASSERT( mOpenCount > 0 );
 
   KMFolder *fld = folder();
@@ -218,4 +219,7 @@ void KMFolderIndex::addToSerialCache() const
       ++index;
     }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }

@@ -117,7 +117,7 @@ KMFilter::~KMFilter()
 }
 
 // only for !bPopFilter
-KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
+KMFilter::ReturnCode KMFilter::execActions( KMime::Message* msg, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
 
@@ -160,7 +160,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   return status;
 }
 
-bool KMFilter::requiresBody( KMMsgBase* msg )
+bool KMFilter::requiresBody( KMime::Content* msg )
 {
   if (pattern() && pattern()->requiresBody())
     return true; // no pattern means always matches?

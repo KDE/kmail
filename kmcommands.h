@@ -90,6 +90,7 @@ signals:
   void completed( KMCommand *command );
 
 protected:
+//TODO IMPORTANT, port this first to akonadi!!
   // Returns list of messages retrieved
   const QList<KMMessage*> retrievedMsgs() const;
   // Returns the single message retrieved

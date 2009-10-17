@@ -392,6 +392,7 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
 
 void KMAcctImap::postProcessNewMail( KMFolder * folder )
 {
+#if 0 //TODO port to akonadi
   disconnect( folder->storage(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)) );
 
@@ -493,6 +494,9 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     mUnreadBeforeCheck.clear();
     mCheckingSingleFolder = false;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -593,7 +597,7 @@ int KMAcctImap::slotFilterMsg( KMMessage *msg )
     // messageRetrieved(0) is always possible
     return -1;
   }
-
+#if 0 //TODO port to akonadi
   msg->setTransferInProgress( false );
 
   if ( msg->parent() && msg->parent()->find( msg ) == -1 ) {
@@ -624,8 +628,11 @@ int KMAcctImap::slotFilterMsg( KMMessage *msg )
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
   }
-
   return filterResult;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return -1;   //whatever it means
+#endif
 }
 
 #include "kmacctimap.moc"

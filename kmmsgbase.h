@@ -23,6 +23,8 @@
 #include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
 
+#include "messageinfo.h"
+
 // for large file support flags
 #include <sys/types.h>
 #include <QString>
@@ -58,20 +60,6 @@ typedef enum
     KMMsgFullySigned='F',
     KMMsgSignatureProblematic='X'
 } KMMsgSignatureState;
-
-/** Flags for the "MDN sent" state. */
-typedef enum
-{
-    KMMsgMDNStateUnknown = ' ',
-    KMMsgMDNNone = 'N',
-    KMMsgMDNIgnore = 'I',
-    KMMsgMDNDisplayed = 'R',
-    KMMsgMDNDeleted = 'D',
-    KMMsgMDNDispatched = 'F',
-    KMMsgMDNProcessed = 'P',
-    KMMsgMDNDenied = 'X',
-    KMMsgMDNFailed = 'E'
-} KMMsgMDNSentState;
 
 /** Flags for the drag and drop action. */
 typedef enum

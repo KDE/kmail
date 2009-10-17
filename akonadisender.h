@@ -30,7 +30,9 @@
 #include <QString>
 #include <QSet>
 
-class KMMessage;
+namespace KMime {
+  class Message;
+}
 class KJob;
 
 namespace KPIM {
@@ -79,7 +81,7 @@ protected:
 
     TODO cberzan: update docu...
    */
-  virtual bool doSend( KMMessage *msg, short sendNow );
+  virtual bool doSend( KMime::Message *msg, short sendNow );
 
   /**
     Send queued messages, using the specified transport or the
@@ -92,7 +94,7 @@ private:
     Queue one message using MailTransport::MessageQueueJob.
     This involves translating the message to KMime.
   */
-  void queueMessage( KMMessage *msg );
+  void queueMessage( KMime::Message *msg );
 
 private slots:
   void queueJobResult( KJob *job );

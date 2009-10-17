@@ -24,8 +24,8 @@
 
 #include "kmfolder.h"
 #include "kmkernel.h"
-#include "kmmessage.h"
 #include "progressmanager.h"
+#include "messagehelper.h"
 
 #include <KMessageBox>
 #include <KLocale>
@@ -61,18 +61,19 @@ static QStringList addrSpecListToStringList( const AddrSpecList &l, bool allowEm
   return result;
 }
 
-static void extractSenderToCCAndBcc( KMMessage *aMsg, QString *sender, QStringList *to, QStringList *cc, QStringList *bcc )
+
+static void extractSenderToCCAndBcc( KMime::Message *aMsg, QString &sender, QStringList &to, QStringList &cc, QStringList &bcc )
 {
-  if ( sender ) *sender = aMsg->sender();
-  if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
+  sender = aMsg->sender()->asUnicodeString();
+  if( aMsg->headerByType("X-KMail-Recipients") ) {
     // extended BCC handling to prevent TOs and CCs from seeing
     // BBC information by looking at source of an OpenPGP encrypted mail
-    if ( to ) *to = addrSpecListToStringList( aMsg->extractAddrSpecs( "X-KMail-Recipients" ) );
-    aMsg->removeHeaderField( "X-KMail-Recipients" );
+    to = addrSpecListToStringList( MessageHelper::extractAddrSpecs( aMsg, "X-KMail-Recipients" ) );
+    aMsg->removeHeader( "X-KMail-Recipients" );
   } else {
-    if ( to ) *to = addrSpecListToStringList( aMsg->extractAddrSpecs( "To" ) );
-    if ( cc ) *cc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Cc" ) );
-    if ( bcc ) *bcc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Bcc" ) );
+    to = addrSpecListToStringList( MessageHelper::extractAddrSpecs( aMsg, "To" ) );
+    cc = addrSpecListToStringList( MessageHelper::extractAddrSpecs( aMsg, "Cc" ) );
+    bcc = addrSpecListToStringList( MessageHelper::extractAddrSpecs( aMsg, "Bcc" ) );
   }
 }
 
@@ -120,18 +121,23 @@ void AkonadiSender::setSendQuotedPrintable( bool aSendQuotedPrintable )
   mSendQuotedPrintable = aSendQuotedPrintable;
 }
 
-bool AkonadiSender::doSend( KMMessage *aMsg, short sendNow  )
+bool AkonadiSender::doSend( KMime::Message *aMsg, short sendNow  )
 {
   KMFolder * const outbox = kmkernel->outboxFolder();
   const KMFolderOpener openOutbox( outbox, "AkonadiSender" );
 
   Q_ASSERT( aMsg );
+#if 0
+  //TODO Port to Akonadi
   aMsg->setStatus( MessageStatus::statusQueued() );
   if ( const int err = openOutbox.folder()->addMsg( aMsg ) ) {
     Q_UNUSED( err );
     KMessageBox::information( 0, i18n( "Cannot add message to outbox folder" ) );
     return false;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   if( sendNow == -1 ) {
     sendNow = mSendImmediate; // -1 == use default setting
@@ -156,6 +162,7 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
       true );
   kDebug() << "Created ProgressItem" << mProgressItem;
 
+#if 0
   // Traverse outbox.
   KMFolder *outbox = kmkernel->outboxFolder();
   outbox->open( "dosendoutbox" );
@@ -165,28 +172,35 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
     KMMessage *msg = outbox->getMsg( 0 );
     queueMessage( msg );
     outbox->removeMsg( 0 );
-  }
 
+  }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return true;
 }
 
-void AkonadiSender::queueMessage( KMMessage *msg )
+void AkonadiSender::queueMessage( KMime::Message *message )
 {
-  Q_ASSERT( msg );
+  Q_ASSERT( message );
+#if 0 //TODO port to akonadi
   msg->setTransferInProgress( true );
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   // Translate message to KMime.
+  KMime::Message::Ptr messagePtr = KMime::Message::Ptr( new KMime::Message );
+  messagePtr->setContent( MessageHelper::asSendableString( message ) );
+  kDebug() << "KMime::Message: \n[\n" << messagePtr->encodedContent().left( 1000 ) << "\n]\n";
+
   MessageQueueJob *qjob = new MessageQueueJob( this );
-  KMime::Message::Ptr message = KMime::Message::Ptr( new KMime::Message );
-  message->setContent( msg->asSendableString() );
-  kDebug() << "KMime::Message: \n[\n" << message->encodedContent().left( 1000 ) << "\n]\n";
-  qjob->setMessage( message );
+  qjob->setMessage( KMime::Message::Ptr(messagePtr) );
 
   // Get transport.
   QString transportName = mCustomTransport;
   kDebug() << "Custom transportName:" << mCustomTransport;
   if( transportName.isEmpty() ) {
-    transportName = msg->headerField( "X-KMail-Transport" );
+    transportName = message->headerByType( "X-KMail-Transport" ) ? message->headerByType( "X-KMail-Transport" )->asUnicodeString() : "";
     kDebug() << "TransportName from headers:" << transportName;
   }
   if( transportName.isEmpty() ) {
@@ -201,12 +215,16 @@ void AkonadiSender::queueMessage( KMMessage *msg )
   // Get addresses.
   QStringList to, cc, bcc;
   QString from;
-  extractSenderToCCAndBcc( msg, &from, &to, &cc, &bcc );
+  extractSenderToCCAndBcc( message, from, to, cc, bcc );
   qjob->setFrom( from );
   qjob->setTo( to );
   qjob->setCc( cc );
   qjob->setBcc( bcc );
+#if 0
   msg->setTransferInProgress( false ); // we are done with the KMMessage
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   // Default sent-mail collection for now.
   // Send immediately (queuing is done by KMail's outbox for now...)

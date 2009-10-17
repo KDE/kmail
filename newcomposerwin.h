@@ -106,6 +106,7 @@ namespace KMail {
 
 namespace KMime {
   class Message;
+  class Content;
 }
 
 namespace KIO {
@@ -132,13 +133,13 @@ class KMComposeWin : public KMail::Composer
   friend class ::KMComposerEditor;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposeWin( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+    explicit KMComposeWin( KMime::Message *msg = 0, TemplateContext context = NoTemplate,
                            uint identity = 0, const QString & textSelection = QString(),
                            const QString & customTemplate = QString() );
     ~KMComposeWin();
 
   public:
-    static Composer *create( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+    static Composer *create( KMime::Message *msg = 0, TemplateContext context = NoTemplate,
                              uint identity = 0, const QString & textSelection = QString(),
                              const QString & customTemplate = QString() );
 
@@ -189,7 +190,7 @@ class KMComposeWin : public KMail::Composer
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-     void setMsg( KMMessage *newMsg, bool mayAutoSign=true,
+     void setMsg( KMime::Message *newMsg, bool mayAutoSign=true,
                  bool allowDecryption=false, bool isModified=false );
 
      /**
@@ -471,7 +472,7 @@ class KMComposeWin : public KMail::Composer
 
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
-    void addAttach( KMMessagePart *msgPart ) {}
+    void addAttach( KMime::Content *msgPart ) {}
 
   public: // AttachmentController
     const KPIMIdentities::Identity &identity() const;
@@ -590,7 +591,7 @@ class KMComposeWin : public KMail::Composer
      * Searches the mime tree, where root is the root node, for embedded images,
      * extracts them froom the body and adds them to the editor.
      */
-    void collectImages( partNode *root );
+    void collectImages( KMime::Content *root );
 
   private:
     /**
@@ -622,7 +623,7 @@ class KMComposeWin : public KMail::Composer
     /**
      * Save the message into the Drafts or Templates folder.
      */
-    bool saveDraftOrTemplate( const QString &folderName, KMMessage *msg );
+    bool saveDraftOrTemplate( const QString &folderName, KMime::Message *msg );
 
     enum SaveIn {
       None,
@@ -742,6 +743,12 @@ class KMComposeWin : public KMail::Composer
     QString addQuotesToText( const QString &inputText ) const;
     // helper method for rethinkFields
     int calcColumnWidth( int which, long allShowing, int width ) const;
+
+
+    /** Initialize header fields. Should be called on new messages
+      if they are not set manually. E.g. before composing. Calling
+      of setAutomaticFields(), see below, is still required. */
+    void initHeader( KMime::Message *message, uint identity=0 );
 
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );

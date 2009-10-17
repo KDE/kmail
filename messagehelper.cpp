@@ -1056,7 +1056,7 @@ KMime::Message* createMDN( KMime::Message *msg,
 
   // extract where to send from:
   QString finalRecipient = kmkernel->identityManager()
-    ->identityForUoidOrDefault( identityUoid() ).fullEmailAddr();
+    ->identityForUoidOrDefault( identityUoid( msg ) ).fullEmailAddr();
 
   //
   // Generate message:
@@ -1214,6 +1214,29 @@ QByteArray getRefStr( KMime::Message *msg )
   retRefStr += msg->messageID()->as7BitString();
   return retRefStr;
 }
+
+QString ccStrip( KMime::Message* msg )
+{
+  return StringUtil::stripEmailAddr( msg->cc()->asUnicodeString() );
+}
+
+QString toStrip( KMime::Message* msg )
+{
+  return StringUtil::stripEmailAddr( msg->to()->asUnicodeString() );
+}
+
+QString fromStrip( KMime::Message* msg )
+{
+  return StringUtil::stripEmailAddr( msg->from()->asUnicodeString() );
+}
+
+
+QString stripOffPrefixes( const QString& str )
+{
+  return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
+                          true, QString() ).trimmed();
+}
+
 
 }
   

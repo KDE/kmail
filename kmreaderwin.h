@@ -33,7 +33,6 @@
 #include <messagecore/messagestatus.h>
 #include <kvbox.h>
 using KPIM::MessageStatus;
-#include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 #include <map>
 #include <messageviewer/viewer.h>
@@ -98,27 +97,13 @@ namespace MessageViewer {
    used for reading or viewing messages.
 */
 
-class KMReaderWin: public QWidget, public KMail::Interface::Observer {
+class KMReaderWin: public QWidget {
   Q_OBJECT
-
-  friend void KMMimePartTree::slotItemClicked( QTreeWidgetItem* );
-  friend void KMMimePartTree::slotContextMenuRequested( const QPoint & );
-  friend void KMMimePartTree::slotSaveAs();
-  friend void KMMimePartTree::startDrag( Qt::DropActions actions );
-
-  friend class KMail::ObjectTreeParser;
-  friend class KHtmlPartHtmlWriter;
 
 public:
   KMReaderWin( QWidget *parent, QWidget *mainWindow,
                KActionCollection *actionCollection, Qt::WindowFlags f = 0 );
   virtual ~KMReaderWin();
-
-  /**
-     \reimp from Interface::Observer
-     Updates the current message
-   */
-  void update( KMail::Interface::Observable * );
 
   /** Read settings from app's config file. */
   void readConfig();
@@ -162,18 +147,6 @@ public:
 
   void setMessage( Akonadi::Item item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
-  /**
-   * This should be called when setting a message that was constructed from another message, which
-   * is the case when viewing encapsulated messages in the separate reader window.
-   * We need to know the serial number of the original message, and at which part index the encapsulated
-   * message was at that original message, so that deleting and editing attachments can work on the
-   * original message.
-   *
-   * This is a HACK. There really shouldn't be a copy of the original mail.
-   *
-   * @see slotDeleteAttachment, slotEditAttachment, fillCommandInfo
-   */
-  void setOriginalMsg( unsigned long serNumOfOriginalMessage, int nodeIdOffset );
 
   /** Instead of settings a message to be shown sets a message part
       to be shown */
@@ -193,16 +166,12 @@ public:
   /** Clear the reader and discard the current message. */
   void clear(bool force = false);
 
+  void update(bool force = false);
+
   /** Saves the relative position of the scroll view. Call this before calling update()
       if you want to preserve the current view. */
   void saveRelativePosition();
 
-  /** Re-parse the current message. */
-  void update(bool force = false);
-#ifndef USE_AKONADI_VIEWER
-  /** Print message. */
-  virtual void printMsg(  KMMessage* aMsg );
-#endif
   /** Return selected text */
   QString copyText();
 
@@ -256,15 +225,6 @@ public:
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
-  /** Returns message part from given URL or null if invalid. */
-  partNode* partNodeFromUrl(const KUrl &url);
-
-  partNode * partNodeForId( int id );
-
-  KUrl tempFileUrlFromPartNode( const partNode *node );
-
-  /** Returns id of message part from given URL or -1 if invalid. */
-  static int msgPartFromUrl(const KUrl &url);
 
   void setUpdateAttachment( bool update = true ) { mAtmUpdate = update; }
   /** Access to the KHTMLPart used for the viewer. Use with
@@ -334,17 +294,7 @@ public:
   /** Show or hide the full list of "To" addresses */
   void setShowFullCcAddressList( bool showFullCcAddressList = true );
 
-  /* retrieve BodyPartMemento of id \a which for partNode \a node */
-  KMail::Interface::BodyPartMemento * bodyPartMemento( const partNode * node, const QByteArray & which ) const;
-
-  /* set/replace BodyPartMemento \a memento of id \a which for
-     partNode \a node. If there was a BodyPartMemento registered
-     already, replaces (deletes) that one. */
-  void setBodyPartMemento( const partNode * node, const QByteArray & which, KMail::Interface::BodyPartMemento * memento );
 private:
-  /* deletes all BodyPartMementos. Use this when skipping to another
-     message (as opposed to re-loading the same one again). */
-  void clearBodyPartMementos();
 
 signals:
   /** Emitted after parsing of a message to have it stored
@@ -382,30 +332,8 @@ public slots:
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
-  void slotMessageArrived( KMMessage *msg );
   void slotTouchMessage();
 
-  /**
-   * Find the node ID and the message of the attachment that should be edited or deleted.
-   * This is used when setOriginalMsg() was called before, in that case we want to operate
-   * on the original message instead of our copy.
-   *
-   * @see setOriginalMsg
-   */
-  void fillCommandInfo( partNode *node, KMMessage **msg, int *nodeId );
-
-  void slotDeleteAttachment( partNode* node );
-  void slotEditAttachment( partNode* node );
-#ifndef USE_AKONADI_VIEWER
-  /**
-   * Does an action for the current attachment.
-   * The action is defined by the KMHandleAttachmentCommand::AttachmentAction
-   * enum.
-   * prepareHandleAttachment() needs to be called before calling this to set the
-   * correct attachment ID.
-   */
-  void slotHandleAttachment( int action );
-#endif
 protected slots:
   /** Some attachment operations. */
   void slotAtmView( int id, const QString& name );
@@ -418,27 +346,12 @@ protected slots:
   void slotPrintMsg();
 #endif
 protected:
-  /** reimplemented in order to update the frame width in case of a changed
-      GUI style */
-  /** Writes the given message part to a temporary file and returns the
-      name of this file or QString() if writing failed.
-  */
-  QString writeMessagePartToTempFile( KMMessagePart* msgPart, int partNumber );
-
-  /**
-    Creates a temporary dir for saving attachments, etc.
-    Will be automatically deleted when another message is viewed.
-    @param param Optional part of the directory name.
-  */
-  QString createTempDir( const QString &param = QString() );
-  /** Cleanup the attachment temp files */
-  virtual void removeTempFiles();
-
 
   KUrl urlClicked() const;
 private:
   void createActions();
 private:
+//TODO(Andras) Remove unneeded stuff
   int mAtmCurrent;
   QString mAtmCurrentName;
   KMMessage *mMessage;
@@ -452,7 +365,6 @@ private:
   unsigned long mLastSerNum;
   QStringList mTempFiles;
   QStringList mTempDirs;
-  partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;

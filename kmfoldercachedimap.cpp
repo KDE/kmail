@@ -534,6 +534,7 @@ void KMFolderCachedImap::takeTemporarily( int idx )
 
 int KMFolderCachedImap::addMsgInternal( KMMessage *msg, bool newMail, int *index_return )
 {
+#if 0 //TODO port to akonadi
   // Possible optimization: Only dirty if not filtered below
   ulong uid = msg->UID();
   if ( uid != 0 ) {
@@ -558,6 +559,10 @@ int KMFolderCachedImap::addMsgInternal( KMMessage *msg, bool newMail, int *index
   }
 
   return rc;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return -1;
+#endif
 }
 
 int KMFolderCachedImap::addMsg( KMMessage *msg, int *index_return )

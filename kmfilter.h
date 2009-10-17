@@ -27,10 +27,12 @@
 
 class QString;
 class KConfigGroup;
-class KMMessage;
+namespace KMime {
+  class Message;
+  class Content;
+}
 class KMFilterAction;
 class KMFolder;
-class KMMsgBase;
 
 // maximum number of filter actions per filter
 const int FILTER_MAX_ACTIONS = 8;
@@ -92,11 +94,11 @@ public:
       true if the caller may apply other filters and false if he shall
       stop the filtering of this message.
   */
-  ReturnCode execActions( KMMessage* msg, bool& stopIt ) const ;
+  ReturnCode execActions( KMime::Message* msg, bool& stopIt ) const ;
 
   /** Determines if the filter depends on the body of the message
   */
-  bool requiresBody(KMMsgBase* msgBase);
+  bool requiresBody(KMime::Content* msgBase);
 
   /** No descriptions */
   KMPopFilterAction action();

@@ -42,11 +42,9 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QSignalMapper>
-#include "partNode.h"
 #include "kmmsgdict.h"
 #include "messagesender.h"
 #include "messageviewer/kcursorsaver.h"
-#include "kmfolder.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/khtmlparthtmlwriter.h"
@@ -59,9 +57,6 @@ using KMail::FolderJob;
 using MessageViewer::CSSHelper;
 #include "isubject.h"
 using KMail::ISubject;
-#include "urlhandlermanager.h"
-using KMail::URLHandlerManager;
-#include "interfaces/observable.h"
 #include "util.h"
 #include <kicon.h>
 #include "broadcaststatus.h"
@@ -75,25 +70,11 @@ using namespace KMime;
 using namespace MessageViewer;
 #include "messageviewer/attachmentstrategy.h"
 
-#include <mimelib/mimepp.h>
-#include <mimelib/body.h>
-#include <mimelib/utility.h>
-
-#include "kleo/specialjob.h"
-#include "kleo/cryptobackend.h"
-#include "kleo/cryptobackendfactory.h"
 
 // KABC includes
 #include <kabc/addressee.h>
 #include <kabc/vcardconverter.h>
 
-// khtml headers
-#include <khtml_part.h>
-#include <khtmlview.h> // So that we can get rid of the frames
-#include <dom/html_element.h>
-#include <dom/html_block.h>
-#include <dom/html_document.h>
-#include <dom/dom_string.h>
 
 #include <kde_file.h>
 #include <kactionmenu.h>
@@ -153,7 +134,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
-  : QWidget(aParent, aFlags ),
+  : QWidget(aParent, aFlags ) /*,TODO(Andras) Remove
     mSerNumOfOriginalMessage( 0 ),
     mNodeIdOffset( -1 ),
     mDelayedMarkTimer( 0 ),
@@ -168,13 +149,14 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
     mShowFullToAddressList( false ),
-    mShowFullCcAddressList( false )
+    mShowFullCcAddressList( false )*/
 {
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
+/*
   mLastSerNum = 0;
   mWaitingForSerNum = 0;
   mMessage = 0;
-  mAtmUpdate = false;
+  mAtmUpdate = false;*/
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
@@ -257,85 +239,6 @@ bool KMReaderWin::isFixedFont() const
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
-  clearBodyPartMementos();
-#if 0
-  if (mAutoDelete) delete message();
-#endif
-  delete mRootNode; mRootNode = 0;
-  removeTempFiles();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotMessageArrived( KMMessage *msg )
-{
-  if (msg && ((KMMsgBase*)msg)->isMessage()) {
-    if ( msg->getMsgSerNum() == mWaitingForSerNum ) {
-      setMsg( msg, true );
-    } else {
-      kDebug() << "Ignoring update";
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::update( KMail::Interface::Observable * observable )
-{
-  if ( !mAtmUpdate ) {
-    // reparse the msg
-    saveRelativePosition();
-    updateReaderWin();
-    return;
-  }
-
-  if ( !mRootNode )
-    return;
-
-  KMMessage* msg = static_cast<KMMessage*>( observable );
-  assert( msg != 0 );
-
-  // find our partNode and update it
-  if ( !msg->lastUpdatedPart() ) {
-    kDebug() << "No updated part";
-    return;
-  }
-  partNode* node = mRootNode->findNodeForDwPart( msg->lastUpdatedPart() );
-  if ( !node ) {
-    kDebug() << "Can't find node for part";
-    return;
-  }
-  node->setDwPart( msg->lastUpdatedPart() );
-
-  // update the tmp file
-  // we have to set it writeable temporarily
-  ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRWXU );
-  QByteArray data = node->msgPart().bodyDecodedBinary();
-  if ( node->msgPart().type() == DwMime::kTypeText && data.size() > 0 ) {
-    // convert CRLF to LF before writing text attachments to disk
-    const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
-    data.truncate( newsize );
-  }
-  KPIMUtils::kByteArrayToFile( data, mAtmCurrentName, false, false, false );
-  ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
-
-  mAtmUpdate = false;
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::removeTempFiles()
-{
-  for (QStringList::Iterator it = mTempFiles.begin(); it != mTempFiles.end();
-    ++it)
-  {
-    QFile::remove(*it);
-  }
-  mTempFiles.clear();
-  for (QStringList::Iterator it = mTempDirs.begin(); it != mTempDirs.end();
-    it++)
-  {
-    QDir(*it).rmdir(*it);
-  }
-  mTempDirs.clear();
 }
 
 
@@ -360,20 +263,8 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nodeIdOffset )
-{
-  mSerNumOfOriginalMessage = serNumOfOriginalMessage;
-  mNodeIdOffset = nodeIdOffset;
-}
-
-//-----------------------------------------------------------------------------
 void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
 {
-  if ( aMsg ) {
-    kDebug() << "(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
-             << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
-  }
-#ifdef USE_AKONADI_VIEWER
   //TEMPORARY
   if ( aMsg ) {
     KMime::Message *message = new KMime::Message;
@@ -382,80 +273,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     mViewer->setMessage( message , force ? Viewer::Force : Viewer::Delayed);
     //return;
   }
-#endif
-
-#ifndef USE_AKONADI_VIEWER
-  // Reset message-transient state
-  if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
-    mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin()-1;
-    clearBodyPartMementos();
-  }
-  if ( mPrinting )
-    mLevelQuote = -1;
-#endif
-  bool complete = true;
-  if ( aMsg &&
-       !aMsg->readyToShow() &&
-       (aMsg->getMsgSerNum() != mLastSerNum) &&
-       !aMsg->isComplete() )
-    complete = false;
-
-  // If not forced and there is aMsg and aMsg is same as mMsg then return
-  if (!force && aMsg && mLastSerNum != 0 && aMsg->getMsgSerNum() == mLastSerNum)
-    return;
-
-  // (de)register as observer
-  if (aMsg && message())
-    message()->detach( this );
-  if (aMsg)
-    aMsg->attach( this );
-  mAtmUpdate = false;
-
   // connect to the updates if we have hancy headers
 
   mDelayedMarkTimer.stop();
-
-  mMessage = 0;
-  if ( !aMsg ) {
-    mWaitingForSerNum = 0; // otherwise it has been set
-    mLastSerNum = 0;
-  } else {
-    mLastSerNum = aMsg->getMsgSerNum();
-    // Check if the serial number can be used to find the assoc KMMessage
-    // If so, keep only the serial number (and not mMessage), to avoid a dangling mMessage
-    // when going to another message in the mainwindow.
-    // Otherwise, keep only mMessage, this is fine for standalone KMReaderMainWins since
-    // we're working on a copy of the KMMessage, which we own.
-    if (message() != aMsg) {
-      mMessage = aMsg;
-      mLastSerNum = 0;
-    }
-  }
-
-  if (aMsg) {
-#ifndef USE_AKONADI_VIEWER
-    aMsg->setOverrideCodec( overrideCodec() );
-#endif
-    aMsg->setDecodeHTML( htmlMail() );
-    // FIXME: workaround to disable DND for IMAP load-on-demand
-#ifndef USE_AKONADI_VIEWER
-    if ( !aMsg->isComplete() )
-      mViewer->setDNDEnabled( false );
-    else
-      mViewer->setDNDEnabled( true );
-#endif
-  }
-
-  // only display the msg if it is complete
-  // otherwise we'll get flickering with progressively loaded messages
-  if ( complete )
-  {
-    // Avoid flicker, somewhat of a cludge
-    if (force) {
-      // stop the timer to avoid calling updateReaderWin twice
-      updateReaderWin();
-    }
-  }
 
   if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
        && GlobalSettings::self()->delayedMarkAsRead() ) {
@@ -471,9 +291,6 @@ void KMReaderWin::clearCache()
 {
   clear();
   mDelayedMarkTimer.stop();
-  mLastSerNum = 0;
-  mWaitingForSerNum = 0;
-  mMessage = 0;
 }
 
 // enter items for the "Important changes" list here:
@@ -600,99 +417,13 @@ void KMReaderWin::displayAboutPage()
   displaySplashPage( info.toString() );
 }
 
-//-----------------------------------------------------------------------------
 
-void KMReaderWin::updateReaderWin()
-{
-  //TODO remove it
-}
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
-                                                 int aPartNum )
-{
-  // If the message part is already written to a file, no point in doing it again.
-  // This function is called twice actually, once from the rendering of the attachment
-  // in the body and once for the header.
-  const partNode * node = mRootNode->findId( aPartNum );
-  KUrl existingFileName = tempFileUrlFromPartNode( node );
-  if ( !existingFileName.isEmpty() ) {
-    return existingFileName.toLocalFile();
-  }
-
-  QString fileName = aMsgPart->fileName();
-  if( fileName.isEmpty() )
-    fileName = aMsgPart->name();
-
-  QString fname = createTempDir( QString::number( aPartNum ) );
-  if ( fname.isEmpty() )
-    return QString();
-
-  // strip off a leading path
-  int slashPos = fileName.lastIndexOf( '/' );
-  if( -1 != slashPos )
-    fileName = fileName.mid( slashPos + 1 );
-  if( fileName.isEmpty() )
-    fileName = "unnamed";
-  fname += '/' + fileName;
-
-  QByteArray data = aMsgPart->bodyDecodedBinary();
-  if ( aMsgPart->type() == DwMime::kTypeText && data.size() > 0 ) {
-    // convert CRLF to LF before writing text attachments to disk
-    const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
-    data.truncate( newsize );
-  }
-  if( !KPIMUtils::kByteArrayToFile( data, fname, false, false, false ) )
-    return QString();
-
-  mTempFiles.append( fname );
-  // make file read-only so that nobody gets the impression that he might
-  // edit attached files (cf. bug #52813)
-  ::chmod( QFile::encodeName( fname ), S_IRUSR );
-
-  return fname;
-}
-
-QString KMReaderWin::createTempDir( const QString &param )
-{
-  KTemporaryFile *tempFile = new KTemporaryFile();
-  tempFile->setSuffix( '.' + param );
-  tempFile->open();
-  QString fname = tempFile->fileName();
-  delete tempFile;
-
-  if ( ::access( QFile::encodeName( fname ), W_OK ) != 0 ) {
-    // Not there or not writable
-    if( KDE_mkdir( QFile::encodeName( fname ), 0 ) != 0 ||
-        ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 ) {
-      return QString(); //failed create
-    }
-  }
-
-  assert( !fname.isNull() );
-
-  mTempDirs.append( fname );
-  return fname;
-}
-
-//-----------------------------------------------------------------------------
-int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
-{
-  if ( aUrl.isEmpty() ) return -1;
-  if ( !aUrl.isLocalFile() ) return -1;
-
-  QString path = aUrl.toLocalFile();
-  uint right = path.lastIndexOf( '/' );
-  uint left = path.lastIndexOf( '.', right );
-
-  bool ok;
-  int res = path.mid( left + 1, right - left - 1 ).toInt( &ok );
-  return ( ok ) ? res : -1;
-}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTouchMessage()
 {
+//TODO(Andras) port to Akonadi
+#if 0
   if ( !message() )
     return;
 
@@ -721,156 +452,11 @@ void KMReaderWin::slotTouchMessage()
                                                    true /* allow GUI */ ) )
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
       KMessageBox::error( this, i18n("Could not send MDN.") );
-}
-
-
-bool foundSMIMEData( const QString aUrl,
-                     QString& displayName,
-                     QString& libName,
-                     QString& keyId )
-{
-  static QString showCertMan("showCertificate#");
-  displayName = "";
-  libName = "";
-  keyId = "";
-  int i1 = aUrl.indexOf( showCertMan );
-  if( -1 < i1 ) {
-    i1 += showCertMan.length();
-    int i2 = aUrl.indexOf(" ### ", i1);
-    if( i1 < i2 )
-    {
-      displayName = aUrl.mid( i1, i2-i1 );
-      i1 = i2+5;
-      i2 = aUrl.indexOf(" ### ", i1);
-      if( i1 < i2 )
-      {
-        libName = aUrl.mid( i1, i2-i1 );
-        i2 += 5;
-
-        keyId = aUrl.mid( i2 );
-        /*
-        int len = aUrl.length();
-        if( len > i2+1 ) {
-          keyId = aUrl.mid( i2, 2 );
-          i2 += 2;
-          while( len > i2+1 ) {
-            keyId += ':';
-            keyId += aUrl.mid( i2, 2 );
-            i2 += 2;
-          }
-        }
-        */
-      }
-    }
-  }
-  return !keyId.isEmpty();
-}
-
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOn(const QString &aUrl)
-{
-  const KUrl url(aUrl);
-  if ( url.protocol() == "kmail" || url.protocol() == "x-kmail" || url.protocol() == "attachment"
-       || (url.protocol().isEmpty() && url.path().isEmpty()) ) {
-    mViewer->setDNDEnabled( false );
-  } else {
-    mViewer->setDNDEnabled( true );
-  }
-  if ( aUrl.trimmed().isEmpty() ) {
-    KPIM::BroadcastStatus::instance()->reset();
-    mHoveredUrl = KUrl();
-    return;
-  }
-
-  mHoveredUrl = url;
-
-  const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
-
-  if ( msg.isEmpty() ) {
-    kWarning() << "Unhandled URL hover!";
-  }
-  KPIM::BroadcastStatus::instance()->setTransientStatusMsg( msg );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
-{
-  const KUrl url( aUrl );
-  mClickedUrl = url;
-
-  if ( URLHandlerManager::instance()->handleContextMenuRequest( url, aPos, this ) )
-    return;
-
-  if ( message() ) {
-    kWarning() << "Unhandled URL right-click!";
-    emit popupMenu( *message(), url, aPos );
-  }
-}
-// Checks if the given node has a parent node that is a DIV which has an ID attribute
-// with the value specified here
-static bool hasParentDivWithId( const DOM::Node &start, const QString &id )
-{
-  if ( start.isNull() )
-    return false;
-
-  if ( start.nodeName().string() == "div" ) {
-    for ( unsigned int i = 0; i < start.attributes().length(); i++ ) {
-      if ( start.attributes().item( i ).nodeName().string() == "id" &&
-           start.attributes().item( i ).nodeValue().string() == id )
-        return true;
-    }
-  }
-
-  if ( !start.parentNode().isNull() )
-    return hasParentDivWithId( start.parentNode(), id );
-  else return false;
-}
-//-----------------------------------------------------------------------------
-void KMReaderWin::prepareHandleAttachment( int id, const QString& fileName )
-{
-  mAtmCurrent = id;
-  mAtmCurrentName = fileName;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotHandleAttachment( int choice )
-{
-  mAtmUpdate = true;
-  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  if ( choice == KMHandleAttachmentCommand::Delete ) {
-    slotDeleteAttachment( node );
-  } else if ( choice == KMHandleAttachmentCommand::Edit ) {
-    slotEditAttachment( node );
-  } else if ( choice == KMHandleAttachmentCommand::Copy ) {
-    if ( !node )
-      return;
-    QList<QUrl> urls;
-    KUrl kUrl = tempFileUrlFromPartNode( node );
-    QUrl url = QUrl::fromPercentEncoding( kUrl.toEncoded() );
-
-    if ( !url.isValid() )
-      return;
-    urls.append( url );
-
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setUrls( urls );
-    QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
-  } else if ( choice == KMHandleAttachmentCommand::ScrollTo ) {
-    scrollToAttachment( node );
-  }
-  else {
-
-    KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
-        node, message(), mAtmCurrent, mAtmCurrentName,
-        KMHandleAttachmentCommand::AttachmentAction( choice ), KService::Ptr( 0 ), this );
-    connect( command, SIGNAL( showAttachment( int, const QString& ) ),
-        this, SLOT( slotAtmView( int, const QString& ) ) );
-    command->start();
-  }
-}
 #endif
+}
+
+
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
 {
@@ -883,30 +469,6 @@ void KMReaderWin::slotCopySelectedText()
   selection.replace( QChar::Nbsp, ' ' );
   QApplication::clipboard()->setText( selection );
 }
-#ifndef USE_AKONADI_VIEWER
-//-----------------------------------------------------------------------------
-void KMReaderWin::atmViewMsg( KMMessagePart* aMsgPart, int nodeId )
-{
-  assert(aMsgPart!=0);
-  KMMessage* msg = new KMMessage;
-  msg->fromString(aMsgPart->bodyDecoded());
-  assert(msg != 0);
-  msg->setMsgSerNum( 0 ); // because lookups will fail
-  // some information that is needed for imap messages with LOD
-  msg->setParent( message()->parent() );
-  msg->setUID(message()->UID());
-  msg->setReadyToShow(true);
-  KMReaderMainWin *win = new KMReaderMainWin();
-  QString encodeStr;
-#ifndef USE_AKONADI_VIEWER
-  encodeStr = overrideEncoding();
-#else
-  encodeStr = mViewer->overrideEncoding();
-#endif
-  win->showMsg( encodeStr, msg, message()->getMsgSerNum(), nodeId );
-  win->show();
-}
-#endif
 
 void KMReaderWin::setMsgPart( partNode * node ) {
 #ifndef USE_AKONADI_VIEWER
@@ -1193,22 +755,11 @@ void KMReaderWin::saveRelativePosition()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::update( bool force )
-{
-#ifndef USE_AKONADI_VIEWER
-  KMMessage *msg = message();
-  if ( msg ) {
-    saveRelativePosition();
-    setMsg( msg, force );
-  }
-#else
-  //TODO
-#endif
-}
-
-//-----------------------------------------------------------------------------
 KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
 {
+
+//TODO(Andras) port to Akonadi
+#if 0
   KMFolder*  tmpFolder;
   KMFolder*& folder = aFolder ? *aFolder : tmpFolder;
   folder = 0;
@@ -1225,6 +776,8 @@ KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
     }
     return message;
   }
+  }
+#endif
   return 0;
 }
 
@@ -1301,106 +854,6 @@ void KMReaderWin::slotMailtoReply()
 #endif
 }
 
-//-----------------------------------------------------------------------------
-partNode * KMReaderWin::partNodeFromUrl( const KUrl & url ) {
-  return mRootNode ? mRootNode->findId( msgPartFromUrl( url ) ) : 0 ;
-}
-
-partNode * KMReaderWin::partNodeForId( int id ) {
-  return mRootNode ? mRootNode->findId( id ) : 0 ;
-}
-
-
-KUrl KMReaderWin::tempFileUrlFromPartNode( const partNode *node )
-{
-  if (!node)
-    return KUrl();
-
-  foreach ( const QString &path, mTempFiles ) {
-    int right = path.lastIndexOf( '/' );
-    int left = path.lastIndexOf( '.', right );
-
-    bool ok = false;
-    int res = path.mid( left + 1, right - left - 1 ).toInt( &ok );
-    if ( ok && res == node->nodeId() )
-      return KUrl( path );
-  }
-  return KUrl();
-}
-
-void KMReaderWin::fillCommandInfo( partNode *node, KMMessage **msg, int *nodeId )
-{
-  Q_ASSERT( msg && nodeId );
-
-  if ( mSerNumOfOriginalMessage != 0 ) {
-    KMFolder *folder = 0;
-    int index = -1;
-    KMMsgDict::instance()->getLocation( mSerNumOfOriginalMessage, &folder, &index );
-    if ( folder && index != -1 )
-      *msg = folder->getMsg( index );
-
-    if ( !( *msg ) ) {
-      kWarning() << "Unable to find the original message, aborting attachment deletion!";
-      return;
-    }
-
-    *nodeId = node->nodeId() + mNodeIdOffset;
-  }
-  else {
-    *nodeId = node->nodeId();
-    *msg = message();
-  }
-}
-
-void KMReaderWin::slotDeleteAttachment(partNode * node)
-{
-  if ( KMessageBox::warningContinueCancel( this,
-       i18n("Deleting an attachment might invalidate any digital signature on this message."),
-       i18n("Delete Attachment"), KStandardGuiItem::del(), KStandardGuiItem::cancel(),
-       "DeleteAttachmentSignatureWarning" )
-     != KMessageBox::Continue ) {
-    return;
-  }
-
-  int nodeId = -1;
-  KMMessage *msg = 0;
-  fillCommandInfo( node, &msg, &nodeId );
-  if ( msg && nodeId != -1 ) {
-#ifdef OLD_COMMAND
-    KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( nodeId, msg, this );
-    command->start();
-#endif
-  }
-
-  // If we are operating on a copy of parts of the message, make sure to update the copy as well.
-  if ( mSerNumOfOriginalMessage != 0 && message() ) {
-    message()->deleteBodyPart( node->nodeId() );
-    update( true );
-  }
-}
-
-void KMReaderWin::slotEditAttachment(partNode * node)
-{
-  if ( KMessageBox::warningContinueCancel( this,
-        i18n("Modifying an attachment might invalidate any digital signature on this message."),
-        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "document-properties" ), KStandardGuiItem::cancel(),
-        "EditAttachmentSignatureWarning" )
-        != KMessageBox::Continue ) {
-    return;
-  }
-
-  int nodeId = -1;
-  KMMessage *msg = 0;
-  fillCommandInfo( node, &msg, &nodeId );
-  if ( msg && nodeId != -1 ) {
-#ifdef OLD_COMMAND
-    KMEditAttachmentCommand* command = new KMEditAttachmentCommand( nodeId, msg, this );
-    command->start();
-#endif
-  }
-
-  // FIXME: If we are operating on a copy of parts of the message, make sure to update the copy as well.
-}
 
 CSSHelper* KMReaderWin::cssHelper() const
 {
@@ -1410,63 +863,6 @@ CSSHelper* KMReaderWin::cssHelper() const
 bool KMReaderWin::decryptMessage() const
 {
   return mViewer->decryptMessage();
-}
-using namespace KMail::Interface;
-
-void KMReaderWin::setBodyPartMemento( const partNode *node,
-                                      const QByteArray &which,
-                                      BodyPartMemento *memento )
-{
-  const QByteArray index = node->path() + ':' + which.toLower();
-
-  const std::map<QByteArray,BodyPartMemento*>::iterator it =
-    mBodyPartMementoMap.lower_bound( index );
-
-  if ( it != mBodyPartMementoMap.end() && it->first == index ) {
-    if ( memento && memento == it->second ) {
-      return;
-    }
-
-    delete it->second;
-
-    if ( memento ) {
-      it->second = memento;
-    } else {
-      mBodyPartMementoMap.erase( it );
-    }
-  } else {
-    if ( memento ) {
-      mBodyPartMementoMap.insert( it, std::make_pair( index, memento ) );
-    }
-  }
-
-  if ( Observable * o = memento ? memento->asObservable() : 0 ) {
-    o->attach( this );
-  }
-}
-
-BodyPartMemento *KMReaderWin::bodyPartMemento( const partNode *node,
-                                               const QByteArray &which ) const
-{
-  const QByteArray index = node->path() + ':' + which.toLower();
-  const std::map<QByteArray,BodyPartMemento*>::const_iterator it =
-    mBodyPartMementoMap.find( index );
-
-  if ( it == mBodyPartMementoMap.end() ) {
-    return 0;
-  } else {
-    return it->second;
-  }
-}
-
-void KMReaderWin::clearBodyPartMementos()
-{
-  for ( std::map<QByteArray,BodyPartMemento*>::const_iterator
-          it = mBodyPartMementoMap.begin(), end = mBodyPartMementoMap.end();
-        it != end; ++it ) {
-    delete it->second;
-  }
-  mBodyPartMementoMap.clear();
 }
 
 bool KMReaderWin::showFullToAddressList() const
@@ -1600,6 +996,10 @@ void KMReaderWin::setAutoDelete(bool f)
   mViewer->setAutoDelete( f );
 }
 
+void KMReaderWin::update( bool force )
+{
+  mViewer->update( force ? Viewer::Force : Viewer::Delayed );
+}
 
 #include "kmreaderwin.moc"
 

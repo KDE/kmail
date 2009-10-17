@@ -7,14 +7,13 @@
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
 // needed temporarily until KMime is replacing the partNode helper class:
-#include "partNode.h"
 #define ALLOW_GUI 1
 #include "kmkernel.h"
 #include "mailinglist-magic.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;
-#include "objecttreeparser.h"
-using KMail::ObjectTreeParser;
+#include "messageviewer/objecttreeparser.h"
+using MessageViewer::ObjectTreeParser;
 #include "kmfolderindex.h"
 #include "undostack.h"
 #include "kmversion.h"

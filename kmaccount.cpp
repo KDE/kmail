@@ -8,7 +8,6 @@ using KMail::AccountManager;
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
-#include "kmmessage.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmfoldercachedimap.h"
@@ -16,6 +15,8 @@ using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
+
+#include "messagehelper.h"
 
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
@@ -29,6 +30,8 @@ using KMail::FolderJob;
 #include <kconfiggroup.h>
 #include <kstringhandler.h>
 #include <knotification.h>
+
+#include <kmime/kmime_message.h>
 
 #include <QList>
 #include <QEventLoop>
@@ -208,7 +211,7 @@ void KMAccount::writeConfig(KConfigGroup& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::sendReceipt(KMMessage* aMsg)
+void KMAccount::sendReceipt(KMime::Message* aMsg)
 {
   bool sendReceipts;
 
@@ -217,7 +220,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg)
   sendReceipts = cfg.readEntry("send-receipts", false );
   if (!sendReceipts) return;
 
-  KMMessage *newMsg = aMsg->createDeliveryReceipt();
+  KMime::Message *newMsg = KMail::MessageHelper::createDeliveryReceipt( aMsg );
   if (newMsg) {
     mReceipts.append(newMsg);
     QTimer::singleShot( 0, this, SLOT( sendReceipts() ) );
@@ -226,21 +229,24 @@ void KMAccount::sendReceipt(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-bool KMAccount::processNewMsg(KMMessage* aMsg)
+bool KMAccount::processNewMsg(KMime::Message* aMsg)
 {
   int rc, processResult;
 
   assert(aMsg != 0);
 
+#if 0 //TODO port to akonadi
   // Save this one for readding
   KMFolderCachedImap* parent = 0;
   if( type() == KAccount::DImap )
     parent = static_cast<KMFolderCachedImap*>( aMsg->storage() );
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   // checks whether we should send delivery receipts
   // and sends them.
   sendReceipt(aMsg);
-
+#if 0 //TODO port to akonadi
   // Set status of new messages that are marked as old to read, otherwise
   // the user won't see which messages newly arrived.
   // This is only valid for pop accounts and produces wrong stati for imap.
@@ -251,6 +257,9 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
     else
       aMsg->setStatus( MessageStatus::statusNew() );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 /*
 QFile fileD0( "testdat_xx-kmaccount-0" );
 if( fileD0.open( QIODevice::WriteOnly ) ) {
@@ -270,6 +279,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   }
   else if (processResult == 1)
   {
+#if 0 //TODO port to akonadi
     if( type() == KAccount::DImap )
       ; // already done by caller: parent->addMsgInternal( aMsg, false );
     else {
@@ -295,8 +305,12 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
       // If count == 1, the message is immediately displayed
       if (count != 1) mFolder->unGetMsg(count - 1);
     }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
+#if 0 //TODO port to akonadi
   // Count number of new messages for each folder
   QString folderId;
   if ( processResult == 1 ) {
@@ -307,7 +321,9 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     folderId = aMsg->parent()->idString();
   }
   addToNewInFolder( folderId, 1 );
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return true; //Everything's fine - message has been added by filter  }
 }
 
@@ -336,8 +352,9 @@ void KMAccount::deleteFolderJobs()
 }
 
 //----------------------------------------------------------------------------
-void KMAccount::ignoreJobsForMessage( KMMessage* msg )
+void KMAccount::ignoreJobsForMessage( KMime::Message* msg )
 {
+#if 0 //TODO port to akonadi
   //FIXME: remove, make folders handle those
   QList<FolderJob*>::iterator it;
   for( it = mJobList.begin(); it != mJobList.end(); ) {
@@ -350,6 +367,9 @@ void KMAccount::ignoreJobsForMessage( KMMessage* msg )
     else
       ++it;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -452,7 +472,7 @@ void KMAccount::mailCheck()
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipts()
 {
-  QList<KMMessage*>::Iterator it;
+  QList<KMime::Message*>::Iterator it;
   for(it = mReceipts.begin(); it != mReceipts.end(); ++it)
     kmkernel->msgSender()->send(*it); //might process events
   mReceipts.clear();

@@ -139,10 +139,14 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg,
 {
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsg( msg, true );
+#if 0 //TODO port to akonadi
   if ( serNumOfOriginalMessage != 0 ) {
     Q_ASSERT( nodeIdOffset != -1 );
     mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mReaderWin->slotTouchMessage();
   setCaption( msg->subject() );
   mMsg = msg;
