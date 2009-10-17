@@ -19,8 +19,6 @@
 #include "messageactions.h"
 
 #include "globalsettings.h"
-#include "kmfolder.h"
-#include "kmmessage.h"
 #include "kmreaderwin.h"
 
 #include <KAction>
@@ -33,6 +31,7 @@
 #include <KStandardDirs>
 
 #include <qwidget.h>
+#include <akonadi/collection.h>
 
 using namespace KMail;
 
@@ -201,15 +200,20 @@ void MessageActions::setSelectedVisibleSernums(const QList< quint32 > & sernums)
 
 void MessageActions::updateActions()
 {
+  bool singleMsg = mCurrentItem.isValid();
+  Akonadi::Collection parent;
+  if ( singleMsg ) //=> valid
+    parent = mCurrentItem.parentCollection();
+  if ( parent.isValid() ) {
 #ifdef OLD_MESSAGEACTION
-  bool singleMsg = (mCurrentMessage != 0);
-  if ( mCurrentMessage && mCurrentMessage->parent() ) {
     if ( mCurrentMessage->parent()->isTemplates() )
       singleMsg = false;
+#endif
   }
-  const bool multiVisible = mVisibleSernums.count() > 0 || mCurrentMessage;
-  const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags() ||
-      !((mCurrentMessage && mCurrentMessage->parent()) ? mCurrentMessage->parent()->isReadOnly() : true);
+
+  const bool multiVisible = mVisibleSernums.count() > 0 || mCurrentItem.isValid();
+  const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags()
+                              || !(parent.isValid() ? parent.rights() & Akonadi::Collection::ReadOnly : true);
 
   mCreateTodoAction->setEnabled( singleMsg && mKorganizerIsOnSystem);
   mReplyActionMenu->setEnabled( singleMsg );
@@ -224,13 +228,14 @@ void MessageActions::updateActions()
   mToggleFlagAction->setEnabled( flagsAvailable );
   mToggleToActAction->setEnabled( flagsAvailable );
 
-  if ( mCurrentMessage ) {
-    mToggleToActAction->setChecked( mCurrentMessage->status().isToAct() );
-    mToggleFlagAction->setChecked( mCurrentMessage->status().isImportant() );
+  if ( mCurrentItem.isValid() ) {
+    KPIM::MessageStatus status;
+    status.setStatusFromFlags( mCurrentItem.flags() );
+    mToggleToActAction->setChecked( status.isToAct() );
+    mToggleFlagAction->setChecked( status.isImportant() );
   }
 
   mEditAction->setEnabled( singleMsg );
-#endif
 }
 
 void MessageActions::slotCreateTodo()
@@ -346,12 +351,12 @@ void MessageActions::slotSetMsgStatusToAct()
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
-#ifdef OLD_MESSAGEACTION
   QList<quint32> serNums = mVisibleSernums;
-  if ( serNums.isEmpty() && mCurrentMessage )
-    serNums.append( mCurrentMessage->getMsgSerNum() );
+  if ( serNums.isEmpty() && mCurrentItem.isValid() )
+    serNums.append( mCurrentItem.id() );
   if ( serNums.empty() )
     return;
+#ifdef OLD_MESSAGEACTION
   KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
   command->start();
 #endif
