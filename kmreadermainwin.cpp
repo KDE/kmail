@@ -146,7 +146,9 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg,
   mReaderWin->slotTouchMessage();
   setCaption( msg->subject() );
   mMsg = msg;
+#if OLD_MESSAGEACTION //TODO port it
   mMsgActions->setCurrentMessage( msg );
+#endif
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
 

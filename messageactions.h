@@ -60,7 +60,6 @@ class MessageActions : public QObject
      */
     void setupForwardingActionsList( KXMLGUIClient *guiClient );
 
-    void setCurrentMessage( KMMessage *msg );
   void setCurrentMessage( const Akonadi::Item &item );
     void setSelectedSernums( const QList<quint32> &sernums );
     void setSelectedVisibleSernums( const QList<quint32> &sernums );
@@ -84,9 +83,9 @@ class MessageActions : public QObject
     void updateActions();
     template<typename T> void replyCommand()
     {
+#ifdef OLD_COMMAND
       if ( !mCurrentMessage )
         return;
-#ifdef OLD_COMMAND
       const QString text = mMessageView ? mMessageView->copyText() : "";
       KMCommand *command = new T( mParent, mCurrentMessage, text );
       command->start();
@@ -110,8 +109,7 @@ class MessageActions : public QObject
   private:
     QWidget *mParent;
     KActionCollection *mActionCollection;
-    KMMessage* mCurrentMessage;
-  Akonadi::Item mCurrentItem;
+    Akonadi::Item mCurrentItem;
     QList<quint32> mSelectedSernums;
     QList<quint32> mVisibleSernums;
     KMReaderWin *mMessageView;

@@ -40,7 +40,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     QObject( parent ),
     mParent( parent ),
     mActionCollection( ac ),
-    mCurrentMessage( 0 ),
     mMessageView( 0 ),
     mRedirectAction( 0 )
 {
@@ -177,16 +176,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   updateActions();
 }
 
-void MessageActions::setCurrentMessage(KMMessage * msg)
-{
-  mCurrentMessage = msg;
-  if ( !msg ) {
-    mSelectedSernums.clear();
-    mVisibleSernums.clear();
-  }
-  updateActions();
-}
-
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 {
   mCurrentItem = msg;
@@ -212,6 +201,7 @@ void MessageActions::setSelectedVisibleSernums(const QList< quint32 > & sernums)
 
 void MessageActions::updateActions()
 {
+#ifdef OLD_MESSAGEACTION
   bool singleMsg = (mCurrentMessage != 0);
   if ( mCurrentMessage && mCurrentMessage->parent() ) {
     if ( mCurrentMessage->parent()->isTemplates() )
@@ -240,11 +230,12 @@ void MessageActions::updateActions()
   }
 
   mEditAction->setEnabled( singleMsg );
+#endif
 }
 
 void MessageActions::slotCreateTodo()
 {
-  if ( !mCurrentMessage )
+  if ( !mCurrentItem.isValid() )
     return;
 #ifdef OLD_COMMAND
   KMCommand *command = new CreateTodoCommand( mParent, mCurrentMessage );
@@ -320,7 +311,7 @@ void MessageActions::slotReplyAllToMsg()
 
 void MessageActions::slotNoQuoteReplyToMsg()
 {
-  if ( !mCurrentMessage )
+  if ( !mCurrentItem.isValid() )
     return;
 #ifdef OLD_COMMAND
   KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentMessage );
@@ -355,6 +346,7 @@ void MessageActions::slotSetMsgStatusToAct()
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
+#ifdef OLD_MESSAGEACTION
   QList<quint32> serNums = mVisibleSernums;
   if ( serNums.isEmpty() && mCurrentMessage )
     serNums.append( mCurrentMessage->getMsgSerNum() );
@@ -362,11 +354,12 @@ void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
     return;
   KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
   command->start();
+#endif
 }
 
 void MessageActions::editCurrentMessage()
 {
-  if ( !mCurrentMessage )
+  if ( !mCurrentItem.isValid() )
     return;
 #ifdef OLD_COMMAND
   KMCommand *command = 0;
