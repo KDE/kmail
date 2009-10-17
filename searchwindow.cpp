@@ -149,9 +149,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mChkbxSpecificFolders->setChecked(true);
 
   mCbxFolders = new FolderRequester( searchWidget );
-#ifdef OLD_FOLDERVIEW
-  mCbxFolders->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
-#endif
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
 

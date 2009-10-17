@@ -308,9 +308,6 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
   FolderRequester *req = new FolderRequester( parent );
-#ifdef OLD_FOLDERVIEW
-  req->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
-#endif
   setParamWidgetValue( req );
   return req;
 }

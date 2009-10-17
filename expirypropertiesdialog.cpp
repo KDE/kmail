@@ -26,11 +26,7 @@ using namespace KMail;
  *
  */
 ExpiryPropertiesDialog::ExpiryPropertiesDialog(
-#ifdef OLD_FOLDERVIEW
-  MainFolderView* tree,
-#else
   QWidget *tree,
-#endif
   KMFolder* folder )
     : KDialog( tree ),
       mFolder( folder )
@@ -100,9 +96,6 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
   moveToHBox->addWidget( moveToRB );
 
   folderSelector = new KMail::FolderRequester( privateLayoutWidget );
-#ifdef OLD_FOLDERVIEW
-  folderSelector->setFolderTree( tree );
-#endif
   folderSelector->setMustBeReadWrite( true );
   moveToHBox->addWidget( folderSelector );
   globalVBox->addLayout( moveToHBox );

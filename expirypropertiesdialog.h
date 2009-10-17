@@ -20,11 +20,7 @@ class ExpiryPropertiesDialog : public KDialog
 
 public:
     ExpiryPropertiesDialog(
-#ifdef OLD_FOLDERVIEW
-      MainFolderView* tree,
-#else
       QWidget *tree,
-#endif
       KMFolder* folder );
     ~ExpiryPropertiesDialog();
 
