@@ -530,7 +530,14 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * to this function.
      */
     void trashMessageSelected( const QList<Akonadi::Item> &select );
-
+    /**
+     * Set the status of the messages referenced by the specified set, eventually toggling it.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void setMessageSetStatus( const QList<Akonadi::Item> &select,
+        const KPIM::MessageStatus &status,
+        bool toggle
+      );
 #ifdef OLD_MESSAGELIST
     /**
      * Set the status of the messages referenced by the specified set, eventually toggling it.

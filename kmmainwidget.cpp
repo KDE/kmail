@@ -2138,6 +2138,14 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
+
+void setMessageSetStatus( const QList<Akonadi::Item> &select, const KPIM::MessageStatus &status, bool toggle )
+{
+  if ( select.isEmpty() )
+    return;
+  //TODO implement it
+}
+
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::setMessageSetStatus(
     KMail::MessageListView::MessageSet * set,
