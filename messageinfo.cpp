@@ -22,6 +22,8 @@
 #include <kmime/kmime_message.h>
 #include <kdebug.h>
 
+namespace KMail {
+
 MessageInfo * MessageInfo::mSelf = 0;
 
 MessageInfo * MessageInfo::instance()
@@ -59,5 +61,7 @@ KMMsgMDNSentState MessageInfo::mdnSentState( KMime::Content *node ) const
     return mMDNSentState[node];
 
   return KMMsgMDNStateUnknown;
+}
+
 }
 

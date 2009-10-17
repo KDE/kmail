@@ -53,6 +53,7 @@ typedef enum
     KMMsgMDNFailed = 'E'
 } KMMsgMDNSentState;
 
+namespace KMail {
 
 class MessageInfo {
 public:
@@ -72,5 +73,6 @@ private:
     QMap<KMime::Content *, KMMsgMDNSentState> mMDNSentState;
 };
 
+}
 
 #endif

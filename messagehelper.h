@@ -42,6 +42,15 @@ namespace MessageHelper {
    header of the given original message */
   void initFromMessage(KMime::Message *msg, KMime::Message *orgiMsg, bool idHeaders = true);
 
+  /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
+  /// the reply mode
+  struct MessageReply
+  {
+    KMime::Message *msg;  ///< The actual reply message
+    bool replyAll;   ///< If true, the "reply all" template was used, otherwise the normal reply
+                     ///  template
+  };
+
     /** Create a new message that is a reply to this message, filling all
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
@@ -51,10 +60,33 @@ namespace MessageHelper {
                           const QString &tmpl = QString() );
                           
 
+  /**
+   * Create a new message that is a reply to this message, filling all
+   * required header fields with the proper values. The returned message
+   * is not stored in any folder. Marks this message as replied.
+   *
+   * @return the reply created, including the reply mode
+   */
+//TODO see if this can be merged with the above one!
+  MessageReply createReply2( KMime::Message* origMsg,
+                            KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
+                            const QString &selection=QString(), bool noQuote=false,
+                            bool allowDecryption=true, bool selectionIsBody=false,
+                            const QString &tmpl = QString() );
+
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
-  KMMessage* createForward( const QString &tmpl = QString() );
+  KMime::Message* createForward(KMime::Message *origMsg, const QString &tmpl = QString() );
+
+  /** Create a new message that is a redirect to this message, filling all
+    required header fields with the proper values. The returned message
+    is not stored in any folder. Marks this message as replied.
+    Redirects differ from forwards so they are forwarded to some other
+    user, mail is not changed and the reply-to field is set to
+    the email address of the original sender
+   */
+  KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr );
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,

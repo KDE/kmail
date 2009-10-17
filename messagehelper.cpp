@@ -25,6 +25,7 @@
 #include "templateparser.h"
 #include "messageinfo.h"
 #include "mdnadvicedialog.h"
+#include "mailinglist-magic.h"
 
 #include <messageviewer/objecttreeparser.h>
 #include <messageviewer/kcursorsaver.h>
@@ -34,6 +35,7 @@
 #include <KMime/Message>
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_dateformatter.h>
+#include <kmime/kmime_headers.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 
@@ -410,29 +412,27 @@ KMime::Message* createReply( KMime::Message *origMsg,
 
   msg->to()->fromUnicodeString( toStr, "utf-8" );
 
-  /** TODO Port to KMime
-  refStr = getRefStr();
+  refStr = getRefStr( origMsg );
   if (!refStr.isEmpty())
-    msg->setReferences(refStr);
+    msg->references()->fromUnicodeString( refStr, "utf-8");
   //In-Reply-To = original msg-id
-  msg->setReplyToId(msgId());  
+  msg->inReplyTo()->fromUnicodeString( origMsg->messageID()->asUnicodeString(), "utf-8" );
 
-  msg->setSubject( replySubject() );
-*/
+  msg->subject()->fromUnicodeString( replySubject(origMsg), "utf-8" );
 
 
-  /** TODO Port to KMime
   // If the reply shouldn't be blank, apply the template to the message
   if ( !noQuote ) {
     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-                           selection, s->smartQuote, allowDecryption, selectionIsBody );
+                           selection, /*TODO what the hell is s? s->smartQuote*/ true, allowDecryption, selectionIsBody );
     if ( !tmpl.isEmpty() )
-      parser.process( tmpl, this );
+      parser.process( tmpl, origMsg );
     else
-      parser.process( this );
+      parser.process( origMsg );
   }
 
-  msg->link( this, MessageStatus::statusReplied() );
+#if 0 //TODO port to akonadi
+msg->link( this, MessageStatus::statusReplied() );
 
   if ( parent() && parent()->putRepliesInSameFolder() )
     msg->setFcc( parent()->idString() );
@@ -442,9 +442,240 @@ KMime::Message* createReply( KMime::Message *origMsg,
        encryptionState() == KMMsgFullyEncrypted ) {
     msg->setEncryptionState( KMMsgFullyEncrypted );
   }
-*/
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return msg;
 }
+
+MessageReply createReply2( KMime::Message *origMsg,
+                                                KMail::ReplyStrategy replyStrategy,
+                                                const QString &selection /*.clear() */,
+                                                bool noQuote /* = false */,
+                                                bool allowDecryption /* = true */,
+                                                bool selectionIsBody /* = false */,
+                                                const QString &tmpl /* = QString() */ )
+{
+  KMime::Message* msg = new KMime::Message;
+  QString str, mailingListStr, replyToStr, toStr;
+  QStringList mailingListAddresses;
+  QByteArray refStr, headerName;
+  bool replyAll = true;
+
+  initFromMessage( msg, origMsg);
+  MailingList::name(origMsg, headerName, mailingListStr);
+  replyToStr = origMsg->replyTo()->asUnicodeString();
+
+  msg->contentType()->setCharset("utf-8");
+#if 0 //TODO port to akonadi
+  // determine the mailing list posting address
+  if ( parent() && parent()->isMailingListEnabled() &&
+       !parent()->mailingListPostAddress().isEmpty() ) {
+    mailingListAddresses << parent()->mailingListPostAddress();
+  }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
+  if ( origMsg->headerByType("List-Post") && origMsg->headerByType("List-Post")->asUnicodeString().contains( "mailto:", Qt::CaseInsensitive ) ) {
+    QString listPost = origMsg->headerByType("List-Post")->asUnicodeString();
+    QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", Qt::CaseInsensitive );
+    if ( rx.indexIn( listPost, 0 ) != -1 ) // matched
+      mailingListAddresses << rx.cap(1) + '@' + rx.cap(2);
+  }
+
+  switch( replyStrategy ) {
+  case ReplySmart : {
+    if ( origMsg->headerByType( "Mail-Followup-To" ) ) {
+      toStr = origMsg->headerByType( "Mail-Followup-To" )->asUnicodeString();
+    }
+    else if ( !replyToStr.isEmpty() ) {
+      toStr = replyToStr;
+      // use the ReplyAll template only when it's a reply to a mailing list
+      if ( mailingListAddresses.isEmpty() )
+        replyAll = false;
+    }
+    else if ( !mailingListAddresses.isEmpty() ) {
+      toStr = mailingListAddresses[0];
+    }
+    else {
+      // doesn't seem to be a mailing list, reply to From: address
+      toStr = origMsg->from()->asUnicodeString();
+      replyAll = false;
+    }
+    // strip all my addresses from the list of recipients
+    QStringList recipients = KPIMUtils::splitAddressList( toStr );
+    toStr = StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
+    // ... unless the list contains only my addresses (reply to self)
+    if ( toStr.isEmpty() && !recipients.isEmpty() )
+      toStr = recipients[0];
+
+    break;
+  }
+  case ReplyList : {
+    if ( origMsg->headerByType( "Mail-Followup-To" ) ) {
+      toStr = origMsg->headerByType( "Mail-Followup-To" )->asUnicodeString();
+    }
+    else if ( !mailingListAddresses.isEmpty() ) {
+      toStr = mailingListAddresses[0];
+    }
+    else if ( !replyToStr.isEmpty() ) {
+      // assume a Reply-To header mangling mailing list
+      toStr = replyToStr;
+    }
+    // strip all my addresses from the list of recipients
+    QStringList recipients = KPIMUtils::splitAddressList( toStr );
+    toStr = StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
+
+    break;
+  }
+  case ReplyAll : {
+    QStringList recipients;
+    QStringList ccRecipients;
+
+    // add addresses from the Reply-To header to the list of recipients
+    if( !replyToStr.isEmpty() ) {
+      recipients += KPIMUtils::splitAddressList( replyToStr );
+      // strip all possible mailing list addresses from the list of Reply-To
+      // addresses
+      for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
+            it != mailingListAddresses.constEnd();
+            ++it ) {
+        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
+      }
+    }
+
+    if ( !mailingListAddresses.isEmpty() ) {
+      // this is a mailing list message
+      if ( recipients.isEmpty() && !origMsg->from()->asUnicodeString().isEmpty() ) {
+        // The sender didn't set a Reply-to address, so we add the From
+        // address to the list of CC recipients.
+        ccRecipients += origMsg->from()->asUnicodeString();
+        kDebug() << "Added" << origMsg->from()->asUnicodeString() <<"to the list of CC recipients";
+      }
+      // if it is a mailing list, add the posting address
+      recipients.prepend( mailingListAddresses[0] );
+    }
+    else {
+      // this is a normal message
+      if ( recipients.isEmpty() && ! origMsg->from()->asUnicodeString().isEmpty() ) {
+        // in case of replying to a normal message only then add the From
+        // address to the list of recipients if there was no Reply-to address
+        recipients +=  origMsg->from()->asUnicodeString();
+        kDebug() << "Added" <<  origMsg->from()->asUnicodeString() <<"to the list of recipients";
+      }
+    }
+
+    // strip all my addresses from the list of recipients
+    toStr = StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
+
+    // merge To header and CC header into a list of CC recipients
+    if( ! origMsg->cc()->asUnicodeString().isEmpty() || ! origMsg->to()->asUnicodeString().isEmpty() ) {
+      QStringList list;
+      if (! origMsg->to()->asUnicodeString().isEmpty())
+        list += KPIMUtils::splitAddressList(origMsg->to()->asUnicodeString());
+      if (! origMsg->cc()->asUnicodeString().isEmpty())
+        list += KPIMUtils::splitAddressList(origMsg->cc()->asUnicodeString());
+      for( QStringList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) {
+        if(    !StringUtil::addressIsInAddressList( *it, recipients )
+            && !StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
+          ccRecipients += *it;
+          kDebug() << "Added" << *it <<"to the list of CC recipients";
+        }
+      }
+    }
+
+    if ( !ccRecipients.isEmpty() ) {
+      // strip all my addresses from the list of CC recipients
+      ccRecipients = StringUtil::stripMyAddressesFromAddressList( ccRecipients );
+
+      // in case of a reply to self toStr might be empty. if that's the case
+      // then propagate a cc recipient to To: (if there is any).
+      if ( toStr.isEmpty() && !ccRecipients.isEmpty() ) {
+        toStr = ccRecipients[0];
+        ccRecipients.pop_front();
+      }
+
+      msg->cc()->fromUnicodeString( ccRecipients.join(", "), "utf-8" );
+    }
+
+    if ( toStr.isEmpty() && !recipients.isEmpty() ) {
+      // reply to self without other recipients
+      toStr = recipients[0];
+    }
+    break;
+  }
+  case ReplyAuthor : {
+    if ( !replyToStr.isEmpty() ) {
+      QStringList recipients = KPIMUtils::splitAddressList( replyToStr );
+      // strip the mailing list post address from the list of Reply-To
+      // addresses since we want to reply in private
+      for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
+            it != mailingListAddresses.constEnd();
+            ++it ) {
+        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
+      }
+      if ( !recipients.isEmpty() ) {
+        toStr = recipients.join(", ");
+      }
+      else {
+        // there was only the mailing list post address in the Reply-To header,
+        // so use the From address instead
+        toStr =  origMsg->from()->asUnicodeString();
+      }
+    }
+    else if ( ! origMsg->from()->asUnicodeString().isEmpty() ) {
+      toStr = origMsg->from()->asUnicodeString();
+    }
+    replyAll = false;
+    break;
+  }
+  case ReplyNone : {
+    // the addressees will be set by the caller
+  }
+  }
+
+  msg->to()->fromUnicodeString(toStr, "utf-8");
+
+  refStr = getRefStr( origMsg );
+  if (!refStr.isEmpty())
+    msg->references()->fromUnicodeString (refStr, "utf-8" );
+  //In-Reply-To = original msg-id
+  msg->inReplyTo()->fromUnicodeString( origMsg->messageID()->asUnicodeString(), "utf-8" );
+
+  msg->subject()->fromUnicodeString( replySubject( origMsg ), "utf-8" );
+
+  // If the reply shouldn't be blank, apply the template to the message
+  if ( !noQuote ) {
+    TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
+                           selection,/*TODO what the hell is s? s->smartQuote*/ true, allowDecryption, selectionIsBody );
+    if ( !tmpl.isEmpty() )
+      parser.process( tmpl, origMsg );
+    else
+      parser.process( origMsg );
+  }
+#if 0 //TODO port to akonadi
+  msg->link( this, MessageStatus::statusReplied() );
+  if ( parent() && parent()->putRepliesInSameFolder() )
+    msg->setFcc( parent()->idString() );
+
+  // replies to an encrypted message should be encrypted as well
+  if ( encryptionState() == KMMsgPartiallyEncrypted ||
+       encryptionState() == KMMsgFullyEncrypted ) {
+    msg->setEncryptionState( KMMsgFullyEncrypted );
+  }
+
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
+  MessageReply reply;
+  reply.msg = msg;
+  reply.replyAll = replyAll;
+  return reply;
+}
+
+
 
 KMime::Message* createForward( KMime::Message *origMsg, const QString &tmpl /* = QString() */ )
 {
@@ -509,6 +740,60 @@ KMime::Message* createForward( KMime::Message *origMsg, const QString &tmpl /* =
   msg->link( this, MessageStatus::statusForwarded() );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  return msg;
+}
+
+KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr )
+{
+  // copy the message 1:1
+  KMime::Message* msg = new KMime::Message;
+  msg->setContent( origMsg->encodedContent() );
+
+  uint id = 0;
+  QString strId = msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed() : "";
+  if ( !strId.isEmpty())
+    id = strId.toUInt();
+  const KPIMIdentities::Identity & ident =
+    kmkernel->identityManager()->identityForUoidOrDefault( id );
+
+  // X-KMail-Redirect-From: content
+  QString strByWayOf = QString("%1 (by way of %2 <%3>)")
+    .arg( origMsg->from()->asUnicodeString() )
+    .arg( ident.fullName() )
+    .arg( ident.emailAddr() );
+
+  // Resent-From: content
+  QString strFrom = QString("%1 <%2>")
+    .arg( ident.fullName() )
+    .arg( ident.emailAddr() );
+
+  // format the current date to be used in Resent-Date:
+  QString origDate = msg->date()->asUnicodeString();
+  msg->date()->setDateTime( KDateTime::currentLocalDateTime() );
+  QString newDate = msg->date()->asUnicodeString();
+
+  // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "Resent-Message-ID", msg, StringUtil::generateMessageId( msg->sender()->asUnicodeString() ), "utf-8" );
+  msg->setHeader( header );
+
+  header = new KMime::Headers::Generic( "Resent-Date", msg, newDate, "utf-8" );
+  msg->setHeader( header );
+
+  header = new KMime::Headers::Generic( "Resent-To", msg, toStr, "utf-8" );
+  msg->setHeader( header );
+  header = new KMime::Headers::Generic( "Resent-To", msg, strFrom, "utf-8" );
+  msg->setHeader( header );
+
+  header = new KMime::Headers::Generic( "X-KMail-Redirect-From", msg, strByWayOf, "utf-8" );
+  msg->setHeader( header );
+  header = new KMime::Headers::Generic( "X-KMail-Recipients", msg, toStr, "utf-8" );
+  msg->setHeader( header );
+
+#if 0 //TODO port to akonadi
+  msg->link( this, MessageStatus::statusForwarded() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   return msg;
 }
