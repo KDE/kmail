@@ -144,7 +144,6 @@ using KMail::TemplateParser;
     using KMail::SieveDebugDialog;
 #endif
 
-#include "messagecopyhelper.h"
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
 
@@ -2088,7 +2087,8 @@ void KMMainWidget::slotTrashThread()
 //        We should probably move everything there....
 void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel )
 {
-  //TODO
+  if ( select.isEmpty() )
+    return;
 
 }
 #ifdef OLD_MESSAGELIST
@@ -2266,60 +2266,6 @@ void KMMainWidget::fillMessageClipboard()
 
   for ( QList< KMMsgBase * >::Iterator it = selected.begin(); it != selected.end(); ++it )
     mMessageClipboard.append( ( *it )->getMsgSerNum() );
-#endif
-}
-
-void KMMainWidget::setMessageClipboardContents( const QList< quint32 > &msgs, bool move )
-{
-  mMessageClipboard = msgs;
-  mMessageClipboardInCutMode = move;
-}
-
-#if 0 //Done by akonadi now
-void KMMainWidget::slotCopyMessages()
-{
-  fillMessageClipboard();
-
-  mMessageClipboardInCutMode = false;
-
-  updateCutCopyPasteActions();
-}
-#endif
-
-void KMMainWidget::slotCutMessages()
-{
-  fillMessageClipboard();
-
-  mMessageClipboardInCutMode = true;
-
-  updateCutCopyPasteActions();
-}
-
-void KMMainWidget::slotPasteMessages()
-{
-  if ( mMessageClipboard.isEmpty() )
-    return; // nothing to do
-
-  new KMail::MessageCopyHelper( mMessageClipboard, folder(), mMessageClipboardInCutMode );
-
-  if ( mMessageClipboardInCutMode )
-    mMessageClipboard.clear(); // moved messages can't be pasted again (FIXME: should re-copied!)
-
-  updateCutCopyPasteActions();
-}
-
-void KMMainWidget::updateCutCopyPasteActions()
-{
-  QAction *copy = action( "copy_messages" );
-  QAction *cut = action( "cut_messages" );
-  QAction *paste = action( "paste_messages" );
-
-  bool haveSelection = !mMessagePane->selectionEmpty();
-
-  copy->setEnabled( haveSelection );
-#ifdef OLD_MESSAGELIST
-  cut->setEnabled( haveSelection && folder() && ( folder()->canDeleteMessages() ) );
-  paste->setEnabled( ( !mMessageClipboard.isEmpty() ) && folder() && ( !folder()->isReadOnly() ) );
 #endif
 }
 
@@ -3367,9 +3313,8 @@ void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QP
   // message from a folder that is not the current in mMessageListView.
   // This should never happen as all the actions are messed up in this case.
   Q_ASSERT( &msg == mMessageListView->currentMessage() );
-
-  updateMessageMenu();
 #endif
+  updateMessageMenu();
   KMenu *menu = new KMenu;
   mUrlCurrent = aUrl;
 
@@ -3783,16 +3728,14 @@ void KMMainWidget::setupActions()
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
   }
   {
-    KAction *action = new KAction(KIcon("edit-cut"), i18n("Cut Messages"), this);
+    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CutItems );
+    action->setText( i18n("Cut Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
-    actionCollection()->addAction("cut_messages", action);
-    connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCutMessages()));
   }
   {
-    KAction *action = new KAction(KIcon("edit-paste"), i18n("Paste Messages"), this);
+    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::Paste );
+    action->setText( i18n("Paste Messages"));
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_V));
-    actionCollection()->addAction("paste_messages", action);
-    connect(action, SIGNAL(triggered(bool)), this, SLOT(slotPasteMessages()));
   }
 
   //----- Message Menu

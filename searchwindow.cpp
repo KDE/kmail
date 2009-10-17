@@ -54,7 +54,6 @@
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 
-#include "messagecopyhelper.h"
 #include "regexplineedit.h"
 #include "textsource.h"
 
@@ -987,14 +986,18 @@ void SearchWindow::slotPrintMsg()
 
 void SearchWindow::slotCopyMsgs()
 {
+#if 0 //Port to akonadi
   QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
   mKMMainWidget->setMessageClipboardContents( list, false );
+#endif
 }
 
 void SearchWindow::slotCutMsgs()
 {
+#if 0  //Port to akonadi
   QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
   mKMMainWidget->setMessageClipboardContents( list, true );
+#endif
 }
 
 

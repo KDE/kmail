@@ -43,8 +43,8 @@
    <Action name="akonadi_paste"/>
    <Separator/>
    <Action name="akonadi_item_copy"/>
-   <Action name="cut_messages"/>
-   <Action name="paste_messages"/>
+   <Action name="akonadi_item_cut"/>
+   <Action name="akonadi_paste"/>
    <Separator/>
    <Action name="move_to_trash" />
    <Action name="move_thread_to_trash" />

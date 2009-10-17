@@ -207,7 +207,6 @@ set(kmailprivate_LIB_SRCS
    customtemplates.cpp
    customtemplatesmenu.cpp
    folderadaptor.cpp
-   messagecopyhelper.cpp
    korghelper.cpp
    localsubscriptiondialog.cpp
    scalix.cpp
