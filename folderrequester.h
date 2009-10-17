@@ -30,11 +30,13 @@
 #define folderrequester_h
 
 #include <klineedit.h>
+#include <akonadi/collection.h>
 
 #include <QtGui/QWidget>
 #include <QKeyEvent>
 
 class KMFolder;
+
 
 namespace KMail {
 
@@ -59,6 +61,9 @@ namespace KMail {
 
       /** Returns selected folder */
       KMFolder* folder( void ) const;
+
+
+      Akonadi::Collection folderCollection() const;
 
       /** Returns the folder id */
       QString folderId() const { return mFolderId; }
@@ -99,6 +104,7 @@ namespace KMail {
       virtual void keyPressEvent( QKeyEvent * e );
 
     protected:
+      Akonadi::Collection mCollection;
       KLineEdit* edit;
       KMFolder* mFolder;
       QString mFolderId;

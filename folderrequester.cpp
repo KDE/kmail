@@ -95,6 +95,11 @@ FolderRequester::~FolderRequester()
 {
 }
 
+Akonadi::Collection FolderRequester::folderCollection() const
+{
+  return mCollection;
+}
+
 //-----------------------------------------------------------------------------
 KMFolder * FolderRequester::folder( void ) const
 {
