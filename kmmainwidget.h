@@ -538,30 +538,15 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
         const KPIM::MessageStatus &status,
         bool toggle
       );
-#ifdef OLD_MESSAGELIST
-    /**
-     * Set the status of the messages referenced by the specified set, eventually toggling it.
-     * The set parameter must not be null and the ownership is passed to this function.
-     */
-    void setMessageSetStatus(
-        KMail::MessageListView::MessageSet * set,
-        const KPIM::MessageStatus &status,
-        bool toggle
-      );
-
     /**
      * Toggles a tag for the messages referenced by the specified set.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-    void toggleMessageSetTag(
-        KMail::MessageListView::MessageSet * set,
-        const QString &taglabel
-      );
-#endif
+    void toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel );
   /**
    * This applies setMessageSetStatus() on the current thread.
    */
-  void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
+   void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
   private slots:
     /**
      * Called when a "move to trash" operation is completed

@@ -1839,26 +1839,20 @@ void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotDeleteMsg( bool confirmDelete )
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent message set from the current selection
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
-  if ( !set ) // no selection
+  QList<Akonadi::Item> select = mMessagePane->selectionAsMessageItemList();
+  if ( select.isEmpty() ) // no selection
     return;
 
-  moveMessageSet( set, 0, confirmDelete );
-#endif
+  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
 }
 
 void KMMainWidget::slotDeleteThread( bool confirmDelete )
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
+  if ( select.isEmpty() ) // no current thread
     return;
 
-  moveMessageSet( set, 0, confirmDelete );
-#endif
+  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
 }
 
 
@@ -2080,14 +2074,11 @@ void KMMainWidget::slotTrashSelectedMessages()
 
 void KMMainWidget::slotTrashThread()
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> lstMsg = mMessagePane->currentThreadAsMessageList();
+  if ( lstMsg.isEmpty() ) // no current thread
     return;
 
-  trashMessageSelected( set );
-#endif
+  trashMessageSelected( lstMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -2095,6 +2086,11 @@ void KMMainWidget::slotTrashThread()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
+void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel )
+{
+  //TODO
+
+}
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::toggleMessageSetTag(
     KMail::MessageListView::MessageSet * set,
@@ -2122,14 +2118,11 @@ void KMMainWidget::toggleMessageSetTag(
 #endif
 void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> select = mMessagePane->selectionAsMessageItemList();
+  if ( select.isEmpty() ) // no current thread
     return;
 
-  toggleMessageSetTag( set, taglabel );
-#endif
+  toggleMessageSetTag( select, taglabel );
 }
 
 
@@ -2139,7 +2132,7 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
 
-void setMessageSetStatus( const QList<Akonadi::Item> &select, const KPIM::MessageStatus &status, bool toggle )
+void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select, const KPIM::MessageStatus &status, bool toggle )
 {
   if ( select.isEmpty() )
     return;
@@ -2194,14 +2187,11 @@ void KMMainWidget::setMessageSetStatus(
 #endif
 void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle )
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
+  if ( select.isEmpty() ) // no current thread
     return;
 
-  setMessageSetStatus( set, status, toggle );
-#endif
+  setMessageSetStatus( select, status, toggle );
 }
 
 void KMMainWidget::slotSetThreadStatusNew()
