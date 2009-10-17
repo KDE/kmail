@@ -100,6 +100,58 @@ namespace MessageHelper {
       and if that fails queries the KMMsgBase::parent() folder for a default.
    **/
   uint identityUoid( KMime::Message *msg );
+
+  /** Create a new message that is a delivery receipt of this message,
+      filling required header fileds with the proper values. The
+      returned message is not stored in any folder. */
+  KMime::Message* createDeliveryReceipt( KMime::Message* msg );
+
+  /** Create a new message that is a MDN for this message, filling all
+      required fields with proper values. The returned message is not
+      stored in any folder.
+
+      @param a Use AutomaticAction for filtering and ManualAction for
+               user-induced events.
+      @param d See docs for KMime::MDN::DispositionType
+      @param m See docs for KMime::MDN::DispositionModifier
+      @param allowGUI Set to true if this method is allowed to ask the
+                      user questions
+
+      @return The notification message or 0, if none should be sent.
+   **/
+  KMime::Message* createMDN( KMime::Message *msg,
+          KMime::MDN::ActionMode a,
+          KMime::MDN::DispositionType d,
+          bool allowGUI=false,
+          QList<KMime::MDN::DispositionModifier> m=QList<KMime::MDN::DispositionModifier>() );
+
+/** Set fields that are either automatically set (Message-id)
+    or that do not change from one message to another (MIME-Version).
+    Call this method before sending *after* all changes to the message
+    are done because this method does things different if there are
+    attachments / multiple body parts. */
+  void setAutomaticFields( KMime::Message* masg, bool isMultipart=false );
+
+  /**
+   * Return the message contents with the headers that should not be
+   * sent stripped off.
+   */
+  QByteArray asSendableString( KMime::Message *msg );
+
+  /**
+   * Return the message header with the headers that should not be
+   * sent stripped off.
+   */
+  QByteArray headerAsSendableString( KMime::Message *msg );
+
+ /**
+   * Remove all private header fields: *Status: and X-KMail-*
+   **/
+  void removePrivateHeaderFields( KMime::Message *msg );
+  /** Creates reference string for reply to messages.
+   *  reference = original first reference + original last reference + original msg-id
+   */
+  QByteArray getRefStr( KMime::Message *msg );
 }
   
 }
