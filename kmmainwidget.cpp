@@ -2253,22 +2253,6 @@ void KMMainWidget::slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::M
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Message clipboard management
-
-void KMMainWidget::fillMessageClipboard()
-{
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
-  if ( selectedMessages.isEmpty() )
-    return;
-#ifdef OLD_MESSAGELIST
-  mMessageClipboard.clear();
-
-  for ( QList< KMMsgBase * >::Iterator it = selected.begin(); it != selected.end(); ++it )
-    mMessageClipboard.append( ( *it )->getMsgSerNum() );
-#endif
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {

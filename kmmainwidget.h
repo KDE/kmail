@@ -486,9 +486,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateVactionScriptStatus( bool active );
 
   private:
-    void updateCutCopyPasteActions();
-    void fillMessageClipboard();
-
     /** Get override character encoding. */
     QString overrideEncoding() const;
 
