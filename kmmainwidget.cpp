@@ -3732,11 +3732,6 @@ void KMMainWidget::setupActions()
     action->setText( i18n("Cut Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
   }
-  {
-    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::Paste );
-    action->setText( i18n("Paste Messages"));
-    action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_V));
-  }
 
   //----- Message Menu
   {
