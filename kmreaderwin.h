@@ -133,12 +133,6 @@ public:
   QString overrideEncoding() const;
   /** Set the override character encoding. */
   void setOverrideEncoding( const QString & encoding );
-#ifndef USE_AKONADI_VIEWER
-  /** Get codec corresponding to the currently selected override character encoding.
-      @return The override codec or 0 if auto-detection is selected. */
-  const QTextCodec * overrideCodec() const;
-  /** Set printing mode */
-#endif
   virtual void setPrinting(bool enable );
 
   /** Set the message that shall be shown. If msg is 0, an empty page is
@@ -233,16 +227,6 @@ public:
 
   /** Returns the current message or 0 if none. */
   KMMessage* message(KMFolder** folder=0) const;
-#ifndef USE_AKONADI_VIEWER
-  /**
-   * Sets the current attachment ID and the current attachment temporary filename
-   * to the given values.
-   * Call this so that slotHandleAttachment() knows which attachment to handle.
-   */
-  void prepareHandleAttachment( int id, const QString& fileName );
-
-  void showAttachmentPopup( int id, const QString & name, const QPoint & p );
-#endif
   /** Set the serial number of the message this reader window is currently
    *  waiting for. Used to discard updates for already deselected messages. */
   void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
@@ -315,8 +299,6 @@ public slots:
   void slotTouchMessage();
 
 protected slots:
-  /** Some attachment operations. */
-  void slotAtmView( int id, const QString& name );
 #ifndef USE_AKONADI_VIEWER
   void slotDelayedResize();
   /** Print message. Called on as a response of finished() signal of mPartHtmlWriter

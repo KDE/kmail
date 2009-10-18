@@ -590,38 +590,6 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
 #endif
 }
 
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmView( int id, const QString& name )
-{
-#ifndef USE_AKONADI_VIEWER
-  partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
-  if( node ) {
-    mAtmCurrent = id;
-    mAtmCurrentName = name;
-    if ( mAtmCurrentName.isEmpty() )
-      mAtmCurrentName = tempFileUrlFromPartNode( node ).toLocalFile();
-
-    KMMessagePart& msgPart = node->msgPart();
-    QString pname = msgPart.fileName();
-    if (pname.isEmpty()) pname=msgPart.name();
-    if (pname.isEmpty()) pname=msgPart.contentDescription();
-    if (pname.isEmpty()) pname="unnamed";
-    // image Attachment is saved already
-    if (kasciistricmp(msgPart.typeStr(), "message")==0) {
-      atmViewMsg( &msgPart,id );
-    } else if ((kasciistricmp(msgPart.typeStr(), "text")==0) &&
-               ( (kasciistricmp(msgPart.subtypeStr(), "x-vcard")==0) ||
-                 (kasciistricmp(msgPart.subtypeStr(), "directory")==0) )) {
-      setMsgPart( &msgPart, htmlMail(), name, pname );
-    } else {
-      KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
-          name, pname, overrideEncoding() );
-      win->show();
-    }
-  }
-#endif
-}
 //-----------------------------------------------------------------------------
 QString KMReaderWin::copyText()
 {
