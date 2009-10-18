@@ -68,8 +68,8 @@ using MailTransport::Transport;
 #include "kmcommands.h"
 #include "kmcomposereditor.h"
 #include "kmfoldercombobox.h"
-#include "kmfolderimap.h"
-#include "kmfoldermaildir.h"
+//TODO port to akonadi #include "kmfolderimap.h"
+//TODO port to akonadi #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmmainwin.h"
 #include "kmreadermainwin.h"
@@ -3555,13 +3555,16 @@ int KMComposeWin::autoSaveInterval() const
 
 void KMComposeWin::initAutoSave()
 {
+#if 0 //TODO port to akonadi
   kDebug() ;
   // make sure the autosave folder exists
   KMFolderMaildir::createMaildirFolders( KMKernel::localDataPath() + "autosave" );
   if ( mAutoSaveFilename.isEmpty() ) {
     mAutoSaveFilename = KMFolderMaildir::constructValidFileName();
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   updateAutoSave();
 }
 
@@ -3581,10 +3584,14 @@ void KMComposeWin::updateAutoSave()
 
 void KMComposeWin::setAutoSaveFilename( const QString &filename )
 {
+#if 0 //TODO port to akonadi
   if ( !mAutoSaveFilename.isEmpty() ) {
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mAutoSaveFilename = filename;
 }
 
@@ -3594,8 +3601,12 @@ void KMComposeWin::cleanupAutoSave()
   if ( !mAutoSaveFilename.isEmpty() ) {
     kDebug() <<"deleting autosave file"
                  << mAutoSaveFilename;
-    KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
+#if 0 //TODO port to akonadi
+   KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     mAutoSaveFilename.clear();
   }
 }

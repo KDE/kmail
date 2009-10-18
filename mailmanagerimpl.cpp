@@ -29,9 +29,11 @@
  *  your version.
  */
 #include "mailmanagerimpl.h"
+#include "messagehelper.h"
+
 #include <manageradaptor.h>
 
-#include "kmmessage.h"
+#include <kmime/kmime_message.h>
 #include "kmfolder.h"
 
 #include <KUrl>
@@ -51,32 +53,35 @@ MailManagerImpl::MailManagerImpl()
   QDBusConnection::sessionBus().registerObject( "/org/freedesktop/email/metadata/Manager", this );
 }
 
-void MailManagerImpl::processMsgBase( const KMMsgBase *msg, QStringList &subjects, QVector<QStringList> &predicatesArray, QVector<QStringList> &valuesArray )
+void MailManagerImpl::processMsgBase( KMime::Message *msg, QStringList &subjects, QVector<QStringList> &predicatesArray, QVector<QStringList> &valuesArray )
 {
   QStringList values;
   QStringList predicates;
 
   predicates.append( "EMailMeta:MessageSubject" );
-  values.append( msg->subject() );
+  values.append( msg->subject()->asUnicodeString() );
 
   predicates.append( "EMailMeta:MessageFrom" );
-  values.append( msg->fromStrip () );
+  values.append( MessageHelper::fromStrip (msg) );
 
   predicates.append( "EMailMeta:MessageTo" );
-  values.append( msg->toStrip () );
-
+  values.append( MessageHelper::toStrip (msg) );
+#if 0 //TODO port to akonadi
   predicates.append( "KMail:MessageIdMD5" );
   values.append( msg->msgIdMD5() );
 
   predicates.append( "KMail:MessageSerNum" );
   values.append( QString::number( msg->getMsgSerNum() ) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   predicates.append( "EMailMeta:MessageSent" );
-  values.append( msg->dateStr () );
+  values.append( msg->date ()->asUnicodeString() );
 
   predicates.append( "EMailMeta:MessageSent" );
-  values.append( msg->dateStr () );
-
+  values.append( msg->date ()->asUnicodeString() );
+#if 0 //TODO port to akonadi
   predicates.append( "EMailMeta:MessageSize" );
   values.append( QString::number( static_cast<uint> ( msg->msgSizeServer() ) ) );
 
@@ -122,6 +127,9 @@ void MailManagerImpl::processMsgBase( const KMMsgBase *msg, QStringList &subject
     values.append( "False" );
 
   subjects.append( "kmail://" + QString::number( msg->getMsgSerNum() ) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   predicatesArray.append( predicates );
   valuesArray.append( values );
 }
@@ -161,7 +169,7 @@ void MailManagerImpl::Register( const QDBusObjectPath &registrarPath, uint lastM
       uint processed = 0;
 
       for ( ; i < fcount; ++i ) {
-        const KMMsgBase *msg = folder->getMsgBase( i );
+        KMime::Message *msg = folder->getMsgBase( i );
 
         processMsgBase( msg, subjects, predicatesArray, valuesArray );
         processed++;

@@ -10,11 +10,11 @@ using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"
 #include "composer.h"
-#include "kmmsgpart.h"
+//TODO port to akonadi #include "kmmsgpart.h"
 #include "kmreadermainwin.h"
 #include "kmfoldermgr.h"
-#include "kmfoldercachedimap.h"
-#include "kmacctcachedimap.h"
+//TODO port to akonadi #include "kmfoldercachedimap.h"
+//TODO port to akonadi #include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #define REALLY_WANT_AKONADISENDER
@@ -798,8 +798,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,
     if ( messageText.isEmpty() )
       return -2;
 
-    KMMessage *msg = new KMMessage();
-    msg->fromString( messageText );
+    KMime::Message *msg = new KMime::Message();
+    msg->setContent( messageText );
 
     if (readFolderMsgIds) {
       if ( foldername.contains("/")) {
@@ -871,17 +871,19 @@ int KMKernel::dbusAddMessage( const QString & foldername,
         int i;
 
         mAddMsgCurrentFolder->open( "dbusadd" );
+#if 0 //TODO port to akonadi
         for( i=0; i<mAddMsgCurrentFolder->count(); i++) {
-          KMMsgBase *mb = mAddMsgCurrentFolder->getMsgBase(i);
+          KMime::Message *mb = mAddMsgCurrentFolder->getMsgBase(i);
+
           QString id = mb->msgIdMD5();
           if ( id.isEmpty() ) {
-            id = mb->subject();
+            id = mb->subject()->asUnicodeString();
             if ( id.isEmpty() )
-              id = mb->fromStrip();
+              id = KMail::MessageHelper::fromStrip( mb );
             if ( id.isEmpty() )
-              id = mb->toStrip();
+              id = KMail::MessageHelper::toStrip( mb );
 
-            id += mb->dateStr();
+            id += mb->date()->asUnicodeString();
           }
 
           //fprintf(stderr,"%s\n",(const char *) id);
@@ -889,18 +891,27 @@ int KMKernel::dbusAddMessage( const QString & foldername,
             mAddMessageMsgIds.append(id);
           }
         }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
         mAddMsgCurrentFolder->close( "dbusadd" );
       }
 
-      QString msgId = msg->msgIdMD5();
-      if ( msgId.isEmpty()) {
-        msgId = msg->subject();
-        if ( msgId.isEmpty() )
-          msgId = msg->fromStrip();
-        if ( msgId.isEmpty() )
-          msgId = msg->toStrip();
 
-        msgId += msg->dateStr();
+      QString msgId;
+#if 0 //TODO port to akonadi
+      msgId = msg->msgIdMD5();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+      if ( msgId.isEmpty()) {
+        msgId = msg->subject()->asUnicodeString();
+        if ( msgId.isEmpty() )
+          msgId = KMail::MessageHelper::fromStrip( msg );
+        if ( msgId.isEmpty() )
+          msgId = KMail::MessageHelper::toStrip( msg );
+
+        msgId += msg->date()->asUnicodeString();
       }
 
       int k = mAddMessageMsgIds.indexOf( msgId );
@@ -910,11 +921,13 @@ int KMKernel::dbusAddMessage( const QString & foldername,
         if ( !msgId.isEmpty() ) {
           mAddMessageMsgIds.append( msgId );
         }
-
+#if 0 //TODO port to akonadi
         if ( !MsgStatusFlags.isEmpty() ) {
           msg->status().setStatusFromStr(MsgStatusFlags);
         }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
         int index;
         if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
           mAddMsgCurrentFolder->unGetMsg( index );
@@ -966,8 +979,8 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     if ( messageText.isEmpty() )
       return -2;
 
-    KMMessage *msg = new KMMessage();
-    msg->fromString( messageText );
+    KMime::Message *msg = new KMime::Message();
+    msg->setContent( messageText );
 
     if ( foldername != mAddMessageLastFolder ) {
       if ( foldername.contains( '/' ) ) {
@@ -1015,11 +1028,13 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
     if ( mAddMsgCurrentFolder ) {
       int index;
-
+#if 0 //TODO port to akonadi
       if( !MsgStatusFlags.isEmpty() ) {
         msg->status().setStatusFromStr(MsgStatusFlags);
       }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
         mAddMsgCurrentFolder->unGetMsg( index );
         retval = 1;
@@ -1100,6 +1115,7 @@ void KMKernel::raise()
 
 bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
 {
+#if 0 //TODO port to akonadi
   KMMainWidget *mainWidget = 0;
 
   // First look for a KMainWindow.
@@ -1127,7 +1143,8 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
     KMMessage *msg = folder->getMsg(idx);
 
     KMReaderMainWin *win = new KMReaderMainWin( false, false );
-    KMMessage *newMessage = new KMMessage( *msg );
+    KMime::Message *newMessage = new KMime::Message;
+    newMessage->setContent( msg->encodedContent() );
     newMessage->setParent( msg->parent() );
     newMessage->setMsgSerNum( msg->getMsgSerNum() );
     newMessage->setReadyToShow( true );
@@ -1139,11 +1156,15 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
     return true;
   }
 
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return false;
 }
 
 QString KMKernel::getFrom( quint32 serialNumber )
 {
+#if 0 //TODO port to akonadi
   int idx = -1;
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
@@ -1159,6 +1180,10 @@ QString KMKernel::getFrom( quint32 serialNumber )
   if (unGet)
     folder->unGetMsg(idx);
   return result;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return "";
+#endif
 }
 
 QString KMKernel::debugScheduler()
@@ -1173,7 +1198,7 @@ QString KMKernel::debugSernum( quint32 serialNumber )
   if (serialNumber != 0) {
     int idx = -1;
     KMFolder *folder = 0;
-    KMMsgBase *msg = 0;
+    KMime::Message *msg = 0;
     KMMsgDict::instance()->getLocation( serialNumber, &folder, &idx );
     // It's possible that the message has been deleted or moved into a
     // different folder
@@ -1183,9 +1208,9 @@ QString KMKernel::debugSernum( quint32 serialNumber )
       msg = folder->getMsgBase( idx );
       if (msg) {
         res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
-                             .arg( msg->subject() )
-                             .arg( msg->fromStrip() )
-                             .arg( msg->dateStr() ) );
+                             .arg( msg->subject()->asUnicodeString() )
+                             .arg( KMail::MessageHelper::fromStrip(msg) )
+                             .arg( msg->date()->asUnicodeString() ) );
       } else {
         res.append( QString( "Invalid serial number." ) );
       }
@@ -1503,8 +1528,12 @@ void KMKernel::init()
   the_msgTagMgr = new KMMessageTagMgr();
   the_msgTagMgr->readConfig();
 
+#if 0 //TODO port to akonadi
   // moved up here because KMMessage::stripOffPrefixes is used below
   KMMessage::readConfig();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
@@ -1572,9 +1601,13 @@ void KMKernel::init()
 
 void KMKernel::readConfig()
 {
+#if 0 //TODO port to akonadi
   //Needed here, since this function is also called when the configuration
   //changes, and the static variables should be updated then - IOF
   KMMessage::readConfig();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 #if 0 //TODO port to akonadi

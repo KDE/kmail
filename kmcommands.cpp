@@ -77,11 +77,12 @@
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "messageviewer/kmaddrbook.h"
+#include "messageviewer/nodehelper.h"
 #include <kaddrbookexternal.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
-#include "kmfoldermbox.h"
-#include "kmfolderimap.h"
+//TODO port to akonadi #include "kmfoldermbox.h"
+//TODO port to akonadi #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
@@ -164,7 +165,7 @@ private:
 };
 
 /// Small helper function to get the composer context from a reply
-static KMail::Composer::TemplateContext replyContext( KMMessage::MessageReply reply )
+static KMail::Composer::TemplateContext replyContext( MessageReply reply )
 {
   if ( reply.replyAll )
     return KMail::Composer::ReplyToAll;
@@ -178,25 +179,26 @@ KMCommand::KMCommand( QWidget *parent )
 {
 }
 
-KMCommand::KMCommand( QWidget *parent, const QList<KMMsgBase*> &msgList )
+KMCommand::KMCommand( QWidget *parent, const QList<KMime::Message*> &msgList )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent ), mMsgList( msgList )
 {
 }
-
-KMCommand::KMCommand( QWidget *parent, KMMsgBase *msgBase )
+#if 0 //TODO port to akonadi
+KMCommand::KMCommand( QWidget *parent, KMime::Message *msgBase )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   mMsgList.append( msgBase );
 }
+#endif
 
-KMCommand::KMCommand( QWidget *parent, KMMessage *msg )
+KMCommand::KMCommand( QWidget *parent, KMime::Message *msg )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   if ( msg ) {
-    mMsgList.append( &msg->toMsgBase() );
+    mMsgList.append( msg );
   }
 }
 
@@ -225,12 +227,12 @@ void KMCommand::start()
 }
 
 
-const QList<KMMessage*> KMCommand::retrievedMsgs() const
+const QList<KMime::Message*> KMCommand::retrievedMsgs() const
 {
   return mRetrievedMsgs;
 }
 
-KMMessage *KMCommand::retrievedMessage() const
+KMime::Message *KMCommand::retrievedMessage() const
 {
   return *(mRetrievedMsgs.begin());
 }
@@ -253,20 +255,19 @@ void KMCommand::slotStart()
       return;
   }
 
-  KMMsgBase *mb = 0;
+  KMime::Message *mb = 0;
   if ( mMsgList.size() > 0 )
     mb = *(mMsgList.begin());
-
+#if 0 //TODO port to akonadi
   if ( ( mb ) && ( mMsgList.count() == 1 ) && ( mb->isMessage() ) &&
        ( mb->parent() == 0 ) )
   {
     // Special case of operating on message that isn't in a folder
-    mRetrievedMsgs.append((KMMessage*)mMsgList.takeFirst());
+    mRetrievedMsgs.append((KMime::Message*)mMsgList.takeFirst());
     emit messagesTransfered( OK );
     return;
   }
-
-  QList<KMMsgBase*>::const_iterator it;
+  QList<KMime::Message*>::const_iterator it;
   for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
     if ( !( (*it)->parent() ) ) {
       emit messagesTransfered( Failed );
@@ -274,6 +275,9 @@ void KMCommand::slotStart()
     } else {
       keepFolderOpen( (*it)->parent() );
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   // transfer the selected messages first
   transferSelectedMsgs();
@@ -286,7 +290,7 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   if ( result == OK )
     result = execute();
   mResult = result;
-  KMMessage* msg;
+  KMime::Message* msg;
   foreach( msg, mRetrievedMsgs ) {
 #if 0 //TODO port to akonadi
     if ( msg && msg->parent() )
@@ -326,14 +330,15 @@ void KMCommand::transferSelectedMsgs()
     mProgressDialog->setModal(true);
     mProgressDialog->setMinimumDuration(1000);
   }
-  QList<KMMsgBase*>::const_iterator it;
+#if 0 //TODO port to akonadi
+  QList<KMime::Message*>::const_iterator it;
   for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
   {
-    KMMsgBase *mb = (*it);
+    KMime::Message *mb = (*it);
     // check if all messages are complete
-    KMMessage *thisMsg = 0;
+    KMime::Message *thisMsg = 0;
     if ( mb->isMessage() )
-      thisMsg = static_cast<KMMessage*>(mb);
+      thisMsg = static_cast<KMime::Message*>(mb);
     else
     {
       KMFolder *folder = mb->parent();
@@ -360,26 +365,24 @@ void KMCommand::transferSelectedMsgs()
       job->setCancellable( false );
       totalSize += thisMsg->msgSizeServer();
       // emitted when the message was transferred successfully
-      connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-              this, SLOT(slotMsgTransfered(KMMessage*)));
+      connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
+              this, SLOT(slotMsgTransfered(KMime::Message*)));
       // emitted when the job is destroyed
       connect(job, SIGNAL(finished()),
               this, SLOT(slotJobFinished()));
       connect(job, SIGNAL(progress(unsigned long, unsigned long)),
               this, SLOT(slotProgress(unsigned long, unsigned long)));
       // msg musn't be deleted
-#if 0 //Port to akonadi
       thisMsg->setTransferInProgress(true);
-#endif
       job->start();
     } else {
-#if 0 //Port to Akonadi
       thisMsg->setTransferInProgress(true);
-#endif
       mRetrievedMsgs.append(thisMsg);
     }
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if (complete)
   {
     delete mProgressDialog;
@@ -395,7 +398,7 @@ void KMCommand::transferSelectedMsgs()
   }
 }
 
-void KMCommand::slotMsgTransfered(KMMessage* msg)
+void KMCommand::slotMsgTransfered(KMime::Message* msg)
 {
   if ( mProgressDialog && mProgressDialog->wasCancelled() ) {
     emit messagesTransfered( Canceled );
@@ -454,26 +457,24 @@ void KMCommand::slotTransferCancelled()
       imapFolder->account()->killAllJobs();
     }
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   KMCommand::mCountJobs = 0;
   mCountMsgs = 0;
   // unget the transferred messages
-  QList<KMMessage*>::const_iterator it;
+  QList<KMime::Message*>::const_iterator it;
   for ( it = mRetrievedMsgs.constBegin(); it != mRetrievedMsgs.constEnd(); ++it ) {
-    KMMessage* msg = (*it);
+    KMime::Message* msg = (*it);
     KMFolder *folder = msg->parent();
     ++it;
     if (!folder)
       continue;
-#if 0 //Port to akonadi
     msg->setTransferInProgress(false);
-#endif
     int idx = folder->find(msg);
     if (idx > 0) folder->unGetMsg(idx);
   }
   mRetrievedMsgs.clear();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   emit messagesTransfered( Canceled );
 }
 
@@ -484,13 +485,14 @@ void KMCommand::keepFolderOpen( KMFolder *folder )
 }
 
 KMMailtoComposeCommand::KMMailtoComposeCommand( const KUrl &url,
-                                                KMMessage *msg )
+                                                KMime::Message *msg )
   :mUrl( url ), mMessage( msg )
 {
 }
 
 KMCommand::Result KMMailtoComposeCommand::execute()
 {
+#if 0 //TODO port to akonadi
   KMime::Message *msg = new KMime::Message;
   uint id = 0;
 
@@ -505,13 +507,15 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   win->setCharset("", true);
   win->setFocusToSubject();
   win->show();
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 
 
 KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
-   const KUrl &url, KMMessage *msg, const QString &selection )
+   const KUrl &url, KMime::Message *msg, const QString &selection )
   :KMCommand( parent, msg ), mUrl( url ), mSelection( selection  )
 {
 }
@@ -538,7 +542,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 
 
 KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
-   const KUrl &url, KMMessage *msg )
+   const KUrl &url, KMime::Message *msg )
   :KMCommand( parent, msg ), mUrl( url )
 {
 }
@@ -696,7 +700,7 @@ void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
 }
 
 
-KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMessage *msg )
+KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMime::Message *msg )
   :KMCommand( parent, msg )
 {
 }
@@ -704,7 +708,7 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMessage *msg )
 KMCommand::Result KMEditMsgCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if (!msg || !msg->parent() ||
       ( !kmkernel->folderIsDraftOrOutbox( msg->parent() ) &&
         !kmkernel->folderIsTemplates( msg->parent() ) ) ) {
@@ -733,7 +737,7 @@ KMCommand::Result KMEditMsgCommand::execute()
   return Failed;
 }
 
-KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMMessage *msg )
+KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMime::Message *msg )
   :KMCommand( parent, msg )
 {
 }
@@ -741,14 +745,14 @@ KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMMessage *msg )
 KMCommand::Result KMUseTemplateCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg || !msg->parent() ||
        !kmkernel->folderIsTemplates( msg->parent() ) ) {
     return Failed;
   }
 
   // Take a copy of the original message, which remains unchanged.
-  KMMessage *newMsg = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
+  KMime::Message *newMsg = new KMime::Message( new DwMessage( *msg->asDwMessage() ) );
   newMsg->setComplete( msg->isComplete() );
 
   // these fields need to be regenerated for the new message
@@ -764,9 +768,9 @@ KMCommand::Result KMUseTemplateCommand::execute()
 #endif
   return OK;
 }
-
+#if 0 //TODO port to akonadi
 KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
-                                          KMMessage *msg, bool fixedFont )
+                                          KMime::Message *msg, bool fixedFont )
   :KMCommand( parent, msg ), mFixedFont( fixedFont )
 {
   // remember complete state
@@ -775,7 +779,7 @@ KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
 
 KMCommand::Result KMShowMsgSrcCommand::execute()
 {
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
@@ -806,6 +810,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
 
   return OK;
 }
+#endif
 
 static KUrl subjectToUrl( const QString &subject )
 {
@@ -819,12 +824,12 @@ static KUrl subjectToUrl( const QString &subject )
   return KFileDialog::getSaveUrl( KUrl::fromPath( fileName ), "*.mbox" );
 }
 
-KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage *msg )
+KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMime::Message *msg )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
     mStandAloneMessage( 0 ),
     mOffset( 0 ),
-    mTotalSize( msg ? msg->msgSize() : 0 )
+    mTotalSize( /* TODO port to akonadi msg ? msg->msgSize() :*/ 0 )
 {
   if ( !msg ) {
     return;
@@ -834,16 +839,20 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage *msg )
   // we need to work with the pointer, but can be reasonably sure it won't
   // go away, since it'll be an encapsulated message or one that was opened
   // from an .eml file.
+#if 0 //TODO port to akonadi
   if ( msg->getMsgSerNum() != 0 ) {
     mMsgList.append( msg->getMsgSerNum() );
   } else {
     mStandAloneMessage = msg;
   }
-  mUrl = subjectToUrl( msg->cleanSubject() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  mUrl = subjectToUrl( NodeHelper::cleanSubject( msg ) );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
-                                    const QList<KMMsgBase*> &msgList )
+                                    const QList<KMime::Message*> &msgList )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
     mStandAloneMessage( 0 ),
@@ -854,10 +863,11 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     return;
   }
   setDeletesItself( true );
-  // We operate on serNums and not the KMMsgBase pointers, as those can
+  // We operate on serNums and not the KMime::Message pointers, as those can
   // change, or become invalid when changing the current message, switching
   // folders, etc.
-  QList<KMMsgBase*>::const_iterator it;
+#if 0 //TODO port to akonadi
+  QList<KMime::Message*>::const_iterator it;
   for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
     mMsgList.append( (*it)->getMsgSerNum() );
     mTotalSize += (*it)->msgSize();
@@ -865,9 +875,12 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
       (*it)->parent()->open( "kmcommand" );
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mMsgListIndex = 0;
-  KMMsgBase *msgBase = *(msgList.begin());
-  mUrl = subjectToUrl( msgBase->cleanSubject() );
+  KMime::Message *msgBase = *(msgList.begin());
+  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase ) );
 }
 
 KUrl KMSaveMsgCommand::url()
@@ -890,6 +903,7 @@ KMCommand::Result KMSaveMsgCommand::execute()
 
 void KMSaveMsgCommand::slotSaveDataReq()
 {
+#if 0 //TODO port to akonadi
   int remainingBytes = mData.size() - mOffset;
   if ( remainingBytes > 0 ) {
     // eat leftovers first
@@ -904,7 +918,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
   }
   // No leftovers, process next message.
   if ( mMsgListIndex < static_cast<unsigned int>( mMsgList.size() ) ) {
-    KMMessage *msg = 0;
+    KMime::Message *msg = 0;
     int idx = -1;
     KMFolder * p = 0;
     KMMsgDict::instance()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
@@ -917,9 +931,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
         QByteArray data = QByteArray();
         mJob->sendAsyncData( data );
       }
-#if 0 //TODO port to akonadi
       msg->setTransferInProgress( true );
-#endif
       if ( msg->isComplete() ) {
         slotMessageRetrievedForSaving( msg );
       } else {
@@ -927,8 +939,8 @@ void KMSaveMsgCommand::slotSaveDataReq()
         if ( msg->parent()  && !msg->isComplete() ) {
           FolderJob *job = msg->parent()->createJob( msg );
           job->setCancellable( false );
-          connect(job, SIGNAL( messageRetrieved( KMMessage* ) ),
-                  this, SLOT( slotMessageRetrievedForSaving( KMMessage* ) ) );
+          connect(job, SIGNAL( messageRetrieved( KMime::Message* ) ),
+                  this, SLOT( slotMessageRetrievedForSaving( KMime::Message* ) ) );
           job->start();
         }
       }
@@ -948,10 +960,14 @@ void KMSaveMsgCommand::slotSaveDataReq()
       mJob->sendAsyncData( data );
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
-void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
+void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMime::Message *msg)
 {
+#if 0 //TODO port to akonadi
   if ( msg ) {
     QByteArray str( msg->mboxMessageSeparator() );
     str += KMFolderMbox::escapeFrom( msg->asDwString() );
@@ -984,6 +1000,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
     p->unGetMsg( idx );
     p->close( "kmcommand" );
   }
+#endif
 }
 
 void KMSaveMsgCommand::slotSaveResult(KJob *job)
@@ -1062,6 +1079,7 @@ void KMOpenMsgCommand::slotDataArrived( KIO::Job *, const QByteArray & data )
 
 void KMOpenMsgCommand::slotResult( KJob *job )
 {
+#if 0 //TODO port to akonadi
   if ( job->error() ) {
     // handle errors
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
@@ -1113,7 +1131,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
       deleteLater();
       return;
     }
-    KMMessage *msg = new KMMessage( dwMsg );
+    KMime::Message *msg = new KMime::Message( dwMsg );
     msg->setReadyToShow( true );
     KMReaderMainWin *win = new KMReaderMainWin();
     win->showMsg( mEncoding, msg );
@@ -1125,6 +1143,9 @@ void KMOpenMsgCommand::slotResult( KJob *job )
     setResult( OK );
     emit completed( this );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   deleteLater();
 }
 
@@ -1132,7 +1153,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
 
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll, ReplyAuthor
 //      are all similar and should be factored
-KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMessage *msg,
+KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMime::Message *msg,
                                     const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
 {
@@ -1142,11 +1163,11 @@ KMCommand::Result KMReplyToCommand::execute()
 {
 #if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = KMail::MessageHelper::createReply( msg, KMail::ReplySmart, mSelection );
+  KMime::Message::MessageReply reply = KMail::MessageHelper::createReply( msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
@@ -1159,7 +1180,7 @@ KMCommand::Result KMReplyToCommand::execute()
 
 
 KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
-                                                  KMMessage *msg )
+                                                  KMime::Message *msg )
   : KMCommand( parent, msg )
 {
 }
@@ -1168,11 +1189,11 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
 #if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplySmart, "", true);
+  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( reply.msg, replyContext( reply ) );
   win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus( false );
@@ -1185,7 +1206,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 
 
 KMReplyListCommand::KMReplyListCommand( QWidget *parent,
-  KMMessage *msg, const QString &selection )
+  KMime::Message *msg, const QString &selection )
  : KMCommand( parent, msg ), mSelection( selection )
 {
 }
@@ -1194,11 +1215,11 @@ KMCommand::Result KMReplyListCommand::execute()
 {
 #if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyList, mSelection );
+  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ),
                                                0, mSelection );
   win->setCharset( msg->codec()->name(), true );
@@ -1212,7 +1233,7 @@ KMCommand::Result KMReplyListCommand::execute()
 
 
 KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
-  KMMessage *msg, const QString &selection )
+  KMime::Message *msg, const QString &selection )
   :KMCommand( parent, msg ), mSelection( selection )
 {
 }
@@ -1221,11 +1242,11 @@ KMCommand::Result KMReplyToAllCommand::execute()
 {
 #if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection );
+  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
   win->setCharset( msg->codec()->name(), true );
@@ -1238,7 +1259,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
 }
 
 
-KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, KMMessage *msg,
+KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, KMime::Message *msg,
                                             const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
 {
@@ -1248,11 +1269,11 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 {
 #if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyAuthor, mSelection );
+  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
   win->setCharset( msg->codec()->name(), true );
@@ -1266,13 +1287,13 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 
 
 KMForwardCommand::KMForwardCommand( QWidget *parent,
-  const QList<KMMsgBase*> &msgList, uint identity )
+  const QList<KMime::Message*> &msgList, uint identity )
   : KMCommand( parent, msgList ),
     mIdentity( identity )
 {
 }
 
-KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
+KMForwardCommand::KMForwardCommand( QWidget *parent, KMime::Message *msg,
                                     uint identity )
   : KMCommand( parent, msg ),
     mIdentity( identity )
@@ -1282,7 +1303,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
 KMCommand::Result KMForwardCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  QList<KMMessage*> msgList = retrievedMsgs();
+  QList<KMime::Message*> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) {
     // ask if they want a mime digest forward
@@ -1297,8 +1318,8 @@ KMCommand::Result KMForwardCommand::execute()
 
     if ( answer == KMessageBox::Yes ) {
       uint id = 0;
-      KMMessage *fwdMsg = new KMMessage;
-      KMMessagePart *msgPart = new KMMessagePart;
+      KMime::Message *fwdMsg = new KMime::Message;
+      KMime::MessagePart *msgPart = new KMime::MessagePart;
       QString msgPartText;
       int msgCnt = 0; // incase there are some we can't forward for some reason
 
@@ -1311,7 +1332,7 @@ KMCommand::Result KMForwardCommand::execute()
       msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
                          " message is contained in the attachment(s).\n\n\n");
       // iterate through all the messages to be forwarded
-      KMMessage *msg;
+      KMime::Message *msg;
       foreach ( msg, msgList ) {
         // set the identity
         if (id == 0)
@@ -1362,8 +1383,8 @@ KMCommand::Result KMForwardCommand::execute()
       return OK;
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
       uint id = 0;
-      QList<KMMessage*> linklist;
-      QList<KMMessage*>::const_iterator it;
+      QList<KMime::Message*> linklist;
+      QList<KMime::Message*>::const_iterator it;
       for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
         // set the identity
         if (id == 0)
@@ -1373,12 +1394,12 @@ KMCommand::Result KMForwardCommand::execute()
       }
       if ( id == 0 )
         id = mIdentity; // use folder identity if no message had an id set
-      KMMessage *fwdMsg = new KMMessage;
+      KMime::Message *fwdMsg = new KMime::Message;
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->setCharset("utf-8");
 
-      foreach( KMMessage *msg, linklist ) {
+      foreach( KMime::Message *msg, linklist ) {
         TemplateParser parser( fwdMsg, TemplateParser::Forward,
                                msg->body(), false, false, false );
         parser.process( msg, 0, true );
@@ -1398,12 +1419,12 @@ KMCommand::Result KMForwardCommand::execute()
   }
 
   // forward a single message at most.
-  KMMessage *msg = msgList.first();
+  KMime::Message *msg = msgList.first();
   if ( !msg || !msg->codec() )
     return Failed;
 
   KCursorSaver busy(KBusyPtr::busy());
-  KMMessage *fwdMsg = msg->createForward();
+  KMime::Message *fwdMsg = msg->createForward();
 
   uint id = msg->headerField("X-KMail-Identity").trimmed().toUInt();
   if ( id == 0 )
@@ -1421,14 +1442,14 @@ KMCommand::Result KMForwardCommand::execute()
 
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
-           const QList<KMMsgBase*> &msgList, uint identity, KMail::Composer *win )
+           const QList<KMime::Message*> &msgList, uint identity, KMail::Composer *win )
   : KMCommand( parent, msgList ), mIdentity( identity ),
     mWin( QPointer<KMail::Composer>( win ))
 {
 }
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
-           KMMessage * msg, uint identity, KMail::Composer *win )
+           KMime::Message * msg, uint identity, KMail::Composer *win )
   : KMCommand( parent, msg ), mIdentity( identity ),
     mWin( QPointer< KMail::Composer >( win ))
 {
@@ -1437,8 +1458,8 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  QList<KMMessage*> msgList = retrievedMsgs();
-  KMMessage *fwdMsg = new KMMessage;
+  QList<KMime::Message*> msgList = retrievedMsgs();
+  KMime::Message *fwdMsg = new KMime::Message;
 
   if (msgList.count() >= 2) {
     // don't respect X-KMail-Identity headers because they might differ for
@@ -1446,7 +1467,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     fwdMsg->initHeader(mIdentity);
   }
   else if (msgList.count() == 1) {
-    KMMessage *msg = msgList.first();
+    KMime::Message *msg = msgList.first();
     fwdMsg->initFromMessage(msg);
     fwdMsg->setSubject( msg->forwardSubject() );
   }
@@ -1458,13 +1479,13 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
 
   // iterate through all the messages to be forwarded
-  KMMessage *msg;
+  KMime::Message *msg;
   foreach ( msg, msgList ) {
     // remove headers that shouldn't be forwarded
     msg->removePrivateHeaderFields();
     msg->removeHeaderField("BCC");
     // set the part
-    KMMessagePart *msgPart = new KMMessagePart;
+    KMime::MessagePart *msgPart = new KMime::MessagePart;
     msgPart->setTypeStr("message");
     msgPart->setSubtypeStr("rfc822");
     msgPart->setCharset(msg->charset());
@@ -1488,7 +1509,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 
 
 KMRedirectCommand::KMRedirectCommand( QWidget *parent,
-  KMMessage *msg )
+  KMime::Message *msg )
   : KMCommand( parent, msg )
 {
 }
@@ -1496,7 +1517,7 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 KMCommand::Result KMRedirectCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
@@ -1507,7 +1528,7 @@ KMCommand::Result KMRedirectCommand::execute()
     return Failed;
   }
 
-  KMMessage *newMsg = msg->createRedirect( dlg->to() );
+  KMime::Message *newMsg = msg->createRedirect( dlg->to() );
   KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
   const KMail::MessageSender::SendMethod method = dlg->sendImmediate()
@@ -1524,7 +1545,7 @@ KMCommand::Result KMRedirectCommand::execute()
 }
 
 
-KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMMessage *msg,
+KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMime::Message *msg,
                                                 const QString &selection,
                                                 const QString &tmpl )
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
@@ -1535,11 +1556,11 @@ KMCommand::Result KMCustomReplyToCommand::execute()
 {
 #if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplySmart, mSelection,
+  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplySmart, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
@@ -1553,7 +1574,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
 }
 
 
-KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, KMMessage *msg,
+KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, KMime::Message *msg,
                                                       const QString &selection,
                                                       const QString &tmpl )
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
@@ -1564,11 +1585,11 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
 #if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection,
+  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
@@ -1583,14 +1604,14 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 
 
 KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
-  const QList<KMMsgBase*> &msgList, uint identity, const QString &tmpl )
+  const QList<KMime::Message*> &msgList, uint identity, const QString &tmpl )
   : KMCommand( parent, msgList ),
     mIdentity( identity ), mTemplate( tmpl )
 {
 }
 
 KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
-  KMMessage *msg, uint identity, const QString &tmpl )
+  KMime::Message *msg, uint identity, const QString &tmpl )
   : KMCommand( parent, msg ),
     mIdentity( identity ), mTemplate( tmpl )
 {
@@ -1599,16 +1620,16 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
 KMCommand::Result KMCustomForwardCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  QList<KMMessage*> msgList = retrievedMsgs();
+  QList<KMime::Message*> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) { // Multiple forward
 
     uint id = 0;
     // QCString msgText = "";
-    QList<KMMessage*> linklist;
-    for ( QList<KMMessage*>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
+    QList<KMime::Message*> linklist;
+    for ( QList<KMime::Message*>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     {
-      KMMessage *msg = *it;
+      KMime::Message *msg = *it;
       // set the identity
       if (id == 0)
         id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
@@ -1617,15 +1638,15 @@ KMCommand::Result KMCustomForwardCommand::execute()
     }
     if ( id == 0 )
       id = mIdentity; // use folder identity if no message had an id set
-    KMMessage *fwdMsg = new KMMessage;
+    KMime::Message *fwdMsg = new KMime::Message;
     fwdMsg->initHeader( id );
     fwdMsg->setAutomaticFields( true );
     fwdMsg->setCharset( "utf-8" );
     // fwdMsg->setBody( msgText );
 
-    for ( QList<KMMessage*>::const_iterator it = linklist.constBegin(); it != linklist.constEnd(); ++it )
+    for ( QList<KMime::Message*>::const_iterator it = linklist.constBegin(); it != linklist.constEnd(); ++it )
     {
-      KMMessage *msg = *it;
+      KMime::Message *msg = *it;
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
         msg->body(), false, false, false );
         parser.process( msg, 0, true );
@@ -1641,13 +1662,13 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
   } else { // forward a single message at most
 
-    KMMessage *msg = msgList.first();
+    KMime::Message *msg = msgList.first();
     if ( !msg || !msg->codec() ) {
       return Failed;
     }
 
     KCursorSaver busy( KBusyPtr::busy() );
-    KMMessage *fwdMsg = msg->createForward( mTemplate );
+    KMime::Message *fwdMsg = msg->createForward( mTemplate );
 
     uint id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
     if ( id == 0 )
@@ -1666,7 +1687,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
 }
 
 
-KMPrintCommand::KMPrintCommand( QWidget *parent, KMMessage *msg,
+KMPrintCommand::KMPrintCommand( QWidget *parent, KMime::Message *msg,
                                 const HeaderStyle *headerStyle,
                                 const HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
@@ -1732,7 +1753,7 @@ KMCommand::Result KMSetStatusCommand::execute()
   // Toggle actions on threads toggle the whole thread
   // depending on the state of the parent.
   if (mToggle) {
-    KMMsgBase *msg;
+    KMime::Message *msg;
     KMMsgDict::instance()->getLocation( *mSerNums.begin(), &folder, &idx );
     if (folder) {
       msg = folder->getMsgBase(idx);
@@ -1747,7 +1768,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     KMMsgDict::instance()->getLocation( *it, &folder, &idx );
     if (folder) {
       if (mToggle) {
-        KMMsgBase *msg = folder->getMsgBase(idx);
+        KMime::Message *msg = folder->getMsgBase(idx);
         // check if we are already at the target toggle state
         if (msg) {
           bool myStatus;
@@ -1791,24 +1812,24 @@ KMCommand::Result KMSetTagCommand::execute()
 #if 0 //TODO port to akonadi
 #ifdef Nepomuk_FOUND
   //Set the visible name for the tag
-  const KMMessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
+  const KMime::MessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
   Nepomuk::Tag n_tag( mTagLabel );
   if ( tagDesc )
     n_tag.setLabel( tagDesc->name() );
 #endif
 
-  QList< KMMsgBase * > msgList;
+  QList< KMime::Message * > msgList;
   foreach ( unsigned long serNum, mSerNums ) {
     KMFolder * folder;
     int idx;
     KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
     if ( folder ) {
-      KMMsgBase *msg = folder->getMsgBase( idx );
+      KMime::Message *msg = folder->getMsgBase( idx );
 #ifdef Nepomuk_FOUND
       Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msgBase->getMsgSerNum() ) );
 #endif
 
-      KMMessageTagList tagList;
+      KMime::MessageTagList tagList;
       if ( msg->tagList() )
         tagList = * msg->tagList();
 
@@ -1854,13 +1875,17 @@ KMCommand::Result KMFilterCommand::execute()
 
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
-                                              const QList<KMMsgBase*> &msgList,
+                                              const QList<KMime::Message*> &msgList,
                                               KMFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
-  QList<KMMsgBase*>::const_iterator it;
+#if 0 //TODO port to akonadi
+  QList<KMime::Message*>::const_iterator it;
   for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     serNumList.append( (*it)->getMsgSerNum() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMCommand::Result KMFilterActionCommand::execute()
@@ -1923,9 +1948,9 @@ void KMMetaFilterActionCommand::start()
     scheduler->setAutoDestruct( true );
     scheduler->setIgnoreFilterSet( true );
 #ifdef OLD_MESSAGELIST
-    QList<KMMsgBase*> msgList = mMainWidget->messageListView()->selectionAsMsgBaseList();
+    QList<KMime::Message*> msgList = mMainWidget->messageListView()->selectionAsMsgBaseList();
 
-    KMMsgBase *msg;
+    KMime::Message *msg;
     foreach( msg, msgList )
       scheduler->execFilters( msg );
 #endif
@@ -1966,7 +1991,7 @@ void FolderShortcutCommand::setAction( QAction* action )
 }
 
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
-                                                        KMMessage *msg )
+                                                        KMime::Message *msg )
   : KMCommand( parent, msg )
 {
 }
@@ -1976,7 +2001,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 #if 0 //TODO port to akonadi
   QByteArray name;
   QString value;
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
@@ -1993,28 +2018,28 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 }
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
-                              const QList<KMMsgBase*> &msgList )
+                              const QList<KMime::Message*> &msgList )
 :mDestFolder( destFolder ), mMsgList( msgList )
 {
   setDeletesItself( true );
 }
 
-KMCopyCommand::KMCopyCommand( KMFolder* destFolder, KMMessage * msg )
+KMCopyCommand::KMCopyCommand( KMFolder* destFolder, KMime::Message * msg )
   :mDestFolder( destFolder )
 {
   setDeletesItself( true );
-  mMsgList.append( &msg->toMsgBase() );
+  mMsgList.append( msg );
 }
 
 KMCommand::Result KMCopyCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  KMMsgBase *msgBase;
-  KMMessage *msg, *newMsg;
+  KMime::Message *msgBase;
+  KMime::Message *msg, *newMsg;
   int idx = -1;
   bool isMessage;
-  QList<KMMessage*> list;
-  QList<KMMessage*> localList;
+  QList<KMime::Message*> list;
+  QList<KMime::Message*> localList;
 
   if ( mDestFolder && mDestFolder->open( "kmcommand" ) != 0 ) {
     deleteLater();
@@ -2024,13 +2049,13 @@ KMCommand::Result KMCopyCommand::execute()
   setEmitsCompletedItself( true );
   KCursorSaver busy(KBusyPtr::busy());
 
-  QList<KMMsgBase*>::const_iterator it;
+  QList<KMime::Message*>::const_iterator it;
   for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it ) {
     msgBase = (*it);
     KMFolder *srcFolder = msgBase->parent();
     isMessage = msgBase->isMessage();
     if ( isMessage ) {
-      msg = static_cast<KMMessage*>( msgBase );
+      msg = static_cast<KMime::Message*>( msgBase );
     } else {
       idx = srcFolder->find( msgBase );
       assert( idx != -1 );
@@ -2055,7 +2080,7 @@ KMCommand::Result KMCopyCommand::execute()
       // imap => imap with same account
       list.append(msg);
     } else {
-      newMsg = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
+      newMsg = new KMime::Message( new DwMessage( *msg->asDwMessage() ) );
       newMsg->setComplete(msg->isComplete());
       // make sure the attachment state is only calculated when it's complete
       if (!newMsg->isComplete())
@@ -2069,8 +2094,8 @@ KMCommand::Result KMCopyCommand::execute()
         FolderJob *job = srcFolder->createJob(newMsg);
         job->setCancellable( false );
         mPendingJobs << job;
-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-                mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+        connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
+                mDestFolder, SLOT(reallyAddCopyOfMsg(KMime::Message*)));
         connect( job, SIGNAL(result(KMail::FolderJob*)),
                  this, SLOT(slotJobFinished(KMail::FolderJob*)) );
         job->start();
@@ -2170,26 +2195,36 @@ void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-                                const QList<KMMsgBase*> &msgList)
+                                const QList<KMime::Message*> &msgList)
     : mDestFolder( destFolder ), mProgressItem( 0 )
-  {
-  foreach ( KMMsgBase *msgBase, msgList )
+{
+#if 0 //TODO port to akonadi
+  foreach ( KMime::Message *msgBase, msgList )
     mSerNumList.append( msgBase->getMsgSerNum() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-                              KMMessage *msg )
+                              KMime::Message *msg )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
+#if 0 //TODO port to akonadi
   mSerNumList.append( msg->getMsgSerNum() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
+#if 0 //TODO port to akonadi
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-                              KMMsgBase *msgBase )
+                              KMime::Message *msgBase )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
   mSerNumList.append( msgBase->getMsgSerNum() );
 }
+#endif
 
 KMMoveCommand::KMMoveCommand( quint32 )
   :  mDestFolder( 0 ), mProgressItem( 0 )
@@ -2201,7 +2236,7 @@ KMCommand::Result KMMoveCommand::execute()
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   setDeletesItself( true );
-  typedef QMap< KMFolder*, QList<KMMessage*>* > FolderToMessageListMap;
+  typedef QMap< KMFolder*, QList<KMime::Message*>* > FolderToMessageListMap;
   FolderToMessageListMap folderDeleteList;
 
   if ( mDestFolder && mDestFolder->open( "kmcommand" ) != 0 ) {
@@ -2218,10 +2253,10 @@ KMCommand::Result KMMoveCommand::execute()
   connect( mProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
            this, SLOT( slotMoveCanceled() ) );
 
-  KMMessage *msg;
+  KMime::Message *msg;
   int rc = 0;
   int index;
-  QList<KMMessage*> list;
+  QList<KMime::Message*> list;
   int undoId = -1;
   mCompleteWithAddedMsg = false;
 
@@ -2283,7 +2318,7 @@ KMCommand::Result KMMoveCommand::execute()
         }
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
-          KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
+          KMime::Message *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
           if (undo && mb)
           {
             if ( undoId == -1 )
@@ -2302,7 +2337,7 @@ KMCommand::Result KMMoveCommand::execute()
       // we are really, really deleting, not just moving to trash
       if (srcFolder->folderType() == KMFolderTypeImap) {
         if (!folderDeleteList[srcFolder])
-          folderDeleteList[srcFolder] = new QList<KMMessage*>;
+          folderDeleteList[srcFolder] = new QList<KMime::Message*>;
         folderDeleteList[srcFolder]->append( msg );
       } else {
         srcFolder->removeMsg(idx);
@@ -2330,6 +2365,7 @@ KMCommand::Result KMMoveCommand::execute()
   return OK;
 }
 
+#if 0 //TODO port to akonadi
 void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool success)
 {
   disconnect (imapFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
@@ -2353,6 +2389,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
     completeMove( Failed );
   }
 }
+#endif
 
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
@@ -2404,14 +2441,14 @@ void KMMoveCommand::slotMoveCanceled()
 
 // srcFolder doesn't make much sense for searchFolders
 KMTrashMsgCommand::KMTrashMsgCommand( KMFolder* srcFolder,
-  const QList<KMMsgBase*> &msgList )
+  const QList<KMime::Message*> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
   srcFolder->open( "kmcommand" );
   mOpenedFolders.push_back( srcFolder );
 }
 
-KMTrashMsgCommand::KMTrashMsgCommand( KMFolder* srcFolder, KMMessage * msg )
+KMTrashMsgCommand::KMTrashMsgCommand( KMFolder* srcFolder, KMime::Message * msg )
 :KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
   srcFolder->open( "kmcommand" );
@@ -2426,7 +2463,7 @@ KMTrashMsgCommand::KMTrashMsgCommand( quint32 sernum )
   KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
 
   if ( srcFolder ) {
-    KMMsgBase *msg = srcFolder->getMsgBase( idx );
+    KMime::Message *msg = srcFolder->getMsgBase( idx );
     srcFolder->open( "kmcommand" );
     mOpenedFolders.push_back( srcFolder );
     addMsg( msg );
@@ -2457,11 +2494,11 @@ KMUrlClickedCommand::KMUrlClickedCommand( const KUrl &url, uint identity,
 KMCommand::Result KMUrlClickedCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  KMMessage* msg;
+  KMime::Message* msg;
 
   if (mUrl.protocol() == "mailto")
   {
-    msg = new KMMessage;
+    msg = new KMime::Message;
     msg->initHeader(mIdentity);
     msg->setCharset("utf-8");
 
@@ -2514,18 +2551,18 @@ KMCommand::Result KMUrlClickedCommand::execute()
   return OK;
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg )
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMime::Message *msg )
   : KMCommand( parent, msg ), mImplicitAttachments( true ), mEncoded( false )
 {
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList<KMMsgBase*>& msgs )
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList<KMime::Message*>& msgs )
   : KMCommand( parent, msgs ), mImplicitAttachments( true ), mEncoded( false )
 {
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*>& attachments,
-                                                    KMMessage *msg, bool encoded )
+                                                    KMime::Message *msg, bool encoded )
   : KMCommand( parent ), mImplicitAttachments( false ), mEncoded( encoded )
 {
   QList<partNode*>::const_iterator it;
@@ -2539,10 +2576,10 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   if ( mImplicitAttachments ) {
-    QList<KMMessage*> msgList = retrievedMsgs();
-    QList<KMMessage*>::const_iterator it;
+    QList<KMime::Message*> msgList = retrievedMsgs();
+    QList<KMime::Message*>::const_iterator it;
     for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
-      KMMessage *msg = (*it);
+      KMime::Message *msg = (*it);
       partNode *rootNode = partNode::fromMessage( msg );
       for ( partNode *child = rootNode; child;
             child = child->firstChild() ) {
@@ -2886,7 +2923,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   return OK;
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, KMMessage *msg )
+KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, KMime::Message *msg )
   : mNeedsRetrieval( 0 )
 {
   QList<partNode*>::const_iterator it;
@@ -2895,7 +2932,7 @@ KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, KMMessage *msg 
   }
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, KMMessage *msg )
+KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, KMime::Message *msg )
   : mNeedsRetrieval( 0 )
 {
   mPartMap.insert( node, msg );
@@ -2922,8 +2959,8 @@ void KMLoadPartsCommand::slotStart()
           curFolder->createJob( it.value(), FolderJob::tGetMessage,
                                 0, it.key()->msgPart().partSpecifier() );
         job->setCancellable( false );
-        connect( job, SIGNAL(messageUpdated(KMMessage*, const QString&)),
-                 this, SLOT(slotPartRetrieved(KMMessage*, const QString&)) );
+        connect( job, SIGNAL(messageUpdated(KMime::Message*, const QString&)),
+                 this, SLOT(slotPartRetrieved(KMime::Message*, const QString&)) );
         job->start();
       } else
         kWarning() <<"KMLoadPartsCommand - msg has no parent";
@@ -2936,7 +2973,7 @@ void KMLoadPartsCommand::slotStart()
 #endif
 }
 
-void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
+void KMLoadPartsCommand::slotPartRetrieved( KMime::Message *msg,
                                             const QString &partSpecifier )
 {
 #if 0 //TODO port to akonadi
@@ -2970,7 +3007,7 @@ KMCommand::Result KMLoadPartsCommand::execute()
 }
 
 KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
-   KMMessage *msg )
+   KMime::Message *msg )
   :KMCommand( parent, msg )
 {
 }
@@ -2978,11 +3015,11 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 KMCommand::Result KMResendMessageCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  KMMessage *msg = retrievedMessage();
+  KMime::Message *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage *newMsg = new KMMessage( *msg );
+  KMime::Message *newMsg = new KMime::Message( *msg );
   newMsg->setCharset( msg->codec()->name() );
   // the message needs a new Message-Id
   newMsg->removeHeaderField( "Message-Id" );
@@ -3098,7 +3135,7 @@ KUrl::List KMMailingListHelpCommand::urls() const
 }
 
 KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
-     KMMessage* msg, int atmId, const QString& atmName,
+     KMime::Message* msg, int atmId, const QString& atmName,
      AttachmentAction action, KService::Ptr offer, QWidget* parent )
 : KMCommand( parent ), mNode( node ), mMsg( msg ), mAtmId( atmId ), mAtmName( atmName ),
   mAction( action ), mOffer( offer ), mJob( 0 )
@@ -3200,7 +3237,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
 KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
 {
 #if 0 //TODO port to akonadi
-  KMMessagePart& msgPart = mNode->msgPart();
+  KMime::MessagePart& msgPart = mNode->msgPart();
   const QString contentTypeStr =
     ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).toLower();
 
@@ -3296,7 +3333,7 @@ void KMHandleAttachmentCommand::atmProperties()
   kDebug() << "port me to AttachmentPropertiesDialog";
 #if 0
   KMMsgPartDialogCompat dlg( 0, true );
-  KMMessagePart& msgPart = mNode->msgPart();
+  KMime::MessagePart& msgPart = mNode->msgPart();
   dlg.setMsgPart( &msgPart );
   dlg.exec();
 #endif
@@ -3449,14 +3486,15 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KJob * j
   d.setResult( OK );
 }
 
-CreateTodoCommand::CreateTodoCommand(QWidget * parent, KMMessage * msg)
+CreateTodoCommand::CreateTodoCommand(QWidget * parent, KMime::Message * msg)
   : KMCommand( parent, msg )
 {
 }
 
 KMCommand::Result CreateTodoCommand::execute()
 {
-  KMMessage *msg = retrievedMessage();
+#if 0 //TODO port to akonadi
+  KMime::Message *msg = retrievedMessage();
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
@@ -3482,7 +3520,9 @@ KMCommand::Result CreateTodoCommand::execute()
                          tf.fileName(), QStringList(), "message/rfc822", true );
   delete iface;
   tf.close();
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return OK;
 }
 

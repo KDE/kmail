@@ -790,7 +790,7 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
   if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
     return res;
   }
-
+#if 0 //TODO port to akonadi
   KMFolderOpener openFolder( folder, "searptr" );
   if ( openFolder.openResult() == 0 ) { // 0 means no error codes
     KMFolder *f =  openFolder.folder();
@@ -809,6 +809,9 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
       res = matches( f->getDwString( idx ), ignoreBody );
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return res;
 }
 

@@ -10,7 +10,7 @@ using KMail::AccountManager;
 #include "messagesender.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
-#include "kmfoldercachedimap.h"
+//TODO port to akonadi #include "kmfoldercachedimap.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressItem;
@@ -36,6 +36,7 @@ using KMail::FolderJob;
 #include <QList>
 #include <QEventLoop>
 #include <QByteArray>
+#include <QTimer>
 
 #include <cstdlib>
 #include <unistd.h>

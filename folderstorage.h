@@ -52,7 +52,11 @@ using KMail::FolderJob;
 #include <sys/types.h>
 #include <stdio.h>
 #include "messageviewer/attachmentstrategy.h"
-class KMMessage;
+namespace KMime {
+  class Message;
+  class Content;
+}
+
 class KMAccount;
 class KMFolderDir;
 class KMMsgDict; // for the rDict manipulations
@@ -139,9 +143,9 @@ public:
   virtual void updateChildrenState();
 
   /** Read message at given index. Indexing starts at zero */
-  virtual KMMessage* getMsg(int idx);
+  virtual KMime::Message* getMsg(int idx);
 
-  /** Replace KMMessage with KMMsgInfo and delete KMMessage  */
+  /** Replace KMime::Message with KMMsgInfo and delete KMime::Message  */
   virtual KMMsgInfo* unGetMsg(int idx);
 
   /** Checks if the message is already "gotten" with getMsg */
@@ -154,7 +158,7 @@ public:
                messages, because remote messages could start a transfer, which
                would trigger an assert when the message is deleted by the caller.
   */
-  virtual KMMessage* readTemporaryMsg(int idx);
+  virtual KMime::Message* readTemporaryMsg(int idx);
 
   /** Read a message and returns a DwString */
   virtual DwString getDwString(int idx) = 0;
@@ -162,16 +166,16 @@ public:
   /**
    * Removes and deletes all jobs associated with the particular message
    */
-  virtual void ignoreJobsForMessage( KMMessage* );
+  virtual void ignoreJobsForMessage( KMime::Message* );
 
   /**
    * These methods create respective FolderJob (You should derive FolderJob
    * for each derived KMFolder).
    */
-  virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
+  virtual FolderJob* createJob( KMime::Message *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0, const QString &partSpecifier = QString(),
                                 const MessageViewer::AttachmentStrategy *as = 0 ) const;
-  virtual FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
+  virtual FolderJob* createJob( QList<KMime::Message*>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0 ) const;
 
@@ -179,19 +183,19 @@ public:
     in the index. Whenever you only need subject, from, date, status
     you should use this method instead of getMsg() because getMsg()
     will load the message if necessary and this method does not. */
-  virtual const KMMsgBase* getMsgBase(int idx) const = 0;
-  virtual KMMsgBase* getMsgBase(int idx) = 0;
+  virtual const KMime::Message* getMsgBase(int idx) const = 0;
+  virtual KMime::Message* getMsgBase(int idx) = 0;
 
   /** Same as getMsgBase(int). */
-  virtual const KMMsgBase* operator[](int idx) const { return getMsgBase(idx); }
+  virtual const KMime::Message* operator[](int idx) const { return getMsgBase(idx); }
 
   /** Same as getMsgBase(int). This time non-const. */
-  virtual KMMsgBase* operator[](int idx) { return getMsgBase(idx); }
+  virtual KMime::Message* operator[](int idx) { return getMsgBase(idx); }
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
-  virtual KMMessage* take(int idx);
-  virtual void takeMessages(const QList<KMMessage*>& msgList);
+  virtual KMime::Message* take(int idx);
+  virtual void takeMessages(const QList<KMime::Message*>& msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -199,12 +203,12 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = 0) = 0;
+  virtual int addMsg(KMime::Message* msg, int* index_return = 0) = 0;
 
   /** (Note(bo): This needs to be fixed better at a later point.)
       This is overridden by dIMAP because addMsg strips the X-UID
       header from the mail. */
-  virtual int addMsgKeepUID(KMMessage* msg, int* index_return = 0) {
+  virtual int addMsgKeepUID(KMime::Message* msg, int* index_return = 0) {
     return addMsg(msg, index_return);
   }
 
@@ -212,7 +216,7 @@ public:
    * Adds the given messages to the folder. Behaviour is identical
    * to addMsg(msg)
    */
-  virtual int addMessages( QList<KMMessage*>&, QList<int>& index_return );
+  virtual int addMessages( QList<KMime::Message*>&, QList<int>& index_return );
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -220,12 +224,12 @@ public:
 
   /** Returns false, if the message has to be retrieved from an IMAP account
    * first. In this case this function does this and cares for the rest */
-  virtual bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
+  virtual bool canAddMsgNow(KMime::Message* aMsg, int* aIndex_ret);
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = false);
-  virtual void removeMessages(const QList<KMMsgBase*>& msgList, bool imapQuiet = false);
-  virtual void removeMessages(const QList<KMMessage*>& msgList, bool imapQuiet = false);
+  virtual void removeMessages(const QList<KMime::Content*>& msgList, bool imapQuiet = false);
+  virtual void removeMessages(const QList<KMime::Message*>& msgList, bool imapQuiet = false);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -235,12 +239,12 @@ public:
     adds it to this folder. Returns zero on success and an errno error
     code on failure. The index of the new message is stored in index_return
     if given. */
-  virtual int moveMsg(KMMessage* msg, int* index_return = 0);
-  virtual int moveMsg(QList<KMMessage*>, int* index_return = 0);
+  virtual int moveMsg(KMime::Message* msg, int* index_return = 0);
+  virtual int moveMsg(QList<KMime::Message*>, int* index_return = 0);
 
   /** Returns the index of the given message or -1 if not found. */
-  virtual int find(const KMMsgBase* msg) const = 0;
-  int find( const KMMessage * msg ) const;
+  virtual int find(const KMime::Content* msg) const = 0;
+  int find( const KMime::Message * msg ) const;
 
   /** Number of messages in this folder. */
   virtual int count(bool cache = false) const;
@@ -255,7 +259,7 @@ public:
    * be reflected in the UI.  */
   virtual bool isCloseToQuota() const;
 
-  /** Called by KMMsgBase::setStatus when status of a message has changed
+  /** Called by KMime::Content::setStatus when status of a message has changed
       required to keep the number unread messages variable current. */
   virtual void msgStatusChanged( const MessageStatus& oldStatus,
                                  const MessageStatus& newStatus,
@@ -530,11 +534,11 @@ public slots:
 
   /** Add the message to the folder after it has been retrieved from an IMAP
       server */
-  virtual void reallyAddMsg(KMMessage* aMsg);
+  virtual void reallyAddMsg(KMime::Message* aMsg);
 
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */
-  virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
+  virtual void reallyAddCopyOfMsg(KMime::Message* aMsg);
 
   /** Emit changed signal if mQuite <=0 */
   void slotEmitChangedTimer();
@@ -552,19 +556,19 @@ protected:
    * in all folders.
    * @see createJob
    */
-  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
+  virtual FolderJob* doCreateJob( KMime::Message *msg, FolderJob::JobType jt, KMFolder *folder,
                                   const QString &partSpecifier, const MessageViewer::AttachmentStrategy *as ) const = 0;
-  virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( QList<KMime::Message*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const = 0;
 
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
-    This method is usually called from within KMMessage::setSubject/set... */
-  void headerOfMsgChanged(const KMMsgBase*, int idx);
+    This method is usually called from within KMime::Message::setSubject/set... */
+  void headerOfMsgChanged(const KMime::Content*, int idx);
 
   /** Load message from file and store it at given index. Returns 0
     on failure. */
-  virtual KMMessage* readMsg(int idx) = 0;
+  virtual KMime::Message* readMsg(int idx) = 0;
 
   //--------- Message Dict manipulation
 friend class KMMsgDict;
@@ -598,7 +602,7 @@ friend class KMMsgDict;
 
   /** Replaces the serial number for the message @p msg at index @p idx with
    * @p sernum */
-  void replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int idx );
+  void replaceMsgSerNum( unsigned long sernum, KMime::Content* msg, int idx );
 
    /** Called when serial numbers for a folder are invalidated,
   invalidates/recreates data structures dependent on the
@@ -617,8 +621,8 @@ friend class KMMsgDict;
 
   /** Read index file and fill the message-info list mMsgList. */
   virtual bool readIndex() = 0;
-  virtual KMMsgBase* takeIndexEntry( int idx ) = 0;
-  virtual KMMsgInfo* setIndexEntry( int idx, KMMessage *msg ) = 0;
+  virtual KMime::Content* takeIndexEntry( int idx ) = 0;
+  virtual KMMsgInfo* setIndexEntry( int idx, KMime::Message *msg ) = 0;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void truncateIndex() = 0;
 

@@ -12,6 +12,7 @@
 #include <kdebug.h>
 #include <kde_file.h>
 #include <kglobal.h>
+#include <kmime/kmime_message.h>
 
 #include <QFileInfo>
 #include <QVector>
@@ -208,8 +209,9 @@ void KMMsgDict::deleteRentry(KMMsgDictREntry *entry)
 }
 
 unsigned long KMMsgDict::insert(unsigned long msgSerNum,
-                                const KMMsgBase *msg, int index)
+                                const KMime::Content *msg, int index)
 {
+#if 0 //TODO port to akonadi
   unsigned long msn = msgSerNum;
   if (!msn) {
     msn = getNextMsgSerNum();
@@ -248,19 +250,28 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
   rentry->set(index, entry);
 
   return msn;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return 0;
+#endif
 }
 
-unsigned long KMMsgDict::insert(const KMMsgBase *msg, int index)
+unsigned long KMMsgDict::insert(const KMime::Content *msg, int index)
 {
+#if 0 //TODO port to akonadi
   unsigned long msn = msg->getMsgSerNum();
   return insert(msn, msg, index);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 
 void KMMsgDict::replace(unsigned long msgSerNum,
-		       const KMMsgBase *msg, int index)
+		       const KMime::Content *msg, int index)
 {
+#if 0 //TODO port to akonadi
   KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if ( !folder ) {
     kDebug() << "Cannot replace the message serial"
@@ -282,6 +293,9 @@ void KMMsgDict::replace(unsigned long msgSerNum,
     folder->setRDict(rentry);
   }
   rentry->set(index, entry);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -302,17 +316,22 @@ void KMMsgDict::remove(unsigned long msgSerNum)
   dict->remove((long)key);
 }
 
-unsigned long KMMsgDict::remove(const KMMsgBase *msg)
+unsigned long KMMsgDict::remove(const KMime::Content *msg)
 {
+#if 0 //TODO port to akonadi
   unsigned long msn = msg->getMsgSerNum();
   remove(msn);
   return msn;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 
-void KMMsgDict::update(const KMMsgBase *msg, int index, int newIndex)
+void KMMsgDict::update(const KMime::Content *msg, int index, int newIndex)
 {
+#if 0 //TODO port to akonadi
   KMMsgDictREntry *rentry = msg->parent()->storage()->rDict();
   if (rentry) {
     KMMsgDictEntry *entry = rentry->get(index);
@@ -322,6 +341,9 @@ void KMMsgDict::update(const KMMsgBase *msg, int index, int newIndex)
       rentry->set(newIndex, entry);
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -339,15 +361,23 @@ void KMMsgDict::getLocation(unsigned long key,
   }
 }
 
-void KMMsgDict::getLocation(const KMMsgBase *msg,
+void KMMsgDict::getLocation(const KMime::Content *msg,
                             KMFolder **retFolder, int *retIndex) const
 {
+#if 0 //TODO port to akonadi
   getLocation(msg->getMsgSerNum(), retFolder, retIndex);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
-void KMMsgDict::getLocation( const KMMessage * msg, KMFolder * *retFolder, int * retIndex ) const
+void KMMsgDict::getLocation( const KMime::Message * msg, KMFolder * *retFolder, int * retIndex ) const
 {
+#if 0 //TODO port to akonadi
   getLocation( msg->toMsgBase().getMsgSerNum(), retFolder, retIndex );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -366,14 +396,18 @@ unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
 //-----------------------------------------------------------------------------
 
 //static
-QList<unsigned long> KMMsgDict::serNumList(QList<KMMsgBase *> msgList)
+QList<unsigned long> KMMsgDict::serNumList(QList<KMime::Content *> msgList)
 {
   QList<unsigned long> ret;
-  for ( int i = 0; i < msgList.count(); i++ ) {
+#if 0 //TODO port to akonadi
+ for ( int i = 0; i < msgList.count(); i++ ) {
     unsigned long serNum = msgList.at(i)->getMsgSerNum();
     assert( serNum );
     ret.append( serNum );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return ret;
 }
 

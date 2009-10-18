@@ -9,7 +9,7 @@
 
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize)
-  : QVector<KMMsgBase*>( initSize, static_cast<KMMsgBase*>( 0 ) ),
+  : QVector<KMime::Message*>( initSize, static_cast<KMime::Message*>( 0 ) ),
     mHigh( 0 ), mCount( 0 )
 {
 }
@@ -28,7 +28,7 @@ void KMMsgList::clear( bool doDelete, bool syncDict )
   if ( mHigh > 0 )
     for ( unsigned int i = mHigh; i > 0; i-- )
     {
-      KMMsgBase * msg = at(i-1);
+      KMime::Content * msg = at(i-1);
       if ( msg ) {
         if ( syncDict )
           KMMsgDict::mutableInstance()->remove( msg );
@@ -46,7 +46,7 @@ void KMMsgList::clear( bool doDelete, bool syncDict )
 bool KMMsgList::resize( unsigned int aSize )
 {
   unsigned int oldSize = size();
-  KMMsgBase* msg;
+  KMime::Content* msg;
 
   // delete messages that will get lost, if any
   if ( aSize < mHigh ) {
@@ -62,7 +62,7 @@ bool KMMsgList::resize( unsigned int aSize )
   }
 
   // do the resizing
-  QVector<KMMsgBase*>::resize( aSize );
+  QVector<KMime::Message*>::resize( aSize );
 
   // initialize new elements
   for ( unsigned int i = oldSize; i < aSize; i++ )
@@ -84,7 +84,7 @@ bool KMMsgList::reset(unsigned int aSize)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::set( unsigned int idx, KMMsgBase* aMsg )
+void KMMsgList::set( unsigned int idx, KMime::Message* aMsg )
 {
   if ( idx >= static_cast<unsigned int>( size() ) )
     resize( idx > 2 * static_cast<unsigned int>( size() ) ? idx + 16 : 2 * size() );
@@ -104,7 +104,7 @@ void KMMsgList::set( unsigned int idx, KMMsgBase* aMsg )
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::insert( unsigned int idx, KMMsgBase* aMsg, bool syncDict )
+void KMMsgList::insert( unsigned int idx, KMime::Message* aMsg, bool syncDict )
 {
   if ( idx >= static_cast<unsigned int>( size() ) )
     resize( idx > 2 * static_cast<unsigned int>( size() ) ? idx + 16 : 2 * size() );
@@ -129,7 +129,7 @@ void KMMsgList::insert( unsigned int idx, KMMsgBase* aMsg, bool syncDict )
 
 
 //-----------------------------------------------------------------------------
-unsigned int KMMsgList::append( KMMsgBase* aMsg, bool syncDict )
+unsigned int KMMsgList::append( KMime::Message* aMsg, bool syncDict )
 {
   const unsigned int idx = mHigh;
   insert( idx, aMsg, syncDict ); // mHigh gets modified in here
@@ -159,9 +159,9 @@ void KMMsgList::remove( unsigned int idx )
 
 
 //-----------------------------------------------------------------------------
-KMMsgBase* KMMsgList::take( unsigned int idx )
+KMime::Content* KMMsgList::take( unsigned int idx )
 {
-  KMMsgBase* msg = at( idx );
+  KMime::Content* msg = at( idx );
   remove( idx );
   return msg;
 }

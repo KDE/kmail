@@ -187,6 +187,7 @@ bool KMMsgBase::isMessage(void) const
 //-----------------------------------------------------------------------------
 void KMMsgBase::toggleStatus(const MessageStatus& aStatus, int idx)
 {
+
   mDirty = true;
   MessageStatus oldStatus = mStatus;
   mStatus.toggle( aStatus );

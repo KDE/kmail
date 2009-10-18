@@ -34,7 +34,7 @@
 #include "messageproperty.h"
 #include "kmfilter.h"
 #include "kmfolderindex.h"
-#include "kmfolderimap.h"
+//TODO port to akonadi #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kmcommands.h"
@@ -178,10 +178,14 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
     mSrcFolder->close( "actionschedsrc" );
   }
   mSrcFolder = srcFolder;
+#if 0 //TODO port to akonadi
   int i = 0;
   for ( i = 0; i < mSrcFolder->count(); ++i ) {
     enqueue( mSrcFolder->getMsgBase( i )->getMsgSerNum() );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( mSrcFolder ) {
     connect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
              this, SLOT(msgAdded(KMFolder*, quint32)) );

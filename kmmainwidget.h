@@ -64,10 +64,8 @@ class KTreeWidgetSearchLine;
 class KMFolder;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
-class KMMessage;
 class KMFolder;
 class KMSystemTray;
-class KMMessageTagDescription;
 typedef QPair<KMMessageTagDescription*,KAction*> MessageTagPtrPair;
 class CustomTemplatesMenu;
 
@@ -301,9 +299,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void createWidgets();
     void deleteWidgets();
     void layoutSplitters();
-    void showMsg( KMReaderWin *win, KMMessage *msg );
+    void showMsg( KMReaderWin *win, KMime::Message *msg );
     void updateFileMenu();
-    void newFromTemplate( KMMessage *msg );
+    void newFromTemplate( KMime::Message *msg );
     void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
     void copySelectedMessagesToFolder( const Akonadi::Collection& dest );
 
@@ -387,7 +385,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
   //(Laurent) remove this function in the future
 #ifndef USE_AKONADI_VIEWER
-  void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
+  void slotMsgPopup(KMime::Message &msg, const KUrl &aUrl, const QPoint&);
 #else
     void slotMessagePopup(KMime::Message& ,const KUrl&,const QPoint& );
 #endif

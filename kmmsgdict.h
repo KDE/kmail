@@ -23,8 +23,10 @@
 #include <QList>
 
 class KMFolder;
-class KMMsgBase;
-class KMMessage;
+namespace KMime {
+  class Content;
+  class Message;
+}
 class KMMsgDictREntry;
 class KMDict;
 class QString;
@@ -61,18 +63,18 @@ class KMMsgDict
     void getLocation( unsigned long key, KMFolder **retFolder, int *retIndex ) const;
     /** Returns the folder the message represented by @p msg is in
       * and the index in that folder at which it is stored. */
-    void getLocation( const KMMsgBase *msg, KMFolder **retFolder, int *retIndex ) const;
+    void getLocation( const KMime::Content *msg, KMFolder **retFolder, int *retIndex ) const;
     /** Returns the folder the message represented by @p msg is in
      * and the index in that folder at which it is stored. */
-    void getLocation( const KMMessage *msg, KMFolder **retFolder, int *retIndex ) const;
+    void getLocation( const KMime::Message *msg, KMFolder **retFolder, int *retIndex ) const;
 
   /** Find the message serial number for the message located at index @p index in folder
    * @p folder.
    * @return the message serial number or zero is no such message can be found */
     unsigned long getMsgSerNum( KMFolder *folder, int index ) const;
 
-  /** Convert a list of KMMsgBase pointers to a list of serial numbers */
-    static QList<unsigned long> serNumList(QList<KMMsgBase *> msgList);
+  /** Convert a list of KMime::Content pointers to a list of serial numbers */
+    static QList<unsigned long> serNumList(QList<KMime::Content *> msgList);
 
 private:
  /* FIXME It would be better to do without these, they are the classes
@@ -89,25 +91,25 @@ private:
   /** Insert a new message.  The message serial number is specified in
    * @p msgSerNum and may be zero, in which case a new serial number is
    * generated.  Returns the message serial number. */
-  unsigned long insert(unsigned long msgSerNum, const KMMsgBase *msg, int index = -1);
+  unsigned long insert(unsigned long msgSerNum, const KMime::Content *msg, int index = -1);
 
   /** Insert a new message.  The message serial number is taken from
    * the message, and passed to the other insert().  Returns the message
    * serial number. */
-  unsigned long insert(const KMMsgBase *msg, int index = -1);
+  unsigned long insert(const KMime::Content *msg, int index = -1);
 
   /** Set the serial number of @p msg to @p msgSerNum */
   void replace(unsigned long msgSerNum,
-               const KMMsgBase *msg, int index = -1);
+               const KMime::Content *msg, int index = -1);
 
   /** Removes a message. */
   void remove(unsigned long msgSerNum);
 
   /** Removes a message, and returns its message serial number. */
-  unsigned long remove(const KMMsgBase *msg);
+  unsigned long remove(const KMime::Content *msg);
 
   /** Updates index for a message. */
-  void update(const KMMsgBase *msg, int index, int newIndex);
+  void update(const KMime::Content *msg, int index, int newIndex);
 
 
   // ----- per folder serial number on-disk structure handling ("ids files")

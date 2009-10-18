@@ -85,6 +85,7 @@ void UndoStack::addMsgToAction( int undoId, ulong serNum )
 
 void UndoStack::undo()
 {
+#if 0 //TODO port to akonadi
   KMMessage *msg;
   ulong serNum;
   int idx = -1;
@@ -115,6 +116,9 @@ void UndoStack::undo()
     // Sorry.. stack is empty..
     KMessageBox::sorry( kmkernel->mainWin(), i18n("There is nothing to undo."));
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void

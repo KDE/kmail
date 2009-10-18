@@ -37,7 +37,7 @@
 #include "kmfolder.h"
 #include "kmkernel.h"
 
-#include "kmfolderimap.h" //for the nasty imap hacks, FIXME
+//TODO port to akonadi #include "kmfolderimap.h" //for the nasty imap hacks, FIXME
 #include "undostack.h"
 #include "kmmsgdict.h"
 #include "kmfoldermgr.h"
@@ -53,11 +53,13 @@
 #include <kdebug.h>
 #include <kconfiggroup.h>
 
+#include <kmime/kmime_message.h>
+
 #include <QFile>
 #include <QList>
 #include <QRegExp>
 
-#include <mimelib/mimepp.h>
+//TODO port to akonadi #include <mimelib/mimepp.h>
 #include <unistd.h>
 #include <errno.h>
 
@@ -167,7 +169,8 @@ void FolderStorage::setDirty(bool f)
 //-----------------------------------------------------------------------------
 void FolderStorage::markNewAsUnread()
 {
-  KMMsgBase* msgBase;
+#if 0 //TODO port to akonadi
+  KMime::Content* msgBase;
   int i;
 
   for (i=0; i< count(); ++i)
@@ -179,11 +182,15 @@ void FolderStorage::markNewAsUnread()
       msgBase->setDirty(true);
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void FolderStorage::markUnreadAsRead()
 {
-  KMMsgBase* msgBase;
+#if 0 //TODO port to akonadi
+  KMime::Content* msgBase;
   SerNumList serNums;
 
   for (int i=count()-1; i>=0; --i)
@@ -200,6 +207,9 @@ void FolderStorage::markUnreadAsRead()
 #ifdef OLD_COMMAND
   KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();
+#endif
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
@@ -240,15 +250,15 @@ void FolderStorage::quiet(bool beQuiet)
 //-----------------------------------------------------------------------------
 
 /** Compare message's date. This is useful for message sorting */
-int operator<( KMMsgBase & m1, KMMsgBase & m2 )
+int operator<( KMime::Message & m1, KMime::Message & m2 )
 {
-  return (m1.date() < m2.date());
+  return (m1.date()->dateTime() < m2.date()->dateTime());
 }
 
 /** Compare message's date. This is useful for message sorting */
-int operator==( KMMsgBase & m1, KMMsgBase & m2 )
+int operator==( KMime::Message & m1, KMime::Message & m2 )
 {
-  return (m1.date() == m2.date());
+  return (m1.date()->dateTime() == m2.date()->dateTime());
 }
 
 
@@ -257,7 +267,7 @@ int FolderStorage::expungeOldMsg(int days)
 {
   int msgnb=0;
   time_t msgTime, maxTime;
-  const KMMsgBase* mb;
+  KMime::Message* mb;
   QList<int> rmvMsgList;
 
   maxTime = time(0) - days * 3600 * 24;
@@ -265,7 +275,7 @@ int FolderStorage::expungeOldMsg(int days)
   for (int i=count()-1; i>=0; i--) {
     mb = getMsgBase(i);
     assert(mb);
-    msgTime = mb->date();
+    msgTime = mb->date()->dateTime().dateTime().toTime_t();
 
     if (msgTime < maxTime) {
       //kDebug() << "deleting msg" << i << ":" << mb->subject() << "-" << mb->dateStr(); //;
@@ -300,8 +310,9 @@ void FolderStorage::emitMsgAddedSignals(int idx)
 }
 
 //-----------------------------------------------------------------------------
-bool FolderStorage::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
+bool FolderStorage::canAddMsgNow(KMime::Message* aMsg, int* aIndex_ret)
 {
+#if 0 //TODO port to akonadi
   if (aIndex_ret) *aIndex_ret = -1;
   KMFolder *msgParent = aMsg->parent();
   // If the message has a parent and is in transfer, bail out. If it does not
@@ -311,21 +322,25 @@ bool FolderStorage::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
   if (!aMsg->isComplete() && msgParent && msgParent->folderType() == KMFolderTypeImap)
   {
     FolderJob *job = msgParent->createJob(aMsg);
-    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            SLOT(reallyAddMsg(KMMessage*)));
+    connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
+            SLOT(reallyAddMsg(KMime::Message*)));
     job->start();
     aMsg->setTransferInProgress( true );
     return false;
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return true;
 }
 
 
 //-----------------------------------------------------------------------------
-void FolderStorage::reallyAddMsg(KMMessage* aMsg)
+void FolderStorage::reallyAddMsg(KMime::Message* aMsg)
 {
   if (!aMsg) // the signal that is connected can call with aMsg=0
     return;
+#if 0 //TODO port to akonadi
   aMsg->setTransferInProgress( false );
   aMsg->setComplete( true );
   KMFolder *aFolder = aMsg->parent();
@@ -339,27 +354,39 @@ void FolderStorage::reallyAddMsg(KMMessage* aMsg)
   {
     kmkernel->undoStack()->pushSingleAction( serNum, aFolder, folder() );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
-void FolderStorage::reallyAddCopyOfMsg(KMMessage* aMsg)
+void FolderStorage::reallyAddCopyOfMsg(KMime::Message* aMsg)
 {
   if ( !aMsg ) return; // messageRetrieved(0) is always possible
+#if 0 //TODO port to akonadi
   aMsg->setParent( 0 );
   aMsg->setTransferInProgress( false );
   addMsg( aMsg );
   unGetMsg( count() - 1 );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
-int FolderStorage::find( const KMMessage * msg ) const {
+int FolderStorage::find( const KMime::Message * msg ) const {
+#if 0 //TODO port to akonadi
   return find( &msg->toMsgBase() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return -1;
+#endif
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMessages(const QList<KMMsgBase*>& msgList, bool imapQuiet)
+void FolderStorage::removeMessages(const QList<KMime::Content*>& msgList, bool imapQuiet)
 {
-  for( QList<KMMsgBase*>::const_iterator it = msgList.begin();
+  for( QList<KMime::Content*>::const_iterator it = msgList.begin();
       it != msgList.end(); ++it )
   {
     int idx = find( *it );
@@ -369,9 +396,9 @@ void FolderStorage::removeMessages(const QList<KMMsgBase*>& msgList, bool imapQu
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMessages(const QList<KMMessage*>& msgList, bool imapQuiet)
+void FolderStorage::removeMessages(const QList<KMime::Message*>& msgList, bool imapQuiet)
 {
-  for( QList<KMMessage*>::const_iterator it = msgList.begin();
+  for( QList<KMime::Message*>::const_iterator it = msgList.begin();
       it != msgList.end(); ++it )
   {
     int idx = find( *it );
@@ -383,6 +410,7 @@ void FolderStorage::removeMessages(const QList<KMMessage*>& msgList, bool imapQu
 //-----------------------------------------------------------------------------
 void FolderStorage::removeMsg(int idx, bool)
 {
+#if 0 //TODO port to akonadi
   //assert(idx>=0);
   if(idx < 0)
   {
@@ -390,7 +418,7 @@ void FolderStorage::removeMsg(int idx, bool)
     return;
   }
 
-  KMMsgBase* mb = getMsgBase(idx);
+  KMime::Content* mb = getMsgBase(idx);
 
   quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
   if (serNum != 0)
@@ -420,14 +448,18 @@ void FolderStorage::removeMsg(int idx, bool)
   QString msgIdMD5 = mb->msgIdMD5();
   emit msgRemoved( idx, msgIdMD5 );
   emit msgRemoved( folder() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
-KMMessage* FolderStorage::take(int idx)
+KMime::Message* FolderStorage::take(int idx)
 {
-  KMMsgBase* mb;
-  KMMessage* msg;
+#if 0 //TODO port to akonadi
+  KMime::Content* mb;
+  KMime::Message* msg;
 
   assert(idx>=0 && idx<=count());
 
@@ -437,7 +469,7 @@ KMMessage* FolderStorage::take(int idx)
   quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
   emit msgRemoved( folder(), serNum );
 
-  msg = (KMMessage*)takeIndexEntry(idx);
+  msg = (KMime::Message*)takeIndexEntry(idx);
 
   if (msg->status().isUnread() || msg->status().isNew() ||
       ( folder() == kmkernel->outboxFolder() )) {
@@ -461,36 +493,45 @@ KMMessage* FolderStorage::take(int idx)
   emit msgRemoved( folder() );
 
   return msg;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return 0;
+#endif
 }
 
-void FolderStorage::takeMessages(const QList<KMMessage*>& msgList)
+void FolderStorage::takeMessages(const QList<KMime::Message*>& msgList)
 {
-  for( QList<KMMessage*>::const_iterator it = msgList.begin();
+#if 0 //TODO port to akonadi
+  for( QList<KMime::Message*>::const_iterator it = msgList.begin();
       it != msgList.end(); ++it )
   {
-    KMMessage *msg = (*it);
+    KMime::Message *msg = (*it);
     if (msg->parent())
     {
       int idx = msg->parent()->find(msg);
       take(idx);
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
-KMMessage* FolderStorage::getMsg(int idx)
+KMime::Message* FolderStorage::getMsg(int idx)
 {
+#if 0 //TODO port to akonadi
   if ( idx < 0 || idx >= count() )
     return 0;
 
-  KMMsgBase* mb = getMsgBase(idx);
+  KMime::Content* mb = getMsgBase(idx);
   if (!mb) return 0;
 
-  KMMessage *msg = 0;
+  KMime::Message *msg = 0;
   bool undo = mb->enableUndo();
   if (mb->isMessage()) {
-      msg = ((KMMessage*)mb);
+      msg = ((KMime::Message*)mb);
   } else {
       QString mbSubject = mb->subject();
       msg = readMsg(idx);
@@ -513,15 +554,18 @@ KMMessage* FolderStorage::getMsg(int idx)
   msg->setEnableUndo(undo);
   msg->setComplete( true );
   return msg;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* FolderStorage::readTemporaryMsg(int idx)
+KMime::Message* FolderStorage::readTemporaryMsg(int idx)
 {
   if(!(idx >= 0 && idx <= count()))
     return 0;
-
-  KMMsgBase* mb = getMsgBase(idx);
+#if 0 //TODO port to akonadi
+  KMime::Content* mb = getMsgBase(idx);
   if (!mb) return 0;
 
   unsigned long sernum = mb->getMsgSerNum();
@@ -531,29 +575,34 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
     return 0;
   }
 
-  KMMessage *msg = 0;
+  KMime::Message *msg = 0;
   bool undo = mb->enableUndo();
   if (mb->isMessage()) {
     // the caller will delete it, so we must make a copy it
-    msg = new KMMessage(*(KMMessage*)mb);
+    msg = new KMime::Message(*(KMime::Message*)mb);
     msg->setMsgSerNum(sernum);
     msg->setComplete( true );
   } else {
     // ## Those two lines need to be moved to a virtual method for KMFolderSearch, like readMsg
-    msg = new KMMessage(*(KMMsgInfo*)mb);
+    msg = new KMime::Message(*(KMMsgInfo*)mb);
     msg->setMsgSerNum(sernum); // before fromDwString so that readyToShow uses the right sernum
     msg->setComplete( true );
     msg->fromDwString(getDwString(idx));
   }
   msg->setEnableUndo(undo);
   return msg;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return 0;
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 KMMsgInfo* FolderStorage::unGetMsg(int idx)
 {
-  KMMsgBase* mb;
+#if 0 //TODO port to akonadi
+  KMime::Content* mb;
 
   if(!(idx >= 0 && idx <= count()))
     return 0;
@@ -565,12 +614,14 @@ KMMsgInfo* FolderStorage::unGetMsg(int idx)
   if (mb->isMessage()) {
     // Remove this message from all jobs' list it might still be on.
     // setIndexEntry deletes the message.
-    KMMessage *msg = static_cast<KMMessage*>(mb);
+    KMime::Message *msg = static_cast<KMime::Message*>(mb);
     if ( msg->transferInProgress() ) return 0;
     ignoreJobsForMessage( msg );
     return setIndexEntry( idx, msg );
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return 0;
 }
 
@@ -578,14 +629,18 @@ KMMsgInfo* FolderStorage::unGetMsg(int idx)
 //-----------------------------------------------------------------------------
 bool FolderStorage::isMessage(int idx)
 {
-  KMMsgBase* mb;
+#if 0 //TODO port to akonadi
+  KMime::Message* mb;
   if (!(idx >= 0 && idx <= count())) return false;
   mb = getMsgBase(idx);
   return (mb && mb->isMessage());
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
-FolderJob* FolderStorage::createJob( KMMessage *msg, FolderJob::JobType jt,
+FolderJob* FolderStorage::createJob( KMime::Message *msg, FolderJob::JobType jt,
                                 KMFolder *folder, const QString &partSpecifier,
                                 const MessageViewer::AttachmentStrategy *as ) const
 {
@@ -596,7 +651,7 @@ FolderJob* FolderStorage::createJob( KMMessage *msg, FolderJob::JobType jt,
 }
 
 //-----------------------------------------------------------------------------
-FolderJob* FolderStorage::createJob( QList<KMMessage*>& msgList, const QString& sets,
+FolderJob* FolderStorage::createJob( QList<KMime::Message*>& msgList, const QString& sets,
                                 FolderJob::JobType jt, KMFolder *folder ) const
 {
   FolderJob * job = doCreateJob( msgList, sets, jt, folder );
@@ -606,10 +661,11 @@ FolderJob* FolderStorage::createJob( QList<KMMessage*>& msgList, const QString& 
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::moveMsg( KMMessage *aMsg, int *aIndex_ret )
+int FolderStorage::moveMsg( KMime::Message *aMsg, int *aIndex_ret )
 {
   assert( aMsg != 0 );
-  KMFolder* msgParent = aMsg->parent();
+#if 0 //TODO port to akonadi
+   KMFolder* msgParent = aMsg->parent();
 
   if ( msgParent ) {
     msgParent->open( "moveMsgSrc" );
@@ -624,12 +680,17 @@ int FolderStorage::moveMsg( KMMessage *aMsg, int *aIndex_ret )
   }
 
   return rc;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return -1;
+#endif
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::moveMsg( QList<KMMessage*> msglist, int *aIndex_ret )
+int FolderStorage::moveMsg( QList<KMime::Message*> msglist, int *aIndex_ret )
 {
-  KMMessage* aMsg = msglist.first();
+#if 0 //TODO port to akonadi
+  KMime::Message* aMsg = msglist.first();
   assert( aMsg != 0 );
   KMFolder* msgParent = aMsg->parent();
 
@@ -651,6 +712,10 @@ int FolderStorage::moveMsg( QList<KMMessage*> msglist, int *aIndex_ret )
   }
 
   return rc;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return -1;
+#endif
 }
 
 
@@ -924,8 +989,9 @@ void FolderStorage::msgStatusChanged( const MessageStatus& oldStatus,
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
+void FolderStorage::headerOfMsgChanged(const KMime::Content* aMsg, int idx)
 {
+#if 0 //TODO port to akonadi
   if (idx < 0)
     idx = aMsg->parent()->find( aMsg );
 
@@ -941,6 +1007,9 @@ void FolderStorage::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
     }
   } else
     mChanged = true;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1061,7 +1130,7 @@ int FolderStorage::appendToFolderIdsFile( int idx )
   return ret;
 }
 
-void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int idx )
+void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMime::Content* msg, int idx )
 {
   if ( !mExportsSernums ) return;
   KMMsgDict::mutableInstance()->replace( sernum, msg, idx );
@@ -1083,13 +1152,17 @@ void FolderStorage::setRDict( KMMsgDictREntry *rentry ) const
 //-----------------------------------------------------------------------------
 void FolderStorage::setStatus(int idx, const MessageStatus& status, bool toggle)
 {
-  KMMsgBase *msg = getMsgBase(idx);
+  KMime::Message *msg = getMsgBase(idx);
+#if 0 //TODO port to akonadi
   if ( msg ) {
     if (toggle)
       msg->toggleStatus(status, idx);
     else
       msg->setStatus(status, idx);
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
@@ -1102,8 +1175,9 @@ void FolderStorage::setStatus(QList<int>& ids, const MessageStatus& status, bool
   }
 }
 
-void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
+void FolderStorage::ignoreJobsForMessage( KMime::Message *msg )
 {
+#if 0 //TODO port to akonadi
   if ( !msg || msg->transferInProgress() )
     return;
 
@@ -1122,6 +1196,9 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
     else
       ++it;
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1200,11 +1277,11 @@ void FolderStorage::search( const KMSearchPattern* pattern, quint32 serNum )
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::addMessages( QList<KMMessage*>& msgList, QList<int>& index_ret )
+int FolderStorage::addMessages( QList<KMime::Message*>& msgList, QList<int>& index_ret )
 {
   int ret = 0;
   int index;
-  for ( QList<KMMessage*>::const_iterator it = msgList.constBegin();
+  for ( QList<KMime::Message*>::const_iterator it = msgList.constBegin();
         it != msgList.constEnd(); ++it )
   {
     int aret = addMsg( *it, &index );

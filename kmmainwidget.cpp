@@ -94,10 +94,10 @@ using KPIM::BroadcastStatus;
 using KMail::AccountManager;
 #include "kmfilter.h"
 #include "kmreadermainwin.h"
-#include "kmfoldercachedimap.h"
-#include "kmfolderimap.h"
+//TODO port to akonadi #include "kmfoldercachedimap.h"
+//TODO port to akonadi #include "kmfolderimap.h"
 #include "foldershortcutdialog.h"
-#include "kmacctcachedimap.h"
+//TODO port to akonadi #include "kmacctcachedimap.h"
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
@@ -113,7 +113,7 @@ using KMail::SearchWindow;
 #include "kmsystemtray.h"
 #include "kmmessagetag.h"
 //TODO port to akonadi #include "imapaccountbase.h"
-using KMail::ImapAccountBase;
+//TODO port to akonadi using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
 
@@ -1199,9 +1199,9 @@ void KMMainWidget::slotShowNewFromTemplate()
 
   mTemplateMenu->menu()->clear();
   for ( int idx = 0; idx<mTemplateFolder->count(); ++idx ) {
-    KMMsgBase *mb = mTemplateFolder->getMsgBase( idx );
+    KMime::Message *mb = mTemplateFolder->getMsgBase( idx );
 
-    QString subj = mb->subject();
+    QString subj = mb->subject()->asUnicodeString();
     if ( subj.isEmpty() )
       subj = i18n("No Subject");
 
@@ -1230,7 +1230,7 @@ void KMMainWidget::slotNewFromTemplate( QAction *action )
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::newFromTemplate( KMMessage *msg )
+void KMMainWidget::newFromTemplate( KMime::Message *msg )
 {
   if ( !msg )
     return;
@@ -1525,6 +1525,7 @@ void KMMainWidget::slotTroubleshootFolder()
 
 void KMMainWidget::slotTroubleshootMaildir()
 {
+#if 0 //TODO port to akonadi
   if ( !mFolder || !mFolder->folderType() == KMFolderTypeMaildir )
     return;
   KMFolderMaildir* f = static_cast<KMFolderMaildir*>( mFolder->storage() );
@@ -1544,6 +1545,9 @@ void KMMainWidget::slotTroubleshootMaildir()
                                     mFolder->label() ),
                               i18n( "Index recreated" ) );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMMainWidget::slotInvalidateIMAPFolders() {
@@ -2509,7 +2513,7 @@ void KMMainWidget::slotApplyFilters()
     KMFolder *folder = 0;
     int idx;
     KMMsgDict::instance()->getLocation( *it, &folder, &idx );
-    KMMessage *msg = 0;
+    KMime::Message *msg = 0;
     if (folder)
       msg = folder->getMsg(idx);
     if (msg)
@@ -2520,8 +2524,8 @@ void KMMainWidget::slotApplyFilters()
       if ( !msg->isComplete() )
       {
         FolderJob *job = mFolder->createJob(msg);
-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-                this, SLOT(slotFilterMsg(KMMessage*)));
+        connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
+                this, SLOT(slotFilterMsg(KMime::Message*)));
         job->start();
       } else {
         if (slotFilterMsg(msg) == 2)
@@ -2758,6 +2762,7 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
 
 void KMMainWidget::openFolder()
 {
+#if 0 //TODO port to akonadi
   if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
     return;
   }
@@ -2774,10 +2779,14 @@ void KMMainWidget::openFolder()
               this, SLOT( folderClosed( KMFolder*) ) );
   connect( imap, SIGNAL( closed( KMFolder* ) ),
            this, SLOT( folderClosed( KMFolder*) ) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMMainWidget::closeFolder()
 {
+#if 0 //TODO port to akonadi
   if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
     return;
   }
@@ -2786,6 +2795,9 @@ void KMMainWidget::closeFolder()
   imap->setSelected( false );
   mFolder->close( "mainwidget" );
   mOpenedImapFolder = false;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3040,12 +3052,12 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
 #ifdef OLD_MESSAGELIST
   kDebug();
-  KMMessage* oldMsg = mMessageListView->currentMessage();
+  KMime::Message* oldMsg = mMessageListView->currentMessage();
   if( oldMsg ) {
     kDebug() << "Old message found";
     if( oldMsg->hasUnencryptedMsg() ) {
       kDebug() << "Extra unencrypted message found";
-      KMMessage* newMsg = oldMsg->unencryptedMsg();
+      KMime::Message* newMsg = oldMsg->unencryptedMsg();
       // adjust the message id
       {
         QString msgId( oldMsg->msgId() );
@@ -3225,8 +3237,8 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   if (msg->parent() && !msg->isComplete())
   {
     FolderJob *job = msg->parent()->createJob(msg);
-    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            SLOT(slotMsgActivated(KMMessage*)));
+    connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
+            SLOT(slotMsgActivated(KMime::Message*)));
     job->start();
     return;
   }
@@ -4297,6 +4309,7 @@ void KMMainWidget::updateFolderMenu()
                                                   !mFolder->isSystemFolder() );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
 
+#if 0 //TODO port to akonadi
   // This is the refresh-folder action in the menu. See kmfoldertree for the one in the RMB...
   bool imap = mFolder && mFolder->folderType() == KMFolderTypeImap;
   bool cachedImap = mFolder && mFolder->folderType() == KMFolderTypeCachedImap;
@@ -4305,6 +4318,9 @@ void KMMainWidget::updateFolderMenu()
   if ( mTroubleshootFolderAction )
     mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
   mTroubleshootMaildirAction->setVisible( mFolder && mFolder->folderType() == KMFolderTypeMaildir );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && mFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
@@ -4399,9 +4415,9 @@ void KMMainWidget::updateMessageTagActions( const int count )
   KToggleAction *aToggler = 0;
   if ( 1 == count )
   {
-    KMMessage * currentMessage = mMessageListView->currentMessage();
+    KMime::Message * currentMessage = mMessageListView->currentMessage();
     Q_ASSERT( currentMessage );
-    KMMessageTagList *aTagList = currentMessage->tagList();
+    KMime::MessageTagList *aTagList = currentMessage->tagList();
     for ( QList<MessageTagPtrPair>::ConstIterator it =
           mMessageTagMenuActions.constBegin();
           it != mMessageTagMenuActions.constEnd(); ++it )
@@ -4782,6 +4798,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
 QString KMMainWidget::findCurrentImapPath()
 {
   QString startPath;
+#if 0 //TODO port to akonadi
   if ( !mFolder ) {
     return startPath;
   }
@@ -4790,10 +4807,14 @@ QString KMMainWidget::findCurrentImapPath()
   } else if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
     startPath = static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath();
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return startPath;
 }
 
 //-----------------------------------------------------------------------------
+#if 0 //TODO port to akonadi
 ImapAccountBase *KMMainWidget::findCurrentImapAccountBase()
 {
   ImapAccountBase *account = 0;
@@ -4807,10 +4828,11 @@ ImapAccountBase *KMMainWidget::findCurrentImapAccountBase()
   }
   return account;
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubscriptionDialog()
 {
+#if 0 //TODO port to akonadi
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
@@ -4821,7 +4843,6 @@ void KMMainWidget::slotSubscriptionDialog()
   }
 
   const QString startPath = findCurrentImapPath();
-#if 0 //TODO port to akonadi
   // KSubscription sets "DestructiveClose"
   SubscriptionDialog * dialog =
       new SubscriptionDialog(this, i18n("Subscription"), account, startPath);
@@ -5011,8 +5032,8 @@ void KMMainWidget::slotMessageSelected(Akonadi::Item item)
     }
     mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, msg->parent(),
           "STRUCTURE", mMsgView->attachmentStrategy() );
-    connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
-            mMsgView, SLOT(slotMessageArrived(KMMessage*)));
+    connect(mJob, SIGNAL(messageRetrieved(KMime::Message*)),
+            mMsgView, SLOT(slotMessageArrived(KMime::Message*)));
     mJob->start();
   } else {
     mMsgView->setMsg(msg);

@@ -49,6 +49,7 @@ KMTextSource::~KMTextSource() {
 
 QByteArray KMTextSource::text(quint32 serialNumber) const {
     QByteArray rc;
+#if 0 //TODO port to akonadi
     KMFolder *folder = 0;
     int idx;
     KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
@@ -65,7 +66,9 @@ QByteArray KMTextSource::text(quint32 serialNumber) const {
             }
         }
     }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     return rc;
 }
 

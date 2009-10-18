@@ -33,7 +33,7 @@
 #include "popaccount.h"
 //TODO port to akonadi #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
-#include "kmacctmaildir.h"
+//TODO port to akonadi #include "kmacctmaildir.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
 
@@ -522,6 +522,7 @@ void AccountWizard::transportCreated()
 
 void AccountWizard::createAccount()
 {
+#if 0 //TODO port to akonadi
   // create incoming account
   AccountManager *acctManager = mKernel->acctMgr();
 
@@ -589,6 +590,9 @@ void AccountWizard::createAccount()
   } else {
     QTimer::singleShot( 0, this, SLOT( accountCreated() ) );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void AccountWizard::accountCreated()

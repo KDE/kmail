@@ -18,6 +18,8 @@
 
 #include "kmfolderindex_common.cpp"
 
+#include <kmime/kmime_message.h>
+
 #ifdef HAVE_MMAP
 #include <sys/mman.h>
 #endif
@@ -25,6 +27,8 @@
 #ifdef KMAIL_SQLITE_INDEX
 # include "kmfolderindex_sqlite.cpp"
 #else
+
+
 
 KMFolderIndex::KMFolderIndex(KMFolder* folder, const char* name)
   : FolderStorage(folder, name), mMsgList(INIT_MSGS)
@@ -45,6 +49,7 @@ KMFolderIndex::~KMFolderIndex()
 
 int KMFolderIndex::updateIndex( bool aboutToClose )
 {
+#if 0 //TODO port to akonadi
   Q_UNUSED( aboutToClose );
   if (!mAutoCreateIndex)
     return 0;
@@ -52,7 +57,7 @@ int KMFolderIndex::updateIndex( bool aboutToClose )
   mDirtyTimer->stop();
   const uint high = mMsgList.high();
   for (uint i=0; !dirty && i<high; i++) {
-    KMMsgBase *msg = mMsgList.at(i);
+    KMime::Content *msg = mMsgList.at(i);
     if (msg)
       dirty = !msg->syncIndexString();
   }
@@ -60,6 +65,9 @@ int KMFolderIndex::updateIndex( bool aboutToClose )
       touchFolderIdsFile();
       return 0;
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return writeIndex();
 }
 
@@ -110,7 +118,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   if ( !createEmptyIndex ) {
     fError = writeMessages( 0/*all*/, false /* !flush */, tmpIndexStream );
 /* moved to writeMessages()
-    KMMsgBase* msgBase;
+    KMime::Content* msgBase;
     int len;
     const uchar *buffer = 0;
     for (unsigned int i=0; i<mMsgList.high(); i++)
@@ -265,7 +273,11 @@ bool KMFolderIndex::readIndex()
       ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;
     }
+#if 0 //TODO port to akonadi
     mMsgList.append(mi, false);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   if( version < 1505)
   {
@@ -466,7 +478,7 @@ void KMFolderIndex::fillMessageDict()
 {
   open( "fillDict" );
   for ( unsigned int idx = 0; idx < mMsgList.high(); idx++ ) {
-    KMMsgBase* msg = mMsgList.at( idx );
+    KMime::Content* msg = mMsgList.at( idx );
     if ( msg ) {
       KMMsgDict::mutableInstance()->insert( 0, msg, idx );
     }
@@ -475,12 +487,16 @@ void KMFolderIndex::fillMessageDict()
 }
 
 
-KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMMessage *msg )
+KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMime::Message *msg )
 {
+#if 0 //TODO port to akonadi
   KMMsgInfo *msgInfo = new KMMsgInfo( folder() );
   *msgInfo = *msg;
   mMsgList.set( idx, msgInfo );
   return msgInfo;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolderIndex::recreateIndex()
@@ -495,12 +511,13 @@ bool KMFolderIndex::recreateIndex()
   return readIndex();
 }
 
-int KMFolderIndex::writeMessages( KMMsgBase* msg, bool flush, FILE* indexStream )
+int KMFolderIndex::writeMessages( KMime::Content* msg, bool flush, FILE* indexStream )
 {
+#if 0 //TODO port to akonadi
   const uint high = mMsgList.high();
   for ( uint i = 0; i < high || msg; i++ )
   {
-    KMMsgBase* msgBase = msg ? msg : mMsgList.at(i);
+    KMime::Content* msgBase = msg ? msg : mMsgList.at(i);
     if ( !msgBase )
       continue;
     int len;
@@ -522,15 +539,18 @@ int KMFolderIndex::writeMessages( KMMsgBase* msg, bool flush, FILE* indexStream 
   int error = ferror( indexStream );
   if ( error != 0 )
     return error;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return 0;
 }
 
-int KMFolderIndex::writeMessages( KMMsgBase* msg, bool flush )
+int KMFolderIndex::writeMessages( KMime::Content* msg, bool flush )
 {
   return writeMessages( msg, flush, mIndexStream );
 }
 
-KMMsgBase * KMFolderIndex::takeIndexEntry(int idx)
+KMime::Content * KMFolderIndex::takeIndexEntry(int idx)
 {
   return mMsgList.take( idx );
 }

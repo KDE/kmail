@@ -20,11 +20,11 @@
 
 #include "kmfolder.h"
 #include "kmfolderdir.h"
-#include "kmfoldermbox.h"
+//TODO port to akonadi #include "kmfoldermbox.h"
 #include "folderstorage.h"
-#include "kmfoldercachedimap.h"
-#include "kmfoldersearch.h"
-#include "kmfolderimap.h"
+//TODO port to akonadi #include "kmfoldercachedimap.h"
+//TODO port to akonadi #include "kmfoldersearch.h"
+//TODO port to akonadi #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
@@ -73,13 +73,13 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   else if( aFolderType == KMFolderTypeMaildir )
     mStorage = new KMFolderMaildir( this, aFolderName.toLatin1() );
   else
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if( aFolderType == KMFolderTypeSearch )
     mStorage = new KMFolderSearch( this, aFolderName.toLatin1() );
   else
     mStorage = new KMFolderMbox( this, aFolderName.toLatin1() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   assert( mStorage );
 
@@ -371,7 +371,7 @@ void KMFolder::setNoChildren( bool aNoChildren )
   mStorage->setNoChildren( aNoChildren );
 }
 
-KMMessage* KMFolder::getMsg( int idx )
+KMime::Message* KMFolder::getMsg( int idx )
 {
   return mStorage->getMsg( idx );
 }
@@ -391,66 +391,66 @@ DwString KMFolder::getDwString( int idx )
   return mStorage->getDwString( idx );
 }
 
-void KMFolder::ignoreJobsForMessage( KMMessage* m )
+void KMFolder::ignoreJobsForMessage( KMime::Message* m )
 {
   mStorage->ignoreJobsForMessage( m );
 }
 
-FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
+FolderJob* KMFolder::createJob( KMime::Message *msg, FolderJob::JobType jt,
                                 KMFolder *folder, const QString &partSpecifier,
                                 const MessageViewer::AttachmentStrategy *as ) const
 {
   return mStorage->createJob( msg, jt, folder, partSpecifier, as );
 }
 
-FolderJob* KMFolder::createJob( QList<KMMessage*>& msgList,
+FolderJob* KMFolder::createJob( QList<KMime::Message*>& msgList,
                                 const QString& sets,
                                 FolderJob::JobType jt, KMFolder *folder ) const
 {
   return mStorage->createJob( msgList, sets, jt, folder );
 }
 
-const KMMsgBase* KMFolder::getMsgBase( int idx ) const
+const KMime::Message* KMFolder::getMsgBase( int idx ) const
 {
   return mStorage->getMsgBase( idx );
 }
 
-KMMsgBase* KMFolder::getMsgBase( int idx )
+KMime::Message* KMFolder::getMsgBase( int idx )
 {
   return mStorage->getMsgBase( idx );
 }
 
-const KMMsgBase* KMFolder::operator[]( int idx ) const
+const KMime::Message* KMFolder::operator[]( int idx ) const
 {
   return mStorage->operator[]( idx );
 }
 
-KMMsgBase* KMFolder::operator[]( int idx )
+KMime::Message* KMFolder::operator[]( int idx )
 {
   return mStorage->operator[]( idx );
 }
 
-KMMessage* KMFolder::take( int idx )
+KMime::Message* KMFolder::take( int idx )
 {
   return mStorage->take( idx );
 }
 
-void KMFolder::takeMessages( const QList<KMMessage*>& msgList )
+void KMFolder::takeMessages( const QList<KMime::Message*>& msgList )
 {
   mStorage->takeMessages( msgList );
 }
 
-int KMFolder::addMsg( KMMessage* msg, int* index_return )
+int KMFolder::addMsg( KMime::Message* msg, int* index_return )
 {
   return mStorage->addMsg( msg, index_return );
 }
 
-int KMFolder::addMsgKeepUID( KMMessage* msg, int* index_return )
+int KMFolder::addMsgKeepUID( KMime::Message* msg, int* index_return )
 {
   return mStorage->addMsgKeepUID( msg, index_return );
 }
 
-int KMFolder::addMessages( QList<KMMessage*>& list, QList<int>& index_return )
+int KMFolder::addMessages( QList<KMime::Message*>& list, QList<int>& index_return )
 {
   return mStorage->addMessages( list, index_return );
 }
@@ -465,7 +465,7 @@ void KMFolder::removeMsg( int i, bool imapQuiet )
   mStorage->removeMsg( i, imapQuiet );
 }
 
-void KMFolder::removeMessages( QList<KMMessage*> msgList, bool imapQuiet ) // TODO const ref
+void KMFolder::removeMessages( QList<KMime::Message*> msgList, bool imapQuiet ) // TODO const ref
 {
   mStorage->removeMessages( msgList, imapQuiet );
 }
@@ -475,22 +475,22 @@ int KMFolder::expungeOldMsg( int days )
   return mStorage->expungeOldMsg( days );
 }
 
-int KMFolder::moveMsg( KMMessage* msg, int* index_return )
+int KMFolder::moveMsg( KMime::Message* msg, int* index_return )
 {
   return mStorage->moveMsg( msg, index_return );
 }
 
-int KMFolder::moveMsg(QList<KMMessage*> q, int* index_return )
+int KMFolder::moveMsg(QList<KMime::Message*> q, int* index_return )
 {
   return mStorage->moveMsg( q, index_return );
 }
 
-int KMFolder::find( const KMMsgBase* msg ) const
+int KMFolder::find( const KMime::Content* msg ) const
 {
   return mStorage->find( msg );
 }
 
-int KMFolder::find( const KMMessage* msg ) const
+int KMFolder::find( const KMime::Message* msg ) const
 {
   return mStorage->find( msg );
 }
@@ -919,12 +919,12 @@ int KMFolder::updateIndex()
   return mStorage->updateIndex();
 }
 
-void KMFolder::reallyAddMsg( KMMessage* aMsg )
+void KMFolder::reallyAddMsg( KMime::Message* aMsg )
 {
   mStorage->reallyAddMsg( aMsg );
 }
 
-void KMFolder::reallyAddCopyOfMsg( KMMessage* aMsg )
+void KMFolder::reallyAddCopyOfMsg( KMime::Message* aMsg )
 {
   mStorage->reallyAddCopyOfMsg( aMsg );
 }

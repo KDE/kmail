@@ -123,8 +123,9 @@ void ExpireJob::slotDoWork()
 #ifdef DEBUG_SCHEDULER
   kDebug() << "ExpireJob: checking messages" << mCurrentIndex << "to" << stopIndex;
 #endif
+#if 0 //TODO port to akonadi
   for( ; mCurrentIndex >= stopIndex; --mCurrentIndex ) {
-    const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
+    const KMime::Message *mb = storage->getMsgBase( mCurrentIndex );
     if (mb == 0)
       continue;
     if ( ( mb->messageStatus().isImportant() || mb->messageStatus().isToAct() || mb->messageStatus().isWatched() )
@@ -133,10 +134,13 @@ void ExpireJob::slotDoWork()
 
     time_t maxTime = mb->messageStatus().isUnread() ? mMaxUnreadTime : mMaxReadTime;
 
-    if (mb->date() < maxTime) {
+    if (mb->date()->dateTime().dateTime().toTime_t() < maxTime) {
       mRemovedMsgs.append( storage->getMsgBase( mCurrentIndex ) );
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( stopIndex == 0 )
     done();
 }

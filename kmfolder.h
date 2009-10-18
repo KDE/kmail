@@ -47,7 +47,11 @@ typedef QList<KMAccount*> AccountList;
 #define KMFOLDER_CONFIG_GROUP_NAME_PREFIX "Folder-"
 #define KMFOLDER_CONFIG_GROUP_NAME_PREFIX_LEN 7
 
-class KMMessage;
+namespace KMime {
+  class Message;
+  class Content;
+}
+
 class KMFolderDir;
 class FolderStorage;
 class KMFolderJob;
@@ -200,9 +204,9 @@ public:
   void setNoChildren(bool aNoChildren);
 
   /** Read message at given index. Indexing starts at zero */
-  KMMessage* getMsg(int idx);
+  KMime::Message* getMsg(int idx);
 
-  /** Replace KMMessage with KMMsgInfo and delete KMMessage  */
+  /** Replace KMime::Message with KMMsgInfo and delete KMime::Message  */
   KMMsgInfo* unGetMsg(int idx);
 
   /** Checks if the message is already "gotten" with getMsg */
@@ -214,16 +218,16 @@ public:
   /**
    * Removes and deletes all jobs associated with the particular message
    */
-  void ignoreJobsForMessage( KMMessage* );
+  void ignoreJobsForMessage( KMime::Message* );
 
   /**
    * These methods create respective FolderJob (You should derive FolderJob
    * for each derived KMFolder).
    */
-  FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
+  FolderJob* createJob( KMime::Message *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0, const QString &partSpecifier = QString(),
                         const MessageViewer::AttachmentStrategy *as = 0 ) const;
-  FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
+  FolderJob* createJob( QList<KMime::Message*>& msgList, const QString& sets,
                         FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0 ) const;
 
@@ -231,19 +235,19 @@ public:
     in the index. Whenever you only need subject, from, date, status
     you should use this method instead of getMsg() because getMsg()
     will load the message if necessary and this method does not. */
-  const KMMsgBase* getMsgBase(int idx) const;
-  KMMsgBase* getMsgBase(int idx);
+  const KMime::Message* getMsgBase(int idx) const;
+  KMime::Message* getMsgBase(int idx);
 
   /** Same as getMsgBase(int). */
-  const KMMsgBase* operator[](int idx) const;
+  const KMime::Message* operator[](int idx) const;
 
   /** Same as getMsgBase(int). This time non-const. */
-  KMMsgBase* operator[](int idx);
+  KMime::Message* operator[](int idx);
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
-  KMMessage* take(int idx);
-  void takeMessages(const QList<KMMessage*>& msgList);
+  KMime::Message* take(int idx);
+  void takeMessages(const QList<KMime::Message*>& msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -251,18 +255,18 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  int addMsg(KMMessage* msg, int* index_return = 0);
+  int addMsg(KMime::Message* msg, int* index_return = 0);
 
   /** (Note(bo): This needs to be fixed better at a later point.)
       This is overridden by dIMAP because addMsg strips the X-UID
       header from the mail. */
-  int addMsgKeepUID(KMMessage* msg, int* index_return = 0);
+  int addMsgKeepUID(KMime::Message* msg, int* index_return = 0);
 
   /**
    * Adds the given messages to the folder. Behaviour is identical
    * to addMsg(msg)
    */
-  int addMessages(QList<KMMessage*>&, QList<int>& index_return);
+  int addMessages(QList<KMime::Message*>&, QList<int>& index_return);
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -270,7 +274,7 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   void removeMsg(int i, bool imapQuiet = false);
-  void removeMessages(QList<KMMessage*> msgList, bool imapQuiet = false);
+  void removeMessages(QList<KMime::Message*> msgList, bool imapQuiet = false);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -280,12 +284,12 @@ public:
     adds it to this folder. Returns zero on success and an errno error
     code on failure. The index of the new message is stored in index_return
     if given. */
-  int moveMsg(KMMessage* msg, int* index_return = 0);
-  int moveMsg(QList<KMMessage*>, int* index_return = 0);
+  int moveMsg(KMime::Message* msg, int* index_return = 0);
+  int moveMsg(QList<KMime::Message*>, int* index_return = 0);
 
   /** Returns the index of the given message or -1 if not found. */
-  int find(const KMMsgBase* msg) const;
-  int find( const KMMessage * msg ) const;
+  int find(const KMime::Content* msg) const;
+  int find( const KMime::Message * msg ) const;
 
   /** Number of messages in this folder. */
   int count(bool cache = false) const;
@@ -297,13 +301,13 @@ public:
       contained by this folder */
   int countUnreadRecursive();
 
-  /** Called by KMMsgBase::setStatus when status of a message has changed
+  /** Called by KMime::Content::setStatus when status of a message has changed
       required to keep the number of unread messages variable current. */
   void msgStatusChanged( const MessageStatus& oldStatus,
                          const MessageStatus& newStatus,
                          int idx);
 
-  /** Called by KMMsgBase::setTagList(). Emits the msgHeaderChanged signal. */
+  /** Called by KMime::Content::setTagList(). Emits the msgHeaderChanged signal. */
   void msgTagListChanged( int idx);
 
   /** Open folder for access.
@@ -656,11 +660,11 @@ public slots:
 
   /** Add the message to the folder after it has been retrieved from an IMAP
       server */
-  void reallyAddMsg(KMMessage* aMsg);
+  void reallyAddMsg(KMime::Message* aMsg);
 
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */
-  void reallyAddCopyOfMsg(KMMessage* aMsg);
+  void reallyAddCopyOfMsg(KMime::Message* aMsg);
 
 private slots:
 

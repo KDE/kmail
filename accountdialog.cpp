@@ -19,7 +19,7 @@
  */
 #include "accountdialog.h"
 #include "sieveconfig.h"
-#include "kmacctmaildir.h"
+//TODO port to akonadi #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "accountmanager.h"
 #include "popaccount.h"
@@ -351,6 +351,7 @@ void AccountDialog::setupSettings()
     interval = 5;                 // interval checking for the first time
 
   KAccount::Type accountType = mAccount->type();
+#if 0 //TODO port to akonadi
   if( accountType == KAccount::Local )
   {
     ProcmailRCParser procmailrcParser;
@@ -451,7 +452,6 @@ void AccountDialog::setupSettings()
   }
   else if( accountType == KAccount::Imap )
   {
-#if 0 //TODO port to akonadi
     KMAcctImap &ai = *(KMAcctImap*)mAccount;
     mImap.ui.nameEdit->setText( mAccount->name() );
     mImap.ui.nameEdit->setFocus();
@@ -499,13 +499,9 @@ void AccountDialog::setupSettings()
     else mImap.ui.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
   else if( accountType == KAccount::DImap )
   {
-#if 0 //TODO port to akonadi
     KMAcctCachedImap &ai = *(KMAcctCachedImap*)mAccount;
     mImap.ui.nameEdit->setText( mAccount->name() );
     mImap.ui.nameEdit->setFocus();
@@ -550,9 +546,6 @@ void AccountDialog::setupSettings()
     else mImap.ui.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
   else if( accountType == KAccount::Maildir )
   {
@@ -571,8 +564,6 @@ void AccountDialog::setupSettings()
   }
   else // Unknown account type
     return;
-
-#if 0 //TODO port to akonadi
   if ( accountType == KAccount::Imap ||
        accountType == KAccount::DImap )
   {
@@ -586,10 +577,6 @@ void AccountDialog::setupSettings()
     } else {
       slotSetupNamespaces( ai.namespacesWithDelimiter() );
     }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
   if (!folderCombo) return;
 
@@ -631,6 +618,10 @@ void AccountDialog::setupSettings()
     if (folderCombo->count() == 0)
       folderCombo->addItem( i18n("inbox") );
   }
+  }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void AccountDialog::slotLeaveOnServerClicked()
@@ -994,6 +985,7 @@ void AccountDialog::slotOk()
 
 void AccountDialog::saveSettings()
 {
+#if 0 //TODO port to akonadi
   KAccount::Type accountType = mAccount->type();
   if( accountType == KAccount::Local )
   {
@@ -1052,7 +1044,6 @@ void AccountDialog::saveSettings()
   }
   else if( accountType == KAccount::Imap )
   {
-#if 0 //TODO port to akonadi
     mAccount->setName( mImap.ui.nameEdit->text() );
     mAccount->setCheckInterval( mImap.ui.intervalCheck->isChecked() ?
                                 mImap.ui.intervalSpin->value() : 0 );
@@ -1077,13 +1068,9 @@ void AccountDialog::saveSettings()
     epa.setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
   else if( accountType == KAccount::DImap )
   {
-#if 0 //TODO port to akonadi
     mAccount->setName( mImap.ui.nameEdit->text() );
     mAccount->setCheckInterval( mImap.ui.intervalCheck->isChecked() ?
                                 mImap.ui.intervalSpin->value() : 0 );
@@ -1109,9 +1096,6 @@ void AccountDialog::saveSettings()
     epa.setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
   else if( accountType == KAccount::Maildir )
   {
@@ -1139,7 +1123,6 @@ void AccountDialog::saveSettings()
     mAccount->setPrecommand( mMaildir.ui.precommand->text() );
   }
 
-#if 0 //TODO port to akonadi
   if ( accountType == KAccount::Imap ||
        accountType == KAccount::DImap )
   {
@@ -1161,9 +1144,6 @@ void AccountDialog::saveSettings()
     ai.setNamespaces( map );
     ai.setNamespaceToDelimiter( delimMap );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
   kmkernel->acctMgr()->writeConfig(true);
   // get the new account and register the new destination folder
@@ -1179,16 +1159,15 @@ void AccountDialog::saveSettings()
     } else if ( accountType == KAccount::Maildir ) {
       newAcct->setFolder( mFolderList.at(mMaildir.ui.folderCombo->currentIndex()), true );
     }
-#if 0 //TODO port to akonadi
       else if ( accountType == KAccount::Imap ) {
       newAcct->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()), true );
     } else if ( accountType == KAccount::DImap ) {
       newAcct->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()), true );
     }
+  }
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  }
 }
 
 

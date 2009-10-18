@@ -205,9 +205,9 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     quint32 serNum;
     KMFolder *folder = 0;
     int idx;
-    QList<KMMsgBase*> messageList;
+    QList<KMime::Message*> messageList;
     while ( !serNumStream.atEnd() ) {
-      KMMsgBase *msgBase = 0;
+      KMime::Message *msgBase = 0;
       serNumStream >> serNum;
       KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
       if ( folder ) {

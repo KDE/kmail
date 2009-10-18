@@ -198,6 +198,7 @@ void KMReaderMainWin::slotTrashMsg()
 {
   if ( !mMsg )
     return;
+#if 0 //TODO port to akonadi
   // find the real msg by its sernum
   KMFolder* parent;
   int index;
@@ -213,6 +214,7 @@ void KMReaderMainWin::slotTrashMsg()
       close();
     }
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------

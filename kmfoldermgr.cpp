@@ -26,8 +26,8 @@
 #include "kmfiltermgr.h"
 #include "folderstorage.h"
 #include "kmfolder.h"
-#include "kmfoldercachedimap.h"
-#include "kmacctcachedimap.h"
+//TODO port to akonadi #include "kmfoldercachedimap.h"
+//TODO port to akonadi #include "kmacctcachedimap.h"
 
 
 //-----------------------------------------------------------------------------

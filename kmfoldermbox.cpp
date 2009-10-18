@@ -43,6 +43,7 @@
 #include <kshell.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <kmime/kmime_message.h>
 
 #include <QDateTime>
 
@@ -492,7 +493,7 @@ int KMFolderMbox::lock()
 
 //-------------------------------------------------------------
 FolderJob*
-KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
+KMFolderMbox::doCreateJob( KMime::Message *msg, FolderJob::JobType jt,
                            KMFolder *folder, const QString&, const MessageViewer::AttachmentStrategy* ) const
 {
 #if 0	
@@ -505,7 +506,7 @@ KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
 
 //-------------------------------------------------------------
 FolderJob*
-KMFolderMbox::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
+KMFolderMbox::doCreateJob( QList<KMime::Message*>& msgList, const QString& sets,
                            FolderJob::JobType jt, KMFolder *folder ) const
 {
 #if 0	
@@ -885,14 +886,14 @@ int KMFolderMbox::createIndexFromContents()
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMFolderMbox::readMsg(int idx)
+KMime::Message* KMFolderMbox::readMsg(int idx)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
   assert(mi!=0 && !mi->isMessage());
   assert(mStream != 0);
 
-  KMMessage *msg = new KMMessage(*mi); // note that mi is deleted by the line below
+  KMime::Message *msg = new KMime::Message(*mi); // note that mi is deleted by the line below
   mMsgList.set(idx,&msg->toMsgBase()); // done now so that the serial number can be computed
   msg->fromDwString(getDwString(idx));
   return msg;
@@ -1000,7 +1001,7 @@ DwString KMFolderMbox::getDwString(int idx)
 
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
+int KMFolderMbox::addMsg( KMime::Message *aMsg, int *aIndex_ret )
 {
   if ( !canAddMsgNow( aMsg, aIndex_ret ) ) {
     return 0;

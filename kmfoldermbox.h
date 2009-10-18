@@ -24,6 +24,10 @@
 
 #include <QList>
 
+namespace KMime {
+  class Message;
+}
+
 namespace KMail {
   class FolderJob;
 }
@@ -67,7 +71,7 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg( KMMessage* msg, int* index_return = 0 );
+  virtual int addMsg( KMime::Message* msg, int* index_return = 0 );
 
   /** Open folder for access.
     Does nothing if the folder is already opened. To reopen a folder
@@ -114,13 +118,13 @@ public:
   virtual qint64 doFolderSize() const;
 
 protected:
-  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
+  virtual FolderJob* doCreateJob( KMime::Message *msg, FolderJob::JobType jt, KMFolder *folder,
                                   const QString &partSpecifier, const MessageViewer::AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( QList<KMime::Message*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */
-  virtual KMMessage* readMsg(int idx);
+  virtual KMime::Message* readMsg(int idx);
 
   /** Create index file from messages file and fill the message-info list
       mMsgList. Returns 0 on success and an errno value (see fopen) on

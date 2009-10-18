@@ -2,8 +2,8 @@
 
 
 #include "kmfolderdir.h"
-#include "kmfoldersearch.h"
-#include "kmfoldercachedimap.h"
+//TODO port to akonadi #include "kmfoldersearch.h"
+//TODO port to akonadi #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
 

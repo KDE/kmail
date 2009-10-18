@@ -1,7 +1,7 @@
 // kmacctlocal.cpp
 
 #include "kmacctlocal.h"
-#include "kmfoldermbox.h"
+//TODO port to akonadi #include "kmfoldermbox.h"
 #include "kmacctfolder.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;

@@ -103,7 +103,7 @@ set(kmailprivate_LIB_SRCS
    kmacctfolder.cpp
    kmdict.cpp
    kmsystemtray.cpp
-   kmacctlocal.cpp
+#   kmacctlocal.cpp
    kmfolderdir.cpp
    kmfoldermgr.cpp
    kmfoldernode.cpp
@@ -116,7 +116,7 @@ set(kmailprivate_LIB_SRCS
    kmsearchpattern.cpp
    kmfilter.cpp
    kmfilterdlg.cpp
-   kmmsgbase.cpp
+#   kmmsgbase.cpp
    kmmsglist.cpp
    xfaceconfigurator.cpp
    networkaccount.cpp
@@ -124,11 +124,11 @@ set(kmailprivate_LIB_SRCS
 #   kmacctimap.cpp
 #   kmacctcachedimap.cpp
    kmfawidgets.cpp
-   kmfoldermbox.cpp
+#   kmfoldermbox.cpp
 #   kmfolderimap.cpp
    undostack.cpp
 #   kmfoldercachedimap.cpp
-   kmfoldermaildir.cpp
+#   kmfoldermaildir.cpp
    popaccount.cpp
    kmkernel.cpp
    accountdialog.cpp
@@ -141,14 +141,14 @@ set(kmailprivate_LIB_SRCS
    kmpopheaders.cpp
    kmpopfiltercnfrmdlg.cpp
    mailinglist-magic.cpp
-   kmacctmaildir.cpp
+#   kmacctmaildir.cpp
    attachmentcollector.cpp
    kmcommands.cpp
    kmreadermainwin.cpp
    kmstartup.cpp
    kmmainwidget.cpp
    kmfolderindex.cpp
-   kmfoldersearch.cpp
+#   kmfoldersearch.cpp
    folderjob.cpp
 #   cachedimapjob.cpp
 #   imapjob.cpp

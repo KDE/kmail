@@ -39,8 +39,6 @@ class KLineEdit;
 class KMFolder;
 class KMFolderSearch;
 class KMMainWidget;
-class KMMessage;
-class KMMsgBase;
 class KMSearchPattern;
 class KMSearchPatternEdit;
 class KStatusBar;
@@ -48,6 +46,11 @@ class KStatusBar;
 namespace KMail {
   class FolderRequester;
   class MatchListView;
+}
+
+namespace KMime {
+  class Message;
+  class Content;
 }
 
 namespace KMail {
@@ -84,13 +87,13 @@ public:
    * Provides access to the list of currently selected message in the listview.
    * @return The list of currently selected search result messages.
    */
-  QList<KMMsgBase*> selectedMessages();
+  QList<KMime::Content*> selectedMessages();
 
   /**
    * Provides access to the currently selected message.
    * @return the currently selected message.
    */
-  KMMessage* message();
+  KMime::Message* message();
 
   void setSearchPattern( const KMSearchPattern &pattern );
 
@@ -148,7 +151,7 @@ protected:
   int mFetchingInProgress;
   int mSortColumn;
   Qt::SortOrder mSortOrder;
-  QPointer<KMFolderSearch> mFolder;
+//TODO port to akonadi  QPointer<KMFolderSearch> mFolder;
   QTimer *mTimer;
 
   // GC'd by Qt
@@ -178,7 +181,7 @@ protected:
   static const int MSGID_COLUMN;
 
 private:
-  KMMessage *indexToMessage( QTreeWidgetItem *item );
+  KMime::Message *indexToMessage( QTreeWidgetItem *item );
 
 };
 

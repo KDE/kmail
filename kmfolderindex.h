@@ -25,6 +25,11 @@
 #include "folderstorage.h"
 #include "kmmsglist.h"
 
+namespace KMime {
+  class Message;
+  class Content;
+}
+
 #ifdef KMAIL_SQLITE_INDEX
 struct sqlite3;
 #endif
@@ -44,9 +49,9 @@ class KMFolderIndex: public FolderStorage
 {
   Q_OBJECT
   //TODO:Have to get rid of this friend declaration and add necessary pure
-  //virtuals to kmfolder.h so that KMMsgBase::parent() can be a plain KMFolder
+  //virtuals to kmfolder.h so that KMime::Content::parent() can be a plain KMFolder
   //rather than a KMFolderIndex. Need this for database indices.
-  friend class ::KMMsgBase;
+  friend class ::KMime::Content;
 public:
 
   /** This enum indicates the status of the index file. It's returned by
@@ -64,25 +69,27 @@ public:
   virtual ~KMFolderIndex();
   virtual int count(bool cache = false) const;
 
-  virtual KMMsgBase* takeIndexEntry( int idx );
-  virtual KMMsgInfo* setIndexEntry( int idx, KMMessage *msg );
+  virtual KMime::Content* takeIndexEntry( int idx );
+  virtual KMMsgInfo* setIndexEntry( int idx, KMime::Message *msg );
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false);
   virtual void truncateIndex();
 
-  virtual const KMMsgBase* getMsgBase(int idx) const { return mMsgList[idx]; }
-  virtual KMMsgBase* getMsgBase(int idx) { return mMsgList[idx]; }
+  virtual const KMime::Message* getMsgBase(int idx) const { return mMsgList[idx]; }
+  virtual KMime::Message* getMsgBase(int idx) { return mMsgList[idx]; }
 
-  virtual int find(const KMMsgBase* msg) const {
-    return mMsgList.indexOf( const_cast<KMMsgBase*>( msg ) );
+  virtual int find(const KMime::Content* msg) const {
+#if 0 //TODO port to akonadi
+    return mMsgList.indexOf( const_cast<KMime::Message*>( msg ) );
+#endif
   }
 
-  int find( const KMMessage * msg ) const { return FolderStorage::find( msg ); }
+  int find( const KMime::Message * msg ) const { return FolderStorage::find( msg ); }
 
   /**
    * Adds all messages of this folder to the serial number cache
    * (by calling MessageProperty::setSerialCache for each message).
    *
-   * This makes subsequent calls to KMMsgBase::getMsgSerNum() much faster since
+   * This makes subsequent calls to KMime::Content::getMsgSerNum() much faster since
    * the serial number is already in the cache.
    *
    * The folder needs to be open for this.
@@ -153,11 +160,11 @@ protected:
   /** Writes messages to the index. The stream is flushed if @a flush is true.
    If @a msg is 0, all messages from mMsgList are written, else only @a is written.
   */
-  int writeMessages( KMMsgBase* msg, bool flush = true );
+  int writeMessages( KMime::Content* msg, bool flush = true );
 
-  /** @overload writeMessages( KMMsgBase* msg, bool flush )
+  /** @overload writeMessages( KMime::Content* msg, bool flush )
    Allows to specify index stream to use. */
-  int writeMessages( KMMsgBase* msg, bool flush, FILE* indexStream );
+  int writeMessages( KMime::Content* msg, bool flush, FILE* indexStream );
 
   /** Opens index stream (or database) without creating it.
    If @a checkIfIndexTooOld is true, message "The index of folder .. seems
@@ -191,7 +198,7 @@ protected:
 
   /* Writes messages to index database for the folder. Inserts or replaces existing messages,
    depending on @a mode. */
-  int writeMessages( KMMsgBase* msg, WriteMessagesMode mode );
+  int writeMessages( KMime::Content* msg, WriteMessagesMode mode );
 
   /* Executes "DELETE FROM messages WHERE id=.." for every id included in @a rowsToDelete.
    Used in readIndex() for messages with 0 serial number, especially for the outbox. */

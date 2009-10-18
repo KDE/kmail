@@ -3,7 +3,7 @@
 #include "accountmanager.h"
 
 #include "kmaccount.h"
-#include "kmacctmaildir.h"
+//TODO port to akonadi #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "popaccount.h"
 //TODO port to akonadi #include "kmacctimap.h"
