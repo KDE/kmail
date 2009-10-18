@@ -124,7 +124,7 @@ set(kmailprivate_LIB_SRCS
 #   kmacctimap.cpp
 #   kmacctcachedimap.cpp
    kmfawidgets.cpp
-#   kmfoldermbox.cpp
+   #kmfoldermbox.cpp
 #   kmfolderimap.cpp
    undostack.cpp
 #   kmfoldercachedimap.cpp

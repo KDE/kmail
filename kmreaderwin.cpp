@@ -134,7 +134,12 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
-  : QWidget(aParent, aFlags ) /*,TODO(Andras) Remove
+  : QWidget(aParent, aFlags ),
+    mActionCollection( actionCollection ),
+    mMailToComposeAction( 0 ),
+    mMailToReplyAction( 0 ),
+    mMailToForwardAction( 0 )
+ /*,TODO(Andras) Remove
     mSerNumOfOriginalMessage( 0 ),
     mNodeIdOffset( -1 ),
     mDelayedMarkTimer( 0 ),
@@ -179,7 +184,6 @@ void KMReaderWin::createActions()
   //
   // Message Menu
   //
-
   // new message to
   mMailToComposeAction = new KAction( KIcon( "mail-message-new" ),
                                       i18n( "New Message To..." ), this );

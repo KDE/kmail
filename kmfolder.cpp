@@ -80,7 +80,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-
+  return;
   assert( mStorage );
 
   QFileInfo dirinfo;
@@ -368,22 +368,29 @@ bool KMFolder::noChildren() const
 
 void KMFolder::setNoChildren( bool aNoChildren )
 {
-  mStorage->setNoChildren( aNoChildren );
+  //TODO port to akonadi
+  //mStorage->setNoChildren( aNoChildren );
 }
 
 KMime::Message* KMFolder::getMsg( int idx )
 {
-  return mStorage->getMsg( idx );
+  //Port to akonadi
+  return 0;
+  //return mStorage->getMsg( idx );
 }
 
 KMMsgInfo* KMFolder::unGetMsg( int idx )
 {
-  return mStorage->unGetMsg( idx );
+  //Port to akonadi
+  return 0;
+  //return mStorage->unGetMsg( idx );
 }
 
 bool KMFolder::isMessage( int idx )
 {
-  return mStorage->isMessage( idx );
+  return false;
+  //Port to akonadi
+  //return mStorage->isMessage( idx );
 }
 
 DwString KMFolder::getDwString( int idx )
@@ -537,12 +544,15 @@ void KMFolder::msgTagListChanged( int idx )
 
 int KMFolder::open( const char *owner )
 {
-  return mStorage->open( owner );
+  return -1;
+  //Port to akonadi
+  //return mStorage->open( owner );
 }
 
 bool KMFolder::canAccess() const
 {
-  return mStorage->canAccess();
+  //TODO port to akonadi
+  return true;//mStorage->canAccess();
 }
 
 void KMFolder::close( const char *owner, bool force )
@@ -553,7 +563,8 @@ void KMFolder::close( const char *owner, bool force )
 
 void KMFolder::sync()
 {
-  mStorage->sync();
+  //Port to akonadi
+  //mStorage->sync();
 }
 
 bool KMFolder::isOpened() const
@@ -563,7 +574,8 @@ bool KMFolder::isOpened() const
 
 void KMFolder::markNewAsUnread()
 {
-  mStorage->markNewAsUnread();
+  //Port to akonadi
+  //mStorage->markNewAsUnread();
 }
 
 void KMFolder::markUnreadAsRead()
@@ -753,14 +765,16 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
   }
   mUserWhoField = whoField;
 
-  if (writeConfig)
-    mStorage->writeConfig();
+  //TODO port to akonadi
+  //if (writeConfig)
+    //mStorage->writeConfig();
   emit viewConfigChanged();
 }
 
 void KMFolder::correctUnreadMsgsCount()
 {
-  mStorage->correctUnreadMsgsCount();
+  //TODO port to akonadi
+  //mStorage->correctUnreadMsgsCount();
 }
 
 QString KMFolder::idString() const
