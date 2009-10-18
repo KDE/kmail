@@ -6,6 +6,7 @@
 #include "globalsettings.h"
 #include "stringutil.h"
 #include "messageviewer/iconnamecache.h"
+#include "messageviewer/nodehelper.h"
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>
@@ -115,7 +116,7 @@ void KMMessagePart::setBody(const QByteArray &aStr)
 }
 
 void KMMessagePart::setBodyFromUnicode( const QString & str ) {
-  QByteArray encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
+  QByteArray encoding = MessageViewer::NodeHelper::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
   const QTextCodec * codec = KMMsgBase::codecForName( encoding );
@@ -421,7 +422,7 @@ QString KMMessagePart::contentDescription( void ) const
 void KMMessagePart::setContentDescription( const QString &aStr )
 {
   QByteArray encoding =
-    KMMsgBase::autoDetectCharset( charset(),
+    MessageViewer::NodeHelper::autoDetectCharset( charset(),
                                   KMMessage::preferredCharsets(), aStr );
   if ( encoding.isEmpty() ) {
     encoding = "utf-8";
