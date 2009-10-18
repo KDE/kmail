@@ -3024,11 +3024,12 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
       preSelectionMode
     );
 
-  updateMessageActions();
-  updateFolderMenu();
   if ( !mFolder && ( mMessageListView->count() < 2 ) )
     slotIntro();
 #endif
+
+  updateMessageActions();
+  updateFolderMenu();
 }
 
 //-----------------------------------------------------------------------------
@@ -4143,7 +4144,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 void KMMainWidget::updateMessageActions()
 {
   int count;
-
+  kDebug()<<" DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD";
   QList< quint32 > selectedSernums;
   QList< quint32 > selectedVisibleSernums;
   bool allSelectedBelongToSameThread = false;
