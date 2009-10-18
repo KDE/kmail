@@ -4291,7 +4291,7 @@ void KMMainWidget::updateMessageActions()
     if ((KMFolder*)mFolder == kmkernel->outboxFolder())
       editAction()->setEnabled( !currentMessage->transferInProgress() );
   }
-
+#endif
   // Enable / disable all filters.
   foreach ( QAction *filterAction, mFilterMenuActions ) {
     filterAction->setEnabled( count > 0 );
@@ -4299,7 +4299,6 @@ void KMMainWidget::updateMessageActions()
 
   mApplyAllFiltersAction->setEnabled( count);
   mApplyFilterActionsMenu->setEnabled( count );
-#endif
 }
 
 // This needs to be updated more often, so it is in its method.
