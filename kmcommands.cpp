@@ -288,8 +288,10 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   mResult = result;
   KMMessage* msg;
   foreach( msg, mRetrievedMsgs ) {
+#if 0 //TODO port to akonadi
     if ( msg && msg->parent() )
       msg->setTransferInProgress(false);
+#endif
   }
   kmkernel->filterMgr()->deref();
   if ( !emitsCompletedItself() )
@@ -366,10 +368,14 @@ void KMCommand::transferSelectedMsgs()
       connect(job, SIGNAL(progress(unsigned long, unsigned long)),
               this, SLOT(slotProgress(unsigned long, unsigned long)));
       // msg musn't be deleted
+#if 0 //Port to akonadi
       thisMsg->setTransferInProgress(true);
+#endif
       job->start();
     } else {
+#if 0 //Port to Akonadi
       thisMsg->setTransferInProgress(true);
+#endif
       mRetrievedMsgs.append(thisMsg);
     }
   }
@@ -461,7 +467,9 @@ void KMCommand::slotTransferCancelled()
     ++it;
     if (!folder)
       continue;
+#if 0 //Port to akonadi
     msg->setTransferInProgress(false);
+#endif
     int idx = folder->find(msg);
     if (idx > 0) folder->unGetMsg(idx);
   }
@@ -712,6 +720,7 @@ KMCommand::Result KMEditMsgCommand::execute()
   }
 
   KMail::Composer *win = KMail::makeComposer();
+
   msg->setTransferInProgress( false ); // From here on on, the composer owns the message.
   win->setMsg( msg, false, true );
   win->setFolder( parent );
@@ -908,7 +917,9 @@ void KMSaveMsgCommand::slotSaveDataReq()
         QByteArray data = QByteArray();
         mJob->sendAsyncData( data );
       }
+#if 0 //TODO port to akonadi
       msg->setTransferInProgress( true );
+#endif
       if ( msg->isComplete() ) {
         slotMessageRetrievedForSaving( msg );
       } else {
@@ -945,8 +956,9 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
     QByteArray str( msg->mboxMessageSeparator() );
     str += KMFolderMbox::escapeFrom( msg->asDwString() );
     str += '\n';
+#if 0  //TODO port to akonadi
     msg->setTransferInProgress(false);
-
+#endif
     mData = str;
     mData.resize(mData.size() - 1);
     mOffset = 0;
