@@ -6,7 +6,7 @@
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "popaccount.h"
-#include "kmacctimap.h"
+//TODO port to akonadi #include "kmacctimap.h"
 #include "networkaccount.h"
 #include "kmacctcachedimap.h"
 #include "broadcaststatus.h"
@@ -237,7 +237,7 @@ KMAccount* AccountManager::create( const KAccount::Type aType,
   KMAccount* act = 0;
   if ( id == 0 )
     id = createId();
-
+#if 0 //TODO port to akonadi
   if ( aType == KAccount::Local) {
     act = new KMAcctLocal(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
     act->setFolder( kmkernel->inboxFolder() );
@@ -252,6 +252,9 @@ KMAccount* AccountManager::create( const KAccount::Type aType,
   } else if (aType == KAccount::DImap) {
     act = new KMAcctCachedImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( !act ) {
       kWarning() <<"Attempt to instantiate a non-existing account type!";
       return 0;

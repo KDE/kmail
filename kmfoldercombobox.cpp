@@ -25,11 +25,15 @@ void KMFolderComboBox::init()
       this, SLOT( slotActivated(int) ) );
   connect( kmkernel->folderMgr(), SIGNAL(changed()),
       this, SLOT(refreshFolders()) );
+#if 0 //TODO port to akonadi
   connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()),
       this, SLOT(refreshFolders()) );
   if (mImapShown)
     connect( kmkernel->imapFolderMgr(), SIGNAL(changed()),
         this, SLOT(refreshFolders()) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
@@ -45,6 +49,7 @@ void KMFolderComboBox::showOutboxFolder(bool shown)
 
 void KMFolderComboBox::showImapFolders(bool shown)
 {
+#if 0 //TODO port to akonadi
   mImapShown = shown;
   refreshFolders();
   if (shown)
@@ -53,6 +58,9 @@ void KMFolderComboBox::showImapFolders(bool shown)
   else
     disconnect( kmkernel->imapFolderMgr(), SIGNAL(changed()),
         this, SLOT(refreshFolders()) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -74,11 +82,14 @@ void KMFolderComboBox::createFolderList(QStringList *names,
       names->erase( namesIt );
     }
   }
-
+#if 0 //TODO port to akonadi
   if (mImapShown)
     kmkernel->imapFolderMgr()->createI18nFolderList( names, folders );
 
   kmkernel->dimapFolderMgr()->createI18nFolderList( names, folders );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------

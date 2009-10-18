@@ -25,7 +25,7 @@
 #include "kmkernel.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
-#include "kmacctimap.h"
+//TODO port to akonadi #include "kmacctimap.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
 #include "filterlog.h"
@@ -211,9 +211,13 @@ bool KMFilter::applyOnAccount( uint id ) const
   if ( applicability() == All )
     return true;
   if ( applicability() == ButImap ) {
+#if 0 //TODO port to akonadi
     KMAccount *account = kmkernel->acctMgr()->find( id );
     bool result =  account && !dynamic_cast<KMAcctImap*>(account);
     return result;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   if ( applicability() == Checked )
     return mAccounts.contains( id );

@@ -31,7 +31,7 @@
 #include <kio/udsentry.h>
 
 #include "folderjob.h"
-#include "imapaccountbase.h"
+//TODO port to akonadi #include "imapaccountbase.h"
 
 class FolderStorage;
 class KJob; 

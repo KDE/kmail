@@ -47,10 +47,14 @@ FolderAdaptor::FolderAdaptor( const QString& vpath )
                                                 QDBusConnection::ExportScriptableSlots |
                                                 QDBusConnection::ExportScriptableSignals );
   mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
+#if 0 //TODO port to akonadi
   if ( !mFolder )
     mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
   if ( !mFolder )
     mFolder = kmkernel->dimapFolderMgr()->getFolderByURL( mPath );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   Q_ASSERT( mFolder );
 }
 

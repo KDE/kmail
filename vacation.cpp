@@ -18,11 +18,12 @@
 #include "vacationdialog.h"
 #include "sievejob.h"
 using KMail::SieveJob;
+#include "sieveconfig.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
-#include "kmacctimap.h"
+//TODO port to akonadi #include "kmacctimap.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include "kmmessage.h"
@@ -489,6 +490,7 @@ namespace KMail {
   }
 
   static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
+#if 0 //TODO port to akonadi
     assert( a );
     const SieveConfig sieve = a->sieveConfig();
     if ( !sieve.managesieveSupported() )
@@ -513,6 +515,10 @@ namespace KMail {
       u.setFileName( sieve.vacationFileName() );
       return u;
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return KUrl();
+#endif
   }
 
   KUrl Vacation::findURL() const {
@@ -522,11 +528,15 @@ namespace KMail {
     while ( accountIt != am->end() ) {
       KMAccount *account = *accountIt;
       ++accountIt;
+#if 0 //TODO port to akonadi
       if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( account ) ) {
         KUrl u = findUrlForAccount( iab );
         if ( !u.isEmpty() )
           return u;
       }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
     return KUrl();
   }

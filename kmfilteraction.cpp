@@ -340,10 +340,14 @@ void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 {
   mFolder = kmkernel->folderMgr()->findIdString( argsStr );
+#if 0 //TODO port to akonadi
   if (!mFolder)
      mFolder = kmkernel->dimapFolderMgr()->findIdString( argsStr );
   if (!mFolder)
      mFolder = kmkernel->imapFolderMgr()->findIdString( argsStr );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if (mFolder)
      mFolderName = mFolder->idString();
   else
@@ -1499,11 +1503,15 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMime::Message* msg) cons
   } else {
     // The old filtering system does not support online imap targets.
     // Skip online imap targets when using the old system.
+#if 0 //TODO port to akonadi
     KMFolder *check;
     check = kmkernel->imapFolderMgr()->findIdString( argsAsString() );
     if (mFolder && (check != mFolder)) {
       MessageProperty::setFilterFolder( msg, mFolder );
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   return GoOn;
 }

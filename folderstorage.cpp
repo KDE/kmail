@@ -42,8 +42,8 @@
 #include "kmmsgdict.h"
 #include "kmfoldermgr.h"
 #include "kmcommands.h"
-#include "listjob.h"
-using KMail::ListJob;
+//TODO port to akonadi #include "listjob.h"
+//using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "globalsettings.h"
 

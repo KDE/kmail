@@ -23,8 +23,8 @@
 #include "kmacctlocal.h"
 #include "accountmanager.h"
 #include "popaccount.h"
-#include "kmacctimap.h"
-#include "kmacctcachedimap.h"
+//TODO port to akonadi #include "kmacctimap.h"
+//TODO port to akonadi #include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"
 #include "protocols.h"
 #include "folderrequester.h"
@@ -113,7 +113,9 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   {
     makePopAccountPage();
   }
-  else if( accountType == KAccount::Imap )
+  else
+#if 0 //TODO port to akonadi
+if( accountType == KAccount::Imap )
   {
     makeImapAccountPage();
   }
@@ -122,6 +124,9 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
     makeImapAccountPage(true);
   }
   else
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   {
     QString msg = i18n( "Account type is not supported." );
     KMessageBox::information( topLevelWidget(),msg,i18n("Configure Account") );
@@ -253,7 +258,7 @@ void AccountDialog::makePopAccountPage()
           SLOT(slotFontChanged()));
 }
 
-
+#if 0 //TODO port to akonadi
 void AccountDialog::makeImapAccountPage( bool connected )
 {
   QWidget *page = new QWidget( this );
@@ -335,6 +340,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   connect( KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()) );
 }
 
+#endif
 
 void AccountDialog::setupSettings()
 {
@@ -445,6 +451,7 @@ void AccountDialog::setupSettings()
   }
   else if( accountType == KAccount::Imap )
   {
+#if 0 //TODO port to akonadi
     KMAcctImap &ai = *(KMAcctImap*)mAccount;
     mImap.ui.nameEdit->setText( mAccount->name() );
     mImap.ui.nameEdit->setFocus();
@@ -492,9 +499,13 @@ void AccountDialog::setupSettings()
     else mImap.ui.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   else if( accountType == KAccount::DImap )
   {
+#if 0 //TODO port to akonadi
     KMAcctCachedImap &ai = *(KMAcctCachedImap*)mAccount;
     mImap.ui.nameEdit->setText( mAccount->name() );
     mImap.ui.nameEdit->setFocus();
@@ -539,6 +550,9 @@ void AccountDialog::setupSettings()
     else mImap.ui.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   else if( accountType == KAccount::Maildir )
   {
@@ -558,6 +572,7 @@ void AccountDialog::setupSettings()
   else // Unknown account type
     return;
 
+#if 0 //TODO port to akonadi
   if ( accountType == KAccount::Imap ||
        accountType == KAccount::DImap )
   {
@@ -572,6 +587,9 @@ void AccountDialog::setupSettings()
       slotSetupNamespaces( ai.namespacesWithDelimiter() );
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   if (!folderCombo) return;
 
@@ -704,6 +722,7 @@ void AccountDialog::slotPopPasswordChanged( const QString& text )
     mPop.ui.storePasswordCheck->setCheckState( Qt::Checked );
 }
 
+#if 0 //TODO port to akonadi
 void AccountDialog::slotImapPasswordChanged( const QString& text )
 {
   if ( text.isEmpty() )
@@ -724,7 +743,7 @@ void AccountDialog::slotImapEncryptionChanged( int id )
   if ( !old->isEnabled() )
     checkHighest( mImap.authButtonGroup );
 }
-
+#endif
 
 void AccountDialog::slotCheckPopCapabilities()
 {
@@ -755,7 +774,7 @@ void AccountDialog::slotCheckPopCapabilities()
   mServerTestFailed = false;
 }
 
-
+#if 0 //TODO port to akonadi
 void AccountDialog::slotCheckImapCapabilities()
 {
   if ( mImap.ui.hostEdit->text().isEmpty() )
@@ -784,6 +803,7 @@ void AccountDialog::slotCheckImapCapabilities()
   mServerTest->start();
   mServerTestFailed = false;
 }
+#endif
 
 void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
 {
@@ -877,6 +897,7 @@ void AccountDialog::enablePopFeatures()
   }
 }
 
+#if 0 //TODO port to akonadi 
 void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
 {
   mImap.ui.checkCapabilitiesStack->setCurrentIndex( 0 );
@@ -893,7 +914,7 @@ void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
   mImap.ui.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
   checkHighest( mImap.encryptionButtonGroup );
 }
-
+#endif
 void AccountDialog::slotLeaveOnServerDaysChanged ( int value )
 {
   mPop.ui.leaveOnServerDaysSpin->setSuffix( i18np(" day", " days", value) );
@@ -913,14 +934,18 @@ void AccountDialog::slotFilterOnServerSizeChanged ( int value )
 
 void AccountDialog::slotIdentityCheckboxChanged()
 {
+#if 0 //TODO port to akonadi
   if ( mAccount->type() == KAccount::Imap ||
        mAccount->type() == KAccount::DImap  ) {
      mImap.identityCombo->setEnabled( !mImap.ui.useDefaultIdentityCheck->isChecked() );
    }
    else
      assert( false );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
-
+#if 0 //TODO port to akonadi
 void AccountDialog::enableImapAuthMethods()
 {
   kDebug();
@@ -943,7 +968,7 @@ void AccountDialog::enableImapAuthMethods()
   mImap.ui.authGSSAPI->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::GSSAPI ) );
   mImap.ui.authAnonymous->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::ANONYMOUS ) );
 }
-
+#endif
 
 void AccountDialog::checkHighest( QButtonGroup *btnGroup )
 {
@@ -1027,6 +1052,7 @@ void AccountDialog::saveSettings()
   }
   else if( accountType == KAccount::Imap )
   {
+#if 0 //TODO port to akonadi
     mAccount->setName( mImap.ui.nameEdit->text() );
     mAccount->setCheckInterval( mImap.ui.intervalCheck->isChecked() ?
                                 mImap.ui.intervalSpin->value() : 0 );
@@ -1051,9 +1077,13 @@ void AccountDialog::saveSettings()
     epa.setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   else if( accountType == KAccount::DImap )
   {
+#if 0 //TODO port to akonadi
     mAccount->setName( mImap.ui.nameEdit->text() );
     mAccount->setCheckInterval( mImap.ui.intervalCheck->isChecked() ?
                                 mImap.ui.intervalSpin->value() : 0 );
@@ -1079,6 +1109,9 @@ void AccountDialog::saveSettings()
     epa.setCheckExclude( !mImap.ui.includeInCheck->isChecked() );
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   else if( accountType == KAccount::Maildir )
   {
@@ -1106,6 +1139,7 @@ void AccountDialog::saveSettings()
     mAccount->setPrecommand( mMaildir.ui.precommand->text() );
   }
 
+#if 0 //TODO port to akonadi
   if ( accountType == KAccount::Imap ||
        accountType == KAccount::DImap )
   {
@@ -1127,6 +1161,9 @@ void AccountDialog::saveSettings()
     ai.setNamespaces( map );
     ai.setNamespaceToDelimiter( delimMap );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   kmkernel->acctMgr()->writeConfig(true);
   // get the new account and register the new destination folder
@@ -1141,11 +1178,16 @@ void AccountDialog::saveSettings()
       newAcct->setFolder( mFolderList.at(mPop.ui.folderCombo->currentIndex()), true );
     } else if ( accountType == KAccount::Maildir ) {
       newAcct->setFolder( mFolderList.at(mMaildir.ui.folderCombo->currentIndex()), true );
-    } else if ( accountType == KAccount::Imap ) {
+    }
+#if 0 //TODO port to akonadi
+      else if ( accountType == KAccount::Imap ) {
       newAcct->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()), true );
     } else if ( accountType == KAccount::DImap ) {
       newAcct->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()), true );
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -1217,11 +1259,13 @@ void AccountDialog::slotEnablePopInterval( bool state )
   mPop.ui.intervalLabel->setEnabled( state );
 }
 
+#if 0 //TODO port to akonadi
 void AccountDialog::slotEnableImapInterval( bool state )
 {
   mImap.ui.intervalSpin->setEnabled( state );
   mImap.ui.intervalLabel->setEnabled( state );
 }
+#endif
 
 void AccountDialog::slotEnableLocalInterval( bool state )
 {
@@ -1250,14 +1294,19 @@ void AccountDialog::slotFontChanged( void )
     titleFont.setBold( true );
     mPop.ui.titleLabel->setFont(titleFont);
   }
+#if 0 //TODO port to akonadi
   else if( accountType == KAccount::Imap )
   {
     QFont titleFont( mImap.ui.titleLabel->font() );
     titleFont.setBold( true );
     mImap.ui.titleLabel->setFont(titleFont);
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
+#if 0 //TODO port to akonadi
 void AccountDialog::slotReloadNamespaces()
 {
   if ( mAccount->type() == KAccount::Imap ||
@@ -1330,6 +1379,7 @@ const QString AccountDialog::namespaceListToString( const QStringList& list )
   }
   return myList.join(",");
 }
+#endif
 
 void AccountDialog::initAccountForConnect()
 {
@@ -1367,6 +1417,7 @@ void AccountDialog::initAccountForConnect()
   }
   else if ( type == KAccount::Imap ||
             type == KAccount::DImap ) {
+#if 0 //TODO port to akonadi
     na.setHost( mImap.ui.hostEdit->text().trimmed() );
     na.setPort( mImap.ui.portEdit->value() );
     na.setLogin( mImap.ui.loginEdit->text().trimmed() );
@@ -1389,9 +1440,13 @@ void AccountDialog::initAccountForConnect()
     else if (mImap.ui.authPlain->isChecked())
       na.setAuth("PLAIN");
     else na.setAuth("*");
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
+#if 0 //TODO port to akonadi
 void AccountDialog::slotEditPersonalNamespace()
 {
   AutoQPointer<NamespaceEditDialog> dialog( new NamespaceEditDialog( this,
@@ -1517,6 +1572,8 @@ void NamespaceEditDialog::slotOk()
   }
   mNamespaceMap->insert( mType, mDelimMap );
 }
+
+#endif
 
 } // namespace KMail
 

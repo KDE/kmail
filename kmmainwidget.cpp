@@ -112,7 +112,7 @@ using KMail::SearchWindow;
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "kmmessagetag.h"
-#include "imapaccountbase.h"
+//TODO port to akonadi #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
@@ -1442,6 +1442,7 @@ void KMMainWidget::slotRemoveFolder()
               "delivers new mail into was reset to the main Inbox folder.</qt>", (*it)->name()));
       }
     }
+#if 0 //TODO port to akonadi
     if (mFolder->folderType() == KMFolderTypeImap)
       kmkernel->imapFolderMgr()->remove(mFolder);
     else if (mFolder->folderType() == KMFolderTypeCachedImap) {
@@ -1453,7 +1454,11 @@ void KMMainWidget::slotRemoveFolder()
 
       kmkernel->dimapFolderMgr()->remove(mFolder);
     }
-    else if (mFolder->folderType() == KMFolderTypeSearch)
+    else
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+    if (mFolder->folderType() == KMFolderTypeSearch)
       kmkernel->searchFolderMgr()->remove(mFolder);
     else
       kmkernel->folderMgr()->remove(mFolder);
@@ -4837,7 +4842,7 @@ void KMMainWidget::slotSubscriptionDialog()
   }
 
   const QString startPath = findCurrentImapPath();
-
+#if 0 //TODO port to akonadi
   // KSubscription sets "DestructiveClose"
   SubscriptionDialog * dialog =
       new SubscriptionDialog(this, i18n("Subscription"), account, startPath);
@@ -4846,11 +4851,15 @@ void KMMainWidget::slotSubscriptionDialog()
     if (mFolder->folderType() == KMFolderTypeImap)
       static_cast<KMFolderImap*>(mFolder->storage())->account()->listDirectory();
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotLocalSubscriptionDialog()
 {
+#if 0 //TODO port to akonadi
   ImapAccountBase *account = findCurrentImapAccountBase();
   if ( !account ) {
     return;
@@ -4865,6 +4874,9 @@ void KMMainWidget::slotLocalSubscriptionDialog()
     if (mFolder->folderType() == KMFolderTypeImap)
       static_cast<KMFolderImap*>(mFolder->storage())->account()->listDirectory();
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMMainWidget::toggleSystemTray()

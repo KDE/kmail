@@ -31,7 +31,7 @@
 #include "kmessagebox.h"
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
-#include "kmacctimap.h"
+//TODO port to akonadi #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "folderstorage.h"
 #include "kmfolder.h"
@@ -66,6 +66,7 @@ ListJob::~ListJob()
 
 void ListJob::execute()
 {
+#if 0 //TODO port to akonadi
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
   {
     kWarning() <<"ListJob - got no connection";
@@ -147,6 +148,9 @@ void ListJob::execute()
       this, SLOT(slotListResult(KJob *)) );
   connect( job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
       this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void ListJob::slotConnectionResult( int errorCode, const QString& errorMsg )
@@ -186,6 +190,7 @@ void ListJob::slotListResult( KJob* job )
 
 void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
 {
+#if 0 //TODO port to akonadi
   ImapAccountBase::JobIterator it = mAccount->findJob( job );
   if ( it == mAccount->jobsEnd() )
   {
@@ -223,6 +228,9 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
       }
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 

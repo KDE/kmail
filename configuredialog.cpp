@@ -50,7 +50,7 @@ using KMail::IdentityListViewItem;
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "accountcombobox.h"
-#include "imapaccountbase.h"
+//TODO port to akonadi #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "folderstorage.h"
 #include "kmfolder.h"
@@ -897,6 +897,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
       if ( account->type() == KAccount::Imap ||
            account->type() == KAccount::DImap )
       {
+#if 0 //TODO port to akonadi
         ImapAccountBase* ai = static_cast<ImapAccountBase*>( account );
         if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
         {
@@ -904,6 +905,9 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
           kDebug() << "slotModifySelectedAccount - connect";
           ai->makeConnection();
         }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       }
 
       ModifiedAccountsType *mod = new ModifiedAccountsType;
@@ -1053,8 +1057,11 @@ void AccountsPage::ReceivingTab::save()
 
   // Incoming mail
   kmkernel->acctMgr()->writeConfig( false );
+#if 0 //TODO port to akonadi
   kmkernel->cleanupImapFolders();
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
@@ -1063,6 +1070,7 @@ void AccountsPage::ReceivingTab::save()
   general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
 
   // Sync new IMAP accounts ASAP:
+#if 0 //TODO port to akonadi
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
     KMAccount *macc = (*it);
     ImapAccountBase *acc = dynamic_cast<ImapAccountBase*> (macc);
@@ -1071,6 +1079,9 @@ void AccountsPage::ReceivingTab::save()
       au->update();
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mNewAccounts.clear();
 
 }
@@ -3617,8 +3628,12 @@ void SecurityPage::GeneralTab::save()
       QStringList names;
       QList<QPointer<KMFolder> > folders;
       kmkernel->folderMgr()->createFolderList(&names, &folders);
+#if 0 //TODO port to akonadi
       kmkernel->imapFolderMgr()->createFolderList(&names, &folders);
       kmkernel->dimapFolderMgr()->createFolderList(&names, &folders);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       kmkernel->searchFolderMgr()->createFolderList(&names, &folders);
       for (QList<QPointer<KMFolder> >::iterator it = folders.begin();
         it != folders.end(); ++it)
@@ -4528,6 +4543,7 @@ void MiscPage::InviteTab::save()
   GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mMITab.mDeleteInvitations->isChecked() );
 }
 
+#if 0 //TODO port to akonadi 
 // *************************************************************
 // *                                                           *
 // *                     AccountUpdater                        *
@@ -4543,7 +4559,7 @@ void AccountUpdater::update()
 {
   connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
           this, SLOT( namespacesFetched() ) );
-  mAccount->makeConnection();
+ mAccount->makeConnection();
 }
 
 void AccountUpdater::namespacesFetched()
@@ -4552,6 +4568,8 @@ void AccountUpdater::namespacesFetched()
   mAccount->processNewMail( false );
   deleteLater();
 }
+
+#endif
 
 //----------------------------
 #include "configuredialog.moc"

@@ -373,11 +373,15 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
       if (!f)
         continue;
       QString name = f->argsAsString();
+#if 0 //TODO port to akonadi
       KMFolder *folder = kmkernel->imapFolderMgr()->findIdString( name );
       if (folder) {
         mBufferedFolderTarget = true;
         return true;
       }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
   }
   mBufferedFolderTarget = false;

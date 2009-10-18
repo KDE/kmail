@@ -20,7 +20,7 @@
 #include "kmsystemtray.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
-#include "kmfolderimap.h"
+//TODO port to akonadi #include "kmfolderimap.h"
 #include "kmmainwidget.h"
 #include "accountmanager.h"
 
@@ -99,8 +99,12 @@ KMSystemTray::KMSystemTray(QWidget *parent)
            this, SLOT( slotContextMenuAboutToShow() ) );
 
   connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+#if 0 //TODO port to akonadi
   connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
@@ -255,8 +259,12 @@ void KMSystemTray::foldersChanged()
   QStringList folderNames;
   QList<QPointer<KMFolder> > folderList;
   kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
+#if 0 //TODO port to akonadi
   kmkernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
   kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   kmkernel->searchFolderMgr()->createFolderList(&folderNames, &folderList);
 
   QStringList::iterator strIt = folderNames.begin();
@@ -352,6 +360,7 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
   QString rvalue = fldr->label();
   if(fldr->folderType() == KMFolderTypeImap)
   {
+#if 0 //TODO port to akonadi
     KMFolderImap * imap = dynamic_cast<KMFolderImap*> (fldr->storage());
     assert(imap);
 
@@ -361,6 +370,9 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
       kDebug() << "IMAP folder, prepend label with type";
       rvalue = imap->account()->name() + "->" + rvalue;
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   kDebug() << "Got label" << rvalue;

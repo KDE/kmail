@@ -55,6 +55,7 @@ protected slots:
   void slotOk();
 };
 
+#if 0 //TODO port to akonadi 
 /**
  * DImap accounts need to be updated after just being created to show the folders it has.
  * This has to be done a-synchronically due to the nature of the account, so this object
@@ -71,5 +72,5 @@ class AccountUpdater : public QObject {
     KMail::ImapAccountBase *mAccount;
 };
 
-
+#endif
 #endif

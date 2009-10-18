@@ -24,8 +24,8 @@
 #define _ACCOUNT_DIALOG_H_
 
 #include <config-kmail.h>
-#include "imapaccountbase.h"
-#include "ui_imapsettings.h"
+//TODO port to akonadi #include "imapaccountbase.h"
+//TODO port to akonadi #include "ui_imapsettings.h"
 #include "ui_localsettings.h"
 #include "ui_maildirsettings.h"
 #include "ui_popsettings.h"
@@ -79,7 +79,7 @@ class AccountDialog : public KDialog
       QButtonGroup *encryptionButtonGroup;
       QButtonGroup *authButtonGroup;
     };
-
+#if 0//TODO port to akonadi 
     struct ImapWidgets
     {
       Ui::ImapPage ui;
@@ -89,13 +89,13 @@ class AccountDialog : public KDialog
       ImapAccountBase::nsDelimMap nsMap;
       KPIMIdentities::IdentityCombo    *identityCombo;
     };
-
+#endif
   private slots:
     virtual void slotOk();
     void slotLocationChooser();
     void slotMaildirChooser();
     void slotEnablePopInterval( bool state );
-    void slotEnableImapInterval( bool state );
+//TODO port to akonadi     void slotEnableImapInterval( bool state );
     void slotEnableLocalInterval( bool state );
     void slotEnableMaildirInterval( bool state );
     void slotFontChanged();
@@ -107,11 +107,12 @@ class AccountDialog : public KDialog
     void slotPipeliningClicked();
     void slotPopEncryptionChanged(int);
     void slotPopPasswordChanged( const QString& text );
+    void slotCheckPopCapabilities();
+    void slotPopCapabilities( QList<int> );
+#if 0//TODO port to akonadi 
     void slotImapPasswordChanged( const QString& text );
     void slotImapEncryptionChanged(int);
-    void slotCheckPopCapabilities();
     void slotCheckImapCapabilities();
-    void slotPopCapabilities( QList<int> );
     void slotImapCapabilities( QList<int> );
     void slotReloadNamespaces();
     void slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map );
@@ -119,6 +120,7 @@ class AccountDialog : public KDialog
     void slotEditOtherUsersNamespace();
     void slotEditSharedNamespace();
     void slotConnectionResult( int errorCode, const QString& );
+#endif
     void slotLeaveOnServerDaysChanged( int value );
     void slotLeaveOnServerCountChanged( int value );
     void slotFilterOnServerSizeChanged( int value );
@@ -128,20 +130,20 @@ class AccountDialog : public KDialog
     void makeLocalAccountPage();
     void makeMaildirAccountPage();
     void makePopAccountPage();
-    void makeImapAccountPage( bool disconnected = false );
+//TODO port to akonadi void makeImapAccountPage( bool disconnected = false );
     void setupSettings();
     void saveSettings();
     void checkHighest( QButtonGroup * );
     void enablePopFeatures();
-    void enableImapAuthMethods();
+//TODO port to akonadi     void enableImapAuthMethods();
     void initAccountForConnect();
-    const QString namespaceListToString( const QStringList& list );
+//TODO port to akonadi const QString namespaceListToString( const QStringList& list );
 
   private:
     LocalWidgets mLocal;
     MaildirWidgets mMaildir;
     PopWidgets   mPop;
-    ImapWidgets  mImap;
+//TODO port to akonadi     ImapWidgets  mImap;
     KMAccount    *mAccount;
     QList<QPointer<KMFolder> > mFolderList;
     QStringList  mFolderNames;
@@ -150,7 +152,7 @@ class AccountDialog : public KDialog
     QRegExpValidator *mValidator;
     bool mServerTestFailed;
 };
-
+#if 0 //TODO port to akonadi
 class NamespaceLineEdit: public KLineEdit
 {
   Q_OBJECT
@@ -186,6 +188,7 @@ class NamespaceEditDialog: public KDialog
     QMap<int, NamespaceLineEdit*> mLineEditMap;
     QButtonGroup* mBg;
 };
+#endif
 
 } // namespace KMail
 

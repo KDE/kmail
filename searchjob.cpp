@@ -29,10 +29,12 @@
 
 #include "searchjob.h"
 #include "kmfolderimap.h"
-#include "imapaccountbase.h"
+//TODO port to akonadi #include "imapaccountbase.h"
 #include "kmsearchpattern.h"
 #include "kmfolder.h"
+#if 0 //TODO port to akonadi
 #include "imapjob.h"
+#endif
 #include "kmmsgdict.h"
 
 #include <progressmanager.h>
@@ -279,7 +281,7 @@ void SearchJob::slotSearchFolder()
     mProgress->setTotalItems( numMsgs );
     connect ( mProgress, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),
         this, SLOT( slotAbortSearch( KPIM::ProgressItem* ) ) );
-
+#if 0 //TODO port to akonadi
     for ( unsigned int i = 0; i < numMsgs ; ++i ) {
       KMMessage * msg = mFolder->getMsg( i );
       if ( needToDownload ) {
@@ -293,6 +295,9 @@ void SearchJob::slotSearchFolder()
         slotSearchMessageArrived( msg );
       }
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -424,11 +429,15 @@ void SearchJob::slotSearchDataSingleMessage( KJob* job, const QString& data,cons
   mUngetCurrentMsg = !mFolder->getMsgBase( idx )->isMessage();
   KMMessage * msg = mFolder->getMsg( idx );
   if ( needsDownload() ) {
+#if 0 //TODO port to akonadi
     ImapJob *job = new ImapJob( msg );
     job->setParentFolder( mFolder );
     connect( job, SIGNAL(messageRetrieved(KMMessage*)),
         this, SLOT(slotSearchMessageArrived(KMMessage*)) );
     job->start();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   } else {
     slotSearchMessageArrived( msg );
   }

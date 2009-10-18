@@ -230,9 +230,13 @@ void KMSearch::stop()
     // explicitly stop jobs for this folder as it will not be closed below
     // when the folder is currently selected
     if ( folder->folderType() == KMFolderTypeImap ) {
+#if 0 //TODO port to akonadi
       KMAcctImap *account =
         static_cast<KMFolderImap*>( folder->storage() )->account();
       account->ignoreJobsForFolder( folder );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
     folder->storage()->search( 0 );
     mSearchCount += folder->count();
@@ -344,6 +348,7 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
   connect(kmkernel->folderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
           this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
+#if 0 //TODO port to akonadi
   connect(kmkernel->imapFolderMgr(), SIGNAL(msgAdded(KMFolder*, quint32)),
           this, SLOT(examineAddedMessage(KMFolder*, quint32)));
   connect(kmkernel->imapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, quint32)),
@@ -373,6 +378,9 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
           this, SLOT(examineRemovedFolder(KMFolder*)));
   connect(kmkernel->dimapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
           this, SLOT(propagateHeaderChanged(KMFolder*,int)));
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   mExecuteSearchTimer = new QTimer();
   mExecuteSearchTimer->setSingleShot( true );
@@ -714,11 +722,15 @@ KMFolderSearch::ignoreJobsForMessage( KMMessage* msg )
   FolderStorage::ignoreJobsForMessage( msg );
 
   if ( msg->parent()->folderType() == KMFolderTypeImap ) {
+#if 0 //TODO port to akonadi
     KMAcctImap *account =
         static_cast<KMFolderImap*>( msg->storage() )->account();
     if( !account )
       return;
     account->ignoreJobsForMessage( msg );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 

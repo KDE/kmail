@@ -86,7 +86,7 @@ set(kmailprivate_LIB_SRCS
    identitydialog.cpp
    kmfoldercombobox.cpp
    kmaccount.cpp
-   listjob.cpp
+#   listjob.cpp
    snippetdlg.cpp
    snippetwidget.cpp
    snippetitem.cpp
@@ -120,14 +120,14 @@ set(kmailprivate_LIB_SRCS
    kmmsglist.cpp
    xfaceconfigurator.cpp
    networkaccount.cpp
-   imapaccountbase.cpp
-   kmacctimap.cpp
-   kmacctcachedimap.cpp
+#   imapaccountbase.cpp
+#   kmacctimap.cpp
+#   kmacctcachedimap.cpp
    kmfawidgets.cpp
    kmfoldermbox.cpp
-   kmfolderimap.cpp
+#   kmfolderimap.cpp
    undostack.cpp
-   kmfoldercachedimap.cpp
+#   kmfoldercachedimap.cpp
    kmfoldermaildir.cpp
    popaccount.cpp
    kmkernel.cpp
@@ -150,9 +150,9 @@ set(kmailprivate_LIB_SRCS
    kmfolderindex.cpp
    kmfoldersearch.cpp
    folderjob.cpp
-   cachedimapjob.cpp
-   imapjob.cpp
-   subscriptiondialog.cpp
+#   cachedimapjob.cpp
+#   imapjob.cpp
+#   subscriptiondialog.cpp
  #  kmailicalifaceimpl.cpp
    aboutdata.cpp
    mailserviceimpl.cpp
@@ -176,7 +176,7 @@ set(kmailprivate_LIB_SRCS
    compactionjob.cpp
    jobscheduler.cpp
    callback.cpp
-   searchjob.cpp
+#   searchjob.cpp
    accountcombobox.cpp
    redirectdialog.cpp
    foldershortcutdialog.cpp
@@ -200,7 +200,7 @@ set(kmailprivate_LIB_SRCS
    customtemplatesmenu.cpp
    folderadaptor.cpp
    korghelper.cpp
-   localsubscriptiondialog.cpp
+#   localsubscriptiondialog.cpp
    scalix.cpp
    messageactions.cpp
    statusbarlabel.cpp

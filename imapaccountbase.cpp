@@ -38,8 +38,12 @@ using KPIM::BroadcastStatus;
 #include "kmfoldercachedimap.h"
 #include "bodyvisitor.h"
 using KMail::BodyVisitor;
+
+#if 0 //TODO Port to Akonadi
 #include "imapjob.h"
 using KMail::ImapJob;
+#endif
+
 #include "protocols.h"
 #include "progressmanager.h"
 using KPIM::ProgressManager;

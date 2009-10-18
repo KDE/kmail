@@ -34,10 +34,13 @@ using KPIM::BroadcastStatus;
 #include "kmfilter.h"
 #include "kmfiltermgr.h"
 #include "folderstorage.h"
+#if 0 //TODO port to akonadi
 #include "imapjob.h"
+using KMail::ImapJob;
+#endif
+
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
-using KMail::ImapJob;
 using KMail::ImapAccountBase;
 #include "progressmanager.h"
 using KPIM::ProgressItem;

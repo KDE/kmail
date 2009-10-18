@@ -357,10 +357,14 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
   connect( kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
            SLOT(slotFolderRemoved(KMFolder*)) );
+#if 0 //TODO port to akonadi
   connect( kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
            SLOT(slotFolderRemoved(KMFolder*)) );
   connect( kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
            SLOT(slotFolderRemoved(KMFolder*)) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
@@ -2987,6 +2991,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
   // get the draftsFolder
   if ( !folderName.isEmpty() ) {
     theFolder = kmkernel->folderMgr()->findIdString( folderName );
+#if 0 //TODO port to akonadi
     if ( theFolder == 0 ) {
       // This is *NOT* supposed to be "imapDraftsFolder", because a
       // dIMAP folder works like a normal folder
@@ -2995,6 +3000,9 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     if ( theFolder == 0 ) {
       imapTheFolder = kmkernel->imapFolderMgr()->findIdString( folderName );
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     if ( !theFolder && !imapTheFolder ) {
       const KPIMIdentities::Identity &id = kmkernel->identityManager()->identityForUoidOrDefault( msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed().toUInt() : 0 );
       KMessageBox::information( 0,

@@ -262,7 +262,7 @@ public:
   void init();
   void setupDBus();
   void readConfig();
-  void cleanupImapFolders();
+//TODO port to akonadi   void cleanupImapFolders();
   void testDir(const char *_name);
   void recoverDeadLetters();
   void initFolders(KSharedConfig::Ptr cfg);
@@ -308,8 +308,10 @@ public:
   KMFolder *templatesFolder() { return the_templatesFolder; }
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
+#if 0
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
   KMFolderMgr *dimapFolderMgr() { return the_dimapFolderMgr; }
+#endif
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
   UndoStack *undoStack() { return the_undoStack; }
   AccountManager *acctMgr() { return the_acctMgr; }
@@ -457,8 +459,10 @@ private:
   KMFolder *the_templatesFolder;
 
   KMFolderMgr *the_folderMgr;
+#if 0 //TODO port to akonadi
   KMFolderMgr *the_imapFolderMgr;
   KMFolderMgr *the_dimapFolderMgr;
+#endif
   KMFolderMgr *the_searchFolderMgr;
   UndoStack *the_undoStack;
   AccountManager *the_acctMgr;

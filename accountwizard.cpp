@@ -31,7 +31,7 @@
 #include "kmacctlocal.h"
 #include "kmkernel.h"
 #include "popaccount.h"
-#include "kmacctimap.h"
+//TODO port to akonadi #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmaildir.h"
 #include "accountmanager.h"
@@ -545,6 +545,7 @@ void AccountWizard::createAccount()
     }
     case AccountTypeBox::IMAP:
     {
+#if 0 //TODO port to akonadi
       mAccount = acctManager->create( KAccount::Imap, accountName() );
       KMAcctImap *acct = static_cast<KMAcctImap*>( mAccount );
       acct->setLogin( mLoginName->text() );
@@ -552,10 +553,14 @@ void AccountWizard::createAccount()
       acct->setHost( mIncomingServer->text() );
       if ( !mPassword->text().isEmpty() )
         acct->setStorePasswd( true );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       break;
     }
     case AccountTypeBox::dIMAP:
     {
+#if 0 //TODO port to akonadi
       mAccount = acctManager->create( KAccount::DImap, accountName() );
       KMAcctCachedImap *acct = static_cast<KMAcctCachedImap*>( mAccount );
       acct->setLogin( mLoginName->text() );
@@ -563,6 +568,9 @@ void AccountWizard::createAccount()
       acct->setHost( mIncomingServer->text() );
       if ( !mPassword->text().isEmpty() )
         acct->setStorePasswd( true );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       break;
     }
     case AccountTypeBox::Maildir:
@@ -587,7 +595,11 @@ void AccountWizard::accountCreated()
 {
   if ( mAccount ) {
     mKernel->acctMgr()->add( mAccount );
+#if 0 //TODO port to akonadi
     mKernel->cleanupImapFolders();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   finished();

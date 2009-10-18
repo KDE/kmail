@@ -65,13 +65,18 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mIgnoreNewMail( false )
 {
   mIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
+#if 0 //TODO port to akonadi
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.toLatin1() );
   else if( aFolderType == KMFolderTypeImap )
     mStorage = new KMFolderImap( this, aFolderName.toLatin1() );
   else if( aFolderType == KMFolderTypeMaildir )
     mStorage = new KMFolderMaildir( this, aFolderName.toLatin1() );
-  else if( aFolderType == KMFolderTypeSearch )
+  else
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  if( aFolderType == KMFolderTypeSearch )
     mStorage = new KMFolderSearch( this, aFolderName.toLatin1() );
   else
     mStorage = new KMFolderMbox( this, aFolderName.toLatin1() );

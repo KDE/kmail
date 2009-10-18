@@ -251,7 +251,7 @@ bool KMFolderDir::reload(void)
     KMFolderType folderType = KMFolderTypeMaildir;
     bool withIndex = true;
     bool exportedSernums = true;
-
+#if 0 //TODO port to akonadi
     if ( mDirType == KMImapDir
       && path().startsWith( KMFolderImap::cacheLocation() ) )
     {
@@ -279,7 +279,11 @@ bool KMFolderDir::reload(void)
           }
        }
     }
-    else if ( mDirType == KMSearchDir)
+    else
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+    if ( mDirType == KMSearchDir)
     {
        folderName = fname;
        folderType = KMFolderTypeSearch;
