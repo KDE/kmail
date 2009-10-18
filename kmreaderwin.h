@@ -234,20 +234,6 @@ public:
   /** Returns the current message or 0 if none. */
   KMMessage* message(KMFolder** folder=0) const;
 #ifndef USE_AKONADI_VIEWER
-
-  void openAttachment( int id, const QString & name );
-  void saveAttachment( const KUrl &tempFileName );
-#endif
-  //need for urlhandlermanager.cpp
-  void emitUrlClicked( const KUrl & url, int button ) {
-    emit urlClicked( url, button );
-  }
-
-  void emitPopupMenu( const KUrl & url, const QPoint & p ) {
-    if ( message() )
-      emit popupMenu( *message(), url, p );
-  }
-#ifndef USE_AKONADI_VIEWER
   /**
    * Sets the current attachment ID and the current attachment temporary filename
    * to the given values.
@@ -300,12 +286,6 @@ signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
   void replaceMsgByUnencryptedVersion();
-
-  /** The user presses the right mouse button. 'url' may be 0. */
-  void popupMenu(KMMessage &msg, const KUrl &url, const QPoint& mousePos);
-
-  /** The user has clicked onto an URL that is no attachment. */
-  void urlClicked(const KUrl &url, int button);
 
   /** Pgp displays a password dialog */
   void noDrag(void);
