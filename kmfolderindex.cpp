@@ -233,7 +233,9 @@ bool KMFolderIndex::readIndex()
       off_t offs = KDE_ftell(mIndexStream);
       if(KDE_fseek(mIndexStream, len, SEEK_CUR))
         break;
+#if 0 //Port to akonadi
       mi = new KMMsgInfo(folder(), offs, len);
+#endif
     }
     else
     {
@@ -247,8 +249,10 @@ bool KMFolderIndex::readIndex()
         clearIndex();
         return false;
       }
+#if 0 //Port to akonadi
       mi = new KMMsgInfo(folder());
       mi->compat_fromOldIndexString(line, mConvertToUtf8);
+#endif
     }
     if(!mi)
       break;
