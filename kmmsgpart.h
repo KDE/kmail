@@ -212,6 +212,8 @@ public:
   /** Set to true if the part itself should be loaded */
   void setLoadPart( bool load ) { mLoadPart = load; }
 
+  QStringList preferredCharsets() const;
+
 protected:
   QByteArray mOriginalContentTypeStr;
   QByteArray mType;

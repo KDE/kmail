@@ -21,6 +21,7 @@
 #include <kcodecs.h>
 #include <kascii.h>
 
+#include <codecmanager.h>
 #include <QTextCodec>
 #include <QList>
 
@@ -115,8 +116,15 @@ void KMMessagePart::setBody(const QByteArray &aStr)
     mBodyDecodedSize = -1; // Can't know the decoded size
 }
 
+//TODO fix it
+QStringList KMMessagePart::preferredCharsets() const
+{
+  const KConfigGroup config( KMKernel::config(), "Composer" );
+  return config.readEntry( "pref-charsets", QStringList() );
+}
+
 void KMMessagePart::setBodyFromUnicode( const QString & str ) {
-  QByteArray encoding = MessageViewer::NodeHelper::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
+  QByteArray encoding = MessageViewer::NodeHelper::autoDetectCharset( charset(), preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
   const QTextCodec * codec = MessageViewer::NodeHelper::codecForName( encoding );
@@ -423,7 +431,7 @@ void KMMessagePart::setContentDescription( const QString &aStr )
 {
   QByteArray encoding =
     MessageViewer::NodeHelper::autoDetectCharset( charset(),
-                                  KMMessage::preferredCharsets(), aStr );
+                                  preferredCharsets(), aStr );
   if ( encoding.isEmpty() ) {
     encoding = "utf-8";
   }
