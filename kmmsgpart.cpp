@@ -119,7 +119,7 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
   QByteArray encoding = MessageViewer::NodeHelper::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
-  const QTextCodec * codec = KMMsgBase::codecForName( encoding );
+  const QTextCodec * codec = MessageViewer::NodeHelper::codecForName( encoding );
   assert( codec );
   QList<int> dummy;
   setCharset( encoding );
@@ -127,12 +127,12 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
 }
 
 const QTextCodec * KMMessagePart::codec() const {
-  const QTextCodec * c = KMMsgBase::codecForName( charset() );
+  const QTextCodec * c = MessageViewer::NodeHelper::codecForName( charset() );
 
   if ( !c ) {
     // Ok, no override and nothing in the message, let's use the fallback
     // the user configured
-    c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().toLatin1() );
+    c = MessageViewer::NodeHelper::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().toLatin1() );
   }
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should
