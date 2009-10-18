@@ -3034,34 +3034,6 @@ void KMMainWidget::showOfflinePage()
       mMessagePane->hide();
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotMsgSelected(KMMessage *msg)
-{
-  if ( msg && msg->parent() && !msg->isComplete() )
-  {
-    if ( msg->transferInProgress() )
-      return;
-    mMsgView->clear();
-    mMsgView->setWaitingForSerNum( msg->getMsgSerNum() );
-
-    if ( mJob ) {
-       disconnect( mJob, 0, mMsgView, 0 );
-       delete mJob;
-    }
-    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, msg->parent(),
-          "STRUCTURE", mMsgView->attachmentStrategy() );
-    connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
-            mMsgView, SLOT(slotMessageArrived(KMMessage*)));
-    mJob->start();
-  } else {
-    mMsgView->setMsg(msg);
-  }
-  // reset HTML override to the folder setting
-  mMsgView->setHtmlOverride(mFolderHtmlPref);
-  mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
-  mMsgView->setDecryptMessageOverwrite( false );
-  mMsgView->setShowSignatureDetails( false );
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()

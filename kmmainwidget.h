@@ -220,8 +220,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void folderSelected();
 
-    void slotMsgSelected( KMMessage * );
-
     /**
       Open a separate viewer window containing the specified message.
     */
