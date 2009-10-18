@@ -4376,7 +4376,7 @@ void KMMainWidget::slotShowStartupFolder()
     // get rid of old-folders
     mMainFolderView->cleanupConfigFile();
   }
-
+#endif
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
            this, SLOT( initializeFilterActions() ) );
 
@@ -4406,7 +4406,7 @@ void KMMainWidget::slotShowStartupFolder()
   }
   if ( !startup )
     startup = kmkernel->inboxFolder();
-
+#ifdef OLD_FOLDERVIEW
   if ( mMainFolderView )
     mMainFolderView->setCurrentFolder( startup );
 #endif
