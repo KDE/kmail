@@ -185,11 +185,13 @@ void KMSearchRule::writeConfig( KConfigGroup & config, int aIdx ) const {
 bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
                        const DwBoyerMoore *, int ) const
 {
+#if 0  //Port to Akonadi
   if ( !msg.isComplete() ) {
     msg.fromDwString( aStr );
     msg.setComplete( true );
   }
   return matches( &msg );
+#endif
 }
 
 const QString KMSearchRule::asString() const
@@ -338,7 +340,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
 
   if ( isEmpty() )
     return false;
-
+#if 0 //Port to akonadi
   QString msgContents;
   // Show the value used to compare the rules against in the log.
   // Overwrite the value for complete messages and all headers!
@@ -412,6 +414,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
+#endif
 }
 
 // helper, does the actual comparing
@@ -676,7 +679,7 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 {
 
   bool rc = false;
-
+#if 0 //Port to akonadi
   switch ( function() ) {
     case FuncEquals: // fallthrough. So that "<status> 'is' 'read'" works
     case FuncContains:
@@ -700,6 +703,7 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
     msg += FilterLog::recode( asString() );
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
+#endif
   return rc;
 }
 
@@ -756,7 +760,7 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
-
+#if 0 //Port to akonadi
   KMMessage msg;
   QList<KMSearchRule*>::const_iterator it;
   switch ( mOperator ) {
@@ -775,6 +779,8 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
   default:
     return false;
   }
+#endif
+  return false;
 }
 
 bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
