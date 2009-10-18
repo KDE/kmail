@@ -2108,7 +2108,8 @@ void KMMainWidget::slotTrashThread()
 //        We should probably move everything there....
 void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel )
 {
-  //TODO
+  if ( select.isEmpty() )
+    return;
 }
 
 #ifdef OLD_MESSAGELIST
@@ -2159,6 +2160,8 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
         bool toggle )
 {
   //TODO
+  if ( select.isEmpty() )
+    return;
 }
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::setMessageSetStatus(
@@ -4143,8 +4146,7 @@ void KMMainWidget::updateMessageActions()
   QList< quint32 > selectedSernums;
   QList< quint32 > selectedVisibleSernums;
   bool allSelectedBelongToSameThread = false;
-
-#ifdef OLD_MESSAGELIST
+  Akonadi::Item currentMessage;
   if (mCurrentFolder.isValid() &&
        mMessagePane->getSelectionStats( selectedSernums, selectedVisibleSernums, &allSelectedBelongToSameThread )
      )
@@ -4219,9 +4221,10 @@ void KMMainWidget::updateMessageActions()
   mTrashThreadAction->setEnabled( thread_actions && !readOnly );
   mDeleteThreadAction->setEnabled( thread_actions && canDeleteMessages );
 
-  if ( currentMessage )
+  if ( currentMessage.isValid() )
   {
-    MessageStatus status = currentMessage->flags();
+    MessageStatus status;
+    status.setStatusFromFlags( currentMessage.flags() );
     updateMessageTagActions( count );
     if (thread_actions)
     {
@@ -4237,6 +4240,7 @@ void KMMainWidget::updateMessageActions()
   //mCopyActionMenu->setEnabled( mass_actions );
   mTrashAction->setEnabled( mass_actions && !readOnly );
   mDeleteAction->setEnabled( mass_actions && !readOnly );
+#ifdef OLD_MESSAGELIST
   mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
   mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
   mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
