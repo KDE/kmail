@@ -2094,14 +2094,11 @@ void KMMainWidget::slotTrashSelectedMessages()
 
 void KMMainWidget::slotTrashThread()
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
+  if ( select.isEmpty() )
     return;
 
-  trashMessageSelected( set );
-#endif
+  trashMessageSelected( select );
 }
 
 //-----------------------------------------------------------------------------
@@ -2109,6 +2106,11 @@ void KMMainWidget::slotTrashThread()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
+void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel )
+{
+  //TODO
+}
+
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::toggleMessageSetTag(
     KMail::MessageListView::MessageSet * set,
@@ -2152,6 +2154,12 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
+void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
+        const KPIM::MessageStatus &status,
+        bool toggle )
+{
+  //TODO
+}
 #ifdef OLD_MESSAGELIST
 void KMMainWidget::setMessageSetStatus(
     KMail::MessageListView::MessageSet * set,
@@ -2200,14 +2208,10 @@ void KMMainWidget::setMessageSetStatus(
 #endif
 void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle )
 {
-#ifdef OLD_MESSAGELIST
-  // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
+  if ( select.isEmpty() )
     return;
-
-  setMessageSetStatus( set, status, toggle );
-#endif
+  setMessageSetStatus( select, status, toggle );
 }
 
 void KMMainWidget::slotSetThreadStatusNew()
