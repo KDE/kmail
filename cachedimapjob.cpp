@@ -308,9 +308,13 @@ void CachedImapJob::slotGetNextMessage(KJob * job)
       mFolder->open( "KMFolderCachedImap::slotGetNextMessage" );
       mFolder->addMsgInternal( mMsg, true, &index );
 
+#if 0 //TODO port to akonadi
       if ( kmkernel->iCalIface().isResourceFolder( mFolder->folder() ) ) {
         mFolder->setStatus( index, MessageStatus::statusRead(), false );
       }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       mFolder->close( "KMFolderCachedImap::slotGetNextMessage" );
 
       emit messageRetrieved( mMsg );
@@ -505,6 +509,7 @@ void CachedImapJob::slotPutMessageResult(KJob *job)
      if ( mMsg->UID() == 0 ) {
         mFolder->removeMsg(i);
      } else {
+#if 0 //TODO port to akonadi
         // When removing+readding, no point in telling the imap resources about it
         bool b = kmkernel->iCalIface().isResourceQuiet();
         kmkernel->iCalIface().setResourceQuiet( true );
@@ -514,6 +519,9 @@ void CachedImapJob::slotPutMessageResult(KJob *job)
         mMsg->setTransferInProgress( false );
 
         kmkernel->iCalIface().setResourceQuiet( b );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
      }
   }
   mMsg = NULL;
