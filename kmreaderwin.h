@@ -298,15 +298,6 @@ public slots:
   void slotAddBookmarks();
   void slotTouchMessage();
 
-protected slots:
-#ifndef USE_AKONADI_VIEWER
-  void slotDelayedResize();
-  /** Print message. Called on as a response of finished() signal of mPartHtmlWriter
-      after rendering is finished.
-      In the very end it deletes the KMReaderWin window that was created
-      for the purpose of rendering. */
-  void slotPrintMsg();
-#endif
 protected:
 
   KUrl urlClicked() const;
