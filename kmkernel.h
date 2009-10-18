@@ -67,7 +67,7 @@ class KComponentData;
 class QTimer;
 class KMMainWin;
 class KMainWindow;
-class KMailICalIfaceImpl;
+//TODO port to akonadi class KMailICalIfaceImpl;
 class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
@@ -328,7 +328,9 @@ public:
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
+#if 0 //TODO port to akonadi
   KMailICalIfaceImpl& iCalIface();
+#endif
 
   bool firstStart() const { return the_firstStart; }
   /** Mark first start as done */
@@ -495,7 +497,9 @@ private:
   ConfigureDialog *mConfigureDialog;
 
   QTimer *mBackgroundTasksTimer;
-  KMailICalIfaceImpl* mICalIface;
+#if 0 //TODO port to akonadi
+ KMailICalIfaceImpl* mICalIface;
+#endif
   JobScheduler* mJobScheduler;
   // temporary mainwin
   KMMainWin *mWin;

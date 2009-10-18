@@ -36,7 +36,7 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmfoldercachedimap.h"
-#include "kmailicalifaceimpl.h"
+// TODO port to akonadi #include "kmailicalifaceimpl.h"
 #include "kmacctcachedimap.h"
 #include "kmmsgdict.h"
 #include "util.h"

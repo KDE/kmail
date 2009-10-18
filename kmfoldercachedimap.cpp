@@ -38,7 +38,7 @@
 #include "kmacctcachedimap.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
-#include "kmailicalifaceimpl.h"
+// TODO port to akonadi #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
 #include "acljobs.h"
@@ -276,7 +276,7 @@ void KMFolderCachedImap::readConfig()
 
   if ( !group.readEntry( "FolderAttributes" ).isEmpty() )
     mFolderAttributes = group.readEntry( "FolderAttributes" );
-
+#if 0 //TODO port to akonadi
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = group.readEntry( "Annotation-FolderType" );
     // if there is an annotation, it has to be XML
@@ -285,6 +285,10 @@ void KMFolderCachedImap::readConfig()
       kmkernel->iCalIface().setStorageFormat( folder(), StorageXML );
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
   mIncidencesFor = incidencesForFromString( group.readEntry( "IncidencesFor" ) );
   mAlarmsBlocked = group.readEntry( "AlarmsBlocked", false );
 //  kDebug() << ( mImapPath.isEmpty() ? label() : mImapPath )
@@ -943,6 +947,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
   case SYNC_STATE_RENAME_FOLDER:
   {
+#if 0 //TODO port to akonadi
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
     // Returns the new name if the folder was renamed, empty otherwise.
     bool isResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( folder() );
@@ -955,6 +960,9 @@ void KMFolderCachedImap::serverSyncInternal()
       job->start();
       break;
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   case SYNC_STATE_CHECK_UIDVALIDITY:
@@ -1178,6 +1186,7 @@ void KMFolderCachedImap::serverSyncInternal()
      * if it's not set. On the other hand, if the user changed the
      * contentstype, there's no need to get first.
      */
+#if 0 //TODO port to akonadi
     if ( !noContent() && mAccount->hasAnnotationSupport() &&
          ( kmkernel->iCalIface().isEnabled() || needToGetInitialAnnotations ) ) {
       QStringList annotations; // list of annotations to be fetched
@@ -1206,6 +1215,9 @@ void KMFolderCachedImap::serverSyncInternal()
         break;
       }
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   } // case
   case SYNC_STATE_SET_ANNOTATIONS:
 #if 0
@@ -1343,7 +1355,11 @@ void KMFolderCachedImap::serverSyncInternal()
     newState( mProgress, i18n("Synchronization done"));
     KUrl url = mAccount->getUrl();
     url.setPath( imapPath() );
+#if 0 //TODO port to akonadi
     kmkernel->iCalIface().folderSynced( folder(), url );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   if ( !mRecurse ) // "check mail for this folder" only
@@ -2581,7 +2597,11 @@ void KMFolderCachedImap::slotMultiSetACLResult( KJob *job )
     static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
   } else {
+#if 0 //TODO port to akonadi
     kmkernel->iCalIface().addFolderChange( folder(), ACLChanged );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   if ( mAccount->slave() ) {
@@ -2682,11 +2702,15 @@ void KMFolderCachedImap::setImapPath( const QString &path )
 
 static bool isFolderTypeKnownToUs( const QString &type )
 {
+ #if 0 //TODO port to akonadi
   for ( uint i = 0 ; i <= ContentsTypeLast; ++i ) {
     FolderContentsType contentsType = static_cast<KMail::FolderContentsType>( i );
     if ( type == KMailICalIfaceImpl::annotationForContentsType( contentsType ) )
       return true;
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return false;
 }
 
@@ -2706,6 +2730,7 @@ void KMFolderCachedImap::updateAnnotationFolderType()
   }
 
   QString newType, newSubType;
+ #if 0 //TODO port to akonadi
   // We want to store an annotation on the folder only if using the kolab storage.
   if ( kmkernel->iCalIface().storageFormat( folder() ) == StorageXML ) {
     newType = KMailICalIfaceImpl::annotationForContentsType( mContentsType );
@@ -2715,7 +2740,9 @@ void KMFolderCachedImap::updateAnnotationFolderType()
       newSubType = oldSubType; // preserve unknown subtypes, like drafts etc.
     }
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   // We do not want to overwrite custom folder types (which we treat as mail folders).
   // So only overwrite custom folder types if the user changed the folder type himself to something
   // other than mail.
@@ -2753,6 +2780,7 @@ void KMFolderCachedImap::slotAnnotationResult( const QString &entry,
                                                const QString &value,
                                                bool found )
 {
+ #if 0 //TODO port to akonadi
   if ( entry == KOLAB_FOLDERTYPE ) {
     /*
      * There are four cases.
@@ -2835,6 +2863,9 @@ void KMFolderCachedImap::slotAnnotationResult( const QString &entry,
       mSharedSeenFlags = value == "true";
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolderCachedImap::slotGetAnnotationResult( KJob *job )
@@ -2990,7 +3021,11 @@ void KMFolderCachedImap::slotAnnotationChanged( const QString &entry,
      * The incidences-for changed, we must trigger the freebusy creation.
      * HACK: in theory we would need a new enum value for this.
      */
+#if 0 //TODO port to akonadi
     kmkernel->iCalIface().addFolderChange( folder(), ACLChanged );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   } else if ( entry == KOLAB_SHAREDSEEN ) {
     mSharedSeenFlagsChanged = false;
   }
@@ -3107,12 +3142,16 @@ bool KMFolderCachedImap::isMoveable() const
 
 void KMFolderCachedImap::slotFolderDeletionOnServerFinished()
 {
+#if 0 //TODO port to akonadi
   for ( QStringList::const_iterator it = foldersForDeletionOnServer.constBegin();
         it != foldersForDeletionOnServer.constEnd(); ++it ) {
     KUrl url( mAccount->getUrl() );
     url.setPath( *it );
     kmkernel->iCalIface().folderDeletedOnServer( url );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   serverSyncInternal();
 }
 

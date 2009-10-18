@@ -93,7 +93,7 @@ set(kmailprivate_LIB_SRCS
    kmfolder.cpp
    kmreaderwin.cpp
    kmmsgdict.cpp
-   kmgroupware.cpp
+#   kmgroupware.cpp
    folderstorage.cpp
    actionscheduler.cpp
    messageproperty.cpp
@@ -153,7 +153,7 @@ set(kmailprivate_LIB_SRCS
    cachedimapjob.cpp
    imapjob.cpp
    subscriptiondialog.cpp
-   kmailicalifaceimpl.cpp
+ #  kmailicalifaceimpl.cpp
    aboutdata.cpp
    mailserviceimpl.cpp
    mailmanagerimpl.cpp

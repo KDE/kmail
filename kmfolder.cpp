@@ -30,7 +30,7 @@
 #include <kpimidentities/identity.h>
 #include "expirejob.h"
 #include "compactionjob.h"
-#include "kmailicalifaceimpl.h"
+// TODO port to akonadi #include "kmailicalifaceimpl.h"
 #include "kmaccount.h"
 
 #include <errno.h>
@@ -939,7 +939,11 @@ bool KMFolder::isMoveable() const
 
 void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
 {
+#if 0 //TODO port to akonadi
   kmkernel->iCalIface().folderContentsTypeChanged( this, type );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   emit iconsChanged();
 }
 

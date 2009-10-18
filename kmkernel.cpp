@@ -44,7 +44,7 @@ using KPIM::RecentAddresses;
 
 #include <kde_file.h>
 #include <kwindowsystem.h>
-#include "kmailicalifaceimpl.h"
+// TODO port to akonadi #include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "mailmanagerimpl.h"
@@ -104,7 +104,7 @@ static KMKernel * mySelf = 0;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
-  mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
+  mIdentityManager(0), mConfigureDialog(0)/*, mICalIface(0)*/, mMailService(0),
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
   mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
@@ -144,8 +144,11 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   GlobalSettings::self();
 
   mJobScheduler = new JobScheduler( this );
+ #if 0 //TODO port to akonadi
   mICalIface = new KMailICalIfaceImpl();
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mXmlGuiInstance = KComponentData();
 
 
@@ -191,9 +194,12 @@ KMKernel::~KMKernel ()
     job->kill();
     it = mPutJobs.begin();
   }
-
+#if 0 //TODO port to akonadi
   delete mICalIface;
   mICalIface = 0;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   delete mMailService;
   mMailService = 0;
   delete mMailManager;
@@ -220,8 +226,12 @@ void KMKernel::setupDBus()
   (void) new KmailAdaptor( this );
   qDBusRegisterMetaType<QVector<QStringList> >();
   QDBusConnection::sessionBus().registerObject( "/KMail", this );
+#if 0 //TODO port to akonadi
   mICalIface->registerWithDBus();
   mICalIface->readConfig();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mMailService =  new MailServiceImpl();
   mMailManager =  new MailManagerImpl();
 }
@@ -1722,9 +1732,12 @@ void KMKernel::cleanup(void)
     }
   }
 
+#if 0 //TODO port to akonadi
   if ( mICalIface )
     mICalIface->cleanup();
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   QList<QPointer<KMFolder> > folders;
   QStringList strList;
   KMFolder *folder;
@@ -2190,11 +2203,13 @@ KSharedConfig::Ptr KMKernel::config()
   return mySelf->mConfig;
 }
 
+#if 0 //TODO port to akonadi
 KMailICalIfaceImpl& KMKernel::iCalIface()
 {
   assert( mICalIface );
   return *mICalIface;
 }
+#endif
 
 void KMKernel::selectFolder( const QString &folderPath )
 {

@@ -32,7 +32,7 @@
     your version.
 */
 
-#include "kmailicalifaceimpl.h"
+// TODO port to akonadi #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
 #include "kmgroupware.h"
