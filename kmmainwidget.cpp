@@ -2256,22 +2256,6 @@ void KMMainWidget::slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::M
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Message clipboard management
-
-void KMMainWidget::fillMessageClipboard()
-{
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
-  if ( selectedMessages.isEmpty() )
-    return;
-#ifdef OLD_MESSAGELIST
-  mMessageClipboard.clear();
-
-  for ( QList< KMMsgBase * >::Iterator it = selected.begin(); it != selected.end(); ++it )
-    mMessageClipboard.append( ( *it )->getMsgSerNum() );
-#endif
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
@@ -3743,11 +3727,6 @@ void KMMainWidget::setupActions()
     action->setText( i18n("Cut Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
   }
-  {
-    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::Paste );
-    action->setText( i18n("Paste Messages"));
-    action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_V));
-  }
 
   //----- Message Menu
   {
@@ -4161,25 +4140,20 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 
 void KMMainWidget::updateMessageActions()
 {
-#ifdef OLD_MESSAGELIST
   int count;
-
-  updateCutCopyPasteActions();
 
   QList< quint32 > selectedSernums;
   QList< quint32 > selectedVisibleSernums;
   bool allSelectedBelongToSameThread = false;
 
-  KMMessage * currentMessage;
-
-  if (
-       mFolder &&
-       mMessageListView->getSelectionStats( selectedSernums, selectedVisibleSernums, &allSelectedBelongToSameThread )
+#ifdef OLD_MESSAGELIST
+  if (mCurrentFolder.isValid() &&
+       mMessagePane->getSelectionStats( selectedSernums, selectedVisibleSernums, &allSelectedBelongToSameThread )
      )
   {
     count = selectedSernums.count();
 
-    currentMessage = mMessageListView->currentMessage();
+    currentMessage = mMessagePane->currentItem();
 
     mMsgActions->setCurrentMessage( currentMessage );
     mMsgActions->setSelectedSernums( selectedSernums );
@@ -4187,8 +4161,8 @@ void KMMainWidget::updateMessageActions()
 
   } else {
     count = 0;
-    currentMessage = 0;
-    mMsgActions->setCurrentMessage( 0 );
+    currentMessage = Akonadi::Item();
+    mMsgActions->setCurrentMessage( Akonadi::Item() );
   }
 
   //
@@ -4247,7 +4221,7 @@ void KMMainWidget::updateMessageActions()
 
   if ( currentMessage )
   {
-    MessageStatus status = currentMessage->status();
+    MessageStatus status = currentMessage->flags();
     updateMessageTagActions( count );
     if (thread_actions)
     {
