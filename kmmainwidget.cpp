@@ -3856,6 +3856,7 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("file_save_attachments", mSaveAttachmentsAction );
   connect(mSaveAttachmentsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveAttachments()));
 
+  //TODO use akonadi action
   mMoveActionMenu =
     new KActionMenu( KIcon( "go-jump" ), i18n( "&Move To" ), this );
   actionCollection()->addAction( "move_to", mMoveActionMenu );
@@ -4170,8 +4171,8 @@ void KMMainWidget::updateMessageActions()
 
   } else {
     count = 0;
-    currentMessage = Akonadi::Item();
-    mMsgActions->setCurrentMessage( Akonadi::Item() );
+    currentMessage = Akonadi::Item();
+    mMsgActions->setCurrentMessage( Akonadi::Item() );
   }
 
   //
@@ -4203,7 +4204,7 @@ void KMMainWidget::updateMessageActions()
   //
 
   updateListFilterAction();
-
+  bool readOnly = mCurrentFolder.isValid() && ( mCurrentFolder.rights() & Akonadi::Collection::ReadOnly );
   // can we apply strictly single message actions ? (this is false if the whole selection contains more than one message)
   bool single_actions = count == 1;
   // can we apply loosely single message actions ? (this is false if the VISIBLE selection contains more than one message)
@@ -4213,7 +4214,7 @@ void KMMainWidget::updateMessageActions()
   // does the selection identify a single thread ?
   bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessagePane->isThreaded();
   // can we apply flags to the selected messages ?
-  bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
+  bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mCurrentFolder.isValid() ? readOnly : true);
 
   mThreadStatusMenu->setEnabled( thread_actions );
   // these need to be handled individually, the user might have them
@@ -4225,8 +4226,10 @@ void KMMainWidget::updateMessageActions()
   mMarkThreadAsUnreadAction->setEnabled( thread_actions );
   mToggleThreadToActAction->setEnabled( thread_actions && flags_available );
   mToggleThreadImportantAction->setEnabled( thread_actions && flags_available );
-  mTrashThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
-  mDeleteThreadAction->setEnabled( thread_actions && mFolder->canDeleteMessages() );
+  bool canDeleteMessages = mCurrentFolder.isValid() && ( mCurrentFolder.rights() & Akonadi::Collection::CanDeleteItem );
+
+  mTrashThreadAction->setEnabled( thread_actions && !readOnly );
+  mDeleteThreadAction->setEnabled( thread_actions && canDeleteMessages );
 
   if ( currentMessage )
   {
@@ -4241,11 +4244,11 @@ void KMMainWidget::updateMessageActions()
     }
   }
 
-  mMoveActionMenu->setEnabled( mass_actions && mFolder->canDeleteMessages() );
-  mMoveMsgToFolderAction->setEnabled( mass_actions && mFolder->canDeleteMessages() );
+  mMoveActionMenu->setEnabled( mass_actions && canDeleteMessages );
+  mMoveMsgToFolderAction->setEnabled( mass_actions && canDeleteMessages );
   //mCopyActionMenu->setEnabled( mass_actions );
-  mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
-  mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
+  mTrashAction->setEnabled( mass_actions && !readOnly );
+  mDeleteAction->setEnabled( mass_actions && !readOnly );
   mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
   mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
   mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
@@ -4277,7 +4280,7 @@ void KMMainWidget::updateMessageActions()
 
   mSaveAsAction->setEnabled( mass_actions );
 
-  bool mails = mFolder && mFolder->count();
+  bool mails = mCurrentFolder.isValid() && mCurrentFolder.statistics().count() > 0;
   bool enable_goto_unread = mails
        || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
        || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
