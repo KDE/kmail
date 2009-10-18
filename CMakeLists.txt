@@ -228,9 +228,9 @@ set(kmailprivate_LIB_SRCS
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
 )
-qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
-  ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl
-)
+#qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+#  ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl
+#)
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
   KMail::MailServiceImpl
