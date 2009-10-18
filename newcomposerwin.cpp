@@ -2386,7 +2386,7 @@ void KMComposeWin::slotInsertFile()
   {
     KSharedConfig::Ptr config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QString encoding = KMMsgBase::encodingForName( u.fileEncoding() ).toLatin1();
+    QString encoding = MessageViewer::NodeHelper::encodingForName( u.fileEncoding() ).toLatin1();
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
     // Prevent config file from growing without bound
@@ -2463,7 +2463,7 @@ void KMComposeWin::slotSetCharset()
   }
   mAutoCharset = false;
 
-  mCharset = KMMsgBase::encodingForName( mEncodingAction->currentText() ).toLatin1();
+  mCharset =MessageViewer::NodeHelper::encodingForName( mEncodingAction->currentText() ).toLatin1();
 }
 #endif
 
