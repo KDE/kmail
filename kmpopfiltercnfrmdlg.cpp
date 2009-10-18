@@ -260,6 +260,33 @@ void KMPopHeadersViewItem::setAction( KMPopFilterAction action )
   }
 }
 
+QString skipKeyword(const QString& aStr, QChar sepChar=':',
+			       bool* hasKeyword = 0)
+{
+  QString str = aStr;
+
+  while (str[0] == ' ') str.remove(0,1);
+  if (hasKeyword) *hasKeyword=false;
+
+  unsigned int i = 0, maxChars = 3;
+  unsigned int strLength(str.length());
+  for (i=0; i < strLength && i < maxChars; i++)
+  {
+    if (str[i] < 'A' || str[i] == sepChar) break;
+  }
+
+  if (str[i] == sepChar) // skip following spaces too
+  {
+    do {
+      i++;
+    } while (str[i] == ' ');
+    if (hasKeyword) *hasKeyword=true;
+    return str.mid(i);
+  }
+  return str;
+}
+
+
 bool KMPopHeadersViewItem::operator < ( const QTreeWidgetItem & other ) const
 {
   switch( treeWidget()->sortColumn() ) {
@@ -267,8 +294,8 @@ bool KMPopHeadersViewItem::operator < ( const QTreeWidgetItem & other ) const
     case 3: { // subject column
       const KMPopHeadersViewItem *otherItem =
           (static_cast<const KMPopHeadersViewItem*>( &other ));
-      QString subject1 = KMMsgBase::skipKeyword( text( 3 ).toLower() );
-      QString subject2 = KMMsgBase::skipKeyword( otherItem->text( 3 ).toLower() );
+      QString subject1 = skipKeyword( text( 3 ).toLower() );
+      QString subject2 = skipKeyword( otherItem->text( 3 ).toLower() );
       return subject1 < subject2;
     }
 
