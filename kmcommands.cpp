@@ -436,6 +436,7 @@ void KMCommand::slotJobFinished()
 
 void KMCommand::slotTransferCancelled()
 {
+#if 0 //TODO port to akonadi
   // kill the pending jobs
   QList<QPointer<KMFolder> >::Iterator fit;
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
@@ -447,7 +448,9 @@ void KMCommand::slotTransferCancelled()
       imapFolder->account()->killAllJobs();
     }
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   KMCommand::mCountJobs = 0;
   mCountMsgs = 0;
   // unget the transferred messages

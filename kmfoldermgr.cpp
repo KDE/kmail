@@ -172,7 +172,7 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 
   if (!aFolderDir)
     fldDir = &mDir;
-
+#if 0 //TODO port to akonadi
   // check if this is a dimap folder and the folder we want to create has been deleted
   // since the last sync
   if ( fldDir->owner() && fldDir->owner()->folderType() == KMFolderTypeCachedImap ) {
@@ -192,7 +192,9 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
       return 0;
     }
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   fld = fldDir->createFolder(fName, sysFldr, aFolderType);
   if (fld) {
     if ( fld->id() == 0 )

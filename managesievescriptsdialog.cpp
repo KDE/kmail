@@ -120,6 +120,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
     last = new QTreeWidgetItem( mListView, last );
     last->setText( 0, a->name() );
     last->setIcon( 0, SmallIcon( "network-server" ) );
+#if 0 //TODO port to akonadi
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
       const KUrl u = ::findUrlForAccount( iab );
       if ( u.isEmpty() ) {
@@ -137,6 +138,9 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
       mJobs.insert( job, last );
       mUrls.insert( last, u );
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 

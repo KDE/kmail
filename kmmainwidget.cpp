@@ -1510,6 +1510,7 @@ void KMMainWidget::slotRefreshFolder()
 
 void KMMainWidget::slotTroubleshootFolder()
 {
+#if 0 //TODO port to akonadi
   if (mFolder)
   {
     if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
@@ -1517,6 +1518,9 @@ void KMMainWidget::slotTroubleshootFolder()
       f->slotTroubleshoot();
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMMainWidget::slotTroubleshootMaildir()
