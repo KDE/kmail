@@ -176,6 +176,7 @@ using KMail::TemplateParser;
 #include <akonadi/entityfilterproxymodel.h>
 #include <akonadi/statisticstooltipproxymodel.h>
 #include <akonadi/collectiondialog.h>
+#include <akonadi/collectionstatistics.h>
 
 #include "collectiontemplatespage.h"
 #include "collectionmaintenancepage.h"
@@ -4286,7 +4287,7 @@ void KMMainWidget::updateMessageActions()
   if (action( "kmail_undo" ))
     action( "kmail_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
 
-  if ( ( count == 1 ) && currentMessage )
+  if ( ( count == 1 ) && currentMessage.isValid() )
   {
     if ((KMFolder*)mFolder == kmkernel->outboxFolder())
       editAction()->setEnabled( !currentMessage->transferInProgress() );
@@ -4304,7 +4305,7 @@ void KMMainWidget::updateMessageActions()
 // This needs to be updated more often, so it is in its method.
 void KMMainWidget::updateMarkAsReadAction()
 {
-  mMarkAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
+  mMarkAllAsReadAction->setEnabled( mCurrentFolder.isValid() && (mCurrentFolder.statistics().unreadCount() > 0) );
 }
 
 //-----------------------------------------------------------------------------
