@@ -40,7 +40,7 @@ using KMail::FilterLog;
 
 #include <mimelib/string.h>
 #include <mimelib/boyermor.h>
-
+#include <kmime/kmime_util.h>
 #include <assert.h>
 
 static const char* funcConfigNames[] =
@@ -296,7 +296,7 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
         stop = aStr.find( '\n', stop + 1 );
       const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
       const QByteArray codedValue( aStr.data() + start, len + 1 );
-      const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).trimmed(); // FIXME: This needs to be changed for IDN support.
+      const QString msgContents = KMime::decodeRFC2047String( codedValue ).trimmed(); // FIXME: This needs to be changed for IDN support.
       rc = matchesInternal( msgContents );
     }
   } else if ( field() == "<recipients>" ) {
