@@ -225,6 +225,9 @@
   <Action name="message_forward"/>
   <Action name="send_again"/>
   <Separator/>
+  <action name="set_status"/>
+  <action name="thread_status"/>
+  <Separator/>
   <Action name="copy_to"/>
   <Action name="file_print"/>
   <Action name="file_saveas"/>

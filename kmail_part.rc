@@ -214,6 +214,25 @@
   <Action name="akonadi_collection_properties"/>
  </Menu>
 
+ <Menu name="akonadi_messagelist_contextmenu">
+  <Action name="message_reply_menu"/>
+  <Action name="message_forward"/>
+  <Action name="send_again"/>
+  <Separator/>
+  <action name="set_status"/>
+  <action name="thread_status"/>
+  <Separator/>
+  <Action name="copy_to"/>
+  <Action name="file_print"/>
+  <Action name="file_saveas"/>
+  <Separator/>
+  <Action name="move_to_trash"/>
+  <Action name="akonadi_item_move_to_menu"/>
+  <Action name="akonadi_item_copy_to_menu"/>
+  <Separator/>
+  <Action name="create_todo"/>
+ </Menu>
+
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
   <text>Main Toolbar</text>
   <Action name="new_message" />
