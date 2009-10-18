@@ -450,8 +450,9 @@ void KMPopFilterCnfrmDlg::setupLVI( KMPopHeadersViewItem *lvi, KMMessage *msg )
   // set the date
   lvi->setText( 6, KMime::DateFormatter::formatDate(
                                    KMime::DateFormatter::Fancy, msg->date() ) );
+#if 0 //Port to akonadi
   lvi->setIsoDate( msg->dateIsoStr() );
-
+#endif
   // set the size
   lvi->setText( 7, KIO::convertSize( msg->msgLength() ) );
   lvi->setMessageSize( msg->msgLength() );

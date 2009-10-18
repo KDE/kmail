@@ -48,7 +48,9 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
 {
   if ( msg ) {
     mMsgList.append( msg );
+#if 0 //port to akonadi ???
     mSets = msg->headerField( "X-UID", KMMessage::NoEncoding );
+#endif
   }
   init();
 }
