@@ -70,6 +70,7 @@ using KMail::TemplateParser;
 using KWallet::Wallet;
 
 #include <kmime/kmime_message.h>
+#include <kmime/kmime_util.h>
 
 #include "actionscheduler.h"
 
@@ -462,7 +463,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   if (!cc.isEmpty())
     msg->cc()->fromUnicodeString( KMime::decodeRFC2047String( cc.toLocal8Bit() ), "utf-8" );
   if (!bcc.isEmpty())
-    msg->bcc()->fromUnicodeString( KMMsgBase::decodeRFC2047String( bcc.toLocal8Bit() ), "utf-8"  );
+    msg->bcc()->fromUnicodeString( KMime::decodeRFC2047String( bcc.toLocal8Bit() ), "utf-8"  );
   if (!subject.isEmpty()) msg->subject()->fromUnicodeString(subject, "utf-8" );
 
   KUrl messageUrl = KUrl( messageFile );
