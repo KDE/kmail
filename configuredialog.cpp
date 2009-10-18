@@ -71,6 +71,7 @@ using KPIM::RecentAddresses;
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
 #include "messageviewer/autoqpointer.h"
+#include "messageviewer/nodehelper.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -1881,7 +1882,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mCharsetCombo = new KComboBox( this );
-  mCharsetCombo->addItems( KMMsgBase::supportedEncodings( false ) );
+  mCharsetCombo->addItems(MessageViewer::NodeHelper::supportedEncodings( false ) );
 
   connect( mCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1900,7 +1901,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   QHBoxLayout *hlay2 = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay2 );
   mOverrideCharsetCombo = new KComboBox( this );
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
   mOverrideCharsetCombo->addItems( encodings );
   mOverrideCharsetCombo->setCurrentIndex(0);
@@ -1924,7 +1925,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 
 void AppearancePage::ReaderTab::readCurrentFallbackCodec()
 {
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
   QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
@@ -1933,7 +1934,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   bool found = false;
   for( ; it != end; ++it)
   {
-    const QString encoding = KMMsgBase::encodingForName(*it);
+    const QString encoding = MessageViewer::NodeHelper::encodingForName(*it);
     if ( encoding == "ISO-8859-15" )
         indexOfLatin9 = i;
     if( encoding == currentEncoding )
@@ -1955,14 +1956,14 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
     mOverrideCharsetCombo->setCurrentIndex( 0 );
     return;
   }
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
   QStringList::ConstIterator it( encodings.constBegin() );
   QStringList::ConstIterator end( encodings.constEnd() );
   int i = 0;
   for( ; it != end; ++it)
   {
-    if( KMMsgBase::encodingForName(*it) == currentOverrideEncoding )
+    if( MessageViewer::NodeHelper::encodingForName(*it) == currentOverrideEncoding )
     {
       mOverrideCharsetCombo->setCurrentIndex( i );
       break;
@@ -2005,11 +2006,11 @@ void AppearancePage::ReaderTab::save()
 
   GlobalSettings::self()->setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
   GlobalSettings::self()->setFallbackCharacterEncoding(
-      KMMsgBase::encodingForName( mCharsetCombo->currentText() ) );
+      MessageViewer::NodeHelper::encodingForName( mCharsetCombo->currentText() ) );
   GlobalSettings::self()->setOverrideCharacterEncoding(
       mOverrideCharsetCombo->currentIndex() == 0 ?
         QString() :
-        KMMsgBase::encodingForName( mOverrideCharsetCombo->currentText() ) );
+        MessageViewer::NodeHelper::encodingForName( mOverrideCharsetCombo->currentText() ) );
 }
 
 QString AppearancePage::SystemTrayTab::helpAnchor() const

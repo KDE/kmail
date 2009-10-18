@@ -263,20 +263,17 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
+void KMReaderWin::setMsg( KMime::Message* aMsg, bool force )
 {
   //TEMPORARY
   if ( aMsg ) {
-    KMime::Message *message = new KMime::Message;
-    message->setContent( aMsg->asString() );
-    message->parse();
-    mViewer->setMessage( message , force ? Viewer::Force : Viewer::Delayed);
+    mViewer->setMessage( aMsg , force ? Viewer::Force : Viewer::Delayed);
     //return;
   }
   // connect to the updates if we have hancy headers
 
   mDelayedMarkTimer.stop();
-
+#if 0 //TODO port to akonadi
   if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
        && GlobalSettings::self()->delayedMarkAsRead() ) {
     if ( GlobalSettings::self()->delayedMarkTime() != 0 )
@@ -284,6 +281,9 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     else
       slotTouchMessage();
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------

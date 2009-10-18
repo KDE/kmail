@@ -134,7 +134,7 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg,
+void KMReaderMainWin::showMsg( const QString & encoding, KMime::Message *msg,
                                unsigned long serNumOfOriginalMessage, int nodeIdOffset )
 {
   mReaderWin->setOverrideEncoding( encoding );
@@ -148,16 +148,18 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg,
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   mReaderWin->slotTouchMessage();
-  setCaption( msg->subject() );
-  mMsg = msg;
+  setCaption( msg->subject()->asUnicodeString() );
 #if OLD_MESSAGEACTION //TODO port it
+  mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
 #endif
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
-
+#if 0 //TODO port to akonadi
   connect ( msg->parent(), SIGNAL( destroyed( QObject* ) ), this, SLOT( slotFolderRemoved( QObject* ) ) );
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 #ifdef USE_AKONADI_VIEWER

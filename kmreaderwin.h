@@ -137,7 +137,7 @@ public:
 
   /** Set the message that shall be shown. If msg is 0, an empty page is
       displayed. */
-  virtual void setMsg( KMMessage* msg, bool force = false );
+  virtual void setMsg( KMime::Message* msg, bool force = false );
 
   void setMessage( Akonadi::Item item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 

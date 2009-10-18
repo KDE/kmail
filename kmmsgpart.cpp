@@ -9,6 +9,8 @@
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>
+#include <kmime/kmime_util.h>
+
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
 #include <mimelib/string.h>
@@ -411,7 +413,7 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
 //-----------------------------------------------------------------------------
 QString KMMessagePart::contentDescription( void ) const
 {
-  return KMMsgBase::decodeRFC2047String( mContentDescription, charset() );;
+  return KMime::decodeRFC2047String( mContentDescription );;
 }
 
 
@@ -424,7 +426,7 @@ void KMMessagePart::setContentDescription( const QString &aStr )
   if ( encoding.isEmpty() ) {
     encoding = "utf-8";
   }
-  mContentDescription = KMMsgBase::encodeRFC2047String( aStr, encoding );
+  mContentDescription = KMime::encodeRFC2047String( aStr, encoding );
 }
 
 
@@ -464,9 +466,13 @@ QString KMMessagePart::fileName( void ) const
                              endOfFilename-startOfFilename + 1 ).trimmed();
 
   if ( bRFC2231encoded ) {
-    return KMMsgBase::decodeRFC2231String( str );
+#if 0 //TODO port to akonadi
+    return KMime::decodeRFC2231String( str );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   } else {
-    return KMMsgBase::decodeRFC2047String( str, charset() );
+    return KMime::decodeRFC2047String( str/*TODO, charset()*/ );
   }
 }
 
