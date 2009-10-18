@@ -356,10 +356,8 @@ void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
     serNums.append( mCurrentItem.id() );
   if ( serNums.empty() )
     return;
-#ifdef OLD_MESSAGEACTION
   KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
   command->start();
-#endif
 }
 
 void MessageActions::editCurrentMessage()
