@@ -278,8 +278,6 @@ public slots:
   /** Force update even if message is the same */
   void clearCache();
 
-  /** Refresh the reader window */
-  void updateReaderWin();
   /** The user selected "Find" from the menu. */
   void slotFind();
   /** Copy the selected text to the clipboard */
