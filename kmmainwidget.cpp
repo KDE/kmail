@@ -2493,12 +2493,11 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
 
   QString text = mMsgView? mMsgView->copyText() : "";
 
   kDebug() << "Reply to All with template:" << tmpl;
-
+#ifdef OLD_MESSAGELIST
   KMCommand *command = new KMCustomReplyAllToCommand(
       this, msg, text, tmpl
     );
@@ -2611,7 +2610,7 @@ void KMMainWidget::updateListFilterAction()
 
   QByteArray name;
   QString value;
-  QString lname = MailingList::name( mMessageListView->currentMessage(), name, value );
+  QString lname = MailingList::name( mMessagePane->currentMessage(), name, value );
   if ( lname.isNull() )
     mListFilterAction->setEnabled( false );
   else {
