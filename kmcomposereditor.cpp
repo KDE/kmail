@@ -24,7 +24,6 @@
 #include "newcomposerwin.h"
 #include "kmcommands.h"
 #include "kmmsgdict.h"
-#include "kmfolder.h"
 #include "maillistdrag.h"
 
 #include <kmime/kmime_codecs.h>
@@ -39,6 +38,9 @@
 #include <KPushButton>
 #include <KInputDialog>
 
+#include "kmkernel.h"
+
+#include <QTextCodec>
 #include <QBuffer>
 #include <QClipboard>
 #include <QDropEvent>
@@ -196,7 +198,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 
     // If this is a list of mails, attach those mails as forwards.
   if ( KPIM::MailList::canDecode( source ) ) {
-
+#if 0 //Port it
     // Decode the list of serial numbers stored as the drag data
     QByteArray serNums = KPIM::MailList::serialsFromMimeData( source );
     QBuffer serNumBuffer( &serNums );
@@ -223,6 +225,9 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     KMCommand *command = new KMForwardAttachedCommand( m_composerWin, messageList,
                                                        identity, m_composerWin );
     command->start();
+#endif
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
     return;
   }
