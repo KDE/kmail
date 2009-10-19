@@ -36,8 +36,8 @@ public:
 
   Akonadi::Collection collection();
 
-  void writeConfig( KConfigGroup & configGroup ) const;
-  void readConfig( KConfigGroup & configGroup );
+  void writeConfig() const;
+  void readConfig();
 
   enum ExpireAction { ExpireDelete, ExpireMove };
 

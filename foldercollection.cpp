@@ -24,13 +24,14 @@
 FolderCollection::FolderCollection( const Akonadi::Collection & col )
   : mCollection( col )
 {
-
+  readConfig();
   connect( KMKernel::self()->identityManager(), SIGNAL( changed() ),
            this, SLOT( slotIdentitiesChanged() ) );
 }
 
 FolderCollection::~FolderCollection()
 {
+  writeConfig();
 }
 
 Akonadi::Collection FolderCollection::collection()
@@ -54,8 +55,9 @@ void FolderCollection::slotIdentitiesChanged()
   }
 }
 
-void FolderCollection::readConfig( KConfigGroup & configGroup )
+void FolderCollection::readConfig()
 {
+  KConfigGroup configGroup( KMKernel::config(), "Folder-" + QString::number( mCollection.id() ) );
   mExpireMessages = configGroup.readEntry( "ExpireMessages", false );
   mReadExpireAge = configGroup.readEntry( "ReadExpireAge", 3 );
   mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)expireMonths );
@@ -92,8 +94,9 @@ void FolderCollection::readConfig( KConfigGroup & configGroup )
   }
 }
 
-void FolderCollection::writeConfig( KConfigGroup & configGroup ) const
+void FolderCollection::writeConfig() const
 {
+  KConfigGroup configGroup( KMKernel::config(), "Folder-" + QString::number( mCollection.id() ) );
   configGroup.writeEntry("ExpireMessages", mExpireMessages);
   configGroup.writeEntry("ReadExpireAge", mReadExpireAge);
   configGroup.writeEntry("ReadExpireUnits", (int)mReadExpireUnits);
