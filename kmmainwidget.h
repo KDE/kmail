@@ -31,6 +31,7 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kvbox.h>
+#include <foldercollection.h>
 
 #include <QList>
 #include <QVBoxLayout>
@@ -651,7 +652,7 @@ private:
     KMail::MessageActions *mMsgActions;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
   MessageList::Pane *mMessagePane;
-  Akonadi::Collection mCurrentFolder;
+  FolderCollection *mCurrentFolder;
 
   FolderSelectionTreeView *mCollectionFolderView;
     bool mOpenedImapFolder;

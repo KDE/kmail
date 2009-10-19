@@ -17,6 +17,7 @@
 */
 
 #include "foldercollection.h"
+#include <kdebug.h>
 #include "kmkernel.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
@@ -31,7 +32,18 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col )
 
 FolderCollection::~FolderCollection()
 {
+  kDebug()<<" FolderCollection::~FolderCollection";
   writeConfig();
+}
+
+Akonadi::Collection::Rights FolderCollection::rights() const
+{
+  return mCollection.rights();
+}
+
+Akonadi::CollectionStatistics FolderCollection::statistics() const
+{
+  return mCollection.statistics();
 }
 
 Akonadi::Collection FolderCollection::collection()
@@ -92,6 +104,16 @@ void FolderCollection::readConfig()
     KShortcut sc( shortcut );
     setShortcut( sc );
   }
+}
+
+bool FolderCollection::isValid() const
+{
+  return mCollection.isValid();
+}
+
+QString FolderCollection::idString() const
+{
+  return QString::number( mCollection.id() );
 }
 
 void FolderCollection::writeConfig() const

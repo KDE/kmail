@@ -21,6 +21,7 @@
 
 #include <kshortcut.h>
 #include <akonadi/collection.h>
+#include <akonadi/collectionstatistics.h>
 #include <KConfigGroup>
 
 #include "mailinglist-magic.h"
@@ -38,6 +39,15 @@ public:
 
   void writeConfig() const;
   void readConfig();
+
+  QString idString() const;
+
+
+  bool isValid() const;
+
+  Akonadi::Collection::Rights rights() const;
+
+  Akonadi::CollectionStatistics statistics() const;
 
   enum ExpireAction { ExpireDelete, ExpireMove };
 

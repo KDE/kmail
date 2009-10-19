@@ -211,7 +211,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
     mVacationIndicatorActive( false ),
-    mGoToFirstUnreadMessageInSelectedFolder( false )
+    mGoToFirstUnreadMessageInSelectedFolder( false ),
+    mCurrentFolder( 0 )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -328,7 +329,6 @@ void KMMainWidget::destruct()
 
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
 {
-  kDebug()<<" active col :"<<col;
   updateFolderMenu();
   folderSelected( col );
 #ifdef OLD_FOLDERVIEW
@@ -374,8 +374,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
 
   if (mMsgView)
     mMsgView->clear(true);
-  bool newFolder = mCurrentFolder != col ;
-
+  bool newFolder = mCurrentFolder && ( mCurrentFolder->collection() != col );
 #ifdef OLD_FOLDERVIEW
   if ( mFolder && newFolder && ( mFolder->folderType() == KMFolderTypeImap ) && !mFolder->noContent() )
   {
@@ -393,7 +392,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
   // a new splash.
   //TODO port it
   bool isNewImapFolder = false;//aFolder && ( aFolder->folderType() == KMFolderTypeImap ) && newFolder;
-  if( !mCurrentFolder.isValid()
+  if( ( !mCurrentFolder  )
       || ( !isNewImapFolder && mShowBusySplashTimer )
       || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
     if ( mMsgView ) {
@@ -407,7 +406,6 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
   // Delete any pending timer, if needed it will be recreated below
   delete mShowBusySplashTimer;
   mShowBusySplashTimer = 0;
-
   if ( newFolder )
   {
     // We're changing folder: write configuration for the old one
@@ -421,7 +419,8 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
     //closeFolder();
   }
 
-  mCurrentFolder = col;
+  delete mCurrentFolder;
+  mCurrentFolder = new FolderCollection( col );
 
   if ( newFolder )
   {
@@ -499,7 +498,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
       preSelectionMode
     );
 #endif
-  if ( !mCurrentFolder.isValid() && ( mMessagePane->count() < 2 ) )
+  if ( !mCurrentFolder->isValid() && ( mMessagePane->count() < 2 ) )
     slotIntro();
 
   updateMessageActions();
@@ -523,11 +522,11 @@ void KMMainWidget::readPreConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readFolderConfig()
 {
-  if ( !mCurrentFolder.isValid() )
+  if ( !mCurrentFolder->isValid() )
     return;
 
   KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + QString::number( mCurrentFolder.id() ) );
+  KConfigGroup group( config, "Folder-" + mCurrentFolder->idString() );
   mFolderHtmlPref =
       group.readEntry( "htmlMailOverride", false );
   mFolderHtmlLoadExtPref =
@@ -538,11 +537,11 @@ void KMMainWidget::readFolderConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeFolderConfig()
 {
-  if ( !mCurrentFolder.isValid() )
+  if ( mCurrentFolder && !mCurrentFolder->isValid() )
     return;
 
   KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + QString::number( mCurrentFolder.id() ) );
+  KConfigGroup group( config, "Folder-" + mCurrentFolder->idString() );
   group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
   group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
 }
@@ -4115,7 +4114,7 @@ void KMMainWidget::updateMessageActions()
   QList< quint32 > selectedVisibleSernums;
   bool allSelectedBelongToSameThread = false;
   Akonadi::Item currentMessage;
-  if (mCurrentFolder.isValid() &&
+  if (mCurrentFolder && mCurrentFolder->isValid() &&
        mMessagePane->getSelectionStats( selectedSernums, selectedVisibleSernums, &allSelectedBelongToSameThread )
      )
   {
@@ -4162,7 +4161,7 @@ void KMMainWidget::updateMessageActions()
   //
 
   updateListFilterAction();
-  bool readOnly = mCurrentFolder.isValid() && ( mCurrentFolder.rights() & Akonadi::Collection::ReadOnly );
+  bool readOnly = mCurrentFolder && mCurrentFolder->isValid() && ( mCurrentFolder->rights() & Akonadi::Collection::ReadOnly );
   // can we apply strictly single message actions ? (this is false if the whole selection contains more than one message)
   bool single_actions = count == 1;
   // can we apply loosely single message actions ? (this is false if the VISIBLE selection contains more than one message)
@@ -4172,7 +4171,7 @@ void KMMainWidget::updateMessageActions()
   // does the selection identify a single thread ?
   bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessagePane->isThreaded();
   // can we apply flags to the selected messages ?
-  bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mCurrentFolder.isValid() ? readOnly : true);
+  bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mCurrentFolder &&  mCurrentFolder->isValid() ? readOnly : true);
 
   mThreadStatusMenu->setEnabled( thread_actions );
   // these need to be handled individually, the user might have them
@@ -4184,7 +4183,7 @@ void KMMainWidget::updateMessageActions()
   mMarkThreadAsUnreadAction->setEnabled( thread_actions );
   mToggleThreadToActAction->setEnabled( thread_actions && flags_available );
   mToggleThreadImportantAction->setEnabled( thread_actions && flags_available );
-  bool canDeleteMessages = mCurrentFolder.isValid() && ( mCurrentFolder.rights() & Akonadi::Collection::CanDeleteItem );
+  bool canDeleteMessages = mCurrentFolder && mCurrentFolder->isValid() && ( mCurrentFolder->rights() & Akonadi::Collection::CanDeleteItem );
 
   mTrashThreadAction->setEnabled( thread_actions && !readOnly );
   mDeleteThreadAction->setEnabled( thread_actions && canDeleteMessages );
@@ -4240,7 +4239,7 @@ void KMMainWidget::updateMessageActions()
 
   mSaveAsAction->setEnabled( mass_actions );
 
-  bool mails = mCurrentFolder.isValid() && mCurrentFolder.statistics().count() > 0;
+  bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
   bool enable_goto_unread = mails
        || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
        || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
@@ -4274,7 +4273,7 @@ void KMMainWidget::updateMessageActions()
 // This needs to be updated more often, so it is in its method.
 void KMMainWidget::updateMarkAsReadAction()
 {
-  mMarkAllAsReadAction->setEnabled( mCurrentFolder.isValid() && (mCurrentFolder.statistics().unreadCount() > 0) );
+  mMarkAllAsReadAction->setEnabled( mCurrentFolder && mCurrentFolder->isValid() && (mCurrentFolder->statistics().unreadCount() > 0) );
 }
 
 //-----------------------------------------------------------------------------
@@ -4751,7 +4750,7 @@ void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
     return;
 
   FolderShortcutCommand *c = new FolderShortcutCommand( this, mCurrentFolder );
-  mFolderShortcutCommands.insert( mCurrentFolder.id(), c );
+  mFolderShortcutCommands.insert( mCurrentFolder->id(), c );
 
   QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
   QString actionname = i18n( "Folder Shortcut %1", folder->idString() );
