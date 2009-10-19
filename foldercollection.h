@@ -60,6 +60,15 @@ public:
   QString userWhoField(void) { return mUserWhoField; }
   void setUserWhoField(const QString &whoField,bool writeConfig=true);
 
+  /** Get / set whether the default identity should be used instead of the
+   *  identity specified by setIdentity(). */
+  void setUseDefaultIdentity( bool useDefaultIdentity );
+  bool useDefaultIdentity() const { return mUseDefaultIdentity; }
+
+  void setIdentity(uint identity);
+  uint identity() const;
+
+
 protected slots:
   void slotIdentitiesChanged();
 

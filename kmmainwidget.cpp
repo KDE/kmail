@@ -1330,12 +1330,12 @@ void KMMainWidget::slotCompose()
   KMail::Composer * win;
   KMime::Message* msg = new KMime::Message;
 
-  if ( mFolder ) {
-      KMail::MessageHelper::initHeader( msg, mFolder->identity() );
+  if ( mCurrentFolder ) {
+      KMail::MessageHelper::initHeader( msg, mCurrentFolder->identity() );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( NULL, mFolder );
-      win = KMail::makeComposer( msg, KMail::Composer::New, mFolder->identity() );
+      win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       KMail::MessageHelper::initHeader( msg );
       TemplateParser parser( msg, TemplateParser::NewMessage,
@@ -1361,10 +1361,10 @@ KMFolder * KMMainWidget::folder() const
 // TODO: do we want the list sorted alphabetically?
 void KMMainWidget::slotShowNewFromTemplate()
 {
-  if ( mFolder )
+  if ( mCurrentFolder )
   {
     const KPIMIdentities::Identity & ident =
-      kmkernel->identityManager()->identityForUoidOrDefault( mFolder->identity() );
+      kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
     mTemplateFolder = kmkernel->folderMgr()->findIdString( ident.templates() );
   }
 
@@ -1419,7 +1419,7 @@ void KMMainWidget::newFromTemplate( KMime::Message *msg )
 void KMMainWidget::slotPostToML()
 {
 #ifdef OLD_COMMAND
-  if ( mFolder && mFolder->isMailingListEnabled() ) {
+  if ( mCurrentFolder && mCurrentFolder->isMailingListEnabled() ) {
     KMCommand *command = new KMMailingListPostCommand( this, mFolder );
     command->start();
   }
@@ -4738,13 +4738,14 @@ QList<QAction*> KMMainWidget::actionList()
 
 void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
 {
+  //TODO reimplement it
   // remove the old one, no autodelete in Qt4
   slotFolderRemoved( col );
 #ifdef OLD_FOLDERVIEW
   if ( folder->shortcut().isEmpty() )
     return;
 
-  FolderShortcutCommand *c = new FolderShortcutCommand( this, mCurrentFolder );
+  FolderShortcutCommand *c = new FolderShortcutCommand( this, col );
   mFolderShortcutCommands.insert( mCurrentFolder->id(), c );
 
   QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );

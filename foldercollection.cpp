@@ -25,6 +25,8 @@
 FolderCollection::FolderCollection( const Akonadi::Collection & col )
   : mCollection( col )
 {
+  mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
+
   readConfig();
   connect( KMKernel::self()->identityManager(), SIGNAL( changed() ),
            this, SLOT( slotIdentitiesChanged() ) );
@@ -205,4 +207,31 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool writeConfi
     //mStorage->writeConfig();
   emit viewConfigChanged();
 #endif
+}
+
+void FolderCollection::setUseDefaultIdentity( bool useDefaultIdentity )
+{
+  mUseDefaultIdentity = useDefaultIdentity;
+  if ( mUseDefaultIdentity )
+    mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
+  kmkernel->slotRequestConfigSync();
+}
+
+void FolderCollection::setIdentity( uint identity )
+{
+  mIdentity = identity;
+  KMKernel::self()->slotRequestConfigSync();
+}
+
+uint FolderCollection::identity() const
+{
+#if 0  //Port to akonadi
+  // if we don't have one set ourselves, check our account
+  if ( mUseDefaultIdentity && mStorage )
+    if ( KMAccount *act = mStorage->account() )
+      return act->identityId();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  return mIdentity;
 }
