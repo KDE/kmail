@@ -219,7 +219,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mWasEverShown = false;
   mSearchWin = 0;
   mIntegrated  = true;
-  mFolder = 0;
   mTemplateFolder = 0;
   mReaderWindowActive = true;
   mReaderWindowBelow = true;
@@ -1141,6 +1140,7 @@ void KMMainWidget::slotFocusQuickSearch()
 //-------------------------------------------------------------------------
 void KMMainWidget::slotSearch()
 {
+#if 0 //Port to akonadi
   if(!mSearchWin)
   {
     mSearchWin = new SearchWindow(this, mFolder);
@@ -1156,6 +1156,9 @@ void KMMainWidget::slotSearch()
 
   mSearchWin->show();
   KWindowSystem::activateWindow( mSearchWin->winId() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
@@ -1273,7 +1276,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   keys.sort();
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
 //    kDebug() << newInFolder.find( *it ).value() << "new message(s) in" << *it;
-
+#if 0
     KMFolder *folder = kmkernel->findFolderById( *it );
 
     if ( folder && !folder->ignoreNewMail() ) {
@@ -1285,6 +1288,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
                                    folder->prettyUrl() );
       }
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   // update folder menus in case some mail got filtered to trash/current folder
@@ -1334,7 +1340,11 @@ void KMMainWidget::slotCompose()
       KMail::MessageHelper::initHeader( msg, mCurrentFolder->identity() );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
+#if 0
       parser.process( NULL, mFolder );
+#else
+        kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       KMail::MessageHelper::initHeader( msg );
@@ -1347,15 +1357,6 @@ void KMMainWidget::slotCompose()
   win->show();
 
 }
-
-KMFolder * KMMainWidget::folder() const
-{
-#ifdef OLD_MESSAGELIST
-  Q_ASSERT( mFolder == messageListView()->currentFolder() || mFolder == 0 );
-#endif
-  return mFolder;
-}
-
 
 //-----------------------------------------------------------------------------
 // TODO: do we want the list sorted alphabetically?
@@ -1566,7 +1567,7 @@ void KMMainWidget::slotRemoveFolder()
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
                 "Any messages it shows will still be available in their original folder.</qt>",
-             Qt::escape( mFolder->label() ) );
+             Qt::escape( mCurrentFolder->name() ) );
     buttonLabel = i18nc("@action:button Delete search", "&Delete");
   } else {
     title = i18n("Delete Folder");
@@ -1574,7 +1575,7 @@ void KMMainWidget::slotRemoveFolder()
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>",
-                Qt::escape( mCurrentFolder->label() ) );
+                Qt::escape( mCurrentFolder->name() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
@@ -1829,8 +1830,12 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMessageQueuedOrDrafted()
 {
+#if 0
   if (!kmkernel->folderIsDraftOrOutbox(mFolder))
       return;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if (mMsgView)
     mMsgView->update(true);
 }
@@ -4317,8 +4322,12 @@ void KMMainWidget::updateFolderMenu()
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
-  mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
+#if 0
+  mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder);
 
   //TODO (laurent) use akonadi action. Perhaps we must change text in akonadi.
@@ -4353,7 +4362,7 @@ void KMMainWidget::slotIntro()
   mMsgView->displayAboutPage();
 
   closeFolder();
-  mFolder = 0;
+  mCurrentFolder = 0;
 }
 
 void KMMainWidget::slotShowStartupFolder()
@@ -4543,7 +4552,7 @@ void KMMainWidget::initializeMessageTagActions()
 void KMMainWidget::removeDuplicates()
 {
 #ifdef OLD_MESSAGELIST
-  if ( !mFolder ) {
+  if ( !mCurrentFolder ) {
     return;
   }
   KMFolder *oFolder = mFolder;

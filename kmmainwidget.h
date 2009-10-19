@@ -63,10 +63,8 @@ class KConfig;
 class KToggleAction;
 class KTreeWidgetSearchLine;
 
-class KMFolder;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
-class KMFolder;
 class KMSystemTray;
 typedef QPair<KMMessageTagDescription*,KAction*> MessageTagPtrPair;
 class CustomTemplatesMenu;
@@ -131,10 +129,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
-    /**
-     * Returns the currently selected folder in messageListView().
-     */
-    KMFolder * folder() const;
 
 
     static void cleanup();
@@ -584,8 +578,6 @@ private:
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
   Akonadi::FavoriteCollectionsView *mFavoriteCollectionsView;
-  //Remove it
-    QPointer<KMFolder> mFolder;
     QWidget      *mSearchAndTree;
     KTreeWidgetSearchLine *mFolderQuickSearch;
     KMReaderWin  *mMsgView;
@@ -652,7 +644,7 @@ private:
     KMail::MessageActions *mMsgActions;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
   MessageList::Pane *mMessagePane;
-  FolderCollection *mCurrentFolder;
+  QPointer<FolderCollection> mCurrentFolder;
 
   FolderSelectionTreeView *mCollectionFolderView;
     bool mOpenedImapFolder;
