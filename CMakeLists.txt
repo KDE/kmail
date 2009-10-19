@@ -77,6 +77,7 @@ set(kmailprivate_LIB_SRCS
    collectionaclpage.cpp
    messagehelper.cpp
    messageinfo.cpp
+   foldercollection.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp
    configuredialog.cpp

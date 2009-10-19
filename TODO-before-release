@@ -1,1 +1,9 @@
 Migrate favorite folder view from kmail to akonadi
+
+
+Migrate some config to akonadi:
+
+  mUseCustomIcons = configGroup.readEntry( "UseCustomIcons", false );
+  mNormalIconPath = configGroup.readEntry( "NormalIconPath" );
+  mUnreadIconPath = configGroup.readEntry( "UnreadIconPath" );
+  mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
