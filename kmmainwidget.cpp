@@ -2642,11 +2642,17 @@ void KMMainWidget::slotJumpToFolder()
     Akonadi::Collection collection = dlg->selectedCollection();
     if ( collection.isValid() ) {
       kDebug()<<" collection.name() :"<<collection.name();
+      selectCollectionFolder( collection );
     }
-    //mCollectionFolderView->setCurrentIndex( mEntityModel->indexForCollection( collection ) );
   }
 }
 
+void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
+{
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+
+  //mCollectionFolderView->setCurrentIndex( mEntityModel->indexForCollection( collection ) );
+}
 
 void KMMainWidget::slotApplyFilters()
 {
@@ -4247,9 +4253,7 @@ void KMMainWidget::updateMessageActions()
   actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
   actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
-  slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
-  if (action( "kmail_undo" ))
-    action( "kmail_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
+
 
   if ( ( count == 1 ) && currentMessage.isValid() )
   {
@@ -4257,6 +4261,10 @@ void KMMainWidget::updateMessageActions()
       editAction()->setEnabled( !currentMessage->transferInProgress() );
   }
 #endif
+  slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
+  if (action( "kmail_undo" ))
+    action( "kmail_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
+
   // Enable / disable all filters.
   foreach ( QAction *filterAction, mFilterMenuActions ) {
     filterAction->setEnabled( count > 0 );
@@ -4387,7 +4395,7 @@ void KMMainWidget::updateMessageTagActions( const int count )
   KToggleAction *aToggler = 0;
   if ( 1 == count )
   {
-    KMime::Message * currentMessage = mMessageListView->currentMessage();
+    KMime::Message * currentMessage = mMessagePane->currentMessage();
     Q_ASSERT( currentMessage );
     KMime::MessageTagList *aTagList = currentMessage->tagList();
     for ( QList<MessageTagPtrPair>::ConstIterator it =
@@ -4743,7 +4751,8 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   if ( folder->shortcut().isEmpty() )
     return;
 
-  FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
+  FolderShortcutCommand *c = new FolderShortcutCommand( this, mCurrentFolder );
+#ifdef OLD_COMMAND
   mFolderShortcutCommands.insert( folder->idString(), c );
 
   QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
@@ -4764,6 +4773,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
                    KIcon( folder->unreadIconPath() ) :
                    KIcon( "folder" ) );
   c->setAction( action ); // will be deleted along with the command
+#endif
 }
 
 //-----------------------------------------------------------------------------

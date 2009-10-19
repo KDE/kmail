@@ -1965,8 +1965,8 @@ void KMMetaFilterActionCommand::start()
 }
 
 FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
-                                              KMFolder *folder )
-    : mMainWidget( mainwidget ), mFolder( folder ), mAction( 0 )
+                                              const Akonadi::Collection&col  )
+    : mMainWidget( mainwidget ), mCollectionFolder( col ), mAction( 0 )
 {
 }
 
@@ -1980,9 +1980,7 @@ FolderShortcutCommand::~FolderShortcutCommand()
 
 void FolderShortcutCommand::start()
 {
-#ifdef OLD_MESSAGELIST
-  mMainWidget->slotSelectFolder( mFolder );
-#endif
+  mMainWidget->selectCollectionFolder( mCollectionFolder );
 }
 
 void FolderShortcutCommand::setAction( QAction* action )

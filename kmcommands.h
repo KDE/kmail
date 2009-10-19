@@ -19,7 +19,7 @@ using KPIM::MessageStatus;
 #include <QPointer>
 #include <QList>
 #include <QMenu>
-
+#include <akonadi/collection.h>
 class KProgressDialog;
 class KMFilter;
 class KMFolder;
@@ -708,7 +708,7 @@ class KMAIL_EXPORT FolderShortcutCommand : public QObject
   Q_OBJECT
 
 public:
-  FolderShortcutCommand( KMMainWidget* mainwidget, KMFolder *folder );
+  FolderShortcutCommand( KMMainWidget* mainwidget, const Akonadi::Collection & col );
   ~FolderShortcutCommand();
 
 public slots:
@@ -720,7 +720,7 @@ public slots:
 
 private:
   KMMainWidget *mMainWidget;
-  KMFolder *mFolder;
+  Akonadi::Collection mCollectionFolder;
   QAction *mAction;
 };
 

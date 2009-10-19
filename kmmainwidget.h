@@ -183,6 +183,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
+  void selectCollectionFolder( const Akonadi::Collection & col );
 
   public slots:
     // Moving messages around
