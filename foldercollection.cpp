@@ -235,3 +235,66 @@ uint FolderCollection::identity() const
 #endif
   return mIdentity;
 }
+
+
+void FolderCollection::setAutoExpire( bool enabled )
+{
+  if( enabled != mExpireMessages ) {
+    mExpireMessages = enabled;
+    //TODO port
+    //mStorage->writeConfig();
+  }
+}
+
+void FolderCollection::setUnreadExpireAge( int age )
+{
+  if( age >= 0 && age != mUnreadExpireAge ) {
+    mUnreadExpireAge = age;
+    //TODO port
+    //mStorage->writeConfig();
+  }
+}
+
+void FolderCollection::setUnreadExpireUnits( ExpireUnits units )
+{
+  if (units >= expireNever && units < expireMaxUnits)
+    mUnreadExpireUnits = units;
+  //TODO port
+  //mStorage->writeConfig();
+}
+
+void FolderCollection::setReadExpireAge( int age )
+{
+  if( age >= 0 && age != mReadExpireAge ) {
+    mReadExpireAge = age;
+    //TODO port
+    //mStorage->writeConfig();
+  }
+}
+
+void FolderCollection::setReadExpireUnits( ExpireUnits units )
+{
+  if (units >= expireNever && units <= expireMaxUnits)
+    mReadExpireUnits = units;
+  //TODO port
+  //mStorage->writeConfig();
+}
+
+
+void FolderCollection::setExpireAction( ExpireAction a )
+{
+  if ( a != mExpireAction ) {
+    mExpireAction = a;
+    //TODO port
+    //mStorage->writeConfig();
+  }
+}
+
+void FolderCollection::setExpireToFolderId( const QString& id )
+{
+  if ( id != mExpireToFolderId ) {
+    mExpireToFolderId = id;
+    //TODO port
+    //mStorage->writeConfig();
+  }
+}

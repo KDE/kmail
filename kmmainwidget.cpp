@@ -1472,12 +1472,12 @@ void KMMainWidget::slotExpireFolder()
   QString     str;
   bool        canBeExpired = true;
 
-  if (!mFolder) return;
+  if (!mCurrentFolder) return;
 
-  if (!mFolder->isAutoExpire()) {
+  if (!mCurrentFolder->isAutoExpire()) {
     canBeExpired = false;
-  } else if (mFolder->getUnreadExpireUnits()==expireNever &&
-             mFolder->getReadExpireUnits()==expireNever) {
+  } else if (mCurrentFolder->getUnreadExpireUnits()==expireNever &&
+             mCurrentFolder->getReadExpireUnits()==expireNever) {
     canBeExpired = false;
   }
 
@@ -1495,8 +1495,11 @@ void KMMainWidget::slotExpireFolder()
                                            KGuiItem(i18n("&Expire")))
         != KMessageBox::Continue) return;
   }
-
-  mFolder->expireOldMessages( true /*immediate*/);
+#if 0 //Port it
+  mCurrentFolder->expireOldMessages( true /*immediate*/);
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1824,7 +1827,7 @@ void KMMainWidget::slotForwardInlineMsg()
     return;
 #ifdef OLD_MESSAGELIST
   KMForwardCommand * command = new KMForwardCommand(
-      this, selectedMessages, mFolder->identity()
+      this, selectedMessages, mCurrentFolder->identity()
     );
 
   command->start();
@@ -1840,7 +1843,7 @@ void KMMainWidget::slotForwardAttachedMsg()
     return;
 #ifdef OLD_MESSAGELIST
   KMForwardAttachedCommand * command = new KMForwardAttachedCommand(
-      this, selectedMessages, mFolder->identity()
+      this, selectedMessages, mCurrentFolder->identity()
     );
 
   command->start();
@@ -2510,7 +2513,7 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
   kDebug() << "Forward with template:" << tmpl;
 
   KMCustomForwardCommand * command = new KMCustomForwardCommand(
-      this, selectedMessages, mFolder->identity(), tmpl
+      this, selectedMessages, mCurrentFolder->identity(), tmpl
     );
 
   command->start();
@@ -2984,6 +2987,7 @@ void KMMainWidget::closeFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderClosed( KMFolder *folder )
 {
+#if 0 //Port or remove
   Q_UNUSED( folder );
   if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
     return;
@@ -2991,6 +2995,9 @@ void KMMainWidget::folderClosed( KMFolder *folder )
 
   mOpenedImapFolder = false;
   openFolder();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------

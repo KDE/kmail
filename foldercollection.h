@@ -68,6 +68,77 @@ public:
   void setIdentity(uint identity);
   uint identity() const;
 
+  /**
+   * Set whether this folder automatically expires messages.
+   */
+  void setAutoExpire(bool enabled);
+
+  /**
+   * Does this folder automatically expire old messages?
+   */
+  bool isAutoExpire() const { return mExpireMessages; }
+
+  /**
+   * Set the maximum age for unread messages in this folder.
+   * Age should not be negative. Units are set using
+   * setUnreadExpireUnits().
+   */
+  void setUnreadExpireAge(int age);
+
+  /**
+   * Set units to use for expiry of unread messages.
+   * Values are 1 = days, 2 = weeks, 3 = months.
+   */
+  void setUnreadExpireUnits(ExpireUnits units);
+
+  /**
+   * Set the maximum age for read messages in this folder.
+   * Age should not be negative. Units are set using
+   * setReadExpireUnits().
+   */
+  void setReadExpireAge(int age);
+
+  /**
+   * Set units to use for expiry of read messages.
+   * Values are 1 = days, 2 = weeks, 3 = months.
+   */
+  void setReadExpireUnits(ExpireUnits units);
+
+  /**
+   * Get the age at which unread messages are expired.
+   * Units are determined by getUnreadExpireUnits().
+   */
+  int getUnreadExpireAge() const { return mUnreadExpireAge; }
+
+  /**
+   * Get the age at which read messages are expired.
+   * Units are determined by getReadExpireUnits().
+   */
+  int getReadExpireAge() const { return mReadExpireAge; }
+
+  /**
+   * What should expiry do? Delete or move to another folder?
+   */
+  ExpireAction expireAction() const { return mExpireAction; }
+  void setExpireAction( ExpireAction a );
+
+  /**
+   * If expiry should move to folder, return the ID of that folder
+   */
+  QString expireToFolderId() const { return mExpireToFolderId; }
+  void setExpireToFolderId( const QString& id );
+
+  /**
+   * Units getUnreadExpireAge() is returned in.
+   * 1 = days, 2 = weeks, 3 = months.
+   */
+  ExpireUnits getUnreadExpireUnits() const { return mUnreadExpireUnits; }
+
+  /**
+   * Units getReadExpireAge() is returned in.
+   * 1 = days, 2 = weeks, 3 = months.
+   */
+  ExpireUnits getReadExpireUnits() const { return mReadExpireUnits; }
 
 protected slots:
   void slotIdentitiesChanged();
