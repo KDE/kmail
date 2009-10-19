@@ -23,7 +23,6 @@
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmkernel.h"
-#include "kmfolder.h"
 
 #include <kpimutils/email.h>
 
@@ -547,7 +546,7 @@ bool KMSearchRuleNumerical::isEmpty() const
 
 bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
 {
-
+#if 0 //Port to akonadi
   QString msgContents;
   int numericalMsgContents = 0;
   int numericalValue = 0;
@@ -623,7 +622,9 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
   default:
     ;
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return false;
 }
 
@@ -790,13 +791,13 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
   }
 
   bool res = false;
+#if 0 //TODO port to akonadi  
   int idx = -1;
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
     return res;
   }
-#if 0 //TODO port to akonadi
   KMFolderOpener openFolder( folder, "searptr" );
   if ( openFolder.openResult() == 0 ) { // 0 means no error codes
     KMFolder *f =  openFolder.folder();

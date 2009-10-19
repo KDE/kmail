@@ -43,14 +43,13 @@
 #include <kmessagebox.h>
 #include <kmcommands.h>
 
-#include "kmfolder.h"
 #include "mailinglist-magic.h"
 
 using namespace KMail;
 
-MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, KMFolder *folder )
+MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, FolderCollection * col )
     : KDialog( parent ),
-      mFolder( folder )
+      mFolder( col )
 {
   setCaption( i18n( "Mailinglist Folder Properties" ) );
   setButtons( Ok | Cancel );

@@ -151,6 +151,16 @@ public:
    */
   ExpireUnits getReadExpireUnits() const { return mReadExpireUnits; }
 
+
+
+  /** Returns true if this folder is associated with a mailing-list. */
+  void setMailingListEnabled( bool enabled );
+  bool isMailingListEnabled() const { return mMailingListEnabled; }
+
+  void setMailingList( const MailingList& mlist );
+  MailingList mailingList() const
+  { return mMailingList; }
+
 protected slots:
   void slotIdentitiesChanged();
 

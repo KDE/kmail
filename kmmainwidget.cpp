@@ -1435,10 +1435,8 @@ void KMMainWidget::slotFolderMailingListProperties()
   if ( !folder.isValid() )
     return;
 
-#ifdef OLD_FOLDERVIEW
-  ( new KMail::MailingListFolderPropertiesDialog( this, folder ) )->show();
+  ( new KMail::MailingListFolderPropertiesDialog( this, mCurrentFolder ) )->show();
   //slotModifyFolder( KMMainWidget::PropsMailingList );
-#endif
 }
 
 //-----------------------------------------------------------------------------

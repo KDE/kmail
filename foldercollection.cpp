@@ -328,3 +328,15 @@ void FolderCollection::setExpireToFolderId( const QString& id )
     writeConfig();
   }
 }
+
+void FolderCollection::setMailingListEnabled( bool enabled )
+{
+  mMailingListEnabled = enabled;
+  writeConfig();
+}
+
+void FolderCollection::setMailingList( const MailingList& mlist )
+{
+  mMailingList = mlist;
+  writeConfig();
+}
