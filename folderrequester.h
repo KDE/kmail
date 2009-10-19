@@ -57,10 +57,6 @@ namespace KMail {
        */
       FolderRequester( QWidget *parent );
       virtual ~FolderRequester();
-#if 0
-      /** Returns selected folder */
-      KMFolder* folder( void ) const;
-#endif
 
       Akonadi::Collection folderCollection() const;
 

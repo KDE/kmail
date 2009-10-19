@@ -99,13 +99,7 @@ Akonadi::Collection FolderRequester::folderCollection() const
 {
   return mCollection;
 }
-#if 0
-//-----------------------------------------------------------------------------
-KMFolder * FolderRequester::folder( void ) const
-{
-  return mFolder;
-}
-#endif
+
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const Akonadi::Collection&col )
 {
