@@ -543,7 +543,6 @@ void KMMainWidget::writeFolderConfig()
 
   KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, "Folder-" + QString::number( mCurrentFolder.id() ) );
-  kDebug()<<" mCurrentFolder.id() :"<<mCurrentFolder.id();
   group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
   group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
 }
@@ -4618,6 +4617,7 @@ void KMMainWidget::clearFilterActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFolderShortcutActions()
 {
+#if 0
   QList< QPointer< KMFolder > > folders = kmkernel->allFolders();
   QList< QPointer< KMFolder > >::Iterator it = folders.begin();
   while ( it != folders.end() ) {
@@ -4625,6 +4625,9 @@ void KMMainWidget::initializeFolderShortcutActions()
     ++it;
     slotShortcutChanged( folder ); // load the initial accel
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4685,16 +4688,14 @@ void KMMainWidget::initializeFilterActions()
   updateMessageActions();
 }
 
-void KMMainWidget::slotCollectionRemoved( const Akonadi::Collection& )
+void KMMainWidget::slotCollectionRemoved( const Akonadi::Collection& col)
 {
-  //TODO
-  //delete mFolderShortcutCommands.take( folder->idString() );
+  delete mFolderShortcutCommands.take( col.id() );
 }
 
-void KMMainWidget::slotFolderRemoved( KMFolder *folder )
+void KMMainWidget::slotFolderRemoved( const Akonadi::Collection &col )
 {
-  //TODO remove it
-  delete mFolderShortcutCommands.take( folder->idString() );
+  delete mFolderShortcutCommands.take( col.id() );
 }
 
 //-----------------------------------------------------------------------------
@@ -4741,17 +4742,16 @@ QList<QAction*> KMMainWidget::actionList()
   return actionCollection()->actions();
 }
 
-void KMMainWidget::slotShortcutChanged( KMFolder *folder )
+void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
 {
   // remove the old one, no autodelete in Qt4
-  slotFolderRemoved( folder );
-
+  slotFolderRemoved( col );
+#ifdef OLD_FOLDERVIEW
   if ( folder->shortcut().isEmpty() )
     return;
 
   FolderShortcutCommand *c = new FolderShortcutCommand( this, mCurrentFolder );
-#ifdef OLD_COMMAND
-  mFolderShortcutCommands.insert( folder->idString(), c );
+  mFolderShortcutCommands.insert( mCurrentFolder.id(), c );
 
   QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
   QString actionname = i18n( "Folder Shortcut %1", folder->idString() );

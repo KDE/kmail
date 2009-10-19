@@ -41,6 +41,7 @@
 #include <akonadi/favoritecollectionsview.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/standardactionmanager.h>
+#include <akonadi/entity.h>
 namespace MessageList {
   class Pane;
 }
@@ -253,7 +254,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void initializeFolderShortcutActions();
 
     /** Add, remove or adjust the folder's shortcut. */
-    void slotShortcutChanged( KMFolder *folder );
+  void slotShortcutChanged( const Akonadi::Collection & );
 
     /** Clear and create actions for message tag toggling */
     void clearMessageTagActions();
@@ -458,7 +459,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
       Remove the shortcut actions associated with a folder.
     */
-    void slotFolderRemoved( KMFolder *folder );
+  void slotFolderRemoved( const Akonadi::Collection& );
   void slotCollectionRemoved( const Akonadi::Collection& );
 
     /**
@@ -636,7 +637,7 @@ private:
     QList<QAction*> mFilterMenuActions;
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
-    QHash<QString,FolderShortcutCommand*> mFolderShortcutCommands;
+  QHash<Akonadi::Entity::Id,FolderShortcutCommand*> mFolderShortcutCommands;
     QPointer<KMail::FolderJob> mJob;
 
     QList<MessageTagPtrPair> mMessageTagMenuActions;
