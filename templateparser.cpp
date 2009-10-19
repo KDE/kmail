@@ -201,6 +201,10 @@ QString TemplateParser::getLName( const QString &str )
 
 void TemplateParser::process( KMime::Message *aorig_msg, KMFolder *afolder, bool append )
 {
+  if( aorig_msg == 0 ) {
+    kDebug() << "aorig_msg == 0!";
+    return;
+  }
   mAppend = append;
   mOrigMsg = aorig_msg;
   mFolder = afolder;

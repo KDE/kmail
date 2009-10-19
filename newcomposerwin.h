@@ -685,6 +685,7 @@ class KMComposeWin : public KMail::Composer
     QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
     bool mDone;
 
+    KMime::Message* mMsg;
     KMComposerEditor *mEditor;
     QGridLayout *mGrid;
     QString mTextSelection;

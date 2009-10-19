@@ -164,7 +164,7 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
     //mAtmModified( false ),
-    //mMsg( 0 ),
+    mMsg( 0 ),
     mTextSelection( textSelection ),
     mCustomTemplate( customTemplate ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
@@ -381,12 +381,10 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
 
   initAutoSave();
 
-#if 0
-  mMsg = 0;
   if ( aMsg ) {
     setMsg( aMsg );
   }
-#endif
+
   mRecipientsEditor->setFocus();
   mEditor->updateActionStates(); // set toolbar buttons to correct values
 
@@ -460,6 +458,11 @@ void KMComposeWin::send( int how )
 void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString &comment, int how )
 {
   kDebug() << "implement me...";
+  for( int i =0; i < urls.count(); ++i ) {
+    addAttachment( urls[i], comment );
+  }
+  
+  send( how );
 #if 0
   Q_UNUSED( comment );
   if ( urls.isEmpty() ) {
@@ -500,6 +503,16 @@ void KMComposeWin::addAttachment( const QString &name,
                                   const QByteArray &contDisp )
 {
   kDebug() << "implement me";
+
+  KPIM::AttachmentPart::Ptr attachment = KPIM::AttachmentPart::Ptr( new KPIM::AttachmentPart() );
+  if( !data.isEmpty() ) {
+    attachment->setName( name );
+    attachment->setData( data );
+    attachment->setMimeType( type );
+    // TODO what about the other fields?
+
+    mAttachmentController->addAttachment( attachment);
+  }
 #if 0
   Q_UNUSED( cte );
 
@@ -629,7 +642,7 @@ void KMComposeWin::writeConfig( void )
 void KMComposeWin::autoSaveMessage()
 {
   kDebug() << "Implement me.";
-#if 0
+
   if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() ) {
     return;
   }
@@ -638,6 +651,10 @@ void KMComposeWin::autoSaveMessage()
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
   }
+  
+  applyChanges( true, true );
+
+  #if 0
   // Make sure that this slot isn't connected multiple times
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
            this, SLOT( slotContinueAutoSave() ) );
@@ -996,13 +1013,12 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyTemplate( uint uoid )
 {
-  kDebug() << "Port me...";
-#if 0
-  const KPIMIdentities::Identity &ident =
-    kmkernel->identityManager()->identityForUoid( uoid );
+//  kDebug() << "Port me...";
+//#if 0
+  const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() )
     return;
-
+#if 0
   mMsg->setTemplates( ident.templates() );
   TemplateParser::Mode mode;
   switch ( mContext ) {
@@ -1526,27 +1542,30 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
 void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
-  kDebug() << "implement me!!!";
-#if 0
+//  kDebug() << "implement me!!!";
   if ( !newMsg ) {
     kDebug() << "newMsg == 0!";
     return;
   }
+  
   mMsg = newMsg;
-  KPIMIdentities::IdentityManager * im = kmkernel->identityManager();
+  KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
 
-  mEdtFrom->setText( mMsg->from() );
-  mEdtReplyTo->setText( mMsg->replyTo() );
-  mRecipientsEditor->setRecipientString( mMsg->to(), Recipient::To );
-  mRecipientsEditor->setRecipientString( mMsg->cc(), Recipient::Cc );
-  mRecipientsEditor->setRecipientString( mMsg->bcc(), Recipient::Bcc );
+  mEdtFrom->setText( mMsg->from()->asUnicodeString() );
+  mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
+  mRecipientsEditor->setRecipientString( mMsg->to()->asUnicodeString(), Recipient::To );
+  mRecipientsEditor->setRecipientString( mMsg->cc()->asUnicodeString(), Recipient::Cc );
+  mRecipientsEditor->setRecipientString( mMsg->bcc()->asUnicodeString(), Recipient::Bcc );
   mRecipientsEditor->setFocusBottom();
-  mEdtSubject->setText( mMsg->subject() );
+  mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
 
   const bool stickyIdentity = mBtnIdentity->isChecked() && !mIgnoreStickyFields;
-  const bool messageHasIdentity = !newMsg->headerField("X-KMail-Identity").isEmpty();
+  bool messageHasIdentity = false;
+  if( newMsg->headerByType("X-KMail-Identity") &&
+      !newMsg->headerByType("X-KMail-Identity")->asUnicodeString().isEmpty() )
+    messageHasIdentity = true;
   if ( !stickyIdentity && messageHasIdentity )
-    mId = newMsg->headerField( "X-KMail-Identity" ).simplified().toUInt();
+    mId = newMsg->headerByType( "X-KMail-Identity" )->asUnicodeString().toUInt();
 
   // don't overwrite the header values with identity specific values
   // unless the identity is sticky
@@ -1565,7 +1584,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     // that's so we can detect that the id changed (because a sticky was set)
     // on apply()
     if ( messageHasIdentity ) {
-      mId = newMsg->headerField("X-KMail-Identity").simplified().toUInt();
+      mId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
     } else {
       mId = im->defaultIdentity().uoid();
     }
@@ -1578,16 +1597,20 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   const KPIMIdentities::Identity &ident = im->identityForUoid( mIdentity->currentIdentity() );
 
   // check for the presence of a DNT header, indicating that MDN's were requested
-  QString mdnAddr = newMsg->headerField( "Disposition-Notification-To" );
-  mRequestMDNAction->setChecked( ( !mdnAddr.isEmpty() &&
+  if( newMsg->headerByType( "Disposition-Notification-To" ) ) {
+    QString mdnAddr = newMsg->headerByType( "Disposition-Notification-To" )->asUnicodeString();
+    mRequestMDNAction->setChecked( ( !mdnAddr.isEmpty() &&
                                    im->thatIsMe( mdnAddr ) ) ||
                                  GlobalSettings::self()->requestMDN() );
-
+  }
+#if 0 //TODO port to akonadi
   // check for presence of a priority header, indicating urgent mail:
   mUrgentAction->setChecked( newMsg->isUrgent() );
 
-  if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
-    mMsg->removeHeaderField( "X-Face" );
+
+  if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() &&
+        mMsg->headerByType( "X-Face" ) ) {
+    mMsg->headerByType( "X-Face" )->clear();
   } else {
     QString xface = ident.xface();
     if ( !xface.isEmpty() ) {
@@ -1595,7 +1618,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
       for ( int i = numNL; i > 0; --i ) {
         xface.insert( i * 70, "\n\t" );
       }
-      mMsg->setHeaderField( "X-Face", xface );
+      mMsg->setHeader( new KMime::Headers::Generic( "X-Face", new KMime::Content( xface.toUtf8() ) ) );
     }
   }
 
@@ -1626,13 +1649,13 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   }
 
   // if these headers are present, the state of the message should be overruled
-  if ( mMsg->headers().FindField( "X-KMail-SignatureActionEnabled" ) )
-    mLastSignActionState = (mMsg->headerField( "X-KMail-SignatureActionEnabled" ) == "true");
-  if ( mMsg->headers().FindField( "X-KMail-EncryptActionEnabled" ) )
-    mLastEncryptActionState = (mMsg->headerField( "X-KMail-EncryptActionEnabled" ) == "true");
-  if ( mMsg->headers().FindField( "X-KMail-CryptoMessageFormat" ) )
+  if ( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
+    mLastSignActionState = (mMsg->headerByType( "X-KMail-SignatureActionEnabled" )->as7BitString() == "true");
+  if ( mMsg->headerByType( "X-KMail-EncryptActionEnabled" ) )
+    mLastEncryptActionState = (mMsg->headerByType( "X-KMail-EncryptActionEnabled" )->as7BitString() == "true");
+  if ( mMsg->headerByType( "X-KMail-CryptoMessageFormat" ) )
     mCryptoModuleAction->setCurrentItem( format2cb( static_cast<Kleo::CryptoMessageFormat>(
-                    mMsg->headerField( "X-KMail-CryptoMessageFormat" ).toInt() ) ) );
+                    mMsg->headerByType( "X-KMail-CryptoMessageFormat" )->asUnicodeString().toInt() ) ) );
 
   mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
@@ -1653,7 +1676,9 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
                           !ident.pgpEncryptionKey().isEmpty() );
 
-  QString transportName = newMsg->headerField("X-KMail-Transport");
+  QString transportName;
+  if( newMsg->headerByType( "X-KMail-Transport" ) ) 
+    transportName = newMsg->headerByType("X-KMail-Transport")->asUnicodeString();
   const bool stickyTransport = mBtnTransport->isChecked() && !mIgnoreStickyFields;
   if ( !stickyTransport && !transportName.isEmpty() ) {
     Transport *transport =
@@ -1696,7 +1721,8 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     if ( partNode * p = n->parentNode() ) {
       if ( p->hasType( DwMime::kTypeMultipart ) &&
            p->hasSubType( DwMime::kSubtypeAlternative ) ) {
-        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" ) {
+        if ( mMsg->headerByType( "X-KMail-Markup" ) &&
+              mMsg->headerByType( "X-KMail-Markup" ).as7BitString() == "true" ) {
           enableHtml();
 
           // get cte decoded body part
@@ -2066,14 +2092,12 @@ bool KMComposeWin::userForgotAttachment()
 void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 {
   kDebug() << "Entering";
-
 #if 0
   if(!mMsg) {
     kDebug() << "mMsg == 0!";
     emit applyChangesDone( false );
     return;
   }
-#endif
 
   if( mComposer ) {
     // This may happen if e.g. the autosave timer calls applyChanges.
@@ -2098,6 +2122,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
   connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotComposerResult(KJob*)) );
   mComposer->start();
   kDebug() << "Composer started.";
+#endif
 }
 
 void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
@@ -3376,8 +3401,13 @@ void KMComposeWin::slotSpellcheckDoneClearStatus()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 {
+  if( mMsg == 0 ) {
+    kDebug() << "Trying to change identity but mMsg == 0!";
+    return;
+  }
+  
   const KPIMIdentities::Identity &ident =
-    kmkernel->identityManager()->identityForUoid( uoid );
+    KMKernel::self()->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() ) {
     return;
   }
@@ -3398,7 +3428,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 
   // remove BCC of old identity and add BCC of new identity (if they differ)
   const KPIMIdentities::Identity &oldIdentity =
-      kmkernel->identityManager()->identityForUoidOrDefault( mId );
+      KMKernel::self()->identityManager()->identityForUoidOrDefault( mId );
   if ( oldIdentity.bcc() != ident.bcc() ) {
     mRecipientsEditor->removeRecipient( oldIdentity.bcc(), Recipient::Bcc );
     mRecipientsEditor->addRecipient( ident.bcc(), Recipient::Bcc );
@@ -3407,11 +3437,11 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 
 #if 0
   if ( ident.organization().isEmpty() ) {
-    mMsg->removeHeaderField( "Organization" );
+    mMsg->organization()->clear();
   } else {
-    mMsg->setHeaderField( "Organization", ident.organization() );
+    mMsg->organization()->fromUnicodeString( ident.organization(), "utf-8" );
   }
-
+  
   if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
     mMsg->removeHeaderField( "X-Face" );
   } else {
