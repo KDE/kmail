@@ -1,7 +1,7 @@
 
 #include "expirypropertiesdialog.h"
 #include "folderrequester.h"
-#include "kmfolder.h"
+#include "foldercollection.h"
 
 
 #include <QVariant>
@@ -27,7 +27,7 @@ using namespace KMail;
  */
 ExpiryPropertiesDialog::ExpiryPropertiesDialog(
   QWidget *tree,
-  KMFolder* folder )
+  FolderCollection* folder )
     : KDialog( tree ),
       mFolder( folder )
 {
@@ -133,16 +133,20 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
     expireUnreadMailSB->setValue( daysToExpireUnread );
   }
 
-  if ( mFolder->expireAction() == KMFolder::ExpireDelete )
+  if ( mFolder->expireAction() == FolderCollection::ExpireDelete )
     deletePermanentlyRB->setChecked( true );
   else
     moveToRB->setChecked( true );
 
   QString destFolderID = mFolder->expireToFolderId();
   if ( !destFolderID.isEmpty() ) {
+#if 0
     KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
     if ( destFolder )
       folderSelector->setFolder( destFolder );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   slotUpdateControls();
   setAttribute(Qt::WA_WState_Polished);
@@ -173,17 +177,19 @@ void ExpiryPropertiesDialog::accept()
   mFolder->setUnreadExpireUnits( expireUnreadMailCB->isChecked()? expireDays : expireNever );
 
   if ( deletePermanentlyRB->isChecked() )
-    mFolder->setExpireAction( KMFolder::ExpireDelete );
+    mFolder->setExpireAction( FolderCollection::ExpireDelete );
   else
-    mFolder->setExpireAction( KMFolder::ExpireMove );
+    mFolder->setExpireAction( FolderCollection::ExpireMove );
+#if 0
   KMFolder* expireToFolder = folderSelector->folder();
   if ( expireToFolder )
     mFolder->setExpireToFolderId( expireToFolder->idString() );
-
   // trigger immediate expiry if there is something to do
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   KDialog::accept();
 }
 

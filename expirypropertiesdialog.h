@@ -8,11 +8,10 @@ class QCheckBox;
 class QRadioButton;
 class KIntSpinBox;
 class KMFolder;
-
+class FolderCollection;
 namespace KMail {
 
   class FolderRequester;
-  class MainFolderView;
 
 class ExpiryPropertiesDialog : public KDialog
 {
@@ -21,7 +20,7 @@ class ExpiryPropertiesDialog : public KDialog
 public:
     ExpiryPropertiesDialog(
       QWidget *tree,
-      KMFolder* folder );
+      FolderCollection* folder );
     ~ExpiryPropertiesDialog();
 
 protected slots:
@@ -29,7 +28,7 @@ protected slots:
     void slotUpdateControls();
 
 private:
-    KMFolder *mFolder;
+    FolderCollection *mFolder;
 
     QCheckBox *expireReadMailCB;
     KIntSpinBox *expireReadMailSB;

@@ -340,3 +340,23 @@ void FolderCollection::setMailingList( const MailingList& mlist )
   mMailingList = mlist;
   writeConfig();
 }
+
+static int daysToExpire( int number, ExpireUnits units )
+{
+  switch (units) {
+  case expireDays: // Days
+    return number;
+  case expireWeeks: // Weeks
+    return number * 7;
+  case expireMonths: // Months - this could be better rather than assuming 31day months.
+    return number * 31;
+  default: // this avoids a compiler warning (not handled enumeration values)
+    ;
+  }
+  return -1;
+}
+
+void FolderCollection::daysToExpire(int& unreadDays, int& readDays) {
+  unreadDays = ::daysToExpire( getUnreadExpireAge(), getUnreadExpireUnits() );
+  readDays = ::daysToExpire( getReadExpireAge(), getReadExpireUnits() );
+}

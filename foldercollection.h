@@ -161,6 +161,9 @@ public:
   MailingList mailingList() const
   { return mMailingList; }
 
+  void daysToExpire( int& unreadDays, int& readDays );
+
+
 protected slots:
   void slotIdentitiesChanged();
 
