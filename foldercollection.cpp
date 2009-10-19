@@ -38,6 +38,42 @@ FolderCollection::~FolderCollection()
   writeConfig();
 }
 
+QString FolderCollection::name() const
+{
+  return mCollection.name();
+}
+
+bool FolderCollection::isSystemFolder() const
+{
+  //TODO port !!!!
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+
+  return false;
+}
+
+bool FolderCollection::noContent() const
+{
+  //TODO port !!!!
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+
+  return false;
+}
+
+bool FolderCollection::isReadOnly() const
+{
+  return mCollection.rights() & Akonadi::Collection::ReadOnly;
+}
+
+bool FolderCollection::canDeleteMessages() const
+{
+  return mCollection.rights() & Akonadi::Collection::CanDeleteItem;
+}
+
+qint64 FolderCollection::count() const
+{
+  return mCollection.statistics().count();
+}
+
 Akonadi::Collection::Rights FolderCollection::rights() const
 {
   return mCollection.rights();

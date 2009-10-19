@@ -1490,7 +1490,7 @@ void KMMainWidget::slotExpireFolder()
   KConfigGroup group(config, "General");
 
   if (group.readEntry("warn-before-expire", true ) ) {
-    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", Qt::escape( mFolder->label() ));
+    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", Qt::escape( mCurrentFolder->name() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
                                            KGuiItem(i18n("&Expire")))
         != KMessageBox::Continue) return;
@@ -1507,16 +1507,20 @@ void KMMainWidget::slotEmptyFolder()
 {
   QString str;
 
-  if (!mFolder) return;
-  bool isTrash = kmkernel->folderIsTrash(mFolder);
-
+  if (!mCurrentFolder) return;
+  bool isTrash = false;
+#if 0   //TODO port
+    kmkernel->folderIsTrash(mFolder);
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if (mConfirmEmpty)
   {
     QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
     QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
       i18n("<qt>Are you sure you want to move all messages from "
-           "folder <b>%1</b> to the trash?</qt>", Qt::escape( mFolder->label() ) );
+           "folder <b>%1</b> to the trash?</qt>", Qt::escape( mCurrentFolder->name() ) );
 
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "user-trash"))
       != KMessageBox::Continue) return;
@@ -1531,7 +1535,8 @@ void KMMainWidget::slotEmptyFolder()
   else
     slotTrashSelectedMessages();
 
-  if (mMsgView) mMsgView->clearCache();
+  if (mMsgView)
+    mMsgView->clearCache();
 
   if ( !isTrash )
     BroadcastStatus::instance()->setStatusMsg(i18n("Moved all messages to the trash"));
@@ -1547,12 +1552,13 @@ void KMMainWidget::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRemoveFolder()
 {
+#if 0 //Port it
   QString str;
   QDir dir;
 
-  if ( !mFolder ) return;
-  if ( mFolder->isSystemFolder() ) return;
-  if ( mFolder->isReadOnly() ) return;
+  if ( !mCurrentFolder ) return;
+  if ( mCurrentFolder->isSystemFolder() ) return;
+  if ( mCurrentFolder->isReadOnly() ) return;
 
   QString title;
   QString buttonLabel;
@@ -1564,11 +1570,11 @@ void KMMainWidget::slotRemoveFolder()
     buttonLabel = i18nc("@action:button Delete search", "&Delete");
   } else {
     title = i18n("Delete Folder");
-    if ( mFolder->count() == 0 ) {
+    if ( mCurrentFolder->count() == 0 ) {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>",
-                Qt::escape( mFolder->label() ) );
+                Qt::escape( mCurrentFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
@@ -1576,7 +1582,7 @@ void KMMainWidget::slotRemoveFolder()
                    "not be empty and their contents will be discarded as well. "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
-                Qt::escape( mFolder->label() ) );
+                Qt::escape( mCurrentFolder->label() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
@@ -1584,14 +1590,14 @@ void KMMainWidget::slotRemoveFolder()
                    "<resource>%1</resource>, discarding its contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
-                Qt::escape( mFolder->label() ) );
+                Qt::escape( mCurrentFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
                    "and all its subfolders, discarding their contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
-              Qt::escape( mFolder->label() ) );
+              Qt::escape( mCurrentFolder->label() ) );
       }
     }
     buttonLabel = i18nc("@action:button Delete folder", "&Delete");
@@ -1635,24 +1641,35 @@ void KMMainWidget::slotRemoveFolder()
     else
       kmkernel->folderMgr()->remove(mFolder);
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMarkAllAsRead()
 {
-  if (!mFolder)
+  if (!mCurrentFolder)
     return;
+#if 0
   mFolder->markUnreadAsRead();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompactFolder()
 {
-  if (!mFolder)
+  if (!mCurrentFolder)
     return;
 
   KCursorSaver busy(KBusyPtr::busy());
+#if 0
   mFolder->compact( KMFolder::CompactNow );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
@@ -1705,7 +1722,7 @@ void KMMainWidget::slotTroubleshootMaildir()
              i18nc( "@info",
                     "You are about to recreate the index for folder <resource>%1</resource>.<nl/>"
                     "<warning>This will destroy all message status information.</warning><nl/>"
-                    "Are you sure you want to continue?", mFolder->label() ),
+                    "Are you sure you want to continue?", mCurrentFolder->name() ),
              i18nc( "@title", "Really recreate index?" ),
              KGuiItem( i18nc( "@action:button", "Recreate Index" ) ),
              KStandardGuiItem::cancel(), QString(),
@@ -1714,7 +1731,7 @@ void KMMainWidget::slotTroubleshootMaildir()
     f->createIndexFromContents();
     KMessageBox::information( this,
                               i18n( "The index of folder %1 has been recreated.",
-                                    mFolder->label() ),
+                                    mCurrentFolder->name() ),
                               i18n( "Index recreated" ) );
   }
 #else
@@ -4281,10 +4298,10 @@ void KMMainWidget::updateMarkAsReadAction()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
-  bool folderWithContent = mFolder && !mFolder->noContent();
+  bool folderWithContent = mCurrentFolder && !mCurrentFolder->noContent();
   bool multiFolder = mCollectionFolderView->selectedCollections().count()>1;
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
-                                                  !mFolder->isSystemFolder() );
+                                                  !mCurrentFolder->isSystemFolder() );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
 
 #if 0 //TODO port to akonadi
@@ -4299,14 +4316,18 @@ void KMMainWidget::updateFolderMenu()
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && mFolder->canDeleteMessages() && !multiFolder );
+  mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
+  mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder);
 
   //TODO (laurent) use akonadi action. Perhaps we must change text in akonadi.
-  mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
+#if 0 //TODO port
+  mRemoveFolderAction->setText( mCurrentFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mCollectionFolderView->folderTreeView()->currentFolder().isValid() ? true : false );
@@ -4314,7 +4335,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlLoadExtAction->setEnabled( mCollectionFolderView->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
-  mRemoveDuplicatesAction->setEnabled( !multiFolder && mFolder && mFolder->canDeleteMessages() );
+  mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder );
 }
 

@@ -40,8 +40,19 @@ public:
   void writeConfig() const;
   void readConfig();
 
+  QString name() const;
+
   QString idString() const;
 
+  bool isReadOnly() const;
+
+  bool noContent() const;
+
+  bool isSystemFolder() const;
+
+  qint64 count() const;
+
+  bool canDeleteMessages() const;
 
   bool isValid() const;
 
