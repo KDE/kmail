@@ -212,7 +212,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       If the folder is 0 the intro is shown
     */
     void folderSelected( KMFolder*, bool forceJumpToUnread = false, bool preferNewTabForOpening = false );
-
+    void folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread = false, bool preferNewTabForOpening = false );
     /**
       Reselect current folder
     */

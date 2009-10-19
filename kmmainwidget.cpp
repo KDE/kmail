@@ -329,7 +329,183 @@ void KMMainWidget::destruct()
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
 {
   kDebug()<<" active col :"<<col;
+  updateFolderMenu();
+  folderSelected( col );
+#ifdef OLD_FOLDERVIEW
+  // update the caption (useful if the name changed)
+  emit captionChangeRequest( mMainFolderView->currentItemFullPath() );
+#endif
+}
+
+void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread, bool preferNewTabForOpening )
+{
+  // This is connected to the MainFolderView signal triggering when a folder is selected
+
+  if ( !forceJumpToUnread )
+    forceJumpToUnread = mGoToFirstUnreadMessageInSelectedFolder;
+
+  mGoToFirstUnreadMessageInSelectedFolder = false;
+
+  MessageList::Core::PreSelectionMode preSelectionMode;
+  if ( forceJumpToUnread )
+  {
+    // the default action has been overridden from outside
+    preSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+  } else {
+    // use the default action
+    switch ( GlobalSettings::self()->actionEnterFolder() )
+    {
+      case GlobalSettings::EnumActionEnterFolder::SelectFirstNew:
+        preSelectionMode = MessageList::Core::PreSelectFirstNewCentered;
+      break;
+      case GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew:
+        preSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+      break;
+      case GlobalSettings::EnumActionEnterFolder::SelectLastSelected:
+        preSelectionMode = MessageList::Core::PreSelectLastSelected;
+      break;
+      default:
+        preSelectionMode = MessageList::Core::PreSelectNone;
+      break;
+    }
+  }
+
+  KCursorSaver busy(KBusyPtr::busy());
+
+  if (mMsgView)
+    mMsgView->clear(true);
+  bool newFolder = mCurrentFolder != col ;
+
+#ifdef OLD_FOLDERVIEW
+  if ( mFolder && newFolder && ( mFolder->folderType() == KMFolderTypeImap ) && !mFolder->noContent() )
+  {
+    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
+    if ( mFolder->needsCompacting() && imap->autoExpunge() )
+      imap->expungeFolder(imap, true);
+  }
+#endif
+  // Re-enable the msg list and quicksearch if we're showing a splash
+  // screen. This is true either if there's no active folder, or if we
+  // have a timer that is no longer active (i.e. it has already fired)
+  // To make the if() a bit more complicated, we suppress the hiding
+  // when the new folder is also an IMAP folder, because that's an
+  // async operation and we don't want flicker if it results in just
+  // a new splash.
+  //TODO port it
+  bool isNewImapFolder = false;//aFolder && ( aFolder->folderType() == KMFolderTypeImap ) && newFolder;
+  if( !mCurrentFolder.isValid()
+      || ( !isNewImapFolder && mShowBusySplashTimer )
+      || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
+    if ( mMsgView ) {
+      mMsgView->viewer()->enableMessageDisplay();
+      mMsgView->clear( true );
+    }
+    if ( mMessagePane )
+      mMessagePane->show();
+    mShowingOfflineScreen = false;
+  }
+  // Delete any pending timer, if needed it will be recreated below
+  delete mShowBusySplashTimer;
+  mShowBusySplashTimer = 0;
+
+  if ( newFolder )
+  {
+    //TODO port to akonadi
+    // We're changing folder: write configuration for the old one
+    //writeFolderConfig();
+  }
+
+  if ( newFolder )
+  {
+    //TODO port to akonadi
+    // Close the old folder, if any
+    //closeFolder();
+  }
+
   mCurrentFolder = col;
+
+  if ( newFolder )
+  {
+    //TODO port to akonadi
+    // Open the new folder
+    //openFolder();
+  }
+#ifdef OLD_FOLDERVIEW
+  // FIXME: re-fetch the contents also if the folder is already open ?
+  if ( aFolder && ( aFolder->folderType() == KMFolderTypeImap )  && ( !mMessageListView->isFolderOpen( mFolder ) ) )
+  {
+    // IMAP folders require extra care.
+
+    if ( kmkernel->isOffline() )
+    {
+      //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
+      // FIXME: Use an "offline tab" ?
+      showOfflinePage();
+      return;
+    }
+
+    KMFolderImap *imap = static_cast<KMFolderImap*>( aFolder->storage() );
+
+    if ( newFolder && ( !mFolder->noContent() ) )
+    {
+      // Folder is not offline, but the contents might need to be fetched
+      connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+               this, SLOT( folderSelected() ) );
+
+      imap->getAndCheckFolder();
+
+      mFolder = 0;          // will make us ignore the "folderChanged" signal from KMail::MessageListView (prevent circular loops)
+      mMessageListView->setCurrentFolder(
+          0,
+          preferNewTabForOpening,
+          MessageList::Core::PreSelectNone,
+          i18nc( "tab title when loading an IMAP folder", "Loading..." )
+        );
+
+      mFolder = aFolder;    // re-enable the signals from KMail::MessageListView
+
+      updateFolderMenu();
+      mForceJumpToUnread = forceJumpToUnread;
+
+      // Set a timer to show a splash screen if fetching folder contents
+      // takes more than the amount of seconds configured in the kmailrc (default 1000 msec)
+
+      // FIXME: Use a "loading" tab instead ?
+      mShowBusySplashTimer = new QTimer( this );
+      mShowBusySplashTimer->setSingleShot( true );
+      connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
+      mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() );
+      return;
+
+    }
+
+    // the folder is complete now - so go ahead
+    disconnect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+                this, SLOT( folderSelected() ) );
+
+    forceJumpToUnread = mForceJumpToUnread;
+  }
+#endif
+
+  //TODO port it
+  //readFolderConfig();
+  if (mMsgView)
+  {
+    mMsgView->setHtmlOverride(mFolderHtmlPref);
+    mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
+  }
+#ifdef OLD_FOLDERVIEW
+  mMessageListView->setCurrentFolder(
+      mFolder,
+      preferNewTabForOpening,
+      preSelectionMode
+    );
+#endif
+  if ( !mCurrentFolder.isValid() && ( mMessagePane->count() < 2 ) )
+    slotIntro();
+
+  updateMessageActions();
+  updateFolderMenu();
 }
 
 //-----------------------------------------------------------------------------
