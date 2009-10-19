@@ -1447,18 +1447,13 @@ void KMMainWidget::slotFolderMailingListProperties()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderShortcutCommand()
 {
-  if (!mCollectionFolderView)
-    return;
 
-  Akonadi::Collection folder = mCollectionFolderView->folderTreeView()->currentFolder();
-  if ( !folder.isValid() )
+  if ( !mCollectionFolderView || !mCurrentFolder )
     return;
-#ifdef OLD_FOLDERVIEW
   AutoQPointer<KMail::FolderShortcutDialog> shorty;
-  shorty = new KMail::FolderShortcutDialog( folder, kmkernel->getKMMainWidget(), mCollectionFolderView );
+  shorty = new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(), mCollectionFolderView );
   shorty->exec();
   //slotModifyFolder( KMMainWidget::PropsShortcut );
-#endif
 }
 
 #if 0

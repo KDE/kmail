@@ -40,9 +40,9 @@
 #define FOLDERSHORTCUTDIALOG_H
 
 #include <kdialog.h> // include for the base class
-class KMFolder;
 class KKeySequenceWidget;
 class KMMainWidget;
+class FolderCollection;
 
 namespace KMail
 {
@@ -51,7 +51,7 @@ class FolderShortcutDialog : public KDialog
 {
 Q_OBJECT
 public:
-  FolderShortcutDialog( KMFolder *folder, KMMainWidget *mw,
+  FolderShortcutDialog( FolderCollection *folder, KMMainWidget *mw,
                         QWidget *parent=0 );
   ~FolderShortcutDialog();
 
@@ -60,7 +60,7 @@ protected slots:
   void slotOk();
 
 private:
-  KMFolder *mFolder;
+  FolderCollection *mFolder;
   KMMainWidget *mMainWidget;
   KKeySequenceWidget *mKeySeqWidget;
 
