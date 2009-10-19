@@ -202,9 +202,8 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool writeConfi
   }
   mUserWhoField = whoField;
 
-  //TODO port to akonadi
-  //if (writeConfig)
-    //mStorage->writeConfig();
+  if (writeConfig)
+    writeConfig();
   emit viewConfigChanged();
 #endif
 }
@@ -241,8 +240,7 @@ void FolderCollection::setAutoExpire( bool enabled )
 {
   if( enabled != mExpireMessages ) {
     mExpireMessages = enabled;
-    //TODO port
-    //mStorage->writeConfig();
+    writeConfig();
   }
 }
 
@@ -250,34 +248,32 @@ void FolderCollection::setUnreadExpireAge( int age )
 {
   if( age >= 0 && age != mUnreadExpireAge ) {
     mUnreadExpireAge = age;
-    //TODO port
-    //mStorage->writeConfig();
+    writeConfig();
   }
 }
 
 void FolderCollection::setUnreadExpireUnits( ExpireUnits units )
 {
-  if (units >= expireNever && units < expireMaxUnits)
+  if (units >= expireNever && units < expireMaxUnits) {
     mUnreadExpireUnits = units;
-  //TODO port
-  //mStorage->writeConfig();
+    writeConfig();
+  }
 }
 
 void FolderCollection::setReadExpireAge( int age )
 {
   if( age >= 0 && age != mReadExpireAge ) {
     mReadExpireAge = age;
-    //TODO port
-    //mStorage->writeConfig();
+    writeConfig();
   }
 }
 
 void FolderCollection::setReadExpireUnits( ExpireUnits units )
 {
-  if (units >= expireNever && units <= expireMaxUnits)
+  if (units >= expireNever && units <= expireMaxUnits) {
     mReadExpireUnits = units;
-  //TODO port
-  //mStorage->writeConfig();
+    writeConfig();
+  }
 }
 
 
@@ -285,8 +281,7 @@ void FolderCollection::setExpireAction( ExpireAction a )
 {
   if ( a != mExpireAction ) {
     mExpireAction = a;
-    //TODO port
-    //mStorage->writeConfig();
+    writeConfig();
   }
 }
 
@@ -294,7 +289,6 @@ void FolderCollection::setExpireToFolderId( const QString& id )
 {
   if ( id != mExpireToFolderId ) {
     mExpireToFolderId = id;
-    //TODO port
-    //mStorage->writeConfig();
+    writeConfig();
   }
 }
