@@ -4144,7 +4144,6 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 void KMMainWidget::updateMessageActions()
 {
   int count;
-  kDebug()<<" DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD";
   QList< quint32 > selectedSernums;
   QList< quint32 > selectedVisibleSernums;
   bool allSelectedBelongToSameThread = false;
