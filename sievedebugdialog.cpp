@@ -251,7 +251,7 @@ void SieveDebugDialog::slotDiagNextAccount()
 {
     if ( mAccountList.isEmpty() )
         return;
-
+#if 0 //Port to akonadi
     KMAccount *acc = mAccountList.first();
     mAccountList.pop_front();
 
@@ -282,6 +282,7 @@ void SieveDebugDialog::slotDiagNextAccount()
 
     // Handle next account async
     QTimer::singleShot( 0, this, SLOT( slotDiagNextAccount() ) );
+#endif
 }
 
 void SieveDebugDialog::slotDiagNextScript()
