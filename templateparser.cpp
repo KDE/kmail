@@ -19,7 +19,6 @@
  */
 
 #include "templateparser.h"
-#include "kmfolder.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
 #include "customtemplates_kfg.h"
@@ -32,6 +31,8 @@
 #include "messageviewer/objecttreeemptysource.h"
 #include "messageviewer/nodehelper.h"
 #include "messagehelper.h"
+
+#include <akonadi/collection.h>
 
 #include <libkpgp/kpgpblock.h>
 
@@ -199,7 +200,7 @@ QString TemplateParser::getLName( const QString &str )
   return res;
 }
 
-void TemplateParser::process( KMime::Message *aorig_msg, KMFolder *afolder, bool append )
+void TemplateParser::process( KMime::Message *aorig_msg, const Akonadi::Collection & afolder, bool append )
 {
   if( aorig_msg == 0 ) {
     kDebug() << "aorig_msg == 0!";
@@ -213,7 +214,7 @@ void TemplateParser::process( KMime::Message *aorig_msg, KMFolder *afolder, bool
 }
 
 void TemplateParser::process( const QString &tmplName, KMime::Message *aorig_msg,
-                              KMFolder *afolder, bool append )
+                              const Akonadi::Collection &afolder, bool append )
 {
   mAppend = append;
   mOrigMsg = aorig_msg;
@@ -223,7 +224,7 @@ void TemplateParser::process( const QString &tmplName, KMime::Message *aorig_msg
 }
 
 void TemplateParser::processWithIdentity( uint uoid, KMime::Message *aorig_msg,
-                                          KMFolder *afolder, bool append )
+                                          const Akonadi::Collection &afolder, bool append )
 {
   mIdentity = uoid;
   return process( aorig_msg, afolder, append );

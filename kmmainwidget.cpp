@@ -1340,11 +1340,7 @@ void KMMainWidget::slotCompose()
       KMail::MessageHelper::initHeader( msg, mCurrentFolder->identity() );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
-#if 0
-      parser.process( NULL, mFolder );
-#else
-        kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+      parser.process( NULL, mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       KMail::MessageHelper::initHeader( msg );

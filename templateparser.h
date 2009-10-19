@@ -22,7 +22,7 @@
 #define __KMAIL_TEMPLATEPARSER_H__
 
 #include <qobject.h>
-
+#include <akonadi/collection.h>
 namespace KMime {
   class Message;
   class Content;
@@ -33,7 +33,6 @@ namespace MessageViewer {
 }
 
 class QString;
-class KMFolder;
 class QObject;
 
 namespace KMail {
@@ -56,10 +55,10 @@ class TemplateParser : public QObject
                     bool aselectionIsBody );
     ~TemplateParser();
 
-    virtual void process( KMime::Message *aorig_msg, KMFolder *afolder = 0, bool append = false );
+  virtual void process( KMime::Message *aorig_msg, const Akonadi::Collection& afolder = Akonadi::Collection(), bool append = false );
     virtual void process( const QString &tmplName, KMime::Message *aorig_msg,
-                          KMFolder *afolder = 0, bool append = false );
-    virtual void processWithIdentity( uint uoid, KMime::Message *aorig_msg, KMFolder *afolder = 0,
+                         const Akonadi::Collection& afolder = Akonadi::Collection() , bool append = false );
+    virtual void processWithIdentity( uint uoid, KMime::Message *aorig_msg,const Akonadi::Collection& afolder = Akonadi::Collection(),
                           bool append = false );
     virtual void processWithTemplate( const QString &tmpl );
 
@@ -81,7 +80,7 @@ class TemplateParser : public QObject
 
   protected:
     Mode mMode;
-    KMFolder *mFolder;
+  Akonadi::Collection mFolder;
     uint mIdentity;
     KMime::Message *mMsg;
     KMime::Message *mOrigMsg;
@@ -118,7 +117,7 @@ class TemplateParser : public QObject
      * In append mode, this will simply append the text to the body.
      *
      * Otherwise, the content of the old message is deleted and replaced with @p body.
-     * Attachments of the original message are also added back to the new message. 
+     * Attachments of the original message are also added back to the new message.
      */
     void addProcessedBodyToMessage( const QString &body );
 

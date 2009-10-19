@@ -718,8 +718,11 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 
   TemplateParser parser( msg, TemplateParser::NewMessage,
                          QString(), false, false, false );
+#if 0 //Port it
   parser.process( NULL, folder );
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
 
   //Add the attachment if we have one
