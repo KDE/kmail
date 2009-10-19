@@ -34,6 +34,8 @@ public:
   FolderCollection( const Akonadi::Collection & col );
   ~FolderCollection();
 
+  Akonadi::Collection collection();
+
   void writeConfig( KConfigGroup & configGroup ) const;
   void readConfig( KConfigGroup & configGroup );
 

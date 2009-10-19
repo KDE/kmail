@@ -33,6 +33,11 @@ FolderCollection::~FolderCollection()
 {
 }
 
+Akonadi::Collection FolderCollection::collection()
+{
+  return mCollection;
+}
+
 void FolderCollection::slotIdentitiesChanged()
 {
   uint defaultIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
