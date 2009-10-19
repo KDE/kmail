@@ -28,13 +28,13 @@
 
 
 #include "folderrequester.h"
-#include "kmfolder.h"
 
 #include "messageviewer/autoqpointer.h"
 
 #include <kdebug.h>
 #include <klineedit.h>
 #include <kiconloader.h>
+#include <KLocale>
 #include <kdialog.h>
 #include "folderselectiontreeviewdialog.h"
 #include <QLayout>
@@ -45,7 +45,7 @@
 namespace KMail {
 
 FolderRequester::FolderRequester( QWidget *parent )
-  : QWidget( parent ), mFolder( 0 ),
+  : QWidget( parent ),
     mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this );
@@ -75,8 +75,8 @@ void FolderRequester::slotOpenDialog()
   dlg->setModal( false );
 
   if ( dlg->exec() && dlg ) {
+    setFolder( dlg->selectedCollection() );
   }
-
 #if 0
   AutoQPointer<FolderSelectionDialog> dlg( new FolderSelectionDialog( this, mFolderTree,
                                                                       i18n("Select Folder"),
@@ -99,29 +99,34 @@ Akonadi::Collection FolderRequester::folderCollection() const
 {
   return mCollection;
 }
-
+#if 0
 //-----------------------------------------------------------------------------
 KMFolder * FolderRequester::folder( void ) const
 {
   return mFolder;
 }
-
+#endif
 //-----------------------------------------------------------------------------
-void FolderRequester::setFolder( KMFolder *folder )
+void FolderRequester::setFolder( const Akonadi::Collection&col )
 {
-  mFolder = folder;
-  if ( mFolder ) {
+  mCollection = col;
+  if ( mCollection.isValid() ) {
+#if 0 //TODO port it
     edit->setText( mFolder->prettyUrl() );
-    mFolderId = mFolder->idString();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+    mFolderId = QString::number( mCollection.id() );
   }
   else if ( !mMustBeReadWrite ) // the Local Folders root node was selected
     edit->setText( i18n("Local Folders") );
-  emit folderChanged( folder );
+  emit folderChanged( mCollection );
 }
 
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const QString &idString )
 {
+#if 0
   KMFolder *folder = kmkernel->findFolderById( idString );
   if ( folder ) {
     setFolder( folder );
@@ -134,6 +139,9 @@ void FolderRequester::setFolder( const QString &idString )
     mFolder = 0;
   }
   mFolderId = idString;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------

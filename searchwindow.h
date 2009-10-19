@@ -28,7 +28,7 @@
 
 #include <KDialog>
 #include <KXMLGUIClient>
-
+#include <akonadi/collection.h>
 class QCheckBox;
 class QCloseEvent;
 class QKeyEvent;
@@ -74,14 +74,14 @@ public:
    * of search operations.
    * @param modal Whether the dialog is to be shown modal.
    */
-  explicit SearchWindow( KMMainWidget* parent, KMFolder *curFolder=0 );
+  explicit SearchWindow( KMMainWidget* parent, const Akonadi::Collection & col=Akonadi::Collection() );
   virtual ~SearchWindow();
 
   /**
    * Changes the base folder for search operations to a different folder.
    * @param curFolder The folder to use as the new base for searches.
    */
-  void activateFolder( KMFolder* curFolder );
+  void activateFolder( const Akonadi::Collection& curFolder );
 
   /**
    * Provides access to the list of currently selected message in the listview.

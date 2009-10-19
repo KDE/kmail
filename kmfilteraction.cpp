@@ -320,21 +320,33 @@ QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 
 void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
 {
+#if 0
   mFolder = ((FolderRequester *)paramWidget)->folder();
   mFolderName = ((FolderRequester *)paramWidget)->folderId();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
 {
+#if 0
   if ( mFolder )
     ((FolderRequester *)paramWidget)->setFolder( mFolder );
   else
     ((FolderRequester *)paramWidget)->setFolder( mFolderName );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 {
+#if 0
   ((FolderRequester *)paramWidget)->setFolder( kmkernel->draftsFolder() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
@@ -587,7 +599,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMime::Mess
        is uploaded, the header is stripped anyhow. */
       QString uid = aMsg->headerByType( "X-UID" ) ?aMsg->headerByType( "X-UID")->asUnicodeString() : "" ;
       aMsg->setContent( msgText );
-      
+
       KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-UID", aMsg, uid, "utf-8" );
       aMsg->setHeader( header );
     }

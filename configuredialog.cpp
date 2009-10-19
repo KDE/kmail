@@ -4248,8 +4248,8 @@ void MiscPage::FolderTab::save()
   general.writeEntry( "empty-trash-on-exit", mMMTab.mEmptyTrashCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mMMTab.mEmptyFolderConfirmCheck->isChecked() );
   general.writeEntry( "default-mailbox-format", mMMTab.mMailboxPrefCombo->currentIndex() );
-  general.writeEntry( "startupFolder", mMMTab.mOnStartupOpenFolder->folder() ?
-                                  mMMTab.mOnStartupOpenFolder->folder()->idString() : QString() );
+  general.writeEntry( "startupFolder", mMMTab.mOnStartupOpenFolder->folderCollection().isValid() ?
+                                  QString::number(mMMTab.mOnStartupOpenFolder->folderCollection().id()) : QString() );
 
   GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );
   GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );
@@ -4395,6 +4395,7 @@ void MiscPage::GroupwareTab::save()
   // return 0. In that case we really don't have it enabled
   QString folderId;
   if (  format == 0 ) {
+#if 0	  
     KMFolder* folder = mMGTab.mFolderCombo->folder();
     if ( folder )
       folderId = folder->idString();
@@ -4421,6 +4422,10 @@ void MiscPage::GroupwareTab::save()
     }
     GlobalSettings::self()->setTheIMAPResourceAccount( foundAccount ?
                                                        foundAccount->id() : 0 );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+
+#endif    
   } else {
     // Inbox folder of the selected account
     KMAccount* acct = mMGTab.mAccountCombo->currentAccount();

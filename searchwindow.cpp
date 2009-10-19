@@ -114,7 +114,7 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
 }
 
 //-----------------------------------------------------------------------------
-SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
+SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder):
   KDialog(0),
   mStopped(false),
   mCloseRequested(false),
@@ -157,6 +157,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   mCbxFolders = new FolderRequester( searchWidget );
   mCbxFolders->setMustBeReadWrite( false );
+
   mCbxFolders->setFolder(curFolder);
 
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
@@ -481,7 +482,7 @@ void SearchWindow::slotFolderActivated()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::activateFolder(KMFolder *curFolder)
+void SearchWindow::activateFolder(const Akonadi::Collection& curFolder)
 {
     mChkbxSpecificFolders->setChecked(true);
     mCbxFolders->setFolder(curFolder);

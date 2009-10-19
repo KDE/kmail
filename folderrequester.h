@@ -35,7 +35,6 @@
 #include <QtGui/QWidget>
 #include <QKeyEvent>
 
-class KMFolder;
 
 
 namespace KMail {
@@ -58,10 +57,10 @@ namespace KMail {
        */
       FolderRequester( QWidget *parent );
       virtual ~FolderRequester();
-
+#if 0
       /** Returns selected folder */
       KMFolder* folder( void ) const;
-
+#endif
 
       Akonadi::Collection folderCollection() const;
 
@@ -72,7 +71,7 @@ namespace KMail {
       QString text() const { return edit->originalText(); }
 
       /** Preset the folder */
-      void setFolder( KMFolder* );
+      void setFolder( const Akonadi::Collection & );
       void setFolder( const QString& idString );
 
       /**
@@ -97,7 +96,7 @@ namespace KMail {
 
     signals:
       /** Emitted when the folder changed */
-      void folderChanged( KMFolder* );
+      void folderChanged( const Akonadi::Collection& );
 
     protected:
       /** Capture space key to open the dialog */
@@ -106,7 +105,6 @@ namespace KMail {
     protected:
       Akonadi::Collection mCollection;
       KLineEdit* edit;
-      KMFolder* mFolder;
       QString mFolderId;
       bool mMustBeReadWrite;
       bool mShowOutbox;

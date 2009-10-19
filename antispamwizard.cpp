@@ -1058,8 +1058,8 @@ bool ASWizSpamRulesPage::moveUnsureSelected() const
 QString ASWizSpamRulesPage::selectedSpamFolderName() const
 {
   QString name = "trash";
-  if ( mFolderReqForSpamFolder->folder() )
-    name = mFolderReqForSpamFolder->folder()->idString();
+  if ( mFolderReqForSpamFolder->folderCollection().isValid() )
+    name = mFolderReqForSpamFolder->folderCollection().id();
   return name;
 }
 
@@ -1067,8 +1067,8 @@ QString ASWizSpamRulesPage::selectedSpamFolderName() const
 QString ASWizSpamRulesPage::selectedUnsureFolderName() const
 {
   QString name = "inbox";
-  if ( mFolderReqForUnsureFolder->folder() )
-    name = mFolderReqForUnsureFolder->folder()->idString();
+  if ( mFolderReqForUnsureFolder->folderCollection().isValid() )
+    name = mFolderReqForUnsureFolder->folderCollection().id();
   return name;
 }
 

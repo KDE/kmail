@@ -163,7 +163,7 @@ ExpiryPropertiesDialog::~ExpiryPropertiesDialog()
 void ExpiryPropertiesDialog::accept()
 {
   bool enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
-  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
+  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folderCollection().isValid() ) {
     KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
                         i18n( "No Folder Selected" ) );
     return;

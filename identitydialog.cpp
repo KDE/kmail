@@ -660,19 +660,29 @@ namespace KMail {
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default sent-mail folder "
                                   "will be used.",
-                               ident.identityName() ) ) )
+                                  ident.identityName() ) ) ) {
+#if 0
       mFccCombo->setFolder( kmkernel->sentFolder() );
-    else
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+    }
+    else {
       mFccCombo->setFolder( ident.fcc() );
-
+    }
     if ( ident.drafts().isEmpty() ||
          !checkFolderExists( ident.drafts(),
                              i18n("The custom drafts folder for identity "
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default drafts folder "
                                   "will be used.",
-                               ident.identityName() ) ) )
+                                  ident.identityName() ) ) ) {
+#if 0
       mDraftsCombo->setFolder( kmkernel->draftsFolder() );
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+    }
     else
       mDraftsCombo->setFolder( ident.drafts() );
 
@@ -681,8 +691,14 @@ namespace KMail {
                              i18n("The custom templates folder for identity "
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default templates folder "
-                                  "will be used.", ident.identityName()) ) )
+                                  "will be used.", ident.identityName()) ) ) {
+#if 0
       mTemplatesCombo->setFolder( kmkernel->templatesFolder() );
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
+    }
     else
       mTemplatesCombo->setFolder( ident.templates() );
 
@@ -720,12 +736,12 @@ namespace KMail {
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                           mTransportCombo->currentText() : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
-    ident.setFcc( mFccCombo->folder() ?
-                  mFccCombo->folder()->idString() : QString() );
-    ident.setDrafts( mDraftsCombo->folder() ?
-                     mDraftsCombo->folder()->idString() : QString() );
-    ident.setTemplates( mTemplatesCombo->folder() ?
-                     mTemplatesCombo->folder()->idString() : QString() );
+    ident.setFcc( mFccCombo->folderCollection().isValid() ?
+                  QString::number( mFccCombo->folderCollection().id() ) : QString() );
+    ident.setDrafts( mDraftsCombo->folderCollection().isValid() ?
+                     QString::number( mDraftsCombo->folderCollection().id() ) : QString() );
+    ident.setTemplates( mTemplatesCombo->folderCollection().isValid() ?
+                        QString::number( mTemplatesCombo->folderCollection().id() ) : QString() );
 
     // "Templates" tab:
     uint identity = ident.uoid();
