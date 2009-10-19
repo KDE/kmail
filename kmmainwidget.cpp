@@ -410,9 +410,8 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
 
   if ( newFolder )
   {
-    //TODO port to akonadi
     // We're changing folder: write configuration for the old one
-    //writeFolderConfig();
+    writeFolderConfig();
   }
 
   if ( newFolder )
@@ -487,8 +486,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
   }
 #endif
 
-  //TODO port it
-  //readFolderConfig();
+  readFolderConfig();
   if (mMsgView)
   {
     mMsgView->setHtmlOverride(mFolderHtmlPref);
@@ -525,11 +523,11 @@ void KMMainWidget::readPreConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readFolderConfig()
 {
-  if ( !mFolder )
+  if ( !mCurrentFolder.isValid() )
     return;
 
   KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + mFolder->idString() );
+  KConfigGroup group( config, "Folder-" + QString::number( mCurrentFolder.id() ) );
   mFolderHtmlPref =
       group.readEntry( "htmlMailOverride", false );
   mFolderHtmlLoadExtPref =
@@ -540,11 +538,12 @@ void KMMainWidget::readFolderConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeFolderConfig()
 {
-  if ( !mFolder )
+  if ( !mCurrentFolder.isValid() )
     return;
 
   KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + mFolder->idString() );
+  KConfigGroup group( config, "Folder-" + QString::number( mCurrentFolder.id() ) );
+  kDebug()<<" mCurrentFolder.id() :"<<mCurrentFolder.id();
   group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
   group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
 }
