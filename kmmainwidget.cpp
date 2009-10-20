@@ -2363,13 +2363,12 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
   QString text = mMsgView? mMsgView->copyText() : "";
 
   kDebug() << "Reply to All with template:" << tmpl;
-  //#ifdef OLD_MESSAGELIST
+
   KMCommand *command = new KMCustomReplyAllToCommand(
       this, &*msg, text, tmpl
     );
 
   command->start();
-  //#endif
 }
 
 
@@ -2399,11 +2398,9 @@ void KMMainWidget::slotNoQuoteReplyToMsg()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
 
-  KMCommand *command = new KMNoQuoteReplyToCommand( this, msg );
+  KMCommand *command = new KMNoQuoteReplyToCommand( this, &*msg );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2425,11 +2422,9 @@ void KMMainWidget::slotMailingListFilter()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
 
-  KMCommand *command = new KMMailingListFilterCommand( this, msg );
+  KMCommand *command = new KMMailingListFilterCommand( this, &*msg );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2747,11 +2742,9 @@ void KMMainWidget::slotSaveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOpenMsg()
 {
-#ifdef OLD_COMMAND
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, KUrl(), overrideEncoding() );
 
   openCommand->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4103,13 +4096,15 @@ void KMMainWidget::updateMessageActions()
 
   // "View Source" will act on the current message: it will ignore any hidden selection
   viewSourceAction()->setEnabled( singleVisibleMessageSelected );
-#ifdef OLD_MESSAGELIST
+
+  MessageStatus status;
+  status.setStatusFromFlags( currentMessage.flags() );
+
   mSendAgainAction->setEnabled(
       single_actions &&
-      ( ( currentMessage && currentMessage->status().isSent() ) ||
-        ( currentMessage && kmkernel->folderIsSentMailFolder( mFolder ) ) )
+      ( ( currentMessage.isValid() && status.isSent() ) ||
+        ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) )
     );
-#endif
   mSaveAsAction->setEnabled( mass_actions );
 
   bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
