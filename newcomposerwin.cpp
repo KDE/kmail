@@ -32,6 +32,8 @@
 #include <libkleo/ui/progressdialog.h>
 #include <libkleo/ui/keyselectiondialog.h>
 
+#include <kpimutils/email.h>
+
 #include <messagecomposer/composer.h>
 #include <messagecomposer/globalpart.h>
 #include <messagecomposer/infopart.h>

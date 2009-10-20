@@ -257,6 +257,7 @@ void SieveDebugDialog::slotDiagNextAccount()
 
     mEdit->append( i18n( "Collecting data for account '%1'...\n", acc->name() ) );
     mEdit->append( i18n( "------------------------------------------------------------\n" ) );
+#if 0  //TODO port to akonadi
     mAccountBase = dynamic_cast<KMail::ImapAccountBase *>( acc );
     if ( mAccountBase )
     {
@@ -276,7 +277,11 @@ void SieveDebugDialog::slotDiagNextAccount()
             // Bypass the singleShot timer -- it's fired when we get our data
             return;
         }
-    } else {
+    } else
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+    {
         mEdit->append( i18n( "(Account is not an IMAP account)\n\n" ) );
     }
 

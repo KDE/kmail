@@ -32,6 +32,9 @@ using KMail::FilterLog;
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
+#include <kmime/kmime_message.h>
+#include <kmime/kmime_util.h>
+
 #include <kabc/stdaddressbook.h>
 
 #include <QRegExp>
@@ -39,7 +42,7 @@ using KMail::FilterLog;
 
 #include <mimelib/string.h>
 #include <mimelib/boyermor.h>
-#include <kmime/kmime_util.h>
+
 #include <assert.h>
 
 static const char* funcConfigNames[] =
@@ -181,16 +184,18 @@ void KMSearchRule::writeConfig( KConfigGroup & config, int aIdx ) const {
   config.writeEntry( contents + cIdx, mContents );
 }
 
-bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
+bool KMSearchRule::matches( const DwString & aStr, KMime::Message & msg,
                        const DwBoyerMoore *, int ) const
 {
-#if 0  //Port to Akonadi
+#if 0  //TODO port to akonadi
   if ( !msg.isComplete() ) {
     msg.fromDwString( aStr );
     msg.setComplete( true );
   }
-  return matches( &msg );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  return matches( &msg );
 }
 
 const QString KMSearchRule::asString() const
@@ -259,7 +264,7 @@ bool KMSearchRuleString::requiresBody() const
   return true;
 }
 
-bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
+bool KMSearchRuleString::matches( const DwString & aStr, KMime::Message & msg,
                        const DwBoyerMoore * aHeaderField, int aHeaderLen ) const
 {
   if ( isEmpty() )
@@ -333,26 +338,26 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
   return rc;
 }
 
-bool KMSearchRuleString::matches( const KMMessage * msg ) const
+bool KMSearchRuleString::matches( KMime::Message * msg ) const
 {
   assert( msg );
 
   if ( isEmpty() )
     return false;
-#if 0 //Port to akonadi
+
   QString msgContents;
   // Show the value used to compare the rules against in the log.
   // Overwrite the value for complete messages and all headers!
   bool logContents = true;
 
   if( field() == "<message>" ) {
-    msgContents = msg->asString();
+    msgContents = msg->encodedContent();
     logContents = false;
   } else if ( field() == "<body>" ) {
-    msgContents = msg->bodyToUnicode();
+    msgContents = msg->body();
     logContents = false;
   } else if ( field() == "<any header>" ) {
-    msgContents = msg->headerAsString();
+    msgContents = msg->head();
     logContents = false;
   } else if ( field() == "<recipients>" ) {
     // (mmutz 2001-11-05) hack to fix "<recipients> !contains foo" to
@@ -361,46 +366,56 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     if ( function() == FuncEquals || function() == FuncNotEqual )
       // do we need to treat this case specially? Ie.: What shall
       // "equality" mean for recipients.
-      return matchesInternal( msg->headerField("To") )
-          || matchesInternal( msg->headerField("Cc") )
-          || matchesInternal( msg->headerField("Bcc") )
-          // sometimes messages have multiple Cc headers
-          || matchesInternal( msg->cc() );
+      return matchesInternal( msg->to()->asUnicodeString() )
+          || matchesInternal( msg->cc()->asUnicodeString() )
+          || matchesInternal( msg->bcc()->asUnicodeString() ) ;
+          // sometimes messages have multiple Cc headers //TODO: check if this can happen for KMime!
+      //    || matchesInternal( msg->cc() )
+          
 
-    msgContents = msg->headerField("To");
+    msgContents = msg->to()->asUnicodeString();
+#if 0  //TODO port to akonadi - check if this is needed for KMime. 
     if ( !msg->headerField("Cc").compare( msg->cc() ) )
       msgContents += ", " + msg->headerField("Cc");
     else
       msgContents += ", " + msg->cc();
-    msgContents += ", " + msg->headerField("Bcc");
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  msgContents += ", " + msg->bcc()->asUnicodeString();
   } else if ( field() == "<tag>" ) {
+#if 0  //TODO port to akonadi
     if ( msg->tagList() ) {
       foreach ( const QString &label, * msg->tagList() ) {
-        const KMMessageTagDescription * tagDesc = kmkernel->msgTagMgr()->find( label );
+        const KMime::MessageTagDescription * tagDesc = kmkernel->msgTagMgr()->find( label );
         if ( tagDesc )
           msgContents += tagDesc->name();
       }
       logContents = false;
     }
-  } else {
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  } else
+ {
     // make sure to treat messages with multiple header lines for
     // the same header correctly
-    msgContents = msg->headerFields( field() ).join( " " );
+    msgContents = msg->headerByType( field() ) ? msg->headerByType( field() )->asUnicodeString() : "";
   }
 
   if ( function() == FuncIsInAddressbook ||
        function() == FuncIsNotInAddressbook ) {
     // I think only the "from"-field makes sense.
-    msgContents = msg->headerField( field() );
+    msgContents = msg->headerByType( field() ) ? msg->headerByType( field() )->asUnicodeString() : "";
     if ( msgContents.isEmpty() )
       return ( function() == FuncIsInAddressbook ) ? false : true;
   }
 
   // these two functions need the kmmessage therefore they don't call matchesInternal
   if ( function() == FuncHasAttachment )
-    return ( msg->toMsgBase().attachmentState() == KMMsgHasAttachment );
+    return ( msg->attachments().size() > 0 );
   if ( function() == FuncHasNoAttachment )
-    return ( ((KMMsgAttachmentState) msg->toMsgBase().attachmentState()) == KMMsgHasNoAttachment );
+    return ( msg->attachments().size() == 0 );
 
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
@@ -413,7 +428,6 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
-#endif
 }
 
 // helper, does the actual comparing
@@ -544,20 +558,19 @@ bool KMSearchRuleNumerical::isEmpty() const
 }
 
 
-bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
+bool KMSearchRuleNumerical::matches( KMime::Message * msg ) const
 {
-#if 0 //Port to akonadi
+
   QString msgContents;
   int numericalMsgContents = 0;
   int numericalValue = 0;
 
   if ( field() == "<size>" ) {
-    numericalMsgContents = int( msg->msgLength() );
+    numericalMsgContents = msg->storageSize(); //TODO check if this is really int( msg->msgLength() );
     numericalValue = contents().toInt();
     msgContents.setNum( numericalMsgContents );
   } else if ( field() == "<age in days>" ) {
-    QDateTime msgDateTime;
-    msgDateTime.setTime_t( msg->date() );
+    QDateTime msgDateTime = msg->date()->dateTime().dateTime();
     numericalMsgContents = msgDateTime.daysTo( QDateTime::currentDateTime() );
     numericalValue = contents().toInt();
     msgContents.setNum( numericalMsgContents );
@@ -622,9 +635,7 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
   default:
     ;
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
   return false;
 }
 
@@ -676,11 +687,11 @@ bool KMSearchRuleStatus::isEmpty() const
   return field().trimmed().isEmpty() || contents().isEmpty();
 }
 
-bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
+bool KMSearchRuleStatus::matches( KMime::Message * msg ) const
 {
 
   bool rc = false;
-#if 0 //Port to akonadi
+#if 0  //TODO port to akonadi
   switch ( function() ) {
     case FuncEquals: // fallthrough. So that "<status> 'is' 'read'" works
     case FuncContains:
@@ -697,14 +708,15 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
     default:
       break;
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( FilterLog::instance()->isLogging() ) {
     QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
                        : "<font color=#FF0000>0 = </font>" );
     msg += FilterLog::recode( asString() );
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
-#endif
   return rc;
 }
 
@@ -733,7 +745,7 @@ KMSearchPattern::~KMSearchPattern()
   qDeleteAll( *this );
 }
 
-bool KMSearchPattern::matches( const KMMessage * msg, bool ignoreBody ) const
+bool KMSearchPattern::matches( KMime::Message * msg, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
@@ -761,8 +773,8 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
-#if 0 //Port to akonadi
-  KMMessage msg;
+
+  KMime::Message msg;
   QList<KMSearchRule*>::const_iterator it;
   switch ( mOperator ) {
   case OpAnd: // all rules must match
@@ -780,8 +792,6 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
   default:
     return false;
   }
-#endif
-  return false;
 }
 
 bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
@@ -791,20 +801,20 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
   }
 
   bool res = false;
-#if 0 //TODO port to akonadi  
   int idx = -1;
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
     return res;
   }
+#if 0 //TODO port to akonadi
   KMFolderOpener openFolder( folder, "searptr" );
   if ( openFolder.openResult() == 0 ) { // 0 means no error codes
     KMFolder *f =  openFolder.folder();
     KMMsgBase *msgBase = f->getMsgBase( idx );
     if ( msgBase && requiresBody() && !ignoreBody ) {
       bool unGet = !msgBase->isMessage();
-      KMMessage *msg = f->getMsg( idx );
+      KMime::Message *msg = f->getMsg( idx );
       res = false;
       if ( msg ) {
         res = matches( msg, ignoreBody );

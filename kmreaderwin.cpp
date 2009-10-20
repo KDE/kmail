@@ -143,7 +143,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSerNumOfOriginalMessage( 0 ),
     mNodeIdOffset( -1 ),
     mDelayedMarkTimer( 0 ),
-    mRootNode( 0 ),
+// TODO remove    mRootNode( 0 ),
     mMainWindow( mainWindow ),
     mActionCollection( actionCollection ),
     mMailToComposeAction( 0 ),
@@ -492,7 +492,7 @@ void KMReaderWin::setMsgPart( partNode * node ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
+void KMReaderWin::setMsgPart( KMime::Content* aMsgPart, bool aHTML,
                               const QString& aFileName, const QString& pname )
 {
 #ifndef  USE_AKONADI_VIEWER
@@ -592,6 +592,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
     mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
   }
 #endif
+  mViewer->setMessagePart( aMsgPart, aHTML, aFileName, pname ); 
 }
 
 //-----------------------------------------------------------------------------
@@ -638,7 +639,7 @@ void KMReaderWin::saveRelativePosition()
 
 
 //-----------------------------------------------------------------------------
-KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
+KMime::Message *KMReaderWin::message( KMFolder **aFolder ) const
 {
 
 //TODO(Andras) port to Akonadi
@@ -660,6 +661,8 @@ KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
     return message;
   }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   return 0;
 }

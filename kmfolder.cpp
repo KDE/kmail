@@ -77,11 +77,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mStorage = new KMFolderSearch( this, aFolderName.toLatin1() );
   else
     mStorage = new KMFolderMbox( this, aFolderName.toLatin1() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  return;
   assert( mStorage );
+
 
   QFileInfo dirinfo;
   dirinfo.setFile( mStorage->location() );
@@ -157,13 +154,24 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
   if ( mId == 0 && aParent )
     mId = aParent->manager()->createId();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMFolder::~KMFolder()
 {
+#if 0  //TODO port to akonadi
   mStorage->close( "~KMFolder", true );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   delete mAcctList;
+#if 0  //TODO port to akonadi
   if ( mHasIndex ) mStorage->deregisterFromMessageDict();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   delete mStorage;
 }
 
@@ -252,13 +260,17 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
   configGroup.writeEntry("MailingListEnabled", mMailingListEnabled);
   mMailingList.writeConfig( configGroup );
 
-
+#if 0  //TODO port to akonadi
   configGroup.writeEntry( "UseDefaultIdentity", mUseDefaultIdentity );
   if ( !mUseDefaultIdentity && ( !mStorage || !mStorage->account() ||
                            mIdentity != mStorage->account()->identityId() ) )
       configGroup.writeEntry("Identity", mIdentity);
   else
       configGroup.deleteEntry("Identity");
+
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
   configGroup.writeEntry("WhoField", mUserWhoField);
   configGroup.writeEntry("Id", mId);
@@ -273,32 +285,62 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
 
 KMFolderType KMFolder::folderType() const
 {
+#if 0  //TODO port to akonadi
   return mStorage ? mStorage->folderType() : KMFolderTypeUnknown;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return KMFolderTypeUnknown;
+#endif
 }
 
 QString KMFolder::fileName() const
 {
+#if 0  //TODO port to akonadi
   return mStorage ? mStorage->fileName() : QString();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return "";
+#endif
 }
 
 QString KMFolder::location() const
 {
+#if 0  //TODO port to akonadi
   return mStorage ? mStorage->location() : QString();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return QString();
+#endif
 }
 
 QString KMFolder::indexLocation() const
 {
+#if 0  //TODO port to akonadi
   return mStorage ? mStorage->indexLocation() : QString();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return QString();
+#endif
 }
 
 QString KMFolder::sortedLocation() const
 {
+#if 0  //TODO port to akonadi
   return mStorage ? mStorage->sortedLocation() : QString();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return QString();
+#endif
 }
 
 QString KMFolder::idsLocation() const
 {
+#if 0  //TODO port to akonadi
   return mStorage ? mStorage->idsLocation() : QString();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return QString();
+#endif
 }
 
 QString KMFolder::subdirLocation() const
@@ -348,168 +390,296 @@ KMFolderDir* KMFolder::createChildFolder()
 void KMFolder::setChild( KMFolderDir* aChild )
 {
   mChild = aChild;
+#if 0  //TODO port to akonadi
   mStorage->updateChildrenState();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::noContent() const
 {
+#if 0  //TODO port to akonadi
   return mStorage ? mStorage->noContent() : true;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
 }
 
 void KMFolder::setNoContent( bool aNoContent )
 {
+#if 0  //TODO port to akonadi
   mStorage->setNoContent( aNoContent );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::noChildren() const
 {
+#if 0  //TODO port to akonadi
   return mStorage->noChildren();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
 }
 
 void KMFolder::setNoChildren( bool aNoChildren )
 {
-  //TODO port to akonadi
-  //mStorage->setNoChildren( aNoChildren );
+#if 0  //TODO port to akonadi
+  mStorage->setNoChildren( aNoChildren );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMime::Message* KMFolder::getMsg( int idx )
 {
-  //Port to akonadi
+#if 0  //TODO port to akonadi
+  return mStorage->getMsg( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
   return 0;
-  //return mStorage->getMsg( idx );
+#endif
 }
 
 KMMsgInfo* KMFolder::unGetMsg( int idx )
 {
-  //Port to akonadi
+#if 0  //TODO port to akonadi
+  return mStorage->unGetMsg( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
   return 0;
-  //return mStorage->unGetMsg( idx );
+#endif
 }
 
 bool KMFolder::isMessage( int idx )
 {
-  return false;
-  //Port to akonadi
-  //return mStorage->isMessage( idx );
+#if 0  //TODO port to akonadi
+  return mStorage->isMessage( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
 }
 
 DwString KMFolder::getDwString( int idx )
 {
+#if 0  //TODO port to akonadi
   return mStorage->getDwString( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::ignoreJobsForMessage( KMime::Message* m )
 {
+#if 0  //TODO port to akonadi
   mStorage->ignoreJobsForMessage( m );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 FolderJob* KMFolder::createJob( KMime::Message *msg, FolderJob::JobType jt,
                                 KMFolder *folder, const QString &partSpecifier,
                                 const MessageViewer::AttachmentStrategy *as ) const
 {
+#if 0  //TODO port to akonadi
   return mStorage->createJob( msg, jt, folder, partSpecifier, as );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
 FolderJob* KMFolder::createJob( QList<KMime::Message*>& msgList,
                                 const QString& sets,
                                 FolderJob::JobType jt, KMFolder *folder ) const
 {
+#if 0  //TODO port to akonadi
   return mStorage->createJob( msgList, sets, jt, folder );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
 const KMime::Message* KMFolder::getMsgBase( int idx ) const
 {
+#if 0  //TODO port to akonadi
   return mStorage->getMsgBase( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
 KMime::Message* KMFolder::getMsgBase( int idx )
 {
+#if 0  //TODO port to akonadi
   return mStorage->getMsgBase( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 const KMime::Message* KMFolder::operator[]( int idx ) const
 {
+#if 0  //TODO port to akonadi
   return mStorage->operator[]( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
 KMime::Message* KMFolder::operator[]( int idx )
 {
+#if 0  //TODO port to akonadi
   return mStorage->operator[]( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
 KMime::Message* KMFolder::take( int idx )
 {
+#if 0  //TODO port to akonadi
   return mStorage->take( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
+#endif
 }
 
 void KMFolder::takeMessages( const QList<KMime::Message*>& msgList )
 {
+#if 0  //TODO port to akonadi
   mStorage->takeMessages( msgList );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::addMsg( KMime::Message* msg, int* index_return )
 {
+#if 0  //TODO port to akonadi
   return mStorage->addMsg( msg, index_return );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::addMsgKeepUID( KMime::Message* msg, int* index_return )
 {
+#if 0  //TODO port to akonadi
   return mStorage->addMsgKeepUID( msg, index_return );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::addMessages( QList<KMime::Message*>& list, QList<int>& index_return )
 {
+#if 0  //TODO port to akonadi
   return mStorage->addMessages( list, index_return );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::emitMsgAddedSignals( int idx )
 {
+#if 0  //TODO port to akonadi
   mStorage->emitMsgAddedSignals( idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::removeMsg( int i, bool imapQuiet )
 {
+#if 0  //TODO port to akonadi
   mStorage->removeMsg( i, imapQuiet );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::removeMessages( QList<KMime::Message*> msgList, bool imapQuiet ) // TODO const ref
 {
+#if 0  //TODO port to akonadi
   mStorage->removeMessages( msgList, imapQuiet );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::expungeOldMsg( int days )
 {
+#if 0  //TODO port to akonadi
   return mStorage->expungeOldMsg( days );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::moveMsg( KMime::Message* msg, int* index_return )
 {
+#if 0  //TODO port to akonadi
   return mStorage->moveMsg( msg, index_return );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::moveMsg(QList<KMime::Message*> q, int* index_return )
 {
+#if 0  //TODO port to akonadi
   return mStorage->moveMsg( q, index_return );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::find( const KMime::Content* msg ) const
 {
+#if 0  //TODO port to akonadi
   return mStorage->find( msg );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::find( const KMime::Message* msg ) const
 {
+#if 0  //TODO port to akonadi
   return mStorage->find( msg );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::count( bool cache ) const
 {
+#if 0  //TODO port to akonadi
   return mStorage->count( cache );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::countUnread()
 {
+#if 0  //TODO port to akonadi
   return mStorage->countUnread();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::countUnreadRecursive()
@@ -533,7 +703,11 @@ int KMFolder::countUnreadRecursive()
 void KMFolder::msgStatusChanged( const MessageStatus& oldStatus,
                                  const MessageStatus& newStatus, int idx )
 {
+#if 0  //TODO port to akonadi
   mStorage->msgStatusChanged( oldStatus, newStatus, idx );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::msgTagListChanged( int idx )
@@ -544,47 +718,74 @@ void KMFolder::msgTagListChanged( int idx )
 
 int KMFolder::open( const char *owner )
 {
-  return -1;
+#if 0  //TODO port to akonadi
   //Port to akonadi
-  //return mStorage->open( owner );
+  return mStorage->open( owner );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::canAccess() const
 {
-  //TODO port to akonadi
-  return true;//mStorage->canAccess();
+#if 0  //TODO port to akonadi
+  return mStorage->canAccess();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
 }
 
 void KMFolder::close( const char *owner, bool force )
 {
+#if 0  //TODO port to akonadi
   // do not emit closed() in here - as this would regain too early
   mStorage->close( owner, force );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::sync()
 {
-  //Port to akonadi
-  //mStorage->sync();
+#if 0  //TODO port to akonadi
+  mStorage->sync();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::isOpened() const
 {
+#if 0  //TODO port to akonadi
   return mStorage->isOpened();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return true;
+#endif
 }
 
 void KMFolder::markNewAsUnread()
 {
-  //Port to akonadi
-  //mStorage->markNewAsUnread();
+#if 0  //TODO port to akonadi
+  mStorage->markNewAsUnread();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::markUnreadAsRead()
 {
+#if 0  //TODO port to akonadi
   mStorage->markUnreadAsRead();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::remove()
 {
+#if 0  //TODO port to akonadi
   /* The storage needs to be open before remove is called, otherwise
      it will not unregister the corresponding serial numbers from
      the message dict, since its message list is empty, and the .ids
@@ -592,56 +793,99 @@ void KMFolder::remove()
      dict returning stale pointers to the folder later. */
   mStorage->open("folderremoval");
   mStorage->remove();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::expunge()
 {
+#if 0  //TODO port to akonadi
   return mStorage->expunge();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::rename( const QString& newName, KMFolderDir *aParent )
 {
+#if 0  //TODO port to akonadi
   return mStorage->rename( newName, aParent );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::dirty() const
 {
+#if 0  //TODO port to akonadi
   return mStorage->dirty();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setDirty( bool f )
 {
+#if 0  //TODO port to akonadi
   mStorage->setDirty( f );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::needsCompacting() const
 {
+#if 0  //TODO port to akonadi
   return mStorage->needsCompacting();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setNeedsCompacting( bool f )
 {
+#if 0  //TODO port to akonadi
   mStorage->setNeedsCompacting( f );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::quiet( bool beQuiet )
 {
+#if 0  //TODO port to akonadi
   mStorage->quiet( beQuiet );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::isReadOnly() const
 {
+#if 0  //TODO port to akonadi
   return mStorage->isReadOnly();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::isWritable() const
 {
+#if 0  //TODO port to akonadi
   return !mStorage->isReadOnly() && mStorage->canDeleteMessages();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 bool KMFolder::canDeleteMessages() const
 {
+#if 0  //TODO port to akonadi
   return mStorage->canDeleteMessages();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 QString KMFolder::label() const
@@ -686,13 +930,21 @@ QString KMFolder::mailingListPostAddress() const
 void KMFolder::setMailingListEnabled( bool enabled )
 {
   mMailingListEnabled = enabled;
+#if 0  //TODO port to akonadi
   mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setMailingList( const MailingList& mlist )
 {
   mMailingList = mlist;
+#if 0  //TODO port to akonadi
   mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setUseDefaultIdentity( bool useDefaultIdentity )
@@ -764,17 +1016,22 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
     return; // don't use the value
   }
   mUserWhoField = whoField;
-
-  //TODO port to akonadi
-  //if (writeConfig)
-    //mStorage->writeConfig();
+#if 0  //TODO port to akonadi
+  if (writeConfig)
+    mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   emit viewConfigChanged();
 }
 
 void KMFolder::correctUnreadMsgsCount()
 {
-  //TODO port to akonadi
-  //mStorage->correctUnreadMsgsCount();
+#if 0  //TODO port to akonadi
+  mStorage->correctUnreadMsgsCount();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 QString KMFolder::idString() const
@@ -801,7 +1058,11 @@ void KMFolder::setAutoExpire( bool enabled )
 {
   if( enabled != mExpireMessages ) {
     mExpireMessages = enabled;
+#if 0  //TODO port to akonadi
     mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -809,7 +1070,11 @@ void KMFolder::setUnreadExpireAge( int age )
 {
   if( age >= 0 && age != mUnreadExpireAge ) {
     mUnreadExpireAge = age;
+#if 0  //TODO port to akonadi
     mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -817,14 +1082,22 @@ void KMFolder::setUnreadExpireUnits( ExpireUnits units )
 {
   if (units >= expireNever && units < expireMaxUnits)
     mUnreadExpireUnits = units;
+#if 0  //TODO port to akonadi
     mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setReadExpireAge( int age )
 {
   if( age >= 0 && age != mReadExpireAge ) {
     mReadExpireAge = age;
+#if 0  //TODO port to akonadi    
     mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -832,7 +1105,11 @@ void KMFolder::setReadExpireUnits( ExpireUnits units )
 {
   if (units >= expireNever && units <= expireMaxUnits)
     mReadExpireUnits = units;
+#if 0  //TODO port to akonadi
     mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
@@ -840,7 +1117,11 @@ void KMFolder::setExpireAction( ExpireAction a )
 {
   if ( a != mExpireAction ) {
     mExpireAction = a;
+#if 0  //TODO port to akonadi
     mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -848,7 +1129,11 @@ void KMFolder::setExpireToFolderId( const QString& id )
 {
   if ( id != mExpireToFolderId ) {
     mExpireToFolderId = id;
+#if 0  //TODO port to akonadi
     mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -889,7 +1174,11 @@ void KMFolder::compact( CompactOptions options )
     KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(this, false);
     kmkernel->jobScheduler()->registerTask( task );
   } else {
+#if 0  //TODO port to akonadi
     mStorage->compact( options == CompactSilentlyNow );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 }
 
@@ -900,18 +1189,30 @@ KMFolder* KMFolder::trashFolder() const
 
 int KMFolder::writeIndex( bool createEmptyIndex )
 {
+#if 0  //TODO port to akonadi
   return mStorage->writeIndex( createEmptyIndex );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setStatus( int idx, const MessageStatus& status, bool toggle )
 {
+#if 0  //TODO port to akonadi
   mStorage->setStatus( idx, status, toggle );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setStatus( QList<int>& ids, const MessageStatus& status,
                           bool toggle )
 {
+#if 0  //TODO port to akonadi
   mStorage->setStatus( ids, status, toggle);
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setIconPaths( const QString &normalPath,
@@ -919,28 +1220,48 @@ void KMFolder::setIconPaths( const QString &normalPath,
 {
   mNormalIconPath = normalPath;
   mUnreadIconPath = unreadPath;
+#if 0  //TODO port to akonadi
   mStorage->writeConfig();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   emit iconsChanged();
 }
 
 void KMFolder::removeJobs()
 {
+#if 0  //TODO port to akonadi
   mStorage->removeJobs();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 int KMFolder::updateIndex()
 {
+#if 0  //TODO port to akonadi
   return mStorage->updateIndex();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::reallyAddMsg( KMime::Message* aMsg )
 {
+#if 0  //TODO port to akonadi
   mStorage->reallyAddMsg( aMsg );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::reallyAddCopyOfMsg( KMime::Message* aMsg )
 {
+#if 0  //TODO port to akonadi
   mStorage->reallyAddCopyOfMsg( aMsg );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::setShortcut( const KShortcut &sc )
@@ -953,7 +1274,11 @@ void KMFolder::setShortcut( const KShortcut &sc )
 
 bool KMFolder::isMoveable() const
 {
+#if 0  //TODO port to akonadi
   return !isSystemFolder() && mStorage->isMoveable();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )

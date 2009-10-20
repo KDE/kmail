@@ -10,8 +10,6 @@
 #include <boost/scoped_ptr.hpp>
 #include "kmail-akonadi.h"
 class KMReaderWin;
-class KMMessage;
-class KMMessagePart;
 class KAction;
 class KActionMenu;
 class KFontAction;
@@ -25,6 +23,7 @@ class MessageActions;
 
 namespace KMime {
   class Message;
+  class Content;
 }
 namespace Akonadi {
   class Item;
@@ -37,7 +36,7 @@ class KMReaderMainWin : public KMail::SecondaryWindow
 public:
   KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride, char *name = 0 );
   KMReaderMainWin( char *name = 0 );
-  KMReaderMainWin(KMMessagePart* aMsgPart,
+  KMReaderMainWin(KMime::Content* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QString & encoding, char *name = 0 );
   virtual ~KMReaderMainWin();
@@ -85,7 +84,7 @@ private:
   void updateCustomTemplateMenus();
 
   KMReaderWin *mReaderWin;
-  KMMessage *mMsg;
+  KMime::Message *mMsg;
   KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,

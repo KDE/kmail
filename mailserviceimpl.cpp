@@ -34,9 +34,6 @@
 #include "composer.h"
 #include "messagehelper.h"
 
-#include "kmmessage.h"
-#include "kmmsgpart.h"
-
 #include <kurl.h>
 #include <kdebug.h>
 #include <KMime/Message>

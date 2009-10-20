@@ -20,8 +20,7 @@
 
 #include "kmpopfiltercnfrmdlg.h"
 
-#include "kmmsgbase.h"
-#include "kmmessage.h"
+#include "messagehelper.h"
 
 #include <QButtonGroup>
 #include <QCheckBox>
@@ -35,9 +34,11 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
+#include <kdebug.h>
 #include <klocale.h>
 #include <kio/global.h>
 
+#include <kmime/kmime_message.h>
 #include <kmime/kmime_dateformatter.h>
 
 #include <assert.h>
@@ -294,8 +295,8 @@ bool KMPopHeadersViewItem::operator < ( const QTreeWidgetItem & other ) const
     case 3: { // subject column
       const KMPopHeadersViewItem *otherItem =
           (static_cast<const KMPopHeadersViewItem*>( &other ));
-      QString subject1 = skipKeyword( text( 3 ).toLower() );
-      QString subject2 = skipKeyword( otherItem->text( 3 ).toLower() );
+      QString subject1 = KMail::MessageHelper::skipKeyword( text( 3 ).toLower() );
+      QString subject2 = KMail::MessageHelper::skipKeyword( otherItem->text( 3 ).toLower() );
       return subject1 < subject2;
     }
 
@@ -398,11 +399,14 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
       upperHeadersView->addTopLevelItem( lvi );
       upperBox->show();
     }
-
+#if 0  //TODO port to akonadi
     if ( lvi ) {
       mItemMap[lvi] = header;
       setupLVI( lvi, header->header() );
     }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   // Initially sort the columns of the treewidgets by size
@@ -424,24 +428,24 @@ KMPopFilterCnfrmDlg::~KMPopFilterCnfrmDlg()
 {
 }
 
-void KMPopFilterCnfrmDlg::setupLVI( KMPopHeadersViewItem *lvi, KMMessage *msg )
+void KMPopFilterCnfrmDlg::setupLVI( KMPopHeadersViewItem *lvi, KMime::Message *msg )
 {
   // set the subject
-  QString tmp = msg->subject();
+  QString tmp = msg->subject()->asUnicodeString();
   if( tmp.isEmpty() )
     tmp = i18nc("@item:intext", "No Subject");
   lvi->setText( 3, tmp );
   lvi->setToolTip( 3, tmp );
 
   // set the sender
-  tmp = msg->fromStrip();
+  tmp = KMail::MessageHelper::fromStrip( msg );
   if( tmp.isEmpty() )
     tmp = i18nc("@item:intext Sender of message is unknown", "Unknown");
   lvi->setText( 4, tmp );
   lvi->setToolTip( 4, tmp );
 
   // set the receiver
-  tmp = msg->toStrip();
+  tmp = KMail::MessageHelper::toStrip( msg );
   if( tmp.isEmpty() )
     tmp = i18nc("@item:intext Receiver of message is unknown", "Unknown");
   lvi->setText( 5, tmp );
@@ -449,13 +453,12 @@ void KMPopFilterCnfrmDlg::setupLVI( KMPopHeadersViewItem *lvi, KMMessage *msg )
 
   // set the date
   lvi->setText( 6, KMime::DateFormatter::formatDate(
-                                   KMime::DateFormatter::Fancy, msg->date() ) );
-#if 0 //Port to akonadi
-  lvi->setIsoDate( msg->dateIsoStr() );
-#endif
+                                   KMime::DateFormatter::Fancy, msg->date()->dateTime().dateTime().toTime_t() ) );
+  lvi->setIsoDate( msg->date()->dateTime().toString() );
+
   // set the size
-  lvi->setText( 7, KIO::convertSize( msg->msgLength() ) );
-  lvi->setMessageSize( msg->msgLength() );
+  lvi->setText( 7, KIO::convertSize( msg->storageSize() ) );
+  lvi->setMessageSize( msg->storageSize() );
 
   connect( lvi, SIGNAL( radioButtonClicked(QTreeWidgetItem*, int) ),
            lvi->treeWidget(), SLOT( slotRadioButtonClicked(QTreeWidgetItem*,int) ) );
@@ -472,6 +475,7 @@ void KMPopFilterCnfrmDlg::slotToggled( bool on )
   setUpdatesEnabled( false );
   if ( on ) {
     if ( mShowLaterMsgs ) {
+#if 0  //TODO port to akonadi
       // show download and deletek msgs in the list view too
       for ( int i = 0; i < mDDLList.count(); ++i ) {
         KMPopHeaders *headers = mDDLList[i];
@@ -482,6 +486,9 @@ void KMPopFilterCnfrmDlg::slotToggled( bool on )
         mDelList.append( lvi );
         setupLVI( lvi, headers->header() );
       }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
 
     if ( !mLowerBoxVisible ) {

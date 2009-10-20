@@ -27,7 +27,10 @@ using KPIM::MessageStatus;
 #include <QList>
 #include <QString>
 
-class KMMessage;
+namespace KMime {
+  class Message;
+}
+
 class KConfigGroup;
 class DwBoyerMoore;
 class DwString;
@@ -89,17 +92,17 @@ public:
 
   virtual ~KMSearchRule() {}
 
-  /** Tries to match the rule against the given KMMessage.
+  /** Tries to match the rule against the given KMime::Message.
       @return true if the rule matched, false otherwise. Must be
       implemented by subclasses.
   */
-  virtual bool matches( const KMMessage * msg ) const = 0;
+  virtual bool matches( KMime::Message * msg ) const = 0;
 
    /** Optimized version tries to match the rule against the given
        @see DwString.
        @return true if the rule matched, false otherwise.
    */
-  virtual bool matches( const DwString & str, KMMessage & msg,
+  virtual bool matches( const DwString & str, KMime::Message & msg,
                         const DwBoyerMoore * headerField=0,
                         int headerLen=-1 ) const;
 
@@ -183,12 +186,12 @@ public:
   virtual bool isEmpty() const ;
   virtual bool requiresBody() const;
 
-  virtual bool matches( const KMMessage * msg ) const;
+  virtual bool matches( KMime::Message * msg ) const;
 
   /** Optimized version tries to match the rule against the given  DwString.
       @return true if the rule matched, false otherwise.
   */
-  virtual bool matches( const DwString & str, KMMessage & msg,
+  virtual bool matches( const DwString & str, KMime::Message & msg,
                         const DwBoyerMoore * headerField=0,
                         int headerLen=-1 ) const;
 
@@ -212,7 +215,7 @@ public:
                          Function function=FuncContains, const QString & contents=QString() );
   virtual bool isEmpty() const ;
 
-  virtual bool matches( const KMMessage * msg ) const;
+  virtual bool matches( KMime::Message * msg ) const;
 
   // Optimized matching not implemented, will use the unoptimized matching
   // from KMSearchRule
@@ -289,7 +292,7 @@ public:
    explicit KMSearchRuleStatus( MessageStatus status, Function function=FuncContains );
 
    virtual bool isEmpty() const ;
-   virtual bool matches( const KMMessage * msg ) const;
+   virtual bool matches( KMime::Message * msg ) const;
 
    //Not possible to implement optimized form for status searching
    using KMSearchRule::matches;
@@ -333,7 +336,7 @@ public:
 
   /** Constructor which provides a pattern with minimal, but
       sufficient initialization. Unmodified, such a pattern will fail
-      to match any KMMessage. You can query for such an empty
+      to match any KMime::Message. You can query for such an empty
       rule by using isEmpty, which is inherited from QPtrList.
   */
   KMSearchPattern();
@@ -348,7 +351,7 @@ public:
   ~KMSearchPattern();
 
   /** The central function of this class. Tries to match the set of
-      rules against a KMMessage. It's virtual to allow derived
+      rules against a KMime::Message. It's virtual to allow derived
       classes with added rules to reimplement it, yet reimplemented
       methods should and (&&) the result of this function with their
       own result or else most functionality is lacking, or has to be
@@ -356,7 +359,7 @@ public:
 
       @return true if the match was successful, false otherwise.
   */
-  bool matches( const KMMessage * msg, bool ignoreBody = false ) const;
+  bool matches( KMime::Message * msg, bool ignoreBody = false ) const;
   bool matches( const DwString & str, bool ignoreBody = false ) const;
   bool matches( quint32 sernum, bool ignoreBody = false ) const;
 

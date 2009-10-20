@@ -20,7 +20,21 @@
 #ifndef KMAIL_MESSAGE_HELPER_H
 #define KMAIL_MESSAGE_HELPER_H
 
-#include "kmmessage.h" //TODO Temporary for ReplyStrategy, move that here!
+#include <kmime/kmime_headers.h>
+#include <kmime/kmime_mdn.h>
+
+namespace KMail {
+  /**
+   * Enumeration that defines the available reply "modes"
+   */
+  enum ReplyStrategy {
+    ReplySmart = 0,    //< Attempt to automatically guess the best recipient for the reply
+    ReplyAuthor,       //< Reply to the author of the message (possibly NOT the mailing list, if any)
+    ReplyList,         //< Reply to the mailing list (and not the author of the message)
+    ReplyAll,          //< Reply to author and all the recipients in CC
+    ReplyNone          //< Don't set reply addresses: they will be set manually
+  };
+}
 
 namespace KMime {
   class Message;
@@ -189,9 +203,16 @@ namespace MessageHelper {
   QString toStrip( KMime::Message *msg );
   QString fromStrip( KMime::Message *msg );
 
-    /** Returns @p str with all "forward" and "reply" prefixes stripped off.
-    **/
-    QString stripOffPrefixes( const QString& str );
+  /** Returns @p str with all "forward" and "reply" prefixes stripped off.
+  **/
+  QString stripOffPrefixes( const QString& str );
+
+  /** Skip leading keyword if keyword has given character at it's end
+   * (e.g. ':' or ',') and skip the then following blanks (if any) too.
+   * If keywordFound is specified it will be true if a keyword was skipped
+   * and false otherwise. */
+  QString skipKeyword(const QString& str, QChar sepChar=':',
+				 bool* keywordFound=0);
 
 }
   

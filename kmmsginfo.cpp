@@ -229,10 +229,10 @@ void KMMsgInfo::init(const QByteArray& aSubject, const QByteArray& aFrom,
     if(!kd)
         kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
-    kd->subject = decodeRFC2047String( aSubject, prefCharset );
-    kd->from = decodeRFC2047String( StringUtil::stripEmailAddr( aFrom ),
+    kd->subject = KMime::decodeRFC2047String( aSubject, prefCharset );
+    kd->from = KMime::decodeRFC2047String( StringUtil::stripEmailAddr( aFrom ),
                                     prefCharset );
-    kd->to = decodeRFC2047String( StringUtil::stripEmailAddr( aTo ),
+    kd->to = KMime::decodeRFC2047String( StringUtil::stripEmailAddr( aTo ),
                                   prefCharset );
     kd->replyToIdMD5 = base64EncodedMD5( replyToId );
     kd->replyToAuxIdMD5 = base64EncodedMD5( replyToAuxId );

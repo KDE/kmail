@@ -31,6 +31,9 @@
 #include "jobscheduler.h"
 #include <QStringList>
 
+// for large file support
+#include <sys/types.h>
+
 namespace KMail {
 
 /**

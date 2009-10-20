@@ -54,7 +54,7 @@ private:
 
 private:
   QTimer mTimer;
-  QList<KMMsgBase*> mRemovedMsgs;
+  QList<KMime::Message*> mRemovedMsgs;
   int mCurrentIndex;
   int mMaxUnreadTime;
   int mMaxReadTime;

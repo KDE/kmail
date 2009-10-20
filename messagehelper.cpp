@@ -38,6 +38,7 @@
 #include <kmime/kmime_headers.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
+#include <KPIMUtils/Email>
 
 namespace KMail {
 
@@ -1235,6 +1236,32 @@ QString stripOffPrefixes( const QString& str )
 {
   return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
                           true, QString() ).trimmed();
+}
+
+QString skipKeyword( const QString& aStr, QChar sepChar,
+			       bool* hasKeyword)
+{
+  QString str = aStr;
+
+  while (str[0] == ' ') str.remove(0,1);
+  if (hasKeyword) *hasKeyword=false;
+  
+  unsigned int i = 0, maxChars = 3;
+  unsigned int strLength(str.length());
+  for (i=0; i < strLength && i < maxChars; i++)
+  {
+    if (str[i] < 'A' || str[i] == sepChar) break;
+  }
+
+  if (str[i] == sepChar) // skip following spaces too
+  {
+    do {
+      i++;
+    } while (str[i] == ' ');
+    if (hasKeyword) *hasKeyword=true;
+    return str.mid(i);
+  }
+  return str;
 }
 
 

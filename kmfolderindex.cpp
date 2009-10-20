@@ -202,6 +202,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
 bool KMFolderIndex::readIndex()
 {
+#if 0  //TODO port to akonadi
   qint32 len;
   KMMsgInfo* mi;
 
@@ -277,11 +278,7 @@ bool KMFolderIndex::readIndex()
       ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;
     }
-#if 0 //TODO port to akonadi
     mMsgList.append(mi, false);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
   if( version < 1505)
   {
@@ -290,6 +287,9 @@ bool KMFolderIndex::readIndex()
     writeIndex();
   }
   mTotalMsgs = mMsgList.count();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return true;
 }
 

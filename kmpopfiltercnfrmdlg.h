@@ -37,6 +37,10 @@ class QSignalMapper;
 class QString;
 class QWidget;
 
+namespace KMime {
+  class Message;
+}
+
 class KMPopFilterCnfrmDlg;
 
 // This treewidget shows KMPopHeadersViewItems.
@@ -159,7 +163,7 @@ protected:
   KMPopHeadersView *mFilteredHeaders;
   bool mLowerBoxVisible;
   bool mShowLaterMsgs;
-  void setupLVI( KMPopHeadersViewItem *lvi, KMMessage *msg );
+  void setupLVI( KMPopHeadersViewItem *lvi, KMime::Message *msg );
 
 public:
   KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,

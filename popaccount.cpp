@@ -440,7 +440,7 @@ MetaData PopAccount::slaveConfig() const {
 // add data to a KMMessage
 void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString &)
 {
-#if 0 //Port to akonadi or remove all if done by akonadi
+#if 0  //TODO port to akonadi
   if (infoMsg != "message complete") return;
   KMMessage *msg = new KMMessage;
   msg->setComplete(true);
@@ -448,9 +448,7 @@ void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString 
   // when piping through external programs
   uint newSize = Util::crlf2lf( curMsgData.data(), curMsgData.size() );
   curMsgData.resize( newSize );
-#if 0 //Port it to akonadi
   msg->fromString( curMsgData, true );
-#endif
   if ( stage == Head ) {
     KMPopHeaders *header = mHeadersOnServer[ mHeaderIndex ];
     int size = mMsgsPendingDownload[ header->id() ];
@@ -468,6 +466,8 @@ void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString 
     msgUidsAwaitingProcessing.enqueue( mUidForIdMap[ idsOfMsgs[indexOfCurrentMsg] ] );
     slotGetNextMsg();
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 

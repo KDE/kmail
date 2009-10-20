@@ -98,8 +98,8 @@ set(kmailprivate_LIB_SRCS
    folderstorage.cpp
    actionscheduler.cpp
    messageproperty.cpp
-   kmmsgpart.cpp
-   #kmmsginfo.cpp
+#   kmmsgpart.cpp
+#   kmmsginfo.cpp
    accountmanager.cpp
    kmacctfolder.cpp
    kmdict.cpp
@@ -125,7 +125,7 @@ set(kmailprivate_LIB_SRCS
 #   kmacctimap.cpp
 #   kmacctcachedimap.cpp
    kmfawidgets.cpp
-   #kmfoldermbox.cpp
+#   kmfoldermbox.cpp
 #   kmfolderimap.cpp
    undostack.cpp
 #   kmfoldercachedimap.cpp
@@ -161,7 +161,7 @@ set(kmailprivate_LIB_SRCS
    kmlineeditspell.cpp
    composer.cpp
    isubject.cpp
-   bodyvisitor.cpp
+#   bodyvisitor.cpp
    antispamwizard.cpp
    secondarywindow.cpp
    filterlog.cpp
@@ -175,6 +175,7 @@ set(kmailprivate_LIB_SRCS
    expirejob.cpp
    compactionjob.cpp
    jobscheduler.cpp
+   callback.cpp
    accountcombobox.cpp
    redirectdialog.cpp
    foldershortcutdialog.cpp

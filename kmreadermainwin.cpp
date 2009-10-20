@@ -90,7 +90,7 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 
 
 //-----------------------------------------------------------------------------
-KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
+KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QString & encoding, char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
@@ -189,10 +189,14 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 
 void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
 {
+#if 0  //TODO port to akonadi
   assert(mMsg);
   assert(folderPtr == mMsg->parent());
   if( mMsg && folderPtr == mMsg->parent() )
     mMsg->setParent( 0 );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------

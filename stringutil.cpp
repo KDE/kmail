@@ -28,6 +28,8 @@
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_header_parsing.h>
+#include <kmime/kmime_util.h>
+
 #include <KPIMUtils/Email>
 #include <KPIMIdentities/IdentityManager>
 #include <kmime/kmime_util.h>

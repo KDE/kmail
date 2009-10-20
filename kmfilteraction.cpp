@@ -34,6 +34,7 @@ using KMail::RegExpLineEdit;
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimutils/kfileio.h>
+#include <kpimutils/email.h>
 
 // KDE headers
 #include <kcombobox.h>

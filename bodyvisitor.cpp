@@ -104,6 +104,7 @@ QList<KMMessagePart*> BodyVisitor::partsToLoad()
     if ( part->originalContentTypeStr().contains("SIGNED") ) {
       // signed messages have to be loaded completely
       // so construct a new dummy part that loads the body
+
       KMMessagePart *fake = new KMMessagePart();
       fake->setPartSpecifier( "TEXT" );
       fake->setOriginalContentTypeStr("");

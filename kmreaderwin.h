@@ -51,8 +51,6 @@ class KToggleAction;
 class KHTMLPart;
 class KUrl;
 class KMFolder;
-class KMMessage;
-class KMMessagePart;
 //Remove it when we remove old code
 class HtmlStatusBar;
 namespace KMail {
@@ -144,7 +142,7 @@ public:
 
   /** Instead of settings a message to be shown sets a message part
       to be shown */
-  void setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
+  void setMsgPart( KMime::Content* aMsgPart, bool aHTML,
                    const QString& aFileName, const QString& pname );
 
   void setMsgPart( partNode * node );
@@ -226,7 +224,7 @@ public:
   KHTMLPart * htmlPart() const;
 
   /** Returns the current message or 0 if none. */
-  KMMessage* message(KMFolder** folder=0) const;
+  KMime::Message* message(KMFolder** folder=0) const;
   /** Set the serial number of the message this reader window is currently
    *  waiting for. Used to discard updates for already deselected messages. */
   void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
@@ -305,7 +303,7 @@ private:
 //TODO(Andras) Remove unneeded stuff
   int mAtmCurrent;
   QString mAtmCurrentName;
-  KMMessage *mMessage;
+  KMime::Message *mMessage;
 
   // See setOriginalMsg() for an explaination for those two.
   unsigned long mSerNumOfOriginalMessage;

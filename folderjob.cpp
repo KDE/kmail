@@ -40,7 +40,7 @@
 namespace KMail {
 
 //----------------------------------------------------------------------------
-FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
+FolderJob::FolderJob( KMime::Message *msg, JobType jt, KMFolder* folder,
                           const QString &partSpecifier )
   : mType( jt ), mSrcFolder( 0 ), mDestFolder( folder ), mPartSpecifier( partSpecifier ),
     mErrorCode( 0 ),
@@ -48,15 +48,13 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
 {
   if ( msg ) {
     mMsgList.append( msg );
-#if 0 //port to akonadi ???
-    mSets = msg->headerField( "X-UID", KMMessage::NoEncoding );
-#endif
+    mSets = msg->headerByType( "X-UID" ) ? msg->headerByType( "X-UID" )->asUnicodeString() : "" ;
   }
   init();
 }
 
 //----------------------------------------------------------------------------
-FolderJob::FolderJob( const QList<KMMessage*>& msgList, const QString& sets,
+FolderJob::FolderJob( const QList<KMime::Message*>& msgList, const QString& sets,
                           JobType jt, KMFolder *folder )
   : mMsgList( msgList ),mType( jt ),
     mSets( sets ), mSrcFolder( 0 ), mDestFolder( folder ),
@@ -117,7 +115,7 @@ void FolderJob::kill()
 }
 
 //----------------------------------------------------------------------------
-QList<KMMessage*> FolderJob::msgList() const
+QList<KMime::Message*> FolderJob::msgList() const
 {
   return mMsgList;
 }
