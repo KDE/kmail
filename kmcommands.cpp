@@ -2194,7 +2194,7 @@ void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 }
 
 
-KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
+KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                                 const QList<KMime::Message*> &msgList)
     : mDestFolder( destFolder ), mProgressItem( 0 )
 {
@@ -2206,7 +2206,7 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
 #endif
 }
 
-KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
+KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                               KMime::Message *msg )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
@@ -2393,6 +2393,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
 
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
+#if 0 //Port to akonadi
   if ( folder != mDestFolder || !mLostBoys.contains( serNum )  ) {
     //kDebug() << "Different folder or invalid serial number.";
     return;
@@ -2414,10 +2415,12 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
       mProgressItem->updateProgress();
     }
   }
+#endif
 }
 
 void KMMoveCommand::completeMove( Result result )
 {
+#if 0
   if ( mDestFolder )
     mDestFolder->close( "kmcommand" );
   while ( !mOpenedFolders.empty() ) {
@@ -2432,6 +2435,7 @@ void KMMoveCommand::completeMove( Result result )
   setResult( result );
   emit completed( this );
   deleteLater();
+#endif
 }
 
 void KMMoveCommand::slotMoveCanceled()
@@ -2440,24 +2444,25 @@ void KMMoveCommand::slotMoveCanceled()
 }
 
 // srcFolder doesn't make much sense for searchFolders
-KMTrashMsgCommand::KMTrashMsgCommand( KMFolder* srcFolder,
+KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder,
   const QList<KMime::Message*> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
-  srcFolder->open( "kmcommand" );
-  mOpenedFolders.push_back( srcFolder );
+  //srcFolder->open( "kmcommand" );
+  //mOpenedFolders.push_back( srcFolder );
 }
 
-KMTrashMsgCommand::KMTrashMsgCommand( KMFolder* srcFolder, KMime::Message * msg )
+KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, KMime::Message * msg )
 :KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
-  srcFolder->open( "kmcommand" );
-  mOpenedFolders.push_back( srcFolder );
+  //srcFolder->open( "kmcommand" );
+  //mOpenedFolders.push_back( srcFolder );
 }
 
 KMTrashMsgCommand::KMTrashMsgCommand( quint32 sernum )
 :KMMoveCommand( sernum )
 {
+#if 0 //Port to akonadi
   KMFolder *srcFolder = 0;
   int idx;
   KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
@@ -2471,16 +2476,20 @@ KMTrashMsgCommand::KMTrashMsgCommand( quint32 sernum )
   } else {
     kWarning() << "Failed to find a source folder for serial number: " << sernum;
   }
+#endif
 }
 
-KMFolder * KMTrashMsgCommand::findTrashFolder( KMFolder * folder )
+Akonadi::Collection KMTrashMsgCommand::findTrashFolder( const Akonadi::Collection& folder )
 {
+#if 0 //port to akonadi
   KMFolder* trash = folder->trashFolder();
   if( !trash )
     trash = kmkernel->trashFolder();
   if( trash != folder )
     return trash;
   return 0;
+#endif
+  return Akonadi::Collection();
 }
 
 

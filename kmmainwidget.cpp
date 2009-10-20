@@ -1405,10 +1405,8 @@ void KMMainWidget::newFromTemplate( KMime::Message *msg )
 {
   if ( !msg )
     return;
-#ifdef OLD_COMMAND
   KMCommand *command = new KMUseTemplateCommand( this, msg );
   command->start();
-#endif
 }
 
 
@@ -1869,11 +1867,9 @@ void KMMainWidget::slotResendMsg()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
-  KMCommand *command = new KMResendMessageCommand( this, msg );
+  KMCommand *command = new KMResendMessageCommand( this, &*msg );
 
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------

@@ -767,10 +767,10 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMoveCommand( KMFolder* destFolder, const QList<KMime::Message*> &msgList );
-  KMMoveCommand( KMFolder* destFolder, KMime::Message * msg );
+  KMMoveCommand( const Akonadi::Collection& destFolder, const QList<KMime::Message*> &msgList );
+  KMMoveCommand( const Akonadi::Collection& destFolder, KMime::Message * msg );
 //TODO port to akonadi  KMMoveCommand( KMFolder* destFolder, KMime::Message * msgBase );
-  KMFolder* destFolder() const { return mDestFolder; }
+  Akonadi::Collection destFolder() const { return mDestFolder; }
 
 public slots:
 //TODO port to akonadi void slotImapFolderCompleted(KMFolderImap *folder, bool success);
@@ -780,7 +780,7 @@ public slots:
 protected:
   // Needed for KMDeleteCommand for "move to trash"
   KMMoveCommand( quint32 sernum );
-  void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
+  void setDestFolder( const Akonadi::Collection& folder ) { mDestFolder = folder; }
   void addMsg( KMime::Message *msg ) {
 //TODO port to akonadi      mSerNumList.append( msg->getMsgSerNum() );
 }
@@ -790,7 +790,7 @@ private:
   virtual Result execute();
   void completeMove( Result result );
 
-  KMFolder *mDestFolder;
+  Akonadi::Collection mDestFolder;
   QList<quint32> mSerNumList;
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
@@ -804,12 +804,12 @@ class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
   Q_OBJECT
 
 public:
-  KMTrashMsgCommand( KMFolder* srcFolder, const QList<KMime::Message*> &msgList );
-  KMTrashMsgCommand( KMFolder* srcFolder, KMime::Message * msg );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<KMime::Message*> &msgList );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, KMime::Message * msg );
   KMTrashMsgCommand( quint32 sernum );
 
 private:
-  static KMFolder * findTrashFolder( KMFolder * srcFolder );
+  static Akonadi::Collection findTrashFolder( const Akonadi::Collection& srcFolder );
 
 };
 
