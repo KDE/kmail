@@ -2278,56 +2278,28 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
         const KPIM::MessageStatus &status,
         bool toggle )
 {
-  //TODO
   if ( select.isEmpty() )
     return;
-}
-#ifdef OLD_MESSAGELIST
-void KMMainWidget::setMessageSetStatus(
-    KMail::MessageListView::MessageSet * set,
-    const KPIM::MessageStatus &status, bool toggle
-  )
-{
-  Q_ASSERT( set );
-
-  if ( !set->isValid() )
-  {
-    delete set;
-    return;
-  }
-
-  Q_ASSERT( set->folder() ); // must exist since the set is valid
-
-  // Get the list of messages
-  QList< KMMsgBase * > selectedMessages = set->contentsAsMsgBaseList();
-  if ( selectedMessages.isEmpty() )
-  {
-    delete set;
-    return;
-  }
-
-  // And stuff them into a KMSetStatusCommand :)
-
-  // FIXME: Why we use SerNumList instead of QList< KMMsgBase * > here ?
+    // FIXME: Why we use SerNumList instead of QList< KMMsgBase * > here ?
   SerNumList serNums;
 
-  for( QList< KMMsgBase * >::Iterator it = selectedMessages.begin(); it != selectedMessages.end(); ++it )
-    serNums.append( ( *it )->getMsgSerNum() );
+  for( QList< Akonadi::Item >::const_iterator it = select.constBegin(); it != select.constEnd(); ++it )
+    serNums.append( ( *it ).id() );
 
   Q_ASSERT( !serNums.empty() );
 
   KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
-
+#if 0
   // Reparent the set to the command so it's deleted even if the command
   // doesn't notify the completion for some reason.
   set->setParent( command ); // so it will be deleted when the command finishes
 
   // Set the name to something unique so we can find it back later in the children list
   set->setObjectName( QString( "setStatusMsgCommandMessageSet" ) );
-
+#endif
   command->start();
 }
-#endif
+
 void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle )
 {
   QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();

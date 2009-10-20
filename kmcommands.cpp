@@ -72,6 +72,9 @@
 #include <kmime/kmime_message.h>
 
 #include <kpimidentities/identitymanager.h>
+#include <akonadi/itemmodifyjob.h>
+#include <akonadi/itemfetchjob.h>
+
 
 #include "foldercollection.h"
 
@@ -1743,8 +1746,6 @@ KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
   : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
 {
 }
-#include <akonadi/itemmodifyjob.h>
-#include <akonadi/itemfetchjob.h>
 
 KMCommand::Result KMSetStatusCommand::execute()
 {
