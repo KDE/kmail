@@ -71,7 +71,8 @@ using KWallet::Wallet;
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
-
+#include <akonadi/kmime/specialcollections.h>
+#include <akonadi/collection.h>
 #include "actionscheduler.h"
 
 #include <QByteArray>
@@ -1089,7 +1090,7 @@ QString KMKernel::getFolder( const QString& vpath )
 #endif
   if( !adaptorName.isEmpty())
   {
-#if 0 //TODO port to akonadi	  
+#if 0 //TODO port to akonadi
     if ( folderAdaptor )
       {
         folderAdaptor->unregisterobject();
@@ -1099,7 +1100,7 @@ QString KMKernel::getFolder( const QString& vpath )
     return vpath;
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif    
+#endif
   }
   kWarning() << "Folder not found:" << vpath;
   return QString();
@@ -2167,15 +2168,15 @@ bool KMKernel::folderIsTemplates(const KMFolder * folder)
   return false;
 }
 
-bool KMKernel::folderIsTrash(KMFolder * folder)
+bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
-  assert(folder);
-  if (folder == the_trashFolder) return true;
+  if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Trash ) )
+    return true;
   QStringList actList = acctMgr()->getAccounts();
   QStringList::Iterator it( actList.begin() );
   for( ; it != actList.end() ; ++it ) {
     KMAccount* act = acctMgr()->findByName( *it );
-    if ( act && ( act->trash() == folder->idString() ) )
+    if ( act && ( act->trash() == QString::number( col.id() ) ) )
       return true;
   }
   return false;

@@ -111,11 +111,6 @@ public:
   bool isSent() {
     return KMKernel::self()->folderIsSentMailFolder( this );
   }
-  /** Returns true if this folder is configured as a trash folder, locally or
-    for one of the accounts. */
-  bool isTrash() {
-    return KMKernel::self()->folderIsTrash( this );
-  }
   /** Returns true if this folder is the drafts box of the local account,
     or is configured to be the drafts box of any of the users identities */
   bool isDrafts() {

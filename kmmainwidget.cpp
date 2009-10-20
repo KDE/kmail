@@ -1503,12 +1503,7 @@ void KMMainWidget::slotEmptyFolder()
   QString str;
 
   if (!mCurrentFolder) return;
-  bool isTrash = false;
-#if 0   //TODO port
-    kmkernel->folderIsTrash(mFolder);
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  bool isTrash = kmkernel->folderIsTrash( mCurrentFolder->collection() );
   if (mConfirmEmpty)
   {
     QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
@@ -4316,12 +4311,8 @@ void KMMainWidget::updateFolderMenu()
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
-#if 0
-  mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mFolder))
+  mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder);
 
   //TODO (laurent) use akonadi action. Perhaps we must change text in akonadi.

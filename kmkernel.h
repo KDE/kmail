@@ -25,6 +25,10 @@
 
 Q_DECLARE_METATYPE(QVector<QStringList>)
 
+namespace Akonadi {
+  class Collection;
+}
+
 namespace KIO {
   class Job;
 }
@@ -286,7 +290,9 @@ public:
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsDrafts(const KMFolder *);
   bool folderIsTemplates(const KMFolder *);
-  bool folderIsTrash(KMFolder *);
+
+  bool folderIsTrash( const Akonadi::Collection & );
+
   /**
    * Returns true if the folder is one of the sent-mail folders.
    */
