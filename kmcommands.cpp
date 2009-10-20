@@ -73,6 +73,8 @@
 
 #include <kpimidentities/identitymanager.h>
 
+#include "foldercollection.h"
+
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -3048,7 +3050,7 @@ KMCommand::Result KMResendMessageCommand::execute()
   return OK;
 }
 
-KMMailingListCommand::KMMailingListCommand( QWidget *parent, KMFolder *folder )
+KMMailingListCommand::KMMailingListCommand( QWidget *parent, FolderCollection *folder )
   : KMCommand( parent ), mFolder( folder )
 {
 }
@@ -3087,7 +3089,7 @@ void KMMailingListCommand::commandCompleted( KMCommand *command )
   deleteLater();
 }
 
-KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, KMFolder *folder )
+KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, FolderCollection *folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -3096,7 +3098,7 @@ KUrl::List KMMailingListPostCommand::urls() const
   return mFolder->mailingList().postURLS();
 }
 
-KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, KMFolder *folder )
+KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, FolderCollection *folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -3105,7 +3107,7 @@ KUrl::List KMMailingListSubscribeCommand::urls() const
   return mFolder->mailingList().subscribeURLS();
 }
 
-KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *folder )
+KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *parent, FolderCollection *folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -3114,7 +3116,7 @@ KUrl::List KMMailingListUnsubscribeCommand::urls() const
   return mFolder->mailingList().unsubscribeURLS();
 }
 
-KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, KMFolder *folder )
+KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, FolderCollection *folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -3123,7 +3125,7 @@ KUrl::List KMMailingListArchivesCommand::urls() const
   return mFolder->mailingList().archiveURLS();
 }
 
-KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, KMFolder *folder )
+KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, FolderCollection *folder )
   : KMMailingListCommand( parent, folder )
 {
 }

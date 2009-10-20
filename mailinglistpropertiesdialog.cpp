@@ -334,7 +334,6 @@ void MailingListFolderPropertiesDialog::fillEditBox()
 
 void MailingListFolderPropertiesDialog::slotInvokeHandler()
 {
-#ifdef OLD_COMMAND
   KMCommand *command =0;
   switch ( mAddressCombo->currentIndex() ) {
   case 0:
@@ -357,7 +356,6 @@ void MailingListFolderPropertiesDialog::slotInvokeHandler()
   }
   if ( command )
     command->start();
-#endif
 }
 
 #include "mailinglistpropertiesdialog.moc"

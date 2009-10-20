@@ -29,6 +29,7 @@ class KMReaderWin;
 class partNode;
 class DwBodyPart;
 class DwEntity;
+class FolderCollection;
 
 namespace KIO { class Job; }
 namespace KMail {
@@ -870,7 +871,7 @@ class KMAIL_EXPORT KMMailingListCommand : public KMCommand
 {
   Q_OBJECT
 public:
-  KMMailingListCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListCommand( QWidget *parent, FolderCollection *parentFolder );
 private:
   virtual Result execute();
 private slots:
@@ -878,14 +879,14 @@ private slots:
 protected:
   virtual KUrl::List urls() const =0;
 protected:
-  KMFolder *mFolder;
+  FolderCollection *mFolder;
 };
 
 class KMAIL_EXPORT KMMailingListPostCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListPostCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListPostCommand( QWidget *parent, FolderCollection *parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -894,7 +895,7 @@ class KMAIL_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListSubscribeCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListSubscribeCommand( QWidget *parent, FolderCollection *parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -903,7 +904,7 @@ class KMAIL_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListUnsubscribeCommand( QWidget *parent, FolderCollection *parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -912,7 +913,7 @@ class KMAIL_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListArchivesCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListArchivesCommand( QWidget *parent, FolderCollection *parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -921,7 +922,7 @@ class KMAIL_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListHelpCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListHelpCommand( QWidget *parent, FolderCollection *parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };

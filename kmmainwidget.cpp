@@ -1415,14 +1415,12 @@ void KMMainWidget::newFromTemplate( KMime::Message *msg )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPostToML()
 {
-#ifdef OLD_COMMAND
   if ( mCurrentFolder && mCurrentFolder->isMailingListEnabled() ) {
-    KMCommand *command = new KMMailingListPostCommand( this, mFolder );
+    KMCommand *command = new KMMailingListPostCommand( this, mCurrentFolder );
     command->start();
   }
   else
     slotCompose();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1861,9 +1859,7 @@ void KMMainWidget::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUseTemplate()
 {
-#ifdef OLD_MESSAGELIST
-  newFromTemplate( mMessagePane->currentMessage() );
-#endif
+  newFromTemplate( &*mMessagePane->currentMessage() );
 }
 
 
