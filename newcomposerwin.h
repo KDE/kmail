@@ -229,7 +229,7 @@ class KMComposeWin : public KMail::Composer
      * Returns message of the composer. To apply the user changes to the
      * message, call applyChanges() first.
      */
-     //KMMessage *msg() const { return mMsg; }
+     KMime::Message *msg() const { return mMsg; }
 
   public: // kmkernel
     /**
@@ -500,13 +500,17 @@ class KMComposeWin : public KMail::Composer
   private:
     /**
      * Applies the user changes to the message object of the composer
-     * and signs/encrypts the message if activated. Returns false in
-     * case of an error (e.g. if PGP encryption fails).
-     * Disables the controls of the composer window unless @p dontDisable
-     * is true.
+     * and signs/encrypts the message if activated.
+     * Disables the controls of the composer window.
      */
-    void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false ); // TODO rename
-
+    void readyForSending();
+    /**
+     * Applies the user changes to the message object, but doesn't
+     * sign nor decrypt, and doesn't disable the controls of the
+     * composer window.
+     */
+    void applyAutoSave();
+    
     void fillGlobalPart( Message::GlobalPart *globalPart );
     void fillTextPart( Message::TextPart *part );
     void fillInfoPart( Message::InfoPart *part );
@@ -737,6 +741,8 @@ class KMComposeWin : public KMail::Composer
     QList<QPointer<KMFolder> > mFolderList;
 
   private:
+    void continueAutoSave();
+
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
     }
@@ -754,14 +760,11 @@ class KMComposeWin : public KMail::Composer
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();
-
-    void slotComposerResult( KJob *job );
+    
+    void slotAutoSaveComposeResult( KJob *job );
+    void slotSendComposeResult( KJob *job );
     void slotQueueResult( KJob *job );
-
-    //void slotEnqueueResult( bool result );
-    void slotContinueDoSend( bool );
     void slotContinuePrint( bool );
-    void slotContinueAutoSave();
 
     void slotEncryptChiasmusToggled( bool );
 

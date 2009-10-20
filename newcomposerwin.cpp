@@ -654,25 +654,10 @@ void KMComposeWin::autoSaveMessage()
     mAutoSaveTimer->stop();
   }
   
-  applyChanges( true, true );
-
-  #if 0
-  // Make sure that this slot isn't connected multiple times
-  disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-           this, SLOT( slotContinueAutoSave() ) );
-  // Now reconnect it once.
-  connect( this, SIGNAL( applyChangesDone( bool ) ),
-           this, SLOT( slotContinueAutoSave() ) );
-  // This method is called when KMail crashed, so don't try signing/encryption
-  // and don't disable controls because it is also called from a timer and
-  // then the disabling is distracting.
-  applyChanges( true, true );
-
-  // Don't continue before the applyChanges is done!
-#endif
+  applyAutoSave();
 }
 
-void KMComposeWin::slotContinueAutoSave()
+void KMComposeWin::continueAutoSave()
 {
   Q_ASSERT( false );
 #if 0
@@ -1754,7 +1739,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     }
   }
 
-  collectImages( root ); // when using html, check for embedded images
+  collectImages( mMsg->mainBodyPart( "text/html" ); // when using html, check for embedded images
 
   if ( mCharset.isEmpty() ) {
     mCharset = mMsg->charset();
@@ -1891,11 +1876,10 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     mEditor->setCursorPositionFromStart( mMsg->getCursorPos() );
 
   setModified( isModified );
-
-  // honor "keep reply in this folder" setting even when the identity is changed later on
-  mPreventFccOverwrite = ( !newMsg->fcc().isEmpty() && ident.fcc() != newMsg->fcc() );
 #endif
 
+  // honor "keep reply in this folder" setting even when the identity is changed later on
+  mPreventFccOverwrite = ( !mFcc->getFolder()->fileName().isEmpty() && ident.fcc() != mFcc->getFolder()->fileName() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1957,10 +1941,10 @@ void KMComposeWin::collectImages( KMime::Content *root )
 void KMComposeWin::setFcc( const QString &idString )
 {
   // check if the sent-mail folder still exists
-  if ( ! idString.isEmpty() && kmkernel->findFolderById( idString ) ) {
+  if ( ! idString.isEmpty() && KMKernel::self()->findFolderById( idString ) ) {
     mFcc->setFolder( idString );
   } else {
-    mFcc->setFolder( kmkernel->sentFolder() );
+    mFcc->setFolder( KMKernel::self()->sentFolder() );
   }
 }
 
@@ -2102,13 +2086,12 @@ bool KMComposeWin::userForgotAttachment()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
+void KMComposeWin::readyForSending()
 {
   kDebug() << "Entering";
-#if 0
+
   if(!mMsg) {
     kDebug() << "mMsg == 0!";
-    emit applyChangesDone( false );
     return;
   }
 
@@ -2118,11 +2101,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
     return;
   }
 
-  // Disable any input to the window, so that we have a snapshot of the
-  // composed stuff.
-  if( !dontDisable ) {
-    setEnabled( false );
-  }
+  setEnabled( false );
 
   // Compose the message and queue it for sending.
   // TODO handle drafts, autosave, etc.
@@ -2132,10 +2111,31 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
   fillInfoPart( mComposer->infoPart() );
   mComposer->addAttachmentParts( mAttachmentModel->attachments() );
 
-  connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotComposerResult(KJob*)) );
+  connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
   mComposer->start();
-  kDebug() << "Composer started.";
-#endif
+  kDebug() << "Composer for sending started.";
+
+}
+
+void KMComposeWin::applyAutoSave()
+{
+  kDebug() << "autosaving applying";
+  if( mComposer ) {
+    // This may happen if e.g. the autosave timer calls applyChanges.
+    kDebug() << "Called while composer active; ignoring.";
+    return;
+  }
+
+  kDebug() << "composer for autosaving started";
+  
+  mComposer = new Message::Composer;
+  fillGlobalPart( mComposer->globalPart() );
+  fillTextPart( mComposer->textPart() );
+  fillInfoPart( mComposer->infoPart() );
+  mComposer->addAttachmentParts( mAttachmentModel->attachments() );
+
+  connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposerResult(KJob*)) );
+  mComposer->start();
 }
 
 void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
@@ -2178,17 +2178,16 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
   infoPart->setSubject( subject() );
 }
 
-void KMComposeWin::slotComposerResult( KJob *job )
+void KMComposeWin::slotSendComposeResult( KJob *job )
 {
   using Message::Composer;
 
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( mComposer == job );
-  //emit applyChangesDone( !job->error() ); // TODO get rid of this
 
   if( mComposer->error() == Composer::NoError ) {
     // The messages were composed successfully.
-    // TODO handle drafts, autosave, etc.
+    // TODO handle drafts
     kDebug() << "NoError.";
     queueMessage( mComposer->resultMessage() );
   } else if( mComposer->error() == Composer::UserCancelledError ) {
@@ -2209,6 +2208,20 @@ void KMComposeWin::slotComposerResult( KJob *job )
   }
 
   mComposer = 0;
+}
+
+
+void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
+{
+  using Message::Composer;
+
+  kDebug() << "error" << job->error() << "errorString" << job->errorString();
+  Q_ASSERT( mComposer == job );
+
+   if( mComposer->error() == Composer::NoError ) {
+     continueAutoSave();
+   }
+   mComposer = 0;
 }
 
 void KMComposeWin::queueMessage( KMime::Message::Ptr message )
@@ -2288,7 +2301,7 @@ bool KMComposeWin::queryExit ()
 
 //-----------------------------------------------------------------------------
 #if 0
-void KMComposeWin::addAttach( KMMessagePart *msgPart )
+void KMComposeWin::addAttach( KMime::Content *msgPart )
 {
   mAtmList.append( msgPart );
 
@@ -2312,7 +2325,6 @@ void KMComposeWin::addAttach( KMMessagePart *msgPart )
   slotUpdateAttachActions();
 }
 #endif
-
 //-----------------------------------------------------------------------------
 
 QString KMComposeWin::prettyMimeType( const QString &type )
@@ -2869,7 +2881,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
                            KMComposeWin::SaveIn saveIn )
 {
   // TODO integrate with MDA online status
-  if ( method != KMail::MessageSender::SendLater && kmkernel->isOffline() ) {
+  if ( method != KMail::MessageSender::SendLater && KMKernel::self()->isOffline() ) {
     KMessageBox::information( this,
                               i18n("KMail is currently in offline mode. "
                                    "Your messages will be kept in the outbox until you go online."),
@@ -2947,31 +2959,24 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
 
   KCursorSaver busy( KBusyPtr::busy() );
 
-#if 0
-  mMsg->setDateToday();
-
-  mMsg->setHeaderField( "X-KMail-Transport", mTransport->currentText() );
-
-  mDisableBreaking = ( saveIn != KMComposeWin::None );
-
-  const bool neverEncrypt = ( mDisableBreaking && GlobalSettings::self()->neverEncryptDrafts() ) ||
+  mMsg->date()->setDateTime( KDateTime::currentLocalDateTime() );
+  mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg, mTransport->currentText(), "utf-8" ) );
+  
+  const bool neverEncrypt = ( GlobalSettings::self()->neverEncryptDrafts() ) ||
     mSigningAndEncryptionExplicitlyDisabled;
-
-  connect( this, SIGNAL(applyChangesDone(bool)),
-           SLOT(slotEnqueueResult(bool)) );
 
   // Save the quote prefix which is used for this message. Each message can have
   // a different quote prefix, for example depending on the original sender.
   if ( mEditor->quotePrefixName().isEmpty() )
-    mMsg->removeHeaderField( "X-KMail-QuotePrefix" );
+    mMsg->removeHeader( "X-KMail-QuotePrefix" );
   else
-    mMsg->setHeaderField( "X-KMail-QuotePrefix", mEditor->quotePrefixName() );
+    mMsg->setHeader( new KMime::Headers::Generic("X-KMail-QuotePrefix", mMsg, mEditor->quotePrefixName(), "utf-8" ) );
 
   if ( mEditor->isFormattingUsed() ) {
     kDebug() << "Html mode";
-    mMsg->setHeaderField( "X-KMail-Markup", "true" );
+    mMsg->setHeader( new KMime::Headers::Generic("X-KMail-Markup", mMsg, "true", "utf-8" ) );
   } else {
-    mMsg->removeHeaderField( "X-KMail-Markup" );
+    mMsg->removeHeader( "X-KMail-Markup" );
     kDebug() << "Plain text";
   }
   if ( mEditor->isFormattingUsed() &&
@@ -3007,19 +3012,18 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   if ( neverEncrypt && saveIn != KMComposeWin::None ) {
       // we can't use the state of the mail itself, to remember the
       // signing and encryption state, so let's add a header instead
-    mMsg->setHeaderField( "X-KMail-SignatureActionEnabled", mSignAction->isChecked()? "true":"false" );
-    mMsg->setHeaderField( "X-KMail-EncryptActionEnabled", mEncryptAction->isChecked()? "true":"false"  );
-    mMsg->setHeaderField( "X-KMail-CryptoMessageFormat", QString::number( cryptoMessageFormat() ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-SignatureActionEnabled", mMsg, mSignAction->isChecked()? "true":"false", "utf-8" ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-EncryptActionEnabled", mMsg, mEncryptAction->isChecked()? "true":"false", "utf-8" ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-CryptoMessageFormat", mMsg, QString::number( cryptoMessageFormat() ), "utf-8" ) );
   } else {
-    mMsg->removeHeaderField( "X-KMail-SignatureActionEnabled" );
-    mMsg->removeHeaderField( "X-KMail-EncryptActionEnabled" );
-    mMsg->removeHeaderField( "X-KMail-CryptoMessageFormat" );
+    mMsg->removeHeader( "X-KMail-SignatureActionEnabled" );
+    mMsg->removeHeader( "X-KMail-EncryptActionEnabled" );
+    mMsg->removeHeader( "X-KMail-CryptoMessageFormat" );
   }
-#endif
 
   kDebug() << "Calling applyChanges()";
   //applyChanges( neverEncrypt );
-  applyChanges( false ); // TODO rename and separate logic for print/sent/autosave
+  readyForSending(); // TODO rename and separate logic for print/sent/autosave
 }
 
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
@@ -3084,79 +3088,6 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
   return true;
-#endif
-}
-
-#if 0
-void KMComposeWin::slotEnqueueResult( bool success )
-{
-  // TODO move everything to slotComposeResult?
-  kDebug() << "success" << success;
-
-  // TODO copied from slotContinueDoSend
-  setModified( false );
-  mAutoDeleteMsg = false;
-  mFolder = 0;
-  cleanupAutoSave();
-  close();
-}
-#endif
-
-void KMComposeWin::slotContinueDoSend( bool sentOk )
-{
-  Q_ASSERT( false );
-#if 0
-  kDebug() << sentOk;
-  disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-              this, SLOT( slotContinueDoSend( bool ) ) );
-
-  if ( !sentOk ) {
-    mDisableBreaking = false;
-    return;
-  }
-
-  for ( QVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
-
-    // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
-    (*it)->cleanupHeader();
-
-    // needed for imap
-    (*it)->setComplete( true );
-
-    if ( mSaveIn == KMComposeWin::Drafts ) {
-      sentOk = saveDraftOrTemplate( (*it)->drafts(), (*it) );
-    } else if ( mSaveIn == KMComposeWin::Templates ) {
-      sentOk = saveDraftOrTemplate( (*it)->templates(), (*it) );
-    } else {
-      (*it)->setTo( StringUtil::expandAliases( to() ));
-      (*it)->setCc( StringUtil::expandAliases( cc() ));
-      if ( !mComposer->originalBCC().isEmpty() ) {
-        (*it)->setBcc( StringUtil::expandAliases( mComposer->originalBCC() ) );
-      }
-      QString recips = (*it)->headerField( "X-KMail-Recipients" );
-      if ( !recips.isEmpty() ) {
-        (*it)->setHeaderField( "X-KMail-Recipients", StringUtil::expandAliases( recips ), KMMessage::Address );
-      }
-      (*it)->cleanupHeader();
-      sentOk = kmkernel->msgSender()->send( (*it), mSendMethod );
-    }
-
-    if ( !sentOk ) {
-      return;
-    }
-
-    *it = 0; // don't kill it later...
-  }
-
-  RecentAddresses::self( KMKernel::config() )->add( bcc() );
-  RecentAddresses::self( KMKernel::config() )->add( cc() );
-  RecentAddresses::self( KMKernel::config() )->add( to() );
-
-  setModified( false );
-  mAutoDeleteMsg = false;
-  mFolder = 0;
-  cleanupAutoSave();
-  close();
 #endif
 }
 
