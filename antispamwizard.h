@@ -38,14 +38,10 @@
 #include <QList>
 #include <QListWidget>
 #include <QBoxLayout>
-
-class KMFolder;
+#include <akonadi/collection.h>
 class QLabel;
 
 namespace KMail {
-#ifdef OLD_FOLDERVIEW
-  class FolderSelectionTreeWidget;
-#endif
   class MainFolderView;
   class FolderRequester;
 
@@ -346,7 +342,7 @@ namespace KMail {
 
     private slots:
       void processSelectionChange();
-      void processSelectionChange( KMFolder* );
+    void processSelectionChange( const Akonadi::Collection & );
 
     signals:
       void selectionChanged();

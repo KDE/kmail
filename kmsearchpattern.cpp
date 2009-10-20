@@ -23,7 +23,7 @@
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmkernel.h"
-
+#include "kmfolder.h"
 #include <kpimutils/email.h>
 
 #include <kglobal.h>

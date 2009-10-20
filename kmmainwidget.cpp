@@ -3231,7 +3231,7 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   {
     FolderJob *job = msg->parent()->createJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
-            SLOT(slotMsgActivated(KMime::Message*)));
+            SLOT(slotMessageActivated(KMime::Message*)));
     job->start();
     return;
   }

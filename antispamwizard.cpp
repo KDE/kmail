@@ -1027,10 +1027,10 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
             this, SLOT(processSelectionChange(void)) );
   connect( mMoveUnsureRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
-  connect( mFolderReqForSpamFolder, SIGNAL(folderChanged(KMFolder*)),
-            this, SLOT(processSelectionChange(KMFolder*)) );
-  connect( mFolderReqForUnsureFolder, SIGNAL(folderChanged(KMFolder*)),
-            this, SLOT(processSelectionChange(KMFolder*)) );
+  connect( mFolderReqForSpamFolder, SIGNAL(folderChanged(const Akonadi::Collection &)),
+           this, SLOT(processSelectionChange(const Akonadi::Collection &)) );
+  connect( mFolderReqForUnsureFolder, SIGNAL(folderChanged(const Akonadi::Collection &)),
+           this, SLOT(processSelectionChange(const Akonadi::Collection&)) );
 
   mMarkRules->setChecked( true );
   mMoveSpamRules->setChecked( true );
@@ -1081,7 +1081,7 @@ void ASWizSpamRulesPage::processSelectionChange()
 }
 
 
-void ASWizSpamRulesPage::processSelectionChange( KMFolder* )
+void ASWizSpamRulesPage::processSelectionChange( const Akonadi::Collection& )
 {
   processSelectionChange();
 }

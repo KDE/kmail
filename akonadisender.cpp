@@ -22,7 +22,6 @@
 #include "akonadisender.h"
 #undef REALLY_WANT_AKONADISENDER
 
-#include "kmfolder.h"
 #include "kmkernel.h"
 #include "progressmanager.h"
 #include "messagehelper.h"
@@ -123,11 +122,11 @@ void AkonadiSender::setSendQuotedPrintable( bool aSendQuotedPrintable )
 
 bool AkonadiSender::doSend( KMime::Message *aMsg, short sendNow  )
 {
+#if 0	
   KMFolder * const outbox = kmkernel->outboxFolder();
   const KMFolderOpener openOutbox( outbox, "AkonadiSender" );
 
   Q_ASSERT( aMsg );
-#if 0
   //TODO Port to Akonadi
   aMsg->setStatus( MessageStatus::statusQueued() );
   if ( const int err = openOutbox.folder()->addMsg( aMsg ) ) {

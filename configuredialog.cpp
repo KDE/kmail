@@ -4202,7 +4202,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mMMTab.mMailboxPrefCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  connect( mMMTab.mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),
+  connect( mMMTab.mOnStartupOpenFolder, SIGNAL( folderChanged( const Akonadi::Collection& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mMMTab.mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -4298,7 +4298,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mMGTab.mFolderComboLabel->setWhatsThis( whatsThis );
   mMGTab.mFolderCombo->setToolTip( toolTip );
   mMGTab.mFolderCombo->setWhatsThis( whatsThis );
-  connect( mMGTab.mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
+  connect( mMGTab.mFolderCombo, SIGNAL( folderChanged( const Akonadi::Collection& ) ),
            this, SLOT( slotEmitChanged() ) );
 
   mMGTab.mAccountCombo->setToolTip( toolTip );
