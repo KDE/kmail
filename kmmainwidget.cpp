@@ -2125,57 +2125,23 @@ void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest
 //
 void KMMainWidget::trashMessageSelected( const QList<Akonadi::Item> & select )
 {
-  //TODO
-  BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash..." ) );
-}
-
-#ifdef OLD_MESSAGELIST
-void KMMainWidget::trashMessageSet( KMail::MessageListView::MessageSet * set )
-{
-  Q_ASSERT( set );
-
-  if ( !set->isValid() )
-  {
-    delete set;
-    return;
-  }
-
-  Q_ASSERT( set->folder() ); // must exist since the set is valid
-
-  // Get the list of messages
-  QList< KMMsgBase * > selectedMessages = set->contentsAsMsgBaseList();
-  if ( selectedMessages.isEmpty() )
-  {
-    delete set;
-    return;
-  }
-
-  // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
-
+    // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
+#if 0
   // And stuff them into a KMTrashMsgCommand :)
-  KMCommand *command = new KMTrashMsgCommand( set->folder(), selectedMessages );
-
-  // Reparent the set to the command so it's deleted even if the command
-  // doesn't notify the completion for some reason.
-  set->setParent( command ); // so it will be deleted when the command finishes
-
-  // Set the name to something unique so we can find it back later in the children list
-  set->setObjectName( QString( "trashMsgCommandMessageSet" ) );
+  KMCommand *command = new KMTrashMsgCommand( mCurrentFolder->collection(), select );
 
   QObject::connect(
       command, SIGNAL( completed( KMCommand * ) ),
       this, SLOT( slotTrashMessagesCompleted( KMCommand * ) )
     );
 
-  // Mark the messages as about to be removed (will remove them from the slelection,
-  // make non selectable and make them appear dimmer).
-  set->markAsAboutToBeRemoved( true );
-
   command->start();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash..." ) );
 }
-#endif
+
 void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
 {
   Q_ASSERT( command );
@@ -2205,10 +2171,14 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotTrashSelectedMessages()
 {
-  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+#if 0
+  QList<KMime::Message::Ptr > lstMsg = mMessagePane->selectionAsMessageList();
   if ( !lstMsg.isEmpty() ) {
     trashMessageSelected( lstMsg );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMMainWidget::slotTrashThread()
@@ -2216,8 +2186,11 @@ void KMMainWidget::slotTrashThread()
   QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
   if ( select.isEmpty() )
     return;
-
+#if 0
   trashMessageSelected( select );
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2353,10 +2326,8 @@ void KMMainWidget::slotRedirectMsg()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
-  KMCommand *command = new KMRedirectCommand( this, msg );
+  KMCommand *command = new KMRedirectCommand( this, &*msg );
   command->start();
-#endif
 }
 
 
@@ -2376,6 +2347,8 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
       this, msg, text, tmpl
     );
   command->start();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
@@ -2390,13 +2363,13 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
   QString text = mMsgView? mMsgView->copyText() : "";
 
   kDebug() << "Reply to All with template:" << tmpl;
-#ifdef OLD_MESSAGELIST
+  //#ifdef OLD_MESSAGELIST
   KMCommand *command = new KMCustomReplyAllToCommand(
-      this, msg, text, tmpl
+      this, &*msg, text, tmpl
     );
 
   command->start();
-#endif
+  //#endif
 }
 
 
@@ -2406,15 +2379,16 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
   QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
   if ( selectedMessages.isEmpty() )
     return;
-#ifdef OLD_MESSAGELIST
 
   kDebug() << "Forward with template:" << tmpl;
-
+#if 0
   KMCustomForwardCommand * command = new KMCustomForwardCommand(
       this, selectedMessages, mCurrentFolder->identity(), tmpl
     );
 
   command->start();
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
