@@ -1900,57 +1900,6 @@ void KMMainWidget::moveMessageSelected( const QList<Akonadi::Item> &selectMsg, c
       return;  // user canceled the action
     }
   }
-
-  //TODO code to move item
-  if ( dest.isValid() )
-    BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages..." ) );
-  else
-    BroadcastStatus::instance()->setStatusMsg( i18n( "Deleting messages..." ) );
-#ifdef OLD_MESSAGELIST
-void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMFolder * destination, bool confirmOnDeletion )
-{
-  Q_ASSERT( set );
-
-  if ( !set->isValid() )
-  {
-    delete set;
-    return;
-  }
-
-  Q_ASSERT( set->folder() ); // must exist since the set is valid
-
-  // Get the list of messages
-  QList< KMMsgBase * > selectedMessages = set->contentsAsMsgBaseList();
-  if ( selectedMessages.isEmpty() )
-  {
-    delete set;
-    return;
-  }
-
-  // If this is a deletion, ask for confirmation
-  if ( !destination && confirmOnDeletion )
-  {
-    int ret = KMessageBox::warningContinueCancel(
-        this,
-        i18np(
-            "<qt>Do you really want to delete the selected message?<br />"
-            "Once deleted, it cannot be restored.</qt>",
-            "<qt>Do you really want to delete the %1 selected messages?<br />"
-            "Once deleted, they cannot be restored.</qt>",
-            selectedMessages.count()
-          ),
-        selectedMessages.count() > 1 ? i18n( "Delete Messages" ) : i18n( "Delete Message" ),
-        KStandardGuiItem::del(),
-        KStandardGuiItem::cancel(),
-        "NoConfirmDelete"
-      );
-    if ( ret == KMessageBox::Cancel )
-    {
-      delete set;
-      return;  // user canceled the action
-    }
-  }
-
   // And stuff them into a KMMoveCommand :)
 #ifdef OLD_COMMAND
   KMCommand *command = new KMMoveCommand( destination, selectedMessages );
@@ -1973,12 +1922,11 @@ void KMMainWidget::moveMessageSet( KMail::MessageListView::MessageSet * set, KMF
 
   command->start();
 #endif
-  if ( destination )
+  //TODO code to move item
+  if ( dest.isValid() )
     BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages..." ) );
   else
     BroadcastStatus::instance()->setStatusMsg( i18n( "Deleting messages..." ) );
-}
-#endif
 }
 
 void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
@@ -2426,27 +2374,6 @@ void KMMainWidget::slotSetThreadStatusIgnored()
   if ( mIgnoreThreadAction->isChecked() )
     mWatchThreadAction->setChecked(false);
 }
-
-void KMMainWidget::slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus & clear )
-{
-  Q_ASSERT( msg );
-
-  SerNumList serNums;
-  serNums.append( msg->getMsgSerNum() );
-
-  if ( clear.toQInt32() != KPIM::MessageStatus().toQInt32() )
-  {
-    KMCommand *command = new KMSetStatusCommand( clear, serNums, true );
-    command->start();
-  }
-
-  if ( set.toQInt32() != KPIM::MessageStatus().toQInt32() )
-  {
-    KMCommand *command = new KMSetStatusCommand( set, serNums, false );
-    command->start();
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()

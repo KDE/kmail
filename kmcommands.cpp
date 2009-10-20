@@ -1743,9 +1743,71 @@ KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
   : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
 {
 }
+#include <akonadi/itemmodifyjob.h>
+#include <akonadi/itemfetchjob.h>
 
 KMCommand::Result KMSetStatusCommand::execute()
 {
+  bool parentStatus = false;
+  // Toggle actions on threads toggle the whole thread
+  // depending on the state of the parent.
+  if (mToggle) {
+    Akonadi::Item first( *mSerNums.begin() );
+    MessageStatus pStatus;
+    pStatus.setStatusFromFlags( first.flags() );
+    if ( pStatus & mStatus )
+      parentStatus = true;
+    else
+      parentStatus = false;
+  }
+
+  kDebug ()<<" before :"<<mSerNums.count();
+  QList<qint32> itemMap;
+  QList<quint32>::Iterator it;
+  for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
+    if (mToggle) {
+      Akonadi::Item tmpItem( *it );
+      //kDebug()<<" item ::"<<tmpItem;
+      if (tmpItem.isValid()) {
+        kDebug()<<" is valid !!!!!!!!!";
+        bool myStatus;
+        MessageStatus itemStatus;
+        itemStatus.setStatusFromFlags( tmpItem.flags() );
+        if ( itemStatus & mStatus)
+          myStatus = true;
+        else
+          myStatus = false;
+        if (myStatus != parentStatus)
+          continue;
+      }
+    }
+    itemMap.append( *it );
+  }
+  kDebug()<<" itemMap.size() :"<<itemMap.size();
+
+  for ( int i = 0; i < itemMap.size(); ++i ) {
+    Akonadi::ItemFetchJob *fetchJob = new Akonadi::ItemFetchJob( Akonadi::Item( itemMap[i] ) );
+    if ( fetchJob->exec() ) {
+      Akonadi::Item item = fetchJob->items().first();
+
+      // Set a custom flag
+      qDebug()<<"before :" << item.flags();
+      item.setFlags( mStatus.getStatusFlags() );
+      qDebug()<<" mStatus.getStatusFlags() :"<<mStatus.getStatusFlags();
+      // Store back modified item
+      Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item );
+      if ( modifyJob->exec() ) {
+        kDebug() << "Item modified successfully";
+        qDebug()<<" after :"<<item.flags();
+      }
+      else
+        kDebug() << "Error occurred";
+    } else {
+      kDebug() << "Error occurred";
+    }
+  }
+
+
 #if 0 //TODO port to akonadi
   QList<quint32>::Iterator it;
   int idx = -1;
@@ -1789,9 +1851,9 @@ KMCommand::Result KMSetStatusCommand::execute()
   }
   QMap< KMFolder*, QList<int> >::Iterator it2 = folderMap.begin();
   while ( it2 != folderMap.end() ) {
-     KMFolder *f = it2.key();
-     f->setStatus( (*it2), mStatus, mToggle );
-     ++it2;
+    KMFolder *f = it2.key();
+    f->setStatus( (*it2), mStatus, mToggle );
+    ++it2;
   }
 
   QDBusMessage message =

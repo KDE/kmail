@@ -542,7 +542,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotRequestFullSearchFromQuickSearch();
   void slotFolderChanged( const Akonadi::Collection& );
 
-    void slotMessageStatusChangeRequest( KMMsgBase *msg, const KPIM::MessageStatus &set, const KPIM::MessageStatus & clear );
   void slotMessageSelected(Akonadi::Item);
 private:
     // Message actions
