@@ -85,6 +85,7 @@ set(kmailprivate_LIB_SRCS
    simplestringlisteditor.cpp
    identitylistview.cpp
    identitydialog.cpp
+   globalsettings.cpp
    kmfoldercombobox.cpp
    kmaccount.cpp
    snippetdlg.cpp
