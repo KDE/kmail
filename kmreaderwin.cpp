@@ -165,7 +165,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
-  mViewer = new Viewer( this/*TODO*/,KGlobal::config(),mMainWindow,mActionCollection );
+  mViewer = new Viewer( this/*TODO*/,KGlobal::config(),mainWindow,mActionCollection );
   vlay->addWidget( mViewer );
   readConfig();
 
