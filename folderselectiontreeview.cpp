@@ -21,14 +21,13 @@
 #include <QSortFilterProxyModel>
 #include <QHBoxLayout>
 
-#include <akonadi/statisticstooltipproxymodel.h>
 #include <akonadi/entitytreeview.h>
 #include <akonadi/changerecorder.h>
 #include <akonadi/session.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
-#include <akonadi/entityfilterproxymodel.h>
+#include <akonadi/entitymimetypefiltermodel.h>
 #include <akonadi/collection.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
@@ -47,16 +46,14 @@ public:
      entityModel( 0 ),
      monitor( 0 ),
      quotaModel( 0 ),
-     statisticsToolTipProxyModel( 0 ),
      readableproxy( 0 )
   {
   }
-  QSortFilterProxyModel *filterModel;
   FolderTreeView *collectionFolderView;
   Akonadi::EntityTreeModel *entityModel;
   Akonadi::ChangeRecorder *monitor;
   Akonadi::QuotaColorProxyModel *quotaModel;
-  Akonadi::StatisticsToolTipProxyModel *statisticsToolTipProxyModel;
+  Akonadi::StatisticsProxyModel *filterModel;
   ReadableCollectionProxyModel *readableproxy;
 };
 
@@ -81,18 +78,14 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 
 
 
-  Akonadi::EntityFilterProxyModel *collectionModel = new Akonadi::EntityFilterProxyModel( this );
+  Akonadi::EntityMimeTypeFilterModel *collectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
   collectionModel->setSourceModel( d->entityModel );
   collectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
-  collectionModel->setHeaderSet( Akonadi::EntityTreeModel::CollectionTreeHeaders );
+  collectionModel->setHeaderGroup( Akonadi::EntityTreeModel::CollectionTreeHeaders );
 
   // ... with statistics...
-  d->statisticsToolTipProxyModel = new Akonadi::StatisticsToolTipProxyModel( this );
-  d->statisticsToolTipProxyModel->setSourceModel( collectionModel );
-
-
   d->filterModel = new Akonadi::StatisticsProxyModel(this);
-  d->filterModel->setSourceModel( d->statisticsToolTipProxyModel );
+  d->filterModel->setSourceModel( collectionModel );
   d->filterModel->setDynamicSortFilter( true );
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
 
@@ -192,10 +185,10 @@ void FolderSelectionTreeView::readConfig()
   switch( checkedFolderToolTipsPolicy ){
   case DisplayAlways:
   case DisplayWhenTextElided: //Need to implement in the future
-    d->statisticsToolTipProxyModel->setToolTipEnabled( true );
+    d->filterModel->setToolTipEnabled( true );
     break;
   case DisplayNever:
-    d->statisticsToolTipProxyModel->setToolTipEnabled( false );
+    d->filterModel->setToolTipEnabled( false );
   }
 
   readQuotaConfig();
@@ -219,9 +212,9 @@ void FolderSelectionTreeView::readQuotaConfig()
   quotaWarningParameters( quotaColor, threshold );
 }
 
-Akonadi::StatisticsToolTipProxyModel * FolderSelectionTreeView::statisticsToolTipProxyModel()
+Akonadi::StatisticsProxyModel * FolderSelectionTreeView::statisticsProxyModel()
 {
-  return d->statisticsToolTipProxyModel;
+  return d->filterModel;
 }
 
 ReadableCollectionProxyModel *FolderSelectionTreeView::readableCollectionProxyModel()

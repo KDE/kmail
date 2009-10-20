@@ -30,7 +30,7 @@ class ReadableCollectionProxyModel;
 namespace Akonadi {
   class EntityTreeModel;
   class ChangeRecorder;
-  class StatisticsToolTipProxyModel;
+  class StatisticsProxyModel;
 }
 class FolderSelectionTreeView : public QWidget
 {
@@ -68,7 +68,7 @@ public:
   FolderTreeView *folderTreeView();
   Akonadi::EntityTreeModel *entityModel();
 
-  Akonadi::StatisticsToolTipProxyModel * statisticsToolTipProxyModel();
+  Akonadi::StatisticsProxyModel * statisticsProxyModel();
 
   ReadableCollectionProxyModel *readableCollectionProxyModel();
 
