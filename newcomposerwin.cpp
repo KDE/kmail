@@ -1998,7 +1998,12 @@ bool KMComposeWin::queryClose ()
   }
 
   if ( isModified() ) {
-    bool istemplate = ( mFolder!=0 && mFolder->isTemplates() );
+    bool istemplate = false;
+#if 0 
+    ( mFolder!=0 && mFolder->isTemplates() );
+#else
+kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     const QString savebut = ( istemplate ?
                               i18n("Re&save as Template") :
                               i18n("&Save as Draft") );

@@ -2152,13 +2152,12 @@ bool KMKernel::folderIsDrafts(const KMFolder * folder)
   return false;
 }
 
-bool KMKernel::folderIsTemplates(const KMFolder * folder)
+bool KMKernel::folderIsTemplates(const Akonadi::Collection &col)
 {
-  assert( folder );
-  if ( folder == the_templatesFolder )
+  if ( col ==  Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Templates ) )
     return true;
 
-  QString idString = folder->idString();
+  QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the templates-folder
@@ -2182,13 +2181,12 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
   return false;
 }
 
-bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
+bool KMKernel::folderIsSentMailFolder( const Akonadi::Collection &col )
 {
-  assert( folder );
-  if ( folder == the_sentFolder )
+  if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::SentMail ) )
     return true;
 
-  QString idString = folder->idString();
+  QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the sent-folder

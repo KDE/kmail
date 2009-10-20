@@ -289,14 +289,14 @@ public:
                               bool overwrite = false );
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsDrafts(const KMFolder *);
-  bool folderIsTemplates(const KMFolder *);
 
+  bool folderIsTemplates(const Akonadi::Collection &);
   bool folderIsTrash( const Akonadi::Collection & );
 
   /**
    * Returns true if the folder is one of the sent-mail folders.
    */
-  bool folderIsSentMailFolder( const KMFolder * );
+  bool folderIsSentMailFolder( const Akonadi::Collection& );
   /**
    * Find a folder by ID string in all folder managers
    */

@@ -106,21 +106,10 @@ public:
   bool isOutbox() {
     return this == KMKernel::self()->outboxFolder();
   }
-  /** Returns true if this folder is the sent-mail box of the local account,
-    or is configured to be the sent mail box of any of the users identities */
-  bool isSent() {
-    return KMKernel::self()->folderIsSentMailFolder( this );
-  }
   /** Returns true if this folder is the drafts box of the local account,
     or is configured to be the drafts box of any of the users identities */
   bool isDrafts() {
     return KMKernel::self()->folderIsDrafts( this );
-  }
-
-  /** Returns true if this folder is the templates folder of the local account,
-    or is configured to be the templates folder of any of the users identities */
-  bool isTemplates() {
-    return KMKernel::self()->folderIsTemplates( this );
   }
 
   void setAcctList( AccountList* list ) { mAcctList = list; }

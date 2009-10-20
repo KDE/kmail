@@ -3236,7 +3236,7 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
     mMsgActions->editCurrentMessage();
     return;
   }
-  if ( kmkernel->folderIsTemplates( mFolder ) ) {
+  if ( kmkernel->folderIsTemplates( mCurrentFolder->collection() ) ) {
     slotUseTemplate();
     return;
   }
@@ -4220,16 +4220,15 @@ void KMMainWidget::updateMessageActions()
   //mCopyActionMenu->setEnabled( mass_actions );
   mTrashAction->setEnabled( mass_actions && !readOnly );
   mDeleteAction->setEnabled( mass_actions && !readOnly );
-#ifdef OLD_MESSAGELIST
-  mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
-  mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
-  mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
-  mMsgActions->forwardMenu()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mFolder ) );
+  mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->forwardMenu()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
   mMsgActions->editAction()->setEnabled( single_actions );
-  mUseAction->setEnabled( single_actions && kmkernel->folderIsTemplates( mFolder ) );
+  mUseAction->setEnabled( single_actions && kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
   filterMenu()->setEnabled( single_actions );
-  mMsgActions->redirectAction()->setEnabled( single_actions && !kmkernel->folderIsTemplates( mFolder ) );
+  mMsgActions->redirectAction()->setEnabled( single_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
   if ( mCustomTemplateMenus )
   {
@@ -4243,13 +4242,13 @@ void KMMainWidget::updateMessageActions()
 
   // "View Source" will act on the current message: it will ignore any hidden selection
   viewSourceAction()->setEnabled( singleVisibleMessageSelected );
-
+#ifdef OLD_MESSAGELIST
   mSendAgainAction->setEnabled(
       single_actions &&
       ( ( currentMessage && currentMessage->status().isSent() ) ||
         ( currentMessage && kmkernel->folderIsSentMailFolder( mFolder ) ) )
     );
-
+#endif
   mSaveAsAction->setEnabled( mass_actions );
 
   bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
@@ -4263,7 +4262,7 @@ void KMMainWidget::updateMessageActions()
   actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
 
-
+#ifdef OLD_MESSAGELIST
   if ( ( count == 1 ) && currentMessage.isValid() )
   {
     if ((KMFolder*)mFolder == kmkernel->outboxFolder())
