@@ -173,8 +173,8 @@ using KMail::TemplateParser;
 
 #include <messagelist/pane.h>
 #include <akonadi/entitytreeview.h>
-#include <akonadi/entityfilterproxymodel.h>
-#include <akonadi/statisticstooltipproxymodel.h>
+//#include <akonadi/entityfilterproxymodel.h>
+//#include <akonadi/statisticstooltipproxymodel.h>
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
 
