@@ -175,7 +175,6 @@ set(kmailprivate_LIB_SRCS
    expirejob.cpp
    compactionjob.cpp
    jobscheduler.cpp
-   callback.cpp
    accountcombobox.cpp
    redirectdialog.cpp
    foldershortcutdialog.cpp
