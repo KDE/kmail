@@ -152,7 +152,6 @@ set(kmailprivate_LIB_SRCS
 #   kmfoldersearch.cpp
    folderjob.cpp
 #   cachedimapjob.cpp
-#   imapjob.cpp
 #   subscriptiondialog.cpp
  #  kmailicalifaceimpl.cpp
    aboutdata.cpp
