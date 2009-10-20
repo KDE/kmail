@@ -38,7 +38,6 @@ using KPIM::ProgressManager;
 #include "listjob.h"
 using KMail::ListJob;
 #include "kmsearchpattern.h"
-#include "searchjob.h"
 using KMail::SearchJob;
 #include "acljobs.h"
 
