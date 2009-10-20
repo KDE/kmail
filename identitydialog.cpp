@@ -39,7 +39,6 @@ using KMail::FolderRequester;
 
 #include "kleo_util.h"
 #include "kmmainwidget.h"
-#include "kmfolder.h"
 #include "stringutil.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
@@ -616,11 +615,15 @@ namespace KMail {
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
                                           const QString & msg ) {
+#if 0 //Port to akonadi
     KMFolder * folder = kmkernel->findFolderById( folderID );
     if ( !folder ) {
       KMessageBox::sorry( this, msg );
       return false;
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     return true;
   }
 

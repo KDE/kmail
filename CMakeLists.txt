@@ -125,11 +125,7 @@ set(kmailprivate_LIB_SRCS
 #   kmacctimap.cpp
 #   kmacctcachedimap.cpp
    kmfawidgets.cpp
-#   kmfoldermbox.cpp
-#   kmfolderimap.cpp
    undostack.cpp
-#   kmfoldercachedimap.cpp
-#   kmfoldermaildir.cpp
    popaccount.cpp
    kmkernel.cpp
    accountdialog.cpp
@@ -149,7 +145,6 @@ set(kmailprivate_LIB_SRCS
    kmstartup.cpp
    kmmainwidget.cpp
    kmfolderindex.cpp
-#   kmfoldersearch.cpp
    folderjob.cpp
 #   subscriptiondialog.cpp
  #  kmailicalifaceimpl.cpp
