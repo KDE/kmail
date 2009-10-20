@@ -34,9 +34,8 @@
 #include "textsource.h"
 #include "kmmsgbase.h"
 #include "kmmsgdict.h"
-#include "kmfolder.h"
 #include "kmfolderindex.h"
-
+#include <KDebug>
 #include <QByteArray>
 
 KMTextSource::KMTextSource() : MailTextSource() {

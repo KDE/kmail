@@ -87,7 +87,6 @@ set(kmailprivate_LIB_SRCS
    identitydialog.cpp
    kmfoldercombobox.cpp
    kmaccount.cpp
-#   listjob.cpp
    snippetdlg.cpp
    snippetwidget.cpp
    snippetitem.cpp
