@@ -269,6 +269,7 @@ KMAccount* AccountManager::create( const KAccount::Type aType,
 //-----------------------------------------------------------------------------
 void AccountManager::add( KMAccount *account )
 {
+#if 0
   if ( account ) {
     mAcctList.append( account );
 
@@ -288,6 +289,9 @@ void AccountManager::add( KMAccount *account )
     emit accountAdded( account );
     account->installTimer();
   }
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 

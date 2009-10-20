@@ -30,7 +30,6 @@
 #include "folderrequester.h"
 
 #include "kmmainwidget.h"
-#include "kmfolder.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimidentities/identity.h>
@@ -888,7 +887,7 @@ void AccountDialog::enablePopFeatures()
   }
 }
 
-#if 0 //TODO port to akonadi 
+#if 0 //TODO port to akonadi
 void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
 {
   mImap.ui.checkCapabilitiesStack->setCurrentIndex( 0 );

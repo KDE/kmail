@@ -38,7 +38,6 @@
 
 class QRegExpValidator;
 class KMAccount;
-class KMFolder;
 class QButtonGroup;
 
 namespace MailTransport {
@@ -79,7 +78,7 @@ class AccountDialog : public KDialog
       QButtonGroup *encryptionButtonGroup;
       QButtonGroup *authButtonGroup;
     };
-#if 0//TODO port to akonadi 
+#if 0//TODO port to akonadi
     struct ImapWidgets
     {
       Ui::ImapPage ui;
@@ -109,7 +108,7 @@ class AccountDialog : public KDialog
     void slotPopPasswordChanged( const QString& text );
     void slotCheckPopCapabilities();
     void slotPopCapabilities( QList<int> );
-#if 0//TODO port to akonadi 
+#if 0//TODO port to akonadi
     void slotImapPasswordChanged( const QString& text );
     void slotImapEncryptionChanged(int);
     void slotCheckImapCapabilities();
@@ -145,7 +144,8 @@ class AccountDialog : public KDialog
     PopWidgets   mPop;
 //TODO port to akonadi     ImapWidgets  mImap;
     KMAccount    *mAccount;
-    QList<QPointer<KMFolder> > mFolderList;
+//TODO port to akonadi
+  //QList<QPointer<KMFolder> > mFolderList;
     QStringList  mFolderNames;
     MailTransport::ServerTest *mServerTest;
     KMail::SieveConfigEditor *mSieveConfigEditor;
