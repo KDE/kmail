@@ -696,8 +696,7 @@ namespace KMail {
     mWidget->loadFromIdentity( identity );
 
     // "Signature" tab:
-    QString dir = QString( "emailidentities/%1/" ).arg( QString::number( ident.uoid() ) );
-    mSignatureConfigurator->setImageLocation( KStandardDirs::locateLocal( "data", dir ) );
+    mSignatureConfigurator->setImageLocation( ident );
     mSignatureConfigurator->setSignature( ident.signature() );
     mXFaceConfigurator->setXFace( ident.xface() );
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
