@@ -7,7 +7,6 @@
 class QCheckBox;
 class QRadioButton;
 class KIntSpinBox;
-class KMFolder;
 class FolderCollection;
 namespace KMail {
 

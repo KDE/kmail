@@ -53,7 +53,6 @@ using KMail::FolderRequester;
 //TODO port to akonadi #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "folderstorage.h"
-#include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "kmmessagetag.h"
 
@@ -3627,14 +3626,11 @@ void SecurityPage::GeneralTab::save()
     {
       GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       QStringList names;
+#if 0 //port to akonadi
       QList<QPointer<KMFolder> > folders;
       kmkernel->folderMgr()->createFolderList(&names, &folders);
-#if 0 //TODO port to akonadi
       kmkernel->imapFolderMgr()->createFolderList(&names, &folders);
       kmkernel->dimapFolderMgr()->createFolderList(&names, &folders);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
       kmkernel->searchFolderMgr()->createFolderList(&names, &folders);
       for (QList<QPointer<KMFolder> >::iterator it = folders.begin();
         it != folders.end(); ++it)
@@ -3645,6 +3641,9 @@ void SecurityPage::GeneralTab::save()
           config.writeEntry("htmlMailOverride", false);
         }
       }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
   }
   GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );
@@ -4364,11 +4363,15 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings()
           if (!node->isDir() && node->name() == "INBOX")
             break;
         }
-
+#if 0
         if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
           selectedAccount = account;
           break;
         }
+#else
+        kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+
+#endif
       }
     }
   }
@@ -4395,7 +4398,7 @@ void MiscPage::GroupwareTab::save()
   // return 0. In that case we really don't have it enabled
   QString folderId;
   if (  format == 0 ) {
-#if 0	  
+#if 0
     KMFolder* folder = mMGTab.mFolderCombo->folder();
     if ( folder )
       folderId = folder->idString();
@@ -4425,7 +4428,7 @@ void MiscPage::GroupwareTab::save()
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 
-#endif    
+#endif
   } else {
     // Inbox folder of the selected account
     KMAccount* acct = mMGTab.mAccountCombo->currentAccount();
@@ -4549,7 +4552,7 @@ void MiscPage::InviteTab::save()
   GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mMITab.mDeleteInvitations->isChecked() );
 }
 
-#if 0 //TODO port to akonadi 
+#if 0 //TODO port to akonadi
 // *************************************************************
 // *                                                           *
 // *                     AccountUpdater                        *

@@ -44,7 +44,6 @@ namespace KMail {
   class JobScheduler;
   class MessageSender;
   class AccountManager;
-  class FolderAdaptor;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
@@ -531,7 +530,7 @@ private:
   QStringList           mAddMessageMsgIds;
   QString               mAddMessageLastFolder;
   KMFolder             *mAddMsgCurrentFolder;
-  KMail::FolderAdaptor *folderAdaptor;
+  //KMail::FolderAdaptor *folderAdaptor;
 
   // special debug area
   int mStorageDebug;
