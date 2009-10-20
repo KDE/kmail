@@ -1605,14 +1605,13 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
                                    im->thatIsMe( mdnAddr ) ) ||
                                  GlobalSettings::self()->requestMDN() );
   }
-#if 0 //TODO port to akonadi
   // check for presence of a priority header, indicating urgent mail:
-  mUrgentAction->setChecked( newMsg->isUrgent() );
+  //mUrgentAction->setChecked( newMsg->isUrgent() );
 
 
-  if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() &&
-        mMsg->headerByType( "X-Face" ) ) {
-    mMsg->headerByType( "X-Face" )->clear();
+  if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
+    if( mMsg->headerByType( "X-Face" ) )
+      mMsg->headerByType( "X-Face" )->clear();
   } else {
     QString xface = ident.xface();
     if ( !xface.isEmpty() ) {
@@ -1620,9 +1619,11 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
       for ( int i = numNL; i > 0; --i ) {
         xface.insert( i * 70, "\n\t" );
       }
-      mMsg->setHeader( new KMime::Headers::Generic( "X-Face", new KMime::Content( xface.toUtf8() ) ) );
+      mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg, xface.toUtf8(), "utf-8" ) );
     }
   }
+  
+#if 0 //TODO port to kmime
 
   // enable/disable encryption if the message was/wasn't encrypted
   switch ( mMsg->encryptionState() ) {
@@ -1649,6 +1650,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   default: // nothing
     break;
   }
+#endif
 
   // if these headers are present, the state of the message should be overruled
   if ( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
@@ -1673,10 +1675,13 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   }
   slotUpdateSignatureAndEncrypionStateIndicators();
 
+#if 0 //TODO port to kmime
+
   // "Attach my public key" is only possible if the user uses OpenPGP
   // support and he specified his key:
   mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
                           !ident.pgpEncryptionKey().isEmpty() );
+#endif
 
   QString transportName;
   if( newMsg->headerByType( "X-KMail-Transport" ) ) 
@@ -1690,14 +1695,20 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   }
 
   if ( !mBtnFcc->isChecked() ) {
-    if ( !mMsg->fcc().isEmpty() ) {
-      setFcc( mMsg->fcc() );
-    } else {
       setFcc( ident.fcc() );
-    }
   }
 
   mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
+
+
+  // Restore the quote prefix. We can't just use the global quote prefix here,
+  // since the prefix is different for each message, it might for example depend
+  // on the original sender in a reply.
+  if ( newMsg->headerByType( "X-KMail-QuotePrefix" ) )
+    mEditor->setQuotePrefixName( newMsg->headerByType( "X-KMail-QuotePrefix" )->asUnicodeString() );
+
+  
+#if 0 //TODO port to kmime
 
   partNode *root = partNode::fromMessage( mMsg );
 
@@ -1752,13 +1763,6 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     mCharset = mDefCharset;
   }
   setCharset( mCharset );
-
-  // Restore the quote prefix. We can't just use the global quote prefix here,
-  // since the prefix is different for each message, it might for example depend
-  // on the original sender in a reply.
-  QString quotePrefix = newMsg->headerField( "X-KMail-QuotePrefix" );
-  if ( !quotePrefix.isEmpty() )
-    mEditor->setQuotePrefixName( quotePrefix );
 
   /* Handle the special case of non-mime mails */
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
@@ -1865,6 +1869,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
 
   setCharset(mCharset);
 #endif // BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
+#endif
 
   if( (GlobalSettings::self()->autoTextSignature()=="auto") && mayAutoSign ) {
     //
@@ -1879,7 +1884,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
       QTimer::singleShot( 0, this, SLOT( slotAppendSignature() ) );
     }
   }
-
+#if 0 // TODO port to KMime
   // Make sure the cursor is at the correct position, which is set by
   // the template parser.
   if ( mMsg->getCursorPos() > 0 )
@@ -1890,6 +1895,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !newMsg->fcc().isEmpty() && ident.fcc() != newMsg->fcc() );
 #endif
+
 }
 
 //-----------------------------------------------------------------------------
