@@ -102,15 +102,6 @@ public:
   bool isMainInbox() {
     return this == KMKernel::self()->inboxFolder();
   }
-  /** Returns true only if this is the outbox for outgoing mail */
-  bool isOutbox() {
-    return this == KMKernel::self()->outboxFolder();
-  }
-  /** Returns true if this folder is the drafts box of the local account,
-    or is configured to be the drafts box of any of the users identities */
-  bool isDrafts() {
-    return KMKernel::self()->folderIsDrafts( this );
-  }
 
   void setAcctList( AccountList* list ) { mAcctList = list; }
   AccountList* acctList() { return mAcctList; }
@@ -153,12 +144,12 @@ public:
       0 if no such directory exists */
   KMFolderDir* child() const
     { return mChild; }
-  
+
   /**
    * Returns true if the specified folder is a descendant of this folder
    * (if fld is somewhere in this folder's children subtree).
    * Returns false otherwise (or if fld is null).
-   * 
+   *
    * This function assumes that fld, if not null, is a valid pointer to
    * a folder that can be dereferenced.
    */
@@ -740,9 +731,9 @@ public:
   }
 
   KMFolder * folder() const { return mFolder; }
-  
+
   int openResult() const { return mOpenRc; }
-  
+
 private:
   //we forbid construction on the heap as good as we can
   void * operator new( size_t size );

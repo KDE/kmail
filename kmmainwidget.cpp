@@ -1819,12 +1819,8 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMessageQueuedOrDrafted()
 {
-#if 0
-  if (!kmkernel->folderIsDraftOrOutbox(mFolder))
+  if (!kmkernel->folderIsDraftOrOutbox(mCurrentFolder->collection()))
       return;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if (mMsgView)
     mMsgView->update(true);
 }
@@ -3231,7 +3227,7 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
     return;
   }
 
-  if (kmkernel->folderIsDraftOrOutbox(mFolder))
+  if (kmkernel->folderIsDraftOrOutbox(mCurrentFolder->collection()))
   {
     mMsgActions->editCurrentMessage();
     return;

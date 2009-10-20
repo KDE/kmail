@@ -366,11 +366,11 @@ void MessageActions::editCurrentMessage()
     return;
 #ifdef OLD_COMMAND
   KMCommand *command = 0;
-  Akonadi::Collection folder = mCurrentMessage->parentCollection();
+  Akonadi::Collection col = mCurrentMessage->parentCollection();
   // edit, unlike send again, removes the message from the folder
   // we only want that for templates and drafts folders
-  if ( folder && ( kmkernel->folderIsDraftOrOutbox( folder ) ||
-       kmkernel->folderIsTemplates( folder ) ) )
+  if ( col && ( kmkernel->folderIsDraftOrOutbox( col ) ||
+       kmkernel->folderIsTemplates( col ) ) )
     command = new KMEditMsgCommand( mParent, mCurrentMessage );
   else
     command = new KMResendMessageCommand( mParent, mCurrentMessage );

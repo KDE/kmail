@@ -2128,21 +2128,19 @@ void KMKernel::emergencyExit( const QString& reason )
 /**
  * Returns true if the folder is either the outbox or one of the drafts-folders
  */
-bool KMKernel::folderIsDraftOrOutbox(const KMFolder * folder)
+bool KMKernel::folderIsDraftOrOutbox(const Akonadi::Collection & col)
 {
-  assert( folder );
-  if ( folder == the_outboxFolder )
+  if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Outbox ) )
     return true;
-  return folderIsDrafts( folder );
+  return folderIsDrafts( col );
 }
 
-bool KMKernel::folderIsDrafts(const KMFolder * folder)
+bool KMKernel::folderIsDrafts(const Akonadi::Collection & col)
 {
-  assert( folder );
-  if ( folder == the_draftsFolder )
+  if ( col ==  Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Drafts ) )
     return true;
 
-  QString idString = folder->idString();
+  QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the drafts-folder

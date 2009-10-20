@@ -287,8 +287,8 @@ public:
                const QStringList &customHeaders );
   void byteArrayToRemoteFile( const QByteArray&, const KUrl&,
                               bool overwrite = false );
-  bool folderIsDraftOrOutbox(const KMFolder *);
-  bool folderIsDrafts(const KMFolder *);
+  bool folderIsDraftOrOutbox(const Akonadi::Collection &);
+  bool folderIsDrafts(const Akonadi::Collection&);
 
   bool folderIsTemplates(const Akonadi::Collection &);
   bool folderIsTrash( const Akonadi::Collection & );
