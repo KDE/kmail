@@ -72,6 +72,7 @@ using KWallet::Wallet;
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
 #include <akonadi/kmime/specialcollections.h>
+#include <akonadi/kmime/specialcollectionsrequestjob.h>
 #include <akonadi/collection.h>
 #include "actionscheduler.h"
 
@@ -1406,6 +1407,38 @@ void KMKernel::recoverDeadLetters()
 #endif
 }
 
+void KMKernel::findCreateDefaultCollection( Akonadi::SpecialCollections::Type type )
+{
+#if 0
+  if( Akonadi::SpecialCollections::self()->hasDefaultCollection( type ) ) {
+    const Akonadi::Collection col = Akonadi::SpecialCollections::self()->defaultCollection( type );
+    if ( !( col.rights() & Akonadi::Collection::AllRights ) )
+      emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
+  }
+  else {
+#if 0
+    Akonadi::SpecialCollectionsRequestJob *job = new Akonadi::SpecialCollectionsRequestJob( this );
+    job->requestDefaultCollection( type );
+    connect( job, SIGNAL( result( KJob* ) ),
+             this, SLOT( createDefaultCollectionDone( KJob* ) ) );
+#endif
+  }
+#endif
+}
+
+void KMKernel::createDefaultCollectionDone( KJob * job)
+{
+  if ( job->error() ) {
+    emergencyExit( job->errorText() );
+    return;
+  }
+
+  Akonadi::SpecialCollectionsRequestJob *requestJob = qobject_cast<Akonadi::SpecialCollectionsRequestJob*>( job );
+  const Akonadi::Collection col = requestJob->collection();
+  if ( !( col.rights() & Akonadi::Collection::AllRights ) )
+    emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
+}
+
 //-----------------------------------------------------------------------------
 void KMKernel::initFolders(KSharedConfig::Ptr cfg)
 {
@@ -1422,6 +1455,8 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
 
   the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
 
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
+
   if ( !the_inboxFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
   }
@@ -1436,7 +1471,7 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
     emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
   }
   the_outboxFolder->setNoChildren(true);
-
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Outbox );
   the_outboxFolder->setSystemFolder(true);
   if ( the_outboxFolder->userWhoField().isEmpty() )
     the_outboxFolder->setUserWhoField( QString() );
@@ -1458,7 +1493,7 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
   if ( the_sentFolder->userWhoField().isEmpty() )
     the_sentFolder->setUserWhoField( QString() );
   // the_sentFolder->open();
-
+  findCreateDefaultCollection( Akonadi::SpecialCollections::SentMail );
   the_trashFolder  = the_folderMgr->findOrCreate(group.readEntry("trashFolder", I18N_NOOP("trash")));
   if ( !the_trashFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
@@ -1472,6 +1507,7 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
   if ( !the_draftsFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Drafts );
   the_draftsFolder->setSystemFolder(true);
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString() );
@@ -1485,6 +1521,7 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
   if ( the_templatesFolder->userWhoField().isEmpty() )
     the_templatesFolder->setUserWhoField( QString() );
   the_templatesFolder->open( "kmkernel" );
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Templates );
 }
 
 void KMKernel::init()

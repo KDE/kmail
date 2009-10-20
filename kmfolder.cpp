@@ -981,6 +981,7 @@ void KMFolder::setWhoField(const QString& aWhoField )
 
 void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
 {
+#if 0	
   if ( mUserWhoField == whoField && !whoField.isEmpty() )
     return;
 
@@ -1023,6 +1024,7 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   emit viewConfigChanged();
+#endif
 }
 
 void KMFolder::correctUnreadMsgsCount()

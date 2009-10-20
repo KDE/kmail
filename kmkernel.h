@@ -19,7 +19,7 @@
 #include "kmmessagetag.h"
 #include "messageviewer/globalsettings.h"
 #include <kcomponentdata.h>
-
+#include <akonadi/kmime/specialcollections.h>
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
@@ -416,6 +416,8 @@ public:
       to regenerate their menus */
   void updatedTemplates();
 
+
+  void findCreateDefaultCollection( Akonadi::SpecialCollections::Type );
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter
@@ -451,6 +453,7 @@ private slots:
   void transportRemoved( int id, const QString &name );
   /** Updates identities when a transport has been renamed. */
   void transportRenamed( int id, const QString &oldName, const QString &newName );
+  void createDefaultCollectionDone( KJob * job);
 
 private:
   void openReader( bool onlyCheck );
