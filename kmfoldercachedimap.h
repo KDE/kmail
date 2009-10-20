@@ -37,7 +37,6 @@
 #include "kmacctcachedimap.h"
 #include "kmfoldertype.h"
 #include "folderjob.h"
-#include "cachedimapjob.h"
 
 #include <kdialog.h>
 #include <kstandarddirs.h>
