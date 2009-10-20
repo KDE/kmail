@@ -452,8 +452,7 @@ namespace KMail {
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator(
-        tabWidget, KPIMIdentities::SignatureConfigurator::EnableHtmlImages );
+    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( tabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
