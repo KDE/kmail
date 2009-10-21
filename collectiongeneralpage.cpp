@@ -30,14 +30,19 @@
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
 #include <kmkernel.h>
-
+#include "foldercollection.h"
 using namespace Akonadi;
 
 CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
-    CollectionPropertiesPage( parent )
+    CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
   setPageTitle(  i18nc("@title:tab General settings for a folder.", "General"));
   init();
+}
+
+CollectionGeneralPage::~CollectionGeneralPage()
+{
+  delete mFolderCollection;
 }
 
 static void addLine( QWidget *parent, QVBoxLayout* layout )
@@ -292,20 +297,6 @@ void CollectionGeneralPage::init()
 
 #if 0
 void FolderDialogGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
-  if ( !folder )
-    return;
-
-  // folder identity
-  mIdentityComboBox->setCurrentIdentity( folder->identity() );
-  mUseDefaultIdentityCheckBox->setChecked( folder->useDefaultIdentity() );
-
-  // ignore new mail
-  mNotifyOnNewMailCheckBox->setChecked( !folder->ignoreNewMail() );
-
-  const bool keepInFolder = !folder->isReadOnly() && folder->putRepliesInSameFolder();
-  mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
-  mKeepRepliesInSameFolderCheckBox->setDisabled( folder->isReadOnly() );
-  mHideInSelectionDialogCheckBox->setChecked( folder->hideInSelectionDialog() );
 
   if (folder->folderType() == KMFolderTypeImap)
   {
@@ -336,12 +327,6 @@ void FolderDialogGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) 
 }
 
 //-----------------------------------------------------------------------------
-void FolderDialogGeneralTab::slotFolderNameChanged( const QString& str )
-{
-  mDlg->enableButtonOk( !str.isEmpty() );
-}
-
-//-----------------------------------------------------------------------------
 void FolderDialogGeneralTab::slotFolderContentsSelectionChanged( int )
 {
   KMail::FolderContentsType type =
@@ -362,23 +347,11 @@ void FolderDialogGeneralTab::slotFolderContentsSelectionChanged( int )
       mAlarmsBlockedCheckBox->setEnabled( enable );
 }
 
-//-----------------------------------------------------------------------------
-void FolderDialogGeneralTab::slotIdentityCheckboxChanged()
-{
-  mIdentityComboBox->setEnabled( !mUseDefaultIdentityCheckBox->isChecked() );
-}
 
 //-----------------------------------------------------------------------------
 bool FolderDialogGeneralTab::save()
 {
   KMFolder* folder = mDlg->folder();
-  folder->setIdentity( mIdentityComboBox->currentIdentity() );
-  folder->setUseDefaultIdentity( mUseDefaultIdentityCheckBox->isChecked() );
-
-  folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
-  folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
-  folder->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
-
   QString fldName, oldFldName;
   KMFolderCachedImap* dimap = 0;
   if ( folder->folderType() == KMFolderTypeCachedImap )
@@ -467,6 +440,19 @@ void CollectionGeneralPage::load(const Akonadi::Collection & col)
   else
     mNameEdit->setText( displayName );
 
+  mFolderCollection = new FolderCollection( col );
+
+  // folder identity
+  mIdentityComboBox->setCurrentIdentity( mFolderCollection->identity() );
+  mUseDefaultIdentityCheckBox->setChecked( mFolderCollection->useDefaultIdentity() );
+
+  // ignore new mail
+  mNotifyOnNewMailCheckBox->setChecked( !mFolderCollection->ignoreNewMail() );
+
+  const bool keepInFolder = !mFolderCollection->isReadOnly() && mFolderCollection->putRepliesInSameFolder();
+  mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
+  mKeepRepliesInSameFolderCheckBox->setDisabled( mFolderCollection->isReadOnly() );
+  mHideInSelectionDialogCheckBox->setChecked( mFolderCollection->hideInSelectionDialog() );
 }
 
 void CollectionGeneralPage::save(Collection & col)
@@ -477,6 +463,25 @@ void CollectionGeneralPage::save(Collection & col)
   else
     col.setName( mNameEdit->text() );
 
+  if ( mFolderCollection ) {
+    mFolderCollection->setIdentity( mIdentityComboBox->currentIdentity() );
+    mFolderCollection->setUseDefaultIdentity( mUseDefaultIdentityCheckBox->isChecked() );
+
+    mFolderCollection->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
+    mFolderCollection->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
+    mFolderCollection->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
+  }
+}
+
+void CollectionGeneralPage::slotFolderNameChanged( const QString& str )
+{
+  //TODO .????
+  //enableButtonOk( !str.isEmpty() );
+}
+
+void CollectionGeneralPage::slotIdentityCheckboxChanged()
+{
+  mIdentityComboBox->setEnabled( !mUseDefaultIdentityCheckBox->isChecked() );
 }
 
 

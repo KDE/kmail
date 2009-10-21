@@ -23,7 +23,10 @@
 #include <kpimidentities/identity.h>
 
 FolderCollection::FolderCollection( const Akonadi::Collection & col )
-  : mCollection( col )
+  : mCollection( col ),
+    mPutRepliesInSameFolder( false ),
+    mHideInSelectionDialog( false ),
+    mIgnoreNewMail( false )
 {
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
 

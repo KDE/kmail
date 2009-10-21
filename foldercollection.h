@@ -163,6 +163,27 @@ public:
 
   void daysToExpire( int& unreadDays, int& readDays );
 
+  /**
+   * Returns true if the replies to mails from this folder should be
+   * put in the same folder.
+   */
+  bool putRepliesInSameFolder() const { return mPutRepliesInSameFolder; }
+  void setPutRepliesInSameFolder( bool b ) { mPutRepliesInSameFolder = b; }
+
+  /**
+   * Returns true if this folder should be hidden from all folder selection dialogs
+   */
+  bool hideInSelectionDialog() const { return mHideInSelectionDialog; }
+  void setHideInSelectionDialog( bool hide ) { mHideInSelectionDialog = hide; }
+
+  /**
+   * Returns true if the user doesn't want to get notified about new mail
+   * in this folder.
+   */
+  bool ignoreNewMail() const { return mIgnoreNewMail; }
+  void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
+
+
 
 protected slots:
   void slotIdentitiesChanged();

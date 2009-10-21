@@ -24,6 +24,7 @@
 class KComboBox;
 class QCheckBox;
 class KLineEdit;
+class FolderCollection;
 
 namespace KPIMIdentities {
   class IdentityCombo;
@@ -34,12 +35,16 @@ class CollectionGeneralPage : public Akonadi::CollectionPropertiesPage
   Q_OBJECT
 public:
   explicit CollectionGeneralPage( QWidget *parent = 0 );
+  ~CollectionGeneralPage();
 
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
 
 protected:
   void init();
+private slots:
+  void slotFolderNameChanged(const QString & );
+  void slotIdentityCheckboxChanged();
 private:
   KComboBox *mContentsComboBox;
   KComboBox *mIncidencesForComboBox;
@@ -52,6 +57,7 @@ private:
   QCheckBox   *mUseDefaultIdentityCheckBox;
   KLineEdit   *mNameEdit;
   KPIMIdentities::IdentityCombo *mIdentityComboBox;
+  FolderCollection * mFolderCollection;
   bool mIsLocalSystemFolder;
   bool mIsResourceFolder;
 
