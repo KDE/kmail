@@ -155,7 +155,6 @@ set(kmailprivate_LIB_SRCS
    kmlineeditspell.cpp
    composer.cpp
    isubject.cpp
-#   bodyvisitor.cpp
    antispamwizard.cpp
    secondarywindow.cpp
    filterlog.cpp
