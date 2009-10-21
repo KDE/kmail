@@ -377,7 +377,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
           this, SLOT(folderInvalidated(KMFolder*)));
 
-  connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
+  connect(mCbxFolders, SIGNAL(folderChanged(const Akonadi::Collection&)),
           this, SLOT(slotFolderActivated()));
 
   ac->addAssociatedWidget( this );
