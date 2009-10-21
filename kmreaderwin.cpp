@@ -738,7 +738,7 @@ void KMReaderWin::clear(bool force )
   mViewer->clear( force ? Viewer::Force : Viewer::Delayed );
 }
 
-void KMReaderWin::setMessage( Akonadi::Item item, Viewer::UpdateMode updateMode)
+void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode updateMode)
 {
   mViewer->setMessageItem( item, updateMode );
 }

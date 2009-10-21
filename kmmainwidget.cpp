@@ -4877,7 +4877,7 @@ void KMMainWidget::slotMessageSelected(Akonadi::Item item)
             mMsgView, SLOT(slotMessageArrived(KMime::Message*)));
     mJob->start();
   } else {
-    mMsgView->setMsg(msg);
+    mMsgView->setMessage(msg);
   }
 #endif
   mMsgView->setMessage( item );

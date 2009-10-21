@@ -132,7 +132,7 @@ public:
       displayed. */
   virtual void setMsg( KMime::Message* msg, bool force = false );
 
-  void setMessage( Akonadi::Item item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
+  void setMessage( const Akonadi::Item& item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
 
   /** Instead of settings a message to be shown sets a message part
