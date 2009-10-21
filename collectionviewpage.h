@@ -42,14 +42,13 @@ public:
   void save( Akonadi::Collection & col );
 protected:
   void init();
-#if 0
 public slots:
   void slotChangeIcon( const QString & icon );
   void slotAggregationCheckboxChanged();
   void slotThemeCheckboxChanged();
   void slotSelectFolderAggregation();
   void slotSelectFolderTheme();
-
+#if 0
 private:
   void initializeWithValuesFromFolder( KMFolder * folder );
 #endif

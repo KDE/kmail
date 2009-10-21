@@ -233,23 +233,23 @@ bool FolderDialogViewTab::save()
 #endif
   return true;
 }
-
-void FolderDialogViewTab::slotChangeIcon( const QString & icon )
+#endif
+void CollectionViewPage::slotChangeIcon( const QString & icon )
 {
     mUnreadIconButton->setIcon( icon );
 }
 
-void FolderDialogViewTab::slotAggregationCheckboxChanged()
+void CollectionViewPage::slotAggregationCheckboxChanged()
 {
   mAggregationComboBox->setEnabled( !mUseDefaultAggregationCheckBox->isChecked() );
 }
 
-void FolderDialogViewTab::slotThemeCheckboxChanged()
+void CollectionViewPage::slotThemeCheckboxChanged()
 {
   mThemeComboBox->setEnabled( !mUseDefaultThemeCheckBox->isChecked() );
 }
 
-void FolderDialogViewTab::slotSelectFolderAggregation()
+void CollectionViewPage::slotSelectFolderAggregation()
 {
 #ifdef OLD_MESSAGELIST
   MessageListView::StorageModel messageListStorageModel( mDlg->folder() );
@@ -259,7 +259,7 @@ void FolderDialogViewTab::slotSelectFolderAggregation()
 #endif
 }
 
-void FolderDialogViewTab::slotSelectFolderTheme()
+void CollectionViewPage::slotSelectFolderTheme()
 {
 #ifdef OLD_MESSAGELIST
   MessageListView::StorageModel messageListStorageModel( mDlg->folder() );
@@ -268,7 +268,7 @@ void FolderDialogViewTab::slotSelectFolderTheme()
   mUseDefaultThemeCheckBox->setChecked( !usesPrivateTheme );
 #endif
 }
-
+#if 0
 void FolderDialogViewTab::initializeWithValuesFromFolder( KMFolder * folder )
 {
   if ( !folder )
