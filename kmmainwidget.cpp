@@ -1335,7 +1335,7 @@ void KMMainWidget::slotCompose()
       KMail::MessageHelper::initHeader( msg );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
-      parser.process( NULL, NULL );
+      parser.process( NULL, Akonadi::Collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New );
   }
 
