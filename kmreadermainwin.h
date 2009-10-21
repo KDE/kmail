@@ -74,8 +74,6 @@ private slots:
   void slotConfigChanged();
   void slotUpdateToolbars();
 
-  void slotFolderRemoved( QObject* folderPtr );
-
 private:
   void initKMReaderMainWin();
   void setupAccel();

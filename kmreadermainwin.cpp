@@ -149,20 +149,15 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMime::Message *msg,
 #endif
   mReaderWin->slotTouchMessage();
   setCaption( msg->subject()->asUnicodeString() );
-#if OLD_MESSAGEACTION //TODO port it
   mMsg = msg;
+#if OLD_MESSAGEACTION //TODO port it
   mMsgActions->setCurrentMessage( msg );
 #endif
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
-#if 0 //TODO port to akonadi
-  connect ( msg->parent(), SIGNAL( destroyed( QObject* ) ), this, SLOT( slotFolderRemoved( QObject* ) ) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
 }
 
-#ifdef USE_AKONADI_VIEWER
 
 void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item &msg )
 {
@@ -181,22 +176,6 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mMsgActions->setCurrentMessage( msg );
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
-#if 0 //Port
-  connect ( msg->parent(), SIGNAL( destroyed( QObject* ) ), this, SLOT( slotFolderRemoved( QObject* ) ) );
-#endif
-}
-#endif
-
-void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
-{
-#if 0  //TODO port to akonadi
-  assert(mMsg);
-  assert(folderPtr == mMsg->parent());
-  if( mMsg && folderPtr == mMsg->parent() )
-    mMsg->setParent( 0 );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------
