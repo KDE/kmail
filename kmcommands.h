@@ -41,13 +41,6 @@ namespace Kleo { class SpecialJob; }
 
 typedef QMap<partNode*, KMime::Message*> PartNodeMessageMap;
   /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
-  /// the reply mode
-  struct MessageReply
-  {
-    KMime::Message *msg;  ///< The actual reply message
-    bool replyAll;   ///< If true, the "reply all" template was used, otherwise the normal reply
-                     ///  template
-  };
 
 class KMAIL_EXPORT KMCommand : public QObject
 {

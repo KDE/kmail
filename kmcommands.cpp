@@ -168,7 +168,7 @@ public:
 private:
   KMCommand::Result m_result;
 };
-
+#if 0
 /// Small helper function to get the composer context from a reply
 static KMail::Composer::TemplateContext replyContext( MessageReply reply )
 {
@@ -177,7 +177,7 @@ static KMail::Composer::TemplateContext replyContext( MessageReply reply )
   else
     return KMail::Composer::Reply;
 }
-
+#endif
 KMCommand::KMCommand( QWidget *parent )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
