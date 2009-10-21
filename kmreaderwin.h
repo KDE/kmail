@@ -219,7 +219,7 @@ public:
   KHTMLPart * htmlPart() const;
 
   /** Returns the current message or 0 if none. */
-  KMime::Message* message(KMFolder** folder=0) const;
+  KMime::Message* message() const;
   /** Set the serial number of the message this reader window is currently
    *  waiting for. Used to discard updates for already deselected messages. */
   void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }

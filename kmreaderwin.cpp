@@ -525,31 +525,22 @@ void KMReaderWin::saveRelativePosition()
 
 
 //-----------------------------------------------------------------------------
-KMime::Message *KMReaderWin::message( KMFolder **aFolder ) const
+KMime::Message *KMReaderWin::message() const
 {
-
-//TODO(Andras) port to Akonadi
-#if 0
-  KMFolder*  tmpFolder;
-  KMFolder*& folder = aFolder ? *aFolder : tmpFolder;
-  folder = 0;
-  if (mMessage)
-      return mMessage;
-  if (mLastSerNum) {
-    KMMessage *message = 0;
-    int index;
-    KMMsgDict::instance()->getLocation( mLastSerNum, &folder, &index );
-    if (folder )
-      message = folder->getMsg( index );
-    if ( !message ) {
-      kWarning() << "Attempt to reference invalid serial number" << mLastSerNum;
+  if ( mMessage )
+    return mMessage;
+  if ( mLastSerNum ) {
+    Akonadi::Item item( mLastSerNum );
+    if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+      kWarning() << "Payload is not a MessagePtr!";
+      return 0;
     }
-    return message;
+    //Mem leak ???
+    KMime::Message *tmpMessage = new KMime::Message;
+    tmpMessage->setContent( item.payloadData() );
+    tmpMessage->parse();
+    return tmpMessage;
   }
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return 0;
 }
 
