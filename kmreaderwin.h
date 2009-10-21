@@ -106,11 +106,6 @@ public:
   /** Read settings from app's config file. */
   void readConfig();
 
-#ifndef USE_AKONADI_VIEWER
-  /** Write settings to app's config file. Calls sync() if withSync is true. */
-  void writeConfig( bool withSync=true ) const;
-#endif
-
   const MessageViewer::HeaderStyle * headerStyle() const;
 
   /** Set the header style and strategy. We only want them to be set
@@ -301,14 +296,9 @@ private:
   void createActions();
 private:
 //TODO(Andras) Remove unneeded stuff
-  int mAtmCurrent;
-  QString mAtmCurrentName;
   KMime::Message *mMessage;
 
   // See setOriginalMsg() for an explaination for those two.
-  unsigned long mSerNumOfOriginalMessage;
-  int mNodeIdOffset;
-
   QTimer mDelayedMarkTimer;
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;

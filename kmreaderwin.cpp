@@ -138,34 +138,17 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mActionCollection( actionCollection ),
     mMailToComposeAction( 0 ),
     mMailToReplyAction( 0 ),
-    mMailToForwardAction( 0 )
- /*,TODO(Andras) Remove
-    mSerNumOfOriginalMessage( 0 ),
-    mNodeIdOffset( -1 ),
-    mDelayedMarkTimer( 0 ),
-// TODO remove    mRootNode( 0 ),
-    mMainWindow( mainWindow ),
-    mActionCollection( actionCollection ),
-    mMailToComposeAction( 0 ),
-    mMailToReplyAction( 0 ),
     mMailToForwardAction( 0 ),
     mAddAddrBookAction( 0 ),
     mOpenAddrBookAction( 0 ),
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
-    mShowFullToAddressList( false ),
-    mShowFullCcAddressList( false )*/
+    mMainWindow( mainWindow )
 {
-  mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
-/*
-  mLastSerNum = 0;
-  mWaitingForSerNum = 0;
-  mMessage = 0;
-  mAtmUpdate = false;*/
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
-  mViewer = new Viewer( this/*TODO*/,KGlobal::config(),mainWindow,mActionCollection );
+  mViewer = new Viewer( this,KGlobal::config(),mainWindow,mActionCollection );
   vlay->addWidget( mViewer );
   readConfig();
 
@@ -495,104 +478,7 @@ void KMReaderWin::setMsgPart( partNode * node ) {
 void KMReaderWin::setMsgPart( KMime::Content* aMsgPart, bool aHTML,
                               const QString& aFileName, const QString& pname )
 {
-#ifndef  USE_AKONADI_VIEWER
-  // Cancel scheduled updates of the reader window, as that would stop the
-  // timer of the HTML writer, which would make viewing attachment not work
-  // anymore as not all HTML is written to the HTML part.
-  // We're updating the reader window here ourselves anyway.
-  mUpdateReaderWinTimer.stop();
-
-  KCursorSaver busy(KBusyPtr::busy());
-  if (kasciistricmp(aMsgPart->typeStr(), "message")==0) {
-      // if called from compose win
-      KMMessage* msg = new KMMessage;
-      assert(aMsgPart!=0);
-      msg->fromString(aMsgPart->bodyDecoded());
-      mMainWindow->setWindowTitle(msg->subject());
-      setMsg(msg, true);
-      setAutoDelete(true);
-  } else if (kasciistricmp(aMsgPart->typeStr(), "text")==0) {
-      if (kasciistricmp(aMsgPart->subtypeStr(), "x-vcard") == 0 ||
-          kasciistricmp(aMsgPart->subtypeStr(), "directory") == 0) {
-        showVCard( aMsgPart );
-        return;
-      }
-      htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
-      htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
-
-      if (aHTML && (kasciistricmp(aMsgPart->subtypeStr(), "html")==0)) { // HTML
-        // ### this is broken. It doesn't stip off the HTML header and footer!
-        htmlWriter()->queue( aMsgPart->bodyToUnicode( overrideCodec() ) );
-        mColorBar->setHtmlMode();
-      } else { // plain text
-        const QByteArray str = aMsgPart->bodyDecoded();
-        ObjectTreeParser otp( this );
-        otp.writeBodyStr( str,
-                          overrideCodec() ? overrideCodec() : aMsgPart->codec(),
-                          message() ? message()->from() : QString() );
-      }
-      htmlWriter()->queue("</body></html>");
-      htmlWriter()->flush();
-      mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
-  } else if (kasciistricmp(aMsgPart->typeStr(), "image")==0 ||
-             (kasciistricmp(aMsgPart->typeStr(), "application")==0 &&
-              kasciistricmp(aMsgPart->subtypeStr(), "postscript")==0))
-  {
-      if (aFileName.isEmpty()) return;  // prevent crash
-      // Open the window with a size so the image fits in (if possible):
-      QImageReader *iio = new QImageReader();
-      iio->setFileName(aFileName);
-      if( iio->canRead() ) {
-          QImage img = iio->read();
-          QRect desk = KGlobalSettings::desktopGeometry(mMainWindow);
-          // determine a reasonable window size
-          int width, height;
-          if( img.width() < 50 )
-              width = 70;
-          else if( img.width()+20 < desk.width() )
-              width = img.width()+20;
-          else
-              width = desk.width();
-          if( img.height() < 50 )
-              height = 70;
-          else if( img.height()+20 < desk.height() )
-              height = img.height()+20;
-          else
-              height = desk.height();
-          mMainWindow->resize( width, height );
-      }
-      // Just write the img tag to HTML:
-      htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
-      htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
-      htmlWriter()->write( "<img src=\"file:" +
-                           KUrl::toPercentEncoding( aFileName ) +
-                           "\" border=\"0\">\n"
-                           "</body></html>\n" );
-      htmlWriter()->end();
-      setWindowTitle( i18n("View Attachment: %1", pname ) );
-      show();
-      delete iio;
-  } else {
-    htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
-    htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
-    htmlWriter()->queue( "<pre>" );
-
-    QString str = aMsgPart->bodyDecoded();
-    // A QString cannot handle binary data. So if it's shorter than the
-    // attachment, we assume the attachment is binary:
-    if( str.length() < aMsgPart->decodedSize() ) {
-      str.prepend( i18np("[KMail: Attachment contains binary data. Trying to show first character.]",
-          "[KMail: Attachment contains binary data. Trying to show first %1 characters.]",
-                               str.length()) + QChar::fromLatin1('\n') );
-    }
-    htmlWriter()->queue( Qt::escape( str ) );
-    htmlWriter()->queue( "</pre>" );
-    htmlWriter()->queue("</body></html>");
-    htmlWriter()->flush();
-    mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
-  }
-#endif
-  mViewer->setMessagePart( aMsgPart, aHTML, aFileName, pname ); 
+  mViewer->setMessagePart( aMsgPart, aHTML, aFileName, pname );
 }
 
 //-----------------------------------------------------------------------------
@@ -670,50 +556,42 @@ KMime::Message *KMReaderWin::message( KMFolder **aFolder ) const
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
-#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoComposeCommand( urlClicked(), message() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoForward()
 {
-#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoForwardCommand( mMainWindow, urlClicked(),
                                                    message() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
-#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoAddAddrBookCommand( urlClicked(),
                                                        mMainWindow );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
-#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoOpenAddrBookCommand( urlClicked(),
                                                         mMainWindow );
   command->start();
-#endif
 }
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen( const KUrl &url )
 {
-#if 0 //port it
+  //Laurent : verify it
+  KUrl mClickedUrl;
   if ( !url.isEmpty() )
     mClickedUrl = url;
   KMCommand *command = new KMUrlOpenCommand( mClickedUrl, this );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -733,11 +611,9 @@ void KMReaderWin::slotUrlSave()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
-#ifdef OLD_COMMAND
   KMCommand *command = new KMMailtoReplyCommand( mMainWindow, urlClicked(),
                                                  message(), copyText() );
   command->start();
-#endif
 }
 
 
