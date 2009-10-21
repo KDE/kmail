@@ -72,13 +72,6 @@ void CollectionMaintenancePage::init()
   mFolderSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
   box->addRow( new QLabel( i18n("Size:"), filesGroup ), mFolderSizeLabel );
 
-  //Port
-  KLineEdit *label2 = new KLineEdit( /*mFolder->indexLocation()*/"", filesGroup );
-  label2->setReadOnly( true );
-  box->addRow( i18n("Index:"), label2 );
-
-  mIndexSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
-  box->addRow( new QLabel( i18n("Size:"), filesGroup ), mIndexSizeLabel );
 #if 0
   if ( folderType == KMFolderTypeMaildir )	// see KMMainWidget::slotTroubleshootMaildir()
   {

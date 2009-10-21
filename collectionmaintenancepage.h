@@ -42,7 +42,6 @@ protected:
   void init();
 private:
   QLabel *mFolderSizeLabel;
-  QLabel *mIndexSizeLabel;
   QPushButton *mRebuildIndexButton;
   QPushButton *mRebuildImapButton;
   QLabel *mCompactStatusLabel;

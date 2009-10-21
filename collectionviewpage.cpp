@@ -54,7 +54,9 @@ void CollectionViewPage::init()
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( 0 );
-
+  //TODO port it
+  mIsLocalSystemFolder = false;
+  mIsResourceFolder = true;
   // Musn't be able to edit details for non-resource, system folder.
   if ( !mIsLocalSystemFolder || mIsResourceFolder )
   {
