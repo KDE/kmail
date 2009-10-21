@@ -2824,9 +2824,6 @@ void KMMainWidget::folderSelected()
 
   folderSelected( mFolder );
   updateFolderMenu();
-
-  // update the caption (useful if the name changed)
-  emit captionChangeRequest( mMainFolderView->currentItemFullPath() );
 }
 
 void KMMainWidget::slotMessageListViewCurrentFolderChanged( KMFolder * fld )
@@ -3030,6 +3027,9 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread, bo
   updateFolderMenu();
   if ( !mFolder && ( mMessageListView->count() < 2 ) )
     slotIntro();
+
+  // update the caption
+  emit captionChangeRequest( mMainFolderView->currentItemFullPath() );
 }
 
 //-----------------------------------------------------------------------------
