@@ -63,7 +63,6 @@ private slots:
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
-  void slotShowMsgSrc();
   void slotFontAction(const QString &);
   void slotSizeAction(int);
   void slotCreateTodo();

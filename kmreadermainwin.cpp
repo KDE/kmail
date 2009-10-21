@@ -269,61 +269,41 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotRedirectMsg()
 {
-#ifdef OLD_COMMAND
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-#ifdef OLD_COMMAND
   kDebug() << "Reply with template:" << tmpl;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
                                                    tmpl );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-#ifdef OLD_COMMAND
   kDebug() << "Reply to All with template:" << tmpl;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
                                                       tmpl );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
-#ifdef OLD_COMMAND
   kDebug() << "Forward with template:" << tmpl;
+
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
   command->start();
-#endif
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotShowMsgSrc()
-{
-#ifdef OLD_COMMAND
-  KMMessage *msg = mReaderWin->message();
-  if ( !msg )
-    return;
-  KMCommand *command = new KMShowMsgSrcCommand( this, msg,
-                                                mReaderWin->isFixedFont() );
-  command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -366,7 +346,7 @@ void KMReaderMainWin::setupAccel()
   //----- View Menu
   mViewSourceAction  = new KAction(i18n("&View Source"), this);
   actionCollection()->addAction("view_source", mViewSourceAction );
-  connect(mViewSourceAction, SIGNAL(triggered(bool) ), SLOT(slotShowMsgSrc()));
+  connect(mViewSourceAction, SIGNAL(triggered(bool) ), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
   //----- Message Menu
@@ -429,9 +409,8 @@ void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,cons
 {
   KMenu *menu = new KMenu;
   mUrl = aUrl;
-#if 0 //TODO port me !!!
   mMsg = &aMsg;
-#endif
+
   bool urlMenuAdded = false;
   bool copyAdded = false;
   if ( !aUrl.isEmpty() ) {

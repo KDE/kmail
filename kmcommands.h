@@ -316,21 +316,6 @@ private:
   virtual Result execute();
 };
 
-#if 0 //TODO port to akonadi
-class KMAIL_EXPORT KMShowMsgSrcCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMShowMsgSrcCommand( QWidget *parent, KMime::Message *msg, bool fixedFont );
-  virtual Result execute();
-
-private:
-  bool mFixedFont;
-  bool mMsgWasComplete;
-};
-#endif
-
 class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
 {
   Q_OBJECT

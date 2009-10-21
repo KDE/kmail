@@ -773,49 +773,6 @@ KMCommand::Result KMUseTemplateCommand::execute()
 #endif
   return OK;
 }
-#if 0 //TODO port to akonadi
-KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
-                                          KMime::Message *msg, bool fixedFont )
-  :KMCommand( parent, msg ), mFixedFont( fixedFont )
-{
-  // remember complete state
-  mMsgWasComplete = msg->isComplete();
-}
-
-KMCommand::Result KMShowMsgSrcCommand::execute()
-{
-  KMime::Message *msg = retrievedMessage();
-  if ( !msg ) {
-    return Failed;
-  }
-  if ( msg->isComplete() && !mMsgWasComplete ) {
-    msg->notify(); // notify observers as msg was transferred
-  }
-  QString str = QString::fromAscii( msg->asString() );
-
-  MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
-  viewer->setWindowTitle( i18n("Message as Plain Text") );
-  viewer->setText( str );
-  if( mFixedFont ) {
-    viewer->setFont( KGlobalSettings::fixedFont() );
-  }
-
-  // Well, there is no widget to be seen here, so we have to use QCursor::pos()
-  // Update: (GS) I'm not going to make this code behave according to Xinerama
-  //         configuration because this is quite the hack.
-  if ( QApplication::desktop()->isVirtualDesktop() ) {
-    int scnum = QApplication::desktop()->screenNumber( QCursor::pos() );
-    viewer->resize( QApplication::desktop()->screenGeometry( scnum ).width()/2,
-                    2 * QApplication::desktop()->screenGeometry( scnum ).height()/3);
-  } else {
-    viewer->resize( QApplication::desktop()->geometry().width()/2,
-                    2 * QApplication::desktop()->geometry().height()/3);
-  }
-  viewer->show();
-
-  return OK;
-}
-#endif
 
 static KUrl subjectToUrl( const QString &subject )
 {
