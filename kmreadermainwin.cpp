@@ -342,14 +342,14 @@ void KMReaderMainWin::setupAccel()
   mMsgActions = new KMail::MessageActions( actionCollection(), this );
   mMsgActions->setMessageView( mReaderWin );
   //----- File Menu
-  mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ),
+  mSaveAsAction = KStandardAction::saveAs( mReaderWin->viewer(), SLOT( slotSaveMessage() ),
                                            actionCollection() );
   mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
 
   mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), actionCollection() );
 
   mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
-  connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin, SLOT(slotSaveAttachments()) );
+  connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAs()) );
 
   mTrashAction = new KAction( KIcon( "user-trash" ), i18n("&Move to Trash"), this );
   mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
