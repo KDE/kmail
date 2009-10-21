@@ -207,7 +207,6 @@ set(kmailprivate_LIB_SRCS
    mdnadvicedialog.cpp
 #remove once the akonadi/kmime port is done
 #   kmmessage.cpp
-#   partNode.cpp
 )
 
 # TODO PORT

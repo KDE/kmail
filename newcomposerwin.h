@@ -75,7 +75,6 @@ class KRecentFilesAction;
 class RecipientsEditor;
 class KMLineEdit;
 class SnippetWidget;
-class partNode;
 
 namespace boost {
   template <typename T> class shared_ptr;
