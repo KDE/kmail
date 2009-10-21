@@ -528,7 +528,7 @@ KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
 KMCommand::Result KMMailtoReplyCommand::execute()
 {
   //TODO : consider factoring createReply into this method.
-  KMime::Message *msg = 0; //FIXME / TODO Port retrievedMessage(); to KMime!
+  KMime::Message *msg = retrievedMessage();
   if ( !msg /*TODO Port || !msg->codec() */) { //TODO Reuse codec() from libmessageviewer/nodehelper
     return Failed;
   }
@@ -555,12 +555,11 @@ KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
 KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
-  KMime::Message *msg = 0;//FIXME / TODO port retrievedMessage(); to KMime
-  /** TODO Port to KMime
-  if ( !msg || !msg->codec() ) {
+  KMime::Message *msg = retrievedMessage();
+  if ( !msg /*|| !msg->codec() Port to KMime::message*/) {
     return Failed;
   }
-  */
+
   KMime::Message *fmsg = KMail::MessageHelper::createForward( msg );
   fmsg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
@@ -1544,22 +1543,22 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, KMime::Me
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMime::Message *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
+  if ( !msg /*|| !msg->codec() Port to kmime*/ ) {
     return Failed;
   }
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( KMail::ReplyAll, mSelection,
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAll, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
+#if 0 //Port to kmime
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus();
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus();
+  win->show();
   return OK;
 }
 
