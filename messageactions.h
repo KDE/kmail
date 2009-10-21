@@ -46,6 +46,7 @@ class MessageActions : public QObject
   Q_OBJECT
   public:
     MessageActions( KActionCollection* ac, QWidget *parent );
+    ~MessageActions();
     void setMessageView( KMReaderWin *msgView );
 
     /**
@@ -83,13 +84,11 @@ class MessageActions : public QObject
     void updateActions();
     template<typename T> void replyCommand()
     {
-#ifdef OLD_COMMAND
       if ( !mCurrentMessage )
         return;
       const QString text = mMessageView ? mMessageView->copyText() : "";
       KMCommand *command = new T( mParent, mCurrentMessage, text );
       command->start();
-#endif
     }
     void setMessageStatus( KPIM::MessageStatus status, bool toggle = false );
 
@@ -110,6 +109,7 @@ class MessageActions : public QObject
     QWidget *mParent;
     KActionCollection *mActionCollection;
     Akonadi::Item mCurrentItem;
+  KMime::Message *mCurrentMessage;
     QList<quint32> mSelectedSernums;
     QList<quint32> mVisibleSernums;
     KMReaderWin *mMessageView;

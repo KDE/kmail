@@ -40,7 +40,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mParent( parent ),
     mActionCollection( ac ),
     mMessageView( 0 ),
-    mRedirectAction( 0 )
+    mRedirectAction( 0 ),
+    mCurrentMessage( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
   mActionCollection->addAction( "message_reply_menu", mReplyActionMenu );
@@ -175,9 +176,25 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   updateActions();
 }
 
+MessageActions::~MessageActions()
+{
+  delete mCurrentMessage;
+}
+
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 {
   mCurrentItem = msg;
+  delete mCurrentMessage;
+  mCurrentMessage = 0;
+
+  if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
+    kWarning() << "Payload is not a MessagePtr!";
+    return;
+  }
+  mCurrentMessage = new KMime::Message;
+  mCurrentMessage->setContent( mCurrentItem.payloadData() );
+  mCurrentMessage->parse();
+
   if ( !msg.isValid() ) {
     mSelectedSernums.clear();
     mVisibleSernums.clear();
@@ -240,12 +257,10 @@ void MessageActions::updateActions()
 
 void MessageActions::slotCreateTodo()
 {
-  if ( !mCurrentItem.isValid() )
+  if ( !mCurrentMessage )
     return;
-#ifdef OLD_COMMAND
   KMCommand *command = new CreateTodoCommand( mParent, mCurrentMessage );
   command->start();
-#endif
 }
 
 void MessageActions::setMessageView(KMReaderWin * msgView)
@@ -316,12 +331,10 @@ void MessageActions::slotReplyAllToMsg()
 
 void MessageActions::slotNoQuoteReplyToMsg()
 {
-  if ( !mCurrentItem.isValid() )
+  if ( !mCurrentMessage )
     return;
-#ifdef OLD_COMMAND
   KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentMessage );
   command->start();
-#endif
 }
 
 void MessageActions::slotSetMsgStatusNew()
