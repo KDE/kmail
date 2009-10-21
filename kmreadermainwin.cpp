@@ -134,7 +134,7 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::showMsg( const QString & encoding, KMime::Message *msg,
+void KMReaderMainWin::showMessage( const QString & encoding, KMime::Message *msg,
                                unsigned long serNumOfOriginalMessage, int nodeIdOffset )
 {
   mReaderWin->setOverrideEncoding( encoding );

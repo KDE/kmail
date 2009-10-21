@@ -1157,7 +1157,7 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
     newMessage->setParent( msg->parent() );
     newMessage->setMsgSerNum( msg->getMsgSerNum() );
     newMessage->setReadyToShow( true );
-    win->showMsg( GlobalSettings::self()->overrideCharacterEncoding(), newMessage );
+    win->showMessage( GlobalSettings::self()->overrideCharacterEncoding(), newMessage );
     win->show();
 
     if (unGet)

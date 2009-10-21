@@ -51,7 +51,7 @@ public:
    * Then, the reader needs to know about that original message, so those to parameters are passed
    * onto setOriginalMsg() of KMReaderWin.
    */
-  void showMsg( const QString & encoding, KMime::Message *msg,
+  void showMessage( const QString & encoding, KMime::Message *msg,
                 unsigned long serNumOfOriginalMessage = 0, int nodeIdOffset = -1 );
 #ifdef USE_AKONADI_VIEWER
   void showMessage( const QString & encoding, const Akonadi::Item &msg );

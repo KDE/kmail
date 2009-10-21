@@ -1096,7 +1096,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
     KMime::Message *msg = new KMime::Message( dwMsg );
     msg->setReadyToShow( true );
     KMReaderMainWin *win = new KMReaderMainWin();
-    win->showMsg( mEncoding, msg );
+    win->showMessage( mEncoding, msg );
     win->show();
     if ( multipleMessages )
       KMessageBox::information( win,
