@@ -22,16 +22,22 @@
 #include <KLocale>
 #include <KPushButton>
 #include <QCheckBox>
+#include "foldercollection.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
 
 using namespace Akonadi;
 
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
-    CollectionPropertiesPage( parent )
+    CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
   setPageTitle( i18n( "Templates" ) );
   init();
+}
+
+CollectionTemplatesPage::~CollectionTemplatesPage()
+{
+  delete mFolderCollection;
 }
 
 bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
@@ -79,59 +85,37 @@ void CollectionTemplatesPage::init()
 
   connect( mCopyGlobal, SIGNAL(clicked()),
            this, SLOT(slotCopyGlobal()) );
-#if 0 //TODO port it
-  initializeWithValuesFromFolder( mDlg->folder() );
-
-#endif
 }
 
 
-void CollectionTemplatesPage::load(const Collection &)
+void CollectionTemplatesPage::load(const Collection & col)
 {
-  //Nothing
-}
-
-void CollectionTemplatesPage::save(Collection &)
-{
-  //Nothing
-}
-
-#if 0 //TODO port it.
-void FolderDialogTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
-  if ( !folder )
-    return;
-
-  mFolder = folder;
-
-  QString fid = folder->idString();
+  mFolderCollection = new FolderCollection( col );
+  QString fid = mFolderCollection->idString();
 
   Templates t( fid );
 
   mCustom->setChecked(t.useCustomTemplates());
 
-  mIdentity = folder->identity();
+  mIdentity = mFolderCollection->identity();
 
   mWidget->loadFromFolder( fid, mIdentity );
 }
 
-//-----------------------------------------------------------------------------
-bool FolderDialogTemplatesTab::save()
+void CollectionTemplatesPage::save(Collection &)
 {
-  KMFolder* folder = mDlg->folder();
+  if ( mFolderCollection ) {
+    QString fid = mFolderCollection->idString();
+    Templates t(fid);
 
-  QString fid = folder->idString();
-  Templates t(fid);
+    kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
+    t.setUseCustomTemplates(mCustom->isChecked());
+    t.writeConfig();
 
-  kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
-  t.setUseCustomTemplates(mCustom->isChecked());
-  t.writeConfig();
-
-  mWidget->saveToFolder(fid);
-
-  return true;
+    mWidget->saveToFolder(fid);
+  }
 }
 
-#endif
 void CollectionTemplatesPage::slotCopyGlobal() {
   if ( mIdentity ) {
     mWidget->loadFromIdentity( mIdentity );

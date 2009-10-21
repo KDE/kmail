@@ -57,6 +57,9 @@ void CollectionGeneralPage::init()
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
   mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
 #endif
+  //TODO port it
+  mIsLocalSystemFolder = false;
+  mIsResourceFolder = true;
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );

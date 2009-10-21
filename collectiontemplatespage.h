@@ -23,12 +23,14 @@
 class KPushButton;
 class QCheckBox;
 class TemplatesConfiguration;
+class FolderCollection;
 
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
 {
   Q_OBJECT
 public:
   explicit CollectionTemplatesPage( QWidget *parent = 0 );
+  ~CollectionTemplatesPage();
 
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
@@ -37,21 +39,14 @@ public:
 public slots:
   void slotCopyGlobal();
 
-private:
-#if 0
-  void initializeWithValuesFromFolder( KMFolder* folder );
-#endif
 protected:
   void init();
 private:
   QCheckBox* mCustom;
   TemplatesConfiguration* mWidget;
   KPushButton* mCopyGlobal;
-#if 0
-  KMFolder* mFolder;
-#endif
   uint mIdentity;
-
+  FolderCollection *mFolderCollection;
   bool mIsLocalSystemFolder;
 };
 
