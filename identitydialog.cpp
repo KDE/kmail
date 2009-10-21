@@ -448,8 +448,7 @@ namespace KMail {
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator(
-        tabWidget, KPIMIdentities::SignatureConfigurator::EnableHtmlImages );
+    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( tabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
@@ -713,8 +712,7 @@ namespace KMail {
     mWidget->loadFromIdentity( identity );
 
     // "Signature" tab:
-    QString dir = QString( "emailidentities/%1/" ).arg( QString::number( ident.uoid() ) );
-    mSignatureConfigurator->setImageLocation( KStandardDirs::locateLocal( "data", dir ) );
+    mSignatureConfigurator->setImageLocation( ident );
     mSignatureConfigurator->setSignature( ident.signature() );
     mXFaceConfigurator->setXFace( ident.xface() );
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
