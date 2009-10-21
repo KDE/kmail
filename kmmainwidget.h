@@ -291,7 +291,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void createWidgets();
     void deleteWidgets();
     void layoutSplitters();
-    void showMsg( KMReaderWin *win, KMime::Message *msg );
     void updateFileMenu();
     void newFromTemplate( KMime::Message *msg );
     void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
