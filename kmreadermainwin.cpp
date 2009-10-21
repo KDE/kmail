@@ -430,12 +430,12 @@ void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,cons
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-#if 0
     if (!mMsg) {
       // no message
       delete menu;
       return;
     }
+#if 0
     if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
                                 aMsg.parent()->isDrafts() ||
                                 aMsg.parent()->isTemplates() ) ) ) {
@@ -489,10 +489,8 @@ void KMReaderMainWin::slotCreateTodo()
 {
   if ( !mMsg )
     return;
-#ifdef OLD_COMMAND
   KMCommand *command = new CreateTodoCommand( this, mMsg );
   command->start();
-#endif
 }
 
 void KMReaderMainWin::slotEditToolbars()
