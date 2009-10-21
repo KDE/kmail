@@ -94,10 +94,7 @@ using KPIM::BroadcastStatus;
 using KMail::AccountManager;
 #include "kmfilter.h"
 #include "kmreadermainwin.h"
-//TODO port to akonadi #include "kmfoldercachedimap.h"
-//TODO port to akonadi #include "kmfolderimap.h"
 #include "foldershortcutdialog.h"
-//TODO port to akonadi #include "kmacctcachedimap.h"
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
@@ -112,8 +109,6 @@ using KMail::SearchWindow;
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "kmmessagetag.h"
-//TODO port to akonadi #include "imapaccountbase.h"
-//TODO port to akonadi using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
 
@@ -173,8 +168,6 @@ using KMail::TemplateParser;
 
 #include <messagelist/pane.h>
 #include <akonadi/entitytreeview.h>
-//#include <akonadi/entityfilterproxymodel.h>
-//#include <akonadi/statisticstooltipproxymodel.h>
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
 
@@ -1140,10 +1133,9 @@ void KMMainWidget::slotFocusQuickSearch()
 //-------------------------------------------------------------------------
 void KMMainWidget::slotSearch()
 {
-#if 0 //Port to akonadi
   if(!mSearchWin)
   {
-    mSearchWin = new SearchWindow(this, mFolder);
+    mSearchWin = new SearchWindow(this, mCurrentFolder->collection());
     mSearchWin->setModal( false );
     mSearchWin->setObjectName( "Search" );
     connect(mSearchWin, SIGNAL(destroyed()),
@@ -1151,14 +1143,11 @@ void KMMainWidget::slotSearch()
   }
   else
   {
-    mSearchWin->activateFolder(mFolder);
+    mSearchWin->activateFolder(mCurrentFolder->collection());
   }
 
   mSearchWin->show();
   KWindowSystem::activateWindow( mSearchWin->winId() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 

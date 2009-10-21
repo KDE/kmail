@@ -290,9 +290,8 @@ void CollectionGeneralPage::init()
         "for all users having access to this folder. If disabled (the default), every user with access to this folder has their "
         "own unread state." ) );
   }
-  topLayout->addStretch( 100 ); // eat all superfluous space
-  initializeWithValuesFromFolder( mDlg->folder() );
 #endif
+  topLayout->addStretch( 100 ); // eat all superfluous space
 }
 
 #if 0
