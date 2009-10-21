@@ -184,6 +184,11 @@ public:
   void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
 
 
+  /** Mark all new messages as unread. */
+  void markNewAsUnread();
+
+  /** Mark all new and unread messages as read. */
+  void markUnreadAsRead();
 
 protected slots:
   void slotIdentitiesChanged();

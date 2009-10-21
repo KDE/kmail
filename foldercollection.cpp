@@ -21,6 +21,9 @@
 #include "kmkernel.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
+#include <akonadi/itemfetchjob.h>
+#include <akonadi/itemfetchscope.h>
+#include "kmcommands.h"
 
 FolderCollection::FolderCollection( const Akonadi::Collection & col )
   : mCollection( col ),
@@ -363,3 +366,56 @@ void FolderCollection::daysToExpire(int& unreadDays, int& readDays) {
   unreadDays = ::daysToExpire( getUnreadExpireAge(), getUnreadExpireUnits() );
   readDays = ::daysToExpire( getReadExpireAge(), getReadExpireUnits() );
 }
+
+
+void FolderCollection::markNewAsUnread()
+{
+  if ( mCollection.isValid() ) {
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection );
+    job->fetchScope().fetchFullPayload();
+    if ( job->exec() ) {
+      QList<quint32> serNums;
+      Akonadi::Item::List items = job->items();
+      foreach( const Akonadi::Item &item, items ) {
+        MessageStatus status;
+        status.setStatusFromFlags( item.flags() );
+        if ( !status.isNew() ) {
+          serNums.append( item.id() );
+        }
+      }
+
+      if (serNums.empty())
+        return;
+      KMCommand *command = new KMSetStatusCommand( MessageStatus::statusUnread(), serNums );
+      command->start();
+    } else {
+      kDebug() << "Error occurred";
+    }
+  }
+}
+
+void FolderCollection::markUnreadAsRead()
+{
+  if ( mCollection.isValid() ) {
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection );
+    job->fetchScope().fetchFullPayload();
+    if ( job->exec() ) {
+      QList<quint32> serNums;
+      Akonadi::Item::List items = job->items();
+      foreach( const Akonadi::Item &item, items ) {
+        MessageStatus status;
+        status.setStatusFromFlags( item.flags() );
+        if (status.isNew() || status.isUnread()) {
+          serNums.append( item.id() );
+        }
+      }
+      if (serNums.empty())
+        return;
+      KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
+      command->start();
+    } else {
+      kDebug() << "Error occurred";
+    }
+  }
+}
+

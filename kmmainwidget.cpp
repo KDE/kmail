@@ -1626,11 +1626,7 @@ void KMMainWidget::slotMarkAllAsRead()
 {
   if (!mCurrentFolder)
     return;
-#if 0
-  mFolder->markUnreadAsRead();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  mCurrentFolder->markUnreadAsRead();
 }
 
 //-----------------------------------------------------------------------------
