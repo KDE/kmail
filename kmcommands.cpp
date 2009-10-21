@@ -168,16 +168,16 @@ public:
 private:
   KMCommand::Result m_result;
 };
-#if 0
+
 /// Small helper function to get the composer context from a reply
-static KMail::Composer::TemplateContext replyContext( MessageReply reply )
+static KMail::Composer::TemplateContext replyContext( KMail::MessageHelper::MessageReply reply )
 {
   if ( reply.replyAll )
     return KMail::Composer::ReplyToAll;
   else
     return KMail::Composer::Reply;
 }
-#endif
+
 KMCommand::KMCommand( QWidget *parent )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
@@ -569,7 +569,6 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   */
   win->show();
-
   return OK;
 }
 
@@ -1123,20 +1122,20 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMime::Message *msg,
 
 KMCommand::Result KMReplyToCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMime::Message::MessageReply reply = KMail::MessageHelper::createReply( msg, KMail::ReplySmart, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
+#if 0  //Port to kmime::message
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus();
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus();
+  win->show();
   return OK;
 }
 
@@ -1149,20 +1148,20 @@ KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
 
 KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplySmart, "", true);
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( reply.msg, replyContext( reply ) );
+#if 0 //Port to akonadi
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus( false );
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus( false );
+  win->show();
   return OK;
 }
 
@@ -1175,21 +1174,21 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
 
 KMCommand::Result KMReplyListCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
   KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyList, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ),
                                                0, mSelection );
+#if 0
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus( false );
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus( false );
+  win->show();
   return OK;
 }
 
@@ -1202,21 +1201,21 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
 
 KMCommand::Result KMReplyToAllCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
   KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
+#if 0
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus();
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus();
+  win->show();
   return OK;
 }
 
@@ -1229,21 +1228,21 @@ KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, KMime::Message *msg
 
 KMCommand::Result KMReplyAuthorCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KCursorSaver busy(KBusyPtr::busy());
   KMime::Message *msg = retrievedMessage();
   if ( !msg ) {
     return Failed;
   }
-  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyAuthor, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
+#if 0
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus();
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus();
+  win->show();
   return OK;
 }
 
@@ -1516,22 +1515,22 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMime::Message 
 
 KMCommand::Result KMCustomReplyToCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KCursorSaver busy( KBusyPtr::busy() );
   KMime::Message *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
+  if ( !msg /*|| !msg->codec()*/ /*TODO port it */ ) {
     return Failed;
   }
-  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplySmart, mSelection,
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
+#if 0 //Port to kmime::message
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus();
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus();
+  win->show();
   return OK;
 }
 
@@ -1551,7 +1550,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMime::Message::MessageReply reply = msg->createReply( KMail::ReplyAll, mSelection,
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( KMail::ReplyAll, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
