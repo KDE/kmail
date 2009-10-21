@@ -24,6 +24,7 @@ class QCheckBox;
 class QLabel;
 class KComboBox;
 class KIconButton;
+class FolderCollection;
 
 namespace MessageList {
   namespace Utils {
@@ -37,6 +38,7 @@ class CollectionViewPage : public Akonadi::CollectionPropertiesPage
   Q_OBJECT
 public:
   explicit CollectionViewPage( QWidget *parent = 0 );
+  ~CollectionViewPage();
 
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
@@ -66,7 +68,7 @@ private:
   MessageList::Utils::AggregationComboBox *mAggregationComboBox;
   QCheckBox *mUseDefaultThemeCheckBox;
   MessageList::Utils::ThemeComboBox *mThemeComboBox;
-
+  FolderCollection *mFolderCollection;
 };
 
 

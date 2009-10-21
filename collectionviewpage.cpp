@@ -35,13 +35,18 @@
 #include "messagelist/utils/themecombobox.h"
 #include "messagelist/utils/themeconfigbutton.h"
 
-
+#include "foldercollection.h"
 
 CollectionViewPage::CollectionViewPage(QWidget * parent) :
-    CollectionPropertiesPage( parent )
+    CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
   setPageTitle( i18nc( "@title:tab View settings for a folder.", "View" ) );
   init();
+}
+
+CollectionViewPage::~CollectionViewPage()
+{
+  delete mFolderCollection;
 }
 
 void CollectionViewPage::init()
@@ -182,45 +187,12 @@ void CollectionViewPage::init()
   messageListGroupLayout->addLayout( themeLayout );
 
   topLayout->addStretch( 100 );
-#if 0
-  initializeWithValuesFromFolder( mDlg->folder() );
-#endif
+
 }
 
 #if 0
 bool FolderDialogViewTab::save()
 {
-  KMFolder * folder = mDlg->folder();
-
-  // folder icons
-  if ( !mIsLocalSystemFolder || mIsResourceFolder )
-  {
-    // Update the tree if new icon paths are different and not empty or if
-    // useCustomIcons changed.
-    if ( folder->useCustomIcons() != mIconsCheckBox->isChecked() )
-    {
-      folder->setUseCustomIcons( mIconsCheckBox->isChecked() );
-      // Reset icons, useCustomIcons was turned off.
-      if( !folder->useCustomIcons() )
-        folder->setIconPaths( "", "" );
-    }
-    if ( folder->useCustomIcons() &&
-         ( ( mNormalIconButton->icon() != folder->normalIconPath() &&
-             !mNormalIconButton->icon().isEmpty() ) ||
-           ( mUnreadIconButton->icon() != folder->unreadIconPath() &&
-             !mUnreadIconButton->icon().isEmpty() ) ) )
-    {
-      folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
-    }
-  }
-
-  // sender or receiver column
-  if ( mShowSenderReceiverComboBox->currentIndex() == 1 )
-    folder->setUserWhoField( "From" );
-  else if ( mShowSenderReceiverComboBox->currentIndex() == 2 )
-    folder->setUserWhoField( "To" );
-  else
-    folder->setUserWhoField( "" );
 #ifdef OLD_MESSAGELIST
   // message list aggregation
   MessageListView::StorageModel messageListStorageModel( folder );
@@ -234,6 +206,7 @@ bool FolderDialogViewTab::save()
   return true;
 }
 #endif
+
 void CollectionViewPage::slotChangeIcon( const QString & icon )
 {
     mUnreadIconButton->setIcon( icon );
@@ -268,49 +241,11 @@ void CollectionViewPage::slotSelectFolderTheme()
   mUseDefaultThemeCheckBox->setChecked( !usesPrivateTheme );
 #endif
 }
-#if 0
-void FolderDialogViewTab::initializeWithValuesFromFolder( KMFolder * folder )
-{
-  if ( !folder )
-    return;
 
-  // folder icons
-  if ( !mIsLocalSystemFolder || mIsResourceFolder )
-  {
-    const bool customIcons = folder->useCustomIcons();
-    mIconsCheckBox->setChecked( customIcons );
-    mNormalIconLabel->setEnabled( customIcons );
-    mNormalIconButton->setEnabled( customIcons );
-    mUnreadIconLabel->setEnabled( customIcons );
-    mUnreadIconButton->setEnabled( customIcons );
-
-    const QString normalIconPath = folder->normalIconPath();
-    if( !normalIconPath.isEmpty() )
-      mNormalIconButton->setIcon( normalIconPath );
-
-    const QString unreadIconPath = folder->unreadIconPath();
-    if( !unreadIconPath.isEmpty() )
-      mUnreadIconButton->setIcon( unreadIconPath );
-  }
-
-  // sender or receiver column
-  const QString whoField = mDlg->folder()->userWhoField();
-  if ( whoField.isEmpty() )
-    mShowSenderReceiverComboBox->setCurrentIndex( 0 );
-  else if ( whoField == "From" )
-    mShowSenderReceiverComboBox->setCurrentIndex( 1 );
-  else if ( whoField == "To" )
-    mShowSenderReceiverComboBox->setCurrentIndex( 2 );
-
-  // message list aggregation
-  slotSelectFolderAggregation();
-
-  // message list theme
-  slotSelectFolderTheme();
-}
-#endif
 void CollectionViewPage::load( const Akonadi::Collection & col )
 {
+  mFolderCollection = new FolderCollection( col );
+
   QString iconName;
   QString unreadIconName;
   bool iconWasEmpty = false;
@@ -333,6 +268,21 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
   }
 
   mIconsCheckBox->setChecked( !iconWasEmpty );
+
+  // sender or receiver column
+  const QString whoField = mFolderCollection->userWhoField();
+  if ( whoField.isEmpty() )
+    mShowSenderReceiverComboBox->setCurrentIndex( 0 );
+  else if ( whoField == "From" )
+    mShowSenderReceiverComboBox->setCurrentIndex( 1 );
+  else if ( whoField == "To" )
+    mShowSenderReceiverComboBox->setCurrentIndex( 2 );
+
+  // message list aggregation
+  slotSelectFolderAggregation();
+
+  // message list theme
+  slotSelectFolderTheme();
 }
 
 void CollectionViewPage::save( Akonadi::Collection & col )
@@ -345,6 +295,16 @@ void CollectionViewPage::save( Akonadi::Collection & col )
   else if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
     col.attribute<Akonadi::EntityDisplayAttribute>()->setIconName( QString() );
     col.attribute<Akonadi::EntityDisplayAttribute>()->setActiveIconName( QString() );
+  }
+
+
+  if ( mFolderCollection ) {
+    if ( mShowSenderReceiverComboBox->currentIndex() == 1 )
+      mFolderCollection->setUserWhoField( "From" );
+    else if ( mShowSenderReceiverComboBox->currentIndex() == 2 )
+      mFolderCollection->setUserWhoField( "To" );
+    else
+      mFolderCollection->setUserWhoField( "" );
   }
 }
 
