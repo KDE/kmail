@@ -603,6 +603,10 @@ public:
   KMSetStatusCommand( const MessageStatus& status, const QList<quint32> &,
                       bool toggle=false );
 
+protected slots:
+  void slotItemFetchDone( KJob* );
+  void slotModifyItemDone( KJob * job );
+
 private:
   virtual Result execute();
 

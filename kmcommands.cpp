@@ -1717,7 +1717,6 @@ KMCommand::Result KMSetStatusCommand::execute()
       parentStatus = false;
   }
 
-  kDebug ()<<" before :"<<mSerNums.count();
   QList<qint32> itemMap;
   QList<quint32>::Iterator it;
   for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
@@ -1725,7 +1724,6 @@ KMCommand::Result KMSetStatusCommand::execute()
       Akonadi::Item tmpItem( *it );
       //kDebug()<<" item ::"<<tmpItem;
       if (tmpItem.isValid()) {
-        kDebug()<<" is valid !!!!!!!!!";
         bool myStatus;
         MessageStatus itemStatus;
         itemStatus.setStatusFromFlags( tmpItem.flags() );
@@ -1742,76 +1740,13 @@ KMCommand::Result KMSetStatusCommand::execute()
   kDebug()<<" itemMap.size() :"<<itemMap.size();
 
   for ( int i = 0; i < itemMap.size(); ++i ) {
-    Akonadi::ItemFetchJob *fetchJob = new Akonadi::ItemFetchJob( Akonadi::Item( itemMap[i] ) );
-    if ( fetchJob->exec() ) {
-      Akonadi::Item item = fetchJob->items().first();
-
-      // Set a custom flag
-      qDebug()<<"before :" << item.flags();
-      item.setFlags( mStatus.getStatusFlags() );
-      qDebug()<<" mStatus.getStatusFlags() :"<<mStatus.getStatusFlags();
-      // Store back modified item
-      Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item );
-      if ( modifyJob->exec() ) {
-        kDebug() << "Item modified successfully";
-        qDebug()<<" after :"<<item.flags();
-      }
-      else
-        kDebug() << "Error occurred";
-    } else {
-      kDebug() << "Error occurred";
-    }
+    Akonadi::ItemFetchJob *fetchJob = new Akonadi::ItemFetchJob( Akonadi::Item( itemMap[i] ),this );
+    connect( fetchJob, SIGNAL( result( KJob* ) ), this, SLOT( slotItemFetchDone( KJob* ) ) );
+    fetchJob->start();
   }
 
 
 #if 0 //TODO port to akonadi
-  QList<quint32>::Iterator it;
-  int idx = -1;
-  KMFolder *folder = 0;
-  bool parentStatus = false;
-
-  // Toggle actions on threads toggle the whole thread
-  // depending on the state of the parent.
-  if (mToggle) {
-    KMime::Message *msg;
-    KMMsgDict::instance()->getLocation( *mSerNums.begin(), &folder, &idx );
-    if (folder) {
-      msg = folder->getMsgBase(idx);
-      if ( msg && ( msg->status() & mStatus ))
-        parentStatus = true;
-      else
-        parentStatus = false;
-    }
-  }
-  QMap< KMFolder*, QList<int> > folderMap;
-  for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
-    KMMsgDict::instance()->getLocation( *it, &folder, &idx );
-    if (folder) {
-      if (mToggle) {
-        KMime::Message *msg = folder->getMsgBase(idx);
-        // check if we are already at the target toggle state
-        if (msg) {
-          bool myStatus;
-          if ( msg->status() & mStatus)
-            myStatus = true;
-          else
-            myStatus = false;
-          if (myStatus != parentStatus)
-            continue;
-        }
-      }
-      /* Collect the ids for each folder in a separate list and
-         send them off in one go at the end. */
-      folderMap[folder].append(idx);
-    }
-  }
-  QMap< KMFolder*, QList<int> >::Iterator it2 = folderMap.begin();
-  while ( it2 != folderMap.end() ) {
-    KMFolder *f = it2.key();
-    f->setStatus( (*it2), mStatus, mToggle );
-    ++it2;
-  }
-
   QDBusMessage message =
     QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
   QDBusConnection::sessionBus().send( message );
@@ -1819,6 +1754,33 @@ KMCommand::Result KMSetStatusCommand::execute()
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   return OK;
+}
+
+void KMSetStatusCommand::slotItemFetchDone( KJob* job)
+{
+  if ( job->error() ) {
+    kDebug()<<" Error in slotItemFetchDone :"<<job->errorText();
+    return;
+  }
+  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+  Q_ASSERT( fjob );
+  if( fjob->items().count() != 1 ) {
+    kError() << "Fetched" << fjob->items().count() << "items, expected 1.";
+    return;
+  }
+  Akonadi::Item item = fjob->items().first();
+  // Set a custom flag
+  item.setFlags( mStatus.getStatusFlags() );
+  // Store back modified item
+  Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item,this );
+  connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
+}
+
+void KMSetStatusCommand::slotModifyItemDone( KJob * job )
+{
+  if ( job->error() ) {
+    kDebug()<<" Error in void KMSetStatusCommand::slotModifyItemDone( KJob * job ) :"<<job->errorText();
+  }
 }
 
 KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
