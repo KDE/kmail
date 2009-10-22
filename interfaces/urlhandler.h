@@ -32,7 +32,7 @@
 #ifndef __KMAIL_INTERFACES_URLHANDLER_H__
 #define __KMAIL_INTERFACES_URLHANDLER_H__
 
-class KUrl;
+#include <kurl.h>
 
 class QString;
 class QPoint;
