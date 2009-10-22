@@ -192,7 +192,6 @@ set(kmailprivate_LIB_SRCS
    #folderadaptor.cpp
    korghelper.cpp
 #   localsubscriptiondialog.cpp
-   scalix.cpp
    messageactions.cpp
    statusbarlabel.cpp
    groupware_types.cpp
