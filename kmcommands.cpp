@@ -189,14 +189,6 @@ KMCommand::KMCommand( QWidget *parent, const QList<KMime::Message*> &msgList )
     mEmitsCompletedItself( false ), mParent( parent ), mMsgList( msgList )
 {
 }
-#if 0 //TODO port to akonadi
-KMCommand::KMCommand( QWidget *parent, KMime::Message *msgBase )
-  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
-    mEmitsCompletedItself( false ), mParent( parent )
-{
-  mMsgList.append( msgBase );
-}
-#endif
 
 KMCommand::KMCommand( QWidget *parent, KMime::Message *msg )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
