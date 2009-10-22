@@ -693,18 +693,16 @@ void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode upda
   mViewer->setMessageItem( item, updateMode );
 
   mDelayedMarkTimer.stop();
-#if 0 //TODO port to akonadi
-  if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
-       && GlobalSettings::self()->delayedMarkAsRead() ) {
-    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000 );
-    else
-      slotTouchMessage();
+  if ( item.isValid() ) {
+    MessageStatus status;
+    status.setStatusFromFlags( item.flags() );
+    if ( ( status.isUnread() || status.isNew() ) && GlobalSettings::self()->delayedMarkAsRead() ) {
+      if (GlobalSettings::self()->delayedMarkTime() != 0 )
+        mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000 );
+      else
+        slotTouchMessage();
+    }
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-
 }
 
 KUrl KMReaderWin::urlClicked() const
