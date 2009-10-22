@@ -405,16 +405,14 @@ void KMCommand::transferSelectedMsgs()
   }
 }
 
-void KMCommand::slotMsgTransfered(KMime::Message* msg)
+void KMCommand::slotMsgTransfered(const Akonadi::Item & msg)
 {
   if ( mProgressDialog && mProgressDialog->wasCancelled() ) {
     emit messagesTransfered( Canceled );
     return;
   }
-#if 0
   // save the complete messages
   mRetrievedMsgs.append(msg);
-#endif
 }
 
 void KMCommand::slotProgress( unsigned long done, unsigned long /*total*/ )
@@ -918,7 +916,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
 #endif
 }
 
-void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMime::Message *msg)
+void KMSaveMsgCommand::slotMessageRetrievedForSaving(const Akonadi::Item &msg)
 {
 #if 0 //TODO port to akonadi
   if ( msg ) {

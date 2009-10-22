@@ -136,7 +136,7 @@ private slots:
 
   void slotPostTransfer( KMCommand::Result result );
   /** the msg has been transferred */
-  void slotMsgTransfered(KMime::Message* msg);
+  void slotMsgTransfered(const Akonadi::Item& msg);
   /** the KMImapJob is finished */
   void slotJobFinished();
   /** the transfer was canceled */
@@ -308,7 +308,7 @@ private slots:
   void slotSaveDataReq();
   void slotSaveResult(KJob *job);
   /** the message has been transferred for saving */
-  void slotMessageRetrievedForSaving(KMime::Message *msg);
+  void slotMessageRetrievedForSaving(const Akonadi::Item &msg);
 
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
@@ -734,7 +734,6 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
 public:
   KMMoveCommand( const Akonadi::Collection& destFolder, const QList<Akonadi::Item> &msgList );
   KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg );
-//TODO port to akonadi  KMMoveCommand( KMFolder* destFolder, KMime::Message * msgBase );
   Akonadi::Collection destFolder() const { return mDestFolder; }
 
 public slots:
@@ -746,9 +745,9 @@ protected:
   // Needed for KMDeleteCommand for "move to trash"
   KMMoveCommand( quint32 sernum );
   void setDestFolder( const Akonadi::Collection& folder ) { mDestFolder = folder; }
-  void addMsg( KMime::Message *msg ) {
-//TODO port to akonadi      mSerNumList.append( msg->getMsgSerNum() );
-}
+  void addMsg( const Akonadi::Item &msg ) {
+    mSerNumList.append( msg.id() );
+  }
   QVector<KMFolder*> mOpenedFolders;
 
 private:
