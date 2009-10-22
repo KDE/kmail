@@ -23,6 +23,7 @@
 #include <akonadi/collection.h>
 #include <akonadi/collectionstatistics.h>
 #include <KConfigGroup>
+#include <KIO/Job>
 
 #include "mailinglist-magic.h"
 #include "kmglobal.h"
@@ -192,7 +193,8 @@ public:
 
 protected slots:
   void slotIdentitiesChanged();
-
+  void slotMarkNewAsUnreadfetchDone( KJob * job );
+  void slotMarkNewAsReadfetchDone( KJob * job);
 signals:
   /** Emitted when the shortcut associated with this folder changes. */
   void shortcutChanged( const Akonadi::Collection & );
