@@ -55,10 +55,8 @@ public:
   KMCommand( QWidget *parent = 0 );
   KMCommand( QWidget *parent, const Akonadi::Item & );
   // Retrieve all messages in msgList when start is called.
-  KMCommand( QWidget *parent, const QList<KMime::Message*> &msgList );
   KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
   // Retrieve the single message msgBase when start is called.
-  KMCommand( QWidget *parent, KMime::Message *message );
   virtual ~KMCommand();
 
   /** These folders will be closed by the dtor, handy, if you need to keep
@@ -93,9 +91,9 @@ signals:
 protected:
 //TODO IMPORTANT, port this first to akonadi!!
   // Returns list of messages retrieved
-  const QList<KMime::Message*> retrievedMsgs() const;
+  const QList<Akonadi::Item> retrievedMsgs() const;
   // Returns the single message retrieved
-  KMime::Message *retrievedMessage() const;
+  Akonadi::Item retrievedMessage() const;
   // Returns the parent widget
   QWidget *parentWidget() const;
 
@@ -155,8 +153,8 @@ private:
   bool mEmitsCompletedItself : 1;
 
   QWidget *mParent;
-  QList<KMime::Message*> mRetrievedMsgs;
-  QList<KMime::Message*> mMsgList;
+  QList<Akonadi::Item> mRetrievedMsgs;
+  QList<Akonadi::Item> mMsgList;
   QList<QPointer<KMFolder> > mFolders;
 };
 
@@ -277,7 +275,7 @@ class KMAIL_EXPORT KMEditMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMEditMsgCommand( QWidget *parent, KMime::Message *msg );
+  KMEditMsgCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
@@ -300,7 +298,7 @@ class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
 
 public:
   KMSaveMsgCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
-  KMSaveMsgCommand( QWidget *parent, KMime::Message * msg );
+  KMSaveMsgCommand( QWidget *parent, const Akonadi::Item & msg );
   KUrl url();
 
 private:
