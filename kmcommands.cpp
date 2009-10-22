@@ -811,7 +811,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMime::Message *msg )
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
-                                    const QList<KMime::Message*> &msgList )
+                                    const QList<Akonadi::Item> &msgList )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
     mStandAloneMessage( 0 ),
@@ -838,8 +838,10 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   mMsgListIndex = 0;
+#if 0  
   KMime::Message *msgBase = *(msgList.begin());
   mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase ) );
+#endif  
 }
 
 KUrl KMSaveMsgCommand::url()
@@ -1246,7 +1248,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 
 
 KMForwardCommand::KMForwardCommand( QWidget *parent,
-  const QList<KMime::Message*> &msgList, uint identity )
+  const QList<Akonadi::Item> &msgList, uint identity )
   : KMCommand( parent, msgList ),
     mIdentity( identity )
 {
@@ -1401,7 +1403,7 @@ KMCommand::Result KMForwardCommand::execute()
 
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
-           const QList<KMime::Message*> &msgList, uint identity, KMail::Composer *win )
+           const QList<Akonadi::Item> &msgList, uint identity, KMail::Composer *win )
   : KMCommand( parent, msgList ), mIdentity( identity ),
     mWin( QPointer<KMail::Composer>( win ))
 {
@@ -1564,7 +1566,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 
 
 KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
-  const QList<KMime::Message*> &msgList, uint identity, const QString &tmpl )
+  const QList<Akonadi::Item> &msgList, uint identity, const QString &tmpl )
   : KMCommand( parent, msgList ),
     mIdentity( identity ), mTemplate( tmpl )
 {
@@ -1857,7 +1859,7 @@ KMCommand::Result KMFilterCommand::execute()
 
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
-                                              const QList<KMime::Message*> &msgList,
+                                              const QList<Akonadi::Item> &msgList,
                                               KMFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
@@ -1998,7 +2000,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 }
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
-                              const QList<KMime::Message*> &msgList )
+                              const QList<Akonadi::Item> &msgList )
 :mDestFolder( destFolder ), mMsgList( msgList )
 {
   setDeletesItself( true );
@@ -2177,7 +2179,7 @@ void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
-                                const QList<KMime::Message*> &msgList)
+                                const QList<Akonadi::Item> &msgList)
     : mDestFolder( destFolder ), mProgressItem( 0 )
 {
 #if 0 //TODO port to akonadi
@@ -2427,7 +2429,7 @@ void KMMoveCommand::slotMoveCanceled()
 
 // srcFolder doesn't make much sense for searchFolders
 KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder,
-  const QList<KMime::Message*> &msgList )
+  const QList<Akonadi::Item> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
   //srcFolder->open( "kmcommand" );
@@ -2547,7 +2549,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const Akona
 {
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList<KMime::Message*>& msgs )
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList<Akonadi::Item>& msgs )
   : KMCommand( parent, msgs ), mImplicitAttachments( true ), mEncoded( false )
 {
 }

@@ -299,7 +299,7 @@ class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMSaveMsgCommand( QWidget *parent, const QList<KMime::Message*> &msgList );
+  KMSaveMsgCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
   KMSaveMsgCommand( QWidget *parent, KMime::Message * msg );
   KUrl url();
 
@@ -360,7 +360,7 @@ public:
       @param parent  The parent widget of the command used for message boxes.
       @param msgs    The messages of which the attachments should be saved.
    */
-  KMSaveAttachmentsCommand( QWidget *parent, const QList<KMime::Message*>& msgs );
+  KMSaveAttachmentsCommand( QWidget *parent, const QList<Akonadi::Item>& msgs );
   /** Use this to save the specified attachments of the given message.
       @param parent       The parent widget of the command used for message
                           boxes.
@@ -461,7 +461,7 @@ class KMAIL_EXPORT KMForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardCommand( QWidget *parent, const QList<KMime::Message*> &msgList,
+  KMForwardCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
                     uint identity = 0 );
   KMForwardCommand( QWidget *parent, const Akonadi::Item& msg,
                     uint identity = 0 );
@@ -478,7 +478,7 @@ class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardAttachedCommand( QWidget *parent, const QList<KMime::Message*> &msgList,
+  KMForwardAttachedCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
                             uint identity = 0, KMail::Composer *win = 0 );
   KMForwardAttachedCommand( QWidget *parent, const Akonadi::Item & msg,
                             uint identity = 0, KMail::Composer *win = 0 );
@@ -540,7 +540,7 @@ class KMAIL_EXPORT KMCustomForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCustomForwardCommand( QWidget *parent, const QList<KMime::Message *> &msgList,
+  KMCustomForwardCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
                           uint identity, const QString &tmpl );
   KMCustomForwardCommand( QWidget *parent, const Akonadi::Item& msg,
                           uint identity, const QString &tmpl );
@@ -647,7 +647,7 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand( QWidget *parent,
-                         const QList<KMime::Message*> &msgList, KMFilter *filter );
+                         const QList<Akonadi::Item> &msgList, KMFilter *filter );
 
 private:
   virtual Result execute();
@@ -710,7 +710,7 @@ class KMAIL_EXPORT KMCopyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCopyCommand( KMFolder* destFolder, const QList<KMime::Message*> &msgList );
+  KMCopyCommand( KMFolder* destFolder, const QList<Akonadi::Item> &msgList );
   KMCopyCommand( KMFolder* destFolder, const Akonadi::Item &msg );
 
 protected slots:
@@ -722,7 +722,7 @@ private:
   virtual Result execute();
 
   KMFolder *mDestFolder;
-  QList<KMime::Message*> mMsgList;
+  QList<Akonadi::Item> mMsgList;
   QList<KMail::FolderJob*> mPendingJobs;
 };
 
@@ -734,7 +734,7 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMoveCommand( const Akonadi::Collection& destFolder, const QList<KMime::Message*> &msgList );
+  KMMoveCommand( const Akonadi::Collection& destFolder, const QList<Akonadi::Item> &msgList );
   KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg );
 //TODO port to akonadi  KMMoveCommand( KMFolder* destFolder, KMime::Message * msgBase );
   Akonadi::Collection destFolder() const { return mDestFolder; }
@@ -771,7 +771,7 @@ class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
   Q_OBJECT
 
 public:
-  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<KMime::Message*> &msgList );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<Akonadi::Item> &msgList );
   KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item& msg );
   KMTrashMsgCommand( quint32 sernum );
 
