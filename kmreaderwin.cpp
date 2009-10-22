@@ -155,7 +155,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mDelayedMarkTimer.setSingleShot( true );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
-  setMsg( 0, false );
+  setMessage( Akonadi::Item(), MessageViewer::Viewer::Delayed );
 }
 
 void KMReaderWin::createActions()
@@ -247,30 +247,6 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
 void KMReaderWin::setOverrideEncoding( const QString & encoding )
 {
   mViewer->setOverrideEncoding( encoding );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::setMsg( KMime::Message* aMsg, bool force )
-{
-  //TEMPORARY
-  if ( aMsg ) {
-    mViewer->setMessage( aMsg , force ? Viewer::Force : Viewer::Delayed);
-    //return;
-  }
-  // connect to the updates if we have hancy headers
-
-  mDelayedMarkTimer.stop();
-#if 0 //TODO port to akonadi
-  if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
-       && GlobalSettings::self()->delayedMarkAsRead() ) {
-    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000 );
-    else
-      slotTouchMessage();
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -455,23 +431,6 @@ void KMReaderWin::slotCopySelectedText()
   QString selection = mViewer->selectedText();
   selection.replace( QChar::Nbsp, ' ' );
   QApplication::clipboard()->setText( selection );
-}
-
-void KMReaderWin::setMsgPart( partNode * node ) {
-#ifndef USE_AKONADI_VIEWER
-  htmlWriter()->reset();
-  mColorBar->hide();
-  htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
-  htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
-  // end ###
-  if ( node ) {
-    ObjectTreeParser otp( this, 0, true );
-    otp.parseObjectTree( node );
-  }
-  // ### this, too
-  htmlWriter()->queue( "</body></html>" );
-  htmlWriter()->flush();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -732,6 +691,20 @@ void KMReaderWin::clear(bool force )
 void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode updateMode)
 {
   mViewer->setMessageItem( item, updateMode );
+
+  mDelayedMarkTimer.stop();
+#if 0 //TODO port to akonadi
+  if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
+       && GlobalSettings::self()->delayedMarkAsRead() ) {
+    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
+      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000 );
+    else
+      slotTouchMessage();
+  }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
 }
 
 KUrl KMReaderWin::urlClicked() const

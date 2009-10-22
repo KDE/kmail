@@ -65,8 +65,6 @@ namespace MessageViewer {
   class HeaderStyle;
 }
 class KHtmlPartHtmlWriter;
-class partNode; // might be removed when KMime is used instead of mimelib
-                //                                      (khz, 29.11.2001)
 
 namespace KParts {
   struct BrowserArguments;
@@ -128,10 +126,6 @@ public:
   void setOverrideEncoding( const QString & encoding );
   virtual void setPrinting(bool enable );
 
-  /** Set the message that shall be shown. If msg is 0, an empty page is
-      displayed. */
-  virtual void setMsg( KMime::Message* msg, bool force = false );
-
   void setMessage( const Akonadi::Item& item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
 
@@ -139,8 +133,6 @@ public:
       to be shown */
   void setMsgPart( KMime::Content* aMsgPart, bool aHTML,
                    const QString& aFileName, const QString& pname );
-
-  void setMsgPart( partNode * node );
 
 
   /** Store message id of last viewed message,

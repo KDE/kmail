@@ -3323,6 +3323,7 @@ void KMHandleAttachmentCommand::atmProperties()
 #if 0
   KMMsgPartDialogCompat dlg( 0, true );
   KMime::MessagePart& msgPart = mNode->msgPart();
+  //Port to KMime::Content
   dlg.setMsgPart( &msgPart );
   dlg.exec();
 #endif

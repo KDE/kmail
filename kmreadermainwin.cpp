@@ -133,32 +133,6 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
   mReaderWin->setUseFixedFont( useFixedFont );
 }
 
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::showMessage( const QString & encoding, KMime::Message *msg,
-                               unsigned long serNumOfOriginalMessage, int nodeIdOffset )
-{
-  mReaderWin->setOverrideEncoding( encoding );
-  mReaderWin->setMsg( msg, true );
-#if 0 //TODO port to akonadi
-  if ( serNumOfOriginalMessage != 0 ) {
-    Q_ASSERT( nodeIdOffset != -1 );
-    mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  mReaderWin->slotTouchMessage();
-  setCaption( msg->subject()->asUnicodeString() );
-  mMsg = msg;
-#if OLD_MESSAGEACTION //TODO port it
-  mMsgActions->setCurrentMessage( msg );
-#endif
-  menuBar()->show();
-  toolBar( "mainToolBar" )->show();
-
-}
-
-
 void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item &msg )
 {
   mReaderWin->setOverrideEncoding( encoding );
