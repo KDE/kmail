@@ -354,7 +354,7 @@ public:
       @param parent  The parent widget of the command used for message boxes.
       @param msg     The message of which the attachments should be saved.
    */
-  KMSaveAttachmentsCommand( QWidget *parent, KMime::Message *msg  );
+  KMSaveAttachmentsCommand( QWidget *parent, const Akonadi::Item &msg  );
   /** Use this to save all attachments of the given messages.
       @param parent  The parent widget of the command used for message boxes.
       @param msgs    The messages of which the attachments should be saved.
@@ -369,7 +369,7 @@ public:
                           when the attachment is saved.
    */
   KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*> &attachments,
-                            KMime::Message *msg, bool encoded = false  );
+                            const Akonadi::Item &msg, bool encoded = false  );
 
 private slots:
   void slotSaveAll();
@@ -462,7 +462,7 @@ class KMAIL_EXPORT KMForwardCommand : public KMCommand
 public:
   KMForwardCommand( QWidget *parent, const QList<KMime::Message*> &msgList,
                     uint identity = 0 );
-  KMForwardCommand( QWidget *parent, KMime::Message * msg,
+  KMForwardCommand( QWidget *parent, const Akonadi::Item& msg,
                     uint identity = 0 );
 
 private:
@@ -479,7 +479,7 @@ class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
 public:
   KMForwardAttachedCommand( QWidget *parent, const QList<KMime::Message*> &msgList,
                             uint identity = 0, KMail::Composer *win = 0 );
-  KMForwardAttachedCommand( QWidget *parent, KMime::Message * msg,
+  KMForwardAttachedCommand( QWidget *parent, const Akonadi::Item & msg,
                             uint identity = 0, KMail::Composer *win = 0 );
 
 private:
@@ -541,7 +541,7 @@ class KMAIL_EXPORT KMCustomForwardCommand : public KMCommand
 public:
   KMCustomForwardCommand( QWidget *parent, const QList<KMime::Message *> &msgList,
                           uint identity, const QString &tmpl );
-  KMCustomForwardCommand( QWidget *parent, KMime::Message * msg,
+  KMCustomForwardCommand( QWidget *parent, const Akonadi::Item& msg,
                           uint identity, const QString &tmpl );
 
 private:
@@ -710,7 +710,7 @@ class KMAIL_EXPORT KMCopyCommand : public KMCommand
 
 public:
   KMCopyCommand( KMFolder* destFolder, const QList<KMime::Message*> &msgList );
-  KMCopyCommand( KMFolder* destFolder, KMime::Message *msg );
+  KMCopyCommand( KMFolder* destFolder, const Akonadi::Item &msg );
 
 protected slots:
   void slotJobFinished( KMail::FolderJob *job );
@@ -734,7 +734,7 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
 
 public:
   KMMoveCommand( const Akonadi::Collection& destFolder, const QList<KMime::Message*> &msgList );
-  KMMoveCommand( const Akonadi::Collection& destFolder, KMime::Message * msg );
+  KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg );
 //TODO port to akonadi  KMMoveCommand( KMFolder* destFolder, KMime::Message * msgBase );
   Akonadi::Collection destFolder() const { return mDestFolder; }
 
@@ -771,7 +771,7 @@ class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
 
 public:
   KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<KMime::Message*> &msgList );
-  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, KMime::Message * msg );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item& msg );
   KMTrashMsgCommand( quint32 sernum );
 
 private:
@@ -802,7 +802,7 @@ class KMAIL_EXPORT KMLoadPartsCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMLoadPartsCommand( QList<partNode*>& parts, KMime::Message* msg );
+  KMLoadPartsCommand( QList<partNode*>& parts, const Akonadi::Item & msg );
   KMLoadPartsCommand( partNode* node, KMime::Message* msg );
   KMLoadPartsCommand( PartNodeMessageMap& partMap );
 
@@ -921,7 +921,7 @@ public:
    * @param action what to do with the attachment
    * @param offer specify a KService that should handle the "open" action, 0 otherwise
    */
-  KMHandleAttachmentCommand( partNode* node, KMime::Message* msg, int atmId,
+  KMHandleAttachmentCommand( partNode* node, const Akonadi::Item& msg, int atmId,
       const QString& atmName, AttachmentAction action, KService::Ptr offer, QWidget* parent );
 
 

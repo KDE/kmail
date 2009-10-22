@@ -1244,7 +1244,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent,
 {
 }
 
-KMForwardCommand::KMForwardCommand( QWidget *parent, KMime::Message *msg,
+KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
                                     uint identity )
   : KMCommand( parent, msg ),
     mIdentity( identity )
@@ -1400,7 +1400,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 }
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
-           KMime::Message * msg, uint identity, KMail::Composer *win )
+                                                    const Akonadi::Item & msg, uint identity, KMail::Composer *win )
   : KMCommand( parent, msg ), mIdentity( identity ),
     mWin( QPointer< KMail::Composer >( win ))
 {
@@ -1563,7 +1563,7 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
 }
 
 KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
-  KMime::Message *msg, uint identity, const QString &tmpl )
+                                                const Akonadi::Item &msg, uint identity, const QString &tmpl )
   : KMCommand( parent, msg ),
     mIdentity( identity ), mTemplate( tmpl )
 {
@@ -1996,11 +1996,13 @@ KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
   setDeletesItself( true );
 }
 
-KMCopyCommand::KMCopyCommand( KMFolder* destFolder, KMime::Message * msg )
+KMCopyCommand::KMCopyCommand( KMFolder* destFolder, const Akonadi::Item& msg )
   :mDestFolder( destFolder )
 {
+#if 0
   setDeletesItself( true );
   mMsgList.append( msg );
+#endif
 }
 
 KMCommand::Result KMCopyCommand::execute()
@@ -2179,7 +2181,7 @@ KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
 }
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
-                              KMime::Message *msg )
+                              const Akonadi::Item& msg )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
 #if 0 //TODO port to akonadi
@@ -2424,7 +2426,7 @@ KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder,
   //mOpenedFolders.push_back( srcFolder );
 }
 
-KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, KMime::Message * msg )
+KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item & msg )
 :KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
   //srcFolder->open( "kmcommand" );
@@ -2532,7 +2534,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
   return OK;
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMime::Message *msg )
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const Akonadi::Item& msg )
   : KMCommand( parent, msg ), mImplicitAttachments( true ), mEncoded( false )
 {
 }
@@ -2543,13 +2545,15 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*>& attachments,
-                                                    KMime::Message *msg, bool encoded )
+                                                    const Akonadi::Item &msg, bool encoded )
   : KMCommand( parent ), mImplicitAttachments( false ), mEncoded( encoded )
 {
+#if 0	
   QList<partNode*>::const_iterator it;
   for ( it = attachments.constBegin(); it != attachments.constEnd(); ++it ) {
     mAttachmentMap.insert( (*it), msg );
   }
+#endif  
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
@@ -2904,13 +2908,15 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   return OK;
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, KMime::Message *msg )
+KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, const Akonadi::Item &msg )
   : mNeedsRetrieval( 0 )
 {
+#if 0	
   QList<partNode*>::const_iterator it;
   for ( it = parts.constBegin(); it != parts.constEnd(); ++it ) {
     mPartMap.insert( (*it), msg );
   }
+#endif  
 }
 
 KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, KMime::Message *msg )
@@ -3116,11 +3122,14 @@ KUrl::List KMMailingListHelpCommand::urls() const
 }
 
 KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
-     KMime::Message* msg, int atmId, const QString& atmName,
+                                                      const Akonadi::Item& msg, int atmId, const QString& atmName,
      AttachmentAction action, KService::Ptr offer, QWidget* parent )
-: KMCommand( parent ), mNode( node ), mMsg( msg ), mAtmId( atmId ), mAtmName( atmName ),
+: KMCommand( parent ), mNode( node ), mAtmId( atmId ), mAtmName( atmName ),
   mAction( action ), mOffer( offer ), mJob( 0 )
 {
+#if 0
+	mMsg(msg);
+#endif	
 }
 
 void KMHandleAttachmentCommand::slotStart()
@@ -3304,9 +3313,11 @@ void KMHandleAttachmentCommand::atmSave()
   QList<partNode*> parts;
   parts.append( mNode );
   // save, do not leave encoded
+#if 0  
   KMSaveAttachmentsCommand *command =
     new KMSaveAttachmentsCommand( 0, parts, mMsg, false );
   command->start();
+#endif
 }
 
 void KMHandleAttachmentCommand::atmProperties()
