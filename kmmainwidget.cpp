@@ -1383,16 +1383,20 @@ void KMMainWidget::slotShowNewFromTemplate()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNewFromTemplate( QAction *action )
 {
+#if 0//Remove kmfolder !!!!!
   if ( !mTemplateFolder )
     return;
   newFromTemplate( mTemplateFolder->getMsg( action->data().toInt() ) );
+#else
+   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::newFromTemplate( KMime::Message *msg )
+void KMMainWidget::newFromTemplate( const Akonadi::Item &msg )
 {
-  if ( !msg )
+  if ( !msg.isValid() )
     return;
   KMCommand *command = new KMUseTemplateCommand( this, msg );
   command->start();
@@ -1842,7 +1846,7 @@ void KMMainWidget::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUseTemplate()
 {
-  newFromTemplate( &*mMessagePane->currentMessage() );
+  newFromTemplate( mMessagePane->currentItem() );
 }
 
 

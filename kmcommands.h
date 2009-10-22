@@ -53,6 +53,7 @@ public:
 
   // Trival constructor, don't retrieve any messages
   KMCommand( QWidget *parent = 0 );
+  KMCommand( QWidget *parent, const Akonadi::Item & );
   // Retrieve all messages in msgList when start is called.
   KMCommand( QWidget *parent, const QList<KMime::Message*> &msgList );
   // Retrieve the single message msgBase when start is called.
@@ -286,7 +287,7 @@ class KMAIL_EXPORT KMUseTemplateCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUseTemplateCommand( QWidget *parent, KMime::Message *msg );
+  KMUseTemplateCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();

@@ -184,6 +184,20 @@ KMCommand::KMCommand( QWidget *parent )
 {
 }
 
+
+
+KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
+  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
+    mEmitsCompletedItself( false ), mParent( parent )
+{
+  if ( msg.isValid() ) {
+#if 0 //Port it
+    mMsgList.append( msg );
+#endif
+  }
+}
+
+
 KMCommand::KMCommand( QWidget *parent, const QList<KMime::Message*> &msgList )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent ), mMsgList( msgList )
@@ -717,7 +731,7 @@ KMCommand::Result KMEditMsgCommand::execute()
   return Failed;
 }
 
-KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMime::Message *msg )
+KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, const Akonadi::Item  &msg )
   :KMCommand( parent, msg )
 {
 }

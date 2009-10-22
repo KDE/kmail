@@ -292,7 +292,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void deleteWidgets();
     void layoutSplitters();
     void updateFileMenu();
-    void newFromTemplate( KMime::Message *msg );
+  void newFromTemplate( const Akonadi::Item& );
     void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
     void copySelectedMessagesToFolder( const Akonadi::Collection& dest );
 
