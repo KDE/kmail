@@ -371,7 +371,7 @@ void FolderCollection::daysToExpire(int& unreadDays, int& readDays) {
 void FolderCollection::markNewAsUnread()
 {
   if ( mCollection.isValid() ) {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection );
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection,this );
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotMarkNewAsUnreadfetchDone( KJob* ) ) );
   }
 }
@@ -403,7 +403,7 @@ void FolderCollection::slotMarkNewAsUnreadfetchDone( KJob * job )
 void FolderCollection::markUnreadAsRead()
 {
   if ( mCollection.isValid() ) {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection );
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection,this );
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotMarkNewAsReadfetchDone( KJob* ) ) );
   }
 }
