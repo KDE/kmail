@@ -19,6 +19,7 @@ using KPIM::MessageStatus;
 #include <QPointer>
 #include <QList>
 #include <QMenu>
+#include <akonadi/item.h>
 #include <akonadi/collection.h>
 class KProgressDialog;
 class KMFilter;
@@ -162,13 +163,13 @@ class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand
   Q_OBJECT
 
 public:
-  explicit KMMailtoComposeCommand( const KUrl &url, KMime::Message *msg=0 );
+  explicit KMMailtoComposeCommand( const KUrl &url, const Akonadi::Item &msg=Akonadi::Item() );
 
 private:
   virtual Result execute();
 
   KUrl mUrl;
-  KMime::Message *mMessage;
+  Akonadi::Item mMessage;
 };
 
 class KMAIL_EXPORT KMMailtoReplyCommand : public KMCommand

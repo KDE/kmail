@@ -504,10 +504,8 @@ Akonadi::Item KMReaderWin::message() const
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
-#if 0
   KMCommand *command = new KMMailtoComposeCommand( urlClicked(), message() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------

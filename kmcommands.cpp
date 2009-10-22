@@ -482,19 +482,20 @@ void KMCommand::keepFolderOpen( KMFolder *folder )
 }
 
 KMMailtoComposeCommand::KMMailtoComposeCommand( const KUrl &url,
-                                                KMime::Message *msg )
+                                                const Akonadi::Item &msg )
   :mUrl( url ), mMessage( msg )
 {
 }
 
 KMCommand::Result KMMailtoComposeCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KMime::Message *msg = new KMime::Message;
   uint id = 0;
 
-  if ( mMessage && mMessage->parent() )
-    id = mMessage->parent()->identity();
+  if ( mMessage.isValid() && mMessage.parentCollection().isValid() ) {
+    FolderCollection fd( mMessage.parentCollection() );
+    id = fd.identity();
+  }
 
   KMail::MessageHelper::initHeader(msg, id);
   msg->contentType()->setCharset("utf-8");
@@ -504,9 +505,6 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   win->setCharset("", true);
   win->setFocusToSubject();
   win->show();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 
