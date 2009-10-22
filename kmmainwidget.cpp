@@ -1853,10 +1853,10 @@ void KMMainWidget::slotUseTemplate()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotResendMsg()
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
-  KMCommand *command = new KMResendMessageCommand( this, &*msg );
+  KMCommand *command = new KMResendMessageCommand( this, msg );
 
   command->start();
 }
@@ -2312,10 +2312,10 @@ void KMMainWidget::slotSetThreadStatusIgnored()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
-  KMCommand *command = new KMRedirectCommand( this, &*msg );
+  KMCommand *command = new KMRedirectCommand( this, msg );
   command->start();
 }
 
@@ -2323,10 +2323,9 @@ void KMMainWidget::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
-#ifdef OLD_MESSAGELIST
 
   QString text = mMsgView ? mMsgView->copyText() : "";
 
@@ -2336,17 +2335,14 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
       this, msg, text, tmpl
     );
   command->start();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
 
   QString text = mMsgView? mMsgView->copyText() : "";
@@ -2354,7 +2350,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
   kDebug() << "Reply to All with template:" << tmpl;
 
   KMCommand *command = new KMCustomReplyAllToCommand(
-      this, &*msg, text, tmpl
+      this, msg, text, tmpl
     );
 
   command->start();
@@ -2384,11 +2380,11 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNoQuoteReplyToMsg()
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
 
-  KMCommand *command = new KMNoQuoteReplyToCommand( this, &*msg );
+  KMCommand *command = new KMNoQuoteReplyToCommand( this, msg );
   command->start();
 }
 
@@ -2408,11 +2404,11 @@ void KMMainWidget::slotSubjectFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMailingListFilter()
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
 
-  KMCommand *command = new KMMailingListFilterCommand( this, &*msg );
+  KMCommand *command = new KMMailingListFilterCommand( this, msg );
   command->start();
 }
 
@@ -2685,15 +2681,14 @@ void KMMainWidget::slotStartWatchGnuPG()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPrintMsg()
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
 
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
   bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
-#ifdef OLD_MESSAGELIST
   KMCommand *command =
     new KMPrintCommand( this, msg,
                         mMsgView ? mMsgView->headerStyle() : 0,
@@ -2701,7 +2696,6 @@ void KMMainWidget::slotPrintMsg()
                         htmlOverride, htmlLoadExtOverride,
                         useFixedFont, overrideEncoding() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3933,19 +3927,10 @@ void KMMainWidget::slotCollapseAllThreads()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowMsgSrc()
 {
-  if ( mMsgView )
+  if ( mMsgView ) {
     mMsgView->setUpdateAttachment( false );
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
-    return;
-#if 0 //Port it Needs to port kmcommand to kmime::message
-
-  KMCommand *command = new KMShowMsgSrcCommand( this, msg,
-                                                mMsgView
-                                                ? mMsgView->isFixedFont()
-                                                : false );
-  command->start();
-#endif
+    mMsgView->viewer()->slotShowMessageSource();
+  }
 }
 
 
@@ -4805,13 +4790,11 @@ QString KMMainWidget::overrideEncoding() const
 
 void KMMainWidget::slotCreateTodo()
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg )
+  Akonadi::Item msg = mMessagePane->currentItem();
+  if ( !msg.isValid() )
     return;
-#ifdef OLD_MESSAGELIST
   KMCommand *command = new CreateTodoCommand( this, msg );
   command->start();
-#endif
 }
 
 void KMMainWidget::showEvent( QShowEvent *event )

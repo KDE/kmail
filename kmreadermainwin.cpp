@@ -471,10 +471,12 @@ void KMReaderMainWin::slotSizeAction( int size )
 
 void KMReaderMainWin::slotCreateTodo()
 {
+#if 0 //Port it !!!!!!!
   if ( !mMsg )
     return;
   KMCommand *command = new CreateTodoCommand( this, mMsg );
   command->start();
+#endif
 }
 
 void KMReaderMainWin::slotEditToolbars()

@@ -389,7 +389,7 @@ class KMAIL_EXPORT KMReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToCommand( QWidget *parent, KMime::Message *msg,
+  KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
                     const QString &selection = QString() );
 
 private:
@@ -404,7 +404,7 @@ class KMAIL_EXPORT KMNoQuoteReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMNoQuoteReplyToCommand( QWidget *parent, KMime::Message *msg );
+  KMNoQuoteReplyToCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
@@ -415,7 +415,7 @@ class KMReplyListCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyListCommand( QWidget *parent, KMime::Message *msg,
+  KMReplyListCommand( QWidget *parent, const Akonadi::Item &msg,
                       const QString &selection = QString() );
 
 private:
@@ -430,7 +430,7 @@ class KMAIL_EXPORT KMReplyToAllCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToAllCommand( QWidget *parent, KMime::Message *msg,
+  KMReplyToAllCommand( QWidget *parent, const Akonadi::Item &msg,
                        const QString &selection = QString() );
 
 private:
@@ -445,7 +445,7 @@ class KMAIL_EXPORT KMReplyAuthorCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyAuthorCommand( QWidget *parent, KMime::Message *msg,
+  KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item &msg,
                         const QString &selection = QString() );
 
 private:
@@ -494,7 +494,7 @@ class KMAIL_EXPORT KMRedirectCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMRedirectCommand( QWidget *parent, KMime::Message *msg );
+  KMRedirectCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
@@ -505,7 +505,7 @@ class KMAIL_EXPORT KMCustomReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCustomReplyToCommand( QWidget *parent, KMime::Message *msg,
+  KMCustomReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
                           const QString &selection,
                           const QString &tmpl );
 
@@ -522,7 +522,7 @@ class KMAIL_EXPORT KMCustomReplyAllToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCustomReplyAllToCommand( QWidget *parent, KMime::Message *msg,
+  KMCustomReplyAllToCommand( QWidget *parent, const Akonadi::Item &msg,
                           const QString &selection,
                           const QString &tmpl );
 
@@ -556,7 +556,7 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, KMime::Message *msg,
+  KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
                   const MessageViewer::HeaderStyle *headerStyle = 0,
                   const MessageViewer::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
@@ -697,7 +697,7 @@ class KMAIL_EXPORT KMMailingListFilterCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailingListFilterCommand( QWidget *parent, KMime::Message *msg );
+  KMMailingListFilterCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
@@ -827,7 +827,7 @@ class KMAIL_EXPORT KMResendMessageCommand : public KMCommand
   Q_OBJECT
 
 public:
-  explicit KMResendMessageCommand( QWidget *parent, KMime::Message *msg=0 );
+  explicit KMResendMessageCommand( QWidget *parent, const Akonadi::Item & msg= Akonadi::Item() );
 
 private:
   virtual Result execute();
@@ -985,7 +985,7 @@ class KMAIL_EXPORT CreateTodoCommand : public KMCommand
 {
   Q_OBJECT
   public:
-    CreateTodoCommand( QWidget *parent, KMime::Message *msg );
+  CreateTodoCommand( QWidget *parent, const Akonadi::Item &msg );
 
   private:
     Result execute();

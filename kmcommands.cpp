@@ -1104,7 +1104,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
 
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll, ReplyAuthor
 //      are all similar and should be factored
-KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMime::Message *msg,
+KMReplyToCommand::KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
                                     const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
 {
@@ -1131,7 +1131,7 @@ KMCommand::Result KMReplyToCommand::execute()
 
 
 KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
-                                                  KMime::Message *msg )
+                                                  const Akonadi::Item &msg )
   : KMCommand( parent, msg )
 {
 }
@@ -1157,7 +1157,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 
 
 KMReplyListCommand::KMReplyListCommand( QWidget *parent,
-  KMime::Message *msg, const QString &selection )
+                                        const Akonadi::Item &msg, const QString &selection )
  : KMCommand( parent, msg ), mSelection( selection )
 {
 }
@@ -1184,7 +1184,7 @@ KMCommand::Result KMReplyListCommand::execute()
 
 
 KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
-  KMime::Message *msg, const QString &selection )
+                                          const Akonadi::Item &msg, const QString &selection )
   :KMCommand( parent, msg ), mSelection( selection )
 {
 }
@@ -1210,7 +1210,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
 }
 
 
-KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, KMime::Message *msg,
+KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item &msg,
                                             const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
 {
@@ -1460,7 +1460,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 
 
 KMRedirectCommand::KMRedirectCommand( QWidget *parent,
-  KMime::Message *msg )
+                                      const Akonadi::Item &msg )
   : KMCommand( parent, msg )
 {
 }
@@ -1496,7 +1496,7 @@ KMCommand::Result KMRedirectCommand::execute()
 }
 
 
-KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMime::Message *msg,
+KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
                                                 const QString &selection,
                                                 const QString &tmpl )
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
@@ -1505,6 +1505,7 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMime::Message 
 
 KMCommand::Result KMCustomReplyToCommand::execute()
 {
+#if 0 //Port to kmime::message
   KCursorSaver busy( KBusyPtr::busy() );
   KMime::Message *msg = retrievedMessage();
   if ( !msg /*|| !msg->codec()*/ /*TODO port it */ ) {
@@ -1514,18 +1515,17 @@ KMCommand::Result KMCustomReplyToCommand::execute()
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
-#if 0 //Port to kmime::message
   win->setCharset( msg->codec()->name(), true );
+  win->setReplyFocus();
+  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  win->setReplyFocus();
-  win->show();
   return OK;
 }
 
 
-KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, KMime::Message *msg,
+KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, const Akonadi::Item &msg,
                                                       const QString &selection,
                                                       const QString &tmpl )
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
@@ -1534,6 +1534,7 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, KMime::Me
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
+#if 0 //Port to kmime
   KCursorSaver busy(KBusyPtr::busy());
   KMime::Message *msg = retrievedMessage();
   if ( !msg /*|| !msg->codec() Port to kmime*/ ) {
@@ -1543,13 +1544,13 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
-#if 0 //Port to kmime
   win->setCharset( msg->codec()->name(), true );
+
+  win->setReplyFocus();
+  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  win->setReplyFocus();
-  win->show();
   return OK;
 }
 
@@ -1638,7 +1639,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
 }
 
 
-KMPrintCommand::KMPrintCommand( QWidget *parent, KMime::Message *msg,
+KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
                                 const HeaderStyle *headerStyle,
                                 const HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
@@ -1962,7 +1963,7 @@ void FolderShortcutCommand::setAction( QAction* action )
 }
 
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
-                                                        KMime::Message *msg )
+                                                        const Akonadi::Item &msg )
   : KMCommand( parent, msg )
 {
 }
@@ -2987,7 +2988,7 @@ KMCommand::Result KMLoadPartsCommand::execute()
 }
 
 KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
-   KMime::Message *msg )
+                                                const Akonadi::Item &msg )
   :KMCommand( parent, msg )
 {
 }
@@ -3467,7 +3468,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KJob * j
   d.setResult( OK );
 }
 
-CreateTodoCommand::CreateTodoCommand(QWidget * parent, KMime::Message * msg)
+CreateTodoCommand::CreateTodoCommand(QWidget * parent, const Akonadi::Item &msg)
   : KMCommand( parent, msg )
 {
 }
