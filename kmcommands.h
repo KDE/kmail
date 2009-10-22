@@ -179,7 +179,7 @@ class KMAIL_EXPORT KMMailtoReplyCommand : public KMCommand
 
 public:
   KMMailtoReplyCommand( QWidget *parent, const KUrl &url,
-                        KMime::Message *msg, const QString &selection );
+                        const Akonadi::Item &msg, const QString &selection );
 
 private:
   virtual Result execute();
@@ -193,7 +193,7 @@ class KMAIL_EXPORT KMMailtoForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoForwardCommand( QWidget *parent, const KUrl &url, KMime::Message *msg );
+  KMMailtoForwardCommand( QWidget *parent, const KUrl &url,const Akonadi::Item& msg );
 
 private:
   virtual Result execute();

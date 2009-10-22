@@ -524,7 +524,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
 
 KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
-   const KUrl &url, KMime::Message *msg, const QString &selection )
+                                            const KUrl &url, const Akonadi::Item &msg, const QString &selection )
   :KMCommand( parent, msg ), mUrl( url ), mSelection( selection  )
 {
 }
@@ -551,7 +551,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 
 
 KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
-   const KUrl &url, KMime::Message *msg )
+                                                const KUrl &url, const Akonadi::Item &msg )
   :KMCommand( parent, msg ), mUrl( url )
 {
 }
