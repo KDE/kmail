@@ -484,54 +484,59 @@ void KMReaderWin::saveRelativePosition()
 
 
 //-----------------------------------------------------------------------------
-KMime::Message *KMReaderWin::message() const
+Akonadi::Item KMReaderWin::message() const
 {
-  if ( mMessage )
+  if ( mMessage.isValid())
     return mMessage;
+
   if ( mLastSerNum ) {
     Akonadi::Item item( mLastSerNum );
     if ( !item.hasPayload<KMime::Message::Ptr>() ) {
       kWarning() << "Payload is not a MessagePtr!";
-      return 0;
+      return Akonadi::Item();
     }
-    //Mem leak ???
-    KMime::Message *tmpMessage = new KMime::Message;
-    tmpMessage->setContent( item.payloadData() );
-    tmpMessage->parse();
-    return tmpMessage;
+    return item;
   }
-  return 0;
+  return Akonadi::Item();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoCompose()
 {
+#if 0
   KMCommand *command = new KMMailtoComposeCommand( urlClicked(), message() );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoForward()
 {
+#if 0
   KMCommand *command = new KMMailtoForwardCommand( mMainWindow, urlClicked(),
                                                    message() );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
+#if 0
   KMCommand *command = new KMMailtoAddAddrBookCommand( urlClicked(),
                                                        mMainWindow );
   command->start();
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
+#if 0
   KMCommand *command = new KMMailtoOpenAddrBookCommand( urlClicked(),
                                                         mMainWindow );
   command->start();
+#endif
 }
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen( const KUrl &url )
@@ -561,9 +566,11 @@ void KMReaderWin::slotUrlSave()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
+#if 0
   KMCommand *command = new KMMailtoReplyCommand( mMainWindow, urlClicked(),
                                                  message(), copyText() );
   command->start();
+#endif
 }
 
 
@@ -690,6 +697,7 @@ void KMReaderWin::clear(bool force )
 
 void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode updateMode)
 {
+  mMessage = item;
   mViewer->setMessageItem( item, updateMode );
 
   mDelayedMarkTimer.stop();

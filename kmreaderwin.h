@@ -210,8 +210,7 @@ public:
       care! */
   KHTMLPart * htmlPart() const;
 
-  /** Returns the current message or 0 if none. */
-  KMime::Message* message() const;
+  Akonadi::Item message() const;
   /** Set the serial number of the message this reader window is currently
    *  waiting for. Used to discard updates for already deselected messages. */
   void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
@@ -287,8 +286,7 @@ protected:
 private:
   void createActions();
 private:
-//TODO(Andras) Remove unneeded stuff
-  KMime::Message *mMessage;
+  Akonadi::Item mMessage;
 
   // See setOriginalMsg() for an explaination for those two.
   QTimer mDelayedMarkTimer;
