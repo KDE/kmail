@@ -938,23 +938,6 @@ private:
   Ui_MiscMainTab mMMTab;
 };
 
-class MiscPageGroupwareTab : public ConfigModuleTab  {
-  Q_OBJECT
-public:
-  MiscPageGroupwareTab( QWidget * parent=0 );
-  void save();
-  QString helpAnchor() const;
-
-private slots:
-  void slotStorageFormatChanged( int );
-
-private:
-  virtual void doLoadFromGlobalSettings();
-
-private:
-  Ui_MiscGroupTab mMGTab;
-};
-
 class MiscPageInviteTab : public ConfigModuleTab  {
   Q_OBJECT
 public:
@@ -979,12 +962,10 @@ public:
   QString helpAnchor() const;
 
   typedef MiscPageFolderTab FolderTab;
-  typedef MiscPageGroupwareTab GroupwareTab;
   typedef MiscPageInviteTab InviteTab;
 
 private:
   FolderTab * mFolderTab;
-  GroupwareTab * mGroupwareTab;
   InviteTab * mInviteTab;
 };
 
