@@ -197,6 +197,14 @@ KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
   }
 }
 
+KMCommand::KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList )
+  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
+    mEmitsCompletedItself( false ), mParent( parent )
+{
+#if 0 //Port it
+  mMsgList( msgList );
+#endif
+}
 
 KMCommand::KMCommand( QWidget *parent, const QList<KMime::Message*> &msgList )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
@@ -2548,12 +2556,12 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QList<partN
                                                     const Akonadi::Item &msg, bool encoded )
   : KMCommand( parent ), mImplicitAttachments( false ), mEncoded( encoded )
 {
-#if 0	
+#if 0
   QList<partNode*>::const_iterator it;
   for ( it = attachments.constBegin(); it != attachments.constEnd(); ++it ) {
     mAttachmentMap.insert( (*it), msg );
   }
-#endif  
+#endif
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
@@ -2911,12 +2919,12 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
 KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, const Akonadi::Item &msg )
   : mNeedsRetrieval( 0 )
 {
-#if 0	
+#if 0
   QList<partNode*>::const_iterator it;
   for ( it = parts.constBegin(); it != parts.constEnd(); ++it ) {
     mPartMap.insert( (*it), msg );
   }
-#endif  
+#endif
 }
 
 KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, KMime::Message *msg )
@@ -3129,7 +3137,7 @@ KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
 {
 #if 0
 	mMsg(msg);
-#endif	
+#endif
 }
 
 void KMHandleAttachmentCommand::slotStart()
@@ -3313,7 +3321,7 @@ void KMHandleAttachmentCommand::atmSave()
   QList<partNode*> parts;
   parts.append( mNode );
   // save, do not leave encoded
-#if 0  
+#if 0
   KMSaveAttachmentsCommand *command =
     new KMSaveAttachmentsCommand( 0, parts, mMsg, false );
   command->start();

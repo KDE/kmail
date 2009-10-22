@@ -56,6 +56,7 @@ public:
   KMCommand( QWidget *parent, const Akonadi::Item & );
   // Retrieve all messages in msgList when start is called.
   KMCommand( QWidget *parent, const QList<KMime::Message*> &msgList );
+  KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
   // Retrieve the single message msgBase when start is called.
   KMCommand( QWidget *parent, KMime::Message *message );
   virtual ~KMCommand();
