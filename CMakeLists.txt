@@ -307,7 +307,7 @@ kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
 
 
 
-kdepim4_link_unique_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
+kdepim4_link_unique_libraries(kcm_kmail  ${KDE4_KDEUI_LIBS} kmailprivate )
 
 install(TARGETS kcm_kmail  DESTINATION ${PLUGIN_INSTALL_DIR})
 
