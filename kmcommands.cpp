@@ -191,9 +191,7 @@ KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
     mEmitsCompletedItself( false ), mParent( parent )
 {
   if ( msg.isValid() ) {
-#if 0 //Port it
     mMsgList.append( msg );
-#endif
   }
 }
 
@@ -201,9 +199,7 @@ KMCommand::KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
-#if 0 //Port it
-  mMsgList( msgList );
-#endif
+  mMsgList = msgList;
 }
 
 
@@ -295,15 +291,13 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   if ( result == OK )
     result = execute();
   mResult = result;
-#if 0
-  KMime::Message* msg;
+  Akonadi::Item msg;
   foreach( msg, mRetrievedMsgs ) {
 #if 0 //TODO port to akonadi
     if ( msg && msg->parent() )
       msg->setTransferInProgress(false);
 #endif
   }
-#endif
   kmkernel->filterMgr()->deref();
   if ( !emitsCompletedItself() )
     emit completed( this );
