@@ -189,8 +189,6 @@ const QString KMFilterActionWithUOID::argsAsString() const
 
 const QString KMFilterActionWithUOID::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -241,8 +239,6 @@ const QString KMFilterActionWithString::argsAsString() const
 
 const QString KMFilterActionWithString::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -862,8 +858,6 @@ const QString KMFilterActionSetStatus::argsAsString() const
 
 const QString KMFilterActionSetStatus::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -1048,8 +1042,6 @@ const QString KMFilterActionFakeDisposition::argsAsString() const
 
 const QString KMFilterActionFakeDisposition::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -1239,8 +1231,6 @@ const QString KMFilterActionAddHeader::argsAsString() const
 
 const QString KMFilterActionAddHeader::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -1417,8 +1407,6 @@ const QString KMFilterActionRewriteHeader::argsAsString() const
 
 const QString KMFilterActionRewriteHeader::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -2018,8 +2006,6 @@ const QString KMFilterActionWithTest::argsAsString() const
 
 const QString KMFilterActionWithTest::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
@@ -2103,8 +2089,6 @@ const QString KMFilterActionWithUrl::argsAsString() const
 
 const QString KMFilterActionWithUrl::displayString() const
 {
-  // FIXME after string freeze:
-  // return i18n("").arg( );
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
