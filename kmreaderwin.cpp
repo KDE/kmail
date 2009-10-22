@@ -386,18 +386,19 @@ void KMReaderWin::displayAboutPage()
 void KMReaderWin::slotTouchMessage()
 {
 //TODO(Andras) port to Akonadi
-#if 0
-  if ( !message() )
+  if ( !message().isValid() )
     return;
+  MessageStatus status;
+  status.setStatusFromFlags( message().flags() );
 
-  if ( !message()->status().isNew() && !message()->status().isUnread() )
+  if ( !status.isNew() && !status.isUnread() )
     return;
 
   SerNumList serNums;
-  serNums.append( message()->getMsgSerNum() );
+  serNums.append( message().id() );
   KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();
-
+#if 0
   // should we send an MDN?
   if ( mNoMDNsWhenEncrypted &&
        message()->encryptionState() != KMMsgNotEncrypted &&
