@@ -254,20 +254,6 @@ private:
   KMMainWidget *mMainWidget;
 };
 
-class KMAIL_EXPORT KMUrlOpenCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMUrlOpenCommand( const KUrl &url, KMReaderWin *readerWin );
-
-private:
-  virtual Result execute();
-
-  KUrl mUrl;
-  KMReaderWin *mReaderWin;
-};
-
 class KMAIL_EXPORT KMUrlSaveCommand : public KMCommand
 {
   Q_OBJECT

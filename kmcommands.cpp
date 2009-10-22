@@ -637,19 +637,6 @@ KMCommand::Result KMUrlCopyCommand::execute()
 }
 
 
-KMUrlOpenCommand::KMUrlOpenCommand( const KUrl &url, KMReaderWin *readerWin )
-  :mUrl( url ), mReaderWin( readerWin )
-{
-}
-
-KMCommand::Result KMUrlOpenCommand::execute()
-{
-#ifndef USE_AKONADI_VIEWER
-  if ( !mUrl.isEmpty() )
-    mReaderWin->slotUrlOpen( mUrl, KParts::OpenUrlArguments(), KParts::BrowserArguments() );
-#endif
-  return OK;
-}
 
 
 KMUrlSaveCommand::KMUrlSaveCommand( const KUrl &url, QWidget *parent )

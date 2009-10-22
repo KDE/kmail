@@ -537,16 +537,6 @@ void KMReaderWin::slotMailtoOpenAddrBook()
   command->start();
 #endif
 }
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen( const KUrl &url )
-{
-  //Laurent : verify it
-  KUrl mClickedUrl;
-  if ( !url.isEmpty() )
-    mClickedUrl = url;
-  KMCommand *command = new KMUrlOpenCommand( mClickedUrl, this );
-  command->start();
-}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAddBookmarks()
