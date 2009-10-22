@@ -4,7 +4,6 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 
-#include "groupware_types.h"
 #include "kmailinterface.h"
 #include "aboutdata.h"
 
@@ -20,7 +19,7 @@ int main(int argc,char **argv)
   KCmdLineArgs::init(argc, argv, &aboutData);
   KApplication app;
 
-  OrgKdeKmailKmailInterface kmailInterface( KMAIL_DBUS_SERVICE, "/KMail", QDBusConnection::sessionBus());
+  OrgKdeKmailKmailInterface kmailInterface( "org.kde.kmail", "/KMail", QDBusConnection::sessionBus());
   kmailInterface.openComposer( "to 1","","","First test","simple openComp call",0);
 
   QDBusReply<QDBusObjectPath> composerDbusPath =  kmailInterface.openComposer("to 2","","","Second test",  "DBUS ref call",0);

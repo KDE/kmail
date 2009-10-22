@@ -147,7 +147,6 @@ set(kmailprivate_LIB_SRCS
    kmfolderindex.cpp
    folderjob.cpp
 #   subscriptiondialog.cpp
- #  kmailicalifaceimpl.cpp
    aboutdata.cpp
    mailserviceimpl.cpp
    mailmanagerimpl.cpp
@@ -194,7 +193,6 @@ set(kmailprivate_LIB_SRCS
 #   localsubscriptiondialog.cpp
    messageactions.cpp
    statusbarlabel.cpp
-   groupware_types.cpp
    messagetree.cpp
    procmailparser.cpp
    stringutil.cpp
@@ -217,9 +215,6 @@ set(kmailprivate_LIB_SRCS
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
 )
-#qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
-#  ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl
-#)
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
   KMail::MailServiceImpl
@@ -246,7 +241,6 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   ui/maildirsettings.ui
   ui/popsettings.ui
   ui/miscpagemaintab.ui
-  ui/miscpagegroupwaretab.ui
   ui/miscpageinvitetab.ui
   ui/securitypagegeneraltab.ui
   ui/identitypage.ui

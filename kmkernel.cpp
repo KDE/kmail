@@ -97,8 +97,6 @@ using KWallet::Wallet;
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
 
-#include "groupware_types.h"
-
 static KMKernel * mySelf = 0;
 
 /********************************************************************/
@@ -1109,7 +1107,7 @@ QString KMKernel::getFolder( const QString& vpath )
 
 void KMKernel::raise()
 {
-  QDBusInterface iface( KMAIL_DBUS_SERVICE, "/MainApplication",
+  QDBusInterface iface( "org.kde.kmail", "/MainApplication",
                         "org.kde.KUniqueApplication",
                         QDBusConnection::sessionBus());
   QDBusReply<int> reply;
