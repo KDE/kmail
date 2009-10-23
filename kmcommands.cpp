@@ -266,34 +266,31 @@ void KMCommand::slotStart()
   connect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
   kmkernel->filterMgr()->ref();
-#if 0
-  if ( mMsgList.contains(0) ) {
+
+  if ( mMsgList.isEmpty() ) {
       emit messagesTransfered( Failed );
       return;
   }
 
-  KMime::Message *mb = 0;
-  if ( mMsgList.size() > 0 )
+  Akonadi::Item mb;
+  if ( !mMsgList.isEmpty() )
     mb = *(mMsgList.begin());
-  if ( ( mb ) && ( mMsgList.count() == 1 ) && ( mb->isMessage() ) &&
-       ( mb->parent() == 0 ) )
+  if ( ( mb.isValid() ) && ( mMsgList.count() == 1 ) &&
+       ( !mb.parentCollection().isValid() ) )
   {
     // Special case of operating on message that isn't in a folder
-    mRetrievedMsgs.append((KMime::Message*)mMsgList.takeFirst());
+    mRetrievedMsgs.append(mMsgList.takeFirst());
     emit messagesTransfered( OK );
     return;
   }
-  QList<KMime::Message*>::const_iterator it;
+  QList<Akonadi::Item>::const_iterator it;
   for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
-    if ( !( (*it)->parent() ) ) {
+    if ( !(*it).parentCollection().isValid()  ) {
       emit messagesTransfered( Failed );
       return;
     } else {
-      keepFolderOpen( (*it)->parent() );
+      //keepFolderOpen( (*it)->parent() );
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
   // transfer the selected messages first
   transferSelectedMsgs();
