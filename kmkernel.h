@@ -509,9 +509,6 @@ private:
   ConfigureDialog *mConfigureDialog;
 
   QTimer *mBackgroundTasksTimer;
-#if 0 //TODO port to akonadi
- KMailICalIfaceImpl* mICalIface;
-#endif
   JobScheduler* mJobScheduler;
   // temporary mainwin
   KMMainWin *mWin;
