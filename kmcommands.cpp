@@ -1494,9 +1494,8 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 
 KMCommand::Result KMRedirectCommand::execute()
 {
-#if 0 //TODO port to akonadi
-  KMime::Message *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() /*|| !msg->codec()*/ ) {
     return Failed;
   }
   AutoQPointer<RedirectDialog> dlg( new RedirectDialog( parentWidget(),
@@ -1505,8 +1504,9 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
   }
+  KMime::Message *msg = message( item );
 
-  KMime::Message *newMsg = msg->createRedirect( dlg->to() );
+  KMime::Message *newMsg = KMail::MessageHelper::createRedirect( msg, dlg->to() );
   KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
   const KMail::MessageSender::SendMethod method = dlg->sendImmediate()
@@ -1516,9 +1516,7 @@ KMCommand::Result KMRedirectCommand::execute()
     kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
     return Failed; // error: couldn't send
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  delete msg;
   return OK;
 }
 
@@ -1606,7 +1604,7 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
 KMCommand::Result KMCustomForwardCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  QList<Akonadi::Item*> msgList = retrievedMsgs();
+  QList<Akonadi::Item> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) { // Multiple forward
 
@@ -1887,13 +1885,9 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               KMFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
-#if 0 //TODO port to akonadi
-  QList<KMime::Message*>::const_iterator it;
+  QList<Akonadi::Item>::const_iterator it;
   for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
-    serNumList.append( (*it)->getMsgSerNum() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    serNumList.append( (*it).id() );
 }
 
 KMCommand::Result KMFilterActionCommand::execute()
