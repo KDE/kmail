@@ -55,6 +55,8 @@ using KMail::TemplateParser;
 
 #include "messagelist/core/configprovider.h"
 
+#include "foldercollection.h"
+
 #include <kmessagebox.h>
 #include <knotification.h>
 #include <kstandarddirs.h>
@@ -683,12 +685,12 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 {
   KUrl attachURL( _attachURL );
   KMime::Message *msg = new KMime::Message;
-  KMFolder *folder = 0;
+  FolderCollection *folder = 0;
   uint id = 0;
 
   if ( useFolderId ) {
     //create message with required folder identity
-    folder = currentFolder();
+    folder = currentFolderCollection();
     id = folder ? folder->identity() : 0;
   }
   KMail::MessageHelper::initHeader( msg, id );
@@ -700,11 +702,8 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 
   TemplateParser parser( msg, TemplateParser::NewMessage,
                          QString(), false, false, false );
-#if 0 //Port it
-  parser.process( NULL, folder );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  parser.process( NULL, folder ? folder->collection() : Akonadi::Collection() );
+
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
 
   //Add the attachment if we have one
@@ -721,11 +720,9 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 
 int KMKernel::viewMessage( const KUrl & messageFile )
 {
-#ifdef OLD_COMMAND
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
 
   openCommand->start();
-#endif
   return 1;
 }
 
@@ -2494,14 +2491,13 @@ QList< QPointer<KMFolder> > KMKernel::allFolders()
   return folders;
 }
 
-KMFolder *KMKernel::currentFolder() {
+FolderCollection *KMKernel::currentFolderCollection()
+{
   KMMainWidget *widget = getKMMainWidget();
-  KMFolder *folder = 0;
-#ifdef OLD_FOLDERVIEW
-  if ( widget && widget->mainFolderView() ) {
-    folder = widget->mainFolderView()->currentFolder();
+  FolderCollection * folder = 0;
+  if ( widget  ) {
+    folder = widget->currentFolder();
   }
-#endif
   return folder;
 }
 

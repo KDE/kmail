@@ -130,6 +130,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
 
+    FolderCollection * currentFolder() const;
 
     static void cleanup();
 

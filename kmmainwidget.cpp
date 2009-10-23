@@ -4757,6 +4757,11 @@ const KMMainWidget::PtrList * KMMainWidget::mainWidgetList()
   return theMainWidgetList;
 }
 
+FolderCollection *KMMainWidget::currentFolder() const
+{
+  return mCurrentFolder;
+}
+
 //-----------------------------------------------------------------------------
 KMSystemTray *KMMainWidget::systray() const
 {

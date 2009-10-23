@@ -61,6 +61,7 @@ class KMFolderMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
 class AkonadiSender;
+class FolderCollection;
 namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
@@ -457,7 +458,7 @@ private slots:
 
 private:
   void openReader( bool onlyCheck );
-  KMFolder *currentFolder();
+  FolderCollection *currentFolderCollection();
 
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
