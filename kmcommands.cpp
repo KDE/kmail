@@ -3502,14 +3502,13 @@ CreateTodoCommand::CreateTodoCommand(QWidget * parent, const Akonadi::Item &msg)
 
 KMCommand::Result CreateTodoCommand::execute()
 {
-#if 0 //TODO port to akonadi
-  KMime::Message *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
+  Akonadi::Item msg = retrievedMessage();
+  if ( !msg.isValid() /*|| !msg->codec()*/ ) {
     return Failed;
   }
 
   KMail::KorgHelper::ensureRunning();
-
+#if 0
   QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from(),
                      msg->to(), msg->subject() );
 

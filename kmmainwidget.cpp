@@ -2104,7 +2104,7 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
 
   // clear the "about to be removed" state from anything that KMCommand failed to remove
   set->markAsAboutToBeRemoved( false );
-
+#endif
   if ( command->result() != KMCommand::OK )
   {
     BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved to trash successfully." ) );
@@ -2114,7 +2114,7 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
     else
       BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash canceled." ) );
   }
-#endif
+
   // The command will autodelete itself and will also kill the set.
 }
 
@@ -2342,11 +2342,9 @@ void KMMainWidget::slotSubjectFilter()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
 
-  KMCommand *command = new KMFilterCommand( "Subject", msg->subject() );
+  KMCommand *command = new KMFilterCommand( "Subject", msg->subject()->asUnicodeString() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
