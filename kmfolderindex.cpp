@@ -24,11 +24,6 @@
 #include <sys/mman.h>
 #endif
 
-#ifdef KMAIL_SQLITE_INDEX
-# include "kmfolderindex_sqlite.cpp"
-#else
-
-
 
 KMFolderIndex::KMFolderIndex(KMFolder* folder, const char* name)
   : FolderStorage(folder, name), mMsgList(INIT_MSGS)
@@ -558,7 +553,5 @@ KMime::Content * KMFolderIndex::takeIndexEntry(int idx)
 {
   return mMsgList.take( idx );
 }
-
-#endif // !KMAIL_SQLITE_INDEX
 
 #include "kmfolderindex.moc"

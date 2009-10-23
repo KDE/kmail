@@ -274,21 +274,6 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS
   customtemplates_kfg.kcfgc
 )
 
-# SQLITE folder index support
-set(KMAIL_SQLITE_INDEX false CACHE BOOL "Use sqlite instead of mmap backend for KMail's folder indexes")
-mark_as_advanced(KMAIL_SQLITE_INDEX)
-if(WIN32)
-  set(KMAIL_SQLITE_INDEX true CACHE BOOL "Use sqlite instead of mmap backend for KMail's folder indexes" FORCE)
-endif(WIN32)
-if(KMAIL_SQLITE_INDEX)
-  find_package(Sqlite)
-  macro_log_feature(SQLITE_FOUND "SQLite" "A C library that implements an SQL database engine" "http://www.sqlite.org" TRUE "version 3" "Required for KMail indexing [Windows ONLY].")
-  if (NOT SQLITE_FOUND)
-    macro_display_feature_log()
-  endif(NOT SQLITE_FOUND)
-  add_definitions(-DKMAIL_SQLITE_INDEX) # to alter declaration of KMFolderIndex
-  include_directories(${SQLITE_INCLUDE_DIR})
-endif(KMAIL_SQLITE_INDEX)
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 target_link_libraries(kmailprivate
@@ -324,10 +309,6 @@ target_link_libraries(kmailprivate
   messageviewer
   akonadi_next
 )
-
-if(KMAIL_SQLITE_INDEX)
-  target_link_libraries(kmailprivate ${SQLITE_LIBRARIES})
-endif(KMAIL_SQLITE_INDEX)
 
 if(Nepomuk_FOUND)
   target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES})
