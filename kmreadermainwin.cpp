@@ -51,7 +51,7 @@
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "kmmsgdict.h"
-
+#include "foldercollection.h"
 
 #include <kabc/stdaddressbook.h>
 #include <kpimutils/email.h>
@@ -183,31 +183,29 @@ void KMReaderMainWin::slotPrintMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardInlineMsg()
 {
-#ifdef OLD_COMMAND
    KMCommand *command = 0;
-   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
-    command = new KMForwardCommand( this, mReaderWin->message(),
-        mReaderWin->message()->parent()->identity() );
+   if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
+     FolderCollection fd( mReaderWin->message().parentCollection() );
+     command = new KMForwardCommand( this, mReaderWin->message(),
+                                     fd.identity() );
    } else {
     command = new KMForwardCommand( this, mReaderWin->message() );
    }
    command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
-#ifdef OLD_COMMAND
    KMCommand *command = 0;
-   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
+   if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
+     FolderCollection fd( mReaderWin->message().parentCollection() );
      command = new KMForwardAttachedCommand( this, mReaderWin->message(),
-        mReaderWin->message()->parent()->identity() );
+        fd.identity() );
    } else {
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
    command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -398,20 +396,21 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl
       delete menu;
       return;
     }
-#if 0
-    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
-                                aMsg.parent()->isDrafts() ||
-                                aMsg.parent()->isTemplates() ) ) ) {
-      // add the reply and forward actions only if we are not in a sent-mail,
-      // templates or drafts folder
-      //
-      // FIXME: needs custom templates added to menu
-      // (see KMMainWidget::updateCustomTemplateMenus)
-      menu->addAction( mMsgActions->replyMenu() );
-      menu->addAction( mMsgActions->forwardMenu() );
-      menu->addSeparator();
+    if ( aMsg.parentCollection().isValid() ) {
+      Akonadi::Collection col = aMsg.parentCollection();
+      if ( ! ( KMKernel::self()->folderIsSentMailFolder( col ) ||
+               KMKernel::self()->folderIsDrafts( col ) ||
+               KMKernel::self()->folderIsTemplates( col ) ) ) {
+        // add the reply and forward actions only if we are not in a sent-mail,
+        // templates or drafts folder
+        //
+        // FIXME: needs custom templates added to menu
+        // (see KMMainWidget::updateCustomTemplateMenus)
+        menu->addAction( mMsgActions->replyMenu() );
+        menu->addAction( mMsgActions->forwardMenu() );
+        menu->addSeparator();
+      }
     }
-#endif
     menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
