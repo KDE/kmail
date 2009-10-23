@@ -533,11 +533,11 @@ KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
 KMCommand::Result KMMailtoReplyCommand::execute()
 {
   //TODO : consider factoring createReply into this method.
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() /*TODO Port || !msg->codec() */) { //TODO Reuse codec() from libmessageviewer/nodehelper
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() /*TODO Port || !msg->codec() */) { //TODO Reuse codec() from libmessageviewer/nodehelper
     return Failed;
   }
-#if 0
+  KMime::Message *msg = message( item );
   KMime::Message *rmsg = KMail::MessageHelper::createReply( msg, KMail::ReplyNone, mSelection );
   rmsg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
@@ -547,7 +547,10 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   */
   win->setReplyFocus();
   win->show();
-#endif
+
+
+  delete msg;
+
   return OK;
 }
 
@@ -3031,7 +3034,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     return Failed;
   }
   KMime::Message *msg = message( item );
-#if 0  
+#if 0
   KMime::Message *newMsg = new KMime::Message( *msg );
   newMsg->setCharset( msg->codec()->name() );
   // the message needs a new Message-Id
