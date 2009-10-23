@@ -8,7 +8,6 @@
 #include <kurl.h>
 
 #include <boost/scoped_ptr.hpp>
-#include "kmail-akonadi.h"
 #include <akonadi/item.h>
 class KMReaderWin;
 class KAction;

@@ -22,7 +22,6 @@
 //#define TEST_DOCKWIDGETS 1
 
 #include <config-kmail.h>
-#include "kmail-akonadi.h"
 #include <assert.h>
 
 #include <QByteArray>

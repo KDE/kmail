@@ -20,7 +20,6 @@
 #ifndef KMREADERWIN_H
 #define KMREADERWIN_H
 
-#include "kmail-akonadi.h"
 #include <QWidget>
 #include <QTimer>
 #include <QStringList>

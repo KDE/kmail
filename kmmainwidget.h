@@ -38,7 +38,6 @@
 #include <QMenu>
 #include <QHash>
 #include <QPointer>
-#include "kmail-akonadi.h"
 #include <akonadi/favoritecollectionsview.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/standardactionmanager.h>
