@@ -935,8 +935,8 @@ void KMMainWidget::createWidgets()
     }
     connect( mMsgView->viewer(), SIGNAL( replaceMsgByUnencryptedVersion() ),
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
-    connect( mMsgView->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
-             this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
+    connect( mMsgView->viewer(), SIGNAL( popupMenu(const Akonadi::Item&,const KUrl&,const QPoint&) ),
+             this, SLOT( slotMessagePopup(const Akonadi::Item&,const KUrl&,const QPoint&) ) );
     connect( mMsgView->viewer(), SIGNAL( urlClicked(const KUrl&,int) ),
              mMsgView->viewer(), SLOT( slotUrlClicked() ) );
 
@@ -3100,7 +3100,7 @@ void KMMainWidget::slotMarkAll()
   updateMessageActions();
 }
 
-void KMMainWidget::slotMessagePopup(KMime::Message&msg ,const KUrl&aUrl,const QPoint& aPoint)
+void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const QPoint& aPoint)
 {
 #if 0 //TODO port it
   mMessageListView->activateMessage( &msg ); // make sure that this message is the active one

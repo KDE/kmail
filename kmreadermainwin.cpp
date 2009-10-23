@@ -57,15 +57,12 @@
 #include <kpimutils/email.h>
 #include <kmime/kmime_message.h>
 
-#ifdef USE_AKONADI_VIEWER
 #include <messageviewer/viewer.h>
 #include <akonadi/item.h>
-#endif
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   //mReaderWin->setShowCompleteMessage( true );
@@ -80,8 +77,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
 
 //-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin( char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setAutoDelete( true );
@@ -93,8 +89,7 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QString & encoding, char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setOverrideEncoding( encoding );
@@ -143,10 +138,10 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
     mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
   }
   setCaption( msg.subject() );
-  mReaderWin->slotTouchMessage();
-  mMsg = msg;
 #endif
 
+  mReaderWin->slotTouchMessage();
+  mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
@@ -155,7 +150,7 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotTrashMsg()
 {
-  if ( !mMsg )
+  if ( !mMsg.isValid() )
     return;
 #if 0 //TODO port to akonadi
   // find the real msg by its sernum
@@ -165,11 +160,9 @@ void KMReaderMainWin::slotTrashMsg()
   if (parent) {
     KMMessage *msg = parent->getMsg( index );
     if (msg) {
-#ifdef OLD_COMMAND
       // now delete the msg and close this window
       KMTrashMsgCommand *command = new KMTrashMsgCommand( parent, msg );
       command->start();
-#endif
       close();
     }
   }
@@ -311,8 +304,8 @@ void KMReaderMainWin::setupAccel()
 
   updateCustomTemplateMenus();
 
-  connect( mReaderWin->viewer(), SIGNAL( popupMenu(KMime::Message&,const KUrl&,const QPoint&) ),
-             this, SLOT( slotMessagePopup(KMime::Message&,const KUrl&,const QPoint&) ) );
+  connect( mReaderWin->viewer(), SIGNAL( popupMenu(const Akonadi::Item&,const KUrl&,const QPoint&) ),
+           this, SLOT( slotMessagePopup(const Akonadi::Item&,const KUrl&,const QPoint&) ) );
   connect( mReaderWin->viewer(), SIGNAL(urlClicked(const KUrl&,int)),
            mReaderWin->viewer(), SLOT(slotUrlClicked()) );
 
@@ -352,11 +345,11 @@ KAction *KMReaderMainWin::copyActionMenu()
   return 0;
 }
 
-void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
+void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
 {
   KMenu *menu = new KMenu;
   mUrl = aUrl;
-  mMsg = &aMsg;
+  mMsg = aMsg;
 
   bool urlMenuAdded = false;
   bool copyAdded = false;
@@ -364,7 +357,7 @@ void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,cons
     if ( aUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
-      if ( mMsg ) {
+      if ( mMsg.isValid() ) {
         menu->addAction( mReaderWin->mailToReplyAction() );
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
@@ -400,7 +393,7 @@ void KMReaderMainWin::slotMessagePopup(KMime::Message&aMsg ,const KUrl&aUrl,cons
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-    if (!mMsg) {
+    if (!mMsg.isValid()) {
       // no message
       delete menu;
       return;

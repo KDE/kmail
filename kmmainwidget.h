@@ -375,12 +375,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSendQueuedVia( QAction* item );
     void slotOnlineStatus();
     void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
-  //(Laurent) remove this function in the future
-#ifndef USE_AKONADI_VIEWER
-  void slotMsgPopup(KMime::Message &msg, const KUrl &aUrl, const QPoint&);
-#else
-    void slotMessagePopup(KMime::Message& ,const KUrl&,const QPoint& );
-#endif
+    void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
     void slotMarkAll();
     void slotFocusQuickSearch();
     void slotSearch();

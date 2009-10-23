@@ -9,6 +9,7 @@
 
 #include <boost/scoped_ptr.hpp>
 #include "kmail-akonadi.h"
+#include <akonadi/item.h>
 class KMReaderWin;
 class KAction;
 class KActionMenu;
@@ -57,7 +58,7 @@ public:
 #endif
   void showMessage( const QString & encoding, const Akonadi::Item &msg );
 private slots:
-    void slotMessagePopup(KMime::Message& ,const KUrl&,const QPoint& );
+  void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
   void slotTrashMsg();
   void slotPrintMsg();
   void slotForwardInlineMsg();
@@ -81,7 +82,7 @@ private:
   void updateCustomTemplateMenus();
 
   KMReaderWin *mReaderWin;
-  KMime::Message *mMsg;
+  Akonadi::Item mMsg;
   KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
