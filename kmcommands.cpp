@@ -3025,18 +3025,18 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 
 KMCommand::Result KMResendMessageCommand::execute()
 {
-#if 0
-  KMime::Message item = retrievedMessage();
+
+  Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() /*|| !msg->codec()*/ ) {
     return Failed;
   }
   KMime::Message *msg = message( item );
+#if 0  
   KMime::Message *newMsg = new KMime::Message( *msg );
   newMsg->setCharset( msg->codec()->name() );
   // the message needs a new Message-Id
-  newMsg->removeHeaderField( "Message-Id" );
+  newMsg->removeHeader( "Message-Id" );
   newMsg->setParent( 0 );
-
   // Remember the identity for the message before removing the headers which
   // store the identity information.
   uint originalIdentity = newMsg->identityUoid();
