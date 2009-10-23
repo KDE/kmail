@@ -179,14 +179,12 @@ void KMReaderMainWin::slotTrashMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotPrintMsg()
 {
-#if 0
   KMPrintCommand *command = new KMPrintCommand( this, mReaderWin->message(),
       mReaderWin->headerStyle(), mReaderWin->headerStrategy(),
       mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
       mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
   command->setOverrideFont( mReaderWin->cssHelper()->bodyFont( mReaderWin->isFixedFont(), true /*printing*/ ) );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -222,49 +220,37 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotRedirectMsg()
 {
-#if 0
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-#if 0
-  kDebug() << "Reply with template:" << tmpl;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
                                                    tmpl );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-#if 0
-  kDebug() << "Reply to All with template:" << tmpl;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
                                                       tmpl );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
-#if 0
-  kDebug() << "Forward with template:" << tmpl;
-
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -471,12 +457,10 @@ void KMReaderMainWin::slotSizeAction( int size )
 
 void KMReaderMainWin::slotCreateTodo()
 {
-#if 0 //Port it !!!!!!!
-  if ( !mMsg )
+  if ( !mReaderWin->message().isValid() )
     return;
-  KMCommand *command = new CreateTodoCommand( this, mMsg );
+  KMCommand *command = new CreateTodoCommand( this, mReaderWin->message() );
   command->start();
-#endif
 }
 
 void KMReaderMainWin::slotEditToolbars()

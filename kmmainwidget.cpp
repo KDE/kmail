@@ -2115,7 +2115,6 @@ void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest
 void KMMainWidget::trashMessageSelected( const QList<Akonadi::Item> & select )
 {
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
-#if 0
   // And stuff them into a KMTrashMsgCommand :)
   KMCommand *command = new KMTrashMsgCommand( mCurrentFolder->collection(), select );
 
@@ -2125,9 +2124,6 @@ void KMMainWidget::trashMessageSelected( const QList<Akonadi::Item> & select )
     );
 
   command->start();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash..." ) );
 }
 
@@ -2160,14 +2156,10 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotTrashSelectedMessages()
 {
-#if 0
-  QList<KMime::Message::Ptr > lstMsg = mMessagePane->selectionAsMessageList();
+  QList<Akonadi::Item> lstMsg = mMessagePane->selectionAsMessageItemList();
   if ( !lstMsg.isEmpty() ) {
     trashMessageSelected( lstMsg );
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void KMMainWidget::slotTrashThread()
@@ -2175,11 +2167,7 @@ void KMMainWidget::slotTrashThread()
   QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
   if ( select.isEmpty() )
     return;
-#if 0
   trashMessageSelected( select );
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2360,20 +2348,16 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 {
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
 
   kDebug() << "Forward with template:" << tmpl;
-#if 0
   KMCustomForwardCommand * command = new KMCustomForwardCommand(
       this, selectedMessages, mCurrentFolder->identity(), tmpl
     );
 
   command->start();
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 

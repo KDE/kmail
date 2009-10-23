@@ -511,31 +511,25 @@ void KMReaderWin::slotMailtoCompose()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoForward()
 {
-#if 0
   KMCommand *command = new KMMailtoForwardCommand( mMainWindow, urlClicked(),
                                                    message() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
-#if 0
   KMCommand *command = new KMMailtoAddAddrBookCommand( urlClicked(),
                                                        mMainWindow );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
-#if 0
   KMCommand *command = new KMMailtoOpenAddrBookCommand( urlClicked(),
                                                         mMainWindow );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -555,11 +549,9 @@ void KMReaderWin::slotUrlSave()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
-#if 0
   KMCommand *command = new KMMailtoReplyCommand( mMainWindow, urlClicked(),
                                                  message(), copyText() );
   command->start();
-#endif
 }
 
 
