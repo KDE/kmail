@@ -757,6 +757,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
                               const QString & messageFile,
                               const QString & MsgStatusFlags)
 {
+#if 0  //Port to akonadi
   // FIXME: Remove code duplication between this method and dbusAddMessage_fastImport()!
   kDebug();
 
@@ -931,6 +932,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,
     retval = -2;
   }
   return retval;
+#endif
+  return -1;
 }
 
 void KMKernel::dbusResetAddMessage()
@@ -943,6 +946,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
                                          const QString & messageFile,
                                          const QString & MsgStatusFlags)
 {
+#if 0
   // Use this function to import messages without
   // search for already existing emails.
   kDebug();
@@ -1034,6 +1038,8 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
   }
 
   return retval;
+#endif
+  return -1;
 }
 
 QStringList KMKernel::folderList() const
