@@ -22,7 +22,6 @@
 #include "undostack.h"
 
 #include "kmmainwin.h"
-#include "kmfolder.h"
 #include "kmmsgdict.h"
 
 #include <kmessagebox.h>
@@ -51,7 +50,7 @@ void UndoStack::clear()
   mStack.clear();
 }
 
-int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
+int UndoStack::newUndoAction( const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder )
 {
   UndoInfo *info = new UndoInfo;
   info->id         = ++mLastId;
@@ -122,14 +121,14 @@ void UndoStack::undo()
 }
 
 void
-UndoStack::pushSingleAction(ulong serNum, KMFolder *folder, KMFolder *destFolder)
+UndoStack::pushSingleAction(ulong serNum, const Akonadi::Collection &folder, const Akonadi::Collection &destFolder)
 {
   int id = newUndoAction( folder, destFolder );
   addMsgToAction( id, serNum );
 }
 
 void
-UndoStack::msgDestroyed( KMMsgBase* /*msg*/)
+UndoStack::msgDestroyed( const Akonadi::Item & /*msg*/)
 {
   /*
    for(UndoInfo *info = mStack.first(); info; )
@@ -146,7 +145,7 @@ UndoStack::msgDestroyed( KMMsgBase* /*msg*/)
 }
 
 void
-UndoStack::folderDestroyed( KMFolder *folder)
+UndoStack::folderDestroyed( const Akonadi::Collection &folder)
 {
   QList<UndoInfo*>::iterator it = mStack.begin();
   while ( it != mStack.end() ) {

@@ -24,10 +24,9 @@
 
 #include <QList>
 #include <QObject>
-
-class KMFolder;
+#include <akonadi/collection.h>
+#include <akonadi/item.h>
 class KMMsgBase;
-
 namespace KMail {
 
 /** A class for storing Undo information. */
@@ -36,8 +35,8 @@ class UndoInfo
 public:
   int          id;
   QList<ulong> serNums;
-  KMFolder     *srcFolder;
-  KMFolder     *destFolder;
+  Akonadi::Collection srcFolder;
+  Akonadi::Collection destFolder;
 };
 
 class UndoStack : public QObject
@@ -50,13 +49,13 @@ public:
 
   void clear();
   int  size() const { return mStack.count(); }
-  int  newUndoAction( KMFolder* srcFolder, KMFolder* destFolder );
+  int  newUndoAction( const Akonadi::Collection& srcFolder, const Akonadi::Collection & destFolder );
   void addMsgToAction( int undoId, ulong serNum );
   void undo();
 
-  void pushSingleAction(ulong serNum, KMFolder *folder, KMFolder* destFolder);
-  void msgDestroyed( KMMsgBase *msg);
-  void folderDestroyed( KMFolder *folder);
+  void pushSingleAction(ulong serNum, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
+  void msgDestroyed( const Akonadi::Item &msg);
+  void folderDestroyed( const Akonadi::Collection &folder);
 protected:
   QList<UndoInfo*> mStack;
   int mSize;
