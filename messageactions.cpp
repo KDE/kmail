@@ -365,18 +365,21 @@ void MessageActions::editCurrentMessage()
 {
   if ( !mCurrentItem.isValid() )
     return;
-#ifdef OLD_COMMAND
   KMCommand *command = 0;
-  Akonadi::Collection col = mCurrentMessage->parentCollection();
+  Akonadi::Collection col = mCurrentItem.parentCollection();
   // edit, unlike send again, removes the message from the folder
   // we only want that for templates and drafts folders
-  if ( col && ( kmkernel->folderIsDraftOrOutbox( col ) ||
-       kmkernel->folderIsTemplates( col ) ) )
-    command = new KMEditMsgCommand( mParent, mCurrentMessage );
-  else
-    command = new KMResendMessageCommand( mParent, mCurrentMessage );
-  command->start();
+  if ( col.isValid()
+#ifdef OLD_COMMAND
+       && ( kmkernel->folderIsDraftOrOutbox( col ) ||
+       kmkernel->folderIsTemplates( col ) )
 #endif
+    )
+
+    command = new KMEditMsgCommand( mParent, mCurrentItem );
+  else
+    command = new KMResendMessageCommand( mParent, mCurrentItem );
+  command->start();
 }
 
 #include "messageactions.moc"
