@@ -38,7 +38,6 @@
 #include "messageviewer/kcursorsaver.h"
 #include "messagesender.h"
 #include "kmfolder.h"
-#include "kmfoldercombobox.h"
 #include "keyresolver.h"
 #include "kleo_util.h"
 #include "globalsettings.h"

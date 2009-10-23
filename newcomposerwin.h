@@ -56,7 +56,6 @@ class CodecAction;
 class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
-class KMFolderComboBox;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
@@ -91,6 +90,10 @@ namespace Sonnet {
 namespace KPIMIdentities {
   class IdentityCombo;
   class Identity;
+}
+
+namespace Akonadi {
+  class CollectionComboBox;
 }
 
 namespace MailTransport {
@@ -678,7 +681,7 @@ class KMComposeWin : public KMail::Composer
     MailTransport::TransportComboBox *mTransport;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
     KPIMIdentities::IdentityCombo *mIdentity;
-    KMFolderComboBox *mFcc;
+    Akonadi::CollectionComboBox *mFcc;
     KMLineEdit *mEdtFrom, *mEdtReplyTo;
     KMLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;

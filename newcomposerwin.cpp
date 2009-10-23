@@ -69,7 +69,9 @@ using MailTransport::Transport;
 #include "kleo_util.h"
 #include "kmcommands.h"
 #include "kmcomposereditor.h"
-#include "kmfoldercombobox.h"
+#include "kmkernel.h"
+#include "kmfolder.h"
+#include "globalsettings.h"
 //TODO port to akonadi #include "kmfolderimap.h"
 //TODO port to akonadi #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
@@ -138,6 +140,8 @@ using KMail::TemplateParser;
 #include <errno.h>
 #include <fcntl.h>
 #include <memory>
+
+#include <akonadi/collectioncombobox.h>
 
 // MOC
 #include "newcomposerwin.moc"
@@ -217,8 +221,12 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
   mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
                                                  mHeadersArea );
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
-  mFcc = new KMFolderComboBox( mHeadersArea );
+  mFcc = new Akonadi::CollectionComboBox( mHeadersArea );
+#if 0 //Port to akonadi
   mFcc->showOutboxFolder( false );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mTransport = new MailTransport::TransportComboBox( mHeadersArea );
   mEdtFrom = new KMLineEdit( false, mHeadersArea, "fromLine" );
   mEdtReplyTo = new KMLineEdit( true, mHeadersArea, "replyToLine" );
@@ -621,7 +629,7 @@ void KMComposeWin::writeConfig( void )
     GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
     GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
   }
-  GlobalSettings::self()->setPreviousFcc( mFcc->getFolder()->idString() );
+  GlobalSettings::self()->setPreviousFcc( QString::number(mFcc->currentCollection().id()) );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
   GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
@@ -1877,7 +1885,11 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
 #endif
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
+#if 0 //Port to akonadi
   mPreventFccOverwrite = ( !mFcc->getFolder()->fileName().isEmpty() && ident.fcc() != mFcc->getFolder()->fileName() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;                                                                  
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1938,12 +1950,16 @@ void KMComposeWin::collectImages( KMime::Content *root )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setFcc( const QString &idString )
 {
+#if 0	
   // check if the sent-mail folder still exists
   if ( ! idString.isEmpty() && KMKernel::self()->findFolderById( idString ) ) {
     mFcc->setFolder( idString );
   } else {
     mFcc->setFolder( KMKernel::self()->sentFolder() );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;                                                                  
+#endif
 }
 
 //-----------------------------------------------------------------------------
