@@ -30,6 +30,7 @@
 #include <KXMLGUIClient>
 #include <KStandardDirs>
 
+#include <kmkernel.h>
 #include <qwidget.h>
 #include <akonadi/collection.h>
 
@@ -210,10 +211,8 @@ void MessageActions::updateActions()
   if ( singleMsg ) //=> valid
     parent = mCurrentItem.parentCollection();
   if ( parent.isValid() ) {
-#ifdef OLD_MESSAGEACTION
-    if ( mCurrentMessage->parent()->isTemplates() )
+    if ( KMKernel::self()->folderIsTemplates(parent) )
       singleMsg = false;
-#endif
   }
 
   const bool multiVisible = mVisibleSernums.count() > 0 || mCurrentItem.isValid();
@@ -370,12 +369,9 @@ void MessageActions::editCurrentMessage()
   // edit, unlike send again, removes the message from the folder
   // we only want that for templates and drafts folders
   if ( col.isValid()
-#ifdef OLD_COMMAND
-       && ( kmkernel->folderIsDraftOrOutbox( col ) ||
-       kmkernel->folderIsTemplates( col ) )
-#endif
+       && ( KMKernel::self()->folderIsDraftOrOutbox( col ) ||
+            KMKernel::self()->folderIsTemplates( col ) )
     )
-
     command = new KMEditMsgCommand( mParent, mCurrentItem );
   else
     command = new KMResendMessageCommand( mParent, mCurrentItem );
