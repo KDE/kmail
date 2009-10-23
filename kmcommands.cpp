@@ -122,6 +122,8 @@ using KMail::TemplateParser;
 #include "calendarinterface.h"
 #include "interfaces/htmlwriter.h"
 
+#include <akonadi/itemmovejob.h>
+
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
@@ -2195,34 +2197,38 @@ KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                                 const QList<Akonadi::Item> &msgList)
     : mDestFolder( destFolder ), mProgressItem( 0 )
 {
-  foreach ( const Akonadi::Item &msg, msgList )
-    mSerNumList.append( msg.id() );
+  mItem = msgList;
 }
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                               const Akonadi::Item& msg )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
-  if ( msg.isValid() )
-    mSerNumList.append( msg.id() );
+  mItem.append( msg );
 }
 
-#if 0 //TODO port to akonadi
-KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-                              KMime::Message *msgBase )
-  : mDestFolder( destFolder ), mProgressItem( 0 )
-{
-  mSerNumList.append( msgBase->getMsgSerNum() );
-}
-#endif
 
 KMMoveCommand::KMMoveCommand( quint32 )
   :  mDestFolder( 0 ), mProgressItem( 0 )
 {
 }
 
+void KMMoveCommand::slotMoveResult( KJob * job )
+{
+  if ( job->error() ) {
+    // handle errors
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    setResult( Failed );
+  }
+}
+
 KMCommand::Result KMMoveCommand::execute()
 {
+  kDebug()<<" KMCommand::Result KMMoveCommand::execute()";
+
+  Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder );
+  connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
+
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   setDeletesItself( true );

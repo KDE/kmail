@@ -742,13 +742,13 @@ public slots:
 //TODO port to akonadi void slotImapFolderCompleted(KMFolderImap *folder, bool success);
   void slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum);
   void slotMoveCanceled();
-
+  void slotMoveResult( KJob * job );
 protected:
   // Needed for KMDeleteCommand for "move to trash"
   KMMoveCommand( quint32 sernum );
   void setDestFolder( const Akonadi::Collection& folder ) { mDestFolder = folder; }
   void addMsg( const Akonadi::Item &msg ) {
-    mSerNumList.append( msg.id() );
+    mItem.append( msg );
   }
   QVector<KMFolder*> mOpenedFolders;
 
@@ -757,12 +757,10 @@ private:
   void completeMove( Result result );
 
   Akonadi::Collection mDestFolder;
-  QList<quint32> mSerNumList;
-  // List of serial numbers that have to be transferred to a host.
-  // Ticked off as they come in via msgAdded signals.
-  QList<quint32> mLostBoys;
   KPIM::ProgressItem *mProgressItem;
   bool mCompleteWithAddedMsg;
+
+  QList<Akonadi::Item> mItem;
 };
 
 class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
