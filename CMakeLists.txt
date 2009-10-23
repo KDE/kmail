@@ -187,7 +187,6 @@ set(kmailprivate_LIB_SRCS
    templatesinsertcommand.cpp
    customtemplates.cpp
    customtemplatesmenu.cpp
-   #folderadaptor.cpp
    korghelper.cpp
 #   localsubscriptiondialog.cpp
    messageactions.cpp

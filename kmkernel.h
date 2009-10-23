@@ -536,7 +536,6 @@ private:
   // variables used by dbusAddMessage()
   QStringList           mAddMessageMsgIds;
   QString               mAddMessageLastFolder;
-  //KMail::FolderAdaptor *folderAdaptor;
 
   // special debug area
   int mStorageDebug;

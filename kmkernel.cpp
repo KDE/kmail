@@ -141,7 +141,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_msgTagMgr = 0;
   mWin = 0;
   mMailCheckAborted = false;
-  //folderAdaptor=0;
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
   // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
