@@ -2015,14 +2015,14 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   }
 }
 
-KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
+KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder,
                               const QList<Akonadi::Item> &msgList )
 :mDestFolder( destFolder ), mMsgList( msgList )
 {
   setDeletesItself( true );
 }
 
-KMCopyCommand::KMCopyCommand( KMFolder* destFolder, const Akonadi::Item& msg )
+KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder, const Akonadi::Item& msg )
   :mDestFolder( destFolder )
 {
   setDeletesItself( true );
@@ -2175,7 +2175,7 @@ void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
 
   if ( mPendingJobs.isEmpty() )
   {
-    mDestFolder->close( "kmcommand" );
+    //mDestFolder->close( "kmcommand" );
     emit completed( this );
     deleteLater();
   }
@@ -2186,7 +2186,7 @@ void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
   kDebug() << success;
   if ( !success )
     setResult( Failed );
-  mDestFolder->close( "kmcommand" );
+  //mDestFolder->close( "kmcommand" );
   emit completed( this );
   deleteLater();
 }

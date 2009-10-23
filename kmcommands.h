@@ -710,8 +710,8 @@ class KMAIL_EXPORT KMCopyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCopyCommand( KMFolder* destFolder, const QList<Akonadi::Item> &msgList );
-  KMCopyCommand( KMFolder* destFolder, const Akonadi::Item &msg );
+  KMCopyCommand( const Akonadi::Collection &destFolder, const QList<Akonadi::Item> &msgList );
+  KMCopyCommand( const Akonadi::Collection& destFolder, const Akonadi::Item &msg );
 
 protected slots:
   void slotJobFinished( KMail::FolderJob *job );
@@ -721,7 +721,7 @@ protected slots:
 private:
   virtual Result execute();
 
-  KMFolder *mDestFolder;
+  Akonadi::Collection mDestFolder;
   QList<Akonadi::Item> mMsgList;
   QList<KMail::FolderJob*> mPendingJobs;
 };

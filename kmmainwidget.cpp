@@ -2008,56 +2008,25 @@ void KMMainWidget::copyMessageSelected( const QList<Akonadi::Item> &selectMsg, c
 {
   if ( selectMsg.isEmpty() )
     return;
-  //TODO
-  BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages..." ) );
-}
-
-//-----------------------------------------------------------------------------
-// Message copying
-// FIXME: Couldn't parts of it be merged with moving code ?
-//
-#ifdef OLD_MESSAGELIST
-void KMMainWidget::copyMessageSet( KMail::MessageListView::MessageSet * set, KMFolder * destination )
-{
-  Q_ASSERT( set );
-  Q_ASSERT( destination );
-
-  if ( !set->isValid() )
-  {
-    delete set;
-    return;
-  }
-
-  Q_ASSERT( set->folder() ); // must exist since the set is valid
-
-  // Get the list of messages
-  QList< KMMsgBase * > selectedMessages = set->contentsAsMsgBaseList();
-  if ( selectedMessages.isEmpty() )
-  {
-    delete set;
-    return;
-  }
-
-  // And stuff them into a KMCopyCommand :)
-  KMCommand *command = new KMCopyCommand( destination, selectedMessages );
-
+    // And stuff them into a KMCopyCommand :)
+  KMCommand *command = new KMCopyCommand( dest, selectMsg );
+#if 0
   // Reparent the set to the command so it's deleted even if the command
   // doesn't notify the completion for some reason.
   set->setParent( command ); // so it will be deleted when the command finishes
 
   // Set the name to something unique so we can find it back later in the children list
   set->setObjectName( QString( "copyMsgCommandMessageSet" ) );
-
+#endif
   QObject::connect(
       command, SIGNAL( completed( KMCommand * ) ),
       this, SLOT( slotCopyMessagesCompleted( KMCommand * ) )
     );
 
-  command->start();
-
   BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages..." ) );
 }
-#endif
+
+
 void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 {
   Q_ASSERT( command );
@@ -2068,7 +2037,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
       command->findChild< KMail::MessageListView::MessageSet * >( QString( "copyMsgCommandMessageSet" ) );
 
   Q_ASSERT( set );
-
+#endif
   if ( command->result() == KMCommand::OK )
   {
     BroadcastStatus::instance()->setStatusMsg( i18n( "Messages copied successfully." ) );
@@ -2078,7 +2047,6 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
     else
       BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages canceled." ) );
   }
-#endif
   // The command will autodelete itself and will also kill the set.
 }
 
