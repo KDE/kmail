@@ -249,6 +249,8 @@ const QList<Akonadi::Item> KMCommand::retrievedMsgs() const
 
 Akonadi::Item KMCommand::retrievedMessage() const
 {
+  if ( mRetrievedMsgs.isEmpty() )
+    return Akonadi::Item();
   return *(mRetrievedMsgs.begin());
 }
 
