@@ -1998,23 +1998,21 @@ KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
 
 KMCommand::Result KMMailingListFilterCommand::execute()
 {
-#if 0 //TODO port to akonadi
   QByteArray name;
   QString value;
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() ) {
     return Failed;
   }
+  KMime::Message *msg = message( item );
   if ( !MailingList::name( msg, name, value ).isEmpty() ) {
     kmkernel->filterMgr()->createFilter( name, value );
+    delete msg;
     return OK;
   } else {
+    delete msg;
     return Failed;
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return OK;
-#endif
 }
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
@@ -2027,10 +2025,8 @@ KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder, const Akonadi::Item& msg )
   :mDestFolder( destFolder )
 {
-#if 0
   setDeletesItself( true );
   mMsgList.append( msg );
-#endif
 }
 
 KMCommand::Result KMCopyCommand::execute()
