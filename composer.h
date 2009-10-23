@@ -24,7 +24,7 @@
 
 #include <kurl.h>
 #include <kglobalsettings.h>
-
+#include <akonadi/collection.h>
 #include <QString>
 
 class KMMessage;
@@ -107,7 +107,7 @@ class Composer : public KMail::SecondaryWindow
      * If this folder is set, the original message is inserted back after
      * canceling
      */
-    virtual void setFolder( KMFolder *aFolder ) = 0;
+  virtual void setFolder( const Akonadi::Collection& ) = 0;
 
   public: // kmkernel, kmcommand, mailserviceimpl
     /**

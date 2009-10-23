@@ -708,14 +708,14 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg )
 
 KMCommand::Result KMEditMsgCommand::execute()
 {
-#if 0 //TODO port to akonadi
-  Akonadi::Item msg = retrievedMessage();
-  if (!msg || !msg->parent() ||
-      ( !kmkernel->folderIsDraftOrOutbox( msg->parent() ) &&
-        !kmkernel->folderIsTemplates( msg->parent() ) ) ) {
+  Akonadi::Item item = retrievedMessage();
+  if (!item.isValid() || !item.parentCollection().isValid() ||
+      ( !kmkernel->folderIsDraftOrOutbox( item.parentCollection() ) &&
+        !kmkernel->folderIsTemplates( item.parentCollection() ) ) ) {
     return Failed;
   }
-
+  KMime::Message *msg = message( item );
+#if 0
   // Remember the old parent, we need it a bit further down to be able
   // to put the unchanged messsage back in the original folder if the nth
   // edit is discarded, for n > 1.
@@ -723,19 +723,18 @@ KMCommand::Result KMEditMsgCommand::execute()
   if ( parent ) {
     parent->take( parent->find( msg ) );
   }
-
-  KMail::Composer *win = KMail::makeComposer();
-
-  msg->setTransferInProgress( false ); // From here on on, the composer owns the message.
-  win->setMsg( msg, false, true );
-  win->setFolder( parent );
-  win->show();
-
-  return OK;
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  return Failed;
+  KMail::Composer *win = KMail::makeComposer();
+#if 0
+  msg->setTransferInProgress( false ); // From here on on, the composer owns the message.
+#endif
+  win->setMsg( msg, false, true );
+  win->setFolder( item.parentCollection() );
+  win->show();
+
+  return OK;
 }
 
 KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, const Akonadi::Item  &msg )

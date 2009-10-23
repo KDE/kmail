@@ -259,7 +259,7 @@ class KMComposeWin : public KMail::Composer
      * If this folder is set, the original message is inserted back after
      * canceling
      */
-     void setFolder( KMFolder *aFolder ) { mFolder = aFolder; }
+  void setFolder(const Akonadi::Collection &aFolder ) { mFolder = aFolder; }
 
   public: // kmkernel, kmcommand, mailserviceimpl
 
@@ -509,7 +509,7 @@ class KMComposeWin : public KMail::Composer
      * composer window.
      */
     void applyAutoSave();
-    
+
     void fillGlobalPart( Message::GlobalPart *globalPart );
     void fillTextPart( Message::TextPart *part );
     void fillInfoPart( Message::InfoPart *part );
@@ -699,7 +699,7 @@ class KMComposeWin : public KMail::Composer
     bool mSigningAndEncryptionExplicitlyDisabled;
     bool mLastSignActionState, mLastEncryptActionState;
     bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
-    KMFolder *mFolder;
+  Akonadi::Collection mFolder;
     long mShowHeaders;
     bool mConfirmSend;
     //bool mDisableBreaking;
@@ -759,7 +759,7 @@ class KMComposeWin : public KMail::Composer
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();
-    
+
     void slotAutoSaveComposeResult( KJob *job );
     void slotSendComposeResult( KJob *job );
     void slotQueueResult( KJob *job );

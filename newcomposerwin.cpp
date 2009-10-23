@@ -170,7 +170,6 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
     mTextSelection( textSelection ),
     mCustomTemplate( customTemplate ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
-    mFolder( 0 ),
     mForceDisableHtml( false ),
     mId( id ),
     mContext( context ),
@@ -250,7 +249,6 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
   //mAtmListView = 0;
   //mAtmModified = false;
   mAutoDeleteMsg = false;
-  mFolder = 0;
   //mAutoCharset = true;
   mFixedFontAction = 0;
   // the attachment view is separated from the editor by a splitter
@@ -463,7 +461,7 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
   for( int i =0; i < urls.count(); ++i ) {
     addAttachment( urls[i], comment );
   }
-  
+
   send( how );
 #if 0
   Q_UNUSED( comment );
@@ -653,7 +651,7 @@ void KMComposeWin::autoSaveMessage()
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
   }
-  
+
   applyAutoSave();
 }
 
@@ -1534,7 +1532,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     kDebug() << "newMsg == 0!";
     return;
   }
-  
+
   mMsg = newMsg;
   KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
 
@@ -1607,7 +1605,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
       mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg, xface.toUtf8(), "utf-8" ) );
     }
   }
-  
+
 #if 0 //TODO port to kmime
 
   // enable/disable encryption if the message was/wasn't encrypted
@@ -1669,7 +1667,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
 #endif
 
   QString transportName;
-  if( newMsg->headerByType( "X-KMail-Transport" ) ) 
+  if( newMsg->headerByType( "X-KMail-Transport" ) )
     transportName = newMsg->headerByType("X-KMail-Transport")->asUnicodeString();
   const bool stickyTransport = mBtnTransport->isChecked() && !mIgnoreStickyFields;
   if ( !stickyTransport && !transportName.isEmpty() ) {
@@ -1692,7 +1690,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   if ( newMsg->headerByType( "X-KMail-QuotePrefix" ) )
     mEditor->setQuotePrefixName( newMsg->headerByType( "X-KMail-QuotePrefix" )->asUnicodeString() );
 
-  
+
 #if 0 //TODO port to kmime
 
   partNode *root = partNode::fromMessage( mMsg );
@@ -1988,12 +1986,7 @@ bool KMComposeWin::queryClose ()
   }
 
   if ( isModified() ) {
-    bool istemplate = false;
-#if 0 
-    ( mFolder!=0 && mFolder->isTemplates() );
-#else
-kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    bool istemplate = ( mFolder.isValid() && kmkernel->folderIsTemplates( mFolder ) );
     const QString savebut = ( istemplate ?
                               i18n("Re&save as Template") :
                               i18n("&Save as Draft") );
@@ -2127,7 +2120,7 @@ void KMComposeWin::applyAutoSave()
   }
 
   kDebug() << "composer for autosaving started";
-  
+
   mComposer = new Message::Composer;
   fillGlobalPart( mComposer->globalPart() );
   fillTextPart( mComposer->textPart() );
@@ -2961,7 +2954,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
 
   mMsg->date()->setDateTime( KDateTime::currentLocalDateTime() );
   mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg, mTransport->currentText(), "utf-8" ) );
-  
+
   const bool neverEncrypt = ( GlobalSettings::self()->neverEncryptDrafts() ) ||
     mSigningAndEncryptionExplicitlyDisabled;
 
@@ -3349,7 +3342,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     kDebug() << "Trying to change identity but mMsg == 0!";
     return;
   }
-  
+
   const KPIMIdentities::Identity &ident =
     KMKernel::self()->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() ) {
@@ -3385,7 +3378,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   } else {
     mMsg->organization()->fromUnicodeString( ident.organization(), "utf-8" );
   }
-  
+
   if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
     mMsg->removeHeaderField( "X-Face" );
   } else {
