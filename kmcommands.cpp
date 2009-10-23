@@ -215,6 +215,19 @@ KMCommand::~KMCommand()
   }
 }
 
+KMime::Message *KMCommand::message( const Akonadi::Item & item )
+{
+  if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+    kWarning() << "Payload is not a MessagePtr!";
+    return 0;
+  }
+  KMime::Message *msg = new KMime::Message;
+  msg->setContent( item.payloadData() );
+  msg->parse();
+
+  return msg;
+}
+
 KMCommand::Result KMCommand::result() const
 {
   if ( mResult == Undefined ) {
@@ -549,11 +562,11 @@ KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
 KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() /*|| !msg->codec() Port to KMime::message*/) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() /*|| !msg->codec() Port to KMime::message*/) {
     return Failed;
   }
-#if 0
+  KMime::Message *msg = message( item );
   KMime::Message *fmsg = KMail::MessageHelper::createForward( msg );
   fmsg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
@@ -562,7 +575,8 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   win->setCharset( msg->codec()->name(), true );
   */
   win->show();
-#endif
+  delete msg;
+
   return OK;
 }
 
@@ -1107,11 +1121,11 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
 KMCommand::Result KMReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() ) {
     return Failed;
   }
-#if 0
+  KMime::Message *msg = message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
 #if 0  //Port to kmime::message
@@ -1121,7 +1135,9 @@ KMCommand::Result KMReplyToCommand::execute()
 #endif
   win->setReplyFocus();
   win->show();
-#endif
+
+  delete msg;
+
   return OK;
 }
 
@@ -1135,11 +1151,11 @@ KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
 KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() ) {
     return Failed;
   }
-#if 0
+  KMime::Message *msg = message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( reply.msg, replyContext( reply ) );
 #if 0 //Port to akonadi
@@ -1149,7 +1165,8 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 #endif
   win->setReplyFocus( false );
   win->show();
-#endif
+  delete msg;
+
   return OK;
 }
 
@@ -1163,11 +1180,11 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
 KMCommand::Result KMReplyListCommand::execute()
 {
   KCursorSaver busy( KBusyPtr::busy() );
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() ) {
     return Failed;
   }
-#if 0
+  KMime::Message *msg = message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ),
                                                0, mSelection );
@@ -1178,7 +1195,8 @@ KMCommand::Result KMReplyListCommand::execute()
 #endif
   win->setReplyFocus( false );
   win->show();
-#endif
+
+  delete msg;
   return OK;
 }
 
@@ -1192,11 +1210,12 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
 KMCommand::Result KMReplyToAllCommand::execute()
 {
   KCursorSaver busy( KBusyPtr::busy() );
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() ) {
     return Failed;
   }
-#if 0
+
+  KMime::Message *msg = message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
@@ -1207,7 +1226,8 @@ KMCommand::Result KMReplyToAllCommand::execute()
 #endif
   win->setReplyFocus();
   win->show();
-#endif
+
+  delete msg;
   return OK;
 }
 
@@ -1221,11 +1241,11 @@ KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item
 KMCommand::Result KMReplyAuthorCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() ) {
     return Failed;
   }
-#if 0
+  KMime::Message *msg = message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
@@ -1236,7 +1256,8 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 #endif
   win->setReplyFocus();
   win->show();
-#endif
+
+  delete msg;
   return OK;
 }
 
@@ -1509,22 +1530,26 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, const Akonadi::
 
 KMCommand::Result KMCustomReplyToCommand::execute()
 {
-#if 0 //Port to kmime::message
   KCursorSaver busy( KBusyPtr::busy() );
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg /*|| !msg->codec()*/ /*TODO port it */ ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() /*|| !msg->codec()*/ /*TODO port it */ ) {
     return Failed;
   }
+  KMime::Message *msg = message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
+#if 0
   win->setCharset( msg->codec()->name(), true );
-  win->setReplyFocus();
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus();
+  win->show();
+
+  delete msg;
+
   return OK;
 }
 
@@ -1538,23 +1563,26 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, const Ako
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
-#if 0 //Port to kmime
   KCursorSaver busy(KBusyPtr::busy());
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg /*|| !msg->codec() Port to kmime*/ ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() /*|| !msg->codec() Port to kmime*/ ) {
     return Failed;
   }
+  KMime::Message *msg = message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAll, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
+#if 0
   win->setCharset( msg->codec()->name(), true );
-
-  win->setReplyFocus();
-  win->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  win->setReplyFocus();
+  win->show();
+
+  delete msg;
+
   return OK;
 }
 
@@ -2176,23 +2204,16 @@ KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                                 const QList<Akonadi::Item> &msgList)
     : mDestFolder( destFolder ), mProgressItem( 0 )
 {
-#if 0 //TODO port to akonadi
-  foreach ( KMime::Message *msgBase, msgList )
-    mSerNumList.append( msgBase->getMsgSerNum() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  foreach ( const Akonadi::Item &msg, msgList )
+    mSerNumList.append( msg.id() );
 }
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                               const Akonadi::Item& msg )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
-#if 0 //TODO port to akonadi
-  mSerNumList.append( msg->getMsgSerNum() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  if ( msg.isValid() )
+    mSerNumList.append( msg.id() );
 }
 
 #if 0 //TODO port to akonadi
@@ -3005,11 +3026,12 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 
 KMCommand::Result KMResendMessageCommand::execute()
 {
-#if 0 //TODO port to akonadi
-  KMime::Message *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
+#if 0
+  KMime::Message item = retrievedMessage();
+  if ( !item.isValid() /*|| !msg->codec()*/ ) {
     return Failed;
   }
+  KMime::Message *msg = message( item );
   KMime::Message *newMsg = new KMime::Message( *msg );
   newMsg->setCharset( msg->codec()->name() );
   // the message needs a new Message-Id
@@ -3131,9 +3153,7 @@ KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
 : KMCommand( parent ), mNode( node ), mAtmId( atmId ), mAtmName( atmName ),
   mAction( action ), mOffer( offer ), mJob( 0 )
 {
-#if 0
-	mMsg(msg);
-#endif
+  mMsg = msg;
 }
 
 void KMHandleAttachmentCommand::slotStart()
