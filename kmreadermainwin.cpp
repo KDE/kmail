@@ -152,21 +152,9 @@ void KMReaderMainWin::slotTrashMsg()
 {
   if ( !mMsg.isValid() )
     return;
-#if 0 //TODO port to akonadi
-  // find the real msg by its sernum
-  KMFolder* parent;
-  int index;
-  KMMsgDict::instance()->getLocation( mMsg->getMsgSerNum(), &parent, &index );
-  if (parent) {
-    KMMessage *msg = parent->getMsg( index );
-    if (msg) {
-      // now delete the msg and close this window
-      KMTrashMsgCommand *command = new KMTrashMsgCommand( parent, msg );
-      command->start();
-      close();
-    }
-  }
-#endif
+  KMTrashMsgCommand *command = new KMTrashMsgCommand( mMsg.parentCollection(), mMsg );
+  command->start();
+  close();
 }
 
 //-----------------------------------------------------------------------------

@@ -1830,16 +1830,14 @@ void KMMainWidget::slotForwardInlineMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardAttachedMsg()
 {
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-#ifdef OLD_MESSAGELIST
   KMForwardAttachedCommand * command = new KMForwardAttachedCommand(
       this, selectedMessages, mCurrentFolder->identity()
     );
 
   command->start();
-#endif
 }
 
 
@@ -1890,28 +1888,26 @@ void KMMainWidget::moveMessageSelected( const QList<Akonadi::Item> &selectMsg, c
     }
   }
   // And stuff them into a KMMoveCommand :)
-#ifdef OLD_COMMAND
-  KMCommand *command = new KMMoveCommand( destination, selectedMessages );
-
+  KMCommand *command = new KMMoveCommand( dest, selectMsg );
+#if 0
   // Reparent the set to the command so it's deleted even if the command
   // doesn't notify the completion for some reason.
   set->setParent( command ); // so it will be deleted when the command finishes
 
   // Set the name to something unique so we can find it back later in the children list
   set->setObjectName( QString( "moveMsgCommandMessageSet" ) );
-
+#endif
   QObject::connect(
       command, SIGNAL( completed( KMCommand * ) ),
       this, SLOT( slotMoveMessagesCompleted( KMCommand * ) )
     );
-
+#if 0
   // Mark the messages as about to be removed (will remove them from the slelection,
   // make non selectable and make them appear dimmer).
   set->markAsAboutToBeRemoved( true );
-
-  command->start();
 #endif
-  //TODO code to move item
+  command->start();
+
   if ( dest.isValid() )
     BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages..." ) );
   else
