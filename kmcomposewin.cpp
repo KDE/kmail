@@ -173,6 +173,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
     mCheckForRecipients( true ),
+    mCheckForForgottenAttachments( true ),
     mIgnoreStickyFields( false )
 {
   (void) new MailcomposerAdaptor( this );
@@ -1934,7 +1935,8 @@ bool KMComposeWin::queryClose ()
 //-----------------------------------------------------------------------------
 bool KMComposeWin::userForgotAttachment()
 {
-  bool checkForForgottenAttachments = GlobalSettings::self()->showForgottenAttachmentWarning();
+  bool checkForForgottenAttachments =
+    mCheckForForgottenAttachments && GlobalSettings::self()->showForgottenAttachmentWarning();
 
   if ( !checkForForgottenAttachments || ( mAtmList.count() > 0 ) ) {
     return false;
@@ -3448,6 +3450,11 @@ void KMComposeWin::forceDisableHtml()
 void KMComposeWin::disableRecipientNumberCheck()
 {
   mCheckForRecipients = false;
+}
+
+void KMComposeWin::disableForgottenAttachmentsCheck()
+{
+  mCheckForForgottenAttachments = false;
 }
 
 void KMComposeWin::ignoreStickyFields()
