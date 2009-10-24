@@ -181,6 +181,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
 
   cWin->forceDisableHtml();
   cWin->disableRecipientNumberCheck();
+  cWin->disableForgottenAttachmentsCheck();
   if ( GlobalSettings::self()->automaticSending() ) {
     cWin->setAttribute( Qt::WA_DeleteOnClose );
     cWin->slotSendNow();
