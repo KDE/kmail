@@ -186,6 +186,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mPreserveUserCursorPosition( false ),
     mPreventFccOverwrite( false ),
     mCheckForRecipients( true ),
+    mCheckForForgottenAttachments( true ),
     mIgnoreStickyFields( false )
 {
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
@@ -2222,7 +2223,8 @@ bool KMComposeWin::queryClose ()
 //-----------------------------------------------------------------------------
 bool KMComposeWin::userForgotAttachment()
 {
-  bool checkForForgottenAttachments = GlobalSettings::self()->showForgottenAttachmentWarning();
+  bool checkForForgottenAttachments =
+    mCheckForForgottenAttachments && GlobalSettings::self()->showForgottenAttachmentWarning();
 
   if ( !checkForForgottenAttachments || ( mAtmList.count() > 0 ) )
     return false;
@@ -3982,6 +3984,11 @@ void KMComposeWin::disableWordWrap()
 void KMComposeWin::disableRecipientNumberCheck()
 {
   mCheckForRecipients = false;
+}
+
+void KMComposeWin::disableForgottenAttachmentsCheck()
+{
+  mCheckForForgottenAttachments = false;
 }
 
 void KMComposeWin::ignoreStickyFields()

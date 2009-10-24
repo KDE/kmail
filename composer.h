@@ -150,6 +150,8 @@ namespace KMail {
 
     virtual void disableRecipientNumberCheck() = 0;
 
+    virtual void disableForgottenAttachmentsCheck() = 0;
+
     virtual void ignoreStickyFields() = 0;
 
   public: // kmcommand

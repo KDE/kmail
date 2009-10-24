@@ -586,6 +586,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   if ( isICalInvitation ) {
     cWin->disableRecipientNumberCheck();
+    cWin->disableForgottenAttachmentsCheck();
   }
 
   if ( hidden == 0 && !iCalAutoSend ) {
