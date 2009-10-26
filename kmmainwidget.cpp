@@ -4674,19 +4674,15 @@ void KMMainWidget::toggleSystemTray()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiSpamWizard()
 {
-#ifdef OLD_FOLDERVIEW
-  AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this, mainFolderView() );
+  AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this );
   wiz.exec();
-#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiVirusWizard()
 {
-#ifdef OLD_FOLDERVIEW
-  AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this, mainFolderView() );
+  AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this);
   wiz.exec();
-#endif
 }
 
 //-----------------------------------------------------------------------------

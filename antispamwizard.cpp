@@ -63,7 +63,7 @@
 using namespace KMail;
 
 AntiSpamWizard::AntiSpamWizard( WizardMode mode,
-                                QWidget* parent, MainFolderView * mainFolderTree )
+                                QWidget* parent )
   : KAssistantDialog( parent ),
     mInfoPage( 0 ),
     mSpamRulesPage( 0 ),
@@ -114,13 +114,13 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
             this, SLOT( checkProgramsSelections( void ) ) );
 
   if ( mMode == AntiSpam ) {
-    mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
+    mSpamRulesPage = new ASWizSpamRulesPage( 0, "" );
     addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
     connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( slotBuildSummary( void ) ) );
   }
   else {
-    mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
+    mVirusRulesPage = new ASWizVirusRulesPage( 0, "" );
     addPage( mVirusRulesPage, i18n( "Options to fine-tune the handling of virus messages" ));
     connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( checkVirusRulesSelections( void ) ) );
@@ -971,8 +971,7 @@ void ASWizInfoPage::processSelectionChange()
 
 
 //---------------------------------------------------------------------------
-ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
-                                        MainFolderView * mainFolderTree )
+ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   : ASWizPage( parent, name )
 {
   QVBoxLayout *layout = new QVBoxLayout();
@@ -1097,8 +1096,7 @@ void ASWizSpamRulesPage::allowUnsureFolderSelection( bool enabled )
 
 
 //---------------------------------------------------------------------------
-ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
-                                  MainFolderView * mainFolderTree )
+ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   : ASWizPage( parent, name )
 {
   QGridLayout *grid = new QGridLayout();
@@ -1129,7 +1127,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
 #ifdef OLD_FOLDERVIEW
-  mFolderTree = new FolderSelectionTreeWidget( this, mainFolderTree );
+  mFolderTree = new FolderSelectionTreeWidget( this );
   mFolderTree->reload( true, true, true, QString( "trash" ) );
   grid->addWidget( mFolderTree, 3, 0 );
 #endif
