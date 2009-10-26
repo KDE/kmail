@@ -1727,6 +1727,7 @@ KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
   const QList<quint32> &serNums, bool toggle )
   : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
 {
+  setDeletesItself(true);
 }
 
 KMCommand::Result KMSetStatusCommand::execute()
@@ -1787,19 +1788,21 @@ void KMSetStatusCommand::slotItemFetchDone( KJob* job)
 {
   if ( job->error() ) {
     kDebug()<<" Error in slotItemFetchDone :"<<job->errorText();
+    deleteLater();
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
   Q_ASSERT( fjob );
   if( fjob->items().count() != 1 ) {
     kError() << "Fetched" << fjob->items().count() << "items, expected 1.";
+    deleteLater();
     return;
   }
   Akonadi::Item item = fjob->items().first();
   // Set a custom flag
   item.setFlags( mStatus.getStatusFlags() );
   // Store back modified item
-  Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item,this );
+  Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
   connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
 }
 
@@ -1808,6 +1811,7 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
   if ( job->error() ) {
     kDebug()<<" Error in void KMSetStatusCommand::slotModifyItemDone( KJob * job ) :"<<job->errorText();
   }
+  deleteLater();
 }
 
 KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
