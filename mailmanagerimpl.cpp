@@ -136,6 +136,7 @@ void MailManagerImpl::processMsgBase( KMime::Message *msg, QStringList &subjects
 
 void MailManagerImpl::Register( const QDBusObjectPath &registrarPath, uint lastModseq )
 {
+#if 0
   Q_UNUSED( lastModseq );
   registrars.append( registrarPath );
 
@@ -197,6 +198,9 @@ void MailManagerImpl::Register( const QDBusObjectPath &registrarPath, uint lastM
 
     folder->close( "DBus", false );
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 

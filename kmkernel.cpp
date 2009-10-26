@@ -2312,6 +2312,7 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 
 QList<Akonadi::Collection> KMKernel::allFoldersCollection()
 {
+  //TODO use directly Monitor::collectionsMonitored ???
   Akonadi::Collection::List collections;
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive );
   if ( job->exec() ) {
@@ -2412,22 +2413,6 @@ Wallet *KMKernel::wallet() {
     mWallet->createFolder( "kmail" );
   mWallet->setFolder( "kmail" );
   return mWallet;
-}
-
-QList< QPointer<KMFolder> > KMKernel::allFolders()
-{
-  QStringList names;
-  QList<QPointer<KMFolder> > folders;
-  folderMgr()->createFolderList(&names, &folders);
-#if 0 //TODO port to akonadi
-  imapFolderMgr()->createFolderList(&names, &folders);
-  dimapFolderMgr()->createFolderList(&names, &folders);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  searchFolderMgr()->createFolderList(&names, &folders);
-
-  return folders;
 }
 
 FolderCollection *KMKernel::currentFolderCollection()

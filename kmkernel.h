@@ -405,7 +405,6 @@ public:
   KMMainWidget *getKMMainWidget();
 
   /** @return a list of all folders from all folder managers. */
-  QList< QPointer<KMFolder> > allFolders();
   QList<Akonadi::Collection> allFoldersCollection();
   void raise();
 
