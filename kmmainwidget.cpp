@@ -1825,16 +1825,14 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardInlineMsg()
 {
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-#ifdef OLD_MESSAGELIST
   KMForwardCommand * command = new KMForwardCommand(
       this, selectedMessages, mCurrentFolder->identity()
     );
 
   command->start();
-#endif
 }
 
 
