@@ -43,8 +43,8 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
   if ( bPopFilter ) {
     kDebug() << "pPopFilter set";
   }
-  connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
-           this, SLOT( slotFolderRemoved( KMFolder* ) ) );
+  connect( kmkernel, SIGNAL( folderRemoved( const Akonadi::Collection& ) ),
+           this, SLOT( slotFolderRemoved( const Akonadi::Collection & ) ) );
 }
 
 
@@ -72,7 +72,7 @@ void KMFilterMgr::readConfig(void)
   if ( bPopFilter ) {
     KConfigGroup group = config->group( "General" );
     mShowLater = group.readEntry( "popshowDLmsgs", false );
-  } 
+  }
   mFilters = FilterImporterExporter::readFiltersFromConfig( config, bPopFilter );
 }
 
@@ -81,7 +81,7 @@ void KMFilterMgr::writeConfig(bool withSync)
 {
   KSharedConfig::Ptr config = KMKernel::config();
 
-  // Now, write out the new stuff:  
+  // Now, write out the new stuff:
   FilterImporterExporter::writeFiltersToConfig( mFilters, config, bPopFilter );
   KConfigGroup group = config->group( "General" );
   if ( bPopFilter )
@@ -510,13 +510,13 @@ void KMFilterMgr::setFilters( const QList<KMFilter*> &filters )
   endUpdate();
 }
 
-void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )
+void KMFilterMgr::slotFolderRemoved( const Akonadi::Collection & aFolder )
 {
-  folderRemoved( aFolder, 0 );
+  folderRemoved( aFolder, Akonadi::Collection() );
 }
 
 //-----------------------------------------------------------------------------
-bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
+bool KMFilterMgr::folderRemoved(const Akonadi::Collection & aFolder, const Akonadi::Collection & aNewFolder)
 {
   mDirtyBufferedFolderTarget = true;
   bool rem = false;

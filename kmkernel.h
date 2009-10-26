@@ -445,7 +445,7 @@ protected slots:
 
 signals:
   void configChanged();
-  void folderRemoved( KMFolder* aFolder );
+  void folderRemoved( const Akonadi::Collection &aFolder );
   void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
   void customTemplatesChanged();
 

@@ -185,7 +185,7 @@ KMPopFilterAction KMFilter::action()
 }
 
 // only for !bPopFilter
-bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
+bool KMFilter::folderRemoved( const Akonadi::Collection & aFolder, const Akonadi::Collection& aNewFolder )
 {
   bool rem = false;
 

@@ -113,7 +113,7 @@ void KMFilterAction::clearParamWidget( QWidget * ) const
 {
 }
 
-bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
+bool KMFilterAction::folderRemoved(const Akonadi::Collection&, const Akonadi::Collection&)
 {
   return false;
 }
@@ -388,7 +388,7 @@ const QString KMFilterActionWithFolder::displayString() const
 #endif
 }
 
-bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
+bool KMFilterActionWithFolder::folderRemoved( const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder )
 {
 #if 0
   if ( aFolder == mFolder ) {

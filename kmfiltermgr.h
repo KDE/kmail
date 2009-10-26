@@ -22,6 +22,7 @@
 
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfolder.h"
+#include <akonadi/collection.h>
 
 namespace KMime {
   class Message;
@@ -161,7 +162,7 @@ public:
     Tests if the folder aFolder is used in any action. Changes
     to aNewFolder folder in this case. Returns true if a change
     occurred. */
-  bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+  bool folderRemoved(const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder);
 
   /** Called from the folder manager when a new folder has been
       created. Forwards this to the filter dialog if that is open. */
@@ -177,7 +178,7 @@ public:
     return mShowLater;
   }
 public slots:
-  void slotFolderRemoved( KMFolder *aFolder );
+  void slotFolderRemoved( const Akonadi::Collection &aFolder );
 
 signals:
   void filterListUpdated();

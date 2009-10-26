@@ -1604,18 +1604,18 @@ void KMKernel::init()
 
   the_weaver =  new ThreadWeaver::Weaver( this );
 
-  connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
+  connect( the_folderMgr, SIGNAL( folderRemoved(const Akonadi::Collection &) ),
+           this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
 #if 0 //TODO port to akonadi
   connect( the_dimapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
            this, SIGNAL( folderRemoved(KMFolder*) ) );
   connect( the_imapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
            this, SIGNAL( folderRemoved(KMFolder*) ) );
 #else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
+  connect( the_searchFolderMgr, SIGNAL( folderRemoved(const Akonadi::Collection&) ),
+           this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
 
   mBackgroundTasksTimer = new QTimer( this );
   mBackgroundTasksTimer->setSingleShot( true );

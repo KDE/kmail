@@ -24,7 +24,7 @@
 #include "kmpopheaders.h"
 
 #include <kshortcut.h>
-
+#include <akonadi/collection.h>
 class QString;
 class KConfigGroup;
 namespace KMime {
@@ -252,7 +252,7 @@ public:
 
   /** This sets the toolbar name for this filter.
    *  The toolbar name is the text to be displayed underneath the toolbar icon
-   *  for this filter. This is usually the same as name(),  expect when 
+   *  for this filter. This is usually the same as name(),  expect when
    *  explicitly set by this function.
    *  This is useful if the normal filter mame is too long for the toolbar.
    *  @see toolbarName, name
@@ -290,7 +290,7 @@ public:
    * @return true if a change in some action occurred,
    * false if no action was affected.
    */
-  bool folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder );
+  bool folderRemoved( const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder );
 
   /** Returns the filter in a human-readable form. useful for
       debugging but not much else. Don't use, as it may well go away

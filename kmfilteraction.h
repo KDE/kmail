@@ -27,9 +27,9 @@
 #include <QPointer>
 #include <QStringList>
 #include <akonadi/collection.h>
-class KMFolder;
-class KTemporaryFile;
 
+class KTemporaryFile;
+class KMFolder;
 namespace KMime {
   class Message;
   class Content;
@@ -140,7 +140,7 @@ public:
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
       case. Returns true if a change was made.  */
-  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+  virtual bool folderRemoved(const Akonadi::Collection & aFolder, const Akonadi::Collection & aNewFolder);
 
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction();
@@ -433,7 +433,7 @@ public:
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
       case. Returns true if a change was made.  */
-  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+  virtual bool folderRemoved(const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder);
 
 protected:
   Akonadi::Collection mFolder;
