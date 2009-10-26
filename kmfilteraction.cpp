@@ -305,7 +305,6 @@ void KMFilterActionWithStringList::argsFromString( const QString &argsStr )
 KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QString &aLabel )
   : KMFilterAction( aName, aLabel )
 {
-  mFolder = 0;
 }
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
@@ -317,12 +316,8 @@ QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 
 void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
 {
-#if 0
-  mFolder = ((FolderRequester *)paramWidget)->folder();
+  mFolder = ((FolderRequester *)paramWidget)->folderCollection();
   mFolderName = ((FolderRequester *)paramWidget)->folderId();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
@@ -348,43 +343,54 @@ void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 
 void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 {
+#if 0
   mFolder = kmkernel->folderMgr()->findIdString( argsStr );
-#if 0 //TODO port to akonadi
   if (!mFolder)
      mFolder = kmkernel->dimapFolderMgr()->findIdString( argsStr );
   if (!mFolder)
      mFolder = kmkernel->imapFolderMgr()->findIdString( argsStr );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if (mFolder)
      mFolderName = mFolder->idString();
   else
      mFolderName = argsStr;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 const QString KMFilterActionWithFolder::argsAsString() const
 {
+#if 0
   QString result;
   if ( mFolder )
     result = mFolder->idString();
   else
     result = mFolderName;
   return result;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return QString();
+#endif
 }
 
 const QString KMFilterActionWithFolder::displayString() const
 {
+#if 0
   QString result;
   if ( mFolder )
     result = mFolder->prettyUrl();
   else
     result = mFolderName;
   return label() + " \"" + Qt::escape( result ) + "\"";
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return QString();
+#endif
 }
 
 bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
 {
+#if 0
   if ( aFolder == mFolder ) {
     mFolder = aNewFolder;
     if ( aNewFolder )
@@ -392,6 +398,10 @@ bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewF
     return true;
   } else
     return false;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return false;
+#endif
 }
 
 //=============================================================================
@@ -1495,25 +1505,24 @@ KMFilterActionMove::KMFilterActionMove()
 
 KMFilterAction::ReturnCode KMFilterActionMove::process(KMime::Message* msg) const
 {
-  if ( !mFolder )
+  if ( !mFolder.isValid() )
     return ErrorButGoOn;
-
+#if 0
   ActionScheduler *handler = MessageProperty::filterHandler( msg );
   if (handler) {
     MessageProperty::setFilterFolder( msg, mFolder );
   } else {
     // The old filtering system does not support online imap targets.
     // Skip online imap targets when using the old system.
-#if 0 //TODO port to akonadi
     KMFolder *check;
     check = kmkernel->imapFolderMgr()->findIdString( argsAsString() );
     if (mFolder && (check != mFolder)) {
       MessageProperty::setFilterFolder( msg, mFolder );
     }
+  }
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  }
   return GoOn;
 }
 
@@ -1549,17 +1558,18 @@ KMFilterActionCopy::KMFilterActionCopy()
 
 KMFilterAction::ReturnCode KMFilterActionCopy::process( KMime::Message *msg ) const
 {
+#if 0 //TODO port to akonadi
+
   // TODO opening and closing the folder is a trade off.
   // Perhaps Copy is a seldomly used action for now,
   // but I gonna look at improvements ASAP.
-  if ( !mFolder || mFolder->open( "filtercopy" ) != 0 ) {
+  if ( !mFolder.isValid() || mFolder->open( "filtercopy" ) != 0 ) {
     return ErrorButGoOn;
   }
 
   // copy the message 1:1
   KMime::Message* msgCopy = new KMime::Message;
   msgCopy->setContent( msg->encodedContent() );
-#if 0 //TODO port to akonadi
   int index;
   int rc = mFolder->addMsg( msgCopy, &index );
   if ( rc == 0 && index != -1 ) {

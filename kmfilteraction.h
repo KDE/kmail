@@ -26,7 +26,7 @@
 #include <QMultiHash>
 #include <QPointer>
 #include <QStringList>
-
+#include <akonadi/collection.h>
 class KMFolder;
 class KTemporaryFile;
 
@@ -401,7 +401,7 @@ public:
       quick test. Eg., actions that have a mail address as parameter
       shouldn't try real address validation, but only check if the
       string representation is empty. */
-  virtual bool isEmpty() const { return (mFolder.isNull() && mFolderName.isEmpty()); }
+  virtual bool isEmpty() const { return (!mFolder.isValid() && mFolderName.isEmpty()); }
 
   /** Creates a widget for setting the filter action parameter. Also
       sets the value of the widget. */
@@ -436,7 +436,7 @@ public:
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 
 protected:
-  QPointer<KMFolder> mFolder;
+  Akonadi::Collection mFolder;
   QString mFolderName;
 };
 
