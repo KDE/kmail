@@ -2171,14 +2171,11 @@ void KMMainWidget::toggleMessageSetTag(
 #endif
 void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 {
-#ifdef OLD_MESSAGELIST
   // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  if ( selectedMessages.isEmpty() )
     return;
-
-  toggleMessageSetTag( set, taglabel );
-#endif
+  toggleMessageSetTag( selectedMessages, taglabel );
 }
 
 
@@ -4178,12 +4175,18 @@ void KMMainWidget::slotShowTip()
 void KMMainWidget::updateMessageTagActions( const int count )
 {
   //TODO: Behaves differently according to number of messages selected
-#ifdef OLD_MESSAGELIST
   KToggleAction *aToggler = 0;
   if ( 1 == count )
   {
-    KMime::Message * currentMessage = mMessagePane->currentMessage();
-    Q_ASSERT( currentMessage );
+    Akonadi::Item item = mMessagePane->currentItem();
+    if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+      kWarning() << "Payload is not a MessagePtr!";
+      return;
+    }
+#if 0
+    KMime::Message *currentMessage = new KMime::Message;
+    currentMessage->setContent( item.payloadData() );
+    currentMessage->parse();
     KMime::MessageTagList *aTagList = currentMessage->tagList();
     for ( QList<MessageTagPtrPair>::ConstIterator it =
           mMessageTagMenuActions.constBegin();
@@ -4197,8 +4200,10 @@ void KMMainWidget::updateMessageTagActions( const int count )
       aToggler->setChecked( list_present );
       aToggler->setEnabled( true );
     }
-  } else if ( count > 1 )
-  {
+    delete currentMessage;
+#endif
+
+  } else if ( count > 1 ) {
     for ( QList<MessageTagPtrPair>::ConstIterator it =
           mMessageTagMenuActions.constBegin();
           it != mMessageTagMenuActions.constEnd(); ++it )
@@ -4217,7 +4222,6 @@ void KMMainWidget::updateMessageTagActions( const int count )
       aToggler->setEnabled( false );
     }
   }
-#endif
 }
 
 QList<KActionCollection*> KMMainWidget::actionCollections() const {
