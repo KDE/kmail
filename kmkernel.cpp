@@ -13,8 +13,6 @@ using KPIM::BroadcastStatus;
 //TODO port to akonadi #include "kmmsgpart.h"
 #include "kmreadermainwin.h"
 #include "kmfoldermgr.h"
-//TODO port to akonadi #include "kmfoldercachedimap.h"
-//TODO port to akonadi #include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #define REALLY_WANT_AKONADISENDER
@@ -1380,12 +1378,11 @@ void KMKernel::findCreateDefaultCollection( Akonadi::SpecialCollections::Type ty
       emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
   }
   else {
-#if 0
     Akonadi::SpecialCollectionsRequestJob *job = new Akonadi::SpecialCollectionsRequestJob( this );
-    job->requestDefaultCollection( type );
     connect( job, SIGNAL( result( KJob* ) ),
              this, SLOT( createDefaultCollectionDone( KJob* ) ) );
-#endif
+    job->requestDefaultCollection( type );
+    job->exec();
   }
 #endif
 }
@@ -2253,14 +2250,6 @@ void KMKernel::selectFolder( const QString &folderPath )
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )
     folder = the_folderMgr->getFolderByURL( folderPath.mid( localPrefix.length() ) );
-#if 0 //TODO port to akonadi
-  if ( !folder )
-    folder = kmkernel->imapFolderMgr()->getFolderByURL( folderPath );
-  if ( !folder )
-    folder = kmkernel->dimapFolderMgr()->getFolderByURL( folderPath );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
   if ( !widget )

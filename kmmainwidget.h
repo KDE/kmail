@@ -575,7 +575,7 @@ private:
     KTreeWidgetSearchLine *mFolderQuickSearch;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
-    KMFolder     *mTemplateFolder;
+  const Akonadi::Collection mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
     bool          mIntegrated;

@@ -211,7 +211,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mWasEverShown = false;
   mSearchWin = 0;
   mIntegrated  = true;
-  mTemplateFolder = 0;
   mReaderWindowActive = true;
   mReaderWindowBelow = true;
   mFolderHtmlPref = false;
@@ -1350,13 +1349,24 @@ void KMMainWidget::slotShowNewFromTemplate()
   {
     const KPIMIdentities::Identity & ident =
       kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
+#if 0
     mTemplateFolder = kmkernel->folderMgr()->findIdString( ident.templates() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
-  if ( !mTemplateFolder ) mTemplateFolder = kmkernel->templatesFolder();
-  if ( !mTemplateFolder ) return;
+  if ( !mTemplateFolder.isValid() ) {
+#if 0
+    mTemplateFolder = kmkernel->templatesFolder();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  }
+  if ( !mTemplateFolder.isValid() ) return;
 
   mTemplateMenu->menu()->clear();
+#if 0
   for ( int idx = 0; idx<mTemplateFolder->count(); ++idx ) {
     KMime::Message *mb = mTemplateFolder->getMsgBase( idx );
 
@@ -1368,7 +1378,9 @@ void KMMainWidget::slotShowNewFromTemplate()
         KStringHandler::rsqueeze( subj.replace( '&', "&&" ) ) );
     templateAction->setData( idx );
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   // If there are no templates available, add a menu entry which informs
   // the user about this.
   if ( mTemplateMenu->menu()->actions().isEmpty() ) {
@@ -1382,12 +1394,12 @@ void KMMainWidget::slotShowNewFromTemplate()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNewFromTemplate( QAction *action )
 {
-#if 0//Remove kmfolder !!!!!
-  if ( !mTemplateFolder )
+  if ( !mTemplateFolder.isValid() )
     return;
+#if 0
   newFromTemplate( mTemplateFolder->getMsg( action->data().toInt() ) );
 #else
-   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
