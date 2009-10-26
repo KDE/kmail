@@ -269,7 +269,7 @@ void KMCommand::slotStart()
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
   kmkernel->filterMgr()->ref();
 
-  if ( mMsgList.isEmpty() ) {
+  if ( mMsgList.contains(Akonadi::Item()) ) {
       emit messagesTransfered( Failed );
       return;
   }
@@ -302,8 +302,9 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
 {
   disconnect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
               this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
-  if ( result == OK )
+  if ( result == OK ) {
     result = execute();
+  }
   mResult = result;
   Akonadi::Item msg;
   foreach( msg, mRetrievedMsgs ) {
@@ -2224,11 +2225,9 @@ void KMMoveCommand::slotMoveResult( KJob * job )
 
 KMCommand::Result KMMoveCommand::execute()
 {
-  kDebug()<<" KMCommand::Result KMMoveCommand::execute()";
 
   Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder );
   connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
-
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   setDeletesItself( true );
