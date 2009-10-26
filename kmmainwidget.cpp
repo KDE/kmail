@@ -3014,8 +3014,11 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
             SLOT(slotMessageActivated(KMime::Message*)));
     job->start();
     return;
-  }
 
+  }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if (kmkernel->folderIsDraftOrOutbox(mCurrentFolder->collection()))
   {
     mMsgActions->editCurrentMessage();
@@ -3026,8 +3029,6 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
     return;
   }
 
-  assert( msg != 0 );
-#endif
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
