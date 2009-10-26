@@ -2455,7 +2455,7 @@ void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 
 void KMMainWidget::slotApplyFilters()
 {
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
 #ifdef OLD_MESSAGELIST
   if (KMail::ActionScheduler::isEnabled() || kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget())
   {

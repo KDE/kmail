@@ -306,12 +306,22 @@ public:
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
+  //Remove it !
   KMFolder *inboxFolder() { return the_inboxFolder; }
   KMFolder *outboxFolder() { return the_outboxFolder; }
   KMFolder *sentFolder() { return the_sentFolder; }
   KMFolder *trashFolder() { return the_trashFolder; }
   KMFolder *draftsFolder() { return the_draftsFolder; }
   KMFolder *templatesFolder() { return the_templatesFolder; }
+
+
+  Akonadi::Collection inboxCollectionFolder() { return the_inboxCollectionFolder; }
+  Akonadi::Collection outboxCollectionFolder() { return the_outboxCollectionFolder; }
+  Akonadi::Collection sentCollectionFolder() { return the_sentCollectionFolder; }
+  Akonadi::Collection trashCollectionFolder() { return the_trashCollectionFolder; }
+  Akonadi::Collection draftsCollectionFolder() { return the_draftsCollectionFolder; }
+  Akonadi::Collection templatesCollectionFolder() { return the_templatesCollectionFolder; }
+
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
@@ -455,12 +465,21 @@ private:
   void openReader( bool onlyCheck );
   FolderCollection *currentFolderCollection();
 
+  //Remove it
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
   KMFolder *the_sentFolder;
   KMFolder *the_trashFolder;
   KMFolder *the_draftsFolder;
   KMFolder *the_templatesFolder;
+
+
+  Akonadi::Collection the_inboxCollectionFolder;
+  Akonadi::Collection the_outboxCollectionFolder;
+  Akonadi::Collection the_sentCollectionFolder;
+  Akonadi::Collection the_trashCollectionFolder;
+  Akonadi::Collection the_draftsCollectionFolder;
+  Akonadi::Collection the_templatesCollectionFolder;
 
   KMFolderMgr *the_folderMgr;
 #if 0 //TODO port to akonadi

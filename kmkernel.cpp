@@ -2255,7 +2255,7 @@ void KMKernel::selectFolder( const QString &folderPath )
   if ( !widget )
     return;
 #ifdef OLD_FOLDERVIEW
-  widget->mainFolderView()->setCurrentFolder( folder );
+  widget->selectCollectionFolder( folder );
 #endif
 }
 
