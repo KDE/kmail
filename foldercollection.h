@@ -38,6 +38,9 @@ public:
 
   Akonadi::Collection collection();
 
+
+  QString configGroupName() const;
+
   void writeConfig() const;
   void readConfig();
 

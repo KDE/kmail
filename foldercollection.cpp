@@ -111,9 +111,14 @@ void FolderCollection::slotIdentitiesChanged()
   }
 }
 
+QString FolderCollection::configGroupName() const
+{
+  return "Folder-"+ QString::number( mCollection.id() );
+}
+
 void FolderCollection::readConfig()
 {
-  KConfigGroup configGroup( KMKernel::config(), "Folder-" + QString::number( mCollection.id() ) );
+  KConfigGroup configGroup( KMKernel::config(), configGroupName() );
   mExpireMessages = configGroup.readEntry( "ExpireMessages", false );
   mReadExpireAge = configGroup.readEntry( "ReadExpireAge", 3 );
   mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)expireMonths );
@@ -162,7 +167,7 @@ QString FolderCollection::idString() const
 
 void FolderCollection::writeConfig() const
 {
-  KConfigGroup configGroup( KMKernel::config(), "Folder-" + QString::number( mCollection.id() ) );
+  KConfigGroup configGroup( KMKernel::config(), configGroupName() );
   configGroup.writeEntry("ExpireMessages", mExpireMessages);
   configGroup.writeEntry("ReadExpireAge", mReadExpireAge);
   configGroup.writeEntry("ReadExpireUnits", (int)mReadExpireUnits);

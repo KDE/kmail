@@ -76,6 +76,7 @@ using KWallet::Wallet;
 #include <akonadi/kmime/specialcollections.h>
 #include <akonadi/kmime/specialcollectionsrequestjob.h>
 #include <akonadi/collection.h>
+#include <akonadi/collectionfetchjob.h>
 #include "actionscheduler.h"
 
 #include <QByteArray>
@@ -2364,6 +2365,16 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000 ); // check again in 4 hours
 #endif
 
+}
+
+QList<Akonadi::Collection> KMKernel::allFoldersCollection()
+{
+  Akonadi::Collection::List collections;
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive );
+  if ( job->exec() ) {
+    collections = job->collections();
+  }
+  return collections;
 }
 
 void KMKernel::expireAllFoldersNow() // called by the GUI

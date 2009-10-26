@@ -3626,24 +3626,13 @@ void SecurityPage::GeneralTab::save()
     {
       GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       QStringList names;
-#if 0 //port to akonadi
-      QList<QPointer<KMFolder> > folders;
-      kmkernel->folderMgr()->createFolderList(&names, &folders);
-      kmkernel->imapFolderMgr()->createFolderList(&names, &folders);
-      kmkernel->dimapFolderMgr()->createFolderList(&names, &folders);
-      kmkernel->searchFolderMgr()->createFolderList(&names, &folders);
-      for (QList<QPointer<KMFolder> >::iterator it = folders.begin();
-        it != folders.end(); ++it)
+      QList<Akonadi::Collection> collections = kmkernel->allFoldersCollection();
+      for (int i = 0; i < collections.size(); ++i)
       {
-        if (*it)
-        {
-          KConfigGroup config( KMKernel::config(), (*it)->configGroupName() );
-          config.writeEntry("htmlMailOverride", false);
-        }
+        FolderCollection fd( collections.at( i ) );
+        KConfigGroup config( KMKernel::config(), fd.configGroupName() );
+        config.writeEntry("htmlMailOverride", false);
       }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     }
   }
   GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );

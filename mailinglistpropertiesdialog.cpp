@@ -222,6 +222,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 
   // next try the 5 most recently added messages
   if ( !( mMailingList.features() & MailingList::Post ) ) {
+
 #if 0 //TODO port to akonadi
     const int maxchecks = 5;
     for( int i = --num; i > num-maxchecks; --i ) {
