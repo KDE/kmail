@@ -36,6 +36,7 @@
 #include <kiconloader.h>
 #include <KLocale>
 #include <kdialog.h>
+#include "kmkernel.h"
 #include "folderselectiontreeviewdialog.h"
 #include <QLayout>
 #include <QToolButton>
@@ -120,9 +121,8 @@ void FolderRequester::setFolder( const Akonadi::Collection&col )
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const QString &idString )
 {
-#if 0
-  KMFolder *folder = kmkernel->findFolderById( idString );
-  if ( folder ) {
+  Akonadi::Collection folder = kmkernel->findFolderCollectionById( idString );
+  if ( folder.isValid() ) {
     setFolder( folder );
   } else {
     if ( !idString.isEmpty() ) {
@@ -130,12 +130,8 @@ void FolderRequester::setFolder( const QString &idString )
     } else {
       edit->setText( i18n( "Please select a folder" ) );
     }
-    mFolder = 0;
   }
   mFolderId = idString;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------

@@ -17,6 +17,8 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <KNumInput>
+#include <akonadi/collection.h>
+#include "kmkernel.h"
 
 using namespace KMail;
 
@@ -140,13 +142,9 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
 
   QString destFolderID = mFolder->expireToFolderId();
   if ( !destFolderID.isEmpty() ) {
-#if 0
-    KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
-    if ( destFolder )
+    Akonadi::Collection destFolder = KMKernel::self()->findFolderCollectionById( destFolderID );
+    if ( destFolder.isValid() )
       folderSelector->setFolder( destFolder );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
   slotUpdateControls();
   setAttribute(Qt::WA_WState_Polished);
@@ -180,11 +178,11 @@ void ExpiryPropertiesDialog::accept()
     mFolder->setExpireAction( FolderCollection::ExpireDelete );
   else
     mFolder->setExpireAction( FolderCollection::ExpireMove );
-#if 0
-  KMFolder* expireToFolder = folderSelector->folder();
-  if ( expireToFolder )
-    mFolder->setExpireToFolderId( expireToFolder->idString() );
+  Akonadi::Collection expireToFolder = folderSelector->folderCollection();
+  if ( expireToFolder.isValid() )
+    mFolder->setExpireToFolderId( QString::number( expireToFolder.id() ) );
   // trigger immediate expiry if there is something to do
+#if 0
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
 #else

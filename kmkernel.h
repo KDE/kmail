@@ -302,6 +302,7 @@ public:
    * Find a folder by ID string in all folder managers
    */
   KMFolder* findFolderById( const QString& idString );
+  Akonadi::Collection findFolderCollectionById( const QString& id );
 
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }

@@ -614,15 +614,11 @@ namespace KMail {
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
                                           const QString & msg ) {
-#if 0 //Port to akonadi
-    KMFolder * folder = kmkernel->findFolderById( folderID );
-    if ( !folder ) {
+    Akonadi::Collection folder = kmkernel->findFolderCollectionById( folderID );
+    if ( !folder.isValid() ) {
       KMessageBox::sorry( this, msg );
       return false;
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     return true;
   }
 

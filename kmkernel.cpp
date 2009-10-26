@@ -2328,6 +2328,13 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
   return folder;
 }
 
+Akonadi::Collection KMKernel::findFolderCollectionById( const QString& id )
+{
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  //TODO port it !!!
+  return Akonadi::Collection();
+}
+
 void KMKernel::enableMailCheck()
 {
   mMailCheckAborted = false;
