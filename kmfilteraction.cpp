@@ -322,14 +322,10 @@ void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
 
 void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
 {
-#if 0
-  if ( mFolder )
+  if ( mFolder.isValid() )
     ((FolderRequester *)paramWidget)->setFolder( mFolder );
   else
     ((FolderRequester *)paramWidget)->setFolder( mFolderName );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
@@ -360,48 +356,33 @@ void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 
 const QString KMFilterActionWithFolder::argsAsString() const
 {
-#if 0
   QString result;
-  if ( mFolder )
-    result = mFolder->idString();
+  if ( mFolder.isValid() )
+    result = mFolder.id();
   else
     result = mFolderName;
   return result;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return QString();
-#endif
 }
 
 const QString KMFilterActionWithFolder::displayString() const
 {
-#if 0
   QString result;
-  if ( mFolder )
-    result = mFolder->prettyUrl();
+  if ( mFolder.isValid() )
+    result = mFolder.url().path();
   else
     result = mFolderName;
   return label() + " \"" + Qt::escape( result ) + "\"";
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return QString();
-#endif
 }
 
 bool KMFilterActionWithFolder::folderRemoved( const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder )
 {
-#if 0
   if ( aFolder == mFolder ) {
     mFolder = aNewFolder;
-    if ( aNewFolder )
-      mFolderName = mFolder->idString();
+    if ( aNewFolder.isValid() )
+      mFolderName = mFolder.id();
     return true;
   } else
     return false;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return false;
-#endif
 }
 
 //=============================================================================

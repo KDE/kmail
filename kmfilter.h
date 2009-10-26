@@ -32,7 +32,6 @@ namespace KMime {
   class Content;
 }
 class KMFilterAction;
-class KMFolder;
 
 // maximum number of filter actions per filter
 const int FILTER_MAX_ACTIONS = 8;
