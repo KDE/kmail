@@ -2389,10 +2389,8 @@ void KMMainWidget::slotToFilter()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
-  KMCommand *command = new KMFilterCommand( "To",  msg->to() );
+  KMCommand *command = new KMFilterCommand( "To",  msg->to()->asUnicodeString() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2406,18 +2404,16 @@ void KMMainWidget::updateListFilterAction()
     mListFilterAction->setEnabled( false );
     return;
   }
-#ifdef OLD_MESSAGELIST
 
   QByteArray name;
   QString value;
-  QString lname = MailingList::name( mMessagePane->currentMessage(), name, value );
+  QString lname = MailingList::name( &*msg, name, value );
   if ( lname.isNull() )
     mListFilterAction->setEnabled( false );
   else {
     mListFilterAction->setEnabled( true );
     mListFilterAction->setText( i18n( "Filter on Mailing-List %1...", lname ) );
   }
-#endif
 }
 
 
