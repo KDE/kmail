@@ -1358,11 +1358,7 @@ void KMMainWidget::slotShowNewFromTemplate()
   }
 
   if ( !mTemplateFolder.isValid() ) {
-#if 0
-    mTemplateFolder = kmkernel->templatesFolder();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    mTemplateFolder = kmkernel->templatesCollectionFolder();
   }
   if ( !mTemplateFolder.isValid() ) return;
 

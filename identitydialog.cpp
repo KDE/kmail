@@ -663,11 +663,7 @@ namespace KMail {
                                   "therefore, the default sent-mail folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-#if 0
-      mFccCombo->setFolder( kmkernel->sentFolder() );
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+      mFccCombo->setFolder( kmkernel->sentCollectionFolder() );
     }
     else {
       mFccCombo->setFolder( ident.fcc() );
@@ -679,11 +675,7 @@ namespace KMail {
                                   "therefore, the default drafts folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-#if 0
-      mDraftsCombo->setFolder( kmkernel->draftsFolder() );
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+      mDraftsCombo->setFolder( kmkernel->draftsCollectionFolder() );
     }
     else
       mDraftsCombo->setFolder( ident.drafts() );
@@ -694,11 +686,7 @@ namespace KMail {
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default templates folder "
                                   "will be used.", ident.identityName()) ) ) {
-#if 0
-      mTemplatesCombo->setFolder( kmkernel->templatesFolder() );
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+      mTemplatesCombo->setFolder( kmkernel->templatesCollectionFolder() );
 
     }
     else

@@ -330,11 +330,7 @@ void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 {
-#if 0
-  ((FolderRequester *)paramWidget)->setFolder( kmkernel->draftsFolder() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  ((FolderRequester *)paramWidget)->setFolder( kmkernel->draftsCollectionFolder() );
 }
 
 void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
