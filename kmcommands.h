@@ -714,16 +714,12 @@ public:
   KMCopyCommand( const Akonadi::Collection& destFolder, const Akonadi::Item &msg );
 
 protected slots:
-  void slotJobFinished( KMail::FolderJob *job );
-
-  void slotFolderComplete( KMFolderImap*, bool success );
-
+  void slotCopyResult( KJob * job );
 private:
   virtual Result execute();
 
   Akonadi::Collection mDestFolder;
   QList<Akonadi::Item> mMsgList;
-  QList<KMail::FolderJob*> mPendingJobs;
 };
 
 namespace KPIM {

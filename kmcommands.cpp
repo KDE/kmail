@@ -123,6 +123,7 @@ using KMail::TemplateParser;
 #include "interfaces/htmlwriter.h"
 
 #include <akonadi/itemmovejob.h>
+#include <akonadi/itemcopyjob.h>
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -2019,7 +2020,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 
 KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder,
                               const QList<Akonadi::Item> &msgList )
-:mDestFolder( destFolder ), mMsgList( msgList )
+  :mDestFolder( destFolder ), mMsgList( msgList )
 {
   setDeletesItself( true );
 }
@@ -2033,166 +2034,21 @@ KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder, const Akona
 
 KMCommand::Result KMCopyCommand::execute()
 {
-#if 0 //TODO port to akonadi
-  KMime::Message *msgBase;
-  KMime::Message *msg, *newMsg;
-  int idx = -1;
-  bool isMessage;
-  QList<KMime::Message*> list;
-  QList<KMime::Message*> localList;
+  Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsgList, mDestFolder,this );
+  connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
 
-  if ( mDestFolder && mDestFolder->open( "kmcommand" ) != 0 ) {
-    deleteLater();
-    return Failed;
-  }
-
-  setEmitsCompletedItself( true );
-  KCursorSaver busy(KBusyPtr::busy());
-
-  QList<KMime::Message*>::const_iterator it;
-  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it ) {
-    msgBase = (*it);
-    KMFolder *srcFolder = msgBase->parent();
-    isMessage = msgBase->isMessage();
-    if ( isMessage ) {
-      msg = static_cast<KMime::Message*>( msgBase );
-    } else {
-      idx = srcFolder->find( msgBase );
-      assert( idx != -1 );
-      msg = srcFolder->getMsg( idx );
-      // corrupt IMAP cache, see FolderStorage::getMsg()
-      if ( msg == 0 ) {
-        KMessageBox::error( parentWidget(),
-                            i18n( "Corrupt IMAP cache detected in folder %1. "
-                                  "Copying of messages aborted.",
-                                  srcFolder->prettyUrl() ) );
-        deleteLater();
-        return Failed;
-      }
-    }
-
-    if (srcFolder && mDestFolder &&
-        (srcFolder->folderType()== KMFolderTypeImap) &&
-        (mDestFolder->folderType() == KMFolderTypeImap) &&
-        (static_cast<KMFolderImap*>(srcFolder->storage())->account() ==
-         static_cast<KMFolderImap*>(mDestFolder->storage())->account()))
-    {
-      // imap => imap with same account
-      list.append(msg);
-    } else {
-      newMsg = new KMime::Message( new DwMessage( *msg->asDwMessage() ) );
-      newMsg->setComplete(msg->isComplete());
-      // make sure the attachment state is only calculated when it's complete
-      if (!newMsg->isComplete())
-        newMsg->setReadyToShow(false);
-      newMsg->setStatus( msg->messageStatus() );
-
-      if (srcFolder && !newMsg->isComplete())
-      {
-        // imap => others
-        newMsg->setParent(msg->parent());
-        FolderJob *job = srcFolder->createJob(newMsg);
-        job->setCancellable( false );
-        mPendingJobs << job;
-        connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
-                mDestFolder, SLOT(reallyAddCopyOfMsg(KMime::Message*)));
-        connect( job, SIGNAL(result(KMail::FolderJob*)),
-                 this, SLOT(slotJobFinished(KMail::FolderJob*)) );
-        job->start();
-      } else {
-        // local => others
-        localList.append(newMsg);
-      }
-    }
-
-    if (srcFolder && !isMessage && list.isEmpty())
-    {
-      assert(idx != -1);
-      srcFolder->unGetMsg( idx );
-    }
-
-  } // end for
-
-  bool deleteNow = false;
-  if ( !localList.isEmpty() && mDestFolder )
-  {
-    QList<int> index;
-    mDestFolder->addMessages( localList, index );
-    for ( QList<int>::Iterator it = index.begin(); it != index.end(); ++it ) {
-      mDestFolder->unGetMsg( *it );
-    }
-    if ( mDestFolder->folderType() == KMFolderTypeImap ) {
-      if ( mPendingJobs.isEmpty() ) {
-        // wait for the end of the copy before closing the folder
-        KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
-        connect( imapDestFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-            this, SLOT( slotFolderComplete( KMFolderImap*, bool ) ) );
-      }
-    } else {
-      deleteNow = list.isEmpty() && mPendingJobs.isEmpty(); // we're done if there are no other mails we need to fetch
-    }
-  }
-
-//TODO: Get rid of the other cases just use this one for all types of folder
-//TODO: requires adding copyMsg and getFolder methods to KMFolder.h
-  if ( !list.isEmpty() && mDestFolder )
-  {
-    // copy the message(s); note: the list is empty afterwards!
-    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
-    connect( imapDestFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-        this, SLOT( slotFolderComplete( KMFolderImap*, bool ) ) );
-    imapDestFolder->copyMsg(list);
-    imapDestFolder->getFolder();
-  }
-
-  // only close the folder and delete the job if we're done
-  // otherwise this is done in slotMsgAdded or slotFolderComplete
-  if ( deleteNow ) {
-    if ( mDestFolder )
-      mDestFolder->close( "kmcommand" );
-    setResult( OK );
-    emit completed( this );
-    deleteLater();
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 
-void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
+void KMCopyCommand::slotCopyResult( KJob * job )
 {
-  mPendingJobs.removeAll( job );
   if ( job->error() ) {
-    kDebug() << "folder job failed:" << job->error();
-    // kill all pending jobs
-    for ( QList<KMail::FolderJob*>::Iterator it = mPendingJobs.begin(); it != mPendingJobs.end(); ++it ) {
-      disconnect( (*it), SIGNAL(result(KMail::FolderJob*)),
-                  this, SLOT(slotJobFinished(KMail::FolderJob*)) );
-      (*it)->kill();
-    }
-    mPendingJobs.clear();
+    // handle errors
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     setResult( Failed );
   }
-
-  if ( mPendingJobs.isEmpty() )
-  {
-    //mDestFolder->close( "kmcommand" );
-    emit completed( this );
-    deleteLater();
-  }
-}
-
-void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
-{
-  kDebug() << success;
-  if ( !success )
-    setResult( Failed );
-  //mDestFolder->close( "kmcommand" );
-  emit completed( this );
   deleteLater();
 }
-
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                                 const QList<Akonadi::Item> &msgList)
@@ -2226,7 +2082,7 @@ void KMMoveCommand::slotMoveResult( KJob * job )
 KMCommand::Result KMMoveCommand::execute()
 {
 
-  Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder );
+  Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder,this );
   connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
