@@ -2661,17 +2661,15 @@ void KMMainWidget::slotConfigChanged()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveMsg()
 {
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-#ifdef OLD_MESSAGELIST
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( this, selectedMessages );
 
   if ( saveCommand->url().isEmpty() )
     delete saveCommand;
   else
     saveCommand->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2685,14 +2683,12 @@ void KMMainWidget::slotOpenMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveAttachments()
 {
-  QList<KMime::Message::Ptr > selectedMessages = mMessagePane->selectionAsMessageList();
+  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-#ifdef OLD_MESSAGELIST
   KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand( this, selectedMessages );
 
   saveCommand->start();
-#endif
 }
 
 void KMMainWidget::slotOnlineStatus()
