@@ -779,7 +779,7 @@ class KMFilterActionSetStatus: public KMFilterActionWithStringList
 public:
   KMFilterActionSetStatus();
   virtual ReturnCode process(KMime::Message* msg) const;
-  virtual bool requiresBody(KMMsgBase*) const;
+  virtual bool requiresBody(KMime::Content*) const;
 
   static KMFilterAction* newAction();
 
@@ -848,7 +848,7 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMime::Message* msg)
   return GoOn;
 }
 
-bool KMFilterActionSetStatus::requiresBody(KMMsgBase*) const
+bool KMFilterActionSetStatus::requiresBody(KMime::Content*) const
 {
   return false;
 }
@@ -892,7 +892,7 @@ class KMFilterActionAddTag: public KMFilterActionWithStringList
 public:
   KMFilterActionAddTag();
   virtual ReturnCode process( KMime::Message* msg ) const;
-  virtual bool requiresBody( KMMsgBase* ) const;
+  virtual bool requiresBody( KMime::Content* ) const;
 
   static KMFilterAction* newAction();
 
@@ -948,7 +948,7 @@ KMFilterAction::ReturnCode KMFilterActionAddTag::process( KMime::Message* msg ) 
   return GoOn;
 }
 
-bool KMFilterActionAddTag::requiresBody( KMMsgBase* ) const
+bool KMFilterActionAddTag::requiresBody( KMime::Content* ) const
 {
   return false;
 }
@@ -1466,7 +1466,7 @@ class KMFilterActionMove: public KMFilterActionWithFolder
 public:
   KMFilterActionMove();
   virtual ReturnCode process(KMime::Message* msg) const;
-  virtual bool requiresBody(KMMsgBase*) const;
+  virtual bool requiresBody(KMime::Content*) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1503,7 +1503,7 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMime::Message* msg) cons
   return GoOn;
 }
 
-bool KMFilterActionMove::requiresBody(KMMsgBase*) const
+bool KMFilterActionMove::requiresBody(KMime::Content*) const
 {
     return false; //iff mFolder->folderMgr == msgBase->parent()->folderMgr;
 }
@@ -1519,7 +1519,7 @@ public:
   KMFilterActionCopy();
   virtual ReturnCode process(KMime::Message* msg) const;
   virtual void processAsync(KMime::Message* msg) const;
-  virtual bool requiresBody(KMMsgBase*) const;
+  virtual bool requiresBody(KMime::Content*) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1570,7 +1570,7 @@ void KMFilterActionCopy::processAsync( KMime::Message *msg ) const
 #endif
 }
 
-bool KMFilterActionCopy::requiresBody( KMMsgBase *msg ) const
+bool KMFilterActionCopy::requiresBody( KMime::Content *msg ) const
 {
   Q_UNUSED( msg );
   return true;
@@ -2000,7 +2000,7 @@ public:
   KMFilterActionExecSound();
   ~KMFilterActionExecSound();
   virtual ReturnCode process(KMime::Message* msg) const;
-  virtual bool requiresBody(KMMsgBase*) const;
+  virtual bool requiresBody(KMime::Content*) const;
   static KMFilterAction* newAction(void);
 private:
   mutable Phonon::MediaObject* mPlayer;
@@ -2083,7 +2083,7 @@ KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMime::Message*) con
   return GoOn;
 }
 
-bool KMFilterActionExecSound::requiresBody(KMMsgBase*) const
+bool KMFilterActionExecSound::requiresBody(KMime::Content*) const
 {
   return false;
 }
