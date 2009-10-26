@@ -314,10 +314,6 @@ public:
   KMFolder *templatesFolder() { return the_templatesFolder; }
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
-#if 0
-  KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
-  KMFolderMgr *dimapFolderMgr() { return the_dimapFolderMgr; }
-#endif
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
   UndoStack *undoStack() { return the_undoStack; }
   AccountManager *acctMgr() { return the_acctMgr; }

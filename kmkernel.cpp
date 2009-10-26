@@ -126,12 +126,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_templatesFolder = 0;
 
   the_folderMgr = 0;
-#if 0 //TODO port to akonadi
-  the_imapFolderMgr = 0;
-  the_dimapFolderMgr = 0;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   the_searchFolderMgr = 0;
   the_undoStack = 0;
   the_acctMgr = 0;
@@ -1048,12 +1042,6 @@ QStringList KMKernel::folderList() const
   const QString localPrefix = "/Local";
   folders << localPrefix;
   the_folderMgr->getFolderURLS( folders, localPrefix );
-#if 0 //TODO port to akonadi
-  the_imapFolderMgr->getFolderURLS( folders );
-  the_dimapFolderMgr->getFolderURLS( folders );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return folders;
 }
 
@@ -1065,14 +1053,6 @@ QString KMKernel::getFolder( const QString& vpath )
     adaptorName=vpath;
   else if ( vpath.startsWith( localPrefix ) && the_folderMgr->getFolderByURL( vpath.mid( localPrefix.length() ) ) )
     adaptorName=vpath.mid( localPrefix.length() );
-#if 0 //TODO port to akonadi
-  else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
-   adaptorName=vpath;
-  else if (the_dimapFolderMgr->getFolderByURL( vpath ) )
-   adaptorName=vpath;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if( !adaptorName.isEmpty())
   {
 #if 0 //TODO port to akonadi
@@ -1566,12 +1546,6 @@ void KMKernel::init()
 
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
-#if 0 //TODO port to akonadi
-  the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
-  the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
   if (lsf)
@@ -1607,14 +1581,6 @@ void KMKernel::init()
 
   connect( the_folderMgr, SIGNAL( folderRemoved(const Akonadi::Collection &) ),
            this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
-#if 0 //TODO port to akonadi
-  connect( the_dimapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
-  connect( the_imapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   connect( the_searchFolderMgr, SIGNAL( folderRemoved(const Akonadi::Collection&) ),
            this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
 
@@ -1848,14 +1814,6 @@ void KMKernel::cleanup(void)
 
   delete the_folderMgr;
   the_folderMgr = 0;
-#if 0 //TODO port to akonadi
-  delete the_imapFolderMgr;
-  the_imapFolderMgr = 0;
-  delete the_dimapFolderMgr;
-  the_dimapFolderMgr = 0;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   // Delete the_acctMgr here since it is used in the other *Mgrs above.
   delete the_acctMgr;
   the_acctMgr = 0;
@@ -2335,14 +2293,6 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   if ( generalGroup.readEntry( "auto-expiring", true ) ) {
     if ( the_folderMgr )
       the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-#if 0 //TODO port to akonadi
-    if ( the_imapFolderMgr )
-      the_imapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-    if ( the_dimapFolderMgr )
-      the_dimapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     // the_searchFolderMgr: no expiry there
   }
 
@@ -2350,13 +2300,6 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
     if ( the_folderMgr )
       the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
     // the_imapFolderMgr: no compaction
-#if 0 //TODO port to akonadi
-    if ( the_dimapFolderMgr )
-      the_dimapFolderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
-    // the_searchFolderMgr: no compaction
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
 
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
@@ -2380,36 +2323,16 @@ QList<Akonadi::Collection> KMKernel::allFoldersCollection()
 void KMKernel::expireAllFoldersNow() // called by the GUI
 {
   the_folderMgr->expireAllFolders( true /*immediate*/ );
-#if 0 //TODO port to akonadi
-  the_imapFolderMgr->expireAllFolders( true /*immediate*/ );
-  the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void KMKernel::compactAllFolders() // called by the GUI
 {
-#if 0 //TODO port to akonadi
   the_folderMgr->compactAllFolders( true /*immediate*/ );
-  //the_imapFolderMgr->compactAllFolders( true /*immediate*/ );
-  the_dimapFolderMgr->compactAllFolders( true /*immediate*/ );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 KMFolder* KMKernel::findFolderById( const QString& idString )
 {
   KMFolder * folder = the_folderMgr->findIdString( idString );
-#if 0 //TODO port to akonadi
-  if ( !folder )
-    folder = the_imapFolderMgr->findIdString( idString );
-  if ( !folder )
-    folder = the_dimapFolderMgr->findIdString( idString );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if ( !folder )
     folder = the_searchFolderMgr->findIdString( idString );
   return folder;
