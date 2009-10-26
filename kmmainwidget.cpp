@@ -178,6 +178,7 @@ using KMail::TemplateParser;
 #include "collectionaclpage.h"
 
 #include <akonadi/collectionpropertiesdialog.h>
+#include <akonadi/entitydisplayattribute.h>
 #include "kmmainwidget.moc"
 using namespace Akonadi;
 
@@ -4418,17 +4419,11 @@ void KMMainWidget::clearFilterActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFolderShortcutActions()
 {
-#if 0
-  QList< QPointer< KMFolder > > folders = kmkernel->allFolders();
-  QList< QPointer< KMFolder > >::Iterator it = folders.begin();
-  while ( it != folders.end() ) {
-    KMFolder *folder = (*it);
-    ++it;
-    slotShortcutChanged( folder ); // load the initial accel
+  QList<Akonadi::Collection> folders = kmkernel->allFoldersCollection();
+  for ( int i = 0 ; i < folders.size(); ++i ) {
+    Akonadi::Collection col = folders.at( i );
+    slotShortcutChanged( col );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4548,15 +4543,15 @@ void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
   //TODO reimplement it
   // remove the old one, no autodelete in Qt4
   slotFolderRemoved( col );
-#ifdef OLD_FOLDERVIEW
-  if ( folder->shortcut().isEmpty() )
+  FolderCollection fd( col );
+  if ( fd.shortcut().isEmpty() )
     return;
 
   FolderShortcutCommand *c = new FolderShortcutCommand( this, col );
-  mFolderShortcutCommands.insert( mCurrentFolder->id(), c );
+  mFolderShortcutCommands.insert( col.id(), c );
 
-  QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
-  QString actionname = i18n( "Folder Shortcut %1", folder->idString() );
+  QString actionlabel = i18n( "Folder Shortcut %1", col.name() );
+  QString actionname = i18n( "Folder Shortcut %1", fd.idString() );
   QString normalizedName = actionname.replace(' ', '_');
   KAction *action = actionCollection()->addAction( normalizedName );
   // The folder shortcut is set in the folder shortcut dialog.
@@ -4568,12 +4563,15 @@ void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
 #endif
   action->setText( actionlabel );
   connect( action, SIGNAL( triggered(bool) ), c, SLOT( start() ) );
-  action->setShortcuts( folder->shortcut() );
-  action->setIcon( folder->useCustomIcons() ?
-                   KIcon( folder->unreadIconPath() ) :
-                   KIcon( "folder" ) );
+  action->setShortcuts( fd.shortcut() );
+
+  KIcon icon( "folder" );
+  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
+       !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
+    icon = KIcon( col.attribute<Akonadi::EntityDisplayAttribute>()->iconName() );
+  }
+  action->setIcon( icon );
   c->setAction( action ); // will be deleted along with the command
-#endif
 }
 
 //-----------------------------------------------------------------------------
