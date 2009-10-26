@@ -2969,7 +2969,6 @@ void KMMainWidget::slotExtendSelectionToPreviousMessage()
 
 void KMMainWidget::slotSelectPreviousUnreadMessage()
 {
-  //TODO port it (laurent)
   if ( !mMessagePane->selectPreviousMessageItem(
       MessageList::Core::MessageTypeNewOrUnreadOnly,
       MessageList::Core::ClearExistingSelection,
@@ -3126,14 +3125,13 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
       delete menu;
       return;
     }
-#if 0 //port it
-    if ( mFolder->isTemplates() ) {
+    Akonadi::Collection parentCol = msg.parentCollection();
+    if ( parentCol.isValid() && KMKernel::self()->folderIsTemplates(parentCol)) {
       menu->addAction( mUseAction );
     } else {
       menu->addAction( mMsgActions->replyMenu() );
       menu->addAction( mMsgActions->forwardMenu() );
     }
-#endif
     menu->addAction(editAction());
     menu->addSeparator();
 
@@ -3156,13 +3154,11 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
     menu->addAction( mSaveAttachmentsAction );
 
     menu->addSeparator();
-#if 0 //Port it
-    if ( mFolder->isTrash() ) {
+    if ( parentCol.isValid() && KMKernel::self()->folderIsTrash(parentCol) ) {
       menu->addAction( mDeleteAction );
     } else {
       menu->addAction( mTrashAction );
     }
-#endif
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
   }
