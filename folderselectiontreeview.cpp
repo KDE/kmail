@@ -144,7 +144,8 @@ QModelIndex FolderSelectionTreeView::currentIndex() const
 Akonadi::Collection FolderSelectionTreeView::selectedCollection() const
 {
   if ( d->collectionFolderView->selectionMode() == QAbstractItemView::SingleSelection ) {
-    const QModelIndex index = d->collectionFolderView->currentIndex();
+    const QModelIndex selectedIndex = d->collectionFolderView->currentIndex();
+    QModelIndex index = selectedIndex.sibling( selectedIndex.row(), 0 );
     if ( index.isValid() )
       return index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
   }
