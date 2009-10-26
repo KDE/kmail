@@ -377,9 +377,7 @@ namespace KMail {
     private:
       QCheckBox * mPipeRules;
       QCheckBox * mMoveRules;
-#ifdef OLD_FOLDERVIEW
-      FolderSelectionTreeWidget *mFolderTree;
-#endif
+      FolderSelectionTreeView *mFolderTree;
       QCheckBox * mMarkRules;
   };
 
