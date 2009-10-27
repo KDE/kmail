@@ -228,6 +228,9 @@
   <action name="set_status"/>
   <action name="thread_status"/>
   <Separator/>
+  <action name="create_filter"/>
+  <action name="apply_filter_actions"/>
+  <Separator/>
   <Action name="copy_to"/>
   <Action name="file_print"/>
   <Action name="file_saveas"/>

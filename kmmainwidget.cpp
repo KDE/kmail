@@ -2367,16 +2367,14 @@ void KMMainWidget::slotFromFilter()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-#ifdef OLD_MESSAGELIST
 
-  AddrSpecList al = msg->extractAddrSpecs( "From" );
+  AddrSpecList al = KMail::MessageHelper::extractAddrSpecs(&*msg, "From" );
   KMCommand *command;
   if ( al.empty() )
-    command = new KMFilterCommand( "From",  msg->from() );
+    command = new KMFilterCommand( "From",  msg->from()->asUnicodeString() );
   else
     command = new KMFilterCommand( "From",  al.front().asString() );
   command->start();
-#endif
 }
 
 //-----------------------------------------------------------------------------
