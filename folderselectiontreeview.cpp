@@ -181,6 +181,13 @@ Akonadi::EntityTreeModel *FolderSelectionTreeView::entityModel()
 
 void FolderSelectionTreeView::readConfig()
 {
+  // Custom/System font support
+  KConfigGroup fontConfig( KMKernel::config(), "Fonts" );
+  if (!fontConfig.readEntry( "defaultFonts", true ) )
+    setFont( fontConfig.readEntry("folder-font", KGlobalSettings::generalFont() ) );
+  else
+    setFont( KGlobalSettings::generalFont() );
+
   KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   switch( checkedFolderToolTipsPolicy ){

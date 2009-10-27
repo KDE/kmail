@@ -777,7 +777,7 @@ void KMMainWidget::readConfig()
 #ifdef OLD_MESSAGELIST
     mMessageListView->reloadGlobalConfiguration();
 #endif
-
+    mCollectionFolderView->readConfig();
   }
 
   { // area for config group "General"
