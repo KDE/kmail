@@ -861,6 +861,7 @@ void KMMainWidget::deleteWidgets()
   mMsgView = 0;
   mSearchAndTree = 0;
   mFolderViewSplitter = 0;
+  mFavoriteCollectionsView = 0;
   mSplitter1 = 0;
   mSplitter2 = 0;
 }
@@ -1003,6 +1004,10 @@ void KMMainWidget::createWidgets()
   //
   // Create the favorite folder view
   //
+  mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
+  mAkonadiStandardActionManager->setCollectionSelectionModel( mCollectionFolderView->folderTreeView()->selectionModel() );
+  mAkonadiStandardActionManager->setItemSelectionModel(mCollectionFolderView->folderTreeView()->selectionModel() );
+
   if ( mEnableFavoriteFolderView ) {
 
     if ( bUseDockWidgets )
@@ -1018,14 +1023,8 @@ void KMMainWidget::createWidgets()
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mCollectionFolderView->entityModel(), KMKernel::config()->group( "FavoriteCollections" ), this );
     mFavoriteCollectionsView->setModel( favoritesModel );
 
-    mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
-    mAkonadiStandardActionManager->setCollectionSelectionModel( mCollectionFolderView->folderTreeView()->selectionModel() );
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
-    mAkonadiStandardActionManager->setItemSelectionModel(mCollectionFolderView->folderTreeView()->selectionModel() );
-
-    mAkonadiStandardActionManager->createAllActions();
-
 
     if ( bUseDockWidgets )
     {
@@ -1034,7 +1033,7 @@ void KMMainWidget::createWidgets()
     }
 
   }
-
+  mAkonadiStandardActionManager->createAllActions();
   //
   // Create all kinds of actions
   //
