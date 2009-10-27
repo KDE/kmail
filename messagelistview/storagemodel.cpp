@@ -153,7 +153,7 @@ StorageModel::StorageModel( KMFolder * folder, QObject * parent )
     mColorNewMessage = config.readEntry( "NewMessage", mColorNewMessage );
     mColorUnreadMessage = config.readEntry( "UnreadMessage", mColorUnreadMessage );
     mColorImportantMessage = config.readEntry( "FlagMessage", mColorImportantMessage );
-    mColorToDoMessage = config.readEntry( "TodoMessage", mColorToDoMessage );
+    mColorToDoMessage = config.readEntry( "ToActMessage", mColorToDoMessage );
   }
 
   if ( GlobalSettings::self()->useDefaultFonts() )
