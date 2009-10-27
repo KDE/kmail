@@ -24,4 +24,8 @@ Migrate color config
         list-new-font to NewMessageFont
         list-unread-font to UnreadMessageFont
         list-toact-font to TodoMessageFont
+=> from [MessageListView]
+        DisplayMessageToolTips to MessageToolTipEnabled
+        HideTabBarWithSingleTab to AutoHideTabBarWithSingleTab
+
 

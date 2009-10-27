@@ -1633,13 +1633,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );
 
-  mDisplayMessageToolTips = new QCheckBox( GlobalSettings::self()->displayMessageToolTipsItem()->label(), group );
+  mDisplayMessageToolTips = new QCheckBox( GlobalSettings::self()->messageToolTipEnabledItem()->label(), group );
   gvlay->addWidget( mDisplayMessageToolTips );
 
   connect( mDisplayMessageToolTips, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mHideTabBarWithSingleTab = new QCheckBox( GlobalSettings::self()->hideTabBarWithSingleTabItem()->label(), group );
+  mHideTabBarWithSingleTab = new QCheckBox( GlobalSettings::self()->autoHideTabBarWithSingleTabItem()->label(), group );
   gvlay->addWidget( mHideTabBarWithSingleTab );
 
   connect( mHideTabBarWithSingleTab, SIGNAL( stateChanged( int ) ),
@@ -1793,8 +1793,8 @@ void AppearancePage::HeadersTab::doLoadOther()
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   // "General Options":
-  mDisplayMessageToolTips->setChecked( GlobalSettings::self()->displayMessageToolTips() );
-  mHideTabBarWithSingleTab->setChecked( GlobalSettings::self()->hideTabBarWithSingleTab() );
+  mDisplayMessageToolTips->setChecked( GlobalSettings::self()->messageToolTipEnabled() );
+  mHideTabBarWithSingleTab->setChecked( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
 
   // "Aggregation":
   slotSelectDefaultAggregation();
@@ -1831,8 +1831,8 @@ void AppearancePage::HeadersTab::save()
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  GlobalSettings::self()->setDisplayMessageToolTips( mDisplayMessageToolTips->isChecked() );
-  GlobalSettings::self()->setHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
+  GlobalSettings::self()->setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
+  GlobalSettings::self()->setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
 
   // "Aggregation"
   mAggregationComboBox->writeDefaultConfig();
