@@ -3219,6 +3219,18 @@ void KMMessage::updateAttachmentState( DwBodyPart *partGiven )
           KMMsgBase::decodeRFC2231String( KMMsgBase::extractRFC2231HeaderField( cd.AsString().c_str(), "filename" ) ).isEmpty();
       }
     }
+
+    // Filename still empty? Check if the content-type has a "name" parameter and try to use that as
+    // the attachment name
+    if ( filenameEmpty && part->Headers().HasContentType() ) {
+      DwMediaType contentType = part->Headers().ContentType();
+      filenameEmpty = contentType.Name().empty();
+      if ( filenameEmpty ) {
+        // let's try if it is rfc 2231 encoded which mimelib can't handle
+        filenameEmpty = KMMsgBase::decodeRFC2231String( KMMsgBase::extractRFC2231HeaderField(
+            contentType.AsString().c_str(), "name" ) ).isEmpty();
+      }
+    }
   }
 
   if ( part->hasHeaders() &&
