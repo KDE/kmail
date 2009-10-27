@@ -114,7 +114,7 @@ namespace KMail {
       "glaurent@telegraph-road.org", 0 },
     { "Sam Magnuson", 0,
       "sam@trolltech.com", 0 },
-    { "Laurent Montel", 0,
+    { "Laurent Montel", I18N_NOOP( "Akonadi porting" ),
       "montel@kde.org", 0 },
     { "Matt Newell", 0,
       "newellm@proaxis.com", 0 },

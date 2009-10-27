@@ -227,10 +227,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
-  mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
-
-  connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
-  connect( mCollectionFolderView->monitorFolders(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
+  mCollectionFolderView = 0;
 
   CollectionPropertiesDialog::useDefaultPage( false );
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
@@ -877,6 +874,10 @@ void KMMainWidget::createWidgets()
   //
   // Create header view and search bar
   //
+  mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
+
+  connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
+  connect( mCollectionFolderView->monitorFolders(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
 
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
