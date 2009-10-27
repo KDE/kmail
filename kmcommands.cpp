@@ -1438,27 +1438,26 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
-#if 0 //TODO port to akonadi
   QList<Akonadi::Item> msgList = retrievedMsgs();
   KMime::Message *fwdMsg = new KMime::Message;
 
   if (msgList.count() >= 2) {
     // don't respect X-KMail-Identity headers because they might differ for
     // the selected mails
-    fwdMsg->initHeader(mIdentity);
+    KMail::MessageHelper::initHeader(fwdMsg, mIdentity);
   }
   else if (msgList.count() == 1) {
-    KMime::Message *msg = msgList.first();
-    fwdMsg->initFromMessage(msg);
-    fwdMsg->setSubject( msg->forwardSubject() );
+    Akonadi::Item item = msgList.first();
+    KMime::Message *msg = message( item );
+    KMail::MessageHelper::initFromMessage(fwdMsg, msg);
+    fwdMsg->subject()->fromUnicodeString(  KMail::MessageHelper::forwardSubject(msg),"utf-8" );
+    delete msg;
   }
-
-  fwdMsg->setAutomaticFields(true);
-
+  KMail::MessageHelper::setAutomaticFields(fwdMsg, true);
   KCursorSaver busy(KBusyPtr::busy());
   if (!mWin)
     mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
-
+#if 0
   // iterate through all the messages to be forwarded
   KMime::Message *msg;
   foreach ( msg, msgList ) {
@@ -1481,10 +1480,10 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     mWin->addAttach( msgPart );
   }
 
-  mWin->show();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  mWin->show();
   return OK;
 }
 
