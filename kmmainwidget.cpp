@@ -1963,26 +1963,22 @@ void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotDeleteMsg( bool confirmDelete )
 {
-#ifdef OLD_MESSAGELIST
   // Create a persistent message set from the current selection
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromSelection();
-  if ( !set ) // no selection
+  QList<Akonadi::Item> select = mMessagePane->selectionAsMessageItemList();
+  if ( select.isEmpty() ) // no selection
     return;
 
-  moveMessageSet( set, 0, confirmDelete );
-#endif
+  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
 }
 
 void KMMainWidget::slotDeleteThread( bool confirmDelete )
 {
-#ifdef OLD_MESSAGELIST
   // Create a persistent set from the current thread.
-  KMail::MessageListView::MessageSet * set = mMessageListView->createMessageSetFromCurrentThread();
-  if ( !set ) // no current thread
+  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
+  if ( select.isEmpty() ) // no current thread
     return;
 
-  moveMessageSet( set, 0, confirmDelete );
-#endif
+  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
 }
 
 

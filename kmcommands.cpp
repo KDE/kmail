@@ -750,8 +750,8 @@ KMCommand::Result KMUseTemplateCommand::execute()
 {
 #if 0 //TODO port to akonadi
   Akonadi::Item msg = retrievedMessage();
-  if ( !msg || !msg->parent() ||
-       !kmkernel->folderIsTemplates( msg->parent() ) ) {
+  if ( !msg.isValid() || !msg.parentCollection().isValid() ||
+       !kmkernel->folderIsTemplates( msg.parentCollection() ) ) {
     return Failed;
   }
 
@@ -1284,7 +1284,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
 KMCommand::Result KMForwardCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  QList<KMime::Message*> msgList = retrievedMsgs();
+  QList<Akonadi::Item> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) {
     // ask if they want a mime digest forward
@@ -1439,7 +1439,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
 #if 0 //TODO port to akonadi
-  QList<KMime::Message*> msgList = retrievedMsgs();
+  QList<Akonadi::Item> msgList = retrievedMsgs();
   KMime::Message *fwdMsg = new KMime::Message;
 
   if (msgList.count() >= 2) {
@@ -1606,11 +1606,10 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
 
 KMCommand::Result KMCustomForwardCommand::execute()
 {
-#if 0 //TODO port to akonadi
   QList<Akonadi::Item> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) { // Multiple forward
-
+#if 0
     uint id = 0;
     // QCString msgText = "";
     QList<Akonadi::Item*> linklist;
@@ -1646,30 +1645,35 @@ KMCommand::Result KMCustomForwardCommand::execute()
                                                  QString(), mTemplate );
     win->setCharset("");
     win->show();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   } else { // forward a single message at most
 
-    KMime::Message *msg = msgList.first();
-    if ( !msg || !msg->codec() ) {
+    Akonadi::Item item = msgList.first();
+    if ( !item.isValid() /*|| !msg->codec() Port to akonadi*/ ) {
       return Failed;
     }
-
+    KMime::Message *msg = message( item );
     KCursorSaver busy( KBusyPtr::busy() );
-    KMime::Message *fwdMsg = msg->createForward( mTemplate );
+    KMime::Message *fwdMsg = KMail::MessageHelper::createForward(  msg, mTemplate );
 
-    uint id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
+    uint id = 0;
+    QString strId = msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed() : "";
+    if ( !strId.isEmpty())
+      id = strId.toUInt();
     if ( id == 0 )
       id = mIdentity;
     {
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                    QString(), mTemplate );
+#if 0
       win->setCharset( fwdMsg->codec()->name(), true );
+#endif
       win->show();
     }
+    delete msg;
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 
@@ -2078,10 +2082,13 @@ void KMMoveCommand::slotMoveResult( KJob * job )
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     setResult( Failed );
   }
+  deleteLater();
 }
 
 KMCommand::Result KMMoveCommand::execute()
 {
+  setEmitsCompletedItself( true );
+  setDeletesItself( true );
 
   Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder,this );
   connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
