@@ -1316,10 +1316,10 @@ static const struct {
   { "LinkColor", I18N_NOOP("Link") },
   { "FollowedColor", I18N_NOOP("Followed Link") },
   { "MisspelledColor", I18N_NOOP("Misspelled Words") },
-  { "NewMessage", I18N_NOOP("New Message") },
-  { "UnreadMessage", I18N_NOOP("Unread Message") },
-  { "FlagMessage", I18N_NOOP("Important Message") },
-  { "ToActMessage", I18N_NOOP("Action Item Message") },
+  { "NewMessageColor", I18N_NOOP("New Message") },
+  { "UnreadMessageColor", I18N_NOOP("Unread Message") },
+  { "ImportantMessageColor", I18N_NOOP("Important Message") },
+  { "TodoMessageColor", I18N_NOOP("Action Item Message") },
   { "PGPMessageEncr", I18N_NOOP("OpenPGP Message - Encrypted") },
   { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP Message - Valid Signature with Trusted Key") },
   { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP Message - Valid Signature with Untrusted Key") },
@@ -1398,6 +1398,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
 void AppearancePage::ColorsTab::doLoadOther()
 {
   KConfigGroup reader( KMKernel::config(), "Reader" );
+  KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
 
   mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", true ) );
   mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
@@ -1429,8 +1430,15 @@ void AppearancePage::ColorsTab::doLoadOther()
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
-    mColorList->setColor( i,
-      reader.readEntry( colorNames[i].configName, defaultColor[i] ));
+    QString configName = colorNames[i].configName;
+    if ( configName == "NewMessageColor" ||
+         configName == "UnreadMessageColor" ||
+         configName == "ImportantMessageColor" ||
+         configName == "TodoMessageColor" ) {
+      mColorList->setColor( i, messageListView.readEntry( configName, defaultColor[i] ));
+    }
+    else
+      mColorList->setColor( i,reader.readEntry( configName, defaultColor[i] ));
   }
   connect( mColorList, SIGNAL( changed( ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1439,16 +1447,28 @@ void AppearancePage::ColorsTab::doLoadOther()
 void AppearancePage::ColorsTab::save()
 {
   KConfigGroup reader( KMKernel::config(), "Reader" );
-
+  KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
   bool customColors = mCustomColorCheck->isChecked();
   GlobalSettings::self()->setUseDefaultColors( !customColors );
 
-  for ( int i = 0 ; i < numColorNames ; i++ )
+  messageListView.writeEntry( "defaultColors", !customColors );
+
+  for ( int i = 0 ; i < numColorNames ; i++ ) {
     // Don't write color info when we use default colors, but write
     // if it's already there:
-    if ( customColors || reader.hasKey( colorNames[i].configName ) )
-      reader.writeEntry( colorNames[i].configName, mColorList->color(i) );
+    QString configName = colorNames[i].configName;
+    if ( configName == "NewMessageColor" ||
+         configName == "UnreadMessageColor" ||
+         configName == "ImportantMessageColor" ||
+         configName == "TodoMessageColor" ) {
+      if ( customColors || messageListView.hasKey( configName ) )
+        messageListView.writeEntry( configName, mColorList->color(i) );
 
+    } else {
+      if ( customColors || reader.hasKey( configName ) )
+        reader.writeEntry( configName, mColorList->color(i) );
+    }
+  }
   reader.writeEntry( "RecycleQuoteColors", mRecycleColorCheck->isChecked() );
   GlobalSettings::self()->setCloseToQuotaThreshold( mCloseToQuotaThreshold->value() );
 }
