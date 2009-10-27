@@ -1795,10 +1795,21 @@ void KMSetStatusCommand::slotItemFetchDone( KJob* job)
   }
   Akonadi::Item item = fjob->items().first();
   // Set a custom flag
-  item.setFlags( mStatus.getStatusFlags() );
-  // Store back modified item
-  Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
-  connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
+  MessageStatus itemStatus;
+  itemStatus.setStatusFromFlags( item.flags() );
+
+  MessageStatus oldStatus = itemStatus;
+  if ( mToggle ) {
+    itemStatus.toggle( mStatus );
+  } else {
+    itemStatus.set( mStatus );
+  }
+  /*if ( itemStatus != oldStatus )*/ {
+      item.setFlags( itemStatus.getStatusFlags() );
+      // Store back modified item
+      Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
+      connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
+  }
 }
 
 void KMSetStatusCommand::slotModifyItemDone( KJob * job )
