@@ -915,8 +915,10 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       toStr = headerField( "Mail-Followup-To" );
     }
     else if ( !replyToStr.isEmpty() ) {
-      // assume a Reply-To header mangling mailing list
       toStr = replyToStr;
+      // use the ReplyAll template only when it's a reply to a mailing list
+      if ( mailingListAddresses.isEmpty() )
+        replyAll = false;
     }
     else if ( !mailingListAddresses.isEmpty() ) {
       toStr = mailingListAddresses[0];
