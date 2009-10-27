@@ -9,3 +9,19 @@ Migrate some config to akonadi:
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
 We use now Collection::Id(); and not idString();
 Port shortcut
+
+
+Migrate color config
+=> from [Reader] to [MessageListView::Colors]
+        NewMessage  to NewMessageColor
+        UnreadMessage to UnreadMessageColor
+        Important to ImportantMessageColor
+        TodoMessage to TodoMessageColor
+
+=> from [Reader] to [MessageListView::Fonts]
+        list-font to MessageListFont
+        list-important-font to ImportantMessageFont
+        list-new-font to NewMessageFont
+        list-unread-font to UnreadMessageFont
+        list-toact-font to TodoMessageFont
+
