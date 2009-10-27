@@ -2900,33 +2900,16 @@ KMCommand::Result KMResendMessageCommand::execute()
   }
   KMime::Message *msg = message( item );
 #if 0
-  KMime::Message *newMsg = new KMime::Message( *msg );
   newMsg->setCharset( msg->codec()->name() );
-  // the message needs a new Message-Id
-  newMsg->removeHeader( "Message-Id" );
-  newMsg->setParent( 0 );
-  // Remember the identity for the message before removing the headers which
-  // store the identity information.
-  uint originalIdentity = newMsg->identityUoid();
+#endif
 
-  // Remove all unnecessary headers
-  QStringList whiteList;
-  whiteList << "To" << "Cc" << "Bcc" << "Subject";
-  newMsg->sanitizeHeaders( whiteList );
-
-  // Set the identity from above
-  newMsg->setHeaderField( "X-KMail-Identity", QString::number( originalIdentity ) );
-  newMsg->applyIdentity( originalIdentity );
-
-  // Restore the original bcc field as this is overwritten in applyIdentity
-  newMsg->setBcc( msg->bcc() );
-
+  KMime::Message *newMsg = KMail::MessageHelper::createResend( msg );
+  kDebug()<<" newMsg :"<<newMsg->encodedContent();
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
+  delete msg;
   return OK;
 }
 

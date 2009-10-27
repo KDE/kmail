@@ -47,7 +47,7 @@ namespace MessageHelper {
     if they are not set manually. E.g. before composing. Calling
     of setAutomaticFields(), see below, is still required. */
   void initHeader( KMime::Message* message, uint id = 0 );
-  
+
   /** Set the from, to, cc, bcc, encrytion etc headers as specified in the
   * given identity. */
   void applyIdentity(KMime::Message* message,  uint id );
@@ -72,7 +72,7 @@ namespace MessageHelper {
                           const QString &selection=QString(), bool noQuote=false,
                           bool allowDecryption=true, bool selectionIsBody=false,
                           const QString &tmpl = QString() );
-                          
+
 
   /**
    * Create a new message that is a reply to this message, filling all
@@ -101,6 +101,8 @@ namespace MessageHelper {
     the email address of the original sender
    */
   KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr );
+
+  KMime::Message* createResend( KMime::Message *origMsg );
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
@@ -215,7 +217,7 @@ namespace MessageHelper {
 				 bool* keywordFound=0);
 
 }
-  
+
 }
 
 #endif

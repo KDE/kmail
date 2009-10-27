@@ -248,7 +248,7 @@ KMime::Message* createReply( KMime::Message *origMsg,
   msg->contentType()->setCharset("utf-8");
 
   /** TODO port it to KMime parent() is the parent folder of origMsg
-  
+
   // determine the mailing list posting address
   if ( parent() && parent()->isMailingListEnabled() &&
        !parent()->mailingListPostAddress().isEmpty() ) {
@@ -745,6 +745,29 @@ KMime::Message* createForward( KMime::Message *origMsg, const QString &tmpl /* =
   return msg;
 }
 
+
+KMime::Message * createResend( KMime::Message *origMsg )
+{
+  KMime::Message *msg = new KMime::Message;
+  initFromMessage( msg, origMsg);
+  msg->setContent( origMsg->encodedContent() );
+  msg->removeHeader( "Message-Id" );
+  uint originalIdentity = identityUoid( origMsg);
+
+  // Remove all unnecessary headers
+  msg->removeHeader("Bcc");
+  msg->removeHeader( "Cc" );
+  msg->removeHeader( "To" );
+  msg->removeHeader( "Subject" );
+  // Set the identity from above
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg, QString::number( originalIdentity ), "utf-8" );
+  msg->setHeader( header );
+
+  // Restore the original bcc field as this is overwritten in applyIdentity
+  msg->bcc( origMsg->bcc() );
+  return msg;
+}
+
 KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr )
 {
   // copy the message 1:1
@@ -814,7 +837,7 @@ void initFromMessage(KMime::Message *msg, KMime::Message *origMsg, bool idHeader
     KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg, origMsg->headerByType("X-KMail-Transport")->asUnicodeString(), "utf-8" );
     msg->setHeader( header );
   }
-}    
+}
 
 KMime::Types::AddrSpecList extractAddrSpecs( KMime::Message* msg, const QByteArray & header )
 {
@@ -1069,7 +1092,7 @@ KMime::Message* createMDN( KMime::Message *msg,
   receipt->removeHeader("Content-Transfer-Encoding");
   // Modify the ContentType directly (replaces setAutomaticFields(true))
   receipt->contentType()->setParameter( "report-type", "disposition-notification" );
-  
+
 
   QString description = replaceHeadersInString( msg, KMime::MDN::descriptionFor( d, m ) );
 
@@ -1245,7 +1268,7 @@ QString skipKeyword( const QString& aStr, QChar sepChar,
 
   while (str[0] == ' ') str.remove(0,1);
   if (hasKeyword) *hasKeyword=false;
-  
+
   unsigned int i = 0, maxChars = 3;
   unsigned int strLength(str.length());
   for (i=0; i < strLength && i < maxChars; i++)
@@ -1266,5 +1289,5 @@ QString skipKeyword( const QString& aStr, QChar sepChar,
 
 
 }
-  
+
 }
