@@ -226,13 +226,13 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool writeConfi
 
     if ( isSystemFolder() && folderType() != KMFolderTypeImap ) {
       // local system folders
-      if ( this == kmkernel->inboxFolder() ||
-           this == kmkernel->trashFolder() )
+      if ( mCollection == kmkernel->inboxCollectionFolder() ||
+           mCollection == kmkernel->trashCollectionFolder() )
         mWhoField = "From";
-      if ( this == kmkernel->outboxFolder() ||
-           this == kmkernel->sentFolder() ||
-           this == kmkernel->templatesFolder() ||
-           this == kmkernel->draftsFolder() )
+      if ( mCollection == kmkernel->outboxCollectionFolder() ||
+           mCollection == kmkernel->sentCollectionFolder() ||
+           mCollection == kmkernel->templatesCollectionFolder() ||
+           mCollection == kmkernel->draftsCollectionFolder() )
         mWhoField = "To";
     } else if ( identity.drafts() == idString() ||
                 identity.templates() == idString() ||

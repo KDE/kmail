@@ -152,7 +152,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMail::MessageActions *messageActions() const { return mMsgActions; }
 
     KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
-    KActionMenu *moveActionMenu() const{ return mMoveActionMenu; }
+    KAction *moveActionMenu() const{ return mMoveActionMenu; }
     KAction *mopyActionMenu() const { return mCopyActionMenu; }
     KActionMenu *applyFilterActionsMenu() const { return mApplyFilterActionsMenu; }
 
@@ -557,9 +557,9 @@ private:
     KActionMenu *mTemplateMenu;
     CustomTemplatesMenu *mCustomTemplateMenus;
 
-    KActionMenu *mThreadStatusMenu,
-      *mMoveActionMenu, *mApplyFilterActionsMenu;
+    KActionMenu *mThreadStatusMenu, *mApplyFilterActionsMenu;
     KAction *mCopyActionMenu;
+    KAction *mMoveActionMenu;
     KAction *mMarkThreadAsNewAction;
     KAction *mMarkThreadAsReadAction;
     KAction *mMarkThreadAsUnreadAction;

@@ -3597,10 +3597,7 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("file_save_attachments", mSaveAttachmentsAction );
   connect(mSaveAttachmentsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveAttachments()));
 
-  //TODO use akonadi action
-  mMoveActionMenu =
-    new KActionMenu( KIcon( "go-jump" ), i18n( "&Move To" ), this );
-  actionCollection()->addAction( "move_to", mMoveActionMenu );
+  mMoveActionMenu = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::MoveItemToMenu);
 
   mCopyActionMenu = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItemToMenu);
 

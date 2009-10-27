@@ -1457,18 +1457,21 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   if (!mWin)
     mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
-#if 0
   // iterate through all the messages to be forwarded
-  KMime::Message *msg;
-  foreach ( msg, msgList ) {
+  Akonadi::Item itemMsg;
+  foreach ( itemMsg, msgList ) {
+    KMime::Message *msg = message( itemMsg );
     // remove headers that shouldn't be forwarded
-    msg->removePrivateHeaderFields();
-    msg->removeHeaderField("BCC");
+    KMail::MessageHelper::removePrivateHeaderFields(msg);
+    msg->removeHeader("BCC");
     // set the part
-    KMime::MessagePart *msgPart = new KMime::MessagePart;
-    msgPart->setTypeStr("message");
-    msgPart->setSubtypeStr("rfc822");
+    KMime::Content *msgPart = new KMime::Content( msg );
+    msgPart->contentType()->setMimeType( "message/rfc822" );
+#if 0
     msgPart->setCharset(msg->charset());
+#endif
+
+#if 0
     msgPart->setName("forwarded message");
     msgPart->setContentDescription(msg->from()+": "+msg->subject());
     msgPart->setContentDisposition( "inline" );
@@ -1477,12 +1480,12 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->setCharset( "" );
 
     fwdMsg->link( msg, MessageStatus::statusForwarded() );
-    mWin->addAttach( msgPart );
-  }
-
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+    mWin->addAttach( msgPart );
+  }
+
   mWin->show();
   return OK;
 }
@@ -2439,12 +2442,10 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QList<partN
                                                     const Akonadi::Item &msg, bool encoded )
   : KMCommand( parent ), mImplicitAttachments( false ), mEncoded( encoded )
 {
-#if 0
   QList<partNode*>::const_iterator it;
   for ( it = attachments.constBegin(); it != attachments.constEnd(); ++it ) {
     mAttachmentMap.insert( (*it), msg );
   }
-#endif
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
@@ -2802,15 +2803,13 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
 KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, const Akonadi::Item &msg )
   : mNeedsRetrieval( 0 )
 {
-#if 0
   QList<partNode*>::const_iterator it;
   for ( it = parts.constBegin(); it != parts.constEnd(); ++it ) {
     mPartMap.insert( (*it), msg );
   }
-#endif
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, KMime::Message *msg )
+KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, const Akonadi::Item &msg )
   : mNeedsRetrieval( 0 )
 {
   mPartMap.insert( node, msg );

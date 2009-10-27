@@ -40,7 +40,7 @@ namespace KMail {
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
 
-typedef QMap<partNode*, KMime::Message*> PartNodeMessageMap;
+typedef QMap<partNode*, Akonadi::Item> PartNodeMessageMap;
   /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
 
 class KMAIL_EXPORT KMCommand : public QObject
@@ -797,7 +797,7 @@ class KMAIL_EXPORT KMLoadPartsCommand : public KMCommand
 
 public:
   KMLoadPartsCommand( QList<partNode*>& parts, const Akonadi::Item & msg );
-  KMLoadPartsCommand( partNode* node, KMime::Message* msg );
+  KMLoadPartsCommand( partNode* node, const Akonadi::Item& msg );
   KMLoadPartsCommand( PartNodeMessageMap& partMap );
 
 public slots:
