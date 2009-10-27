@@ -1155,11 +1155,11 @@ static const struct {
   bool   onlyFixed;
 } fontNames[] = {
   { "body-font", I18N_NOOP("Message Body"), true, false },
-  { "list-font", I18N_NOOP("Message List"), true, false },
-  { "list-new-font", I18N_NOOP("Message List - New Messages"), true, false },
-  { "list-unread-font", I18N_NOOP("Message List - Unread Messages"), true, false },
-  { "list-important-font", I18N_NOOP("Message List - Important Messages"), true, false },
-  { "list-toact-font", I18N_NOOP("Message List - Action Item Messages"), true, false },
+  { "MessageListFont", I18N_NOOP("Message List"), true, false },
+  { "NewMessageFont", I18N_NOOP("Message List - New Messages"), true, false },
+  { "UnreadMessageFont", I18N_NOOP("Message List - Unread Messages"), true, false },
+  { "ImportantMessageFont", I18N_NOOP("Message List - Important Messages"), true, false },
+  { "TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), true, false },
   { "folder-font", I18N_NOOP("Folder List"), true, false },
   { "quote1-font", I18N_NOOP("Quoted Text - First Level"), false, false },
   { "quote2-font", I18N_NOOP("Quoted Text - Second Level"), false, false },
@@ -1271,13 +1271,25 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 void AppearancePage::FontsTab::doLoadOther()
 {
   KConfigGroup fonts( KMKernel::config(), "Fonts" );
+  KConfigGroup messagelistFont( KMKernel::config(), "MessageListView::Fonts" );
 
   mFont[0] = KGlobalSettings::generalFont();
   QFont fixedFont = KGlobalSettings::fixedFont();
-  for ( int i = 0 ; i < numFontNames ; i++ )
-    mFont[i] = fonts.readEntry( fontNames[i].configName,
-      (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
 
+  for ( int i = 0 ; i < numFontNames ; i++ ) {
+    QString configName = fontNames[i].configName;
+    if ( configName == "MessageListFont" ||
+         configName == "NewMessageFont" ||
+         configName == "UnreadMessageFont" ||
+         configName == "ImportantMessageFont" ||
+         configName == "TodoMessageFont" ) {
+      mFont[i] = messagelistFont.readEntry( configName,
+                                            (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
+    } else {
+      mFont[i] = fonts.readEntry( configName,
+                                  (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
+    }
+  }
   mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentIndex( 0 );
   slotFontSelectorChanged( 0 );
@@ -1286,6 +1298,7 @@ void AppearancePage::FontsTab::doLoadOther()
 void AppearancePage::FontsTab::save()
 {
   KConfigGroup fonts( KMKernel::config(), "Fonts" );
+  KConfigGroup messagelistFont( KMKernel::config(), "MessageListView::Fonts" );
 
   // read the current font (might have been modified)
   if ( mActiveFontIndex >= 0 )
@@ -1293,11 +1306,27 @@ void AppearancePage::FontsTab::save()
 
   bool customFonts = mCustomFontCheck->isChecked();
   fonts.writeEntry( "defaultFonts", !customFonts );
-  for ( int i = 0 ; i < numFontNames ; i++ )
-    if ( customFonts || fonts.hasKey( fontNames[i].configName ) )
-      // Don't write font info when we use default fonts, but write
-      // if it's already there:
-      fonts.writeEntry( fontNames[i].configName, mFont[i] );
+  messagelistFont.writeEntry( "defaultFonts", !customFonts );
+
+  for ( int i = 0 ; i < numFontNames ; i++ ) {
+    QString configName = fontNames[i].configName;
+    if ( configName == "MessageListFont" ||
+         configName == "NewMessageFont" ||
+         configName == "UnreadMessageFont" ||
+         configName == "ImportantMessageFont" ||
+         configName == "TodoMessageFont" ) {
+      if ( customFonts || messagelistFont.hasKey( configName ) ) {
+        // Don't write font info when we use default fonts, but write
+        // if it's already there:
+        messagelistFont.writeEntry( configName, mFont[i] );
+      }
+    } else {
+      if ( customFonts || fonts.hasKey( configName ) )
+        // Don't write font info when we use default fonts, but write
+        // if it's already there:
+        fonts.writeEntry( configName, mFont[i] );
+    }
+  }
 }
 
 QString AppearancePage::ColorsTab::helpAnchor() const
