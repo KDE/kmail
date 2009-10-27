@@ -597,7 +597,7 @@ private:
 
   MessageStatus mStatus;
   QList<quint32> mSerNums;
-  QList<int> mIds;
+  int messageStatusChanged;
   bool mToggle;
 };
 

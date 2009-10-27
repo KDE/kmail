@@ -1725,7 +1725,7 @@ KMCommand::Result KMPrintCommand::execute()
 
 KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
   const QList<quint32> &serNums, bool toggle )
-  : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
+  : mStatus( status ), mSerNums( serNums ), mToggle( toggle ), messageStatusChanged( 0 )
 {
   setDeletesItself(true);
 }
@@ -1765,7 +1765,6 @@ KMCommand::Result KMSetStatusCommand::execute()
     }
     itemMap.append( *it );
   }
-  kDebug()<<" itemMap.size() :"<<itemMap.size();
 
   for ( int i = 0; i < itemMap.size(); ++i ) {
     Akonadi::ItemFetchJob *fetchJob = new Akonadi::ItemFetchJob( Akonadi::Item( itemMap[i] ),this );
@@ -1773,14 +1772,6 @@ KMCommand::Result KMSetStatusCommand::execute()
     fetchJob->start();
   }
 
-
-#if 0 //TODO port to akonadi
-  QDBusMessage message =
-    QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
-  QDBusConnection::sessionBus().send( message );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 
@@ -1811,7 +1802,13 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
   if ( job->error() ) {
     kDebug()<<" Error in void KMSetStatusCommand::slotModifyItemDone( KJob * job ) :"<<job->errorText();
   }
-  deleteLater();
+  messageStatusChanged++;
+  if ( messageStatusChanged == mSerNums.size() ) {
+    QDBusMessage message =
+      QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
+    QDBusConnection::sessionBus().send( message );
+    deleteLater();
+  }
 }
 
 KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
