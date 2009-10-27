@@ -106,11 +106,7 @@ void FolderRequester::setFolder( const Akonadi::Collection&col )
 {
   mCollection = col;
   if ( mCollection.isValid() ) {
-#if 0 //TODO port it
-    edit->setText( mFolder->prettyUrl() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    edit->setText( col.name() );
     mFolderId = QString::number( mCollection.id() );
   }
   else if ( !mMustBeReadWrite ) // the Local Folders root node was selected

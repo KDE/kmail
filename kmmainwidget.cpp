@@ -785,7 +785,7 @@ void KMMainWidget::readConfig()
     mBeepOnNew = group.readEntry( "beep-on-mail", false );
     mConfirmEmpty = group.readEntry( "confirm-before-empty", true );
     // startup-Folder, defaults to system-inbox
-    mStartupFolder = group.readEntry( "startupFolder", kmkernel->inboxFolder()->idString() );
+    mStartupFolder = group.readEntry( "startupFolder", QString::number( kmkernel->inboxCollectionFolder().id() ) );
     if ( !mStartupDone )
     {
       // check mail on startup
@@ -1264,21 +1264,20 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   keys.sort();
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
 //    kDebug() << newInFolder.find( *it ).value() << "new message(s) in" << *it;
-#if 0
-    KMFolder *folder = kmkernel->findFolderById( *it );
+    Akonadi::Collection col = kmkernel->findFolderCollectionById( *it );
 
-    if ( folder && !folder->ignoreNewMail() ) {
-      showNotification = true;
-      if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-        summary += "<br>" + i18np( "1 new message in %2",
-                                   "%1 new messages in %2",
-                                   newInFolder.find( *it ).value(),
-                                   folder->prettyUrl() );
+    if ( col.isValid() ) {
+      FolderCollection fd( col,false /*don't write config*/ );
+      if (  !fd.ignoreNewMail() ) {
+        showNotification = true;
+        if ( GlobalSettings::self()->verboseNewMailNotification() ) {
+          summary += "<br>" + i18np( "1 new message in %2",
+                                     "%1 new messages in %2",
+                                     newInFolder.find( *it ).value(),
+                                     col.name() );
+        }
       }
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
 
   // update folder menus in case some mail got filtered to trash/current folder
@@ -2435,8 +2434,9 @@ void KMMainWidget::slotJumpToFolder()
 void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 {
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-
+  if ( mCollectionFolderView ) {
   //mCollectionFolderView->setCurrentIndex( mEntityModel->indexForCollection( collection ) );
+  }
 }
 
 void KMMainWidget::slotApplyFilters()
@@ -4144,17 +4144,14 @@ void KMMainWidget::slotShowStartupFolder()
     return;
   }
 
-  KMFolder* startup = 0;
+  Akonadi::Collection startup;
   if ( !mStartupFolder.isEmpty() ) {
     // find the startup-folder
-    startup = kmkernel->findFolderById( mStartupFolder );
+    startup = kmkernel->findFolderCollectionById( mStartupFolder );
   }
-  if ( !startup )
-    startup = kmkernel->inboxFolder();
-#ifdef OLD_FOLDERVIEW
-  if ( mMainFolderView )
-    mMainFolderView->setCurrentFolder( startup );
-#endif
+  if ( !startup.isValid() )
+    startup = kmkernel->inboxCollectionFolder();
+  selectCollectionFolder( startup );
 }
 
 void KMMainWidget::slotShowTip()

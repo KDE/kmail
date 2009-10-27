@@ -25,11 +25,12 @@
 #include <akonadi/itemfetchscope.h>
 #include "kmcommands.h"
 
-FolderCollection::FolderCollection( const Akonadi::Collection & col )
+FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writeconfig )
   : mCollection( col ),
     mPutRepliesInSameFolder( false ),
     mHideInSelectionDialog( false ),
-    mIgnoreNewMail( false )
+    mIgnoreNewMail( false ),
+    mWriteConfig( writeconfig )
 {
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
 
@@ -41,7 +42,8 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col )
 FolderCollection::~FolderCollection()
 {
   kDebug()<<" FolderCollection::~FolderCollection";
-  writeConfig();
+  if ( mWriteConfig )
+    writeConfig();
 }
 
 QString FolderCollection::name() const

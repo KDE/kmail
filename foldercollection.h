@@ -33,7 +33,7 @@ class FolderCollection : public QObject
 {
   Q_OBJECT
 public:
-  FolderCollection( const Akonadi::Collection & col );
+  FolderCollection( const Akonadi::Collection & col, bool writeConfig = true );
   ~FolderCollection();
 
   Akonadi::Collection collection();
@@ -233,7 +233,7 @@ private:
 
   /** shortcut associated with this folder or null, if none is configured. */
   KShortcut mShortcut;
-
+  bool mWriteConfig;
 };
 
 

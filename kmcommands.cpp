@@ -1718,11 +1718,7 @@ KMCommand::Result KMPrintCommand::execute()
   printerWin->setOverrideEncoding( mEncoding );
   printerWin->cssHelper()->setPrintFont( mOverrideFont );
   printerWin->setDecryptMessageOverwrite( true );
-#if 0 //TODO port to akonadi
-  printerWin->printMsg( retrievedMessage() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  printerWin->viewer()->printMessage( retrievedMessage() );
   return OK;
 }
 

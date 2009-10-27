@@ -40,7 +40,6 @@
 #include "kmacctseldlg.h"
 using KMail::AccountDialog;
 #include "messagesender.h"
-#include "kmfoldermgr.h"
 #include <kpimidentities/identitymanager.h>
 #include "identitylistview.h"
 using KMail::IdentityListView;
