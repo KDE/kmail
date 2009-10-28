@@ -211,7 +211,7 @@
   <Action name="akonadi_collection_create" />
   <Action name="akonadi_collection_copy_to_menu"/>
   <Action name="akonadi_collection_move_to_menu"/>
-  <Action name="akonadi_collection_delete"/>
+  <Action name="delete_folder"/>
   <Separator/>
   <Action name="akonadi_collection_add_to_favorites"/>
   <Separator/>

@@ -1541,17 +1541,15 @@ void KMMainWidget::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRemoveFolder()
 {
-#if 0 //Port it
   QString str;
   QDir dir;
 
   if ( !mCurrentFolder ) return;
   if ( mCurrentFolder->isSystemFolder() ) return;
   if ( mCurrentFolder->isReadOnly() ) return;
-
   QString title;
   QString buttonLabel;
-  if ( mFolder->folderType() == KMFolderTypeSearch ) {
+  if ( CollectionUtils::isVirtual( mCurrentFolder->collection() ) ) {
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
                 "Any messages it shows will still be available in their original folder.</qt>",
@@ -1560,6 +1558,7 @@ void KMMainWidget::slotRemoveFolder()
   } else {
     title = i18n("Delete Folder");
     if ( mCurrentFolder->count() == 0 ) {
+#if 0
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>",
@@ -1588,16 +1587,17 @@ void KMMainWidget::slotRemoveFolder()
                    "into your Trash folder and are permanently deleted.</p></qt>",
               Qt::escape( mCurrentFolder->label() ) );
       }
+#endif
     }
     buttonLabel = i18nc("@action:button Delete folder", "&Delete");
   }
-
   if ( KMessageBox::warningContinueCancel( this, str, title,
                                            KGuiItem( buttonLabel, "edit-delete" ),
                                            KStandardGuiItem::cancel(), "",
                                            KMessageBox::Notify | KMessageBox::Dangerous )
       == KMessageBox::Continue )
   {
+#if 0
     if ( mFolder->hasAccounts() ) {
       // this folder has an account, so we need to change that to the inbox
       for ( AccountList::Iterator it (mFolder->acctList()->begin() ),
@@ -1609,7 +1609,6 @@ void KMMainWidget::slotRemoveFolder()
               "delivers new mail into was reset to the main Inbox folder.</qt>", (*it)->name()));
       }
     }
-#if 0 //TODO port to akonadi
     if (mFolder->folderType() == KMFolderTypeImap)
       kmkernel->imapFolderMgr()->remove(mFolder);
     else if (mFolder->folderType() == KMFolderTypeCachedImap) {
@@ -1622,17 +1621,13 @@ void KMMainWidget::slotRemoveFolder()
       kmkernel->dimapFolderMgr()->remove(mFolder);
     }
     else
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     if (mFolder->folderType() == KMFolderTypeSearch)
       kmkernel->searchFolderMgr()->remove(mFolder);
     else
       kmkernel->folderMgr()->remove(mFolder);
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  }
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 }
 
 //-----------------------------------------------------------------------------
