@@ -2526,4 +2526,14 @@ Akonadi::Collection KMKernel::templatesCollectionFolder()
   return the_templatesCollectionFolder;
 }
 
+bool KMKernel::isSystemFolderCollection( const Akonadi::Collection &col)
+{
+  return ( col == inboxCollectionFolder() ||
+           col == outboxCollectionFolder() ||
+           col == sentCollectionFolder() ||
+           col == trashCollectionFolder() ||
+           col == draftsCollectionFolder() ||
+           col == templatesCollectionFolder() );
+}
+
 #include "kmkernel.moc"

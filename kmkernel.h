@@ -323,6 +323,8 @@ public:
   Akonadi::Collection draftsCollectionFolder();
   Akonadi::Collection templatesCollectionFolder();
 
+  bool isSystemFolderCollection( const Akonadi::Collection &col);
+
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
