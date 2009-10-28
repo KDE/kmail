@@ -37,7 +37,6 @@
 
 #include "kmkernel.h"
 #include "accountmanager.h"
-#include "kmmessage.h"
 #include "imapaccountbase.h"
 #include "listjob.h"
 

@@ -26,7 +26,6 @@ using KMail::AccountManager;
 //TODO port to akonadi #include "kmacctimap.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
-#include "kmmessage.h"
 #include "globalsettings.h"
 
 #include <kmime/kmime_header_parsing.h>
