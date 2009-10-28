@@ -270,8 +270,6 @@ private:
   KPushButton* mCopyGlobal;
   KMFolder* mFolder;
   uint mIdentity;
-
-  bool mIsLocalSystemFolder;
 };
 
 } // end of namespace KMail

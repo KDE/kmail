@@ -1011,7 +1011,6 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
                                                      QWidget *parent )
   : FolderDialogTab( dlg, parent, 0 )
 {
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setMargin( 0 );
