@@ -162,6 +162,8 @@ using KMail::TemplateParser;
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/entitytreeviewstatesaver.h>
+//TODO needs to export to public class
+#include <akonadi/private/collectionutils_p.h>
 
 #include <messageviewer/viewer.h>
 
@@ -4073,12 +4075,8 @@ void KMMainWidget::updateFolderMenu()
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder);
 
-  //TODO (laurent) use akonadi action. Perhaps we must change text in akonadi.
-#if 0 //TODO port
-  mRemoveFolderAction->setText( mCurrentFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  mRemoveFolderAction->setText( mCurrentFolder && CollectionUtils::isVirtual( mCurrentFolder->collection() ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
+
   mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
