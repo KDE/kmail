@@ -20,6 +20,7 @@
 #define KMAIL_STRINGUTIL_H
 
 #include <QString>
+#include <QMap>
 
 class KUrl;
 namespace KMime
@@ -185,10 +186,9 @@ namespace StringUtil
   QString formatString( const QString &wildString, const QString &fromAddr = QString() );
 
   /**
-   * Parses a mailto: url and extracts the information about to, cc, subject and body out into
-   * the QStrings given as argument.
+   * Parses a mailto: url and extracts the information in the QMap (field name as key).
    */
-  void parseMailtoUrl( const KUrl &url, QString &to, QString &cc, QString &subject, QString &body );
+  QMap<QString, QString> parseMailtoUrl( const KUrl &url );
 
   /**
    * Determines if the MIME part with the specified type and subtype is a crypto part.

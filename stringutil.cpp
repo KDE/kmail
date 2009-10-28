@@ -1071,15 +1071,14 @@ QString formatString( const QString &wildString, const QString &fromAddr )
 
 #ifndef KMAIL_UNITTESTS
 
-void parseMailtoUrl ( const KUrl& url, QString& to, QString& cc, QString& subject, QString& body )
+QMap<QString, QString> parseMailtoUrl ( const KUrl& url )
 {
   kDebug() << url.pathOrUrl();
-  to = decodeMailtoUrl( url.path() );
   QMap<QString, QString> values = url.queryItems( KUrl::CaseInsensitiveKeys );
-  to += ", " + values.value( "to" );
-  body = values.value( "body" );
-  subject = values.value( "subject" );
-  cc = values.value( "cc" );
+  QString to = decodeMailtoUrl( url.path() );
+  to = to.isEmpty() ?  values.value( "to" ) : to + QString( ", " ) + values.value( "to" );
+  values.insert( "to", to );
+  return values;
 }
 
 #endif

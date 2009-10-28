@@ -2373,16 +2373,15 @@ KMCommand::Result KMUrlClickedCommand::execute()
     msg->initHeader(mIdentity);
     msg->setCharset("utf-8");
 
-    QString to, body, subject, cc;
-    KMail::StringUtil::parseMailtoUrl( mUrl, to, cc, subject, body );
+    QMap<QString, QString> fields =  KMail::StringUtil::parseMailtoUrl( mUrl );
 
-    msg->setTo( to );
-    if ( !subject.isEmpty() )
-      msg->setSubject( subject );
-    if ( !body.isEmpty() )
-      msg->setBodyFromUnicode( body );
-    if ( !cc.isEmpty() )
-      msg->setCc( cc );
+    msg->setTo( fields.value( "to" ) );
+    if ( !fields.value( "subject" ).isEmpty() )
+      msg->setSubject( fields.value( "subject" ) );
+    if ( !fields.value( "body" ).isEmpty() )
+      msg->setBodyFromUnicode( fields.value( "body" ) );
+    if ( !fields.value( "cc" ).isEmpty() )
+      msg->setCc( fields.value( "cc" ) );
 
     KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, mIdentity );
     win->setCharset("", true);
