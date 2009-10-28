@@ -445,16 +445,6 @@ KMime::Message* KMFolder::getMsg( int idx )
 #endif
 }
 
-KMMsgInfo* KMFolder::unGetMsg( int idx )
-{
-#if 0  //TODO port to akonadi
-  return mStorage->unGetMsg( idx );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return 0;
-#endif
-}
-
 bool KMFolder::isMessage( int idx )
 {
 #if 0  //TODO port to akonadi

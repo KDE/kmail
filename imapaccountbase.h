@@ -43,6 +43,7 @@ class KMMessagePart;
 class DwBodyPart;
 class DwMessage;
 class FolderStorage;
+class KMMessage;
 template <typename T> class QVector;
 
 namespace KIO {

@@ -597,7 +597,7 @@ KMime::Message* FolderStorage::readTemporaryMsg(int idx)
 #endif
 }
 
-
+#if 0
 //-----------------------------------------------------------------------------
 KMMsgInfo* FolderStorage::unGetMsg(int idx)
 {
@@ -624,7 +624,7 @@ KMMsgInfo* FolderStorage::unGetMsg(int idx)
 #endif
   return 0;
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 bool FolderStorage::isMessage(int idx)

@@ -97,7 +97,6 @@ set(kmailprivate_LIB_SRCS
    actionscheduler.cpp
    messageproperty.cpp
 #   kmmsgpart.cpp
-#   kmmsginfo.cpp
    accountmanager.cpp
    kmacctfolder.cpp
    kmdict.cpp

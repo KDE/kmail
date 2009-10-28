@@ -24,7 +24,6 @@
 
 #include "kmfoldernode.h"
 #include "kmfoldertype.h"
-#include "kmmsginfo.h"
 #include "kmglobal.h"
 #include "kmkernel.h"
 #include "folderjob.h"
@@ -180,9 +179,6 @@ public:
 
   /** Read message at given index. Indexing starts at zero */
   KMime::Message* getMsg(int idx);
-
-  /** Replace KMime::Message with KMMsgInfo and delete KMime::Message  */
-  KMMsgInfo* unGetMsg(int idx);
 
   /** Checks if the message is already "gotten" with getMsg */
   bool isMessage(int idx);

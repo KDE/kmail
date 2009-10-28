@@ -70,7 +70,6 @@ public:
   virtual int count(bool cache = false) const;
 
   virtual KMime::Content* takeIndexEntry( int idx );
-  virtual KMMsgInfo* setIndexEntry( int idx, KMime::Message *msg );
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false);
   virtual void truncateIndex();
 

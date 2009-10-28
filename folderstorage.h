@@ -39,7 +39,6 @@
 
 #include "kmfoldernode.h"
 #include "kmfoldertype.h"
-#include "kmmsginfo.h"
 #include "kmglobal.h"
 #include "folderjob.h"
 using KMail::FolderJob;
@@ -52,6 +51,7 @@ using KMail::FolderJob;
 #include <sys/types.h>
 #include <stdio.h>
 #include "messageviewer/attachmentstrategy.h"
+#include "messagecore/messagestatus.h"
 namespace KMime {
   class Message;
   class Content;
@@ -63,7 +63,7 @@ class KMMsgDict; // for the rDict manipulations
 class KMMsgDictREntry;
 class QTimer;
 class KMSearchPattern;
-
+class KMMsgInfo;
 namespace MessageViewer {
    class AttachmentStrategy;
 }
@@ -144,10 +144,10 @@ public:
 
   /** Read message at given index. Indexing starts at zero */
   virtual KMime::Message* getMsg(int idx);
-
+#if 0
   /** Replace KMime::Message with KMMsgInfo and delete KMime::Message  */
   virtual KMMsgInfo* unGetMsg(int idx);
-
+#endif
   /** Checks if the message is already "gotten" with getMsg */
   virtual bool isMessage(int idx);
 
@@ -261,8 +261,8 @@ public:
 
   /** Called by KMime::Content::setStatus when status of a message has changed
       required to keep the number unread messages variable current. */
-  virtual void msgStatusChanged( const MessageStatus& oldStatus,
-                                 const MessageStatus& newStatus,
+  virtual void msgStatusChanged( const KPIM::MessageStatus& oldStatus,
+                                 const KPIM::MessageStatus& newStatus,
                                  int idx);
 
   /** Open folder for access.
@@ -380,10 +380,10 @@ public:
   void deregisterFromMessageDict();
 
   /** Set the status of the message at index @p idx to @p status. */
-  virtual void setStatus(int idx, const MessageStatus& status, bool toggle=false);
+  virtual void setStatus(int idx, const KPIM::MessageStatus& status, bool toggle=false);
 
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
-  virtual void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle=false);
+  virtual void setStatus(QList<int>& ids, const KPIM::MessageStatus& status, bool toggle=false);
 
   void removeJobs();
 
@@ -622,7 +622,6 @@ friend class KMMsgDict;
   /** Read index file and fill the message-info list mMsgList. */
   virtual bool readIndex() = 0;
   virtual KMime::Content* takeIndexEntry( int idx ) = 0;
-  virtual KMMsgInfo* setIndexEntry( int idx, KMime::Message *msg ) = 0;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void truncateIndex() = 0;
 

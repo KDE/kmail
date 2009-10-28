@@ -486,17 +486,6 @@ void KMFolderIndex::fillMessageDict()
 }
 
 
-KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMime::Message *msg )
-{
-#if 0 //TODO port to akonadi
-  KMMsgInfo *msgInfo = new KMMsgInfo( folder() );
-  *msgInfo = *msg;
-  mMsgList.set( idx, msgInfo );
-  return msgInfo;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
 
 bool KMFolderIndex::recreateIndex()
 {
