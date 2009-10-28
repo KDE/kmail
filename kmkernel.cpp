@@ -10,7 +10,6 @@ using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"
 #include "composer.h"
-//TODO port to akonadi #include "kmmsgpart.h"
 #include "kmreadermainwin.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
@@ -1165,6 +1164,7 @@ QString KMKernel::debugScheduler()
 
 QString KMKernel::debugSernum( quint32 serialNumber )
 {
+#if 0
   QString res;
   if (serialNumber != 0) {
     int idx = -1;
@@ -1190,6 +1190,11 @@ QString KMKernel::debugSernum( quint32 serialNumber )
     }
   }
   return res;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return "";
+
+#endif
 }
 
 

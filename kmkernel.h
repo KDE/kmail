@@ -483,10 +483,6 @@ private:
   Akonadi::Collection the_templatesCollectionFolder;
 
   KMFolderMgr *the_folderMgr;
-#if 0 //TODO port to akonadi
-  KMFolderMgr *the_imapFolderMgr;
-  KMFolderMgr *the_dimapFolderMgr;
-#endif
   KMFolderMgr *the_searchFolderMgr;
   UndoStack *the_undoStack;
   AccountManager *the_acctMgr;
