@@ -2843,7 +2843,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       } else if ( headerStyle() == HeaderStyle::fancy() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
-        html += KStringHandler::rPixelSqueeze( label, fm, 300 );
+        html += KStringHandler::rPixelSqueeze( label, fm, 1000 );
       } else {
         html += label;
       }
