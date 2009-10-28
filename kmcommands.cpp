@@ -1613,7 +1613,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
       KMime::Message *msg = *it;
       // set the identity
       if (id == 0)
-        id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
+        id = msg->headerByType( "X-KMail-Identity" ).trimmed().toUInt();
 
       linklist.append( msg );
     }

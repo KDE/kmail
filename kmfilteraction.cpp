@@ -336,19 +336,11 @@ void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 
 void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 {
-#if 0
-  mFolder = kmkernel->folderMgr()->findIdString( argsStr );
-  if (!mFolder)
-     mFolder = kmkernel->dimapFolderMgr()->findIdString( argsStr );
-  if (!mFolder)
-     mFolder = kmkernel->imapFolderMgr()->findIdString( argsStr );
-  if (mFolder)
-     mFolderName = mFolder->idString();
+  mFolder = kmkernel->findFolderCollectionById( argsStr );
+  if ( mFolder.isValid() )
+    mFolderName= QString::number( mFolder.id() );
   else
-     mFolderName = argsStr;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    mFolderName = argsStr;
 }
 
 const QString KMFilterActionWithFolder::argsAsString() const
