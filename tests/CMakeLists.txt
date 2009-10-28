@@ -10,7 +10,7 @@ include_directories(
 
 set(utiltests_SRCS utiltests.cpp ../util.cpp)
 kde4_add_unit_test(utiltests TESTNAME kmail-utiltests ${utiltests_SRCS})
-target_link_libraries(utiltests mimelib
+target_link_libraries(utiltests mimelib messageviewer
   ${QT_QTTEST_LIBRARY}
   ${QT_QTCORE_LIBRARY}
   ${KDE4_KIO_LIBS}
@@ -27,22 +27,11 @@ target_link_libraries(messagedicttests ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY}
 
 set(mimelibtests_SRCS mimelibtests.cpp ../util.cpp)
 kde4_add_unit_test(mimelibtests TESTNAME kmail-mimelibtests ${mimelibtests_SRCS})
-target_link_libraries(mimelibtests mimelib
+target_link_libraries(mimelibtests mimelib messageviewer
   ${QT_QTTEST_LIBRARY}
   ${QT_QTCORE_LIBRARY}
   ${KDE4_KIO_LIBS}
   ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
-)
-
-########### stringutiltest ###############
-
-set(stringutiltest_SRCS stringutiltest.cpp ../stringutil.cpp)
-add_definitions(-DKMAIL_UNITTESTS=YES)
-kde4_add_unit_test(stringutiltest TESTNAME kmail-stringutiltest ${stringutiltest_SRCS})
-target_link_libraries(stringutiltest
-  ${QT_QTTEST_LIBRARY}
-  ${QT_QTCORE_LIBRARY}
-  ${KDE4_KIO_LIBS}
 )
 
 ########### dbus test ###############
