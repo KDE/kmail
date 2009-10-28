@@ -18,7 +18,6 @@
 */
 
 #include "kmpopheaders.h"
-#include "kmmessage.h"
 
 KMPopHeaders::KMPopHeaders()
   : mAction( NoAction ),

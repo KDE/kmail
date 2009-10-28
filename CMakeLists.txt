@@ -124,7 +124,7 @@ set(kmailprivate_LIB_SRCS
 #   kmacctcachedimap.cpp
    kmfawidgets.cpp
    undostack.cpp
-   popaccount.cpp
+   #popaccount.cpp
    kmkernel.cpp
    accountdialog.cpp
    searchwindow.cpp
@@ -133,8 +133,8 @@ set(kmailprivate_LIB_SRCS
    sievedebugdialog.cpp
    sieveconfig.cpp
    sievejob.cpp
-   kmpopheaders.cpp
-   kmpopfiltercnfrmdlg.cpp
+   #kmpopheaders.cpp
+   #kmpopfiltercnfrmdlg.cpp
    mailinglist-magic.cpp
 #   kmacctmaildir.cpp
    attachmentcollector.cpp
@@ -199,8 +199,6 @@ set(kmailprivate_LIB_SRCS
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
-#remove once the akonadi/kmime port is done
-#   kmmessage.cpp
 )
 
 # TODO PORT
