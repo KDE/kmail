@@ -26,7 +26,7 @@
 
 
 KMFolderIndex::KMFolderIndex(KMFolder* folder, const char* name)
-  : FolderStorage(folder, name), mMsgList(INIT_MSGS)
+  : FolderStorage(folder, name)
 {
     mIndexStream = 0;
     mIndexStreamPtr = 0;
@@ -273,7 +273,9 @@ bool KMFolderIndex::readIndex()
       ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;
     }
+#if 0
     mMsgList.append(mi, false);
+#endif
   }
   if( version < 1505)
   {
@@ -291,10 +293,12 @@ bool KMFolderIndex::readIndex()
 
 int KMFolderIndex::count(bool cache) const
 {
+#if 0
   int res = FolderStorage::count(cache);
   if (res == -1)
     res = mMsgList.count();
   return res;
+#endif
 }
 
 
@@ -459,7 +463,9 @@ KMFolderIndex::IndexStatus KMFolderIndex::indexStatus()
 
 void KMFolderIndex::clearIndex(bool autoDelete, bool syncDict)
 {
+#if 0
     mMsgList.clear(autoDelete, syncDict);
+#endif
 }
 
 
@@ -475,6 +481,7 @@ void KMFolderIndex::truncateIndex()
 
 void KMFolderIndex::fillMessageDict()
 {
+#if 0
   open( "fillDict" );
   for ( unsigned int idx = 0; idx < mMsgList.high(); idx++ ) {
     KMime::Content* msg = mMsgList.at( idx );
@@ -483,6 +490,7 @@ void KMFolderIndex::fillMessageDict()
     }
   }
   close( "fillDict" );
+#endif
 }
 
 
@@ -540,7 +548,9 @@ int KMFolderIndex::writeMessages( KMime::Content* msg, bool flush )
 
 KMime::Content * KMFolderIndex::takeIndexEntry(int idx)
 {
+#if 0
   return mMsgList.take( idx );
+#endif
 }
 
 #include "kmfolderindex.moc"

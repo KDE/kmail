@@ -115,7 +115,6 @@ set(kmailprivate_LIB_SRCS
    kmfilter.cpp
    kmfilterdlg.cpp
 #   kmmsgbase.cpp
-   kmmsglist.cpp
    xfaceconfigurator.cpp
    networkaccount.cpp
 #   imapaccountbase.cpp

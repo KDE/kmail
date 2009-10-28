@@ -23,7 +23,6 @@
 #include <QtCore/QFlags>
 
 #include "folderstorage.h"
-#include "kmmsglist.h"
 
 namespace KMime {
   class Message;
@@ -73,13 +72,8 @@ public:
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false);
   virtual void truncateIndex();
 
-  virtual const KMime::Message* getMsgBase(int idx) const { return mMsgList[idx]; }
-  virtual KMime::Message* getMsgBase(int idx) { return mMsgList[idx]; }
 
   virtual int find(const KMime::Content* msg) const {
-#if 0 //TODO port to akonadi
-    return mMsgList.indexOf( const_cast<KMime::Message*>( msg ) );
-#endif
   }
 
   int find( const KMime::Message * msg ) const { return FolderStorage::find( msg ); }
@@ -175,8 +169,6 @@ protected:
    Called by KMFolderMaildir::create() and KMFolderMbox::create(). */
   int createInternal();
 
-  /** list of index entries or messages */
-  KMMsgList mMsgList;
 
 
 #ifdef KMAIL_SQLITE_INDEX
