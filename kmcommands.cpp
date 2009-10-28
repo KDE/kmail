@@ -1271,7 +1271,6 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
 
 KMCommand::Result KMForwardCommand::execute()
 {
-#if 0 //TODO port to akonadi
   QList<Akonadi::Item> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) {
@@ -1286,6 +1285,7 @@ KMCommand::Result KMForwardCommand::execute()
                    KGuiItem(i18n("Send Individually")) );
 
     if ( answer == KMessageBox::Yes ) {
+#if 0
       uint id = 0;
       KMime::Message *fwdMsg = new KMime::Message;
       KMime::MessagePart *msgPart = new KMime::MessagePart;
@@ -1349,8 +1349,10 @@ KMCommand::Result KMForwardCommand::execute()
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
       win->addAttach(msgPart);
       win->show();
+#endif
       return OK;
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
+#if 0
       uint id = 0;
       QList<KMime::Message*> linklist;
       QList<KMime::Message*>::const_iterator it;
@@ -1380,6 +1382,7 @@ KMCommand::Result KMForwardCommand::execute()
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
       win->setCharset("");
       win->show();
+#endif
       return OK;
     } else {
       // user cancelled
@@ -1388,24 +1391,26 @@ KMCommand::Result KMForwardCommand::execute()
   }
 
   // forward a single message at most.
-  KMime::Message *msg = msgList.first();
-  if ( !msg || !msg->codec() )
+  Akonadi::Item item = msgList.first();
+  if ( !item.isValid() /*|| !item->codec() Port it*/ )
     return Failed;
 
+  KMime::Message *msg = message( item );
   KCursorSaver busy(KBusyPtr::busy());
-  KMime::Message *fwdMsg = msg->createForward();
+  KMime::Message *fwdMsg = KMail::MessageHelper::createForward(msg);
 
-  uint id = msg->headerField("X-KMail-Identity").trimmed().toUInt();
+  uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
   if ( id == 0 )
     id = mIdentity;
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
+#if 0
     win->setCharset( fwdMsg->codec()->name(), true );
+#endif
     win->show();
   }
-#else
+  delete msg;
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 
