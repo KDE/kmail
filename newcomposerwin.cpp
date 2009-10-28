@@ -81,7 +81,7 @@ using MailTransport::Transport;
 #include "objecttreeparser.h"
 #include "recipientseditor.h"
 #include "messageviewer/stl_util.h"
-#include "stringutil.h"
+#include "messageviewer/stringutil.h"
 #include "util.h"
 #include "kmmsgdict.h"
 #include "templateparser.h"

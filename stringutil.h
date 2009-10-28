@@ -170,14 +170,6 @@ namespace StringUtil
   QString guessEmailAddressFromLoginName( const QString& userName );
 
   /**
-   *  Given argument msg add quoting characters and relayout for max width maxLength
-   *  @param msg the string which it to be quoted
-   *  @param maxLineLength reformat text to be this amount of columns at maximum, adding
-   *    linefeeds at word boundaries to make it fit.
-   */
-  QString smartQuote( const QString &msg, int maxLineLength );
-
-  /**
    * Convert wildcards into normal string
    * @param wildString the string to be converted
    * @fromAddr from email address to convert to displayable string
@@ -190,16 +182,6 @@ namespace StringUtil
    */
   void parseMailtoUrl( const KUrl &url, QString &to, QString &cc, QString &subject, QString &body );
 
-  /**
-   * Determines if the MIME part with the specified type and subtype is a crypto part.
-   * For example, this function returns true for type "application" and subtype "pgp-encrypted".
-   * The filename is needed if the part is named "msg.asc", in which case it is also a crypto part.
-   *
-   * This function is useful for finding out if the part should be handled as attachment or not.
-   *
-   * All strings are handled case-insensitive.
-   */
-  bool isCryptoPart( const QString &type, const QString &subType, const QString &fileName );
 }
 
 }

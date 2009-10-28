@@ -953,73 +953,6 @@ QString guessEmailAddressFromLoginName( const QString& loginName )
 }
 #endif
 
-QString smartQuote( const QString & msg, int maxLineLength )
-{
-  QStringList part;
-  QString oldIndent;
-  bool firstPart = true;
-
-  const QStringList lines = msg.split('\n');
-
-  QString result;
-  for(QStringList::const_iterator it = lines.begin();
-      it != lines.end();
-      ++it)
-  {
-     QString line = *it;
-
-     const QString indent = splitLine( line );
-
-     if ( line.isEmpty())
-     {
-        if (!firstPart)
-           part.append(QString());
-        continue;
-     };
-
-     if (firstPart)
-     {
-        oldIndent = indent;
-        firstPart = false;
-     }
-
-     if (oldIndent != indent)
-     {
-        QString fromLine;
-        // Search if the last non-blank line could be "From" line
-        if (part.count() && (oldIndent.length() < indent.length()))
-        {
-           QStringList::Iterator it2 = part.isEmpty() ? part.end() : --part.end();
-           // FIXME: what if all strings are empty? Then we'll decrement part.begin().
-           // Shouldn't we also check for .begin()?
-           while( (it2 != part.end()) && (*it2).isEmpty())
-             --it2;
-
-           if ((it2 != part.end()) && ((*it2).endsWith(':')))
-           {
-              fromLine = oldIndent + (*it2) + '\n';
-              part.erase(it2);
-           }
-        }
-        if (flushPart( result, part, oldIndent, maxLineLength))
-        {
-           if (oldIndent.length() > indent.length())
-              result += indent + '\n';
-           else
-              result += oldIndent + '\n';
-        }
-        if (!fromLine.isEmpty())
-        {
-           result += fromLine;
-        }
-        oldIndent = indent;
-     }
-     part.append(line);
-  }
-  flushPart( result, part, oldIndent, maxLineLength);
-  return result;
-}
-
 QString formatString( const QString &wildString, const QString &fromAddr )
 {
   QString result;
@@ -1086,18 +1019,6 @@ void parseMailtoUrl ( const KUrl& url, QString& to, QString& cc, QString& subjec
 }
 
 #endif
-
-bool isCryptoPart( const QString &type, const QString &subType, const QString &fileName )
-{
-  return ( type.toLower() == "application" &&
-           ( subType.toLower() == "pgp-encrypted" ||
-             subType.toLower() == "pgp-signature" ||
-             subType.toLower() == "pkcs7-mime" ||
-             subType.toLower() == "pkcs7-signature" ||
-             subType.toLower() == "x-pkcs7-signature" ||
-             ( subType.toLower() == "octet-stream" &&
-               fileName.toLower() == "msg.asc" ) ) );
-}
 
 }
 
