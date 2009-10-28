@@ -30,7 +30,6 @@
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include <kpimutils/kfileio.h>
-#include "kmfolderindex.h"
 #include "kmcommands.h"
 #include <QByteArray>
 #include <QImageReader>
@@ -394,7 +393,7 @@ void KMReaderWin::slotTouchMessage()
   if ( !status.isNew() && !status.isUnread() )
     return;
 
-  SerNumList serNums;
+  QList<quint32> serNums;
   serNums.append( message().id() );
   KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();

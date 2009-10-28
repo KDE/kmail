@@ -49,7 +49,6 @@ class KToggleAction;
 class KToggleAction;
 class KHTMLPart;
 class KUrl;
-class KMFolder;
 //Remove it when we remove old code
 class HtmlStatusBar;
 namespace KMail {

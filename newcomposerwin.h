@@ -352,7 +352,7 @@ class KMComposeWin : public KMail::Composer
     void slotFormatReset();
     void slotMarkAll();
 
-    void slotFolderRemoved( KMFolder * );
+  void slotFolderRemoved( const Akonadi::Collection& );
     //void slotEditDone( KMail::EditorWatcher* watcher );
     void slotLanguageChanged( const QString &language );
 

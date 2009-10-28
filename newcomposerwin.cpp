@@ -72,8 +72,6 @@ using MailTransport::Transport;
 #include "kmkernel.h"
 #include "kmfolder.h"
 #include "globalsettings.h"
-//TODO port to akonadi #include "kmfolderimap.h"
-//TODO port to akonadi #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmmainwin.h"
 #include "kmreadermainwin.h"
@@ -363,11 +361,9 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
 
   connect( mEdtFrom, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
-  connect( kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-           SLOT(slotFolderRemoved(KMFolder*)) );
+  connect( kmkernel->folderMgr(), SIGNAL(folderRemoved(const Akonadi::Collection&)),
+           SLOT(slotFolderRemoved(const Akonadi::Collection&)) );
 #if 0 //TODO port to akonadi
-  connect( kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-           SLOT(slotFolderRemoved(KMFolder*)) );
   connect( kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
            SLOT(slotFolderRemoved(KMFolder*)) );
 #else
@@ -3612,7 +3608,7 @@ void KMComposeWin::slotConfigChanged()
  * checks if the drafts-folder has been deleted
  * that is not nice so we set the system-drafts-folder
  */
-void KMComposeWin::slotFolderRemoved( KMFolder *folder )
+void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
 {
   kDebug() << "you killed me.";
 #if 0

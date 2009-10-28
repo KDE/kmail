@@ -334,7 +334,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotRemoveFolder();
     void slotEmptyFolder();
     void slotCompactFolder();
-    void slotRefreshFolder();
+#if 0
+  void slotRefreshFolder();
+#endif
     void slotTroubleshootFolder();
     void slotTroubleshootMaildir();
     void slotCompactAll();

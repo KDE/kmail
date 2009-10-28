@@ -1657,11 +1657,10 @@ void KMMainWidget::slotCompactFolder()
 #endif
 }
 
-
+#if 0
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRefreshFolder()
 {
-#if 0 //Use akonadi but perhaps we need to use this code in the future
   if (mFolder)
   {
     if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap ) {
@@ -1679,8 +1678,8 @@ void KMMainWidget::slotRefreshFolder()
       f->account()->processNewMailInFolder( mFolder );
     }
   }
-#endif
 }
+#endif
 
 void KMMainWidget::slotTroubleshootFolder()
 {

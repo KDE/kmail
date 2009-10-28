@@ -45,7 +45,6 @@
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
-#include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "messageviewer/csshelper.h"
 #include "customtemplatesmenu.h"
