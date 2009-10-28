@@ -1888,7 +1888,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
 #if 0 //Port to akonadi
   mPreventFccOverwrite = ( !mFcc->getFolder()->fileName().isEmpty() && ident.fcc() != mFcc->getFolder()->fileName() );
 #else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;                                                                  
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
@@ -1950,16 +1950,12 @@ void KMComposeWin::collectImages( KMime::Content *root )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setFcc( const QString &idString )
 {
-#if 0	
   // check if the sent-mail folder still exists
-  if ( ! idString.isEmpty() && KMKernel::self()->findFolderById( idString ) ) {
-    mFcc->setFolder( idString );
+  if ( ! idString.isEmpty() && KMKernel::self()->findFolderCollectionById( idString ).isValid() ) {
+    mFcc->setDefaultCollection( KMKernel::self()->findFolderCollectionById( idString ) );
   } else {
-    mFcc->setFolder( KMKernel::self()->sentFolder() );
+    mFcc->setDefaultCollection( KMKernel::self()->sentCollectionFolder() );
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;                                                                  
-#endif
 }
 
 //-----------------------------------------------------------------------------
