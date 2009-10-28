@@ -1260,17 +1260,17 @@ QString msgId(KMime::Message *msg)
 
 QString ccStrip( KMime::Message* msg )
 {
-  return StringUtil::stripEmailAddr( msg->cc()->asUnicodeString() );
+  return MessageViewer::StringUtil::stripEmailAddr( msg->cc()->asUnicodeString() );
 }
 
 QString toStrip( KMime::Message* msg )
 {
-  return StringUtil::stripEmailAddr( msg->to()->asUnicodeString() );
+  return MessageViewer::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() );
 }
 
 QString fromStrip( KMime::Message* msg )
 {
-  return StringUtil::stripEmailAddr( msg->from()->asUnicodeString() );
+  return MessageViewer::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() );
 }
 
 

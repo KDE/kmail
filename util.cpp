@@ -38,7 +38,8 @@
 
 
 #include "util.h"
-#include "stringutil.h"
+#include "messageviewer/stringutil.h"
+
 #include <stdlib.h>
 #include <mimelib/string.h>
 #include <kpimutils/email.h>
@@ -137,7 +138,7 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
 
   QStringList distributionListEmpty;
   KPIMUtils::EmailParseResult errorCode =
-    KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses,distributionListEmpty ),
+    KPIMUtils::isValidAddressList( MessageViewer::StringUtil::expandAliases( addresses,distributionListEmpty ),
                                    brokenAddress );
   if ( !distributionListEmpty.isEmpty() ) {
     QString errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.", distributionListEmpty.join( ", " ) );

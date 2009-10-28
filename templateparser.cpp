@@ -1285,7 +1285,7 @@ QString TemplateParser::asPlainTextFromObjectTree( KMime::Message *msg, KMime::C
 
   // strip the signature (footer):
   if ( aStripSignature )
-    return StringUtil::stripSignature( result, clearSigned );
+    return MessageViewer::StringUtil::stripSignature( result, clearSigned );
   else
     return result;
 }

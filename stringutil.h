@@ -40,16 +40,6 @@ namespace KMail
  */
 namespace StringUtil
 {
-
-  /**
-   * Strips the signature blocks from a message text. "-- " is considered as a signature block separator.
-   @param msg. The message to remove the signature block from.
-   @param clearSigned. Before a message is cryptographically signed
-   all trailing whitespace is removed. Therefore the signature
-   separator loses the trailing space.
-   */
-  QString stripSignature ( const QString & msg, bool clearSigned );
-
   /**
    * Returns a list of content-transfer-encodings that can be used with
    * the given result of the character frequency analysis of a message or
@@ -58,20 +48,6 @@ namespace StringUtil
   QList<int> determineAllowedCtes( const KMime::CharFreq& cf,
                                    bool allow8Bit,
                                    bool willBeSigned );
-
-  /**
-   * This function generates a displayable string from a list of email
-   * addresses.
-   * Input : mailbox-list
-   * Output: comma separated list of display name resp. comment resp.
-   *         address
-   */
-  QByteArray stripEmailAddr( const QByteArray& emailAddr );
-
-  /**
-   * Does the same as the above function. Shouldn't be used.
-   */
-  QString stripEmailAddr( const QString& emailAddr );
 
   /**
    * Used to determine if the visible part of the anchor contains
@@ -106,12 +82,6 @@ namespace StringUtil
    * when replying.
    */
   QStringList stripMyAddressesFromAddressList( const QStringList& list );
-
-  /**
-   * Expands aliases (distribution lists and nick names) and appends a
-   * domain part to all email addresses which are missing the domain part.
-   */
-  QString expandAliases( const QString& recipients,QStringList &distributionListIsEmpty );
 
 
   /**
