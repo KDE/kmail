@@ -2332,6 +2332,11 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
 
 Akonadi::Collection KMKernel::findFolderCollectionById( const QString& id )
 {
+  Akonadi::Collection col( id.toInt() );
+  if ( col.isValid() ) {
+    kDebug()<<" IS VALID !!!!!!!!!!!!! :"<<col;
+    return col;
+  }
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
   //TODO port it !!!
   return Akonadi::Collection();

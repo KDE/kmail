@@ -338,7 +338,7 @@ void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 {
   mFolder = kmkernel->findFolderCollectionById( argsStr );
   if ( mFolder.isValid() )
-    mFolderName= QString::number( mFolder.id() );
+    mFolderName= mFolder.name();
   else
     mFolderName = argsStr;
 }
