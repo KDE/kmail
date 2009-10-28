@@ -132,6 +132,7 @@ using KMail::TemplateParser;
 #include "statusbarlabel.h"
 #include "actionscheduler.h"
 #include "accountwizard.h"
+#include "expirypropertiesdialog.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -3767,6 +3768,13 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), kmkernel, SLOT(slotShowConfigurationDialog()));
   }
 
+  {
+    //TODO enable/disable it
+    mExpireConfigAction = new KAction( i18n( "Expire..." ), this );
+    connect( mExpireConfigAction, SIGNAL( triggered( bool ) ), this, SLOT( slotShowExpiryProperties() ) );
+  }
+
+
   actionCollection()->addAction(KStandardAction::Undo,  "kmail_undo", this, SLOT(slotUndo()));
 
   KStandardAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
@@ -3793,6 +3801,14 @@ void KMMainWidget::slotEditNotifications()
     KNotifyConfigWidget::configure( this, a->appName() );
   } else {
     KNotifyConfigWidget::configure( this );
+  }
+}
+
+void KMMainWidget::slotShowExpiryProperties()
+{
+  if ( mCurrentFolder ) {
+     KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( this, mCurrentFolder );
+  dlg->show();
   }
 }
 

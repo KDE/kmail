@@ -467,6 +467,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void updateVactionScriptStatus( bool active );
 
+
+  void slotShowExpiryProperties();
+
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;
@@ -552,7 +555,7 @@ private:
         *mListFilterAction;
 
     KAction *mNextMessageAction, *mPreviousMessageAction;
-
+  KAction *mExpireConfigAction;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;
     CustomTemplatesMenu *mCustomTemplateMenus;

@@ -230,34 +230,4 @@ ReadableCollectionProxyModel *FolderSelectionTreeView::readableCollectionProxyMo
   return d->readableproxy;
 }
 
-#if 0 //TODO port it
-  if ( item->folderType() != FolderViewItem::Root ) // non account level folder
-  {
-    menu->addAction( mMainWidget->action( "folder_shortcut_command" ) );
-    if ( !folder->noContent() )
-      menu->addAction( i18n("Expire..."), item, SLOT( slotShowExpiryProperties() ) );
-
-    // properties
-    menu->addAction( mMainWidget->action("modify") );
-
-    // FIXME: Couldn't we show the account edit dialog for imap roots ?
-  }
-void FolderViewItem::slotShowExpiryProperties()
-{
-  if ( !folder() )
-    return;
-
-  FolderView * fv = dynamic_cast< FolderView * >( treeWidget() );
-  if ( !fv )
-    return;
-
-  MainFolderView *mfv = fv->mainWidget()->mainFolderView();
-  if ( !mfv )
-    return;
-
-  KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( mfv, folder() );
-  dlg->show();
-  //fv->mainWidget()->slotModifyFolder( KMMainWidget::PropsExpire );
-}
-#endif
 #include "folderselectiontreeview.moc"
