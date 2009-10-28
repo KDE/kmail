@@ -48,9 +48,6 @@ bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
 
 void CollectionTemplatesPage::init()
 {
-#if 0
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
-#endif
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setMargin( 0 );
   topLayout->setSpacing( KDialog::spacingHint() );
