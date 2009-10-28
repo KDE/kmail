@@ -730,8 +730,6 @@ public slots:
   void slotMoveCanceled();
   void slotMoveResult( KJob * job );
 protected:
-  // Needed for KMDeleteCommand for "move to trash"
-  KMMoveCommand( quint32 sernum );
   void setDestFolder( const Akonadi::Collection& folder ) { mDestFolder = folder; }
   void addMsg( const Akonadi::Item &msg ) {
     mItem.append( msg );
@@ -755,7 +753,6 @@ class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
 public:
   KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<Akonadi::Item> &msgList );
   KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item& msg );
-  KMTrashMsgCommand( quint32 sernum );
 
 private:
   static Akonadi::Collection findTrashFolder( const Akonadi::Collection& srcFolder );

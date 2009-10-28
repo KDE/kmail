@@ -2071,12 +2071,6 @@ KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
   mItem.append( msg );
 }
 
-
-KMMoveCommand::KMMoveCommand( quint32 )
-  :  mDestFolder( 0 ), mProgressItem( 0 )
-{
-}
-
 void KMMoveCommand::slotMoveResult( KJob * job )
 {
   if ( job->error() ) {
@@ -2091,8 +2085,6 @@ KMCommand::Result KMMoveCommand::execute()
 {
   setEmitsCompletedItself( true );
   setDeletesItself( true );
-  kDebug()<<" mItem :"<<mItem.size();
-  kDebug()<<" mDestFolder :"<<mDestFolder;
   Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder,this );
   connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
 #if 0 //TODO port to akonadi
@@ -2259,42 +2251,17 @@ KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder,
   const QList<Akonadi::Item> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
-
-  //srcFolder->open( "kmcommand" );
-  //mOpenedFolders.push_back( srcFolder );
 }
 
 KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item & msg )
 :KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
-  //srcFolder->open( "kmcommand" );
-  //mOpenedFolders.push_back( srcFolder );
 }
 
-KMTrashMsgCommand::KMTrashMsgCommand( quint32 sernum )
-:KMMoveCommand( sernum )
-{
-#if 0 //Port to akonadi
-  KMFolder *srcFolder = 0;
-  int idx;
-  KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
-
-  if ( srcFolder ) {
-    KMime::Message *msg = srcFolder->getMsgBase( idx );
-    srcFolder->open( "kmcommand" );
-    mOpenedFolders.push_back( srcFolder );
-    addMsg( msg );
-    setDestFolder( findTrashFolder( srcFolder ) );
-  } else {
-    kWarning() << "Failed to find a source folder for serial number: " << sernum;
-  }
-#endif
-}
 
 Akonadi::Collection KMTrashMsgCommand::findTrashFolder( const Akonadi::Collection& folder )
 {
   Akonadi::Collection col = kmkernel->trashCollectionFolder();
-  kDebug()<<" findTrashFolder :"<<col;
 #if 0 //port to akonadi
   KMFolder* trash = folder->trashFolder();
   if( !trash )
