@@ -1239,6 +1239,24 @@ QByteArray getRefStr( KMime::Message *msg )
   return retRefStr;
 }
 
+
+QString msgId(KMime::Message *msg)
+{
+  if ( !msg->headerByType("Message-Id") )
+    return QString();
+  QString msgId = msg->headerByType("Message-Id")->asUnicodeString();
+
+  // search the end of the message id
+  const int rightAngle = msgId.indexOf( '>' );
+  if (rightAngle != -1)
+    msgId.truncate( rightAngle + 1 );
+  // now search the start of the message id
+  const int leftAngle = msgId.lastIndexOf( '<' );
+  if (leftAngle != -1)
+    msgId = msgId.mid( leftAngle );
+  return msgId;
+}
+
 QString ccStrip( KMime::Message* msg )
 {
   return StringUtil::stripEmailAddr( msg->cc()->asUnicodeString() );

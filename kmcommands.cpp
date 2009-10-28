@@ -2219,31 +2219,6 @@ KMCommand::Result KMMoveCommand::execute()
   return OK;
 }
 
-#if 0 //TODO port to akonadi
-void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool success)
-{
-  disconnect (imapFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
-      this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
-  if ( success ) {
-    // the folder was checked successfully but we were still called, so check
-    // if we are still waiting for messages to show up. If so, uidValidity
-    // changed, or something else went wrong. Clean up.
-
-    /* Unfortunately older UW imap servers change uid validity for each put job.
-     * Yes, it is really that broken. *sigh* So we cannot report error here, I guess. */
-    if ( !mLostBoys.isEmpty() ) {
-      kDebug() << "### Not all moved messages reported back that they were";
-      kDebug() << "### added to the target folder. Did uidValidity change?";
-      completeMove( Failed );
-    }
-    else
-      completeMove( OK );
-  } else {
-    // Should we inform the user here or leave that to the caller?
-    completeMove( Failed );
-  }
-}
-#endif
 
 
 void KMMoveCommand::completeMove( Result result )
@@ -3145,11 +3120,9 @@ void KMHandleAttachmentCommand::atmSave()
   QList<partNode*> parts;
   parts.append( mNode );
   // save, do not leave encoded
-#if 0
   KMSaveAttachmentsCommand *command =
     new KMSaveAttachmentsCommand( 0, parts, mMsg, false );
   command->start();
-#endif
 }
 
 void KMHandleAttachmentCommand::atmProperties()
@@ -3318,35 +3291,36 @@ CreateTodoCommand::CreateTodoCommand(QWidget * parent, const Akonadi::Item &msg)
 
 KMCommand::Result CreateTodoCommand::execute()
 {
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() /*|| !msg->codec()*/ ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid() /*|| !msg->codec()*/ ) {
     return Failed;
   }
+  KMime::Message *msg = message( item );
 
   KMail::KorgHelper::ensureRunning();
-#if 0
-  QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from(),
-                     msg->to(), msg->subject() );
-
+  QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from()->asUnicodeString(),
+                     msg->to()->asUnicodeString(), msg->subject()->asUnicodeString() );
   KTemporaryFile tf;
   tf.setAutoRemove( true );
   if ( !tf.open() ) {
     kWarning() << "CreateTodoCommand: Unable to open temp file.";
+    delete msg;
     return Failed;
   }
-  QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + '/' + msg->msgId();
+  QString uri = "kmail:" + QString::number( item.id() ) + '/' + KMail::MessageHelper::msgId(msg);
+#if 0
   tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
-
-  OrgKdeKorganizerCalendarInterface *iface =
-      new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
-                                             QDBusConnection::sessionBus(), this );
-  iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt, uri,
-                         tf.fileName(), QStringList(), "message/rfc822", true );
-  delete iface;
-  tf.close();
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  OrgKdeKorganizerCalendarInterface *iface =
+      new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
+                                             QDBusConnection::sessionBus(), this );
+  iface->openTodoEditor( i18n("Mail: %1", msg->subject()->asUnicodeString() ), txt, uri,
+                         tf.fileName(), QStringList(), "message/rfc822", true );
+  delete iface;
+  tf.close();
+  delete msg;
   return OK;
 }
 

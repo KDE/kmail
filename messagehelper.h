@@ -201,6 +201,9 @@ namespace MessageHelper {
    */
   QByteArray getRefStr( KMime::Message *msg );
 
+  QString msgId(KMime::Message *msg);
+
+
   QString ccStrip( KMime::Message *msg );
   QString toStrip( KMime::Message *msg );
   QString fromStrip( KMime::Message *msg );
