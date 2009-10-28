@@ -405,24 +405,6 @@ QByteArray html2source( const QByteArray & src )
   return result;
 }
 
-#ifndef KMAIL_UNITTESTS
-QString encodeMailtoUrl( const QString& str )
-{
-  QString result;
-  result = QString::fromLatin1( KMime::encodeRFC2047String( str,
-                                "utf-8" ) );
-  result = KUrl::toPercentEncoding( result );
-  return result;
-}
-
-QString decodeMailtoUrl( const QString& url )
-{
-  QString result;
-  result = KUrl::fromPercentEncoding( url.toLatin1() );
-  result = KMime::decodeRFC2047String( result.toLatin1() );
-  return result;
-}
-#endif
 
 QByteArray stripEmailAddr( const QByteArray& aStr )
 {
@@ -741,41 +723,6 @@ QString stripEmailAddr( const QString& aStr )
   return result;
 }
 
-QString quoteHtmlChars( const QString& str, bool removeLineBreaks )
-{
-  QString result;
-
-  unsigned int strLength(str.length());
-  result.reserve( 6*strLength ); // maximal possible length
-  for( unsigned int i = 0; i < strLength; ++i ) {
-    switch ( str[i].toLatin1() ) {
-      case '<':
-        result += "&lt;";
-        break;
-      case '>':
-        result += "&gt;";
-        break;
-      case '&':
-        result += "&amp;";
-        break;
-      case '"':
-        result += "&quot;";
-        break;
-      case '\n':
-        if ( !removeLineBreaks )
-          result += "<br>";
-        break;
-      case '\r':
-      // ignore CR
-        break;
-      default:
-        result += str[i];
-    }
-  }
-
-  result.squeeze();
-  return result;
-}
 
 #ifndef KMAIL_UNITTESTS
 QString emailAddrAsAnchor( const QString& aEmail, Display display, const QString& cssStyle,
@@ -806,12 +753,12 @@ QString emailAddrAsAnchor( const QString& aEmail, Display display, const QString
       }
       if( link == ShowLink ) {
         result += "<a href=\"mailto:"
-                + encodeMailtoUrl( address )
+                + MessageViewer::StringUtil::encodeMailtoUrl( address )
                 + "\" "+cssStyle+">";
       }
       if( display == DisplayNameOnly )
         address = stripEmailAddr( address );
-      result += quoteHtmlChars( address, true );
+      result += MessageViewer::StringUtil::quoteHtmlChars( address, true );
       if( link == ShowLink ) {
         result += "</a>, ";
       }
@@ -908,7 +855,7 @@ QString expandAliases( const QString& recipients, QStringList &distributionListE
 void parseMailtoUrl ( const KUrl& url, QString& to, QString& cc, QString& subject, QString& body )
 {
   kDebug() << url.pathOrUrl();
-  to = decodeMailtoUrl( url.path() );
+  to = MessageViewer::StringUtil::decodeMailtoUrl( url.path() );
   QMap<QString, QString> values = url.queryItems( KUrl::CaseInsensitiveKeys );
   to += ", " + values.value( "to" );
   body = values.value( "body" );

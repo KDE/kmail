@@ -123,6 +123,8 @@ using KMail::TemplateParser;
 #include <akonadi/itemmovejob.h>
 #include <akonadi/itemcopyjob.h>
 
+#include "messageviewer/stringutil.h"
+
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
@@ -504,7 +506,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
   KMail::MessageHelper::initHeader(msg, id);
   msg->contentType()->setCharset("utf-8");
-  msg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" );
+  msg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" );
 
   KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, id );
   win->setCharset("", true);
@@ -529,7 +531,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   }
   KMime::Message *msg = message( item );
   KMime::Message *rmsg = KMail::MessageHelper::createReply( msg, KMail::ReplyNone, mSelection );
-  rmsg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
+  rmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
   /** TODO Port it to KMime
@@ -560,7 +562,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   }
   KMime::Message *msg = message( item );
   KMime::Message *fmsg = KMail::MessageHelper::createForward( msg );
-  fmsg->to()->fromUnicodeString( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
+  fmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
   /** TODO Port to KMime
@@ -599,7 +601,7 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 {
-  KPIM::KAddrBookExternal::addEmail( KMail::StringUtil::decodeMailtoUrl( mUrl.path() ),
+  KPIM::KAddrBookExternal::addEmail( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ),
                                      parentWidget() );
 
   return OK;
@@ -614,7 +616,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
-  QString addr = KMail::StringUtil::decodeMailtoUrl( mUrl.path() );
+  QString addr = MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() );
   KPIM::KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr),
                                       addr, parentWidget() );
 
@@ -633,7 +635,7 @@ KMCommand::Result KMUrlCopyCommand::execute()
 
   if (mUrl.protocol() == "mailto") {
     // put the url into the mouse selection and the clipboard
-    QString address = KMail::StringUtil::decodeMailtoUrl( mUrl.path() );
+    QString address = MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() );
     clip->setText( address, QClipboard::Clipboard );
     clip->setText( address, QClipboard::Selection );
     KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Address copied to clipboard." ));

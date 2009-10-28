@@ -79,15 +79,6 @@ namespace StringUtil
    */
   QByteArray html2source( const QByteArray & src );
 
-
-  /** Encodes an email address as mailto URL
-   */
-  QString encodeMailtoUrl( const QString& str );
-
-  /** Decodes a mailto URL
-   */
-  QString decodeMailtoUrl( const QString& url );
-
   /**
    * This function generates a displayable string from a list of email
    * addresses.
@@ -101,15 +92,6 @@ namespace StringUtil
    * Does the same as the above function. Shouldn't be used.
    */
   QString stripEmailAddr( const QString& emailAddr );
-
-  /**
-   * Quotes the following characters which have a special meaning in HTML:
-   * '<'  '>'  '&'  '"'. Additionally '\\n' is converted to "<br />" if
-   * @p removeLineBreaks is false. If @p removeLineBreaks is true, then
-   * '\\n' is removed. Last but not least '\\r' is removed.
-   */
-  QString quoteHtmlChars( const QString& str,
-                          bool removeLineBreaks = false );
 
   /**
    * Used to determine if the visible part of the anchor contains
