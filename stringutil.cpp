@@ -68,40 +68,6 @@ static void removeTrailingSpace( QString &line )
   line.truncate( i+1);
 }
 
-static QString splitLine( QString &line)
-{
-  removeTrailingSpace( line );
-  int i = 0;
-  int j = -1;
-  int l = line.length();
-
-  // TODO: Replace tabs with spaces first.
-
-  while(i < l)
-  {
-      QChar c = line[i];
-      if ((c == '>') || (c == ':') || (c == '|'))
-        j = i+1;
-      else if ((c != ' ') && (c != '\t'))
-        break;
-      i++;
-  }
-
-  if ( j <= 0 )
-  {
-      return "";
-  }
-  if ( i == l )
-  {
-      QString result = line.left(j);
-      line.clear();
-      return result;
-  }
-
-  QString result = line.left(j);
-  line = line.mid(j);
-  return result;
-}
 
 
 static QString flowText(QString &text, const QString& indent, int maxLength)
@@ -296,114 +262,9 @@ QList<int> determineAllowedCtes( const CharFreq& cf,
          return allowedCtes;
 }
 
-AddressList splitAddrField( const QByteArray & str )
-{
-  AddressList result;
-  const char * scursor = str.begin();
-  if ( !scursor )
-    return AddressList();
-  const char * const send = str.begin() + str.length();
-  if ( !parseAddressList( scursor, send, result ) ) {
-    kDebug() << "Error in address splitting: parseAddressList returned false!";
-  }
-  return result;
-}
 
-QString generateMessageId( const QString& addr )
-{
-  QDateTime datetime = QDateTime::currentDateTime();
-  QString msgIdStr;
-
-  msgIdStr = '<' + datetime.toString( "yyyyMMddhhmm.sszzz" );
-
-  QString msgIdSuffix;
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  if( general.readEntry( "useCustomMessageIdSuffix", false ) )
-    msgIdSuffix = general.readEntry( "myMessageIdSuffix" );
-
-  if( !msgIdSuffix.isEmpty() )
-    msgIdStr += '@' + msgIdSuffix;
-  else
-    msgIdStr += '.' + KPIMUtils::toIdn( addr );
-
-  msgIdStr += '>';
-
-  return msgIdStr;
-}
 #endif
 
-QByteArray html2source( const QByteArray & src )
-{
-  QByteArray result( 1 + 6*src.length(), '\0' );  // maximal possible length
-
-  QByteArray::ConstIterator s = src.begin();
-  QByteArray::Iterator d = result.begin();
-  while ( *s ) {
-    switch ( *s ) {
-      case '<': {
-        *d++ = '&';
-        *d++ = 'l';
-        *d++ = 't';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-      case '\r': {
-        ++s;
-      }
-      break;
-      case '\n': {
-        *d++ = '<';
-        *d++ = 'b';
-        *d++ = 'r';
-        *d++ = '>';
-        ++s;
-      }
-      break;
-      case '>': {
-        *d++ = '&';
-        *d++ = 'g';
-        *d++ = 't';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-      case '&': {
-        *d++ = '&';
-        *d++ = 'a';
-        *d++ = 'm';
-        *d++ = 'p';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-      case '"': {
-        *d++ = '&';
-        *d++ = 'q';
-        *d++ = 'u';
-        *d++ = 'o';
-        *d++ = 't';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-      case '\'': {
-        *d++ = '&';
-        *d++ = 'a';
-        *d++ = 'p';
-        *d++ = 's';
-        *d++ = ';';
-        ++s;
-      }
-      break;
-      default:
-        *d++ = *s++;
-    }
-  }
-  result.truncate( d - result.begin() );
-  return result;
-}
 
 
 QByteArray stripEmailAddr( const QByteArray& aStr )

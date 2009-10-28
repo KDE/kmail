@@ -799,7 +799,7 @@ KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr )
   QString newDate = msg->date()->asUnicodeString();
 
   // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
-  KMime::Headers::Generic *header = new KMime::Headers::Generic( "Resent-Message-ID", msg, StringUtil::generateMessageId( msg->sender()->asUnicodeString() ), "utf-8" );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "Resent-Message-ID", msg, MessageViewer::StringUtil::generateMessageId( msg->sender()->asUnicodeString() ), "utf-8" );
   msg->setHeader( header );
 
   header = new KMime::Headers::Generic( "Resent-Date", msg, newDate, "utf-8" );
@@ -846,7 +846,7 @@ KMime::Types::AddrSpecList extractAddrSpecs( KMime::Message* msg, const QByteArr
   if ( !msg->headerByType( header ) )
     return result;
 
-  KMime::Types::AddressList al =  StringUtil::splitAddrField( msg->headerByType( header )->asUnicodeString().toUtf8() );
+  KMime::Types::AddressList al =  MessageViewer::StringUtil::splitAddrField( msg->headerByType( header )->asUnicodeString().toUtf8() );
   for ( KMime::Types::AddressList::const_iterator ait = al.constBegin() ; ait != al.constEnd() ; ++ait )
     for ( KMime::Types::MailboxList::const_iterator mit = (*ait).mailboxList.constBegin() ; mit != (*ait).mailboxList.constEnd() ; ++mit )
       result.push_back( (*mit).addrSpec() );

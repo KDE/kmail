@@ -60,26 +60,6 @@ namespace StringUtil
                                    bool willBeSigned );
 
   /**
-   * Splits the given address list into separate addresses.
-   */
-  KMime::Types::AddressList splitAddrField( const QByteArray & str );
-
-  /**
-   * Generates the Message-Id. It uses either the Message-Id suffix
-   * defined by the user or the given email address as suffix. The address
-   * must be given as addr-spec as defined in RFC 2822.
-   */
-  QString generateMessageId( const QString& addr );
-
-  /**
-   * Convert '<' into "&lt;" resp. '>' into "&gt;" in order to
-   * prevent their interpretation by KHTML.
-   * Does *not* use the Qt replace function but runs a very fast C code
-   * the same way as lf2crlf() does.
-   */
-  QByteArray html2source( const QByteArray & src );
-
-  /**
    * This function generates a displayable string from a list of email
    * addresses.
    * Input : mailbox-list
