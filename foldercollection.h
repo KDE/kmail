@@ -201,7 +201,7 @@ protected slots:
 signals:
   /** Emitted when the shortcut associated with this folder changes. */
   void shortcutChanged( const Akonadi::Collection & );
-
+  void viewConfigChanged();
 private:
 
   Akonadi::Collection mCollection;

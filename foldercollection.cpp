@@ -209,9 +209,8 @@ void FolderCollection::setShortcut( const KShortcut &sc )
 }
 
 
-void FolderCollection::setUserWhoField( const QString& whoField, bool writeConfig )
+void FolderCollection::setUserWhoField( const QString& whoField, bool _writeConfig )
 {
-#if 0 //TODO port it
   if ( mUserWhoField == whoField && !whoField.isEmpty() )
     return;
 
@@ -221,7 +220,15 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool writeConfi
     const KPIMIdentities::Identity & identity =
       kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
-    if ( isSystemFolder() && folderType() != KMFolderTypeImap ) {
+    if ( kmkernel->isSystemFolderCollection(mCollection)
+#if 0
+         && folderType() != KMFolderTypeImap ) {
+
+
+#else
+         ) {
+         kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       // local system folders
       if ( mCollection == kmkernel->inboxCollectionFolder() ||
            mCollection == kmkernel->trashCollectionFolder() )
@@ -248,10 +255,9 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool writeConfi
   }
   mUserWhoField = whoField;
 
-  if (writeConfig)
+  if (_writeConfig)
     writeConfig();
   emit viewConfigChanged();
-#endif
 }
 
 void FolderCollection::setUseDefaultIdentity( bool useDefaultIdentity )
