@@ -3403,6 +3403,7 @@ void KMMainWidget::slotMsgPopup( KMMessage &msg, const KUrl &aUrl, const QPoint 
       menu->addAction( mMsgActions->forwardMenu() );
     }
     menu->addAction(editAction());
+    menu->addAction( mailingListActionMenu() );
     menu->addSeparator();
 
     menu->addAction( mCopyActionMenu );
