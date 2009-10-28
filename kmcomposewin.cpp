@@ -62,6 +62,7 @@ using MailTransport::Transport;
 #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmmainwin.h"
+#include "kmmainwidget.h"
 #include "kmmsgpartdlg.h"
 #include "kmreadermainwin.h"
 #include "mailcomposeradaptor.h"
@@ -1427,6 +1428,19 @@ void KMComposeWin::setupActions( void )
   QAction *configureAction = actionCollection()->action( "options_configure" );
   if ( configureAction ) {
     configureAction->setText( i18n("Configure KMail..." ) );
+  }
+
+  // Check against conflicting shortcuts between the check mail and the strike out action.
+  // We can not get hold of the strike out action in an easier way.
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
+  if ( mainWidget ) {
+    KAction *checkMail = qobject_cast<KAction*>( mainWidget->action( "check_mail" ) );
+    KAction *strikeOut = qobject_cast<KAction*>( actionCollection()->action( "format_text_strikeout" ) );
+    if ( checkMail && strikeOut ) {
+      if ( checkMail->shortcut() == strikeOut->shortcut() ) {
+        strikeOut->setShortcut( KShortcut() );
+      }
+    }
   }
 }
 
