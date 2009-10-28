@@ -17,6 +17,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "stringutil.h"
+#include "messageviewer/stringutil.h"
 
 #ifndef KMAIL_UNITTESTS
 
@@ -828,23 +829,6 @@ QString emailAddrAsAnchor( const QString& aEmail, Display display, const QString
   return result;
 }
 
-QStringList stripAddressFromAddressList( const QString& address,
-                                         const QStringList& list )
-{
-  QStringList addresses( list );
-  QString addrSpec( KPIMUtils::extractEmailAddress( address ) );
-  for ( QStringList::Iterator it = addresses.begin();
-        it != addresses.end(); ) {
-    if ( kasciistricmp( addrSpec.toUtf8().data(),
-         KPIMUtils::extractEmailAddress( *it ).toUtf8().data() ) == 0 ) {
-      kDebug() << "Removing" << *it << "from the address list";
-      it = addresses.erase( it );
-    }
-    else
-      ++it;
-  }
-  return addresses;
-}
 
 QStringList stripMyAddressesFromAddressList( const QStringList& list )
 {
@@ -860,19 +844,6 @@ QStringList stripMyAddressesFromAddressList( const QStringList& list )
       ++it;
   }
   return addresses;
-}
-
-bool addressIsInAddressList( const QString& address,
-                             const QStringList& addresses )
-{
-  QString addrSpec = KPIMUtils::extractEmailAddress( address );
-  for( QStringList::ConstIterator it = addresses.begin();
-       it != addresses.end(); ++it ) {
-    if ( kasciistricmp( addrSpec.toUtf8().data(),
-         KPIMUtils::extractEmailAddress( *it ).toUtf8().data() ) == 0 )
-      return true;
-  }
-  return false;
 }
 
 QString expandAliases( const QString& recipients, QStringList &distributionListEmpty )
@@ -919,7 +890,7 @@ QString expandAliases( const QString& recipients, QStringList &distributionListE
         expandedRecipients += KPIMUtils::normalizedAddress( displayName, addrSpec + '@' + defaultdomain, comment );
       }
       else {
-        expandedRecipients += guessEmailAddressFromLoginName( addrSpec );
+        expandedRecipients += MessageViewer::StringUtil::guessEmailAddressFromLoginName( addrSpec );
       }
     }
     else
@@ -929,81 +900,8 @@ QString expandAliases( const QString& recipients, QStringList &distributionListE
   return expandedRecipients;
 }
 
-QString guessEmailAddressFromLoginName( const QString& loginName )
-{
-  if ( loginName.isEmpty() )
-    return QString();
-
-  QString address = loginName;
-  address += '@';
-  address += QHostInfo::localHostName();
-
-  // try to determine the real name
-  const KUser user( loginName );
-  if ( user.isValid() ) {
-    QString fullName = user.property( KUser::FullName ).toString();
-    if ( fullName.contains( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) )
-      address = '"' + fullName.replace( '\\', "\\" ).replace( '"', "\\" )
-          + "\" <" + address + '>';
-    else
-      address = fullName + " <" + address + '>';
-  }
-
-  return address;
-}
 #endif
 
-QString formatString( const QString &wildString, const QString &fromAddr )
-{
-  QString result;
-
-  if ( wildString.isEmpty() ) {
-    return wildString;
-  }
-
-  unsigned int strLength( wildString.length() );
-  for ( uint i=0; i<strLength; ) {
-    QChar ch = wildString[i++];
-    if ( ch == '%' && i<strLength ) {
-      ch = wildString[i++];
-      switch ( ch.toLatin1() ) {
-      case 'f': // sender's initals
-      {
-        QString str = stripEmailAddr( fromAddr );
-
-        uint j = 0;
-        for ( ; str[j]>' '; j++ )
-          ;
-        unsigned int strLength( str.length() );
-        for ( ; j < strLength && str[j] <= ' '; j++ )
-          ;
-        result += str[0];
-        if ( str[j] > ' ' ) {
-          result += str[j];
-        } else {
-          if ( str[1] > ' ' ) {
-            result += str[1];
-          }
-        }
-      }
-      break;
-      case '_':
-        result += ' ';
-        break;
-      case '%':
-        result += '%';
-        break;
-      default:
-        result += '%';
-        result += ch;
-        break;
-      }
-    } else {
-      result += ch;
-    }
-  }
-  return result;
-}
 
 #ifndef KMAIL_UNITTESTS
 

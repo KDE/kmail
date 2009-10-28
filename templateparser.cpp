@@ -27,6 +27,8 @@
 #include "attachmentcollector.h"
 #include "stringutil.h"
 
+
+#include "messageviewer/stringutil.h"
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/objecttreeemptysource.h"
 #include "messageviewer/nodehelper.h"
@@ -1323,7 +1325,7 @@ QString TemplateParser::asQuotedString( KMime::Message* msg, const QString& aInd
   if ( lineStart >= 0 )
     content.remove( 0, static_cast<unsigned int>( lineStart ) );
 
-  const QString indentStr = StringUtil::formatString( aIndentStr, msg->from()->asUnicodeString() );
+  const QString indentStr = MessageViewer::StringUtil::formatString( aIndentStr, msg->from()->asUnicodeString() );
 #if 0 //TODO port to akonadi
   if ( TODO port it to akonadi s->smartQuote && s->wordWrap )
     content = StringUtil::smartQuote( content, s->wrapCol - indentStr.length() );

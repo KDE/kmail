@@ -2554,7 +2554,7 @@ void KMComposeWin::slotUpdateFont()
 
 QString KMComposeWin::smartQuote( const QString & msg )
 {
-  return StringUtil::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
+  return MessageViewer::StringUtil::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
 }
 
 void KMComposeWin::slotPasteAsAttachment()
@@ -2591,7 +2591,7 @@ QString KMComposeWin::addQuotesToText( const QString &inputText ) const
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );
   answer += '\n';
-  return StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
+  return MessageViewer::StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
 }
 
 //-----------------------------------------------------------------------------

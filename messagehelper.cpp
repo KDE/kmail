@@ -20,6 +20,7 @@
 #include "kmkernel.h"
 #include "messagehelper.h"
 #include "stringutil.h"
+#include "messageviewer/stringutil.h"
 #include "version-kmail.h"
 #include "kmversion.h"
 #include "templateparser.h"
@@ -317,7 +318,7 @@ KMime::Message* createReply( KMime::Message *origMsg,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
+        recipients = MessageViewer::StringUtil::stripAddressFromAddressList( *it, recipients );
       }
     }
 
@@ -343,7 +344,7 @@ KMime::Message* createReply( KMime::Message *origMsg,
     }
 
     // strip all my addresses from the list of recipients
-    toStr = StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
+    toStr = MessageViewer::StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
 
     // merge To header and CC header into a list of CC recipients
     if( !origMsg->cc()->asUnicodeString().isEmpty() || !origMsg->to()->asUnicodeString().isEmpty() ) {
@@ -353,8 +354,8 @@ KMime::Message* createReply( KMime::Message *origMsg,
       if (!origMsg->cc()->asUnicodeString().isEmpty())
         list += KPIMUtils::splitAddressList(origMsg->cc()->asUnicodeString());
       for( QStringList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) {
-        if(    !StringUtil::addressIsInAddressList( *it, recipients )
-            && !StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
+        if(    !MessageViewer::StringUtil::addressIsInAddressList( *it, recipients )
+            && !MessageViewer::StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;
           kDebug() << "Added" << *it <<"to the list of CC recipients";
         }
@@ -389,7 +390,7 @@ KMime::Message* createReply( KMime::Message *origMsg,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
+        recipients = MessageViewer::StringUtil::stripAddressFromAddressList( *it, recipients );
       }
       if ( !recipients.isEmpty() ) {
         toStr = recipients.join(", ");
@@ -542,7 +543,7 @@ MessageReply createReply2( KMime::Message *origMsg,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
+        recipients = MessageViewer::StringUtil::stripAddressFromAddressList( *it, recipients );
       }
     }
 
@@ -578,8 +579,8 @@ MessageReply createReply2( KMime::Message *origMsg,
       if (! origMsg->cc()->asUnicodeString().isEmpty())
         list += KPIMUtils::splitAddressList(origMsg->cc()->asUnicodeString());
       for( QStringList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) {
-        if(    !StringUtil::addressIsInAddressList( *it, recipients )
-            && !StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
+        if(    !MessageViewer::StringUtil::addressIsInAddressList( *it, recipients )
+            && !MessageViewer::StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;
           kDebug() << "Added" << *it <<"to the list of CC recipients";
         }
@@ -614,7 +615,7 @@ MessageReply createReply2( KMime::Message *origMsg,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = StringUtil::stripAddressFromAddressList( *it, recipients );
+        recipients = MessageViewer::StringUtil::stripAddressFromAddressList( *it, recipients );
       }
       if ( !recipients.isEmpty() ) {
         toStr = recipients.join(", ");
