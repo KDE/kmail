@@ -3,7 +3,6 @@
 
 #include "kmmsgdict.h"
 
-#include "kmfolderindex.h"
 #include "kmfolder.h"
 #include "kmdict.h"
 #include "globalsettings.h"
