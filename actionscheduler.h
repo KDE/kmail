@@ -145,7 +145,9 @@ private slots:
 
 private:
   static QList<ActionScheduler*> *schedulerList; // for debugging
+#if 0
   static KMFolderMgr *tempFolderMgr;
+#endif
   static int refCount, count;
   static bool sEnabled, sEnabledChecked;
 

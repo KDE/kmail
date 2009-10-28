@@ -34,8 +34,6 @@
 #include "messageproperty.h"
 #include "kmfilter.h"
 #include "kmfolderindex.h"
-//TODO port to akonadi #include "kmfolderimap.h"
-#include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kmcommands.h"
 #include "broadcaststatus.h"
@@ -53,8 +51,9 @@ using KMail::AccountManager;
 
 using namespace KMail;
 
-
+#if 0
 KMFolderMgr* ActionScheduler::tempFolderMgr = 0;
+#endif
 int ActionScheduler::refCount = 0;
 int ActionScheduler::count = 0;
 QList<ActionScheduler*> *ActionScheduler::schedulerList = 0;
@@ -112,12 +111,16 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   } else {
     QString tmpName;
     tmpName.setNum( count );
+#if 0
     if (!tempFolderMgr)
       tempFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/filter"));
     KMFolder *tempFolder = tempFolderMgr->findOrCreate( tmpName );
     tempFolder->expunge();
     mDeleteSrcFolder = true;
     setSourceFolder( tempFolder );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   if (!schedulerList)
       schedulerList = new QList<ActionScheduler*>;
@@ -133,16 +136,18 @@ ActionScheduler::~ActionScheduler()
   disconnect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
               this, SLOT(folderClosedOrExpunged()) );
   mSrcFolder->close( "actionschedsrc" );
-
+#if 0
   if ( mDeleteSrcFolder ) {
     tempFolderMgr->remove( mSrcFolder );
   }
-
+#endif
   --refCount;
+#if 0
   if ( refCount == 0 ) {
     delete tempFolderMgr;
     tempFolderMgr = 0;
   }
+#endif
 }
 
 void ActionScheduler::setAutoDestruct( bool autoDestruct )

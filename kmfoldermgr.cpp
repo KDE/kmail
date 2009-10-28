@@ -26,8 +26,6 @@
 #include "kmfiltermgr.h"
 #include "folderstorage.h"
 #include "kmfolder.h"
-//TODO port to akonadi #include "kmfoldercachedimap.h"
-//TODO port to akonadi #include "kmacctcachedimap.h"
 
 
 //-----------------------------------------------------------------------------
@@ -571,7 +569,7 @@ void KMFolderMgr::moveFolder( KMFolder* folder, KMFolderDir *newParent )
 void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
                                 KMFolderDir *newParent )
 {
-#if 0 //Done by akonadi	
+#if 0 //Done by akonadi
   RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
   connect( job, SIGNAL( renameDone( const QString&, bool ) ),
       this, SLOT( slotRenameDone( const QString&, bool ) ) );
@@ -579,13 +577,13 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
            this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
 
   job->start();
-#endif  
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 {
-#if 0 //Done by akonadi	
+#if 0 //Done by akonadi
   kDebug() << "Copy folder:" << folder->prettyUrl();
   CopyFolderJob* job = new CopyFolderJob( folder->storage(), newParent );
   connect( job, SIGNAL( folderCopyComplete( bool ) ),

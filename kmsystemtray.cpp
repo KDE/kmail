@@ -19,8 +19,6 @@
 
 #include "kmsystemtray.h"
 #include "kmfolder.h"
-#include "kmfoldermgr.h"
-//TODO port to akonadi #include "kmfolderimap.h"
 #include "kmmainwidget.h"
 #include "accountmanager.h"
 
@@ -97,15 +95,13 @@ KMSystemTray::KMSystemTray(QWidget *parent)
            this, SLOT( slotActivated( QSystemTrayIcon::ActivationReason ) ) );
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
-
+#if 0
   connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
-#if 0 //TODO port to akonadi
-  connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
-  connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+  connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            SLOT( updateNewMessages() ) );
@@ -258,14 +254,11 @@ void KMSystemTray::foldersChanged()
 
   QStringList folderNames;
   QList<QPointer<KMFolder> > folderList;
+#if 0
   kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
-#if 0 //TODO port to akonadi
-  kmkernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
-  kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  kmkernel->searchFolderMgr()->createFolderList(&folderNames, &folderList);
 
   QStringList::iterator strIt = folderNames.begin();
 

@@ -47,8 +47,6 @@
 
 #include "folderrequester.h"
 #include "kmcommands.h"
-#include "kmfoldermgr.h"
-//TODO port to akonadi #include "kmfoldersearch.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
@@ -374,9 +372,12 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mCutAction = ac->addAction( KStandardAction::Cut, "search_cut_messages", this, SLOT(slotCutMsgs()) );
 
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
+#if 0
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
           this, SLOT(folderInvalidated(KMFolder*)));
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   connect(mCbxFolders, SIGNAL(folderChanged(const Akonadi::Collection&)),
           this, SLOT(slotFolderActivated()));
 
@@ -510,7 +511,7 @@ void SearchWindow::slotSearch()
   mSortColumn = mLbxMatches->sortColumn();
   mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
   mLbxMatches->setSortingEnabled( false );
-
+#if 0
   // If we haven't openend an existing search folder, find or create one.
   if ( !mFolder ) {
     KMFolderMgr *mgr = kmkernel->searchFolderMgr();
@@ -531,6 +532,7 @@ void SearchWindow::slotSearch()
     }
     mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
   }
+#endif
   mFolder->stopSearch();
   disconnect( mFolder, SIGNAL( msgAdded( int ) ),
               this, SLOT( slotAddMsg( int ) ) );
