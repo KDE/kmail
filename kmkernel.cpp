@@ -1465,6 +1465,7 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
   if ( the_trashFolder->userWhoField().isEmpty() )
     the_trashFolder->setUserWhoField( QString() );
   // the_trashFolder->open();
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Trash );
 
   the_draftsFolder = the_folderMgr->findOrCreate(group.readEntry("draftsFolder", I18N_NOOP("drafts")));
   if ( !the_draftsFolder->canAccess() ) {
