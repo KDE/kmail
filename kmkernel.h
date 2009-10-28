@@ -71,7 +71,6 @@ class KComponentData;
 class QTimer;
 class KMMainWin;
 class KMainWindow;
-//TODO port to akonadi class KMailICalIfaceImpl;
 class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
@@ -310,7 +309,6 @@ public:
   //Remove it !
   KMFolder *inboxFolder() { return the_inboxFolder; }
   KMFolder *outboxFolder() { return the_outboxFolder; }
-  KMFolder *sentFolder() { return the_sentFolder; }
   KMFolder *trashFolder() { return the_trashFolder; }
   KMFolder *draftsFolder() { return the_draftsFolder; }
   KMFolder *templatesFolder() { return the_templatesFolder; }
