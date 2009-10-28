@@ -316,12 +316,12 @@ public:
   KMFolder *templatesFolder() { return the_templatesFolder; }
 
 
-  Akonadi::Collection inboxCollectionFolder() { return the_inboxCollectionFolder; }
-  Akonadi::Collection outboxCollectionFolder() { return the_outboxCollectionFolder; }
-  Akonadi::Collection sentCollectionFolder() { return the_sentCollectionFolder; }
-  Akonadi::Collection trashCollectionFolder() { return the_trashCollectionFolder; }
-  Akonadi::Collection draftsCollectionFolder() { return the_draftsCollectionFolder; }
-  Akonadi::Collection templatesCollectionFolder() { return the_templatesCollectionFolder; }
+  Akonadi::Collection inboxCollectionFolder();
+  Akonadi::Collection outboxCollectionFolder();
+  Akonadi::Collection sentCollectionFolder();
+  Akonadi::Collection trashCollectionFolder();
+  Akonadi::Collection draftsCollectionFolder();
+  Akonadi::Collection templatesCollectionFolder();
 
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }

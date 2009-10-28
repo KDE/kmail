@@ -1376,7 +1376,6 @@ void KMKernel::recoverDeadLetters()
 
 void KMKernel::findCreateDefaultCollection( Akonadi::SpecialCollections::Type type )
 {
-#if 0
   if( Akonadi::SpecialCollections::self()->hasDefaultCollection( type ) ) {
     const Akonadi::Collection col = Akonadi::SpecialCollections::self()->defaultCollection( type );
     if ( !( col.rights() & Akonadi::Collection::AllRights ) )
@@ -1387,9 +1386,7 @@ void KMKernel::findCreateDefaultCollection( Akonadi::SpecialCollections::Type ty
     connect( job, SIGNAL( result( KJob* ) ),
              this, SLOT( createDefaultCollectionDone( KJob* ) ) );
     job->requestDefaultCollection( type );
-    job->exec();
   }
-#endif
 }
 
 void KMKernel::createDefaultCollectionDone( KJob * job)
@@ -2486,5 +2483,47 @@ void KMKernel::updatedTemplates()
   emit customTemplatesChanged();
 }
 
+
+Akonadi::Collection KMKernel::inboxCollectionFolder()
+{
+  if ( !the_inboxCollectionFolder.isValid() )
+    the_inboxCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Inbox );
+  return the_inboxCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::outboxCollectionFolder()
+{
+  if ( !the_outboxCollectionFolder.isValid() )
+    the_outboxCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Outbox );
+  return the_outboxCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::sentCollectionFolder()
+{
+  if ( !the_sentCollectionFolder.isValid() )
+    the_sentCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::SentMail );
+  return the_sentCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::trashCollectionFolder()
+{
+  if ( !the_trashCollectionFolder.isValid() )
+    the_trashCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Trash );
+  return the_trashCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::draftsCollectionFolder()
+{
+  if ( !the_draftsCollectionFolder.isValid() )
+    the_draftsCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Drafts );
+  return the_draftsCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::templatesCollectionFolder()
+{
+  if ( !the_templatesCollectionFolder.isValid() )
+    the_templatesCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Templates );
+  return the_templatesCollectionFolder;
+}
 
 #include "kmkernel.moc"
