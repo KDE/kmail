@@ -194,10 +194,14 @@ public:
   /** Mark all new and unread messages as read. */
   void markUnreadAsRead();
 
+  void removeCollection();
+
 protected slots:
   void slotIdentitiesChanged();
   void slotMarkNewAsUnreadfetchDone( KJob * job );
   void slotMarkNewAsReadfetchDone( KJob * job);
+  void slotDeletionCollectionResult( KJob *job );
+
 signals:
   /** Emitted when the shortcut associated with this folder changes. */
   void shortcutChanged( const Akonadi::Collection & );

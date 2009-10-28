@@ -23,6 +23,8 @@
 #include <kpimidentities/identity.h>
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
+#include <akonadi/collectiondeletejob.h>
+#include <kio/jobuidelegate.h>
 #include "kmcommands.h"
 
 FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writeconfig )
@@ -438,5 +440,20 @@ void FolderCollection::slotMarkNewAsReadfetchDone( KJob * job)
     return;
   KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();
+}
+
+
+void FolderCollection::removeCollection()
+{
+  Akonadi::CollectionDeleteJob *job = new Akonadi::CollectionDeleteJob( mCollection );
+  connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDeletionCollectionResult( KJob* ) ) );
+}
+
+void FolderCollection::slotDeletionCollectionResult( KJob * job )
+{
+  if ( job->error() ) {
+    // handle errors
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+  }
 }
 

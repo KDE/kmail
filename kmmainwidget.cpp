@@ -1626,7 +1626,10 @@ void KMMainWidget::slotRemoveFolder()
     else
       kmkernel->folderMgr()->remove(mFolder);
 #endif
+    mCurrentFolder->removeCollection();
   }
+  delete mCurrentFolder;
+  mCurrentFolder = 0;
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 }
 
