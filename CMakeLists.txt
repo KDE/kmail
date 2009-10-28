@@ -392,7 +392,7 @@ install(FILES
   kmail_part.rc
   DESTINATION ${DATA_INSTALL_DIR}/kmail
 )
-install(FILES dbusmail.desktop dbusimap.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install(FILES dbusmail.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install(FILES
   application_octetstream.desktop
   DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter
