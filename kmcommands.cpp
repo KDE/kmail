@@ -86,8 +86,6 @@ using KMail::ActionScheduler;
 #include <kaddrbookexternal.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
-//TODO port to akonadi #include "kmfoldermbox.h"
-//TODO port to akonadi #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
@@ -209,13 +207,6 @@ KMCommand::KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList )
 
 KMCommand::~KMCommand()
 {
-  QList<QPointer<KMFolder> >::Iterator fit;
-  for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
-    if ( !(*fit) ) {
-      continue;
-    }
-    (*fit)->close( "kmcommand" );
-  }
 }
 
 KMime::Message *KMCommand::message( const Akonadi::Item & item )
@@ -494,11 +485,6 @@ void KMCommand::slotTransferCancelled()
   emit messagesTransfered( Canceled );
 }
 
-void KMCommand::keepFolderOpen( KMFolder *folder )
-{
-  folder->open( "kmcommand" );
-  mFolders.append( folder );
-}
 
 KMMailtoComposeCommand::KMMailtoComposeCommand( const KUrl &url,
                                                 const Akonadi::Item &msg )
@@ -2259,32 +2245,6 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
 }
 #endif
 
-void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
-{
-#if 0 //Port to akonadi
-  if ( folder != mDestFolder || !mLostBoys.contains( serNum )  ) {
-    //kDebug() << "Different folder or invalid serial number.";
-    return;
-  }
-  mLostBoys.removeAll(serNum);
-  if ( mLostBoys.isEmpty() ) {
-    // we are done. All messages transferred to the host successfully
-    disconnect (mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
-             this, SLOT(slotMsgAddedToDestFolder(KMFolder*, quint32)));
-    if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
-      mDestFolder->sync();
-    }
-    if ( mCompleteWithAddedMsg ) {
-      completeMove( OK );
-    }
-  } else {
-    if ( mProgressItem ) {
-      mProgressItem->incCompletedItems();
-      mProgressItem->updateProgress();
-    }
-  }
-#endif
-}
 
 void KMMoveCommand::completeMove( Result result )
 {

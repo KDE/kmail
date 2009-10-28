@@ -23,8 +23,6 @@ using KPIM::MessageStatus;
 #include <akonadi/collection.h>
 class KProgressDialog;
 class KMFilter;
-class KMFolder;
-class KMFolderImap;
 class KMMainWidget;
 class KMReaderWin;
 class partNode;
@@ -59,11 +57,6 @@ public:
   // Retrieve the single message msgBase when start is called.
   virtual ~KMCommand();
 
-  /** These folders will be closed by the dtor, handy, if you need to keep
-      a folder open during the lifetime of the command, but don't want to
-      care about closing it again.
-   */
-  void keepFolderOpen( KMFolder *folder );
 
   /** Returns the result of the command. Only call this method from the slot
       connected to completed().
@@ -157,7 +150,6 @@ private:
   QWidget *mParent;
   QList<Akonadi::Item> mRetrievedMsgs;
   QList<Akonadi::Item> mMsgList;
-  QList<QPointer<KMFolder> > mFolders;
 };
 
 class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand
@@ -735,8 +727,6 @@ public:
   Akonadi::Collection destFolder() const { return mDestFolder; }
 
 public slots:
-//TODO port to akonadi void slotImapFolderCompleted(KMFolderImap *folder, bool success);
-  void slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum);
   void slotMoveCanceled();
   void slotMoveResult( KJob * job );
 protected:
@@ -746,7 +736,6 @@ protected:
   void addMsg( const Akonadi::Item &msg ) {
     mItem.append( msg );
   }
-  QVector<KMFolder*> mOpenedFolders;
 
 private:
   virtual Result execute();
