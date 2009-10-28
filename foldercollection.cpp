@@ -53,10 +53,7 @@ QString FolderCollection::name() const
 
 bool FolderCollection::isSystemFolder() const
 {
-  //TODO port !!!!
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-
-  return false;
+  return KMKernel::self()->isSystemFolderCollection( mCollection );
 }
 
 bool FolderCollection::noContent() const
