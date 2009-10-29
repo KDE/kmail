@@ -74,6 +74,7 @@ using KWallet::Wallet;
 #include <akonadi/kmime/specialcollectionsrequestjob.h>
 #include <akonadi/collection.h>
 #include <akonadi/collectionfetchjob.h>
+#include <akonadi/changerecorder.h>
 #include "actionscheduler.h"
 
 #include <QByteArray>
@@ -2334,15 +2335,30 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
   return folder;
 }
 
-Akonadi::Collection KMKernel::findFolderCollectionById( const QString& id )
+Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )
 {
-  Akonadi::Collection col( id.toInt() );
-  if ( col.isValid() ) {
-    kDebug()<<" IS VALID !!!!!!!!!!!!! :"<<col;
-    return col;
+  /*
+  KMMainWidget *widget = getKMMainWidget();
+  if ( !widget )
+    return Akonadi::Collection();
+  Akonadi::ChangeRecorder *recorder = widget->monitorFolders();
+  if ( !recorder )
+    return Akonadi::Collection();
+  */
+  int id = idString.toInt();
+
+  Akonadi::Collection::List lst;
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive );
+  if ( job->exec() ) {
+    lst = job->collections();
+    for ( int i = 0; i < lst.count(); ++i ) {
+      if ( lst.at( i ).id() == id ) {
+        delete job;
+        return lst.at( i );
+      }
+    }
   }
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  //TODO port it !!!
+  delete job;
   return Akonadi::Collection();
 }
 
@@ -2434,7 +2450,10 @@ FolderCollection *KMKernel::currentFolderCollection()
 
 // can't be inline, since KMSender isn't known to implement
 // KMail::MessageSender outside this .cpp file
-KMail::MessageSender * KMKernel::msgSender() { return the_msgSender; }
+KMail::MessageSender * KMKernel::msgSender()
+{
+  return the_msgSender;
+}
 
 void KMKernel::transportRemoved(int id, const QString & name)
 {
