@@ -10,7 +10,6 @@ using KMail::AccountManager;
 #include "messagesender.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
-//TODO port to akonadi #include "kmfoldercachedimap.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressItem;
@@ -96,7 +95,7 @@ void KMPrecommand::precommandExited(int exitCode, QProcess::ExitStatus)
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
   : KAccount( id, aName ),
-    mTrash(KMKernel::self()->trashFolder()->idString()),
+    mTrash(QString::number( KMKernel::self()->trashCollectionFolder().id() )),
     mOwner(aOwner),
     mFolder(0),
     mTimer(0),
@@ -117,7 +116,7 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
 }
 
 void KMAccount::init() {
-  mTrash = kmkernel->trashFolder()->idString();
+  mTrash = QString::number( kmkernel->trashCollectionFolder().id() );
   mExclude = false;
   mInterval = 0;
   mNewInFolder.clear();
