@@ -990,7 +990,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   layout->addWidget( mMoveSpamRules );
 
   mFolderReqForSpamFolder = new FolderRequester( this );
-  mFolderReqForSpamFolder->setFolder( "trash" );
+  mFolderReqForSpamFolder->setFolder( KMKernel::self()->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
   mFolderReqForSpamFolder->setShowImapFolders( false );
@@ -1057,10 +1057,10 @@ bool ASWizSpamRulesPage::moveUnsureSelected() const
 
 QString ASWizSpamRulesPage::selectedSpamFolderName() const
 {
-  QString name = "trash";
   if ( mFolderReqForSpamFolder->folderCollection().isValid() )
-    name = mFolderReqForSpamFolder->folderCollection().id();
-  return name;
+    return QString::number( mFolderReqForSpamFolder->folderCollection().id() );
+  else
+    return QString::number( KMKernel::self()->trashCollectionFolder().id() );
 }
 
 
@@ -1068,8 +1068,9 @@ QString ASWizSpamRulesPage::selectedUnsureFolderName() const
 {
   QString name = "inbox";
   if ( mFolderReqForUnsureFolder->folderCollection().isValid() )
-    name = mFolderReqForUnsureFolder->folderCollection().id();
-  return name;
+    return QString::number( mFolderReqForUnsureFolder->folderCollection().id() );
+  else
+    return QString::number( KMKernel::self()->inboxCollectionFolder().id() );
 }
 
 
@@ -1163,10 +1164,10 @@ bool ASWizVirusRulesPage::markReadRulesSelected() const
 
 QString ASWizVirusRulesPage::selectedFolderName() const
 {
-  QString name = "trash";
   if ( mFolderTree->selectedCollection().isValid() )
-    name = mFolderTree->selectedCollection().id();
-  return name;
+    return QString::number( mFolderTree->selectedCollection().id() );
+  else
+    return QString::number( KMKernel::self()->trashCollectionFolder().id() );
 }
 
 void ASWizVirusRulesPage::processSelectionChange()
