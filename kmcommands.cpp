@@ -2026,13 +2026,13 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 }
 
 KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder,
-                              const QList<Akonadi::Item> &msgList )
+                              const QList<Akonadi::Item> &msgList)
   :mDestFolder( destFolder ), mMsgList( msgList )
 {
   setDeletesItself( true );
 }
 
-KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder, const Akonadi::Item& msg )
+KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder, const Akonadi::Item& msg)
   :mDestFolder( destFolder )
 {
   setDeletesItself( true );
@@ -2058,15 +2058,17 @@ void KMCopyCommand::slotCopyResult( KJob * job )
 }
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
-                                const QList<Akonadi::Item> &msgList)
-    : mDestFolder( destFolder ), mProgressItem( 0 )
+                              const QList<Akonadi::Item> &msgList,
+                              MessageList::Core::MessageItemSetReference ref)
+    : mDestFolder( destFolder ), mProgressItem( 0 ), mRef( ref )
 {
   mItem = msgList;
 }
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
-                              const Akonadi::Item& msg )
-  : mDestFolder( destFolder ), mProgressItem( 0 )
+                              const Akonadi::Item& msg ,
+                              MessageList::Core::MessageItemSetReference ref)
+  : mDestFolder( destFolder ), mProgressItem( 0 ), mRef( ref )
 {
   mItem.append( msg );
 }
@@ -2078,11 +2080,16 @@ void KMMoveCommand::slotMoveResult( KJob * job )
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     setResult( Failed );
   }
+  else
+    setResult( OK );
   deleteLater();
+  emit moveDone(this);
 }
 
 KMCommand::Result KMMoveCommand::execute()
 {
+  KCursorSaver busy( KBusyPtr::busy() );
+
   setEmitsCompletedItself( true );
   setDeletesItself( true );
   Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder,this );
@@ -2248,13 +2255,13 @@ void KMMoveCommand::slotMoveCanceled()
 
 // srcFolder doesn't make much sense for searchFolders
 KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder,
-  const QList<Akonadi::Item> &msgList )
-:KMMoveCommand( findTrashFolder( srcFolder ), msgList)
+  const QList<Akonadi::Item> &msgList,MessageList::Core::MessageItemSetReference ref )
+:KMMoveCommand( findTrashFolder( srcFolder ), msgList, ref)
 {
 }
 
-KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item & msg )
-:KMMoveCommand( findTrashFolder( srcFolder ), msg)
+KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item & msg,MessageList::Core::MessageItemSetReference ref )
+:KMMoveCommand( findTrashFolder( srcFolder ), msg, ref)
 {
 }
 

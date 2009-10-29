@@ -2214,7 +2214,7 @@ void KMKernel::slotEmptyTrash()
   {
     return;
   }
-
+#if 0
   QList<KMAccount*>::iterator accountIt = acctMgr()->begin();
   while ( accountIt != acctMgr()->end() ) {
     KMAccount *acct = *accountIt;
@@ -2225,6 +2225,9 @@ void KMKernel::slotEmptyTrash()
       trash->expunge();
     }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMKernel* KMKernel::self()

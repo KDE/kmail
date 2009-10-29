@@ -42,6 +42,7 @@
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/standardactionmanager.h>
 #include <akonadi/entity.h>
+#include <messagelist/core/view.h>
 namespace MessageList {
   class Pane;
 }
@@ -494,7 +495,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateCustomTemplateMenus();
 
 
-    void moveMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest, bool confirmOnDeletion = true );
+    void moveMessageSelected( MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true );
 
     void copyMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest );
 
@@ -504,7 +505,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * The set parameter must not be null and the ownership is passed
      * to this function.
      */
-    void trashMessageSelected( const QList<Akonadi::Item> &select );
+    void trashMessageSelected( MessageList::Core::MessageItemSetReference ref );
     /**
      * Set the status of the messages referenced by the specified set, eventually toggling it.
      * The set parameter must not be null and the ownership is passed to this function.
@@ -526,12 +527,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
      * Called when a "move to trash" operation is completed
      */
-    void slotTrashMessagesCompleted( KMCommand *command );
+    void slotTrashMessagesCompleted( KMMoveCommand *command );
 
     /**
      * Called when a "move" operation is completed
      */
-    void slotMoveMessagesCompleted( KMCommand *command );
+    void slotMoveMessagesCompleted( KMMoveCommand *command );
 
     /**
      * Called when a "copy" operation is completed

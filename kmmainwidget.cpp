@@ -1563,8 +1563,7 @@ void KMMainWidget::slotRemoveFolder()
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>",
                 Qt::escape( mCurrentFolder->name() ) );
-      }
-      else {
+      } else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<resource>%1</resource> and all its subfolders? Those subfolders might "
                    "not be empty and their contents will be discarded as well. "
@@ -1579,14 +1578,15 @@ void KMMainWidget::slotRemoveFolder()
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
                 Qt::escape( mCurrentFolder->label() ) );
-      }
-      else {
+      }else {
         str = i18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
                    "and all its subfolders, discarding their contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
               Qt::escape( mCurrentFolder->label() ) );
       }
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
     }
     buttonLabel = i18nc("@action:button Delete folder", "&Delete");
@@ -1625,6 +1625,8 @@ void KMMainWidget::slotRemoveFolder()
       kmkernel->searchFolderMgr()->remove(mFolder);
     else
       kmkernel->folderMgr()->remove(mFolder);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
     mCurrentFolder->removeCollection();
   }
@@ -1868,8 +1870,9 @@ void KMMainWidget::slotResendMsg()
 // Message moving and permanent deletion
 //
 
-void KMMainWidget::moveMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest, bool confirmOnDeletion )
+void KMMainWidget::moveMessageSelected( MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion )
 {
+  QList<Akonadi::Item> selectMsg  = mMessagePane->itemListFromPersistentSet( ref );
   // If this is a deletion, ask for confirmation
   if ( !dest.isValid() && confirmOnDeletion )
   {
@@ -1889,11 +1892,13 @@ void KMMainWidget::moveMessageSelected( const QList<Akonadi::Item> &selectMsg, c
       );
     if ( ret == KMessageBox::Cancel )
     {
+      mMessagePane->deletePersistentSet( ref );
       return;  // user canceled the action
     }
   }
+  mMessagePane->markMessageItemsAsAboutToBeRemoved( ref, true );
   // And stuff them into a KMMoveCommand :)
-  KMCommand *command = new KMMoveCommand( dest, selectMsg );
+  KMMoveCommand *command = new KMMoveCommand( dest, selectMsg,ref );
 #if 0
   // Reparent the set to the command so it's deleted even if the command
   // doesn't notify the completion for some reason.
@@ -1903,14 +1908,9 @@ void KMMainWidget::moveMessageSelected( const QList<Akonadi::Item> &selectMsg, c
   set->setObjectName( QString( "moveMsgCommandMessageSet" ) );
 #endif
   QObject::connect(
-      command, SIGNAL( completed( KMCommand * ) ),
-      this, SLOT( slotMoveMessagesCompleted( KMCommand * ) )
+      command, SIGNAL( moveDone( KMMoveCommand * ) ),
+      this, SLOT( slotMoveMessagesCompleted( KMMoveCommand * ) )
     );
-#if 0
-  // Mark the messages as about to be removed (will remove them from the slelection,
-  // make non selectable and make them appear dimmer).
-  set->markAsAboutToBeRemoved( true );
-#endif
   command->start();
 
   if ( dest.isValid() )
@@ -1919,22 +1919,13 @@ void KMMainWidget::moveMessageSelected( const QList<Akonadi::Item> &selectMsg, c
     BroadcastStatus::instance()->setStatusMsg( i18n( "Deleting messages..." ) );
 }
 
-void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
+void KMMainWidget::slotMoveMessagesCompleted( KMMoveCommand *command )
 {
   Q_ASSERT( command );
-#ifdef OLD_MESSAGELIST
-  // We have given our persistent set a nice name when it has been created.
-  // We have also attacched it as the command child.
-  KMail::MessageListView::MessageSet * set = \
-      command->findChild< KMail::MessageListView::MessageSet * >( QString( "moveMsgCommandMessageSet" ) );
-
-  Q_ASSERT( set );
-
+  mMessagePane->markMessageItemsAsAboutToBeRemoved( command->refSet(), false );
+  mMessagePane->deletePersistentSet( command->refSet() );
   // Bleah :D
-  bool moveWasReallyADelete = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
-
-  // clear the "about to be removed" state from anything that KMCommand failed to remove
-  set->markAsAboutToBeRemoved( false );
+  bool moveWasReallyADelete = !command->destFolder().isValid();
 
   if ( command->result() != KMCommand::OK )
   {
@@ -1956,28 +1947,23 @@ void KMMainWidget::slotMoveMessagesCompleted( KMCommand *command )
         BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages canceled." ) );
     }
   }
-#endif
   // The command will autodelete itself and will also kill the set.
 }
 
 void KMMainWidget::slotDeleteMsg( bool confirmDelete )
 {
-  // Create a persistent message set from the current selection
-  QList<Akonadi::Item> select = mMessagePane->selectionAsMessageItemList();
-  if ( select.isEmpty() ) // no selection
-    return;
-
-  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
+   // Create a persistent message set from the current selection
+  MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
+  if ( ref != -1 )
+    moveMessageSelected( ref, Akonadi::Collection(), confirmDelete );
 }
 
 void KMMainWidget::slotDeleteThread( bool confirmDelete )
 {
   // Create a persistent set from the current thread.
-  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
-  if ( select.isEmpty() ) // no current thread
-    return;
-
-  moveMessageSelected( select, Akonadi::Collection(), confirmDelete );
+  MessageList::Core::MessageItemSetReference ref = mMessagePane->currentThreadAsPersistentSet();
+  if ( ref != -1 )
+    moveMessageSelected( ref, Akonadi::Collection(), confirmDelete );
 }
 
 
@@ -1997,10 +1983,10 @@ void KMMainWidget::slotMoveSelectedMessageToFolder()
 
 void KMMainWidget::moveSelectedMessagesToFolder( const Akonadi::Collection & dest )
 {
-  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
-  if ( !lstMsg.isEmpty() ) {
+   MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
+  if ( ref != -1 ) {
     //Need to verify if dest == src ??? akonadi do it for us.
-    moveMessageSelected( lstMsg, dest, false );
+    moveMessageSelected( ref, dest, false );
   }
 }
 
@@ -2077,35 +2063,29 @@ void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest
 //-----------------------------------------------------------------------------
 // Message trashing
 //
-void KMMainWidget::trashMessageSelected( const QList<Akonadi::Item> & select )
+void KMMainWidget::trashMessageSelected( MessageList::Core::MessageItemSetReference ref )
 {
+  QList<Akonadi::Item> select = mMessagePane->itemListFromPersistentSet( ref );
+  mMessagePane->markMessageItemsAsAboutToBeRemoved( ref, true );
+
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
   // And stuff them into a KMTrashMsgCommand :)
-  KMCommand *command = new KMTrashMsgCommand( mCurrentFolder->collection(), select );
+  KMCommand *command = new KMTrashMsgCommand( mCurrentFolder->collection(), select,ref );
 
   QObject::connect(
-      command, SIGNAL( completed( KMCommand * ) ),
-      this, SLOT( slotTrashMessagesCompleted( KMCommand * ) )
+      command, SIGNAL( moveDone( KMMoveCommand * ) ),
+      this, SLOT( slotTrashMessagesCompleted( KMMoveCommand * ) )
     );
 
   command->start();
   BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash..." ) );
 }
 
-void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
+void KMMainWidget::slotTrashMessagesCompleted( KMMoveCommand *command )
 {
   Q_ASSERT( command );
-#ifdef OLD_MESSAGELIST
-  // We have given our persistent set a nice name when it has been created.
-  // We have also attacched it as the command child.
-  KMail::MessageListView::MessageSet * set = \
-      command->findChild< KMail::MessageListView::MessageSet * >( QString( "trashMsgCommandMessageSet" ) );
-
-  Q_ASSERT( set );
-
-  // clear the "about to be removed" state from anything that KMCommand failed to remove
-  set->markAsAboutToBeRemoved( false );
-#endif
+  mMessagePane->markMessageItemsAsAboutToBeRemoved( command->refSet(), false );
+  mMessagePane->deletePersistentSet( command->refSet() );
   if ( command->result() != KMCommand::OK )
   {
     BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved to trash successfully." ) );
@@ -2121,18 +2101,17 @@ void KMMainWidget::slotTrashMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotTrashSelectedMessages()
 {
-  QList<Akonadi::Item> lstMsg = mMessagePane->selectionAsMessageItemList();
-  if ( !lstMsg.isEmpty() ) {
-    trashMessageSelected( lstMsg );
+  MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
+  if ( ref != -1 ) {
+    trashMessageSelected( ref );
   }
 }
 
 void KMMainWidget::slotTrashThread()
 {
-  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
-  if ( select.isEmpty() )
-    return;
-  trashMessageSelected( select );
+  MessageList::Core::MessageItemSetReference ref = mMessagePane->currentThreadAsPersistentSet();
+  if ( ref != -1 )
+    trashMessageSelected( ref );
 }
 
 //-----------------------------------------------------------------------------

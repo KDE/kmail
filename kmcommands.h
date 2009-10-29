@@ -11,6 +11,7 @@
 using MessageViewer::EditorWatcher;
 #include <mimelib/string.h>
 #include <messagecore/messagestatus.h>
+#include <messagelist/core/view.h>
 using KPIM::MessageStatus;
 #include <kservice.h>
 #include <ktemporaryfile.h>
@@ -722,9 +723,11 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMoveCommand( const Akonadi::Collection& destFolder, const QList<Akonadi::Item> &msgList );
-  KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg );
+  KMMoveCommand( const Akonadi::Collection& destFolder, const QList<Akonadi::Item> &msgList, MessageList::Core::MessageItemSetReference ref );
+  KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg, MessageList::Core::MessageItemSetReference ref );
   Akonadi::Collection destFolder() const { return mDestFolder; }
+
+  MessageList::Core::MessageItemSetReference refSet() const { return mRef; }
 
 public slots:
   void slotMoveCanceled();
@@ -735,12 +738,16 @@ protected:
     mItem.append( msg );
   }
 
+signals:
+  void moveDone( KMMoveCommand* );
+
 private:
   virtual Result execute();
   void completeMove( Result result );
 
   Akonadi::Collection mDestFolder;
   KPIM::ProgressItem *mProgressItem;
+  MessageList::Core::MessageItemSetReference mRef;
   bool mCompleteWithAddedMsg;
 
   QList<Akonadi::Item> mItem;
@@ -751,8 +758,8 @@ class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
   Q_OBJECT
 
 public:
-  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<Akonadi::Item> &msgList );
-  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item& msg );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<Akonadi::Item> &msgList,MessageList::Core::MessageItemSetReference ref );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item& msg,MessageList::Core::MessageItemSetReference ref );
 
 private:
   static Akonadi::Collection findTrashFolder( const Akonadi::Collection& srcFolder );

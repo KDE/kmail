@@ -151,7 +151,7 @@ void KMReaderMainWin::slotTrashMsg()
 {
   if ( !mMsg.isValid() )
     return;
-  KMTrashMsgCommand *command = new KMTrashMsgCommand( mMsg.parentCollection(), mMsg );
+  KMTrashMsgCommand *command = new KMTrashMsgCommand( mMsg.parentCollection(), mMsg, -1 );
   command->start();
   close();
 }
