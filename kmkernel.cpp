@@ -2337,26 +2337,12 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
 
 Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )
 {
-  /*
-  KMMainWidget *widget = getKMMainWidget();
-  if ( !widget )
-    return Akonadi::Collection();
-  Akonadi::ChangeRecorder *recorder = widget->monitorFolders();
-  if ( !recorder )
-    return Akonadi::Collection();
-  */
   int id = idString.toInt();
-
-  Akonadi::Collection::List lst;
-  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive );
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base, this );
   if ( job->exec() ) {
-    lst = job->collections();
-    for ( int i = 0; i < lst.count(); ++i ) {
-      if ( lst.at( i ).id() == id ) {
-        delete job;
-        return lst.at( i );
-      }
-    }
+    Akonadi::Collection::List lst = job->collections();
+    if ( lst.count() == 1 )
+      return lst.at( 0 );
   }
   delete job;
   return Akonadi::Collection();
