@@ -173,22 +173,6 @@ bool KMail::Util::handleUrlOnMac( const KUrl& url )
 #endif
 }
 
-KMail::Util::RecursionPreventer::RecursionPreventer( int &counter )
-  : mCounter( counter )
-{
-  mCounter++;
-}
-
-KMail::Util::RecursionPreventer::~RecursionPreventer()
-{
-  mCounter--;
-}
-
-bool KMail::Util::RecursionPreventer::isRecursive() const
-{
-  return mCounter > 1;
-}
-
 
 KMime::Message *KMail::Util::message( const Akonadi::Item & item )
 {
