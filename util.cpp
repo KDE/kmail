@@ -189,3 +189,16 @@ bool KMail::Util::RecursionPreventer::isRecursive() const
   return mCounter > 1;
 }
 
+
+KMime::Message *KMail::Util::message( const Akonadi::Item & item )
+{
+  if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+    kWarning() << "Payload is not a MessagePtr!";
+    return 0;
+  }
+  KMime::Message *msg = new KMime::Message;
+  msg->setContent( item.payloadData() );
+  msg->parse();
+
+  return msg;
+}

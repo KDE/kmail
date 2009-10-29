@@ -45,7 +45,8 @@
 #include <kio/netaccess.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-
+#include <akonadi/item.h>
+#include <kmime/kmime_message.h>
 class DwString;
 class KUrl;
 
@@ -113,6 +114,8 @@ namespace Util {
      * @return false if one or several addresses are invalid.
      */
     bool validateAddresses( QWidget *parent, const QString &addresses );
+
+    KMime::Message *message( const Akonadi::Item & item );
 
 
     /**

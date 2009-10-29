@@ -211,19 +211,6 @@ KMCommand::~KMCommand()
 {
 }
 
-KMime::Message *KMCommand::message( const Akonadi::Item & item )
-{
-  if ( !item.hasPayload<KMime::Message::Ptr>() ) {
-    kWarning() << "Payload is not a MessagePtr!";
-    return 0;
-  }
-  KMime::Message *msg = new KMime::Message;
-  msg->setContent( item.payloadData() );
-  msg->parse();
-
-  return msg;
-}
-
 KMCommand::Result KMCommand::result() const
 {
   if ( mResult == Undefined ) {
@@ -529,7 +516,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   if ( !item.isValid() /*TODO Port || !msg->codec() */) { //TODO Reuse codec() from libmessageviewer/nodehelper
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMime::Message *rmsg = KMail::MessageHelper::createReply( msg, KMail::ReplyNone, mSelection );
   rmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
@@ -560,7 +547,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   if ( !item.isValid() /*|| !msg->codec() Port to KMime::message*/) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMime::Message *fmsg = KMail::MessageHelper::createForward( msg );
   fmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
@@ -706,7 +693,7 @@ KMCommand::Result KMEditMsgCommand::execute()
         !kmkernel->folderIsTemplates( item.parentCollection() ) ) ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
 #if 0
   // Remember the old parent, we need it a bit further down to be able
   // to put the unchanged messsage back in the original folder if the nth
@@ -1118,7 +1105,7 @@ KMCommand::Result KMReplyToCommand::execute()
   if ( !item.isValid() ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
 #if 0  //Port to kmime::message
@@ -1148,7 +1135,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   if ( !item.isValid() ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( reply.msg, replyContext( reply ) );
 #if 0 //Port to akonadi
@@ -1177,7 +1164,7 @@ KMCommand::Result KMReplyListCommand::execute()
   if ( !item.isValid() ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ),
                                                0, mSelection );
@@ -1208,7 +1195,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
     return Failed;
   }
 
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
@@ -1238,7 +1225,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   if ( !item.isValid() ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
@@ -1395,7 +1382,7 @@ KMCommand::Result KMForwardCommand::execute()
   if ( !item.isValid() /*|| !item->codec() Port it*/ )
     return Failed;
 
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KCursorSaver busy(KBusyPtr::busy());
   KMime::Message *fwdMsg = KMail::MessageHelper::createForward(msg);
 
@@ -1441,7 +1428,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   }
   else if (msgList.count() == 1) {
     Akonadi::Item item = msgList.first();
-    KMime::Message *msg = message( item );
+    KMime::Message *msg = KMail::Util::message( item );
     KMail::MessageHelper::initFromMessage(fwdMsg, msg);
     fwdMsg->subject()->fromUnicodeString(  KMail::MessageHelper::forwardSubject(msg),"utf-8" );
     delete msg;
@@ -1453,7 +1440,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   // iterate through all the messages to be forwarded
   Akonadi::Item itemMsg;
   foreach ( itemMsg, msgList ) {
-    KMime::Message *msg = message( itemMsg );
+    KMime::Message *msg = KMail::Util::message( itemMsg );
     // remove headers that shouldn't be forwarded
     KMail::MessageHelper::removePrivateHeaderFields(msg);
     msg->removeHeader("BCC");
@@ -1502,7 +1489,7 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
 
   KMime::Message *newMsg = KMail::MessageHelper::createRedirect( msg, dlg->to() );
   KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
@@ -1533,7 +1520,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   if ( !item.isValid() /*|| !msg->codec()*/ /*TODO port it */ ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplySmart, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
@@ -1566,7 +1553,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   if ( !item.isValid() /*|| !msg->codec() Port to kmime*/ ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( msg, KMail::ReplyAll, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
@@ -1649,7 +1636,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     if ( !item.isValid() /*|| !msg->codec() Port to akonadi*/ ) {
       return Failed;
     }
-    KMime::Message *msg = message( item );
+    KMime::Message *msg = KMail::Util::message( item );
     KCursorSaver busy( KBusyPtr::busy() );
     KMime::Message *fwdMsg = KMail::MessageHelper::createForward(  msg, mTemplate );
 
@@ -2014,7 +2001,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   if ( !item.isValid() ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
   if ( !MailingList::name( msg, name, value ).isEmpty() ) {
     kmkernel->filterMgr()->createFilter( name, value );
     delete msg;
@@ -2818,7 +2805,7 @@ KMCommand::Result KMResendMessageCommand::execute()
   if ( !item.isValid() /*|| !msg->codec()*/ ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
 #if 0
   newMsg->setCharset( msg->codec()->name() );
 #endif
@@ -3282,7 +3269,7 @@ KMCommand::Result CreateTodoCommand::execute()
   if ( !item.isValid() /*|| !msg->codec()*/ ) {
     return Failed;
   }
-  KMime::Message *msg = message( item );
+  KMime::Message *msg = KMail::Util::message( item );
 
   KMail::KorgHelper::ensureRunning();
   QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from()->asUnicodeString(),

@@ -133,6 +133,8 @@ using KMail::TemplateParser;
 #include "actionscheduler.h"
 #include "accountwizard.h"
 #include "expirypropertiesdialog.h"
+#include <akonadi/itemfetchjob.h>
+#include "util.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -1362,24 +1364,29 @@ void KMMainWidget::slotShowNewFromTemplate()
   if ( !mTemplateFolder.isValid() ) {
     mTemplateFolder = kmkernel->templatesCollectionFolder();
   }
-  if ( !mTemplateFolder.isValid() ) return;
+  if ( !mTemplateFolder.isValid() )
+    return;
 
   mTemplateMenu->menu()->clear();
-#if 0
-  for ( int idx = 0; idx<mTemplateFolder->count(); ++idx ) {
-    KMime::Message *mb = mTemplateFolder->getMsgBase( idx );
+  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mTemplateFolder );
+  Akonadi::Item::List items;
+  if ( job->exec() ) {
+    items = job->items();
+  }
+  for ( int idx = 0; idx < items.count(); ++idx ) {
+    KMime::Message *msg = KMail::Util::message( items.at( idx ) );
 
-    QString subj = mb->subject()->asUnicodeString();
+    QString subj = msg->subject()->asUnicodeString();
     if ( subj.isEmpty() )
       subj = i18n("No Subject");
 
     QAction *templateAction = mTemplateMenu->menu()->addAction(
         KStringHandler::rsqueeze( subj.replace( '&', "&&" ) ) );
-    templateAction->setData( idx );
+    QVariant var;
+    var.setValue( items.at( idx ) );
+    templateAction->setData( var );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
   // If there are no templates available, add a menu entry which informs
   // the user about this.
   if ( mTemplateMenu->menu()->actions().isEmpty() ) {
@@ -1395,11 +1402,8 @@ void KMMainWidget::slotNewFromTemplate( QAction *action )
 {
   if ( !mTemplateFolder.isValid() )
     return;
-#if 0
-  newFromTemplate( mTemplateFolder->getMsg( action->data().toInt() ) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  Akonadi::Item item = action->data().value<Akonadi::Item>();
+  newFromTemplate( item );
 }
 
 
@@ -1641,6 +1645,7 @@ void KMMainWidget::slotMarkAllAsRead()
   if (!mCurrentFolder)
     return;
   mCurrentFolder->markUnreadAsRead();
+  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------

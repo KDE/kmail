@@ -91,8 +91,6 @@ protected:
   // Returns the parent widget
   QWidget *parentWidget() const;
 
-  KMime::Message *message(const Akonadi::Item & );
-
   bool deletesItself() const { return mDeletesItself; }
   /** Specify whether the subclass takes care of the deletion of the object.
       By default the base class will delete the object.
