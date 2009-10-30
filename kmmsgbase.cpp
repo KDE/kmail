@@ -416,21 +416,6 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 
 
 //-----------------------------------------------------------------------------
-const QTextCodec* KMMsgBase::codecForName(const QByteArray& _str)
-{
-  // cberzan: kill this
-  if (_str.isEmpty())
-    return 0;
-  QByteArray codec = _str;
-  kAsciiToLower(codec.data()); // TODO cberzan: I don't think this is needed anymore
-                               // (see kdelibs/kdecore/localization/kcharsets.cpp:
-                               // it already toLowers stuff).
-  return KGlobal::charsets()->codecForName(codec);
-}
-
-
-
-//-----------------------------------------------------------------------------
 QStringList KMMsgBase::supportedEncodings(bool usAscii)
 {
   // cberzan: replaced by KCodecAction in CodecManager

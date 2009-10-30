@@ -2333,7 +2333,7 @@ bool MessageComposer::getSourceText( QByteArray &plainTextEncoded, QByteArray &h
     plainText = mComposeWin->mEditor->toWrappedPlainText();
 
   // Now, convert the string to a bytearray with the right codec.
-  const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+  const QTextCodec *codec = KMail::Util::codecForName( mCharset );
   if ( mCharset == "us-ascii" ) {
     plainTextEncoded = KMail::Util::toUsAscii( plainText );
     htmlSourceEncoded = KMail::Util::toUsAscii( htmlSource );
@@ -2377,7 +2377,7 @@ bool MessageComposer::breakLinesAndApplyCodec()
                        KGuiItem ( i18n("Send Anyway") ),
                        KGuiItem( i18n("Auto-Detect Encoding") ) ) == KMessageBox::Yes );
     if ( loseChars ) {
-      const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+      const QTextCodec *codec = KMail::Util::codecForName( mCharset );
       mComposeWin->mEditor->replaceUnknownChars( codec );
     }
     else {

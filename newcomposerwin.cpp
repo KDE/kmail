@@ -1734,7 +1734,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
           QByteArray bodyDecoded = n->msgPart().bodyDecoded();
 
           // respect html part charset
-          const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+          const QTextCodec *codec = KMail::Util::codecForName( mCharset );
           if ( codec ) {
             mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
           } else {
@@ -1767,7 +1767,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
       decryptOrStripOffCleartextSignature( bodyDecoded );
     }
 
-    const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+    const QTextCodec *codec = KMail::Util::codecForName( mCharset );
     if ( codec ) {
       mEditor->setText( codec->toUnicode( bodyDecoded ) );
     } else {
@@ -1822,7 +1822,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
       if( allowDecryption )
         decryptOrStripOffCleartextSignature( bodyDecoded );
 
-      const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+      const QTextCodec *codec = KMail::Util::codecForName(mCharset);
       if (codec)
         mEditor->setText(codec->toUnicode(bodyDecoded));
       else
@@ -1850,7 +1850,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     if( allowDecryption )
       decryptOrStripOffCleartextSignature( bodyDecoded );
 
-    const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+    const QTextCodec *codec = KMail::Util::codecForName(mCharset);
     if (codec) {
       mEditor->setText(codec->toUnicode(bodyDecoded));
     } else

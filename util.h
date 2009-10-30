@@ -121,6 +121,13 @@ namespace Util {
      * If ok is non-null, *ok will be set to true if all characters
      * where ascii, *ok will be set to false otherwise */
     QByteArray toUsAscii(const QString& _str, bool *ok=0);
+
+
+    /** Return a QTextCodec for the specified charset.
+     * This function is a bit more tolerant, than QTextCodec::codecForName */
+    const QTextCodec* codecForName(const QByteArray& _str);
+
+
     /**
      * A LaterDeleter is intended to be used with the RAII ( Resource
      * Acquisiation is Initialization ) paradigm. When an instance of it

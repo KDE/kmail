@@ -38,11 +38,15 @@
 
 
 #include "util.h"
+#include <QTextCodec>
 #include "messageviewer/stringutil.h"
 
 #include <stdlib.h>
 #include <mimelib/string.h>
 #include <kpimutils/email.h>
+#include <kglobal.h>
+#include <kascii.h>
+#include <KCharsets>
 
 void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
 {
@@ -200,4 +204,16 @@ QByteArray toUsAscii(const QString& _str, bool *ok)
   if (ok)
     *ok = all_ok;
   return result.toLatin1();
+}
+
+const QTextCodec* codecForName(const QByteArray& _str)
+{
+  // cberzan: kill this
+  if (_str.isEmpty())
+    return 0;
+  QByteArray codec = _str;
+  kAsciiToLower(codec.data()); // TODO cberzan: I don't think this is needed anymore
+                               // (see kdelibs/kdecore/localization/kcharsets.cpp:
+                               // it already toLowers stuff).
+  return KGlobal::charsets()->codecForName(codec);
 }

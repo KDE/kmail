@@ -235,11 +235,6 @@ public:
   static QString skipKeyword(const QString& str, QChar sepChar=':',
 				 bool* keywordFound=0);
 
-  /** Return a QTextCodec for the specified charset.
-   * This function is a bit more tolerant, than QTextCodec::codecForName */
-  static const QTextCodec* codecForName(const QByteArray& _str);
-
-
   /**
    * Return a list of the supported encodings
    * @param usAscii if true, US-Ascii encoding will be prepended to the list.
