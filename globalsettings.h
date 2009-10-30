@@ -21,14 +21,14 @@
     without including the source code for Qt in the source distribution.
 */
 
-#ifndef MESSAGEVIEWER_GLOBALSETTINGS_H
-#define MESSAGEVIEWER_GLOBALSETTINGS_H
+#ifndef KMAIL_GLOBALSETTINGS_H
+#define KMAIL_GLOBALSETTINGS_H
 
 #include "globalsettings_base.h"
-#include "messageviewer_export.h"
+
 class QTimer;
 
-class MESSAGEVIEWER_EXPORT GlobalSettings : public GlobalSettingsBase
+class GlobalSettings : public GlobalSettingsBase
 {
   Q_OBJECT
 public:
