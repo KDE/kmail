@@ -1573,7 +1573,7 @@ void KMMainWidget::slotRemoveFolder()
                    "not be empty and their contents will be discarded as well. "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
-                Qt::escape( mCurrentFolder->label() ) );
+                Qt::escape( mCurrentFolder->name() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
@@ -1581,13 +1581,13 @@ void KMMainWidget::slotRemoveFolder()
                    "<resource>%1</resource>, discarding its contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
-                Qt::escape( mCurrentFolder->label() ) );
+                Qt::escape( mCurrentFolder->name() ) );
       }else {
         str = i18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
                    "and all its subfolders, discarding their contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
                    "into your Trash folder and are permanently deleted.</p></qt>",
-              Qt::escape( mCurrentFolder->label() ) );
+              Qt::escape( mCurrentFolder->name() ) );
       }
 #else
       kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
@@ -1904,14 +1904,6 @@ void KMMainWidget::moveMessageSelected( MessageList::Core::MessageItemSetReferen
   mMessagePane->markMessageItemsAsAboutToBeRemoved( ref, true );
   // And stuff them into a KMMoveCommand :)
   KMMoveCommand *command = new KMMoveCommand( dest, selectMsg,ref );
-#if 0
-  // Reparent the set to the command so it's deleted even if the command
-  // doesn't notify the completion for some reason.
-  set->setParent( command ); // so it will be deleted when the command finishes
-
-  // Set the name to something unique so we can find it back later in the children list
-  set->setObjectName( QString( "moveMsgCommandMessageSet" ) );
-#endif
   QObject::connect(
       command, SIGNAL( moveDone( KMMoveCommand * ) ),
       this, SLOT( slotMoveMessagesCompleted( KMMoveCommand * ) )
@@ -2002,14 +1994,6 @@ void KMMainWidget::copyMessageSelected( const QList<Akonadi::Item> &selectMsg, c
     return;
     // And stuff them into a KMCopyCommand :)
   KMCommand *command = new KMCopyCommand( dest, selectMsg );
-#if 0
-  // Reparent the set to the command so it's deleted even if the command
-  // doesn't notify the completion for some reason.
-  set->setParent( command ); // so it will be deleted when the command finishes
-
-  // Set the name to something unique so we can find it back later in the children list
-  set->setObjectName( QString( "copyMsgCommandMessageSet" ) );
-#endif
   QObject::connect(
       command, SIGNAL( completed( KMCommand * ) ),
       this, SLOT( slotCopyMessagesCompleted( KMCommand * ) )
@@ -2022,14 +2006,6 @@ void KMMainWidget::copyMessageSelected( const QList<Akonadi::Item> &selectMsg, c
 void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 {
   Q_ASSERT( command );
-#ifdef OLD_MESSAGELIST
-  // We have given our persistent set a nice name when it has been created.
-  // We have also attacched it as the command child.
-  KMail::MessageListView::MessageSet * set = \
-      command->findChild< KMail::MessageListView::MessageSet * >( QString( "copyMsgCommandMessageSet" ) );
-
-  Q_ASSERT( set );
-#endif
   if ( command->result() == KMCommand::OK )
   {
     BroadcastStatus::instance()->setStatusMsg( i18n( "Messages copied successfully." ) );
@@ -2185,14 +2161,6 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
   Q_ASSERT( !serNums.empty() );
 
   KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
-#if 0
-  // Reparent the set to the command so it's deleted even if the command
-  // doesn't notify the completion for some reason.
-  set->setParent( command ); // so it will be deleted when the command finishes
-
-  // Set the name to something unique so we can find it back later in the children list
-  set->setObjectName( QString( "setStatusMsgCommandMessageSet" ) );
-#endif
   command->start();
 }
 
