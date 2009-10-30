@@ -38,7 +38,7 @@
 #include <QMenu>
 #include <QHash>
 #include <QPointer>
-#include <akonadi/favoritecollectionsview.h>
+#include <akonadi/entitylistview.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/standardactionmanager.h>
 #include <akonadi/entity.h>
@@ -577,7 +577,7 @@ private:
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
-  Akonadi::FavoriteCollectionsView *mFavoriteCollectionsView;
+    Akonadi::EntityListView *mFavoriteCollectionsView;
     QWidget      *mSearchAndTree;
     KTreeWidgetSearchLine *mFolderQuickSearch;
     KMReaderWin  *mMsgView;
