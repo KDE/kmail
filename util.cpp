@@ -186,3 +186,18 @@ KMime::Message *KMail::Util::message( const Akonadi::Item & item )
 
   return msg;
 }
+
+QByteArray toUsAscii(const QString& _str, bool *ok)
+{
+  bool all_ok =true;
+  QString result = _str;
+  int len = result.length();
+  for (int i = 0; i < len; i++)
+    if (result.at(i).unicode() >= 128) {
+      result[i] = '?';
+      all_ok = false;
+    }
+  if (ok)
+    *ok = all_ok;
+  return result.toLatin1();
+}

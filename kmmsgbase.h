@@ -113,7 +113,7 @@ public:
   virtual QString tagString( void ) const = 0;
   /**Get a pointer to the tag label list*/
   virtual KMMessageTagList *tagList( void ) const = 0;
-  /**Split @p aString at commas and set the tag list to the resulting 
+  /**Split @p aString at commas and set the tag list to the resulting
   list and set dirty*/
   virtual void setTagList( const QString &aString );
   /**Set the tag list to @p aTagList and set dirty*/
@@ -239,10 +239,6 @@ public:
    * This function is a bit more tolerant, than QTextCodec::codecForName */
   static const QTextCodec* codecForName(const QByteArray& _str);
 
-  /** Convert all non-ascii characters to question marks
-    * If ok is non-null, *ok will be set to true if all characters
-    * where ascii, *ok will be set to false otherwise */
-  static QByteArray toUsAscii(const QString& _str, bool *ok=0);
 
   /**
    * Return a list of the supported encodings

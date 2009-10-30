@@ -395,7 +395,7 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 
   while (str[0] == ' ') str.remove(0,1);
   if (hasKeyword) *hasKeyword=false;
-  
+
   unsigned int i = 0, maxChars = 3;
   unsigned int strLength(str.length());
   for (i=0; i < strLength && i < maxChars; i++)
@@ -428,22 +428,6 @@ const QTextCodec* KMMsgBase::codecForName(const QByteArray& _str)
   return KGlobal::charsets()->codecForName(codec);
 }
 
-
-//-----------------------------------------------------------------------------
-QByteArray KMMsgBase::toUsAscii(const QString& _str, bool *ok)
-{
-  bool all_ok =true;
-  QString result = _str;
-  int len = result.length();
-  for (int i = 0; i < len; i++)
-    if (result.at(i).unicode() >= 128) {
-      result[i] = '?';
-      all_ok = false;
-    }
-  if (ok)
-    *ok = all_ok;
-  return result.toLatin1();
-}
 
 
 //-----------------------------------------------------------------------------

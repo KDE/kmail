@@ -533,7 +533,7 @@ void MessageComposer::readFromComposeWin()
     CustomMimeHeader customMimeHeader( QString::number(ix) );
     customMimeHeader.readConfig();
     mReferenceMessage->setHeaderField(
-      KMMsgBase::toUsAscii( customMimeHeader.custHeaderName() ),
+      KMail::Util::toUsAscii( customMimeHeader.custHeaderName() ),
       customMimeHeader.custHeaderValue() );
   }
 
@@ -2335,8 +2335,8 @@ bool MessageComposer::getSourceText( QByteArray &plainTextEncoded, QByteArray &h
   // Now, convert the string to a bytearray with the right codec.
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
   if ( mCharset == "us-ascii" ) {
-    plainTextEncoded = KMMsgBase::toUsAscii( plainText );
-    htmlSourceEncoded = KMMsgBase::toUsAscii( htmlSource );
+    plainTextEncoded = KMail::Util::toUsAscii( plainText );
+    htmlSourceEncoded = KMail::Util::toUsAscii( htmlSource );
     newPlainText = QString::fromLatin1( plainTextEncoded );
   } else if ( codec == 0 ) {
     kDebug() << "Something is wrong and I can not get a codec.";

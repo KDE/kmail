@@ -117,7 +117,10 @@ namespace Util {
 
     KMime::Message *message( const Akonadi::Item & item );
 
-
+    /** Convert all non-ascii characters to question marks
+     * If ok is non-null, *ok will be set to true if all characters
+     * where ascii, *ok will be set to false otherwise */
+    QByteArray toUsAscii(const QString& _str, bool *ok=0);
     /**
      * A LaterDeleter is intended to be used with the RAII ( Resource
      * Acquisiation is Initialization ) paradigm. When an instance of it
