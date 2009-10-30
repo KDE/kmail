@@ -21,6 +21,8 @@
 #include "globalsettings.h"
 #include "kmreaderwin.h"
 #include "mailinglist-magic.h"
+#include "kmkernel.h"
+#include "util.h"
 
 #include <KAction>
 #include <KActionMenu>
@@ -249,7 +251,7 @@ void MessageActions::updateActions()
     mToggleFlagAction->setChecked( status.isImportant() );
 
     MailingList mailList;
-    mailList = MailingList::detect( mCurrentMessage );
+    mailList = MailingList::detect( KMail::Util::message( mCurrentItem ) );
 
     if ( mailList.features() & ~MailingList::Id ) {
       // A mailing list menu with only a title is pretty boring

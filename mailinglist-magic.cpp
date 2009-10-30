@@ -243,8 +243,8 @@ MailingList::detect( KMime::Message *message )
   mlist.setArchiveURLS( headerToAddress(
                           message->headerByType( "List-Arhive" ) ? message->headerByType( "List-Archive" )->asUnicodeString() : "" ) );
   mlist.setOwnerURLS( headerToAddress(
-                          message->headerField( "List-Owner" ) ) );
-  mlist.setArchivedAt( message->headerField( "Archived-At" ) );
+                          message->headerByType( "List-Owner" ) ? message->headerByType( "List-Owner" )->asUnicodeString() : "" ) );
+  mlist.setArchivedAt( message->headerByType( "Archived-At" ) ? message->headerByType( "Archived-At" )->asUnicodeString() : "" );
   mlist.setId( message->headerByType( "List-Id" ) ? message->headerByType( "List-Id" )->asUnicodeString() : ""  );
 
   return mlist;
