@@ -84,6 +84,7 @@ using MailTransport::Transport;
 #include "kmmsgdict.h"
 #include "templateparser.h"
 #include "messagehelper.h"
+#include "keyresolver.h"
 
 using Sonnet::DictionaryComboBox;
 using KMail::TemplateParser;
@@ -461,7 +462,7 @@ void KMComposeWin::send( int how )
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString &comment, int how )
 {
-  kDebug() << "implement me...";
+  kDebug() << "addAttachment and sending!";
   for( int i =0; i < urls.count(); ++i ) {
     addAttachment( urls[i], comment );
   }
@@ -493,6 +494,7 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
 void KMComposeWin::addAttachment( const KUrl &url, const QString &comment )
 {
   Q_UNUSED( comment );
+  kDebug() << "adding attachment with url:" << url;
   mAttachmentController->addAttachment( url );
 }
 
@@ -1002,7 +1004,7 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyTemplate( uint uoid )
 {
-//  kDebug() << "Port me...";
+  kDebug() << "Port me...";
 //#if 0
   const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() )
@@ -1694,6 +1696,8 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   if ( newMsg->headerByType( "X-KMail-QuotePrefix" ) )
     mEditor->setQuotePrefixName( newMsg->headerByType( "X-KMail-QuotePrefix" )->asUnicodeString() );
 
+  // TODO fix crash in kmime
+ // collectImages( mMsg->mainBodyPart( "text/html" ) ); // when using html, check for embedded images
 
 #if 0 //TODO port to kmime
 
@@ -1741,7 +1745,6 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     }
   }
 
-  collectImages( mMsg->mainBodyPart( "text/html" ); // when using html, check for embedded images
 
   if ( mCharset.isEmpty() ) {
     mCharset = mMsg->charset();
@@ -2110,13 +2113,93 @@ void KMComposeWin::readyForSending()
   fillGlobalPart( mComposer->globalPart() );
   fillTextPart( mComposer->textPart() );
   fillInfoPart( mComposer->infoPart() );
-  mComposer->addAttachmentParts( mAttachmentModel->attachments() );
 
+  fillCryptoInfo( mComposer, mSignAction->isChecked(), mEncryptAction->isChecked() );
+  
+  mComposer->addAttachmentParts( mAttachmentModel->attachments() );
+ 
   connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
   mComposer->start();
   kDebug() << "Composer for sending started.";
 
 }
+
+void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool encrypt )
+{
+  if( !sign&& !encrypt ) {
+    return;
+  }
+
+  kDebug() << "filling crypto info";
+
+  Kleo::KeyResolver* keyResolver = new Kleo::KeyResolver( false, true, true, Kleo::AutoFormat, 1, 1, 1, 1, 1, 1 /** TODO fill in real args **/ );
+  const KPIMIdentities::Identity &id = KMKernel::self()->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+  QStringList encryptToSelfKeys;
+  QStringList signKeys;
+
+  if( encrypt ) {
+    if ( !id.pgpEncryptionKey().isEmpty() )
+      encryptToSelfKeys.push_back( id.pgpEncryptionKey() );
+    if ( !id.smimeEncryptionKey().isEmpty() )
+      encryptToSelfKeys.push_back( id.smimeEncryptionKey() );
+    if ( keyResolver->setEncryptToSelfKeys( encryptToSelfKeys ) != Kpgp::Ok ) {
+      /// TODO handle failure
+      kDebug() << "Failed to set encryptoToSelf keys!";
+      return;
+    }
+  }
+
+  if( sign ) {
+    if ( !id.pgpSigningKey().isEmpty() )
+      signKeys.push_back( id.pgpSigningKey() );
+    if ( !id.smimeSigningKey().isEmpty() )
+      signKeys.push_back( id.smimeSigningKey() );
+    if ( keyResolver->setSigningKeys( signKeys ) != Kpgp::Ok ) {
+      /// TODO handle failure
+      kDebug() << "Failed to set signing keys!";
+      return;
+    }
+  }
+
+  QStringList recipients, bcc;
+  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
+    switch( r.type() ) {
+      case Recipient::To: recipients << r.email(); break;
+      case Recipient::Cc: recipients << r.email(); break;
+      case Recipient::Bcc: bcc << r.email(); break;
+      default: Q_ASSERT( false ); break;
+    }
+  }
+  
+  kDebug() << "primary recipients:" <<  recipients;
+  kDebug() << "secondary:" <<  bcc;
+  keyResolver->setPrimaryRecipients( recipients );
+  keyResolver->setSecondaryRecipients( bcc );
+
+  kDebug() << "resolving keys that we set";
+  if ( keyResolver->resolveAllKeys( sign, encrypt ) != Kpgp::Ok ) {
+    /// TODO handle failure
+    kDebug() << "failed to resolve keys! oh noes";
+    return;
+  }
+  kDebug() << "done resolving keys";
+
+  if( encrypt ) {
+    std::vector<Kleo::KeyResolver::SplitInfo> encData = keyResolver->encryptionItems( cryptoMessageFormat() );
+    //TODO HACK for now just take the first one
+    composer->setEncryptionKeys( encData.at(0).recipients, encData.at(0).keys );
+  }
+
+  if( sign ) {
+    std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( cryptoMessageFormat() );
+    composer->setSigningKeys( signingKeys );
+  }
+  
+  composer->setSignAndEncrypt( sign, encrypt );
+  kDebug() << "setting crypto format on message:" << Kleo::cryptoMessageFormatToString( cryptoMessageFormat() );
+  composer->setMessageCryptoFormat( cryptoMessageFormat() );
+}
+
 
 void KMComposeWin::applyAutoSave()
 {
