@@ -3074,6 +3074,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
       menu->addAction( mMsgActions->forwardMenu() );
     }
     menu->addAction(editAction());
+    menu->addAction( mailingListActionMenu() );
     menu->addSeparator();
 
     menu->addAction( mCopyActionMenu );

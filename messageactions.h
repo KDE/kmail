@@ -22,6 +22,8 @@
 #include "kmcommands.h"
 #include "kmreaderwin.h"
 
+#include <KUrl>
+
 #include <qobject.h>
 #include <qlist.h>
 
@@ -77,6 +79,8 @@ class MessageActions : public QObject
 
     KAction* editAction() const { return mEditAction; }
 
+    KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
+
   public slots:
     void editCurrentMessage();
 
@@ -91,6 +95,8 @@ class MessageActions : public QObject
       command->start();
     }
     void setMessageStatus( KPIM::MessageStatus status, bool toggle = false );
+    void addMailingListAction( const QString &item, const KUrl &url );
+    void addMailingListActions( const QString &item, const KUrl::List &list );
 
   private slots:
     void slotReplyToMsg();
@@ -104,6 +110,7 @@ class MessageActions : public QObject
     void slotSetMsgStatusRead();
     void slotSetMsgStatusToAct();
     void slotSetMsgStatusFlag();
+    void slotRunUrl( QAction *urlAction );
 
   private:
     QWidget *mParent;
@@ -120,6 +127,7 @@ class MessageActions : public QObject
     KAction *mCreateTodoAction;
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
+    KActionMenu *mMailingListActionMenu;
     KToggleAction *mToggleFlagAction, *mToggleToActAction;
     KAction *mEditAction;
     bool mKorganizerIsOnSystem;

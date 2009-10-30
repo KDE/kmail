@@ -314,16 +314,17 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     for(int i= 0; i < args->count(); i++)
     {
       if ( args->arg(i).startsWith( QLatin1String( "mailto:" ), Qt::CaseInsensitive ) ) {
-        QString mailtoTo, mailtoBody, mailtoSubject, mailtoCC;
-        KMail::StringUtil::parseMailtoUrl( args->url( i ), mailtoTo, mailtoCC, mailtoSubject, mailtoBody );
-        if ( !mailtoTo.isEmpty() )
-          to += mailtoTo + ", ";
-        if ( !mailtoCC.isEmpty() )
-          cc += mailtoCC + ", ";
-        if ( !mailtoSubject.isEmpty() )
-          subj = mailtoSubject;
-        if ( !mailtoBody.isEmpty() )
-          body = mailtoBody;
+        QMap<QString, QString> values = KMail::StringUtil::parseMailtoUrl( args->url( i ) );
+        if ( !values.value( "to" ).isEmpty() )
+          to += values.value( "to" ) + ", ";
+        if ( !values.value( "cc" ).isEmpty() )
+          cc += values.value( "cc" ) + ", ";
+        if ( !values.value( "subject" ).isEmpty() )
+          subj = values.value( "subject" );
+        if ( !values.value( "body" ).isEmpty() )
+          body = values.value( "body" );
+        if ( !values.value( "in-reply-to" ).isEmpty() )
+          customHeaders << "In-Reply-To:" + values.value( "in-reply-to" );
       }
       else {
         QString tmpArg = args->arg(i);

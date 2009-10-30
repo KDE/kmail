@@ -242,6 +242,9 @@ MailingList::detect( KMime::Message *message )
                           message->headerByType( "List-Unsubscribe" ) ? message->headerByType( "List-Unsubscribe" )->asUnicodeString() : ""));
   mlist.setArchiveURLS( headerToAddress(
                           message->headerByType( "List-Arhive" ) ? message->headerByType( "List-Archive" )->asUnicodeString() : "" ) );
+  mlist.setOwnerURLS( headerToAddress(
+                          message->headerField( "List-Owner" ) ) );
+  mlist.setArchivedAt( message->headerField( "Archived-At" ) );
   mlist.setId( message->headerByType( "List-Id" ) ? message->headerByType( "List-Id" )->asUnicodeString() : ""  );
 
   return mlist;
@@ -272,25 +275,22 @@ MailingList::MailingList()
 {
 }
 
-int
-MailingList::features() const
+int MailingList::features() const
 {
   return mFeatures;
 }
 
-void
-MailingList::setHandler( MailingList::Handler han )
+void MailingList::setHandler( MailingList::Handler han )
 {
   mHandler = han;
 }
-MailingList::Handler
-MailingList::handler() const
+
+MailingList::Handler MailingList::handler() const
 {
   return mHandler;
 }
 
-void
-MailingList::setPostURLS ( const KUrl::List& lst )
+void MailingList::setPostURLS ( const KUrl::List& lst )
 {
   mFeatures |= Post;
   if ( lst.empty() ) {
@@ -298,14 +298,13 @@ MailingList::setPostURLS ( const KUrl::List& lst )
   }
   mPostURLS = lst;
 }
-KUrl::List
-MailingList::postURLS() const
+
+KUrl::List MailingList::postURLS() const
 {
   return mPostURLS;
 }
 
-void
-MailingList::setSubscribeURLS( const KUrl::List& lst )
+void MailingList::setSubscribeURLS( const KUrl::List& lst )
 {
   mFeatures |= Subscribe;
   if ( lst.empty() ) {
@@ -314,14 +313,13 @@ MailingList::setSubscribeURLS( const KUrl::List& lst )
 
   mSubscribeURLS = lst;
 }
-KUrl::List
-MailingList::subscribeURLS() const
+
+KUrl::List MailingList::subscribeURLS() const
 {
   return mSubscribeURLS;
 }
 
-void
-MailingList::setUnsubscribeURLS( const KUrl::List& lst )
+void MailingList::setUnsubscribeURLS( const KUrl::List& lst )
 {
   mFeatures |= Unsubscribe;
   if ( lst.empty() ) {
@@ -330,13 +328,13 @@ MailingList::setUnsubscribeURLS( const KUrl::List& lst )
 
   mUnsubscribeURLS = lst;
 }
+
 KUrl::List MailingList::unsubscribeURLS() const
 {
   return mUnsubscribeURLS;
 }
 
-void
-MailingList::setHelpURLS( const KUrl::List& lst )
+void MailingList::setHelpURLS( const KUrl::List& lst )
 {
   mFeatures |= Help;
   if ( lst.empty() ) {
@@ -345,14 +343,13 @@ MailingList::setHelpURLS( const KUrl::List& lst )
 
   mHelpURLS = lst;
 }
-KUrl::List
-MailingList::helpURLS() const
+
+KUrl::List MailingList::helpURLS() const
 {
   return mHelpURLS;
 }
 
-void
-MailingList::setArchiveURLS( const KUrl::List& lst )
+void MailingList::setArchiveURLS( const KUrl::List& lst )
 {
   mFeatures |= Archive;
   if ( lst.empty() ) {
@@ -361,14 +358,42 @@ MailingList::setArchiveURLS( const KUrl::List& lst )
 
   mArchiveURLS = lst;
 }
-KUrl::List
-MailingList::archiveURLS() const
+
+KUrl::List MailingList::archiveURLS() const
 {
   return mArchiveURLS;
 }
 
-void
-MailingList::setId( const QString& str )
+void MailingList::setOwnerURLS( const KUrl::List& lst )
+{
+  mFeatures |= Owner;
+  if ( lst.empty() ) {
+    mFeatures ^= Owner;
+  }
+
+  mOwnerURLS = lst;
+}
+
+KUrl::List MailingList::ownerURLS() const
+{
+  return mOwnerURLS;
+}
+
+void MailingList::setArchivedAt( const QString& str )
+{
+  mFeatures |= ArchivedAt;
+  if ( str.isEmpty() ) {
+    mFeatures ^= ArchivedAt;
+  }
+
+  mArchivedAt = str;
+}
+QString MailingList::archivedAt() const
+{
+  return mArchivedAt;
+}
+
+void MailingList::setId( const QString& str )
 {
   mFeatures |= Id;
   if ( str.isEmpty() ) {
@@ -377,14 +402,13 @@ MailingList::setId( const QString& str )
 
   mId = str;
 }
-QString
-MailingList::id() const
+
+QString MailingList::id() const
 {
   return mId;
 }
 
-void
-MailingList::writeConfig( KConfigGroup & config ) const
+void MailingList::writeConfig( KConfigGroup & config ) const
 {
   config.writeEntry( "MailingListFeatures", mFeatures );
   config.writeEntry( "MailingListHandler", (int)mHandler );
@@ -393,11 +417,15 @@ MailingList::writeConfig( KConfigGroup & config ) const
   config.writeEntry( "MailingListSubscribeAddress", mSubscribeURLS.toStringList() );
   config.writeEntry( "MailingListUnsubscribeAddress", mUnsubscribeURLS.toStringList() );
   config.writeEntry( "MailingListArchiveAddress", mArchiveURLS.toStringList() );
+  config.writeEntry( "MailingListOwnerAddress", mOwnerURLS.toStringList() );
   config.writeEntry( "MailingListHelpAddress", mHelpURLS.toStringList() );
+  /* Note: mArchivedAt deliberately not saved here as it refers to a single 
+   * instance of a message rather than an element of a general mailing list.
+   * http://reviewboard.kde.org/r/1768/#review2783
+   */
 }
 
-void
-MailingList::readConfig( KConfigGroup & config )
+void MailingList::readConfig( KConfigGroup & config )
 {
   mFeatures =  config.readEntry( "MailingListFeatures", 0 );
   mHandler = static_cast<MailingList::Handler>(
@@ -408,5 +436,6 @@ MailingList::readConfig( KConfigGroup & config )
   mSubscribeURLS   = config.readEntry( "MailingListSubscribeAddress", QStringList() );
   mUnsubscribeURLS = config.readEntry( "MailingListUnsubscribeAddress", QStringList() );
   mArchiveURLS     = config.readEntry( "MailingListArchiveAddress", QStringList() );
+  mOwnerURLS       = config.readEntry( "MailingListOwnerddress", QStringList() );
   mHelpURLS        = config.readEntry( "MailingListHelpAddress", QStringList() );
 }

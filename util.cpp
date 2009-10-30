@@ -177,7 +177,6 @@ bool KMail::Util::handleUrlOnMac( const KUrl& url )
 #endif
 }
 
-
 KMime::Message *KMail::Util::message( const Akonadi::Item & item )
 {
   if ( !item.hasPayload<KMime::Message::Ptr>() ) {
@@ -261,3 +260,4 @@ QByteArray autoDetectCharset(const QByteArray &_encoding, const QStringList &enc
     // cberzan: till here =====================================================
     return 0;
 }
+

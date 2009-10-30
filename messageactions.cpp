@@ -20,6 +20,7 @@
 
 #include "globalsettings.h"
 #include "kmreaderwin.h"
+#include "mailinglist-magic.h"
 
 #include <KAction>
 #include <KActionMenu>
@@ -29,8 +30,10 @@
 #include <KLocale>
 #include <KXMLGUIClient>
 #include <KStandardDirs>
+#include <KRun>
+#include <KMenu>
 
-#include <kmkernel.h>
+#include <QVariant>
 #include <qwidget.h>
 #include <akonadi/collection.h>
 
@@ -173,6 +176,13 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mRedirectAction->setShortcut( QKeySequence( Qt::Key_E ) );
   mForwardActionMenu->addAction( mRedirectAction );
 
+  //FIXME add KIcon("mail-list") as first arguement. Icon can be derived from
+  // mail-reply-list icon by removing top layers off svg
+  mMailingListActionMenu = new KActionMenu( i18nc( "Message->", "Mailing-&List" ), this );
+  connect( mMailingListActionMenu->menu(), SIGNAL(triggered(QAction *)),
+         this, SLOT(slotRunUrl(QAction *)) );
+  mActionCollection->addAction( "message_list", mMailingListActionMenu );
+
   updateActions();
 }
 
@@ -237,6 +247,52 @@ void MessageActions::updateActions()
     status.setStatusFromFlags( mCurrentItem.flags() );
     mToggleToActAction->setChecked( status.isToAct() );
     mToggleFlagAction->setChecked( status.isImportant() );
+
+    MailingList mailList;
+    mailList = MailingList::detect( mCurrentMessage );
+
+    if ( mailList.features() & ~MailingList::Id ) {
+      // A mailing list menu with only a title is pretty boring
+      // so make sure theres at least some content
+      QString listId;
+      if ( mailList.features() & MailingList::Id ) {
+        // From a list-id in the form, "Birds of France <bof.yahoo.com>",
+        // take "Birds of France" if it exists otherwise "bof.yahoo.com".
+        listId = mailList.id();
+        const int start = listId.indexOf( '<' );
+        if ( start > 0 ) {
+          listId.truncate( start - 1 );
+        } else if ( start == 0 ) {
+          const int end = listId.lastIndexOf( '>' );
+          if ( end < 1 ) { // shouldn't happen but account for it anyway
+            listId.remove( 0, 1 );
+          } else {
+            listId = listId.mid( 1, end-1 );
+          }
+        }
+      }
+      mMailingListActionMenu->menu()->clear();
+      mMailingListActionMenu->menu()->addTitle( listId );
+
+      if ( mailList.features() & MailingList::ArchivedAt )
+        // IDEA: this may be something you want to copy - "Copy in submenu"?
+        addMailingListAction( i18n( "Open Message in List Archive" ), KUrl( mailList.archivedAt() ) );
+      if ( mailList.features() & MailingList::Post )
+        addMailingListActions( i18n( "Post New Message" ), mailList.postURLS() );
+      if ( mailList.features() & MailingList::Archive )
+        addMailingListActions( i18n( "Go to Archive" ), mailList.archiveURLS() );
+      if ( mailList.features() & MailingList::Help )
+        addMailingListActions( i18n( "Request Help" ), mailList.helpURLS() );
+      if ( mailList.features() & MailingList::Owner )
+        addMailingListActions( i18n( "Contact Owner" ), mailList.ownerURLS() );
+      if ( mailList.features() & MailingList::Subscribe )
+        addMailingListActions( i18n( "Subscribe to List" ), mailList.subscribeURLS() );
+      if ( mailList.features() & MailingList::Unsubscribe )
+        addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeURLS() );
+      mMailingListActionMenu->setEnabled( true );
+    } else {
+      mMailingListActionMenu->setEnabled( false );
+    }
   }
 
   mEditAction->setEnabled( singleMsg );
@@ -349,6 +405,14 @@ void MessageActions::slotSetMsgStatusToAct()
   setMessageStatus( KPIM::MessageStatus::statusToAct(), true );
 }
 
+void MessageActions::slotRunUrl( QAction *urlAction )
+{
+  const QVariant q = urlAction->data();
+  if ( q.type() == QVariant::String ) {
+    new KRun( KUrl( q.toString() ) , mParent );
+  }
+}
+
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
   QList<quint32> serNums = mVisibleSernums;
@@ -358,6 +422,43 @@ void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
     return;
   KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
   command->start();
+}
+
+/**
+ * This adds a list of actions to mMailingListActionMenu mapping the identifier item to
+ * the url.
+ *
+ * e.g.: item = "Contact Owner"
+ * "Contact Owner (email)" -> KRun( "mailto:bob@arthouseflowers.example.com" )
+ * "Contact Owner (web)" -> KRun( "http://arthouseflowers.example.com/contact-owner.php" )
+ */
+void MessageActions::addMailingListActions( const QString &item, const KUrl::List &list )
+{
+  foreach ( KUrl url, list ) {
+    addMailingListAction( item, url );
+  }
+}
+
+/**
+ * This adds a action to mMailingListActionMenu mapping the identifier item to
+ * the url. See addMailingListActions above.
+ */
+void MessageActions::addMailingListAction( const QString &item, const KUrl &url )
+{
+  QString protocol = url.protocol().toLower();
+  QString prettyUrl = url.prettyUrl();
+  if ( protocol == "mailto" ) {
+    protocol = i18n( "email" );
+    prettyUrl.remove( 0, 7 ); // length( "mailto:" )
+  } else if ( protocol.startsWith( "http" ) ) {
+    protocol = i18n( "web" );
+  }
+  // item is a mailing list url description passed from the updateActions method above.
+  KAction *act = new KAction( i18nc( "%1 is a 'Contact Owner' or simlar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)",  item, protocol ) , this );
+  const QVariant v(  url.url() );
+  act-> setData( v );
+  act-> setHelpText( prettyUrl );
+  mMailingListActionMenu->addAction( act );
 }
 
 void MessageActions::editCurrentMessage()
