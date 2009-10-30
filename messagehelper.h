@@ -104,13 +104,6 @@ namespace MessageHelper {
 
   KMime::Message* createResend( KMime::Message *origMsg );
 
-  /** @return the UOID of the identity for this message.
-      Searches the "x-kmail-identity" header and if that fails,
-      searches with KPIMIdentities::IdentityManager::identityForAddress()
-      and if that fails queries the KMMsgBase::parent() folder for a default.
-   **/
-  uint identityUoid();
-
   KMime::Types::AddrSpecList extractAddrSpecs( KMime::Message* msg, const QByteArray & header );
 
   /** Check for prefixes @p prefixRegExps in #subject(). If none

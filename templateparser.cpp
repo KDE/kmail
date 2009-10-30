@@ -1028,22 +1028,22 @@ QString TemplateParser::findTemplate()
 
   QString tmpl;
 
-  if ( !mFolder ) { // find folder message belongs to
+  if ( !mFolder.isValid() ) { // find folder message belongs to
     mFolder = mMsg->parent();
-    if ( !mFolder ) {
+    if ( !mFolder.isValid() ) {
       if ( mOrigMsg ) {
         mFolder = mOrigMsg->parent();
       }
-      if ( !mFolder ) {
+      if ( !mFolder.isValid() ) {
         kDebug() << "Oops! No folder for message";
       }
     }
   }
   kDebug() << "Folder found:" << mFolder;
 
-  if ( mFolder )  // only if a folder was found
+  if ( mFolder.isValid() )  // only if a folder was found
   {
-    QString fid = mFolder->idString();
+    QString fid = QString::number( mFolder->id() );
     Templates fconf( fid );
     if ( fconf.useCustomTemplates() ) {   // does folder use custom templates?
       switch( mMode ) {
