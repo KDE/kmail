@@ -483,6 +483,9 @@ class KMComposeWin : public KMail::Composer
     /** Don't check if there are too many recipients for a mail, eg. when sending out invitations. */
     virtual void disableRecipientNumberCheck();
 
+    /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
+    void disableForgottenAttachmentsCheck();
+
     /**
     * Ignore the "sticky" setting of the transport combo box and prefer the X-KMail-Transport
     * header field of the message instead.
@@ -831,6 +834,7 @@ class KMComposeWin : public KMail::Composer
     QLabel *mEncryptionStateIndicator;
 
     bool mPreventFccOverwrite;
+    bool mCheckForForgottenAttachments;
     bool mIgnoreStickyFields;
 };
 
