@@ -723,13 +723,12 @@ KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, const Akonadi::Item
 
 KMCommand::Result KMUseTemplateCommand::execute()
 {
-#if 0 //TODO port to akonadi
   Akonadi::Item msg = retrievedMessage();
   if ( !msg.isValid() || !msg.parentCollection().isValid() ||
        !kmkernel->folderIsTemplates( msg.parentCollection() ) ) {
     return Failed;
   }
-
+#if 0
   // Take a copy of the original message, which remains unchanged.
   KMime::Message *newMsg = new KMime::Message( new DwMessage( *msg->asDwMessage() ) );
   newMsg->setComplete( msg->isComplete() );

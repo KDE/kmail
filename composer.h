@@ -29,7 +29,6 @@
 
 class KMMessage;
 class KMFolder;
-class KMMessagePart;
 class MailComposerIface;
 
 namespace KMime {

@@ -144,7 +144,6 @@ using KMail::TemplateParser;
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
 
-#include "messagetree.h"
 #include "messagehelper.h"
 
 #include "messageviewer/autoqpointer.h"
