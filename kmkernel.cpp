@@ -41,7 +41,6 @@ using KPIM::RecentAddresses;
 
 #include <kde_file.h>
 #include <kwindowsystem.h>
-// TODO port to akonadi #include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "mailmanagerimpl.h"

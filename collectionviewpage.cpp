@@ -22,6 +22,7 @@
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
 #include <akonadi/private/collectionutils_p.h>
+#include <kmkernel.h>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <kicondialog.h>
@@ -41,7 +42,6 @@ CollectionViewPage::CollectionViewPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
   setPageTitle( i18nc( "@title:tab View settings for a folder.", "View" ) );
-  init();
 }
 
 CollectionViewPage::~CollectionViewPage()
@@ -49,21 +49,16 @@ CollectionViewPage::~CollectionViewPage()
   delete mFolderCollection;
 }
 
-void CollectionViewPage::init()
+void CollectionViewPage::init(const Akonadi::Collection & col)
 {
-#if 0
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
-  mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
-#endif
+  mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col );
 
+  qDebug()<<" mIsLocalSystemFolder :"<<mIsLocalSystemFolder;
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( 0 );
-  //TODO port it
-  mIsLocalSystemFolder = false;
-  mIsResourceFolder = true;
   // Musn't be able to edit details for non-resource, system folder.
-  if ( !mIsLocalSystemFolder || mIsResourceFolder )
+  if ( !mIsLocalSystemFolder /*|| mIsResourceFolder*/ )
   {
     // icons
     mIconsCheckBox = new QCheckBox( i18n( "Use custom &icons"), this );
@@ -244,31 +239,32 @@ void CollectionViewPage::slotSelectFolderTheme()
 
 void CollectionViewPage::load( const Akonadi::Collection & col )
 {
+  init( col );
   mFolderCollection = new FolderCollection( col );
+  if ( !mIsLocalSystemFolder ) {
+    QString iconName;
+    QString unreadIconName;
+    bool iconWasEmpty = false;
+    if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
+      iconName = col.attribute<Akonadi::EntityDisplayAttribute>()->iconName();
+      unreadIconName = col.attribute<Akonadi::EntityDisplayAttribute>()->activeIconName();
+    }
 
-  QString iconName;
-  QString unreadIconName;
-  bool iconWasEmpty = false;
-  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
-    iconName = col.attribute<Akonadi::EntityDisplayAttribute>()->iconName();
-    unreadIconName = col.attribute<Akonadi::EntityDisplayAttribute>()->activeIconName();
+    if ( iconName.isEmpty() ) {
+      iconName = Akonadi::CollectionUtils::defaultIconName( col );
+      iconWasEmpty = true;
+    }
+    mNormalIconButton->setIcon( iconName );
+
+    if ( unreadIconName.isEmpty() ) {
+      mUnreadIconButton->setIcon( iconName );
+    }
+    else {
+      mUnreadIconButton->setIcon( unreadIconName );
+    }
+
+    mIconsCheckBox->setChecked( !iconWasEmpty );
   }
-
-  if ( iconName.isEmpty() ) {
-    iconName = Akonadi::CollectionUtils::defaultIconName( col );
-    iconWasEmpty = true;
-  }
-  mNormalIconButton->setIcon( iconName );
-
-  if ( unreadIconName.isEmpty() ) {
-    mUnreadIconButton->setIcon( iconName );
-  }
-  else {
-    mUnreadIconButton->setIcon( unreadIconName );
-  }
-
-  mIconsCheckBox->setChecked( !iconWasEmpty );
-
   // sender or receiver column
   const QString whoField = mFolderCollection->userWhoField();
   if ( whoField.isEmpty() )
@@ -287,16 +283,16 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
 
 void CollectionViewPage::save( Akonadi::Collection & col )
 {
-
-  if ( mIconsCheckBox->isChecked() ) {
-    col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setIconName( mNormalIconButton->icon() );
-    col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setActiveIconName( mUnreadIconButton->icon() );
+  if ( !mIsLocalSystemFolder ) {
+    if ( mIconsCheckBox->isChecked() ) {
+      col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setIconName( mNormalIconButton->icon() );
+      col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setActiveIconName( mUnreadIconButton->icon() );
+    }
+    else if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
+      col.attribute<Akonadi::EntityDisplayAttribute>()->setIconName( QString() );
+      col.attribute<Akonadi::EntityDisplayAttribute>()->setActiveIconName( QString() );
+    }
   }
-  else if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
-    col.attribute<Akonadi::EntityDisplayAttribute>()->setIconName( QString() );
-    col.attribute<Akonadi::EntityDisplayAttribute>()->setActiveIconName( QString() );
-  }
-
 
   if ( mFolderCollection ) {
     if ( mShowSenderReceiverComboBox->currentIndex() == 1 )

@@ -43,7 +43,7 @@ public:
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
 protected:
-  void init();
+  void init(const Akonadi::Collection&);
 public slots:
   void slotChangeIcon( const QString & icon );
   void slotAggregationCheckboxChanged();

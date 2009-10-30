@@ -4479,7 +4479,6 @@ QList<QAction*> KMMainWidget::actionList()
 
 void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
 {
-  //TODO reimplement it
   // remove the old one, no autodelete in Qt4
   slotFolderRemoved( col );
   FolderCollection fd( col );
