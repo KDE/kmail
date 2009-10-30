@@ -33,7 +33,6 @@ using KPIM::BroadcastStatus;
 #include "kmmainwin.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
-#include "kmmsgpart.h"
 #include "acljobs.h"
 #include "kmfoldercachedimap.h"
 
