@@ -3412,7 +3412,7 @@ void KMMainWidget::setupActions()
 
   {
     KAction *action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyCollections);
-    action->setText( i18n("Copy Folder") );
+    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CopyCollections, ki18np( "Copy Folder", "Copy %1 Folders" ) );
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
   }
   {
@@ -3421,12 +3421,12 @@ void KMMainWidget::setupActions()
   }
   {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItems);
-    action->setText( i18n("Copy Messages") );
+    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CopyItems, ki18nc("Copy Message", "Copy %1 Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
   }
   {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CutItems );
-    action->setText( i18n("Cut Messages") );
+     mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CutItems, ki18np("Cut Message", "Cut %1 Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
   }
 
