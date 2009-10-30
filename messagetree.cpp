@@ -21,7 +21,6 @@
 
 #include "messagetree.h"
 #include "kmmsgbase.h"
-
 namespace KMail
 {
 

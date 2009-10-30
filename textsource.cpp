@@ -32,7 +32,6 @@
 
 
 #include "textsource.h"
-#include "kmmsgbase.h"
 #include "kmmsgdict.h"
 #include "kmfolderindex.h"
 #include <KDebug>

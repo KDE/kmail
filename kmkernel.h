@@ -15,7 +15,6 @@
 #include <kurl.h>
 
 #include "kmail_export.h"
-#include "kmmsgbase.h"
 #include "kmmessagetag.h"
 #include "globalsettings.h"
 #include <kcomponentdata.h>

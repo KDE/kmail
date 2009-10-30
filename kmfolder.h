@@ -37,6 +37,7 @@ typedef QList<KMAccount*> AccountList;
 #include "mimelib/string.h"
 #include <kshortcut.h>
 #include "messageviewer/attachmentstrategy.h"
+#include "messagecore/messagestatus.h"
 #include <QList>
 
 
@@ -274,8 +275,8 @@ public:
 
   /** Called by KMime::Content::setStatus when status of a message has changed
       required to keep the number of unread messages variable current. */
-  void msgStatusChanged( const MessageStatus& oldStatus,
-                         const MessageStatus& newStatus,
+  void msgStatusChanged( const KPIM::MessageStatus& oldStatus,
+                         const KPIM::MessageStatus& newStatus,
                          int idx);
 
   /** Called by KMime::Content::setTagList(). Emits the msgHeaderChanged signal. */
@@ -504,10 +505,10 @@ public:
   int writeIndex( bool createEmptyIndex = false );
 
   /** Set the status of the message at index @p idx to @p status. */
-  void setStatus(int idx, const MessageStatus& status, bool toggle=false);
+  void setStatus(int idx, const KPIM::MessageStatus& status, bool toggle=false);
 
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
-  void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle=false);
+  void setStatus(QList<int>& ids, const KPIM::MessageStatus& status, bool toggle=false);
 
   /** Icon related methods */
   bool useCustomIcons() const { return mUseCustomIcons; }
