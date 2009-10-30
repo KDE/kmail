@@ -303,13 +303,6 @@ public:
   static QString base64EncodedMD5( const QByteArray & aStr );
   static QString base64EncodedMD5( const char * aStr, int len=-1 );
 
-  /**
-   * Find out preferred charset for 'text'.
-   * First @p encoding is tried and if that one is not suitable,
-   * the encodings in @p encodingList are tried.
-   */
-  static QByteArray autoDetectCharset(const QByteArray &encoding, const QStringList &encodingList, const QString &text);
-
   /** Returns the message serial number for the message. */
   virtual unsigned long getMsgSerNum() const;
 

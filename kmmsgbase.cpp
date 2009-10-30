@@ -773,51 +773,6 @@ QString KMMsgBase::base64EncodedMD5( const char * s, int len ) {
 
 
 //-----------------------------------------------------------------------------
-QByteArray KMMsgBase::autoDetectCharset(const QByteArray &_encoding, const QStringList &encodingList, const QString &text)
-{
-    QStringList charsets = encodingList;
-    if (!_encoding.isEmpty())
-    {
-       QString currentCharset = QString::fromLatin1(_encoding);
-       charsets.removeAll(currentCharset);
-       charsets.prepend(currentCharset);
-    }
-
-    // cberzan: moved this crap to CodecManager ==================================
-    QStringList::ConstIterator it = charsets.constBegin();
-    for (; it != charsets.constEnd(); ++it)
-    {
-       QByteArray encoding = (*it).toLatin1();
-       if (encoding == "locale")
-       {
-         encoding = kmkernel->networkCodec()->name();
-         kAsciiToLower(encoding.data());
-       }
-       if (text.isEmpty())
-         return encoding;
-       if (encoding == "us-ascii") {
-         bool ok;
-         (void) KMMsgBase::toUsAscii(text, &ok);
-         if (ok)
-            return encoding;
-       }
-       else
-       {
-         const QTextCodec *codec = KMMsgBase::codecForName(encoding);
-         if (!codec) {
-           kDebug() << "Auto-Charset: Something is wrong and I can not get a codec. [" << encoding <<"]";
-         } else {
-           if (codec->canEncode(text))
-              return encoding;
-         }
-       }
-    }
-    // cberzan: till here =====================================================
-    return 0;
-}
-
-
-//-----------------------------------------------------------------------------
 unsigned long KMMsgBase::getMsgSerNum() const
 {
 #if 0 //TODO port to akonadi

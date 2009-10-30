@@ -2488,7 +2488,7 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
   // For the encoding of the name, prefer the current charset of the composer first,
   // then try every other available encoding.
   QByteArray nameEncoding =
-      KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), name );
+      KMail::Util::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), name );
   if ( nameEncoding.isEmpty() )
     nameEncoding = "utf-8";
 

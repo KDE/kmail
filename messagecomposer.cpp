@@ -648,7 +648,7 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
 
     // this is taken from kmmsgpartdlg.cpp:
     QByteArray encoding =
-      KMMsgBase::autoDetectCharset( part->charset(),
+      KMail::Util::autoDetectCharset( part->charset(),
                                     KMMessage::preferredCharsets(), filename );
     if ( encoding.isEmpty() )
       encoding = "utf-8";
@@ -2298,7 +2298,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 bool MessageComposer::autoDetectCharset()
 {
   QByteArray charset =
-      KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(),
+      KMail::Util::autoDetectCharset( mCharset, KMMessage::preferredCharsets(),
                                     mComposeWin->mEditor->textOrHtml() );
   if ( charset.isEmpty() ) {
     KCursorSaver idle( KBusyPtr::idle() );

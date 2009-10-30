@@ -46,6 +46,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <akonadi/item.h>
+#include "kmkernel.h"
 #include <kmime/kmime_message.h>
 class DwString;
 class KUrl;
@@ -127,6 +128,13 @@ namespace Util {
      * This function is a bit more tolerant, than QTextCodec::codecForName */
     const QTextCodec* codecForName(const QByteArray& _str);
 
+
+    /**
+     * Find out preferred charset for 'text'.
+     * First @p encoding is tried and if that one is not suitable,
+     * the encodings in @p encodingList are tried.
+     */
+     QByteArray autoDetectCharset(const QByteArray &encoding, const QStringList &encodingList, const QString &text);
 
     /**
      * A LaterDeleter is intended to be used with the RAII ( Resource
