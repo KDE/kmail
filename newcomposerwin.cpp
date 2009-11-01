@@ -1716,6 +1716,31 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
     mEditor->setText( QString( msgContent->decodedContent() ) );
   }
 
+  if ( KMime::Content * n = MessageViewer::ObjectTreeParser::findType( msgContent, "text/html", true, true ) ) {
+    KMime::Content *parentnode = n->parent();
+    if ( parentnode &&
+         parentnode->contentType()->isMultipart()) {
+      if ( mMsg->headerByType( "X-KMail-Markup" ) &&
+           mMsg->headerByType( "X-KMail-Markup" )->asUnicodeString() == "true" ) {
+        enableHtml();
+#if 0
+
+        // get cte decoded body part
+        mCharset = n->msgPart().charset();
+        QByteArray bodyDecoded = n->msgPart().bodyDecoded();
+
+        // respect html part charset
+        const QTextCodec *codec = KMail::Util::codecForName( mCharset );
+        if ( codec ) {
+          mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
+        } else {
+          mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
+        }
+#endif
+      }
+    }
+  }
+
 #if 0 //TODO port to kmime
 
   partNode *root = partNode::fromMessage( mMsg );
