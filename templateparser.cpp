@@ -212,6 +212,7 @@ void TemplateParser::process( KMime::Message *aorig_msg, const Akonadi::Collecti
   mOrigMsg = aorig_msg;
   mFolder = afolder;
   QString tmpl = findTemplate();
+  if( tmpl.isEmpty()) return;
   return processWithTemplate( tmpl );
 }
 
@@ -1137,6 +1138,7 @@ QString TemplateParser::findTemplate()
   return tmpl;
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return QString();
 #endif
 }
 

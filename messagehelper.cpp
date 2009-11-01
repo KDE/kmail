@@ -685,10 +685,10 @@ void link( KMime::Message *msg, const Akonadi::Item & item,const KPIM::MessageSt
 {
   Q_ASSERT( aStatus.isReplied() || aStatus.isForwarded() || aStatus.isDeleted() );
 
-  QString message = msg->headerByType( "X-KMail-Link-Message" )->asUnicodeString();
+  QString message = msg->headerByType( "X-KMail-Link-Message" ) ? msg->headerByType( "X-KMail-Link-Message" )->asUnicodeString() : QString();
   if ( !message.isEmpty() )
     message += ',';
-  QString type = msg->headerByType( "X-KMail-Link-Type" )->asUnicodeString();
+  QString type = msg->headerByType( "X-KMail-Link-Type" ) ? msg->headerByType( "X-KMail-Link-Type" )->asUnicodeString(): QString();
   if ( !type.isEmpty() )
     type += ',';
 
