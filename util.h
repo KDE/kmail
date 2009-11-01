@@ -116,7 +116,7 @@ namespace Util {
      */
     bool validateAddresses( QWidget *parent, const QString &addresses );
 
-    KMime::Message *message( const Akonadi::Item & item );
+    KMime::Message::Ptr message( const Akonadi::Item & item );
 
     /** Convert all non-ascii characters to question marks
      * If ok is non-null, *ok will be set to true if all characters

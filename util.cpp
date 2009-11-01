@@ -177,17 +177,13 @@ bool KMail::Util::handleUrlOnMac( const KUrl& url )
 #endif
 }
 
-KMime::Message *KMail::Util::message( const Akonadi::Item & item )
+KMime::Message::Ptr KMail::Util::message( const Akonadi::Item & item )
 {
   if ( !item.hasPayload<KMime::Message::Ptr>() ) {
     kWarning() << "Payload is not a MessagePtr!";
-    return 0;
+    return KMime::Message::Ptr();
   }
-  KMime::Message *msg = new KMime::Message;
-  msg->setContent( item.payloadData() );
-  msg->parse();
-
-  return msg;
+  return item.payload<boost::shared_ptr<KMime::Message> >();
 }
 
 QByteArray toUsAscii(const QString& _str, bool *ok)

@@ -1373,7 +1373,7 @@ void KMMainWidget::slotShowNewFromTemplate()
     items = job->items();
   }
   for ( int idx = 0; idx < items.count(); ++idx ) {
-    KMime::Message *msg = KMail::Util::message( items.at( idx ) );
+    KMime::Message::Ptr msg = KMail::Util::message( items.at( idx ) );
 
     QString subj = msg->subject()->asUnicodeString();
     if ( subj.isEmpty() )
