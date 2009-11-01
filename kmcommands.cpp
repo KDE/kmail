@@ -327,6 +327,14 @@ void KMCommand::transferSelectedMsgs()
     mProgressDialog->setModal(true);
     mProgressDialog->setMinimumDuration(1000);
   }
+  QList<Akonadi::Item>::const_iterator it;
+  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
+  {
+    //Temporary code
+    // save the complete messages
+    mRetrievedMsgs.append(*it);
+  }
+
 #if 0 //TODO port to akonadi
   QList<KMime::Message*>::const_iterator it;
   for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
