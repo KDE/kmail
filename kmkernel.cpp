@@ -2216,20 +2216,20 @@ void KMKernel::slotEmptyTrash()
   {
     return;
   }
-#if 0
   QList<KMAccount*>::iterator accountIt = acctMgr()->begin();
   while ( accountIt != acctMgr()->end() ) {
     KMAccount *acct = *accountIt;
     ++accountIt;
-    KMFolder* trash = findFolderById(acct->trash());
-    if (trash)
+    Akonadi::Collection trash = findFolderCollectionById(acct->trash());
+    if (trash.isValid())
     {
+#if 0
       trash->expunge();
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 KMKernel* KMKernel::self()

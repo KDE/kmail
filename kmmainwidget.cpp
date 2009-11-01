@@ -1353,11 +1353,7 @@ void KMMainWidget::slotShowNewFromTemplate()
   {
     const KPIMIdentities::Identity & ident =
       kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
-#if 0
-    mTemplateFolder = kmkernel->folderMgr()->findIdString( ident.templates() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    mTemplateFolder = kmkernel->findFolderCollectionById( ident.templates() );
   }
 
   if ( !mTemplateFolder.isValid() ) {
