@@ -1711,6 +1711,11 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   qDebug()<<" opt.textualContent :"<<otp.textualContent();
   mEditor->setText( otp.textualContent() );
 
+  if ( otp.textualContent().isEmpty() ) {
+    //Temporary code
+    mEditor->setText( QString( msgContent->decodedContent() ) );
+  }
+
 #if 0 //TODO port to kmime
 
   partNode *root = partNode::fromMessage( mMsg );
