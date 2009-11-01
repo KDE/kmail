@@ -49,6 +49,7 @@
 #include "messageviewer/khtmlparthtmlwriter.h"
 using MessageViewer::HtmlWriter;
 #include "messageviewer/htmlstatusbar.h"
+#include "messagehelper.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 
@@ -403,19 +404,27 @@ void KMReaderWin::slotTouchMessage()
        message()->encryptionState() != KMMsgNotEncrypted &&
        message()->encryptionState() != KMMsgEncryptionStateUnknown )
     return;
-
-  KMFolder *folder = message()->parent();
-  if ( folder &&
-       ( folder->isOutbox() || folder->isSent() || folder->isTrash() ||
-         folder->isDrafts() || folder->isTemplates() ) )
+#endif
+  Akonadi::Collection col = message().parentCollection();
+  if ( col.isValid() &&
+       ( KMKernel::self()->folderIsSentMailFolder( col ) ||
+         KMKernel::self()->folderIsTrash( col ) ||
+         KMKernel::self()->folderIsDraftOrOutbox( col ) ||
+         KMKernel::self()->folderIsTemplates( col ) ) )
     return;
 
-  if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
-                                                   MDN::Displayed,
-                                                   true /* allow GUI */ ) )
+  KMime::Message::Ptr msg = KMail::Util::message( message() );
+  if ( !msg )
+    return;
+
+  if ( KMime::Message * receipt = KMail::MessageHelper::createMDN( &*msg, MDN::ManualAction,
+                                                        MDN::Displayed,
+                                                        true /* allow GUI */ ) ) {
+#if 0
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
       KMessageBox::error( this, i18n("Could not send MDN.") );
 #endif
+  }
 }
 
 
