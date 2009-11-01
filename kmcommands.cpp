@@ -1109,7 +1109,7 @@ KMCommand::Result KMReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( &*msg, KMail::ReplySmart, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
 #if 0  //Port to kmime::message
   win->setCharset( msg->codec()->name(), true );
@@ -1140,7 +1140,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( &*msg, KMail::ReplySmart, "", true);
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( reply.msg, replyContext( reply ) );
 #if 0 //Port to akonadi
   win->setCharset( msg->codec()->name(), true );
@@ -1170,7 +1170,7 @@ KMCommand::Result KMReplyListCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( &*msg, KMail::ReplyList, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ),
                                                0, mSelection );
 #if 0
@@ -1202,7 +1202,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( &*msg, KMail::ReplyAll, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
 #if 0
@@ -1233,7 +1233,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( &*msg, KMail::ReplyAuthor, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
 #if 0
@@ -1534,7 +1534,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( &*msg, KMail::ReplySmart, mSelection,
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplySmart, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
@@ -1568,7 +1568,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( &*msg, KMail::ReplyAll, mSelection,
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplyAll, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );

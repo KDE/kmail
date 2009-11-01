@@ -330,6 +330,20 @@ void FolderCollection::setReadExpireUnits( ExpireUnits units )
   }
 }
 
+QString FolderCollection::mailingListPostAddress() const
+{
+  if ( mMailingList.features() & MailingList::Post ) {
+    KUrl::List::const_iterator it;
+    KUrl::List post = mMailingList.postURLS();
+    for( it = post.constBegin(); it != post.constEnd(); ++it ) {
+      // We check for isEmpty because before 3.3 postAddress was just an
+      // email@kde.org and that leaves protocol() field in the kurl class
+      if ( (*it).protocol() == "mailto" || (*it).protocol().isEmpty() )
+        return (*it).path();
+    }
+  }
+  return QString();
+}
 
 void FolderCollection::setExpireAction( ExpireAction a )
 {

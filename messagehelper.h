@@ -22,7 +22,7 @@
 
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_mdn.h>
-
+#include <akonadi/item.h>
 namespace KMail {
   /**
    * Enumeration that defines the available reply "modes"
@@ -68,7 +68,7 @@ namespace MessageHelper {
     /** Create a new message that is a reply to this message, filling all
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
-  KMime::Message* createReply( KMime::Message* origMsg, KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
+  KMime::Message* createReply(KMime::Message* origMsg, KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
                           const QString &selection=QString(), bool noQuote=false,
                           bool allowDecryption=true, bool selectionIsBody=false,
                           const QString &tmpl = QString() );
@@ -82,7 +82,7 @@ namespace MessageHelper {
    * @return the reply created, including the reply mode
    */
 //TODO see if this can be merged with the above one!
-  MessageReply createReply2( KMime::Message* origMsg,
+  MessageReply createReply2( const Akonadi::Item & item, KMime::Message* origMsg,
                             KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
                             const QString &selection=QString(), bool noQuote=false,
                             bool allowDecryption=true, bool selectionIsBody=false,

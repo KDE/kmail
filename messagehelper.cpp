@@ -27,6 +27,7 @@
 #include "messageinfo.h"
 #include "mdnadvicedialog.h"
 #include "mailinglist-magic.h"
+#include "foldercollection.h"
 
 #include <messageviewer/objecttreeparser.h>
 #include <messageviewer/kcursorsaver.h>
@@ -450,13 +451,14 @@ msg->link( this, MessageStatus::statusReplied() );
   return msg;
 }
 
-MessageReply createReply2( KMime::Message *origMsg,
-                                                KMail::ReplyStrategy replyStrategy,
-                                                const QString &selection /*.clear() */,
-                                                bool noQuote /* = false */,
-                                                bool allowDecryption /* = true */,
-                                                bool selectionIsBody /* = false */,
-                                                const QString &tmpl /* = QString() */ )
+MessageReply createReply2(const Akonadi::Item &item,
+                          KMime::Message *origMsg,
+                          KMail::ReplyStrategy replyStrategy,
+                          const QString &selection /*.clear() */,
+                          bool noQuote /* = false */,
+                          bool allowDecryption /* = true */,
+                          bool selectionIsBody /* = false */,
+                          const QString &tmpl /* = QString() */ )
 {
   KMime::Message* msg = new KMime::Message;
   QString str, mailingListStr, replyToStr, toStr;
@@ -469,15 +471,15 @@ MessageReply createReply2( KMime::Message *origMsg,
   replyToStr = origMsg->replyTo()->asUnicodeString();
 
   msg->contentType()->setCharset("utf-8");
-#if 0 //TODO port to akonadi
   // determine the mailing list posting address
-  if ( parent() && parent()->isMailingListEnabled() &&
-       !parent()->mailingListPostAddress().isEmpty() ) {
-    mailingListAddresses << parent()->mailingListPostAddress();
+  Akonadi::Collection parentCollection = item.parentCollection();
+  FolderCollection *fd = 0;
+  if ( parentCollection.isValid() ) {
+    fd = new FolderCollection( parentCollection, false /*don't save*/ );
+    if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
+      mailingListAddresses << fd->mailingListPostAddress();
+    }
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
   if ( origMsg->headerByType("List-Post") && origMsg->headerByType("List-Post")->asUnicodeString().contains( "mailto:", Qt::CaseInsensitive ) ) {
     QString listPost = origMsg->headerByType("List-Post")->asUnicodeString();
@@ -658,9 +660,12 @@ MessageReply createReply2( KMime::Message *origMsg,
   }
 #if 0 //TODO port to akonadi
   msg->link( this, MessageStatus::statusReplied() );
-  if ( parent() && parent()->putRepliesInSameFolder() )
-    msg->setFcc( parent()->idString() );
-
+#endif
+  if ( parentCollection.isValid() && fd->putRepliesInSameFolder() ) {
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg, QString::number( parentCollection.id() ), "utf-8" );
+    msg->setHeader( header );
+  }
+#if 0
   // replies to an encrypted message should be encrypted as well
   if ( encryptionState() == KMMsgPartiallyEncrypted ||
        encryptionState() == KMMsgFullyEncrypted ) {
@@ -674,6 +679,7 @@ MessageReply createReply2( KMime::Message *origMsg,
   MessageReply reply;
   reply.msg = msg;
   reply.replyAll = replyAll;
+  delete fd;
   return reply;
 }
 

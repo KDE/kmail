@@ -187,6 +187,7 @@ public:
   bool ignoreNewMail() const { return mIgnoreNewMail; }
   void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
 
+  QString mailingListPostAddress() const;
 
   /** Mark all new messages as unread. */
   void markNewAsUnread();
