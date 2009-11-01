@@ -15,8 +15,6 @@
 #include "folderrequester.h"
 
 using KMail::FolderRequester;
-#include "templateparser.h"
-using KMail::TemplateParser;
 #include "messageproperty.h"
 #include "actionscheduler.h"
 using KMail::MessageProperty;
