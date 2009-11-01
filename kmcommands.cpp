@@ -1503,7 +1503,7 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !msg )
     return Failed;
 
-  KMime::Message *newMsg = KMail::MessageHelper::createRedirect( &*msg, dlg->to() );
+  KMime::Message *newMsg = KMail::MessageHelper::createRedirect( item, &*msg, dlg->to() );
   KMFilterAction::sendMDN( &*msg, KMime::MDN::Dispatched );
 
   const KMail::MessageSender::SendMethod method = dlg->sendImmediate()

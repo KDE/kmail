@@ -1774,11 +1774,13 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMime::Message* aMsg)
   KMime::Message* msg;
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
-
+#if 0
   msg = KMail::MessageHelper::createRedirect( aMsg, mParameter );
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
     kDebug() << "KMFilterAction: could not redirect message (sending failed)";
     return ErrorButGoOn; // error: couldn't send

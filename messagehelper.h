@@ -101,7 +101,7 @@ namespace MessageHelper {
     user, mail is not changed and the reply-to field is set to
     the email address of the original sender
    */
-  KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr );
+  KMime::Message* createRedirect( const Akonadi::Item &, KMime::Message *origMsg, const QString &toStr );
 
   KMime::Message* createResend( KMime::Message *origMsg );
 

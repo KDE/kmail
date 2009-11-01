@@ -795,7 +795,7 @@ KMime::Message * createResend( KMime::Message *origMsg )
   return msg;
 }
 
-KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr )
+KMime::Message* createRedirect( const Akonadi::Item & item, KMime::Message *origMsg, const QString &toStr )
 {
   // copy the message 1:1
   KMime::Message* msg = new KMime::Message;
@@ -841,11 +841,7 @@ KMime::Message* createRedirect( KMime::Message *origMsg, const QString &toStr )
   header = new KMime::Headers::Generic( "X-KMail-Recipients", msg, toStr, "utf-8" );
   msg->setHeader( header );
 
-#if 0 //TODO port to akonadi
-  msg->link( this, MessageStatus::statusForwarded() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  link( msg, item, KPIM::MessageStatus::statusForwarded() );
   return msg;
 }
 
