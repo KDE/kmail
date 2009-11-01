@@ -367,12 +367,6 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
   connect( kmkernel->folderMgr(), SIGNAL(folderRemoved(const Akonadi::Collection&)),
            SLOT(slotFolderRemoved(const Akonadi::Collection&)) );
-#if 0 //TODO port to akonadi
-  connect( kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-           SLOT(slotFolderRemoved(KMFolder*)) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
@@ -1060,7 +1054,6 @@ void KMComposeWin::applyTemplate( uint uoid )
 
 void KMComposeWin::setQuotePrefix( uint uoid )
 {
-  kDebug() << "Port me...";
   QString quotePrefix = mMsg->headerByType( "X-KMail-QuotePrefix" ) ? mMsg->headerByType( "X-KMail-QuotePrefix" )->asUnicodeString() : QString();
   if ( quotePrefix.isEmpty() ) {
     // no quote prefix header, set quote prefix according in identity
