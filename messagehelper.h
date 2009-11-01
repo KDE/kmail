@@ -92,7 +92,7 @@ namespace MessageHelper {
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
-  KMime::Message* createForward(KMime::Message *origMsg, const QString &tmpl = QString() );
+  KMime::Message* createForward(const Akonadi::Item &item, KMime::Message *origMsg, const QString &tmpl = QString() );
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message

@@ -1611,7 +1611,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( KMime::Message *msg )
     kWarning() << "Attempt to forward to receipient of original message, ignoring.";
     return ErrorButGoOn;
   }
-
+#if 0
   KMime::Message *fwdMsg = KMail::MessageHelper::createForward( msg, mTemplate );
   fwdMsg->to()->fromUnicodeString( fwdMsg->to()->asUnicodeString() + ',' + mParameter, "utf-8" );
 
@@ -1621,7 +1621,10 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( KMime::Message *msg )
   }
   else
     sendMDN( msg, KMime::MDN::Dispatched );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 
+#endif
   // (the msgSender takes ownership of the message, so don't delete it here)
   return GoOn;
 }

@@ -709,7 +709,7 @@ void link( KMime::Message *msg, const Akonadi::Item & item,const KPIM::MessageSt
 
 
 
-KMime::Message* createForward( KMime::Message *origMsg, const QString &tmpl /* = QString() */ )
+KMime::Message* createForward( const Akonadi::Item &item, KMime::Message *origMsg, const QString &tmpl /* = QString() */ )
 {
   KMime::Message* msg = new KMime::Message();
 
@@ -768,11 +768,7 @@ KMime::Message* createForward( KMime::Message *origMsg, const QString &tmpl /* =
   else
     parser.process( origMsg );
 
-#if 0 //TODO port to akonadi
-  msg->link( this, MessageStatus::statusForwarded() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  link( msg, item, KPIM::MessageStatus::statusForwarded() );
   return msg;
 }
 

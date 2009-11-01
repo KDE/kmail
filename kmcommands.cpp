@@ -549,7 +549,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMime::Message *fmsg = KMail::MessageHelper::createForward( &*msg );
+  KMime::Message *fmsg = KMail::MessageHelper::createForward( item, &*msg );
   fmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
@@ -1392,7 +1392,7 @@ KMCommand::Result KMForwardCommand::execute()
   if ( !msg )
     return Failed;
   KCursorSaver busy(KBusyPtr::busy());
-  KMime::Message *fwdMsg = KMail::MessageHelper::createForward(&*msg);
+  KMime::Message *fwdMsg = KMail::MessageHelper::createForward(item, &*msg);
 
   uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
   if ( id == 0 )
@@ -1653,7 +1653,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     if ( !msg )
       return Failed;
     KCursorSaver busy( KBusyPtr::busy() );
-    KMime::Message *fwdMsg = KMail::MessageHelper::createForward(  &*msg, mTemplate );
+    KMime::Message *fwdMsg = KMail::MessageHelper::createForward( item, &*msg, mTemplate );
 
     uint id = 0;
     QString strId = msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed() : "";
