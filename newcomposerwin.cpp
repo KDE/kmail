@@ -86,6 +86,8 @@ using MailTransport::Transport;
 #include "templateparser.h"
 #include "messagehelper.h"
 #include "keyresolver.h"
+#include "templatesconfiguration_kfg.h"
+
 
 using Sonnet::DictionaryComboBox;
 using KMail::TemplateParser;
@@ -1005,8 +1007,6 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyTemplate( uint uoid )
 {
-  kDebug() << "Port me...";
-//#if 0
   const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() )
     return;
@@ -1058,12 +1058,10 @@ void KMComposeWin::applyTemplate( uint uoid )
 #endif
 }
 
-//-----------------------------------------------------------------------------
 void KMComposeWin::setQuotePrefix( uint uoid )
 {
   kDebug() << "Port me...";
-#if 0
-  QString quotePrefix = mMsg->headerField( "X-KMail-QuotePrefix" );
+  QString quotePrefix = mMsg->headerByType( "X-KMail-QuotePrefix" ) ? mMsg->headerByType( "X-KMail-QuotePrefix" )->asUnicodeString() : QString();
   if ( quotePrefix.isEmpty() ) {
     // no quote prefix header, set quote prefix according in identity
     if ( mCustomTemplate.isEmpty() ) {
@@ -1075,8 +1073,7 @@ void KMComposeWin::setQuotePrefix( uint uoid )
       quotePrefix = quoteTemplate.quoteString();
     }
   }
-  mEditor->setQuotePrefixName( StringUtil::formatString( quotePrefix, mMsg->from() ) );
-#endif
+  mEditor->setQuotePrefixName( MessageViewer::StringUtil::formatString( quotePrefix, mMsg->from()->asUnicodeString() ) );
 }
 
 //-----------------------------------------------------------------------------
