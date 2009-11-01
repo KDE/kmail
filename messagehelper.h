@@ -23,6 +23,7 @@
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_mdn.h>
 #include <akonadi/item.h>
+#include <messagecore/messagestatus.h>
 namespace KMail {
   /**
    * Enumeration that defines the available reply "modes"
@@ -212,6 +213,7 @@ namespace MessageHelper {
   QString skipKeyword(const QString& str, QChar sepChar=':',
 				 bool* keywordFound=0);
 
+  void link( KMime::Message *msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus );
 }
 
 }

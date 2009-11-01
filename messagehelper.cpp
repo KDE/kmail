@@ -658,9 +658,7 @@ MessageReply createReply2(const Akonadi::Item &item,
     else
       parser.process( origMsg );
   }
-#if 0 //TODO port to akonadi
-  msg->link( this, MessageStatus::statusReplied() );
-#endif
+  link( msg, item, KPIM::MessageStatus::statusReplied() );
   if ( parentCollection.isValid() && fd->putRepliesInSameFolder() ) {
     KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg, QString::number( parentCollection.id() ), "utf-8" );
     msg->setHeader( header );
@@ -681,6 +679,32 @@ MessageReply createReply2(const Akonadi::Item &item,
   reply.replyAll = replyAll;
   delete fd;
   return reply;
+}
+
+void link( KMime::Message *msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus )
+{
+  Q_ASSERT( aStatus.isReplied() || aStatus.isForwarded() || aStatus.isDeleted() );
+
+  QString message = msg->headerByType( "X-KMail-Link-Message" )->asUnicodeString();
+  if ( !message.isEmpty() )
+    message += ',';
+  QString type = msg->headerByType( "X-KMail-Link-Type" )->asUnicodeString();
+  if ( !type.isEmpty() )
+    type += ',';
+
+  message += QString::number( item.id() );
+  if ( aStatus.isReplied() )
+    type += "reply";
+  else if ( aStatus.isForwarded() )
+    type += "forward";
+  else if ( aStatus.isDeleted() )
+    type += "deleted";
+
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Link-Message", msg, message, "utf-8" );
+  msg->setHeader( header );
+
+  header = new KMime::Headers::Generic( "X-KMail-Link-Type", msg, type, "utf-8" );
+  msg->setHeader( header );
 }
 
 
