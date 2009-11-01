@@ -329,10 +329,9 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
 
   mSplitter->setOpaqueResize( true );
 
-  //Laurent comment it. It crashs don't understand why
-  //mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
-  //mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
-  //mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
+  mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
+  mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
+  mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
 
   setCaption( i18n("Composer") );
   setMinimumSize( 200, 200 );
@@ -2130,9 +2129,9 @@ void KMComposeWin::readyForSending()
   fillInfoPart( mComposer->infoPart() );
 
   fillCryptoInfo( mComposer, mSignAction->isChecked(), mEncryptAction->isChecked() );
-  
+
   mComposer->addAttachmentParts( mAttachmentModel->attachments() );
- 
+
   connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
   mComposer->start();
   kDebug() << "Composer for sending started.";
@@ -2185,7 +2184,7 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
       default: Q_ASSERT( false ); break;
     }
   }
-  
+
   kDebug() << "primary recipients:" <<  recipients;
   kDebug() << "secondary:" <<  bcc;
   keyResolver->setPrimaryRecipients( recipients );
@@ -2209,7 +2208,7 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( cryptoMessageFormat() );
     composer->setSigningKeys( signingKeys );
   }
-  
+
   composer->setSignAndEncrypt( sign, encrypt );
   kDebug() << "setting crypto format on message:" << Kleo::cryptoMessageFormatToString( cryptoMessageFormat() );
   composer->setMessageCryptoFormat( cryptoMessageFormat() );
