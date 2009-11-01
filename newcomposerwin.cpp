@@ -144,7 +144,7 @@ using KMail::TemplateParser;
 #include <memory>
 
 #include <akonadi/collectioncombobox.h>
-
+#include <messageviewer/objecttreeemptysource.h>
 // MOC
 #include "newcomposerwin.moc"
 
@@ -1710,6 +1710,14 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   // TODO fix crash in kmime
  // collectImages( mMsg->mainBodyPart( "text/html" ) ); // when using html, check for embedded images
 
+  KMime::Content *msgContent = new KMime::Content;
+  msgContent->setContent( mMsg->encodedContent() );
+  MessageViewer::EmptySource emptySource;
+  MessageViewer::ObjectTreeParser otp( &emptySource );//All default are ok
+  otp.parseObjectTree( msgContent );
+  qDebug()<<" opt.textualContent :"<<otp.textualContent();
+  mEditor->setText( otp.textualContent() );
+
 #if 0 //TODO port to kmime
 
   partNode *root = partNode::fromMessage( mMsg );
@@ -1890,9 +1898,8 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
   // the template parser.
   if ( mMsg->getCursorPos() > 0 )
     mEditor->setCursorPositionFromStart( mMsg->getCursorPos() );
-
-  setModified( isModified );
 #endif
+  setModified( isModified );
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
 #if 0 //Port to akonadi
