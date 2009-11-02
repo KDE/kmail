@@ -737,14 +737,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
            SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
 
-#if 0
-  mAccountsReceiving.mAccountList->setSortingEnabled( true );
-  mAccountsReceiving.mAccountList->sortByColumn( 0, Qt::AscendingOrder );
   mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
-
-  connect( mAccountsReceiving.mAccountList, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
-           this, SLOT(slotModifySelectedAccount()) );
-#endif
 
   connect( mAccountsReceiving.mAddAccountButton, SIGNAL(clicked()),
            this, SLOT(slotAddAccount()) );
@@ -877,7 +870,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
   mNewAccounts.append( account );
 #endif
-
+  //TODO verify this dialog box. We can see note etc...
   Akonadi::AgentTypeDialog dlg( this );
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
   filter->addMimeTypeFilter( "message/rfc822" );
