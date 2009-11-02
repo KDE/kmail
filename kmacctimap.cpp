@@ -179,11 +179,17 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
       (*it).progressItem->setComplete();
     }
   }
-  if (mSlave && mapJobData.begin() != mapJobData.end())
-  {
-    mSlave->kill();
+
+  if ( slave() ) {
+    if ( disconnectSlave ) {
+      KIO::Scheduler::disconnectSlave( slave() );
+    }
+    if ( mapJobData.begin() != mapJobData.end() ) {
+      mSlave->kill();
+    }
     mSlave = 0;
   }
+
   // remove the jobs
   mapJobData.clear();
   KMAccount::deleteFolderJobs();
@@ -197,10 +203,6 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
   {
     checkDone( false, CheckOK ); // returned 0 new messages
     mCountRemainChecks = 0;
-  }
-  if ( disconnectSlave && slave() ) {
-    KIO::Scheduler::disconnectSlave( slave() );
-    mSlave = 0;
   }
 }
 
