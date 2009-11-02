@@ -515,7 +515,7 @@ class KMComposeWin : public KMail::Composer
      * composer window.
      */
     void applyAutoSave();
-    
+
     void fillCryptoInfo( Message::Composer* composer, bool sign, bool encrypt );
     void fillGlobalPart( Message::GlobalPart *globalPart );
     void fillTextPart( Message::TextPart *part );

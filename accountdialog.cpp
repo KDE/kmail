@@ -19,12 +19,9 @@
  */
 #include "accountdialog.h"
 #include "sieveconfig.h"
-//TODO port to akonadi #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "accountmanager.h"
 #include "popaccount.h"
-//TODO port to akonadi #include "kmacctimap.h"
-//TODO port to akonadi #include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"
 #include "protocols.h"
 #include "folderrequester.h"

@@ -1024,11 +1024,10 @@ QString TemplateParser::findCustomTemplate( const QString &tmplName )
 
 QString TemplateParser::findTemplate()
 {
-#if 0 //TODO port to akonadi
   // kDebug() << "Trying to find template for mode" << mode;
 
   QString tmpl;
-
+#if 0
   if ( !mFolder.isValid() ) { // find folder message belongs to
     mFolder = mMsg->parentCollection();
     if ( !mFolder.isValid() ) {
@@ -1040,8 +1039,10 @@ QString TemplateParser::findTemplate()
       }
     }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   kDebug() << "Folder found:" << mFolder;
-
   if ( mFolder.isValid() )  // only if a folder was found
   {
     QString fid = QString::number( mFolder.id() );
@@ -1072,9 +1073,9 @@ QString TemplateParser::findTemplate()
   }
 
   if ( !mIdentity ) { // find identity message belongs to
-    mIdentity = mMsg->identityUoid();
+    mIdentity = KMail::MessageHelper::identityUoid( mMsg );
     if ( !mIdentity && mOrigMsg ) {
-      mIdentity = mOrigMsg->identityUoid();
+      mIdentity = KMail::MessageHelper::identityUoid( mOrigMsg );
     }
     mIdentity = kmkernel->identityManager()->identityForUoidOrDefault( mIdentity ).uoid();
     if ( !mIdentity ) {
@@ -1136,10 +1137,6 @@ QString TemplateParser::findTemplate()
 
   mQuoteString = GlobalSettings::self()->quoteString();
   return tmpl;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return QString();
-#endif
 }
 
 QString TemplateParser::pipe( const QString &cmd, const QString &buf )
