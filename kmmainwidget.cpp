@@ -265,6 +265,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            this, SLOT( slotMailChecked( bool, bool, const QMap<QString, int> & ) ) );
 
+
   connect( kmkernel->acctMgr(), SIGNAL( accountAdded( KMAccount* ) ),
            this, SLOT( initializeIMAPActions() ) );
   connect( kmkernel->acctMgr(), SIGNAL( accountRemoved( KMAccount* ) ),
@@ -1242,16 +1243,6 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
   } else {
     kDebug() << "- account with name '" << item->data().toString() <<"' not found";
   }
-#if 0
-  KMAccount* t = kmkernel->acctMgr()->findByName( item->data().toString() );
-
-  if ( t ) {
-    kmkernel->acctMgr()->singleCheckMail( t );
-  }
-  else {
-    kDebug() << "- account with name '" << item->data().toString() <<"' not found";
-  }
-#endif
 }
 
 //-----------------------------------------------------------------------------
