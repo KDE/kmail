@@ -736,6 +736,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "application/x-vnd.kde.contactgroup" );
   connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
            SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
+  connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
+           this, SLOT(slotModifySelectedAccount()) );
 
   mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
 
