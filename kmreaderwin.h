@@ -60,7 +60,6 @@ namespace MessageViewer {
   class HeaderStrategy;
   class HeaderStyle;
 }
-class KHtmlPartHtmlWriter;
 
 namespace KParts {
   struct BrowserArguments;
