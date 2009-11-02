@@ -145,6 +145,8 @@ using MailTransport::TransportManagementWidget;
 #include <akonadi/agentinstancemodel.h>
 #include <akonadi/agenttype.h>
 #include <akonadi/agentmanager.h>
+#include <akonadi/agenttypedialog.h>
+#include <akonadi/agentinstancecreatejob.h>
 namespace {
 
   static const char * lockedDownWarning =
@@ -771,6 +773,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
   connect( mAccountsReceiving.mOtherNewMailActionsButton, SIGNAL(clicked()),
            this, SLOT(slotEditNotifications()) );
+  slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
+
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
@@ -835,6 +839,7 @@ QStringList AccountsPage::ReceivingTab::occupiedNames()
 
 void AccountsPage::ReceivingTab::slotAddAccount()
 {
+#if 0
   AutoQPointer<KMAcctSelDlg> accountSelectorDialog( new KMAcctSelDlg( this ) );
   if ( accountSelectorDialog->exec() != QDialog::Accepted || !accountSelectorDialog ) {
     return;
@@ -862,8 +867,8 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
 #if 0
   QTreeWidgetItem *after = mAccountsReceiving.mAccountList->topLevelItemCount() > 0 ?
-      mAccountsReceiving.mAccountList->topLevelItem( mAccountsReceiving.mAccountList->topLevelItemCount() - 1 ) :
-      0;
+    mAccountsReceiving.mAccountList->topLevelItem( mAccountsReceiving.mAccountList->topLevelItemCount() - 1 ) :
+    0;
 
   QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountsReceiving.mAccountList, after );
   listItem->setText( 0, account->name() );
@@ -871,7 +876,26 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
 #endif
+
   mNewAccounts.append( account );
+#endif
+
+  Akonadi::AgentTypeDialog dlg( this );
+  Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
+  filter->addMimeTypeFilter( "message/rfc822" );
+  filter->addMimeTypeFilter( "application/x-vnd.kde.contactgroup" );
+  if ( dlg.exec() ) {
+    const Akonadi::AgentType agentType = dlg.agentType();
+
+    if ( agentType.isValid() ) {
+
+      Akonadi::AgentInstanceCreateJob *job = new Akonadi::AgentInstanceCreateJob( agentType, this );
+      job->configure( this );
+      job->start();
+    }
+  }
+
+
   emit changed( true );
 }
 
