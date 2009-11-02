@@ -157,7 +157,6 @@ set(kmailprivate_LIB_SRCS
    keyresolver.cpp
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
-   acljobs.cpp
    expirejob.cpp
    compactionjob.cpp
    jobscheduler.cpp

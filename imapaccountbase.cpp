@@ -33,7 +33,6 @@ using KPIM::BroadcastStatus;
 #include "kmmainwin.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
-#include "acljobs.h"
 #include "kmfoldercachedimap.h"
 
 #if 0 //TODO Port to Akonadi
