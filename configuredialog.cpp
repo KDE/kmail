@@ -139,6 +139,10 @@ using MailTransport::TransportManagementWidget;
 #include <stdlib.h>
 #include <kvbox.h>
 
+
+#include <akonadi/agentfilterproxymodel.h>
+#include <akonadi/agentinstancemodel.h>
+
 namespace {
 
   static const char * lockedDownWarning =
@@ -726,10 +730,20 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.vlay->setSpacing( KDialog::spacingHint() );
   mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
+
+  Akonadi::AgentInstanceModel *model = new Akonadi::AgentInstanceModel( this );
+
+  Akonadi::AgentFilterProxyModel *proxy = new Akonadi::AgentFilterProxyModel( this );
+  //proxy->addMimeTypeFilter( "text/directory" );
+  proxy->addMimeTypeFilter( "message/rfc822" );
+  proxy->addMimeTypeFilter( "application/x-vnd.kde.contactgroup" );
+  proxy->setSourceModel( model );
+  mAccountsReceiving.mAccountList->setModel( proxy );
+#if 0
   mAccountsReceiving.mAccountList->setSortingEnabled( true );
   mAccountsReceiving.mAccountList->sortByColumn( 0, Qt::AscendingOrder );
   mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
-
+#endif
   connect( mAccountsReceiving.mAccountList->selectionModel(),
            SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection &)),
            this, SLOT(slotAccountSelected()) );
@@ -788,9 +802,11 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
 
 void AccountsPage::ReceivingTab::slotAccountSelected()
 {
+#if 0
   QTreeWidgetItem *item = mAccountsReceiving.mAccountList->currentItem();
   mAccountsReceiving.mModifyAccountButton->setEnabled( item );
   mAccountsReceiving.mRemoveAccountButton->setEnabled( item );
+#endif
 }
 
 QStringList AccountsPage::ReceivingTab::occupiedNames()
@@ -846,7 +862,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
   account->deinstallTimer();
   account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
-
+#if 0
   QTreeWidgetItem *after = mAccountsReceiving.mAccountList->topLevelItemCount() > 0 ?
       mAccountsReceiving.mAccountList->topLevelItem( mAccountsReceiving.mAccountList->topLevelItemCount() - 1 ) :
       0;
@@ -856,7 +872,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
-
+#endif
   mNewAccounts.append( account );
   emit changed( true );
 }
@@ -865,6 +881,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
+#if 0
   QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
   if( !listItem ) return;
 
@@ -931,7 +948,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
-
+#endif
   emit changed( true );
 }
 
@@ -939,6 +956,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 {
+#if 0
   QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
   if( !listItem ) return;
 
@@ -979,8 +997,9 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
   if ( item ) {
     mAccountsReceiving.mAccountList->setCurrentItem( item );
   }
-
+#endif
   emit changed( true );
+
 }
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
@@ -998,6 +1017,7 @@ void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
+#if 0
   KConfigGroup general( KMKernel::config(), "General" );
 
   mAccountsReceiving.mAccountList->clear();
@@ -1023,6 +1043,7 @@ void AccountsPage::ReceivingTab::doLoadOther()
   mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
   mAccountsReceiving.mCheckmailStartupCheck->setChecked(
       general.readEntry( "checkmail-startup", false ) );
+#endif
 }
 
 void AccountsPage::ReceivingTab::save()
@@ -3377,6 +3398,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
       mTagList->topLevelItem( mTagList->topLevelItemCount() - 1 )
     );
   }
+
   emit changed( true );
 }
 

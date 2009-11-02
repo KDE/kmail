@@ -23,22 +23,7 @@
      <item>
       <layout class="QHBoxLayout" name="hlay">
        <item>
-        <widget class="ListView" name="mAccountList">
-         <column>
-          <property name="text">
-           <string notr="true">Name</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Type</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Folder</string>
-          </property>
-         </column>
+        <widget class="QListView" name="mAccountList">
         </widget>
        </item>
        <item>
