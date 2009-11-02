@@ -345,7 +345,7 @@ KMime::Message* createReply( const Akonadi::Item & item,
     }
 
     // strip all my addresses from the list of recipients
-    toStr = MessageViewer::StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
+    toStr = KMail::StringUtil::stripMyAddressesFromAddressList( recipients ).join(", ");
 
     // merge To header and CC header into a list of CC recipients
     if( !origMsg->cc()->asUnicodeString().isEmpty() || !origMsg->to()->asUnicodeString().isEmpty() ) {

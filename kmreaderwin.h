@@ -49,8 +49,6 @@ class KToggleAction;
 class KToggleAction;
 class KHTMLPart;
 class KUrl;
-//Remove it when we remove old code
-class HtmlStatusBar;
 namespace KMail {
   namespace Interface {
     class Observable;
