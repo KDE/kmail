@@ -32,6 +32,7 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
     mPutRepliesInSameFolder( false ),
     mHideInSelectionDialog( false ),
     mIgnoreNewMail( false ),
+    mExpireMessages( false ),
     mWriteConfig( writeconfig )
 {
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
