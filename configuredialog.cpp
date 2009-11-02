@@ -755,9 +755,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   connect( mAccountsReceiving.mBeepNewMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  //(Comment it it crashs kmail
-  //mAccountsReceiving.mVerboseNotificationCheck->setWhatsThis(
-    //GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
+  mAccountsReceiving.mVerboseNotificationCheck->setWhatsThis(
+  GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
   connect( mAccountsReceiving.mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
