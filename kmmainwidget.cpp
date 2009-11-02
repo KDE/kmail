@@ -3716,6 +3716,7 @@ void KMMainWidget::setupActions()
   {
     //TODO enable/disable it
     mExpireConfigAction = new KAction( i18n( "Expire..." ), this );
+    actionCollection()->addAction( "expire_settings",mExpireConfigAction );
     connect( mExpireConfigAction, SIGNAL( triggered( bool ) ), this, SLOT( slotShowExpiryProperties() ) );
   }
 
