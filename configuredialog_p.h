@@ -26,6 +26,8 @@
 #include <kcmodule.h>
 #include <klocale.h>
 
+#include <akonadi/agentinstance.h>
+
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
@@ -290,7 +292,7 @@ signals:
   void accountListChanged( const QStringList & );
 
 private slots:
-  void slotAccountSelected();
+  void slotAccountSelected(const Akonadi::AgentInstance&);
   void slotAddAccount();
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();

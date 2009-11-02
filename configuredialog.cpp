@@ -31,6 +31,7 @@
 
 #include "globalsettings.h"
 #include "templatesconfiguration_kfg.h"
+#include "configuredialoglistview.h"
 
 // other KMail headers:
 #include "kmkernel.h"
@@ -142,7 +143,8 @@ using MailTransport::TransportManagementWidget;
 
 #include <akonadi/agentfilterproxymodel.h>
 #include <akonadi/agentinstancemodel.h>
-
+#include <akonadi/agenttype.h>
+#include <akonadi/agentmanager.h>
 namespace {
 
   static const char * lockedDownWarning =
@@ -730,25 +732,19 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.vlay->setSpacing( KDialog::spacingHint() );
   mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "message/rfc822" );
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "application/x-vnd.kde.contactgroup" );
+  connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
+           SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
 
-  Akonadi::AgentInstanceModel *model = new Akonadi::AgentInstanceModel( this );
-
-  Akonadi::AgentFilterProxyModel *proxy = new Akonadi::AgentFilterProxyModel( this );
-  //proxy->addMimeTypeFilter( "text/directory" );
-  proxy->addMimeTypeFilter( "message/rfc822" );
-  proxy->addMimeTypeFilter( "application/x-vnd.kde.contactgroup" );
-  proxy->setSourceModel( model );
-  mAccountsReceiving.mAccountList->setModel( proxy );
 #if 0
   mAccountsReceiving.mAccountList->setSortingEnabled( true );
   mAccountsReceiving.mAccountList->sortByColumn( 0, Qt::AscendingOrder );
   mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
-#endif
-  connect( mAccountsReceiving.mAccountList->selectionModel(),
-           SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection &)),
-           this, SLOT(slotAccountSelected()) );
-           connect( mAccountsReceiving.mAccountList, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
+
+  connect( mAccountsReceiving.mAccountList, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
            this, SLOT(slotModifySelectedAccount()) );
+#endif
 
   connect( mAccountsReceiving.mAddAccountButton, SIGNAL(clicked()),
            this, SLOT(slotAddAccount()) );
@@ -800,13 +796,15 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
 
 }
 
-void AccountsPage::ReceivingTab::slotAccountSelected()
+void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstance& current)
 {
-#if 0
-  QTreeWidgetItem *item = mAccountsReceiving.mAccountList->currentItem();
-  mAccountsReceiving.mModifyAccountButton->setEnabled( item );
-  mAccountsReceiving.mRemoveAccountButton->setEnabled( item );
-#endif
+  if ( !current.isValid() ) {
+    mAccountsReceiving.mModifyAccountButton->setEnabled( false );
+    mAccountsReceiving.mRemoveAccountButton->setEnabled( false );
+  } else {
+    mAccountsReceiving.mModifyAccountButton->setEnabled( !current.type().capabilities().contains( QLatin1String( "NoConfig" ) ) );
+    mAccountsReceiving.mRemoveAccountButton->setEnabled( true );
+  }
 }
 
 QStringList AccountsPage::ReceivingTab::occupiedNames()
@@ -881,6 +879,12 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
+  Akonadi::AgentInstance instance = mAccountsReceiving.mAccountList->currentAgentInstance();
+  if ( instance.isValid() ) {
+    KWindowSystem::allowExternalProcessWindowActivation();
+    instance.configure( this );
+  }
+
 #if 0
   QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
   if( !listItem ) return;
@@ -956,6 +960,12 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 {
+  const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
+  if ( instance.isValid() )
+    Akonadi::AgentManager::self()->removeInstance( instance );
+
+  slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
+
 #if 0
   QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
   if( !listItem ) return;

@@ -23,7 +23,7 @@
      <item>
       <layout class="QHBoxLayout" name="hlay">
        <item>
-        <widget class="QListView" name="mAccountList">
+        <widget class="Akonadi::AgentInstanceWidget" name="mAccountList">
         </widget>
        </item>
        <item>
@@ -36,7 +36,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="mModifyAccountButton">
+          <widget class="KPushButton" name="mModifyAccountButton">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -46,7 +46,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="mRemoveAccountButton">
+          <widget class="KPushButton" name="mRemoveAccountButton">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -137,9 +137,9 @@
  <layoutdefault spacing="6" margin="0"/>
  <customwidgets>
   <customwidget>
-   <class>ListView</class>
-   <extends>QTreeWidget</extends>
-   <header>configuredialoglistview.h</header>
+   <class>Akonadi::AgentInstanceWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">akonadi/agentinstancewidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
