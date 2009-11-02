@@ -49,7 +49,6 @@ using KMail::IdentityListViewItem;
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "accountcombobox.h"
-//TODO port to akonadi #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "folderstorage.h"
 #include "kmmainwidget.h"

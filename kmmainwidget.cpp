@@ -1646,11 +1646,7 @@ void KMMainWidget::slotCompactFolder()
     return;
 
   KCursorSaver busy(KBusyPtr::busy());
-#if 0
-  mFolder->compact( KMFolder::CompactNow );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  mCurrentFolder->compact( FolderCollection::CompactNow );
 }
 
 #if 0

@@ -485,3 +485,9 @@ void FolderCollection::expireOldMessages( bool immediate )
   }
 #endif
 }
+
+void FolderCollection::compact( FolderCollection::CompactOptions options )
+{
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+}
+
