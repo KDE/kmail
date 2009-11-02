@@ -1221,7 +1221,7 @@ void KMMainWidget::slotCheckMail()
   }
   Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
   foreach( Akonadi::AgentInstance type, lst ) {
-    type.synchronizeCollectionTree();
+    type.synchronize();
   }
 }
 
@@ -1238,7 +1238,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
 
   Akonadi::AgentInstance agent = kmkernel->agentManager()->instance( item->data().toString() );
   if ( agent.isValid() ) {
-    agent.synchronizeCollectionTree();
+    agent.synchronize();
   } else {
     kDebug() << "- account with name '" << item->data().toString() <<"' not found";
   }
@@ -3113,13 +3113,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
 //-----------------------------------------------------------------------------
 void KMMainWidget::getAccountMenu()
 {
-  QStringList actList;
-
   mActMenu->clear();
-#if 0
-  actList = kmkernel->acctMgr()->getAccounts();
-  QStringList::Iterator it;
-#endif
   Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
@@ -4651,10 +4645,18 @@ void KMMainWidget::slotFilterLogViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFileMenu()
 {
-  Akonadi::AgentType::List lst = kmkernel->agentManager()->types();
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
+  foreach ( const Akonadi::AgentInstance& type, lst )
+  {
+    if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
+      actionCollection()->action("check_mail")->setEnabled( true );
+      actionCollection()->action("check_mail_in")->setEnabled( true );
+      return;
+    }
+  }
 
-  actionCollection()->action("check_mail")->setEnabled( !lst.isEmpty() );
-  actionCollection()->action("check_mail_in")->setEnabled( !lst.isEmpty() );
+  actionCollection()->action("check_mail")->setEnabled( false );
+  actionCollection()->action("check_mail_in")->setEnabled( false );
 }
 
 //-----------------------------------------------------------------------------
