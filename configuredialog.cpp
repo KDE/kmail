@@ -38,8 +38,6 @@
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
 #include <libkdepim/colorlistbox.h>
-#include "kmacctseldlg.h"
-using KMail::AccountDialog;
 #include "messagesender.h"
 #include <kpimidentities/identitymanager.h>
 #include "identitylistview.h"

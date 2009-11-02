@@ -105,7 +105,6 @@ set(kmailprivate_LIB_SRCS
    kmfoldermgr.cpp
    kmfoldernode.cpp
    akonadisender.cpp
-   kmacctseldlg.cpp
    kmfiltermgr.cpp
    filterimporterexporter.cpp
    kmsearchpatternedit.cpp
