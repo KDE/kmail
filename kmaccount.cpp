@@ -220,7 +220,8 @@ void KMAccount::sendReceipt(KMime::Message* aMsg)
   sendReceipts = cfg.readEntry("send-receipts", false );
   if (!sendReceipts) return;
 
-  KMime::Message *newMsg = KMail::MessageHelper::createDeliveryReceipt( aMsg );
+  kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
+  KMime::Message *newMsg = KMail::MessageHelper::createDeliveryReceipt( Akonadi::Item(), aMsg );
   if (newMsg) {
     mReceipts.append(newMsg);
     QTimer::singleShot( 0, this, SLOT( sendReceipts() ) );

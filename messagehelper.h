@@ -55,7 +55,7 @@ namespace MessageHelper {
 
   /** Initialize headers fields according to the identity and the transport
    header of the given original message */
-  void initFromMessage(KMime::Message *msg, KMime::Message *orgiMsg, bool idHeaders = true);
+  void initFromMessage(const Akonadi::Item &, KMime::Message *msg, KMime::Message *orgiMsg, bool idHeaders = true);
 
   /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
   /// the reply mode
@@ -103,7 +103,7 @@ namespace MessageHelper {
    */
   KMime::Message* createRedirect( const Akonadi::Item &, KMime::Message *origMsg, const QString &toStr );
 
-  KMime::Message* createResend( KMime::Message *origMsg );
+  KMime::Message* createResend( const Akonadi::Item &, KMime::Message *origMsg );
 
   KMime::Types::AddrSpecList extractAddrSpecs( KMime::Message* msg, const QByteArray & header );
 
@@ -141,12 +141,12 @@ namespace MessageHelper {
       searches with KPIMIdentities::IdentityManager::identityForAddress()
       and if that fails queries the KMMsgBase::parent() folder for a default.
    **/
-  uint identityUoid( KMime::Message *msg );
+  uint identityUoid(const Akonadi::Item &, KMime::Message *msg );
 
   /** Create a new message that is a delivery receipt of this message,
       filling required header fileds with the proper values. The
       returned message is not stored in any folder. */
-  KMime::Message* createDeliveryReceipt( KMime::Message* msg );
+  KMime::Message* createDeliveryReceipt(const Akonadi::Item &, KMime::Message* msg );
 
   /** Create a new message that is a MDN for this message, filling all
       required fields with proper values. The returned message is not
@@ -161,11 +161,12 @@ namespace MessageHelper {
 
       @return The notification message or 0, if none should be sent.
    **/
-  KMime::Message* createMDN( KMime::Message *msg,
-          KMime::MDN::ActionMode a,
-          KMime::MDN::DispositionType d,
-          bool allowGUI=false,
-          QList<KMime::MDN::DispositionModifier> m=QList<KMime::MDN::DispositionModifier>() );
+  KMime::Message* createMDN( const Akonadi::Item & item,
+                             KMime::Message *msg,
+                             KMime::MDN::ActionMode a,
+                             KMime::MDN::DispositionType d,
+                             bool allowGUI=false,
+                             QList<KMime::MDN::DispositionModifier> m=QList<KMime::MDN::DispositionModifier>() );
 
 /** Set fields that are either automatically set (Message-id)
     or that do not change from one message to another (MIME-Version).

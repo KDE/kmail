@@ -1446,7 +1446,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     KMime::Message::Ptr msg = KMail::Util::message( item );
     if ( !msg )
       return Failed;
-    KMail::MessageHelper::initFromMessage(fwdMsg, &*msg);
+    KMail::MessageHelper::initFromMessage(item, fwdMsg, &*msg);
     fwdMsg->subject()->fromUnicodeString(  KMail::MessageHelper::forwardSubject(&*msg),"utf-8" );
   }
   KMail::MessageHelper::setAutomaticFields(fwdMsg, true);
@@ -2833,7 +2833,7 @@ KMCommand::Result KMResendMessageCommand::execute()
   newMsg->setCharset( msg->codec()->name() );
 #endif
 
-  KMime::Message *newMsg = KMail::MessageHelper::createResend( &*msg );
+  KMime::Message *newMsg = KMail::MessageHelper::createResend( item, &*msg );
   kDebug()<<" newMsg :"<<newMsg->encodedContent();
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );

@@ -1073,9 +1073,12 @@ QString TemplateParser::findTemplate()
   }
 
   if ( !mIdentity ) { // find identity message belongs to
-    mIdentity = KMail::MessageHelper::identityUoid( mMsg );
+       kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
+
+    mIdentity = KMail::MessageHelper::identityUoid( Akonadi::Item(), mMsg );
     if ( !mIdentity && mOrigMsg ) {
-      mIdentity = KMail::MessageHelper::identityUoid( mOrigMsg );
+      kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
+      mIdentity = KMail::MessageHelper::identityUoid( Akonadi::Item(), mOrigMsg );
     }
     mIdentity = kmkernel->identityManager()->identityForUoidOrDefault( mIdentity ).uoid();
     if ( !mIdentity ) {

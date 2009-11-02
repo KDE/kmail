@@ -241,7 +241,7 @@ KMime::Message* createReply( const Akonadi::Item & item,
   QByteArray refStr, headerName;
   bool replyAll = true;
 
-  initFromMessage( msg, origMsg );
+  initFromMessage( item, msg, origMsg );
 
   MailingList::name(msg, headerName, mailingListStr);
   replyToStr = origMsg->replyTo()->asUnicodeString();
@@ -468,7 +468,7 @@ MessageReply createReply2(const Akonadi::Item &item,
   QByteArray refStr, headerName;
   bool replyAll = true;
 
-  initFromMessage( msg, origMsg);
+  initFromMessage( item, msg, origMsg);
   MailingList::name(origMsg, headerName, mailingListStr);
   replyToStr = origMsg->replyTo()->asUnicodeString();
 
@@ -721,7 +721,7 @@ KMime::Message* createForward( const Akonadi::Item &item, KMime::Message *origMs
       ( !origMsg->contentType()->isText() ||
       ( origMsg->contentType()->isText() && origMsg->contentType()->subType() != "html"
         && origMsg->contentType()->subType() != "plain" ) ) ) {
-    initFromMessage( msg, origMsg );
+    initFromMessage( item, msg, origMsg );
     msg->removeHeader("Content-Type");
     msg->removeHeader("Content-Transfer-Encoding");
 
@@ -752,7 +752,7 @@ KMime::Message* createForward( const Akonadi::Item &item, KMime::Message *origMs
     msg->setHead( origMsg->head() );
     msg->setBody( origMsg->body() );
     QString oldContentType = msg->contentType()->asUnicodeString();
-    initFromMessage( msg, origMsg );
+    initFromMessage(item, msg, origMsg );
 
     // restore the content type, initFromMessage() sets the contents type to
     // text/plain, via initHeader(), for unclear reasons
@@ -775,13 +775,13 @@ KMime::Message* createForward( const Akonadi::Item &item, KMime::Message *origMs
 }
 
 
-KMime::Message * createResend( KMime::Message *origMsg )
+KMime::Message * createResend( const Akonadi::Item & item, KMime::Message *origMsg )
 {
   KMime::Message *msg = new KMime::Message;
-  initFromMessage( msg, origMsg);
+  initFromMessage( item, msg, origMsg);
   msg->setContent( origMsg->encodedContent() );
   msg->removeHeader( "Message-Id" );
-  uint originalIdentity = identityUoid( origMsg);
+  uint originalIdentity = identityUoid( item, origMsg);
 
   // Remove all unnecessary headers
   msg->removeHeader("Bcc");
@@ -848,9 +848,9 @@ KMime::Message* createRedirect( const Akonadi::Item & item, KMime::Message *orig
 }
 
 
-void initFromMessage(KMime::Message *msg, KMime::Message *origMsg, bool idHeaders)
+void initFromMessage(const Akonadi::Item & item, KMime::Message *msg, KMime::Message *origMsg, bool idHeaders)
 {
-  uint id = identityUoid( origMsg );
+  uint id = identityUoid( item, origMsg );
 
   if ( idHeaders )
     initHeader( msg, id );
@@ -933,7 +933,7 @@ QString replacePrefixes( const QString& str,
     return str;
 }
 
-uint identityUoid( KMime::Message *msg )
+uint identityUoid( const Akonadi::Item & item , KMime::Message *msg )
 {
   QString idString;
   if ( msg->headerByType("X-KMail-Identity") )
@@ -944,16 +944,16 @@ uint identityUoid( KMime::Message *msg )
   if ( !ok || id == 0 )
     id = kmkernel->identityManager()->identityForAddress( msg->to()->asUnicodeString() + ", " + msg->cc()->asUnicodeString() ).uoid();
 
-#if 0 //TODO port to akonadi
-  if ( id == 0 && parent() )
-    id = parent()->identity();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  if ( id == 0 && item.isValid() ) {
+    if ( item.parentCollection().isValid() ) {
+      FolderCollection fd( item.parentCollection(), false );
+      id = fd.identity();
+    }
+  }
   return id;
 }
 
-KMime::Message* createDeliveryReceipt( KMime::Message *msg )
+KMime::Message* createDeliveryReceipt( const Akonadi::Item & item, KMime::Message *msg )
 {
   QString str, receiptTo;
   KMime::Message *receipt = 0;
@@ -964,7 +964,7 @@ KMime::Message* createDeliveryReceipt( KMime::Message *msg )
   receiptTo.remove( '\n' );
 
   receipt = new KMime::Message;
-  initFromMessage( receipt, msg );
+  initFromMessage( item, receipt, msg );
   receipt->to()->fromUnicodeString( receiptTo, "utf-8" );
   receipt->subject()->fromUnicodeString( i18n("Receipt: ") + msg->subject()->asUnicodeString(), "utf-8");
 
@@ -981,7 +981,8 @@ KMime::Message* createDeliveryReceipt( KMime::Message *msg )
   return receipt;
 }
 
-KMime::Message* createMDN( KMime::Message *msg,
+KMime::Message* createMDN( const Akonadi::Item & item,
+                           KMime::Message *msg,
                            KMime::MDN::ActionMode a,
                            KMime::MDN::DispositionType d,
                            bool allowGUI,
@@ -1105,14 +1106,14 @@ KMime::Message* createMDN( KMime::Message *msg,
 
   // extract where to send from:
   QString finalRecipient = kmkernel->identityManager()
-    ->identityForUoidOrDefault( identityUoid( msg ) ).fullEmailAddr();
+    ->identityForUoidOrDefault( identityUoid( item, msg ) ).fullEmailAddr();
 
   //
   // Generate message:
   //
 
   KMime::Message * receipt = new KMime::Message();
-  initFromMessage( receipt, msg);
+  initFromMessage( item, receipt, msg);
   receipt->contentType()->from7BitString( "multipart/report" );
   receipt->removeHeader("Content-Transfer-Encoding");
   // Modify the ContentType directly (replaces setAutomaticFields(true))

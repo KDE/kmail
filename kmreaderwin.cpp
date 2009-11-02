@@ -417,7 +417,7 @@ void KMReaderWin::slotTouchMessage()
   if ( !msg )
     return;
 
-  if ( KMime::Message * receipt = KMail::MessageHelper::createMDN( &*msg, MDN::ManualAction,
+  if ( KMime::Message * receipt = KMail::MessageHelper::createMDN( message(), &*msg, MDN::ManualAction,
                                                         MDN::Displayed,
                                                         true /* allow GUI */ ) ) {
 #if 0

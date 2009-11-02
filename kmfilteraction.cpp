@@ -141,7 +141,8 @@ void KMFilterAction::sendMDN( KMime::Message * msg, KMime::MDN::DispositionType 
     msg->setHeader( header );
   }
 
-  KMime::Message * mdn = KMail::MessageHelper::createMDN( msg, KMime::MDN::AutomaticAction, d, false, m );
+  kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
+  KMime::Message * mdn = KMail::MessageHelper::createMDN( Akonadi::Item(), msg, KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
     kDebug() << "Sending failed.";
     //delete mdn;
@@ -620,7 +621,9 @@ KMFilterActionSendReceipt::KMFilterActionSendReceipt()
 
 KMFilterAction::ReturnCode KMFilterActionSendReceipt::process(KMime::Message* msg) const
 {
-  KMime::Message *receipt = KMail::MessageHelper::createDeliveryReceipt( msg );
+  kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
+
+  KMime::Message *receipt = KMail::MessageHelper::createDeliveryReceipt( Akonadi::Item(), msg );
   if ( !receipt ) return ErrorButGoOn;
 
   // Queue message. This is a) so that the user can check
