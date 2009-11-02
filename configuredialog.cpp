@@ -733,7 +733,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "message/rfc822" );
-  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "application/x-vnd.kde.contactgroup" );
   connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
            SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
   connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
@@ -876,7 +875,6 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   Akonadi::AgentTypeDialog dlg( this );
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
   filter->addMimeTypeFilter( "message/rfc822" );
-  filter->addMimeTypeFilter( "application/x-vnd.kde.contactgroup" );
   if ( dlg.exec() ) {
     const Akonadi::AgentType agentType = dlg.agentType();
 

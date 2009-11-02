@@ -19,6 +19,7 @@
 #include "globalsettings.h"
 #include <kcomponentdata.h>
 #include <akonadi/kmime/specialcollections.h>
+#include <akonadi/agentmanager.h>
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
@@ -265,6 +266,10 @@ public:
   void setupDBus();
   void readConfig();
   void readComposerConfig();
+
+
+  Akonadi::AgentManager *agentManager();
+
 
 //TODO port to akonadi   void cleanupImapFolders();
   void testDir(const char *_name);
@@ -552,6 +557,8 @@ private:
   // variables used by dbusAddMessage()
   QStringList           mAddMessageMsgIds;
   QString               mAddMessageLastFolder;
+
+  Akonadi::AgentManager *mAgentManager;
 
   // special debug area
   int mStorageDebug;

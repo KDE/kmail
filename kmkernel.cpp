@@ -201,6 +201,11 @@ KMKernel::~KMKernel ()
   kDebug();
 }
 
+Akonadi::AgentManager *KMKernel::agentManager()
+{
+  return Akonadi::AgentManager::self();
+}
+
 int KMKernel::storageDebug()
 {
   KMKernel *theKernel = self();
