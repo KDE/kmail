@@ -196,6 +196,7 @@ public:
   void markUnreadAsRead();
 
   void removeCollection();
+  void expireOldMessages( bool immediate );
 
 protected slots:
   void slotIdentitiesChanged();

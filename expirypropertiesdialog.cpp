@@ -182,12 +182,8 @@ void ExpiryPropertiesDialog::accept()
   if ( expireToFolder.isValid() )
     mFolder->setExpireToFolderId( QString::number( expireToFolder.id() ) );
   // trigger immediate expiry if there is something to do
-#if 0
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   KDialog::accept();
 }
 

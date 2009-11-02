@@ -472,3 +472,7 @@ void FolderCollection::slotDeletionCollectionResult( KJob * job )
   }
 }
 
+void FolderCollection::expireOldMessages( bool immediate )
+{
+  kDebug() << "AKONADI PORT: port it  " << Q_FUNC_INFO;
+}

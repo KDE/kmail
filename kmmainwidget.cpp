@@ -1488,11 +1488,7 @@ void KMMainWidget::slotExpireFolder()
                                            KGuiItem(i18n("&Expire")))
         != KMessageBox::Continue) return;
   }
-#if 0 //Port it
   mCurrentFolder->expireOldMessages( true /*immediate*/);
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------
