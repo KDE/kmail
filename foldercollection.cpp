@@ -489,5 +489,13 @@ void FolderCollection::expireOldMessages( bool immediate )
 void FolderCollection::compact( FolderCollection::CompactOptions options )
 {
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#if 0
+  if ( options == CompactLater ) {
+    KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(this, false);
+    kmkernel->jobScheduler()->registerTask( task );
+  } else {
+    mStorage->compact( options == CompactSilentlyNow );
+  }
+#endif
 }
 
