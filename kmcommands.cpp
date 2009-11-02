@@ -527,7 +527,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMime::Message *rmsg = KMail::MessageHelper::createReply( &*msg, KMail::ReplyNone, mSelection );
+  KMime::Message *rmsg = KMail::MessageHelper::createReply( item, &*msg, KMail::ReplyNone, mSelection );
   rmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
