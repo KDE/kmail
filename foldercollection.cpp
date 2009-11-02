@@ -26,6 +26,7 @@
 #include <akonadi/collectiondeletejob.h>
 #include <kio/jobuidelegate.h>
 #include "kmcommands.h"
+//#include "expirejob.h"
 
 FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writeconfig )
   : mCollection( col ),
@@ -475,4 +476,12 @@ void FolderCollection::slotDeletionCollectionResult( KJob * job )
 void FolderCollection::expireOldMessages( bool immediate )
 {
   kDebug() << "AKONADI PORT: port it  " << Q_FUNC_INFO;
+#if 0
+  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(this, immediate);
+  kmkernel->jobScheduler()->registerTask( task );
+  if ( immediate ) {
+    // #82259: compact after expiring.
+    compact( CompactLater );
+  }
+#endif
 }
