@@ -2327,20 +2327,22 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
 
   KMMessageTagDescription *tmp_desc = mMsgTagList->at( aIndex );
 
-  //First row
   tmp_desc->setName( mTagListBox->item( aIndex )->text() );
-  //Second row
+
   tmp_desc->setTextColor( mTextColorCheck->isChecked() ?
                           mTextColorCombo->color() : QColor() );
-  //Third row
+
+  tmp_desc->setBackgroundColor( mBackgroundColorCheck->isChecked() ?
+                                mBackgroundColorCombo->color() : QColor() );
+
   tmp_desc->setTextFont( mTextFontCheck->isChecked() ?
                           mFontRequester->font() : QFont() );
-  //Fourth row
+
   tmp_desc->setIconName( mIconButton->icon() );
-  //Fifth row
+
   mKeySequenceWidget->applyStealShortcut();
   tmp_desc->setShortcut( KShortcut(mKeySequenceWidget->keySequence()) );
-  //Sixth row
+
   tmp_desc->setInToolbar( mInToolbarCheck->isChecked() );
 }
 
@@ -2356,6 +2358,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
     mTagNameLineEdit->setEnabled( false );
     mTextColorCheck->setEnabled( false );
+    mBackgroundColorCheck->setEnabled( false );
     mTextFontCheck->setEnabled( false );
     mInToolbarCheck->setEnabled( false );
     mTextColorCombo->setEnabled( false );
@@ -2374,11 +2377,9 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
   KMMessageTagDescription *tmp_desc = mMsgTagList->at( mTagListBox->currentRow() );
 
-  //1st row
   mTagNameLineEdit->setEnabled( true );
   mTagNameLineEdit->setText( tmp_desc->name() );
 
-  //2nd row
   QColor tmp_color = tmp_desc->textColor();
   mTextColorCheck->setEnabled( true );
   if ( tmp_color.isValid() ) {
@@ -2388,22 +2389,27 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mTextColorCheck->setChecked( false );
   }
 
-  //3rd row
+  tmp_color = tmp_desc->backgroundColor();
+  mBackgroundColorCheck->setEnabled( true );
+  if ( tmp_color.isValid() ) {
+    mBackgroundColorCombo->setColor( tmp_color );
+    mBackgroundColorCheck->setChecked( true );
+  } else {
+    mBackgroundColorCheck->setChecked( false );
+  }
+
   QFont tmp_font = tmp_desc->textFont();
   mTextFontCheck->setEnabled( true );
   mTextFontCheck->setChecked( ( tmp_font != QFont() ) );
   mFontRequester->setFont( tmp_font );
 
-  //4th row
   mIconButton->setEnabled( true );
   mIconButton->setIcon( tmp_desc->toolbarIconName() );
 
-  //5th row
   mKeySequenceWidget->setEnabled( true );
   mKeySequenceWidget->setKeySequence( tmp_desc->shortcut().primary(),
                                       KKeySequenceWidget::NoValidate );
 
-  //6th row
   mInToolbarCheck->setEnabled( true );
   mInToolbarCheck->setChecked( tmp_desc->inToolbar() );
 
