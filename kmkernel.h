@@ -264,6 +264,8 @@ public:
   void init();
   void setupDBus();
   void readConfig();
+  void readComposerConfig();
+
 //TODO port to akonadi   void cleanupImapFolders();
   void testDir(const char *_name);
   void recoverDeadLetters();
@@ -341,6 +343,10 @@ public:
 
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
+
+  bool smartQuote() const { return mSmartQuote; }
+  bool wordWrap() const { return mWordWrap;}
+  int wrapCol() const { return mWrapCol;}
 
 #if 0 //TODO port to akonadi
   KMailICalIfaceImpl& iCalIface();
@@ -549,6 +555,8 @@ private:
 
   // special debug area
   int mStorageDebug;
+  bool mSmartQuote : 1, mWordWrap : 1;
+  int mWrapCol;
 };
 
 #endif // _KMKERNEL_H

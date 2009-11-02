@@ -132,6 +132,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_msgSender = 0;
   the_msgTagMgr = 0;
   mWin = 0;
+  mSmartQuote = false;
+  mWordWrap = false;
+  mWrapCol = 80;
   mMailCheckAborted = false;
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
@@ -1539,12 +1542,7 @@ void KMKernel::init()
   the_msgTagMgr = new KMMessageTagMgr();
   the_msgTagMgr->readConfig();
 
-#if 0 //TODO port to akonadi
-  // moved up here because KMMessage::stripOffPrefixes is used below
-  KMMessage::readConfig();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  readComposerConfig();
 
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
@@ -1596,15 +1594,21 @@ void KMKernel::init()
 #endif
 }
 
+void KMKernel::readComposerConfig()
+{
+  KConfigGroup config( KMKernel::config(), "Composer" );
+  mSmartQuote = GlobalSettings::self()->smartQuote();
+  mWordWrap = GlobalSettings::self()->wordWrap();
+  mWrapCol = GlobalSettings::self()->lineWrapWidth();
+  if ((mWrapCol == 0) || (mWrapCol > 78))
+    mWrapCol = 78;
+  if (mWrapCol < 30)
+    mWrapCol = 30;
+}
+
 void KMKernel::readConfig()
 {
-#if 0 //TODO port to akonadi
-  //Needed here, since this function is also called when the configuration
-  //changes, and the static variables should be updated then - IOF
-  KMMessage::readConfig();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  readComposerConfig();
 }
 
 #if 0 //TODO port to akonadi

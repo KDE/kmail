@@ -1325,12 +1325,8 @@ QString TemplateParser::asQuotedString( KMime::Message* msg, const QString& aInd
     content.remove( 0, static_cast<unsigned int>( lineStart ) );
 
   const QString indentStr = MessageViewer::StringUtil::formatString( aIndentStr, msg->from()->asUnicodeString() );
-#if 0 //TODO port to akonadi
-  if ( TODO port it to akonadi s->smartQuote && s->wordWrap )
-    content = StringUtil::smartQuote( content, s->wrapCol - indentStr.length() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  if ( kmkernel->smartQuote() && kmkernel->wordWrap() )
+    content = MessageViewer::StringUtil::smartQuote( content, kmkernel->wrapCol() - indentStr.length() );
   content.replace( '\n', '\n' + indentStr );
   content.prepend( indentStr );
   content += '\n';
