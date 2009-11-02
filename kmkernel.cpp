@@ -376,7 +376,17 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 
 QStringList KMKernel::accounts()
 {
-  return kmkernel->acctMgr()->getAccounts();
+  QStringList accountLst;
+  Akonadi::AgentInstance::List lst = agentManager()->instances();
+  foreach ( const Akonadi::AgentInstance& type, lst )
+  {
+    if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
+      // Explicitly make a copy, as we're not changing values of the list but only
+      // the local copy which is passed to action.
+      accountLst<<type.identifier();
+    }
+  }
+  return accountLst;
 }
 
 void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
