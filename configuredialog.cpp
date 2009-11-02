@@ -1049,9 +1049,8 @@ void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
-#if 0
   KConfigGroup general( KMKernel::config(), "General" );
-
+#if 0
   mAccountsReceiving.mAccountList->clear();
   QTreeWidgetItem *top = 0;
 
@@ -1071,11 +1070,10 @@ void AccountsPage::ReceivingTab::doLoadOther()
   if ( listItem ) {
     mAccountsReceiving.mAccountList->setCurrentItem( listItem );
   }
-
+#endif
   mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
   mAccountsReceiving.mCheckmailStartupCheck->setChecked(
       general.readEntry( "checkmail-startup", false ) );
-#endif
 }
 
 void AccountsPage::ReceivingTab::save()
