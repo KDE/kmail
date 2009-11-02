@@ -3292,9 +3292,11 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiVirusWizard()));
   }
   {
+#if 0
     KAction *action = new KAction( i18n("&Account Wizard..."), this );
     actionCollection()->addAction( "accountWizard", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAccountWizard()) );
+#endif
   }
   if ( GlobalSettings::self()->allowOutOfOfficeSettings() )
   {
@@ -4628,13 +4630,13 @@ void KMMainWidget::slotAntiVirusWizard()
   AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this);
   wiz.exec();
 }
-
+#if 0
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAccountWizard()
 {
   AccountWizard::start( kmkernel, this );
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilterLogViewer()
 {
