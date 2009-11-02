@@ -219,7 +219,7 @@ namespace KMail {
     { "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"),
       "jan@simonson.pp.se", 0 },
     { "Paul Sprakes", 0, 0, 0 }, // fix for bug:63619 (filter button in toolbar doesn't work), context menu clean up
-    { "Jaroslaw Staniek", 0, "js@iidea.pl", 0 },
+    { "Jarosław Staniek", 0, "staniek@kde.org", 0 }, // MS Windows porting
     { "Will Stephenson", 0, 0, 0 }, // added IM status indicator
     { "Hasso Tepper", 0, 0, 0 }, // improve layout of recipients editor
     { "Frank Thieme", 0, "frank@fthieme.net", 0 },
