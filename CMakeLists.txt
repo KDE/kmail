@@ -121,7 +121,6 @@ set(kmailprivate_LIB_SRCS
    undostack.cpp
    #popaccount.cpp
    kmkernel.cpp
-   accountdialog.cpp
    searchwindow.cpp
    vacationdialog.cpp
    vacation.cpp
