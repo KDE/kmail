@@ -183,6 +183,8 @@ using KMail::TemplateParser;
 
 #include <akonadi/collectionpropertiesdialog.h>
 #include <akonadi/entitydisplayattribute.h>
+#include <akonadi/agentinstance.h>
+#include <akonadi/agenttype.h>
 #include "kmmainwidget.moc"
 using namespace Akonadi;
 
@@ -1217,7 +1219,10 @@ void KMMainWidget::slotCheckMail()
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
-  kmkernel->acctMgr()->checkMail(true);
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
+  foreach( Akonadi::AgentInstance type, lst ) {
+    type.synchronizeCollectionTree();
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1231,6 +1236,13 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     return;
   }
 
+  Akonadi::AgentInstance agent = kmkernel->agentManager()->instance( item->data().toString() );
+  if ( agent.isValid() ) {
+    agent.synchronizeCollectionTree();
+  } else {
+    kDebug() << "- account with name '" << item->data().toString() <<"' not found";
+  }
+#if 0
   KMAccount* t = kmkernel->acctMgr()->findByName( item->data().toString() );
 
   if ( t ) {
@@ -1239,6 +1251,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
   else {
     kDebug() << "- account with name '" << item->data().toString() <<"' not found";
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3103,14 +3116,19 @@ void KMMainWidget::getAccountMenu()
   QStringList actList;
 
   mActMenu->clear();
+#if 0
   actList = kmkernel->acctMgr()->getAccounts();
   QStringList::Iterator it;
-  foreach ( const QString& accountName, actList )
+#endif
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
+  foreach ( const Akonadi::AgentInstance& type, lst )
   {
-    // Explicitly make a copy, as we're not changing values of the list but only
-    // the local copy which is passed to action.
-    QAction* action = mActMenu->addAction( QString( accountName ).replace('&', "&&") );
-    action->setData( accountName );
+    if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
+      // Explicitly make a copy, as we're not changing values of the list but only
+      // the local copy which is passed to action.
+      QAction* action = mActMenu->addAction( QString( type.name() ).replace('&', "&&") );
+      action->setData( type.identifier() );
+    }
   }
 }
 
@@ -4633,10 +4651,10 @@ void KMMainWidget::slotFilterLogViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFileMenu()
 {
-  QStringList actList = kmkernel->acctMgr()->getAccounts();
+  Akonadi::AgentType::List lst = kmkernel->agentManager()->types();
 
-  actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
-  actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
+  actionCollection()->action("check_mail")->setEnabled( !lst.isEmpty() );
+  actionCollection()->action("check_mail_in")->setEnabled( !lst.isEmpty() );
 }
 
 //-----------------------------------------------------------------------------
