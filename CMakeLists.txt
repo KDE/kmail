@@ -115,7 +115,6 @@ set(kmailprivate_LIB_SRCS
 #   imapaccountbase.cpp
    kmfawidgets.cpp
    undostack.cpp
-   #popaccount.cpp
    kmkernel.cpp
    searchwindow.cpp
    vacationdialog.cpp

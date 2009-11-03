@@ -1107,7 +1107,6 @@ void KMKernel::raise()
 
 bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
 {
-#if 0 //TODO port to akonadi
   KMMainWidget *mainWidget = 0;
 
   // First look for a KMainWindow.
@@ -1120,7 +1119,7 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
         break;
     }
   }
-
+#if 0
   if ( mainWidget ) {
     int idx = -1;
     KMFolder *folder = 0;

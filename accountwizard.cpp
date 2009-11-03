@@ -29,7 +29,6 @@
 #include "accountwizard.h"
 
 #include "kmkernel.h"
-#include "popaccount.h"
 using KMail::AccountManager;
 
 #include "globalsettings.h"
