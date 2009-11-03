@@ -10,8 +10,8 @@
 
 // other KMail headers:
 #include "globalsettings.h"
-#include "kmacctcachedimap.h"
 #include "configuredialoglistview.h"
+#include "kmkernel.h"
 
 // other kdenetwork headers: (none)
 

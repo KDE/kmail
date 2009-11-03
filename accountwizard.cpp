@@ -31,9 +31,6 @@
 #include "kmacctlocal.h"
 #include "kmkernel.h"
 #include "popaccount.h"
-//TODO port to akonadi #include "kmacctimap.h"
-#include "kmacctcachedimap.h"
-//TODO port to akonadi #include "kmacctmaildir.h"
 using KMail::AccountManager;
 
 #include "globalsettings.h"

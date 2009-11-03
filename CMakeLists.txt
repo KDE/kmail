@@ -116,7 +116,6 @@ set(kmailprivate_LIB_SRCS
    networkaccount.cpp
 #   imapaccountbase.cpp
 #   kmacctimap.cpp
-#   kmacctcachedimap.cpp
    kmfawidgets.cpp
    undostack.cpp
    #popaccount.cpp
