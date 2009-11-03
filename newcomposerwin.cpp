@@ -197,7 +197,6 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
-    mCheckForForgottenAttachments( true ),
     mIgnoreStickyFields( false )
 {
   //(void) new MailcomposerAdaptor( this );
@@ -2075,7 +2074,7 @@ bool KMComposeWin::queryClose ()
 //-----------------------------------------------------------------------------
 bool KMComposeWin::userForgotAttachment()
 {
-  bool checkForForgottenAttachments = mCheckForForgottenAttachments && GlobalSettings::self()->showForgottenAttachmentWarning();
+  bool checkForForgottenAttachments = GlobalSettings::self()->showForgottenAttachmentWarning();
 
   if ( !checkForForgottenAttachments || ( mAttachmentModel->rowCount() > 0 ) ) {
     return false;
@@ -2231,8 +2230,13 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
 
   if( encrypt ) {
     std::vector<Kleo::KeyResolver::SplitInfo> encData = keyResolver->encryptionItems( cryptoMessageFormat() );
-    //TODO HACK for now just take the first one
-    composer->setEncryptionKeys( encData.at(0).recipients, encData.at(0).keys );
+    std::vector<Kleo::KeyResolver::SplitInfo>::iterator it;
+    QList<QPair<QStringList, std::vector<GpgME::Key> > > data;
+    for( it = encData.begin(); it != encData.end(); ++it ) {
+      QPair<QStringList, std::vector<GpgME::Key> > p( it->recipients, it->keys );
+      data.append( p );
+    }
+    composer->setEncryptionKeys( data );
   }
 
   if( sign ) {
@@ -2318,7 +2322,9 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
     // The messages were composed successfully.
     // TODO handle drafts
     kDebug() << "NoError.";
-    queueMessage( mComposer->resultMessage() );
+    for( int i = 0; i < mComposer->resultMessages().size(); ++i ) {
+      queueMessage( KMime::Message::Ptr( mComposer->resultMessages()[i] ) );
+    }
   } else if( mComposer->error() == Composer::UserCancelledError ) {
     // The job warned the user about something, and the user chose to return
     // to the message.  Nothing to do.
