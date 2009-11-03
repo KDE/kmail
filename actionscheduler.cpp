@@ -37,8 +37,6 @@
 #include "kmmsgdict.h"
 #include "kmcommands.h"
 #include "broadcaststatus.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -914,6 +912,7 @@ void ActionScheduler::fetchTimeOut()
 
 QString ActionScheduler::debug()
 {
+#if 0	
   QString res;
   QList<ActionScheduler*>::iterator it;
   int i = 1;
@@ -943,6 +942,10 @@ QString ActionScheduler::debug()
     ++i;
   }
   return res;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+return QString();  
+#endif
 }
 
 bool ActionScheduler::isEnabled()

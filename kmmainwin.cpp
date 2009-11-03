@@ -26,7 +26,6 @@
 #include "statusbarprogresswidget.h"
 #include "accountwizard.h"
 #include "broadcaststatus.h"
-#include "accountmanager.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -91,10 +90,12 @@ KMMainWin::KMMainWin(QWidget *)
 
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
-
+#if 0
   if ( kmkernel->firstStart() )
     AccountWizard::start( kmkernel, this );
-
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
 }
@@ -118,7 +119,11 @@ KMMainWin::~KMMainWin()
       // Running KIO jobs prevent kapp from exiting, so we need to kill them
       // if they are only about checking mail (not important stuff like moving messages)
       kmkernel->abortMailCheck();
-      kmkernel->acctMgr()->cancelMailCheck();
+#if 0
+      //kmkernel->acctMgr()->cancelMailCheck();
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif      
     }
   }
 }

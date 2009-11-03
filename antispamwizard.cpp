@@ -30,7 +30,6 @@
 
 #include "antispamwizard.h"
 #include "messageviewer/kcursorsaver.h"
-#include "accountmanager.h"
 #include "kmfilter.h"
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
@@ -511,7 +510,7 @@ void AntiSpamWizard::checkToolAvailability()
       // check the configured account for pattern in <server>
       QString pattern = (*it).getServerPattern();
       kDebug() << "Testing for server pattern:" << pattern;
-
+#if 0
       AccountManager* mgr = kmkernel->acctMgr();
       QList<KMAccount*>::iterator accountIt = mgr->begin();
       while ( accountIt != mgr->end() ) {
@@ -527,6 +526,9 @@ void AntiSpamWizard::checkToolAvailability()
           }
         }
       }
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
     else {
       // check the availability of the application

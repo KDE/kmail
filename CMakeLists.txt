@@ -96,7 +96,7 @@ set(kmailprivate_LIB_SRCS
    folderstorage.cpp
    actionscheduler.cpp
    messageproperty.cpp
-   accountmanager.cpp
+   #accountmanager.cpp
    kmacctfolder.cpp
    kmdict.cpp
    kmsystemtray.cpp
@@ -168,7 +168,7 @@ set(kmailprivate_LIB_SRCS
    distributionlistdialog.cpp
    expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
-   accountwizard.cpp
+   #accountwizard.cpp
    textsource.cpp
    managesievescriptsdialog.cpp
    chiasmuskeyselector.cpp

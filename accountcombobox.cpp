@@ -30,18 +30,21 @@
 #include "accountcombobox.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
-#include "accountmanager.h"
 #include <kdebug.h>
-
+#include <kmaccount.h>
 using namespace KMail;
 
 AccountComboBox::AccountComboBox( QWidget* parent ) : KComboBox( parent )
 {
+#if 0
   connect( kmkernel->acctMgr(), SIGNAL( accountAdded( KMAccount* ) ),
            this, SLOT( slotRefreshAccounts() ) );
   connect( kmkernel->acctMgr(), SIGNAL( accountRemoved( KMAccount* ) ),
            this, SLOT( slotRefreshAccounts() ) );
   slotRefreshAccounts();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void AccountComboBox::slotRefreshAccounts()
@@ -94,6 +97,7 @@ KMAccount* AccountComboBox::currentAccount() const
 QList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
 {
   QList<KMAccount*> lst;
+#if 0
   QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
   while ( accountIt != kmkernel->acctMgr()->end() ) {
     KMAccount *a = *accountIt;
@@ -102,6 +106,9 @@ QList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
       lst.append( a );
     }
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return lst;
 }
 

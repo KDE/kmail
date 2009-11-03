@@ -34,7 +34,6 @@
 //TODO port to akonadi #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 //TODO port to akonadi #include "kmacctmaildir.h"
-#include "accountmanager.h"
 using KMail::AccountManager;
 
 #include "globalsettings.h"

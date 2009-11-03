@@ -20,9 +20,7 @@
 #include "kmsystemtray.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
-#include "accountmanager.h"
 
-using KMail::AccountManager;
 #include "globalsettings.h"
 
 
@@ -102,9 +100,12 @@ KMSystemTray::KMSystemTray(QWidget *parent)
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-
+#if 0
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            SLOT( updateNewMessages() ) );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMSystemTray::buildPopupMenu()

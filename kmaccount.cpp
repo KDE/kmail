@@ -2,7 +2,6 @@
 
 #include "kmaccount.h"
 
-#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
@@ -461,13 +460,14 @@ void KMAccount::mailCheck()
 {
   if (mTimer)
     mTimer->stop();
-
+#if 0
   if ( kmkernel ) {
     AccountManager *acctmgr = kmkernel->acctMgr();
     if ( acctmgr ) {
       acctmgr->singleCheckMail( this, false );
     }
   }
+#endif  
 }
 
 //-----------------------------------------------------------------------------

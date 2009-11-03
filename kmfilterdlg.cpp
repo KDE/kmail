@@ -25,8 +25,6 @@
 #include "kmsearchpatternedit.h"
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
 #include "filterimporterexporter.h"
 using KMail::FilterImporterExporter;
 
@@ -585,7 +583,7 @@ void KMFilterDlg::slotUpdateAccountList()
   mAccountList->clear();
 
   QTreeWidgetItem *top = 0;
-
+#if 0
   // Block the signals here, otherwise we end up calling
   // slotApplicableAccountsChanged(), which will read the incomplete item
   // state and write that back to the filter
@@ -614,6 +612,9 @@ void KMFilterDlg::slotUpdateAccountList()
   if ( top ) {
     mAccountList->setCurrentItem( top );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif  
 }
 
 //=============================================================================

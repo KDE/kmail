@@ -89,8 +89,6 @@ using KPIM::ProgressManager;
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
 #include "kmfilter.h"
 #include "kmreadermainwin.h"
 #include "foldershortcutdialog.h"
@@ -261,7 +259,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   readConfig();
 
   QTimer::singleShot( 0, this, SLOT( slotShowStartupFolder() ));
-
+#if 0
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            this, SLOT( slotMailChecked( bool, bool, const QMap<QString, int> & ) ) );
 
@@ -270,7 +268,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
            this, SLOT( initializeIMAPActions() ) );
   connect( kmkernel->acctMgr(), SIGNAL( accountRemoved( KMAccount* ) ),
            this, SLOT( initializeIMAPActions() ) );
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
@@ -1710,8 +1710,13 @@ void KMMainWidget::slotInvalidateIMAPFolders() {
           i18n("Are you sure you want to refresh the IMAP cache?\n"
                "This will remove all changes that you have done "
                "locally to your IMAP folders."),
-          i18n("Refresh IMAP Cache"), KGuiItem(i18n("&Refresh")) ) == KMessageBox::Continue )
-    kmkernel->acctMgr()->invalidateIMAPFolders();
+                                           i18n("Refresh IMAP Cache"), KGuiItem(i18n("&Refresh")) ) == KMessageBox::Continue ) {
+#if 0
+    //kmkernel->acctMgr()->invalidateIMAPFolders();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -4356,6 +4361,7 @@ void KMMainWidget::slotFolderRemoved( const Akonadi::Collection &col )
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeIMAPActions( bool setState /* false the first time, true later on */ )
 {
+#if 0
   bool hasImapAccount = false;
   QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
   while ( accountIt != kmkernel->acctMgr()->end() ) {
@@ -4390,6 +4396,9 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
 
   if ( factory )
     factory->addClient( mGUIClient );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 QList<QAction*> KMMainWidget::actionList()

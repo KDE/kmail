@@ -3,7 +3,6 @@
 #include "managesievescriptsdialog_p.h"
 
 #include "sieveconfig.h"
-#include "accountmanager.h"
 #include "imapaccountbase.h"
 #include "sievejob.h"
 #include "kmkernel.h"
@@ -103,7 +102,7 @@ static KUrl findUrlForAccount( const KMail::ImapAccountBase * a )
 void KMail::ManageSieveScriptsDialog::slotRefresh()
 {
   clear();
-
+#if 0
   KMail::AccountManager * am = kmkernel->acctMgr();
   assert( am );
   QTreeWidgetItem *last = 0;
@@ -142,6 +141,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   }
+#endif
 }
 
 void KMail::ManageSieveScriptsDialog::slotResult( KMail::SieveJob * job, bool success, const QString &, bool )

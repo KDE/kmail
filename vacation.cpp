@@ -21,8 +21,6 @@ using KMail::SieveJob;
 #include "sieveconfig.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
 //TODO port to akonadi #include "kmacctimap.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
@@ -521,22 +519,22 @@ namespace KMail {
   }
 
   KUrl Vacation::findURL() const {
+#if 0
     AccountManager * am = kmkernel->acctMgr();
     assert( am );
     QList<KMAccount*>::iterator accountIt = am->begin();
     while ( accountIt != am->end() ) {
       KMAccount *account = *accountIt;
       ++accountIt;
-#if 0 //TODO port to akonadi
       if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( account ) ) {
         KUrl u = findUrlForAccount( iab );
         if ( !u.isEmpty() )
           return u;
       }
+    }
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-    }
     return KUrl();
   }
 

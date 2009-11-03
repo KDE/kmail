@@ -31,11 +31,9 @@
 #include "kmstartup.h"
 #include "aboutdata.h"
 #include "kmfolder.h"
-#include "accountmanager.h"
 
 #include <QPixmap>
 #include <QVBoxLayout>
-using KMail::AccountManager;
 
 #include <kparts/mainwindow.h>
 #include <kpluginfactory.h>
@@ -139,8 +137,11 @@ KMailPart::~KMailPart()
   // Running KIO jobs prevent kapp from exiting, so we need to kill them
   // if they are only about checking mail (not important stuff like moving messages)
   kmkernel->abortMailCheck();
+#if 0
   kmkernel->acctMgr()->cancelMailCheck();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mainWidget->destruct();
   kmkernel->cleanup();
   delete kmkernel;

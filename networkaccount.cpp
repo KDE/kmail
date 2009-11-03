@@ -25,7 +25,6 @@
 
 
 #include "networkaccount.h"
-#include "accountmanager.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
 
@@ -91,8 +90,13 @@ namespace KMail {
   }
 
   QString NetworkAccount::passwd() const {
-    if ( storePasswd() && mPasswd.isEmpty() )
-      mOwner->readPasswords();
+    if ( storePasswd() && mPasswd.isEmpty() ) {
+#if 0
+      //mOwner->readPasswords();
+#else
+
+#endif
+    }
     return KStringHandler::obscure( mPasswd );
   }
 

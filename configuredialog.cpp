@@ -43,7 +43,6 @@
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "messageviewer/kcursorsaver.h"
-#include "accountmanager.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "accountcombobox.h"
@@ -137,6 +136,8 @@ using MailTransport::TransportManagementWidget;
 #include <stdlib.h>
 #include <kvbox.h>
 
+#include "kmfolder.h"
+#include "kmaccount.h"
 
 #include <akonadi/agentfilterproxymodel.h>
 #include <akonadi/agentinstancemodel.h>
@@ -804,6 +805,7 @@ void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstanc
 
 QStringList AccountsPage::ReceivingTab::occupiedNames()
 {
+#if 0
   QStringList accountNames = kmkernel->acctMgr()->getAccounts();
 
   QList<ModifiedAccountsType*>::Iterator k;
@@ -826,6 +828,9 @@ QStringList AccountsPage::ReceivingTab::occupiedNames()
     accountNames += (*j)->newAccount->name();
 
   return accountNames;
+#else
+  return QStringList();
+#endif
 }
 
 void AccountsPage::ReceivingTab::slotAddAccount()
@@ -1070,6 +1075,7 @@ void AccountsPage::ReceivingTab::doLoadOther()
 
 void AccountsPage::ReceivingTab::save()
 {
+#if 0
   // Add accounts marked as new
   QList< QPointer<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
@@ -1097,6 +1103,7 @@ void AccountsPage::ReceivingTab::save()
 
   // Incoming mail
   kmkernel->acctMgr()->writeConfig( false );
+#endif
 #if 0 //TODO port to akonadi
   kmkernel->cleanupImapFolders();
 #else

@@ -18,8 +18,6 @@ using KPIM::BroadcastStatus;
 #include "akonadisender.h"
 #undef REALLY_WANT_AKONADISENDER
 #include "undostack.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
 #include <kpimutils/kfileio.h>
 #include "kmversion.h"
 #include "kmreaderwin.h"
@@ -125,7 +123,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_folderMgr = 0;
   the_searchFolderMgr = 0;
   the_undoStack = 0;
-  the_acctMgr = 0;
   the_filterMgr = 0;
   the_popFilterMgr = 0;
   the_filterActionDict = 0;
@@ -371,7 +368,11 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 {
   if ( !kmkernel->askToGoOnline() )
     return;
+#if 0
   kmkernel->acctMgr()->checkMail( false );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 QStringList KMKernel::accounts()
@@ -391,6 +392,7 @@ QStringList KMKernel::accounts()
 
 void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
 {
+#if 0
   kDebug();
   if ( account.isEmpty() )
     checkMail();
@@ -399,6 +401,9 @@ void KMKernel::checkAccount( const QString &account ) //might create a new reade
     if ( acct )
       kmkernel->acctMgr()->singleCheckMail (acct, false );
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMKernel::openReader( bool onlyCheck )
@@ -1566,13 +1571,11 @@ void KMKernel::init()
   if (lsf)
     the_searchFolderMgr->remove( lsf );
 
-  the_acctMgr       = new AccountManager();
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
 
   initFolders(cfg);
-  the_acctMgr->readConfig();
   the_filterMgr->readConfig();
   the_popFilterMgr->readConfig();
 #if 0 //TODO port to akonadi
@@ -1778,7 +1781,6 @@ void KMKernel::cleanup(void)
   closeAllKMailWindows();
 
   // Write the config while all other managers are alive
-  the_acctMgr->writeConfig(false);
   delete the_filterMgr;
   the_filterMgr = 0;
   delete the_msgSender;
@@ -1835,9 +1837,6 @@ void KMKernel::cleanup(void)
 
   delete the_folderMgr;
   the_folderMgr = 0;
-  // Delete the_acctMgr here since it is used in the other *Mgrs above.
-  delete the_acctMgr;
-  the_acctMgr = 0;
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
   delete mConfigureDialog;
@@ -2163,6 +2162,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
   if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Trash ) )
     return true;
+#if 0
   QStringList actList = acctMgr()->getAccounts();
   QStringList::Iterator it( actList.begin() );
   for( ; it != actList.end() ; ++it ) {
@@ -2170,6 +2170,9 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
     if ( act && ( act->trash() == QString::number( col.id() ) ) )
       return true;
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   return false;
 }
 
@@ -2235,6 +2238,7 @@ void KMKernel::slotEmptyTrash()
   {
     return;
   }
+#if 0
   QList<KMAccount*>::iterator accountIt = acctMgr()->begin();
   while ( accountIt != acctMgr()->end() ) {
     KMAccount *acct = *accountIt;
@@ -2249,6 +2253,9 @@ void KMKernel::slotEmptyTrash()
 #endif
     }
   }
+#else
+   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMKernel* KMKernel::self()
