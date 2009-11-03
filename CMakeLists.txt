@@ -130,7 +130,6 @@ set(kmailprivate_LIB_SRCS
    #kmpopheaders.cpp
    #kmpopfiltercnfrmdlg.cpp
    mailinglist-magic.cpp
-#   kmacctmaildir.cpp
    attachmentcollector.cpp
    kmcommands.cpp
    kmreadermainwin.cpp
