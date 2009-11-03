@@ -23,7 +23,6 @@
 
 // other kmail headers
 #include "kmkernel.h"
-//TODO port to akonadi #include "kmacctimap.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
 #include "filterlog.h"

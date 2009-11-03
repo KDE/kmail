@@ -96,7 +96,6 @@ set(kmailprivate_LIB_SRCS
    folderstorage.cpp
    actionscheduler.cpp
    messageproperty.cpp
-   #accountmanager.cpp
    kmacctfolder.cpp
    kmdict.cpp
    kmsystemtray.cpp
@@ -115,7 +114,6 @@ set(kmailprivate_LIB_SRCS
    xfaceconfigurator.cpp
    networkaccount.cpp
 #   imapaccountbase.cpp
-#   kmacctimap.cpp
    kmfawidgets.cpp
    undostack.cpp
    #popaccount.cpp
