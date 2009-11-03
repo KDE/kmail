@@ -262,7 +262,8 @@ void MessageActions::updateActions()
         }
       }
       mMailingListActionMenu->menu()->clear();
-      mMailingListActionMenu->menu()->addTitle( listId );
+      if ( !listId.isEmpty() )
+        mMailingListActionMenu->menu()->addTitle( listId );
 
       if ( mailList.features() & MailingList::ArchivedAt )
         // IDEA: this may be something you want to copy - "Copy in submenu"?
