@@ -368,11 +368,10 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 {
   if ( !kmkernel->askToGoOnline() )
     return;
-#if 0
-  kmkernel->acctMgr()->checkMail( false );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  Akonadi::AgentInstance::List lst = agentManager()->instances();
+  foreach( Akonadi::AgentInstance type, lst ) {
+    type.synchronize();
+  }
 }
 
 QStringList KMKernel::accounts()
@@ -392,18 +391,16 @@ QStringList KMKernel::accounts()
 
 void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
 {
-#if 0
   kDebug();
   if ( account.isEmpty() )
     checkMail();
   else {
-    KMAccount* acct = kmkernel->acctMgr()->findByName( account );
-    if ( acct )
-      kmkernel->acctMgr()->singleCheckMail (acct, false );
+    Akonadi::AgentInstance agent = kmkernel->agentManager()->instance( account );
+    if ( agent.isValid() )
+      agent.synchronize();
+    else
+      kDebug() << "- account with name '" << account <<"' not found";
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void KMKernel::openReader( bool onlyCheck )
@@ -2162,7 +2159,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
   if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Trash ) )
     return true;
-#if 0
+#if 0 //TODO : will implement in imap akonadi ressource. Wait for the moment
   QStringList actList = acctMgr()->getAccounts();
   QStringList::Iterator it( actList.begin() );
   for( ; it != actList.end() ; ++it ) {
@@ -2238,7 +2235,7 @@ void KMKernel::slotEmptyTrash()
   {
     return;
   }
-#if 0
+#if 0 //TODO will be implement in imap ressource
   QList<KMAccount*>::iterator accountIt = acctMgr()->begin();
   while ( accountIt != acctMgr()->end() ) {
     KMAccount *acct = *accountIt;
@@ -2246,11 +2243,7 @@ void KMKernel::slotEmptyTrash()
     Akonadi::Collection trash = findFolderCollectionById(acct->trash());
     if (trash.isValid())
     {
-#if 0
       trash->expunge();
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     }
   }
 #else
