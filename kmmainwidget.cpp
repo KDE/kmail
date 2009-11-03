@@ -4549,7 +4549,7 @@ void KMMainWidget::slotAntiVirusWizard()
   AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this);
   wiz.exec();
 }
-#if 0
+#if 0 //Need to reimplement it
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAccountWizard()
 {
