@@ -71,6 +71,8 @@ class BackupJob : public QObject
     KArchive *mArchive;
     QWidget *mParentWidget;
     bool mCurrentFolderOpen;
+    int mArchivedMessages;
+    uint mArchivedSize;
 
     QPtrList<KMFolder> mPendingFolders;
     KMFolder *mCurrentFolder;

@@ -28,6 +28,7 @@
 #include "kmessagebox.h"
 
 #include "qfile.h"
+#include "qfileinfo.h"
 #include "qstringlist.h"
 
 using namespace KMail;
@@ -39,6 +40,8 @@ BackupJob::BackupJob( QWidget *parent )
     mArchive( 0 ),
     mParentWidget( parent ),
     mCurrentFolderOpen( false ),
+    mArchivedMessages( 0 ),
+    mArchivedSize( 0 ),
     mCurrentFolder( 0 ),
     mCurrentMessage( 0 ),
     mCurrentJob( 0 )
@@ -136,9 +139,16 @@ void BackupJob::finish()
     }
   }
 
+  QFileInfo archiveFileInfo( mMailArchivePath.path() );
+  QString text = i18n( "Archiving folder '%1' successfully completed. "
+                       "The archive was written to the file '%2'." )
+                   .arg( mRootFolder->name() ).arg( mMailArchivePath.path() );
+  text += "\n" + i18n( "%1 messages with the total size of %2 were archived." )
+                   .arg( mArchivedMessages ).arg( KIO::convertSize( mArchivedSize ) );
+  text += "\n" + i18n( "The archive file has a size of %1." )
+                   .arg( KIO::convertSize( archiveFileInfo.size() ) );
+  KMessageBox::information( mParentWidget, text, i18n( "Archiving finished." ) );
   deleteLater();
-  kdDebug(5006) << "Finished backup job." << endl;
-  // TODO: nice success dialog
 }
 
 void BackupJob::archiveNextMessage()
@@ -216,6 +226,9 @@ void BackupJob::processCurrentMessage()
       abort( i18n( "Failed to write a message into the archive folder '%1'." ).arg( mCurrentFolder->name() ) );
       return;
     }
+
+    mArchivedMessages++;
+    mArchivedSize += messageSize;
   }
   else {
     // No message? According to ImapJob::slotGetMessageResult(), that means the message is no
