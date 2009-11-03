@@ -3744,16 +3744,11 @@ void KMComposeWin::slotConfigChanged()
 void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
 {
   kDebug() << "you killed me.";
-#if 0
   // TODO: need to handle templates here?
-  if ( (mFolder) && (folder->idString() == mFolder->idString()) ) {
-    mFolder = kmkernel->draftsFolder();
-    kDebug() << "restoring drafts to" << mFolder->idString();
+  if ( (mFolder.isValid()) && (col.id() == mFolder.id()) ) {
+    mFolder = kmkernel->draftsCollectionFolder();
+    kDebug() << "restoring drafts to" << mFolder.id();
   }
-  if ( mMsg ) {
-    mMsg->setParent( 0 );
-  }
-#endif
 }
 
 void KMComposeWin::slotSetAlwaysSend( bool bAlways )
