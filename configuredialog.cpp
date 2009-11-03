@@ -770,24 +770,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
-  // When hitting Cancel or closing the dialog with the window-manager-button,
-  // we have a number of things to clean up:
-
-  // The newly created accounts
-  QList< QPointer<KMAccount> >::Iterator it;
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    delete (*it);
-  }
-  mNewAccounts.clear();
-
-  // The modified accounts
-  QList<ModifiedAccountsType*>::Iterator j;
-  for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j ) {
-    delete (*j)->newAccount;
-    delete (*j);
-  }
-  mModifiedAccounts.clear();
-
 
 }
 
@@ -802,78 +784,8 @@ void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstanc
   }
 }
 
-QStringList AccountsPage::ReceivingTab::occupiedNames()
-{
-#if 0
-  QStringList accountNames = kmkernel->acctMgr()->getAccounts();
-
-  QList<ModifiedAccountsType*>::Iterator k;
-  for (k = mModifiedAccounts.begin(); k != mModifiedAccounts.end(); ++k )
-    if ((*k)->oldAccount)
-      accountNames.removeAll( (*k)->oldAccount->name() );
-
-  QList< QPointer<KMAccount> >::Iterator l;
-  for (l = mAccountsToDelete.begin(); l != mAccountsToDelete.end(); ++l )
-    if (*l)
-      accountNames.removeAll( (*l)->name() );
-
-  QList< QPointer<KMAccount> >::Iterator it;
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
-    if (*it)
-      accountNames += (*it)->name();
-
-  QList<ModifiedAccountsType*>::Iterator j;
-  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
-    accountNames += (*j)->newAccount->name();
-
-  return accountNames;
-#else
-  return QStringList();
-#endif
-}
-
 void AccountsPage::ReceivingTab::slotAddAccount()
 {
-#if 0
-  AutoQPointer<KMAcctSelDlg> accountSelectorDialog( new KMAcctSelDlg( this ) );
-  if ( accountSelectorDialog->exec() != QDialog::Accepted || !accountSelectorDialog ) {
-    return;
-  }
-
-  KAccount::Type accountType = accountSelectorDialog->selected();
-  KMAccount *account = kmkernel->acctMgr()->create( accountType );
-  if ( !account ) {
-    // ### FIXME: Give the user more information. Is this error
-    // recoverable?
-    KMessageBox::sorry( this, i18n("Unable to create account") );
-    return;
-  }
-
-  account->init(); // fill the account fields with good default values
-
-  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Add Account"), account, this ) );
-
-  if ( dialog->exec() != QDialog::Accepted ) {
-    delete account;
-    return;
-  }
-
-  account->deinstallTimer();
-  account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
-#if 0
-  QTreeWidgetItem *after = mAccountsReceiving.mAccountList->topLevelItemCount() > 0 ?
-    mAccountsReceiving.mAccountList->topLevelItem( mAccountsReceiving.mAccountList->topLevelItemCount() - 1 ) :
-    0;
-
-  QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountsReceiving.mAccountList, after );
-  listItem->setText( 0, account->name() );
-  listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-  if( account->folder() )
-    listItem->setText( 2, account->folder()->label() );
-#endif
-
-  mNewAccounts.append( account );
-#endif
   //TODO verify this dialog box. We can see note etc...
   Akonadi::AgentTypeDialog dlg( this );
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
@@ -902,75 +814,6 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
     KWindowSystem::allowExternalProcessWindowActivation();
     instance.configure( this );
   }
-
-#if 0
-  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
-  if( !listItem ) return;
-
-  KMAccount *account = 0;
-  QList<ModifiedAccountsType*>::Iterator j;
-  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
-    if ( (*j)->newAccount->name() == listItem->text( 0 ) ) {
-      account = (*j)->newAccount;
-      break;
-    }
-
-  if ( !account ) {
-    QList< QPointer<KMAccount> >::Iterator it;
-    for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
-      if ( (*it)->name() == listItem->text( 0 ) ) {
-        account = *it;
-        break;
-      }
-
-    if ( !account ) {
-      account = kmkernel->acctMgr()->findByName( listItem->text( 0 ) );
-      if( !account ) {
-        // ### FIXME: How should this happen? See above.
-        KMessageBox::sorry( this, i18n("Unable to locate account") );
-        return;
-      }
-      if ( account->type() == KAccount::Imap ||
-           account->type() == KAccount::DImap )
-      {
-#if 0 //TODO port to akonadi
-        ImapAccountBase* ai = static_cast<ImapAccountBase*>( account );
-        if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
-        {
-          // connect to server - the namespaces are fetched automatically
-          kDebug() << "slotModifySelectedAccount - connect";
-          ai->makeConnection();
-        }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-      }
-
-      ModifiedAccountsType *mod = new ModifiedAccountsType;
-      mod->oldAccount = account;
-      mod->newAccount = kmkernel->acctMgr()->create( account->type(),
-                                                   account->name() );
-      mod->newAccount->pseudoAssign( account );
-      mModifiedAccounts.append( mod );
-      account = mod->newAccount;
-    }
-  }
-
-  QStringList accountNames = occupiedNames();
-  accountNames.removeAll( account->name() );
-
-  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Modify Account"), account, this ) );
-
-  if ( dialog->exec() != QDialog::Accepted ) return;
-
-  if ( accountNames.contains( account->name() ) )
-    account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
-
-  listItem->setText( 0, account->name() );
-  listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-  if( account->folder() )
-    listItem->setText( 2, account->folder()->label() );
-#endif
   emit changed( true );
 }
 
@@ -984,48 +827,6 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 
   slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
 
-#if 0
-  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
-  if( !listItem ) return;
-
-  KMAccount *acct = 0;
-  QList<ModifiedAccountsType*>::Iterator j;
-  for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j )
-    if ( (*j)->newAccount->name() == listItem->text(0) ) {
-      acct = (*j)->oldAccount;
-      mAccountsToDelete.append( acct );
-      mModifiedAccounts.erase( j );
-      break;
-    }
-  if ( !acct ) {
-    QList< QPointer<KMAccount> >::Iterator it;
-    for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
-      if ( (*it)->name() == listItem->text(0) ) {
-        acct = *it;
-        mNewAccounts.erase( it );
-        break;
-      }
-  }
-  if ( !acct ) {
-    acct = kmkernel->acctMgr()->findByName( listItem->text(0) );
-    if ( acct )
-      mAccountsToDelete.append( acct );
-  }
-  if ( !acct ) {
-    // ### FIXME: see above
-    KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>",
-                         listItem->text(0)) );
-    return;
-  }
-
-  QTreeWidgetItem *item = mAccountsReceiving.mAccountList->itemBelow( listItem );
-  if ( !item ) item = mAccountsReceiving.mAccountList->itemAbove( listItem );
-  delete listItem;
-
-  if ( item ) {
-    mAccountsReceiving.mAccountList->setCurrentItem( item );
-  }
-#endif
   emit changed( true );
 
 }
@@ -1046,27 +847,6 @@ void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 void AccountsPage::ReceivingTab::doLoadOther()
 {
   KConfigGroup general( KMKernel::config(), "General" );
-#if 0
-  mAccountsReceiving.mAccountList->clear();
-  QTreeWidgetItem *top = 0;
-
-  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
-  while ( accountIt != kmkernel->acctMgr()->end() ) {
-    KMAccount *account = *accountIt;
-    ++accountIt;
-    QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountsReceiving.mAccountList, top );
-    listItem->setText( 0, account->name() );
-    listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-    if( account->folder() )
-      listItem->setText( 2, account->folder()->label() );
-    top = listItem;
-  }
-  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->topLevelItemCount() == 0 ?
-      0 : mAccountsReceiving.mAccountList->topLevelItem( 0 );
-  if ( listItem ) {
-    mAccountsReceiving.mAccountList->setCurrentItem( listItem );
-  }
-#endif
   mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
   mAccountsReceiving.mCheckmailStartupCheck->setChecked(
       general.readEntry( "checkmail-startup", false ) );
@@ -1074,35 +854,6 @@ void AccountsPage::ReceivingTab::doLoadOther()
 
 void AccountsPage::ReceivingTab::save()
 {
-#if 0
-  // Add accounts marked as new
-  QList< QPointer<KMAccount> >::Iterator it;
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    kmkernel->acctMgr()->add( *it ); // calls installTimer too
-  }
-
-  // Update accounts that have been modified
-  QList<ModifiedAccountsType*>::Iterator j;
-  for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j ) {
-    (*j)->oldAccount->pseudoAssign( (*j)->newAccount );
-    delete (*j)->newAccount;
-    delete (*j);
-  }
-  mModifiedAccounts.clear();
-
-  // Delete accounts marked for deletion
-  for ( it = mAccountsToDelete.begin() ;
-        it != mAccountsToDelete.end() ; ++it ) {
-    kmkernel->acctMgr()->writeConfig( true );
-    if ( (*it) && !kmkernel->acctMgr()->remove(*it) )
-      KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>",
-                            (*it)->name() ) );
-  }
-  mAccountsToDelete.clear();
-
-  // Incoming mail
-  kmkernel->acctMgr()->writeConfig( false );
-#endif
 #if 0 //TODO port to akonadi
   kmkernel->cleanupImapFolders();
 #else
@@ -1115,20 +866,6 @@ void AccountsPage::ReceivingTab::save()
 
   general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
 
-  // Sync new IMAP accounts ASAP:
-#if 0 //TODO port to akonadi
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    KMAccount *macc = (*it);
-    ImapAccountBase *acc = dynamic_cast<ImapAccountBase*> (macc);
-    if ( acc ) {
-      AccountUpdater *au = new AccountUpdater( acc );
-      au->update();
-    }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  mNewAccounts.clear();
 
 }
 
@@ -4436,33 +4173,6 @@ void MiscPage::InviteTab::save()
   GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mMITab.mDeleteInvitations->isChecked() );
 }
 
-#if 0 //TODO port to akonadi
-// *************************************************************
-// *                                                           *
-// *                     AccountUpdater                        *
-// *                                                           *
-// *************************************************************
-AccountUpdater::AccountUpdater(ImapAccountBase *account)
-    : QObject()
-{
-  mAccount = account;
-}
-
-void AccountUpdater::update()
-{
-  connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
-          this, SLOT( namespacesFetched() ) );
- mAccount->makeConnection();
-}
-
-void AccountUpdater::namespacesFetched()
-{
-  mAccount->setCheckingMail( true );
-  mAccount->processNewMail( false );
-  deleteLater();
-}
-
-#endif
 
 //----------------------------
 #include "configuredialog.moc"

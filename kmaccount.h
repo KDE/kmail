@@ -20,11 +20,10 @@
 #ifndef kmaccount_h
 #define kmaccount_h
 
-#include "kmacctfolder.h"
 
 #include <kprocess.h>
 #include <kaccount.h>
-
+#include <QEventLoop>
 #include <QList>
 #include <QMap>
 #include <QPointer>

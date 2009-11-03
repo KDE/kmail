@@ -302,18 +302,9 @@ private:
   virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   //FIXME virtual void doResetToDefaultsOther();
-  QStringList occupiedNames();
 
 private:
   Ui_AccountsPageReceivingTab mAccountsReceiving;
-  QList< QPointer<KMAccount> > mAccountsToDelete;
-  QList< QPointer<KMAccount> > mNewAccounts;
-  struct ModifiedAccountsType {
-    QPointer< KMAccount > oldAccount;
-    QPointer< KMAccount > newAccount;
-  };
-  // ### make this a qptrlist:
-  QList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
