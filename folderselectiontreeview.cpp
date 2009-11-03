@@ -116,6 +116,19 @@ FolderSelectionTreeView::~FolderSelectionTreeView()
 }
 
 
+void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection & col )
+{
+  kDebug() << "AKONADI PORT: Bug in this code  " << Q_FUNC_INFO;
+
+  QModelIndexList rows = d->collectionFolderView->model()->match(QModelIndex(), Akonadi::EntityTreeModel::CollectionIdRole, col.id());
+
+
+  if ( rows.size() < 1 )
+    return;
+  QModelIndex colIndex = rows.first();
+  d->collectionFolderView->selectionModel()->select(colIndex, QItemSelectionModel::SelectCurrent);
+}
+
 Akonadi::ChangeRecorder * FolderSelectionTreeView::monitorFolders()
 {
   return d->monitor;

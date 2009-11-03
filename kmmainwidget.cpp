@@ -2354,7 +2354,6 @@ void KMMainWidget::slotJumpToFolder()
   if ( dlg->exec() && dlg ) {
     Akonadi::Collection collection = dlg->selectedCollection();
     if ( collection.isValid() ) {
-      kDebug()<<" collection.name() :"<<collection.name();
       selectCollectionFolder( collection );
     }
   }
@@ -2362,9 +2361,8 @@ void KMMainWidget::slotJumpToFolder()
 
 void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 {
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
   if ( mCollectionFolderView ) {
-  //mCollectionFolderView->setCurrentIndex( mEntityModel->indexForCollection( collection ) );
+    mCollectionFolderView->selectCollectionFolder( col );
   }
 }
 

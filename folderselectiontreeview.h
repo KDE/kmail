@@ -52,6 +52,8 @@ public:
 
   Akonadi::ChangeRecorder *monitorFolders();
 
+  void selectCollectionFolder( const Akonadi::Collection & col );
+
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );
 
