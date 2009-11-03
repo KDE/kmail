@@ -407,22 +407,9 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
     writeFolderConfig();
   }
 
-  if ( newFolder )
-  {
-    //TODO port to akonadi
-    // Close the old folder, if any
-    //closeFolder();
-  }
-
   delete mCurrentFolder;
   mCurrentFolder = new FolderCollection( col );
 
-  if ( newFolder )
-  {
-    //TODO port to akonadi
-    // Open the new folder
-    //openFolder();
-  }
 #ifdef OLD_FOLDERVIEW
   // FIXME: re-fetch the contents also if the folder is already open ?
   if ( aFolder && ( aFolder->folderType() == KMFolderTypeImap )  && ( !mMessageListView->isFolderOpen( mFolder ) ) )
@@ -948,8 +935,7 @@ void KMMainWidget::createWidgets()
     connect( mMsgView->viewer(), SIGNAL( urlClicked(const KUrl&,int) ),
              mMsgView->viewer(), SLOT( slotUrlClicked() ) );
 
-#if 0
-    // FIXME (Pragma)
+#if 0    // FIXME (Pragma)
     connect( mMsgView, SIGNAL( noDrag() ),
              mHeaders, SLOT( slotNoDrag() ) );
 #endif
@@ -2669,63 +2655,6 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
     kmkernel->msgSender()->sendQueued( item->text() );
 }
 
-
-void KMMainWidget::openFolder()
-{
-#if 0 //TODO port to akonadi
-  if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
-    return;
-  }
-  KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
-  assert( !mOpenedImapFolder );
-  imap->open("mainwidget"); // will be closed in the folderSelected slot
-  mOpenedImapFolder = true;
-  // first get new headers before we select the folder
-  imap->setSelected( true );
-
-  // If the folder gets closed because of renaming, re-open it again to prevent
-  // an assert in closeFolder() later.
-  disconnect( imap, SIGNAL( closed( KMFolder* ) ),
-              this, SLOT( folderClosed( KMFolder*) ) );
-  connect( imap, SIGNAL( closed( KMFolder* ) ),
-           this, SLOT( folderClosed( KMFolder*) ) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-void KMMainWidget::closeFolder()
-{
-#if 0 //TODO port to akonadi
-  if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
-    return;
-  }
-  assert( mOpenedImapFolder );
-  KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
-  imap->setSelected( false );
-  mFolder->close( "mainwidget" );
-  mOpenedImapFolder = false;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::folderClosed( KMFolder *folder )
-{
-#if 0 //Port or remove
-  Q_UNUSED( folder );
-  if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
-    return;
-  }
-
-  mOpenedImapFolder = false;
-  openFolder();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowBusySplash()
 {
@@ -4061,7 +3990,6 @@ void KMMainWidget::slotIntro()
     mMessagePane->hide();
   mMsgView->displayAboutPage();
 
-  closeFolder();
   mCurrentFolder = 0;
 }
 

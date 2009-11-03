@@ -298,9 +298,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
     void copySelectedMessagesToFolder( const Akonadi::Collection& dest );
 
-    // helper functions for keeping reference to mFolder
-    void openFolder();
-    void closeFolder();
 
     virtual void showEvent( QShowEvent *event );
 
@@ -455,11 +452,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
   void slotFolderRemoved( const Akonadi::Collection& );
   void slotCollectionRemoved( const Akonadi::Collection& );
-
-    /**
-     * Reopens the folder if it was closed because of a rename
-     */
-    void folderClosed( KMFolder *folder );
 
     /** Show a splash screen for the longer-lasting operation */
     void slotShowBusySplash();

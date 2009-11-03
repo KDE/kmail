@@ -72,6 +72,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->monitor->fetchCollection( true );
   d->monitor->setAllMonitored( true );
   d->monitor->setMimeTypeMonitored( "message/rfc822" );
+
   // TODO: Only fetch the envelope etc if possible.
   d->monitor->itemFetchScope().fetchFullPayload(true);
   d->entityModel = new Akonadi::EntityTreeModel( session, d->monitor, this );
