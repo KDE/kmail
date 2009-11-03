@@ -131,7 +131,6 @@ set(kmailprivate_LIB_SRCS
    kmmainwidget.cpp
    kmfolderindex.cpp
    folderjob.cpp
-#   subscriptiondialog.cpp
    aboutdata.cpp
    mailserviceimpl.cpp
    mailmanagerimpl.cpp
@@ -172,7 +171,8 @@ set(kmailprivate_LIB_SRCS
    customtemplates.cpp
    customtemplatesmenu.cpp
    korghelper.cpp
-#   localsubscriptiondialog.cpp
+   #subscriptiondialog.cpp   
+   #localsubscriptiondialog.cpp
    messageactions.cpp
    statusbarlabel.cpp
    procmailparser.cpp
