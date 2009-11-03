@@ -3,7 +3,6 @@
 #include "kmaccount.h"
 
 using KMail::AccountManager;
-#include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
@@ -96,7 +95,6 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
   : KAccount( id, aName ),
     mTrash(QString::number( KMKernel::self()->trashCollectionFolder().id() )),
     mOwner(aOwner),
-    mFolder(0),
     mTimer(0),
     mInterval(0),
     mExclude(false),
@@ -124,8 +122,10 @@ void KMAccount::init() {
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount()
 {
+#if 0
   if ( (kmkernel && !kmkernel->shuttingDown()) && mFolder ) mFolder->removeAccount(this);
   if (mTimer) deinstallTimer();
+#endif
 }
 
 
@@ -147,11 +147,11 @@ void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 {
   if(!aFolder) {
     //kDebug() << "aFolder == 0";
-    mFolder = 0;
     return;
   }
-  mFolder = (KMAcctFolder*)aFolder;
+#if 0
   if (addAccount) mFolder->addAccount(this);
+#endif
 }
 
 
@@ -159,7 +159,7 @@ void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 void KMAccount::readConfig(KConfigGroup& config)
 {
   QString folderName;
-  mFolder = 0;
+
   folderName = config.readEntry("Folder");
   setCheckInterval(config.readEntry("check-interval", 0 ) );
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
@@ -199,7 +199,6 @@ void KMAccount::writeConfig(KConfigGroup& config)
   KAccount::writeConfig(config);
 
   config.writeEntry("Type", KAccount::nameForType( type() ) );
-  config.writeEntry("Folder", mFolder ? mFolder->idString() : QString());
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
   config.writePathEntry("precommand", mPrecommand);
@@ -467,7 +466,7 @@ void KMAccount::mailCheck()
       acctmgr->singleCheckMail( this, false );
     }
   }
-#endif  
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -510,7 +509,6 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
   setId( a->id() );
   setCheckInterval( a->checkInterval() );
   setCheckExclude( a->checkExclude() );
-  setFolder( a->folder() );
   setPrecommand( a->precommand() );
   setTrash( a->trash() );
   setIdentityId( a->identityId() );

@@ -33,7 +33,6 @@
 class QTimer;
 
 class KMFolder;
-class KMAcctFolder;
 class KMFolderCachedImap;
 class AccountsPageReceivingTab;
 
@@ -120,7 +119,6 @@ public:
   /**
    * There can be exactly one folder that is fed by messages from an
    * account. */
-  KMFolder* folder(void) const { return ((KMFolder*)((KMAcctFolder*)mFolder)); }
   virtual void setFolder(KMFolder*, bool addAccount = false);
 
   /**
@@ -309,7 +307,6 @@ protected:
   QString       mPrecommand;
   QString       mTrash;
   AccountManager*    mOwner;
-  QPointer<KMAcctFolder> mFolder;
   QTimer *mTimer;
   int mInterval; // this is a switch and a scalar at the same time. If it is 0,
   // interval mail checking is turned off and the interval spinbox proposes a

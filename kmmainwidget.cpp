@@ -1179,10 +1179,10 @@ void KMMainWidget::slotPopFilter()
 
 void KMMainWidget::slotManageSieveScripts()
 {
-#if 0	
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
+#if 0
   KMail::ManageSieveScriptsDialog * dlg = new KMail::ManageSieveScriptsDialog( this );
   dlg->show();
 #else

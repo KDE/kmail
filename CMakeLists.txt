@@ -96,7 +96,6 @@ set(kmailprivate_LIB_SRCS
    folderstorage.cpp
    actionscheduler.cpp
    messageproperty.cpp
-   kmacctfolder.cpp
    kmdict.cpp
    kmsystemtray.cpp
    kmfolderdir.cpp
