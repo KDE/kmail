@@ -99,7 +99,6 @@ set(kmailprivate_LIB_SRCS
    kmacctfolder.cpp
    kmdict.cpp
    kmsystemtray.cpp
-#   kmacctlocal.cpp
    kmfolderdir.cpp
    kmfoldermgr.cpp
    kmfoldernode.cpp

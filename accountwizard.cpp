@@ -28,7 +28,6 @@
 
 #include "accountwizard.h"
 
-#include "kmacctlocal.h"
 #include "kmkernel.h"
 #include "popaccount.h"
 using KMail::AccountManager;
