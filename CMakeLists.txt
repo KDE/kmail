@@ -112,7 +112,6 @@ set(kmailprivate_LIB_SRCS
    kmfilterdlg.cpp
    xfaceconfigurator.cpp
    networkaccount.cpp
-#   imapaccountbase.cpp
    kmfawidgets.cpp
    undostack.cpp
    kmkernel.cpp
@@ -163,7 +162,7 @@ set(kmailprivate_LIB_SRCS
    mailinglistpropertiesdialog.cpp
    #accountwizard.cpp
    textsource.cpp
-   managesievescriptsdialog.cpp
+   #managesievescriptsdialog.cpp
    chiasmuskeyselector.cpp
    util.cpp
    kmmessagetag.cpp

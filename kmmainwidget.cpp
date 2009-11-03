@@ -109,10 +109,10 @@ using KMail::SearchWindow;
 #include "vacation.h"
 using KMail::Vacation;
 
-#include "subscriptiondialog.h"
-using KMail::SubscriptionDialog;
-#include "localsubscriptiondialog.h"
-using KMail::LocalSubscriptionDialog;
+//#include "subscriptiondialog.h"
+//using KMail::SubscriptionDialog;
+//#include "localsubscriptiondialog.h"
+//using KMail::LocalSubscriptionDialog;
 #include "messageviewer/attachmentstrategy.h"
 using MessageViewer::AttachmentStrategy;
 #include "messageviewer/headerstrategy.h"
@@ -1179,11 +1179,15 @@ void KMMainWidget::slotPopFilter()
 
 void KMMainWidget::slotManageSieveScripts()
 {
+#if 0	
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
   KMail::ManageSieveScriptsDialog * dlg = new KMail::ManageSieveScriptsDialog( this );
   dlg->show();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 
