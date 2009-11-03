@@ -38,8 +38,10 @@ BackupJob::BackupJob( QWidget *parent )
     mRootFolder( 0 ),
     mArchive( 0 ),
     mParentWidget( parent ),
+    mCurrentFolderOpen( false ),
     mCurrentFolder( 0 ),
-    mCurrentMessage( 0 )
+    mCurrentMessage( 0 ),
+    mCurrentJob( 0 )
 {
 }
 
@@ -50,7 +52,6 @@ BackupJob::~BackupJob()
     delete mArchive;
     mArchive = 0;
   }
-  deleteLater();
 }
 
 void BackupJob::setRootFolder( KMFolder *rootFolder )
@@ -68,7 +69,7 @@ void BackupJob::setArchiveType( ArchiveType type )
   mArchiveType = type;
 }
 
-QString BackupJob::stripRootPath( const QString &path )
+QString BackupJob::stripRootPath( const QString &path ) const
 {
   QString ret = path;
   ret = ret.remove( mRootFolder->path() );
@@ -80,7 +81,6 @@ QString BackupJob::stripRootPath( const QString &path )
 void BackupJob::queueFolders( KMFolder *root )
 {
   mPendingFolders.append( root );
-  kdDebug(5006) << "Queueing folder " << root->name() << endl;
   KMFolderDir *dir = root->child();
   if ( dir ) {
     for ( KMFolderNode * node = dir->first() ; node ; node = dir->next() ) {
@@ -104,11 +104,41 @@ bool BackupJob::hasChildren( KMFolder *folder ) const
   return false;
 }
 
+
+void BackupJob::abort( const QString &errorMessage )
+{
+  if ( mCurrentFolderOpen && mCurrentFolder ) {
+    mCurrentFolder->close( "BackupJob" );
+    mCurrentFolder = 0;
+  }
+  if ( mArchive && mArchive->isOpened() ) {
+    mArchive->close();
+  }
+  if ( mCurrentJob ) {
+    mCurrentJob->kill();
+    mCurrentJob = 0;
+  }
+
+  QString text = i18n( "Failed to archive the folder '%1'." ).arg( mRootFolder->name() );
+  text += "\n" + errorMessage;
+  KMessageBox::sorry( mParentWidget, text, i18n( "Archiving failed." ) );
+  deleteLater();
+  // Clean up archive file here?
+}
+
 void BackupJob::finish()
 {
-  mArchive->close();
+  if ( mArchive->isOpened() ) {
+    mArchive->close();
+    if ( !mArchive->closeSucceeded() ) {
+      abort( i18n( "Unable to finalize the archive file." ) );
+      return;
+    }
+  }
+
+  deleteLater();
   kdDebug(5006) << "Finished backup job." << endl;
-  // TODO: nice error/success dialog
+  // TODO: nice success dialog
 }
 
 void BackupJob::archiveNextMessage()
@@ -117,6 +147,7 @@ void BackupJob::archiveNextMessage()
   if ( mPendingMessages.isEmpty() ) {
     kdDebug(5006) << "===> All messages done in folder " << mCurrentFolder->name() << endl;
     mCurrentFolder->close( "BackupJob" );
+    mCurrentFolderOpen = false;
     archiveNextFolder();
     return;
   }
@@ -126,14 +157,19 @@ void BackupJob::archiveNextMessage()
 
   KMFolder *folder;
   int index = -1;
-  kdDebug(5006) << "SerNum: " << serNum << endl;
   KMMsgDict::instance()->getLocation( serNum, &folder, &index );
-  kdDebug(5006) << "Index: " << index << endl;
-  // TODO: handle error
+  if ( index == -1 ) {
+    kdWarning(5006) << "Failed to get message location for sernum " << serNum << endl;
+    abort( i18n( "Unable to retrieve a message for folder '%1'." ).arg( mCurrentFolder->name() ) );
+    return;
+  }
+
   Q_ASSERT( folder == mCurrentFolder );
   KMMessage *message = mCurrentFolder->getMsg( index );
   if ( !message ) {
-    // TODO: handle error case!
+    kdWarning(5006) << "Failed to retrieve message with index " << index << endl;
+    abort( i18n( "Unable to retrieve a message for folder '%1'." ).arg( mCurrentFolder->name() ) );
+    return;
   }
 
   kdDebug(5006) << "Going to get next message with subject " << message->subject() << ", "
@@ -146,16 +182,19 @@ void BackupJob::archiveNextMessage()
     QTimer::singleShot( 0, this, SLOT( processCurrentMessage() ) );
   }
   else if ( message->parent() ) {
-    FolderJob *job = message->parent()->createJob( message );
-    job->setCancellable( false );
-    connect( job, SIGNAL( messageRetrieved( KMMessage* ) ),
+    mCurrentJob = message->parent()->createJob( message );
+    mCurrentJob->setCancellable( false );
+    connect( mCurrentJob, SIGNAL( messageRetrieved( KMMessage* ) ),
              this, SLOT( messageRetrieved( KMMessage* ) ) );
-    connect( job, SIGNAL( result( KMail::FolderJob* ) ),
+    connect( mCurrentJob, SIGNAL( result( KMail::FolderJob* ) ),
              this, SLOT( folderJobFinished( KMail::FolderJob* ) ) );
-    job->start();
+    mCurrentJob->start();
   }
   else {
-    // WTF, handle error
+    kdWarning(5006) << "Message with subject " << mCurrentMessage->subject()
+                    << " is neither complete nor has a parent!" << endl;
+    abort( i18n( "Internal error while trying to retrieve a message from folder '%1'." )
+              .arg( mCurrentFolder->name() ) );
   }
 }
 
@@ -168,13 +207,15 @@ void BackupJob::processCurrentMessage()
     const char *messageString = mCurrentMessage->asDwString().c_str();
     QString messageName = mCurrentMessage->fileName();
     if ( messageName.isEmpty() ) {
-      messageName = QString::number( mCurrentMessage->getMsgSerNum() );
+      messageName = QString::number( mCurrentMessage->getMsgSerNum() ); // IMAP doesn't have filenames
     }
     const QString fileName = stripRootPath( mCurrentFolder->location() ) +
                              "/cur/" + messageName;
 
-    mArchive->writeFile( fileName, "root", "root", messageSize, messageString );
-    // TODO: check error code
+    if ( !mArchive->writeFile( fileName, "root", "root", messageSize, messageString ) ) {
+      abort( i18n( "Failed to write a message into the archive folder '%1'." ).arg( mCurrentFolder->name() ) );
+      return;
+    }
   }
   else {
     // No message? According to ImapJob::slotGetMessageResult(), that means the message is no
@@ -192,7 +233,18 @@ void BackupJob::messageRetrieved( KMMessage *message )
 
 void BackupJob::folderJobFinished( KMail::FolderJob *job )
 {
-  // TODO: error handling
+  // The job might finish after it has emitted messageRetrieved(), in which case we have already
+  // started a new job. Don't set the current job to 0 in that case.
+  if ( job == mCurrentJob ) {
+    mCurrentJob = 0;
+  }
+
+  if ( job->error() ) {
+    if ( mCurrentFolder )
+      abort( i18n( "Downloading a message in folder '%1' failed." ).arg( mCurrentFolder->name() ) );
+    else
+      abort( i18n( "Downloading a message in the current folder failed." ) );
+  }
 }
 
 void BackupJob::archiveNextFolder()
@@ -204,23 +256,27 @@ void BackupJob::archiveNextFolder()
 
   mCurrentFolder = mPendingFolders.take( 0 );
   kdDebug(5006) << "===> Archiving next folder: " << mCurrentFolder->name() << endl;
-  mCurrentFolder->open( "BackupJob" );
-
-  // TODO: error handling
-  const QString folderName = mCurrentFolder->name();
-  if ( hasChildren( mCurrentFolder ) ) {
-    mArchive->writeDir( stripRootPath( mCurrentFolder->subdirLocation() ), "root", "root" );
+  if ( mCurrentFolder->open( "BackupJob" ) != 0 ) {
+    abort( i18n( "Unable to open folder '%1'.").arg( mCurrentFolder->name() ) );
+    return;
   }
-  mArchive->writeDir( stripRootPath( mCurrentFolder->location() ), "root", "root" );
-  mArchive->writeDir( stripRootPath( mCurrentFolder->location() ) + "/cur", "root", "root" );
+  mCurrentFolderOpen = true;
 
-  KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( mCurrentFolder->storage() );
-  /*if ( dimapFolder ) {
-    mArchive->addLocalFile( dimapFolder->uidCacheLocation(), stripRootPath( dimapFolder->uidCacheLocation() ) );
-    // TODO: error handling
-  }*/
-  //mArchive->addLocalFile( mCurrentFolder->indexLocation(), stripRootPath( mCurrentFolder->indexLocation() ) );
-  // TODO: error handling
+  const QString folderName = mCurrentFolder->name();
+  bool success = true;
+  if ( hasChildren( mCurrentFolder ) ) {
+    if ( !mArchive->writeDir( stripRootPath( mCurrentFolder->subdirLocation() ), "root", "root" ) )
+      success = false;
+  }
+  if ( !mArchive->writeDir( stripRootPath( mCurrentFolder->location() ), "root", "root" ) )
+    success = false;
+  if ( !mArchive->writeDir( stripRootPath( mCurrentFolder->location() ) + "/cur", "root", "root" ) )
+    success = false;
+  if ( !success ) {
+    abort( i18n( "Unable to create folder structure for folder '%1' within archive file." )
+              .arg( mCurrentFolder->name() ) );
+    return;
+  }
 
   for ( int i = 0; i < mCurrentFolder->count( true ); i++ ) {
     unsigned long serNum = KMMsgDict::instance()->getMsgSerNum( mCurrentFolder, i );
@@ -228,7 +284,10 @@ void BackupJob::archiveNextFolder()
       // Uh oh
       kdWarning(5006) << "Got serial number zero in " << mCurrentFolder->name()
                       << " at index " << i << "!" << endl;
-      // TODO: handle error. this is _very_ bad
+      // TODO: handle error in a nicer way. this is _very_ bad
+      abort( i18n( "Unable to backup messages in folder '%1', the index file is corrupted." )
+               .arg( mCurrentFolder->name() ) );
+      return;
     }
     else
       mPendingMessages.append( serNum );
@@ -239,16 +298,21 @@ void BackupJob::archiveNextFolder()
 // TODO
 // - error handling
 // - import
-// - connect to progressmanager
+// - connect to progressmanager, especially abort
 // - messagebox when finished (?)
 // - ui dialog
 // - use correct permissions
 // - save index and serial number?
 // - guarded pointers for folders
 // - online IMAP: check mails first, so sernums are up-to-date?
+// - "ignore errors"-mode, with summary how many messages couldn't be archived?
+// - do something when the user quits KMail while the backup job is running
+// - run in a thread?
+// - delete source folder after completion. dangerous!!!
 //
 // BUGS
 // - Online IMAP: Test Mails -> Test%20Mails
+// - corrupted sernums indices stop backup job
 void BackupJob::start()
 {
   Q_ASSERT( !mMailArchivePath.isEmpty() );
@@ -278,8 +342,10 @@ void BackupJob::start()
   }
 
   kdDebug(5006) << "Starting backup." << endl;
-  mArchive->open( IO_WriteOnly );
-  // TODO: error handling
+  if ( !mArchive->open( IO_WriteOnly ) ) {
+    abort( i18n( "Unable to open archive for writing." ) );
+    return;
+  }
 
   archiveNextFolder();
 }

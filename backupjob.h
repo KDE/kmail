@@ -60,20 +60,23 @@ class BackupJob : public QObject
     void queueFolders( KMFolder *root );
     void archiveNextFolder();
     void archiveNextMessage();
-    QString stripRootPath( const QString &path );
-    void finish();
+    QString stripRootPath( const QString &path ) const;
     bool hasChildren( KMFolder *folder ) const;
+    void finish();
+    void abort( const QString &errorMessage );
 
     KURL mMailArchivePath;
     ArchiveType mArchiveType;
     KMFolder *mRootFolder;
     KArchive *mArchive;
     QWidget *mParentWidget;
+    bool mCurrentFolderOpen;
 
     QPtrList<KMFolder> mPendingFolders;
     KMFolder *mCurrentFolder;
     QValueList<unsigned long> mPendingMessages;
     KMMessage *mCurrentMessage;
+    FolderJob *mCurrentJob;
 };
 
 }
