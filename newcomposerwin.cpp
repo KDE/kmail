@@ -1006,6 +1006,7 @@ void KMComposeWin::applyTemplate( uint uoid )
     return;
 #if 0
   mMsg->setTemplates( ident.templates() );
+#endif
   TemplateParser::Mode mode;
   switch ( mContext ) {
     case New:
@@ -1032,6 +1033,7 @@ void KMComposeWin::applyTemplate( uint uoid )
     else
       parser.processWithIdentity( uoid, 0 );
   } else {
+#if 0
     // apply template to all original messages for non-New messages
     foreach ( const QString& serNumStr,
               mMsg->headerField( "X-KMail-Link-Message" ).split( ',' ) ) {
@@ -1047,7 +1049,9 @@ void KMComposeWin::applyTemplate( uint uoid )
           parser.processWithIdentity( uoid, originalMessage, folder );
       }
     }
+#endif
   }
+#if 0
   mEditor->setText( mMsg->bodyToUnicode() );
 #endif
 }
