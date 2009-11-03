@@ -2602,11 +2602,10 @@ void KMComposeWin::slotRecentListFileClear()
 void KMComposeWin::slotInsertRecentFile( const KUrl &u )
 {
   kDebug() << "implement me...";
-#if 0
   if ( u.fileName().isEmpty() ) {
     return;
   }
-
+#if 0
   KIO::Job *job = KIO::get( u );
   atmLoadData ld;
   ld.url = u;
