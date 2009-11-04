@@ -318,7 +318,6 @@ public:
 
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
-  KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
   UndoStack *undoStack() { return the_undoStack; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
@@ -472,7 +471,6 @@ private:
   Akonadi::Collection the_templatesCollectionFolder;
 
   KMFolderMgr *the_folderMgr;
-  KMFolderMgr *the_searchFolderMgr;
   UndoStack *the_undoStack;
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;

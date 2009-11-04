@@ -115,7 +115,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
 
   the_folderMgr = 0;
-  the_searchFolderMgr = 0;
   the_undoStack = 0;
   the_filterMgr = 0;
   the_popFilterMgr = 0;
@@ -1482,8 +1481,8 @@ void KMKernel::init()
 
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
-  the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
 #if 0
+  the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
   if (lsf)
     the_searchFolderMgr->remove( lsf );
@@ -1743,6 +1742,7 @@ void KMKernel::cleanup(void)
   }
   strList.clear();
   folders.clear();
+#if 0
   the_searchFolderMgr->createFolderList(&strList, &folders);
   for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
     folder = *it;
@@ -1751,11 +1751,13 @@ void KMKernel::cleanup(void)
     }
     folder->close( "kmkernel", true );
   }
-
+#endif
   delete the_folderMgr;
   the_folderMgr = 0;
+#if 0
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
+#endif
   delete mConfigureDialog;
   mConfigureDialog = 0;
   // do not delete, because mWin may point to an existing window

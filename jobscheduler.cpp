@@ -163,7 +163,11 @@ void JobScheduler::slotRunNextJob()
       }
       // The condition is that the folder must be unused (not open)
       // But first we ask search folders to release their access to it
+#if 0
       kmkernel->searchFolderMgr()->tryReleasingFolder( folder );
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 #ifdef DEBUG_SCHEDULER
       kDebug() << "  looking at folder" << folder->label()
                     << folder->location()
