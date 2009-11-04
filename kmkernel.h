@@ -72,6 +72,7 @@ class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
 class KMMessageTagMgr;
+class FolderCollectionMonitor;
 
 /**
  * @short Central point of coordination in KMail
@@ -532,7 +533,7 @@ private:
   QString               mAddMessageLastFolder;
 
   Akonadi::AgentManager *mAgentManager;
-  Akonadi::ChangeRecorder *mMonitor;
+  FolderCollectionMonitor *mFolderCollectionMonitor;
 
   // special debug area
   int mStorageDebug;

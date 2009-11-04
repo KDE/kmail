@@ -94,6 +94,7 @@ using KWallet::Wallet;
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
+#include "foldercollectionmonitor.h"
 
 static KMKernel * mySelf = 0;
 
@@ -105,17 +106,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mMailService(0),
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
-  // monitor collection changes
-  mMonitor = new Akonadi::ChangeRecorder( this );
-  mMonitor->setCollectionMonitored( Akonadi::Collection::root() );
-  mMonitor->fetchCollection( true );
-  mMonitor->setAllMonitored( true );
-  mMonitor->setMimeTypeMonitored( "message/rfc822" );
-  mMonitor->setResourceMonitored( "akonadi_search_resource" ,  true );
-
-  // TODO: Only fetch the envelope etc if possible.
-  mMonitor->itemFetchScope().fetchFullPayload(true);
-
+  mFolderCollectionMonitor = new FolderCollectionMonitor( this );
 
   mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
   kDebug();
@@ -209,7 +200,7 @@ Akonadi::AgentManager *KMKernel::agentManager()
 
 Akonadi::ChangeRecorder * KMKernel::monitor()
 {
-  return mMonitor;
+  return mFolderCollectionMonitor->monitor();
 }
 
 int KMKernel::storageDebug()
@@ -2243,21 +2234,13 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   // Hidden KConfig keys. Not meant to be used, but a nice fallback in case
   // a stable kmail release goes out with a nasty bug in CompactionJob...
   KConfigGroup generalGroup( config(), "General" );
-#if 0
   if ( generalGroup.readEntry( "auto-expiring", true ) ) {
-    if ( the_folderMgr )
-      the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-    // the_searchFolderMgr: no expiry there
+      mFolderCollectionMonitor->expireAllFolders( false /*scheduled, not immediate*/ );
   }
 
   if ( generalGroup.readEntry( "auto-compaction", true ) ) {
-    if ( the_folderMgr )
-      the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
-    // the_imapFolderMgr: no compaction
+      mFolderCollectionMonitor->compactAllFolders( false /*scheduled, not immediate*/ );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
   mBackgroundTasksTimer->start( 60 * 1000 ); // check again in 1 minute
@@ -2280,20 +2263,12 @@ QList<Akonadi::Collection> KMKernel::allFoldersCollection()
 
 void KMKernel::expireAllFoldersNow() // called by the GUI
 {
-#if 0
-  the_folderMgr->expireAllFolders( true /*immediate*/ );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  mFolderCollectionMonitor->expireAllFolders( true /*immediate*/ );
 }
 
 void KMKernel::compactAllFolders() // called by the GUI
 {
-#if 0
-  the_folderMgr->compactAllFolders( true /*immediate*/ );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  mFolderCollectionMonitor->compactAllFolders( true /*immediate*/ );
 }
 
 Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )
