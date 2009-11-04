@@ -30,10 +30,8 @@
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
-  QObject(), mDir(this, QString(), dirType)
+  QObject()
 {
-  if ( dirType == KMStandardDir )
-    mDir.setBaseURL( I18N_NOOP("Local Folders") );
   mQuiet = 0;
   mChanged = false;
   setBasePath(aBasePath);
@@ -81,8 +79,6 @@ void KMFolderMgr::expireAll() {
 int KMFolderMgr::folderCount(KMFolderDir *dir)
 {
   int count = 0;
-  if (dir == 0)
-    dir = &mDir;
   DO_FOR_ALL(
         {
           count += folderCount( child );
@@ -100,8 +96,6 @@ int KMFolderMgr::folderCount(KMFolderDir *dir)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::compactAllFolders(bool immediate, KMFolderDir* dir)
 {
-  if (dir == 0)
-    dir = &mDir;
   DO_FOR_ALL(
         {
           compactAllFolders( immediate, child );
@@ -154,8 +148,6 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
       ::exit(-1);
     }
   }
-  mDir.setPath(mBasePath);
-  mDir.reload();
   contentsChanged();
 }
 
@@ -165,11 +157,11 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 				    KMFolderType aFolderType,
 				    KMFolderDir *aFolderDir)
 {
+	return 0;
   KMFolder* fld;
   KMFolderDir *fldDir = aFolderDir;
 
-  if (!aFolderDir)
-    fldDir = &mDir;
+
 #if 0 //TODO port to akonadi
   // check if this is a dimap folder and the folder we want to create has been deleted
   // since the last sync
@@ -210,6 +202,7 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly) const
 {
+#if 0
   QList<KMFolderNode*>::const_iterator it;
   for ( it = mDir.begin(); it != mDir.end(); ++it )
   {
@@ -217,6 +210,7 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly) const
     if (node->isDir() && foldersOnly) continue;
     if (node->name()==folderName) return (KMFolder*)node;
   }
+#endif
   return 0;
 }
 
@@ -231,8 +225,6 @@ KMFolder* KMFolderMgr::findIdString( const QString& folderId,
                                      const uint id,
                                      const KMFolderDir *dir ) const
 {
-  if (!dir)
-    dir = &mDir;
 
   DO_FOR_ALL(
         {
@@ -253,6 +245,7 @@ KMFolder* KMFolderMgr::findIdString( const QString& folderId,
 void KMFolderMgr::getFolderURLS( QStringList& flist, const QString& prefix,
                                  const KMFolderDir *adir ) const
 {
+#if 0
   const KMFolderDir* dir = adir ? adir : &mDir;
 
   DO_FOR_ALL(
@@ -263,12 +256,14 @@ void KMFolderMgr::getFolderURLS( QStringList& flist, const QString& prefix,
                flist << prefix + '/' + folder->name();
              }
              )
-}
+#endif
+    }
 
 KMFolder* KMFolderMgr::getFolderByURL( const QString& vpath,
                                        const QString& prefix,
                                        const KMFolderDir *adir ) const
 {
+#if 0
   const KMFolderDir* dir = adir ? adir : &mDir;
   DO_FOR_ALL(
         {
@@ -283,6 +278,7 @@ KMFolder* KMFolderMgr::getFolderByURL( const QString& vpath,
             return folder;
         }
   )
+#endif
   return 0;
 }
 
@@ -290,6 +286,8 @@ KMFolder* KMFolderMgr::getFolderByURL( const QString& vpath,
 KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr,
                                     const uint id)
 {
+  return 0;
+
   KMFolder* folder = 0;
   if ( id == 0 )
     folder = find(aFolderName);
@@ -421,11 +419,6 @@ void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
   dir.rmdir(folderDirLocation);
 }
 
-//-----------------------------------------------------------------------------
-KMFolderRootDir& KMFolderMgr::dir(void)
-{
-  return mDir;
-}
 
 
 //-----------------------------------------------------------------------------
@@ -462,6 +455,7 @@ void KMFolderMgr::createFolderList(QStringList *str,
 				   const QString& prefix,
 				   bool i18nized)
 {
+#if 0
   KMFolderDir* dir = adir ? adir : &mDir;
 
   DO_FOR_ALL(
@@ -476,11 +470,13 @@ void KMFolderMgr::createFolderList(QStringList *str,
           folders->append( folder );
         }
   )
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
 {
+#if 0
   KMFolderDir* dir = adir ? adir : &mDir;
   DO_FOR_ALL(
              {
@@ -491,6 +487,7 @@ void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
 	         folder->sync();
              }
   )
+#endif
 }
 
 
@@ -502,6 +499,7 @@ void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
  * Should be called with 0 first time around.
  */
 void KMFolderMgr::expireAllFolders(bool immediate, KMFolderDir *adir) {
+#if 0
   KMFolderDir   *dir = adir ? adir : &mDir;
 
   DO_FOR_ALL(
@@ -514,6 +512,7 @@ void KMFolderMgr::expireAllFolders(bool immediate, KMFolderDir *adir) {
                }
              }
   )
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -535,6 +534,7 @@ void KMFolderMgr::quiet(bool beQuiet)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::tryReleasingFolder(KMFolder* f, KMFolderDir* adir)
 {
+#if 0
   KMFolderDir* dir = adir ? adir : &mDir;
   DO_FOR_ALL(
              {
@@ -545,6 +545,7 @@ void KMFolderMgr::tryReleasingFolder(KMFolder* f, KMFolderDir* adir)
 	         folder->storage()->tryReleasingFolder(f);
              }
   )
+#endif
 }
 
 //-----------------------------------------------------------------------------

@@ -27,8 +27,6 @@ public:
   /** Set base path. Also calls reload() on the base directory. */
   void setBasePath(const QString&);
 
-  /** Provides access to base directory */
-  KMFolderRootDir& dir();
 
   /** Searches folder and returns it. Skips directories
     (objects of type KMFolderDir) if foldersOnly is true. */
@@ -177,7 +175,6 @@ protected:
   void removeDirAux(KMFolderDir* aFolderDir);
 
   QString mBasePath;
-  KMFolderRootDir mDir;
   int mQuiet;
   bool mChanged;
   KMFolder* mRemoveOrig;
