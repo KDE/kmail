@@ -61,57 +61,6 @@ namespace StringUtil
 
 #ifndef KMAIL_UNITTESTS
 
-QString emailAddrAsAnchor( const QString& aEmail, Display display, const QString& cssStyle,
-                             Link link, AddressMode expandable, const QString& fieldName )
-{
-  if( aEmail.isEmpty() )
-    return aEmail;
-
-  const QStringList addressList = KPIMUtils::splitAddressList( aEmail );
-
-  QString result;
-  int numberAddresses = 0;
-  bool expandableInserted = false;
-
-  for( QStringList::ConstIterator it = addressList.constBegin();
-       ( it != addressList.constEnd() );
-       ++it ) {
-    if( !(*it).isEmpty() ) {
-      numberAddresses++;
-
-      QString address = *it;
-      if( expandable == ExpandableAddresses &&
-          !expandableInserted && numberAddresses > GlobalSettings::self()->numberOfAddressesToShow() ) {
-        Q_ASSERT( !fieldName.isEmpty() );
-        result = "<span id=\"icon" + fieldName + "\"></span>" + result;
-        result += "<span id=\"dots" + fieldName + "\">...</span><span id=\"hidden" + fieldName +"\">";
-        expandableInserted = true;
-      }
-      if( link == ShowLink ) {
-        result += "<a href=\"mailto:"
-                + MessageViewer::StringUtil::encodeMailtoUrl( address )
-                + "\" "+cssStyle+">";
-      }
-      if( display == DisplayNameOnly )
-        address = MessageViewer::StringUtil::stripEmailAddr( address );
-      result += MessageViewer::StringUtil::quoteHtmlChars( address, true );
-      if( link == ShowLink ) {
-        result += "</a>, ";
-      }
-    }
-  }
-  // cut of the trailing ", "
-  if( link == ShowLink ) {
-    result.truncate( result.length() - 2 );
-  }
-  if( expandableInserted ) {
-    result += "</span>";
-  }
-
-  //kDebug() << "('" << aEmail << "') returns:\n-->" << result << "<--";
-  return result;
-}
-
 
 QStringList stripMyAddressesFromAddressList( const QStringList& list )
 {

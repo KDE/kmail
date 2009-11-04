@@ -62,13 +62,6 @@ namespace StringUtil
     FullAddresses
   };
 
-  /** Converts the email address(es) to (a) nice HTML mailto: anchor(s). */
-  QString emailAddrAsAnchor( const QString& emailAddr,
-                             Display display = DisplayNameOnly, const QString& cssStyle = QString(),
-                             Link link = ShowLink, AddressMode expandable = FullAddresses,
-                             const QString& fieldName = QString() );
-
-
   /**
    * Strips all the user's addresses from an address list. This is used
    * when replying.
