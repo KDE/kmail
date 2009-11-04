@@ -40,12 +40,10 @@
 //TODO port to akonadi #include "kmfolderimap.h" //for the nasty imap hacks, FIXME
 #include "undostack.h"
 #include "kmmsgdict.h"
-#include "kmfoldermgr.h"
 #include "kmcommands.h"
-//TODO port to akonadi #include "listjob.h"
-//using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "globalsettings.h"
+#include "kmfolderdir.h"
 
 #include <kde_file.h>
 #include <klocale.h>
