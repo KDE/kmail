@@ -45,7 +45,7 @@ class BackupJob : public QObject
     explicit BackupJob( QWidget *parent = 0 );
     ~BackupJob();
     void setRootFolder( KMFolder *rootFolder );
-    void setSaveLocation( KUrl savePath );
+    void setSaveLocation( const KUrl savePath );
     void setArchiveType( ArchiveType type );
     void start();
 
