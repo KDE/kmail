@@ -310,9 +310,6 @@ public:
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
-  //Remove it !
-  KMFolder *outboxFolder() { return the_outboxFolder; }
-
 
   Akonadi::Collection inboxCollectionFolder();
   Akonadi::Collection outboxCollectionFolder();
@@ -469,8 +466,6 @@ private:
   void openReader( bool onlyCheck );
   FolderCollection *currentFolderCollection();
 
-  //Remove it
-  KMFolder *the_outboxFolder;
 
 
   Akonadi::Collection the_inboxCollectionFolder;

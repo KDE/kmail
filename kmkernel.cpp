@@ -113,7 +113,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   closed_by_user = true;
   the_firstInstance = true;
 
-  the_outboxFolder = 0;
 
   the_folderMgr = 0;
   the_searchFolderMgr = 0;
@@ -1419,33 +1418,9 @@ void KMKernel::createDefaultCollectionDone( KJob * job)
 }
 
 //-----------------------------------------------------------------------------
-void KMKernel::initFolders(KSharedConfig::Ptr cfg)
+void KMKernel::initFolders(KSharedConfig::Ptr /*cfg*/)
 {
-  KConfigGroup group(cfg,"General");
 
-  // Currently the folder manager cannot manage folders which are not
-  // in the base folder directory.
-  //if (name.isEmpty()) name = getenv("MAIL");
-
-  the_outboxFolder = the_folderMgr->findOrCreate(group.readEntry("outboxFolder", I18N_NOOP("outbox")));
-#if 0
-  if ( !the_outboxFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
-  }
-  the_outboxFolder->setNoChildren(true);
-  the_outboxFolder->setSystemFolder(true);
-  if ( the_outboxFolder->userWhoField().isEmpty() )
-    the_outboxFolder->setUserWhoField( QString() );
-  /* Nuke the oubox's index file, to make sure that no ghost messages are in
-   * it from a previous crash. Ghost messages happen in the outbox because it
-   * the only folder where messages enter and leave within 5 seconds, which is
-   * the leniency period for index invalidation. Since the number of mails in
-   * this folder is expected to be very small, we can live with regenerating
-   * the index on each start to be on the save side. */
-  //if ( the_outboxFolder->folderType() == KMFolderTypeMaildir )
-  //  unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
-  the_outboxFolder->open( "kmkernel" );
-#endif
   findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
   findCreateDefaultCollection( Akonadi::SpecialCollections::Outbox );
   findCreateDefaultCollection( Akonadi::SpecialCollections::SentMail );

@@ -1108,11 +1108,14 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotSelectFocusedMessage() ) );
     action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Space ) );
   }
-
+#if 0
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, const QString&) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
            SLOT( startUpdateMessageActionsTimer() ) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 //-------------------------------------------------------------------------
@@ -3914,8 +3917,9 @@ void KMMainWidget::updateMessageActions()
   actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
   actionCollection()->action( "go_prev_message" )->setEnabled( mails );
   actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
-  actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
-  actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
+  const qint64 nbMsgOutboxCollection = kmkernel->outboxCollectionFolder().statistics().count();
+  actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
+  actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 
 #ifdef OLD_MESSAGELIST
   if ( ( count == 1 ) && currentMessage.isValid() )
