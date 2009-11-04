@@ -42,10 +42,15 @@ static QString makePrintable( const QByteArray& str )
 
 static QString makePrintable( const DwString& str )
 {
+#if 0 // TODO: port me to Akonadi
   QString a = KMail::Util::ByteArray( str ); // ## we assume latin1
   a = a.replace( '\r', "\\r" );
   a = a.replace( '\n', "\\n" );
   return a;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return QString();
+#endif
 }
 
 QByteArray MimeLibTester::readFile(const QString& fileName)
