@@ -311,7 +311,6 @@ public:
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
   //Remove it !
-  KMFolder *inboxFolder() { return the_inboxFolder; }
   KMFolder *outboxFolder() { return the_outboxFolder; }
   KMFolder *trashFolder() { return the_trashFolder; }
   KMFolder *draftsFolder() { return the_draftsFolder; }
@@ -474,7 +473,6 @@ private:
   FolderCollection *currentFolderCollection();
 
   //Remove it
-  KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
   KMFolder *the_sentFolder;
   KMFolder *the_trashFolder;

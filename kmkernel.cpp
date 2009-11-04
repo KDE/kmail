@@ -113,7 +113,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   closed_by_user = true;
   the_firstInstance = true;
 
-  the_inboxFolder = 0;
   the_outboxFolder = 0;
   the_sentFolder = 0;
   the_trashFolder = 0;
@@ -1426,29 +1425,13 @@ void KMKernel::createDefaultCollectionDone( KJob * job)
 //-----------------------------------------------------------------------------
 void KMKernel::initFolders(KSharedConfig::Ptr cfg)
 {
-  QString name;
   KConfigGroup group(cfg,"General");
-
-  name = group.readEntry("inboxFolder");
 
   // Currently the folder manager cannot manage folders which are not
   // in the base folder directory.
   //if (name.isEmpty()) name = getenv("MAIL");
-
-  if (name.isEmpty()) name = I18N_NOOP("inbox");
-
-  the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
-
   findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
-#if 0
-  if ( !the_inboxFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
-  }
-  the_inboxFolder->setSystemFolder(true);
-  if ( the_inboxFolder->userWhoField().isEmpty() )
-    the_inboxFolder->setUserWhoField( QString() );
-  // inboxFolder->open();
-#endif
+
   the_outboxFolder = the_folderMgr->findOrCreate(group.readEntry("outboxFolder", I18N_NOOP("outbox")));
 #if 0
   if ( !the_outboxFolder->canAccess() ) {

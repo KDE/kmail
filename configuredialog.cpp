@@ -4050,7 +4050,7 @@ void MiscPage::FolderTab::doLoadOther()
   mMMTab.mEmptyTrashCheck->setChecked(
       general.readEntry( "empty-trash-on-exit", false ) );
   mMMTab.mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-      kmkernel->inboxFolder()->idString() ) );
+      QString::number(kmkernel->inboxCollectionFolder().id() )) );
   mMMTab.mEmptyFolderConfirmCheck->setChecked(
       general.readEntry( "confirm-before-empty", true ) );
 

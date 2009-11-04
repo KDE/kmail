@@ -98,11 +98,6 @@ public:
                 bool exportedSernums = true );
   ~KMFolder();
 
-  /** Returns true if this folder is the inbox on the local disk */
-  bool isMainInbox() {
-    return this == KMKernel::self()->inboxFolder();
-  }
-
   void setAcctList( AccountList* list ) { mAcctList = list; }
   AccountList* acctList() { return mAcctList; }
 
