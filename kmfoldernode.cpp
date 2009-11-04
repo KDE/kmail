@@ -1,12 +1,10 @@
 // kmfoldernode.cpp
 
-
-#include "kmfolderdir.h"
+#include "kmfoldernode.h"
 
 //-----------------------------------------------------------------------------
-KMFolderNode::KMFolderNode( KMFolderDir * parent, const QString & name )
+KMFolderNode::KMFolderNode( /*KMFolderDir * parent,*/ const QString & name )
   : mName( name ),
-    mParent( parent ),
     mDir( false ),
     mId( 0 )
 {
@@ -28,7 +26,6 @@ bool KMFolderNode::isDir(void) const
 //-----------------------------------------------------------------------------
 QString KMFolderNode::path() const
 {
-  if (parent()) return parent()->path();
   return QString();
 }
 
@@ -38,17 +35,6 @@ QString KMFolderNode::label(void) const
   return name();
 }
 
-//-----------------------------------------------------------------------------
-KMFolderDir* KMFolderNode::parent(void) const
-{
-  return mParent;
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderNode::setParent( KMFolderDir* aParent )
-{
-  mParent = aParent;
-}
 
 //-----------------------------------------------------------------------------
 uint KMFolderNode::id() const

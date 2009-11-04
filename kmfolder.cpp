@@ -19,7 +19,6 @@
  */
 
 #include "kmfolder.h"
-#include "kmfolderdir.h"
 //TODO port to akonadi #include "kmfoldermbox.h"
 #include "folderstorage.h"
 //TODO port to akonadi #include "kmfoldercachedimap.h"
@@ -45,10 +44,9 @@
 #include <QFileInfo>
 #include <QList>
 
-KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
+KMFolder::KMFolder( /*KMFolderDir* aParent,*/ const QString& aFolderName,
                     KMFolderType aFolderType, bool withIndex, bool exportedSernums )
-  : KMFolderNode( aParent, aFolderName ), mStorage(0),
-    mChild( 0 ),
+  : KMFolderNode( /*aParent,*/ aFolderName ), mStorage(0),
     mIsSystemFolder( false ),
     mHasIndex( withIndex ),
     mExportsSernums( exportedSernums ),
@@ -176,22 +174,12 @@ KMFolder::~KMFolder()
 
 bool KMFolder::hasDescendant( KMFolder *fld ) const
 {
-  if ( !fld )
-    return false;
-  KMFolderDir * pdir = fld->parent();
-  if ( !pdir )
-    return false;
-  fld = pdir->owner();
-  if ( fld == this )
-    return true;
-  return hasDescendant( fld );
+	return false;
 }
 
 KMFolder * KMFolder::ownerFolder() const
 {
-  if ( !mParent )
-    return 0;
-  return mParent->owner();
+	return 0;
 }
 
 
@@ -353,48 +341,6 @@ QString KMFolder::subdirLocation() const
   return sLocation;
 }
 
-KMFolderDir* KMFolder::createChildFolder()
-{
-  if ( mChild ) {
-    return mChild;
-  }
-
-  QString childName = '.' + fileName() + ".directory";
-  QString childDir = path() + '/' + childName;
-  if ( access( QFile::encodeName( childDir ), W_OK ) != 0 ) {
-    // childDir does not exist or is not writable, so create it.
-    if ( KDE_mkdir( QFile::encodeName(childDir), S_IRWXU ) != 0 &&
-         chmod( QFile::encodeName(childDir), S_IRWXU) != 0 ) {
-      QString wmsg = QString( " '%1': %2" ).arg( childDir ).arg( strerror( errno ) );
-      KMessageBox::information( 0, i18n( "Failed to create folder" ) + wmsg );
-      return 0;
-    }
-  }
-
-  KMFolderDirType newType = KMStandardDir;
-  if ( folderType() == KMFolderTypeCachedImap ) {
-    newType = KMDImapDir;
-  } else if ( folderType() == KMFolderTypeImap ) {
-    newType = KMImapDir;
-  }
-
-  mChild = new KMFolderDir( this, parent(), childName, newType );
-  if( !mChild )
-    return 0;
-  mChild->reload();
-  parent()->append( mChild );
-  return mChild;
-}
-
-void KMFolder::setChild( KMFolderDir* aChild )
-{
-  mChild = aChild;
-#if 0  //TODO port to akonadi
-  mStorage->updateChildrenState();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
 
 bool KMFolder::noContent() const
 {
@@ -663,23 +609,6 @@ int KMFolder::countUnread()
 #endif
 }
 
-int KMFolder::countUnreadRecursive()
-{
-  KMFolder *folder;
-  int count = countUnread();
-  KMFolderDir *dir = child();
-  if (!dir)
-    return count;
-
-  QList<KMFolderNode*>::const_iterator it;
-  for ( it = dir->constBegin(); it != dir->constEnd(); ++it )
-    if ( !( (*it)->isDir() ) ) {
-      folder = static_cast<KMFolder*>( (*it) );
-      count += folder->countUnreadRecursive();
-    }
-
-  return count;
-}
 
 void KMFolder::msgStatusChanged( const MessageStatus& oldStatus,
                                  const MessageStatus& newStatus, int idx )
@@ -788,14 +717,6 @@ int KMFolder::expunge()
 #endif
 }
 
-int KMFolder::rename( const QString& newName, KMFolderDir *aParent )
-{
-#if 0  //TODO port to akonadi
-  return mStorage->rename( newName, aParent );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
 
 bool KMFolder::dirty() const
 {
@@ -883,12 +804,6 @@ QString KMFolder::label() const
 //-----------------------------------------------------------------------------
 QString KMFolder::prettyUrl() const
 {
-  QString parentUrl;
-  if ( parent() )
-    parentUrl = parent()->prettyUrl();
-  if ( !parentUrl.isEmpty() )
-    return parentUrl + '/' + label();
-  else
     return label();
 }
 
@@ -962,7 +877,7 @@ void KMFolder::setWhoField(const QString& aWhoField )
 
 void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
 {
-#if 0	
+#if 0
   if ( mUserWhoField == whoField && !whoField.isEmpty() )
     return;
 
@@ -1019,22 +934,7 @@ void KMFolder::correctUnreadMsgsCount()
 
 QString KMFolder::idString() const
 {
-  KMFolderNode* folderNode = parent();
-  if (!folderNode)
-    return "";
-  while ( folderNode->parent() )
-    folderNode = folderNode->parent();
-  QString myPath = path();
-  int pathLen = myPath.length() - folderNode->path().length();
-  QString relativePath = myPath.right( pathLen );
-  if (!relativePath.isEmpty())
-    relativePath = relativePath.right( relativePath.length() - 1 ) + '/';
-  QString escapedName = name();
-  /* Escape [ and ] as they are disallowed for kconfig sections and that is
-     what the idString is primarily used for. */
-  escapedName.replace( '[', "%(" );
-  escapedName.replace( ']', "%)" );
-  return relativePath + escapedName;
+	return "";
 }
 
 void KMFolder::setAutoExpire( bool enabled )
@@ -1076,7 +976,7 @@ void KMFolder::setReadExpireAge( int age )
 {
   if( age >= 0 && age != mReadExpireAge ) {
     mReadExpireAge = age;
-#if 0  //TODO port to akonadi    
+#if 0  //TODO port to akonadi
     mStorage->writeConfig();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
@@ -1272,12 +1172,12 @@ void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
 void KMFolder::slotFolderSizeChanged()
 {
   emit folderSizeChanged( this );
-#if 0  
+#if 0
   KMFolder* papa = parent()->manager()->parentFolder( this );
   if ( papa && papa != this ) {
     papa->slotFolderSizeChanged();
   }
-#endif  
+#endif
 }
 
 void KMFolder::slotIdentitiesChanged()

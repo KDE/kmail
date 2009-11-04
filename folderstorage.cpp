@@ -1093,15 +1093,6 @@ void FolderStorage::removeJobs()
 //-----------------------------------------------------------------------------
 void FolderStorage::updateChildrenState()
 {
-  if ( folder() && folder()->child() )
-  {
-#if 0
-    if ( kmkernel->folderMgr()->folderCount( folder()->child() ) > 0 )
-      setHasChildren( HasChildren );
-    else
-      setHasChildren( HasNoChildren );
-#endif
-  }
 }
 
 //-----------------------------------------------------------------------------

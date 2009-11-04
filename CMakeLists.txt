@@ -98,7 +98,6 @@ set(kmailprivate_LIB_SRCS
    messageproperty.cpp
    kmdict.cpp
    kmsystemtray.cpp
-   kmfolderdir.cpp
    kmfoldernode.cpp
    akonadisender.cpp
    kmfiltermgr.cpp

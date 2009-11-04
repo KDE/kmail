@@ -24,14 +24,13 @@
 #include <QObject>
 #include <QString>
 
-class KMFolderDir;
 
 class KMFolderNode: public QObject
 {
   Q_OBJECT
 
 public:
-  KMFolderNode( KMFolderDir * parent, const QString & name );
+  KMFolderNode( /*KMFolderDir * parent,*/ const QString & name );
   virtual ~KMFolderNode();
 
   /** Is it a directory where mail folders are stored or is it a folder that
@@ -40,12 +39,6 @@ public:
     are directories on disk but are handled as folders here. */
   virtual bool isDir(void) const;
   virtual void setDir(bool aDir) { mDir = aDir; }
-
-  /** Returns ptr to owning directory object or 0 if none. This
-    is just a wrapper for convenient access. */
-  KMFolderDir* parent(void) const ;
-  void setParent( KMFolderDir* aParent );
-  //	{ return (KMFolderDir*)KMFolderNodeInherited::parent(); }
 
   /** Returns full path to the directory where this node is stored or 0
    if the node has no parent. Example: if this object represents a folder
@@ -70,7 +63,6 @@ public:
 
 protected:
   QString mName;
-  KMFolderDir *mParent;
   bool mDir;
   uint mId;
 };

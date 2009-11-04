@@ -51,7 +51,6 @@ namespace KMime {
   class Content;
 }
 
-class KMFolderDir;
 class FolderStorage;
 class KMFolderJob;
 
@@ -92,7 +91,7 @@ public:
    * the global MsgDict for lookup.
    * @return A new folder instance.
    */
-  KMFolder( KMFolderDir* parent, const QString& name,
+  KMFolder( /*KMFolderDir* parent,*/ const QString& name,
                 KMFolderType aFolderType, bool withIndex = true,
                 bool exportedSernums = true );
   ~KMFolder();
@@ -134,10 +133,6 @@ public:
   /** Returns full path to sub directory file */
   QString subdirLocation() const;
 
-  /** Returns the folder directory associated with this node or
-      0 if no such directory exists */
-  KMFolderDir* child() const
-    { return mChild; }
 
   /**
    * Returns true if the specified folder is a descendant of this folder
@@ -154,11 +149,7 @@ public:
    */
   KMFolder * ownerFolder() const;
 
-  /** Create a child folder directory and associates it with this folder */
-  KMFolderDir* createChildFolder();
 
-  /** Set the folder directory associated with this node */
-  void setChild( KMFolderDir* aChild );
 
   /** Returns, if the folder can't contain mails, but only subfolder */
   bool noContent() const;
@@ -324,9 +315,6 @@ public:
    */
   void compact( CompactOptions options );
 
-  /** Physically rename the folder. Returns zero on success and an errno
-    on failure. */
-  int rename(const QString& newName, KMFolderDir *aParent = 0);
 
   /** Returns true if the table of contents is dirty. This happens when
     a message is deleted from the folder. The toc will then be re-created
@@ -639,7 +627,6 @@ private slots:
 
 private:
   FolderStorage* mStorage;
-  KMFolderDir* mChild;
   bool mIsSystemFolder;
   bool mHasIndex :1;
   bool mExportsSernums :1;
