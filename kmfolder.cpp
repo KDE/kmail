@@ -25,7 +25,6 @@
 //TODO port to akonadi #include "kmfoldercachedimap.h"
 //TODO port to akonadi #include "kmfoldersearch.h"
 //TODO port to akonadi #include "kmfolderimap.h"
-#include "kmfoldermgr.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include "expirejob.h"
@@ -1281,10 +1280,12 @@ void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
 void KMFolder::slotFolderSizeChanged()
 {
   emit folderSizeChanged( this );
+#if 0  
   KMFolder* papa = parent()->manager()->parentFolder( this );
   if ( papa && papa != this ) {
     papa->slotFolderSizeChanged();
   }
+#endif  
 }
 
 void KMFolder::slotIdentitiesChanged()

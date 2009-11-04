@@ -11,7 +11,6 @@ using KMail::FilterLog;
 #include "kmfolderindex.h"
 #include "filterimporterexporter.h"
 using KMail::FilterImporterExporter;
-#include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;

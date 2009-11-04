@@ -3,7 +3,6 @@
 #include "kmaccount.h"
 
 using KMail::AccountManager;
-#include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
 #include "broadcaststatus.h"

@@ -72,7 +72,6 @@ using MailTransport::Transport;
 #include "kmkernel.h"
 #include "kmfolder.h"
 #include "globalsettings.h"
-#include "kmfoldermgr.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"

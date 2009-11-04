@@ -88,7 +88,6 @@ using KPIM::ProgressManager;
 #include "messageviewer/kcursorsaver.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
-#include "kmfoldermgr.h"
 #include "kmfilter.h"
 #include "kmreadermainwin.h"
 #include "foldershortcutdialog.h"

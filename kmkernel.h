@@ -55,7 +55,6 @@ using KMail::MailManagerImpl;
 using KMail::UndoStack;
 using KMail::JobScheduler;
 using KPIM::ProgressDialog;
-class KMFolderMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
 class AkonadiSender;
@@ -469,7 +468,6 @@ private:
   Akonadi::Collection the_draftsCollectionFolder;
   Akonadi::Collection the_templatesCollectionFolder;
 
-  KMFolderMgr *the_folderMgr;
   UndoStack *the_undoStack;
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;

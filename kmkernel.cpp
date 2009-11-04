@@ -11,7 +11,6 @@ using KPIM::BroadcastStatus;
 #include "kmmainwin.h"
 #include "composer.h"
 #include "kmreadermainwin.h"
-#include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #define REALLY_WANT_AKONADISENDER
@@ -127,7 +126,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_firstInstance = true;
 
 
-  the_folderMgr = 0;
   the_undoStack = 0;
   the_filterMgr = 0;
   the_popFilterMgr = 0;
@@ -1068,15 +1066,21 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
 QStringList KMKernel::folderList() const
 {
+#if 0
   QStringList folders;
   const QString localPrefix = "/Local";
   folders << localPrefix;
   the_folderMgr->getFolderURLS( folders, localPrefix );
   return folders;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return QStringList();
+#endif
 }
 
 QString KMKernel::getFolder( const QString& vpath )
 {
+#if 0
   QString adaptorName;
   const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )
@@ -1085,7 +1089,6 @@ QString KMKernel::getFolder( const QString& vpath )
     adaptorName=vpath.mid( localPrefix.length() );
   if( !adaptorName.isEmpty())
   {
-#if 0 //TODO port to akonadi
     if ( folderAdaptor )
       {
         folderAdaptor->unregisterobject();
@@ -1093,10 +1096,10 @@ QString KMKernel::getFolder( const QString& vpath )
       }
     folderAdaptor = new KMail::FolderAdaptor(adaptorName);
     return vpath;
+  }
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  }
   kWarning() << "Folder not found:" << vpath;
   return QString();
 }
@@ -1498,7 +1501,6 @@ void KMKernel::init()
   readComposerConfig();
 
   the_undoStack     = new UndoStack(20);
-  the_folderMgr     = new KMFolderMgr(foldersPath);
 #if 0
   the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
@@ -1739,6 +1741,7 @@ void KMKernel::cleanup(void)
       }
     }
   }
+#if 0
   QList<QPointer<KMFolder> > folders;
   QStringList strList;
   KMFolder *folder;
@@ -1752,8 +1755,9 @@ void KMKernel::cleanup(void)
     }
     folder->close( "kmkernel", true );
   }
-  strList.clear();
-  folders.clear();
+#endif
+  //strList.clear();
+  //folders.clear();
 #if 0
   the_searchFolderMgr->createFolderList(&strList, &folders);
   for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
@@ -1764,8 +1768,6 @@ void KMKernel::cleanup(void)
     folder->close( "kmkernel", true );
   }
 #endif
-  delete the_folderMgr;
-  the_folderMgr = 0;
 #if 0
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
@@ -2241,7 +2243,7 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   // Hidden KConfig keys. Not meant to be used, but a nice fallback in case
   // a stable kmail release goes out with a nasty bug in CompactionJob...
   KConfigGroup generalGroup( config(), "General" );
-
+#if 0
   if ( generalGroup.readEntry( "auto-expiring", true ) ) {
     if ( the_folderMgr )
       the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
@@ -2253,6 +2255,9 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
       the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
     // the_imapFolderMgr: no compaction
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
   mBackgroundTasksTimer->start( 60 * 1000 ); // check again in 1 minute
@@ -2275,12 +2280,20 @@ QList<Akonadi::Collection> KMKernel::allFoldersCollection()
 
 void KMKernel::expireAllFoldersNow() // called by the GUI
 {
+#if 0
   the_folderMgr->expireAllFolders( true /*immediate*/ );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMKernel::compactAllFolders() // called by the GUI
 {
+#if 0
   the_folderMgr->compactAllFolders( true /*immediate*/ );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )

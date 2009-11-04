@@ -35,7 +35,6 @@
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
-#include "kmfoldermgr.h"
 
 #include "kleo_util.h"
 #include "kmmainwidget.h"

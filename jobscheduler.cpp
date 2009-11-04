@@ -30,7 +30,6 @@
 #include "jobscheduler.h"
 #include "kmfolder.h"
 #include "folderstorage.h"
-#include "kmfoldermgr.h"
 #include <kdebug.h>
 
 using namespace KMail;

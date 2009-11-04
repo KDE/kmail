@@ -8,7 +8,6 @@
 #include "kmcommands.h"
 #include "kmfiltermgr.h"
 #include "kmfolderindex.h"
-#include "kmfoldermgr.h"
 #include "messagesender.h"
 #include "kmmainwidget.h"
 #include "kmfawidgets.h"

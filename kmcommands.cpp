@@ -86,7 +86,6 @@ using KMail::ActionScheduler;
 #include <kaddrbookexternal.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
-#include "kmfoldermgr.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "messagesender.h"
