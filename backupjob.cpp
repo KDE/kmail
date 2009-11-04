@@ -28,6 +28,7 @@
 #include "kmessagebox.h"
 
 #include "qfile.h"
+#include "qfileinfo.h"
 #include "qstringlist.h"
 
 using namespace KMail;
@@ -39,6 +40,8 @@ BackupJob::BackupJob( QWidget *parent )
     mArchive( 0 ),
     mParentWidget( parent ),
     mCurrentFolderOpen( false ),
+    mArchivedMessages( 0 ),
+    mArchivedSize( 0 ),
     mCurrentFolder( 0 ),
     mCurrentMessage( 0 ),
     mCurrentJob( 0 )
@@ -124,8 +127,8 @@ void BackupJob::abort( const QString &errorMessage )
     mCurrentJob = 0;
   }
 
-  QString text = i18n( "Failed to archive the folder '%1'." ).arg( mRootFolder->name() );
-  text += "\n" + errorMessage;
+  QString text = i18n( "Failed to archive the folder '%1'.", mRootFolder->name() );
+  text += '\n' + errorMessage;
   KMessageBox::sorry( mParentWidget, text, i18n( "Archiving failed." ) );
   deleteLater();
   // Clean up archive file here?
@@ -140,9 +143,16 @@ void BackupJob::finish()
     }
   }
 
+  QFileInfo archiveFileInfo( mMailArchivePath.path() );
+  QString text = i18n( "Archiving folder '%1' successfully completed. "
+                       "The archive was written to the file '%2'.",
+                       mRootFolder->name(), mMailArchivePath.path() );
+  text += '\n' + i18n( "%1 messages with the total size of %2 were archived.",
+                       mArchivedMessages, KIO::convertSize( mArchivedSize ) );
+  text += '\n' + i18n( "The archive file has a size of %1.",
+                       KIO::convertSize( archiveFileInfo.size() ) );
+  KMessageBox::information( mParentWidget, text, i18n( "Archiving finished." ) );
   deleteLater();
-  kDebug(5006) << "Finished backup job.";
-  // TODO: nice success dialog
 }
 
 void BackupJob::archiveNextMessage()
@@ -220,6 +230,9 @@ void BackupJob::processCurrentMessage()
       abort( i18n( "Failed to write a message into the archive folder '%1'.", mCurrentFolder->name() ) );
       return;
     }
+
+    mArchivedMessages++;
+    mArchivedSize += messageSize;
   }
   else {
     // No message? According to ImapJob::slotGetMessageResult(), that means the message is no
