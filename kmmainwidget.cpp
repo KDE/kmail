@@ -99,7 +99,6 @@ using KPIM::BroadcastStatus;
 #include "kmversion.h"
 #include "searchwindow.h"
 using KMail::SearchWindow;
-#include "kmacctfolder.h"
 #include "undostack.h"
 #include "kmcommands.h"
 #include "kmmsgdict.h"

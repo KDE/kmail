@@ -452,12 +452,16 @@ const QString KMFilter::asString() const
     } else if ( bApplyOnInbound ) {
       QList<int>::ConstIterator it2;
       result += "This filter applies to the following accounts:";
+#if 0 // TODO: port to Akonadi
       if ( mAccounts.isEmpty() )
         result += " None";
       else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 )
         if ( kmkernel->acctMgr()->find( *it2 ) )
           result += ' ' + kmkernel->acctMgr()->find( *it2 )->name();
       result += '\n';
+#else
+   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO; 
+#endif
     }
     if ( bStopProcessingHere )
       result += "If it matches, processing stops at this filter.\n";

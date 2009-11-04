@@ -23,6 +23,7 @@
 #include <limits.h>
 
 #include <QDateTime>
+#include <QTimer>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -36,10 +37,9 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
-#include "kmacctimap.h"
-using KMail::AccountManager;
 #include "kmkernel.h"
 #include "sievejob.h"
+#include "sieveconfig.h"
 
 using KMail::SieveJob;
 using KMime::Types::AddrSpecList;
@@ -189,6 +189,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
     setCaption( i18n( "Sieve Diagnostics" ) );
     setButtons( Ok );
     // Collect all accounts
+#if 0 // TODO: port to Akonadi
     AccountManager *am = kmkernel->acctMgr();
     assert( am );
     QList<KMAccount*>::iterator accountIt = am->begin();
@@ -197,6 +198,9 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
       ++accountIt;
       mAccountList.append( account );
     }
+#else
+   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
     mEdit = new KTextEdit( this );
     mEdit->setReadOnly( true );
@@ -220,6 +224,7 @@ SieveDebugDialog::~SieveDebugDialog()
     kDebug() ;
 }
 
+#if 0 // TODO: port to Akonadi
 static KUrl urlFromAccount( const KMail::ImapAccountBase * a ) {
     const SieveConfig sieve = a->sieveConfig();
     if ( !sieve.managesieveSupported() )
@@ -245,6 +250,7 @@ static KUrl urlFromAccount( const KMail::ImapAccountBase * a ) {
     }
     return u;
 }
+#endif
 
 void SieveDebugDialog::slotDiagNextAccount()
 {
@@ -303,7 +309,11 @@ void SieveDebugDialog::slotDiagNextScript()
     mScriptList.pop_front();
 
     mEdit->append( i18n( "Contents of script '%1':\n", scriptFile ) );
+#if 0 // TODO: port to Akonadi
     mUrl = urlFromAccount( mAccountBase );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     mUrl.setFileName( scriptFile );
 
     mSieveJob = SieveJob::get( mUrl );
