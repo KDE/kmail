@@ -2361,27 +2361,47 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
 
 void KMComposeWin::queueMessage( KMime::Message::Ptr message )
 {
-  using MailTransport::MessageQueueJob;
   using Message::InfoPart;
 
-  Q_ASSERT( mPendingQueueJobs == 0 );
   Q_ASSERT( mComposer );
   const InfoPart *infoPart = mComposer->infoPart();
-  MessageQueueJob *qjob = new MessageQueueJob( this );
+  MailTransport::MessageQueueJob *qjob = new MailTransport::MessageQueueJob( this );
   qjob->setMessage( message );
   qjob->setTransportId( infoPart->transportId() );
   // TODO dispatch mode.
   // TODO sent-mail collection
-  qjob->setFrom( infoPart->from() );
-  qjob->setTo( infoPart->to() );
-  qjob->setCc( infoPart->cc() );
-  qjob->setBcc( infoPart->bcc() );
+  fillQueueJobHeaders( qjob, message );
 
   connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
   mPendingQueueJobs++;
   qjob->start();
 
   kDebug() << "Queued a message.";
+}
+
+void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message )
+{
+  QStringList to, cc, bcc;
+  foreach( QByteArray address, message->to()->addresses() ) {
+    to << QString::fromUtf8( address );
+  }
+  
+  foreach( QByteArray address, message->cc()->addresses()  ) {
+    cc << QString::fromUtf8( address );
+  }
+  
+  foreach( QByteArray address, message->bcc()->addresses()  ) {
+    bcc << QString::fromUtf8( address );
+  }
+
+  // NOTE what to do if there is more than one From address?
+  // it is supported in KMime::Headers::From, but not in the MessageQueueJob
+  qjob->setFrom( QString::fromUtf8( message->from()->addresses().first() ) );
+  
+  qjob->setTo( to );
+  qjob->setCc( cc );
+  qjob->setBcc( bcc );
+  
 }
 
 void KMComposeWin::slotQueueResult( KJob *job )

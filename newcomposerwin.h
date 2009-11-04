@@ -39,6 +39,9 @@
 // LIBKDEPIM includes
 #include <libkdepim/kmeditor.h>
 
+// KDEPIMLIBS includes
+#include <kmime/kmime_message.h>
+
 // Other includes
 #include "kleo/enum.h"
 
@@ -106,11 +109,6 @@ namespace KMail {
   class AttachmentView;
 }
 
-namespace KMime {
-  class Message;
-  class Content;
-}
-
 namespace KIO {
   class Job;
 }
@@ -124,6 +122,10 @@ namespace Message {
   class GlobalPart;
   class InfoPart;
   class TextPart;
+}
+
+namespace MailTransport{
+  class MessageQueueJob;
 }
 
 //-----------------------------------------------------------------------------
@@ -762,6 +764,11 @@ class KMComposeWin : public KMail::Composer
       if they are not set manually. E.g. before composing. Calling
       of setAutomaticFields(), see below, is still required. */
     void initHeader( KMime::Message *message, uint identity=0 );
+
+    /**
+     * Fills in headers for message going into queue. Just sets from/to/bcc/cc
+    */
+    void fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message );
 
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
