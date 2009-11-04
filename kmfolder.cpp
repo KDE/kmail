@@ -454,14 +454,6 @@ bool KMFolder::isMessage( int idx )
 #endif
 }
 
-DwString KMFolder::getDwString( int idx )
-{
-#if 0  //TODO port to akonadi
-  return mStorage->getDwString( idx );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
 
 void KMFolder::ignoreJobsForMessage( KMime::Message* m )
 {

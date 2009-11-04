@@ -42,15 +42,6 @@ namespace KMail
 namespace StringUtil
 {
   /**
-   * Returns a list of content-transfer-encodings that can be used with
-   * the given result of the character frequency analysis of a message or
-   * message part under the given restrictions.
-   */
-  QList<int> determineAllowedCtes( const KMime::CharFreq& cf,
-                                   bool allow8Bit,
-                                   bool willBeSigned );
-
-  /**
    * Used to determine if the visible part of the anchor contains
    * only the name part and not the given emailAddr or the full address.
    */

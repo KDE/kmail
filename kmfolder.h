@@ -34,7 +34,6 @@ using KMail::MailingList;
 class KMAccount;
 typedef QList<KMAccount*> AccountList;
 
-#include "mimelib/string.h"
 #include <kshortcut.h>
 #include "messageviewer/attachmentstrategy.h"
 #include "messagecore/messagestatus.h"
@@ -179,8 +178,6 @@ public:
   /** Checks if the message is already "gotten" with getMsg */
   bool isMessage(int idx);
 
-  /** Read a message and returns a DwString */
-  DwString getDwString(int idx);
 
   /**
    * Removes and deletes all jobs associated with the particular message
@@ -706,7 +703,6 @@ public:
    : mFolder( folder )
    , mOwner( owner )
   {
-    assert( folder ); //change if that's not what you want
     mOpenRc = folder->open( owner );
   }
 

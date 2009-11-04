@@ -25,7 +25,6 @@
 #include "kmkernel.h"
 
 #include <libkdepim/kaddrbookexternal.h>
-#include <mimelib/enum.h>
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_header_parsing.h>
@@ -61,53 +60,6 @@ namespace StringUtil
 {
 
 #ifndef KMAIL_UNITTESTS
-//-----------------------------------------------------------------------------
-QList<int> determineAllowedCtes( const CharFreq& cf,
-                                 bool allow8Bit,
-                                 bool willBeSigned )
-{
-  QList<int> allowedCtes;
-
-  switch ( cf.type() ) {
-    case CharFreq::SevenBitText:
-      allowedCtes << DwMime::kCte7bit;
-    case CharFreq::EightBitText:
-      if ( allow8Bit )
-        allowedCtes << DwMime::kCte8bit;
-    case CharFreq::SevenBitData:
-      if ( cf.printableRatio() > 5.0/6.0 ) {
-      // let n the length of data and p the number of printable chars.
-      // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
-      // => qp < base64 iff p > 5n/6.
-        allowedCtes << DwMime::kCteQp;
-        allowedCtes << DwMime::kCteBase64;
-      } else {
-        allowedCtes << DwMime::kCteBase64;
-        allowedCtes << DwMime::kCteQp;
-      }
-      break;
-    case CharFreq::EightBitData:
-      allowedCtes << DwMime::kCteBase64;
-      break;
-    case CharFreq::None:
-    default:
-    // just nothing (avoid compiler warning)
-      ;
-  }
-
-  // In the following cases only QP and Base64 are allowed:
-  // - the buffer will be OpenPGP/MIME signed and it contains trailing
-  //   whitespace (cf. RFC 3156)
-  // - a line starts with "From "
-  if ( ( willBeSigned && cf.hasTrailingWhitespace() ) ||
-         cf.hasLeadingFrom() ) {
-    allowedCtes.removeAll( DwMime::kCte8bit );
-    allowedCtes.removeAll( DwMime::kCte7bit );
-         }
-
-         return allowedCtes;
-}
-
 
 QString emailAddrAsAnchor( const QString& aEmail, Display display, const QString& cssStyle,
                              Link link, AddressMode expandable, const QString& fieldName )
