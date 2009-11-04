@@ -5,7 +5,6 @@
 //TODO port to akonadi #include "kmfoldersearch.h"
 //TODO port to akonadi #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
-#include "kmfoldermgr.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -17,66 +16,6 @@
 #include <QDir>
 #include <QList>
 #include <QByteArray>
-
-//=============================================================================
-//=============================================================================
-KMFolderRootDir::KMFolderRootDir(KMFolderMgr* manager, const QString& path,
-                                 KMFolderDirType dirType)
-  : KMFolderDir( 0, 0, path, dirType ),
-    mPath( path ),
-    mManager( manager )
-{
-}
-
-//-----------------------------------------------------------------------------
-KMFolderRootDir::~KMFolderRootDir()
-{
-  // WABA: We can't let KMFolderDir do this because by the time its
-  // desctructor gets called, KMFolderRootDir is already destructed
-  // Most notably the path.
-  qDeleteAll( begin(), end() ); // we own the pointers to our folders
-  clear();
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderRootDir::setPath(const QString& aPath)
-{
-  mPath = aPath;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMFolderRootDir::path() const
-{
-  return mPath;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMFolderRootDir::prettyUrl() const
-{
-  if ( !mBaseURL.isEmpty() )
-    return i18n( mBaseURL.data() );
-  else
-    return QString();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderRootDir::setBaseURL( const QByteArray &baseURL )
-{
-  mBaseURL = baseURL;
-}
-
-
-//-----------------------------------------------------------------------------
-KMFolderMgr* KMFolderRootDir::manager() const
-{
-  return mManager;
-}
-
-
-//=============================================================================
 //=============================================================================
 KMFolderDir::KMFolderDir( KMFolder * owner, KMFolderDir* parent,
                           const QString& name, KMFolderDirType dirType )
@@ -221,7 +160,7 @@ bool KMFolderDir::reload(void)
 
   QSet<QString> dirs;
   QList<KMFolder*> folderList;
-  const QFileInfoList fiList( dir.entryInfoList() ); 
+  const QFileInfoList fiList( dir.entryInfoList() );
   Q_FOREACH( const QFileInfo& fileInfo, fiList )
   {
     const QString fname = fileInfo.fileName();
@@ -232,7 +171,7 @@ bool KMFolderDir::reload(void)
     }
     if ( fname == ".directory"
 #ifdef KMAIL_SQLITE_INDEX
-    || fname.endsWith( QLatin1String(".index.db") ) 
+    || fname.endsWith( QLatin1String(".index.db") )
 #endif
     ) {
       // ignore .directory and *.index.db files (not created by us)
@@ -371,12 +310,6 @@ KMFolderNode* KMFolderDir::hasNamedFolder(const QString& aName)
   return 0;
 }
 
-
-//-----------------------------------------------------------------------------
-KMFolderMgr* KMFolderDir::manager() const
-{
-  return parent()->manager();
-}
 
 
 #include "kmfolderdir.moc"

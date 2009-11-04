@@ -7,7 +7,6 @@
 #include "kmfoldertype.h"
 
 class KMFolder;
-class KMFolderMgr;
 
 
 /** KMail list that manages the contents of one directory that may
@@ -52,8 +51,6 @@ public:
   /** Returns folder with given name or zero if it does not exist */
   virtual KMFolderNode* hasNamedFolder(const QString& name);
 
-  /** Returns the folder manager that manages this folder */
-  virtual KMFolderMgr* manager() const;
 
   /** Returns the folder whose children we are holding */
   KMFolder* owner() const { return mOwner; }
@@ -65,34 +62,6 @@ protected:
   KMFolderDirType mDirType;
 };
 
-
-//-----------------------------------------------------------------------------
-
-class KMFolderRootDir: public KMFolderDir
-{
-  Q_OBJECT
-
-public:
-  explicit KMFolderRootDir(KMFolderMgr* manager,
-		  const QString& path=QString(),
-		  KMFolderDirType dirType = KMStandardDir);
-  virtual ~KMFolderRootDir();
-  virtual QString path() const;
-
-  /** set the absolute path */
-  virtual void setPath(const QString&);
-
-  virtual QString prettyUrl() const;
-
-  void setBaseURL( const QByteArray& baseURL );
-
-  virtual KMFolderMgr* manager() const;
-
-protected:
-  QString mPath;
-  KMFolderMgr *mManager;
-  QByteArray mBaseURL;
-};
 
 #endif /*kmfolderdir_h*/
 
