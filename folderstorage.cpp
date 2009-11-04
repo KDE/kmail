@@ -43,7 +43,6 @@
 #include "kmcommands.h"
 #include "kmsearchpattern.h"
 #include "globalsettings.h"
-#include "kmfolderdir.h"
 
 #include <kde_file.h>
 #include <klocale.h>
@@ -718,125 +717,6 @@ int FolderStorage::moveMsg( QList<KMime::Message*> msglist, int *aIndex_ret )
 
 
 //-----------------------------------------------------------------------------
-int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
-{
-  QString oldLoc, oldIndexLoc, oldSortedLoc, oldIdsLoc, newLoc, newIndexLoc, newSortedLoc, newIdsLoc;
-  QString oldSubDirLoc, newSubDirLoc;
-  QString oldName;
-  int rc = 0;
-  KMFolderDir *oldParent;
-
-  assert( !newName.isEmpty() );
-
-  oldLoc = location();
-  oldIndexLoc = indexLocation();
-  oldSortedLoc = sortedLocation();
-  oldSubDirLoc = folder()->subdirLocation();
-  oldIdsLoc =  KMMsgDict::instance()->getFolderIdsLocation( *this );
-  QString oldConfigString = folder()->configGroupName();
-
-  close( "rename", true );
-
-  oldName = folder()->fileName();
-  oldParent = folder()->parent();
-  if ( newParent ) {
-    folder()->setParent( newParent );
-  }
-
-  folder()->setName( newName );
-  newLoc = location();
-  newIndexLoc = indexLocation();
-  newSortedLoc = sortedLocation();
-  newSubDirLoc = folder()->subdirLocation();
-  newIdsLoc = KMMsgDict::instance()->getFolderIdsLocation( *this );
-
-  if ( KDE_rename( QFile::encodeName( oldLoc ),
-                   QFile::encodeName( newLoc ) ) != 0 ) {
-    folder()->setName( oldName );
-    folder()->setParent( oldParent );
-    rc = errno;
-  } else {
-    // rename/move index file and index.sorted file
-    if ( !oldIndexLoc.isEmpty() ) {
-      if ( KDE_rename( QFile::encodeName( oldIndexLoc ),
-                       QFile::encodeName( newIndexLoc ) ) != 0 )
-      {
-        kWarning() << "Failed to rename the index file from" << oldIndexLoc
-                   << "to" << newIndexLoc;
-        return 1;
-      }
-      if ( KDE_rename( QFile::encodeName( oldSortedLoc ),
-                       QFile::encodeName( newSortedLoc ) ) != 0 )
-      {
-        kWarning() << "Failed to rename the sorted file from" << oldSortedLoc
-                   << "to" << newSortedLoc;
-        // Don't return here, the sorted file is not that critically, and apparently
-        // sometimes doesn't exist (in case of empty folder, for example).
-        //return 1;
-      }
-    }
-
-    // rename/move serial number file
-    if ( !oldIdsLoc.isEmpty() ) {
-      if ( KDE_rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) ) != 0 ) {
-        kWarning() << "Failed to rename the serial number file from" << oldIdsLoc
-                   << "to" << newIdsLoc;
-        return 1;
-      }
-    }
-
-    // rename/move the subfolder directory
-    KMFolderDir *child = 0;
-    if( folder() ) {
-      child = folder()->child();
-    }
-
-    if ( KDE_rename( QFile::encodeName( oldSubDirLoc ),
-                      QFile::encodeName( newSubDirLoc ) ) == 0 ) {
-      // now that the subfolder directory has been renamed and/or moved also
-      // change the name that is stored in the corresponding KMFolderNode
-      // (provide that the name actually changed)
-      if( child && ( oldName != newName ) ) {
-        child->setName( '.' + QFile::encodeName(newName) + ".directory" );
-      }
-    }
-
-    // if the folder is being moved then move its node and, if necessary, also
-    // the associated subfolder directory node to the new parent
-    if ( newParent ) {
-      int idx = oldParent->indexOf( folder() );
-      if ( idx != -1 ) {
-        oldParent->takeAt( idx );
-      }
-      newParent->prepend( folder() );
-      qSort( newParent->begin(), newParent->end() );
-      if ( child ) {
-        int idx = child->parent()->indexOf( child );
-        if ( idx != -1 ) {
-          child->parent()->takeAt( idx );
-        }
-        newParent->prepend( child );
-        qSort( newParent->begin(), newParent->end() );
-        child->setParent( newParent );
-      }
-    }
-  }
-
-  writeConfig();
-
-  // delete the old entry as we get two entries with the same ID otherwise
-  if ( oldConfigString != folder()->configGroupName() )
-    KMKernel::config()->deleteGroup( oldConfigString );
-
-  emit locationChanged( oldLoc, newLoc );
-  emit nameChanged();
-  emit closed( folder() ); // let the ticket owners regain
-#if 0
-  kmkernel->folderMgr()->contentsChanged();
-#endif
-  return rc;
-}
-
 
 //-----------------------------------------------------------------------------
 void FolderStorage::remove()

@@ -58,7 +58,6 @@ namespace KMime {
 }
 
 class KMAccount;
-class KMFolderDir;
 class KMMsgDict; // for the rDict manipulations
 class KMMsgDictREntry;
 class QTimer;
@@ -321,10 +320,6 @@ public:
     A statusbar message will inform the user that the compaction worked,
     unless @p silent is set. */
   virtual int compact( bool silent ) = 0;
-
-  /** Physically rename the folder. Returns zero on success and an errno
-    on failure. */
-  virtual int rename(const QString& newName, KMFolderDir *aParent = 0);
 
   /** Returns true if a table of contents file is automatically created. */
   bool autoCreateIndex() const { return mAutoCreateIndex; }
