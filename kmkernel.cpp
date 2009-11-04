@@ -2196,6 +2196,7 @@ void KMKernel::selectFolder( const QString &folderPath )
 {
   kDebug()<<"Selecting a folder"<<folderPath;
   const QString localPrefix = "/Local";
+#if 0
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )
     folder = the_folderMgr->getFolderByURL( folderPath.mid( localPrefix.length() ) );
@@ -2203,6 +2204,7 @@ void KMKernel::selectFolder( const QString &folderPath )
   Q_ASSERT( widget );
   if ( !widget )
     return;
+#endif
 #ifdef OLD_FOLDERVIEW
   widget->selectCollectionFolder( folder );
 #endif

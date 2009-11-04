@@ -171,10 +171,13 @@ void KMAccount::readConfig(KConfigGroup& config)
   mUseDefaultIdentity = config.readEntry( "use-default-identity", true );
   slotIdentitiesChanged();
 
+#if 0
   if ( !folderName.isEmpty() ) {
     setFolder (kmkernel->folderMgr()->findIdString( folderName ), true );
   }
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if (mInterval == 0)
     deinstallTimer();
   else

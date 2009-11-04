@@ -364,8 +364,12 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
 
   connect( mEdtFrom, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
+#if 0
   connect( kmkernel->folderMgr(), SIGNAL(folderRemoved(const Akonadi::Collection&)),
            SLOT(slotFolderRemoved(const Akonadi::Collection&)) );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
@@ -2385,11 +2389,11 @@ void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KM
   foreach( QByteArray address, message->to()->addresses() ) {
     to << QString::fromUtf8( address );
   }
-  
+
   foreach( QByteArray address, message->cc()->addresses()  ) {
     cc << QString::fromUtf8( address );
   }
-  
+
   foreach( QByteArray address, message->bcc()->addresses()  ) {
     bcc << QString::fromUtf8( address );
   }
@@ -2397,11 +2401,11 @@ void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KM
   // NOTE what to do if there is more than one From address?
   // it is supported in KMime::Headers::From, but not in the MessageQueueJob
   qjob->setFrom( QString::fromUtf8( message->from()->addresses().first() ) );
-  
+
   qjob->setTo( to );
   qjob->setCc( cc );
   qjob->setBcc( bcc );
-  
+
 }
 
 void KMComposeWin::slotQueueResult( KJob *job )
@@ -3188,7 +3192,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
                                         KMime::Message *msg )
 {
-#if 0	
+#if 0
   KMFolder *theFolder = 0, *imapTheFolder = 0;
   // get the draftsFolder
   if ( !folderName.isEmpty() ) {

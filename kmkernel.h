@@ -317,7 +317,6 @@ public:
   bool isSystemFolderCollection( const Akonadi::Collection &col);
 
 
-  KMFolderMgr *folderMgr() { return the_folderMgr; }
   UndoStack *undoStack() { return the_undoStack; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }

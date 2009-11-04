@@ -833,7 +833,9 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
   emit locationChanged( oldLoc, newLoc );
   emit nameChanged();
   emit closed( folder() ); // let the ticket owners regain
+#if 0
   kmkernel->folderMgr()->contentsChanged();
+#endif
   return rc;
 }
 
@@ -1215,10 +1217,12 @@ void FolderStorage::updateChildrenState()
 {
   if ( folder() && folder()->child() )
   {
+#if 0
     if ( kmkernel->folderMgr()->folderCount( folder()->child() ) > 0 )
       setHasChildren( HasChildren );
     else
       setHasChildren( HasNoChildren );
+#endif
   }
 }
 

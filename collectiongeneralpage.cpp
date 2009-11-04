@@ -410,18 +410,6 @@ bool FolderDialogGeneralTab::save()
   // make sure everything is on disk, connected slots will call readConfig()
   // when creating a new folder.
   folder->storage()->writeConfig();
-  // Renamed an existing folder? We don't check for oldName == newName on
-  // purpose here. The folder might be pending renaming on the next dimap
-  // sync already, in which case the old name would still be around and
-  // something like Calendar -> CalendarFoo -> Calendar inbetween syncs would
-  // fail. Therefor let the folder sort it out itself, whether the rename is
-  // a noop or not.
-  if ( !oldFldName.isEmpty() )
-  {
-    kmkernel->folderMgr()->renameFolder( folder, fldName );
-  } else {
-    kmkernel->folderMgr()->contentsChanged();
-  }
 
   return true;
 }
