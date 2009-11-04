@@ -116,8 +116,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_outboxFolder = 0;
   the_sentFolder = 0;
   the_trashFolder = 0;
-  the_draftsFolder = 0;
-  the_templatesFolder = 0;
 
   the_folderMgr = 0;
   the_searchFolderMgr = 0;
@@ -1430,7 +1428,6 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
   // Currently the folder manager cannot manage folders which are not
   // in the base folder directory.
   //if (name.isEmpty()) name = getenv("MAIL");
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
 
   the_outboxFolder = the_folderMgr->findOrCreate(group.readEntry("outboxFolder", I18N_NOOP("outbox")));
 #if 0
@@ -1438,7 +1435,6 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
     emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
   }
   the_outboxFolder->setNoChildren(true);
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Outbox );
   the_outboxFolder->setSystemFolder(true);
   if ( the_outboxFolder->userWhoField().isEmpty() )
     the_outboxFolder->setUserWhoField( QString() );
@@ -1462,7 +1458,6 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
     the_sentFolder->setUserWhoField( QString() );
   // the_sentFolder->open();
 #endif
-  findCreateDefaultCollection( Akonadi::SpecialCollections::SentMail );
 #if 0
   the_trashFolder  = the_folderMgr->findOrCreate(group.readEntry("trashFolder", I18N_NOOP("trash")));
   if ( !the_trashFolder->canAccess() ) {
@@ -1472,29 +1467,12 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
   if ( the_trashFolder->userWhoField().isEmpty() )
     the_trashFolder->setUserWhoField( QString() );
   // the_trashFolder->open();
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Trash );
 #endif
-  the_draftsFolder = the_folderMgr->findOrCreate(group.readEntry("draftsFolder", I18N_NOOP("drafts")));
-#if 0
-  if ( !the_draftsFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
-  }
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Outbox );
+  findCreateDefaultCollection( Akonadi::SpecialCollections::SentMail );
   findCreateDefaultCollection( Akonadi::SpecialCollections::Drafts );
-  the_draftsFolder->setSystemFolder(true);
-  if ( the_draftsFolder->userWhoField().isEmpty() )
-    the_draftsFolder->setUserWhoField( QString() );
-  the_draftsFolder->open( "kmkernel" );
-#endif
-  the_templatesFolder = the_folderMgr->findOrCreate(group.readEntry("templatesFolder", I18N_NOOP("templates")));
-#if 0
-  if ( !the_templatesFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your templates folder.") );
-  }
-  the_templatesFolder->setSystemFolder(true);
-  if ( the_templatesFolder->userWhoField().isEmpty() )
-    the_templatesFolder->setUserWhoField( QString() );
-  the_templatesFolder->open( "kmkernel" );
-#endif
+  findCreateDefaultCollection( Akonadi::SpecialCollections::Trash );
   findCreateDefaultCollection( Akonadi::SpecialCollections::Templates );
 }
 

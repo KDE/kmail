@@ -3188,11 +3188,11 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
                                         KMime::Message *msg )
 {
+#if 0	
   KMFolder *theFolder = 0, *imapTheFolder = 0;
   // get the draftsFolder
   if ( !folderName.isEmpty() ) {
     theFolder = kmkernel->folderMgr()->findIdString( folderName );
-#if 0 //TODO port to akonadi
     if ( theFolder == 0 ) {
       // This is *NOT* supposed to be "imapDraftsFolder", because a
       // dIMAP folder works like a normal folder
@@ -3201,9 +3201,6 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     if ( theFolder == 0 ) {
       imapTheFolder = kmkernel->imapFolderMgr()->findIdString( folderName );
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     if ( !theFolder && !imapTheFolder ) {
       const KPIMIdentities::Identity &id = kmkernel->identityManager()->identityForUoidOrDefault( msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed().toUInt() : 0 );
       KMessageBox::information( 0,
@@ -3229,7 +3226,6 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     kDebug() << "imapTheFolder=" << imapTheFolder->name();
   }
 
-#if 0 //TODO port to akonadi
   bool sentOk = !( theFolder->addMsg( msg ) );
 
   // Ensure the message is correctly and fully parsed

@@ -313,8 +313,6 @@ public:
   //Remove it !
   KMFolder *outboxFolder() { return the_outboxFolder; }
   KMFolder *trashFolder() { return the_trashFolder; }
-  KMFolder *draftsFolder() { return the_draftsFolder; }
-  KMFolder *templatesFolder() { return the_templatesFolder; }
 
 
   Akonadi::Collection inboxCollectionFolder();
@@ -476,8 +474,6 @@ private:
   KMFolder *the_outboxFolder;
   KMFolder *the_sentFolder;
   KMFolder *the_trashFolder;
-  KMFolder *the_draftsFolder;
-  KMFolder *the_templatesFolder;
 
 
   Akonadi::Collection the_inboxCollectionFolder;
