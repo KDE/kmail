@@ -252,7 +252,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
         in all selected messages */
     void slotUpdateMessageTagList( const QString &aLabel );
 
-
     /** If @p aCount is 0, disables all tag related actions in menus.
         If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
         If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
@@ -318,6 +317,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotExpireAll();
     void slotInvalidateIMAPFolders();
     void slotMarkAllAsRead();
+    void slotArchiveFolder();
     void slotRemoveFolder();
     void slotEmptyFolder();
     void slotCompactFolder();
@@ -563,7 +563,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *mNewFolderAction, *mModifyFolderAction, *mRemoveFolderAction,
       *mExpireFolderAction, *mCompactFolderAction, *mRefreshFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
-      *mFolderShortCutCommandAction, *mTroubleshootFolderAction, *mRemoveDuplicatesAction,
+      *mFolderShortCutCommandAction, *mTroubleshootFolderAction,
+      *mRemoveDuplicatesAction, *mArchiveFolderAction,
       *mTroubleshootMaildirAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction,
       *mThreadMessagesAction, *mThreadBySubjectAction;
