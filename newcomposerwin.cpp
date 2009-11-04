@@ -144,6 +144,8 @@ using KMail::TemplateParser;
 #include <memory>
 
 #include <akonadi/collectioncombobox.h>
+#include <akonadi/changerecorder.h>
+
 #include <messageviewer/objecttreeemptysource.h>
 // MOC
 #include "newcomposerwin.moc"
@@ -364,12 +366,8 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
 
   connect( mEdtFrom, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
-#if 0
-  connect( kmkernel->folderMgr(), SIGNAL(folderRemoved(const Akonadi::Collection&)),
+  connect( kmkernel->monitor(), SIGNAL(collectionRemoved(const Akonadi::Collection&)),
            SLOT(slotFolderRemoved(const Akonadi::Collection&)) );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 

@@ -49,9 +49,6 @@ public:
     DisplayNever             ///< Nevery display tooltips
   };
 
-
-  Akonadi::ChangeRecorder *monitorFolders();
-
   void selectCollectionFolder( const Akonadi::Collection & col );
 
 
@@ -79,7 +76,6 @@ public:
 
 
   void readConfig();
-
 private:
   class FolderSelectionTreeViewPrivate;
   FolderSelectionTreeViewPrivate * const d;

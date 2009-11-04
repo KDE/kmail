@@ -72,6 +72,7 @@ using KWallet::Wallet;
 #include <akonadi/collection.h>
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/changerecorder.h>
+#include <akonadi/itemfetchscope.h>
 #include "actionscheduler.h"
 
 #include <QByteArray>
@@ -105,6 +106,18 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mMailService(0),
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
+  // monitor collection changes
+  mMonitor = new Akonadi::ChangeRecorder( this );
+  mMonitor->setCollectionMonitored( Akonadi::Collection::root() );
+  mMonitor->fetchCollection( true );
+  mMonitor->setAllMonitored( true );
+  mMonitor->setMimeTypeMonitored( "message/rfc822" );
+  mMonitor->setResourceMonitored( "akonadi_search_resource" ,  true );
+
+  // TODO: Only fetch the envelope etc if possible.
+  mMonitor->itemFetchScope().fetchFullPayload(true);
+
+
   mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
   kDebug();
   setObjectName( name );
@@ -194,6 +207,11 @@ KMKernel::~KMKernel ()
 Akonadi::AgentManager *KMKernel::agentManager()
 {
   return Akonadi::AgentManager::self();
+}
+
+Akonadi::ChangeRecorder * KMKernel::monitor()
+{
+  return mMonitor;
 }
 
 int KMKernel::storageDebug()
@@ -1513,12 +1531,6 @@ void KMKernel::init()
 
   the_weaver =  new ThreadWeaver::Weaver( this );
 
-  connect( the_folderMgr, SIGNAL( folderRemoved(const Akonadi::Collection &) ),
-           this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
-#if 0
-  connect( the_searchFolderMgr, SIGNAL( folderRemoved(const Akonadi::Collection&) ),
-           this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
-#endif
   mBackgroundTasksTimer = new QTimer( this );
   mBackgroundTasksTimer->setSingleShot( true );
   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );

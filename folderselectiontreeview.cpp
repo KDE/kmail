@@ -44,14 +44,12 @@ public:
     :filterModel( 0 ),
      collectionFolderView( 0 ),
      entityModel( 0 ),
-     monitor( 0 ),
      quotaModel( 0 ),
      readableproxy( 0 )
   {
   }
   FolderTreeView *collectionFolderView;
   Akonadi::EntityTreeModel *entityModel;
-  Akonadi::ChangeRecorder *monitor;
   Akonadi::QuotaColorProxyModel *quotaModel;
   Akonadi::StatisticsProxyModel *filterModel;
   ReadableCollectionProxyModel *readableproxy;
@@ -66,17 +64,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   lay->setMargin( 0 );
   Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );
 
-  // monitor collection changes
-  d->monitor = new Akonadi::ChangeRecorder( this );
-  d->monitor->setCollectionMonitored( Akonadi::Collection::root() );
-  d->monitor->fetchCollection( true );
-  d->monitor->setAllMonitored( true );
-  d->monitor->setMimeTypeMonitored( "message/rfc822" );
-  d->monitor->setResourceMonitored( "akonadi_search_resource" ,  true );
-
-  // TODO: Only fetch the envelope etc if possible.
-  d->monitor->itemFetchScope().fetchFullPayload(true);
-  d->entityModel = new Akonadi::EntityTreeModel( session, d->monitor, this );
+  d->entityModel = new Akonadi::EntityTreeModel( session, KMKernel::self()->monitor(), this );
 
 
 
@@ -127,11 +115,6 @@ void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection 
     return;
   QModelIndex colIndex = rows.first();
   d->collectionFolderView->selectionModel()->select(colIndex, QItemSelectionModel::SelectCurrent);
-}
-
-Akonadi::ChangeRecorder * FolderSelectionTreeView::monitorFolders()
-{
-  return d->monitor;
 }
 
 void FolderSelectionTreeView::setSelectionMode( QAbstractItemView::SelectionMode mode )
@@ -244,5 +227,6 @@ ReadableCollectionProxyModel *FolderSelectionTreeView::readableCollectionProxyMo
 {
   return d->readableproxy;
 }
+
 
 #include "folderselectiontreeview.moc"

@@ -27,6 +27,7 @@ Q_DECLARE_METATYPE(QVector<QStringList>)
 
 namespace Akonadi {
   class Collection;
+  class ChangeRecorder;
 }
 
 namespace KIO {
@@ -266,7 +267,7 @@ public:
 
 
   Akonadi::AgentManager *agentManager();
-
+  Akonadi::ChangeRecorder *monitor();
 
 //TODO port to akonadi   void cleanupImapFolders();
   void testDir(const char *_name);
@@ -445,7 +446,6 @@ protected slots:
 
 signals:
   void configChanged();
-  void folderRemoved( const Akonadi::Collection &aFolder );
   void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
   void customTemplatesChanged();
 
@@ -534,6 +534,7 @@ private:
   QString               mAddMessageLastFolder;
 
   Akonadi::AgentManager *mAgentManager;
+  Akonadi::ChangeRecorder *mMonitor;
 
   // special debug area
   int mStorageDebug;

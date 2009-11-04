@@ -871,7 +871,7 @@ void KMMainWidget::createWidgets()
   mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
 
   connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
-  connect( mCollectionFolderView->monitorFolders(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
+  connect( KMKernel::self()->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
 
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
