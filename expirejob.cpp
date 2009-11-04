@@ -172,9 +172,13 @@ void ExpireJob::done()
                   "Removing %1 old messages from folder %2...", count,
               mSrcFolder->label() );
     } else {
+#if 0
       // Expire by moving
       mMoveToFolder =
         kmkernel->findFolderById( mSrcFolder->expireToFolderId() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       if ( !mMoveToFolder ) {
         str = i18n( "Cannot expire messages from folder %1: destination "
                     "folder %2 not found",

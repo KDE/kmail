@@ -2268,14 +2268,6 @@ void KMKernel::compactAllFolders() // called by the GUI
   the_folderMgr->compactAllFolders( true /*immediate*/ );
 }
 
-KMFolder* KMKernel::findFolderById( const QString& idString )
-{
-  KMFolder * folder = the_folderMgr->findIdString( idString );
-  if ( !folder )
-    folder = the_searchFolderMgr->findIdString( idString );
-  return folder;
-}
-
 Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )
 {
   int id = idString.toInt();

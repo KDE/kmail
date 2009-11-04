@@ -301,10 +301,7 @@ public:
    * Returns true if the folder is one of the sent-mail folders.
    */
   bool folderIsSentMailFolder( const Akonadi::Collection& );
-  /**
-   * Find a folder by ID string in all folder managers
-   */
-  KMFolder* findFolderById( const QString& idString );
+
   Akonadi::Collection findFolderCollectionById( const QString& id );
 
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
