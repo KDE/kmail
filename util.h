@@ -48,7 +48,6 @@
 #include <akonadi/item.h>
 #include "kmkernel.h"
 #include <kmime/kmime_message.h>
-class DwString;
 class KUrl;
 
 namespace KMail
@@ -97,17 +96,6 @@ namespace Util {
      * @return The result string.
      */
     QByteArray lf2crlf( const QByteArray & src );
-
-    /**
-     * Construct a QByteArray from a DwString
-     */
-    QByteArray ByteArray( const DwString& str );
-
-    /**
-     * Construct a DwString from a QByteArray
-     */
-    DwString dwString( const QByteArray& str );
-
 
     /**
      * Validates a list of email addresses.

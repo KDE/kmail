@@ -42,7 +42,6 @@
 #include "messageviewer/stringutil.h"
 
 #include <stdlib.h>
-#include <mimelib/string.h>
 #include <kpimutils/email.h>
 #include <kglobal.h>
 #include <kascii.h>
@@ -103,22 +102,6 @@ QByteArray KMail::Util::lf2crlf( const QByteArray & src )
     }
     result.truncate( d - result.begin() );
     return result;
-}
-
-QByteArray KMail::Util::ByteArray( const DwString& str )
-{
-  const int strLen = str.size();
-  QByteArray arr;
-  arr.resize( strLen );
-  memcpy( arr.data(), str.data(), strLen );
-  return arr;
-}
-
-DwString KMail::Util::dwString( const QByteArray& str )
-{
-  if ( !str.data() ) // DwString doesn't like char*=0
-    return DwString();
-  return DwString( str.data(), str.size() );
 }
 
 bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
