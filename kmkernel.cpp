@@ -114,8 +114,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_firstInstance = true;
 
   the_outboxFolder = 0;
-  the_sentFolder = 0;
-  the_trashFolder = 0;
 
   the_folderMgr = 0;
   the_searchFolderMgr = 0;
@@ -1448,26 +1446,6 @@ void KMKernel::initFolders(KSharedConfig::Ptr cfg)
   //  unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
   the_outboxFolder->open( "kmkernel" );
 #endif
-  the_sentFolder = the_folderMgr->findOrCreate(group.readEntry("sentFolder", I18N_NOOP("sent-mail")));
-#if 0
-  if ( !the_sentFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
-  }
-  the_sentFolder->setSystemFolder(true);
-  if ( the_sentFolder->userWhoField().isEmpty() )
-    the_sentFolder->setUserWhoField( QString() );
-  // the_sentFolder->open();
-#endif
-#if 0
-  the_trashFolder  = the_folderMgr->findOrCreate(group.readEntry("trashFolder", I18N_NOOP("trash")));
-  if ( !the_trashFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
-  }
-  the_trashFolder->setSystemFolder(true);
-  if ( the_trashFolder->userWhoField().isEmpty() )
-    the_trashFolder->setUserWhoField( QString() );
-  // the_trashFolder->open();
-#endif
   findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
   findCreateDefaultCollection( Akonadi::SpecialCollections::Outbox );
   findCreateDefaultCollection( Akonadi::SpecialCollections::SentMail );
@@ -1762,7 +1740,7 @@ void KMKernel::cleanup(void)
 
   KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");
-
+#if 0
   if ( the_trashFolder ) {
 
     the_trashFolder->close( "kmkernel", true );
@@ -1773,7 +1751,9 @@ void KMKernel::cleanup(void)
       }
     }
   }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   QList<QPointer<KMFolder> > folders;
   QStringList strList;
   KMFolder *folder;

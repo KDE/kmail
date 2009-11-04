@@ -517,12 +517,6 @@ public:
   void daysToExpire( int& unreadDays, int& readDays );
 
   /**
-   * If this folder has a special trash folder set, return it. Otherwise
-   * return 0.
-   */
-  KMFolder* trashFolder() const;
-
-  /**
    * Returns true if the replies to mails from this folder should be
    * put in the same folder.
    */

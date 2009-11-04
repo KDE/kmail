@@ -312,7 +312,6 @@ public:
 
   //Remove it !
   KMFolder *outboxFolder() { return the_outboxFolder; }
-  KMFolder *trashFolder() { return the_trashFolder; }
 
 
   Akonadi::Collection inboxCollectionFolder();
@@ -472,8 +471,6 @@ private:
 
   //Remove it
   KMFolder *the_outboxFolder;
-  KMFolder *the_sentFolder;
-  KMFolder *the_trashFolder;
 
 
   Akonadi::Collection the_inboxCollectionFolder;

@@ -162,7 +162,7 @@ void KMAccount::readConfig(KConfigGroup& config)
 
   folderName = config.readEntry("Folder");
   setCheckInterval(config.readEntry("check-interval", 0 ) );
-  setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
+  setTrash(config.readEntry("trash", QString::number(kmkernel->trashCollectionFolder().id())));
   setCheckExclude(config.readEntry("check-exclude", false ) );
   setPrecommand(config.readPathEntry("precommand", QString()));
 

@@ -1174,11 +1174,6 @@ void KMFolder::compact( CompactOptions options )
   }
 }
 
-KMFolder* KMFolder::trashFolder() const
-{
-  return mStorage ? mStorage->trashFolder() : 0;
-}
-
 int KMFolder::writeIndex( bool createEmptyIndex )
 {
 #if 0  //TODO port to akonadi
