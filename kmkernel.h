@@ -54,7 +54,6 @@ using KMail::MailManagerImpl;
 using KMail::UndoStack;
 using KMail::JobScheduler;
 using KPIM::ProgressDialog;
-class KMFolder;
 class KMFolderMgr;
 class KMFilterMgr;
 class KMFilterActionDict;

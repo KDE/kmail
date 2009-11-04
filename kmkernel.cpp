@@ -1483,10 +1483,11 @@ void KMKernel::init()
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
+#if 0
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
   if (lsf)
     the_searchFolderMgr->remove( lsf );
-
+#endif
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
@@ -1515,9 +1516,10 @@ void KMKernel::init()
 
   connect( the_folderMgr, SIGNAL( folderRemoved(const Akonadi::Collection &) ),
            this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
+#if 0
   connect( the_searchFolderMgr, SIGNAL( folderRemoved(const Akonadi::Collection&) ),
            this, SIGNAL( folderRemoved(const Akonadi::Collection&) ) );
-
+#endif
   mBackgroundTasksTimer = new QTimer( this );
   mBackgroundTasksTimer->setSingleShot( true );
   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
@@ -1715,20 +1717,17 @@ void KMKernel::cleanup(void)
 
   KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");
-#if 0
-  if ( the_trashFolder ) {
-
-    the_trashFolder->close( "kmkernel", true );
-
+  if ( the_trashCollectionFolder.isValid() ) {
     if ( group.readEntry( "empty-trash-on-exit", false ) ) {
-      if ( the_trashFolder->count( true ) > 0 ) {
+      if ( the_trashCollectionFolder.statistics().count() > 0 ) {
+#if 0
         the_trashFolder->expunge();
-      }
-    }
-  }
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+      }
+    }
+  }
   QList<QPointer<KMFolder> > folders;
   QStringList strList;
   KMFolder *folder;
