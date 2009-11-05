@@ -1489,7 +1489,7 @@ void KMKernel::init()
   the_msgTagMgr = new KMMessageTagMgr();
   the_msgTagMgr->readConfig();
 
-  readComposerConfig();
+  readConfig();
 
   the_undoStack     = new UndoStack(20);
 #if 0
@@ -1534,7 +1534,7 @@ void KMKernel::init()
 #endif
 }
 
-void KMKernel::readComposerConfig()
+void KMKernel::readConfig()
 {
   KConfigGroup config( KMKernel::config(), "Composer" );
   mSmartQuote = GlobalSettings::self()->smartQuote();
@@ -1544,11 +1544,6 @@ void KMKernel::readComposerConfig()
     mWrapCol = 78;
   if (mWrapCol < 30)
     mWrapCol = 30;
-}
-
-void KMKernel::readConfig()
-{
-  readComposerConfig();
 }
 
 #if 0 //TODO port to akonadi

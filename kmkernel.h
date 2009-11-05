@@ -263,7 +263,6 @@ public:
   void init();
   void setupDBus();
   void readConfig();
-  void readComposerConfig();
 
 
   Akonadi::AgentManager *agentManager();
