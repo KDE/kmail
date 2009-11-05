@@ -104,9 +104,8 @@ void FolderTreeView::selectNextUnreadFolder( bool confirm )
     }
     current = nextIndex;
   }
-
-  current = rootIndex();
-  kDebug()<<" current :"<<current;
+  //Move to top
+  current = model()->index( 0, 0 );
   while ( current.isValid() ) {
     QModelIndex nextIndex;
     if ( isUnreadFolder( current,nextIndex, FolderTreeView::Next,confirm ) ) {
