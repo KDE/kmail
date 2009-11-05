@@ -8,7 +8,6 @@
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmfilterdlg.h"
-#include "kmfolderindex.h"
 #include "filterimporterexporter.h"
 using KMail::FilterImporterExporter;
 #include "kmmsgdict.h"
