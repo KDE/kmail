@@ -37,10 +37,11 @@ public:
 
   Akonadi::Collection currentFolder();
 protected:
+  enum Move { Next = 0, Previous = 1};
   void init();
   void selectModelIndex( const QModelIndex & );
   QModelIndex selectNextFolder( const QModelIndex & current );
-  bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex );
+  bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex,FolderTreeView::Move move);
 
 public slots:
   void slotFocusNextFolder();

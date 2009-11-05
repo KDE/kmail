@@ -96,7 +96,7 @@ void FolderTreeView::selectNextUnreadFolder()
   QModelIndex current = selectNextFolder( currentIndex() );
   while ( current.isValid() ) {
     QModelIndex nextIndex;
-    if ( isUnreadFolder( current,nextIndex ) ) {
+    if ( isUnreadFolder( current,nextIndex,FolderTreeView::Next ) ) {
       selectModelIndex( current );
       return;
     }
@@ -107,7 +107,7 @@ void FolderTreeView::selectNextUnreadFolder()
   kDebug()<<" current :"<<current;
   while ( current.isValid() ) {
     QModelIndex nextIndex;
-    if ( isUnreadFolder( current,nextIndex ) ) {
+    if ( isUnreadFolder( current,nextIndex, FolderTreeView::Next ) ) {
       selectModelIndex( current );
       return;
     }
@@ -115,12 +115,17 @@ void FolderTreeView::selectNextUnreadFolder()
   }
 }
 
-bool FolderTreeView::isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex )
+bool FolderTreeView::isUnreadFolder( const QModelIndex & current, QModelIndex &index, FolderTreeView::Move move )
 {
   if ( current.isValid() ) {
-    nextIndex = selectNextFolder( current );
-    if ( nextIndex.isValid() ) {
-      Akonadi::Collection collection = nextIndex.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+
+    if ( move == FolderTreeView::Next )
+      index = selectNextFolder( current );
+    else if ( move == FolderTreeView::Previous )
+      index = indexAbove( current );
+
+    if ( index.isValid() ) {
+      Akonadi::Collection collection = index.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
       if ( collection.isValid() ) {
         if ( collection.statistics().unreadCount()>0 ) {
           return true;
@@ -134,10 +139,17 @@ bool FolderTreeView::isUnreadFolder( const QModelIndex & current, QModelIndex &n
 void FolderTreeView::selectPrevUnreadFolder()
 {
   kDebug()<<" Need to implement FolderTreeView::selectPrevUnreadFolder()";
-  QModelIndex current = currentIndex();
-  if ( current.isValid() ) {
 
+  QModelIndex current = indexAbove( currentIndex() );
+  while ( current.isValid() ) {
+    QModelIndex nextIndex;
+    if ( isUnreadFolder( current,nextIndex,FolderTreeView::Previous ) ) {
+      selectModelIndex( current );
+      return;
+    }
+    current = nextIndex;
   }
+  //TODO start at the end.
 }
 
 Akonadi::Collection FolderTreeView::currentFolder()
