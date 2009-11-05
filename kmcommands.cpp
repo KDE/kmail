@@ -44,11 +44,6 @@
 
 #include <unistd.h> // link()
 #include <errno.h>
-#include <mimelib/enum.h>
-#include <mimelib/field.h>
-#include <mimelib/mimepp.h>
-#include <mimelib/string.h>
-
 #include <kprogressdialog.h>
 #include <kpimutils/email.h>
 #include <kdbusservicestarter.h>
