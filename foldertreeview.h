@@ -31,8 +31,8 @@ public:
 
   virtual ~FolderTreeView();
 
-  void selectNextUnreadFolder();
-  void selectPrevUnreadFolder();
+  void selectNextUnreadFolder( bool confirm = false);
+  void selectPrevUnreadFolder( bool confirm = false);
 
 
   Akonadi::Collection currentFolder();
@@ -41,7 +41,7 @@ protected:
   void init();
   void selectModelIndex( const QModelIndex & );
   QModelIndex selectNextFolder( const QModelIndex & current );
-  bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex,FolderTreeView::Move move);
+  bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex,FolderTreeView::Move move, bool confirm);
 
 public slots:
   void slotFocusNextFolder();

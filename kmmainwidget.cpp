@@ -2821,11 +2821,9 @@ void KMMainWidget::slotSelectNextUnreadMessage()
          ( GlobalSettings::self()->loopOnGotoUnread() ==
            GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
-#ifdef OLD_MESSAGELIST
       mGoToFirstUnreadMessageInSelectedFolder = true;
-      mMainFolderView->selectNextUnreadFolder(true // confirm );
+      mCollectionFolderView->folderTreeView()->selectNextUnreadFolder( true );
       mGoToFirstUnreadMessageInSelectedFolder = false;
-#endif
     }
   }
 }
@@ -2862,11 +2860,9 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
          ( GlobalSettings::self()->loopOnGotoUnread() ==
            GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
-#ifdef OLD_MESSAGELIST
       mGoToFirstUnreadMessageInSelectedFolder = true;
-      mMainFolderView->selectPrevUnreadFolder();
+      mCollectionFolderView->folderTreeView()->selectPrevUnreadFolder();
       mGoToFirstUnreadMessageInSelectedFolder = false;
-#endif
     }
   }
 }
