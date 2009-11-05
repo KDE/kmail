@@ -3535,15 +3535,14 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     mRecipientsEditor->setFocusBottom();
   }
 
-#if 0
   if ( ident.organization().isEmpty() ) {
     mMsg->organization()->clear();
   } else {
-    mMsg->organization()->fromUnicodeString( ident.organization(), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Organization", mMsg, ident.organization(), "utf-8" );
+    mMsg->setHeader( header );
   }
-
   if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
-    mMsg->removeHeaderField( "X-Face" );
+    mMsg->removeHeader( "X-Face" );
   } else {
     QString xface = ident.xface();
     if ( !xface.isEmpty() ) {
@@ -3551,10 +3550,10 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
       for ( int i = numNL; i > 0; --i ) {
         xface.insert( i*70, "\n\t" );
       }
-      mMsg->setHeaderField( "X-Face", xface );
+      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-Face", mMsg, xface, "utf-8" );
+      mMsg->setHeader( header );
     }
   }
-
   // If the transport sticky checkbox is not checked, set the transport
   // from the new identity
   if ( !mBtnTransport->isChecked() && !mIgnoreStickyFields ) {
@@ -3562,16 +3561,16 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     Transport *transport =
         TransportManager::self()->transportByName( transportName, false );
     if ( !transport ) {
-      mMsg->removeHeaderField( "X-KMail-Transport" );
+      mMsg->removeHeader( "X-KMail-Transport" );
       mTransport->setCurrentTransport(
                                TransportManager::self()->defaultTransportId() );
     }
     else {
-      mMsg->setHeaderField( "X-KMail-Transport", transportName );
+      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", mMsg, transportName, "utf-8" );
+      mMsg->setHeader( header );
       mTransport->setCurrentTransport( transport->id() );
     }
   }
-#endif
 
   mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   mEditor->setSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );

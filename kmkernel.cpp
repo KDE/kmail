@@ -2216,7 +2216,6 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 
 QList<Akonadi::Collection> KMKernel::allFoldersCollection()
 {
-  //TODO use directly Monitor::collectionsMonitored ???
   Akonadi::Collection::List collections;
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive );
   if ( job->exec() ) {
