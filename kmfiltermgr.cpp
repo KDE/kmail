@@ -15,6 +15,8 @@ using KMail::FilterImporterExporter;
 #include "messageproperty.h"
 using KMail::MessageProperty;
 
+#include <akonadi/changerecorder.h>
+
 // other KDE headers
 #include <kdebug.h>
 #include <klocale.h>
@@ -42,7 +44,7 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
   if ( bPopFilter ) {
     kDebug() << "pPopFilter set";
   }
-  connect( kmkernel, SIGNAL( folderRemoved( const Akonadi::Collection& ) ),
+  connect( kmkernel->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ),
            this, SLOT( slotFolderRemoved( const Akonadi::Collection & ) ) );
 }
 
