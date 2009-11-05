@@ -78,11 +78,6 @@ QStringList stripMyAddressesFromAddressList( const QStringList& list )
   return addresses;
 }
 
-#endif
-
-
-#ifndef KMAIL_UNITTESTS
-
 QMap<QString, QString> parseMailtoUrl ( const KUrl& url )
 {
   kDebug() << url.pathOrUrl();
