@@ -272,7 +272,7 @@ public:
 //TODO port to akonadi   void cleanupImapFolders();
   void testDir(const char *_name);
   void recoverDeadLetters();
-  void initFolders(KSharedConfig::Ptr cfg);
+  void initFolders();
   void closeAllKMailWindows();
   void cleanup(void);
   void quit();

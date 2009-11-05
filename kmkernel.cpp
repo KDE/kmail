@@ -1429,7 +1429,7 @@ void KMKernel::createDefaultCollectionDone( KJob * job)
 }
 
 //-----------------------------------------------------------------------------
-void KMKernel::initFolders(KSharedConfig::Ptr /*cfg*/)
+void KMKernel::initFolders()
 {
 
   findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
@@ -1502,7 +1502,7 @@ void KMKernel::init()
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
 
-  initFolders(cfg);
+  initFolders();
   the_filterMgr->readConfig();
   the_popFilterMgr->readConfig();
 #if 0 //TODO port to akonadi
