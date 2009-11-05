@@ -21,6 +21,7 @@
 #include <QDebug>
 #include <KLocale>
 #include <akonadi/entitytreemodel.h>
+#include <akonadi/collectionstatistics.h>
 FolderTreeView::FolderTreeView(QWidget *parent )
   : Akonadi::EntityTreeView( parent )
 {
@@ -92,10 +93,42 @@ void FolderTreeView::slotFocusPrevFolder()
 void FolderTreeView::selectNextUnreadFolder()
 {
   kDebug()<<"Need to implement  FolderTreeView::selectNextUnreadFolder() ";
-  QModelIndex current = currentIndex();
-  if ( current.isValid() ) {
-
+  QModelIndex current = selectNextFolder( currentIndex() );
+  while ( current.isValid() ) {
+    QModelIndex nextIndex;
+    if ( isUnreadFolder( current,nextIndex ) ) {
+      selectModelIndex( current );
+      return;
+    }
+    current = nextIndex;
   }
+
+  current = rootIndex();
+  kDebug()<<" current :"<<current;
+  while ( current.isValid() ) {
+    QModelIndex nextIndex;
+    if ( isUnreadFolder( current,nextIndex ) ) {
+      selectModelIndex( current );
+      return;
+    }
+    current = nextIndex;
+  }
+}
+
+bool FolderTreeView::isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex )
+{
+  if ( current.isValid() ) {
+    nextIndex = selectNextFolder( current );
+    if ( nextIndex.isValid() ) {
+      Akonadi::Collection collection = nextIndex.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+      if ( collection.isValid() ) {
+        if ( collection.statistics().unreadCount()>0 ) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 void FolderTreeView::selectPrevUnreadFolder()

@@ -40,6 +40,7 @@ protected:
   void init();
   void selectModelIndex( const QModelIndex & );
   QModelIndex selectNextFolder( const QModelIndex & current );
+  bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex );
 
 public slots:
   void slotFocusNextFolder();
