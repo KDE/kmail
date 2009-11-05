@@ -466,7 +466,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
 
   void slotShowExpiryProperties();
-
+  void slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col);
+  void slotItemRemoved( const Akonadi::Item & );
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;

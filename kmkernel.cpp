@@ -1732,37 +1732,6 @@ void KMKernel::cleanup(void)
       }
     }
   }
-#if 0
-  QList<QPointer<KMFolder> > folders;
-  QStringList strList;
-  KMFolder *folder;
-  the_folderMgr->createFolderList(&strList, &folders);
-
-  QList<QPointer<KMFolder> >::const_iterator it;
-  for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
-    folder = *it;
-    if ( !folder || folder->isDir() ) {
-      continue;
-    }
-    folder->close( "kmkernel", true );
-  }
-#endif
-  //strList.clear();
-  //folders.clear();
-#if 0
-  the_searchFolderMgr->createFolderList(&strList, &folders);
-  for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
-    folder = *it;
-    if ( !folder || folder->isDir() ) {
-      continue;
-    }
-    folder->close( "kmkernel", true );
-  }
-#endif
-#if 0
-  delete the_searchFolderMgr;
-  the_searchFolderMgr = 0;
-#endif
   delete mConfigureDialog;
   mConfigureDialog = 0;
   // do not delete, because mWin may point to an existing window

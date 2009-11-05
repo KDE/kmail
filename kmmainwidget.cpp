@@ -1107,14 +1107,24 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotSelectFocusedMessage() ) );
     action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Space ) );
   }
-#if 0
-  connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, const QString&) ),
-           SLOT( startUpdateMessageActionsTimer() ) );
-  connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
-           SLOT( startUpdateMessageActionsTimer() ) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  connect( kmkernel->monitor(), SIGNAL( itemAdded( const Akonadi::Item &, const Akonadi::Collection &) ), SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
+  connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ), SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
+}
+
+void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
+{
+  if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
+    qDebug() <<" UPDATE MENU !!!!!!!!!!!!!!!";
+    startUpdateMessageActionsTimer();
+  }
+}
+
+void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
+{
+  if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == kmkernel->outboxCollectionFolder() ) ) {
+    qDebug()<<" update MENU !!!!!!!!!!!!!!!!!!!!";
+    startUpdateMessageActionsTimer();
+  }
 }
 
 //-------------------------------------------------------------------------
