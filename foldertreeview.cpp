@@ -95,7 +95,6 @@ void FolderTreeView::slotFocusPrevFolder()
 
 void FolderTreeView::selectNextUnreadFolder( bool confirm )
 {
-  kDebug()<<"Need to implement  FolderTreeView::selectNextUnreadFolder() ";
   QModelIndex current = selectNextFolder( currentIndex() );
   while ( current.isValid() ) {
     QModelIndex nextIndex;
