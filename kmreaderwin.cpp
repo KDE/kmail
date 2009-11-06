@@ -3019,7 +3019,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       } else if ( headerStyle() == HeaderStyle::fancy() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
-        html += fm.elidedText( label, Qt::ElideRight, 300 );
+        html += fm.elidedText( label, Qt::ElideRight, 1000 );
       } else {
         html += label;
       }
