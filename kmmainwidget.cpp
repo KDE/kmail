@@ -1355,11 +1355,11 @@ void KMMainWidget::slotCompose()
 void KMMainWidget::slotShowNewFromTemplate()
 {
   if ( mCurrentFolder )
-  {
-    const KPIMIdentities::Identity & ident =
-      kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
-    mTemplateFolder = kmkernel->findFolderCollectionById( ident.templates() );
-  }
+    {
+      const KPIMIdentities::Identity & ident =
+        kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
+      mTemplateFolder = kmkernel->findFolderCollectionById( ident.templates() );
+    }
 
   if ( !mTemplateFolder.isValid() ) {
     mTemplateFolder = kmkernel->templatesCollectionFolder();
@@ -1369,29 +1369,30 @@ void KMMainWidget::slotShowNewFromTemplate()
 
   mTemplateMenu->menu()->clear();
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mTemplateFolder );
+  job->fetchScope().fetchFullPayload();
   Akonadi::Item::List items;
   if ( job->exec() ) {
     items = job->items();
   }
   for ( int idx = 0; idx < items.count(); ++idx ) {
     KMime::Message::Ptr msg = KMail::Util::message( items.at( idx ) );
+    if ( msg ) {
+      QString subj = msg->subject()->asUnicodeString();
+      if ( subj.isEmpty() )
+        subj = i18n("No Subject");
 
-    QString subj = msg->subject()->asUnicodeString();
-    if ( subj.isEmpty() )
-      subj = i18n("No Subject");
-
-    QAction *templateAction = mTemplateMenu->menu()->addAction(
-        KStringHandler::rsqueeze( subj.replace( '&', "&&" ) ) );
-    QVariant var;
-    var.setValue( items.at( idx ) );
-    templateAction->setData( var );
+      QAction *templateAction = mTemplateMenu->menu()->addAction(KStringHandler::rsqueeze( subj.replace( '&', "&&" ) ) );
+      QVariant var;
+      var.setValue( items.at( idx ) );
+      templateAction->setData( var );
+    }
   }
 
   // If there are no templates available, add a menu entry which informs
   // the user about this.
   if ( mTemplateMenu->menu()->actions().isEmpty() ) {
     QAction *noAction = mTemplateMenu->menu()->addAction(
-                                            i18n( "(no templates)" ) );
+                                                         i18n( "(no templates)" ) );
     noAction->setEnabled( false );
   }
 }
@@ -1400,6 +1401,7 @@ void KMMainWidget::slotShowNewFromTemplate()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNewFromTemplate( QAction *action )
 {
+
   if ( !mTemplateFolder.isValid() )
     return;
   Akonadi::Item item = action->data().value<Akonadi::Item>();
