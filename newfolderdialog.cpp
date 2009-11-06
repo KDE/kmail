@@ -40,6 +40,7 @@
 #include <kdialogbase.h>
 #include <kmessagebox.h>
 
+#include "folderutil.h"
 #include "newfolderdialog.h"
 #include "kmfolder.h"
 #include "folderstorage.h"
@@ -58,7 +59,9 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     : KDialogBase( parent, "new_folder_dialog", false, i18n( "New Folder" ),
                    KDialogBase::Ok|KDialogBase::Cancel,
                    KDialogBase::Ok, true ),
+      mFormatComboBox( 0 ),
       mContentsComboBox( 0 ),
+      mNamespacesComboBox( 0 ),
       mFolder( folder )
 {
   setWFlags( getWFlags() | WDestructiveClose );
@@ -247,55 +250,21 @@ void NewFolderDialog::slotOk()
   /* Ok, obvious errors caught, let's try creating it for real. */
   const QString message = i18n( "<qt>Failed to create folder <b>%1</b>."
             "</qt> " ).arg(fldName);
-  bool success = false;
-  KMFolder *newFolder = 0;
 
-   if ( mFolder && mFolder->folderType() == KMFolderTypeImap ) {
-    KMFolderImap* selectedStorage = static_cast<KMFolderImap*>( mFolder->storage() );
-    KMAcctImap *anAccount = selectedStorage->account();
-    // check if a connection is available BEFORE creating the folder
-    if (anAccount->makeConnection() == ImapAccountBase::Connected) {
-      newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, false, KMFolderTypeImap, selectedFolderDir );
-      if ( newFolder ) {
-        QString imapPath, parent;
-        if ( mNamespacesComboBox ) {
-          // create folder with namespace
-          parent = anAccount->addPathToNamespace( mNamespacesComboBox->currentText() );
-          imapPath = anAccount->createImapPath( parent, fldName );
-        } else {
-          imapPath = anAccount->createImapPath( selectedStorage->imapPath(), fldName );
-        }
-        KMFolderImap* newStorage = static_cast<KMFolderImap*>( newFolder->storage() );
-        selectedStorage->createFolder(fldName, parent); // create it on the server
-        newStorage->initializeFrom( selectedStorage, imapPath, QString::null );
-        static_cast<KMFolderImap*>(mFolder->storage())->setAccount( selectedStorage->account() );
-        success = true;
-      }
-    }
-  } else if ( mFolder && mFolder->folderType() == KMFolderTypeCachedImap ) {
-    newFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, false, KMFolderTypeCachedImap, selectedFolderDir );
-    if ( newFolder ) {
-      KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>( mFolder->storage() );
-      KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>( newFolder->storage() );
-      newStorage->initializeFrom( selectedStorage );
-      if ( mNamespacesComboBox ) {
-        // create folder with namespace
-        QString path = selectedStorage->account()->createImapPath(
-            mNamespacesComboBox->currentText(), fldName );
-        newStorage->setImapPathForCreation( path );
-      }
-      success = true;
-    }
-  } else {
-    // local folder
-    if (mFormatComboBox->currentItem() == 1)
-      newFolder = kmkernel->folderMgr()->createFolder(fldName, false, KMFolderTypeMaildir, selectedFolderDir );
-    else
-      newFolder = kmkernel->folderMgr()->createFolder(fldName, false, KMFolderTypeMbox, selectedFolderDir );
-    if ( newFolder )
-      success = true;
+  QString namespaceName;
+  if ( mNamespacesComboBox ) {
+    namespaceName = mNamespacesComboBox->currentText();
   }
-  if ( !success ) {
+
+  KMFolderType folderType = KMFolderTypeUnknown;
+  if ( mFormatComboBox && mFormatComboBox->currentItem() == 1 )
+    folderType = KMFolderTypeMaildir;
+  else if ( mFormatComboBox )
+    folderType = KMFolderTypeMbox;
+
+  KMFolder *newFolder = KMail::FolderUtil::createSubFolder( mFolder, selectedFolderDir, fldName,
+                                                            namespaceName, folderType );
+  if ( !newFolder ) {
     KMessageBox::error( this, message );
     return;
   }
