@@ -78,6 +78,7 @@ MailSourceViewer::MailSourceViewer( QWidget *parent )
   setAttribute( Qt::WA_DeleteOnClose );
   setLineWrapMode( QTextEdit::NoWrap );
   setTextInteractionFlags( Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard );
+  setLayoutDirection( Qt::LeftToRight );
 
   // combining the shortcuts in one qkeysequence() did not work...
   QShortcut* shortcut = new QShortcut( this );
