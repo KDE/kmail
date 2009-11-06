@@ -1279,6 +1279,15 @@ namespace KMail {
       // immediate children of this multipart/alternative node.
       // In this case, the HTML node is a child of multipart/related.
       dataHtml = child->findType( DwMime::kTypeMultipart, DwMime::kSubtypeRelated, false, true );
+
+      // Still not found? Stupid apple mail actually puts the attachments inside of the
+      // multipart/alternative, which is wrong. Therefore we also have to look for multipart/mixed
+      // here.
+      // Do this only when prefering HTML mail, though, since otherwise the attachments are hidden
+      // when displaying plain text.
+      if ( !dataHtml && mReader->htmlMail() ) {
+        dataHtml = child->findType( DwMime::kTypeMultipart, DwMime::kSubtypeMixed, false, true );
+      }
     }
     partNode * dataPlain = child->findType( DwMime::kTypeText,
                                             DwMime::kSubtypePlain, false, true );
