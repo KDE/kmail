@@ -16,39 +16,35 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef KMAGENTMANAGER_H
-#define KMAGENTMANAGER_H
+#ifndef KMAGENTINSTANCE_H
+#define KMAGENTINSTANCE_H
 
 #include <QObject>
-#include <QMap>
 #include <akonadi/agentinstance.h>
-#include <akonadi/agentmanager.h>
+namespace KPIM {
+  class ProgressItem;
+}
 
-class KMAgentInstance;
+using KPIM::ProgressItem;
 
-class KMAgentManager : public QObject
+class KMAgentInstance : public QObject
 {
   Q_OBJECT
 public:
-  explicit KMAgentManager( QObject *parent );
-  ~KMAgentManager();
+  explicit KMAgentInstance( QObject *, const Akonadi::AgentInstance & );
+  ~KMAgentInstance();
 
-  bool isEmpty() const;
-  Akonadi::AgentInstance::List instanceList() const;
-  Akonadi::AgentInstance instance( const QString & );
+  void progressChanged( int );
 
 protected slots:
-  void slotInstanceAdded( const Akonadi::AgentInstance &);
-  void slotInstanceRemoved( const Akonadi::AgentInstance &);
-  void slotInstanceProgressChanged( const Akonadi::AgentInstance &);
+  void slotCanceled();
 
 private:
-  void init();
-  QMap<QString, KMAgentInstance*> lstAgentInstance;
-  Akonadi::AgentInstance::List mListInstance;
-  Akonadi::AgentManager * mAgentManager;
+  Akonadi::AgentInstance mAgentInstance;
+  ProgressItem *mProgressItem;
+
 };
 
 
-#endif /* KMAGENTMANAGER_H */
+#endif /* KMAGENTINSTANCE_H */
 

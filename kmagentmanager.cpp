@@ -19,12 +19,24 @@
 #include "kmagentmanager.h"
 #include <QDebug>
 #include <QStringList>
+#include "kmagentinstance.h"
 
 KMAgentManager::KMAgentManager( QObject *parent )
   : QObject( parent )
   , mAgentManager( Akonadi::AgentManager::self() )
 {
   init();
+}
+
+KMAgentManager::~KMAgentManager()
+{
+  qDebug()<<" KMAgentManager::~KMAgentManager";
+  QMapIterator<QString, KMAgentInstance*> i(lstAgentInstance);
+  while (i.hasNext()) {
+    i.next();
+    delete i.value();
+  }
+  lstAgentInstance.clear();
 }
 
 void KMAgentManager::init()
@@ -34,10 +46,15 @@ void KMAgentManager::init()
   {
     if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
       mListInstance << type;
+      KMAgentInstance *agent = new KMAgentInstance( this, type );
+      lstAgentInstance.insert( type.identifier(), agent );
+
     }
   }
   connect( mAgentManager, SIGNAL( instanceAdded( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceAdded( const Akonadi::AgentInstance& ) ) );
   connect( mAgentManager, SIGNAL( instanceRemoved( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceRemoved( const Akonadi::AgentInstance& ) ) );
+
+  connect( mAgentManager, SIGNAL( instanceProgressChanged( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceProgressChanged( const Akonadi::AgentInstance& ) ) );
 }
 
 Akonadi::AgentInstance::List KMAgentManager::instanceList() const
@@ -55,18 +72,31 @@ bool KMAgentManager::isEmpty() const
   return mListInstance.isEmpty();
 }
 
+void KMAgentManager::slotInstanceProgressChanged( const Akonadi::AgentInstance & instance )
+{
+  qDebug()<<" slotInstanceProgressChanged";
+  if ( lstAgentInstance.contains( instance.identifier() ) ) {
+    lstAgentInstance.value( instance.identifier() )->progressChanged(instance.progress());
+  }
+}
+
 void KMAgentManager::slotInstanceAdded( const Akonadi::AgentInstance & instance)
 {
   qDebug()<<" KMAgentManager::slotInstanceAdded :"<<instance.name();
-  if ( instance.type().mimeTypes().contains( "message/rfc822" ) )
+  if ( instance.type().mimeTypes().contains( "message/rfc822" ) ) {
     mListInstance << instance;
+    KMAgentInstance *agent = new KMAgentInstance( this, instance );
+    lstAgentInstance.insert( instance.identifier(), agent );
+  }
 }
 
 void KMAgentManager::slotInstanceRemoved( const Akonadi::AgentInstance &instance )
 {
   qDebug()<<" KMAgentManager::slotInstanceRemoved :"<<instance.name();
-  if ( mListInstance.contains( instance ) )
+  if ( mListInstance.contains( instance ) ) {
     mListInstance.removeAll( instance );
+    lstAgentInstance.remove( instance.identifier() );
+  }
 }
 
 #include "kmagentmanager.moc"
