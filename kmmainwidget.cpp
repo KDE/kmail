@@ -181,6 +181,9 @@ using KMail::TemplateParser;
 #include <akonadi/entitydisplayattribute.h>
 #include <akonadi/agentinstance.h>
 #include <akonadi/agenttype.h>
+
+
+#include "kmagentmanager.h"
 #include "kmmainwidget.moc"
 using namespace Akonadi;
 
@@ -1221,7 +1224,7 @@ void KMMainWidget::slotCheckMail()
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
   foreach( Akonadi::AgentInstance type, lst ) {
     type.synchronize();
   }
@@ -3050,15 +3053,13 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
 void KMMainWidget::getAccountMenu()
 {
   mActMenu->clear();
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
-    if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
-      // Explicitly make a copy, as we're not changing values of the list but only
-      // the local copy which is passed to action.
-      QAction* action = mActMenu->addAction( QString( type.name() ).replace('&', "&&") );
-      action->setData( type.identifier() );
-    }
+    // Explicitly make a copy, as we're not changing values of the list but only
+    // the local copy which is passed to action.
+    QAction* action = mActMenu->addAction( QString( type.name() ).replace('&', "&&") );
+    action->setData( type.identifier() );
   }
 }
 
@@ -4587,18 +4588,9 @@ void KMMainWidget::slotFilterLogViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFileMenu()
 {
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instances();
-  foreach ( const Akonadi::AgentInstance& type, lst )
-  {
-    if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
-      actionCollection()->action("check_mail")->setEnabled( true );
-      actionCollection()->action("check_mail_in")->setEnabled( true );
-      return;
-    }
-  }
-
-  actionCollection()->action("check_mail")->setEnabled( false );
-  actionCollection()->action("check_mail_in")->setEnabled( false );
+  bool isEmpty = kmkernel->agentManager()->isEmpty();
+  actionCollection()->action("check_mail")->setEnabled( !isEmpty );
+  actionCollection()->action("check_mail_in")->setEnabled( !isEmpty );
 }
 
 //-----------------------------------------------------------------------------

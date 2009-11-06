@@ -19,7 +19,7 @@
 #include "globalsettings.h"
 #include <kcomponentdata.h>
 #include <akonadi/kmime/specialcollections.h>
-#include <akonadi/agentmanager.h>
+
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
@@ -73,6 +73,7 @@ class KMMainWidget;
 class ConfigureDialog;
 class KMMessageTagMgr;
 class FolderCollectionMonitor;
+class KMAgentManager;
 
 /**
  * @short Central point of coordination in KMail
@@ -265,7 +266,7 @@ public:
   void readConfig();
 
 
-  Akonadi::AgentManager *agentManager();
+  KMAgentManager *agentManager();
   Akonadi::ChangeRecorder *monitor();
 
 //TODO port to akonadi   void cleanupImapFolders();
@@ -531,8 +532,8 @@ private:
   QStringList           mAddMessageMsgIds;
   QString               mAddMessageLastFolder;
 
-  Akonadi::AgentManager *mAgentManager;
   FolderCollectionMonitor *mFolderCollectionMonitor;
+  KMAgentManager *mAgentManager;
 
   // special debug area
   int mStorageDebug;

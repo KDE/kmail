@@ -95,6 +95,7 @@ using KWallet::Wallet;
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
 #include "foldercollectionmonitor.h"
+#include "kmagentmanager.h"
 
 static KMKernel * mySelf = 0;
 
@@ -107,7 +108,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
 {
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
-
+  mAgentManager = new KMAgentManager( this );
   mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
   kDebug();
   setObjectName( name );
@@ -193,9 +194,9 @@ KMKernel::~KMKernel ()
   kDebug();
 }
 
-Akonadi::AgentManager *KMKernel::agentManager()
+KMAgentManager *KMKernel::agentManager()
 {
-  return Akonadi::AgentManager::self();
+  return mAgentManager;
 }
 
 Akonadi::ChangeRecorder * KMKernel::monitor()
@@ -368,7 +369,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 {
   if ( !kmkernel->askToGoOnline() )
     return;
-  Akonadi::AgentInstance::List lst = agentManager()->instances();
+  Akonadi::AgentInstance::List lst = agentManager()->instanceList();
   foreach( Akonadi::AgentInstance type, lst ) {
     type.synchronize();
   }
@@ -377,14 +378,12 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 QStringList KMKernel::accounts()
 {
   QStringList accountLst;
-  Akonadi::AgentInstance::List lst = agentManager()->instances();
+  Akonadi::AgentInstance::List lst = agentManager()->instanceList();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
-    if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
-      // Explicitly make a copy, as we're not changing values of the list but only
-      // the local copy which is passed to action.
-      accountLst<<type.identifier();
-    }
+    // Explicitly make a copy, as we're not changing values of the list but only
+    // the local copy which is passed to action.
+    accountLst<<type.identifier();
   }
   return accountLst;
 }
