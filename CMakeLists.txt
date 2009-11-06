@@ -235,6 +235,7 @@ set(kmailprivate_LIB_SRCS
    kleojobexecutor.cpp
    iconnamecache.cpp
    backupjob.cpp
+   importjob.cpp
    folderutil.cpp
 )
 
