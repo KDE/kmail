@@ -79,6 +79,7 @@ class ImportJob : public QObject
 
     QWidget *mParentWidget;
     KURL mArchiveFile;
+    int mNumberOfImportedMessages;
 
     // List of archive folders with their corresponding KMail parent folder that are awaiting
     // processing
