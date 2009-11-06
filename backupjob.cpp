@@ -84,7 +84,7 @@ QString BackupJob::stripRootPath( const QString &path ) const
 void BackupJob::queueFolders( KMFolder *root )
 {
   mPendingFolders.append( root );
-  kDebug(5006) << "Queueing folder " << root->name();
+  kDebug() << "Queueing folder " << root->name();
   KMFolderDir *dir = root->child();
   if ( dir ) {
     QListIterator<KMFolderNode*> it( *dir );
@@ -159,7 +159,7 @@ void BackupJob::archiveNextMessage()
 {
   mCurrentMessage = 0;
   if ( mPendingMessages.isEmpty() ) {
-    kDebug(5006) << "===> All messages done in folder " << mCurrentFolder->name();
+    kDebug() << "===> All messages done in folder " << mCurrentFolder->name();
     mCurrentFolder->close( "BackupJob" );
     mCurrentFolderOpen = false;
     archiveNextFolder();
@@ -173,7 +173,7 @@ void BackupJob::archiveNextMessage()
   int index = -1;
   KMMsgDict::instance()->getLocation( serNum, &folder, &index );
   if ( index == -1 ) {
-    kWarning(5006) << "Failed to get message location for sernum " << serNum;
+    kWarning() << "Failed to get message location for sernum " << serNum;
     abort( i18n( "Unable to retrieve a message for folder '%1'.", mCurrentFolder->name() ) );
     return;
   }
@@ -181,13 +181,13 @@ void BackupJob::archiveNextMessage()
   Q_ASSERT( folder == mCurrentFolder );
   KMMessage *message = mCurrentFolder->getMsg( index );
   if ( !message ) {
-    kWarning(5006) << "Failed to retrieve message with index " << index;
+    kWarning() << "Failed to retrieve message with index " << index;
     abort( i18n( "Unable to retrieve a message for folder '%1'.", mCurrentFolder->name() ) );
     return;
   }
 
-  kDebug(5006) << "Going to get next message with subject " << message->subject() << ", "
-               << mPendingMessages.size() << " messages left in the folder.";
+  kDebug() << "Going to get next message with subject " << message->subject() << ", "
+           << mPendingMessages.size() << " messages left in the folder.";
 
   if ( message->isComplete() ) {
     // Use a singleshot timer, or otherwise we risk ending up in a very big recursion
@@ -205,8 +205,8 @@ void BackupJob::archiveNextMessage()
     mCurrentJob->start();
   }
   else {
-    kWarning(5006) << "Message with subject " << mCurrentMessage->subject()
-                   << " is neither complete nor has a parent!";
+    kWarning() << "Message with subject " << mCurrentMessage->subject()
+               << " is neither complete nor has a parent!";
     abort( i18n( "Internal error while trying to retrieve a message from folder '%1'.",
                  mCurrentFolder->name() ) );
   }
@@ -215,7 +215,7 @@ void BackupJob::archiveNextMessage()
 void BackupJob::processCurrentMessage()
 {
   if ( mCurrentMessage ) {
-    kDebug(5006) << "Processing message with subject " << mCurrentMessage->subject();
+    kDebug() << "Processing message with subject " << mCurrentMessage->subject();
     const DwString &messageDWString = mCurrentMessage->asDwString();
     const qint64 messageSize = messageDWString.size();
     const char *messageString = mCurrentMessage->asDwString().c_str();
@@ -237,7 +237,7 @@ void BackupJob::processCurrentMessage()
   else {
     // No message? According to ImapJob::slotGetMessageResult(), that means the message is no
     // longer on the server. So ignore this one.
-    kWarning(5006) << "Unable to download a message for folder " << mCurrentFolder->name();
+    kWarning() << "Unable to download a message for folder " << mCurrentFolder->name();
   }
   archiveNextMessage();
 }
@@ -272,7 +272,7 @@ void BackupJob::archiveNextFolder()
   }
 
   mCurrentFolder = mPendingFolders.takeAt( 0 );
-  kDebug(5006) << "===> Archiving next folder: " << mCurrentFolder->name();
+  kDebug() << "===> Archiving next folder: " << mCurrentFolder->name();
   if ( mCurrentFolder->open( "BackupJob" ) != 0 ) {
     abort( i18n( "Unable to open folder '%1'.", mCurrentFolder->name() ) );
     return;
@@ -308,8 +308,8 @@ void BackupJob::archiveNextFolder()
     unsigned long serNum = KMMsgDict::instance()->getMsgSerNum( mCurrentFolder, i );
     if ( serNum == 0 ) {
       // Uh oh
-      kWarning(5006) << "Got serial number zero in " << mCurrentFolder->name()
-                     << " at index " << i << "!";
+      kWarning() << "Got serial number zero in " << mCurrentFolder->name()
+                 << " at index " << i << "!";
       // TODO: handle error in a nicer way. this is _very_ bad
       abort( i18n( "Unable to backup messages in folder '%1', the index file is corrupted.",
                    mCurrentFolder->name() ) );
@@ -367,7 +367,7 @@ void BackupJob::start()
     }
   }
 
-  kDebug(5006) << "Starting backup.";
+  kDebug() << "Starting backup.";
   if ( !mArchive->open( IO_WriteOnly ) ) {
     abort( i18n( "Unable to open archive for writing." ) );
     return;

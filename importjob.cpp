@@ -64,7 +64,7 @@ void ImportJob::setRootFolder( KMFolder *rootFolder )
 
 void ImportJob::finish()
 {
-  kDebug(5006) << "Finished import job.";
+  kDebug() << "Finished import job.";
   QString text = i18n( "Importing the archive file '%1' into the folder '%2' succeeded.",
                        mArchiveFile.path(), mRootFolder->name() );
   text += '\n' + i18n( "%1 messages were imported.", mNumberOfImportedMessages );
@@ -107,10 +107,10 @@ void ImportJob::enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder 
       const KArchiveEntry *entry = messageDir->entry( entries[i] );
       Q_ASSERT( entry );
       if ( entry->isDirectory() ) {
-        kWarning(5006) << "Unexpected subdirectory in archive folder " << dir->name();
+        kWarning() << "Unexpected subdirectory in archive folder " << dir->name();
       }
       else {
-        kDebug(5006) << "Queueing message " << entry->name();
+        kDebug() << "Queueing message " << entry->name();
         const KArchiveFile *file = static_cast<const KArchiveFile*>( entry );
         messagesToQueue.files.append( file );
       }
@@ -118,14 +118,14 @@ void ImportJob::enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder 
     mQueuedMessages.append( messagesToQueue );
   }
   else {
-    kWarning(5006) << "No 'cur' subdirectory for archive directory " << dir->name();
+    kWarning() << "No 'cur' subdirectory for archive directory " << dir->name();
   }
 }
 
 void ImportJob::importNextMessage()
 {
   if ( mQueuedMessages.isEmpty() ) {
-    kDebug(5006) << "Processed all messages in the queue.";
+    kDebug() << "Processed all messages in the queue.";
     if ( mCurrentFolder ) {
       mCurrentFolder->close( "ImportJob" );
     }
@@ -143,7 +143,7 @@ void ImportJob::importNextMessage()
 
   KMFolder *folder = messages.parent;
   if ( folder != mCurrentFolder ) {
-    kDebug(5006) << "Processed all messages in the current folder of the queue.";
+    kDebug() << "Processed all messages in the current folder of the queue.";
     if ( mCurrentFolder ) {
       mCurrentFolder->close( "ImportJob" );
     }
@@ -152,7 +152,7 @@ void ImportJob::importNextMessage()
       abort( i18n( "Unable to open folder '%1'.", mCurrentFolder->name() ) );
       return;
     }
-    kDebug(5006) << "Current folder of queue is now: " << mCurrentFolder->name();
+    kDebug() << "Current folder of queue is now: " << mCurrentFolder->name();
   }
   const KArchiveFile *file = messages.files.first();
   Q_ASSERT( file );
@@ -167,8 +167,8 @@ void ImportJob::importNextMessage()
   }
   else {
     mNumberOfImportedMessages++;
-    kDebug(5006) << "Added message with subject " /*<< newMessage->subject()*/ // < this causes a pure virtual method to be called...
-                 << " to folder " << mCurrentFolder->name() << " at index " << retIndex;
+    kDebug() << "Added message with subject " /*<< newMessage->subject()*/ // < this causes a pure virtual method to be called...
+             << " to folder " << mCurrentFolder->name() << " at index " << retIndex;
   }
   QTimer::singleShot( 0, this, SLOT( importNextMessage() ) );
 }
@@ -183,18 +183,18 @@ void ImportJob::importNextDirectory()
   Folder folder = mQueuedDirectories.first();
   KMFolder *currentFolder = folder.parent;
   mQueuedDirectories.pop_front();
-  kDebug(5006) << "Working on directory " << folder.archiveDir->name();
+  kDebug() << "Working on directory " << folder.archiveDir->name();
 
   QStringList entries = folder.archiveDir->entries();
   for ( int i = 0; i < entries.size(); i++ ) {
     const KArchiveEntry *entry = folder.archiveDir->entry( entries[i] );
     Q_ASSERT( entry );
-    kDebug(5006) << "Queueing entry " << entry->name();
+    kDebug() << "Queueing entry " << entry->name();
     if ( entry->isDirectory() ) {
       const KArchiveDirectory *dir = static_cast<const KArchiveDirectory*>( entry );
       if ( !dir->name().startsWith( QLatin1String( "." ) ) ) {
 
-        kDebug(5006) << "Queueing messages in folder " << entry->name();
+        kDebug() << "Queueing messages in folder " << entry->name();
         KMFolder *subFolder = createSubFolder( currentFolder, entry->name() );
         if ( !subFolder )
           return;
@@ -208,7 +208,7 @@ void ImportJob::importNextDirectory()
           Folder newFolder;
           newFolder.archiveDir = static_cast<const KArchiveDirectory*>( folder.archiveDir->entry( dirName ) );
           newFolder.parent = subFolder;
-          kDebug(5006) << "Enqueueing directory " << newFolder.archiveDir->name();
+          kDebug() << "Enqueueing directory " << newFolder.archiveDir->name();
           mQueuedDirectories.push_back( newFolder );
         }
       }
