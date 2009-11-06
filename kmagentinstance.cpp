@@ -18,6 +18,7 @@
 
 #include "kmagentinstance.h"
 #include <akonadi/agentinstance.h>
+#include <agentprogressmonitor.h>
 #include <QDebug>
 #include <KLocale>
 #include "progressmanager.h"
@@ -28,32 +29,13 @@ KMAgentInstance::KMAgentInstance( QObject *parent, const Akonadi::AgentInstance 
   :QObject( parent ), mAgentInstance( inst ), mProgressItem( 0 )
 {
   qDebug()<<" KMAgentInstance::KMAgentInstance";
+  ProgressItem *item = ProgressManager::createProgressItem( mAgentInstance.name() );
+  mProgressItem = ProgressManager::createProgressItem(item, "MailCheck"+mAgentInstance.name(),i18n("Preparing transmission from \"%1\"...", mAgentInstance.name() ) );
 }
 
 KMAgentInstance::~KMAgentInstance()
 {
   qDebug()<<" KMAgentInstance::~KMAgentInstance";
-}
-
-void KMAgentInstance::progressChanged(int progress)
-{
-  if ( !mProgressItem ) {
-    mProgressItem = ProgressManager::createProgressItem ("MailCheck"+mAgentInstance.name(),i18n("Preparing transmission from \"%1\"...", mAgentInstance.name() ) );
-    connect( mProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ), this, SLOT( slotCanceled() ) ) ;
-  }
-  mProgressItem->setProgress( progress );
-  if ( progress == 100 ) {
-    mProgressItem->setComplete();
-    mProgressItem = 0;
-  }
-  qDebug()<<" progress changed :"<<progress;
-}
-
-void KMAgentInstance::slotCanceled()
-{
-  mAgentInstance.abortCurrentTask();
-  mProgressItem->reset();
-  mProgressItem = 0;
 }
 
 #include "kmagentinstance.moc"

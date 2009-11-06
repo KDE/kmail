@@ -36,13 +36,9 @@ public:
 
   void progressChanged( int );
 
-protected slots:
-  void slotCanceled();
-
 private:
   Akonadi::AgentInstance mAgentInstance;
   ProgressItem *mProgressItem;
-
 };
 
 

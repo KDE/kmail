@@ -40,7 +40,6 @@ public:
 protected slots:
   void slotInstanceAdded( const Akonadi::AgentInstance &);
   void slotInstanceRemoved( const Akonadi::AgentInstance &);
-  void slotInstanceProgressChanged( const Akonadi::AgentInstance &);
 
 private:
   void init();

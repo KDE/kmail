@@ -54,7 +54,6 @@ void KMAgentManager::init()
   connect( mAgentManager, SIGNAL( instanceAdded( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceAdded( const Akonadi::AgentInstance& ) ) );
   connect( mAgentManager, SIGNAL( instanceRemoved( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceRemoved( const Akonadi::AgentInstance& ) ) );
 
-  connect( mAgentManager, SIGNAL( instanceProgressChanged( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceProgressChanged( const Akonadi::AgentInstance& ) ) );
 }
 
 Akonadi::AgentInstance::List KMAgentManager::instanceList() const
@@ -70,14 +69,6 @@ Akonadi::AgentInstance KMAgentManager::instance( const QString &name)
 bool KMAgentManager::isEmpty() const
 {
   return mListInstance.isEmpty();
-}
-
-void KMAgentManager::slotInstanceProgressChanged( const Akonadi::AgentInstance & instance )
-{
-  qDebug()<<" slotInstanceProgressChanged";
-  if ( lstAgentInstance.contains( instance.identifier() ) ) {
-    lstAgentInstance.value( instance.identifier() )->progressChanged(instance.progress());
-  }
 }
 
 void KMAgentManager::slotInstanceAdded( const Akonadi::AgentInstance & instance)
