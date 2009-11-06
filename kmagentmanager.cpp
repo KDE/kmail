@@ -36,6 +36,8 @@ void KMAgentManager::init()
       mListInstance << type;
     }
   }
+  connect( mAgentManager, SIGNAL( instanceAdded( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceAdded( const Akonadi::AgentInstance& ) ) );
+  connect( mAgentManager, SIGNAL( instanceRemoved( const Akonadi::AgentInstance & ) ), this, SLOT( slotInstanceRemoved( const Akonadi::AgentInstance& ) ) );
 }
 
 Akonadi::AgentInstance::List KMAgentManager::instanceList() const
