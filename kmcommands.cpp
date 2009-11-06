@@ -727,26 +727,30 @@ KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, const Akonadi::Item
 
 KMCommand::Result KMUseTemplateCommand::execute()
 {
-  Akonadi::Item msg = retrievedMessage();
-  if ( !msg.isValid() || !msg.parentCollection().isValid() ||
-       !kmkernel->folderIsTemplates( msg.parentCollection() ) ) {
+  Akonadi::Item item = retrievedMessage();
+  if ( !item.isValid()
+#if 0 //Don't work after a fetch...
+       || !item.parentCollection().isValid() ||
+       !kmkernel->folderIsTemplates( item.parentCollection() )
+#endif
+       ) {
     return Failed;
   }
-#if 0
-  // Take a copy of the original message, which remains unchanged.
-  KMime::Message *newMsg = new KMime::Message( new DwMessage( *msg->asDwMessage() ) );
-  newMsg->setComplete( msg->isComplete() );
-
+  KMime::Message::Ptr msg = KMail::Util::message( item );
+  if ( !msg )
+    return Failed;
+  KMime::Message *newMsg = new KMime::Message;
+  newMsg->setContent( msg->encodedContent() );
   // these fields need to be regenerated for the new message
   newMsg->removeHeader("Date");
   newMsg->removeHeader("Message-ID");
 
   KMail::Composer *win = KMail::makeComposer();
-  newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
+  //newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
   win->setMsg( newMsg, false, true );
   win->show();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#if 0
+  newMsg->setComplete( msg->isComplete() );
 #endif
   return OK;
 }
