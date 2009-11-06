@@ -144,6 +144,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     mFolderViewParent( 0 ),
     mFolderViewSplitter( 0 ),
     mQuickSearchLine( 0 ),
+    mArchiveFolderAction( 0 ),
+    mImportArchiveAction( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
@@ -2833,13 +2835,13 @@ void KMMainWidget::setupActions()
   mRemoveFolderAction = new KAction( "foo" /*set in updateFolderMenu*/, "editdelete", 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
 
-  mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), "filesave", 0, this,
+  /*mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), "filesave", 0, this,
                                       SLOT( slotArchiveFolder() ), actionCollection(),
                                       "archive_folder" );
 
   mImportArchiveAction = new KAction( i18n( "Import Archive..." ), "fileload", 0, this,
                                       SLOT( slotImportArchive() ), actionCollection(),
-                                      "import_archive" );
+                                      "import_archive" );*/
 
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
@@ -3476,7 +3478,8 @@ void KMMainWidget::updateFolderMenu()
   mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch
         ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  mArchiveFolderAction->setEnabled( mFolder && !multiFolder );
+  if ( mArchiveFolderAction )
+    mArchiveFolderAction->setEnabled( mFolder && !multiFolder );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
