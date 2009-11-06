@@ -284,6 +284,7 @@ protected slots:
   void slotInvalidateIMAPFolders();
   void slotMarkAllAsRead();
   void slotArchiveFolder();
+  void slotImportArchive();
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
@@ -533,7 +534,7 @@ private:
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
       *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mFolderShortCutCommandAction, *mTroubleshootFolderAction,
-      *mRemoveDuplicatesAction, *mArchiveFolderAction;
+      *mRemoveDuplicatesAction, *mArchiveFolderAction, *mImportArchiveAction;
   KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction, *mThreadMessagesAction;
   KToggleAction *mThreadBySubjectAction;
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
