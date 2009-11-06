@@ -1372,6 +1372,7 @@ void KMMainWidget::slotShowNewFromTemplate()
 
   mTemplateMenu->menu()->clear();
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mTemplateFolder );
+  job->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
   job->fetchScope().fetchFullPayload();
   Akonadi::Item::List items;
   if ( job->exec() ) {

@@ -729,10 +729,8 @@ KMCommand::Result KMUseTemplateCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid()
-#if 0 //Don't work after a fetch...
        || !item.parentCollection().isValid() ||
        !kmkernel->folderIsTemplates( item.parentCollection() )
-#endif
        ) {
     return Failed;
   }
