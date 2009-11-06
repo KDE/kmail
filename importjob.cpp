@@ -159,7 +159,7 @@ void ImportJob::importNextMessage()
   messages.files.removeFirst();
 
   KMMessage *newMessage = new KMMessage();
-  newMessage->fromString( file->data() );
+  newMessage->fromString( file->data(), true /* setStatus */ );
   int retIndex;
   if ( mCurrentFolder->addMsg( newMessage, &retIndex ) != 0 ) {
     abort( i18n( "Failed to add a message to the folder '%1'.", mCurrentFolder->name() ) );
