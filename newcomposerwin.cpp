@@ -2171,9 +2171,7 @@ void KMComposeWin::readyForSending()
 
 void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool encrypt )
 {
-  if( !sign&& !encrypt ) {
-    return;
-  }
+
 
   kDebug() << "filling crypto info";
 
@@ -2182,7 +2180,22 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
   QStringList encryptToSelfKeys;
   QStringList signKeys;
 
-  if( encrypt ) {
+  bool signSomething = sign;
+  foreach( AttachmentPart::Ptr attachment, mAttachmentModel->attachments() ) {
+    if( attachment->isSigned() )
+      signSomething = true;
+  }
+  bool encryptSomething = encrypt;
+  foreach( AttachmentPart::Ptr attachment, mAttachmentModel->attachments() ) {
+    if( attachment->isEncrypted() )
+      encryptSomething = true;
+  }
+
+   if( !signSomething && !encryptSomething ) {
+    return;
+  }
+  
+  if( encryptSomething ) {
     if ( !id.pgpEncryptionKey().isEmpty() )
       encryptToSelfKeys.push_back( id.pgpEncryptionKey() );
     if ( !id.smimeEncryptionKey().isEmpty() )
@@ -2194,7 +2207,7 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     }
   }
 
-  if( sign ) {
+  if( signSomething ) {
     if ( !id.pgpSigningKey().isEmpty() )
       signKeys.push_back( id.pgpSigningKey() );
     if ( !id.smimeSigningKey().isEmpty() )
@@ -2216,20 +2229,17 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     }
   }
 
-  kDebug() << "primary recipients:" <<  recipients;
-  kDebug() << "secondary:" <<  bcc;
   keyResolver->setPrimaryRecipients( recipients );
   keyResolver->setSecondaryRecipients( bcc );
 
-  kDebug() << "resolving keys that we set";
-  if ( keyResolver->resolveAllKeys( sign, encrypt ) != Kpgp::Ok ) {
+  if ( keyResolver->resolveAllKeys( signSomething, encryptSomething ) != Kpgp::Ok ) {
     /// TODO handle failure
     kDebug() << "failed to resolve keys! oh noes";
     return;
   }
   kDebug() << "done resolving keys";
 
-  if( encrypt ) {
+  if( encryptSomething ) {
     std::vector<Kleo::KeyResolver::SplitInfo> encData = keyResolver->encryptionItems( cryptoMessageFormat() );
     std::vector<Kleo::KeyResolver::SplitInfo>::iterator it;
     QList<QPair<QStringList, std::vector<GpgME::Key> > > data;
@@ -2240,13 +2250,12 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     composer->setEncryptionKeys( data );
   }
 
-  if( sign ) {
+  if( signSomething ) {
     std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( cryptoMessageFormat() );
     composer->setSigningKeys( signingKeys );
   }
 
   composer->setSignAndEncrypt( sign, encrypt );
-  kDebug() << "setting crypto format on message:" << Kleo::cryptoMessageFormatToString( cryptoMessageFormat() );
   composer->setMessageCryptoFormat( cryptoMessageFormat() );
 }
 
