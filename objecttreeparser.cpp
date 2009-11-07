@@ -1311,7 +1311,7 @@ namespace KMail {
       // here.
       // Do this only when prefering HTML mail, though, since otherwise the attachments are hidden
       // when displaying plain text.
-      if ( !dataHtml && mReader->htmlMail() ) {
+      if ( !dataHtml && mReader && mReader->htmlMail() ) {
         dataHtml = child->findType( DwMime::kTypeMultipart, DwMime::kSubtypeMixed, false, true );
       }
     }
