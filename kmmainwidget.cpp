@@ -327,11 +327,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
 {
   updateFolderMenu();
   folderSelected( col );
-#ifdef OLD_FOLDERVIEW
-  // update the caption (useful if the name changed)
-  emit captionChangeRequest( mMainFolderView->currentItemFullPath() );
-#endif
-
+  emit captionChangeRequest( col.name() );
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread, bool preferNewTabForOpening )
