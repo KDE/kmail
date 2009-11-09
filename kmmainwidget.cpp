@@ -3932,6 +3932,10 @@ void KMMainWidget::updateMessageActions()
   actionCollection()->action( "go_prev_message" )->setEnabled( mails );
   actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
   const qint64 nbMsgOutboxCollection = kmkernel->outboxCollectionFolder().statistics().count();
+  //TODO : don't know when statistic is not correct here.
+  //FIXME
+  qDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
+  qDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 
@@ -4208,10 +4212,10 @@ void KMMainWidget::initializeMessageTagActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::removeDuplicates()
 {
-#ifdef OLD_MESSAGELIST
   if ( !mCurrentFolder ) {
     return;
   }
+#ifdef OLD_MESSAGELIST
   KMFolder *oFolder = mFolder;
   mMessageListView->setCurrentFolder( 0 );
   QMap< QString, QList<int> > idMD5s;
