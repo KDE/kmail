@@ -3932,8 +3932,12 @@ void KMMainWidget::updateMessageActions()
   //FIXME
   qDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
   qDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
+#if 0
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
+#else
+  qDebug()<<" Fix enable/disable send_queued action";
+#endif
 
 #ifdef OLD_MESSAGELIST
   if ( ( count == 1 ) && currentMessage.isValid() )
