@@ -331,6 +331,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
   // update the caption (useful if the name changed)
   emit captionChangeRequest( mMainFolderView->currentItemFullPath() );
 #endif
+
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread, bool preferNewTabForOpening )
@@ -904,6 +905,7 @@ void KMMainWidget::createWidgets()
     connect( action, SIGNAL( triggered( bool ) ),
              SLOT( slotFocusQuickSearch() ) );
   }
+
 #if 0
   // FIXME!
   if ( !GlobalSettings::self()->quickSearchActive() )
@@ -1037,6 +1039,9 @@ void KMMainWidget::createWidgets()
     connect( mRemoveDuplicatesAction, SIGNAL( triggered( bool ) ),
              SLOT( removeDuplicates() ) );
     mRemoveDuplicatesAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Asterisk ) );
+  }
+  {
+    mCollectionProperties = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties );
   }
   {
     mMoveMsgToFolderAction = new KAction( i18n("Move Message to Folder"), this );
@@ -3994,6 +3999,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder );
+  mCollectionProperties->setVisible( mCurrentFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection() ) );
 }
 
 //-----------------------------------------------------------------------------

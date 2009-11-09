@@ -544,7 +544,7 @@ private:
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-      *mRefreshImapCacheAction, *mMoveMsgToFolderAction;
+      *mRefreshImapCacheAction, *mMoveMsgToFolderAction, *mCollectionProperties;
     // Composition actions
     KAction *mPrintAction;
     // Filter actions
