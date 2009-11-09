@@ -99,9 +99,9 @@ void CollectionGeneralPage::init()
       if ( imapPath == "/INBOX/" )
         mNameEdit->setEnabled( false );
     }
+#endif
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
-#endif
     connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
                     this, SLOT( slotFolderNameChanged( const QString & ) ) );
   }
