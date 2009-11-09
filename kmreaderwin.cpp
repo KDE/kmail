@@ -420,10 +420,8 @@ void KMReaderWin::slotTouchMessage()
   if ( KMime::Message * receipt = KMail::MessageHelper::createMDN( message(), &*msg, MDN::ManualAction,
                                                         MDN::Displayed,
                                                         true /* allow GUI */ ) ) {
-#if 0
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
       KMessageBox::error( this, i18n("Could not send MDN.") );
-#endif
   }
 }
 
