@@ -2371,16 +2371,15 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
 
 void KMComposeWin::queueMessage( KMime::Message::Ptr message )
 {
-  using Message::InfoPart;
 
   Q_ASSERT( mComposer );
-  const InfoPart *infoPart = mComposer->infoPart();
+  const Message::InfoPart *infoPart = mComposer->infoPart();
   MailTransport::MessageQueueJob *qjob = new MailTransport::MessageQueueJob( this );
   qjob->setMessage( message );
   qjob->setTransportId( infoPart->transportId() );
   // TODO dispatch mode.
   // TODO sent-mail collection
-  fillQueueJobHeaders( qjob, message );
+  fillQueueJobHeaders( qjob, message, infoPart );
 
   connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
   mPendingQueueJobs++;
@@ -2389,29 +2388,35 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message )
   kDebug() << "Queued a message.";
 }
 
-void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message )
+void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message, const Message::InfoPart* infoPart )
 {
-  QStringList to, cc, bcc;
-  foreach( QByteArray address, message->to()->addresses() ) {
-    to << QString::fromUtf8( address );
+  qjob->setFrom( infoPart->from() );
+  
+  if( mEncryptAction->isChecked() && !infoPart->bcc().isEmpty() ) // have to deal with multiple message contents
+  {
+    // if the bcc isn't empty, then we send it to the bcc because this is the bcc-only encrypted body
+    if( !message->bcc()->addresses().isEmpty() ) {
+      QStringList bcc;
+      foreach( QByteArray address, message->bcc()->addresses()  ) {
+        bcc << QString::fromUtf8( address );
+      }
+      kDebug() << "sending with-bcc encr mail to a secondary recipient:" << bcc;
+      qjob->setTo( bcc );
+    } else {
+      // the main mail in the encrypted set, just don't set the bccs here
+      qjob->setTo( infoPart->to() );
+      qjob->setCc( infoPart->cc() );
+
+      kDebug() << "sending with-bcc encrypted mail to orig recipients:" <<infoPart->to() << infoPart->cc();
+
+    }
+  } else {
+    // continue as normal
+    kDebug() << "no bccs";
+    qjob->setTo( infoPart->to() );
+    qjob->setCc( infoPart->cc() );
+    qjob->setBcc( infoPart->bcc() );
   }
-
-  foreach( QByteArray address, message->cc()->addresses()  ) {
-    cc << QString::fromUtf8( address );
-  }
-
-  foreach( QByteArray address, message->bcc()->addresses()  ) {
-    bcc << QString::fromUtf8( address );
-  }
-
-  // NOTE what to do if there is more than one From address?
-  // it is supported in KMime::Headers::From, but not in the MessageQueueJob
-  qjob->setFrom( QString::fromUtf8( message->from()->addresses().first() ) );
-
-  qjob->setTo( to );
-  qjob->setCc( cc );
-  qjob->setBcc( bcc );
-
 }
 
 void KMComposeWin::slotQueueResult( KJob *job )

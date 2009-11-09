@@ -128,6 +128,10 @@ namespace MailTransport{
   class MessageQueueJob;
 }
 
+namespace Message {
+  class InfoPart;
+}
+
 //-----------------------------------------------------------------------------
 class KMComposeWin : public KMail::Composer
 {
@@ -768,7 +772,7 @@ class KMComposeWin : public KMail::Composer
     /**
      * Fills in headers for message going into queue. Just sets from/to/bcc/cc
     */
-    void fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message );
+    void fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message, const Message::InfoPart* infoPart );
 
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
