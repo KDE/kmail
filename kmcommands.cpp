@@ -1472,11 +1472,10 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     // THIS HAS TO BE AFTER setCte()!!!!
     msgPart->setMessageBody( KMail::Util::ByteArray( msg->asDwString() ) );
     msgPart->setCharset( "" );
-
-    fwdMsg->link( msg, MessageStatus::statusForwarded() );
 #else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+    KMail::MessageHelper::link( &*msg, itemMsg, KPIM::MessageStatus::statusForwarded() );
     mWin->addAttach( msgPart );
   }
 

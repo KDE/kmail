@@ -363,7 +363,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 }
 
 /********************************************************************/
-/*             DCOP-callable, and command line actions              */
+/*             D-Bus-callable, and command line actions              */
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
@@ -1491,12 +1491,6 @@ void KMKernel::init()
   readConfig();
 
   the_undoStack     = new UndoStack(20);
-#if 0
-  the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
-  KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
-  if (lsf)
-    the_searchFolderMgr->remove( lsf );
-#endif
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
