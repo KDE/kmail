@@ -196,7 +196,7 @@ void FolderSelectionTreeView::readConfig()
   case DisplayNever:
     d->filterModel->setToolTipEnabled( false );
   }
-
+  d->collectionFolderView->askDndActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
   readQuotaConfig();
 }
 
