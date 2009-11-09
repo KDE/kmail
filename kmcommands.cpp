@@ -3112,7 +3112,7 @@ void KMHandleAttachmentCommand::atmSave()
   parts.append( mNode );
   // save, do not leave encoded
   KMSaveAttachmentsCommand *command =
-    new KMSaveAttachmentsCommand( 0, parts, mMsg, false );
+    new KMSaveAttachmentsCommand( parentWidget(), parts, mMsg, false );
   command->start();
 }
 
