@@ -2391,6 +2391,10 @@ void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveI
     return;
   }
 
+  // Store when the draft or template got saved.
+  message->date()->setDateTime( KDateTime::currentLocalDateTime() );
+  message->assemble();
+
   Akonadi::Item item;
   item.setMimeType( "message/rfc822" );
   item.setPayload( message );
