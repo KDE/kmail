@@ -2315,27 +2315,29 @@ KMUrlClickedCommand::KMUrlClickedCommand( const KUrl &url, uint identity,
 
 KMCommand::Result KMUrlClickedCommand::execute()
 {
-#if 0 //TODO port to akonadi
   KMime::Message* msg;
 
   if (mUrl.protocol() == "mailto")
   {
     msg = new KMime::Message;
     KMail::MessageHelper::initHeader( msg, mIdentity );
+#if 0 //Port it
     msg->setCharset("utf-8");
-
+#endif
     QMap<QString, QString> fields =  KMail::StringUtil::parseMailtoUrl( mUrl );
 
-    msg->setTo( fields.value( "to" ) );
+    msg->to()->fromUnicodeString( fields.value( "to" ),"utf-8" );
     if ( !fields.value( "subject" ).isEmpty() )
-      msg->setSubject( fields.value( "subject" ) );
+      msg->subject()->fromUnicodeString( fields.value( "subject" ),"utf-8" );
     if ( !fields.value( "body" ).isEmpty() )
-      msg->setBodyFromUnicode( fields.value( "body" ) );
+      msg->setBody( fields.value( "body" ).toUtf8() );
     if ( !fields.value( "cc" ).isEmpty() )
-      msg->setCc( fields.value( "cc" ) );
+      msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
 
     KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, mIdentity );
+#if 0 //Port it
     win->setCharset("", true);
+#endif
     win->setFocusToSubject();
     win->show();
   }
@@ -2366,9 +2368,6 @@ KMCommand::Result KMUrlClickedCommand::execute()
   }
   else
     return Failed;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 
