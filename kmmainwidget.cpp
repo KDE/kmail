@@ -761,9 +761,7 @@ void KMMainWidget::readConfig()
   { // Read the config of the folder views and the header
     if ( mMsgView )
       mMsgView->readConfig();
-#ifdef OLD_MESSAGELIST
-    mMessageListView->reloadGlobalConfiguration();
-#endif
+    mMessagePane->reloadGlobalConfiguration();
     mCollectionFolderView->readConfig();
   }
 
