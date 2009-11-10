@@ -1291,8 +1291,8 @@ KMCommand::Result KMForwardCommand::execute()
 
       // dummy header initialization; initialization with the correct identity
       // is done below
-      fwdMsg->initHeader(id);
-      fwdMsg->setAutomaticFields(true);
+      KMail::MessageHelper::initHeader( fwdMsg, id );
+      KMail::MessageHelper::setAutomaticFields( fwdMsg, true );
       fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
       QByteArray boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
       msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
@@ -1329,7 +1329,7 @@ KMCommand::Result KMForwardCommand::execute()
       }
       if ( id == 0 )
         id = mIdentity; // use folder identity if no message had an id set
-      fwdMsg->initHeader(id);
+      KMail::MessageHelper::initHeader( fwdMsg, id );
       msgPartText += "--";
       msgPartText += QString::fromLatin1( boundary );
       msgPartText += "--\n";
@@ -1363,8 +1363,8 @@ KMCommand::Result KMForwardCommand::execute()
       if ( id == 0 )
         id = mIdentity; // use folder identity if no message had an id set
       KMime::Message *fwdMsg = new KMime::Message;
-      fwdMsg->initHeader(id);
-      fwdMsg->setAutomaticFields(true);
+      KMail::MessageHelper::initHeader( fwdMsg, id );
+      KMail::MessageHelper::setAutomaticFields( fwdMsg, true );
       fwdMsg->setCharset("utf-8");
 
       foreach( KMime::Message *msg, linklist ) {
@@ -2305,7 +2305,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
   if (mUrl.protocol() == "mailto")
   {
     msg = new KMime::Message;
-    msg->initHeader(mIdentity);
+    KMail::MessageHelper::initHeader( msg, mIdentity );
     msg->setCharset("utf-8");
 
     QMap<QString, QString> fields =  KMail::StringUtil::parseMailtoUrl( mUrl );
