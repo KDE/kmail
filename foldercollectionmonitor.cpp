@@ -23,6 +23,7 @@
 #include <akonadi/itemdeletejob.h>
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/item.h>
+#include <akonadi/kmime/messageparts.h>
 
 FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   :QObject( parent )
@@ -35,7 +36,7 @@ FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   mMonitor->setMimeTypeMonitored( "message/rfc822" );
   mMonitor->setResourceMonitored( "akonadi_search_resource" ,  true );
   // TODO: Only fetch the envelope etc if possible.
-  mMonitor->itemFetchScope().fetchFullPayload(true);
+  mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
 }
 
 FolderCollectionMonitor::~FolderCollectionMonitor()
