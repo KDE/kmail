@@ -22,6 +22,8 @@
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
 #include <kdebug.h>
+//TODO needs to export to public class
+#include <akonadi/private/collectionutils_p.h>
 
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
@@ -59,6 +61,10 @@ Qt::ItemFlags ReadableCollectionProxyModel::flags( const QModelIndex & index ) c
   {
     const QModelIndex sourceIndex = mapToSource( index.sibling( index.row(), 0 ) );
     Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+
+    if ( Akonadi::CollectionUtils::isVirtual( collection ) ) {
+      return Qt::NoItemFlags;
+    }
     if ( !( collection.rights() & d->necessaryRight )) {
       return Qt::NoItemFlags;
     }

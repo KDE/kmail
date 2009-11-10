@@ -1115,7 +1115,6 @@ void KMMainWidget::createWidgets()
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
 {
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
-    qDebug() <<" UPDATE MENU !!!!!!!!!!!!!!!";
     startUpdateMessageActionsTimer();
   }
 }
@@ -1123,7 +1122,6 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collecti
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 {
   if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == kmkernel->outboxCollectionFolder() ) ) {
-    qDebug()<<" update MENU !!!!!!!!!!!!!!!!!!!!";
     startUpdateMessageActionsTimer();
   }
 }
