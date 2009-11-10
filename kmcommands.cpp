@@ -116,6 +116,7 @@ using KMail::TemplateParser;
 
 #include <akonadi/itemmovejob.h>
 #include <akonadi/itemcopyjob.h>
+#include <akonadi/itemdeletejob.h>
 
 #include "messageviewer/stringutil.h"
 
@@ -2105,8 +2106,15 @@ KMCommand::Result KMMoveCommand::execute()
 
   setEmitsCompletedItself( true );
   setDeletesItself( true );
-  Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder,this );
-  connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
+  if ( mDestFolder.isValid() ) {
+    Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder,this );
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
+  }
+  else {
+    Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( mItem );
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotMoveResult( KJob* ) ) );
+  }
+
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   setDeletesItself( true );
@@ -2282,6 +2290,8 @@ KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, cons
 Akonadi::Collection KMTrashMsgCommand::findTrashFolder( const Akonadi::Collection& folder )
 {
   Akonadi::Collection col = kmkernel->trashCollectionFolder();
+  if ( folder != col )
+    return col;
 #if 0 //port to akonadi
   KMFolder* trash = folder->trashFolder();
   if( !trash )
@@ -2292,7 +2302,7 @@ Akonadi::Collection KMTrashMsgCommand::findTrashFolder( const Akonadi::Collectio
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  return col;
+  return Akonadi::Collection();
 }
 
 
