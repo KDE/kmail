@@ -720,9 +720,7 @@ void KMMainWidget::layoutSplitters()
   // shortcuts like + or j go to the wrong place.
   // This would normally be done in the message list itself, but apparently something resets the focus
   // again, probably all the reparenting we do here.
-#ifdef OLD_MESSAGELIST
-  mMessageListView->focusView();
-#endif
+  mMessagePane->focusView();
   // Make the copy action work, see disconnect comment above
   if ( mMsgView )
     connect( mMsgView->copyAction(), SIGNAL( triggered(bool) ),
