@@ -870,8 +870,8 @@ void KMMainWidget::createWidgets()
 
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
-  Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView->folderTreeView() );
-  saver.restoreState( cfg );
+  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver( mCollectionFolderView->folderTreeView() );
+  saver->restoreState( cfg );
 
   mMessagePane = new MessageList::Pane( mCollectionFolderView->entityModel(), mCollectionFolderView->folderTreeView()->selectionModel(), this );
 
