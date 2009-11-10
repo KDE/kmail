@@ -102,7 +102,7 @@ static bool ValidOpenPGPEncryptionKey( const GpgME::Key & key ) {
   if ( key.protocol() != GpgME::OpenPGP ) {
     return false;
   }
-#if 0
+#if 1
   if ( key.isRevoked() )
     kWarning() << "is revoked";
   if ( key.isExpired() )
@@ -124,7 +124,7 @@ static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
   for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
     if ( !it->isRevoked() && it->validity() >= GpgME::UserID::Marginal )
       return true;
-#if 0
+#if 1
     else
       if ( it->isRevoked() )
         kWarning() <<"a userid is revoked";
@@ -1066,11 +1066,13 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
   //
   // 1. Get keys for all recipients:
   //
-
+  kDebug() << "resolving enc keys";
   for ( std::vector<Item>::iterator it = d->mPrimaryEncryptionKeys.begin() ; it != d->mPrimaryEncryptionKeys.end() ; ++it ) {
+    kDebug() << "checking primary:" << it->address;
     if ( !it->needKeys )
       continue;
     it->keys = getEncryptionKeys( it->address, false );
+    kDebug() << "got # keys:" << it->keys.size();
     if ( it->keys.empty() )
       return Kpgp::Canceled;
     QString addr = canonicalAddress( it->address ).toLower();
@@ -1078,6 +1080,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
     it->pref = pref.encryptionPreference;
     it->signPref = pref.signingPreference;
     it->format = pref.cryptoMessageFormat;
+    kDebug() << "set key data:" << it->pref << it->signPref << it->format;
   }
 
   for ( std::vector<Item>::iterator it = d->mSecondaryEncryptionKeys.begin() ; it != d->mSecondaryEncryptionKeys.end() ; ++it ) {
@@ -1123,6 +1126,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
       break;
     }
   }
+  kDebug() << "got commonFormat for primary recipients:" << commonFormat;
   if ( commonFormat != AutoFormat )
     addKeys( d->mPrimaryEncryptionKeys, commonFormat );
   else
@@ -1163,6 +1167,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
 
   // 4a. Check for OpenPGP keys
 
+  kDebug() << "sizes of encryption items:" << encryptionItems( InlineOpenPGPFormat ).size() << encryptionItems( OpenPGPMIMEFormat ).size() << encryptionItems( SMIMEFormat ).size() << encryptionItems( SMIMEOpaqueFormat ).size();
   if ( !encryptionItems( InlineOpenPGPFormat ).empty() ||
        !encryptionItems( OpenPGPMIMEFormat ).empty() ) {
     // need them

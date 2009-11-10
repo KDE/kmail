@@ -2178,8 +2178,15 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
 
   kDebug() << "filling crypto info";
 
-  Kleo::KeyResolver* keyResolver = new Kleo::KeyResolver( false, true, true, Kleo::AutoFormat, 1, 1, 1, 1, 1, 1 /** TODO fill in real args **/ );
-  const KPIMIdentities::Identity &id = KMKernel::self()->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+  Kleo::KeyResolver* keyResolver = new Kleo::KeyResolver(  encryptToSelf(), showKeyApprovalDialog(),
+                                                           GlobalSettings::self()->pgpAutoEncrypt(), cryptoMessageFormat(),
+                                                           encryptKeyNearExpiryWarningThresholdInDays(),
+                                                           signingKeyNearExpiryWarningThresholdInDays(),
+                                                           encryptRootCertNearExpiryWarningThresholdInDays(),
+                                                           signingRootCertNearExpiryWarningThresholdInDays(),
+                                                           encryptChainCertNearExpiryWarningThresholdInDays(),
+                                                           signingChainCertNearExpiryWarningThresholdInDays());
+                                                           const KPIMIdentities::Identity &id = KMKernel::self()->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QStringList encryptToSelfKeys;
   QStringList signKeys;
 
@@ -2240,7 +2247,7 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     kDebug() << "failed to resolve keys! oh noes";
     return;
   }
-  kDebug() << "done resolving keys";
+  kDebug() << "done resolving keys:";
 
   if( encryptSomething ) {
     std::vector<Kleo::KeyResolver::SplitInfo> encData = keyResolver->encryptionItems( cryptoMessageFormat() );
@@ -2249,6 +2256,7 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     for( it = encData.begin(); it != encData.end(); ++it ) {
       QPair<QStringList, std::vector<GpgME::Key> > p( it->recipients, it->keys );
       data.append( p );
+      kDebug() << "got resolved keys for:" << it->recipients;
     }
     composer->setEncryptionKeys( data );
   }
@@ -2470,6 +2478,81 @@ void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KM
     qjob->setCc( infoPart->cc() );
     qjob->setBcc( infoPart->bcc() );
   }
+}
+
+
+bool KMComposeWin::encryptToSelf()
+{
+  // return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
+  KConfigGroup group( KMKernel::config(), "Composer" );
+  return group.readEntry( "crypto-encrypt-to-self", true );
+}
+
+bool KMComposeWin::showKeyApprovalDialog()
+{
+  KConfigGroup group( KMKernel::config(), "Composer" );
+  return group.readEntry( "crypto-show-keys-for-approval", true );
+}
+
+int KMComposeWin::encryptKeyNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
+    return -1;
+  }
+  const int num = composer.readEntry( "crypto-warn-encr-key-near-expire-int", 14 );
+  return qMax( 1, num );
+}
+
+int KMComposeWin::signingKeyNearExpiryWarningThresholdInDays()
+{
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
+    return -1;
+  }
+  const int num = composer.readEntry( "crypto-warn-sign-key-near-expire-int", 14 );
+  return qMax( 1, num );
+}
+
+int KMComposeWin::encryptRootCertNearExpiryWarningThresholdInDays()
+{
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
+    return -1;
+  }
+  const int num = composer.readEntry( "crypto-warn-encr-root-near-expire-int", 14 );
+  return qMax( 1, num );
+}
+
+int KMComposeWin::signingRootCertNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
+    return -1;
+  }
+  const int num =
+  composer.readEntry( "crypto-warn-sign-root-near-expire-int", 14 );
+  return qMax( 1, num );
+}
+
+int KMComposeWin::encryptChainCertNearExpiryWarningThresholdInDays()
+{
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
+    return -1;
+  }
+  const int num =
+  composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 );
+  return qMax( 1, num );
+}
+
+int KMComposeWin::signingChainCertNearExpiryWarningThresholdInDays()
+{
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
+    return -1;
+  }
+  const int num =
+  composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 );
+  return qMax( 1, num );
 }
 
 void KMComposeWin::slotQueueResult( KJob *job )

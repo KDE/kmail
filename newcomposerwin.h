@@ -776,6 +776,18 @@ class KMComposeWin : public KMail::Composer
     */
     void fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message, const Message::InfoPart* infoPart );
 
+    /**
+     * Helper methods to read from config various encryption settings
+     */
+    inline bool encryptToSelf();
+    inline bool showKeyApprovalDialog();
+    inline int encryptKeyNearExpiryWarningThresholdInDays();
+    inline int signingKeyNearExpiryWarningThresholdInDays();
+    inline int encryptRootCertNearExpiryWarningThresholdInDays();
+    inline int signingRootCertNearExpiryWarningThresholdInDays();
+    inline int encryptChainCertNearExpiryWarningThresholdInDays();
+    inline int signingChainCertNearExpiryWarningThresholdInDays();
+    
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();
