@@ -1607,45 +1607,48 @@ KMCommand::Result KMCustomForwardCommand::execute()
   QList<Akonadi::Item> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) { // Multiple forward
-#if 0
+
     uint id = 0;
     // QCString msgText = "";
-    QList<Akonadi::Item*> linklist;
-    for ( QList<KMime::Message*>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
+    for ( QList<Akonadi::Item>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     {
-      KMime::Message *msg = *it;
-      // set the identity
-      if (id == 0)
-        id = msg->headerByType( "X-KMail-Identity" ).trimmed().toUInt();
-
-      linklist.append( msg );
+      KMime::Message::Ptr msg = KMail::Util::message( *it );
+      if ( msg ) {
+        // set the identity
+        if (id == 0)
+          id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed().toUInt() : 0;
+      }
     }
     if ( id == 0 )
       id = mIdentity; // use folder identity if no message had an id set
     KMime::Message *fwdMsg = new KMime::Message;
-    fwdMsg->initHeader( id );
-    fwdMsg->setAutomaticFields( true );
+    KMail::MessageHelper::initHeader(fwdMsg, id);
+    KMail::MessageHelper::setAutomaticFields(fwdMsg, true);
+
+#if 0 //Port it
     fwdMsg->setCharset( "utf-8" );
+#endif
     // fwdMsg->setBody( msgText );
-
-    for ( QList<KMime::Message*>::const_iterator it = linklist.constBegin(); it != linklist.constEnd(); ++it )
+    for ( QList<Akonadi::Item>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     {
-      KMime::Message *msg = *it;
-      TemplateParser parser( fwdMsg, TemplateParser::Forward,
-        msg->body(), false, false, false );
-        parser.process( msg, 0, true );
+      KMime::Message::Ptr msg = KMail::Util::message( *it );
+      if ( msg ) {
 
-      fwdMsg->link( msg, MessageStatus::statusForwarded() );
+        TemplateParser parser( fwdMsg, TemplateParser::Forward,
+                               msg->body(), false, false, false );
+        parser.process( &*msg, ( *it ).parentCollection(), true );
+
+        KMail::MessageHelper::link( &*msg, *it, MessageStatus::statusForwarded() );
+      }
     }
 
     KCursorSaver busy( KBusyPtr::busy() );
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                  QString(), mTemplate );
+#if 0
     win->setCharset("");
-    win->show();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+    win->show();
   } else { // forward a single message at most
 
     Akonadi::Item item = msgList.first();
