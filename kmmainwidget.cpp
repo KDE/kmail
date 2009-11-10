@@ -4707,12 +4707,31 @@ void KMMainWidget::slotMessageSelected(Akonadi::Item item)
     mMsgView->setMessage(msg);
   }
 #endif
+
+  // TODO: Port to partFetcher.
+  ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
+  itemFetchJob->fetchScope().fetchFullPayload( true );
+  connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(itemsReceived(Akonadi::Item::List)) );
+  connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob *)) );
+}
+
+void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
+{
+  Q_ASSERT( list.size() == 1 );
+  Item item = list.first();
+
   mMsgView->setMessage( item );
   // reset HTML override to the folder setting
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   mMsgView->setDecryptMessageOverwrite( false );
   mMsgView->setShowSignatureDetails( false );
+}
+
+void KMMainWidget::itemsFetchDone( KJob *job )
+{
+  if ( job->error() )
+    kDebug() << job->errorString();
 }
 
 KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Type type )
