@@ -65,7 +65,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );
 
   d->entityModel = new Akonadi::EntityTreeModel( session, KMKernel::self()->monitor(), this );
-
+  d->entityModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
 
 
   Akonadi::EntityMimeTypeFilterModel *collectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
