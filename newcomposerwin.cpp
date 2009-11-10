@@ -56,6 +56,7 @@ using MailTransport::TransportManager;
 #include <mailtransport/transport.h>
 using MailTransport::Transport;
 #include <mailtransport/messagequeuejob.h>
+#include <mailtransport/sentbehaviourattribute.h>
 #include <kmime/kmime_codecs.h>
 #include <kmime/kmime_message.h>
 #include <boost/shared_ptr.hpp>
@@ -2378,7 +2379,8 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message )
   qjob->setMessage( message );
   qjob->setTransportId( infoPart->transportId() );
   // TODO dispatch mode.
-  // TODO sent-mail collection
+  // TODO use the actually selected sent-mail collection
+  qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
   fillQueueJobHeaders( qjob, message, infoPart );
 
   connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
