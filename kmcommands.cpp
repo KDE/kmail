@@ -2838,7 +2838,6 @@ KMCommand::Result KMResendMessageCommand::execute()
 #endif
 
   KMime::Message *newMsg = KMail::MessageHelper::createResend( item, &*msg );
-  kDebug()<<" newMsg :"<<newMsg->encodedContent();
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();
