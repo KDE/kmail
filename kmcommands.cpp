@@ -1349,37 +1349,43 @@ KMCommand::Result KMForwardCommand::execute()
 #endif
       return OK;
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
-#if 0
       uint id = 0;
-      QList<KMime::Message*> linklist;
-      QList<KMime::Message*>::const_iterator it;
+      QList<Akonadi::Item>::const_iterator it;
       for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
         // set the identity
-        if (id == 0)
-          id = (*it)->headerField("X-KMail-Identity").trimmed().toUInt();
+        KMime::Message::Ptr msg = KMail::Util::message( *it );
+        if ( msg ) {
+          if (id == 0)
+            id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
+        }
 
-        linklist.append( (*it) );
       }
       if ( id == 0 )
         id = mIdentity; // use folder identity if no message had an id set
       KMime::Message *fwdMsg = new KMime::Message;
       KMail::MessageHelper::initHeader( fwdMsg, id );
       KMail::MessageHelper::setAutomaticFields( fwdMsg, true );
+#if 0 //Port it
       fwdMsg->setCharset("utf-8");
+#endif
+      for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
+        KMime::Message::Ptr msg = KMail::Util::message( *it );
+        if ( msg ) {
 
-      foreach( KMime::Message *msg, linklist ) {
-        TemplateParser parser( fwdMsg, TemplateParser::Forward,
-                               msg->body(), false, false, false );
-        parser.process( msg, 0, true );
+          TemplateParser parser( fwdMsg, TemplateParser::Forward,
+                                 msg->body(), false, false, false );
+          parser.process( &*msg, ( *it ).parentCollection(), true );
 
-        fwdMsg->link( msg, MessageStatus::statusForwarded() );
+          KMail::MessageHelper::link( &*msg, *it, KPIM::MessageStatus::statusForwarded() );
+        }
       }
 
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
+#if 0  //Port it
       win->setCharset("");
-      win->show();
 #endif
+      win->show();
       return OK;
     } else {
       // user cancelled
