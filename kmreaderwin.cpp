@@ -149,6 +149,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
   mViewer = new Viewer( this,KGlobal::config(),mainWindow,mActionCollection );
+  connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ), this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
   vlay->addWidget( mViewer );
   readConfig();
 
@@ -718,6 +719,20 @@ void KMReaderWin::setAutoDelete(bool f)
 void KMReaderWin::update( bool force )
 {
   mViewer->update( force ? Viewer::Force : Viewer::Delayed );
+}
+
+void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
+{
+  KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>(mMainWindow);
+  uint identity = 0;
+  if ( item.isValid() && item.parentCollection().isValid() ) {
+    FolderCollection fd( item.parentCollection() );
+    identity = fd.identity();
+  }
+
+  KMCommand *command = new KMUrlClickedCommand( url, identity, this,
+                                                false, mainWidget );
+  command->start();
 }
 
 #include "kmreaderwin.moc"

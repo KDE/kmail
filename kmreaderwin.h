@@ -271,7 +271,7 @@ public slots:
   void slotUrlSave();
   void slotAddBookmarks();
   void slotTouchMessage();
-
+  void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
 protected:
 
   KUrl urlClicked() const;
