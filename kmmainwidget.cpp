@@ -1007,6 +1007,7 @@ void KMMainWidget::createWidgets()
     }
 
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ));
+    mFavoriteCollectionsView->setViewMode( QListView::IconMode );
 
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mCollectionFolderView->entityModel(), KMKernel::config()->group( "FavoriteCollections" ), this );
     mFavoriteCollectionsView->setModel( favoritesModel );
