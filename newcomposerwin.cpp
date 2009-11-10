@@ -145,6 +145,7 @@ using KMail::TemplateParser;
 
 #include <akonadi/collectioncombobox.h>
 #include <akonadi/changerecorder.h>
+#include <akonadi/itemcreatejob.h>
 
 #include <messageviewer/objecttreeemptysource.h>
 // MOC
@@ -195,6 +196,7 @@ KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext cont
     mComposer( 0 ),
     mDummyComposer( 0 ),
     mPendingQueueJobs( 0 ),
+    mPendingCreateItemJobs( 0 ),
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
@@ -2334,7 +2336,11 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
     // TODO handle drafts
     kDebug() << "NoError.";
     for( int i = 0; i < mComposer->resultMessages().size(); ++i ) {
-      queueMessage( KMime::Message::Ptr( mComposer->resultMessages()[i] ) );
+      if ( mSaveIn==None ) {
+        queueMessage( KMime::Message::Ptr( mComposer->resultMessages()[i] ) );
+      } else {
+        saveMessage( KMime::Message::Ptr( mComposer->resultMessages()[i] ), mSaveIn );
+      }
     }
   } else if( mComposer->error() == Composer::UserCancelledError ) {
     // The job warned the user about something, and the user chose to return
@@ -2368,6 +2374,47 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
      continueAutoSave();
    }
    mComposer = 0;
+}
+
+void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveIn saveIn )
+{
+  Akonadi::Collection target;
+
+  if ( saveIn==KMComposeWin::Templates ) {
+    target = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Templates );
+  } else {
+    target = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Drafts );
+  }
+
+  if ( !target.isValid() ) {
+    kWarning() << "No default collection for" << saveIn;
+    return;
+  }
+
+  Akonadi::Item item;
+  item.setMimeType( "message/rfc822" );
+  item.setPayload( message );
+  Akonadi::ItemCreateJob *create = new Akonadi::ItemCreateJob( item, target, this );
+  connect( create, SIGNAL(result(KJob*)), this, SLOT(slotCreateItemResult(KJob*)) );
+  mPendingCreateItemJobs++;
+}
+
+void KMComposeWin::slotCreateItemResult( KJob *job )
+{
+  mPendingCreateItemJobs--;
+  kDebug() << "mPendingCreateItemJobs" << mPendingCreateItemJobs;
+  Q_ASSERT( mPendingCreateItemJobs >= 0 );
+
+  if( job->error() ) {
+    kDebug() << "Failed to save a message:" << job->errorString();
+    return;
+  }
+
+  if( mPendingCreateItemJobs == 0 ) {
+    setModified( false );
+    cleanupAutoSave();
+    close();
+  }
 }
 
 void KMComposeWin::queueMessage( KMime::Message::Ptr message )

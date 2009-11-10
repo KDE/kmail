@@ -653,6 +653,8 @@ class KMComposeWin : public KMail::Composer
     void doSend( KMail::MessageSender::SendMethod method=KMail::MessageSender::SendDefault,
                  KMComposeWin::SaveIn saveIn = KMComposeWin::None );
 
+    void saveMessage( boost::shared_ptr<KMime::Message> message, KMComposeWin::SaveIn saveIn );
+
     /**
      * Returns the autosave interval in milliseconds (as needed for QTimer).
      */
@@ -781,6 +783,7 @@ class KMComposeWin : public KMail::Composer
     void slotAutoSaveComposeResult( KJob *job );
     void slotSendComposeResult( KJob *job );
     void slotQueueResult( KJob *job );
+    void slotCreateItemResult( KJob *job );
     void slotContinuePrint( bool );
 
     void slotEncryptChiasmusToggled( bool );
@@ -815,6 +818,7 @@ class KMComposeWin : public KMail::Composer
     Message::Composer *mComposer;
     Message::Composer *mDummyComposer;
     int mPendingQueueJobs;
+    int mPendingCreateItemJobs;
 
     // Temp var for slotPrint:
     bool mMessageWasModified;
