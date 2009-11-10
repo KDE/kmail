@@ -150,6 +150,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   vlay->setMargin( 0 );
   mViewer = new Viewer( this,KGlobal::config(),mainWindow,mActionCollection );
   connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ), this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
+  connect( mViewer, SIGNAL( copyUrl( const KUrl& ) ), this, SLOT( slotCopyUrl( const KUrl& ) ) );
   vlay->addWidget( mViewer );
   readConfig();
 
@@ -732,6 +733,14 @@ void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
 
   KMCommand *command = new KMUrlClickedCommand( url, identity, this,
                                                 false, mainWidget );
+  command->start();
+}
+
+void KMReaderWin::slotCopyUrl( const KUrl& url )
+{
+  KMCommand *command =
+    new KMUrlCopyCommand( url,
+                          dynamic_cast<KMMainWidget*>( mMainWindow ) );
   command->start();
 }
 

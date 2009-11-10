@@ -622,7 +622,6 @@ KMUrlCopyCommand::KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget )
 KMCommand::Result KMUrlCopyCommand::execute()
 {
   QClipboard* clip = QApplication::clipboard();
-
   if (mUrl.protocol() == "mailto") {
     // put the url into the mouse selection and the clipboard
     QString address = MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() );
