@@ -2880,7 +2880,7 @@ void KMMainWidget::slotDisplayCurrentMessage()
 
 void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 {
-  if ( !msg.isValid() )
+  if ( !mCurrentFolder || !msg.isValid() )
     return;
 #if 0//Laurent port it
   if (msg->parent() && !msg->isComplete())
