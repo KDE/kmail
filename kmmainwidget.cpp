@@ -828,6 +828,7 @@ void KMMainWidget::writeConfig()
       KConfigGroup group(config, "CollectionFolderView");
       Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView->folderTreeView() );
       saver.saveState( group );
+      group.writeEntry( "HeaderState", mCollectionFolderView->folderTreeView()->header()->saveState() );
       group.sync();
     }
 
@@ -870,6 +871,7 @@ void KMMainWidget::createWidgets()
 
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
+  mCollectionFolderView->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
   Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver( mCollectionFolderView->folderTreeView() );
   saver->restoreState( cfg );
 
