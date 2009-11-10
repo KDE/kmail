@@ -20,8 +20,11 @@
 #define FOLDERCOLLECTIONMONITOR_H
 
 #include <QObject>
+#include <kio/job.h>
+#include <kio/jobuidelegate.h>
 namespace Akonadi {
   class ChangeRecorder;
+  class Collection;
 }
 
 class FolderCollectionMonitor : public QObject
@@ -34,6 +37,9 @@ public:
   Akonadi::ChangeRecorder * monitor();
   void expireAllFolders(bool immediate );
   void compactAllFolders( bool immediate );
+  void expure( const Akonadi::Collection& );
+private slots:
+  void slotFetchJob( KJob *job );
 private:
   Akonadi::ChangeRecorder *mMonitor;
 };

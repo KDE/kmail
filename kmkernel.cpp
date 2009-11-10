@@ -2132,6 +2132,8 @@ void KMKernel::slotEmptyTrash()
   }
 #else
    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+   Akonadi::Collection trash = trashCollectionFolder();
+   mFolderCollectionMonitor->expure( trash );
 #endif
 }
 

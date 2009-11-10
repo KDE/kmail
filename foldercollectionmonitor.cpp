@@ -20,6 +20,9 @@
 #include <akonadi/changerecorder.h>
 #include <akonadi/collection.h>
 #include <akonadi/itemfetchscope.h>
+#include <akonadi/itemdeletejob.h>
+#include <akonadi/itemfetchjob.h>
+#include <akonadi/item.h>
 
 FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   :QObject( parent )
@@ -54,3 +57,25 @@ void FolderCollectionMonitor::compactAllFolders( bool immediate )
     kDebug() << "AKONADI PORT: Need to implement it  " << Q_FUNC_INFO;
 
 }
+
+void FolderCollectionMonitor::expure( const Akonadi::Collection & col )
+{
+  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( col,this );
+  connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
+
+}
+
+void FolderCollectionMonitor::slotFetchJob( KJob *job )
+{
+  if ( job->error() ) {
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    return;
+  }
+  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+  if ( !fjob )
+    return;
+  Akonadi::Item::List lstItem = fjob->items();
+  Akonadi::ItemDeleteJob *jobDelete = new Akonadi::ItemDeleteJob(lstItem,this );
+
+}
+
