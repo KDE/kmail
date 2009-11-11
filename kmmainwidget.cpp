@@ -4684,7 +4684,7 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
   return mVacationScriptIndicator;
 }
 
-void KMMainWidget::slotMessageSelected(Akonadi::Item item)
+void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 {
 #if 0 //Port it
   if ( msg && msg->parent() && !msg->isComplete() )

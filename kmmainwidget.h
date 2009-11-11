@@ -537,7 +537,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotRequestFullSearchFromQuickSearch();
   void slotFolderChanged( const Akonadi::Collection& );
 
-  void slotMessageSelected(Akonadi::Item);
+  void slotMessageSelected(const Akonadi::Item &);
   void itemsReceived(const Akonadi::Item::List &list );
   void itemsFetchDone( KJob *job );
 
