@@ -2917,13 +2917,13 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("delete_folder", mRemoveFolderAction );
   connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
 
-  /*mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), this );
+  mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), this );
   actionCollection()->addAction( "archive_folder", mArchiveFolderAction );
   connect( mArchiveFolderAction, SIGNAL(triggered(bool)), SLOT(slotArchiveFolder()) );
 
   mImportArchiveAction = new KAction( i18n( "Import Archive..." ), this );
   actionCollection()->addAction( "import_archive", mImportArchiveAction );
-  connect( mImportArchiveAction, SIGNAL(triggered(bool)), SLOT(slotImportArchive()) );*/
+  connect( mImportArchiveAction, SIGNAL(triggered(bool)), SLOT(slotImportArchive()) );
 
   mPreferHtmlAction = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
   actionCollection()->addAction("prefer_html", mPreferHtmlAction );
