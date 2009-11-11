@@ -216,6 +216,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       Open a separate viewer window containing the specified message.
     */
   void slotMessageActivated( const Akonadi::Item & );
+  void slotItemsFetchedForActivation( const Akonadi::Item::List &list );
   void slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & );
 
 

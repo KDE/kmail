@@ -2882,6 +2882,31 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 {
   if ( !mCurrentFolder || !msg.isValid() )
     return;
+
+  if ( kmkernel->folderIsDraftOrOutbox( mCurrentFolder->collection() ) )
+  {
+    mMsgActions->editCurrentMessage();
+    return;
+  }
+
+  if ( kmkernel->folderIsTemplates( mCurrentFolder->collection() ) ) {
+    slotUseTemplate();
+    return;
+  }
+
+  // TODO: Port to partFetcher so that this is not necessary.
+  ItemFetchJob *itemFetchJob = new ItemFetchJob( msg, this );
+  itemFetchJob->fetchScope().fetchFullPayload( true );
+  connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForActivation(Akonadi::Item::List)) );
+  connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob*)) );
+}
+
+void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &list )
+{
+  Q_ASSERT( list.size() == 1 );
+
+  Item msg = list.first();
+
 #if 0//Laurent port it
   if (msg->parent() && !msg->isComplete())
   {
@@ -2895,15 +2920,6 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  if (kmkernel->folderIsDraftOrOutbox(mCurrentFolder->collection()))
-  {
-    mMsgActions->editCurrentMessage();
-    return;
-  }
-  if ( kmkernel->folderIsTemplates( mCurrentFolder->collection() ) ) {
-    slotUseTemplate();
-    return;
-  }
 
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   KConfigGroup reader( KMKernel::config(), "Reader" );
