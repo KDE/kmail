@@ -21,14 +21,13 @@ using KPIM::MessageStatus;
 #include <QList>
 #include <QMenu>
 #include <akonadi/item.h>
+#include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>
 class KProgressDialog;
 class KMFilter;
 class KMMainWidget;
 class KMReaderWin;
 class partNode;
-class DwBodyPart;
-class DwEntity;
 class FolderCollection;
 
 namespace KIO { class Job; }
@@ -83,7 +82,9 @@ signals:
   void completed( KMCommand *command );
 
 protected:
-//TODO IMPORTANT, port this first to akonadi!!
+  /** Allows to configure how much data should be retrieved of the messages. */
+  Akonadi::ItemFetchScope& fetchScope() { return mFetchScope; }
+
   // Returns list of messages retrieved
   const QList<Akonadi::Item> retrievedMsgs() const;
   // Returns the single message retrieved
@@ -130,7 +131,7 @@ private slots:
 
   void slotPostTransfer( KMCommand::Result result );
   /** the msg has been transferred */
-  void slotMsgTransfered(const Akonadi::Item& msg);
+  void slotMsgTransfered(const Akonadi::Item::List& msgs);
   /** the KMImapJob is finished */
   void slotJobFinished();
   /** the transfer was canceled */
@@ -149,6 +150,7 @@ private:
   QWidget *mParent;
   QList<Akonadi::Item> mRetrievedMsgs;
   QList<Akonadi::Item> mMsgList;
+  Akonadi::ItemFetchScope mFetchScope;
 };
 
 class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand

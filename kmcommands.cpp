@@ -282,13 +282,6 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
     result = execute();
   }
   mResult = result;
-  Akonadi::Item msg;
-  foreach( msg, mRetrievedMsgs ) {
-#if 0 //TODO port to akonadi
-    if ( msg && msg->parent() )
-      msg->setTransferInProgress(false);
-#endif
-  }
   kmkernel->filterMgr()->deref();
   if ( !emitsCompletedItself() )
     emit completed( this );
@@ -322,67 +315,29 @@ void KMCommand::transferSelectedMsgs()
     mProgressDialog->setModal(true);
     mProgressDialog->setMinimumDuration(1000);
   }
-  QList<Akonadi::Item>::const_iterator it;
-  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
-  {
-    //Temporary code
-    // save the complete messages
-    mRetrievedMsgs.append(*it);
-  }
 
+  // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
+  if ( !mFetchScope.isEmpty() ) {
 #if 0 //TODO port to akonadi
-  QList<KMime::Message*>::const_iterator it;
-  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
-  {
-    KMime::Message *mb = (*it);
-    // check if all messages are complete
-    KMime::Message *thisMsg = 0;
-    if ( mb->isMessage() )
-      thisMsg = static_cast<KMime::Message*>(mb);
-    else
-    {
-      KMFolder *folder = mb->parent();
-      int idx = folder->find(mb);
-      if (idx < 0) continue;
-      thisMsg = folder->getMsg(idx);
-    }
-    if (!thisMsg) continue;
-    if ( thisMsg->transferInProgress() &&
-         thisMsg->parent()->folderType() == KMFolderTypeImap )
-    {
-      thisMsg->setTransferInProgress( false, true );
-      thisMsg->parent()->ignoreJobsForMessage( thisMsg );
-    }
-
     if ( thisMsg->parent() && !thisMsg->isComplete() &&
          ( !mProgressDialog || !mProgressDialog->wasCancelled() ) )
     {
-      kDebug()<<"### INCOMPLETE";
-      // the message needs to be transferred first
-      complete = false;
-      KMCommand::mCountJobs++;
-      FolderJob *job = thisMsg->parent()->createJob(thisMsg);
-      job->setCancellable( false );
       totalSize += thisMsg->msgSizeServer();
       // emitted when the message was transferred successfully
       connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
               this, SLOT(slotMsgTransfered(KMime::Message*)));
-      // emitted when the job is destroyed
-      connect(job, SIGNAL(finished()),
-              this, SLOT(slotJobFinished()));
-      connect(job, SIGNAL(progress(unsigned long, unsigned long)),
-              this, SLOT(slotProgress(unsigned long, unsigned long)));
-      // msg musn't be deleted
-      thisMsg->setTransferInProgress(true);
-      job->start();
-    } else {
-      thisMsg->setTransferInProgress(true);
-      mRetrievedMsgs.append(thisMsg);
     }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+    complete = false;
+    KMCommand::mCountJobs++;
+    Akonadi::ItemFetchJob *fetch = new Akonadi::ItemFetchJob( mMsgList, this );
+    fetch->setFetchScope( mFetchScope );
+    connect( fetch, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotMsgTransfered(Akonadi::Item::List)) );
+    connect( fetch, SIGNAL(result(KJob*)), SLOT(slotJobFinished()) );
+  } else {
+    // no need to fetch anything
+    mRetrievedMsgs = mMsgList;
+  }
   if (complete)
   {
     delete mProgressDialog;
@@ -398,14 +353,14 @@ void KMCommand::transferSelectedMsgs()
   }
 }
 
-void KMCommand::slotMsgTransfered(const Akonadi::Item & msg)
+void KMCommand::slotMsgTransfered(const Akonadi::Item::List& msgs)
 {
   if ( mProgressDialog && mProgressDialog->wasCancelled() ) {
     emit messagesTransfered( Canceled );
     return;
   }
   // save the complete messages
-  mRetrievedMsgs.append(msg);
+  mRetrievedMsgs.append( msgs );
 }
 
 void KMCommand::slotProgress( unsigned long done, unsigned long /*total*/ )
@@ -420,7 +375,7 @@ void KMCommand::slotJobFinished()
 
   if ( mProgressDialog && mProgressDialog->wasCancelled() ) return;
 
-  if ( (mCountMsgs - static_cast<int>(mRetrievedMsgs.count())) > KMCommand::mCountJobs )
+  if ( mCountMsgs > mRetrievedMsgs.count() )
   {
     // the message wasn't retrieved before => error
     if ( mProgressDialog )
@@ -510,6 +465,7 @@ KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
                                             const KUrl &url, const Akonadi::Item &msg, const QString &selection )
   :KMCommand( parent, msg ), mUrl( url ), mSelection( selection  )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMMailtoReplyCommand::execute()
@@ -540,6 +496,7 @@ KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
                                                 const KUrl &url, const Akonadi::Item &msg )
   :KMCommand( parent, msg ), mUrl( url )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMMailtoForwardCommand::execute()
@@ -685,6 +642,7 @@ void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
 KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg )
   :KMCommand( parent, msg )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMEditMsgCommand::execute()
@@ -723,6 +681,7 @@ KMCommand::Result KMEditMsgCommand::execute()
 KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, const Akonadi::Item  &msg )
   :KMCommand( parent, msg )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMUseTemplateCommand::execute()
@@ -791,6 +750,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  fetchScope().fetchFullPayload( true );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
@@ -825,6 +785,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   KMime::Message *msgBase = *(msgList.begin());
   mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase ) );
 #endif
+  fetchScope().fetchFullPayload( true );
 }
 
 KUrl KMSaveMsgCommand::url()
@@ -1101,6 +1062,7 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
                                     const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMReplyToCommand::execute()
@@ -1162,6 +1124,7 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
                                         const Akonadi::Item &msg, const QString &selection )
  : KMCommand( parent, msg ), mSelection( selection )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMReplyListCommand::execute()
@@ -1193,6 +1156,7 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
                                           const Akonadi::Item &msg, const QString &selection )
   :KMCommand( parent, msg ), mSelection( selection )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMReplyToAllCommand::execute()
@@ -1225,6 +1189,7 @@ KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item
                                             const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMReplyAuthorCommand::execute()
@@ -1257,6 +1222,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent,
   : KMCommand( parent, msgList ),
     mIdentity( identity )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
@@ -1264,6 +1230,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
   : KMCommand( parent, msg ),
     mIdentity( identity )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMForwardCommand::execute()
@@ -1424,6 +1391,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
   : KMCommand( parent, msgList ), mIdentity( identity ),
     mWin( QPointer<KMail::Composer>( win ))
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
@@ -1431,6 +1399,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
   : KMCommand( parent, msg ), mIdentity( identity ),
     mWin( QPointer< KMail::Composer >( win ))
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMForwardAttachedCommand::execute()
@@ -1494,6 +1463,7 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
                                       const Akonadi::Item &msg )
   : KMCommand( parent, msg )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMRedirectCommand::execute()
@@ -1531,6 +1501,7 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, const Akonadi::
                                                 const QString &tmpl )
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMCustomReplyToCommand::execute()
@@ -1565,6 +1536,7 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, const Ako
                                                       const QString &tmpl )
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
@@ -1599,6 +1571,7 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
   : KMCommand( parent, msgList ),
     mIdentity( identity ), mTemplate( tmpl )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
@@ -1606,6 +1579,7 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
   : KMCommand( parent, msg ),
     mIdentity( identity ), mTemplate( tmpl )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMCustomForwardCommand::execute()
@@ -1697,6 +1671,7 @@ KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
     mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
+  fetchScope().fetchFullPayload( true );
   if ( GlobalSettings::useDefaultFonts() )
     mOverrideFont = KGlobalSettings::generalFont();
   else {
@@ -2829,6 +2804,7 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
                                                 const Akonadi::Item &msg )
   :KMCommand( parent, msg )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMResendMessageCommand::execute()
