@@ -25,6 +25,8 @@
 #include <qvaluelist.h>
 #include <qptrlist.h>
 
+#include <sys/types.h>
+
 class QWidget;
 class KArchive;
 class KArchiveDirectory;
@@ -68,7 +70,7 @@ class ImportJob : public QObject
     void abort( const QString &errorMessage );
     void queueFolders();
     void importNextDirectory();
-    KMFolder* createSubFolder( KMFolder *parent, const QString &folderName );
+    KMFolder* createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions );
     void enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder );
 
     KArchive *mArchive;

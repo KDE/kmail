@@ -30,6 +30,7 @@
 
 #include <qwidget.h>
 #include <qtimer.h>
+#include <qfile.h>
 
 using namespace KMail;
 
@@ -80,7 +81,7 @@ void ImportJob::abort( const QString &errorMessage )
   deleteLater();
 }
 
-KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderName )
+KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions )
 {
   if ( !parent->createChildFolder() ) {
     abort( i18n( "Unable to create subfolder for folder '%1'." ).arg( parent->name() ) );
@@ -93,7 +94,16 @@ KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderNa
     abort( i18n( "Unable to create subfolder for folder '%1'." ).arg( parent->name() ) );
     return 0;
   }
-  else return newFolder;
+  else {
+    newFolder->createChildFolder(); // TODO: Just creating a child folder here is wasteful, only do
+                                    //       that if really needed. We do it here so we can set the
+                                    //       permissions
+    chmod( newFolder->location().latin1(), permissions );
+    chmod( newFolder->subdirLocation().latin1(), permissions );
+    // TODO: chown?
+    // TODO: what about subdirectories like "cur"?
+    return newFolder;
+  }
 }
 
 void ImportJob::enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder )
@@ -167,6 +177,22 @@ void ImportJob::importNextMessage()
   }
   else {
     mNumberOfImportedMessages++;
+    if ( mCurrentFolder->folderType() == KMFolderTypeMaildir ||
+         mCurrentFolder->folderType() == KMFolderTypeCachedImap ) {
+      const QString messageFile = mCurrentFolder->location() + "/cur/" + newMessage->fileName();
+      // TODO: what if the file is not in the "cur" subdirectory?
+      if ( QFile::exists( messageFile ) ) {
+        chmod( messageFile.latin1(), file->permissions() );
+        // TODO: changing user/group he requires a bit more work, requires converting the strings
+        //       to uid_t and gid_t
+        //getpwnam()
+        //chown( messageFile, 
+      }
+      else {
+        kdWarning(5006) << "Unable to change permissions for newly created file: " << messageFile << endl;
+      }
+    }
+    // TODO: Else?
     kdDebug(5006) << "Added message with subject " /*<< newMessage->subject()*/ // < this causes a pure virtual method to be called...
                   << " to folder " << mCurrentFolder->name() << " at index " << retIndex << endl;
   }
@@ -195,7 +221,7 @@ void ImportJob::importNextDirectory()
       if ( !dir->name().startsWith( "." ) ) {
 
         kdDebug(5006) << "Queueing messages in folder " << entry->name() << endl;
-        KMFolder *subFolder = createSubFolder( currentFolder, entry->name() );
+        KMFolder *subFolder = createSubFolder( currentFolder, entry->name(), entry->permissions() );
         if ( !subFolder )
           return;
 
