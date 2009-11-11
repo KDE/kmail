@@ -2835,13 +2835,13 @@ void KMMainWidget::setupActions()
   mRemoveFolderAction = new KAction( "foo" /*set in updateFolderMenu*/, "editdelete", 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
 
-  /*mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), "filesave", 0, this,
+  mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), "filesave", 0, this,
                                       SLOT( slotArchiveFolder() ), actionCollection(),
                                       "archive_folder" );
 
   mImportArchiveAction = new KAction( i18n( "Import Archive..." ), "fileload", 0, this,
                                       SLOT( slotImportArchive() ), actionCollection(),
-                                      "import_archive" );*/
+                                      "import_archive" );
 
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );

@@ -64,6 +64,7 @@ class BackupJob : public QObject
     bool hasChildren( KMFolder *folder ) const;
     void finish();
     void abort( const QString &errorMessage );
+    bool writeDirHelper( const QString &directoryPath, const QString &permissionPath );
 
     KURL mMailArchivePath;
     ArchiveType mArchiveType;
