@@ -1204,12 +1204,13 @@ void TemplateParser::parseTextStringFromContent( KMime::Content * root,
     return;
 
   isHTML = false;
-  KMime::Content * curNode = MessageViewer::ObjectTreeParser::findType( root, "text", "", true, false );
+  KMime::Content * curNode = root->textContent();
   kDebug() << ( curNode ? "text part found!\n" : "sorry, no text node!\n" );
   if( curNode ) {
     isHTML = curNode->contentType()->isHTMLText();
     // now parse the TEXT message part we want to quote
-    MessageViewer::ObjectTreeParser otp( 0, 0, 0, true, false, true );
+    MessageViewer::EmptySource emptySource;
+    MessageViewer::ObjectTreeParser otp( &emptySource, 0, 0, true, false, true );
     otp.parseObjectTree( curNode );
     parsedString = otp.rawReplyString();
     codec = otp.nodeHelper()->codec( curNode );
@@ -1307,6 +1308,7 @@ QString TemplateParser::asPlainText( KMime::Message* msg, bool aStripSignature, 
 
   KMime::Content *root = new KMime::Content;
   root->setContent( msg->encodedContent() );
+  root->parse();
   MessageViewer::EmptySource emptySource;
   MessageViewer::ObjectTreeParser otp(&emptySource);
   otp.parseObjectTree( root );
