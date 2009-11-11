@@ -480,7 +480,7 @@ class KMComposeWin : public KMail::Composer
 
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
-    void addAttach( KMime::Content *msgPart ) {}
+    void addAttach( KMime::Content *msgPart );
 
   public: // AttachmentController
     const KPIMIdentities::Identity &identity() const;

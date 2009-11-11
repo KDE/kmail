@@ -2614,9 +2614,9 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-#if 0
 void KMComposeWin::addAttach( KMime::Content *msgPart )
 {
+#if 0 // TODO port me!
   mAtmList.append( msgPart );
 
   // show the attachment listbox if it does not up to now
@@ -2637,8 +2637,16 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
            this, SLOT( uncompressAttach( KMAtmListViewItem* ) ) );
 
   slotUpdateAttachActions();
-}
+#else
+  kDebug() << "disabled code";
 #endif
+  AttachmentPart::Ptr part( new AttachmentPart );
+  part->setName( msgPart->contentDescription()->asUnicodeString() );
+  part->setFileName( msgPart->contentDisposition()->filename() );
+  part->setMimeType( msgPart->contentType()->mimeType() );
+  part->setData( msgPart->encodedContent() );
+  mAttachmentController->addAttachment( part );
+}
 //-----------------------------------------------------------------------------
 
 QString KMComposeWin::prettyMimeType( const QString &type )
