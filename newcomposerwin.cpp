@@ -2644,7 +2644,7 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
   part->setName( msgPart->contentDescription()->asUnicodeString() );
   part->setFileName( msgPart->contentDisposition()->filename() );
   part->setMimeType( msgPart->contentType()->mimeType() );
-  part->setData( msgPart->encodedContent() );
+  part->setData( msgPart->decodedContent() );
   mAttachmentController->addAttachment( part );
 }
 //-----------------------------------------------------------------------------

@@ -1443,7 +1443,8 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->contentDisposition()->setFilename( "forwarded message" );
     msgPart->contentDisposition()->setDisposition( KMime::Headers::CDinline );
     msgPart->contentDescription()->fromUnicodeString( msg->from()->asUnicodeString() + ": " + msg->subject()->asUnicodeString(), "utf-8" );
-    msgPart->setBody( msg->encodedContent() );
+    msgPart->fromUnicodeString( msg->encodedContent() );
+    msgPart->assemble();
 #if 0
     // THIS HAS TO BE AFTER setCte()!!!!
     msgPart->setCharset( "" );
