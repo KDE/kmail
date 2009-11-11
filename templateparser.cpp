@@ -924,7 +924,8 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
   
   // ### temporary hack to uncrash reply/forward
   mOrigRoot = new KMime::Content;
-  mOrigRoot->setContent( mMsg->encodedContent() );
+  mOrigRoot->setContent( mOrigMsg->encodedContent() );
+  mOrigRoot->parse();
 
   MessageViewer::EmptySource emptySource;
   MessageViewer::ObjectTreeParser otp(&emptySource); // all defaults are ok
