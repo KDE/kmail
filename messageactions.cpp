@@ -133,6 +133,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mToggleFlagAction, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusFlag()) );
   mToggleFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Message Mark")) );
+  mToggleFlagAction->setIconText( i18n( "Important" ) );
   mActionCollection->addAction( "status_flag", mToggleFlagAction );
   mStatusMenu->addAction( mToggleFlagAction );
 
@@ -141,6 +142,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mToggleToActAction, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusToAct()) );
   mToggleToActAction->setCheckedState( KGuiItem(i18n("Remove &Action Item Message Mark")) );
+  mToggleToActAction->setIconText( i18n( "Action Item" ) );
   mActionCollection->addAction( "status_toact", mToggleToActAction );
   mStatusMenu->addAction( mToggleToActAction );
 
