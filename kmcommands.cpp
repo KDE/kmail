@@ -1440,12 +1440,12 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->setCharset(msg->charset());
 #endif
 
+    msgPart->contentDisposition()->setFilename( "forwarded message" );
+    msgPart->contentDisposition()->setDisposition( KMime::Headers::CDinline );
+    msgPart->contentDescription()->fromUnicodeString( msg->from()->asUnicodeString() + ": " + msg->subject()->asUnicodeString(), "utf-8" );
+    msgPart->setBody( msg->encodedContent() );
 #if 0
-    msgPart->setName("forwarded message");
-    msgPart->setContentDescription(msg->from()+": "+msg->subject());
-    msgPart->setContentDisposition( "inline" );
     // THIS HAS TO BE AFTER setCte()!!!!
-    msgPart->setMessageBody( KMail::Util::ByteArray( msg->asDwString() ) );
     msgPart->setCharset( "" );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
