@@ -918,13 +918,20 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
 {
   if ( !mSelection.isEmpty() && allowSelectionOnly )
     return mSelection;
+  // FIXME
   // No selection text, therefore we need to parse the object tree ourselves to get
-  KMime::Content *root = parsedObjectTree();
+  //KMime::Content *root = parsedObjectTree();
+  
+  // ### temporary hack to uncrash reply/forward
+  mOrigRoot = new KMime::Content;
+  mOrigRoot->setContent( mMsg->encodedContent() );
 
   MessageViewer::EmptySource emptySource;
   MessageViewer::ObjectTreeParser otp(&emptySource); // all defaults are ok
+  otp.setAllowAsync( false );
+  otp.parseObjectTree( mOrigRoot );
 
-  return asPlainTextFromObjectTree( mOrigMsg, root, /*TODO Review, fix*/&otp,  true, mAllowDecryption );
+  return asPlainTextFromObjectTree( mOrigMsg, mOrigRoot, &otp, true, mAllowDecryption );
 }
 
 KMime::Content* TemplateParser::parsedObjectTree()
