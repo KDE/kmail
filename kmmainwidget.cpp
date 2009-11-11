@@ -870,7 +870,7 @@ void KMMainWidget::createWidgets()
   connect( KMKernel::self()->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
 
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
-  const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
+  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
   mCollectionFolderView->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
   Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver( mCollectionFolderView->folderTreeView() );
   saver->restoreState( cfg );
