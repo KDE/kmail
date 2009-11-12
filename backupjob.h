@@ -34,13 +34,21 @@ namespace KMail
 {
   class FolderJob;
 
+/**
+ * Writes an entire folder structure to an archive file.
+ * The archive is structured like a hierarchy of maildir folders. However, every type of folder
+ * works as the source, i.e. also online IMAP folders.
+ *
+ * The job deletes itself after it finished.
+ */
 class BackupJob : public QObject
 {
   Q_OBJECT
 
   public:
 
-    enum ArchiveType { Zip, Tar, TarBz2, TarGz };
+    // These enum values have to stay in sync with the format combobox of ArchiveFolderDialog!
+    enum ArchiveType { Zip = 0, Tar = 1, TarBz2 = 2, TarGz = 3 };
 
     explicit BackupJob( QWidget *parent = 0 );
     ~BackupJob();

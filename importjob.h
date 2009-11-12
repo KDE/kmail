@@ -36,6 +36,12 @@ class KMFolder;
 namespace KMail
 {
 
+/**
+ * Imports an archive that was previously backed up with an BackupJob.
+ * This job will re-create the folder structure, under the root folder given in setRootFolder().
+ *
+ * The job deletes itself after it finished.
+ */
 class ImportJob : public QObject
 {
   Q_OBJECT

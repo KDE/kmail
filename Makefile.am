@@ -156,7 +156,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 treebase.cpp \
                 backupjob.cpp \
                 importjob.cpp \
-                folderutil.cpp
+                folderutil.cpp \
+                archivefolderdialog.cpp
 
 libkmailprivate_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
