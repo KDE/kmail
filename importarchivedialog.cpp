@@ -32,12 +32,13 @@
 
 using namespace KMail;
 
-ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
+ImportArchiveDialog::ImportArchiveDialog( QWidget *parent, Qt::WidgetFlags flags )
   : KDialogBase( parent, "import_archive_dialog", false, i18n( "Import Archive" ),
                  KDialogBase::Ok | KDialogBase::Cancel,
                  KDialogBase::Ok, true ),
     mParentWidget( parent )
 {
+  setWFlags( flags );
   QWidget *mainWidget = new QWidget( this );
   QGridLayout *mainLayout = new QGridLayout( mainWidget );
   mainLayout->setSpacing( KDialog::spacingHint() );

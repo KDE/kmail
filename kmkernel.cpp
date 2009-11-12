@@ -44,6 +44,7 @@ using KRecentAddress::RecentAddresses;
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "transportmanager.h"
+#include "importarchivedialog.h"
 
 #include <kwin.h>
 #include "kmailicalifaceimpl.h"
@@ -1083,6 +1084,14 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
   }
 
   return retval;
+}
+
+void KMKernel::showImportArchiveDialog()
+{
+  KMMainWidget *mainWidget = getKMMainWidget();
+  KMail::ImportArchiveDialog *importDialog = new KMail::ImportArchiveDialog( mainWidget, WDestructiveClose );
+  importDialog->setFolder( mainWidget->folderTree()->currentFolder() );
+  importDialog->show();
 }
 
 QStringList KMKernel::folderList() const

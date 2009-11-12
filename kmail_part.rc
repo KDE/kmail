@@ -19,7 +19,6 @@
    <Action name="file_open" />
    <Action name="file_save_as" />
    <Action name="import"/>
-   <Action name="import_archive"/>
    <Action name="file_print" />
    <Separator/>
    <Action name="expire_all_folders" />

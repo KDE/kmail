@@ -196,6 +196,7 @@ public:
                                 const QString & MsgStatusFlags = QString());
   int dcopAddMessage_fastImport(const QString & foldername, const KURL & messagefile,
                                 const QString & MsgStatusFlags = QString());
+  void showImportArchiveDialog();
 
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );

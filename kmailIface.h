@@ -115,6 +115,7 @@ k_dcop:
   virtual int dcopAddMessage(const QString & foldername,
                              const KURL & messagefile,
                              const QString & MsgStatusFlags = QString()) = 0;
+  virtual void showImportArchiveDialog() = 0;
 
   virtual QStringList folderList() const =0;
   virtual DCOPRef getFolder( const QString& vpath ) =0;
