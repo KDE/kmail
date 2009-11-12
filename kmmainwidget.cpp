@@ -4003,10 +4003,11 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder);
+  mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection()) );
+
+
 
   mRemoveFolderAction->setText( mCurrentFolder && CollectionUtils::isVirtual( mCurrentFolder->collection() ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  mRemoveFolderAction->setEnabled( mCurrentFolder&& !CollectionUtils::isVirtualParent( mCurrentFolder->collection() ) );
   mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
