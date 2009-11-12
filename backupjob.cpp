@@ -23,6 +23,8 @@
 #include "kmfoldercachedimap.h"
 #include "kmfolderdir.h"
 
+#include "progressmanager.h"
+
 #include "kzip.h"
 #include "ktar.h"
 #include "kmessagebox.h"
@@ -42,6 +44,8 @@ BackupJob::BackupJob( QWidget *parent )
     mCurrentFolderOpen( false ),
     mArchivedMessages( 0 ),
     mArchivedSize( 0 ),
+    mProgressItem( 0 ),
+    mAborted( false ),
     mCurrentFolder( 0 ),
     mCurrentMessage( 0 ),
     mCurrentJob( 0 )
@@ -107,9 +111,19 @@ bool BackupJob::hasChildren( KMFolder *folder ) const
   return false;
 }
 
+void BackupJob::cancelJob()
+{
+  abort( i18n( "The operation was cancelled by the user." ) );
+}
 
 void BackupJob::abort( const QString &errorMessage )
 {
+  // We could be called this twice, since killing the current job below will cause the job to fail,
+  // and that will call abort()
+  if ( mAborted )
+    return;
+
+  mAborted = true;
   if ( mCurrentFolderOpen && mCurrentFolder ) {
     mCurrentFolder->close( "BackupJob" );
     mCurrentFolder = 0;
@@ -120,6 +134,11 @@ void BackupJob::abort( const QString &errorMessage )
   if ( mCurrentJob ) {
     mCurrentJob->kill();
     mCurrentJob = 0;
+  }
+  if ( mProgressItem ) {
+    mProgressItem->setComplete();
+    mProgressItem = 0;
+    // The progressmanager will delete it
   }
 
   QString text = i18n( "Failed to archive the folder '%1'." ).arg( mRootFolder->name() );
@@ -138,6 +157,10 @@ void BackupJob::finish()
       return;
     }
   }
+
+  mProgressItem->setStatus( i18n( "Archiving finished" ) );
+  mProgressItem->setComplete();
+  mProgressItem = 0;
 
   QFileInfo archiveFileInfo( mMailArchivePath.path() );
   QString text = i18n( "Archiving folder '%1' successfully completed. "
@@ -206,6 +229,8 @@ void BackupJob::archiveNextMessage()
     abort( i18n( "Internal error while trying to retrieve a message from folder '%1'." )
               .arg( mCurrentFolder->name() ) );
   }
+
+  mProgressItem->setProgress( ( mProgressItem->progress() + 5 ) );
 }
 
 static int fileInfoToUnixPermissions( const QFileInfo &fileInfo )
@@ -327,6 +352,7 @@ void BackupJob::archiveNextFolder()
 
   mCurrentFolder = mPendingFolders.take( 0 );
   kdDebug(5006) << "===> Archiving next folder: " << mCurrentFolder->name() << endl;
+  mProgressItem->setStatus( i18n( "Archiving folder %1" ).arg( mCurrentFolder->name() ) );
   if ( mCurrentFolder->open( "BackupJob" ) != 0 ) {
     abort( i18n( "Unable to open folder '%1'.").arg( mCurrentFolder->name() ) );
     return;
@@ -417,6 +443,15 @@ void BackupJob::start()
     abort( i18n( "Unable to open archive for writing." ) );
     return;
   }
+
+  mProgressItem = KPIM::ProgressManager::createProgressItem(
+      "BackupJob",
+      i18n( "Archiving" ),
+      QString(),
+      true );
+  mProgressItem->setUsesBusyIndicator( true );
+  connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+           this, SLOT(cancelJob()) );
 
   archiveNextFolder();
 }

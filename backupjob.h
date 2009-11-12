@@ -30,6 +30,10 @@ class KArchive;
 class KProcess;
 class QWidget;
 
+namespace KPIM {
+  class ProgressItem;
+}
+
 namespace KMail
 {
   class FolderJob;
@@ -62,6 +66,7 @@ class BackupJob : public QObject
     void messageRetrieved( KMMessage *message );
     void folderJobFinished( KMail::FolderJob *job );
     void processCurrentMessage();
+    void cancelJob();
 
   private:
 
@@ -82,6 +87,8 @@ class BackupJob : public QObject
     bool mCurrentFolderOpen;
     int mArchivedMessages;
     uint mArchivedSize;
+    KPIM::ProgressItem *mProgressItem;
+    bool mAborted;
 
     QPtrList<KMFolder> mPendingFolders;
     KMFolder *mCurrentFolder;
