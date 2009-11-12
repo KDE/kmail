@@ -59,6 +59,7 @@ class BackupJob : public QObject
     void setRootFolder( KMFolder *rootFolder );
     void setSaveLocation( const KURL &savePath );
     void setArchiveType( ArchiveType type );
+    void setDeleteFoldersAfterCompletion( bool deleteThem );
     void start();
 
   private slots:
@@ -89,6 +90,7 @@ class BackupJob : public QObject
     uint mArchivedSize;
     KPIM::ProgressItem *mProgressItem;
     bool mAborted;
+    bool mDeleteFoldersAfterCompletion;
 
     QPtrList<KMFolder> mPendingFolders;
     KMFolder *mCurrentFolder;

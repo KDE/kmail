@@ -22,6 +22,7 @@
 #include "kmfolder.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolderdir.h"
+#include "folderutil.h"
 
 #include "progressmanager.h"
 
@@ -46,6 +47,7 @@ BackupJob::BackupJob( QWidget *parent )
     mArchivedSize( 0 ),
     mProgressItem( 0 ),
     mAborted( false ),
+    mDeleteFoldersAfterCompletion( false ),
     mCurrentFolder( 0 ),
     mCurrentMessage( 0 ),
     mCurrentJob( 0 )
@@ -74,6 +76,11 @@ void BackupJob::setSaveLocation( const KURL &savePath )
 void BackupJob::setArchiveType( ArchiveType type )
 {
   mArchiveType = type;
+}
+
+void BackupJob::setDeleteFoldersAfterCompletion( bool deleteThem )
+{
+  mDeleteFoldersAfterCompletion = deleteThem;
 }
 
 QString BackupJob::stripRootPath( const QString &path ) const
@@ -171,6 +178,15 @@ void BackupJob::finish()
   text += "\n" + i18n( "The archive file has a size of %1." )
                    .arg( KIO::convertSize( archiveFileInfo.size() ) );
   KMessageBox::information( mParentWidget, text, i18n( "Archiving finished." ) );
+
+  if ( mDeleteFoldersAfterCompletion ) {
+    // Some saftey checks first...
+    if ( archiveFileInfo.size() > 0 && mArchivedMessages > 0 && mArchivedSize > 0 ) {
+      // Sorry for any data loss!
+      FolderUtil::deleteFolder( mRootFolder, mParentWidget );
+    }
+  }
+
   deleteLater();
 }
 
