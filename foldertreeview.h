@@ -35,6 +35,8 @@ public:
   void selectPrevUnreadFolder( bool confirm = false);
 
 
+  void disableContextMenuAndExtraColumn();
+
   Akonadi::Collection currentFolder();
 protected:
   enum Move { Next = 0, Previous = 1};
@@ -53,6 +55,10 @@ protected slots:
   void slotHeaderContextMenuChangeIconSize( bool );
   void slotHeaderContextMenuChangeHeader( bool );
   void slotHeaderContextMenuChangeToolTipDisplayPolicy( bool );
+
+private:
+  bool mbDisableContextMenuAndExtraColumn;
+
 };
 
 

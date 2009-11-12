@@ -74,6 +74,7 @@ public:
   void quotaWarningParameters( const QColor &color, qreal threshold );
   void readQuotaConfig();
 
+  void disableContextMenuAndExtraColumn();
 
   void readConfig();
 private:

@@ -109,6 +109,11 @@ FolderSelectionTreeView::~FolderSelectionTreeView()
 }
 
 
+void FolderSelectionTreeView::disableContextMenuAndExtraColumn()
+{
+  d->collectionFolderView->disableContextMenuAndExtraColumn();
+}
+
 void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection & col )
 {
   kDebug() << "AKONADI PORT: Bug in this code  " << Q_FUNC_INFO;

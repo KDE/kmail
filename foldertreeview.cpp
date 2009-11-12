@@ -28,14 +28,14 @@
 #include <KMenu>
 
 FolderTreeView::FolderTreeView(QWidget *parent )
-  : Akonadi::EntityTreeView( parent )
+  : Akonadi::EntityTreeView( parent ), mbDisableContextMenuAndExtraColumn( false )
 {
   init();
 }
 
 
 FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent )
-  :Akonadi::EntityTreeView( xmlGuiClient, parent )
+  :Akonadi::EntityTreeView( xmlGuiClient, parent ), mbDisableContextMenuAndExtraColumn( false )
 {
   init();
 }
@@ -43,6 +43,16 @@ FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent )
 
 FolderTreeView::~FolderTreeView()
 {
+}
+
+
+void FolderTreeView::disableContextMenuAndExtraColumn()
+{
+  mbDisableContextMenuAndExtraColumn = true;
+  for ( int i = 1; i <header()->count(); ++i )
+  {
+    setColumnHidden( i, true );
+  }
 }
 
 void FolderTreeView::init()
@@ -74,6 +84,9 @@ void FolderTreeView::readConfig()
 
 void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
 {
+  if ( mbDisableContextMenuAndExtraColumn )
+    return;
+
   // the menu for the columns
   KMenu menu;
   QAction *act;
