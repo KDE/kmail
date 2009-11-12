@@ -4024,8 +4024,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this , SLOT(slotEmitChanged( void )) );
   connect( mMMTab.mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  connect( mMMTab.mMailboxPrefCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
   connect( mMMTab.mOnStartupOpenFolder, SIGNAL( folderChanged( const Akonadi::Collection& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mMMTab.mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
@@ -4060,9 +4058,6 @@ void MiscPage::FolderTab::doLoadOther()
   mMMTab.mEmptyFolderConfirmCheck->setChecked(
       general.readEntry( "confirm-before-empty", true ) );
 
-  int num = general.readEntry("default-mailbox-format", 1 );
-  if ( num < 0 || num > 1 ) num = 1;
-  mMMTab.mMailboxPrefCombo->setCurrentIndex( num );
 }
 
 void MiscPage::FolderTab::save()
@@ -4071,7 +4066,6 @@ void MiscPage::FolderTab::save()
 
   general.writeEntry( "empty-trash-on-exit", mMMTab.mEmptyTrashCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mMMTab.mEmptyFolderConfirmCheck->isChecked() );
-  general.writeEntry( "default-mailbox-format", mMMTab.mMailboxPrefCombo->currentIndex() );
   general.writeEntry( "startupFolder", mMMTab.mOnStartupOpenFolder->folderCollection().isValid() ?
                                   QString::number(mMMTab.mOnStartupOpenFolder->folderCollection().id()) : QString() );
 
