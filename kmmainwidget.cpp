@@ -76,8 +76,6 @@ using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
 #include "favoritefolderview.h"
-#include "backupjob.h"
-#include "importjob.h"
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
 #include "localsubscriptiondialog.h"
@@ -102,6 +100,7 @@ using KMail::HeaderListQuickSearch;
 #include "mailinglistpropertiesdialog.h"
 #include "templateparser.h"
 #include "archivefolderdialog.h"
+#include "importarchivedialog.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -1183,17 +1182,9 @@ void KMMainWidget::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotImportArchive()
 {
-  // TODO: UI dialog to select target folder
-  //       Make this d-bus callable and add the ability to call it from kmailcvt
-  KFileDialog fileDialog( KGlobalSettings::desktopPath(), "*.tar.gz *.tar.bz2 *.tar *.tar.gz *.zip",
-                          this, "ImportDialog", false /* modal */ );
-  if ( fileDialog.exec() == QDialog::Accepted ) {
-    KURL archivePath = fileDialog.selectedURL();
-    KMail::ImportJob *importJob = new KMail::ImportJob( this );
-    importJob->setFile( archivePath );
-    importJob->setRootFolder( mFolder );
-    importJob->start();
-  }
+  KMail::ImportArchiveDialog importDialog;
+  importDialog.setFolder( mFolder );
+  importDialog.exec();
 }
 
 //-----------------------------------------------------------------------------
