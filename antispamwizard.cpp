@@ -1131,6 +1131,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
   mFolderTree = new FolderSelectionTreeView( this );
+  mFolderTree->disableContextMenuAndExtraColumn();
 #if 0 //Port to akonadi
   mFolderTree->reload( true, true, true, QString( "trash" ) );
 #endif
