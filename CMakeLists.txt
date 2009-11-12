@@ -78,6 +78,7 @@ set(kmailprivate_LIB_SRCS
    collectionquotapage.cpp
    collectionquotapage_p.cpp
    collectionaclpage.cpp
+   imapaclattribute.cpp
    messagehelper.cpp
    messageinfo.cpp
    foldercollection.cpp

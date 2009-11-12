@@ -21,6 +21,7 @@
 #include <QSortFilterProxyModel>
 #include <QHBoxLayout>
 
+#include <akonadi/attributefactory.h>
 #include <akonadi/entitytreeview.h>
 #include <akonadi/changerecorder.h>
 #include <akonadi/session.h>
@@ -31,6 +32,8 @@
 #include <akonadi/collection.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
+
+#include "imapaclattribute.h"
 
 #include "readablecollectionproxymodel.h"
 
@@ -60,6 +63,8 @@ public:
 FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient )
   : QWidget( parent ), d( new FolderSelectionTreeViewPrivate() )
 {
+  Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
+
   QHBoxLayout *lay = new QHBoxLayout( this );
   lay->setMargin( 0 );
   Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );

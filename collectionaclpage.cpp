@@ -33,6 +33,10 @@
 #include <khbox.h>
 #include <QStackedWidget>
 #include "messageviewer/autoqpointer.h"
+#include "imapaclattribute.h"
+
+#include <akonadi/collection.h>
+#include <akonadi/collectionmodifyjob.h>
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
@@ -59,19 +63,18 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 
-#if 0
 // The set of standard permission sets
 static const struct {
   unsigned int permissions;
   const char* userString;
 } standardPermissions[] = {
-  { 0, I18N_NOOP2( "Permissions", "None" ) },
-  { ACLJobs::List | ACLJobs::Read | ACLJobs::WriteSeenFlag, I18N_NOOP2( "Permissions", "Read" ) },
-  { ACLJobs::List | ACLJobs::Read | ACLJobs::WriteSeenFlag | ACLJobs::Insert | ACLJobs::Post, I18N_NOOP2( "Permissions", "Append" ) },
-  { ACLJobs::AllWrite, I18N_NOOP2( "Permissions", "Write" ) },
-  { ACLJobs::All, I18N_NOOP2( "Permissions", "All" ) }
+  { KIMAP::Acl::None, I18N_NOOP2( "Permissions", "None" ) },
+  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen, I18N_NOOP2( "Permissions", "Read" ) },
+  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Insert | KIMAP::Acl::Post, I18N_NOOP2( "Permissions", "Append" ) },
+  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Write, I18N_NOOP2( "Permissions", "Write" ) },
+  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Insert | KIMAP::Acl::Post | KIMAP::Acl::Write, I18N_NOOP2( "Permissions", "All" ) }
 };
-#endif
+
 #if 0
 ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent )
   : KDialog( parent )
@@ -203,6 +206,7 @@ unsigned int ACLEntryDialog::permissions() const
     return static_cast<unsigned int>(-1); // hm ?
   return mButtonGroup->id( button );
 }
+#endif
 
 class CollectionAclPage::ListViewItem : public QTreeWidgetItem
 {
@@ -211,7 +215,7 @@ public:
     : QTreeWidgetItem( listview ),
       mModified( false ), mNew( false ) {}
 
-  void load( const ACLListEntry& entry );
+  void load( const QByteArray &id, KIMAP::Acl::Rights rights );
   void save( ACLList& list,
              KABC::AddressBook* abook,
              IMAPUserIdFormat userIdFormat );
@@ -258,27 +262,28 @@ void CollectionAclPage::ListViewItem::setPermissions( unsigned int permissions )
   setText( 1, permissionsToUserString( permissions, QString() ) );
 }
 
-void CollectionAclPage::ListViewItem::load( const ACLListEntry& entry )
+void CollectionAclPage::ListViewItem::load( const QByteArray &id, KIMAP::Acl::Rights rights )
 {
   // Don't allow spaces in userids. If you need this, fix the slave->app communication,
   // since it uses space as a separator (imap4.cc, look for GETACL)
   // It's ok in distribution list names though, that's why this check is only done here
   // and also why there's no validator on the lineedit.
-  if ( entry.userId.contains( ' ' ) ) {
-    kWarning() << "Userid contains a space:" << entry.userId;
+  if ( id.contains( ' ' ) ) {
+    kWarning() << "Userid contains a space:" << id;
   }
 
-  setUserId( entry.userId );
-  mPermissions = entry.permissions;
-  mInternalRightsList = entry.internalRightsList;
-  setText( 1, permissionsToUserString( entry.permissions, entry.internalRightsList ) );
-  mModified = entry.changed; // for dimap, so that earlier changes are still marked as changes
+  setUserId( id );
+  mPermissions = rights;
+  mInternalRightsList = KIMAP::Acl::rightsToString( rights );
+  setText( 1, permissionsToUserString( mPermissions, mInternalRightsList ) );
+  mModified = true; // for dimap, so that earlier changes are still marked as changes
 }
 
 void CollectionAclPage::ListViewItem::save( ACLList& aclList,
                                                  KABC::AddressBook* addressBook,
                                                  IMAPUserIdFormat userIdFormat )
 {
+  #if 0
   // expand distribution lists
   KABC::DistributionList* list = addressBook->findDistributionListByName( userId(),  Qt::CaseInsensitive );
   if ( list ) {
@@ -301,8 +306,9 @@ void CollectionAclPage::ListViewItem::save( ACLList& aclList,
     }
     aclList.append( entry );
   }
+  #endif
 }
-#endif
+
 ////
 
 CollectionAclPage::CollectionAclPage( QWidget* parent )
@@ -369,6 +375,23 @@ void CollectionAclPage::init()
 
 void CollectionAclPage::load(const Akonadi::Collection & col)
 {
+  if ( !col.hasAttribute<Akonadi::ImapAclAttribute>() ) {
+    return;
+  }
+
+  Akonadi::ImapAclAttribute *acls = col.attribute<Akonadi::ImapAclAttribute>();
+  QMap<QByteArray, KIMAP::Acl::Rights> rights = acls->rights();
+
+  mListView->clear();
+  foreach ( const QByteArray &id, rights.keys() ) {
+    ListViewItem* item = new ListViewItem( mListView );
+    item->load( id, rights[id] );
+    if ( !col.isValid() ) // new collection? everything is new then
+      item->setModified( true );
+  }
+
+  mStack->setCurrentWidget( mACLWidget );
+  //slotSelectionChanged();
 }
 
 void CollectionAclPage::save(Akonadi::Collection & col)
