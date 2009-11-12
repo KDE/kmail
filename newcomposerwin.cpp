@@ -2170,8 +2170,13 @@ void KMComposeWin::readyForSending()
   fillTextPart( mComposer->textPart() );
   fillInfoPart( mComposer->infoPart() );
 
-  fillCryptoInfo( mComposer, mSignAction->isChecked(), mEncryptAction->isChecked() );
-
+  if( !fillCryptoInfo( mComposer, mSignAction->isChecked(), mEncryptAction->isChecked() ) ) {
+    delete mComposer;
+    mComposer = 0;
+    setEnabled( true );
+    return;
+  }
+  
   mComposer->addAttachmentParts( mAttachmentModel->attachments() );
 
   connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
@@ -2180,7 +2185,7 @@ void KMComposeWin::readyForSending()
 
 }
 
-void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool encrypt )
+bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool encrypt )
 {
 
 
@@ -2210,7 +2215,7 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
   }
 
    if( !signSomething && !encryptSomething ) {
-    return;
+    return true;
   }
   
   if( encryptSomething ) {
@@ -2219,9 +2224,8 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     if ( !id.smimeEncryptionKey().isEmpty() )
       encryptToSelfKeys.push_back( id.smimeEncryptionKey() );
     if ( keyResolver->setEncryptToSelfKeys( encryptToSelfKeys ) != Kpgp::Ok ) {
-      /// TODO handle failure
       kDebug() << "Failed to set encryptoToSelf keys!";
-      return;
+      return false;
     }
   }
 
@@ -2231,9 +2235,8 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
     if ( !id.smimeSigningKey().isEmpty() )
       signKeys.push_back( id.smimeSigningKey() );
     if ( keyResolver->setSigningKeys( signKeys ) != Kpgp::Ok ) {
-      /// TODO handle failure
       kDebug() << "Failed to set signing keys!";
-      return;
+      return false;
     }
   }
 
@@ -2253,7 +2256,7 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
   if ( keyResolver->resolveAllKeys( signSomething, encryptSomething ) != Kpgp::Ok ) {
     /// TODO handle failure
     kDebug() << "failed to resolve keys! oh noes";
-    return;
+    return false;
   }
   kDebug() << "done resolving keys:";
 
@@ -2276,6 +2279,8 @@ void KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
 
   composer->setSignAndEncrypt( sign, encrypt );
   composer->setMessageCryptoFormat( cryptoMessageFormat() );
+
+  return true;
 }
 
 
