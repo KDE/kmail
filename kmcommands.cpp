@@ -482,9 +482,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   rmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
-  /** TODO Port it to KMime
-  win->setCharset( msg->codec()->name(), true );
-  */
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -513,9 +511,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   fmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
-  /** TODO Port to KMime
-  win->setCharset( msg->codec()->name(), true );
-  */
+  win->setCharset( msg->defaultCharset(), true );
   win->show();
 
   return OK;
@@ -1073,11 +1069,7 @@ KMCommand::Result KMReplyToCommand::execute()
     return Failed;
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0, mSelection );
-#if 0  //Port to kmime::message
-  win->setCharset( msg->codec()->name(), true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1104,11 +1096,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
     return Failed;
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( reply.msg, replyContext( reply ) );
-#if 0 //Port to akonadi
-  win->setCharset( msg->codec()->name(), true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus( false );
   win->show();
 
@@ -1136,11 +1124,7 @@ KMCommand::Result KMReplyListCommand::execute()
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ),
                                                0, mSelection );
-#if 0
-  win->setCharset( msg->codec()->name(), true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus( false );
   win->show();
 
@@ -1169,11 +1153,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
-#if 0
-  win->setCharset( msg->codec()->name(), true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1201,11 +1181,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, &*msg, KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection );
-#if 0
-  win->setCharset( msg->codec()->name(), true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1328,9 +1304,8 @@ KMCommand::Result KMForwardCommand::execute()
       KMime::Message *fwdMsg = new KMime::Message;
       KMail::MessageHelper::initHeader( fwdMsg, id );
       KMail::MessageHelper::setAutomaticFields( fwdMsg, true );
-#if 0 //Port it
-      fwdMsg->setCharset("utf-8");
-#endif
+      fwdMsg->contentType()->setCharset("utf-8");
+
       for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
         KMime::Message::Ptr msg = KMail::Util::message( *it );
         if ( msg ) {
@@ -1372,9 +1347,7 @@ KMCommand::Result KMForwardCommand::execute()
     id = mIdentity;
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
-#if 0
-    win->setCharset( fwdMsg->codec()->name(), true );
-#endif
+    win->setCharset( fwdMsg->defaultCharset(), true );
     win->show();
   }
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
@@ -1432,9 +1405,8 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     // set the part
     KMime::Content *msgPart = new KMime::Content( &*msg );
     msgPart->contentType()->setMimeType( "message/rfc822" );
-#if 0
-    msgPart->setCharset(msg->charset());
-#endif
+    msgPart->contentType()->setCharset(msg->defaultCharset());
+
 
     msgPart->contentDisposition()->setFilename( "forwarded message" );
     msgPart->contentDisposition()->setDisposition( KMime::Headers::CDinline );
@@ -1515,11 +1487,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
-#if 0
-  win->setCharset( msg->codec()->name(), true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1550,11 +1518,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply.msg, replyContext( reply ), 0,
                                                mSelection, mTemplate );
-#if 0
-  win->setCharset( msg->codec()->name(), true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1602,9 +1566,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     KMail::MessageHelper::initHeader(fwdMsg, id);
     KMail::MessageHelper::setAutomaticFields(fwdMsg, true);
 
-#if 0 //Port it
-    fwdMsg->setCharset( "utf-8" );
-#endif
+    fwdMsg->contentType()->setCharset("utf-8");
     // fwdMsg->setBody( msgText );
     for ( QList<Akonadi::Item>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
     {
@@ -1647,9 +1609,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     {
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                    QString(), mTemplate );
-#if 0
-      win->setCharset( fwdMsg->codec()->name(), true );
-#endif
+      win->setCharset( fwdMsg->defaultCharset(), true );
       win->show();
     }
   }
@@ -2292,9 +2252,8 @@ KMCommand::Result KMUrlClickedCommand::execute()
   {
     msg = new KMime::Message;
     KMail::MessageHelper::initHeader( msg, mIdentity );
-#if 0 //Port it
-    msg->setCharset("utf-8");
-#endif
+    msg->contentType()->setCharset("utf-8");
+
     QMap<QString, QString> fields =  KMail::StringUtil::parseMailtoUrl( mUrl );
 
     msg->to()->fromUnicodeString( fields.value( "to" ),"utf-8" );
@@ -2306,9 +2265,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
       msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
 
     KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, mIdentity );
-#if 0 //Port it
     win->setCharset("", true);
-#endif
     win->setFocusToSubject();
     win->show();
   }
@@ -2814,11 +2771,10 @@ KMCommand::Result KMResendMessageCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-#if 0
-  newMsg->setCharset( msg->codec()->name() );
-#endif
 
   KMime::Message *newMsg = KMail::MessageHelper::createResend( item, &*msg );
+  newMsg->contentType()->setCharset( msg->defaultCharset() );
+
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();
