@@ -83,6 +83,8 @@ class ImportJob : public QObject
     void queueFolders();
     void importNextDirectory();
     KMFolder* createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions );
+    KMFolder* getOrCreateSubFolder( KMFolder *parentFolder, const QString &subFolderName,
+                                    mode_t subFolderPermissions );
     void enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder );
 
     KArchive *mArchive;
