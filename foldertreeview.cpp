@@ -74,7 +74,6 @@ void FolderTreeView::readConfig()
 
 void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
 {
-  qDebug()<<" slotHeaderContextMenuRequested()";
   // the menu for the columns
   KMenu menu;
   QAction *act;
@@ -110,9 +109,39 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
     connect( act, SIGNAL( triggered( bool ) ),
              SLOT( slotHeaderContextMenuChangeIconSize( bool ) ) );
   }
+  menu.addTitle( i18n( "Display Tooltips" ) );
+
+  grp = new QActionGroup( &menu );
+
+  act = menu.addAction( i18nc("@action:inmenu Always display tooltips", "Always") );
+  act->setCheckable( true );
+  grp->addAction( act );
+  //act->setChecked( mToolTipDisplayPolicy == DisplayAlways );
+  //act->setData( QVariant( (int)DisplayAlways ) );
+  connect( act, SIGNAL( triggered( bool ) ),
+           SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
+  act = menu.addAction( i18nc("@action:inmenu", "When Text Obscured") );
+  act->setCheckable( true );
+  grp->addAction( act );
+  //act->setChecked( mToolTipDisplayPolicy == DisplayWhenTextElided );
+  //act->setData( QVariant( (int)DisplayWhenTextElided ) );
+  connect( act, SIGNAL( triggered( bool ) ),
+           SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
+
+  act = menu.addAction( i18nc("@action:inmenu Never display tooltips.", "Never") );
+  act->setCheckable( true );
+  grp->addAction( act );
+  //act->setChecked( mToolTipDisplayPolicy == DisplayNever );
+  //act->setData( QVariant( (int)DisplayNever ) );
+  connect( act, SIGNAL( triggered( bool ) ),
+           SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
 
 
   menu.exec( header()->mapToGlobal( pnt ) );
+}
+
+void FolderTreeView::slotHeaderContextMenuChangeToolTipDisplayPolicy( bool )
+{
 }
 
 void FolderTreeView::slotHeaderContextMenuChangeHeader( bool )

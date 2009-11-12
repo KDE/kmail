@@ -52,6 +52,7 @@ protected slots:
   void slotHeaderContextMenuRequested( const QPoint& );
   void slotHeaderContextMenuChangeIconSize( bool );
   void slotHeaderContextMenuChangeHeader( bool );
+  void slotHeaderContextMenuChangeToolTipDisplayPolicy( bool );
 };
 
 
