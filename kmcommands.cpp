@@ -984,7 +984,6 @@ void KMOpenMsgCommand::slotDataArrived( KIO::Job *, const QByteArray & data )
 
 void KMOpenMsgCommand::slotResult( KJob *job )
 {
-#if 0 //TODO port to akonadi
   if ( job->error() ) {
     // handle errors
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
@@ -1011,6 +1010,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
       }
       startOfMessage += 1; // the message starts after the '\n'
     }
+#if 0
     // check for multiple messages in the file
     bool multipleMessages = true;
     int endOfMessage = mMsgString.find( "\nFrom " );
@@ -1047,10 +1047,10 @@ void KMOpenMsgCommand::slotResult( KJob *job )
                                       "Only the first message is shown." ) );
     setResult( OK );
     emit completed( this );
-  }
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  }
   deleteLater();
 }
 
