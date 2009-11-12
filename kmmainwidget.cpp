@@ -2377,7 +2377,7 @@ void KMMainWidget::slotJumpToFolder()
 {
   // can jump to anywhere, need not be read/write
   AutoQPointer<FolderSelectionTreeViewDialog> dlg;
-  dlg = new FolderSelectionTreeViewDialog( this );
+  dlg = new FolderSelectionTreeViewDialog( this,false );
   dlg->setCaption( i18n( "Jump to Folder") );
   if ( dlg->exec() && dlg ) {
     Akonadi::Collection collection = dlg->selectedCollection();

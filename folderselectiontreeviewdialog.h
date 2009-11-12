@@ -29,7 +29,7 @@ class FolderSelectionTreeViewDialog : public KDialog
 {
   Q_OBJECT
 public:
-  FolderSelectionTreeViewDialog( QWidget *parent );
+  FolderSelectionTreeViewDialog( QWidget *parent, bool enableCheck = true );
   ~FolderSelectionTreeViewDialog();
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );

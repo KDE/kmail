@@ -30,7 +30,7 @@
 
 #include <KLocale>
 
-FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent )
+FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, bool enableCheck )
   :KDialog( parent )
 {
   setButtons( Ok | Cancel | User1 );
@@ -42,7 +42,7 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent )
   QVBoxLayout *layout = new QVBoxLayout( widget );
   treeview = new FolderSelectionTreeView( this );
   treeview->disableContextMenuAndExtraColumn();
-  treeview->readableCollectionProxyModel()->setEnabledCheck( true );
+  treeview->readableCollectionProxyModel()->setEnabledCheck( enableCheck );
   treeview->readableCollectionProxyModel()->setNecessaryRight( Akonadi::Collection::CanCreateCollection );
   layout->addWidget( treeview );
   enableButton( KDialog::Ok, false );
