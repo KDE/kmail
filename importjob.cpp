@@ -20,6 +20,7 @@
 
 #include "kmfolder.h"
 #include "folderutil.h"
+#include "kmfolderdir.h"
 
 #include "progressmanager.h"
 
@@ -226,6 +227,21 @@ void ImportJob::importNextMessage()
   QTimer::singleShot( 0, this, SLOT( importNextMessage() ) );
 }
 
+// Input: .inbox.directory
+// Output: inbox
+// Can also return an empty string if this is no valid dir name
+static QString folderNameForDirectoryName( const QString &dirName )
+{
+  Q_ASSERT( dirName.startsWith( "." ) );
+  const QString end = ".directory";
+  const int expectedIndex = dirName.length() - end.length();
+  if ( dirName.lower().find( end ) != expectedIndex )
+    return QString();
+  QString returnName = dirName.left( dirName.length() - end.length() );
+  returnName = returnName.right( returnName.length() - 1 );
+  return returnName;
+}
+
 void ImportJob::importNextDirectory()
 {
   if ( mAborted )
@@ -256,18 +272,33 @@ void ImportJob::importNextDirectory()
           return;
 
         enqueueMessages( dir, subFolder );
+      }
 
-        const QString dirName = "." + entries[i] + ".directory";
-        QStringList::iterator it = entries.find( dirName );
-        if ( it != entries.end() ) {
-          Q_ASSERT( folder.archiveDir->entry( *it )->isDirectory() );
-          Q_ASSERT( folder.archiveDir->entry( *it )->name() == dirName );
-          Folder newFolder;
-          newFolder.archiveDir = static_cast<const KArchiveDirectory*>( folder.archiveDir->entry( *it ) );
-          newFolder.parent = subFolder;
-          kdDebug(5006) << "Enqueueing directory " << newFolder.archiveDir->name() << endl;
-          mQueuedDirectories.push_back( newFolder );
+      // Entry starts with a dot, so we assume it is a subdirectory
+      else {
+
+        // Check if the subfolder already exists or create it
+        KMFolder *subFolder = 0;
+        const QString folderName = folderNameForDirectoryName( entry->name() );
+        if ( folderName.isEmpty() ) {
+          abort( i18n( "Unexpected subdirectory named '%1'." ).arg( entry->name() ) );
+          return;
         }
+        if ( currentFolder->child() ) {
+          subFolder = dynamic_cast<KMFolder*>( currentFolder->child()->hasNamedFolder( folderName ) );
+        }
+        if ( !subFolder ) {
+          kdDebug(5006) << "Creating subfolder for directory " << entry->name() << endl;
+          subFolder = createSubFolder( currentFolder, folderName, entry->permissions() );
+          if ( !subFolder )
+            return;
+        }
+
+        Folder newFolder;
+        newFolder.archiveDir = dir;
+        newFolder.parent = subFolder;
+        kdDebug(5006) << "Enqueueing directory " << entry->name() << endl;
+        mQueuedDirectories.push_back( newFolder );
       }
     }
   }
