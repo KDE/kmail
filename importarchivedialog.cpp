@@ -48,6 +48,7 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
 
   // TODO: Explaination label
   // TODO: Use QFormLayout in KDE4
+  // TODO: better label for "Ok" button
 
   QLabel *folderLabel = new QLabel( i18n( "Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );

@@ -24,6 +24,7 @@
 class KMFolder;
 class KMFolderDir;
 class QString;
+class QWidget;
 
 namespace KMail
 {
@@ -46,6 +47,16 @@ namespace FolderUtil
 KMFolder *createSubFolder( KMFolder *parentFolder, KMFolderDir *parentDir,
                            const QString &folderName, const QString &namespaceName,
                            KMFolderType localFolderType );
+
+/**
+ * Deletes a folder and all its subfolders.
+ * Handles all types of folders correctly, as well as folders with accounts
+ *
+ * @param folderToDelete the folder which is going to be deleted
+ * @param parent the parent widget, which is used when displaying a messagebox,
+ *               which happens when removing a folder with an associated account
+ */
+void deleteFolder( KMFolder *folderToDelete, QWidget *parent );
 
 }
 
