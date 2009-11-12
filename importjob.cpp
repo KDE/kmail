@@ -21,6 +21,8 @@
 #include "kmfolder.h"
 #include "folderutil.h"
 
+#include "progressmanager.h"
+
 #include <kdebug.h>
 #include <kzip.h>
 #include <ktar.h>
@@ -40,7 +42,9 @@ ImportJob::ImportJob( QWidget *parentWidget )
     mRootFolder( 0 ),
     mParentWidget( parentWidget ),
     mNumberOfImportedMessages( 0 ),
-    mCurrentFolder( 0 )
+    mCurrentFolder( 0 ),
+    mProgressItem( 0 ),
+    mAborted( false )
 {
 }
 
@@ -66,6 +70,8 @@ void ImportJob::setRootFolder( KMFolder *rootFolder )
 void ImportJob::finish()
 {
   kdDebug(5006) << "Finished import job." << endl;
+  mProgressItem->setComplete();
+  mProgressItem = 0;
   QString text = i18n( "Importing the archive file '%1' into the folder '%2' succeeded." )
                      .arg( mArchiveFile.path() ).arg( mRootFolder->name() );
   text += "\n" + i18n( "%1 messages were imported." ).arg( mNumberOfImportedMessages );
@@ -73,10 +79,24 @@ void ImportJob::finish()
   deleteLater();
 }
 
+void ImportJob::cancelJob()
+{
+  abort( i18n( "The operation was cancelled by the user." ) );
+}
+
 void ImportJob::abort( const QString &errorMessage )
 {
+  if ( mAborted )
+    return;
+
+  mAborted = true;
   QString text = i18n( "Failed to import the archive into folder '%1'." ).arg( mRootFolder->name() );
   text += "\n" + errorMessage;
+  if ( mProgressItem ) {
+    mProgressItem->setComplete();
+    mProgressItem = 0;
+    // The progressmanager will delete it
+  }
   KMessageBox::sorry( mParentWidget, text, i18n( "Importing archive failed." ) );
   deleteLater();
 }
@@ -134,6 +154,9 @@ void ImportJob::enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder 
 
 void ImportJob::importNextMessage()
 {
+  if ( mAborted )
+    return;
+
   if ( mQueuedMessages.isEmpty() ) {
     kdDebug(5006) << "importNextMessage(): Processed all messages in the queue." << endl;
     if ( mCurrentFolder ) {
@@ -163,7 +186,11 @@ void ImportJob::importNextMessage()
       return;
     }
     kdDebug(5006) << "importNextMessage(): Current folder of queue is now: " << mCurrentFolder->name() << endl;
+    mProgressItem->setStatus( i18n( "Importing folder %1" ).arg( mCurrentFolder->name() ) );
   }
+
+  mProgressItem->setProgress( ( mProgressItem->progress() + 5 ) );
+
   const KArchiveFile *file = messages.files.first();
   Q_ASSERT( file );
   messages.files.removeFirst();
@@ -201,6 +228,9 @@ void ImportJob::importNextMessage()
 
 void ImportJob::importNextDirectory()
 {
+  if ( mAborted )
+    return;
+
   if ( mQueuedDirectories.isEmpty() ) {
     finish();
     return;
@@ -268,6 +298,15 @@ void ImportJob::start()
     abort( i18n( "Unable to open archive file '%1'" ).arg( mArchiveFile.path() ) );
     return;
   }
+
+  mProgressItem = KPIM::ProgressManager::createProgressItem(
+      "ImportJob",
+      i18n( "Importing Archive" ),
+      QString(),
+      true );
+  mProgressItem->setUsesBusyIndicator( true );
+  connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+           this, SLOT(cancelJob()) );
 
   Folder nextFolder;
   nextFolder.archiveDir = mArchive->directory();

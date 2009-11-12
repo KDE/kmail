@@ -176,6 +176,9 @@ void BackupJob::finish()
 
 void BackupJob::archiveNextMessage()
 {
+  if ( mAborted )
+    return;
+
   mCurrentMessage = 0;
   if ( mPendingMessages.isEmpty() ) {
     kdDebug(5006) << "===> All messages done in folder " << mCurrentFolder->name() << endl;
@@ -250,6 +253,9 @@ static int fileInfoToUnixPermissions( const QFileInfo &fileInfo )
 
 void BackupJob::processCurrentMessage()
 {
+  if ( mAborted )
+    return;
+
   if ( mCurrentMessage ) {
     kdDebug(5006) << "Processing message with subject " << mCurrentMessage->subject() << endl;
     const DwString &messageDWString = mCurrentMessage->asDwString();
@@ -316,6 +322,9 @@ void BackupJob::messageRetrieved( KMMessage *message )
 
 void BackupJob::folderJobFinished( KMail::FolderJob *job )
 {
+  if ( mAborted )
+    return;
+
   // The job might finish after it has emitted messageRetrieved(), in which case we have already
   // started a new job. Don't set the current job to 0 in that case.
   if ( job == mCurrentJob ) {
@@ -345,6 +354,9 @@ bool BackupJob::writeDirHelper( const QString &directoryPath, const QString &per
 
 void BackupJob::archiveNextFolder()
 {
+  if ( mAborted )
+    return;
+
   if ( mPendingFolders.isEmpty() ) {
     finish();
     return;
