@@ -51,6 +51,7 @@ public slots:
 protected slots:
   void slotHeaderContextMenuRequested( const QPoint& );
   void slotHeaderContextMenuChangeIconSize( bool );
+  void slotHeaderContextMenuChangeHeader( bool );
 };
 
 

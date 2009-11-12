@@ -78,6 +78,19 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
   // the menu for the columns
   KMenu menu;
   QAction *act;
+  menu.addTitle( i18n("View Columns") );
+  for ( int i = 1; i <header()->count(); ++i )
+  {
+    act = menu.addAction( model()->headerData( i, Qt::Horizontal ).toString() );
+    act->setCheckable( true );
+    act->setChecked( !header()->isSectionHidden( i ) );
+    act->setData( QVariant( i ) );
+    if ( i == 0)
+       act->setEnabled( false );
+    connect( act,  SIGNAL( triggered( bool ) ),
+             SLOT( slotHeaderContextMenuChangeHeader( bool ) ) );
+  }
+
 
   menu.addTitle( i18n( "Icon Size" ) );
 
@@ -100,6 +113,25 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
 
 
   menu.exec( header()->mapToGlobal( pnt ) );
+}
+
+void FolderTreeView::slotHeaderContextMenuChangeHeader( bool )
+{
+  QAction *act = dynamic_cast< QAction * >( sender() );
+  if ( !act )
+    return;
+
+  QVariant data = act->data();
+
+  bool ok;
+  int id = data.toInt( &ok );
+  if ( !ok )
+    return;
+
+  if ( id > header()->count() )
+    return;
+
+  setColumnHidden( id, !act->isChecked() );
 }
 
 void FolderTreeView::slotHeaderContextMenuChangeIconSize( bool )
