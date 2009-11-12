@@ -3717,7 +3717,7 @@ void KMMainWidget::slotShowExpiryProperties()
 {
   if ( mCurrentFolder ) {
      KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( this, mCurrentFolder );
-  dlg->show();
+     dlg->show();
   }
 }
 
