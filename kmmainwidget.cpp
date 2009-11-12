@@ -136,6 +136,7 @@ using KMail::HeaderListQuickSearch;
 #include "templateparser.h"
 using KMail::TemplateParser;
 #include "statusbarlabel.h"
+#include "archivefolderdialog.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -1334,18 +1335,9 @@ void KMMainWidget::slotImportArchive()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotArchiveFolder()
 {
-  // TODO: Add nice dialog here.
-  KUrl savePath = KFileDialog::getSaveUrl( KGlobalSettings::desktopPath(),
-                                           QString( "*.tar.gz" ),
-                                           this,
-                                           i18n( "Select a Mail Archive Location" ) );
-  if ( savePath.isValid() ) {
-    KMail::BackupJob *backupJob = new KMail::BackupJob( this );
-    backupJob->setRootFolder( mFolder );
-    backupJob->setSaveLocation( savePath );
-    backupJob->setArchiveType( KMail::BackupJob::TarGz );
-    backupJob->start();
-  }
+  KMail::ArchiveFolderDialog archiveDialog;
+  archiveDialog.setFolder( mFolder );
+  archiveDialog.exec();
 }
 
 //-----------------------------------------------------------------------------
