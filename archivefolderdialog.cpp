@@ -119,6 +119,12 @@ void ArchiveFolderDialog::slotOk()
     }
   }
 
+  if ( !mFolderRequester->folder() ) {
+    KMessageBox::information( this, i18n( "Please select the folder that should be archived." ),
+                              i18n( "No folder selected" ) );
+    return;
+  }
+
   // TODO: check if url is empty. or better yet, disable ok button until file is chosen
   KMail::BackupJob *backupJob = new KMail::BackupJob( mParentWidget );
   backupJob->setRootFolder( mFolderRequester->folder() );
