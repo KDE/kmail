@@ -33,6 +33,7 @@
 #define COLLECTIONACLPAGE_H
 
 #include <akonadi/collectionpropertiespage.h>
+#include <kimap/acl.h>
 #include <KDialog>
 class KJob;
 class KMFolderImap;
@@ -59,18 +60,15 @@ class ImapAccountBase;
  * "New Access Control Entry" dialog.
  * Internal class, only used by CollectionAclPage
  */
-#if 0
 class ACLEntryDialog :public KDialog {
   Q_OBJECT
 
 public:
-  ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent );
-#if 0
-  void setValues( const QString& userId, unsigned int permissions );
-
+  ACLEntryDialog( const QString& caption, QWidget* parent );
+  void setValues( const QString& userId, KIMAP::Acl::Rights permissions );
   QString userId() const;
   QStringList userIds() const;
-  unsigned int permissions() const;
+  KIMAP::Acl::Rights permissions() const;
 
 private slots:
   void slotSelectAddresses();
@@ -79,10 +77,8 @@ private slots:
 private:
   QButtonGroup* mButtonGroup;
   KLineEdit* mUserIdLineEdit;
-  IMAPUserIdFormat mUserIdFormat;
-#endif
 };
-#endif
+
 /**
  * "Access Control" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
@@ -113,6 +109,8 @@ private slots:
   void slotReceivedUserRights( KMFolder* folder );
   void slotDirectoryListingFinished(KMFolderImap*);
 
+#endif
+private slots:
   // User (QTreeWidget) slots
   void slotEditACL( QTreeWidgetItem* );
   void slotSelectionChanged();
@@ -122,6 +120,7 @@ private slots:
   void slotEditACL();
   void slotRemoveACL();
 
+#if 0
   void slotChanged( bool b );
 
 private:
@@ -130,8 +129,10 @@ private:
   void startListing();
   void loadListView( const KMail::ACLList& aclList );
   void loadFinished( const KMail::ACLList& aclList );
-  void addACLs( const QStringList& userIds, unsigned int permissions );
 #endif
+private:
+  void addACLs( const QStringList& userIds, KIMAP::Acl::Rights permissions );
+
 private:
   // The widget containing the ACL widgets (listview and buttons)
   KHBox* mACLWidget;
@@ -142,11 +143,14 @@ private:
   KPushButton* mAddACL;
   KPushButton* mEditACL;
   KPushButton* mRemoveACL;
-#if 0
   QStringList mRemovedACLs;
+#if 0
   QString mImapPath;
   ImapAccountBase* mImapAccount;
-  int mUserRights;
+#endif
+  QString mImapUserName;
+  KIMAP::Acl::Rights mUserRights;
+#if 0
   KMFolderType mFolderType;
   ACLList mInitialACLList;
   ACLList mACLList; // to be set

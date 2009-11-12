@@ -49,6 +49,8 @@
 #include <kconfiggroup.h>
 #include <KLineEdit>
 
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <QLayout>
 #include <QLabel>
 #include <QRadioButton>
@@ -65,24 +67,19 @@
 
 // The set of standard permission sets
 static const struct {
-  unsigned int permissions;
+  KIMAP::Acl::Rights permissions;
   const char* userString;
 } standardPermissions[] = {
   { KIMAP::Acl::None, I18N_NOOP2( "Permissions", "None" ) },
   { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen, I18N_NOOP2( "Permissions", "Read" ) },
   { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Insert | KIMAP::Acl::Post, I18N_NOOP2( "Permissions", "Append" ) },
-  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Write, I18N_NOOP2( "Permissions", "Write" ) },
-  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Insert | KIMAP::Acl::Post | KIMAP::Acl::Write, I18N_NOOP2( "Permissions", "All" ) }
+  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Insert | KIMAP::Acl::Post | KIMAP::Acl::Write | KIMAP::Acl::Create | KIMAP::Acl::Delete, I18N_NOOP2( "Permissions", "Write" ) },
+  { KIMAP::Acl::Lookup | KIMAP::Acl::Read | KIMAP::Acl::KeepSeen | KIMAP::Acl::Insert | KIMAP::Acl::Post | KIMAP::Acl::Write | KIMAP::Acl::Create | KIMAP::Acl::Delete | KIMAP::Acl::Admin, I18N_NOOP2( "Permissions", "All" ) }
 };
 
-#if 0
-ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent )
+ACLEntryDialog::ACLEntryDialog( const QString& caption, QWidget* parent )
   : KDialog( parent )
-#if 0
-  , mUserIdFormat( userIdFormat )
-#endif
 {
-#if 0
   setCaption( caption );
   setButtons( Ok | Cancel );
   QWidget *page = new QWidget( this );
@@ -129,24 +126,11 @@ ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& ca
   mUserIdLineEdit->setFocus();
   // Ensure the lineedit is rather wide so that email addresses can be read in it
   incrementInitialSize( QSize( 200, 0 ) );
-#endif
 }
-#endif
-#if 0
+
 void ACLEntryDialog::slotChanged()
 {
   enableButtonOk( !mUserIdLineEdit->text().isEmpty() && mButtonGroup->checkedButton() != 0 );
-}
-
-static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat userIdFormat )
-{
-  QString email = addr.preferredEmail();
-  if ( userIdFormat == FullEmail )
-    return email;
-  else { // mUserIdFormat == UserName
-    email.truncate( email.indexOf( '@' ) );
-    return email;
-  }
 }
 
 void ACLEntryDialog::slotSelectAddresses()
@@ -154,8 +138,8 @@ void ACLEntryDialog::slotSelectAddresses()
   AutoQPointer<KPIM::AddressesDialog> dlg( new KPIM::AddressesDialog( this ) );
   dlg->setShowCC( false );
   dlg->setShowBCC( false );
-  if ( mUserIdFormat == FullEmail ) // otherwise we have no way to go back from userid to email
-    dlg->setSelectedTo( userIds() );
+  dlg->setSelectedTo( userIds() );
+
   if ( dlg->exec() != QDialog::Accepted || !dlg ) {
     return;
   }
@@ -167,13 +151,13 @@ void ACLEntryDialog::slotSelectAddresses()
     for( QList<KABC::Addressee>::ConstIterator it = lst.constBegin(); it != lst.constEnd(); ++it ) {
       if ( !txt.isEmpty() )
         txt += ", ";
-      txt += addresseeToUserId( *it, mUserIdFormat );
+      txt += it->preferredEmail();
     }
   }
   mUserIdLineEdit->setText( txt );
 }
 
-void ACLEntryDialog::setValues( const QString& userId, unsigned int permissions )
+void ACLEntryDialog::setValues( const QString& userId, KIMAP::Acl::Rights permissions )
 {
   mUserIdLineEdit->setText( userId );
 
@@ -199,14 +183,13 @@ QStringList ACLEntryDialog::userIds() const
   return lst;
 }
 
-unsigned int ACLEntryDialog::permissions() const
+KIMAP::Acl::Rights ACLEntryDialog::permissions() const
 {
   QAbstractButton* button = mButtonGroup->checkedButton();
   if( !button )
-    return static_cast<unsigned int>(-1); // hm ?
-  return mButtonGroup->id( button );
+    return static_cast<KIMAP::Acl::Rights>(-1); // hm ?
+  return static_cast<KIMAP::Acl::Rights>( mButtonGroup->id( button ) );
 }
-#endif
 
 class CollectionAclPage::ListViewItem : public QTreeWidgetItem
 {
@@ -223,8 +206,8 @@ public:
   QString userId() const { return text( 0 ); }
   void setUserId( const QString& userId ) { setText( 0, userId ); }
 
-  unsigned int permissions() const { return mPermissions; }
-  void setPermissions( unsigned int permissions );
+  KIMAP::Acl::Rights permissions() const { return mPermissions; }
+  void setPermissions( KIMAP::Acl::Rights permissions );
 
   bool isModified() const { return mModified; }
   void setModified( bool b ) { mModified = b; }
@@ -235,7 +218,7 @@ public:
   void setNew( bool b ) { mNew = b; }
 
 private:
-  unsigned int mPermissions;
+  KIMAP::Acl::Rights mPermissions;
   QString mInternalRightsList; ///< protocol-dependent string (e.g. IMAP rights list)
   bool mModified;
   bool mNew;
@@ -256,7 +239,7 @@ static QString permissionsToUserString( unsigned int permissions, const QString&
     return i18n( "Custom Permissions (%1)", internalRightsList );
 }
 
-void CollectionAclPage::ListViewItem::setPermissions( unsigned int permissions )
+void CollectionAclPage::ListViewItem::setPermissions( KIMAP::Acl::Rights permissions )
 {
   mPermissions = permissions;
   setText( 1, permissionsToUserString( permissions, QString() ) );
@@ -312,11 +295,10 @@ void CollectionAclPage::ListViewItem::save( ACLList& aclList,
 ////
 
 CollectionAclPage::CollectionAclPage( QWidget* parent )
-  : CollectionPropertiesPage( parent )
+  : CollectionPropertiesPage( parent ),
+    mUserRights( KIMAP::Acl::None ),
+    mChanged( false )
 #if 0
-    mImapAccount( 0 ),
-    mUserRights( 0 ),
-    mChanged( false ),
     mAccepting( false ),
     mSaving( false )
 #endif
@@ -390,12 +372,42 @@ void CollectionAclPage::load(const Akonadi::Collection & col)
       item->setModified( true );
   }
 
+  QDBusInterface resourceSettings( QString("org.freedesktop.Akonadi.Resource.")+col.resource(),
+                                   "/Settings", "org.kde.Akonadi.Imap.Settings" );
+  QDBusReply<QString> reply = resourceSettings.call( "userName" );
+  if ( reply.isValid() ) {
+    mImapUserName = reply;
+  }
+
+  mUserRights = rights[mImapUserName.toUtf8()];
+
   mStack->setCurrentWidget( mACLWidget );
-  //slotSelectionChanged();
+  slotSelectionChanged();
 }
 
 void CollectionAclPage::save(Akonadi::Collection & col)
 {
+  if ( !col.hasAttribute<Akonadi::ImapAclAttribute>() ) {
+    return;
+  }
+
+  if ( !mChanged ) {
+    return;
+  }
+
+  Akonadi::ImapAclAttribute *acls = col.attribute<Akonadi::ImapAclAttribute>();
+  QMap<QByteArray, KIMAP::Acl::Rights> rights;
+
+  QTreeWidgetItemIterator it( mListView );
+  while ( QTreeWidgetItem* item = *it ) {
+    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
+    rights[ ACLitem->userId().toUtf8() ] = ACLitem->permissions();
+    ++it;
+  }
+
+  acls->setRights( rights );
+
+  new Akonadi::CollectionModifyJob( col, this );
 }
 
 #if 0
@@ -582,23 +594,23 @@ void CollectionAclPage::loadFinished( const ACLList& aclList )
   mStack->setCurrentWidget( mACLWidget );
   slotSelectionChanged();
 }
+#endif
 
 void CollectionAclPage::slotEditACL(QTreeWidgetItem* item)
 {
   if ( !item ) return;
-  bool canAdmin = ( mUserRights & ACLJobs::Administer );
+  bool canAdmin = ( mUserRights & KIMAP::Acl::Admin );
   // Same logic as in slotSelectionChanged, but this is also needed for double-click IIRC
-  if ( canAdmin && mImapAccount && item ) {
+  if ( canAdmin && item ) {
     // Don't allow users to remove their own admin permissions - there's no way back
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    if ( mImapAccount->login() == ACLitem->userId() && ACLitem->permissions() == ACLJobs::All )
+    if ( mImapUserName == ACLitem->userId() && ( ACLitem->permissions() & KIMAP::Acl::Admin ) )
       canAdmin = false;
   }
   if ( !canAdmin ) return;
 
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
-  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( mUserIdFormat,
-                                                        i18n( "Modify Permissions" ),
+  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( i18n( "Modify Permissions" ),
                                                         this ) );
   dlg->setValues( ACLitem->userId(), ACLitem->permissions() );
   if ( dlg->exec() == QDialog::Accepted && dlg ) {
@@ -607,7 +619,7 @@ void CollectionAclPage::slotEditACL(QTreeWidgetItem* item)
     ACLitem->setUserId( dlg->userIds().front() );
     ACLitem->setPermissions( dlg->permissions() );
     ACLitem->setModified( true );
-    emit changed(true);
+    mChanged = true;
     if ( userIds.count() > 1 ) { // more emails were added, append them
       userIds.pop_front();
       addACLs( userIds, dlg->permissions() );
@@ -620,7 +632,7 @@ void CollectionAclPage::slotEditACL()
   slotEditACL( mListView->currentItem() );
 }
 
-void CollectionAclPage::addACLs( const QStringList& userIds, unsigned int permissions )
+void CollectionAclPage::addACLs( const QStringList& userIds, KIMAP::Acl::Rights permissions )
 {
   for( QStringList::const_iterator it = userIds.constBegin(); it != userIds.constEnd(); ++it ) {
     ListViewItem* ACLitem = new ListViewItem( mListView );
@@ -633,12 +645,11 @@ void CollectionAclPage::addACLs( const QStringList& userIds, unsigned int permis
 
 void CollectionAclPage::slotAddACL()
 {
-  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( mUserIdFormat, i18n( "Add Permissions" ),
-                                                        this ) );
+  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( i18n( "Add Permissions" ), this ) );
   if ( dlg->exec() == QDialog::Accepted && dlg ) {
     const QStringList userIds = dlg->userIds();
     addACLs( dlg->userIds(), dlg->permissions() );
-    emit changed(true);
+    mChanged = true;
   }
 }
 
@@ -646,19 +657,19 @@ void CollectionAclPage::slotSelectionChanged()
 {
   QTreeWidgetItem* item = mListView->currentItem();
 
-  bool canAdmin = ( mUserRights & ACLJobs::Administer );
+  bool canAdmin = ( mUserRights & KIMAP::Acl::Admin );
   bool canAdminThisItem = canAdmin;
-  if ( canAdmin && mImapAccount && item ) {
+  if ( canAdmin && item ) {
     // Don't allow users to remove their own admin permissions - there's no way back
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    if ( mImapAccount->login() == ACLitem->userId() && ACLitem->permissions() == ACLJobs::All )
+    if ( mImapUserName == ACLitem->userId() && ( ACLitem->permissions() & KIMAP::Acl::Admin ) )
       canAdminThisItem = false;
   }
 
   bool lvVisible = mStack->currentWidget() == mACLWidget;
-  mAddACL->setEnabled( lvVisible && canAdmin && !mSaving );
-  mEditACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
-  mRemoveACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
+  mAddACL->setEnabled( lvVisible && canAdmin );
+  mEditACL->setEnabled( item && lvVisible && canAdminThisItem );
+  mRemoveACL->setEnabled( item && lvVisible && canAdminThisItem );
 }
 
 void CollectionAclPage::slotRemoveACL()
@@ -667,7 +678,7 @@ void CollectionAclPage::slotRemoveACL()
   if ( !ACLitem )
     return;
   if ( !ACLitem->isNew() ) {
-    if ( mImapAccount && mImapAccount->login() == ACLitem->userId() ) {
+    if ( mImapUserName == ACLitem->userId() ) {
       if ( KMessageBox::Cancel == KMessageBox::warningContinueCancel( topLevelWidget(),
          i18n( "Do you really want to remove your own permissions for this folder? You will not be able to access it afterwards." ), i18n( "Remove" ) ) )
         return;
@@ -675,9 +686,10 @@ void CollectionAclPage::slotRemoveACL()
     mRemovedACLs.append( ACLitem->userId() );
   }
   delete ACLitem;
-  emit changed(true);
+  mChanged = true;
 }
 
+#if 0
 FolderDialogTab::AcceptStatus CollectionAclPage::accept()
 {
   if ( !mChanged || !mImapAccount )
