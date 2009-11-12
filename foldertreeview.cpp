@@ -45,6 +45,15 @@ FolderTreeView::~FolderTreeView()
 
 void FolderTreeView::init()
 {
+  header()->setContextMenuPolicy( Qt::CustomContextMenu );
+  connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
+           SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
+
+}
+
+void FolderTreeView::slotHeaderContextMenuRequested( const QPoint& )
+{
+  qDebug()<<" slotHeaderContextMenuRequested()";
 }
 
 void FolderTreeView::selectModelIndex( const QModelIndex & index )

@@ -46,6 +46,8 @@ protected:
 public slots:
   void slotFocusNextFolder();
   void slotFocusPrevFolder();
+protected slots:
+  void slotHeaderContextMenuRequested( const QPoint& );
 };
 
 
