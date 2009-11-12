@@ -25,6 +25,8 @@
 #include "kmkernel.h"
 #include <KMessageBox>
 #include <KGuiItem>
+#include <KMenu>
+
 FolderTreeView::FolderTreeView(QWidget *parent )
   : Akonadi::EntityTreeView( parent )
 {
@@ -41,19 +43,80 @@ FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent )
 
 FolderTreeView::~FolderTreeView()
 {
+  writeConfig();
 }
 
 void FolderTreeView::init()
 {
+  setIconSize( QSize( 22, 22 ) );
+
   header()->setContextMenuPolicy( Qt::CustomContextMenu );
   connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
            SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
+  readConfig();
+}
+
+void FolderTreeView::writeConfig()
+{
+  KConfigGroup myGroup( KMKernel::config(), "MainFolderView");
+  myGroup.writeEntry( "IconSize", iconSize().width() );
 
 }
 
-void FolderTreeView::slotHeaderContextMenuRequested( const QPoint& )
+void FolderTreeView::readConfig()
+{
+  KConfigGroup myGroup( KMKernel::config(), "MainFolderView" );
+  int iIconSize = myGroup.readEntry( "IconSize", iconSize().width() );
+  if ( iIconSize < 16 || iIconSize > 32 )
+    iIconSize = 22;
+  setIconSize( QSize( iIconSize, iIconSize ) );
+
+}
+
+void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
 {
   qDebug()<<" slotHeaderContextMenuRequested()";
+  // the menu for the columns
+  KMenu menu;
+  QAction *act;
+
+  menu.addTitle( i18n( "Icon Size" ) );
+
+  static int icon_sizes[] = { 16, 22, 32 /*, 48, 64, 128 */ };
+
+  QActionGroup *grp = new QActionGroup( &menu );
+
+  for ( int i = 0; i < (int)( sizeof( icon_sizes ) / sizeof( int ) ); i++ )
+  {
+    act = menu.addAction( QString("%1x%2").arg( icon_sizes[ i ] ).arg( icon_sizes[ i ] ) );
+    act->setCheckable( true );
+    grp->addAction( act );
+    if ( iconSize().width() == icon_sizes[ i ] )
+      act->setChecked( true );
+    act->setData( QVariant( icon_sizes[ i ] ) );
+
+    connect( act, SIGNAL( triggered( bool ) ),
+             SLOT( slotHeaderContextMenuChangeIconSize( bool ) ) );
+  }
+
+
+  menu.exec( header()->mapToGlobal( pnt ) );
+}
+
+void FolderTreeView::slotHeaderContextMenuChangeIconSize( bool )
+{
+  QAction *act = dynamic_cast< QAction * >( sender() );
+  if ( !act )
+    return;
+
+  QVariant data = act->data();
+
+  bool ok;
+  int size = data.toInt( &ok );
+  if ( !ok )
+    return;
+
+  setIconSize( QSize( size, size ) );
 }
 
 void FolderTreeView::selectModelIndex( const QModelIndex & index )

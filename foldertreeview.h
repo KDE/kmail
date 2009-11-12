@@ -42,12 +42,15 @@ protected:
   void selectModelIndex( const QModelIndex & );
   QModelIndex selectNextFolder( const QModelIndex & current );
   bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex,FolderTreeView::Move move, bool confirm);
-
+  void readConfig();
+  void writeConfig();
 public slots:
   void slotFocusNextFolder();
   void slotFocusPrevFolder();
+
 protected slots:
   void slotHeaderContextMenuRequested( const QPoint& );
+  void slotHeaderContextMenuChangeIconSize( bool );
 };
 
 
