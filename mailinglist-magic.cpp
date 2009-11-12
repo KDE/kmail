@@ -221,7 +221,7 @@ headerToAddress( const QString& header )
       kDebug()<<"Serious mailing list header parsing error !";
       return addr;
     }
-    kDebug()<<"Mailing list ="<<header.mid( start, end - start );
+    //kDebug()<<"Mailing list ="<<header.mid( start, end - start );
     addr.append( header.mid( start, end - start ) );
   }
   return  addr;
