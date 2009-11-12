@@ -21,6 +21,7 @@
 
 #include <akonadi/entitytreeview.h>
 #include <akonadi/collection.h>
+#include "folderselectiontreeview.h"
 class FolderTreeView : public Akonadi::EntityTreeView
 {
   Q_OBJECT
@@ -37,6 +38,8 @@ public:
 
   void disableContextMenuAndExtraColumn();
 
+  void setTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
+
   Akonadi::Collection currentFolder();
 protected:
   enum Move { Next = 0, Previous = 1};
@@ -46,6 +49,7 @@ protected:
   bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex,FolderTreeView::Move move, bool confirm);
   void readConfig();
   void writeConfig();
+
 public slots:
   void slotFocusNextFolder();
   void slotFocusPrevFolder();
@@ -56,9 +60,13 @@ protected slots:
   void slotHeaderContextMenuChangeHeader( bool );
   void slotHeaderContextMenuChangeToolTipDisplayPolicy( bool );
 
+
+signals:
+  void changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
+
 private:
   bool mbDisableContextMenuAndExtraColumn;
-
+  FolderSelectionTreeView::ToolTipDisplayPolicy mToolTipDisplayPolicy;
 };
 
 

@@ -77,6 +77,13 @@ public:
   void disableContextMenuAndExtraColumn();
 
   void readConfig();
+protected:
+  void changeToolTipsPolicyConfig( ToolTipDisplayPolicy );
+
+protected slots:
+  void slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
+
+
 private:
   class FolderSelectionTreeViewPrivate;
   FolderSelectionTreeViewPrivate * const d;

@@ -93,6 +93,9 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
+  connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ), this, SLOT( slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ) );
+
+
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
   d->collectionFolderView->setModel( d->readableproxy );
@@ -198,7 +201,21 @@ void FolderSelectionTreeView::readConfig()
 
   KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
-  switch( checkedFolderToolTipsPolicy ){
+  changeToolTipsPolicyConfig( ( ToolTipDisplayPolicy )checkedFolderToolTipsPolicy );
+
+  d->collectionFolderView->askDndActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
+  readQuotaConfig();
+}
+
+void FolderSelectionTreeView::slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy policy)
+{
+  changeToolTipsPolicyConfig( policy );
+}
+
+
+void FolderSelectionTreeView::changeToolTipsPolicyConfig( ToolTipDisplayPolicy policy )
+{
+  switch( policy ){
   case DisplayAlways:
   case DisplayWhenTextElided: //Need to implement in the future
     d->filterModel->setToolTipEnabled( true );
@@ -206,8 +223,7 @@ void FolderSelectionTreeView::readConfig()
   case DisplayNever:
     d->filterModel->setToolTipEnabled( false );
   }
-  d->collectionFolderView->askDndActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
-  readQuotaConfig();
+  d->collectionFolderView->setTooltipsPolicy( policy );
 }
 
 void FolderSelectionTreeView::quotaWarningParameters( const QColor &color, qreal threshold )
