@@ -1561,6 +1561,9 @@ void KMMainWidget::slotRemoveFolder()
     buttonLabel = i18nc("@action:button Delete search", "&Delete");
   } else {
     title = i18n("Delete Folder");
+    str = i18n( "<qt>Are you sure you want to delete the folder "
+                   "<b>%1</b>?</qt>",
+                Qt::escape( mCurrentFolder->name() ) );
     if ( mCurrentFolder->count() == 0 ) {
 #if 0
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
