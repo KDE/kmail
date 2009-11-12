@@ -33,7 +33,7 @@
 using namespace KMail;
 
 ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
-  : KDialogBase( parent, "archive_folder_dialog", false, i18n( "Archive Folder" ),
+  : KDialogBase( parent, "import_archive_dialog", false, i18n( "Import Archive" ),
                  KDialogBase::Ok | KDialogBase::Cancel,
                  KDialogBase::Ok, true ),
     mParentWidget( parent )
