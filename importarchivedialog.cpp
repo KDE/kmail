@@ -87,6 +87,12 @@ void ImportArchiveDialog::slotOk()
     return;
   }
 
+  if ( !mFolderRequester->folder() ) {
+    KMessageBox::information( this, i18n( "Please select the folder where the archive should be imported to." ),
+                              i18n( "No target folder selected" ) );
+    return;
+  }
+
   // TODO: check if url is empty. or better yet, disable ok button until file is chosen
 
   ImportJob *importJob = new KMail::ImportJob( mParentWidget );
