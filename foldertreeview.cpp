@@ -43,7 +43,6 @@ FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent )
 
 FolderTreeView::~FolderTreeView()
 {
-  writeConfig();
 }
 
 void FolderTreeView::init()
@@ -117,6 +116,7 @@ void FolderTreeView::slotHeaderContextMenuChangeIconSize( bool )
     return;
 
   setIconSize( QSize( size, size ) );
+  writeConfig();
 }
 
 void FolderTreeView::selectModelIndex( const QModelIndex & index )
