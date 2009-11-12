@@ -130,6 +130,8 @@ using KMail::TemplateParser;
 #include "accountwizard.h"
 #include "expirypropertiesdialog.h"
 #include <akonadi/itemfetchjob.h>
+#include <akonadi/collectionfetchjob.h>
+#include <akonadi/collectionfetchscope.h>
 #include "util.h"
 
 #if !defined(NDEBUG)
@@ -1561,12 +1563,14 @@ void KMMainWidget::slotRemoveFolder()
     buttonLabel = i18nc("@action:button Delete search", "&Delete");
   } else {
     title = i18n("Delete Folder");
-    str = i18n( "<qt>Are you sure you want to delete the folder "
-                   "<b>%1</b>?</qt>",
-                Qt::escape( mCurrentFolder->name() ) );
+
+    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(), CollectionFetchJob::FirstLevel, this );
+    job->fetchScope().setContentMimeTypes( QStringList() << "message/rfc822" );
+    job->exec();
+    bool hasNotSubDirectory = job->collections().isEmpty();
+
     if ( mCurrentFolder->count() == 0 ) {
-#if 0
-      if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
+      if ( hasNotSubDirectory ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>",
                 Qt::escape( mCurrentFolder->name() ) );
@@ -1579,7 +1583,7 @@ void KMMainWidget::slotRemoveFolder()
                 Qt::escape( mCurrentFolder->name() ) );
       }
     } else {
-      if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
+      if ( hasNotSubDirectory ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
                    "<resource>%1</resource>, discarding its contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
@@ -1592,9 +1596,6 @@ void KMMainWidget::slotRemoveFolder()
                    "into your Trash folder and are permanently deleted.</p></qt>",
               Qt::escape( mCurrentFolder->name() ) );
       }
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     }
     buttonLabel = i18nc("@action:button Delete folder", "&Delete");
   }
