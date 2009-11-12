@@ -238,6 +238,7 @@ set(kmailprivate_LIB_SRCS
    importjob.cpp
    folderutil.cpp
    archivefolderdialog.cpp
+   importarchivedialog.cpp
 )
 
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )
