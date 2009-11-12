@@ -979,7 +979,7 @@ void KMOpenMsgCommand::slotDataArrived( KIO::Job *, const QByteArray & data )
   if ( data.isEmpty() )
     return;
 
-  mMsgString.append( data.data(), data.size() );
+  mMsgString.append( data.data() );
 }
 
 void KMOpenMsgCommand::slotResult( KJob *job )
@@ -992,8 +992,8 @@ void KMOpenMsgCommand::slotResult( KJob *job )
   }
   else {
     int startOfMessage = 0;
-    if ( mMsgString.compare( 0, 5, "From ", 5 ) == 0 ) {
-      startOfMessage = mMsgString.find( '\n' );
+    if ( mMsgString.startsWith("From ") ) {
+      startOfMessage = mMsgString.indexOf( '\n' );
       if ( startOfMessage == -1 ) {
         KMessageBox::sorry( parentWidget(),
                             i18n( "The file does not contain a message." ) );
@@ -1010,23 +1010,20 @@ void KMOpenMsgCommand::slotResult( KJob *job )
       }
       startOfMessage += 1; // the message starts after the '\n'
     }
-#if 0
     // check for multiple messages in the file
     bool multipleMessages = true;
-    int endOfMessage = mMsgString.find( "\nFrom " );
+    int endOfMessage = mMsgString.indexOf( "\nFrom " );
     if ( endOfMessage == -1 ) {
       endOfMessage = mMsgString.length();
       multipleMessages = false;
     }
-    DwMessage *dwMsg = new DwMessage;
-    dwMsg->FromString( mMsgString.substr( startOfMessage,
-                                          endOfMessage - startOfMessage ) );
-    dwMsg->Parse();
-    // check whether we have a message ( no headers => this isn't a message )
-    if ( dwMsg->Headers().NumFields() == 0 ) {
+    KMime::Message *msg = new KMime::Message;
+    msg->setContent( mMsgString.mid( startOfMessage,endOfMessage - startOfMessage ).toUtf8() );
+    msg->parse();
+    if ( !msg->hasContent() ) {
       KMessageBox::sorry( parentWidget(),
                           i18n( "The file does not contain a message." ) );
-      delete dwMsg; dwMsg = 0;
+      delete msg; msg = 0;
       setResult( Failed );
       emit completed( this );
       // Emulate closing of a secondary window (see above).
@@ -1036,10 +1033,12 @@ void KMOpenMsgCommand::slotResult( KJob *job )
       deleteLater();
       return;
     }
-    KMime::Message *msg = new KMime::Message( dwMsg );
-    msg->setReadyToShow( true );
     KMReaderMainWin *win = new KMReaderMainWin();
+#if 0 //Port it
     win->showMessage( mEncoding, msg );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     win->show();
     if ( multipleMessages )
       KMessageBox::information( win,
@@ -1047,9 +1046,6 @@ void KMOpenMsgCommand::slotResult( KJob *job )
                                       "Only the first message is shown." ) );
     setResult( OK );
     emit completed( this );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
   deleteLater();
 }

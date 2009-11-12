@@ -335,7 +335,7 @@ private slots:
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
   KUrl mUrl;
-  DwString mMsgString;
+  QString mMsgString;
   KIO::TransferJob *mJob;
   const QString mEncoding;
 };
