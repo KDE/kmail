@@ -41,7 +41,7 @@ class ImportArchiveDialog : public KDialog
   protected slots:
 
     /** reimp */
-    virtual void slotOk();
+    virtual void slotButtonClicked( int button );
 
   private:
 

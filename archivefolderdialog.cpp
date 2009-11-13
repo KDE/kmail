@@ -115,8 +115,14 @@ void ArchiveFolderDialog::setFolder( KMFolder *defaultFolder )
   mUrlRequester->setUrl( standardArchivePath( defaultFolder->name() ) );
 }
 
-void ArchiveFolderDialog::slotOk()
+void ArchiveFolderDialog::slotButtonClicked( int button )
 {
+  if ( button == KDialog::Cancel ) {
+    reject();
+    return;
+  }
+  Q_ASSERT( button == KDialog::Ok );
+
   if ( QFile::exists( mUrlRequester->url().path() ) ) {
     if ( KMessageBox::questionYesNo( this, i18n( "The specified file already exists. Do you want to overwrite it?" ),
                                      i18n( "File already exists" ), KGuiItem( i18n( "Overwrite" ) ),

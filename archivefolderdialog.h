@@ -44,7 +44,7 @@ class ArchiveFolderDialog : public KDialog
     void slotFixFileExtension();
 
     /** reimp */
-    virtual void slotOk();
+    virtual void slotButtonClicked( int button );
 
   private:
 
