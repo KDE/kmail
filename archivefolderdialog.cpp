@@ -37,7 +37,7 @@ using namespace KMail;
 
 static QString standardArchivePath( const QString &folderName )
 {
-  return KGlobalSettings::documentPath() +
+  return KGlobalSettings::documentPath() + '/' +
     i18nc( "Start of the filename for a mail archive file" , "Archive" ) + '_' + folderName + '_' + QDate::currentDate().toString( Qt::ISODate ) + ".zip";
 }
 
