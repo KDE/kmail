@@ -1141,6 +1141,8 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       if ( !multiFolder )
         folderMenu->addAction( mMainWidget->action("search_messages") );
 
+      folderMenu->addAction( mMainWidget->action( "archive_folder" ) );
+
       folderMenu->addAction( mMainWidget->action("compact") );
 
       if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
