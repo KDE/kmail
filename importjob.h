@@ -32,6 +32,11 @@ class KArchiveDirectory;
 class KArchiveFile;
 class KMFolder;
 
+namespace KPIM
+{
+  class ProgressItem;
+}
+
 namespace KMail
 {
 
@@ -56,6 +61,7 @@ class ImportJob : public QObject
   private slots:
 
     void importNextMessage();
+    void cancelJob();
 
   private:
 
@@ -97,6 +103,9 @@ class ImportJob : public QObject
 
     // The folder to which we are currently importing messages
     KMFolder *mCurrentFolder;
+
+    KPIM::ProgressItem *mProgressItem;
+    bool mAborted;
 };
 
 }
