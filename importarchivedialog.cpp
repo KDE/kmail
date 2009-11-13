@@ -35,8 +35,8 @@ using namespace KMail;
 ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
   : KDialog( parent ), mParentWidget( parent )
 {
-  setObjectName( "archive_folder_dialog" );
-  setCaption( i18n( "Archive Folder" ) );
+  setObjectName( "import_archive_dialog" );
+  setCaption( i18n( "Import Archive" ) );
   setButtons( Ok|Cancel );
   setDefaultButton( Ok );
   setModal( true );
