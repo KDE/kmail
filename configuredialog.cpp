@@ -1652,7 +1652,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 
   // "show colorbar" check box:
   populateCheckBox( mShowColorbarCheck = new QCheckBox( this ),
-                    GlobalSettings::self()->showColorbarItem() );
+                    GlobalSettings::self()->showColorBarItem() );
   vlay->addWidget( mShowColorbarCheck );
   connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -1822,14 +1822,14 @@ void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
-  loadWidget( mShowColorbarCheck, GlobalSettings::self()->showColorbarItem() );
+  loadWidget( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
   loadWidget( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
 }
 
 
 void AppearancePage::ReaderTab::save()
 {
-  saveCheckBox( mShowColorbarCheck, GlobalSettings::self()->showColorbarItem() );
+  saveCheckBox( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
   saveCheckBox( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
   GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );
   GlobalSettings::self()->setShrinkQuotes( mShrinkQuotesCheck->isChecked() );

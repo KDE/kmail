@@ -28,4 +28,6 @@ Migrate color config
         DisplayMessageToolTips to MessageToolTipEnabled
         HideTabBarWithSingleTab to AutoHideTabBarWithSingleTab
 
-
+from [Reader] to [Reader] (rename just item)
+        showColorbar  to showColorBar
+ 

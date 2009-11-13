@@ -603,7 +603,7 @@
       <default>Never</default>
      </entry>
 
-     <entry name="showColorbar" type="Bool">
+     <entry name="showColorBar" type="Bool">
        <label>Show HTML status bar</label>
        <default>false</default>
      </entry>
