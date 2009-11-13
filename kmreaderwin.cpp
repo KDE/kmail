@@ -234,7 +234,7 @@ KMReaderWin::~KMReaderWin()
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
-  //TODO remove it
+  mViewer->readConfig();
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
