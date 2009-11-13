@@ -185,8 +185,6 @@ void ImportJob::importNextMessage()
     mProgressItem->setStatus( i18n( "Importing folder %1", mCurrentFolder->name() ) );
   }
 
-  mProgressItem->setProgress( ( mProgressItem->progress() + 5 ) );
-
   const KArchiveFile *file = messages.files.first();
   Q_ASSERT( file );
   messages.files.removeFirst();

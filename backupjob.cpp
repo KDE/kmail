@@ -252,8 +252,6 @@ void BackupJob::archiveNextMessage()
     abort( i18n( "Internal error while trying to retrieve a message from folder '%1'.",
                  mCurrentFolder->name() ) );
   }
-
-  mProgressItem->setProgress( ( mProgressItem->progress() + 5 ) );
 }
 
 static int fileInfoToUnixPermissions( const QFileInfo &fileInfo )
