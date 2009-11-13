@@ -1128,6 +1128,8 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
       if ( !multiFolder )
         mMainWidget->action("search_messages")->plug(folderMenu);
 
+      mMainWidget->action( "archive_folder" )->plug( folderMenu );
+
       mMainWidget->action("compact")->plug(folderMenu);
 
       if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
