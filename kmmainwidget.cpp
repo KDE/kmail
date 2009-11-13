@@ -4017,8 +4017,7 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection()) );
-
+  mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection()) && ( mCurrentFolder->collection()!= Akonadi::Collection::root() ) && !CollectionUtils::isResource( mCurrentFolder->collection() ) );
 
 
   mRemoveFolderAction->setText( mCurrentFolder && CollectionUtils::isVirtual( mCurrentFolder->collection() ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
