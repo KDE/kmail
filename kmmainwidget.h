@@ -318,7 +318,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotInvalidateIMAPFolders();
     void slotMarkAllAsRead();
     void slotArchiveFolder();
-    void slotImportArchive();
     void slotRemoveFolder();
     void slotEmptyFolder();
     void slotCompactFolder();
@@ -565,7 +564,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       *mExpireFolderAction, *mCompactFolderAction, *mRefreshFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mFolderShortCutCommandAction, *mTroubleshootFolderAction,
-      *mRemoveDuplicatesAction, *mArchiveFolderAction, *mImportArchiveAction,
+      *mRemoveDuplicatesAction, *mArchiveFolderAction,
       *mTroubleshootMaildirAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction,
       *mThreadMessagesAction, *mThreadBySubjectAction;
