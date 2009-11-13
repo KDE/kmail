@@ -61,7 +61,6 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent, Qt::WFlags flags )
   QLabel *fileNameLabel = new QLabel( i18n( "Archive File:" ), mainWidget );
   mainLayout->addWidget( fileNameLabel, row, 0 );
   mUrlRequester = new KUrlRequester( mainWidget );
-  mUrlRequester->setMode( KFile::LocalOnly );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
   mainLayout->addWidget( mUrlRequester, row, 1 );
   row++;
