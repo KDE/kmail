@@ -772,6 +772,7 @@ void KMMainWidget::readConfig()
       mMsgView->viewer()->setOverrideCharacterEncoding( GlobalSettings::self()->overrideCharacterEncoding() );
       mMsgView->readConfig();
     }
+    mMessagePane->setAutoHideTabBarWithSingleTab( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
     mMessagePane->reloadGlobalConfiguration();
     mCollectionFolderView->readConfig();
   }
