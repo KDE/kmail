@@ -45,7 +45,7 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
 
 FolderCollection::~FolderCollection()
 {
-  kDebug()<<" FolderCollection::~FolderCollection";
+//   kDebug()<<" FolderCollection::~FolderCollection";
   if ( mWriteConfig )
     writeConfig();
 }
