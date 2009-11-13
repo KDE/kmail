@@ -761,8 +761,17 @@ void KMMainWidget::readConfig()
 
 
   { // Read the config of the folder views and the header
-    if ( mMsgView )
+    if ( mMsgView ) {
+      mMsgView->viewer()->setShowColorBar( GlobalSettings::self()->showColorBar() );
+      mMsgView->viewer()->setShowEmoticons( GlobalSettings::self()->showEmoticons() );
+      mMsgView->viewer()->setShrinkQuotes( GlobalSettings::self()->shrinkQuotes() );
+      mMsgView->viewer()->setShowExpandQuotesMark( GlobalSettings::self()->showExpandQuotesMark() );
+      mMsgView->viewer()->setCollapseQuoteLevelSpin( GlobalSettings::self()->collapseQuoteLevelSpin() );
+      mMsgView->viewer()->setShowSpamStatus( GlobalSettings::self()->showSpamStatus() );
+      mMsgView->viewer()->setFallbackCharacterEncoding( GlobalSettings::self()->fallbackCharacterEncoding() );
+      mMsgView->viewer()->setOverrideCharacterEncoding( GlobalSettings::self()->overrideCharacterEncoding() );
       mMsgView->readConfig();
+    }
     mMessagePane->reloadGlobalConfiguration();
     mCollectionFolderView->readConfig();
   }
