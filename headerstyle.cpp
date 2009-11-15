@@ -48,12 +48,11 @@ using namespace KPIM;
 #include <mimelib/field.h>
 #include <mimelib/headers.h>
 
+#include <akonadi/contact/contactsearchjob.h>
 #include <kdebug.h>
 #include <kconfiggroup.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kabc/stdaddressbook.h>
-#include <kabc/addresseelist.h>
 #include <kcodecs.h>
 #include <QDateTime>
 #include <QBuffer>
@@ -486,8 +485,11 @@ namespace KMail {
 
     QString userHTML;
 
-    KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-    KABC::Addressee::List addresses = addressBook->findByEmail( KPIMUtils::firstEmailAddress( message->from() ) );
+    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
+    job->setQuery( Akonadi::ContactSearchJob::Email, KPIMUtils::firstEmailAddress( message->from() ) );
+    job->exec();
+
+    const KABC::Addressee::List addresses = job->contacts();
 
     QString photoURL;
     int photoWidth = 60;
