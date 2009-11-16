@@ -1323,6 +1323,8 @@ namespace KMail {
       if ( dataPlain )
         dataPlain->setProcessed( true, false );
       stdChildHandling( dataHtml );
+      if ( mReader )
+        mReader->mColorBar->setMultipartHtmlMode();
       return true;
     }
 
@@ -1330,6 +1332,8 @@ namespace KMail {
       if ( dataHtml )
         dataHtml->setProcessed( true, false );
       stdChildHandling( dataPlain );
+      if ( mReader )
+        mReader->mColorBar->setMultipartPlainMode();
       return true;
     }
 

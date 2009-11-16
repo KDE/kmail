@@ -36,6 +36,7 @@
 
 class QString;
 class QColor;
+class QMouseEvent;
 
 namespace KMail {
 
@@ -43,17 +44,19 @@ namespace KMail {
    * @short The HTML statusbar widget for use with the reader.
    *
    * The HTML status bar is a small widget that acts as an indicator
-   * for the message content. It can be in one of two modes:
+   * for the message content. It can be in one of four modes:
    *
    * <dl>
    * <dt><code>Normal</code></dt>
    * <dd>Default. No HTML.</dd>
-   * <dt><code>Neutral</code></dt>
-   * <dd>Temporary value. Used while the real mode is undetermined.</dd>
    * <dt><code>Html</code></dt>
    * <dd>HTML content is being shown. Since HTML mails can mimic all sorts
    *     of KMail markup in the reader, this provides out-of-band information
    *     about the presence of (rendered) HTML.</dd>
+   * <dt><code>MultipartPlain</code></dt>
+   * <dd>Viewed as plain text with HTML part also available.</dd>
+   * <dt><code>MultipartHtml</code></dt>
+   * <dd>Viewed as Html with plain text part also available.</dd>
    * </dl>
    *
    * @author Ingo Kloecker <kloecker@kde.org>, Marc Mutz <mutz@kde.org>
@@ -67,14 +70,16 @@ namespace KMail {
     enum Mode {
       Normal,
       Html,
-      Neutral
+      MultipartPlain,
+      MultipartHtml
     };
 
     /** @return current mode. */
     Mode mode() const { return mMode ; }
     bool isHtml() const { return mode() == Html ; }
     bool isNormal() const { return mode() == Normal ; }
-    bool isNeutral() const { return mode() == Neutral ; }
+    bool isMultipartHtml() const { return mode() == MultipartHtml; }
+    bool isMultipartPlain() const { return mode() == MultipartPlain; }
 
     // Update the status bar, for example when the color scheme changed.
     void update();
@@ -84,13 +89,23 @@ namespace KMail {
     void setHtmlMode();
     /** Switch to "normal mode". */
     void setNormalMode();
-    /** Switch to "neutral" mode (currently == normal mode). */
-    void setNeutralMode();
+    /** Switch to "multipart html mode". */
+    void setMultipartHtmlMode();
+    /** Switch to "multipart plain mode". */
+    void setMultipartPlainMode();
     /** Switch to mode @p m */
     void setMode( Mode m );
 
+  signals:
+    /** The user has clicked the status bar. */
+    void clicked();
+
+  protected:
+    void mousePressEvent( QMouseEvent * event );
+
   private:
     QString message() const;
+    QString toolTip() const;
     QColor bgColor() const;
     QColor fgColor() const;
 

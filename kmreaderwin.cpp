@@ -365,6 +365,8 @@ void KMReaderWin::createWidgets() {
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox );
   mColorBar->setObjectName( "mColorBar" );
+  connect( mColorBar, SIGNAL( clicked() ),
+           this, SLOT( slotToggleHtmlMode() ) );
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
   // Remove the shortcut for the selectAll action from khtml part. It's redefined to
@@ -385,7 +387,7 @@ void KMReaderWin::createWidgets() {
   } else {
     kDebug() << "Failed to find khtml's find action to remove it's shortcut";
   }
- 
+
   mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 }
@@ -429,6 +431,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mToggleMimePartTreeAction( 0 ),
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
+    mToggleDisplayModeAction( 0 ),
     mCanStartDrag( false ),
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
@@ -698,6 +701,16 @@ void KMReaderWin::createActions()
   ac->addAction( "scroll_down_more", mScrollDownMoreAction );
   connect( mScrollDownMoreAction, SIGNAL( triggered( bool ) ),
            this, SLOT( slotScrollNext() ) );
+
+  //
+  // Actions not in menu
+  //
+
+  // Toggle HTML display mode.
+  mToggleDisplayModeAction = new KToggleAction( i18n( "Toggle HTML Display Mode" ), this );
+  ac->addAction( "toggle_html_display_mode", mToggleDisplayModeAction );
+  connect( mToggleDisplayModeAction, SIGNAL( triggered( bool ) ), SLOT( slotToggleHtmlMode() ) );
+  mToggleDisplayModeAction->setHelpText( i18n( "Toggle display mode between HTML and plain text" ) );
 }
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
@@ -1518,12 +1531,9 @@ void KMReaderWin::displayMessage() {
 
   removeTempFiles();
 
-  mColorBar->setNeutralMode();
+  mColorBar->setNormalMode();
 
   parseMsg(msg);
-
-  if( mColorBar->isNeutral() )
-    mColorBar->setNormalMode();
 
   htmlWriter()->queue("</body></html>");
   htmlWriter()->flush();
@@ -2140,6 +2150,13 @@ void KMReaderWin::slotHandleAttachment( int choice )
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::slotToggleHtmlMode()
+{
+  setHtmlOverride( !htmlMail() );
+  update( true );
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
 {
   mViewer->findText();
@@ -2499,6 +2516,9 @@ void KMReaderWin::setHtmlOverride( bool override )
   if ( message() ) {
     message()->setDecodeHTML( htmlMail() );
   }
+
+  // keep toggle display mode action state in sync.
+  mToggleDisplayModeAction->setChecked( htmlMail() );
 }
 
 //-----------------------------------------------------------------------------

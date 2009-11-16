@@ -253,6 +253,7 @@ public:
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
+  KToggleAction *toggleDisplayModeAction() { return mToggleDisplayModeAction; }
   KAction *mailToComposeAction() { return mMailToComposeAction; }
   KAction *mailToReplyAction() { return mMailToReplyAction; }
   KAction *mailToForwardAction() { return mMailToForwardAction; }
@@ -471,6 +472,9 @@ public slots:
    */
   void slotHandleAttachment( int action );
 
+  /** Toggle display mode between HTML and plain text. */
+  void slotToggleHtmlMode();
+
 protected slots:
   void slotCycleHeaderStyles();
   void slotBriefHeaders();
@@ -624,7 +628,7 @@ private:
       *mScrollUpAction, *mScrollDownAction, *mScrollUpMoreAction, *mScrollDownMoreAction,
       *mToggleMimePartTreeAction;
   KSelectAction *mSelectEncodingAction;
-  KToggleAction *mToggleFixFontAction;
+  KToggleAction *mToggleFixFontAction, *mToggleDisplayModeAction;
 
   KUrl mHoveredUrl;
   KUrl mClickedUrl;

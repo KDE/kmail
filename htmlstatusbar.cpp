@@ -44,6 +44,7 @@
 #include <QColor>
 #include <QString>
 #include <QLabel>
+#include <QMouseEvent>
 
 KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, Qt::WFlags f )
   : QLabel( parent, f ),
@@ -65,6 +66,7 @@ void KMail::HtmlStatusBar::update() {
   pal.setColor( foregroundRole(), fgColor() );
   setPalette( pal );
   setText( message() );
+  setToolTip( toolTip() );
 }
 
 void KMail::HtmlStatusBar::setNormalMode() {
@@ -75,8 +77,14 @@ void KMail::HtmlStatusBar::setHtmlMode() {
   setMode( Html );
 }
 
-void KMail::HtmlStatusBar::setNeutralMode() {
-  setMode( Neutral );
+void KMail::HtmlStatusBar::setMultipartPlainMode()
+{
+  setMode( MultipartPlain );
+}
+
+void KMail::HtmlStatusBar::setMultipartHtmlMode()
+{
+  setMode( MultipartHtml );
 }
 
 void KMail::HtmlStatusBar::setMode( Mode m ) {
@@ -86,19 +94,46 @@ void KMail::HtmlStatusBar::setMode( Mode m ) {
   update();
 }
 
+void KMail::HtmlStatusBar::mousePressEvent( QMouseEvent * event )
+{
+  if ( event->button() == Qt::LeftButton )
+  {
+    emit clicked();
+  }
+}
+
 QString KMail::HtmlStatusBar::message() const {
   switch ( mode() ) {
   case Html: // bold: "HTML Message"
+  case MultipartHtml:
     return i18n( "<qt><b><br />H<br />T<br />M<br />L<br /> "
                  "<br />M<br />e<br />s<br />s<br />a<br />g<br />e</b></qt>" );
   case Normal: // normal: "No HTML Message"
     return i18n( "<qt><br />N<br />o<br /> "
                  "<br />H<br />T<br />M<br />L<br /> "
                  "<br />M<br />e<br />s<br />s<br />a<br />g<br />e</qt>" );
+  case MultipartPlain: // normal: "Plain Message"
+    return i18n( "<qt><br />P<br />l<br />a<br />i<br />n<br /> "
+                 "<br />M<br />e<br />s<br />s<br />a<br />g<br />e<br /></qt>" );
   default:
-  case Neutral:
     return QString();
   }
+}
+
+QString KMail::HtmlStatusBar::toolTip() const
+{
+  switch ( mode() )
+  {
+    case Html:
+    case MultipartHtml:
+    case MultipartPlain:
+      return i18n( "Click to toggle between HTML and plain text." );
+    default:
+    case Normal:
+      break;
+  }
+
+  return QString();
 }
 
 QColor KMail::HtmlStatusBar::fgColor() const {
@@ -106,6 +141,7 @@ QColor KMail::HtmlStatusBar::fgColor() const {
   QColor defaultColor, color;
   switch ( mode() ) {
   case Html:
+  case MultipartHtml:
     defaultColor = Qt::white;
     color = defaultColor;
     if ( !GlobalSettings::self()->useDefaultColors() ) {
@@ -113,6 +149,7 @@ QColor KMail::HtmlStatusBar::fgColor() const {
     }
     return color;
   case Normal:
+  case MultipartPlain:
     defaultColor = Qt::black;
     color = defaultColor;
     if ( !GlobalSettings::self()->useDefaultColors() ) {
@@ -120,7 +157,6 @@ QColor KMail::HtmlStatusBar::fgColor() const {
     }
     return color;
   default:
-  case Neutral:
     return Qt::black;
   }
 }
@@ -131,6 +167,7 @@ QColor KMail::HtmlStatusBar::bgColor() const {
   QColor defaultColor, color;
   switch ( mode() ) {
   case Html:
+  case MultipartHtml:
     defaultColor = Qt::black;
     color = defaultColor;
     if ( !GlobalSettings::self()->useDefaultColors() ) {
@@ -138,6 +175,7 @@ QColor KMail::HtmlStatusBar::bgColor() const {
     }
     return color;
   case Normal:
+  case MultipartPlain:
     defaultColor = Qt::lightGray;
     color = defaultColor;
     if ( !GlobalSettings::self()->useDefaultColors() ) {
@@ -145,7 +183,6 @@ QColor KMail::HtmlStatusBar::bgColor() const {
     }
     return color;
   default:
-  case Neutral:
     return Qt::white;
   }
 }
