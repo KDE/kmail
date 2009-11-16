@@ -2166,8 +2166,19 @@ KMainWindow* KMKernel::mainWin()
   return mWin;
 }
 
+static void selectKontactKMailPlugin()
+{
+  QDBusInterface kontact( "org.kde.kontact",
+      "/KontactInterface", "org.kde.kontact.KontactInterface",
+       QDBusConnection::sessionBus() );
+  if ( kontact.isValid() ) {
+    kontact.call( "selectPlugin", "kontact_kmailplugin" );
+  }
+}
+
 void KMKernel::showMainWin()
 {
+  selectKontactKMailPlugin();
   // We use forceActiveWindow here because this function is called from
   // indicators, which act as part of the user desktop
   KWindowSystem::forceActiveWindow( mainWin()->winId() );
