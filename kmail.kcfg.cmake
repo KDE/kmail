@@ -123,6 +123,11 @@
         <whatsthis>If this option is enabled then for each folder the number of newly arrived messages is shown in the new mail notification; otherwise, you will only get a simple 'New mail arrived' message.</whatsthis>
         <default>true</default>
       </entry>
+      <entry name="UseMessageIndicator" type="Bool">
+        <label>Use message indicator</label>
+        <whatsthis>If this option is enabled and a message indicator is installed on the desktop, then indicators will be displayed for folders containing unread messages.</whatsthis>
+        <default>false</default>
+      </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>

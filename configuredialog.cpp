@@ -760,6 +760,17 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   connect( mAccountsReceiving.mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+#ifdef INDICATEQT_FOUND
+  // "Use message indicator" check box
+  mAccountsReceiving.mUseMessageIndicatorCheck->setWhatsThis(
+    GlobalSettings::self()->useMessageIndicatorItem()->whatsThis() );
+  connect( mAccountsReceiving.mUseMessageIndicatorCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+#else
+  delete mAccountsReceiving.mUseMessageIndicatorCheck;
+  mAccountsReceiving.mUseMessageIndicatorCheck = 0;
+#endif
+
   connect( mAccountsReceiving.mOtherNewMailActionsButton, SIGNAL(clicked()),
            this, SLOT(slotEditNotifications()) );
 }
@@ -991,6 +1002,9 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 {
   mAccountsReceiving.mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
+#ifdef INDICATEQT_FOUND
+  mAccountsReceiving.mUseMessageIndicatorCheck->setChecked( GlobalSettings::self()->useMessageIndicator() );
+#endif
 }
 
 void AccountsPage::ReceivingTab::doLoadOther()
@@ -1057,6 +1071,10 @@ void AccountsPage::ReceivingTab::save()
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
   GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
+
+#ifdef INDICATEQT_FOUND
+  GlobalSettings::self()->setUseMessageIndicator( mAccountsReceiving.mUseMessageIndicatorCheck->isChecked() );
+#endif
 
   general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
 

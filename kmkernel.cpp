@@ -1496,7 +1496,6 @@ void KMKernel::init()
   }
   connect( the_indicateServer, SIGNAL( serverDisplay() ),
            SLOT( showMainWin() ) );
-  the_indicateServer->show();
 #endif
 
   the_undoStack     = new UndoStack(20);
@@ -1555,6 +1554,13 @@ void KMKernel::init()
 
 void KMKernel::readConfig()
 {
+#ifdef INDICATEQT_FOUND
+  if ( GlobalSettings::useMessageIndicator() ) {
+    the_indicateServer->show();
+  } else {
+    the_indicateServer->hide();
+  }
+#endif
   //Needed here, since this function is also called when the configuration
   //changes, and the static variables should be updated then - IOF
   KMMessage::readConfig();

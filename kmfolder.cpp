@@ -33,6 +33,7 @@
 #include "compactionjob.h"
 #include "kmailicalifaceimpl.h"
 #include "kmaccount.h"
+#include "globalsettings.h"
 
 #include <errno.h>
 #include <unistd.h> // W_OK
@@ -967,6 +968,8 @@ void KMFolder::setIgnoreNewMail( bool b )
       SLOT( updateIndicatorCount() ) );
     connect( this, SIGNAL( iconsChanged() ),
       SLOT( updateIndicatorIcon() ) );
+    connect( kmkernel, SIGNAL( configChanged() ),
+      SLOT( updateIndicatorCount() ) );
     updateIndicatorText();
     updateIndicatorIcon();
     updateIndicatorCount();
@@ -991,6 +994,10 @@ void KMFolder::updateIndicatorCount()
 {
 #ifdef INDICATEQT_FOUND
   if ( !mIndicator ) {
+    return;
+  }
+  if ( !GlobalSettings::useMessageIndicator() ) {
+    mIndicator->hide();
     return;
   }
   int count = mStorage->countUnread();

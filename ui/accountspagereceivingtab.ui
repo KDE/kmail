@@ -114,6 +114,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="mUseMessageIndicatorCheck">
+          <property name="text">
+           <string>&amp;Use message indicator</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="mVerboseNotificationCheck">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -157,6 +164,17 @@
    <header>configuredialoglistview.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>mAccountList</tabstop>
+  <tabstop>mAddAccountButton</tabstop>
+  <tabstop>mModifyAccountButton</tabstop>
+  <tabstop>mRemoveAccountButton</tabstop>
+  <tabstop>mCheckmailStartupCheck</tabstop>
+  <tabstop>mBeepNewMailCheck</tabstop>
+  <tabstop>mUseMessageIndicatorCheck</tabstop>
+  <tabstop>mVerboseNotificationCheck</tabstop>
+  <tabstop>mOtherNewMailActionsButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
