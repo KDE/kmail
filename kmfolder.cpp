@@ -646,21 +646,21 @@ QString KMFolder::label() const
   return name();
 }
 
-void KMFolder::setSystemFolder(bool itIs)
+void KMFolder::setSystemFolder( bool itIs )
 {
   mIsSystemFolder = itIs;
   updateIndicatorText();
   updateIndicatorIcon();
 }
 
-void KMFolder::setLabel(const QString &l)
+void KMFolder::setLabel( const QString &l )
 {
   mLabel = l;
   updateIndicatorText();
   updateIndicatorIcon();
 }
 
-void KMFolder::setSystemLabel(const QString &l)
+void KMFolder::setSystemLabel( const QString &l )
 {
   mSystemLabel = l;
   updateIndicatorText();
