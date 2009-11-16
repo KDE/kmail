@@ -59,9 +59,6 @@ using KMail::AccountManager;
  */
 KMSystemTray::KMSystemTray(QWidget *parent)
   : KSystemTrayIcon( parent),
-    mParentVisible( true ),
-    mPosOfMainWin( 0, 0 ),
-    mDesktopOfMainWin( 0 ),
     mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
     mNewMessagesPopup( 0 ),
@@ -76,17 +73,6 @@ KMSystemTray::KMSystemTray(QWidget *parent)
 
   mDefaultIcon = KIcon( "kmail" ).pixmap( 22 );
   setIcon( mDefaultIcon );
-#ifdef Q_WS_X11
-  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
-  if ( mainWidget ) {
-    QWidget * mainWin = mainWidget->topLevelWidget();
-    if ( mainWin ) {
-      mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
-                                            NET::WMDesktop ).desktop();
-      mPosOfMainWin = mainWin->pos();
-    }
-  }
-#endif
   // register the applet with the kernel
   kmkernel->registerSystemTrayApplet( this );
 
@@ -296,10 +282,7 @@ void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
   // switch to kmail on left mouse button
   if( reason == QSystemTrayIcon::Trigger )
   {
-    if( mParentVisible && mainWindowIsOnCurrentDesktop() )
-      hideKMail();
-    else
-      showKMail();
+    kmkernel->toggleMainWin();
   }
 }
 
@@ -368,80 +351,6 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
   return rvalue;
 }
 
-
-bool KMSystemTray::mainWindowIsOnCurrentDesktop()
-{
-#ifdef Q_WS_X11
-  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
-  if ( !mainWidget )
-    return false;
-
-  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
-  if ( !mainWin )
-    return false;
-
-  return KWindowSystem::windowInfo( mainWin->winId(),
-                           NET::WMDesktop ).isOnCurrentDesktop();
-#else
-  return true;
-#endif
-}
-
-/**
- * Shows and raises the first KMMainWidget and
- * switches to the appropriate virtual desktop.
- */
-void KMSystemTray::showKMail()
-{
-  if (!kmkernel->getKMMainWidget())
-    return;
-  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
-  assert(mainWin);
-#ifdef Q_WS_X11
-  if(mainWin)
-  {
-    KWindowInfo cur = KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
-    if ( cur.valid() ) mDesktopOfMainWin = cur.desktop();
-    // switch to appropriate desktop
-    if ( mDesktopOfMainWin != NET::OnAllDesktops )
-      KWindowSystem::setCurrentDesktop( mDesktopOfMainWin );
-    if ( !mParentVisible ) {
-      if ( mDesktopOfMainWin == NET::OnAllDesktops )
-        KWindowSystem::setOnAllDesktops( mainWin->winId(), true );
-    }
-    KWindowSystem::activateWindow( mainWin->winId() );
-  }
-#endif
-  if ( !mParentVisible ) {
-    mainWin->move( mPosOfMainWin );
-    mainWin->show();
-    mParentVisible = true;
-  }
-  kmkernel->raise();
-
-  //Fake that the folders have changed so that the icon status is correct
-  foldersChanged();
-}
-
-void KMSystemTray::hideKMail()
-{
-  if (!kmkernel->getKMMainWidget())
-    return;
-  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
-  assert(mainWin);
-  if(mainWin)
-  {
-    mPosOfMainWin = mainWin->pos();
-#ifdef Q_WS_X11
-    mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
-                                          NET::WMDesktop ).desktop();
-    // iconifying is unnecessary, but it looks cooler
-    KWindowSystem::minimizeWindow( mainWin->winId() );
-#endif
-    mainWin->hide();
-    mParentVisible = false;
-  }
-}
 
 /**
  * Called on startup of the KMSystemTray and when the numUnreadMsgsChanged signal
@@ -559,7 +468,7 @@ void KMSystemTray::updateNewMessages()
  */
 void KMSystemTray::selectedAccount(int id)
 {
-  showKMail();
+  kmkernel->showMainWin();
 
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if (!mainWidget)

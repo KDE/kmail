@@ -106,7 +106,8 @@ static KMKernel * mySelf = 0;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
-  mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
+  mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 ),
+  mMainWinVisible( true ), mPosOfMainWin( 0, 0 ), mDesktopOfMainWin( 0 )
 {
   mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
   kDebug();
@@ -2166,7 +2167,16 @@ KMainWindow* KMKernel::mainWin()
   return mWin;
 }
 
-static void selectKontactKMailPlugin()
+void KMKernel::toggleMainWin()
+{
+  if( mMainWinVisible && mainWindowIsOnCurrentDesktop() ) {
+    hideMainWin();
+  } else {
+    showMainWin();
+  }
+}
+
+void KMKernel::showMainWin()
 {
   QDBusInterface kontact( "org.kde.kontact",
       "/KontactInterface", "org.kde.kontact.KontactInterface",
@@ -2174,16 +2184,80 @@ static void selectKontactKMailPlugin()
   if ( kontact.isValid() ) {
     kontact.call( "selectPlugin", "kontact_kmailplugin" );
   }
+
+  KMMainWidget *widget = getKMMainWidget();
+  if ( !widget ) {
+    return;
+  }
+  QWidget *mainWin = widget->topLevelWidget();
+  assert(mainWin);
+#ifdef Q_WS_X11
+  KWindowInfo cur = KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
+  if ( cur.valid() ) {
+    mDesktopOfMainWin = cur.desktop();
+  }
+  // switch to appropriate desktop
+  if ( mDesktopOfMainWin != NET::OnAllDesktops ) {
+    KWindowSystem::setCurrentDesktop( mDesktopOfMainWin );
+  }
+  if ( !mMainWinVisible ) {
+    if ( mDesktopOfMainWin == NET::OnAllDesktops ) {
+      KWindowSystem::setOnAllDesktops( mainWin->winId(), true );
+    }
+  }
+  KWindowSystem::activateWindow( mainWin->winId() );
+#endif
+  if ( !mMainWinVisible ) {
+    mainWin->move( mPosOfMainWin );
+    mainWin->show();
+    mMainWinVisible = true;
+  }
+  raise();
+
+  KMSystemTray *systray = widget->systray();
+  if ( systray ) {
+    //Fake that the folders have changed so that the icon status is correct
+    systray->foldersChanged();
+  }
 }
 
-void KMKernel::showMainWin()
+void KMKernel::hideMainWin()
 {
-  selectKontactKMailPlugin();
-  // We use forceActiveWindow here because this function is called from
-  // indicators, which act as part of the user desktop
-  KWindowSystem::forceActiveWindow( mainWin()->winId() );
+  if ( !getKMMainWidget() ) {
+    return;
+  }
+  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
+  assert(mainWin);
+  mPosOfMainWin = mainWin->pos();
+#ifdef Q_WS_X11
+  mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
+                                        NET::WMDesktop ).desktop();
+  // iconifying is unnecessary, but it looks cooler
+  KWindowSystem::minimizeWindow( mainWin->winId() );
+#endif
+  mainWin->hide();
+  mMainWinVisible = false;
 }
 
+bool KMKernel::mainWindowIsOnCurrentDesktop()
+{
+#ifdef Q_WS_X11
+  KMMainWidget * mainWidget = getKMMainWidget();
+  if ( !mainWidget ) {
+    return false;
+  }
+
+  QWidget *mainWin = mainWidget->topLevelWidget();
+  if ( !mainWin ) {
+    return false;
+  }
+
+  return KWindowSystem::windowInfo( mainWin->winId(),
+                           NET::WMDesktop ).isOnCurrentDesktop();
+#else
+  return true;
+#endif
+}
 
 /**
  * Empties all trash folders
@@ -2361,11 +2435,11 @@ bool KMKernel::canQueryClose()
   if ( !systray || GlobalSettings::closeDespiteSystemTray() )
       return true;
   if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
-    systray->hideKMail();
+    hideMainWin();
     return false;
   } else if ( ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) && ( systray->hasUnreadMail() )) {
     systray->show();
-    systray->hideKMail();
+    hideMainWin();
     return false;
   }
   return true;

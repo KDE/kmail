@@ -49,7 +49,6 @@ public:
   void setMode(int mode);
   int mode() const;
 
-  void hideKMail();
   bool hasUnreadMail() const;
 
 public slots:
@@ -63,19 +62,12 @@ private slots:
   void slotContextMenuAboutToShow();
 
 protected:
-  bool mainWindowIsOnCurrentDesktop();
-  void showKMail();
   void buildPopupMenu();
   void updateCount();
 
   QString prettyName(KMFolder *);
 
 private:
-
-  bool mParentVisible;
-  QPoint mPosOfMainWin;
-  int mDesktopOfMainWin;
-
   int mMode;
   int mCount;
 

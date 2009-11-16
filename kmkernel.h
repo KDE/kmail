@@ -416,7 +416,9 @@ public:
   void selectFolder( KMFolder *folder );
 
 public slots:
+  void toggleMainWin();
   void showMainWin();
+  void hideMainWin();
 
   /// Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
@@ -453,6 +455,7 @@ private slots:
   void transportRenamed( int id, const QString &oldName, const QString &newName );
 
 private:
+  bool mainWindowIsOnCurrentDesktop();
   void openReader( bool onlyCheck );
   KMFolder *currentFolder();
 
@@ -537,6 +540,11 @@ private:
 
   // special debug area
   int mStorageDebug;
+
+  // main window management
+  bool mMainWinVisible;
+  QPoint mPosOfMainWin;
+  int mDesktopOfMainWin;
 };
 
 #endif // _KMKERNEL_H
