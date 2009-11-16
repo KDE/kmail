@@ -474,7 +474,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
       job->setQuery( Akonadi::ContactSearchJob::Email, KPIMUtils::extractEmailAddress( *it ) );
       job->exec();
 
-      if ( !job->contacts().isEmpty() )
+      if ( job->contacts().isEmpty() )
         return true;
     }
     return false;
