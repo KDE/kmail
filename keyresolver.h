@@ -47,6 +47,10 @@
 
 class QStringList;
 
+namespace KABC {
+  class Addressee;
+}
+
 namespace Kleo {
 
 
@@ -289,6 +293,7 @@ namespace Kleo {
     };
 
     ContactPreferences lookupContactPreferences( const QString& address ) const;
+    void writeCustomContactProperties( KABC::Addressee &contact, const ContactPreferences& pref ) const;
     void saveContactPreference( const QString& email, const ContactPreferences& pref ) const;
 
   private:

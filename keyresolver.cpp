@@ -1758,6 +1758,15 @@ Kleo::KeyResolver::ContactPreferences Kleo::KeyResolver::lookupContactPreference
   return pref;
 }
 
+void Kleo::KeyResolver::writeCustomContactProperties( KABC::Addressee &contact, const ContactPreferences& pref ) const
+{
+  contact.insertCustom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF", Kleo::encryptionPreferenceToString( pref.encryptionPreference ) );
+  contact.insertCustom( "KADDRESSBOOK", "CRYPTOSIGNPREF", Kleo::signingPreferenceToString( pref.signingPreference ) );
+  contact.insertCustom( "KADDRESSBOOK", "CRYPTOPROTOPREF", cryptoMessageFormatToString( pref.cryptoMessageFormat ) );
+  contact.insertCustom( "KADDRESSBOOK", "OPENPGPFP", pref.pgpKeyFingerprints.join( "," ) );
+  contact.insertCustom( "KADDRESSBOOK", "SMIMEFP", pref.smimeCertFingerprints.join( "," ) );
+}
+
 void Kleo::KeyResolver::saveContactPreference( const QString& email, const ContactPreferences& pref ) const
 {
   d->mContactPreferencesMap.insert( std::make_pair( email, pref ) );
@@ -1786,12 +1795,7 @@ void Kleo::KeyResolver::saveContactPreference( const QString& email, const Conta
     KABC::Addressee contact;
     contact.setNameFromString( fullName );
     contact.insertEmail( email, true );
-
-    contact.insertCustom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF", Kleo::encryptionPreferenceToString( pref.encryptionPreference ) );
-    contact.insertCustom( "KADDRESSBOOK", "CRYPTOSIGNPREF", Kleo::signingPreferenceToString( pref.signingPreference ) );
-    contact.insertCustom( "KADDRESSBOOK", "CRYPTOPROTOPREF", cryptoMessageFormatToString( pref.cryptoMessageFormat ) );
-    contact.insertCustom( "KADDRESSBOOK", "OPENPGPFP", pref.pgpKeyFingerprints.join( "," ) );
-    contact.insertCustom( "KADDRESSBOOK", "SMIMEFP", pref.smimeCertFingerprints.join( "," ) );
+    writeCustomContactProperties( contact, pref );
 
     Akonadi::Item item( KABC::Addressee::mimeType() );
     item.setPayload<KABC::Addressee>( contact );
@@ -1801,11 +1805,7 @@ void Kleo::KeyResolver::saveContactPreference( const QString& email, const Conta
     Akonadi::Item item = items.first();
 
     KABC::Addressee contact = item.payload<KABC::Addressee>();
-    contact.insertCustom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF", Kleo::encryptionPreferenceToString( pref.encryptionPreference ) );
-    contact.insertCustom( "KADDRESSBOOK", "CRYPTOSIGNPREF", Kleo::signingPreferenceToString( pref.signingPreference ) );
-    contact.insertCustom( "KADDRESSBOOK", "CRYPTOPROTOPREF", cryptoMessageFormatToString( pref.cryptoMessageFormat ) );
-    contact.insertCustom( "KADDRESSBOOK", "OPENPGPFP", pref.pgpKeyFingerprints.join( "," ) );
-    contact.insertCustom( "KADDRESSBOOK", "SMIMEFP", pref.smimeCertFingerprints.join( "," ) );
+    writeCustomContactProperties( contact, pref );
 
     item.setPayload<KABC::Addressee>( contact );
 
