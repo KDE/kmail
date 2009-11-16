@@ -970,9 +970,14 @@ void KMFolder::setIgnoreNewMail( bool b )
       SLOT( updateIndicatorIcon() ) );
     connect( kmkernel, SIGNAL( configChanged() ),
       SLOT( updateIndicatorCount() ) );
-    updateIndicatorText();
-    updateIndicatorIcon();
-    updateIndicatorCount();
+
+    // Update components of the indicator, but delay it because it's not good
+    // to ask for a folder count while the application is still starting up
+    // (for example search folder manager in KMKernel might not have been
+    // initialized yet)
+    QMetaObject::invokeMethod( this, "updateIndicatorText", Qt::QueuedConnection );
+    QMetaObject::invokeMethod( this, "updateIndicatorIcon", Qt::QueuedConnection );
+    QMetaObject::invokeMethod( this, "updateIndicatorCount", Qt::QueuedConnection );
   }
 #endif
 }
