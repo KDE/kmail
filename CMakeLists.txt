@@ -10,6 +10,15 @@ macro_bool_to_01(SYS_INOTIFY_H_FOUND HAVE_SYS_INOTIFY_H)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
+# indicate-qt
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(INDICATEQT indicate-qt>=0.2.1)
+macro_log_feature(INDICATEQT_FOUND "indicate-qt" "Qt bindings for libindicate" "http://launchpad.net/libindicate-qt" FALSE "0.2.1" "Required for indicators support in KMail.")
+if(INDICATEQT_FOUND)
+  include_directories(${INDICATEQT_INCLUDE_DIRS})
+  link_directories(${INDICATEQT_LIBRARY_DIRS})
+endif(INDICATEQT_FOUND)
+
 # Support for the SVN revision number in version-kmail.h
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
   if (NOT KdeSubversion_FOUND)
@@ -365,6 +374,10 @@ target_link_libraries(kmailprivate
   ${KDEPIMLIBS_KPIMTEXTEDIT_LIBS}
   ${QT_QT3SUPPORT_LIBRARY}
 )
+
+if(INDICATEQT_FOUND)
+  target_link_libraries(kmailprivate ${INDICATEQT_LIBRARIES})
+endif(INDICATEQT_FOUND)
 
 if(KMAIL_SQLITE_INDEX)
   target_link_libraries(kmailprivate ${SQLITE_LIBRARIES})

@@ -73,6 +73,10 @@ class KMMainWidget;
 class ConfigureDialog;
 class KMMessageTagMgr;
 
+namespace QIndicate {
+  class Server;
+}
+
 /**
  * @short Central point of coordination in KMail
  *
@@ -325,6 +329,8 @@ public:
 
   JobScheduler* jobScheduler() { return mJobScheduler; }
 
+  QIndicate::Server *indicateServer() { return the_indicateServer; }
+
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
@@ -407,7 +413,10 @@ public:
       to regenerate their menus */
   void updatedTemplates();
 
+  void selectFolder( KMFolder *folder );
+
 public slots:
+  void showMainWin();
 
   /// Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
@@ -463,6 +472,7 @@ private:
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
+  QIndicate::Server *the_indicateServer;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
   KMMessageTagMgr *the_msgTagMgr;

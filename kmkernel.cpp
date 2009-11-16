@@ -85,6 +85,11 @@ using KWallet::Wallet;
 #include <stdlib.h>
 #include <assert.h>
 
+#ifdef INDICATEQT_FOUND
+// libindicate
+#include <qindicateserver.h>
+#endif
+
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
@@ -129,6 +134,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_filterActionDict = 0;
   the_msgSender = 0;
   the_msgTagMgr = 0;
+  the_indicateServer = 0;
   mWin = 0;
   mMailCheckAborted = false;
   folderAdaptor=0;
@@ -1478,6 +1484,21 @@ void KMKernel::init()
   // moved up here because KMMessage::stripOffPrefixes is used below
   KMMessage::readConfig();
 
+#ifdef INDICATEQT_FOUND
+  the_indicateServer = QIndicate::Server::defaultInstance();
+  the_indicateServer->setType( "message.mail" );
+  const QString appName = KGlobal::mainComponent().componentName();
+  KService::Ptr service = KService::serviceByDesktopName( appName );
+  if ( service ) {
+    the_indicateServer->setDesktopFile( service->entryPath() );
+  } else {
+    kWarning() << "Could not find desktop file for application";
+  }
+  connect( the_indicateServer, SIGNAL( serverDisplay() ),
+           SLOT( showMainWin() ) );
+  the_indicateServer->show();
+#endif
+
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
@@ -2139,6 +2160,13 @@ KMainWindow* KMKernel::mainWin()
   return mWin;
 }
 
+void KMKernel::showMainWin()
+{
+  // We use forceActiveWindow here because this function is called from
+  // indicators, which act as part of the user desktop
+  KWindowSystem::forceActiveWindow( mainWin()->winId() );
+}
+
 
 /**
  * Empties all trash folders
@@ -2203,6 +2231,11 @@ void KMKernel::selectFolder( const QString &folderPath )
   if ( !folder )
     folder = kmkernel->dimapFolderMgr()->getFolderByURL( folderPath );
 
+  selectFolder( folder );
+}
+
+void KMKernel::selectFolder( KMFolder *folder )
+{
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
   if ( !widget )

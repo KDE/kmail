@@ -14,3 +14,5 @@
 #cmakedefine HAVE_MMAP 1
 
 #cmakedefine KDEPIM_FOLDEROPEN_PROFILE 1
+
+#cmakedefine INDICATEQT_FOUND 1

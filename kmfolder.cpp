@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
+#include <config-kmail.h>
 
 #include "kmfolder.h"
 #include "kmfolderdir.h"
@@ -35,6 +36,11 @@
 
 #include <errno.h>
 #include <unistd.h> // W_OK
+
+#ifdef INDICATEQT_FOUND
+// libindicate
+#include <qindicateindicator.h>
+#endif
 
 #include <kdebug.h>
 #include <kde_file.h> // KDE_mkdir
@@ -62,7 +68,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mAcctList( 0 ),
     mPutRepliesInSameFolder( false ),
     mHideInSelectionDialog( false ),
-    mIgnoreNewMail( false )
+    mIgnoreNewMail( false ),
+    mIndicator( 0 )
 {
   mIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
   if( aFolderType == KMFolderTypeCachedImap )
@@ -216,7 +223,7 @@ void KMFolder::readConfig( KConfigGroup & configGroup )
     mId = savedId;
   mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
-  mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
+  setIgnoreNewMail( configGroup.readEntry( "IgnoreNewMail", false ) );
 
   if ( mUseCustomIcons )
     emit iconsChanged();
@@ -638,6 +645,27 @@ QString KMFolder::label() const
   return name();
 }
 
+void KMFolder::setSystemFolder(bool itIs)
+{
+  mIsSystemFolder = itIs;
+  updateIndicatorText();
+  updateIndicatorIcon();
+}
+
+void KMFolder::setLabel(const QString &l)
+{
+  mLabel = l;
+  updateIndicatorText();
+  updateIndicatorIcon();
+}
+
+void KMFolder::setSystemLabel(const QString &l)
+{
+  mSystemLabel = l;
+  updateIndicatorText();
+  updateIndicatorIcon();
+}
+
 //-----------------------------------------------------------------------------
 QString KMFolder::prettyUrl() const
 {
@@ -924,6 +952,28 @@ void KMFolder::reallyAddCopyOfMsg( KMMessage* aMsg )
   mStorage->reallyAddCopyOfMsg( aMsg );
 }
 
+void KMFolder::setIgnoreNewMail( bool b )
+{
+  mIgnoreNewMail = b;
+#ifdef INDICATEQT_FOUND
+  if ( b && mIndicator ) {
+    delete mIndicator;
+    mIndicator = 0;
+  } else if ( !b && !mIndicator ) {
+    mIndicator = new QIndicate::Indicator( this );
+    connect( mIndicator, SIGNAL( display( QIndicate::Indicator* ) ),
+      SLOT( slotIndicatorClicked() ) );
+    connect( mStorage, SIGNAL( numUnreadMsgsChanged( KMFolder* ) ),
+      SLOT( updateIndicatorCount() ) );
+    connect( this, SIGNAL( iconsChanged() ),
+      SLOT( updateIndicatorIcon() ) );
+    updateIndicatorText();
+    updateIndicatorIcon();
+    updateIndicatorCount();
+  }
+#endif
+}
+
 void KMFolder::setShortcut( const KShortcut &sc )
 {
   if ( mShortcut != sc ) {
@@ -935,6 +985,81 @@ void KMFolder::setShortcut( const KShortcut &sc )
 bool KMFolder::isMoveable() const
 {
   return !isSystemFolder() && mStorage->isMoveable();
+}
+
+void KMFolder::updateIndicatorCount()
+{
+#ifdef INDICATEQT_FOUND
+  if ( !mIndicator ) {
+    return;
+  }
+  int count = mStorage->countUnread();
+  if ( count > 0 ) {
+    mIndicator->setCountProperty( count );
+    mIndicator->show();
+  } else {
+    mIndicator->hide();
+  }
+#endif
+}
+
+void KMFolder::updateIndicatorText()
+{
+#ifdef INDICATEQT_FOUND
+  if ( !mIndicator ) {
+    return;
+  }
+  mIndicator->setNameProperty( label() );
+#endif
+}
+
+void KMFolder::updateIndicatorIcon()
+{
+#ifdef INDICATEQT_FOUND
+  if ( !mIndicator ) {
+    return;
+  }
+
+  QString icon;
+  if ( useCustomIcons() ) {
+    icon = unreadIconPath();
+    if ( icon.isEmpty() ) {
+      icon = normalIconPath();
+    }
+  }
+  // Real icon code is in FolderView. This approximation should be good enough.
+  if ( icon.isEmpty() ) {
+    if ( mIsSystemFolder ) {
+      if ( mName == "inbox" ) {
+        icon = "mail-folder-inbox";
+      } else if ( mName == "outbox" ) {
+        icon = "mail-folder-outbox";
+      } else if ( mName == "sent" ) {
+        icon = "mail-folder-sent";
+      } else if ( mName == "trash" ) {
+        icon = "user-trash";
+      } else if ( mName == "drafts" ) {
+        icon = "document-properties";
+      } else if ( mName == "templates" ) {
+        icon = "document-new";
+      }
+    } else {
+      icon = "folder-open";
+    }
+  }
+  QPixmap pix = SmallIcon(icon);
+  if ( pix.isNull() ) {
+    kWarning() << "Could not read image from" << icon;
+  } else {
+    mIndicator->setIconProperty( pix.toImage() );
+  }
+#endif
+}
+
+void KMFolder::slotIndicatorClicked()
+{
+  kmkernel->showMainWin();
+  kmkernel->selectFolder( this );
 }
 
 void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )

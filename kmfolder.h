@@ -57,6 +57,10 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
+namespace QIndicate {
+  class Indicator;
+}
+
 typedef QList<quint32> SerNumList;
 
 /** Mail folder.
@@ -396,15 +400,15 @@ public:
     The name of these folders is nationalized in the folder display and
     they cannot have accounts associated. Deletion is also forbidden. Etc. */
   bool isSystemFolder() const { return mIsSystemFolder; }
-  void setSystemFolder(bool itIs) { mIsSystemFolder = itIs; }
+  void setSystemFolder( bool itIs );
 
   /** Returns the label of the folder for visualization. */
   virtual QString label() const;
-  void setLabel( const QString& l ) { mLabel = l; }
+  void setLabel( const QString& l );
 
   /** Set the label that is used as a system default */
   virtual QString systemLabel() const { return mSystemLabel; }
-  void setSystemLabel( const QString& l ) { mSystemLabel = l; }
+  void setSystemLabel( const QString& l );
 
   /** URL of the node for visualization purposes. */
   virtual QString prettyUrl() const;
@@ -570,7 +574,7 @@ public:
    * in this folder.
    */
   bool ignoreNewMail() const { return mIgnoreNewMail; }
-  void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
+  void setIgnoreNewMail( bool b );
 
   const KShortcut &shortcut() const { return mShortcut; }
   void setShortcut( const KShortcut& );
@@ -676,6 +680,12 @@ private slots:
    *  to the default identity if the current one became invalid. */
   void slotIdentitiesChanged();
 
+  void updateIndicatorCount();
+  void updateIndicatorText();
+  void updateIndicatorIcon();
+
+  void slotIndicatorClicked();
+
 private:
   FolderStorage* mStorage;
   KMFolderDir* mChild;
@@ -725,6 +735,8 @@ private:
 
   /** shortcut associated with this folder or null, if none is configured. */
   KShortcut mShortcut;
+
+  QIndicate::Indicator* mIndicator;
 };
 
 /**
