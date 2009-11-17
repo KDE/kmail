@@ -61,15 +61,17 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   // TODO: Explaination label
   // TODO: Use QFormLayout in KDE4
 
-  QLabel *folderLabel = new QLabel( i18n( "Folder:" ), mainWidget );
+  QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
   mFolderRequester = new FolderRequester( mainWidget, kmkernel->getKMMainWidget()->folderTree() );
+  folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
 
-  QLabel *formatLabel = new QLabel( i18n( "Format:" ), mainWidget );
+  QLabel *formatLabel = new QLabel( i18n( "F&ormat:" ), mainWidget );
   mainLayout->addWidget( formatLabel, row, 0 );
   mFormatComboBox = new KComboBox( mainWidget );
+  formatLabel->setBuddy( mFormatComboBox );
 
   // These combobox values have to stay in sync with the ArchiveType enum from BackupJob!
   mFormatComboBox->addItem( i18n( "Compressed Zip Archive (.zip)" ) );
@@ -82,18 +84,19 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mainLayout->addWidget( mFormatComboBox, row, 1 );
   row++;
 
-  QLabel *fileNameLabel = new QLabel( i18n( "Archive File:" ), mainWidget );
+  QLabel *fileNameLabel = new QLabel( i18n( "&Archive File:" ), mainWidget );
   mainLayout->addWidget( fileNameLabel, row, 0 );
   mUrlRequester = new KUrlRequester( mainWidget );
   mUrlRequester->setMode( KFile::LocalOnly | KFile::File );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
+  fileNameLabel->setBuddy( mUrlRequester );
   connect( mUrlRequester, SIGNAL(urlSelected(const KUrl&)),
            this, SLOT(slotFixFileExtension()) );
   mainLayout->addWidget( mUrlRequester, row, 1 );
   row++;
 
   // TODO: Make this appear more dangerous!
-  mDeleteCheckBox = new QCheckBox( i18n( "Delete folders after completion" ), mainWidget );
+  mDeleteCheckBox = new QCheckBox( i18n( "&Delete folders after completion" ), mainWidget );
   mainLayout->addWidget( mDeleteCheckBox, row, 0, 1, 2, Qt::AlignLeft );
   row++;
 
