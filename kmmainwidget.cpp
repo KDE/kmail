@@ -2718,10 +2718,10 @@ void KMMainWidget::showOfflinePage()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-#ifdef OLD_MESSAGELIST
   kDebug();
-  KMime::Message* oldMsg = mMessageListView->currentMessage();
-  if( oldMsg ) {
+  Akonadi::Item oldMsg = mMessagePane->currentItem();
+  if( oldMsg.isValid() ) {
+#if 0
     kDebug() << "Old message found";
     if( oldMsg->hasUnencryptedMsg() ) {
       kDebug() << "Extra unencrypted message found";
@@ -2776,9 +2776,11 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
       kDebug() << "Done.";
     } else
       kDebug() << "NO EXTRA UNENCRYPTED MESSAGE FOUND";
+#else
+   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   } else
     kDebug() << "PANIC: NO OLD MESSAGE FOUND";
-#endif
 }
 
 void KMMainWidget::slotFocusOnNextMessage()
