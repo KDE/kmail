@@ -53,7 +53,6 @@ namespace KMail {
       /**
        * Constructor
        * @param parent the parent widget
-       * @param tree the KMFolderTree to get the folders
        */
       FolderRequester( QWidget *parent );
       virtual ~FolderRequester();
