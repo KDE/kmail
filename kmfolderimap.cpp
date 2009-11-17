@@ -109,12 +109,6 @@ KMFolderImap::~KMFolderImap()
 //-----------------------------------------------------------------------------
 void KMFolderImap::reallyDoClose(const char* owner)
 {
-  if (isSelected()) {
-      kdWarning(5006) << "Trying to close the selected folder " << label() <<
-          " - ignoring!" << endl;
-      return;
-  }
-
   // FIXME is this still needed?
   if (account())
     account()->ignoreJobsForFolder( folder() );
