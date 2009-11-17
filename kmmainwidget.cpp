@@ -3958,8 +3958,8 @@ void KMMainWidget::updateMessageActions()
   const qint64 nbMsgOutboxCollection = kmkernel->outboxCollectionFolder().statistics().count();
   //TODO : don't know when statistic is not correct here.
   //FIXME
-  qDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
-  qDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
+  //qDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
+  //qDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
 #if 0
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
