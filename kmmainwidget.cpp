@@ -4030,7 +4030,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
-  mFolderShortCutCommandAction->setEnabled( !multiFolder );
+  mFolderShortCutCommandAction->setEnabled( !multiFolder &&mCurrentFolder);
   mCollectionProperties->setVisible( mCurrentFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection() ) );
 }
 
