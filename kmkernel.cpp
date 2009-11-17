@@ -1712,11 +1712,7 @@ void KMKernel::cleanup(void)
   if ( the_trashCollectionFolder.isValid() ) {
     if ( group.readEntry( "empty-trash-on-exit", false ) ) {
       if ( the_trashCollectionFolder.statistics().count() > 0 ) {
-#if 0
-        the_trashFolder->expunge();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+        mFolderCollectionMonitor->expunge( the_trashCollectionFolder );
       }
     }
   }
@@ -2133,7 +2129,7 @@ void KMKernel::slotEmptyTrash()
 #else
    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
    Akonadi::Collection trash = trashCollectionFolder();
-   mFolderCollectionMonitor->expure( trash );
+   mFolderCollectionMonitor->expunge( trash );
 #endif
 }
 

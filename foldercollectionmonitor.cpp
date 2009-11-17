@@ -59,7 +59,7 @@ void FolderCollectionMonitor::compactAllFolders( bool immediate )
 
 }
 
-void FolderCollectionMonitor::expure( const Akonadi::Collection & col )
+void FolderCollectionMonitor::expunge( const Akonadi::Collection & col )
 {
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( col,this );
   connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
