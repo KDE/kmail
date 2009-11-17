@@ -2260,25 +2260,71 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
   }
   kDebug() << "done resolving keys:";
 
+  // When the user has configured the preferred cryptography format to any, at this
+  // point it should be found out which format should be used for which recipient.
+  // This wasn't done at all first and the current implementation is a quick fix
+  // which isn't completely correct. It just uses the first concrete format that
+  // it finds and doesn't handle cases in which more formats are supported for
+  // a recipient. This also would need changes in Message::Composer as it seems
+  // to assume composing of one message and one encryption/signing format which
+  // isn't true always.
+  //
+  // Current Quick fix: Iterate over the concrete Crypto message format and take
+  //                    the first supported one.
+  // Correct fix: Iterate over all message formats and for any that return split infos
+  //              create a message for every split info.
+  Kleo::CryptoMessageFormat concreteEncryptFormat = Kleo::AutoFormat;
   if( encryptSomething ) {
-    std::vector<Kleo::KeyResolver::SplitInfo> encData = keyResolver->encryptionItems( cryptoMessageFormat() );
-    std::vector<Kleo::KeyResolver::SplitInfo>::iterator it;
-    QList<QPair<QStringList, std::vector<GpgME::Key> > > data;
-    for( it = encData.begin(); it != encData.end(); ++it ) {
-      QPair<QStringList, std::vector<GpgME::Key> > p( it->recipients, it->keys );
-      data.append( p );
-      kDebug() << "got resolved keys for:" << it->recipients;
+    for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
+      if ( keyResolver->encryptionItems( concreteCryptoMessageFormats[i] ).empty() )
+        continue;
+
+      if ( !(concreteCryptoMessageFormats[i] & cryptoMessageFormat()) )
+        continue;
+
+      concreteEncryptFormat = concreteCryptoMessageFormats[i];
+
+      std::vector<Kleo::KeyResolver::SplitInfo> encData = keyResolver->encryptionItems( concreteEncryptFormat );
+      std::vector<Kleo::KeyResolver::SplitInfo>::iterator it;
+      QList<QPair<QStringList, std::vector<GpgME::Key> > > data;
+      for( it = encData.begin(); it != encData.end(); ++it ) {
+        QPair<QStringList, std::vector<GpgME::Key> > p( it->recipients, it->keys );
+        data.append( p );
+        kDebug() << "got resolved keys for:" << it->recipients;
+      }
+      composer->setEncryptionKeys( data );
+      break; // Quick fix, TODO: Implement correct fix.
     }
-    composer->setEncryptionKeys( data );
   }
 
+  Kleo::CryptoMessageFormat concreteSignFormat = Kleo::AutoFormat;
   if( signSomething ) {
-    std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( cryptoMessageFormat() );
-    composer->setSigningKeys( signingKeys );
+    for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
+      if ( keyResolver->encryptionItems( concreteCryptoMessageFormats[i] ).empty() )
+        continue;
+
+      if ( !(concreteCryptoMessageFormats[i] & cryptoMessageFormat()) )
+        continue;
+
+      concreteSignFormat = concreteCryptoMessageFormats[i];
+
+      std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( concreteSignFormat );
+      composer->setSigningKeys( signingKeys );
+
+      break; // Quick fix, TODO: Implement correct fix.
+    }
   }
 
   composer->setSignAndEncrypt( sign, encrypt );
-  composer->setMessageCryptoFormat( cryptoMessageFormat() );
+
+  // TODO: Take in account that a composer can create more than one message which might
+  //       have different formats.
+  if ( concreteEncryptFormat != Kleo::AutoFormat )
+    composer->setMessageCryptoFormat( concreteEncryptFormat );
+  else if ( concreteSignFormat != Kleo::AutoFormat )
+    composer->setMessageCryptoFormat( concreteSignFormat );
+  else if( signSomething || encryptSomething )
+    Q_ASSERT_X( false, "KMComposeWin::fillCryptoInfo" , "No concrete sign or encrypt method selected");
 
   return true;
 }
