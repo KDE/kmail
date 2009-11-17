@@ -757,10 +757,12 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   return OK;
 }
 
-static KURL subjectToUrl( const QString & subject ) {
-    return KFileDialog::getSaveURL( subject.stripWhiteSpace()
-                                           .replace( QDir::separator(), '_' ),
-                                    "*.mbox" );
+static KURL subjectToUrl( const QString & subject )
+{
+  return KFileDialog::getSaveURL( subject.stripWhiteSpace()
+                                           .replace( QDir::separator(), '_' )
+                                           .replace( ':', '_' ),
+                                  "*.mbox" );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
