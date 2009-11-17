@@ -639,6 +639,7 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg )
   :KMCommand( parent, msg )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMEditMsgCommand::execute()
