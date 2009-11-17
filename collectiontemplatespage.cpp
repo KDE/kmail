@@ -52,7 +52,7 @@ void CollectionTemplatesPage::init()
   topLayout->setMargin( 0 );
   topLayout->setSpacing( KDialog::spacingHint() );
 
-  QHBoxLayout *topItems = new QHBoxLayout( this );
+  QHBoxLayout *topItems = new QHBoxLayout;
   topLayout->addLayout( topItems );
 
   mCustom = new QCheckBox( i18n("&Use custom message templates in this folder"), this );
