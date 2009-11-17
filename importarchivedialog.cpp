@@ -51,17 +51,19 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent, Qt::WidgetFlags flags
   // TODO: Use QFormLayout in KDE4
   // TODO: better label for "Ok" button
 
-  QLabel *folderLabel = new QLabel( i18n( "Folder:" ), mainWidget );
+  QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
   mFolderRequester = new FolderRequester( mainWidget, kmkernel->getKMMainWidget()->folderTree() );
+  folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
 
-  QLabel *fileNameLabel = new QLabel( i18n( "Archive File:" ), mainWidget );
+  QLabel *fileNameLabel = new QLabel( i18n( "&Archive File:" ), mainWidget );
   mainLayout->addWidget( fileNameLabel, row, 0 );
   mUrlRequester = new KURLRequester( mainWidget );
   mUrlRequester->setMode( KFile::LocalOnly );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
+  fileNameLabel->setBuddy( mUrlRequester );
   mainLayout->addWidget( mUrlRequester, row, 1 );
   row++;
 
