@@ -224,6 +224,8 @@ void CollectionViewPage::slotSelectFolderAggregation()
   bool usesPrivateAggregation = false;
   mAggregationComboBox->readStorageModelConfig( &messageListStorageModel, usesPrivateAggregation );
   mUseDefaultAggregationCheckBox->setChecked( !usesPrivateAggregation );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
@@ -234,6 +236,8 @@ void CollectionViewPage::slotSelectFolderTheme()
   bool usesPrivateTheme = false;
   mThemeComboBox->readStorageModelConfig( &messageListStorageModel, usesPrivateTheme );
   mUseDefaultThemeCheckBox->setChecked( !usesPrivateTheme );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 

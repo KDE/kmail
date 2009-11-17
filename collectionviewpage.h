@@ -50,10 +50,6 @@ public slots:
   void slotThemeCheckboxChanged();
   void slotSelectFolderAggregation();
   void slotSelectFolderTheme();
-#if 0
-private:
-  void initializeWithValuesFromFolder( KMFolder * folder );
-#endif
 private:
 
   bool mIsLocalSystemFolder;
