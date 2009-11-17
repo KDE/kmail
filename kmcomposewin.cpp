@@ -4416,17 +4416,17 @@ void KMComposeWin::slotAppendSignature()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotPrependSignature()
 {
-    insertSignature( false );
+    insertSignature( Prepend );
 }
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotInsertSignatureAtCursor()
 {
-    insertSignature( false, mEditor->currentLine() );
+    insertSignature( AtCursor, mEditor->currentLine() );
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::insertSignature( bool append, int pos )
+void KMComposeWin::insertSignature( SignaturePlacement placement, int pos )
 {
    bool mod = mEditor->isModified();
 
@@ -4438,12 +4438,18 @@ void KMComposeWin::insertSignature( bool append, int pos )
 
    if( !mOldSigText.isEmpty() )
    {
-      mEditor->sync();
-      if ( append ) {
-         mEditor->setText( mEditor->text() + mOldSigText );
-    } else {
-       mOldSigText = "\n\n"+mOldSigText+"\n";
-       mEditor->insertAt(mOldSigText, pos, 0);
+    mEditor->sync();
+    switch( placement ) {
+      case Append:
+        mEditor->setText( mEditor->text() + mOldSigText );
+        break;
+      case Prepend:
+        mOldSigText = "\n\n" + mOldSigText + "\n";
+        mEditor->insertAt( mOldSigText, pos, 0 );
+        break;
+      case AtCursor:
+        mEditor->insertAt( mOldSigText, pos, 0 );
+        break;
     }
     mEditor->update();
     mEditor->setModified(mod);
@@ -4459,7 +4465,7 @@ void KMComposeWin::insertSignature( bool append, int pos )
       // for append and prepend, move the cursor to 0,0, for insertAt,
       // keep it in the same row, but move to first column
       mEditor->setCursorPosition( pos, 0 );
-      if ( !append && pos == 0 )
+      if ( placement == Prepend || placement == Append )
         mEditor->setContentsPos( 0, 0 );
     }
     mEditor->sync();
@@ -4840,7 +4846,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
       edtText = edtText.replace( pos, oldLength, mOldSigText );
       mEditor->setText( edtText );
     } else {
-      insertSignature( false );
+      insertSignature( Append );
     }
   }
 
