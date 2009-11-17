@@ -51,6 +51,7 @@ CollectionViewPage::~CollectionViewPage()
 
 void CollectionViewPage::init(const Akonadi::Collection & col)
 {
+  mCurrentCollection = col;
   mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col );
 
   qDebug()<<" mIsLocalSystemFolder :"<<mIsLocalSystemFolder;
@@ -231,14 +232,9 @@ void CollectionViewPage::slotSelectFolderAggregation()
 
 void CollectionViewPage::slotSelectFolderTheme()
 {
-#ifdef OLD_MESSAGELIST
-  MessageListView::StorageModel messageListStorageModel( mDlg->folder() );
   bool usesPrivateTheme = false;
-  mThemeComboBox->readStorageModelConfig( &messageListStorageModel, usesPrivateTheme );
+  mThemeComboBox->readStorageModelConfig( mCurrentCollection, usesPrivateTheme );
   mUseDefaultThemeCheckBox->setChecked( !usesPrivateTheme );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void CollectionViewPage::load( const Akonadi::Collection & col )
@@ -306,5 +302,9 @@ void CollectionViewPage::save( Akonadi::Collection & col )
     else
       mFolderCollection->setUserWhoField( "" );
   }
+
+    // message list theme
+  const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
+  mThemeComboBox->writeStorageModelConfig( mCurrentCollection, usePrivateTheme );
 }
 

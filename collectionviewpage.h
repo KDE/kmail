@@ -20,6 +20,7 @@
 #define COLLECTIONVIEWPAGE_H
 
 #include <akonadi/collectionpropertiespage.h>
+#include <akonadi/collection.h>
 class QCheckBox;
 class QLabel;
 class KComboBox;
@@ -65,6 +66,7 @@ private:
   QCheckBox *mUseDefaultThemeCheckBox;
   MessageList::Utils::ThemeComboBox *mThemeComboBox;
   FolderCollection *mFolderCollection;
+  Akonadi::Collection mCurrentCollection;
 };
 
 
