@@ -473,13 +473,11 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
     mMsgView->setHtmlOverride(mFolderHtmlPref);
     mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   }
-#ifdef OLD_FOLDERVIEW
-  mMessageListView->setCurrentFolder(
-      mFolder,
+  mMessagePane->setCurrentFolder(
+      mCurrentFolder->collection(),
       preferNewTabForOpening,
       preSelectionMode
     );
-#endif
   if ( !mCurrentFolder->isValid() && ( mMessagePane->count() < 2 ) )
     slotIntro();
 
