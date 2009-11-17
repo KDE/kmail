@@ -186,22 +186,6 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
 
 }
 
-#if 0
-bool FolderDialogViewTab::save()
-{
-#ifdef OLD_MESSAGELIST
-  // message list aggregation
-  MessageListView::StorageModel messageListStorageModel( folder );
-  const bool usePrivateAggregation = !mUseDefaultAggregationCheckBox->isChecked();
-  mAggregationComboBox->writeStorageModelConfig( &messageListStorageModel, usePrivateAggregation );
-
-  // message list theme
-  const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
-  mThemeComboBox->writeStorageModelConfig( &messageListStorageModel, usePrivateTheme );
-#endif
-  return true;
-}
-#endif
 
 void CollectionViewPage::slotChangeIcon( const QString & icon )
 {
@@ -220,14 +204,9 @@ void CollectionViewPage::slotThemeCheckboxChanged()
 
 void CollectionViewPage::slotSelectFolderAggregation()
 {
-#ifdef OLD_MESSAGELIST
-  MessageListView::StorageModel messageListStorageModel( mDlg->folder() );
   bool usesPrivateAggregation = false;
-  mAggregationComboBox->readStorageModelConfig( &messageListStorageModel, usesPrivateAggregation );
+  mAggregationComboBox->readStorageModelConfig(mCurrentCollection, usesPrivateAggregation );
   mUseDefaultAggregationCheckBox->setChecked( !usesPrivateAggregation );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void CollectionViewPage::slotSelectFolderTheme()
@@ -306,5 +285,9 @@ void CollectionViewPage::save( Akonadi::Collection & col )
     // message list theme
   const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
   mThemeComboBox->writeStorageModelConfig( mCurrentCollection, usePrivateTheme );
+  // message list aggregation
+  const bool usePrivateAggregation = !mUseDefaultAggregationCheckBox->isChecked();
+  mAggregationComboBox->writeStorageModelConfig( mCurrentCollection, usePrivateAggregation );
+
 }
 
