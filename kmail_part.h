@@ -41,7 +41,6 @@ class KMKernel;
 class KMMainWidget;
 namespace KPIM { class StatusbarProgressWidget; }
 using KPIM::StatusbarProgressWidget;
-class KMFolder;
 
 class ActionManager;
 
