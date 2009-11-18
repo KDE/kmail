@@ -54,7 +54,6 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
   mCurrentCollection = col;
   mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col );
 
-  qDebug()<<" mIsLocalSystemFolder :"<<mIsLocalSystemFolder;
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( 0 );

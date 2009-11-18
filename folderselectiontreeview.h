@@ -19,7 +19,9 @@
 #ifndef FOLDERSELECTIONTREEVIEW_H
 #define FOLDERSELECTIONTREEVIEW_H
 
+#include "kmail_export.h"
 #include <QWidget>
+
 #include <QAbstractItemView>
 #include <akonadi/collection.h>
 class KXMLGUIClient;
@@ -32,7 +34,7 @@ namespace Akonadi {
   class ChangeRecorder;
   class StatisticsProxyModel;
 }
-class FolderSelectionTreeView : public QWidget
+class KMAIL_EXPORT FolderSelectionTreeView : public QWidget
 {
   Q_OBJECT
 public:

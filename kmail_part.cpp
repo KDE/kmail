@@ -43,6 +43,10 @@
 #include <ksettings/dispatcher.h>
 #include <kmailpartadaptor.h>
 #include <kicon.h>
+#include <akonadi/collection.h>
+#include <akonadi/entitydisplayattribute.h>
+#include "folderselectiontreeview.h"
+#include "foldertreeview.h"
 
 #include <QLayout>
 #include <kglobal.h>
@@ -117,8 +121,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
+  connect( mainWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 #ifdef OLD_FOLDERVIEW
-  connect( mainWidget->folderViewManager(), SIGNAL(folderActivated(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
 
   connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(FolderViewItem*)),
            this, SLOT(slotIconChanged(FolderViewItem*)) );
@@ -156,18 +160,17 @@ bool KMailPart::openFile()
   return true;
 }
 
-void KMailPart::exportFolder( KMFolder *folder )
+void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
 {
-#ifdef OLD_FOLDERVIEW
-  FolderViewItem* fti = static_cast<FolderViewItem *>( mainWidget->mainFolderView()->currentItem() );
-
-  if ( folder != 0 )
-    emit textChanged( folder->label() );
-
-  if ( fti )
-    emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
-#endif
+  if ( col.isValid() ) {
+    emit textChanged( col.name() );
+    if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
+         !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
+      emit iconChanged( col.attribute<Akonadi::EntityDisplayAttribute>()->icon().pixmap( 22, 22 ) );
+    }
+  }
 }
+
 #ifdef OLD_FOLDERVIEW
 void KMailPart::slotIconChanged( FolderViewItem *fti )
 {

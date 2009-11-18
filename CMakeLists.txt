@@ -316,6 +316,7 @@ qt4_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.km
 kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
 target_link_libraries(kmailpart
   ${KDE4_KDECORE_LIBS}
+  ${KDE4_AKONADI_LIBS}
   kmailprivate
   ${KDE4_KPARTS_LIBS}
   ${KDE4_KUTILS_LIBS}

@@ -43,6 +43,7 @@
 #include <akonadi/standardactionmanager.h>
 #include <akonadi/entity.h>
 #include <messagelist/core/view.h>
+#include "folderselectiontreeview.h"
 namespace MessageList {
   class Pane;
 }
@@ -62,7 +63,7 @@ class KActionMenu;
 class KConfig;
 class KToggleAction;
 class KTreeWidgetSearchLine;
-
+class FolderTreeView;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
 class KMSystemTray;
@@ -182,6 +183,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
   void selectCollectionFolder( const Akonadi::Collection & col );
+
+  FolderTreeView *folderTreeView() const {
+    return mCollectionFolderView->folderTreeView();
+  }
+
+
+
 
   public slots:
     // Moving messages around

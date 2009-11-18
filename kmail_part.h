@@ -31,6 +31,7 @@
 #include <kparts/factory.h>
 #include <kparts/event.h>
 #include <kparts/part.h>
+#include <akonadi/collection.h>
 
 #include <QWidget>
 #include <QPixmap>
@@ -67,7 +68,7 @@ class KMailPart: public KParts::ReadOnlyPart
     Q_SCRIPTABLE void save() { /*TODO*/ }
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
-    void exportFolder( KMFolder* folder );
+  void slotFolderChanged( const Akonadi::Collection& );
 #ifdef OLD_FOLDERVIEW
     void slotIconChanged( FolderViewItem *fti );
     void slotNameChanged( FolderViewItem *fti );
