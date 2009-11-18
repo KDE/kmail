@@ -4034,7 +4034,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder &&mCurrentFolder);
-  mCollectionProperties->setVisible( mCurrentFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection() ) );
+  mCollectionProperties->setVisible( mCurrentFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection() ) && !CollectionUtils::isResource( mCurrentFolder->collection() ));
 }
 
 //-----------------------------------------------------------------------------
