@@ -7,9 +7,7 @@
 #include <QString>
 #include <QByteArray>
 
-namespace KMime {
-  class Message;
-}
+#include <kmime/kmime_message.h>
 
 class KConfigGroup;
 
@@ -52,8 +50,8 @@ public:
     ArchivedAt    = 1 << 7  /** Archive-At header exists */
   };
 public:
-  static MailingList detect(  KMime::Message* msg );
-  static QString name(  KMime::Message  *message, QByteArray &header_name,
+  static MailingList detect(  const KMime::Message::Ptr &msg );
+  static QString name( const KMime::Message::Ptr &message, QByteArray &header_name,
                        QString &header_value );
 public:
   /**

@@ -420,7 +420,7 @@ void KMReaderWin::slotTouchMessage()
   if ( !msg )
     return;
 
-  if ( KMime::Message * receipt = KMail::MessageHelper::createMDN( message(), &*msg, MDN::ManualAction,
+  if ( KMime::Message::Ptr receipt = KMail::MessageHelper::createMDN( message(), msg, MDN::ManualAction,
                                                         MDN::Displayed,
                                                         true /* allow GUI */ ) ) {
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue

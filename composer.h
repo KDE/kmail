@@ -24,15 +24,17 @@
 
 #include <kurl.h>
 #include <kglobalsettings.h>
+#include <kmime/kmime_message.h>
 #include <akonadi/collection.h>
 #include <QString>
+
+#include <boost/shared_ptr.hpp>
 
 class KMMessage;
 class KMFolder;
 class MailComposerIface;
 
 namespace KMime {
-  class Message;
   class Content;
 }
 
@@ -70,7 +72,7 @@ class Composer : public KMail::SecondaryWindow
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    virtual void setMsg( KMime::Message *newMsg, bool mayAutoSign=true,
+    virtual void setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign=true,
                          bool allowDecryption=false, bool isModified=false ) = 0;
 
     /**
@@ -173,7 +175,7 @@ class Composer : public KMail::SecondaryWindow
     virtual void addAttach( KMime::Content *msgPart ) = 0;
 };
 
-Composer *makeComposer( KMime::Message *msg = 0,
+Composer *makeComposer( const KMime::Message::Ptr &msg = KMime::Message::Ptr(),
                         Composer::TemplateContext context = Composer::NoTemplate,
                         uint identity = 0, const QString & textSelection = QString(),
                         const QString & customTemplate = QString() );

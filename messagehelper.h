@@ -22,6 +22,7 @@
 
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_mdn.h>
+#include <kmime/kmime_message.h>
 #include <akonadi/item.h>
 #include <messagecore/messagestatus.h>
 namespace KMail {
@@ -47,21 +48,22 @@ namespace MessageHelper {
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
     of setAutomaticFields(), see below, is still required. */
-  void initHeader( KMime::Message* message, uint id = 0 );
+  void initHeader( const KMime::Message::Ptr &message, uint id = 0 );
 
   /** Set the from, to, cc, bcc, encrytion etc headers as specified in the
   * given identity. */
-  void applyIdentity(KMime::Message* message,  uint id );
+  void applyIdentity( const KMime::Message::Ptr &message,  uint id );
 
   /** Initialize headers fields according to the identity and the transport
    header of the given original message */
-  void initFromMessage(const Akonadi::Item &, KMime::Message *msg, KMime::Message *orgiMsg, bool idHeaders = true);
+  void initFromMessage(const Akonadi::Item &, const KMime::Message::Ptr &msg,
+                       const KMime::Message::Ptr &orgiMsg, bool idHeaders = true);
 
   /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
   /// the reply mode
   struct MessageReply
   {
-    KMime::Message *msg;  ///< The actual reply message
+    KMime::Message::Ptr msg;  ///< The actual reply message
     bool replyAll;   ///< If true, the "reply all" template was used, otherwise the normal reply
                      ///  template
   };
@@ -69,10 +71,11 @@ namespace MessageHelper {
     /** Create a new message that is a reply to this message, filling all
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
-  KMime::Message* createReply(const Akonadi::Item &item, KMime::Message* origMsg, KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                          const QString &selection=QString(), bool noQuote=false,
-                          bool allowDecryption=true, bool selectionIsBody=false,
-                          const QString &tmpl = QString() );
+  KMime::Message::Ptr createReply(const Akonadi::Item &item, const KMime::Message::Ptr &origMsg,
+                              KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
+                              const QString &selection = QString(), bool noQuote = false,
+                              bool allowDecryption = true, bool selectionIsBody = false,
+                              const QString &tmpl = QString() );
 
 
   /**
@@ -83,7 +86,7 @@ namespace MessageHelper {
    * @return the reply created, including the reply mode
    */
 //TODO see if this can be merged with the above one!
-  MessageReply createReply2( const Akonadi::Item & item, KMime::Message* origMsg,
+  MessageReply createReply2(const Akonadi::Item & item, const KMime::Message::Ptr &origMsg,
                             KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
                             const QString &selection=QString(), bool noQuote=false,
                             bool allowDecryption=true, bool selectionIsBody=false,
@@ -92,7 +95,8 @@ namespace MessageHelper {
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
-  KMime::Message* createForward(const Akonadi::Item &item, KMime::Message *origMsg, const QString &tmpl = QString() );
+  KMime::Message::Ptr createForward(const Akonadi::Item &item, const KMime::Message::Ptr &origMsg,
+                                const QString &tmpl = QString() );
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message
@@ -101,11 +105,11 @@ namespace MessageHelper {
     user, mail is not changed and the reply-to field is set to
     the email address of the original sender
    */
-  KMime::Message* createRedirect( const Akonadi::Item &, KMime::Message *origMsg, const QString &toStr );
+  KMime::Message::Ptr createRedirect( const Akonadi::Item &, const KMime::Message::Ptr &origMsg, const QString &toStr );
 
-  KMime::Message* createResend( const Akonadi::Item &, KMime::Message *origMsg );
+  KMime::Message::Ptr createResend( const Akonadi::Item &, const KMime::Message::Ptr &origMsg );
 
-  KMime::Types::AddrSpecList extractAddrSpecs( KMime::Message* msg, const QByteArray & header );
+  KMime::Types::AddrSpecList extractAddrSpecs( const KMime::Message::Ptr &msg, const QByteArray &header );
 
   /** Check for prefixes @p prefixRegExps in #subject(). If none
       is found, @p newPrefix + ' ' is prepended to the subject and the
@@ -113,18 +117,18 @@ namespace MessageHelper {
       sequence of whitespace-delimited prefixes at the beginning of
       #subject() is replaced by @p newPrefix
   **/
-  QString cleanSubject( KMime::Message* msg, const QStringList& prefixRegExps, bool replace,
-                        const QString& newPrefix );
+  QString cleanSubject( const KMime::Message::Ptr &msg, const QStringList &prefixRegExps, bool replace,
+                        const QString &newPrefix );
 
   /** Return this mails subject, with all "forward" and "reply"
       prefixes removed */
-  QString cleanSubject( KMime::Message* msg );
+  QString cleanSubject( const KMime::Message::Ptr &msg );
 
   /** Return this mails subject, formatted for "forward" mails */
-  QString forwardSubject(KMime::Message* msg );
+  QString forwardSubject( const KMime::Message::Ptr &msg );
 
   /** Return this mails subject, formatted for "reply" mails */
-  QString replySubject( KMime::Message* msg );
+  QString replySubject( const KMime::Message::Ptr &msg );
   /** Check for prefixes @p prefixRegExps in @p str. If none
       is found, @p newPrefix + ' ' is prepended to @p str and the
       resulting string is returned. If @p replace is true, any
@@ -141,12 +145,12 @@ namespace MessageHelper {
       searches with KPIMIdentities::IdentityManager::identityForAddress()
       and if that fails queries the KMMsgBase::parent() folder for a default.
    **/
-  uint identityUoid(const Akonadi::Item &, KMime::Message *msg );
+  uint identityUoid(const Akonadi::Item &, const KMime::Message::Ptr &msg );
 
   /** Create a new message that is a delivery receipt of this message,
       filling required header fileds with the proper values. The
       returned message is not stored in any folder. */
-  KMime::Message* createDeliveryReceipt(const Akonadi::Item &, KMime::Message* msg );
+  KMime::Message::Ptr createDeliveryReceipt( const Akonadi::Item &, const KMime::Message::Ptr &msg );
 
   /** Create a new message that is a MDN for this message, filling all
       required fields with proper values. The returned message is not
@@ -161,8 +165,8 @@ namespace MessageHelper {
 
       @return The notification message or 0, if none should be sent.
    **/
-  KMime::Message* createMDN( const Akonadi::Item & item,
-                             KMime::Message *msg,
+  KMime::Message::Ptr createMDN( const Akonadi::Item & item,
+                             const KMime::Message::Ptr &msg,
                              KMime::MDN::ActionMode a,
                              KMime::MDN::DispositionType d,
                              bool allowGUI=false,
@@ -173,35 +177,35 @@ namespace MessageHelper {
     Call this method before sending *after* all changes to the message
     are done because this method does things different if there are
     attachments / multiple body parts. */
-  void setAutomaticFields( KMime::Message* masg, bool isMultipart=false );
+  void setAutomaticFields( const KMime::Message::Ptr &msg, bool isMultipart=false );
 
   /**
    * Return the message contents with the headers that should not be
    * sent stripped off.
    */
-  QByteArray asSendableString( KMime::Message *msg );
+  QByteArray asSendableString( const KMime::Message::Ptr &msg );
 
   /**
    * Return the message header with the headers that should not be
    * sent stripped off.
    */
-  QByteArray headerAsSendableString( KMime::Message *msg );
+  QByteArray headerAsSendableString( const KMime::Message::Ptr &msg );
 
  /**
    * Remove all private header fields: *Status: and X-KMail-*
    **/
-  void removePrivateHeaderFields( KMime::Message *msg );
+  void removePrivateHeaderFields( const KMime::Message::Ptr &msg );
   /** Creates reference string for reply to messages.
    *  reference = original first reference + original last reference + original msg-id
    */
-  QByteArray getRefStr( KMime::Message *msg );
+  QByteArray getRefStr( const KMime::Message::Ptr &msg );
 
-  QString msgId(KMime::Message *msg);
+  QString msgId( const KMime::Message::Ptr &msg );
 
 
-  QString ccStrip( KMime::Message *msg );
-  QString toStrip( KMime::Message *msg );
-  QString fromStrip( KMime::Message *msg );
+  QString ccStrip( const KMime::Message::Ptr &msg );
+  QString toStrip( const KMime::Message::Ptr &msg );
+  QString fromStrip( const KMime::Message::Ptr &msg );
 
   /** Returns @p str with all "forward" and "reply" prefixes stripped off.
   **/
@@ -214,7 +218,7 @@ namespace MessageHelper {
   QString skipKeyword(const QString& str, QChar sepChar=':',
 				 bool* keywordFound=0);
 
-  void link( KMime::Message *msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus );
+  void link( const KMime::Message::Ptr &msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus );
 }
 
 }

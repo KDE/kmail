@@ -1341,19 +1341,19 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 void KMMainWidget::slotCompose()
 {
   KMail::Composer * win;
-  KMime::Message* msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message() );
 
   if ( mCurrentFolder ) {
       KMail::MessageHelper::initHeader( msg, mCurrentFolder->identity() );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
-      parser.process( NULL, mCurrentFolder->collection() );
+      parser.process( KMime::Message::Ptr(), mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       KMail::MessageHelper::initHeader( msg );
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
-      parser.process( NULL, Akonadi::Collection() );
+      parser.process( KMime::Message::Ptr(), Akonadi::Collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New );
   }
 
@@ -2328,7 +2328,7 @@ void KMMainWidget::slotFromFilter()
   if ( !msg )
     return;
 
-  AddrSpecList al = KMail::MessageHelper::extractAddrSpecs(&*msg, "From" );
+  AddrSpecList al = KMail::MessageHelper::extractAddrSpecs( msg, "From" );
   KMCommand *command;
   if ( al.empty() )
     command = new KMFilterCommand( "From",  msg->from()->asUnicodeString() );
@@ -2361,7 +2361,7 @@ void KMMainWidget::updateListFilterAction()
 
   QByteArray name;
   QString value;
-  QString lname = MailingList::name( &*msg, name, value );
+  QString lname = MailingList::name( msg, name, value );
   if ( lname.isNull() )
     mListFilterAction->setEnabled( false );
   else {
@@ -2480,7 +2480,7 @@ void KMMainWidget::slotApplyFilters()
 #endif
 }
 
-int KMMainWidget::slotFilterMsg(KMime::Message *msg)
+int KMMainWidget::slotFilterMsg( const KMime::Message::Ptr &msg )
 {
   if ( !msg ) return 2; // messageRetrieve(0) is always possible
 #if 0 //TODO port to akonadi

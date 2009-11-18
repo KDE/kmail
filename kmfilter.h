@@ -25,12 +25,11 @@
 
 #include <kshortcut.h>
 #include <akonadi/collection.h>
+
+#include <kmime/kmime_message.h>
+
 class QString;
 class KConfigGroup;
-namespace KMime {
-  class Message;
-  class Content;
-}
 class KMFilterAction;
 
 // maximum number of filter actions per filter
@@ -93,7 +92,7 @@ public:
       true if the caller may apply other filters and false if he shall
       stop the filtering of this message.
   */
-  ReturnCode execActions( KMime::Message* msg, bool& stopIt ) const ;
+  ReturnCode execActions( const KMime::Message::Ptr &msg, bool& stopIt ) const ;
 
   /** Determines if the filter depends on the body of the message
   */

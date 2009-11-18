@@ -114,7 +114,7 @@ KMFilter::~KMFilter()
 }
 
 // only for !bPopFilter
-KMFilter::ReturnCode KMFilter::execActions( KMime::Message* msg, bool& stopIt ) const
+KMFilter::ReturnCode KMFilter::execActions( const KMime::Message::Ptr &msg, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
 

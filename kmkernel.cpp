@@ -448,7 +448,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   KMail::MessageHelper::initHeader( msg );
   msg->contentType()->setCharset("utf-8");
   // tentatively decode to, cc and bcc because invokeMailer calls us with
@@ -471,7 +471,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     else {
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
-      parser.process( NULL, NULL );
+      parser.process( KMime::Message::Ptr() );
     }
   }
   else if ( !body.isEmpty() ) {
@@ -481,7 +481,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( 0, 0 );
+    parser.process( KMime::Message::Ptr() );
   }
 
   if ( !customHeaders.isEmpty() )
@@ -495,7 +495,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
           QString header = (*it).left( pos ).trimmed();
           QString value = (*it).mid( pos+1 ).trimmed();
           if ( !header.isEmpty() && !value.isEmpty() ) {
-            KMime::Headers::Generic *h = new KMime::Headers::Generic( header.toUtf8(), msg, value.toUtf8() );
+            KMime::Headers::Generic *h = new KMime::Headers::Generic( header.toUtf8(), msg.get(), value.toUtf8() );
             msg->setHeader( h );
           }
         }
@@ -536,7 +536,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   KMime::Content *msgPart = 0;
   KMail::MessageHelper::initHeader( msg );
   msg->contentType()->setCharset( "utf-8" );
@@ -545,7 +545,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
   if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
   if ( identity > 0 ) {
-    KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity", msg, QByteArray::number( identity ) );
+    KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity", msg.get(), QByteArray::number( identity ) );
     msg->setHeader( h );
   }
   if ( !body.isEmpty() ) {
@@ -554,7 +554,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( NULL, NULL );
+    parser.process( KMime::Message::Ptr() );
   }
 
   bool iCalAutoSend = false;
@@ -601,7 +601,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( 0, context );
+  KMail::Composer * cWin = KMail::makeComposer( KMime::Message::Ptr(), context );
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && GlobalSettings::self()->legacyBodyInvites() );
@@ -651,7 +651,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
                                         const QString &subject,
                                         const QString &body, bool hidden )
 {
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   KMail::MessageHelper::initHeader( msg );
   msg->contentType()->setCharset("utf-8");
   if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
@@ -663,7 +663,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( NULL, NULL );
+    parser.process( KMime::Message::Ptr() );
   }
 
   const KMail::Composer::TemplateContext context = body.isEmpty() ? KMail::Composer::New :
@@ -696,7 +696,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
                                       const QString &_attachURL)
 {
   KUrl attachURL( _attachURL );
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   FolderCollection *folder = 0;
   uint id = 0;
 
@@ -714,7 +714,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 
   TemplateParser parser( msg, TemplateParser::NewMessage,
                          QString(), false, false, false );
-  parser.process( NULL, folder ? folder->collection() : Akonadi::Collection() );
+  parser.process( KMime::Message::Ptr(), folder ? folder->collection() : Akonadi::Collection() );
 
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
 
@@ -740,7 +740,7 @@ int KMKernel::viewMessage( const KUrl & messageFile )
 
 int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 {
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   KMail::MessageHelper::initHeader( msg );
   msg->contentType()->setCharset("utf-8");
   msg->subject()->fromUnicodeString(i18n( "Certificate Signature Request" ), "utf-8" );

@@ -61,7 +61,7 @@ static QStringList addrSpecListToStringList( const AddrSpecList &l, bool allowEm
 }
 
 
-static void extractSenderToCCAndBcc( KMime::Message *aMsg, QString &sender, QStringList &to, QStringList &cc, QStringList &bcc )
+static void extractSenderToCCAndBcc( const KMime::Message::Ptr &aMsg, QString &sender, QStringList &to, QStringList &cc, QStringList &bcc )
 {
   sender = aMsg->sender()->asUnicodeString();
   if( aMsg->headerByType("X-KMail-Recipients") ) {
@@ -120,7 +120,7 @@ void AkonadiSender::setSendQuotedPrintable( bool aSendQuotedPrintable )
   mSendQuotedPrintable = aSendQuotedPrintable;
 }
 
-bool AkonadiSender::doSend( KMime::Message *aMsg, short sendNow  )
+bool AkonadiSender::doSend( const KMime::Message::Ptr &aMsg, short sendNow  )
 {
 #if 0	
   KMFolder * const outbox = kmkernel->outboxFolder();
@@ -179,7 +179,7 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
   return true;
 }
 
-void AkonadiSender::queueMessage( KMime::Message *message )
+void AkonadiSender::queueMessage( const KMime::Message::Ptr &message )
 {
   Q_ASSERT( message );
 #if 0 //TODO port to akonadi

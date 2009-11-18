@@ -53,7 +53,7 @@ MailManagerImpl::MailManagerImpl()
   QDBusConnection::sessionBus().registerObject( "/org/freedesktop/email/metadata/Manager", this );
 }
 
-void MailManagerImpl::processMsgBase( KMime::Message *msg, QStringList &subjects, QVector<QStringList> &predicatesArray, QVector<QStringList> &valuesArray )
+void MailManagerImpl::processMsgBase( const KMime::Message::Ptr &msg, QStringList &subjects, QVector<QStringList> &predicatesArray, QVector<QStringList> &valuesArray )
 {
   QStringList values;
   QStringList predicates;

@@ -64,7 +64,7 @@ namespace KMail {
 
 static const int PipeTimeout = 15 * 1000;
 
-TemplateParser::TemplateParser( KMime::Message *amsg, const Mode amode,
+TemplateParser::TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode,
                                 const QString &aselection,
                                 bool asmartQuote, bool aallowDecryption,
                                 bool aselectionIsBody ) :
@@ -202,7 +202,7 @@ QString TemplateParser::getLName( const QString &str )
   return res;
 }
 
-void TemplateParser::process( KMime::Message *aorig_msg, const Akonadi::Collection & afolder, bool append )
+void TemplateParser::process( const KMime::Message::Ptr &aorig_msg, const Akonadi::Collection & afolder, bool append )
 {
   if( aorig_msg == 0 ) {
     kDebug() << "aorig_msg == 0!";
@@ -216,7 +216,7 @@ void TemplateParser::process( KMime::Message *aorig_msg, const Akonadi::Collecti
   return processWithTemplate( tmpl );
 }
 
-void TemplateParser::process( const QString &tmplName, KMime::Message *aorig_msg,
+void TemplateParser::process( const QString &tmplName, const KMime::Message::Ptr &aorig_msg,
                               const Akonadi::Collection &afolder, bool append )
 {
   mAppend = append;
@@ -226,7 +226,7 @@ void TemplateParser::process( const QString &tmplName, KMime::Message *aorig_msg
   return processWithTemplate( tmpl );
 }
 
-void TemplateParser::processWithIdentity( uint uoid, KMime::Message *aorig_msg,
+void TemplateParser::processWithIdentity( uint uoid, const KMime::Message::Ptr &aorig_msg,
                                           const Akonadi::Collection &afolder, bool append )
 {
   mIdentity = uoid;
@@ -994,7 +994,7 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     {
       mMsg->contentType()->setMimeType( "multipart/mixed" );
 
-      KMime::Content *textPart = new KMime::Content( mMsg );
+      KMime::Content *textPart = new KMime::Content( mMsg.get() );
       textPart->setBody( body.toUtf8() );
       mMsg->addContent( textPart );
       mMsg->assemble();
@@ -1218,7 +1218,7 @@ void TemplateParser::parseTextStringFromContent( KMime::Content * root,
   }
 }
 
-QString TemplateParser::asPlainTextFromObjectTree( KMime::Message *msg, KMime::Content *root, MessageViewer::ObjectTreeParser *otp, bool aStripSignature,
+QString TemplateParser::asPlainTextFromObjectTree( const KMime::Message::Ptr &msg, KMime::Content *root, MessageViewer::ObjectTreeParser *otp, bool aStripSignature,
                                               bool allowDecryption )
 {
   Q_ASSERT( root );
@@ -1302,7 +1302,7 @@ QString TemplateParser::asPlainTextFromObjectTree( KMime::Message *msg, KMime::C
 }
 
 
-QString TemplateParser::asPlainText( KMime::Message* msg, bool aStripSignature, bool allowDecryption )
+QString TemplateParser::asPlainText( const KMime::Message::Ptr &msg, bool aStripSignature, bool allowDecryption )
 {
   if ( !msg )
     return QString();
@@ -1320,10 +1320,10 @@ QString TemplateParser::asPlainText( KMime::Message* msg, bool aStripSignature, 
 
 
 
-QString TemplateParser::asQuotedString( KMime::Message* msg, const QString& aIndentStr,
-                                   const QString& selection /*.clear() */,
-                                   bool aStripSignature /* = true */,
-                                   bool allowDecryption /* = true */)
+QString TemplateParser::asQuotedString( const KMime::Message::Ptr &msg, const QString& aIndentStr,
+                                        const QString& selection /*.clear() */,
+                                        bool aStripSignature /* = true */,
+                                        bool allowDecryption /* = true */)
 {
   if ( !msg )
     return QString();

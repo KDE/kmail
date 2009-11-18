@@ -116,7 +116,7 @@ static int requestAdviceOnMDN( const char * what ) {
   return 0;
 }
 
-QString replaceHeadersInString( KMime::Message *msg, const QString & s )
+QString replaceHeadersInString( const KMime::Message::Ptr &msg, const QString & s )
 {
     QString result = s;
     QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
@@ -143,7 +143,7 @@ QString replaceHeadersInString( KMime::Message *msg, const QString & s )
 }
 
 
-void initHeader( KMime::Message* message, uint id )
+void initHeader( const KMime::Message::Ptr &message, uint id )
 {
   applyIdentity( message, id );
   message->to()->clear();
@@ -164,7 +164,7 @@ void initHeader( KMime::Message* message, uint id )
   message->contentType()->setMimeType( "text/plain" );
 }
 
-void applyIdentity( KMime::Message *message, uint id )
+void applyIdentity( const KMime::Message::Ptr &message, uint id )
 {
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( id );
@@ -187,28 +187,28 @@ void applyIdentity( KMime::Message *message, uint id )
   if (ident.organization().isEmpty())
     message->removeHeader("Organization");
   else {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Organization", message, ident.organization(), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Organization", message.get(), ident.organization(), "utf-8" );
     message->setHeader( header );
   }
 
   if (ident.isDefault())
     message->removeHeader("X-KMail-Identity");
   else {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", message, QString::number( ident.uoid() ), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", message.get(), QString::number( ident.uoid() ), "utf-8" );
     message->setHeader( header );
   }
 
   if (ident.transport().isEmpty())
     message->removeHeader("X-KMail-Transport");
   else {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", message, ident.transport(), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", message.get(), ident.transport(), "utf-8" );
     message->setHeader( header );
   }
 
   if (ident.fcc().isEmpty())
     message->removeHeader("X-KMail-Fcc");
   else {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", message, ident.fcc(), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", message.get(), ident.fcc(), "utf-8" );
     message->setHeader( header );
   }
 
@@ -226,16 +226,16 @@ void applyIdentity( KMime::Message *message, uint id )
   */
 }
 
-KMime::Message* createReply( const Akonadi::Item & item,
-                             KMime::Message *origMsg,
-                             ReplyStrategy replyStrategy,
-                             const QString &selection /*.clear() */,
-                             bool noQuote /* = false */,
-                             bool allowDecryption /* = true */,
-                             bool selectionIsBody /* = false */,
-                             const QString &tmpl /* = QString() */ )
+KMime::Message::Ptr createReply( const Akonadi::Item & item,
+                                 const KMime::Message::Ptr &origMsg,
+                                 ReplyStrategy replyStrategy,
+                                 const QString &selection /*.clear() */,
+                                 bool noQuote /* = false */,
+                                 bool allowDecryption /* = true */,
+                                 bool selectionIsBody /* = false */,
+                                 const QString &tmpl /* = QString() */ )
 {
-  KMime::Message* msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   QString str, mailingListStr, replyToStr, toStr;
   QStringList mailingListAddresses;
   QByteArray refStr, headerName;
@@ -435,7 +435,7 @@ KMime::Message* createReply( const Akonadi::Item & item,
   }
   link( msg, item, KPIM::MessageStatus::statusReplied() );
   if ( parentCollection.isValid() && fd->putRepliesInSameFolder() ) {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg, QString::number( parentCollection.id() ), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg.get(), QString::number( parentCollection.id() ), "utf-8" );
     msg->setHeader( header );
   }
 
@@ -454,7 +454,7 @@ KMime::Message* createReply( const Akonadi::Item & item,
 }
 
 MessageReply createReply2(const Akonadi::Item &item,
-                          KMime::Message *origMsg,
+                          const KMime::Message::Ptr &origMsg,
                           KMail::ReplyStrategy replyStrategy,
                           const QString &selection /*.clear() */,
                           bool noQuote /* = false */,
@@ -462,7 +462,7 @@ MessageReply createReply2(const Akonadi::Item &item,
                           bool selectionIsBody /* = false */,
                           const QString &tmpl /* = QString() */ )
 {
-  KMime::Message* msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   QString str, mailingListStr, replyToStr, toStr;
   QStringList mailingListAddresses;
   QByteArray refStr, headerName;
@@ -662,7 +662,7 @@ MessageReply createReply2(const Akonadi::Item &item,
   }
   link( msg, item, KPIM::MessageStatus::statusReplied() );
   if ( parentCollection.isValid() && fd->putRepliesInSameFolder() ) {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg, QString::number( parentCollection.id() ), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg.get(), QString::number( parentCollection.id() ), "utf-8" );
     msg->setHeader( header );
   }
 #if 0
@@ -683,7 +683,7 @@ MessageReply createReply2(const Akonadi::Item &item,
   return reply;
 }
 
-void link( KMime::Message *msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus )
+void link( const KMime::Message::Ptr &msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus )
 {
   Q_ASSERT( aStatus.isReplied() || aStatus.isForwarded() || aStatus.isDeleted() );
 
@@ -702,18 +702,18 @@ void link( KMime::Message *msg, const Akonadi::Item & item,const KPIM::MessageSt
   else if ( aStatus.isDeleted() )
     type += "deleted";
 
-  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Link-Message", msg, message, "utf-8" );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Link-Message", msg.get(), message, "utf-8" );
   msg->setHeader( header );
 
-  header = new KMime::Headers::Generic( "X-KMail-Link-Type", msg, type, "utf-8" );
+  header = new KMime::Headers::Generic( "X-KMail-Link-Type", msg.get(), type, "utf-8" );
   msg->setHeader( header );
 }
 
 
 
-KMime::Message* createForward( const Akonadi::Item &item, KMime::Message *origMsg, const QString &tmpl /* = QString() */ )
+KMime::Message::Ptr createForward( const Akonadi::Item &item, const KMime::Message::Ptr &origMsg, const QString &tmpl /* = QString() */ )
 {
-  KMime::Message* msg = new KMime::Message();
+  KMime::Message::Ptr msg( new KMime::Message );
 
   // This is a non-multipart, non-text mail (e.g. text/calendar). Construct
   // a multipart/mixed mail and add the original body as an attachment.
@@ -775,9 +775,9 @@ KMime::Message* createForward( const Akonadi::Item &item, KMime::Message *origMs
 }
 
 
-KMime::Message * createResend( const Akonadi::Item & item, KMime::Message *origMsg )
+KMime::Message::Ptr createResend( const Akonadi::Item & item, const KMime::Message::Ptr &origMsg )
 {
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   initFromMessage( item, msg, origMsg);
   msg->setContent( origMsg->encodedContent() );
   msg->removeHeader( "Message-Id" );
@@ -789,7 +789,7 @@ KMime::Message * createResend( const Akonadi::Item & item, KMime::Message *origM
   msg->removeHeader( "To" );
   msg->removeHeader( "Subject" );
   // Set the identity from above
-  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg, QString::number( originalIdentity ), "utf-8" );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg.get(), QString::number( originalIdentity ), "utf-8" );
   msg->setHeader( header );
 
   // Restore the original bcc field as this is overwritten in applyIdentity
@@ -797,10 +797,10 @@ KMime::Message * createResend( const Akonadi::Item & item, KMime::Message *origM
   return msg;
 }
 
-KMime::Message* createRedirect( const Akonadi::Item & item, KMime::Message *origMsg, const QString &toStr )
+KMime::Message::Ptr createRedirect( const Akonadi::Item & item, const KMime::Message::Ptr &origMsg, const QString &toStr )
 {
   // copy the message 1:1
-  KMime::Message* msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   msg->setContent( origMsg->encodedContent() );
 
   uint id = 0;
@@ -827,20 +827,20 @@ KMime::Message* createRedirect( const Akonadi::Item & item, KMime::Message *orig
   QString newDate = msg->date()->asUnicodeString();
 
   // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
-  KMime::Headers::Generic *header = new KMime::Headers::Generic( "Resent-Message-ID", msg, MessageViewer::StringUtil::generateMessageId( msg->sender()->asUnicodeString() ), "utf-8" );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "Resent-Message-ID", msg.get(), MessageViewer::StringUtil::generateMessageId( msg->sender()->asUnicodeString() ), "utf-8" );
   msg->setHeader( header );
 
-  header = new KMime::Headers::Generic( "Resent-Date", msg, newDate, "utf-8" );
+  header = new KMime::Headers::Generic( "Resent-Date", msg.get(), newDate, "utf-8" );
   msg->setHeader( header );
 
-  header = new KMime::Headers::Generic( "Resent-To", msg, toStr, "utf-8" );
+  header = new KMime::Headers::Generic( "Resent-To", msg.get(), toStr, "utf-8" );
   msg->setHeader( header );
-  header = new KMime::Headers::Generic( "Resent-To", msg, strFrom, "utf-8" );
+  header = new KMime::Headers::Generic( "Resent-To", msg.get(), strFrom, "utf-8" );
   msg->setHeader( header );
 
-  header = new KMime::Headers::Generic( "X-KMail-Redirect-From", msg, strByWayOf, "utf-8" );
+  header = new KMime::Headers::Generic( "X-KMail-Redirect-From", msg.get(), strByWayOf, "utf-8" );
   msg->setHeader( header );
-  header = new KMime::Headers::Generic( "X-KMail-Recipients", msg, toStr, "utf-8" );
+  header = new KMime::Headers::Generic( "X-KMail-Recipients", msg.get(), toStr, "utf-8" );
   msg->setHeader( header );
 
   link( msg, item, KPIM::MessageStatus::statusForwarded() );
@@ -848,23 +848,23 @@ KMime::Message* createRedirect( const Akonadi::Item & item, KMime::Message *orig
 }
 
 
-void initFromMessage(const Akonadi::Item & item, KMime::Message *msg, KMime::Message *origMsg, bool idHeaders)
+void initFromMessage(const Akonadi::Item & item, const KMime::Message::Ptr &msg, const KMime::Message::Ptr &origMsg, bool idHeaders)
 {
   uint id = identityUoid( item, origMsg );
 
   if ( idHeaders )
     initHeader( msg, id );
   else {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg, QString::number(id), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg.get(), QString::number(id), "utf-8" );
     msg->setHeader( header );
   }
   if (origMsg->headerByType("X-KMail-Transport")) {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg, origMsg->headerByType("X-KMail-Transport")->asUnicodeString(), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg.get(), origMsg->headerByType("X-KMail-Transport")->asUnicodeString(), "utf-8" );
     msg->setHeader( header );
   }
 }
 
-KMime::Types::AddrSpecList extractAddrSpecs( KMime::Message* msg, const QByteArray & header )
+KMime::Types::AddrSpecList extractAddrSpecs( const KMime::Message::Ptr &msg, const QByteArray & header )
 {
   KMime::Types::AddrSpecList result;
   if ( !msg->headerByType( header ) )
@@ -877,34 +877,31 @@ KMime::Types::AddrSpecList extractAddrSpecs( KMime::Message* msg, const QByteArr
   return result;
 }
 
-QString cleanSubject( KMime::Message* msg )
+QString cleanSubject( const KMime::Message::Ptr &msg )
 {
   return cleanSubject( msg, sReplySubjPrefixes + sForwardSubjPrefixes,
 		       true, QString() ).trimmed();
 }
 
-QString cleanSubject( KMime::Message* msg, const QStringList & prefixRegExps,
-                                 bool replace,
-                                 const QString & newPrefix )
+QString cleanSubject( const KMime::Message::Ptr &msg, const QStringList & prefixRegExps,
+                      bool replace, const QString & newPrefix )
 {
   return replacePrefixes( msg->subject()->asUnicodeString(), prefixRegExps, replace,
                                      newPrefix );
 }
 
-QString forwardSubject( KMime::Message* msg )
+QString forwardSubject( const KMime::Message::Ptr &msg )
 {
   return cleanSubject( msg, sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
 }
 
-QString replySubject(KMime::Message* msg )
+QString replySubject( const KMime::Message::Ptr &msg )
 {
   return cleanSubject( msg, sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
 }
 
-QString replacePrefixes( const QString& str,
-                          const QStringList& prefixRegExps,
-                          bool replace,
-                          const QString& newPrefix )
+QString replacePrefixes( const QString& str, const QStringList &prefixRegExps,
+                         bool replace, const QString &newPrefix )
 {
   bool recognized = false;
   // construct a big regexp that
@@ -933,7 +930,7 @@ QString replacePrefixes( const QString& str,
     return str;
 }
 
-uint identityUoid( const Akonadi::Item & item , KMime::Message *msg )
+uint identityUoid( const Akonadi::Item & item , const KMime::Message::Ptr &msg )
 {
   QString idString;
   if ( msg->headerByType("X-KMail-Identity") )
@@ -953,17 +950,17 @@ uint identityUoid( const Akonadi::Item & item , KMime::Message *msg )
   return id;
 }
 
-KMime::Message* createDeliveryReceipt( const Akonadi::Item & item, KMime::Message *msg )
+KMime::Message::Ptr createDeliveryReceipt( const Akonadi::Item & item, const KMime::Message::Ptr &msg )
 {
   QString str, receiptTo;
-  KMime::Message *receipt = 0;
+  KMime::Message::Ptr receipt;
 
   receiptTo = msg->headerByType("Disposition-Notification-To") ? msg->headerByType("Disposition-Notification-To")->asUnicodeString() : "";
   if ( receiptTo.trimmed().isEmpty() )
-    return 0;
+    return  KMime::Message::Ptr();
   receiptTo.remove( '\n' );
 
-  receipt = new KMime::Message;
+  receipt =  KMime::Message::Ptr( new KMime::Message );
   initFromMessage( item, receipt, msg );
   receipt->to()->fromUnicodeString( receiptTo, "utf-8" );
   receipt->subject()->fromUnicodeString( i18n("Receipt: ") + msg->subject()->asUnicodeString(), "utf-8");
@@ -981,12 +978,12 @@ KMime::Message* createDeliveryReceipt( const Akonadi::Item & item, KMime::Messag
   return receipt;
 }
 
-KMime::Message* createMDN( const Akonadi::Item & item,
-                           KMime::Message *msg,
-                           KMime::MDN::ActionMode a,
-                           KMime::MDN::DispositionType d,
-                           bool allowGUI,
-                           QList<KMime::MDN::DispositionModifier> m )
+KMime::Message::Ptr createMDN( const Akonadi::Item & item,
+                               const KMime::Message::Ptr &msg,
+                               KMime::MDN::ActionMode a,
+                               KMime::MDN::DispositionType d,
+                               bool allowGUI,
+                               QList<KMime::MDN::DispositionModifier> m )
 {
   // RFC 2298: At most one MDN may be issued on behalf of each
   // particular recipient by their user agent.  That is, once an MDN
@@ -995,24 +992,24 @@ KMime::Message* createMDN( const Akonadi::Item & item,
   // is performed on the message.
 //#define MDN_DEBUG 1
 #ifndef MDN_DEBUG
-  if ( MessageInfo::instance()->mdnSentState( msg ) != KMMsgMDNStateUnknown &&
-       MessageInfo::instance()->mdnSentState( msg ) != KMMsgMDNNone )
-    return 0;
+  if ( MessageInfo::instance()->mdnSentState( msg.get() ) != KMMsgMDNStateUnknown &&
+       MessageInfo::instance()->mdnSentState( msg.get() ) != KMMsgMDNNone )
+    return KMime::Message::Ptr();
 #else
   char st[2]; st[0] = (char)MessageInfo::instance()->mdnSentState( msg ); st[1] = 0;
   kDebug() << "mdnSentState() == '" << st <<"'";
 #endif
 
   // RFC 2298: An MDN MUST NOT be generated in response to an MDN.
-  if ( MessageViewer::ObjectTreeParser::findType( msg, "message",
+  if ( MessageViewer::ObjectTreeParser::findType( msg.get(), "message",
                        "disposition-notification", true, true ) ) {
-    MessageInfo::instance()->setMDNSentState( msg, KMMsgMDNIgnore );
-    return 0;
+    MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
+    return KMime::Message::Ptr();
   }
 
   // extract where to send to:
   QString receiptTo = msg->headerByType("Disposition-Notification-To") ? msg->headerByType("Disposition-Notification-To")->asUnicodeString() : "";
-  if ( receiptTo.trimmed().isEmpty() ) return 0;
+  if ( receiptTo.trimmed().isEmpty() ) return KMime::Message::Ptr();
   receiptTo.remove( '\n' );
 
 
@@ -1024,11 +1021,11 @@ KMime::Message* createMDN( const Akonadi::Item & item,
   int mode = mdnConfig.readEntry( "default-policy", 0 );
   if ( !mode || mode < 0 || mode > 3 ) {
     // early out for ignore:
-    MessageInfo::instance()->setMDNSentState( msg, KMMsgMDNIgnore );
-    return 0;
+    MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
+    return KMime::Message::Ptr();
   }
   if ( mode == 1 /* ask */ && !allowGUI )
-    return 0; // don't setMDNSentState here!
+    return KMime::Message::Ptr(); // don't setMDNSentState here!
 
   // RFC 2298: An importance of "required" indicates that
   // interpretation of the parameter is necessary for proper
@@ -1041,7 +1038,7 @@ KMime::Message* createMDN( const Akonadi::Item & item,
     // ### hacky; should parse...
     // There is a required option that we don't understand. We need to
     // ask the user what we should do:
-    if ( !allowGUI ) return 0; // don't setMDNSentState here!
+    if ( !allowGUI ) return KMime::Message::Ptr(); // don't setMDNSentState here!
     mode = requestAdviceOnMDN( "mdnUnknownOption" );
     s = KMime::MDN::SentManually;
 
@@ -1057,7 +1054,7 @@ KMime::Message* createMDN( const Akonadi::Item & item,
   kDebug() << "KPIMUtils::splitAddressList(receiptTo):" // krazy:exclude=kdebug
            << KPIMUtils::splitAddressList(receiptTo).join("\n");
   if ( KPIMUtils::splitAddressList(receiptTo).count() > 1 ) {
-    if ( !allowGUI ) return 0; // don't setMDNSentState here!
+    if ( !allowGUI ) return KMime::Message::Ptr(); // don't setMDNSentState here!
     mode = requestAdviceOnMDN( "mdnMultipleAddressesInReceiptTo" );
     s = KMime::MDN::SentManually;
   }
@@ -1072,7 +1069,7 @@ KMime::Message* createMDN( const Akonadi::Item & item,
     : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
   kDebug() << "clean return path:" << returnPath;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, Qt::CaseSensitive ) ) {
-    if ( !allowGUI ) return 0; // don't setMDNSentState here!
+    if ( !allowGUI ) return KMime::Message::Ptr(); // don't setMDNSentState here!
     mode = requestAdviceOnMDN( returnPath.isEmpty() ?
                                "mdnReturnPathEmpty" :
                                "mdnReturnPathNotInReceiptTo" );
@@ -1088,8 +1085,8 @@ KMime::Message* createMDN( const Akonadi::Item & item,
 
     switch ( mode ) {
       case 0: // ignore:
-        MessageInfo::instance()->setMDNSentState( msg, KMMsgMDNIgnore );
-        return 0;
+        MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
+        return KMime::Message::Ptr();
       default:
       case 1:
         kFatal() << "The \"ask\" mode should never appear here!";
@@ -1112,7 +1109,7 @@ KMime::Message* createMDN( const Akonadi::Item & item,
   // Generate message:
   //
 
-  KMime::Message * receipt = new KMime::Message();
+  KMime::Message::Ptr receipt( new KMime::Message() );
   initFromMessage( item, receipt, msg);
   receipt->contentType()->from7BitString( "multipart/report" );
   receipt->removeHeader("Content-Transfer-Encoding");
@@ -1123,13 +1120,13 @@ KMime::Message* createMDN( const Akonadi::Item & item,
   QString description = replaceHeadersInString( msg, KMime::MDN::descriptionFor( d, m ) );
 
   // text/plain part:
-  KMime::Content* firstMsgPart = new KMime::Content( msg );
+  KMime::Content* firstMsgPart = new KMime::Content( msg.get() );
   firstMsgPart->contentType()->setMimeType( "text/plain" );
   firstMsgPart->setBody( description.toUtf8() );
   receipt->addContent( firstMsgPart );
 
   // message/disposition-notification part:
-  KMime::Content* secondMsgPart = new KMime::Content( msg );
+  KMime::Content* secondMsgPart = new KMime::Content( msg.get() );
   secondMsgPart->contentType()->setMimeType( "message/disposition-notification" );
   //secondMsgPart.setCharset( "us-ascii" );
   //secondMsgPart.setCteStr( "7bit" );
@@ -1145,7 +1142,7 @@ KMime::Message* createMDN( const Akonadi::Item & item,
   if ( num < 0 || num > 2 ) num = 0;
   /* 0=> Nothing, 1=>Full Message, 2=>HeadersOnly*/
 
-  KMime::Content* thirdMsgPart = new KMime::Content( msg );
+  KMime::Content* thirdMsgPart = new KMime::Content( msg.get() );
   switch ( num ) {
   case 1:
     thirdMsgPart->contentType()->setMimeType( "message/rfc822" );
@@ -1164,7 +1161,7 @@ KMime::Message* createMDN( const Akonadi::Item & item,
 
   receipt->to()->fromUnicodeString( receiptTo, "utf-8" );
   receipt->subject()->from7BitString( "Message Disposition Notification" );
-  KMime::Headers::Generic *header = new KMime::Headers::Generic( "In-Reply-To", receipt, msg->messageID()->as7BitString() );
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "In-Reply-To", receipt.get(), msg->messageID()->as7BitString() );
   receipt->setHeader( header );
 
   receipt->references()->from7BitString( getRefStr( msg ) );
@@ -1185,14 +1182,14 @@ KMime::Message* createMDN( const Akonadi::Item & item,
   case KMime::MDN::Denied:      state = KMMsgMDNDenied;     break;
   case KMime::MDN::Failed:      state = KMMsgMDNFailed;     break;
   };
-  MessageInfo::instance()->setMDNSentState( msg, state );
+  MessageInfo::instance()->setMDNSentState( msg.get(), state );
 
   receipt->assemble();
   return receipt;
 }
 
 
-void setAutomaticFields(KMime::Message *msg, bool aIsMulti)
+void setAutomaticFields(const KMime::Message::Ptr &msg, bool aIsMulti)
 {
 //TODO review and port  header.MimeVersion().FromString("1.0");
 
@@ -1205,25 +1202,25 @@ void setAutomaticFields(KMime::Message *msg, bool aIsMulti)
   }
 }
 
-QByteArray asSendableString( KMime::Message *msg )
+QByteArray asSendableString( const KMime::Message::Ptr &msg )
 {
   KMime::Message message;
   message.setContent( msg->encodedContent() );
-  removePrivateHeaderFields( &message );
+  removePrivateHeaderFields( KMime::Message::Ptr( &message ) );
   message.removeHeader("Bcc");
   return message.encodedContent();
 }
 
-QByteArray headerAsSendableString( KMime::Message *msg )
+QByteArray headerAsSendableString( const KMime::Message::Ptr &msg )
 {
   KMime::Message message;
   message.setContent( msg->encodedContent() );
-  removePrivateHeaderFields( &message );
+  removePrivateHeaderFields( KMime::Message::Ptr( &message ) );
   message.removeHeader("Bcc");
   return message.head();
 }
 
-void removePrivateHeaderFields( KMime::Message *msg ) {
+void removePrivateHeaderFields( const KMime::Message::Ptr &msg ) {
   msg->removeHeader("Status");
   msg->removeHeader("X-Status");
   msg->removeHeader("X-KMail-EncryptionState");
@@ -1238,7 +1235,7 @@ void removePrivateHeaderFields( KMime::Message *msg ) {
   msg->removeHeader( "X-KMail-QuotePrefix" );
 }
 
-QByteArray getRefStr( KMime::Message *msg )
+QByteArray getRefStr( const KMime::Message::Ptr &msg )
 {
   QByteArray firstRef, lastRef, refStr, retRefStr;
   int i, j;
@@ -1266,7 +1263,7 @@ QByteArray getRefStr( KMime::Message *msg )
 }
 
 
-QString msgId(KMime::Message *msg)
+QString msgId( const KMime::Message::Ptr &msg )
 {
   if ( !msg->headerByType("Message-Id") )
     return QString();
@@ -1283,17 +1280,17 @@ QString msgId(KMime::Message *msg)
   return msgId;
 }
 
-QString ccStrip( KMime::Message* msg )
+QString ccStrip( const KMime::Message::Ptr &msg )
 {
   return MessageViewer::StringUtil::stripEmailAddr( msg->cc()->asUnicodeString() );
 }
 
-QString toStrip( KMime::Message* msg )
+QString toStrip( const KMime::Message::Ptr &msg )
 {
   return MessageViewer::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() );
 }
 
-QString fromStrip( KMime::Message* msg )
+QString fromStrip( const KMime::Message::Ptr &msg )
 {
   return MessageViewer::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() );
 }

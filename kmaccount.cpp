@@ -211,7 +211,7 @@ void KMAccount::writeConfig(KConfigGroup& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::sendReceipt(KMime::Message* aMsg)
+void KMAccount::sendReceipt( const KMime::Message::Ptr &aMsg )
 {
   bool sendReceipts;
 
@@ -221,7 +221,7 @@ void KMAccount::sendReceipt(KMime::Message* aMsg)
   if (!sendReceipts) return;
 
   kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
-  KMime::Message *newMsg = KMail::MessageHelper::createDeliveryReceipt( Akonadi::Item(), aMsg );
+  KMime::Message::Ptr newMsg = KMail::MessageHelper::createDeliveryReceipt( Akonadi::Item(), aMsg );
   if (newMsg) {
     mReceipts.append(newMsg);
     QTimer::singleShot( 0, this, SLOT( sendReceipts() ) );
@@ -230,7 +230,7 @@ void KMAccount::sendReceipt(KMime::Message* aMsg)
 
 
 //-----------------------------------------------------------------------------
-bool KMAccount::processNewMsg(KMime::Message* aMsg)
+bool KMAccount::processNewMsg( const KMime::Message::Ptr &aMsg )
 {
   int rc, processResult;
 
@@ -271,7 +271,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 */
   // 0==message moved; 1==processing ok, no move; 2==critical error, abort!
 
-  processResult = kmkernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound,true,id());
+  processResult = kmkernel->filterMgr()->process( aMsg, KMFilterMgr::Inbound, true, id() );
   if (processResult == 2) {
     kError() << "Critical error: Unable to collect mail (out of space?)";
     KMessageBox::information(0,(i18n("Critical error: "
@@ -353,7 +353,7 @@ void KMAccount::deleteFolderJobs()
 }
 
 //----------------------------------------------------------------------------
-void KMAccount::ignoreJobsForMessage( KMime::Message* msg )
+void KMAccount::ignoreJobsForMessage( const KMime::Message::Ptr &msg )
 {
 #if 0 //TODO port to akonadi
   //FIXME: remove, make folders handle those
@@ -474,7 +474,7 @@ void KMAccount::mailCheck()
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipts()
 {
-  QList<KMime::Message*>::Iterator it;
+  QList<KMime::Message::Ptr>::Iterator it;
   for(it = mReceipts.begin(); it != mReceipts.end(); ++it)
     kmkernel->msgSender()->send(*it); //might process events
   mReceipts.clear();

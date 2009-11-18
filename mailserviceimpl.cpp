@@ -58,7 +58,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
     return false;
 
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   MessageHelper::initHeader( msg );
 
   msg->contentType()->setCharset( "utf-8" );
@@ -91,7 +91,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
     return false;
 
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
   MessageHelper::initHeader( msg );
 
   msg->contentType()->setCharset( "utf-8" );

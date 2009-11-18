@@ -155,13 +155,13 @@ using KMail::TemplateParser;
 
 using namespace KMail;
 
-KMail::Composer *KMail::makeComposer( KMime::Message *msg, Composer::TemplateContext context,
+KMail::Composer *KMail::makeComposer( const KMime::Message::Ptr &msg, Composer::TemplateContext context,
                                       uint identity, const QString & textSelection,
                                       const QString & customTemplate ) {
   return KMComposeWin::create( msg, context, identity, textSelection, customTemplate );
 }
 
-KMail::Composer *KMComposeWin::create( KMime::Message *msg, Composer::TemplateContext context,
+KMail::Composer *KMComposeWin::create( const KMime::Message::Ptr &msg, Composer::TemplateContext context,
                                        uint identity, const QString & textSelection,
                                        const QString & customTemplate ) {
   return new KMComposeWin( msg, context, identity, textSelection, customTemplate );
@@ -170,12 +170,11 @@ KMail::Composer *KMComposeWin::create( KMime::Message *msg, Composer::TemplateCo
 int KMComposeWin::s_composerNumber = 0;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( KMime::Message *aMsg, Composer::TemplateContext context, uint id,
+KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateContext context, uint id,
                             const QString & textSelection, const QString & customTemplate )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
     //mAtmModified( false ),
-    mMsg( 0 ),
     mTextSelection( textSelection ),
     mCustomTemplate( customTemplate ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
@@ -1032,9 +1031,9 @@ void KMComposeWin::applyTemplate( uint uoid )
                          GlobalSettings::self()->automaticDecrypt(), mTextSelection.isEmpty() );
   if ( mode == TemplateParser::NewMessage ) {
     if ( !mCustomTemplate.isEmpty() )
-      parser.process( mCustomTemplate, 0 );
+      parser.process( mCustomTemplate, KMime::Message::Ptr() );
     else
-      parser.processWithIdentity( uoid, 0 );
+      parser.processWithIdentity( uoid, KMime::Message::Ptr() );
   } else {
 #if 0
     // apply template to all original messages for non-New messages
@@ -1541,7 +1540,7 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
+void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
 //  kDebug() << "implement me!!!";
@@ -1619,7 +1618,7 @@ void KMComposeWin::setMsg( KMime::Message *newMsg, bool mayAutoSign,
       for ( int i = numNL; i > 0; --i ) {
         xface.insert( i * 70, "\n\t" );
       }
-      mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg, xface.toUtf8(), "utf-8" ) );
+      mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg.get(), xface.toUtf8(), "utf-8" ) );
     }
   }
 
@@ -3057,7 +3056,7 @@ void KMComposeWin::slotClose()
 void KMComposeWin::slotNewComposer()
 {
   KMComposeWin *win;
-  KMime::Message *msg = new KMime::Message;
+  KMime::Message::Ptr msg( new KMime::Message );
 
   MessageHelper::initHeader( msg );
   win = new KMComposeWin( msg );
@@ -3337,7 +3336,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   KCursorSaver busy( KBusyPtr::busy() );
 
   mMsg->date()->setDateTime( KDateTime::currentLocalDateTime() );
-  mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg, mTransport->currentText(), "utf-8" ) );
+  mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), mTransport->currentText(), "utf-8" ) );
 
   const bool neverEncrypt = ( GlobalSettings::self()->neverEncryptDrafts() ) ||
     mSigningAndEncryptionExplicitlyDisabled;
@@ -3347,11 +3346,11 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   if ( mEditor->quotePrefixName().isEmpty() )
     mMsg->removeHeader( "X-KMail-QuotePrefix" );
   else
-    mMsg->setHeader( new KMime::Headers::Generic("X-KMail-QuotePrefix", mMsg, mEditor->quotePrefixName(), "utf-8" ) );
+    mMsg->setHeader( new KMime::Headers::Generic("X-KMail-QuotePrefix", mMsg.get(), mEditor->quotePrefixName(), "utf-8" ) );
 
   if ( mEditor->isFormattingUsed() ) {
     kDebug() << "Html mode";
-    mMsg->setHeader( new KMime::Headers::Generic("X-KMail-Markup", mMsg, "true", "utf-8" ) );
+    mMsg->setHeader( new KMime::Headers::Generic("X-KMail-Markup", mMsg.get(), "true", "utf-8" ) );
   } else {
     mMsg->removeHeader( "X-KMail-Markup" );
     kDebug() << "Plain text";
@@ -3389,9 +3388,9 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   if ( neverEncrypt && saveIn != KMComposeWin::None ) {
       // we can't use the state of the mail itself, to remember the
       // signing and encryption state, so let's add a header instead
-    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-SignatureActionEnabled", mMsg, mSignAction->isChecked()? "true":"false", "utf-8" ) );
-    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-EncryptActionEnabled", mMsg, mEncryptAction->isChecked()? "true":"false", "utf-8" ) );
-    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-CryptoMessageFormat", mMsg, QString::number( cryptoMessageFormat() ), "utf-8" ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-SignatureActionEnabled", mMsg.get(), mSignAction->isChecked()? "true":"false", "utf-8" ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-EncryptActionEnabled", mMsg.get(), mEncryptAction->isChecked()? "true":"false", "utf-8" ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-CryptoMessageFormat", mMsg.get(), QString::number( cryptoMessageFormat() ), "utf-8" ) );
   } else {
     mMsg->removeHeader( "X-KMail-SignatureActionEnabled" );
     mMsg->removeHeader( "X-KMail-EncryptActionEnabled" );
@@ -3755,7 +3754,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( ident.organization().isEmpty() ) {
     mMsg->organization()->clear();
   } else {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Organization", mMsg, ident.organization(), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Organization", mMsg.get(), ident.organization(), "utf-8" );
     mMsg->setHeader( header );
   }
   if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
@@ -3767,7 +3766,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
       for ( int i = numNL; i > 0; --i ) {
         xface.insert( i*70, "\n\t" );
       }
-      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-Face", mMsg, xface, "utf-8" );
+      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-Face", mMsg.get(), xface, "utf-8" );
       mMsg->setHeader( header );
     }
   }
@@ -3783,7 +3782,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
                                TransportManager::self()->defaultTransportId() );
     }
     else {
-      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", mMsg, transportName, "utf-8" );
+      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), transportName, "utf-8" );
       mMsg->setHeader( header );
       mTransport->setCurrentTransport( transport->id() );
     }

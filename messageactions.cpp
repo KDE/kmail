@@ -253,7 +253,7 @@ void MessageActions::updateActions()
     mToggleFlagAction->setChecked( status.isImportant() );
 
     MailingList mailList;
-    mailList = MailingList::detect( &*KMail::Util::message( mCurrentItem ) );
+    mailList = MailingList::detect( KMail::Util::message( mCurrentItem ) );
 
     if ( mailList.features() & ~MailingList::Id ) {
       // A mailing list menu with only a title is pretty boring

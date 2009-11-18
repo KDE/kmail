@@ -90,7 +90,7 @@ void KMFilterMgr::writeConfig(bool withSync)
   if ( withSync ) group.sync();
 }
 
-int KMFilterMgr::processPop( KMime::Message * msg ) const {
+int KMFilterMgr::processPop( const KMime::Message::Ptr & msg ) const {
 #if 0 //TODO port to akonadi
   for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
         it != mFilters.end() ; ++it )
@@ -114,7 +114,7 @@ bool KMFilterMgr::beginFiltering(KMime::Content *msgBase) const
   return true;
 }
 
-int KMFilterMgr::moveMessage(KMime::Message *msg) const
+int KMFilterMgr::moveMessage( const KMime::Message::Ptr &msg) const
 {
 #if 0 //TODO port to akonadi
   if (MessageProperty::filterFolder(msg)->moveMsg( msg ) == 0) {
@@ -151,7 +151,7 @@ void KMFilterMgr::endFiltering(KMime::Content *msgBase) const
   MessageProperty::setFiltering( msgBase, false );
 }
 
-int KMFilterMgr::process( KMime::Message * msg, const KMFilter * filter ) {
+int KMFilterMgr::process( const KMime::Message::Ptr & msg, const KMFilter * filter ) {
   int result = 1;
 #if 0 //TODO port to akonadi
  bool stopIt = false;
@@ -238,7 +238,7 @@ int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
   return result;
 }
 
-int KMFilterMgr::process( KMime::Message * msg, FilterSet set,
+int KMFilterMgr::process( const KMime::Message::Ptr &msg, FilterSet set,
                           bool account, uint accountId ) {
   if ( bPopFilter )
     return processPop( msg );
@@ -251,7 +251,7 @@ int KMFilterMgr::process( KMime::Message * msg, FilterSet set,
   bool stopIt = false;
   bool atLeastOneRuleMatched = false;
 
-  if (!beginFiltering( msg ))
+  if ( !beginFiltering( msg.get() ) )
     return 1;
 #if 0 //TODO port to akonadi
   for ( QList<KMFilter*>::const_iterator it = mFilters.constBegin();
@@ -294,7 +294,7 @@ int KMFilterMgr::process( KMime::Message * msg, FilterSet set,
   return 1;
 }
 
-bool KMFilterMgr::isMatching( KMime::Message * msg, const KMFilter * filter )
+bool KMFilterMgr::isMatching( const KMime::Message::Ptr & msg, const KMFilter * filter )
 {
   bool result = false;
   if ( FilterLog::instance()->isLogging() ) {

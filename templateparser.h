@@ -23,10 +23,9 @@
 
 #include <qobject.h>
 #include <akonadi/collection.h>
-namespace KMime {
-  class Message;
-  class Content;
-}
+
+#include <kmime/kmime_message.h>
+#include <boost/shared_ptr.hpp>
 
 namespace MessageViewer {
   class ObjectTreeParser;
@@ -50,15 +49,17 @@ class TemplateParser : public QObject
     };
 
   public:
-    TemplateParser( KMime::Message *amsg, const Mode amode, const QString &aselection,
+    TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode, const QString &aselection,
                     bool aSmartQuote, bool aallowDecryption,
                     bool aselectionIsBody );
     ~TemplateParser();
 
-  virtual void process( KMime::Message *aorig_msg, const Akonadi::Collection& afolder = Akonadi::Collection(), bool append = false );
-    virtual void process( const QString &tmplName, KMime::Message *aorig_msg,
-                         const Akonadi::Collection& afolder = Akonadi::Collection() , bool append = false );
-    virtual void processWithIdentity( uint uoid, KMime::Message *aorig_msg,const Akonadi::Collection& afolder = Akonadi::Collection(),
+    virtual void process( const KMime::Message::Ptr &aorig_msg,
+                          const Akonadi::Collection& afolder = Akonadi::Collection(),
+                          bool append = false );
+    virtual void process( const QString &tmplName, const KMime::Message::Ptr &aorig_msg,
+                         const Akonadi::Collection& afolder = Akonadi::Collection(), bool append = false );
+    virtual void processWithIdentity( uint uoid, const KMime::Message::Ptr &aorig_msg,const Akonadi::Collection& afolder = Akonadi::Collection(),
                           bool append = false );
     virtual void processWithTemplate( const QString &tmpl );
 
@@ -80,10 +81,10 @@ class TemplateParser : public QObject
 
   protected:
     Mode mMode;
-  Akonadi::Collection mFolder;
+    Akonadi::Collection mFolder;
     uint mIdentity;
-    KMime::Message *mMsg;
-    KMime::Message *mOrigMsg;
+    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mOrigMsg;
     QString mSelection;
     bool mSmartQuote;
     bool mAllowDecryption;
@@ -135,9 +136,9 @@ class TemplateParser : public QObject
     THIS FUNCTION WILL BE REPLACED ONCE KMime IS FULLY INTEGRATED
     (khz, June 05 2002)*/ //TODO Review if we can get rid of it
     void parseTextStringFromContent( KMime::Content * root,
-                                           QByteArray& parsedString,
-                                           const QTextCodec*& codec,
-                                           bool& isHTML ) const;
+                                     QByteArray& parsedString,
+                                     const QTextCodec*& codec,
+                                     bool& isHTML ) const;
 
     /**
       * Returns message body indented by the
@@ -149,15 +150,15 @@ class TemplateParser : public QObject
       * smart quoting is turned on. Signed or encrypted texts
       * get converted to plain text when allowDecryption is true.
     */
-    QString asQuotedString( KMime::Message* msg,
-            const QString & indentStr,
-            const QString & selection=QString(),
-            bool aStripSignature=true,
-            bool allowDecryption=true);
+    QString asQuotedString( const KMime::Message::Ptr &msg,
+                            const QString &indentStr,
+                            const QString & election=QString(),
+                            bool aStripSignature=true,
+                            bool allowDecryption=true);
 
     /** Return the textual content of the message as plain text,
         converting HTML to plain text if necessary. */
-    QString asPlainText(  KMime::Message* msg, bool stripSignature, bool allowDecryption );
+    QString asPlainText( const KMime::Message::Ptr &msg, bool stripSignature, bool allowDecryption );
 
     /**
     * Same as asPlainText(), only that this method expects an already parsed object tree as
@@ -165,8 +166,9 @@ class TemplateParser : public QObject
     * By passing an already parsed objecttree, this allows to share the objecttree and therefore
     * reduce the amount of parsing (which can include decrypting, which can include a passphrase dialog)
     */
-    QString asPlainTextFromObjectTree( KMime::Message* msg, KMime::Content *root, MessageViewer::ObjectTreeParser *otp, bool stripSignature,
-                                      bool allowDecryption );
+    QString asPlainTextFromObjectTree( const KMime::Message::Ptr &msg, KMime::Content *root,
+                                       MessageViewer::ObjectTreeParser *otp, bool stripSignature,
+                                       bool allowDecryption );
 
 };
 

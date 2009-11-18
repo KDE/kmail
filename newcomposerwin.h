@@ -141,13 +141,13 @@ class KMComposeWin : public KMail::Composer
   friend class ::KMComposerEditor;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposeWin( KMime::Message *msg = 0, TemplateContext context = NoTemplate,
+    explicit KMComposeWin( const KMime::Message::Ptr &msg = KMime::Message::Ptr(), TemplateContext context = NoTemplate,
                            uint identity = 0, const QString & textSelection = QString(),
                            const QString & customTemplate = QString() );
     ~KMComposeWin();
 
   public:
-    static Composer *create( KMime::Message *msg = 0, TemplateContext context = NoTemplate,
+    static Composer *create( const KMime::Message::Ptr &msg = KMime::Message::Ptr(), TemplateContext context = NoTemplate,
                              uint identity = 0, const QString & textSelection = QString(),
                              const QString & customTemplate = QString() );
 
@@ -198,7 +198,7 @@ class KMComposeWin : public KMail::Composer
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-     void setMsg( KMime::Message *newMsg, bool mayAutoSign=true,
+    void setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign=true,
                  bool allowDecryption=false, bool isModified=false );
 
      /**
@@ -237,7 +237,7 @@ class KMComposeWin : public KMail::Composer
      * Returns message of the composer. To apply the user changes to the
      * message, call applyChanges() first.
      */
-     KMime::Message *msg() const { return mMsg; }
+    KMime::Message::Ptr msg() const { return mMsg; }
 
   public: // kmkernel
     /**
@@ -703,7 +703,7 @@ class KMComposeWin : public KMail::Composer
     QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
     bool mDone;
 
-    KMime::Message* mMsg;
+    KMime::Message::Ptr mMsg;
     KMComposerEditor *mEditor;
     QGridLayout *mGrid;
     QString mTextSelection;

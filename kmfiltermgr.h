@@ -61,9 +61,9 @@ public:
       rule with "field equals value" */
   void createFilter( const QByteArray & field, const QString & value );
 
-  bool beginFiltering(KMime::Content *msgBase) const;
-  int moveMessage(KMime::Message *msg) const;
-  void endFiltering(KMime::Content *msgBase) const;
+  bool beginFiltering( KMime::Content *msgBase ) const;
+  int moveMessage( const KMime::Message::Ptr &msg ) const;
+  void endFiltering( KMime::Content *msgBase ) const;
 
   /**
    * Returns whether at least one filter applies to this account,
@@ -115,14 +115,14 @@ public:
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  int process( KMime::Message * msg, FilterSet aSet = Inbound,
+  int process( const KMime::Message::Ptr &msg, FilterSet aSet = Inbound,
 	       bool account = false, uint accountId = 0 );
 
   /** For ad-hoc filters. Applies @p filter to @p msg. Return codes
       are as with the above method.
       @deprecated Use int process( quint32, const KMFilter * )
   */
-  int process( KMime::Message * msg, const KMFilter * filter );
+  int process( const KMime::Message::Ptr &msg, const KMFilter * filter );
 
   /** For ad-hoc filters. Applies @p filter to message with @p serNum .
       Return codes are as with the above method. */
@@ -184,9 +184,9 @@ signals:
   void filterListUpdated();
 
 private:
-  int processPop( KMime::Message * msg ) const;
+  int processPop( const KMime::Message::Ptr &msg ) const;
   /** Find out if a message matches the filter criteria */
-  bool isMatching( KMime::Message * msg, const KMFilter * filter );
+  bool isMatching( const KMime::Message::Ptr &msg, const KMFilter * filter );
   bool isMatching( quint32 serNum, const KMFilter * filter );
 
   QPointer<KMFilterDlg> mEditDialog;

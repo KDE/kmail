@@ -31,12 +31,12 @@
 #ifndef MAILMANAGERIMPL_H
 #define MAILMANAGERIMPL_H
 
-namespace KMime {
-  class Message;
-}
-class QString;
 #include <QObject>
 #include <QtDBus/QtDBus>
+
+#include <kmime/kmime_message.h>
+
+class QString;
 
 namespace KMail {
 
@@ -48,7 +48,7 @@ namespace KMail {
     Q_OBJECT
   private:
     QList< QDBusObjectPath > registrars;
-    void processMsgBase ( KMime::Message *msg, QStringList &subjects,
+    void processMsgBase ( const KMime::Message::Ptr &msg, QStringList &subjects,
                           QVector<QStringList> &predicatesArray,
                           QVector<QStringList> &valuesArray );
 

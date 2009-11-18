@@ -28,12 +28,11 @@
 #include <QStringList>
 #include <akonadi/collection.h>
 
+#include  <kmime/kmime_message.h>
+
 class KTemporaryFile;
 class KMFolder;
-namespace KMime {
-  class Message;
-  class Content;
-}
+
 
 class QWidget;
 
@@ -93,12 +92,12 @@ public:
       is required, @p GoOn if the message shall be processed by
       further filters and @p Ok otherwise.
   */
-  virtual ReturnCode process(KMime::Message* msg) const = 0;
+  virtual ReturnCode process( const KMime::Message::Ptr &msg) const = 0;
 
   /** Execute an action on given message asynchronously.
       Emits a result signal on completion.
   */
-  virtual void processAsync(KMime::Message* msg) const;
+  virtual void processAsync( const KMime::Message::Ptr &msg ) const;
 
   /** Determines if the action depends on the body of the message
   */
@@ -150,7 +149,7 @@ public:
   static int tempOpenFolder(KMFolder* aFolder);
 
   /** Automates the sending of MDNs from filter actions. */
-  static void sendMDN( KMime::Message * msg, KMime::MDN::DispositionType d,
+  static void sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::DispositionType d,
 		       const QList<KMime::MDN::DispositionModifier> & m
 		       = QList<KMime::MDN::DispositionModifier>() );
 
@@ -586,9 +585,9 @@ public:
       supported, where n in an integer >= 0. %n gets substituted for
       the name of a tempfile holding the n'th message part, with n=0
       meaning the body of the message. */
-  virtual QString substituteCommandLineArgsFor( KMime::Message *aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
+  virtual QString substituteCommandLineArgsFor( const KMime::Message::Ptr &aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
 
-  virtual ReturnCode genericProcess( KMime::Message * aMsg, bool filtering ) const;
+  virtual ReturnCode genericProcess( const KMime::Message::Ptr &aMsg, bool filtering ) const;
 };
 
 
