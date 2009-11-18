@@ -261,6 +261,7 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool _writeConf
 
   if (_writeConfig)
     writeConfig();
+  //TODO fixme !!!
   emit viewConfigChanged();
 }
 

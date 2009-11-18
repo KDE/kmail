@@ -273,6 +273,8 @@ public slots:
   void slotTouchMessage();
   void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
   void slotCopyUrl( const KUrl& );
+  void slotRequestConfigSync();
+
 protected:
 
   KUrl urlClicked() const;
