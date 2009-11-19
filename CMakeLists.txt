@@ -127,7 +127,6 @@ set(kmailprivate_LIB_SRCS
    kmreadermainwin.cpp
    kmstartup.cpp
    kmmainwidget.cpp
-   #kmfolderindex.cpp
    folderjob.cpp
    aboutdata.cpp
    mailserviceimpl.cpp
