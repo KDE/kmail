@@ -60,31 +60,16 @@ bool CollectionQuotaPage::canHandle( const Akonadi::Collection &collection ) con
 void CollectionQuotaPage::init()
 {
   QVBoxLayout* topLayout = new QVBoxLayout( this );
-  // We need a widget stack to show either a label ("no qutoa support", "please wait"...)
-  // or quota info
-  mStack = new QStackedWidget( this );
-  topLayout->addWidget( mStack );
-
-  mLabel = new QLabel( mStack );
-  mLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-  mLabel->setWordWrap( true );
-  mStack->addWidget( mLabel );
-
-  mQuotaWidget = new QuotaWidget( mStack );
-  mStack->addWidget( mQuotaWidget );
+  mQuotaWidget = new QuotaWidget(this);
+  topLayout->addWidget(mQuotaWidget);
 }
 
 void CollectionQuotaPage::load( const Akonadi::Collection & col )
 {
   if ( col.hasAttribute<Akonadi::CollectionQuotaAttribute>() ) {
-    mStack->setCurrentWidget( mQuotaWidget );
     qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue();
     qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue();
     mQuotaWidget->setQuotaInfo( currentValue, maximumValue );
-  }
-  else {
-    mLabel->setText( i18n( "This account does not have support for quota information." ) );
-    mStack->setCurrentWidget( mLabel );
   }
 }
 
@@ -93,142 +78,3 @@ void CollectionQuotaPage::save( Akonadi::Collection & )
   // nothing to do, we are read-only
 }
 
-
-#if 0
-void KMail::FolderDialogQuotaTab::initializeWithValuesFromFolder( KMFolder* folder )
-{
-  // This can be simplified once KMFolderImap and KMFolderCachedImap have a common base class
-  mFolderType = folder->folderType();
-  if ( mFolderType == KMFolderTypeImap ) {
-    KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
-    mImapAccount = folderImap->account();
-    mImapPath = folderImap->imapPath();
-  }
-  else if ( mFolderType == KMFolderTypeCachedImap ) {
-    KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
-    mImapAccount = folderImap->account();
-    mQuotaInfo = folderImap->quotaInfo();
-  }
-  else
-    assert( 0 ); // see KMFolderDialog constructor
-}
-
-void KMail::FolderDialogQuotaTab::load()
-{
-  if ( mDlg->folder() ) {
-    // existing folder
-    initializeWithValuesFromFolder( mDlg->folder() );
-  } else if ( mDlg->parentFolder() ) {
-    // new folder
-    initializeWithValuesFromFolder( mDlg->parentFolder() );
-  }
-
-  if ( mFolderType == KMFolderTypeCachedImap ) {
-    showQuotaWidget();
-    return;
-  }
-
-  assert( mFolderType == KMFolderTypeImap );
-
-  // Loading, for online IMAP, consists of two steps:
-  // 1) connect
-  // 2) get quota info
-
-  // First ensure we are connected
-  mStack->setCurrentWidget( mLabel );
-  if ( !mImapAccount ) { // hmmm?
-    mLabel->setText( i18n( "Error: no IMAP account defined for this folder" ) );
-    return;
-  }
-  KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
-  if ( folder && folder->storage() == mImapAccount->rootFolder() )
-    return; // nothing to be done for the (virtual) account folder
-  mLabel->setText( i18n( "Connecting to server %1, please wait...", mImapAccount->host() ) );
-  ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
-  if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
-    slotConnectionResult( -1, QString() );
-  } else if ( state == ImapAccountBase::Connecting ) {
-    connect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
-             this, SLOT( slotConnectionResult(int, const QString&) ) );
-  } else { // Connected
-    slotConnectionResult( 0, QString() );
-  }
-
-}
-
-void KMail::FolderDialogQuotaTab::slotConnectionResult( int errorCode, const QString& errorMsg )
-{
-  disconnect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
-              this, SLOT( slotConnectionResult(int, const QString&) ) );
-  if ( errorCode ) {
-    if ( errorCode == -1 )  // unspecified error
-      mLabel->setText( i18n( "Error connecting to server %1", mImapAccount->host() ) );
-    else
-      // Connection error (error message box already shown by the account)
-      mLabel->setText( KIO::buildErrorString( errorCode, errorMsg ) );
-    return;
-  }
-  connect( mImapAccount, SIGNAL( receivedStorageQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& ) ),
-          this, SLOT( slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& ) ) );
-  KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
-  mImapAccount->getStorageQuotaInfo( folder, mImapPath );
-}
-
-void KMail::FolderDialogQuotaTab::slotReceivedQuotaInfo( KMFolder* folder,
-                                                      KIO::Job* job,
-                                                      const KMail::QuotaInfo& info )
-{
-  if ( folder == mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) {
-    //KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
-
-    disconnect( mImapAccount, SIGNAL(receivedStorageQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )),
-                this, SLOT(slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )) );
-
-    if ( job && job->error() ) {
-      if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION )
-        mLabel->setText( i18n( "This account does not have support for quota information." ) );
-      else
-        mLabel->setText( i18n( "Error retrieving quota information from server\n%1", job->errorString() ) );
-    } else {
-      mQuotaInfo = info;
-    }
-    showQuotaWidget();
-  }
-}
-
-void KMail::FolderDialogQuotaTab::showQuotaWidget()
-{
-  if ( !mQuotaInfo.isValid() ) {
-    if ( !mImapAccount->hasQuotaSupport() ) {
-      mLabel->setText( i18n( "This account does not have support for quota information." ) );
-    }
-  } else {
-    if ( !mQuotaInfo.isEmpty() ) {
-      mStack->setCurrentWidget( mQuotaWidget );
-      mQuotaWidget->setQuotaInfo( mQuotaInfo );
-    } else {
-      mLabel->setText( i18n( "No quota is set for this folder." ) );
-    }
-  }
-}
-
-
-KMail::FolderDialogTab::AcceptStatus KMail::FolderDialogQuotaTab::accept()
-{
-  if ( mFolderType == KMFolderTypeCachedImap || mFolderType == KMFolderTypeImap )
-    return Accepted;
-  else
-    assert(0);
-  return Canceled;
-}
-
-bool KMail::FolderDialogQuotaTab::supports( KMFolder* refFolder )
-{
-  ImapAccountBase* imapAccount = 0;
-  if ( refFolder->folderType() == KMFolderTypeImap )
-    imapAccount = static_cast<KMFolderImap*>( refFolder->storage() )->account();
-  else if ( refFolder->folderType() == KMFolderTypeCachedImap )
-    imapAccount = static_cast<KMFolderCachedImap*>( refFolder->storage() )->account();
-  return imapAccount && imapAccount->hasQuotaSupport(); // support for Quotas (or not tried connecting yet)
-}
-#endif

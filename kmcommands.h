@@ -33,7 +33,6 @@ class FolderCollection;
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
-  class FolderJob;
 }
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }

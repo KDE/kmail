@@ -50,8 +50,6 @@
 using MessageViewer::HtmlWriter;
 #include "messageviewer/htmlstatusbar.h"
 #include "messagehelper.h"
-#include "folderjob.h"
-using KMail::FolderJob;
 
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
@@ -152,6 +150,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ), this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
   connect( mViewer, SIGNAL( copyUrl( const KUrl& ) ), this, SLOT( slotCopyUrl( const KUrl& ) ) );
   connect( mViewer, SIGNAL( requestConfigSync() ), this, SLOT( slotRequestConfigSync() ) );
+  connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ), this, SLOT( slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ) );
   vlay->addWidget( mViewer );
   readConfig();
 
@@ -748,6 +747,12 @@ void KMReaderWin::slotCopyUrl( const KUrl& url )
 void KMReaderWin::slotRequestConfigSync()
 {
   kmkernel->slotRequestConfigSync();
+}
+
+void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool htmlMail, const QString&filename, const QString&pname, const QString &encoding)
+{
+  KMReaderMainWin *win = new KMReaderMainWin(msgPart, htmlMail,filename, pname, encoding );
+  win->show();
 }
 
 #include "kmreaderwin.moc"

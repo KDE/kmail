@@ -35,7 +35,6 @@
 #include "kmfiltermgr.h"
 #include "kmkernel.h"
 #include "kmmainwin.h"
-#include "networkaccount.h"
 #include "folderrequester.h"
 #include "folderselectiontreeview.h"
 

@@ -384,22 +384,6 @@ public:
   bool contextMenuShown() const { return mContextMenuShown; }
 
   /**
-   * Returns true IFF the user has requested that the current mail checks
-   * should be aborted. Needs to be periodically polled.
-   */
-  bool mailCheckAborted() const;
-  /**  Set the state of the abort requested variable to false,
-   * i.e. enable mail checking again
-   */
-  void enableMailCheck();
-  /**
-   * Set the state of the abort requested variable to true,
-   * (to let the current jobs run, but stop when possible).
-   * This is used to cancel mail checks when closing the last mainwindow
-   */
-  void abortMailCheck();
-
-  /**
    * Called by the folder tree if the count of unread/total messages changed.
    */
   void messageCountChanged();
@@ -497,7 +481,6 @@ private:
   /** true unles kmail is closed by session management */
   bool closed_by_user;
   bool the_firstInstance;
-  bool mMailCheckAborted;
 
   KSharedConfig::Ptr mConfig;
   QTextCodec *netCodec;

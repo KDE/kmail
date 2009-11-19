@@ -89,7 +89,7 @@ using KMail::ActionScheduler;
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
 using KMail::ObjectTreeParser;
-using KMail::FolderJob;
+//using KMail::FolderJob;
 #include "chiasmuskeyselector.h"
 #include "messageviewer/mailsourceviewer.h"
 using namespace MessageViewer;
@@ -2999,6 +2999,7 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
   return KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return KService::Ptr();
 #endif
 }
 

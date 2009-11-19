@@ -45,6 +45,7 @@
 #include <kicon.h>
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
+#include <akonadi/changerecorder.h>
 #include "folderselectiontreeview.h"
 #include "foldertreeview.h"
 
@@ -122,13 +123,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   connect( mainWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
-#ifdef OLD_FOLDERVIEW
-
-  connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(FolderViewItem*)),
-           this, SLOT(slotIconChanged(FolderViewItem*)) );
-  connect( mainWidget->mainFolderView(), SIGNAL(nameChanged(FolderViewItem*)),
-           this, SLOT(slotNameChanged(FolderViewItem*)) );
-#endif
+  connect( kmkernel->monitor(), SIGNAL(collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)), this, SLOT(slotCollectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)));
   setXMLFile( "kmail_part.rc", true );
 #endif
 
@@ -140,8 +135,8 @@ KMailPart::~KMailPart()
   kDebug() << "Closing last KMMainWin: stopping mail check";
   // Running KIO jobs prevent kapp from exiting, so we need to kill them
   // if they are only about checking mail (not important stuff like moving messages)
-  kmkernel->abortMailCheck();
 #if 0
+  kmkernel->abortMailCheck();
   kmkernel->acctMgr()->cancelMailCheck();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
@@ -169,6 +164,12 @@ void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
       emit iconChanged( col.attribute<Akonadi::EntityDisplayAttribute>()->icon().pixmap( 22, 22 ) );
     }
   }
+}
+void KMailPart::slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames )
+{
+  if( !attributeNames.contains("ENTITYDISPLAY")) 
+     return;
+  slotFolderChanged(collection);
 }
 
 #ifdef OLD_FOLDERVIEW

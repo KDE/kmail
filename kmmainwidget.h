@@ -82,7 +82,6 @@ namespace KIO {
 namespace KMail {
   class Vacation;
   class SieveDebugDialog;
-  class FolderJob;
   class SearchWindow;
   class ImapAccountBase;
   class FavoriteFolderView;
@@ -637,7 +636,6 @@ private:
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
   QHash<Akonadi::Entity::Id,FolderShortcutCommand*> mFolderShortcutCommands;
-    QPointer<KMail::FolderJob> mJob;
 
     QList<MessageTagPtrPair> mMessageTagMenuActions;
     QList<QAction*> mMessageTagTBarActions;

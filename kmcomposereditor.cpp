@@ -221,11 +221,9 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     }
     serNumBuffer.close();
     uint identity = folder ? folder->identity() : 0;
-#ifdef OLD_COMMAND
     KMCommand *command = new KMForwardAttachedCommand( m_composerWin, messageList,
                                                        identity, m_composerWin );
     command->start();
-#endif
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif

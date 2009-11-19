@@ -67,11 +67,9 @@ class KMailPart: public KParts::ReadOnlyPart
     Q_SCRIPTABLE void save() { /*TODO*/ }
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
+    void slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames );
+
   void slotFolderChanged( const Akonadi::Collection& );
-#ifdef OLD_FOLDERVIEW
-    void slotIconChanged( FolderViewItem *fti );
-    void slotNameChanged( FolderViewItem *fti );
-#endif
   signals:
     void textChanged( const QString& );
     void iconChanged( const QPixmap& );

@@ -161,7 +161,7 @@ private:
   unsigned long nextMsgSerNum;
 
   /** The dictionary. */
-  KMDict *dict;
+  //KMDict *dict;
 };
 
 #endif /* __KMMSGDICT */

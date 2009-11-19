@@ -22,7 +22,6 @@
 
 // for large file support
 
-#include "kmfoldernode.h"
 #include "kmfoldertype.h"
 #include "kmglobal.h"
 #include "kmkernel.h"
@@ -70,7 +69,7 @@ typedef QList<quint32> SerNumList;
  *   specific folder.
  */
 
-class KMFolder: public KMFolderNode
+class KMFolder : public QObject/*: public KMFolderNode*/
 {
   Q_OBJECT
   friend class ::KMFolderJob;

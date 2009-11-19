@@ -268,7 +268,7 @@ void KMSystemTray::foldersChanged()
   {
     KMFolder * currentFolder = *it;
     QString currentName = *strIt;
-
+#if 0
     if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().toLower() == "inbox")) ||
          (currentFolder->folderType() == KMFolderTypeImap)) &&
          !currentFolder->ignoreNewMail() )
@@ -284,6 +284,7 @@ void KMSystemTray::foldersChanged()
       disconnect( currentFolder, SIGNAL( numUnreadMsgsChanged(KMFolder*) ),
                   this, SLOT( updateNewMessageNotification(KMFolder *) ) );
     }
+#endif
   }
 }
 
@@ -528,7 +529,7 @@ void KMSystemTray::updateNewMessages()
     }
     else {
       if ( unread == 0 ) {
-        kDebug() << "Removing folder from internal store" << fldr->name();
+        //kDebug() << "Removing folder from internal store" << fldr->name();
 
         // Remove the folder from the internal store
         mFoldersWithUnread.remove(fldr);

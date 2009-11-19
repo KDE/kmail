@@ -19,15 +19,6 @@ target_link_libraries(utiltests mimelib messageviewer
   kmailprivate
 )
 
-########### messagedicttests ###############
-set(messagedicttests_SRCS messagedicttests.cpp ../kmdict.cpp)
-kde4_add_unit_test(messagedicttests TESTNAME kmail-messagedicttests ${messagedicttests_SRCS})
-target_link_libraries(messagedicttests
-  ${QT_QTTEST_LIBRARY} 
-  ${QT_QTCORE_LIBRARY}
-  ${KDE4_KIO_LIBS}
-)
-
 ########### mimelibtests ###############
 
 set(mimelibtests_SRCS mimelibtests.cpp ../util.cpp)

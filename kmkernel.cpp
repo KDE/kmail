@@ -128,7 +128,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mSmartQuote = false;
   mWordWrap = false;
   mWrapCol = 80;
-  mMailCheckAborted = false;
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
   // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
@@ -2238,20 +2237,6 @@ Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString 
   return Akonadi::Collection();
 }
 
-void KMKernel::enableMailCheck()
-{
-  mMailCheckAborted = false;
-}
-
-bool KMKernel::mailCheckAborted() const
-{
-  return mMailCheckAborted;
-}
-
-void KMKernel::abortMailCheck()
-{
-  mMailCheckAborted = true;
-}
 
 bool KMKernel::canQueryClose()
 {

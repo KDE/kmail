@@ -100,9 +100,7 @@ set(kmailprivate_LIB_SRCS
    folderstorage.cpp
    actionscheduler.cpp
    messageproperty.cpp
-   kmdict.cpp
    kmsystemtray.cpp
-   kmfoldernode.cpp
    akonadisender.cpp
    kmfiltermgr.cpp
    filterimporterexporter.cpp
@@ -112,7 +110,6 @@ set(kmailprivate_LIB_SRCS
    kmfilter.cpp
    kmfilterdlg.cpp
    xfaceconfigurator.cpp
-   networkaccount.cpp
    kmfawidgets.cpp
    undostack.cpp
    kmkernel.cpp
@@ -160,7 +157,6 @@ set(kmailprivate_LIB_SRCS
    distributionlistdialog.cpp
    expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
-   #accountwizard.cpp
    textsource.cpp
    #managesievescriptsdialog.cpp
    chiasmuskeyselector.cpp

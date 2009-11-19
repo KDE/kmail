@@ -4,7 +4,6 @@
 #include "kmmsgdict.h"
 
 #include "kmfolder.h"
-#include "kmdict.h"
 #include "globalsettings.h"
 #include "folderstorage.h"
 
@@ -52,7 +51,7 @@
  * @short an entry in the global message dictionary consisting of a pointer
  * to a folder and the index of a message in the folder.
  */
-class KMMsgDictEntry : public KMDictItem
+class KMMsgDictEntry //: public KMDictItem
 {
 public:
   KMMsgDictEntry(const KMFolder *aFolder, int aIndex)
@@ -112,9 +111,11 @@ public:
 
   ulong getMsn(int index)
   {
+#if 0
     KMMsgDictEntry *entry = get(index);
     if (entry)
       return entry->key;
+#endif
     return 0;
   }
 
@@ -161,7 +162,7 @@ KMMsgDict::KMMsgDict()
   int lastSizeOfDict = GlobalSettings::self()->msgDictSizeHint();
   lastSizeOfDict = ( lastSizeOfDict * 11 ) / 10;
   GlobalSettings::self()->setMsgDictSizeHint( 0 );
-  dict = new KMDict( lastSizeOfDict );
+  //dict = new KMDict( lastSizeOfDict );
   nextMsgSerNum = 1;
 }
 
@@ -169,7 +170,7 @@ KMMsgDict::KMMsgDict()
 
 KMMsgDict::~KMMsgDict()
 {
-  delete dict;
+  //delete dict;
 }
 
 //-----------------------------------------------------------------------------
@@ -301,6 +302,7 @@ void KMMsgDict::replace(unsigned long msgSerNum,
 
 void KMMsgDict::remove(unsigned long msgSerNum)
 {
+#if 0
   long key = (long)msgSerNum;
   KMMsgDictEntry *entry = (KMMsgDictEntry *)dict->find(key);
   if (!entry)
@@ -313,6 +315,7 @@ void KMMsgDict::remove(unsigned long msgSerNum)
   }
 
   dict->remove((long)key);
+#endif
 }
 
 unsigned long KMMsgDict::remove(const KMime::Content *msg)
@@ -350,6 +353,7 @@ void KMMsgDict::update(const KMime::Content *msg, int index, int newIndex)
 void KMMsgDict::getLocation(unsigned long key,
                             KMFolder **retFolder, int *retIndex) const
 {
+#if 0
   KMMsgDictEntry *entry = (KMMsgDictEntry *)dict->find((long)key);
   if (entry) {
     *retFolder = (KMFolder *)entry->folder;
@@ -358,6 +362,7 @@ void KMMsgDict::getLocation(unsigned long key,
     *retFolder = 0;
     *retIndex = -1;
   }
+#endif
 }
 
 void KMMsgDict::getLocation(const KMime::Content *msg,
@@ -438,6 +443,8 @@ bool KMMsgDict::isFolderIdsOutdated( const FolderStorage &storage )
 
 int KMMsgDict::readFolderIds( FolderStorage& storage )
 {
+return -1;
+#if 0
   if ( isFolderIdsOutdated( storage ) )
     return -1;
 
@@ -527,6 +534,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
   storage.setRDict(rentry);
 
   return 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------

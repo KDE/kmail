@@ -115,8 +115,8 @@ using KMail::Vacation;
 using MessageViewer::AttachmentStrategy;
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
-#include "folderjob.h"
-using KMail::FolderJob;
+//#include "folderjob.h"
+//using KMail::FolderJob;
 #include "mailinglist-magic.h"
 #include "antispamwizard.h"
 using KMail::AntiSpamWizard;
@@ -127,7 +127,6 @@ using KMail::FilterLogDialog;
 using KMail::TemplateParser;
 #include "statusbarlabel.h"
 #include "actionscheduler.h"
-#include "accountwizard.h"
 #include "expirypropertiesdialog.h"
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/collectionfetchjob.h>
@@ -229,7 +228,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout( this );
   mTopLayout->setMargin( 0 );
-  mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;

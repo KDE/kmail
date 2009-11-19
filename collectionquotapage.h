@@ -34,13 +34,9 @@
 #include <akonadi/collectionpropertiespage.h>
 
 class QuotaWidget;
-class QStackedWidget;
-class QLabel;
-class QStackedWidget;
 
 /**
  * "Quota" tab in the folder dialog
- * Internal class, only used by KMFolderDialog
  */
 class CollectionQuotaPage : public Akonadi::CollectionPropertiesPage
 {
@@ -54,31 +50,8 @@ public:
 protected:
   void init();
 
-#if 0
-  virtual AcceptStatus accept();
-
-  static bool supports( KMFolder* refFolder );
-
 private:
-  void initializeWithValuesFromFolder( KMFolder* folder );
-  void showQuotaWidget();
-private slots:
-  // Network (KIO) slots
-  void slotConnectionResult( int, const QString& );
-  void slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& );
-#endif
-
-private:
-
-  QLabel* mLabel;
   QuotaWidget* mQuotaWidget;
-  QStackedWidget* mStack;
-  QString mImapPath;
-#if 0
-  ImapAccountBase* mImapAccount;
-  QuotaInfo mQuotaInfo;
-  KMFolderType mFolderType;
-#endif
 };
 
 

@@ -34,7 +34,12 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
     mHideInSelectionDialog( false ),
     mIgnoreNewMail( false ),
     mExpireMessages( false ),
-    mWriteConfig( writeconfig )
+    mWriteConfig( writeconfig ),
+    mUnreadExpireAge( 28 ),
+    mReadExpireAge( 14 ),
+    mUnreadExpireUnits( expireNever ),
+    mReadExpireUnits( expireNever ),
+    mExpireAction( ExpireDelete )
 {
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
 

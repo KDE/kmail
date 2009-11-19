@@ -37,7 +37,6 @@
 #include "kmfolder.h"
 #include "kmkernel.h"
 
-//TODO port to akonadi #include "kmfolderimap.h" //for the nasty imap hacks, FIXME
 #include "undostack.h"
 #include "kmmsgdict.h"
 #include "kmcommands.h"
@@ -56,7 +55,6 @@
 #include <QList>
 #include <QRegExp>
 
-//TODO port to akonadi #include <mimelib/mimepp.h>
 #include <unistd.h>
 #include <errno.h>
 
@@ -132,17 +130,21 @@ void FolderStorage::removeJob( QObject* job )
 //-----------------------------------------------------------------------------
 QString FolderStorage::location() const
 {
+#if 0
   QString sLocation(const_cast<FolderStorage*>(this)->folder()->path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += dotEscape(fileName());
 
   return sLocation;
+#endif
+return QString();
 }
 
 QString FolderStorage::fileName() const
 {
-  return mFolder->name();
+  //return mFolder->name();
+return QString();
 }
 
 
@@ -1179,6 +1181,7 @@ KMAccount* FolderStorage::account() const
 
 QString FolderStorage::location(const QString& suffix) const
 {
+#if 0
   QString sLocation( folder()->path() );
 
   if ( !sLocation.isEmpty() )
@@ -1189,6 +1192,8 @@ QString FolderStorage::location(const QString& suffix) const
     sLocation += suffix;
   }
   return sLocation;
+#endif
+return QString();
 }
 
 QString FolderStorage::indexLocation() const

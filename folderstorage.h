@@ -37,7 +37,6 @@
 
 // for large file support
 
-#include "kmfoldernode.h"
 #include "kmfoldertype.h"
 #include "kmglobal.h"
 #include "folderjob.h"

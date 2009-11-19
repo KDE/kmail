@@ -274,7 +274,7 @@ public slots:
   void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
   void slotCopyUrl( const KUrl& );
   void slotRequestConfigSync();
-
+  void slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &);
 protected:
 
   KUrl urlClicked() const;

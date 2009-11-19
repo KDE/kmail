@@ -46,7 +46,7 @@
 
 KMFolder::KMFolder( /*KMFolderDir* aParent,*/ const QString& aFolderName,
                     KMFolderType aFolderType, bool withIndex, bool exportedSernums )
-  : KMFolderNode( /*aParent,*/ aFolderName ), mStorage(0),
+  : /*KMFolderNode( aParent, aFolderName ),*/ mStorage(0),
     mIsSystemFolder( false ),
     mHasIndex( withIndex ),
     mExportsSernums( exportedSernums ),
@@ -212,8 +212,10 @@ void KMFolder::readConfig( KConfigGroup & configGroup )
   setUserWhoField( configGroup.readEntry( "WhoField" ), false );
   uint savedId = configGroup.readEntry( "Id", 0 );
   // make sure that we don't overwrite a valid id
+#if 0
   if ( savedId != 0 && mId == 0 )
     mId = savedId;
+#endif
   mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
   mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
@@ -260,7 +262,7 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
 #endif
 
   configGroup.writeEntry("WhoField", mUserWhoField);
-  configGroup.writeEntry("Id", mId);
+//  configGroup.writeEntry("Id", mId);
   configGroup.writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   configGroup.writeEntry( "HideInSelectionDialog", mHideInSelectionDialog );
   configGroup.writeEntry( "IgnoreNewMail", mIgnoreNewMail );
@@ -332,6 +334,7 @@ QString KMFolder::idsLocation() const
 
 QString KMFolder::subdirLocation() const
 {
+#if 0
   QString sLocation( path() );
 
   if( !sLocation.isEmpty() )
@@ -339,6 +342,8 @@ QString KMFolder::subdirLocation() const
   sLocation += '.' + FolderStorage::dotEscape( fileName() ) + ".directory";
 
   return sLocation;
+#endif
+return QString();
 }
 
 
@@ -796,9 +801,12 @@ QString KMFolder::label() const
      return mSystemLabel;
   if ( !mLabel.isEmpty() )
      return mLabel;
+#if 0
   if ( isSystemFolder() )
      return i18n( name().toUtf8() );
   return name();
+#endif
+return QString();
 }
 
 //-----------------------------------------------------------------------------
