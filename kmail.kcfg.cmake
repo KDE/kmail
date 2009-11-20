@@ -222,7 +222,7 @@
 
     <group name="IMAP Resource">
       <entry name="TheIMAPResourceEnabled" type="Bool">
-        <whatsthis>&lt;p&gt;Enabling this makes it possible to store the entries from the Kontact applications (KOrganizer, KAddressBook, and KNotes.)&lt;/p&gt;&lt;p&gt;If you want to set this option you must also set the applications to use the IMAP resource; this is done in the KDE Control Center.&lt;/p&gt;</whatsthis>
+        <whatsthis>&lt;p&gt;Enabling this makes it possible to store the entries from the Kontact applications (KOrganizer, KAddressBook, and KNotes.)&lt;/p&gt;&lt;p&gt;If you want to set this option you must also set the applications to use the IMAP resource; this is done in the KDE System Settings.&lt;/p&gt;</whatsthis>
         <default>false</default>
       </entry>
 
