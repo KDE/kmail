@@ -30,7 +30,6 @@
 */
 
 #include "subscriptiondialog.h"
-#include "folderstorage.h"
 #include "listjob.h"
 #include "imapaccountbase.h"
 

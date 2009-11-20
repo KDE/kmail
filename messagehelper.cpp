@@ -212,7 +212,7 @@ void applyIdentity( const KMime::Message::Ptr &message, uint id )
     message->setHeader( header );
   }
 
-
+#if 0
   /** TODO Port to KMime
   if (ident.drafts().isEmpty())
     setDrafts( QString() );
@@ -224,6 +224,9 @@ void applyIdentity( const KMime::Message::Ptr &message, uint id )
   else
     setTemplates( ident.templates() );
   */
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMime::Message::Ptr createReply( const Akonadi::Item & item,
@@ -427,7 +430,7 @@ KMime::Message::Ptr createReply( const Akonadi::Item & item,
   // If the reply shouldn't be blank, apply the template to the message
   if ( !noQuote ) {
     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-                           selection, /*TODO what the hell is s? s->smartQuote*/ true, allowDecryption, selectionIsBody );
+                           selection, kmkernel->smartQuote(), allowDecryption, selectionIsBody );
     if ( !tmpl.isEmpty() )
       parser.process( tmpl, origMsg );
     else
@@ -654,7 +657,7 @@ MessageReply createReply2(const Akonadi::Item &item,
   // If the reply shouldn't be blank, apply the template to the message
   if ( !noQuote ) {
     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-                           selection,/*TODO what the hell is s? s->smartQuote*/ true, allowDecryption, selectionIsBody );
+                           selection,kmkernel->smartQuote(), allowDecryption, selectionIsBody );
     if ( !tmpl.isEmpty() )
       parser.process( tmpl, origMsg );
     else
