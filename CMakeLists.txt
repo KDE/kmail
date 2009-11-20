@@ -173,7 +173,7 @@ set(kmailprivate_LIB_SRCS
    statusbarlabel.cpp
    procmailparser.cpp
    stringutil.cpp
-   newcomposerwin.cpp
+   kmcomposewin.cpp
    attachmentcontroller.cpp
    attachmentmodel.cpp
    attachmentview.cpp

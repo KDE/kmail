@@ -28,7 +28,7 @@
 #include "messageviewer/editorwatcher.h"
 #include "globalsettings.h"
 #include "kmkernel.h"
-#include "newcomposerwin.h"
+#include "kmcomposewin.h"
 
 #include <QMenu>
 #include <QPointer>

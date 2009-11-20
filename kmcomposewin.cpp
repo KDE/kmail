@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "newcomposerwin.h"
+#include "kmcomposewin.h"
 
 #include "messagehelper.h"
 
@@ -149,7 +149,7 @@ using KMail::TemplateParser;
 
 #include <messageviewer/objecttreeemptysource.h>
 // MOC
-#include "newcomposerwin.moc"
+#include "kmcomposewin.moc"
 
 #include "snippetwidget.h"
 
