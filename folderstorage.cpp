@@ -723,7 +723,9 @@ int FolderStorage::moveMsg( QList<KMime::Message*> msglist, int *aIndex_ret )
 //-----------------------------------------------------------------------------
 void FolderStorage::remove()
 {
+#if 0 //TODO port to akonadi
   assert( !folder()->name().isEmpty() );
+#endif
 
   // delete and remove from dict if necessary
   clearIndex( true, mExportsSernums );
@@ -751,7 +753,9 @@ void FolderStorage::remove()
 //-----------------------------------------------------------------------------
 int FolderStorage::expunge()
 {
+#if 0 //TODO port to akonadi
   assert( !folder()->name().isEmpty() );
+#endif
 
   // delete and remove from dict, if needed
   clearIndex( true, mExportsSernums );
