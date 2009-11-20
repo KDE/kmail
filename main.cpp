@@ -21,9 +21,12 @@
 #include <kontactinterface/pimuniqueapplication.h>
 #include <kglobal.h>
 #include "kmkernel.h" //control center
+#include "kmmainwidget.h"
 #include "kmail_options.h"
 
 #include <kdebug.h>
+
+#include <akonadi/control.h>
 
 #undef Status // stupid X headers
 
@@ -141,6 +144,9 @@ int main(int argc, char *argv[])
   //If the instance hasn't been created yet, do that now
   app.setEventLoopReached();
   app.delayedInstanceCreation();
+
+  // Start Akonadi
+  Akonadi::Control::start( kmkernel->getKMMainWidget() );
 
   // Go!
   int ret = qApp->exec();
