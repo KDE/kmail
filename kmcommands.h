@@ -5,6 +5,7 @@
 
 #include "kmail_export.h"
 #include <kmime/kmime_message.h>
+#include "messageviewer/viewer.h"
 #include "messageviewer/editorwatcher.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
@@ -884,20 +885,6 @@ class KMAIL_EXPORT KMHandleAttachmentCommand : public KMCommand
   Q_OBJECT
 
 public:
-  /** Supported types of attachment handling */
-  enum AttachmentAction
-  {
-    Open = 1,
-    OpenWith = 2,
-    View = 3,
-    Save = 4,
-    Properties = 5,
-    ChiasmusEncrypt = 6,
-    Delete = 7,
-    Edit = 8,
-    Copy = 9,
-    ScrollTo = 10
-  };
   /**
    * Construct a new command
    * @param node the partNode
@@ -908,7 +895,7 @@ public:
    * @param offer specify a KService that should handle the "open" action, 0 otherwise
    */
   KMHandleAttachmentCommand( partNode* node, const Akonadi::Item& msg, int atmId,
-      const QString& atmName, AttachmentAction action, KService::Ptr offer, QWidget* parent );
+                             const QString& atmName, MessageViewer::Viewer::AttachmentAction action, KService::Ptr offer, QWidget* parent );
 
 
 signals:
@@ -922,23 +909,11 @@ private:
   /** Get a KService if it was not specified */
   KService::Ptr getServiceOffer();
 
-  /** Open needs a valid KService */
-  void atmOpen();
-
-  /** Display an open-with dialog */
-  void atmOpenWith();
-
   /**
    * Viewing is not supported by this command
    * so it just emits showAttachment
    */
   void atmView();
-
-  /** Save the attachment */
-  void atmSave();
-
-  /** Display the properties */
-  void atmProperties();
 
   /** Encrypt using chiasmus */
   void atmEncryptWithChiasmus();
@@ -961,7 +936,7 @@ private:
   Akonadi::Item mMsg;
   int mAtmId;
   QString mAtmName;
-  AttachmentAction mAction;
+  MessageViewer::Viewer::AttachmentAction mAction;
   KService::Ptr mOffer;
   Kleo::SpecialJob *mJob;
 

@@ -2870,7 +2870,7 @@ KUrl::List KMMailingListHelpCommand::urls() const
 
 KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
                                                       const Akonadi::Item& msg, int atmId, const QString& atmName,
-     AttachmentAction action, KService::Ptr offer, QWidget* parent )
+                                                      MessageViewer::Viewer::AttachmentAction action, KService::Ptr offer, QWidget* parent )
 : KMCommand( parent ), mNode( node ), mAtmId( atmId ), mAtmName( atmName ),
   mAction( action ), mOffer( offer ), mJob( 0 )
 {
@@ -2906,22 +2906,7 @@ KMCommand::Result KMHandleAttachmentCommand::execute()
 {
   switch( mAction )
   {
-    case Open:
-      atmOpen();
-      break;
-    case OpenWith:
-      atmOpenWith();
-      break;
-    case View:
-      atmView();
-      break;
-    case Save:
-      atmSave();
-      break;
-    case Properties:
-      atmProperties();
-      break;
-    case ChiasmusEncrypt:
+    case MessageViewer::Viewer::ChiasmusEncrypt:
       atmEncryptWithChiasmus();
       return Undefined;
       break;
@@ -3003,78 +2988,12 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
 #endif
 }
 
-void KMHandleAttachmentCommand::atmOpen()
-{
-  if ( !mOffer )
-    mOffer = getServiceOffer();
-  if ( !mOffer ) {
-    kDebug() << "got no offer";
-    return;
-  }
-
-  KUrl::List lst;
-  KUrl url;
-  bool autoDelete = true;
-  QString fname = createAtmFileLink();
-
-  if ( fname.isNull() ) {
-    autoDelete = false;
-    fname = mAtmName;
-  }
-
-  url.setPath( fname );
-  lst.append( url );
-  if ( (!KRun::run( *mOffer, lst, 0, autoDelete )) && autoDelete ) {
-      QFile::remove(url.toLocalFile());
-  }
-}
-
-void KMHandleAttachmentCommand::atmOpenWith()
-{
-  KUrl::List lst;
-  KUrl url;
-  bool autoDelete = true;
-  QString fname = createAtmFileLink();
-
-  if ( fname.isNull() ) {
-    autoDelete = false;
-    fname = mAtmName;
-  }
-
-  url.setPath( fname );
-  lst.append( url );
-  if ( (! KRun::displayOpenWithDialog(lst, kmkernel->mainWin(), autoDelete)) && autoDelete ) {
-    QFile::remove( url.toLocalFile() );
-  }
-}
-
 void KMHandleAttachmentCommand::atmView()
 {
   // we do not handle this ourself
   emit showAttachment( mAtmId, mAtmName );
 }
 
-void KMHandleAttachmentCommand::atmSave()
-{
-  QList<partNode*> parts;
-  parts.append( mNode );
-  // save, do not leave encoded
-  KMSaveAttachmentsCommand *command =
-    new KMSaveAttachmentsCommand( parentWidget(), parts, mMsg, false );
-  command->start();
-}
-
-void KMHandleAttachmentCommand::atmProperties()
-{
-  kDebug() << "port me to AttachmentPropertiesDialog";
-#if 0
-  KMMsgPartDialogCompat dlg( 0, true );
-  KMime::MessagePart& msgPart = mNode->msgPart();
-  //Port to KMime::Content
-  dlg.setMsgPart( &msgPart );
-  dlg.exec();
-#endif
-}
 
 void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
 {
