@@ -2447,9 +2447,9 @@ void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveI
   Akonadi::Collection target;
 
   if ( saveIn==KMComposeWin::Templates ) {
-    target = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Templates );
+    target = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates );
   } else {
-    target = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Drafts );
+    target = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts );
   }
 
   if ( !target.isValid() ) {

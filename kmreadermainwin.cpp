@@ -52,7 +52,7 @@
 #include "kmmsgdict.h"
 #include "foldercollection.h"
 
-#include <kabc/stdaddressbook.h>
+#include <akonadi/contact/contactsearchjob.h>
 #include <kpimutils/email.h>
 #include <kmime/kmime_message.h>
 
@@ -348,8 +348,11 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl
         menu->addSeparator();
       }
       QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
-      KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-      KABC::Addressee::List addresseeList = addressBook->findByEmail( email );
+      Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
+      job->setQuery( Akonadi::ContactSearchJob::Email, email );
+      job->exec();
+
+      KABC::Addressee::List addresseeList = job->contacts();
 
       if ( addresseeList.count() == 0 ) {
         menu->addAction( mReaderWin->addAddrBookAction() );

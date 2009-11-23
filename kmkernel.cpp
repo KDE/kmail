@@ -66,8 +66,8 @@ using KWallet::Wallet;
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
-#include <akonadi/kmime/specialcollections.h>
-#include <akonadi/kmime/specialcollectionsrequestjob.h>
+#include <akonadi/kmime/specialmailcollections.h>
+#include <akonadi/kmime/specialmailcollectionsrequestjob.h>
 #include <akonadi/collection.h>
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/changerecorder.h>
@@ -1398,15 +1398,15 @@ void KMKernel::recoverDeadLetters()
 #endif
 }
 
-void KMKernel::findCreateDefaultCollection( Akonadi::SpecialCollections::Type type )
+void KMKernel::findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type type )
 {
-  if( Akonadi::SpecialCollections::self()->hasDefaultCollection( type ) ) {
-    const Akonadi::Collection col = Akonadi::SpecialCollections::self()->defaultCollection( type );
+  if( Akonadi::SpecialMailCollections::self()->hasDefaultCollection( type ) ) {
+    const Akonadi::Collection col = Akonadi::SpecialMailCollections::self()->defaultCollection( type );
     if ( !( col.rights() & Akonadi::Collection::AllRights ) )
       emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
   }
   else {
-    Akonadi::SpecialCollectionsRequestJob *job = new Akonadi::SpecialCollectionsRequestJob( this );
+    Akonadi::SpecialMailCollectionsRequestJob *job = new Akonadi::SpecialMailCollectionsRequestJob( this );
     connect( job, SIGNAL( result( KJob* ) ),
              this, SLOT( createDefaultCollectionDone( KJob* ) ) );
     job->requestDefaultCollection( type );
@@ -1420,7 +1420,7 @@ void KMKernel::createDefaultCollectionDone( KJob * job)
     return;
   }
 
-  Akonadi::SpecialCollectionsRequestJob *requestJob = qobject_cast<Akonadi::SpecialCollectionsRequestJob*>( job );
+  Akonadi::SpecialMailCollectionsRequestJob *requestJob = qobject_cast<Akonadi::SpecialMailCollectionsRequestJob*>( job );
   const Akonadi::Collection col = requestJob->collection();
   if ( !( col.rights() & Akonadi::Collection::AllRights ) )
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
@@ -1430,12 +1430,12 @@ void KMKernel::createDefaultCollectionDone( KJob * job)
 void KMKernel::initFolders()
 {
 
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Inbox );
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Outbox );
-  findCreateDefaultCollection( Akonadi::SpecialCollections::SentMail );
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Drafts );
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Trash );
-  findCreateDefaultCollection( Akonadi::SpecialCollections::Templates );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Inbox );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Outbox );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::SentMail );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Drafts );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Trash );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Templates );
 }
 
 void KMKernel::init()
@@ -1999,14 +1999,14 @@ void KMKernel::emergencyExit( const QString& reason )
  */
 bool KMKernel::folderIsDraftOrOutbox(const Akonadi::Collection & col)
 {
-  if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Outbox ) )
+  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox ) )
     return true;
   return folderIsDrafts( col );
 }
 
 bool KMKernel::folderIsDrafts(const Akonadi::Collection & col)
 {
-  if ( col ==  Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Drafts ) )
+  if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts ) )
     return true;
 
   QString idString = QString::number( col.id() );
@@ -2021,7 +2021,7 @@ bool KMKernel::folderIsDrafts(const Akonadi::Collection & col)
 
 bool KMKernel::folderIsTemplates(const Akonadi::Collection &col)
 {
-  if ( col ==  Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Templates ) )
+  if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates ) )
     return true;
 
   QString idString = QString::number( col.id() );
@@ -2036,7 +2036,7 @@ bool KMKernel::folderIsTemplates(const Akonadi::Collection &col)
 
 bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
-  if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Trash ) )
+  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ) )
     return true;
 #if 0 //TODO : will implement in imap akonadi ressource. Wait for the moment
   QStringList actList = acctMgr()->getAccounts();
@@ -2054,7 +2054,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 
 bool KMKernel::folderIsSentMailFolder( const Akonadi::Collection &col )
 {
-  if ( col == Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::SentMail ) )
+  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail ) )
     return true;
 
   QString idString = QString::number( col.id() );
@@ -2376,42 +2376,42 @@ void KMKernel::updatedTemplates()
 Akonadi::Collection KMKernel::inboxCollectionFolder()
 {
   if ( !the_inboxCollectionFolder.isValid() )
-    the_inboxCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Inbox );
+    the_inboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Inbox );
   return the_inboxCollectionFolder;
 }
 
 Akonadi::Collection KMKernel::outboxCollectionFolder()
 {
   if ( !the_outboxCollectionFolder.isValid() )
-    the_outboxCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Outbox );
+    the_outboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox );
   return the_outboxCollectionFolder;
 }
 
 Akonadi::Collection KMKernel::sentCollectionFolder()
 {
   if ( !the_sentCollectionFolder.isValid() )
-    the_sentCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::SentMail );
+    the_sentCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail );
   return the_sentCollectionFolder;
 }
 
 Akonadi::Collection KMKernel::trashCollectionFolder()
 {
   if ( !the_trashCollectionFolder.isValid() )
-    the_trashCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Trash );
+    the_trashCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash );
   return the_trashCollectionFolder;
 }
 
 Akonadi::Collection KMKernel::draftsCollectionFolder()
 {
   if ( !the_draftsCollectionFolder.isValid() )
-    the_draftsCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Drafts );
+    the_draftsCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts );
   return the_draftsCollectionFolder;
 }
 
 Akonadi::Collection KMKernel::templatesCollectionFolder()
 {
   if ( !the_templatesCollectionFolder.isValid() )
-    the_templatesCollectionFolder = Akonadi::SpecialCollections::self()->defaultCollection( Akonadi::SpecialCollections::Templates );
+    the_templatesCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates );
   return the_templatesCollectionFolder;
 }
 

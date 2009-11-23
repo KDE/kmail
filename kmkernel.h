@@ -18,7 +18,7 @@
 #include "kmmessagetag.h"
 #include "globalsettings.h"
 #include <kcomponentdata.h>
-#include <akonadi/kmime/specialcollections.h>
+#include <akonadi/kmime/specialmailcollections.h>
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -403,7 +403,7 @@ public:
   void updatedTemplates();
 
 
-  void findCreateDefaultCollection( Akonadi::SpecialCollections::Type );
+  void findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type );
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter
