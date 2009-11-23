@@ -1585,9 +1585,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     KCursorSaver busy( KBusyPtr::busy() );
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                  QString(), mTemplate );
-#if 0
     win->setCharset("");
-#endif
     win->show();
   } else { // forward a single message at most
 
