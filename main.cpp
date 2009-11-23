@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
   app.setEventLoopReached();
   app.delayedInstanceCreation();
 
-  Akonadi::Control::start( kmailKernel.getKMMainWidget() );
+  Akonadi::Control::start( kmkernel->getKMMainWidget() );
   // Go!
   int ret = qApp->exec();
   // clean up
