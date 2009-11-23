@@ -158,7 +158,6 @@ set(kmailprivate_LIB_SRCS
    mailinglistpropertiesdialog.cpp
    textsource.cpp
    #managesievescriptsdialog.cpp
-   chiasmuskeyselector.cpp
    util.cpp
    kmmessagetag.cpp
    templateparser.cpp

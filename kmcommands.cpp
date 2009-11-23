@@ -90,7 +90,6 @@ using KMail::ActionScheduler;
 #include "messageviewer/csshelper.h"
 using KMail::ObjectTreeParser;
 //using KMail::FolderJob;
-#include "chiasmuskeyselector.h"
 #include "messageviewer/mailsourceviewer.h"
 using namespace MessageViewer;
 #include "kmreadermainwin.h"

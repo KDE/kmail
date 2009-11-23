@@ -65,7 +65,7 @@ using MailTransport::Transport;
 #include "attachmentcontroller.h"
 #include "attachmentmodel.h"
 #include "attachmentview.h"
-#include "chiasmuskeyselector.h"
+#include "messageviewer/chiasmuskeyselector.h"
 #include "codecaction.h"
 #include "kleo_util.h"
 #include "kmcommands.h"
@@ -4096,7 +4096,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
     return;
   }
 
-  ChiasmusKeySelector selectorDlg( this, i18n( "Chiasmus Encryption Key Selection" ),
+  MessageViewer::ChiasmusKeySelector selectorDlg( this, i18n( "Chiasmus Encryption Key Selection" ),
                                    keys, GlobalSettings::chiasmusKey(),
                                    GlobalSettings::chiasmusOptions() );
 
