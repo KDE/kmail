@@ -880,54 +880,6 @@ protected:
   virtual KUrl::List urls() const;
 };
 
-class KMAIL_EXPORT KMHandleAttachmentCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  /**
-   * Construct a new command
-   * @param node the partNode
-   * @param msg the KMime::Message
-   * @param atmId the ID of the attachment, the partNode must know this
-   * @param atmName the name of the attachment
-   * @param action what to do with the attachment
-   * @param offer specify a KService that should handle the "open" action, 0 otherwise
-   */
-  KMHandleAttachmentCommand( partNode* node, const Akonadi::Item& msg, int atmId,
-                             const QString& atmName, MessageViewer::Viewer::AttachmentAction action, KService::Ptr offer, QWidget* parent );
-
-private:
-  virtual Result execute();
-
-
-  /** Encrypt using chiasmus */
-  void atmEncryptWithChiasmus();
-
-private slots:
-  /** Called from start() via a single shot timer. */
-  virtual void slotStart();
-
-  /**
-   * Called when the part was downloaded
-   * Calls execute
-   */
-  void slotPartComplete();
-
-  void slotAtmDecryptWithChiasmusResult( const GpgME::Error &, const QVariant & );
-  void slotAtmDecryptWithChiasmusUploadResult( KJob * );
-
-private:
-  partNode* mNode;
-  Akonadi::Item mMsg;
-  int mAtmId;
-  QString mAtmName;
-  MessageViewer::Viewer::AttachmentAction mAction;
-  KService::Ptr mOffer;
-  Kleo::SpecialJob *mJob;
-
-};
-
 class KMAIL_EXPORT CreateTodoCommand : public KMCommand
 {
   Q_OBJECT
