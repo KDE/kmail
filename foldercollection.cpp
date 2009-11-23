@@ -189,13 +189,16 @@ void FolderCollection::writeConfig() const
 
 
   configGroup.writeEntry( "UseDefaultIdentity", mUseDefaultIdentity );
+  if ( !mUseDefaultIdentity
 #if 0 //TODO port it
-  if ( !mUseDefaultIdentity && ( !mStorage || !mStorage->account() ||
-                           mIdentity != mStorage->account()->identityId() ) )
+       && ( !mStorage || !mStorage->account() ||
+                           mIdentity != mStorage->account()->identityId() )
+#endif
+       )
       configGroup.writeEntry("Identity", mIdentity);
   else
       configGroup.deleteEntry("Identity");
-#endif
+
   configGroup.writeEntry("WhoField", mUserWhoField);
 #if 0 //TODO ????
   configGroup.writeEntry("Id", mId);
