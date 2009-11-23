@@ -897,23 +897,9 @@ public:
   KMHandleAttachmentCommand( partNode* node, const Akonadi::Item& msg, int atmId,
                              const QString& atmName, MessageViewer::Viewer::AttachmentAction action, KService::Ptr offer, QWidget* parent );
 
-
-signals:
-  void showAttachment( int id, const QString& name );
-
 private:
   virtual Result execute();
 
-  QString createAtmFileLink() const;
-
-  /** Get a KService if it was not specified */
-  KService::Ptr getServiceOffer();
-
-  /**
-   * Viewing is not supported by this command
-   * so it just emits showAttachment
-   */
-  void atmView();
 
   /** Encrypt using chiasmus */
   void atmEncryptWithChiasmus();
