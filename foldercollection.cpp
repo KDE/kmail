@@ -106,7 +106,6 @@ Akonadi::Collection FolderCollection::collection()
 void FolderCollection::slotIdentitiesChanged()
 {
   uint defaultIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
-
   // The default identity may have changed, therefore set it again
   // if necessary
   if ( mUseDefaultIdentity )
@@ -278,7 +277,7 @@ void FolderCollection::setUseDefaultIdentity( bool useDefaultIdentity )
   mUseDefaultIdentity = useDefaultIdentity;
   if ( mUseDefaultIdentity )
     mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
-  kmkernel->slotRequestConfigSync();
+  KMKernel::self()->slotRequestConfigSync();
 }
 
 void FolderCollection::setIdentity( uint identity )
