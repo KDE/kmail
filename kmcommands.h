@@ -235,20 +235,6 @@ private:
   KUrl mUrl;
 };
 
-class KMAIL_EXPORT KMUrlCopyCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  explicit KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget = 0 );
-
-private:
-  virtual Result execute();
-
-  KUrl mUrl;
-  KMMainWidget *mMainWidget;
-};
-
 class KMAIL_EXPORT KMUrlSaveCommand : public KMCommand
 {
   Q_OBJECT

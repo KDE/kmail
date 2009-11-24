@@ -566,33 +566,6 @@ KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 }
 
 
-KMUrlCopyCommand::KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget )
-  :mUrl( url ), mMainWidget( mainWidget )
-{
-}
-
-KMCommand::Result KMUrlCopyCommand::execute()
-{
-  QClipboard* clip = QApplication::clipboard();
-  if (mUrl.protocol() == "mailto") {
-    // put the url into the mouse selection and the clipboard
-    QString address = MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() );
-    clip->setText( address, QClipboard::Clipboard );
-    clip->setText( address, QClipboard::Selection );
-    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Address copied to clipboard." ));
-  } else {
-    // put the url into the mouse selection and the clipboard
-    clip->setText( mUrl.url(), QClipboard::Clipboard );
-    clip->setText( mUrl.url(), QClipboard::Selection );
-    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "URL copied to clipboard." ));
-  }
-
-  return OK;
-}
-
-
-
-
 KMUrlSaveCommand::KMUrlSaveCommand( const KUrl &url, QWidget *parent )
   : KMCommand( parent ), mUrl( url )
 {
