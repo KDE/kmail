@@ -850,7 +850,11 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: CLEAR";
         i += strlen( "CLEAR" );
         body = "";
-
+#if 0
+        mMsg->setCursorPos( 0 );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       } else if ( cmd.startsWith( QLatin1String("DEBUGOFF") ) ) {
         // turn off debug
         kDebug() << "Command: DEBUGOFF";
@@ -867,7 +871,11 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         // turn on debug
         kDebug() << "Command: CURSOR";
         i += strlen( "CURSOR" );
-
+#if 0
+        mMsg->setCursorPos( body.length() );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       } else if ( cmd.startsWith( QLatin1String( "SIGNATURE" ) ) ) {
         kDebug() << "Command: SIGNATURE";
         i += strlen( "SIGNATURE" );
@@ -921,7 +929,7 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
   // FIXME
   // No selection text, therefore we need to parse the object tree ourselves to get
   //KMime::Content *root = parsedObjectTree();
-  
+
   // ### temporary hack to uncrash reply/forward
   mOrigRoot = new KMime::Content;
   mOrigRoot->setContent( mOrigMsg->encodedContent() );
