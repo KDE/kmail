@@ -148,24 +148,6 @@ using namespace KMime;
 
 #include <memory>
 
-class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
-{
-public:
-  LaterDeleterWithCommandCompletion( KMCommand* command )
-    :LaterDeleter( command ), m_result( KMCommand::Failed )
-  {
-  }
-  ~LaterDeleterWithCommandCompletion()
-  {
-    setResult( m_result );
-    KMCommand *command = static_cast<KMCommand*>( m_object );
-    emit command->completed( command );
-  }
-  void setResult( KMCommand::Result v ) { m_result = v; }
-private:
-  KMCommand::Result m_result;
-};
-
 /// Small helper function to get the composer context from a reply
 static KMail::Composer::TemplateContext replyContext( KMail::MessageHelper::MessageReply reply )
 {

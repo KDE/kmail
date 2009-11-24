@@ -44,7 +44,6 @@ typedef QMap<partNode*, Akonadi::Item> PartNodeMessageMap;
 class KMAIL_EXPORT KMCommand : public QObject
 {
   Q_OBJECT
-    friend class LaterDeleterWithCommandCompletion;
 
 public:
   enum Result { Undefined, OK, Canceled, Failed };
