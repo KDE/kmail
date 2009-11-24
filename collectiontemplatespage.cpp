@@ -21,6 +21,7 @@
 #include <akonadi/collection.h>
 #include <KLocale>
 #include <KPushButton>
+#include "kmkernel.h"
 #include <QCheckBox>
 #include "foldercollection.h"
 #include "templatesconfiguration.h"
@@ -42,8 +43,8 @@ CollectionTemplatesPage::~CollectionTemplatesPage()
 
 bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
 {
-  //TODO it
-  return true;
+
+  return !KMKernel::self()->isSystemFolderCollection( collection );
 }
 
 void CollectionTemplatesPage::init()
