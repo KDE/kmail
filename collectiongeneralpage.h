@@ -41,7 +41,7 @@ public:
   void save( Akonadi::Collection & col );
 
 protected:
-  void init();
+  void init(const Akonadi::Collection&);
 private slots:
   void slotFolderNameChanged(const QString & );
   void slotIdentityCheckboxChanged();

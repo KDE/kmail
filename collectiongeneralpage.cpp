@@ -37,7 +37,6 @@ CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
   setPageTitle(  i18nc("@title:tab General settings for a folder.", "General"));
-  init();
 }
 
 CollectionGeneralPage::~CollectionGeneralPage()
@@ -56,15 +55,15 @@ static void addLine( QWidget *parent, QVBoxLayout* layout )
    layout->addWidget( line );
 }
 
-void CollectionGeneralPage::init()
+void CollectionGeneralPage::init(const Akonadi::Collection &col)
 {
+  mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col );
+
 #if 0
-  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder();
   mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
 #endif
   //TODO port it
-  mIsLocalSystemFolder = false;
-  mIsResourceFolder = true;
+  mIsResourceFolder = false;
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
@@ -417,16 +416,18 @@ bool FolderDialogGeneralTab::save()
 
 void CollectionGeneralPage::load(const Akonadi::Collection & col)
 {
+  init( col );
   QString displayName;
   if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
     displayName = col.attribute<Akonadi::EntityDisplayAttribute>()->displayName();
   }
 
-  if ( displayName.isEmpty() )
-    mNameEdit->setText( col.name() );
-  else
-    mNameEdit->setText( displayName );
-
+  if ( !mIsLocalSystemFolder || mIsResourceFolder ) {
+    if ( displayName.isEmpty() )
+      mNameEdit->setText( col.name() );
+    else
+      mNameEdit->setText( displayName );
+  }
   mFolderCollection = new FolderCollection( col );
 
   // folder identity
@@ -438,17 +439,22 @@ void CollectionGeneralPage::load(const Akonadi::Collection & col)
 
   const bool keepInFolder = !mFolderCollection->isReadOnly() && mFolderCollection->putRepliesInSameFolder();
   mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
+  qDebug()<<" mFolderCollection->isReadOnly()  :"<<mFolderCollection->isReadOnly();
   mKeepRepliesInSameFolderCheckBox->setDisabled( mFolderCollection->isReadOnly() );
   mHideInSelectionDialogCheckBox->setChecked( mFolderCollection->hideInSelectionDialog() );
 }
 
 void CollectionGeneralPage::save(Collection & col)
 {
-  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
-       !col.attribute<Akonadi::EntityDisplayAttribute>()->displayName().isEmpty() )
-    col.attribute<Akonadi::EntityDisplayAttribute>()->setDisplayName( mNameEdit->text() );
-  else
-    col.setName( mNameEdit->text() );
+
+  if ( !mIsLocalSystemFolder || mIsResourceFolder ) {
+
+    if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
+         !col.attribute<Akonadi::EntityDisplayAttribute>()->displayName().isEmpty() )
+      col.attribute<Akonadi::EntityDisplayAttribute>()->setDisplayName( mNameEdit->text() );
+    else
+      col.setName( mNameEdit->text() );
+  }
 
   if ( mFolderCollection ) {
     mFolderCollection->setIdentity( mIdentityComboBox->currentIdentity() );
