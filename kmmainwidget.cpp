@@ -1363,7 +1363,6 @@ void KMMainWidget::slotEmptyFolder()
 }
 
 //-----------------------------------------------------------------------------
-KUrl mMailArchivePath;
 void KMMainWidget::slotArchiveFolder()
 {
   // TODO: multi folder support?

@@ -62,7 +62,7 @@ void BackupJob::setRootFolder( KMFolder *rootFolder )
   mRootFolder = rootFolder;
 }
 
-void BackupJob::setSaveLocation( KUrl savePath )
+void BackupJob::setSaveLocation( const KUrl savePath )
 {
   mMailArchivePath = savePath;
 }
