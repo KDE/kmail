@@ -1479,6 +1479,8 @@ void FolderView::fillContextMenuFolderServiceRelatedActions( KMenu *menu, Folder
         );
   }
 
+  menu->addAction( mMainWidget->action( "archive_folder" ) );
+
   // compaction is only supported for mbox folders
   // see FolderDialogMaintenanceTab::FolderDialogMaintenanceTab()
   if ( folder->folderType() == KMFolderTypeMbox )
