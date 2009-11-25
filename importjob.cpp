@@ -38,6 +38,7 @@ ImportJob::ImportJob( QWidget *parentWidget )
     mArchive( 0 ),
     mRootFolder( 0 ),
     mParentWidget( parentWidget ),
+    mNumberOfImportedMessages( 0 ),
     mCurrentFolder( 0 )
 {
 }
@@ -64,6 +65,10 @@ void ImportJob::setRootFolder( KMFolder *rootFolder )
 void ImportJob::finish()
 {
   kDebug(5006) << "Finished import job.";
+  QString text = i18n( "Importing the archive file '%1' into the folder '%2' succeeded.",
+                       mArchiveFile.path(), mRootFolder->name() );
+  text += '\n' + i18n( "%1 messages were imported.", mNumberOfImportedMessages );
+  KMessageBox::information( mParentWidget, text, i18n( "Import finished." ) );
   deleteLater();
 }
 
@@ -161,8 +166,9 @@ void ImportJob::importNextMessage()
     return;
   }
   else {
+    mNumberOfImportedMessages++;
     kDebug(5006) << "Added message with subject " /*<< newMessage->subject()*/ // < this causes a pure virtual method to be called...
-                  << " to folder " << mCurrentFolder->name() << " at index " << retIndex;
+                 << " to folder " << mCurrentFolder->name() << " at index " << retIndex;
   }
   QTimer::singleShot( 0, this, SLOT( importNextMessage() ) );
 }
@@ -212,6 +218,10 @@ void ImportJob::importNextDirectory()
   importNextMessage();
 }
 
+// TODO:
+// BUGS:
+//    Online IMAP can fail spectacular, for example when cancelling upload
+//    Online IMAP: Inform that messages are still being uploaded on finish()!
 void ImportJob::start()
 {
   Q_ASSERT( mRootFolder );
