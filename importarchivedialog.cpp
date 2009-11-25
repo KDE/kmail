@@ -81,8 +81,14 @@ void ImportArchiveDialog::setFolder( KMFolder *defaultFolder )
   mFolderRequester->setFolder( defaultFolder );
 }
 
-void ImportArchiveDialog::slotOk()
+void ImportArchiveDialog::slotButtonClicked( int button )
 {
+  if ( button == KDialog::Cancel ) {
+    reject();
+    return;
+  }
+  Q_ASSERT( button == KDialog::Ok );
+
   if ( !QFile::exists( mUrlRequester->url().path() ) ) {
     KMessageBox::information( this, i18n( "Please select an archive file that should be imported." ),
                               i18n( "No archive file selected" ) );
