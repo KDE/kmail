@@ -141,7 +141,6 @@ using KMail::TemplateParser;
 #include "actionscheduler.h"
 #include "accountwizard.h"
 #include "archivefolderdialog.h"
-#include "importarchivedialog.h"
 #include "folderutil.h"
 
 #if !defined(NDEBUG)
@@ -178,7 +177,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mSplitter2( 0 ),
     mFolderViewSplitter( 0 ),
     mArchiveFolderAction( 0 ),
-    mImportArchiveAction( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
@@ -1364,14 +1362,6 @@ void KMMainWidget::slotEmptyFolder()
   // Disable empty trash/move all to trash action - we've just deleted/moved
   // all folder contents.
   mEmptyFolderAction->setEnabled( false );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotImportArchive()
-{
-  KMail::ImportArchiveDialog importDialog;
-  importDialog.setFolder( mFolder );
-  importDialog.exec();
 }
 
 //-----------------------------------------------------------------------------
@@ -3751,10 +3741,6 @@ void KMMainWidget::setupActions()
   mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), this );
   actionCollection()->addAction( "archive_folder", mArchiveFolderAction );
   connect( mArchiveFolderAction, SIGNAL(triggered(bool)), SLOT(slotArchiveFolder()) );
-
-  mImportArchiveAction = new KAction( i18n( "Import Archive..." ), this );
-  actionCollection()->addAction( "import_archive", mImportArchiveAction );
-  connect( mImportArchiveAction, SIGNAL(triggered(bool)), SLOT(slotImportArchive()) );
 
   mPreferHtmlAction = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
   actionCollection()->addAction("prefer_html", mPreferHtmlAction );

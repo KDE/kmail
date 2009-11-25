@@ -35,7 +35,7 @@ class ImportArchiveDialog : public KDialog
 
   public:
 
-    ImportArchiveDialog( QWidget *parent = 0 );
+    ImportArchiveDialog( QWidget *parent );
     void setFolder( KMFolder *defaultFolder );
 
   protected slots:

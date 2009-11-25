@@ -34,6 +34,7 @@ using KPIM::RecentAddresses;
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "stringutil.h"
+#include "importarchivedialog.h"
 
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
@@ -526,6 +527,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
+
   KMMessage *msg = new KMMessage;
   KMMessagePart *msgPart = 0;
   msg->initHeader();
@@ -1027,6 +1029,15 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
   }
 
   return retval;
+}
+
+void KMKernel::showImportArchiveDialog()
+{
+  KMMainWidget *mainWidget = getKMMainWidget();
+  KMail::ImportArchiveDialog *importDialog = new KMail::ImportArchiveDialog( mainWidget );
+  importDialog->setAttribute( Qt::WA_DeleteOnClose );
+  importDialog->setFolder( mainWidget->mainFolderView()->currentFolder() );
+  importDialog->show();
 }
 
 QStringList KMKernel::folderList() const
@@ -2312,7 +2323,7 @@ KMailICalIfaceImpl& KMKernel::iCalIface()
 
 void KMKernel::selectFolder( const QString &folderPath )
 {
-  kDebug()<<"Selecting a folder"<<folderPath;
+  kDebug()<< "Selecting a folder" << folderPath;
   const QString localPrefix = "/Local";
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )
