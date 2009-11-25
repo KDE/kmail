@@ -23,7 +23,6 @@
 #include <config-kmail.h>
 
 #include <assert.h>
-
 #include <QByteArray>
 #include <QLabel>
 #include <QLayout>
@@ -118,7 +117,7 @@ using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
 #include "favoritefolderview.h"
-
+#include "backupjob.h"
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
 #include "localsubscriptiondialog.h"
@@ -1363,6 +1362,26 @@ void KMMainWidget::slotEmptyFolder()
   mEmptyFolderAction->setEnabled( false );
 }
 
+//-----------------------------------------------------------------------------
+KUrl mMailArchivePath;
+void KMMainWidget::slotArchiveFolder()
+{
+  // TODO: multi folder support?
+  // TODO: extract this into a job class!
+  // TODO: support other formats in addtion to tar.gz. portable ones.
+  // TODO: pick a portable format as the default
+
+  // TODO: search, mbox, maildir, online imap!
+   KUrl savePath = KFileDialog::getSaveUrl( KGlobalSettings::desktopPath(),
+                                                QString( "*.tar.gz" ),
+                                                this,
+                                                i18n( "Select a Mail Archive Location" ) );
+   KMail::BackupJob *backupJob = new KMail::BackupJob( this );
+   backupJob->setRootFolder( mFolder );
+   backupJob->setSaveLocation( savePath );
+   backupJob->setArchiveType( KMail::BackupJob::TarGz );
+   backupJob->start();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRemoveFolder()
@@ -3755,6 +3774,10 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("delete_folder", mRemoveFolderAction );
   connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
 
+  mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), this );
+  actionCollection()->addAction( "archive_folder", mArchiveFolderAction );
+  connect( mArchiveFolderAction, SIGNAL(triggered(bool)), SLOT(slotArchiveFolder()) );
+
   mPreferHtmlAction = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
   actionCollection()->addAction("prefer_html", mPreferHtmlAction );
   connect(mPreferHtmlAction, SIGNAL(triggered(bool) ), SLOT(slotOverrideHtml()));
@@ -4409,6 +4432,7 @@ void KMMainWidget::updateFolderMenu()
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
+  mArchiveFolderAction->setEnabled( mFolder && !multiFolder );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
