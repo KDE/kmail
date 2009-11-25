@@ -1282,9 +1282,7 @@ KMCommand::Result KMForwardCommand::execute()
 
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
-#if 0  //Port it
       win->setCharset("");
-#endif
       win->show();
       return OK;
     } else {
