@@ -58,6 +58,8 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   // TODO: Explaination label
   // TODO: Use QFormLayout in KDE4
+  // TODO: sensible stretch factors
+  // TODO: sensible minimum horizontal size
 
   QLabel *folderLabel = new QLabel( i18n( "Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
@@ -94,6 +96,8 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   // TODO: checkbox "delete after success"
 
   // TODO: what's this, tooltips
+
+  // TODO: Warn that user should do mail check for online IMAP and possibly cached IMAP as well
 
   mainLayout->addItem( new QSpacerItem( 1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding ), row, 0 );
 }
