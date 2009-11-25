@@ -86,7 +86,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   QLabel *fileNameLabel = new QLabel( i18n( "Archive File:" ), mainWidget );
   mainLayout->addWidget( fileNameLabel, row, 0 );
   mUrlRequester = new KUrlRequester( mainWidget );
-  mUrlRequester->setMode( KFile::LocalOnly );
+  mUrlRequester->setMode( KFile::LocalOnly | KFile::File );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
   connect( mUrlRequester, SIGNAL(urlSelected(const KUrl&)),
            this, SLOT(slotFixFileExtension()) );
