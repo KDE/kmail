@@ -33,9 +33,6 @@ namespace Akonadi {
 namespace KIO {
   class Job;
 }
-namespace KWallet {
-  class Wallet;
-}
 
 class KJob;
 /** The KMail namespace contains classes used for KMail.
@@ -388,8 +385,6 @@ public:
    */
   void messageCountChanged();
 
-  /** Open KDE wallet and set it to kmail folder */
-  KWallet::Wallet *wallet();
 
   /** Get first mainwidget */
   KMMainWidget *getKMMainWidget();
@@ -509,7 +504,6 @@ private:
   /* Weaver */
   ThreadWeaver::Weaver *the_weaver;
 
-  KWallet::Wallet *mWallet;
 
   // variables used by dbusAddMessage()
   QStringList           mAddMessageMsgIds;

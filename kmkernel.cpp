@@ -61,8 +61,6 @@ using KMail::TemplateParser;
 #include <kdebug.h>
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
-#include <kwallet.h>
-using KWallet::Wallet;
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
@@ -105,7 +103,7 @@ static KMKernel * mySelf = 0;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0), mMailService(0),
-  mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 )
+  mMailManager( 0 ), mContextMenuShown( false )
 {
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
   mAgentManager = new KMAgentManager( this );
@@ -187,8 +185,6 @@ KMKernel::~KMKernel ()
   mMailManager = 0;
 
   GlobalSettings::self()->writeConfig();
-  delete mWallet;
-  mWallet = 0;
   mySelf = 0;
   kDebug();
 }
@@ -2270,34 +2266,6 @@ int KMKernel::timeOfLastMessageCountChange() const
   return mTimeOfLastMessageCountChange;
 }
 
-Wallet *KMKernel::wallet() {
-  static bool walletOpenFailed = false;
-  if ( mWallet && mWallet->isOpen() )
-    return mWallet;
-
-  if ( !Wallet::isEnabled() || walletOpenFailed )
-    return 0;
-
-  // find an appropriate parent window for the wallet dialog
-  WId window = 0;
-  if ( qApp->activeWindow() )
-    window = qApp->activeWindow()->winId();
-  else if ( getKMMainWidget() )
-    window = getKMMainWidget()->topLevelWidget()->winId();
-
-  delete mWallet;
-  mWallet = Wallet::openWallet( Wallet::NetworkWallet(), window );
-
-  if ( !mWallet ) {
-    walletOpenFailed = true;
-    return 0;
-  }
-
-  if ( !mWallet->hasFolder( "kmail" ) )
-    mWallet->createFolder( "kmail" );
-  mWallet->setFolder( "kmail" );
-  return mWallet;
-}
 
 FolderCollection *KMKernel::currentFolderCollection()
 {
