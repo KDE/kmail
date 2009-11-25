@@ -260,6 +260,7 @@ set(kmailprivate_LIB_SRCS
    messagelistview/storagemodel.cpp
    messagelistview/widget.cpp
    backupjob.cpp
+   folderutil.cpp
 )
 
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
