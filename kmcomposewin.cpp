@@ -1922,12 +1922,9 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
       QTimer::singleShot( 0, this, SLOT( slotAppendSignature() ) );
     }
   }
-#if 0 // TODO port to KMime
-  // Make sure the cursor is at the correct position, which is set by
-  // the template parser.
-  if ( mMsg->getCursorPos() > 0 )
-    mEditor->setCursorPositionFromStart( mMsg->getCursorPos() );
-#endif
+  if ( mMsg->headerByType( "X-KMail-CursorPos" ) ) {
+    mEditor->setCursorPositionFromStart( mMsg->headerByType( "X-KMail-CursorPos" )->asUnicodeString().toInt() );
+  }
   setModified( isModified );
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
@@ -2175,7 +2172,7 @@ void KMComposeWin::readyForSending()
     setEnabled( true );
     return;
   }
-  
+
   mComposer->addAttachmentParts( mAttachmentModel->attachments() );
 
   connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
@@ -2216,7 +2213,7 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
    if( !signSomething && !encryptSomething ) {
     return true;
   }
-  
+
   if( encryptSomething ) {
     if ( !id.pgpEncryptionKey().isEmpty() )
       encryptToSelfKeys.push_back( id.pgpEncryptionKey() );
@@ -2510,7 +2507,7 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message )
 void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message, const Message::InfoPart* infoPart )
 {
   qjob->setFrom( infoPart->from() );
-  
+
   if( mEncryptAction->isChecked() && !infoPart->bcc().isEmpty() ) // have to deal with multiple message contents
   {
     // if the bcc isn't empty, then we send it to the bcc because this is the bcc-only encrypted body

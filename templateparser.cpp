@@ -406,11 +406,9 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         QString pipe_cmd = q;
         QString str = pipe( pipe_cmd, body );
         body = str;
-#if 0 //TODO port to akonadi
-        mMsg->setCursorPos( 0 );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+        KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-CursorPos", mMsg.get(), QString::number( 0 ), "utf-8" );
+        mMsg->setHeader( header );
+
       } else if ( cmd.startsWith( QLatin1String("TEXT") ) ) {
         kDebug() << "Command: TEXT";
         i += strlen( "TEXT" );
@@ -850,11 +848,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug() << "Command: CLEAR";
         i += strlen( "CLEAR" );
         body = "";
-#if 0
-        mMsg->setCursorPos( 0 );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+        KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-CursorPos", mMsg.get(), QString::number( 0 ), "utf-8" );
+        mMsg->setHeader( header );
       } else if ( cmd.startsWith( QLatin1String("DEBUGOFF") ) ) {
         // turn off debug
         kDebug() << "Command: DEBUGOFF";
@@ -871,11 +866,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         // turn on debug
         kDebug() << "Command: CURSOR";
         i += strlen( "CURSOR" );
-#if 0
-        mMsg->setCursorPos( body.length() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+        KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-CursorPos", mMsg.get(), QString::number( body.length() ), "utf-8" );
+        mMsg->setHeader( header );
       } else if ( cmd.startsWith( QLatin1String( "SIGNATURE" ) ) ) {
         kDebug() << "Command: SIGNATURE";
         i += strlen( "SIGNATURE" );
