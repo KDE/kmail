@@ -256,7 +256,8 @@ class KMAIL_EXPORT KMEditMsgCommand : public KMCommand
 
 public:
   KMEditMsgCommand( QWidget *parent, const Akonadi::Item &msg );
-
+private slots:
+  void slotDeleteItem( KJob *job );
 private:
   virtual Result execute();
 };

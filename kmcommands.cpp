@@ -594,6 +594,7 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg )
 {
   fetchScope().fetchFullPayload( true );
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+  setDeletesItself( true );
 }
 
 KMCommand::Result KMEditMsgCommand::execute()
@@ -607,17 +608,8 @@ KMCommand::Result KMEditMsgCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-#if 0
-  // Remember the old parent, we need it a bit further down to be able
-  // to put the unchanged messsage back in the original folder if the nth
-  // edit is discarded, for n > 1.
-  KMFolder *parent = msg->parent();
-  if ( parent ) {
-    parent->take( parent->find( msg ) );
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
+  connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDeleteItem( KJob* ) ) );
   KMail::Composer *win = KMail::makeComposer();
 #if 0
   msg->setTransferInProgress( false ); // From here on on, the composer owns the message.
@@ -627,6 +619,20 @@ KMCommand::Result KMEditMsgCommand::execute()
   win->show();
 
   return OK;
+}
+
+void KMEditMsgCommand::slotDeleteItem( KJob *job )
+{
+  if ( job->error() ) {
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    setResult( Failed );
+    emit completed( this );
+  }
+  else {
+    setResult( OK );
+    emit completed( this );
+  }
+  deleteLater( );
 }
 
 KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, const Akonadi::Item  &msg )
