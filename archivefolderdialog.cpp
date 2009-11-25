@@ -58,8 +58,6 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   // TODO: Explaination label
   // TODO: Use QFormLayout in KDE4
-  // TODO: sensible stretch factors
-  // TODO: sensible minimum horizontal size
 
   QLabel *folderLabel = new QLabel( i18n( "Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
@@ -99,7 +97,11 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   // TODO: Warn that user should do mail check for online IMAP and possibly cached IMAP as well
 
+  mainLayout->setColumnStretch( 1, 1 );
   mainLayout->addItem( new QSpacerItem( 1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding ), row, 0 );
+
+  // Make it a bit bigger, else the folder requester cuts off the text too early
+  resize( 500, minimumSize().height() );
 }
 
 void ArchiveFolderDialog::setFolder( KMFolder *defaultFolder )

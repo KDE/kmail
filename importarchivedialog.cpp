@@ -50,8 +50,6 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
 
   // TODO: Explaination label
   // TODO: Use QFormLayout in KDE4
-  // TODO: sensible stretch factors
-  // TODO: sensible minimum horizontal size
 
   QLabel *folderLabel = new QLabel( i18n( "Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
@@ -70,7 +68,11 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
 
   // TODO: what's this, tooltips
 
+  mainLayout->setColumnStretch( 1, 1 );
   mainLayout->addItem( new QSpacerItem( 1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding ), row, 0 );
+
+  // Make it a bit bigger, else the folder requester cuts off the text too early
+  resize( 500, minimumSize().height() );
 }
 
 void ImportArchiveDialog::setFolder( KMFolder *defaultFolder )
