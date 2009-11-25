@@ -1147,7 +1147,7 @@ void KMMainWidget::slotSearch()
 {
   if(!mSearchWin)
   {
-    mSearchWin = new SearchWindow(this, mCurrentFolder->collection());
+    mSearchWin = new SearchWindow(this, mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
     mSearchWin->setModal( false );
     mSearchWin->setObjectName( "Search" );
     connect(mSearchWin, SIGNAL(destroyed()),
@@ -4682,6 +4682,7 @@ void KMMainWidget::showEvent( QShowEvent *event )
 void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
   slotSearch();
+  
   assert( mSearchWin );
   KMSearchPattern pattern;
   pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mMessagePane->currentFilterSearchString() ) );
