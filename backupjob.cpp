@@ -212,6 +212,21 @@ void BackupJob::archiveNextMessage()
   }
 }
 
+static int fileInfoToUnixPermissions( const QFileInfo &fileInfo )
+{
+  int perm = 0;
+  if ( fileInfo.permission( QFile::ExeOther ) ) perm += S_IXOTH;
+  if ( fileInfo.permission( QFile::WriteOther ) ) perm += S_IWOTH;
+  if ( fileInfo.permission( QFile::ReadOther ) ) perm += S_IROTH;
+  if ( fileInfo.permission( QFile::ExeGroup ) ) perm += S_IXGRP;
+  if ( fileInfo.permission( QFile::WriteGroup ) ) perm += S_IWGRP;
+  if ( fileInfo.permission( QFile::ReadGroup ) ) perm += S_IRGRP;
+  if ( fileInfo.permission( QFile::ExeOwner ) ) perm += S_IXUSR;
+  if ( fileInfo.permission( QFile::WriteOwner ) ) perm += S_IWUSR;
+  if ( fileInfo.permission( QFile::ReadOwner ) ) perm += S_IRUSR;
+  return perm;
+}
+
 void BackupJob::processCurrentMessage()
 {
   if ( mCurrentMessage ) {
@@ -219,14 +234,45 @@ void BackupJob::processCurrentMessage()
     const DwString &messageDWString = mCurrentMessage->asDwString();
     const qint64 messageSize = messageDWString.size();
     const char *messageString = mCurrentMessage->asDwString().c_str();
-    QString messageName = mCurrentMessage->fileName();
+    QString messageName;
+    QFileInfo fileInfo;
     if ( messageName.isEmpty() ) {
       messageName = QString::number( mCurrentMessage->getMsgSerNum() ); // IMAP doesn't have filenames
+      if ( mCurrentMessage->storage() ) {
+        fileInfo.setFile( mCurrentMessage->storage()->location() );
+        // TODO: what permissions etc to take when there is no storage file?
+      }
     }
+    else {
+      // TODO: What if the message is not in the "cur" directory?
+      fileInfo.setFile( mCurrentFolder->location() + "/cur/" + mCurrentMessage->fileName() );
+      messageName = mCurrentMessage->fileName();
+    }
+
     const QString fileName = stripRootPath( mCurrentFolder->location() ) +
                              "/cur/" + messageName;
 
-    if ( !mArchive->writeFile( fileName, "root", "root", messageString, messageSize ) ) {
+    QString user;
+    QString group;
+    mode_t permissions = 0700;
+    time_t creationTime = time( 0 );
+    time_t modificationTime = time( 0 );
+    time_t accessTime = time( 0 );
+    if ( !fileInfo.fileName().isEmpty() ) {
+      user = fileInfo.owner();
+      group = fileInfo.group();
+      permissions = fileInfoToUnixPermissions( fileInfo );
+      creationTime = fileInfo.created().toTime_t();
+      modificationTime = fileInfo.lastModified().toTime_t();
+      accessTime = fileInfo.lastRead().toTime_t();
+    }
+    else {
+      kWarning() << "Unable to find file for message " << fileName;
+    }
+
+    if ( !mArchive->writeFile( fileName, user, group,
+                               messageString, messageSize, permissions,
+                               accessTime, modificationTime, creationTime ) ) {
       abort( i18n( "Failed to write a message into the archive folder '%1'.", mCurrentFolder->name() ) );
       return;
     }
@@ -264,6 +310,19 @@ void BackupJob::folderJobFinished( KMail::FolderJob *job )
   }
 }
 
+bool BackupJob::writeDirHelper( const QString &directoryPath, const QString &permissionPath )
+{
+  QFileInfo fileInfo( permissionPath );
+  QString user = fileInfo.owner();
+  QString group = fileInfo.group();
+  mode_t permissions = fileInfoToUnixPermissions( fileInfo );
+  time_t creationTime = fileInfo.created().toTime_t();
+  time_t modificationTime = fileInfo.lastModified().toTime_t();
+  time_t accessTime = fileInfo.lastRead().toTime_t();
+  return mArchive->writeDir( stripRootPath( directoryPath ), user, group, permissions, accessTime,
+                             modificationTime, creationTime );
+}
+
 void BackupJob::archiveNextFolder()
 {
   if ( mPendingFolders.isEmpty() ) {
@@ -282,12 +341,12 @@ void BackupJob::archiveNextFolder()
   const QString folderName = mCurrentFolder->name();
   bool success = true;
   if ( hasChildren( mCurrentFolder ) ) {
-    if ( !mArchive->writeDir( stripRootPath( mCurrentFolder->subdirLocation() ), "root", "root" ) )
+    if ( !writeDirHelper( mCurrentFolder->subdirLocation(), mCurrentFolder->subdirLocation() ) )
       success = false;
   }
-  if ( !mArchive->writeDir( stripRootPath( mCurrentFolder->location() ), "root", "root" ) )
+  if ( !writeDirHelper( mCurrentFolder->location(), mCurrentFolder->location() ) )
     success = false;
-  if ( !mArchive->writeDir( stripRootPath( mCurrentFolder->location() ) + "/cur", "root", "root" ) )
+  if ( !writeDirHelper( mCurrentFolder->location() + "/cur", mCurrentFolder->location() ) )
     success = false;
   if ( !success ) {
     abort( i18n( "Unable to create folder structure for folder '%1' within archive file.",
