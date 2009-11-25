@@ -23,6 +23,8 @@
 #include "kmfoldercachedimap.h"
 #include "kmfoldermgr.h"
 
+#include <kmessagebox.h>
+
 using namespace KMail;
 using namespace FolderUtil;
 
@@ -49,7 +51,7 @@ KMFolder *KMail::FolderUtil::createSubFolder( KMFolder *parentFolder, KMFolderDi
         }
         KMFolderImap* newStorage = static_cast<KMFolderImap*>( newFolder->storage() );
         selectedStorage->createFolder(folderName, parent); // create it on the server
-        newStorage->initializeFrom( selectedStorage, imapPath, QString::null );
+        newStorage->initializeFrom( selectedStorage, imapPath, QString() );
         static_cast<KMFolderImap*>(parentFolder->storage())->setAccount( selectedStorage->account() );
         return newFolder;
       }
@@ -78,4 +80,36 @@ KMFolder *KMail::FolderUtil::createSubFolder( KMFolder *parentFolder, KMFolderDi
   }
 
   return newFolder;
+}
+
+void KMail::FolderUtil::deleteFolder( KMFolder *folderToDelete, QWidget *parent )
+{
+  if ( folderToDelete->hasAccounts() ) {
+    // this folder has an account, so we need to change that to the inbox
+    for ( AccountList::Iterator it (folderToDelete->acctList()->begin() ),
+           end( folderToDelete->acctList()->end() ); it != end; ++it ) {
+      (*it)->setFolder( kmkernel->inboxFolder() );
+      KMessageBox::information(
+        parent,
+        i18n( "<qt>The folder you deleted was associated with the account "
+              "<b>%1</b> which delivered mail into it. The folder the account "
+              "delivers new mail into was reset to the main Inbox folder.</qt>",
+              (*it)->name() ) );
+    }
+  }
+  if (folderToDelete->folderType() == KMFolderTypeImap)
+    kmkernel->imapFolderMgr()->remove(folderToDelete);
+  else if (folderToDelete->folderType() == KMFolderTypeCachedImap) {
+    // Deleted by user -> tell the account (see KMFolderCachedImap::listDirectory2)
+    KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>( folderToDelete->storage() );
+    KMAcctCachedImap* acct = storage->account();
+    if ( acct )
+      acct->addDeletedFolder( folderToDelete );
+
+    kmkernel->dimapFolderMgr()->remove(folderToDelete);
+  }
+  else if (folderToDelete->folderType() == KMFolderTypeSearch)
+    kmkernel->searchFolderMgr()->remove(folderToDelete);
+  else
+    kmkernel->folderMgr()->remove(folderToDelete);
 }

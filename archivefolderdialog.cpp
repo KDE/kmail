@@ -56,6 +56,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   int row = 0;
 
+  // TODO: better label for "Ok" button
   // TODO: Explaination label
   // TODO: Use QFormLayout in KDE4
 
