@@ -77,7 +77,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mFormatComboBox->addItem( i18n( "Uncompressed Archive (.tar)" ) );
   mFormatComboBox->addItem( i18n( "BZ2-Compressed Tar Archive (.tar.bz2)" ) );
   mFormatComboBox->addItem( i18n( "GZ-Compressed Tar Archive (.tar.gz)" ) );
-  mFormatComboBox->setCurrentItem( 0 );
+  mFormatComboBox->setCurrentIndex( 0 );
   connect( mFormatComboBox, SIGNAL(activated(int)),
            this, SLOT(slotFixFileExtension()) );
   mainLayout->addWidget( mFormatComboBox, row, 1 );
