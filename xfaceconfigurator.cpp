@@ -32,19 +32,21 @@
 
 #include "xfaceconfigurator.h"
 
+#include <akonadi/contact/contactsearchjob.h>
+#include <kabc/addressee.h>
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <kimageio.h>
+#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 #include <ktextedit.h>
 #include <kurl.h>
-#include <kio/netaccess.h>
 #include <kxface.h>
-#include <kabc/stdaddressbook.h>
-#include <kabc/addressee.h>
 
 #include <QCheckBox>
 #include <QHBoxLayout>
@@ -242,33 +244,42 @@ namespace KMail {
 
   void XFaceConfigurator::slotSelectFromAddressbook()
   {
-    StdAddressBook *ab = StdAddressBook::self( true );
-    Addressee me = ab->whoAmI();
-    if ( !me.isEmpty() )
-    {
-      if ( me.photo().isIntern() )
-      {
-        QImage photo = me.photo().data();
-        if ( !photo.isNull() )
-        {
-          KXFace xf;
-          mTextEdit->setText( xf.fromImage( photo ) );
-        }
-        else
-          KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
+    using namespace KPIMIdentities;
 
+    IdentityManager manager( true );
+    const Identity defaultIdentity = manager.defaultIdentity();
+    const QString email = defaultIdentity.emailAddr();
+
+    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob;
+    job->setQuery( Akonadi::ContactSearchJob::Email, email );
+    job->exec();
+
+    if ( job->contacts().isEmpty() ) {
+      KMessageBox::information( this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture") );
+      return;
+    }
+
+    const Addressee contact = job->contacts().first();
+    if ( contact.photo().isIntern() )
+    {
+      const QImage photo = contact.photo().data();
+      if ( !photo.isNull() )
+      {
+        KXFace xf;
+        mTextEdit->setText( xf.fromImage( photo ) );
       }
       else
-      {
-        KUrl url = me.photo().url();
-        if( !url.isEmpty() )
-          setXfaceFromFile( url );
-        else
-          KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
-      }
+        KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
+
     }
     else
-      KMessageBox::information( this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture") );
+    {
+      const KUrl url = contact.photo().url();
+      if( !url.isEmpty() )
+        setXfaceFromFile( url );
+      else
+        KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
+    }
   }
 
   void XFaceConfigurator::slotUpdateXFace()
