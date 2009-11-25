@@ -21,6 +21,7 @@
 
 #include <kdialog.h>
 
+class QCheckBox;
 class KUrlRequester;
 class KComboBox;
 class KMFolder;
@@ -48,6 +49,7 @@ class ArchiveFolderDialog : public KDialog
   private:
 
     QWidget *mParentWidget;
+    QCheckBox *mDeleteCheckBox;
     FolderRequester *mFolderRequester;
     KComboBox *mFormatComboBox;
     KUrlRequester *mUrlRequester;

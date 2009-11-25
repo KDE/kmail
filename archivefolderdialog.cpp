@@ -30,6 +30,7 @@
 #include <kmessagebox.h>
 
 #include <qlabel.h>
+#include <qcheckbox.h>
 #include <qlayout.h>
 
 using namespace KMail;
@@ -92,7 +93,10 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mainLayout->addWidget( mUrlRequester, row, 1 );
   row++;
 
-  // TODO: checkbox "delete after success"
+  // TODO: Make this appear more dangerous!
+  mDeleteCheckBox = new QCheckBox( i18n( "Delete folders after completion" ), mainWidget );
+  mainLayout->addWidget( mDeleteCheckBox, row, 0, 1, 2, Qt::AlignLeft );
+  row++;
 
   // TODO: what's this, tooltips
 
@@ -133,6 +137,7 @@ void ArchiveFolderDialog::slotOk()
   backupJob->setRootFolder( mFolderRequester->folder() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );
+  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() );
   backupJob->start();
   accept();
 }
