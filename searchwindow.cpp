@@ -59,6 +59,8 @@
 #include <maillistdrag.h>
 using namespace KPIM;
 
+#include <akonadi/searchcreatejob.h>
+
 #include <kmime/kmime_message.h>
 
 #include <mimelib/boyermor.h>
@@ -492,7 +494,6 @@ void SearchWindow::activateFolder(const Akonadi::Collection& curFolder)
 //-----------------------------------------------------------------------------
 void SearchWindow::slotSearch()
 {
-#if 0 //TODO port to akonadi
   mLastFocus = focusWidget();
   setButtonFocus( User1 );     // set focus so we don't miss key event
 
@@ -511,7 +512,7 @@ void SearchWindow::slotSearch()
   mSortColumn = mLbxMatches->sortColumn();
   mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
   mLbxMatches->setSortingEnabled( false );
-#if 0
+#if 0 //TODO port to akonadi
   // If we haven't openend an existing search folder, find or create one.
   if ( !mFolder ) {
     KMFolderMgr *mgr = kmkernel->searchFolderMgr();
@@ -532,7 +533,6 @@ void SearchWindow::slotSearch()
     }
     mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
   }
-#endif
   mFolder->stopSearch();
   disconnect( mFolder, SIGNAL( msgAdded( int ) ),
               this, SLOT( slotAddMsg( int ) ) );
@@ -553,25 +553,26 @@ void SearchWindow::slotSearch()
     search->setRecursive( mChkSubFolders->isChecked() );
   }
 
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mPatternEdit->updateSearchPattern();
   KMSearchPattern *searchPattern = new KMSearchPattern();
   *searchPattern = *mSearchPattern; //deep copy
   searchPattern->purify();
-  search->setSearchPattern( searchPattern );
-  mFolder->setSearch( search );
+//   search->setSearchPattern( searchPattern );
+//   mFolder->setSearch( search );
   enableGUI();
 
   mTimer->start( 200 );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
-  mPatternEdit->updateSearchPattern();
-  kDebug() << mSearchPattern->asSparqlQuery();
+  kDebug() << searchPattern->asSparqlQuery();
+  Akonadi::SearchCreateJob *searchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern->asSparqlQuery(), this );
+  connect( searchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::searchDone()
+void SearchWindow::searchDone( KJob* job )
 {
     mTimer->stop();
     updStatus();

@@ -1034,8 +1034,8 @@ QString KMSearchPattern::asSparqlQuery() const
   SparqlBuilder::GroupGraphPattern innerGroup;
   innerGroup.setUnion( mOperator == OpOr );
 
-  foreach ( KMSearchRule* rule, *this )
-    rule->asQueryGraph( innerGroup );
+  for ( const_iterator it = begin(); it != end(); ++it )
+    (*it)->asQueryGraph( innerGroup );
 
   outerGroup.addGraphPattern( innerGroup );
   outerGroup.setUnion( false );

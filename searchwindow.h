@@ -42,6 +42,7 @@ class KMMainWidget;
 class KMSearchPattern;
 class KMSearchPatternEdit;
 class KStatusBar;
+class KJob;
 
 namespace KMail {
   class FolderRequester;
@@ -130,7 +131,7 @@ protected slots:
   void slotCutMsgs();
 
   /** GUI cleanup after search */
-  virtual void searchDone();
+  void searchDone(KJob* job);
   virtual void slotAddMsg(int idx);
   virtual void slotRemoveMsg(KMFolder *, quint32 serNum);
   void enableGUI();
