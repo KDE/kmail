@@ -88,7 +88,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mUrlRequester = new KUrlRequester( mainWidget );
   mUrlRequester->setMode( KFile::LocalOnly );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
-  connect( mUrlRequester, SIGNAL(urlSelected(const QString&)),
+  connect( mUrlRequester, SIGNAL(urlSelected(const KUrl&)),
            this, SLOT(slotFixFileExtension()) );
   mainLayout->addWidget( mUrlRequester, row, 1 );
   row++;
