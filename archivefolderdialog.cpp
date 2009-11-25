@@ -124,6 +124,8 @@ void ArchiveFolderDialog::slotOk()
                                       KGuiItem( i18n( "Cancel" ) ) ) != KMessageBox::Yes ) {
       return;
     }
+
+    // TODO: Check if overwriting actually works!
   }
 
   if ( !mFolderRequester->folder() ) {
