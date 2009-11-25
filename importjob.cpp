@@ -104,11 +104,6 @@ void ImportJob::abort( const QString &errorMessage )
 
 KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions )
 {
-  if ( !parent->createChildFolder() ) {
-    abort( i18n( "Unable to create subfolder for folder '%1'.", parent->name() ) );
-    return 0;
-  }
-
   KMFolder *newFolder = FolderUtil::createSubFolder( parent, parent->child(), folderName, QString(),
                                                      KMFolderTypeMaildir );
   if ( !newFolder ) {
@@ -242,6 +237,23 @@ static QString folderNameForDirectoryName( const QString &dirName )
   return returnName;
 }
 
+KMFolder* ImportJob::getOrCreateSubFolder( KMFolder *parentFolder, const QString &subFolderName,
+                                           mode_t subFolderPermissions )
+{
+  if ( !parentFolder->createChildFolder() ) {
+    abort( i18n( "Unable to create subfolder for folder '%1'.", parentFolder->name() ) );
+    return 0;
+  }
+
+  KMFolder *subFolder = 0;
+  subFolder = dynamic_cast<KMFolder*>( parentFolder->child()->hasNamedFolder( subFolderName ) );
+
+  if ( !subFolder ) {
+    subFolder = createSubFolder( parentFolder, subFolderName, subFolderPermissions );
+  }
+  return subFolder;
+}
+
 void ImportJob::importNextDirectory()
 {
   if ( mAborted )
@@ -267,7 +279,7 @@ void ImportJob::importNextDirectory()
       if ( !dir->name().startsWith( QLatin1String( "." ) ) ) {
 
         kDebug() << "Queueing messages in folder " << entry->name();
-        KMFolder *subFolder = createSubFolder( currentFolder, entry->name(), entry->permissions() );
+        KMFolder *subFolder = getOrCreateSubFolder( currentFolder, entry->name(), entry->permissions() );
         if ( !subFolder )
           return;
 
@@ -277,22 +289,14 @@ void ImportJob::importNextDirectory()
       // Entry starts with a dot, so we assume it is a subdirectory
       else {
 
-        // Check if the subfolder already exists or create it
-        KMFolder *subFolder = 0;
         const QString folderName = folderNameForDirectoryName( entry->name() );
         if ( folderName.isEmpty() ) {
           abort( i18n( "Unexpected subdirectory named '%1'.", entry->name() ) );
           return;
         }
-        if ( currentFolder->child() ) {
-          subFolder = dynamic_cast<KMFolder*>( currentFolder->child()->hasNamedFolder( folderName ) );
-        }
-        if ( !subFolder ) {
-          kDebug() << "Creating subfolder for directory " << entry->name();
-          subFolder = createSubFolder( currentFolder, folderName, entry->permissions() );
-          if ( !subFolder )
-            return;
-        }
+        KMFolder *subFolder = getOrCreateSubFolder( currentFolder, folderName, entry->permissions() );
+        if ( !subFolder )
+          return;
 
         Folder newFolder;
         newFolder.archiveDir = dir;
