@@ -30,6 +30,7 @@
 
 #include <qwidget.h>
 #include <qtimer.h>
+#include <qfile.h>
 
 using namespace KMail;
 
@@ -80,7 +81,7 @@ void ImportJob::abort( const QString &errorMessage )
   deleteLater();
 }
 
-KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderName )
+KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions )
 {
   if ( !parent->createChildFolder() ) {
     abort( i18n( "Unable to create subfolder for folder '%1'.", parent->name() ) );
@@ -93,7 +94,16 @@ KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderNa
     abort( i18n( "Unable to create subfolder for folder '%1'.", parent->name() ) );
     return 0;
   }
-  else return newFolder;
+  else {
+    newFolder->createChildFolder(); // TODO: Just creating a child folder here is wasteful, only do
+                                    //       that if really needed. We do it here so we can set the
+                                    //       permissions
+    chmod( newFolder->location().toLatin1(), permissions );
+    chmod( newFolder->subdirLocation().toLatin1(), permissions );
+    // TODO: chown?
+    // TODO: what about subdirectories like "cur"?
+    return newFolder;
+  }
 }
 
 void ImportJob::enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder )
@@ -167,6 +177,22 @@ void ImportJob::importNextMessage()
   }
   else {
     mNumberOfImportedMessages++;
+    if ( mCurrentFolder->folderType() == KMFolderTypeMaildir ||
+         mCurrentFolder->folderType() == KMFolderTypeCachedImap ) {
+      const QString messageFile = mCurrentFolder->location() + "/cur/" + newMessage->fileName();
+      // TODO: what if the file is not in the "cur" subdirectory?
+      if ( QFile::exists( messageFile ) ) {
+        chmod( messageFile.toLatin1(), file->permissions() );
+        // TODO: changing user/group he requires a bit more work, requires converting the strings
+        //       to uid_t and gid_t
+        //getpwnam()
+        //chown( messageFile,
+      }
+      else {
+        kWarning() << "Unable to change permissions for newly created file: " << messageFile;
+      }
+    }
+    // TODO: Else?
     kDebug() << "Added message with subject " /*<< newMessage->subject()*/ // < this causes a pure virtual method to be called...
              << " to folder " << mCurrentFolder->name() << " at index " << retIndex;
   }
@@ -195,7 +221,7 @@ void ImportJob::importNextDirectory()
       if ( !dir->name().startsWith( QLatin1String( "." ) ) ) {
 
         kDebug() << "Queueing messages in folder " << entry->name();
-        KMFolder *subFolder = createSubFolder( currentFolder, entry->name() );
+        KMFolder *subFolder = createSubFolder( currentFolder, entry->name(), entry->permissions() );
         if ( !subFolder )
           return;
 
