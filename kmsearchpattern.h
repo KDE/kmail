@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
+#include <sparqlbuilder.h>
 
 #include <QList>
 #include <QString>
@@ -157,6 +158,9 @@ public:
   /** Returns the rule as string. For debugging.*/
   const QString asString() const;
 
+  /** Adds a query graph pattern to the given graph group. */
+  virtual void asQueryGraph( SparqlBuilder::GroupGraphPattern &graphGroup ) const = 0;
+
 private:
   static Function configValueToFunc( const char * str );
   static QString functionToString( Function function );
@@ -187,6 +191,7 @@ public:
   virtual bool requiresBody() const;
 
   virtual bool matches( KMime::Message * msg ) const;
+  virtual void asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const;
 
   /** Optimized version tries to match the rule against the given  DwString.
       @return true if the rule matched, false otherwise.
@@ -216,6 +221,7 @@ public:
   virtual bool isEmpty() const ;
 
   virtual bool matches( KMime::Message * msg ) const;
+  virtual void asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const;
 
   // Optimized matching not implemented, will use the unoptimized matching
   // from KMSearchRule
@@ -293,6 +299,7 @@ public:
 
    virtual bool isEmpty() const ;
    virtual bool matches( KMime::Message * msg ) const;
+   virtual void asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const;
 
    //Not possible to implement optimized form for status searching
    using KMSearchRule::matches;
@@ -407,6 +414,9 @@ public:
 
   /** Returns the pattern as string. For debugging.*/
   QString asString() const;
+
+  /** Returns the pattern as a SPARQL query. */
+  QString asSparqlQuery() const;
 
   /** Overloaded assignment operator. Makes a deep copy. */
   const KMSearchPattern & operator=( const KMSearchPattern & aPattern );

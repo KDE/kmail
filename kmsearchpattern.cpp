@@ -26,6 +26,10 @@ using KMail::FilterLog;
 #include "kmfolder.h"
 #include <kpimutils/email.h>
 
+#include <selectsqarqlbuilder.h>
+#include <nmo.h>
+#include <nco.h>
+
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -42,6 +46,8 @@ using KMail::FilterLog;
 
 #include <mimelib/string.h>
 #include <mimelib/boyermor.h>
+
+#include <Soprano/Vocabulary/RDF>
 
 #include <assert.h>
 
@@ -430,6 +436,51 @@ bool KMSearchRuleString::matches( KMime::Message * msg ) const
   return rc;
 }
 
+void KMSearchRuleString::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const
+{
+  SparqlBuilder::GroupGraphPattern patternGroup;
+
+  // TODO split contents() into address/name and adapt the query accordingly
+  if ( field() == "To" || field() == "<recipients>" || field() == "<any header>" ) {
+    SparqlBuilder::BasicGraphPattern pattern;
+    pattern.addTriple( "?message", Vocabulary::NMO::to(), SparqlBuilder::QueryVariable("?toPerson") );
+    pattern.addTriple( "?toPerson", Vocabulary::NCO::hasEmailAddress(), SparqlBuilder::QueryVariable("?toAddress") );
+    pattern.addTriple( "?toAddress", Vocabulary::NCO::emailAddress(), contents() );
+    patternGroup.addGraphPattern( pattern );
+  }
+  if ( field() == "Cc" || field() == "<recipients>" || field() == "<any header>" ) {
+    SparqlBuilder::BasicGraphPattern pattern;
+    pattern.addTriple( "?message", Vocabulary::NMO::cc(), SparqlBuilder::QueryVariable("?ccPerson") );
+    pattern.addTriple( "?ccPerson", Vocabulary::NCO::hasEmailAddress(), SparqlBuilder::QueryVariable("?ccAddress") );
+    pattern.addTriple( "?ccAddress", Vocabulary::NCO::emailAddress(), contents() );
+    patternGroup.addGraphPattern( pattern );
+  }
+
+  // TODO split contents() into address/name and adapt the query accordingly
+  if ( field() == "From" || field() == "<any header>" ) {
+    SparqlBuilder::BasicGraphPattern pattern;
+    pattern.addTriple( "?message", Vocabulary::NMO::cc(), SparqlBuilder::QueryVariable("?fromPerson") );
+    pattern.addTriple( "?fromPerson", Vocabulary::NCO::hasEmailAddress(), SparqlBuilder::QueryVariable("?fromAddress") );
+    pattern.addTriple( "?fromAddress", Vocabulary::NCO::emailAddress(), contents() );
+    patternGroup.addGraphPattern( pattern );
+  }
+
+  if ( field() == "Subject" || field() == "<any header>" ) {
+    SparqlBuilder::BasicGraphPattern pattern;
+    pattern.addTriple( "?message", Vocabulary::NMO::messageSubject(), contents() );
+    patternGroup.addGraphPattern( pattern );
+  }
+
+  // TODO complete for other headers, generic headers and content
+  // TODO honor function()
+
+  if ( field() == "<recipients>" || field() == "<any header>" )
+    patternGroup.setUnion( true );
+  if ( !patternGroup.isEmpty() )
+    graphGroup.addGraphPattern( patternGroup );
+}
+
+
 // helper, does the actual comparing
 bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 {
@@ -644,6 +695,10 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
   return false;
 }
 
+void KMSearchRuleNumerical::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const
+{
+  // TODO
+}
 
 
 //==================================================
@@ -723,6 +778,11 @@ bool KMSearchRuleStatus::matches( KMime::Message * msg ) const
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
+}
+
+void KMSearchRuleStatus::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const
+{
+  // TODO
 }
 
 // ----------------------------------------------------------------------------
@@ -958,6 +1018,29 @@ QString KMSearchPattern::asString() const {
     result += "\n\t" + FilterLog::recode( (*it)->asString() );
 
   return result;
+}
+
+QString KMSearchPattern::asSparqlQuery() const
+{
+  SelectSparqlBuilder queryBuilder;
+  queryBuilder.addQueryVariable( "?message" );
+
+  SparqlBuilder::GroupGraphPattern outerGroup;
+  // FIXME: type restriction seems to always fail
+//   SparqlBuilder::BasicGraphPattern typePattern;
+//   typePattern.addTriple( "?message", Soprano::Vocabulary::RDF::type(), Vocabulary::NMO::Email() );
+//   outerGroup.addGraphPattern( typePattern );
+
+  SparqlBuilder::GroupGraphPattern innerGroup;
+  innerGroup.setUnion( mOperator == OpOr );
+
+  foreach ( KMSearchRule* rule, *this )
+    rule->asQueryGraph( innerGroup );
+
+  outerGroup.addGraphPattern( innerGroup );
+  outerGroup.setUnion( false );
+  queryBuilder.setGraphPattern( outerGroup );
+  return queryBuilder.query();
 }
 
 const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & other ) {

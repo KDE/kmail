@@ -565,6 +565,9 @@ void SearchWindow::slotSearch()
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+
+  mPatternEdit->updateSearchPattern();
+  kDebug() << mSearchPattern->asSparqlQuery();
 }
 
 //-----------------------------------------------------------------------------

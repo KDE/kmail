@@ -53,6 +53,8 @@ include_directories(
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
   ${CMAKE_SOURCE_DIR}/akonadi/
+  ${CMAKE_CURRENT_SOURCE_DIR}/../nepomuk_email_feeder/shared/
+  ${CMAKE_CURRENT_BINARY_DIR}/../ontologies
  )
 if(Nepomuk_FOUND)
   include_directories( ${NEPOMUK_INCLUDES} )
@@ -178,6 +180,8 @@ set(kmailprivate_LIB_SRCS
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
+   ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/sparqlbuilder.cpp
+   ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/selectsparqlbuilder.cpp
 )
 
 # TODO PORT
@@ -283,6 +287,8 @@ target_link_libraries(kmailprivate
   ${QT_QT3SUPPORT_LIBRARY}
   messageviewer
   akonadi_next
+  ${SOPRANO_LIBRARIES}
+  niefast_apps
 )
 
 if(Nepomuk_FOUND)
