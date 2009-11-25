@@ -1235,7 +1235,8 @@ void removePrivateHeaderFields( const KMime::Message::Ptr &msg ) {
   msg->removeHeader("X-KMail-Redirect-From");
   msg->removeHeader("X-KMail-Link-Message");
   msg->removeHeader("X-KMail-Link-Type");
-  msg->removeHeader( "X-KMail-QuotePrefix" );
+  msg->removeHeader("X-KMail-QuotePrefix");
+  msg->removeHeader("X-KMail-CursorPos");
 }
 
 QByteArray getRefStr( const KMime::Message::Ptr &msg )
