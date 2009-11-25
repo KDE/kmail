@@ -220,7 +220,7 @@ class KMComposeWin : public KMail::Composer
      /**
       * Returns @c true while the message composing is in progress.
       */
-     bool isComposing() const { return mComposer != 0; }
+     bool isComposing() const { return !mComposers.isEmpty(); }
 
      /**
       * Set the text selection the message is a response to.
@@ -522,11 +522,11 @@ class KMComposeWin : public KMail::Composer
      */
     void applyAutoSave();
 
-    bool fillCryptoInfo( Message::Composer* composer, bool sign, bool encrypt );
+    QList< Message::Composer* > generateCryptoMessages( bool sign, bool encrypt );
     void fillGlobalPart( Message::GlobalPart *globalPart );
     void fillTextPart( Message::TextPart *part );
     void fillInfoPart( Message::InfoPart *part );
-    void queueMessage( boost::shared_ptr<KMime::Message> message );
+    void queueMessage( boost::shared_ptr<KMime::Message> message, Message::Composer* composer );
 
     /**
      * Install grid management and header fields. If fields exist that
@@ -827,7 +827,7 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mEncryptChiasmusAction;
     bool mEncryptWithChiasmus;
 
-    Message::Composer *mComposer;
+    QList< Message::Composer* > mComposers;
     Message::Composer *mDummyComposer;
     int mPendingQueueJobs;
     int mPendingCreateItemJobs;

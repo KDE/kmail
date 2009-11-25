@@ -192,7 +192,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mCryptoModuleAction( 0 ),
     mEncryptChiasmusAction( 0 ),
     mEncryptWithChiasmus( false ),
-    mComposer( 0 ),
     mDummyComposer( 0 ),
     mPendingQueueJobs( 0 ),
     mPendingCreateItemJobs( 0 ),
@@ -648,7 +647,7 @@ void KMComposeWin::autoSaveMessage()
 {
   kDebug() << "Implement me.";
 
-  if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() ) {
+  if ( !mMsg || !mComposers.isEmpty() || mAutoSaveFilename.isEmpty() ) {
     return;
   }
   kDebug() << "autosaving message";
@@ -2043,7 +2042,7 @@ bool KMComposeWin::queryClose ()
     return true;
   }
 
-  if( mComposer ) {
+  if( !mComposers.isEmpty() ) {
     kWarning() << "Tried to close while composer was active";
     return false;
   }
@@ -2151,7 +2150,7 @@ void KMComposeWin::readyForSending()
     return;
   }
 
-  if( mComposer ) {
+  if( !mComposers.isEmpty() ) {
     // This may happen if e.g. the autosave timer calls applyChanges.
     kDebug() << "Called while composer active; ignoring.";
     return;
@@ -2159,32 +2158,36 @@ void KMComposeWin::readyForSending()
 
   setEnabled( false );
 
-  // Compose the message and queue it for sending.
-  // TODO handle drafts, autosave, etc.
-  mComposer = new Message::Composer;
-  fillGlobalPart( mComposer->globalPart() );
-  fillTextPart( mComposer->textPart() );
-  fillInfoPart( mComposer->infoPart() );
-
-  if( !fillCryptoInfo( mComposer, mSignAction->isChecked(), mEncryptAction->isChecked() ) ) {
-    delete mComposer;
-    mComposer = 0;
+  // we first figure out if we need to create multiple messages with different crypto formats
+  // if so, we create a composer per format
+  // if we aren't signing or encrypting, this just returns a single empty message
+  mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
+  
+  if( mComposers.isEmpty() ) {
     setEnabled( true );
     return;
   }
+  // Compose each message and queue it for sending.
+  // TODO handle drafts, autosave, etc.
+  foreach( Message::Composer* composer, mComposers ) {
+    fillGlobalPart( composer->globalPart() );
+    fillTextPart( composer->textPart() );
+    fillInfoPart( composer->infoPart() );
 
-  mComposer->addAttachmentParts( mAttachmentModel->attachments() );
+    composer->addAttachmentParts( mAttachmentModel->attachments() );
 
-  connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
-  mComposer->start();
-  kDebug() << "Composer for sending started.";
+    connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
+    composer->start();
+    kDebug() << "Started a composer for sending!";
+  }
 
 }
 
-bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool encrypt )
+QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, bool encrypt )
 {
 
-
+  QList< Message::Composer* > composers;
+  
   kDebug() << "filling crypto info";
 
   Kleo::KeyResolver* keyResolver = new Kleo::KeyResolver(  encryptToSelf(), showKeyApprovalDialog(),
@@ -2211,7 +2214,8 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
   }
 
    if( !signSomething && !encryptSomething ) {
-    return true;
+    composers.append( new Message::Composer() );
+    return composers;
   }
 
   if( encryptSomething ) {
@@ -2221,7 +2225,7 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
       encryptToSelfKeys.push_back( id.smimeEncryptionKey() );
     if ( keyResolver->setEncryptToSelfKeys( encryptToSelfKeys ) != Kpgp::Ok ) {
       kDebug() << "Failed to set encryptoToSelf keys!";
-      return false;
+      return composers;
     }
   }
 
@@ -2232,7 +2236,7 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
       signKeys.push_back( id.smimeSigningKey() );
     if ( keyResolver->setSigningKeys( signKeys ) != Kpgp::Ok ) {
       kDebug() << "Failed to set signing keys!";
-      return false;
+      return composers;
     }
   }
 
@@ -2252,23 +2256,10 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
   if ( keyResolver->resolveAllKeys( signSomething, encryptSomething ) != Kpgp::Ok ) {
     /// TODO handle failure
     kDebug() << "failed to resolve keys! oh noes";
-    return false;
+    return composers;
   }
   kDebug() << "done resolving keys:";
 
-  // When the user has configured the preferred cryptography format to any, at this
-  // point it should be found out which format should be used for which recipient.
-  // This wasn't done at all first and the current implementation is a quick fix
-  // which isn't completely correct. It just uses the first concrete format that
-  // it finds and doesn't handle cases in which more formats are supported for
-  // a recipient. This also would need changes in Message::Composer as it seems
-  // to assume composing of one message and one encryption/signing format which
-  // isn't true always.
-  //
-  // Current Quick fix: Iterate over the concrete Crypto message format and take
-  //                    the first supported one.
-  // Correct fix: Iterate over all message formats and for any that return split infos
-  //              create a message for every split info.
   Kleo::CryptoMessageFormat concreteEncryptFormat = Kleo::AutoFormat;
   if( encryptSomething ) {
     for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
@@ -2288,13 +2279,24 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
         data.append( p );
         kDebug() << "got resolved keys for:" << it->recipients;
       }
+      Message::Composer* composer =  new Message::Composer;
+      
       composer->setEncryptionKeys( data );
-      break; // Quick fix, TODO: Implement correct fix.
-    }
-  }
+      composer->setMessageCryptoFormat( concreteEncryptFormat );
 
-  Kleo::CryptoMessageFormat concreteSignFormat = Kleo::AutoFormat;
-  if( signSomething ) {
+      if( signSomething ) {
+        // find signing keys for this format
+        std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( concreteEncryptFormat );
+        composer->setSigningKeys( signingKeys );
+      }
+
+      composer->setSignAndEncrypt( sign, encrypt );
+      
+      composers.append( composer );
+    }
+  } else if( signSomething ) { // just signing, so check sign prefs
+    Kleo::CryptoMessageFormat concreteSignFormat = Kleo::AutoFormat;
+
     for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
       if ( keyResolver->encryptionItems( concreteCryptoMessageFormats[i] ).empty() )
         continue;
@@ -2303,33 +2305,29 @@ bool KMComposeWin::fillCryptoInfo( Message::Composer* composer, bool sign, bool 
         continue;
 
       concreteSignFormat = concreteCryptoMessageFormats[i];
+      std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( concreteEncryptFormat );
 
-      std::vector<GpgME::Key> signingKeys = keyResolver->signingKeys( concreteSignFormat );
+      Message::Composer* composer =  new Message::Composer;
+
       composer->setSigningKeys( signingKeys );
+      composer->setMessageCryptoFormat( concreteSignFormat );
+      composer->setSignAndEncrypt( sign, encrypt );
 
-      break; // Quick fix, TODO: Implement correct fix.
+      composers.append( composer );
     }
   }
 
-  composer->setSignAndEncrypt( sign, encrypt );
-
-  // TODO: Take in account that a composer can create more than one message which might
-  //       have different formats.
-  if ( concreteEncryptFormat != Kleo::AutoFormat )
-    composer->setMessageCryptoFormat( concreteEncryptFormat );
-  else if ( concreteSignFormat != Kleo::AutoFormat )
-    composer->setMessageCryptoFormat( concreteSignFormat );
-  else if( signSomething || encryptSomething )
+  if( composers.isEmpty() && ( signSomething || encryptSomething ) )
     Q_ASSERT_X( false, "KMComposeWin::fillCryptoInfo" , "No concrete sign or encrypt method selected");
 
-  return true;
+  return composers;
 }
 
 
 void KMComposeWin::applyAutoSave()
 {
   kDebug() << "autosaving applying";
-  if( mComposer ) {
+  if( !mComposers.isEmpty() ) {
     // This may happen if e.g. the autosave timer calls applyChanges.
     kDebug() << "Called while composer active; ignoring.";
     return;
@@ -2337,14 +2335,15 @@ void KMComposeWin::applyAutoSave()
 
   kDebug() << "composer for autosaving started";
 
-  mComposer = new Message::Composer;
-  fillGlobalPart( mComposer->globalPart() );
-  fillTextPart( mComposer->textPart() );
-  fillInfoPart( mComposer->infoPart() );
-  mComposer->addAttachmentParts( mAttachmentModel->attachments() );
+  Message::Composer* composer = new Message::Composer;
+  fillGlobalPart( composer->globalPart() );
+  fillTextPart( composer->textPart() );
+  fillInfoPart( composer->infoPart() );
+  composer->addAttachmentParts( mAttachmentModel->attachments() );
 
-  connect( mComposer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposerResult(KJob*)) );
-  mComposer->start();
+  mComposers.append( composer );
+  connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposerResult(KJob*)) );
+  composer->start();
 }
 
 void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
@@ -2392,20 +2391,23 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
   using Message::Composer;
 
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
-  Q_ASSERT( mComposer == job );
-
-  if( mComposer->error() == Composer::NoError ) {
+  Q_ASSERT( dynamic_cast< Composer* >( job ) );
+  Composer* composer = dynamic_cast< Composer* >( job );
+  
+  Q_ASSERT( mComposers.contains( composer ) );
+  
+  if( composer->error() == Composer::NoError ) {
     // The messages were composed successfully.
     // TODO handle drafts
     kDebug() << "NoError.";
-    for( int i = 0; i < mComposer->resultMessages().size(); ++i ) {
+    for( int i = 0; i < composer->resultMessages().size(); ++i ) {
       if ( mSaveIn==None ) {
-        queueMessage( KMime::Message::Ptr( mComposer->resultMessages()[i] ) );
+        queueMessage( KMime::Message::Ptr( composer->resultMessages()[i] ), composer );
       } else {
-        saveMessage( KMime::Message::Ptr( mComposer->resultMessages()[i] ), mSaveIn );
+        saveMessage( KMime::Message::Ptr( composer->resultMessages()[i] ), mSaveIn );
       }
     }
-  } else if( mComposer->error() == Composer::UserCancelledError ) {
+  } else if( composer->error() == Composer::UserCancelledError ) {
     // The job warned the user about something, and the user chose to return
     // to the message.  Nothing to do.
     kDebug() << "UserCancelledError.";
@@ -2413,7 +2415,7 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
   } else {
     kDebug() << "other Error.";
     QString msg;
-    if( mComposer->error() == Composer::BugError ) {
+    if( composer->error() == Composer::BugError ) {
       msg = i18n( "Error composing message:\n\n%1\n\nPlease report this bug.", job->errorString() );
     } else {
       msg = i18n( "Error composing message:\n\n%1", job->errorString() );
@@ -2422,7 +2424,7 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
     KMessageBox::sorry( this, msg, i18n( "Composer" ) );
   }
 
-  mComposer = 0;
+  mComposers.removeAll( composer );
 }
 
 
@@ -2431,13 +2433,17 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
   using Message::Composer;
 
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
-  Q_ASSERT( mComposer == job );
+  Q_ASSERT( dynamic_cast< Composer* >( job ) );
+  Composer* composer = dynamic_cast< Composer* >( job );
+  
+  Q_ASSERT( mComposers.contains( composer ) );
 
-   if( mComposer->error() == Composer::NoError ) {
+
+   if( composer->error() == Composer::NoError ) {
      continueAutoSave();
    }
-   mComposer = 0;
-}
+
+   mComposers.removeAll( composer );}
 
 void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveIn saveIn )
 {
@@ -2484,11 +2490,10 @@ void KMComposeWin::slotCreateItemResult( KJob *job )
   }
 }
 
-void KMComposeWin::queueMessage( KMime::Message::Ptr message )
+void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer* composer )
 {
 
-  Q_ASSERT( mComposer );
-  const Message::InfoPart *infoPart = mComposer->infoPart();
+  const Message::InfoPart *infoPart = composer->infoPart();
   MailTransport::MessageQueueJob *qjob = new MailTransport::MessageQueueJob( this );
   qjob->setMessage( message );
   qjob->setTransportId( infoPart->transportId() );
