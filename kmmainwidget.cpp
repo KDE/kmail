@@ -118,6 +118,7 @@ using KMail::ImapAccountBase;
 using KMail::Vacation;
 #include "favoritefolderview.h"
 #include "backupjob.h"
+#include "importjob.h"
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
 #include "localsubscriptiondialog.h"
@@ -1363,23 +1364,38 @@ void KMMainWidget::slotEmptyFolder()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotImportArchive()
+{
+  // TODO: UI dialog to select target folder
+  //       Make this d-bus callable and add the ability to call it from kmailcvt
+  KFileDialog fileDialog( KGlobalSettings::desktopPath(),
+                          "*.tar.gz *.tar.bz2 *.tar *.tar.gz *.zip", this );
+  fileDialog.setObjectName( "ImportDialog" );
+  fileDialog.setModal( false );
+  if ( fileDialog.exec() == QDialog::Accepted ) {
+    KUrl archivePath = fileDialog.selectedUrl();
+    KMail::ImportJob *importJob = new KMail::ImportJob( this );
+    importJob->setFile( archivePath );
+    importJob->setRootFolder( mFolder );
+    importJob->start();
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotArchiveFolder()
 {
-  // TODO: multi folder support?
-  // TODO: extract this into a job class!
-  // TODO: support other formats in addtion to tar.gz. portable ones.
-  // TODO: pick a portable format as the default
-
-  // TODO: search, mbox, maildir, online imap!
-   KUrl savePath = KFileDialog::getSaveUrl( KGlobalSettings::desktopPath(),
-                                                QString( "*.tar.gz" ),
-                                                this,
-                                                i18n( "Select a Mail Archive Location" ) );
-   KMail::BackupJob *backupJob = new KMail::BackupJob( this );
-   backupJob->setRootFolder( mFolder );
-   backupJob->setSaveLocation( savePath );
-   backupJob->setArchiveType( KMail::BackupJob::TarGz );
-   backupJob->start();
+  // TODO: Add nice dialog here.
+  KUrl savePath = KFileDialog::getSaveUrl( KGlobalSettings::desktopPath(),
+                                           QString( "*.tar.gz" ),
+                                           this,
+                                           i18n( "Select a Mail Archive Location" ) );
+  if ( savePath.isValid() ) {
+    KMail::BackupJob *backupJob = new KMail::BackupJob( this );
+    backupJob->setRootFolder( mFolder );
+    backupJob->setSaveLocation( savePath );
+    backupJob->setArchiveType( KMail::BackupJob::TarGz );
+    backupJob->start();
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3776,6 +3792,10 @@ void KMMainWidget::setupActions()
   mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), this );
   actionCollection()->addAction( "archive_folder", mArchiveFolderAction );
   connect( mArchiveFolderAction, SIGNAL(triggered(bool)), SLOT(slotArchiveFolder()) );
+
+  mImportArchiveAction = new KAction( i18n( "Import Archive..." ), this );
+  actionCollection()->addAction( "import_archive", mImportArchiveAction );
+  connect( mImportArchiveAction, SIGNAL(triggered(bool)), SLOT(slotImportArchive()) );
 
   mPreferHtmlAction = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
   actionCollection()->addAction("prefer_html", mPreferHtmlAction );

@@ -260,6 +260,7 @@ set(kmailprivate_LIB_SRCS
    messagelistview/storagemodel.cpp
    messagelistview/widget.cpp
    backupjob.cpp
+   importjob.cpp
    folderutil.cpp
 )
 
