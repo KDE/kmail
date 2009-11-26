@@ -459,7 +459,7 @@ void KMSearchRuleString::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGro
   // TODO split contents() into address/name and adapt the query accordingly
   if ( field() == "From" || field() == "<any header>" ) {
     SparqlBuilder::BasicGraphPattern pattern;
-    pattern.addTriple( "?message", Vocabulary::NMO::cc(), SparqlBuilder::QueryVariable("?fromPerson") );
+    pattern.addTriple( "?message", Vocabulary::NMO::from(), SparqlBuilder::QueryVariable("?fromPerson") );
     pattern.addTriple( "?fromPerson", Vocabulary::NCO::hasEmailAddress(), SparqlBuilder::QueryVariable("?fromAddress") );
     pattern.addTriple( "?fromAddress", Vocabulary::NCO::emailAddress(), contents() );
     patternGroup.addGraphPattern( pattern );

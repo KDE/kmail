@@ -54,6 +54,11 @@ namespace KMime {
   class Content;
 }
 
+namespace Akonadi {
+  class EntityTreeView;
+  class ItemModel;
+}
+
 namespace KMail {
 
   /**
@@ -152,7 +157,7 @@ protected:
   int mFetchingInProgress;
   int mSortColumn;
   Qt::SortOrder mSortOrder;
-//TODO port to akonadi  QPointer<KMFolderSearch> mFolder;
+  Akonadi::Collection mFolder;
   QTimer *mTimer;
 
   // GC'd by Qt
@@ -160,7 +165,8 @@ protected:
   QRadioButton *mChkbxSpecificFolders;
   KMail::FolderRequester *mCbxFolders;
   QCheckBox *mChkSubFolders;
-  MatchListView* mLbxMatches;
+  Akonadi::ItemModel *mResultModel;
+  Akonadi::EntityTreeView* mLbxMatches;
   QLabel *mSearchFolderLbl;
   KLineEdit *mSearchFolderEdt;
   KPushButton *mSearchFolderOpenBtn;
@@ -184,26 +190,6 @@ protected:
 private:
   KMime::Message *indexToMessage( QTreeWidgetItem *item );
 
-};
-
-// QTreeWidget sub-class for dnd support
-// Internal, only used by SearchWindow.
-class MatchListView : public QTreeWidget
-{
-  Q_OBJECT
-
-  public:
-    MatchListView( QWidget *parent, SearchWindow* sw );
-
-  protected:
-
-    virtual void contextMenuEvent( QContextMenuEvent* event );
-    virtual void startDrag( Qt::DropActions supportedActions );
-
-  private:
-    SearchWindow* mSearchWindow;
-  signals:
-    void contextMenuRequested( QTreeWidgetItem* item );
 };
 
 } // namespace KMail

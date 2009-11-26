@@ -59,7 +59,9 @@
 #include <maillistdrag.h>
 using namespace KPIM;
 
+#include <akonadi/entitytreeview.h>
 #include <akonadi/searchcreatejob.h>
+#include <akonadi/itemmodel.h>
 
 #include <kmime/kmime_message.h>
 
@@ -73,11 +75,7 @@ namespace KMail {
 
 const int SearchWindow::MSGID_COLUMN = 4;
 
-MatchListView::MatchListView( QWidget *parent, SearchWindow* sw ) :
-      QTreeWidget( parent ),
-      mSearchWindow( sw )
-{}
-
+#if 0 //TODO port to akonadi
 void MatchListView::contextMenuEvent( QContextMenuEvent* event )
 {
   emit contextMenuRequested( itemAt( event->pos() ) );
@@ -85,7 +83,6 @@ void MatchListView::contextMenuEvent( QContextMenuEvent* event )
 
 void MatchListView::startDrag ( Qt::DropActions supportedActions )
 {
-#if 0 //TODO port to akonadi
   QList<KMime::Content*> list = mSearchWindow->selectedMessages();
   MailList mailList;
   foreach ( KMime::Content* msg, list ) {
@@ -108,10 +105,8 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
 
   drag->setPixmap( pixmap );
   drag->exec( supportedActions );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
+#endif
 
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder):
@@ -120,7 +115,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mCloseRequested(false),
   mSortColumn(0),
   mSortOrder(Qt::AscendingOrder),
-//TODO port to akonadi    mFolder(0),
+  mResultModel( 0 ),
   mTimer(new QTimer(this)),
   mLastFocus(0),
   mKMMainWidget(w)
@@ -208,7 +203,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
            this, SLOT(setEnabledSearchButton(bool)) );
 
 
-  mLbxMatches = new MatchListView(searchWidget, this);
+  mLbxMatches = new Akonadi::EntityTreeView( mKMMainWidget->guiClient(), this );
   mLbxMatches->setObjectName( "Find Messages" );
   mLbxMatches->setAlternatingRowColors( true );
 
@@ -226,10 +221,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
      comapare functions
   */
   mLbxMatches->setSortingEnabled( true );
+#if 0 // port me!
   mLbxMatches->sortItems( 2, Qt::DescendingOrder );
   mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
+#endif
   mLbxMatches->setAllColumnsShowFocus( true );
   mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
+#if 0 // port me!
   QStringList headerNames;
   headerNames << i18nc("@title:column Subject of the found message.", "Subject")
               << i18nc("@title:column Sender of the found message.", "Sender/Receiver")
@@ -253,6 +251,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
            this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
   mLbxMatches->setDragEnabled( true );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
 
   QHBoxLayout *hbl2 = new QHBoxLayout();
@@ -265,8 +266,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
     mSearchFolderEdt->setText( searchFolder->folder()->name() );
   else
     mSearchFolderEdt->setText( i18n("Last Search") );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   mSearchFolderOpenBtn = new KPushButton(i18n("Op&en Search Folder"), searchWidget);
@@ -507,12 +506,12 @@ void SearchWindow::slotSearch()
   enableButton( User1, false );
   enableButton( User2, true );
 
+#if 0 //TODO port to akonadi
   mLbxMatches->clear();
 
   mSortColumn = mLbxMatches->sortColumn();
   mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
   mLbxMatches->setSortingEnabled( false );
-#if 0 //TODO port to akonadi
   // If we haven't openend an existing search folder, find or create one.
   if ( !mFolder ) {
     KMFolderMgr *mgr = kmkernel->searchFolderMgr();
@@ -574,6 +573,16 @@ void SearchWindow::slotSearch()
 //-----------------------------------------------------------------------------
 void SearchWindow::searchDone( KJob* job )
 {
+    if ( job->error() )
+      kWarning() << job->errorText(); // TODO
+
+    if ( !mResultModel )
+      mResultModel = new Akonadi::ItemModel( this );
+    Akonadi::SearchCreateJob* searchJob = static_cast<Akonadi::SearchCreateJob*>( job );
+    mFolder = searchJob->createdCollection();
+    mResultModel->setCollection( mFolder );
+    mLbxMatches->setModel( mResultModel );
+
     mTimer->stop();
     updStatus();
 
@@ -799,7 +808,9 @@ bool SearchWindow::slotShowMsg( QTreeWidgetItem *item, int )
 //-----------------------------------------------------------------------------
 void SearchWindow::slotViewSelectedMsg()
 {
+#if 0 // port me!
   slotViewMsg( mLbxMatches->currentItem(), 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -846,6 +857,7 @@ void SearchWindow::enableGUI()
 QList<KMime::Content*> SearchWindow::selectedMessages()
 {
     QList<KMime::Content*> msgList;
+#if 0 // TODO port me!
     KMFolder* folder = 0;
     int msgIndex = -1;
     for (QTreeWidgetItemIterator it(mLbxMatches); (*it); ++it)
@@ -855,12 +867,16 @@ QList<KMime::Content*> SearchWindow::selectedMessages()
             if (folder && msgIndex >= 0)
                 msgList.append(folder->getMsgBase(msgIndex));
         }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     return msgList;
 }
 
 //-----------------------------------------------------------------------------
 KMime::Message* SearchWindow::message()
 {
+#if 0 // TODO port me!
     QTreeWidgetItem *item = mLbxMatches->currentItem();
     KMFolder* folder = 0;
     int msgIndex = -1;
@@ -872,6 +888,10 @@ KMime::Message* SearchWindow::message()
         return 0;
 
     return folder->getMsg(msgIndex);
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -923,7 +943,9 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
         return;
     if ( !lvi->isSelected() ) {
       lvi->setSelected( lvi );
+#if 0 // TODO port me!
       mLbxMatches->setCurrentItem( lvi );
+#endif
     }
 
     // FIXME is this ever unGetMsg()'d?

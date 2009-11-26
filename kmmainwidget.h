@@ -187,7 +187,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     return mCollectionFolderView->folderTreeView();
   }
 
-
+    /** Returns the XML GUI client. */
+    KXMLGUIClient* guiClient() const { return mGUIClient; }
 
 
   public slots:
