@@ -47,7 +47,6 @@
 
 #include "folderrequester.h"
 #include "kmcommands.h"
-#include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmsearchpatternedit.h"
@@ -63,9 +62,6 @@ using namespace KPIM;
 #include <akonadi/kmime/messagemodel.h>
 
 #include <kmime/kmime_message.h>
-
-#include <mimelib/boyermor.h>
-#include <mimelib/enum.h>
 
 #include <assert.h>
 #include <stdlib.h>
@@ -217,15 +213,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 
   connect(mLbxMatches, SIGNAL(itemClicked(QTreeWidgetItem *,int)),
           this, SLOT(slotShowMsg(QTreeWidgetItem *,int)));
-  connect(mLbxMatches, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
-          this, SLOT(slotViewMsg(QTreeWidgetItem *,int)));
-  connect( mLbxMatches, SIGNAL( currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem *) ),
-           this, SLOT( slotCurrentChanged(QTreeWidgetItem *) ) );
   connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
            this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  connect( mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)), SLOT(slotViewMsg(Akonadi::Item)) );
+  connect( mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)), SLOT(slotCurrentChanged(Akonadi::Item)) );
 
 
   QHBoxLayout *hbl2 = new QHBoxLayout();
@@ -345,12 +339,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mCutAction = ac->addAction( KStandardAction::Cut, "search_cut_messages", this, SLOT(slotCutMsgs()) );
 
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
-#if 0
-  connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
-          this, SLOT(folderInvalidated(KMFolder*)));
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   connect(mCbxFolders, SIGNAL(folderChanged(const Akonadi::Collection&)),
           this, SLOT(slotFolderActivated()));
 
@@ -362,14 +350,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 //-----------------------------------------------------------------------------
 SearchWindow::~SearchWindow()
 {
-  QList<QPointer<KMFolder> >::Iterator fit;
-  for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
-    if ( !(*fit) ) {
-      continue;
-    }
-    (*fit)->close( "searchwindow" );
-  }
-
   KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );
   group.writeEntry( "SubjectWidth", mLbxMatches->columnWidth( 0 ) );
@@ -477,9 +457,9 @@ void SearchWindow::slotSearch()
   enableButton( User1, false );
   enableButton( User2, true );
 
-#if 0 //TODO port to akonadi
-  mLbxMatches->clear();
+  mLbxMatches->setModel( 0 );
 
+#if 0 //TODO port to akonadi
   mSortColumn = mLbxMatches->sortColumn();
   mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
   mLbxMatches->setSortingEnabled( false );
@@ -523,7 +503,6 @@ void SearchWindow::slotSearch()
   *searchPattern = *mSearchPattern; //deep copy
   searchPattern->purify();
 //   search->setSearchPattern( searchPattern );
-//   mFolder->setSearch( search );
   enableGUI();
 
   mTimer->start( 200 );
@@ -647,23 +626,6 @@ void SearchWindow::openSearchFolder()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::folderInvalidated(KMFolder *folder)
-{
-#if 0 //TODO port to akonadi
-    if (folder->storage() == mFolder) {
-        mLbxMatches->clear();
-        if (mFolder->search())
-            connect(mFolder->search(), SIGNAL(finished(bool)),
-                    this, SLOT(searchDone()));
-        mTimer->start(200);
-        enableGUI();
-    }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-//-----------------------------------------------------------------------------
 KMime::Message *SearchWindow::indexToMessage( QTreeWidgetItem *item )
 {
 #if 0 //TODO port to akonadi
@@ -705,29 +667,23 @@ bool SearchWindow::slotShowMsg( QTreeWidgetItem *item, int )
 //-----------------------------------------------------------------------------
 void SearchWindow::slotViewSelectedMsg()
 {
-#if 0 // port me!
-  slotViewMsg( mLbxMatches->currentItem(), 0 );
-#endif
+  mKMMainWidget->slotMessageActivated( message() );
 }
 
 //-----------------------------------------------------------------------------
-bool SearchWindow::slotViewMsg( QTreeWidgetItem *item, int )
+bool SearchWindow::slotViewMsg( const Akonadi::Item &item )
 {
-  KMime::Message *message = indexToMessage( item );
-  if ( message ) {
-    //TODO port to new API => KMime::Message
-#ifdef OLD_FOLDERVIEW
-    mKMMainWidget->slotMsgActivated( message );
-#endif
+  if ( item.isValid() ) {
+    mKMMainWidget->slotMessageActivated( item );
     return true;
   }
   return false;
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotCurrentChanged( QTreeWidgetItem *item )
+void SearchWindow::slotCurrentChanged( const Akonadi::Item &item )
 {
-  mSearchResultOpenBtn->setEnabled( item != 0 );
+  mSearchResultOpenBtn->setEnabled( item.isValid() );
 }
 
 //-----------------------------------------------------------------------------
@@ -773,22 +729,7 @@ QList<Akonadi::Item> SearchWindow::selectedMessages()
 //-----------------------------------------------------------------------------
 Akonadi::Item SearchWindow::message()
 {
-#if 0 // TODO port me!
-    QTreeWidgetItem *item = mLbxMatches->currentItem();
-    KMFolder* folder = 0;
-    int msgIndex = -1;
-    if (!item)
-        return 0;
-    KMMsgDict::instance()->getLocation(item->text(MSGID_COLUMN).toUInt(),
-                                   &folder, &msgIndex);
-    if (!folder || msgIndex < 0)
-        return 0;
-
-    return folder->getMsg(msgIndex);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return Akonadi::Item();
-#endif
+  return mLbxMatches->currentIndex().data( Akonadi::ItemModel::ItemRole ).value<Akonadi::Item>();
 }
 
 //-----------------------------------------------------------------------------

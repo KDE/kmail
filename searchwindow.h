@@ -36,8 +36,6 @@ class QLabel;
 class QRadioButton;
 class KActionMenu;
 class KLineEdit;
-class KMFolder;
-class KMFolderSearch;
 class KMMainWidget;
 class KMSearchPattern;
 class KMSearchPatternEdit;
@@ -114,11 +112,10 @@ protected slots:
   void scheduleRename(const QString &);
   void renameSearchFolder();
   void openSearchFolder();
-  void folderInvalidated(KMFolder *);
   virtual bool slotShowMsg(QTreeWidgetItem *,int);
   void slotViewSelectedMsg();
-  virtual bool slotViewMsg( QTreeWidgetItem *, int );
-  void slotCurrentChanged(QTreeWidgetItem *);
+  virtual bool slotViewMsg( const Akonadi::Item &item );
+  void slotCurrentChanged(const Akonadi::Item&);
   virtual void updateContextMenuActions();
   virtual void slotContextMenuRequested( QTreeWidgetItem* );
   void slotCopySelectedMessagesToFolder( QAction* );
@@ -175,7 +172,6 @@ protected:
     *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction, *mCopyAction, *mCutAction;
   KActionMenu *mForwardActionMenu;
-  QList<QPointer<KMFolder> > mFolders;
   QTimer mRenameTimer;
 
   // not owned by us
