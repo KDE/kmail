@@ -469,7 +469,6 @@ void SearchWindow::slotSearch()
   setButtonFocus( User1 );     // set focus so we don't miss key event
 
   mStopped = false;
-  mFetchingInProgress = 0;
 
   mSearchFolderOpenBtn->setEnabled( true );
   if ( mSearchFolderEdt->text().isEmpty() ) {
@@ -617,8 +616,8 @@ void SearchWindow::scheduleRename( const QString &s )
 //-----------------------------------------------------------------------------
 void SearchWindow::renameSearchFolder()
 {
+  if ( mFolder.isValid() && ( mFolder.name() != mSearchFolderEdt->text() ) ) {
 #if 0 //TODO port to akonadi
-  if ( mFolder && ( mFolder->folder()->name() != mSearchFolderEdt->text() ) ) {
     int i = 1;
     QString name =  mSearchFolderEdt->text();
     while ( i < 100 ) {
@@ -631,26 +630,20 @@ void SearchWindow::renameSearchFolder()
       name = mSearchFolderEdt->text() + ' ' + name;
       ++i;
     }
-  }
-  if ( mFolder )
-    mSearchFolderOpenBtn->setEnabled( true );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  }
+  if ( mFolder.isValid() )
+    mSearchFolderOpenBtn->setEnabled( true );
 }
 
 void SearchWindow::openSearchFolder()
 {
-#if 0 //TODO port to akonadi
-  Q_ASSERT( mFolder );
+  Q_ASSERT( mFolder.isValid() );
   renameSearchFolder();
-#ifdef OLD_FOLDERVIEW
-  mKMMainWidget->slotSelectFolder( mFolder->folder() );
-#endif
+  mKMMainWidget->selectCollectionFolder( mFolder );
   slotClose();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------

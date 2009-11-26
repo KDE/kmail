@@ -153,7 +153,6 @@ protected:
 protected:
   bool mStopped;
   bool mCloseRequested;
-  int mFetchingInProgress;
   int mSortColumn;
   Qt::SortOrder mSortOrder;
   Akonadi::Collection mFolder;
