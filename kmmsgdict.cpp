@@ -263,6 +263,7 @@ unsigned long KMMsgDict::insert(const KMime::Content *msg, int index)
   return insert(msn, msg, index);
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return 0;
 #endif
 }
 
@@ -326,6 +327,7 @@ unsigned long KMMsgDict::remove(const KMime::Content *msg)
   return msn;
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return 0;
 #endif
 }
 

@@ -148,6 +148,7 @@ int MboxCompactionJob::executeNow( bool silent )
   return mErrorCode;
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return 0;
 #endif
 }
 
@@ -266,6 +267,7 @@ int MaildirCompactionJob::executeNow( bool silent )
   return mErrorCode;
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return 0;
 #endif
 }
 

@@ -455,6 +455,7 @@ KMime::Message* KMFolder::getMsgBase( int idx )
   return mStorage->getMsgBase( idx );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -503,6 +504,7 @@ int KMFolder::addMsg( KMime::Message* msg, int* index_return )
   return mStorage->addMsg( msg, index_return );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -512,6 +514,7 @@ int KMFolder::addMsgKeepUID( KMime::Message* msg, int* index_return )
   return mStorage->addMsgKeepUID( msg, index_return );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -521,6 +524,7 @@ int KMFolder::addMessages( QList<KMime::Message*>& list, QList<int>& index_retur
   return mStorage->addMessages( list, index_return );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -557,6 +561,7 @@ int KMFolder::expungeOldMsg( int days )
   return mStorage->expungeOldMsg( days );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -566,6 +571,7 @@ int KMFolder::moveMsg( KMime::Message* msg, int* index_return )
   return mStorage->moveMsg( msg, index_return );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -575,6 +581,7 @@ int KMFolder::moveMsg(QList<KMime::Message*> q, int* index_return )
   return mStorage->moveMsg( q, index_return );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -584,6 +591,7 @@ int KMFolder::find( const KMime::Content* msg ) const
   return mStorage->find( msg );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -593,6 +601,7 @@ int KMFolder::find( const KMime::Message* msg ) const
   return mStorage->find( msg );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -602,6 +611,7 @@ int KMFolder::count( bool cache ) const
   return mStorage->count( cache );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -611,6 +621,7 @@ int KMFolder::countUnread()
   return mStorage->countUnread();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -638,6 +649,7 @@ int KMFolder::open( const char *owner )
   return mStorage->open( owner );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -719,6 +731,7 @@ int KMFolder::expunge()
   return mStorage->expunge();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -729,6 +742,7 @@ bool KMFolder::dirty() const
   return mStorage->dirty();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return false;
 #endif
 }
 
@@ -747,6 +761,7 @@ bool KMFolder::needsCompacting() const
   return mStorage->needsCompacting();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return false;
 #endif
 }
 
@@ -774,6 +789,7 @@ bool KMFolder::isReadOnly() const
   return mStorage->isReadOnly();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return false;
 #endif
 }
 
@@ -783,6 +799,7 @@ bool KMFolder::isWritable() const
   return !mStorage->isReadOnly() && mStorage->canDeleteMessages();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return false;
 #endif
 }
 
@@ -792,6 +809,7 @@ bool KMFolder::canDeleteMessages() const
   return mStorage->canDeleteMessages();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return false;
 #endif
 }
 
@@ -1079,6 +1097,7 @@ int KMFolder::writeIndex( bool createEmptyIndex )
   return mStorage->writeIndex( createEmptyIndex );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -1129,6 +1148,7 @@ int KMFolder::updateIndex()
   return mStorage->updateIndex();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 
@@ -1164,6 +1184,7 @@ bool KMFolder::isMoveable() const
   return !isSystemFolder() && mStorage->isMoveable();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  return 0;
 #endif
 }
 

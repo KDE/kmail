@@ -555,6 +555,7 @@ KMime::Message* FolderStorage::getMsg(int idx)
   return msg;
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return 0;
 #endif
 }
 
@@ -635,6 +636,7 @@ bool FolderStorage::isMessage(int idx)
   return (mb && mb->isMessage());
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return false;
 #endif
 }
 
