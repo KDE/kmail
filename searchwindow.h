@@ -57,6 +57,7 @@ namespace KMime {
 namespace Akonadi {
   class EntityTreeView;
   class ItemModel;
+  class Item;
 }
 
 namespace KMail {
@@ -93,13 +94,13 @@ public:
    * Provides access to the list of currently selected message in the listview.
    * @return The list of currently selected search result messages.
    */
-  QList<KMime::Content*> selectedMessages();
+  QList<Akonadi::Item> selectedMessages();
 
   /**
    * Provides access to the currently selected message.
    * @return the currently selected message.
    */
-  KMime::Message* message();
+  Akonadi::Item message();
 
   void setSearchPattern( const KMSearchPattern &pattern );
 
