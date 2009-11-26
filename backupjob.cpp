@@ -125,7 +125,7 @@ bool BackupJob::hasChildren( KMFolder *folder ) const
 
 void BackupJob::cancelJob()
 {
-  abort( i18n( "The operation was cancelled by the user." ) );
+  abort( i18n( "The operation was canceled by the user." ) );
 }
 
 void BackupJob::abort( const QString &errorMessage )
@@ -177,8 +177,9 @@ void BackupJob::finish()
   QString text = i18n( "Archiving folder '%1' successfully completed. "
                        "The archive was written to the file '%2'.",
                        mRootFolder->name(), mMailArchivePath.path() );
-  text += '\n' + i18n( "%1 messages with the total size of %2 were archived.",
-                       mArchivedMessages, KIO::convertSize( mArchivedSize ) );
+  text += '\n' + i18np( "1 message of size %2 was archived.",
+                        "%1 messages with the total size of %2 were archived.",
+                        mArchivedMessages, KIO::convertSize( mArchivedSize ) );
   text += '\n' + i18n( "The archive file has a size of %1.",
                        KIO::convertSize( archiveFileInfo.size() ) );
   KMessageBox::information( mParentWidget, text, i18n( "Archiving finished." ) );
