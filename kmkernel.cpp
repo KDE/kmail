@@ -93,6 +93,7 @@ using KWallet::Wallet;
 #include <kstartupinfo.h>
 
 KMKernel *KMKernel::mySelf = 0;
+static bool s_askingToGoOnline = false;
 
 /********************************************************************/
 /*                     Constructor and destructor                   */
@@ -1276,7 +1277,13 @@ bool KMKernel::isOffline()
 
 bool KMKernel::askToGoOnline()
 {
+  // already asking means we are offline and need to wait anyhow
+  if ( s_askingToGoOnline ) {
+    return false;
+  }
+
   if ( kmkernel->isOffline() ) {
+    s_askingToGoOnline = true;
     int rc =
     KMessageBox::questionYesNo( KMKernel::self()->mainWin(),
                                 i18n("KMail is currently in offline mode. "
@@ -1285,6 +1292,7 @@ bool KMKernel::askToGoOnline()
                                 i18n("Work Online"),
                                 i18n("Work Offline"));
 
+    s_askingToGoOnline = false;
     if( rc == KMessageBox::No ) {
       return false;
     } else {
