@@ -29,7 +29,6 @@
 #include "compactionjob.h"
 #include "kmfolder.h"
 #include "broadcaststatus.h"
-#include "folderstorage.h"
 using KPIM::BroadcastStatus;
 //TODO port to akonadi #include "kmfoldermbox.h"
 //TODO port to akonadi #include "kmfoldermaildir.h"

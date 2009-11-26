@@ -30,7 +30,6 @@
 #include "expirejob.h"
 #include "kmfolder.h"
 #include "globalsettings.h"
-#include "folderstorage.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmcommands.h"
