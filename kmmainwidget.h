@@ -223,7 +223,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
       Open a separate viewer window containing the specified message.
     */
-  void slotMessageActivated( const Akonadi::Item & );
+    void slotMessageActivated( const Akonadi::Item & );
+
+    /**
+      Opens mail in the internal viewer.
+    */
+    void slotMessageSelected( const Akonadi::Item & );
+
   void slotItemsFetchedForActivation( const Akonadi::Item::List &list );
   void slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & );
 
@@ -546,7 +552,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotRequestFullSearchFromQuickSearch();
   void slotFolderChanged( const Akonadi::Collection& );
 
-  void slotMessageSelected(const Akonadi::Item &);
   void itemsReceived(const Akonadi::Item::List &list );
   void itemsFetchDone( KJob *job );
 

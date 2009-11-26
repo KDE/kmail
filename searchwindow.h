@@ -112,7 +112,7 @@ protected slots:
   void scheduleRename(const QString &);
   void renameSearchFolder();
   void openSearchFolder();
-  virtual bool slotShowMsg(QTreeWidgetItem *,int);
+  virtual bool slotShowMsg( const Akonadi::Item &item );
   void slotViewSelectedMsg();
   virtual bool slotViewMsg( const Akonadi::Item &item );
   void slotCurrentChanged(const Akonadi::Item&);
@@ -180,10 +180,6 @@ protected:
   KMSearchPattern *mSearchPattern;
 
   static const int MSGID_COLUMN;
-
-private:
-  KMime::Message *indexToMessage( QTreeWidgetItem *item );
-
 };
 
 } // namespace KMail

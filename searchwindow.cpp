@@ -211,13 +211,12 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mLbxMatches->setColumnWidth( 3, group.readEntry( "FolderWidth", 100 ) );
   mLbxMatches->setColumnWidth( 4, 0 );
 
-  connect(mLbxMatches, SIGNAL(itemClicked(QTreeWidgetItem *,int)),
-          this, SLOT(slotShowMsg(QTreeWidgetItem *,int)));
   connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
            this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  connect( mLbxMatches, SIGNAL(clicked(Akonadi::Item)), SLOT(slotShowMsg(Akonadi::Item)) );
   connect( mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)), SLOT(slotViewMsg(Akonadi::Item)) );
   connect( mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)), SLOT(slotCurrentChanged(Akonadi::Item)) );
 
@@ -626,42 +625,12 @@ void SearchWindow::openSearchFolder()
 }
 
 //-----------------------------------------------------------------------------
-KMime::Message *SearchWindow::indexToMessage( QTreeWidgetItem *item )
+bool SearchWindow::slotShowMsg( const Akonadi::Item &item )
 {
-#if 0 //TODO port to akonadi
-  if( !item ) {
-    return 0;
-  }
-
-  KMFolder *folder;
-  int msgIndex;
-  KMMsgDict::instance()->getLocation( item->text( MSGID_COLUMN ).toUInt(),
-                                      &folder, &msgIndex );
-
-  if ( !folder || msgIndex < 0 ) {
-    return 0;
-  }
-#ifdef OLD_FOLDERVIEW
-  mKMMainWidget->slotSelectFolder( folder );
-#endif
-  return folder->getMsg( msgIndex );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return 0;
-#endif
-}
-
-//-----------------------------------------------------------------------------
-bool SearchWindow::slotShowMsg( QTreeWidgetItem *item, int )
-{
-#ifdef OLD_FOLDERVIEW
-  KMime::Message *message = indexToMessage( item );
-  if ( message ) {
-    mKMMainWidget->slotSelectMessage( message );
-    return true;
-  }
-#endif
-  return false;
+  if ( !item.isValid() )
+    return false;
+  mKMMainWidget->slotMessageSelected( item );
+  return true;
 }
 
 //-----------------------------------------------------------------------------
