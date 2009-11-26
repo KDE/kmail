@@ -138,8 +138,6 @@ protected slots:
 
   /** GUI cleanup after search */
   void searchDone(KJob* job);
-  virtual void slotAddMsg(int idx);
-  virtual void slotRemoveMsg(KMFolder *, quint32 serNum);
   void enableGUI();
 
   void setEnabledSearchButton(bool);

@@ -56,12 +56,11 @@
 #include "regexplineedit.h"
 #include "textsource.h"
 
-#include <maillistdrag.h>
 using namespace KPIM;
 
 #include <akonadi/entitytreeview.h>
 #include <akonadi/searchcreatejob.h>
-#include <akonadi/itemmodel.h>
+#include <akonadi/kmime/messagemodel.h>
 
 #include <kmime/kmime_message.h>
 
@@ -79,32 +78,6 @@ const int SearchWindow::MSGID_COLUMN = 4;
 void MatchListView::contextMenuEvent( QContextMenuEvent* event )
 {
   emit contextMenuRequested( itemAt( event->pos() ) );
-}
-
-void MatchListView::startDrag ( Qt::DropActions supportedActions )
-{
-  QList<KMime::Content*> list = mSearchWindow->selectedMessages();
-  MailList mailList;
-  foreach ( KMime::Content* msg, list ) {
-    if ( !msg )
-      continue;
-    MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
-                             msg->subject()->asUnicodeString(), KMail::MessageHelper::fromStrip( msg ),
-                             KMail::MessageHelper::toStrip( msg ), msg->date()->asUnicodeString() );
-    mailList.append( mailSummary );
-  }
-  QDrag *drag = new QDrag( viewport() );
-  drag->setMimeData( new MailListMimeData( new KMTextSource() ) );
-  mailList.populateMimeData( drag->mimeData() );
-
-  QPixmap pixmap;
-  if( mailList.count() == 1 )
-    pixmap = QPixmap( DesktopIcon("mail-message", KIconLoader::SizeSmall) );
-  else
-    pixmap = QPixmap( DesktopIcon("document-multiple", KIconLoader::SizeSmall) );
-
-  drag->setPixmap( pixmap );
-  drag->exec( supportedActions );
 }
 #endif
 
@@ -250,7 +223,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
            this, SLOT( slotCurrentChanged(QTreeWidgetItem *) ) );
   connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
            this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
-  mLbxMatches->setDragEnabled( true );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
@@ -533,14 +505,6 @@ void SearchWindow::slotSearch()
     mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
   }
   mFolder->stopSearch();
-  disconnect( mFolder, SIGNAL( msgAdded( int ) ),
-              this, SLOT( slotAddMsg( int ) ) );
-  disconnect( mFolder, SIGNAL( msgRemoved( KMFolder*, quint32  )),
-              this, SLOT( slotRemoveMsg( KMFolder*, quint32 ) ) );
-  connect( mFolder, SIGNAL( msgAdded( int ) ),
-           this, SLOT( slotAddMsg( int ) ) );
-  connect( mFolder, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
-           this, SLOT( slotRemoveMsg( KMFolder*, quint32 ) ) );
   mSearchFolderEdt->setEnabled( false );
   KMSearch *search = new KMSearch();
   connect( search, SIGNAL( finished( bool ) ),
@@ -577,7 +541,7 @@ void SearchWindow::searchDone( KJob* job )
       kWarning() << job->errorText(); // TODO
 
     if ( !mResultModel )
-      mResultModel = new Akonadi::ItemModel( this );
+      mResultModel = new Akonadi::MessageModel( this );
     Akonadi::SearchCreateJob* searchJob = static_cast<Akonadi::SearchCreateJob*>( job );
     mFolder = searchJob->createdCollection();
     mResultModel->setCollection( mFolder );
@@ -596,66 +560,6 @@ void SearchWindow::searchDone( KJob* job )
     mLbxMatches->sortByColumn( mSortColumn, mSortOrder );
 
     mSearchFolderEdt->setEnabled( true );
-}
-
-void SearchWindow::slotAddMsg( int idx )
-{
-#if 0 //TODO port to akonadi
-  if ( !mFolder ) {
-    return;
-  }
-  bool unget = !mFolder->isMessage( idx );
-  KMime::Message *msg = mFolder->getMsg( idx );
-  QString from, fName;
-  KMFolder *pFolder = msg->parent();
-  if ( !mFolders.contains( pFolder ) ) {
-    mFolders.append( pFolder );
-    pFolder->open( "searchwindow" );
-  }
-  if( pFolder->whoField() == "To" ) {
-    from = msg->to();
-  } else {
-    from = msg->from();
-  }
-  if ( pFolder->isSystemFolder() ) {
-    fName = i18n( pFolder->name().toUtf8() );
-  } else {
-    fName = pFolder->name();
-  }
-
-  QTreeWidgetItem *newItem = new QTreeWidgetItem( mLbxMatches );
-  newItem->setText( 0, msg->subject() );
-  newItem->setText( 1, from );
-  newItem->setText( 2, msg->dateIsoStr() );
-  newItem->setText( 3, fName );
-  newItem->setText( 4,QString::number( mFolder->serNum( idx ) ) );
-  mLbxMatches->addTopLevelItem( newItem );
-  if ( unget ) {
-    mFolder->unGetMsg( idx );
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-void SearchWindow::slotRemoveMsg(KMFolder *, quint32 serNum)
-{
-#if 0 //TODO port to akonadi
-    if (!mFolder)
-        return;
-    QTreeWidgetItemIterator it(mLbxMatches);
-    while ( (*it) ) {
-        QTreeWidgetItem *item = *it;
-        if (serNum == (*it)->text(MSGID_COLUMN).toUInt()) {
-            delete mLbxMatches->takeTopLevelItem(
-                mLbxMatches->indexOfTopLevelItem( item ) );
-            return;
-        }
-        ++it;
-    }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------
