@@ -72,11 +72,13 @@ ExpireJob::~ExpireJob()
 
 void ExpireJob::kill()
 {
+#if 0	
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() )
     mSrcFolder->storage()->close( "expirejob" );
   FolderJob::kill();
+#endif
 }
 
 void ExpireJob::execute()
@@ -101,7 +103,7 @@ void ExpireJob::execute()
     delete this;
     return;
   }
-
+#if 0
   FolderStorage* storage = mSrcFolder->storage();
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open( "expirejob" );
@@ -112,11 +114,13 @@ void ExpireJob::execute()
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   mTimer.start( EXPIREJOB_TIMERINTERVAL );
   slotDoWork();
+#endif  
   // do nothing here, we might be deleted!
 }
 
 void ExpireJob::slotDoWork()
 {
+#if 0	
   // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
   FolderStorage* storage = mSrcFolder->storage();
   int stopIndex = mImmediate ? 0 : qMax( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
@@ -143,6 +147,7 @@ void ExpireJob::slotDoWork()
 #endif
   if ( stopIndex == 0 )
     done();
+#endif
 }
 
 void ExpireJob::done()
@@ -209,15 +214,19 @@ void ExpireJob::done()
   group.writeEntry( "Current", -1 ); // i.e. make it invalid, the serial number will be used
 
   if ( !moving ) {
+#if 0	  
     mSrcFolder->storage()->close( "expirejob" );
     mFolderOpen = false;
+#endif    
     delete this;
   }
 }
 
 void ExpireJob::slotMessagesMoved( KMCommand *command )
 {
+#if 0	
   mSrcFolder->storage()->close( "expirejob" );
+#endif  
   mFolderOpen = false;
   QString msg;
   switch ( command->result() ) {

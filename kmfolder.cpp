@@ -20,7 +20,6 @@
 
 #include "kmfolder.h"
 //TODO port to akonadi #include "kmfoldermbox.h"
-#include "folderstorage.h"
 //TODO port to akonadi #include "kmfoldercachedimap.h"
 //TODO port to akonadi #include "kmfoldersearch.h"
 //TODO port to akonadi #include "kmfolderimap.h"
@@ -46,7 +45,7 @@
 
 KMFolder::KMFolder( /*KMFolderDir* aParent,*/ const QString& aFolderName,
                     KMFolderType aFolderType, bool withIndex, bool exportedSernums )
-  : /*KMFolderNode( aParent, aFolderName ),*/ mStorage(0),
+  : /*KMFolderNode( aParent, aFolderName ),*/ 
     mIsSystemFolder( false ),
     mHasIndex( withIndex ),
     mExportsSernums( exportedSernums ),
@@ -169,7 +168,6 @@ KMFolder::~KMFolder()
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  delete mStorage;
 }
 
 bool KMFolder::hasDescendant( KMFolder *fld ) const
@@ -885,11 +883,7 @@ void KMFolder::setIdentity( uint identity )
 
 uint KMFolder::identity() const
 {
-  // if we don't have one set ourselves, check our account
-  if ( mUseDefaultIdentity && mStorage )
-    if ( KMAccount *act = mStorage->account() )
-      return act->identityId();
-  return mIdentity;
+return 0;
 }
 
 void KMFolder::setWhoField(const QString& aWhoField )

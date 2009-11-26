@@ -50,7 +50,6 @@ namespace KMime {
   class Content;
 }
 
-class FolderStorage;
 class KMFolderJob;
 
 //namespace MessageViewer {
@@ -106,10 +105,6 @@ public:
 
   /** This is used by the storage to save the folder specific configuration */
   void writeConfig( KConfigGroup & config ) const;
-
-  FolderStorage* storage() { return mStorage; }
-  /** if the folder is const, the storage should be as well */
-  const FolderStorage* storage() const { return mStorage; }
 
   /** Returns the type of this folder */
   KMFolderType folderType() const;
@@ -625,7 +620,6 @@ private slots:
   void slotIdentitiesChanged();
 
 private:
-  FolderStorage* mStorage;
   bool mIsSystemFolder;
   bool mHasIndex :1;
   bool mExportsSernums :1;

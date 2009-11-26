@@ -66,6 +66,7 @@ MboxCompactionJob::~MboxCompactionJob()
 
 void MboxCompactionJob::kill()
 {
+#if 0	
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() ) {
@@ -80,6 +81,7 @@ void MboxCompactionJob::kill()
     QFile::remove( mTempName );
   }
   FolderJob::kill();
+#endif
 }
 
 QString MboxCompactionJob::realLocation() const
@@ -231,6 +233,7 @@ MaildirCompactionJob::~MaildirCompactionJob()
 
 void MaildirCompactionJob::kill()
 {
+#if 0	
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() ) {
@@ -238,6 +241,7 @@ void MaildirCompactionJob::kill()
   }
 
   FolderJob::kill();
+#endif
 }
 
 int MaildirCompactionJob::executeNow( bool silent )
@@ -323,6 +327,7 @@ ScheduledJob *ScheduledCompactionTask::run()
 {
   if ( !folder() || !folder()->needsCompacting() )
     return 0;
+#if 0  
   switch( folder()->storage()->folderType() ) {
   case KMFolderTypeMbox:
     return new MboxCompactionJob( folder(), isImmediate() );
@@ -332,6 +337,8 @@ ScheduledJob *ScheduledCompactionTask::run()
   default: // imap, search, unknown...
     return 0;
   }
+#endif
+return 0;  
 }
 
 #include "compactionjob.moc"

@@ -224,7 +224,9 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
     return;
   }
   // Register the job in the folder. This makes it autodeleted if the folder is deleted.
+#if 0
   mCurrentTask->folder()->storage()->addJob( mCurrentJob );
+#endif  
   connect( mCurrentJob, SIGNAL( finished() ), this, SLOT( slotJobFinished() ) );
   mCurrentJob->start();
 }

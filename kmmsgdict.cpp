@@ -390,6 +390,7 @@ void KMMsgDict::getLocation( const KMime::Message * msg, KMFolder * *retFolder, 
 
 unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
 {
+#if 0	
   unsigned long msn = 0;
   if ( folder ) {
     KMMsgDictREntry *rentry = folder->storage()->rDict();
@@ -397,6 +398,8 @@ unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
       msn = rentry->getMsn(index);
   }
   return msn;
+#endif
+  return 0;
 }
 
 //-----------------------------------------------------------------------------
