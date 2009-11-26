@@ -88,6 +88,7 @@ using KWallet::Wallet;
 
 #include "folderadaptor.h"
 #include "groupware_types.h"
+static bool s_askingToGoOnline = false;
 
 static KMKernel * mySelf = 0;
 
@@ -1198,7 +1199,13 @@ bool KMKernel::isOffline()
 
 bool KMKernel::askToGoOnline()
 {
+  // already asking means we are offline and need to wait anyhow
+  if ( s_askingToGoOnline ) {
+    return false;
+  }
+
   if ( kmkernel->isOffline() ) {
+    s_askingToGoOnline = true;
     int rc =
     KMessageBox::questionYesNo( KMKernel::self()->mainWin(),
                                 i18n("KMail is currently in offline mode. "
@@ -1207,6 +1214,7 @@ bool KMKernel::askToGoOnline()
                                 KGuiItem(i18n("Work Online")),
                                 KGuiItem(i18n("Work Offline")));
 
+    s_askingToGoOnline = false;
     if( rc == KMessageBox::No ) {
       return false;
     } else {
