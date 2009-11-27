@@ -30,7 +30,6 @@
 #include "kmmainwidget.h"
 #include "kmstartup.h"
 #include "aboutdata.h"
-#include "kmfolder.h"
 
 #include <QPixmap>
 #include <QVBoxLayout>
