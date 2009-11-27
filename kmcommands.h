@@ -28,7 +28,6 @@ class KProgressDialog;
 class KMFilter;
 class KMMainWidget;
 class KMReaderWin;
-class partNode;
 class FolderCollection;
 
 namespace KIO { class Job; }
@@ -38,7 +37,7 @@ namespace KMail {
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
 
-typedef QMap<partNode*, Akonadi::Item> PartNodeMessageMap;
+typedef QMap<KMime::Content*, Akonadi::Item> PartNodeMessageMap;
   /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
 
 class KMAIL_EXPORT KMCommand : public QObject
@@ -346,7 +345,7 @@ private slots:
 
 private:
   virtual Result execute();
-  Result saveItem( partNode *node, const KUrl& url );
+  Result saveItem( KMime::Content *node, const KUrl& url );
 
 private:
   PartNodeMessageMap mAttachmentMap;

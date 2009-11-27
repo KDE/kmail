@@ -2471,7 +2471,7 @@ QString KMCommand::cleanFileName( const QString &name )
   return fileName;
 }
 
-KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
+KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *node,
                                                       const KUrl& url )
 {
 #if 0 //TODO port to akonadi
