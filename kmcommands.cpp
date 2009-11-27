@@ -2608,20 +2608,6 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   return OK;
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, const Akonadi::Item &msg )
-  : mNeedsRetrieval( 0 )
-{
-  QList<partNode*>::const_iterator it;
-  for ( it = parts.constBegin(); it != parts.constEnd(); ++it ) {
-    mPartMap.insert( (*it), msg );
-  }
-}
-
-KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, const Akonadi::Item &msg )
-  : mNeedsRetrieval( 0 )
-{
-  mPartMap.insert( node, msg );
-}
 
 KMLoadPartsCommand::KMLoadPartsCommand( PartNodeMessageMap& partMap )
   : mNeedsRetrieval( 0 ), mPartMap( partMap )

@@ -763,8 +763,6 @@ class KMAIL_EXPORT KMLoadPartsCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMLoadPartsCommand( QList<partNode*>& parts, const Akonadi::Item & msg );
-  KMLoadPartsCommand( partNode* node, const Akonadi::Item& msg );
   KMLoadPartsCommand( PartNodeMessageMap& partMap );
 
 public slots:
