@@ -1008,7 +1008,7 @@ static const struct {
 
 static const int numMdnMessageBoxes
       = sizeof mdnMessageBoxes / sizeof *mdnMessageBoxes;
-      
+
 static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) ) {
@@ -1946,7 +1946,7 @@ QString KMMessage::headerField( const QByteArray& aName, EncodingMode encodingMo
     return QString();
   }
 
-  if ( !mMsg->Headers().FindField( aName ) ) {
+  if ( !mMsg || !mMsg->Headers().FindField( aName ) ) {
     return QString();
   }
 
