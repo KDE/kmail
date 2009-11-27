@@ -43,9 +43,6 @@ using KMail::FilterLog;
 #include <QRegExp>
 #include <QByteArray>
 
-#include <mimelib/string.h>
-#include <mimelib/boyermor.h>
-
 #include <Soprano/Vocabulary/RDF>
 
 #include <assert.h>
@@ -189,20 +186,6 @@ void KMSearchRule::writeConfig( KConfigGroup & config, int aIdx ) const {
   config.writeEntry( contents + cIdx, mContents );
 }
 
-bool KMSearchRule::matches( const DwString & aStr, KMime::Message & msg,
-                       const DwBoyerMoore *, int ) const
-{
-#if 0  //TODO port to akonadi
-  if ( !msg.isComplete() ) {
-    msg.fromDwString( aStr );
-    msg.setComplete( true );
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  return matches( &msg );
-}
-
 const QString KMSearchRule::asString() const
 {
   QString result  = "\"" + mField + "\" <";
@@ -222,18 +205,11 @@ KMSearchRuleString::KMSearchRuleString( const QByteArray & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
-  if ( field.isEmpty() || field[0] == '<' )
-    mBmHeaderField = 0;
-  else // make sure you handle the unrealistic case of the message starting with mField
-    mBmHeaderField = new DwBoyerMoore(('\n' + field + ": ").data());
 }
 
 KMSearchRuleString::KMSearchRuleString( const KMSearchRuleString & other )
-  : KMSearchRule( other ),
-    mBmHeaderField( 0 )
+  : KMSearchRule( other )
 {
-  if ( other.mBmHeaderField )
-    mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
 }
 
 const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleString & other )
@@ -244,17 +220,12 @@ const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleStri
   setField( other.field() );
   setFunction( other.function() );
   setContents( other.contents() );
-  delete mBmHeaderField; mBmHeaderField = 0;
-  if ( other.mBmHeaderField )
-    mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
 
   return *this;
 }
 
 KMSearchRuleString::~KMSearchRuleString()
 {
-  delete mBmHeaderField;
-  mBmHeaderField = 0;
 }
 
 bool KMSearchRuleString::isEmpty() const
@@ -264,83 +235,9 @@ bool KMSearchRuleString::isEmpty() const
 
 bool KMSearchRuleString::requiresBody() const
 {
-  if (mBmHeaderField || (field() == "<recipients>" ))
+  if ( field().startsWith( '<' ) || field() == "<recipients>" )
     return false;
   return true;
-}
-
-bool KMSearchRuleString::matches( const DwString & aStr, KMime::Message & msg,
-                       const DwBoyerMoore * aHeaderField, int aHeaderLen ) const
-{
-  if ( isEmpty() )
-    return false;
-
-  bool rc = false;
-
-  const DwBoyerMoore * headerField = aHeaderField ? aHeaderField : mBmHeaderField ;
-
-  const int headerLen = ( aHeaderLen > -1 ? aHeaderLen : field().length() ) + 2 ; // +1 for ': '
-
-  if ( headerField ) {
-    static const DwBoyerMoore lflf( "\n\n" );
-    static const DwBoyerMoore lfcrlf( "\n\r\n" );
-
-    size_t endOfHeader = lflf.FindIn( aStr, 0 );
-    if ( endOfHeader == DwString::npos )
-      endOfHeader = lfcrlf.FindIn( aStr, 0 );
-    const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
-    // In case the searched header is at the beginning, we have to prepend
-    // a newline - see the comment in KMSearchRuleString constructor
-    DwString fakedHeaders( "\n" );
-    size_t start = headerField->FindIn( fakedHeaders.append( headers ), 0, false );
-    // if the header field doesn't exist then return false for positive
-    // functions and true for negated functions (e.g. "does not
-    // contain"); note that all negated string functions correspond
-    // to an odd value
-    if ( start == DwString::npos )
-      rc = ( ( function() & 1 ) == 1 );
-    else {
-      start += headerLen;
-      size_t stop = aStr.find( '\n', start );
-      char ch = '\0';
-      while ( stop != DwString::npos && ( ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' ) )
-        stop = aStr.find( '\n', stop + 1 );
-      const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
-      const QByteArray codedValue( aStr.data() + start, len + 1 );
-      const QString msgContents = KMime::decodeRFC2047String( codedValue ).trimmed(); // FIXME: This needs to be changed for IDN support.
-      rc = matchesInternal( msgContents );
-    }
-  } else if ( field() == "<recipients>" ) {
-    static const DwBoyerMoore to("\nTo: ");
-    static const DwBoyerMoore cc("\nCc: ");
-    static const DwBoyerMoore bcc("\nBcc: ");
-    // <recipients> "contains" "foo" is true if any of the fields contains
-    // "foo", while <recipients> "does not contain" "foo" is true if none
-    // of the fields contains "foo"
-    if ( ( function() & 1 ) == 0 ) {
-      // positive function, e.g. "contains"
-      rc = ( matches( aStr, msg, &to, 2 ) ||
-             matches( aStr, msg, &cc, 2 ) ||
-             matches( aStr, msg, &bcc, 3 ) );
-    }
-    else {
-      // negated function, e.g. "does not contain"
-      rc = ( matches( aStr, msg, &to, 2 ) &&
-             matches( aStr, msg, &cc, 2 ) &&
-             matches( aStr, msg, &bcc, 3 ) );
-    }
-  }
-  if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
-                       : "<font color=#FF0000>0 = </font>" );
-    msg += FilterLog::recode( asString() );
-    // only log headers bcause messages and bodies can be pretty large
-// FIXME We have to separate the text which is used for filtering to be able to show it in the log
-//    if ( logContents )
-//      msg += " (<i>" + FilterLog::recode( msgContents ) + "</i>)";
-    FilterLog::instance()->add( msg, FilterLog::ruleResult );
-  }
-  return rc;
 }
 
 bool KMSearchRuleString::matches( KMime::Message * msg ) const
@@ -831,69 +728,6 @@ bool KMSearchPattern::matches( KMime::Message * msg, bool ignoreBody ) const
   default:
     return false;
   }
-}
-
-bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
-{
-  if ( isEmpty() )
-    return true;
-
-  KMime::Message msg;
-  QList<KMSearchRule*>::const_iterator it;
-  switch ( mOperator ) {
-  case OpAnd: // all rules must match
-    for ( it = begin() ; it != end() ; ++it )
-      if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( !(*it)->matches( aStr, msg ) )
-          return false;
-    return true;
-  case OpOr:  // at least one rule must match
-    for ( it = begin() ; it != end() ; ++it )
-      if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( (*it)->matches( aStr, msg ) )
-          return true;
-    // fall through
-  default:
-    return false;
-  }
-}
-
-bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
-{
-  if ( isEmpty() ) {
-    return true;
-  }
-
-  bool res = false;
-  int idx = -1;
-#if 0 //Port to akonadi
-  KMFolder *folder = 0;
-  KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-  if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
-    return res;
-  }
-  KMFolderOpener openFolder( folder, "searptr" );
-  if ( openFolder.openResult() == 0 ) { // 0 means no error codes
-    KMFolder *f =  openFolder.folder();
-    KMMsgBase *msgBase = f->getMsgBase( idx );
-    if ( msgBase && requiresBody() && !ignoreBody ) {
-      bool unGet = !msgBase->isMessage();
-      KMime::Message *msg = f->getMsg( idx );
-      res = false;
-      if ( msg ) {
-        res = matches( msg, ignoreBody );
-        if ( unGet ) {
-          folder->unGetMsg( idx );
-        }
-      }
-    } else {
-      res = matches( f->getDwString( idx ), ignoreBody );
-    }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  return res;
 }
 
 bool KMSearchPattern::requiresBody() const {

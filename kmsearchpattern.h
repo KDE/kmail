@@ -33,8 +33,6 @@ namespace KMime {
 }
 
 class KConfigGroup;
-class DwBoyerMoore;
-class DwString;
 
 
 // maximum number of filter rules per filter
@@ -98,14 +96,6 @@ public:
       implemented by subclasses.
   */
   virtual bool matches( KMime::Message * msg ) const = 0;
-
-   /** Optimized version tries to match the rule against the given
-       @see DwString.
-       @return true if the rule matched, false otherwise.
-   */
-  virtual bool matches( const DwString & str, KMime::Message & msg,
-                        const DwBoyerMoore * headerField=0,
-                        int headerLen=-1 ) const;
 
   /** Determine whether the rule is worth considering. It isn't if
       either the field is not set or the contents is empty.
@@ -193,18 +183,8 @@ public:
   virtual bool matches( KMime::Message * msg ) const;
   virtual void asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const;
 
-  /** Optimized version tries to match the rule against the given  DwString.
-      @return true if the rule matched, false otherwise.
-  */
-  virtual bool matches( const DwString & str, KMime::Message & msg,
-                        const DwBoyerMoore * headerField=0,
-                        int headerLen=-1 ) const;
-
   /** Helper for the main matches() method. Does the actual comparing. */
   bool matchesInternal( const QString & msgContents ) const;
-
-private:
-  const DwBoyerMoore *mBmHeaderField;
 };
 
 
@@ -367,8 +347,6 @@ public:
       @return true if the match was successful, false otherwise.
   */
   bool matches( KMime::Message * msg, bool ignoreBody = false ) const;
-  bool matches( const DwString & str, bool ignoreBody = false ) const;
-  bool matches( quint32 sernum, bool ignoreBody = false ) const;
 
   /** Returns true if the pattern only depends the DwString that backs
       a message */

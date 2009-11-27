@@ -316,6 +316,7 @@ bool KMFilterMgr::isMatching( const KMime::Message::Ptr & msg, const KMFilter * 
   return result;
 }
 
+#if 0 // TODO port me!
 bool KMFilterMgr::isMatching( quint32 serNum, const KMFilter * filter )
 {
   bool result = false;
@@ -333,6 +334,7 @@ bool KMFilterMgr::isMatching( quint32 serNum, const KMFilter * filter )
   }
   return result;
 }
+#endif
 
 bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 {

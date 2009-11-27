@@ -187,7 +187,9 @@ private:
   int processPop( const KMime::Message::Ptr &msg ) const;
   /** Find out if a message matches the filter criteria */
   bool isMatching( const KMime::Message::Ptr &msg, const KMFilter * filter );
+#if 0 // TODO port me!
   bool isMatching( quint32 serNum, const KMFilter * filter );
+#endif
 
   QPointer<KMFilterDlg> mEditDialog;
   QVector<KMFolder *> mOpenFolders;
