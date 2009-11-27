@@ -50,11 +50,12 @@ int KMFolderIndex::updateIndex( bool aboutToClose )
     return 0;
   bool dirty = mDirty;
   mDirtyTimer->stop();
-  const uint high = mMsgList.high();
-  for (uint i=0; !dirty && i<high; i++) {
-    KMMsgBase *msg = mMsgList.at(i);
-    if (msg)
-      dirty = !msg->syncIndexString();
+  for ( unsigned int i = 0; !dirty && i < mMsgList.high(); i++ ) {
+    if ( mMsgList.at(i) ) {
+      if ( !mMsgList.at(i)->syncIndexString() ) {
+        dirty = true;
+      }
+    }
   }
   if (!dirty) { // Update successful
       touchFolderIdsFile();
