@@ -124,7 +124,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
       msgBase->setIndexOffset(tmp);
       msgBase->setIndexLength(len);
       if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
-        kDebug(5006) <<"Whoa!";
+        kDebug() << "Whoa!";
     }*/
   }
 
@@ -302,13 +302,13 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       *gv = indexVersion;
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
-        kDebug(5006) <<"Converting old index file" << indexLocation() <<" to utf-8";
+        kDebug() << "Converting old index file" << indexLocation() << " to utf-8";
         mConvertToUtf8 = true;
       }
       return true;
   } else if (indexVersion == 1505) {
   } else if (indexVersion < INDEX_VERSION) {
-      kDebug(5006) <<"Index file" << indexLocation() <<" is out of date. Re-creating it.";
+      kDebug() << "Index file" << indexLocation() << " is out of date. Re-creating it.";
       createIndexFromContents();
       return false;
   } else if(indexVersion > INDEX_VERSION) {
@@ -361,9 +361,9 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       KDE_fseek(mIndexStream, endOfHeader, SEEK_SET );
 
       if (mIndexSwapByteOrder)
-         kDebug(5006) <<"Index File has byte order swapped!";
+         kDebug() << "Index File has byte order swapped!";
       if (mIndexSizeOfLong != sizeof(long))
-         kDebug(5006) <<"Index File sizeOfLong is" << mIndexSizeOfLong <<" while sizeof(long) is" << sizeof(long) <<" !";
+         kDebug() << "Index File sizeOfLong is" << mIndexSizeOfLong <<" while sizeof(long) is" << sizeof(long) <<" !";
 
   }
   return true;
