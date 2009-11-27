@@ -32,7 +32,6 @@
 
 #include "kmfolder.h"
 #include "globalsettings.h"
-#include "folderstorage.h"
 
 #include <kdebug.h>
 #include <kio/global.h>

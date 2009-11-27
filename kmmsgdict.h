@@ -30,7 +30,6 @@ namespace KMime {
 class KMMsgDictREntry;
 class KMDict;
 class QString;
-class FolderStorage;
 
 class KMMsgDictSingletonProvider;
 
@@ -81,7 +80,6 @@ private:
   * involved in filling and maintaining the dict. The MsgList needs access
   * because of things it does that should be in FolderIndex, probably, which
   * the message list is an implementation detail of. */
-  friend class FolderStorage;
   friend class KMMsgList;
   friend class KMFolderIndex;
 
@@ -113,35 +111,6 @@ private:
 
 
   // ----- per folder serial number on-disk structure handling ("ids files")
-
-  /** Returns the name of the .folder.index.ids file. */
-  static QString getFolderIdsLocation( const FolderStorage &folder );
-
-  /** Returns true if the .folder.index.ids file should not be read. */
-  bool isFolderIdsOutdated( const FolderStorage &folder );
-
-  /** Reads the .folder.index.ids file.  Returns 0 on success. */
-  int readFolderIds( FolderStorage & );
-
-  /** Writes the .folder.index.ids file.  Returns 0 on success. */
-  int writeFolderIds( const FolderStorage & );
-
-  /** Touches the .folder.index.ids file.  Returns 0 on success. */
-  int touchFolderIds( const FolderStorage & );
-
-  /** Appends the message to the .folder.index.ids file.
-   * Returns 0 on success. */
-  int appendToFolderIds( FolderStorage&, int index );
-
-  /** Returns true if the folder has a .folder.index.ids file.  */
-  bool hasFolderIds( const FolderStorage & );
-
-  /** Removes the .folder.index.ids file. */
-  bool removeFolderIds( FolderStorage & );
-
-  /** Opens the .folder.index.ids file, and writes the header
-   * information at the beginning of the file. */
-  KMMsgDictREntry *openFolderIds( const FolderStorage &, bool truncate);
 
 
   // --------- helpers ------------

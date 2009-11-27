@@ -99,7 +99,6 @@ set(kmailprivate_LIB_SRCS
    kmfolder.cpp
    kmreaderwin.cpp
    kmmsgdict.cpp
-   folderstorage.cpp
    actionscheduler.cpp
    messageproperty.cpp
    kmsystemtray.cpp
