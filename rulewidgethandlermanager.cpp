@@ -36,6 +36,8 @@
 #include "interfaces/rulewidgethandler.h"
 #include "messageviewer/stl_util.h"
 
+#include <Nepomuk/Tag>
+
 #include <kdebug.h>
 #include <kiconloader.h>
 
@@ -375,7 +377,6 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
 
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
-#include "messageviewer/kmaddrbook.h"
 #include "kmsearchpattern.h"
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
@@ -461,8 +462,12 @@ namespace {
     if ( number == 2 ) {
       KComboBox *combo =  new KComboBox( valueStack );
       combo->setObjectName( "categoryCombo" );
-      QStringList categories = KabcBridge::categories();
-      combo->addItems( categories );
+      foreach ( const Nepomuk::Tag &tag, Nepomuk::Tag::allTags() ) {
+        if ( tag.genericIcon().isEmpty() )
+          combo->addItem( tag.label(), tag.resourceUri() );
+        else
+          combo->addItem( KIcon( tag.genericIcon() ), tag.label(), tag.resourceUri() );
+      }
       QObject::connect( combo, SIGNAL( activated( int ) ),
                         receiver, SLOT( slotValueChanged() ) );
       return combo;
