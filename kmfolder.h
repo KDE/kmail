@@ -22,7 +22,6 @@
 
 // for large file support
 
-#include "kmfoldertype.h"
 #include "kmglobal.h"
 #include "kmkernel.h"
 #include "folderjob.h"
@@ -90,7 +89,7 @@ public:
    * @return A new folder instance.
    */
   KMFolder( /*KMFolderDir* parent,*/ const QString& name,
-                KMFolderType aFolderType, bool withIndex = true,
+                /*KMFolderType aFolderType, */bool withIndex = true,
                 bool exportedSernums = true );
   ~KMFolder();
 
@@ -604,9 +603,6 @@ public slots:
   void reallyAddCopyOfMsg(KMime::Message* aMsg);
 
 private slots:
-
-  /** The type of contents of this folder changed. Do what is needed. */
-  void slotContentsTypeChanged( KMail::FolderContentsType type );
 
   /** Triggered by the storage when its size changed. */
   void slotFolderSizeChanged();

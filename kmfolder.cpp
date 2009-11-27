@@ -44,7 +44,7 @@
 #include <QList>
 
 KMFolder::KMFolder( /*KMFolderDir* aParent,*/ const QString& aFolderName,
-                    KMFolderType aFolderType, bool withIndex, bool exportedSernums )
+                    /*KMFolderType aFolderType,*/ bool withIndex, bool exportedSernums )
   : /*KMFolderNode( aParent, aFolderName ),*/ 
     mIsSystemFolder( false ),
     mHasIndex( withIndex ),
@@ -1170,16 +1170,6 @@ bool KMFolder::isMoveable() const
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
   return 0;
 #endif
-}
-
-void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
-{
-#if 0 //TODO port to akonadi
-  kmkernel->iCalIface().folderContentsTypeChanged( this, type );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  emit iconsChanged();
 }
 
 void KMFolder::slotFolderSizeChanged()
