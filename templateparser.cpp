@@ -46,9 +46,12 @@
 #include "partNode.h"
 #include "attachmentcollector.h"
 #include "objecttreeparser.h"
+#include "util.h"
 
 #include "templateparser.h"
 #include <mimelib/bodypart.h>
+
+using namespace KMail;
 
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
                                 const QString aselection,
@@ -870,7 +873,7 @@ partNode* TemplateParser::parsedObjectTree()
     return mOrigRoot;
 
   mOrigRoot = partNode::fromMessage( mOrigMsg );
-  KMail::ObjectTreeParser otp; // all defaults are ok
+  ObjectTreeParser otp; // all defaults are ok
   otp.parseObjectTree( mOrigRoot );
   return mOrigRoot;
 }
@@ -888,7 +891,7 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
 
     // Get the attachments of the original mail
     partNode *root = parsedObjectTree();
-    KMail::AttachmentCollector ac;
+    AttachmentCollector ac;
     ac.collectAttachmentsFrom( root );
 
     // Now, delete the old content and set the new content, which
@@ -929,8 +932,9 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
       mMsg->addDwBodyPart( mMsg->createDWBodyPart( &textPart ) );
       mMsg->assembleIfNeeded();
 
+      int attachmentNumber = 1;
       for ( std::vector<partNode*>::const_iterator it = ac.attachments().begin();
-            it != ac.attachments().end(); ++it ) {
+            it != ac.attachments().end(); ++it, attachmentNumber++ ) {
 
         // When adding this body part, make sure to _not_ add the next bodypart
         // as well, which mimelib would do, therefore creating a mail with many
@@ -938,7 +942,25 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
         // Body::AddBodyPart is very misleading here...
         ( *it )->dwPart()->SetNext( 0 );
 
-        mMsg->addDwBodyPart( static_cast<DwBodyPart*>( ( *it )->dwPart()->Clone() ) );
+        DwBodyPart *cloned = static_cast<DwBodyPart*>( ( *it )->dwPart()->Clone() );
+
+        // If the content type has no name or filename parameter, add one, since otherwise the name
+        // would be empty in the attachment view of the composer, which looks confusing
+        if ( cloned->Headers().HasContentType() ) {
+          DwMediaType &ct = cloned->Headers().ContentType();
+
+          // Converting to a string here, since DwMediaType does not have a HasParameter() function
+          QString ctStr = ct.AsString().c_str();
+          if ( !ctStr.lower().contains( "name=" ) && !ctStr.lower().contains( "filename=" ) ) {
+            DwParameter *nameParameter = new DwParameter;
+            nameParameter->SetAttribute( "name" );
+            nameParameter->SetValue( Util::dwString( KMMsgBase::encodeRFC2231StringAutoDetectCharset(
+                       i18n( "Attachment %1" ).arg( attachmentNumber ) ) ) );
+            ct.AddParameter( nameParameter );
+          }
+        }
+
+        mMsg->addDwBodyPart( cloned );
         mMsg->assembleIfNeeded();
       }
     }
