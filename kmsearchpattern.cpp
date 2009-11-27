@@ -29,6 +29,8 @@ using KMail::FilterLog;
 #include <nmo.h>
 #include <nco.h>
 
+#include <Nepomuk/Tag>
+
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -43,6 +45,7 @@ using KMail::FilterLog;
 #include <QRegExp>
 #include <QByteArray>
 
+#include <Soprano/Vocabulary/NAO>
 #include <Soprano/Vocabulary/RDF>
 
 #include <assert.h>
@@ -678,7 +681,35 @@ bool KMSearchRuleStatus::matches( KMime::Message * msg ) const
 
 void KMSearchRuleStatus::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const
 {
+  SparqlBuilder::BasicGraphPattern pattern;
+
+  if ( mStatus.isRead() || mStatus.isUnread() ) {
+    bool read = false;
+    if ( function() == FuncContains || function() == FuncEquals )
+      read = true;
+    if ( mStatus.isUnread() )
+      read = !read;
+    pattern.addTriple( "?message", Vocabulary::NMO::isRead(), read );
+  }
+
+  if ( mStatus.isImportant() ) {
+    Nepomuk::Tag tag( "important" );
+    pattern.addTriple( "?message", Soprano::Vocabulary::NAO::hasTag(), tag.resourceUri() );
+  }
+
+  if ( mStatus.isToAct() ) {
+    Nepomuk::Tag tag( "todo" );
+    pattern.addTriple( "?message", Soprano::Vocabulary::NAO::hasTag(), tag.resourceUri() );
+  }
+
+  if ( mStatus.isWatched() ) {
+    Nepomuk::Tag tag( "watched" );
+    pattern.addTriple( "?message", Soprano::Vocabulary::NAO::hasTag(), tag.resourceUri() );
+  }
+
   // TODO
+
+  graphGroup.addGraphPattern( pattern );
 }
 
 // ----------------------------------------------------------------------------
