@@ -23,7 +23,6 @@
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmkernel.h"
-#include "kmfolder.h"
 #include <kpimutils/email.h>
 
 #include <selectsqarqlbuilder.h>
@@ -867,12 +866,12 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
 
   bool res = false;
   int idx = -1;
+#if 0 //Port to akonadi
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
     return res;
   }
-#if 0 //TODO port to akonadi
   KMFolderOpener openFolder( folder, "searptr" );
   if ( openFolder.openResult() == 0 ) { // 0 means no error codes
     KMFolder *f =  openFolder.folder();

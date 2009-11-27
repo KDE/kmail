@@ -34,7 +34,6 @@
 #include <manageradaptor.h>
 
 #include <kmime/kmime_message.h>
-#include "kmfolder.h"
 
 #include <KUrl>
 #include <KDebug>
