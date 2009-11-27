@@ -27,7 +27,6 @@ QTEST_KDEMAIN_CORE( UtilTester )
 
 #include <kdebug.h>
 #include "util.h"
-#include <mimelib/string.h>
 
 
 static QString makePrintable( const QByteArray& str )

@@ -1,7 +1,6 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 include_directories(
-  ${CMAKE_SOURCE_DIR}/mimelib
   ${CMAKE_SOURCE_DIR}/kmail
   ${CMAKE_BINARY_DIR}/kmail
   ${Boost_INCLUDE_DIRS}
@@ -11,19 +10,7 @@ include_directories(
 
 set(utiltests_SRCS utiltests.cpp ../util.cpp)
 kde4_add_unit_test(utiltests TESTNAME kmail-utiltests ${utiltests_SRCS})
-target_link_libraries(utiltests mimelib messageviewer
-  ${QT_QTTEST_LIBRARY}
-  ${QT_QTCORE_LIBRARY}
-  ${KDE4_KIO_LIBS}
-  ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
-  kmailprivate
-)
-
-########### mimelibtests ###############
-
-set(mimelibtests_SRCS mimelibtests.cpp ../util.cpp)
-kde4_add_unit_test(mimelibtests TESTNAME kmail-mimelibtests ${mimelibtests_SRCS})
-target_link_libraries(mimelibtests mimelib messageviewer
+target_link_libraries(utiltests messageviewer
   ${QT_QTTEST_LIBRARY}
   ${QT_QTCORE_LIBRARY}
   ${KDE4_KIO_LIBS}
