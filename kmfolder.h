@@ -28,7 +28,6 @@
 using KMail::FolderJob;
 #include "mailinglist-magic.h"
 using KMail::MailingList;
-//#include "kmaccount.h" // for AccountList
 class KMAccount;
 typedef QList<KMAccount*> AccountList;
 

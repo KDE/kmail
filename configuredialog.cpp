@@ -134,7 +134,6 @@ using MailTransport::TransportManagementWidget;
 #include <stdlib.h>
 #include <kvbox.h>
 
-#include "kmaccount.h"
 
 #include <akonadi/agentfilterproxymodel.h>
 #include <akonadi/agentinstancemodel.h>

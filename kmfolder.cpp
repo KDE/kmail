@@ -28,7 +28,6 @@
 #include "expirejob.h"
 #include "compactionjob.h"
 // TODO port to akonadi #include "kmailicalifaceimpl.h"
-#include "kmaccount.h"
 
 #include <errno.h>
 #include <unistd.h> // W_OK

@@ -53,7 +53,6 @@ class KButtonGroup;
 class KUrlRequester;
 class KFontChooser;
 class KTabWidget;
-class KMAccount;
 class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
