@@ -23,6 +23,7 @@
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "folderrequester.h"
+#include "util.h"
 
 #include <klocale.h>
 #include <kcombobox.h>
@@ -119,14 +120,8 @@ void ArchiveFolderDialog::setFolder( KMFolder *defaultFolder )
 
 void ArchiveFolderDialog::slotOk()
 {
-  if ( QFile::exists( mUrlRequester->url() ) ) {
-    if ( KMessageBox::questionYesNo( this, i18n( "The specified file already exists. Do you want to overwrite it?" ),
-                                     i18n( "File already exists" ), KGuiItem( i18n( "Overwrite" ) ),
-                                      KGuiItem( i18n( "Cancel" ) ) ) != KMessageBox::Yes ) {
-      return;
-    }
-
-    // TODO: Check if overwriting actually works!
+  if ( !Util::checkOverwrite( mUrlRequester->url(), this ) ) {
+    return;
   }
 
   if ( !mFolderRequester->folder() ) {
