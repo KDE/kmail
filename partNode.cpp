@@ -599,6 +599,13 @@ bool partNode::isAttachment() const
   if ( !dwPart()->hasHeaders() )
     return false;
   DwHeaders& headers = dwPart()->Headers();
+  if ( headers.HasContentType() &&
+       headers.ContentType().Type() == DwMime::kTypeMessage &&
+       headers.ContentType().Subtype() == DwMime::kSubtypeRfc822 ) {
+    // Messages are always attachments. Normally message attachments created from KMail have a content
+    // disposition, but some mail clients omit that.
+    return true;
+  }
   if( !headers.HasContentDisposition() )
     return false;
   return ( headers.ContentDisposition().DispositionType()
