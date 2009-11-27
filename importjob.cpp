@@ -21,6 +21,8 @@
 #include "kmfolder.h"
 #include "folderutil.h"
 #include "kmfolderdir.h"
+#include "kmfolderimap.h"
+#include "imapjob.h"
 
 #include "progressmanager.h"
 
@@ -44,6 +46,8 @@ ImportJob::ImportJob( QWidget *parentWidget )
     mParentWidget( parentWidget ),
     mNumberOfImportedMessages( 0 ),
     mCurrentFolder( 0 ),
+    mCurrentMessage( 0 ),
+    mCurrentMessageFile( 0 ),
     mProgressItem( 0 ),
     mAborted( false )
 {
@@ -148,6 +152,31 @@ void ImportJob::enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder 
   }
 }
 
+void ImportJob::messageAdded()
+{
+  mNumberOfImportedMessages++;
+  if ( mCurrentFolder->folderType() == KMFolderTypeMaildir ||
+       mCurrentFolder->folderType() == KMFolderTypeCachedImap ) {
+    const QString messageFile = mCurrentFolder->location() + "/cur/" + mCurrentMessage->fileName();
+    // TODO: what if the file is not in the "cur" subdirectory?
+    if ( QFile::exists( messageFile ) ) {
+      chmod( messageFile.toLatin1(), mCurrentMessageFile->permissions() );
+      // TODO: changing user/group he requires a bit more work, requires converting the strings
+      //       to uid_t and gid_t
+      //getpwnam()
+      //chown( messageFile,
+    }
+    else {
+      kWarning() << "Unable to change permissions for newly created file: " << messageFile;
+    }
+  }
+  // TODO: Else?
+
+  mCurrentMessage = 0;
+  mCurrentMessageFile = 0;
+  QTimer::singleShot( 0, this, SLOT( importNextMessage() ) );
+}
+
 void ImportJob::importNextMessage()
 {
   if ( mAborted )
@@ -185,39 +214,53 @@ void ImportJob::importNextMessage()
     mProgressItem->setStatus( i18n( "Importing folder %1", mCurrentFolder->name() ) );
   }
 
-  const KArchiveFile *file = messages.files.first();
-  Q_ASSERT( file );
+  mCurrentMessageFile = messages.files.first();
+  Q_ASSERT( mCurrentMessageFile );
   messages.files.removeFirst();
 
-  KMMessage *newMessage = new KMMessage();
-  newMessage->fromString( file->data(), true /* setStatus */ );
+  mCurrentMessage = new KMMessage();
+  mCurrentMessage->fromString( mCurrentMessageFile->data(), true /* setStatus */ );
   int retIndex;
-  if ( mCurrentFolder->addMsg( newMessage, &retIndex ) != 0 ) {
-    abort( i18n( "Failed to add a message to the folder '%1'.", mCurrentFolder->name() ) );
-    return;
+
+  // If this is not an IMAP folder, we can add the message directly. Otherwise, the whole thing is
+  // async, for online IMAP. While addMsg() fakes a sync call, we rather do it the async way here
+  // ourselves, as otherwise the whole thing gets pretty much messed up with regards to folder
+  // refcounting. Furthermore, the completion dialog would be shown before the messages are actually
+  // uploaded.
+  if ( mCurrentFolder->folderType() != KMFolderTypeImap ) {
+    if ( mCurrentFolder->addMsg( mCurrentMessage, &retIndex ) != 0 ) {
+      abort( i18n( "Failed to add a message to the folder '%1'.", mCurrentFolder->name() ) );
+      return;
+    }
+    messageAdded();
   }
   else {
-    mNumberOfImportedMessages++;
-    if ( mCurrentFolder->folderType() == KMFolderTypeMaildir ||
-         mCurrentFolder->folderType() == KMFolderTypeCachedImap ) {
-      const QString messageFile = mCurrentFolder->location() + "/cur/" + newMessage->fileName();
-      // TODO: what if the file is not in the "cur" subdirectory?
-      if ( QFile::exists( messageFile ) ) {
-        chmod( messageFile.toLatin1(), file->permissions() );
-        // TODO: changing user/group he requires a bit more work, requires converting the strings
-        //       to uid_t and gid_t
-        //getpwnam()
-        //chown( messageFile,
-      }
-      else {
-        kWarning() << "Unable to change permissions for newly created file: " << messageFile;
-      }
-    }
-    // TODO: Else?
-    kDebug() << "Added message with subject " /*<< newMessage->subject()*/ // < this causes a pure virtual method to be called...
-             << " to folder " << mCurrentFolder->name() << " at index " << retIndex;
+    ImapJob *imapJob = new ImapJob( mCurrentMessage, ImapJob::tPutMessage,
+                                    dynamic_cast<KMFolderImap*>( mCurrentFolder->storage() ) );
+    connect( imapJob, SIGNAL(result(KMail::FolderJob*)),
+             SLOT(messagePutResult(KMail::FolderJob*)) );
+    imapJob->start();
   }
-  QTimer::singleShot( 0, this, SLOT( importNextMessage() ) );
+}
+
+void ImportJob::messagePutResult( KMail::FolderJob *job )
+{
+  if ( mAborted )
+    return;
+
+  if ( job->error() ) {
+    abort( i18n( "Failed to upload a message to the IMAP server." ) );
+    return;
+  } else {
+
+    KMFolderImap *imap = dynamic_cast<KMFolderImap*>( mCurrentFolder->storage() );
+    Q_ASSERT( imap );
+
+    // Ok, we uploaded the message, but we still need to add it to the folder. Use addMsgQuiet(),
+    // otherwise it will be uploaded again.
+    imap->addMsgQuiet( mCurrentMessage );
+    messageAdded();
+  }
 }
 
 // Input: .inbox.directory

@@ -31,6 +31,7 @@ class KArchive;
 class KArchiveDirectory;
 class KArchiveFile;
 class KMFolder;
+class KMMessage;
 
 namespace KPIM
 {
@@ -39,6 +40,7 @@ namespace KPIM
 
 namespace KMail
 {
+  class FolderJob;
 
 /**
  * Imports an archive that was previously backed up with an BackupJob.
@@ -62,6 +64,7 @@ class ImportJob : public QObject
 
     void importNextMessage();
     void cancelJob();
+    void messagePutResult( KMail::FolderJob *job );
 
   private:
 
@@ -85,6 +88,7 @@ class ImportJob : public QObject
     KMFolder* getOrCreateSubFolder( KMFolder *parentFolder, const QString &subFolderName,
                                     mode_t subFolderPermissions );
     void enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder );
+    void messageAdded();
 
     KArchive *mArchive;
 
@@ -105,6 +109,12 @@ class ImportJob : public QObject
 
     // The folder to which we are currently importing messages
     KMFolder *mCurrentFolder;
+
+    // The message which is currently being added
+    KMMessage *mCurrentMessage;
+
+    // The archive file of the current message that is being added
+    const KArchiveFile *mCurrentMessageFile;
 
     KPIM::ProgressItem *mProgressItem;
     bool mAborted;

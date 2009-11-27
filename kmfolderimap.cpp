@@ -336,8 +336,6 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
     int idx = aFolder->find( aMsg );
     assert( idx != -1 );
     aFolder->take( idx );
-  } else {
-    kDebug(5006) <<"no parent";
   }
   if ( !account()->hasCapability("uidplus") ) {
     // Remember the status with the MD5 as key
