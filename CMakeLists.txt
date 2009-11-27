@@ -118,7 +118,6 @@ set(kmailprivate_LIB_SRCS
    vacationdialog.cpp
    vacation.cpp
    sievedebugdialog.cpp
-   sieveconfig.cpp
    sievejob.cpp
    #kmpopheaders.cpp
    #kmpopfiltercnfrmdlg.cpp

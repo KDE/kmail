@@ -18,7 +18,6 @@
 #include "vacationdialog.h"
 #include "sievejob.h"
 using KMail::SieveJob;
-#include "sieveconfig.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include <kpimidentities/identitymanager.h>

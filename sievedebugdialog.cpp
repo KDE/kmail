@@ -39,7 +39,6 @@
 
 #include "kmkernel.h"
 #include "sievejob.h"
-#include "sieveconfig.h"
 
 using KMail::SieveJob;
 using KMime::Types::AddrSpecList;
