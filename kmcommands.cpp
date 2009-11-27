@@ -2267,16 +2267,6 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList
 {
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*>& attachments,
-                                                    const Akonadi::Item &msg, bool encoded )
-  : KMCommand( parent ), mImplicitAttachments( false ), mEncoded( encoded )
-{
-  QList<partNode*>::const_iterator it;
-  for ( it = attachments.constBegin(); it != attachments.constEnd(); ++it ) {
-    mAttachmentMap.insert( (*it), msg );
-  }
-}
-
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
 #if 0 //TODO port to akonadi

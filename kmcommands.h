@@ -340,16 +340,6 @@ public:
       @param msgs    The messages of which the attachments should be saved.
    */
   KMSaveAttachmentsCommand( QWidget *parent, const QList<Akonadi::Item>& msgs );
-  /** Use this to save the specified attachments of the given message.
-      @param parent       The parent widget of the command used for message
-                          boxes.
-      @param attachments  The attachments that should be saved.
-      @param msg          The message that the attachments belong to.
-      @param encoded      True if the transport encoding should not be removed
-                          when the attachment is saved.
-   */
-  KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*> &attachments,
-                            const Akonadi::Item &msg, bool encoded = false  );
 
 private slots:
   void slotSaveAll();
