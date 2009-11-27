@@ -2270,11 +2270,11 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
-#if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
   QList<Akonadi::Item> msgList = retrievedMsgs();
   QList<Akonadi::Item>::const_iterator it;
   for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
+#if 0 //TODO port to akonadi
     partNode *rootNode = partNode::fromMessage( msg );
     for ( partNode *child = rootNode; child;
           child = child->firstChild() ) {
@@ -2283,6 +2283,9 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
           mAttachmentMap.insert( node, msg );
       }
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   setDeletesItself( true );
   // load all parts
@@ -2290,9 +2293,6 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
   connect( command, SIGNAL( partsRetrieved() ),
            this, SLOT( slotSaveAll() ) );
   command->start();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 

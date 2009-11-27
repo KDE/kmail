@@ -115,8 +115,6 @@ using KMail::Vacation;
 using MessageViewer::AttachmentStrategy;
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
-//#include "folderjob.h"
-//using KMail::FolderJob;
 #include "mailinglist-magic.h"
 #include "antispamwizard.h"
 using KMail::AntiSpamWizard;
@@ -4682,7 +4680,7 @@ void KMMainWidget::showEvent( QShowEvent *event )
 void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
   slotSearch();
-  
+
   assert( mSearchWin );
   KMSearchPattern pattern;
   pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mMessagePane->currentFilterSearchString() ) );
@@ -4719,28 +4717,6 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
 
 void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 {
-#if 0 //Port it
-  if ( msg && msg->parent() && !msg->isComplete() )
-  {
-    if ( msg->transferInProgress() )
-      return;
-    mMsgView->clear();
-    mMsgView->setWaitingForSerNum( msg->getMsgSerNum() );
-
-    if ( mJob ) {
-       disconnect( mJob, 0, mMsgView, 0 );
-       delete mJob;
-    }
-    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, msg->parent(),
-          "STRUCTURE", mMsgView->attachmentStrategy() );
-    connect(mJob, SIGNAL(messageRetrieved(KMime::Message*)),
-            mMsgView, SLOT(slotMessageArrived(KMime::Message*)));
-    mJob->start();
-  } else {
-    mMsgView->setMessage(msg);
-  }
-#endif
-
   // TODO: Port to partFetcher.
   ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
   itemFetchJob->fetchScope().fetchFullPayload( true );
