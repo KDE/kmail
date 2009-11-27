@@ -2298,26 +2298,23 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
 
 void KMSaveAttachmentsCommand::slotSaveAll()
 {
-#if 0 //TODO port to akonadi
   // now that all message parts have been retrieved, remove all parts which
   // don't represent an attachment if they were not explicitly passed in the
   // c'tor
-  if ( mImplicitAttachments ) {
     for ( PartNodeMessageMap::iterator it = mAttachmentMap.begin();
           it != mAttachmentMap.end(); ) {
       // only body parts which have a filename or a name parameter (except for
       // the root node for which name is set to the message's subject) are
       // considered attachments
-      if ( it.key()->msgPart().fileName().trimmed().isEmpty() &&
-           ( it.key()->msgPart().name().trimmed().isEmpty() ||
-             !it.key()->parentNode() ) ) {
+      if ( it.key()->contentDisposition()->filename().trimmed().isEmpty() &&
+           ( it.key()->contentType()->name().trimmed().isEmpty() ||
+             !it.key()->topLevel() ) ) {
         PartNodeMessageMap::iterator delIt = it;
         ++it;
         mAttachmentMap.erase( delIt );
       }
       else
         ++it;
-    }
     if ( mAttachmentMap.isEmpty() ) {
       KMessageBox::information( 0, i18n("Found no attachments to save.") );
       setResult( OK ); // The user has already been informed.
@@ -2345,10 +2342,10 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   }
   else {
     // only one item, get the desired filename
-    partNode *node = mAttachmentMap.begin().key();
-    QString s = node->msgPart().fileName().trimmed();
+    KMime::Content *content = mAttachmentMap.begin().key();
+    QString s = content->contentDisposition()->filename().trimmed();
     if ( s.isEmpty() )
-      s = node->msgPart().name().trimmed();
+      s = content->contentType()->name().trimmed();
     if ( s.isEmpty() )
       s = i18nc("filename for an unnamed attachment", "attachment.1");
     else
@@ -2375,11 +2372,12 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         it != mAttachmentMap.constEnd();
         ++it ) {
     KUrl curUrl;
+    KMime::Content *content = it.key();
     if ( !dirUrl.isEmpty() ) {
       curUrl = dirUrl;
-      QString s = it.key()->msgPart().fileName().trimmed();
+      QString s = content->contentDisposition()->filename().trimmed();
       if ( s.isEmpty() )
-        s = it.key()->msgPart().name().trimmed();
+        s = content->contentType()->name().trimmed();
       if ( s.isEmpty() ) {
         ++unnamedAtmCount;
         s = i18nc("filename for the %1-th unnamed attachment",
@@ -2452,9 +2450,6 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
   }
   setResult( globalResult );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   emit completed( this );
   deleteLater();
 }
@@ -2471,136 +2466,120 @@ QString KMCommand::cleanFileName( const QString &name )
   return fileName;
 }
 
-KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *node,
+KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
                                                       const KUrl& url )
 {
+  KMime::Content *topContent  = content->topLevel();
 #if 0 //TODO port to akonadi
   bool bSaveEncrypted = false;
-  bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
+  bool bEncryptedParts = mNodeHelper->encryptionState( content ) != KMMsgNotEncrypted;
   if( bEncryptedParts )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?",
-           url.fileName() ),
-          i18n( "KMail Question" ), KGuiItem(i18n("Keep Encryption")), KGuiItem(i18n("Do Not Keep")) ) ==
+                                    i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?",
+                                          url.fileName() ),
+                                    i18n( "KMail Question" ), KGuiItem(i18n("Keep Encryption")), KGuiItem(i18n("Do Not Keep")) ) ==
         KMessageBox::Yes )
       bSaveEncrypted = true;
 
   bool bSaveWithSig = true;
-  if( node->signatureState() != KMMsgNotSigned )
+  if(mNodeHelper->signatureState( content ) != KMMsgNotSigned )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?",
-           url.fileName() ),
-          i18n( "KMail Question" ), KGuiItem(i18n("Keep Signature")), KGuiItem(i18n("Do Not Keep")) ) !=
+                                    i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?",
+                                          url.fileName() ),
+                                    i18n( "KMail Question" ), KGuiItem(i18n("Keep Signature")), KGuiItem(i18n("Do Not Keep")) ) !=
         KMessageBox::Yes )
       bSaveWithSig = false;
 
   QByteArray data;
-    if( bSaveEncrypted || !bEncryptedParts) {
-      partNode *dataNode = node;
-      QByteArray rawReplyString;
-      bool gotRawReplyString = false;
-      if ( !bSaveWithSig ) {
-        if ( DwMime::kTypeMultipart == node->type() &&
-             DwMime::kSubtypeSigned == node->subType() ) {
-          // carefully look for the part that is *not* the signature part:
-          if ( node->findType( DwMime::kTypeApplication,
-                               DwMime::kSubtypePgpSignature,
-                               true, false ) ) {
-            dataNode = node->findTypeNot( DwMime::kTypeApplication,
-                                          DwMime::kSubtypePgpSignature,
-                                          true, false );
-          } else if ( node->findType( DwMime::kTypeApplication,
-                                      DwMime::kSubtypePkcs7Mime,
-                                      true, false ) ) {
-            dataNode = node->findTypeNot( DwMime::kTypeApplication,
-                                          DwMime::kSubtypePkcs7Mime,
-                                          true, false );
-          } else {
-            dataNode = node->findTypeNot( DwMime::kTypeMultipart,
-                                          DwMime::kSubtypeUnknown,
-                                          true, false );
-          }
+  if( bSaveEncrypted || !bEncryptedParts) {
+    KMime::Content *dataNode = node;
+    QByteArray rawReplyString;
+    bool gotRawReplyString = false;
+    if ( !bSaveWithSig ) {
+      if ( topContent->contentType()->mimeType() == "multipart/signed" )  {
+        // carefully look for the part that is *not* the signature part:
+        if ( ObjectTreeParser::findType( topContent, "application/pgp-signature", true, false ) ) {
+          dataNode = ObjectTreeParser::findTypeNot( topContent, "application", "pgp-signature", true, false );
+        } else if ( ObjectTreeParser::findType( topContent, "application/pkcs7-mime" , true, false ) ) {
+          dataNode = ObjectTreeParser::findTypeNot( topContent, "application", "pkcs7-mime", true, false );
         } else {
-          ObjectTreeParser otp( 0, 0, false, false, false );
-
-          // process this node and all it's siblings and descendants
-          dataNode->setProcessed( false, true );
-          otp.parseObjectTree( dataNode );
-
-          rawReplyString = otp.rawReplyString();
-          gotRawReplyString = true;
+          dataNode = ObjectTreeParser::findTypeNot( topContent, "multipart", "", true, false );
         }
+      } else {
+        EmptySource emptySource;
+        ObjectTreeParser otp( &emptySource, 0, 0,false, false, false );
+
+        // process this node and all it's siblings and descendants
+        dataNode->setProcessed( false, true );
+        otp.parseObjectTree( dataNode );
+
+        rawReplyString = otp.rawReplyString();
+        gotRawReplyString = true;
       }
-      QByteArray cstr = gotRawReplyString
-                         ? rawReplyString
-                         : dataNode->msgPart().bodyDecodedBinary();
-      data = cstr;
-      size_t size = cstr.size();
-      if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
-        // convert CRLF to LF before writing text attachments to disk
-        // PENDING (romain) disable on Windows ?
-        size = KMail::Util::crlf2lf( data.data(), size );
-      }
-      data.resize( size );
     }
+    QByteArray cstr = gotRawReplyString
+      ? rawReplyString
+      : dataNode->decodedContent();
+    data = KMime::CRLFtoLF( cstr );
+  }
   QDataStream ds;
   QFile file;
   KTemporaryFile tf;
   if ( url.isLocalFile() )
-  {
-    // save directly
-    file.setFileName( url.toLocalFile() );
-    if ( !file.open( QIODevice::WriteOnly ) )
     {
-      KMessageBox::error( parentWidget(),
-                          i18nc( "1 = file name, 2 = error string",
-                                 "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
-                                 file.fileName(),
-                                 QString::fromLocal8Bit( strerror( errno ) ) ),
-                          i18n( "Error saving attachment" ) );
-      return Failed;
+      // save directly
+      file.setFileName( url.toLocalFile() );
+      if ( !file.open( QIODevice::WriteOnly ) )
+        {
+          KMessageBox::error( parentWidget(),
+                              i18nc( "1 = file name, 2 = error string",
+                                     "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
+                                     file.fileName(),
+                                     QString::fromLocal8Bit( strerror( errno ) ) ),
+                              i18n( "Error saving attachment" ) );
+          return Failed;
+        }
+
+      // #79685 by default use the umask the user defined, but let it be configurable
+      if ( GlobalSettings::self()->disregardUmask() )
+        fchmod( file.handle(), S_IRUSR | S_IWUSR );
+
+      ds.setDevice( &file );
+    } else
+    {
+      // tmp file for upload
+      tf.open();
+      ds.setDevice( &tf );
     }
-
-    // #79685 by default use the umask the user defined, but let it be configurable
-    if ( GlobalSettings::self()->disregardUmask() )
-      fchmod( file.handle(), S_IRUSR | S_IWUSR );
-
-    ds.setDevice( &file );
-  } else
-  {
-    // tmp file for upload
-    tf.open();
-    ds.setDevice( &tf );
-  }
 
   if ( ds.writeRawData( data.data(), data.size() ) == -1)
-  {
-    QFile *f = static_cast<QFile *>( ds.device() );
-    KMessageBox::error( parentWidget(),
-                        i18nc( "1 = file name, 2 = error string",
-                               "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
-                               f->fileName(),
-                               f->errorString() ),
-                        i18n( "Error saving attachment" ) );
-    return Failed;
-  }
-
-  if ( !url.isLocalFile() )
-  {
-    // QTemporaryFile::fileName() is only defined while the file is open
-    QString tfName = tf.fileName();
-    tf.close();
-    if ( !KIO::NetAccess::upload( tfName, url, parentWidget() ) )
     {
+      QFile *f = static_cast<QFile *>( ds.device() );
       KMessageBox::error( parentWidget(),
                           i18nc( "1 = file name, 2 = error string",
                                  "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
-                                 url.prettyUrl(),
-                                 KIO::NetAccess::lastErrorString() ),
+                                 f->fileName(),
+                                 f->errorString() ),
                           i18n( "Error saving attachment" ) );
       return Failed;
     }
-  } else
+
+  if ( !url.isLocalFile() )
+    {
+      // QTemporaryFile::fileName() is only defined while the file is open
+      QString tfName = tf.fileName();
+      tf.close();
+      if ( !KIO::NetAccess::upload( tfName, url, parentWidget() ) )
+        {
+          KMessageBox::error( parentWidget(),
+                              i18nc( "1 = file name, 2 = error string",
+                                     "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
+                                     url.prettyUrl(),
+                                     KIO::NetAccess::lastErrorString() ),
+                              i18n( "Error saving attachment" ) );
+          return Failed;
+        }
+    } else
     file.close();
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
