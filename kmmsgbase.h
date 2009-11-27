@@ -353,6 +353,13 @@ public:
   static QCString encodeRFC2231String(const QString& aStr,
     const QCString& charset);
 
+  /**
+   * Just like encodeRFC2231String, only that the encoding is auto-detected.
+   * @param defaultCharset If given, this will be the prefered charset
+   */
+  static QCString encodeRFC2231StringAutoDetectCharset( const QString &str,
+                                                        const QCString &defaultCharset = "" );
+
   /** Decode given string as described in RFC2231 */
   static QString decodeRFC2231String(const QCString& aStr);
   /** Extract a given param from the RFC2231-encoded header field, in particular

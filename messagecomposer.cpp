@@ -613,11 +613,8 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
     part->setTypeStr( "application" );
     part->setSubtypeStr( "vnd.de.bund.bsi.chiasmus" );
     part->setName( filename + ".xia" );
-    // this is taken from kmmsgpartdlg.cpp:
-    QCString encoding = KMMsgBase::autoDetectCharset( part->charset(), KMMessage::preferredCharsets(), filename );
-    if ( encoding.isEmpty() )
-      encoding = "utf-8";
-    const QCString enc_name = KMMsgBase::encodeRFC2231String( filename + ".xia", encoding );
+    const QCString enc_name = KMMsgBase::encodeRFC2231StringAutoDetectCharset(
+        filename + ".xia", part->charset() );
     const QCString cDisp = "attachment;\n\tfilename"
                            + ( QString( enc_name ) != filename + ".xia"
                                ? "*=" + enc_name
