@@ -106,9 +106,6 @@ public:
   /** This is used by the storage to save the folder specific configuration */
   void writeConfig( KConfigGroup & config ) const;
 
-  /** Returns the type of this folder */
-  KMFolderType folderType() const;
-
   /** Returns the filename of the folder (reimplemented in KMFolderImap) */
   QString fileName() const;
 

@@ -352,7 +352,9 @@ void KMSystemTray::slotContextMenuAboutToShow()
  */
 QString KMSystemTray::prettyName(KMFolder * fldr)
 {
+
   QString rvalue = fldr->label();
+#if 0  
   if(fldr->folderType() == KMFolderTypeImap)
   {
 #if 0 //TODO port to akonadi
@@ -371,7 +373,7 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
   }
 
   kDebug() << "Got label" << rvalue;
-
+#endif
   return rvalue;
 }
 
@@ -458,6 +460,7 @@ void KMSystemTray::hideKMail()
  */
 void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 {
+#if 0	
   //We don't want to count messages from search folders as they
   //  already counted as part of their original folders
   if( !fldr ||
@@ -475,6 +478,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   else {
     mUpdateTimer->start(150);
   }
+#endif  
 }
 
 void KMSystemTray::updateNewMessages()

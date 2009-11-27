@@ -29,7 +29,6 @@
 
 #include "jobscheduler.h"
 #include "kmfolder.h"
-#include "folderstorage.h"
 #include <kdebug.h>
 
 using namespace KMail;

@@ -270,16 +270,6 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
     configGroup.deleteEntry( "Shortcut" );
 }
 
-KMFolderType KMFolder::folderType() const
-{
-#if 0  //TODO port to akonadi
-  return mStorage ? mStorage->folderType() : KMFolderTypeUnknown;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return KMFolderTypeUnknown;
-#endif
-}
-
 QString KMFolder::fileName() const
 {
 #if 0  //TODO port to akonadi
