@@ -406,15 +406,6 @@ void BackupJob::archiveNextFolder()
     return;
   }
 
-
-  KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( mCurrentFolder->storage() );
-  /*if ( dimapFolder ) {
-    mArchive->addLocalFile( dimapFolder->uidCacheLocation(), stripRootPath( dimapFolder->uidCacheLocation() ) );
-    // TODO: error handling
-  }*/
-  //mArchive->addLocalFile( mCurrentFolder->indexLocation(), stripRootPath( mCurrentFolder->indexLocation() ) );
-  // TODO: error handling
-
   for ( int i = 0; i < mCurrentFolder->count( false /* no cache */ ); i++ ) {
     unsigned long serNum = KMMsgDict::instance()->getMsgSerNum( mCurrentFolder, i );
     if ( serNum == 0 ) {
