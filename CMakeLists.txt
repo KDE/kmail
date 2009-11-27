@@ -181,6 +181,19 @@ set(kmailprivate_LIB_SRCS
    ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/selectsparqlbuilder.cpp
 )
 
+macro(add_resource_iface _kcfgFile _ifaceName _className)
+  kcfg_generate_dbus_interface(${kdepim-runtime_SOURCE_DIR}/resources/${_kcfgFile} ${_ifaceName})
+  string(TOLOWER ${_className} _codeFile)
+  qt4_add_dbus_interface(kmailprivate_LIB_SRCS
+    ${CMAKE_CURRENT_BINARY_DIR}/${_ifaceName}.xml ${_codeFile} ${_className}
+  )
+endmacro(add_resource_iface)
+
+add_resource_iface( imap/imapresource.kcfg
+                    org.kde.Akonadi.Imap.Settings ImapSettings )
+
+
+
 # TODO PORT
 # qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 # qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS

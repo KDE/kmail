@@ -15,11 +15,13 @@
 #include "vacation.h"
 #include <limits.h>
 
+#include "imapsettings.h"
 #include "vacationdialog.h"
 #include "sievejob.h"
 using KMail::SieveJob;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
+#include "kmagentmanager.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include "globalsettings.h"
@@ -35,6 +37,8 @@ using KMime::Types::AddrSpecList;
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+
+#include <akonadi/agentinstance.h>
 
 #include <QByteArray>
 #include <QDateTime>
@@ -484,55 +488,56 @@ namespace KMail {
     return script;
   }
 
-  static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
-#if 0 //TODO port to akonadi
+   static KUrl findUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a) {
     assert( a );
-    const SieveConfig sieve = a->sieveConfig();
-    if ( !sieve.managesieveSupported() )
+    if ( !a->sieveSupport() )
       return KUrl();
-    if ( sieve.reuseConfig() ) {
+    if ( a->sieveReuseConfig() ) {
       // assemble Sieve url from the settings of the account:
       KUrl u;
       u.setProtocol( "sieve" );
+#if 0
       u.setHost( a->host() );
       u.setUser( a->login() );
       u.setPass( a->passwd() );
-      u.setPort( sieve.port() );
+      u.setPort( a->port() );
       u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() ); //translate IMAP LOGIN to PLAIN
       if ( !a->useSSL() && !a->useTLS() )
         u.addQueryItem( "x-allow-unencrypted", "true" );
-      u.setFileName( sieve.vacationFileName() );
+#endif
+      qDebug()<<" a->sieveVacationFilename() :"<<a->sieveVacationFilename();
+      u.setFileName( a->sieveVacationFilename() );
+
       return u;
     } else {
-      KUrl u = sieve.alternateURL();
+      KUrl u( a->sieveAlternateUrl() );
+#if 0
       if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
         u.addQueryItem( "x-allow-unencrypted", "true" );
-      u.setFileName( sieve.vacationFileName() );
+#endif
+      u.setFileName( a->sieveVacationFilename() );
       return u;
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return KUrl();
-#endif
   }
 
   KUrl Vacation::findURL() const {
-#if 0
-    AccountManager * am = kmkernel->acctMgr();
-    assert( am );
-    QList<KMAccount*>::iterator accountIt = am->begin();
-    while ( accountIt != am->end() ) {
-      KMAccount *account = *accountIt;
-      ++accountIt;
-      if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( account ) ) {
-        KUrl u = findUrlForAccount( iab );
-        if ( !u.isEmpty() )
-          return u;
+    Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+    foreach ( const Akonadi::AgentInstance& type, lst )
+    {
+      //TODO verify it.
+      if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
+        OrgKdeAkonadiImapSettingsInterface *iface = new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
+        if ( iface->isValid() ) {
+          KUrl u = findUrlForAccount( iface );
+          if ( !u.isEmpty() ) {
+            qDebug()<<" u :"<<u;
+            delete iface;
+            return u;
+          }
+        }
+        delete iface;
       }
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     return KUrl();
   }
 
