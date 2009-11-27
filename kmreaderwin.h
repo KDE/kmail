@@ -54,7 +54,6 @@ namespace KMail {
     class Observable;
     class BodyPartMemento;
   }
-  class ObjectTreeParser;
 }
 namespace MessageViewer {
   class HeaderStrategy;

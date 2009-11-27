@@ -88,7 +88,6 @@ using KMail::ActionScheduler;
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
-using KMail::ObjectTreeParser;
 //using KMail::FolderJob;
 #include "messageviewer/mailsourceviewer.h"
 using namespace MessageViewer;
@@ -118,6 +117,8 @@ using KMail::TemplateParser;
 #include <akonadi/itemdeletejob.h>
 
 #include "messageviewer/stringutil.h"
+#include "messageviewer/nodehelper.h"
+#include "messageviewer/objecttreeemptysource.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -2470,7 +2471,8 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
                                                       const KUrl& url )
 {
   KMime::Content *topContent  = content->topLevel();
-#if 0 //TODO port to akonadi
+  MessageViewer::NodeHelper *mNodeHelper = new MessageViewer::NodeHelper;
+#if 1 //TODO port to akonadi
   bool bSaveEncrypted = false;
   bool bEncryptedParts = mNodeHelper->encryptionState( content ) != KMMsgNotEncrypted;
   if( bEncryptedParts )
@@ -2492,25 +2494,25 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
 
   QByteArray data;
   if( bSaveEncrypted || !bEncryptedParts) {
-    KMime::Content *dataNode = node;
+    KMime::Content *dataNode = content;
     QByteArray rawReplyString;
     bool gotRawReplyString = false;
     if ( !bSaveWithSig ) {
       if ( topContent->contentType()->mimeType() == "multipart/signed" )  {
         // carefully look for the part that is *not* the signature part:
-        if ( ObjectTreeParser::findType( topContent, "application/pgp-signature", true, false ) ) {
-          dataNode = ObjectTreeParser::findTypeNot( topContent, "application", "pgp-signature", true, false );
-        } else if ( ObjectTreeParser::findType( topContent, "application/pkcs7-mime" , true, false ) ) {
-          dataNode = ObjectTreeParser::findTypeNot( topContent, "application", "pkcs7-mime", true, false );
+        if ( MessageViewer::ObjectTreeParser::findType( topContent, "application/pgp-signature", true, false ) ) {
+          dataNode = MessageViewer::ObjectTreeParser::findTypeNot( topContent, "application", "pgp-signature", true, false );
+        } else if ( MessageViewer::ObjectTreeParser::findType( topContent, "application/pkcs7-mime" , true, false ) ) {
+          dataNode = MessageViewer::ObjectTreeParser::findTypeNot( topContent, "application", "pkcs7-mime", true, false );
         } else {
-          dataNode = ObjectTreeParser::findTypeNot( topContent, "multipart", "", true, false );
+          dataNode = MessageViewer::ObjectTreeParser::findTypeNot( topContent, "multipart", "", true, false );
         }
       } else {
-        EmptySource emptySource;
-        ObjectTreeParser otp( &emptySource, 0, 0,false, false, false );
+        MessageViewer::EmptySource emptySource;
+        MessageViewer::ObjectTreeParser otp( &emptySource, 0, 0,false, false, false );
 
         // process this node and all it's siblings and descendants
-        dataNode->setProcessed( false, true );
+        mNodeHelper->setNodeUnprocessed( dataNode, true );
         otp.parseObjectTree( dataNode );
 
         rawReplyString = otp.rawReplyString();
@@ -2584,6 +2586,8 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  mNodeHelper->removeTempFiles();
+  delete mNodeHelper;
   return OK;
 }
 
