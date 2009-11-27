@@ -21,7 +21,6 @@ using KMail::SieveJob;
 #include "sieveconfig.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-//TODO port to akonadi #include "kmacctimap.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include "globalsettings.h"
