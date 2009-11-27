@@ -2258,12 +2258,12 @@ KMCommand::Result KMUrlClickedCommand::execute()
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const Akonadi::Item& msg )
-  : KMCommand( parent, msg ), mImplicitAttachments( true ), mEncoded( false )
+  : KMCommand( parent, msg )
 {
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList<Akonadi::Item>& msgs )
-  : KMCommand( parent, msgs ), mImplicitAttachments( true ), mEncoded( false )
+  : KMCommand( parent, msgs )
 {
 }
 
@@ -2271,7 +2271,6 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
-  if ( mImplicitAttachments ) {
     QList<KMime::Message*> msgList = retrievedMsgs();
     QList<KMime::Message*>::const_iterator it;
     for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
@@ -2285,7 +2284,6 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
         }
       }
     }
-  }
   setDeletesItself( true );
   // load all parts
   KMLoadPartsCommand *command = new KMLoadPartsCommand( mAttachmentMap );
@@ -2497,14 +2495,6 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       bSaveWithSig = false;
 
   QByteArray data;
-  if ( mEncoded )
-  {
-    // This does not decode the Message Content-Transfer-Encoding
-    // but saves the _original_ content of the message part
-    data = node->msgPart().body();
-  }
-  else
-  {
     if( bSaveEncrypted || !bEncryptedParts) {
       partNode *dataNode = node;
       QByteArray rawReplyString;
@@ -2553,7 +2543,6 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       }
       data.resize( size );
     }
-  }
   QDataStream ds;
   QFile file;
   KTemporaryFile tf;

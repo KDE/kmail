@@ -350,8 +350,6 @@ private:
 
 private:
   PartNodeMessageMap mAttachmentMap;
-  bool mImplicitAttachments;
-  bool mEncoded;
 };
 
 class KMAIL_EXPORT KMReplyToCommand : public KMCommand
