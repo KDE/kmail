@@ -398,6 +398,10 @@ void BackupJob::archiveNextFolder()
     success = false;
   if ( !writeDirHelper( mCurrentFolder->location() + "/cur", mCurrentFolder->location() ) )
     success = false;
+  if ( !writeDirHelper( mCurrentFolder->location() + "/new", mCurrentFolder->location() ) )
+    success = false;
+  if ( !writeDirHelper( mCurrentFolder->location() + "/tmp", mCurrentFolder->location() ) )
+    success = false;
   if ( !success ) {
     abort( i18n( "Unable to create folder structure for folder '%1' within archive file." )
               .arg( mCurrentFolder->name() ) );
