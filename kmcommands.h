@@ -10,7 +10,6 @@
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 using MessageViewer::EditorWatcher;
-#include <mimelib/string.h>
 #include <messagecore/messagestatus.h>
 #include <messagelist/core/view.h>
 using KPIM::MessageStatus;
