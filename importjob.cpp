@@ -79,14 +79,14 @@ void ImportJob::finish()
   mProgressItem = 0;
   QString text = i18n( "Importing the archive file '%1' into the folder '%2' succeeded." )
                      .arg( mArchiveFile.path() ).arg( mRootFolder->name() );
-  text += "\n" + i18n( "%1 messages were imported." ).arg( mNumberOfImportedMessages );
+  text += "\n" + i18n( "1 message was imported.", "%n messages were imported.", mNumberOfImportedMessages );
   KMessageBox::information( mParentWidget, text, i18n( "Import finished." ) );
   deleteLater();
 }
 
 void ImportJob::cancelJob()
 {
-  abort( i18n( "The operation was cancelled by the user." ) );
+  abort( i18n( "The operation was canceled by the user." ) );
 }
 
 void ImportJob::abort( const QString &errorMessage )
