@@ -439,7 +439,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       }
       mReaderWin->addAddrBookAction()->plug( menu );
       mReaderWin->openAddrBookAction()->plug( menu );
-      mReaderWin->copyAction()->plug( menu );
+      mReaderWin->copyURLAction()->plug( menu );
       copyAdded = true;
     } else {
       // popup on a not-mailto URL
