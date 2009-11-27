@@ -640,14 +640,7 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
     part->setTypeStr( "application" );
     part->setSubtypeStr( "vnd.de.bund.bsi.chiasmus" );
     part->setName( filename + ".xia" );
-
-    // this is taken from kmmsgpartdlg.cpp:
-    QByteArray encoding =
-      KMMsgBase::autoDetectCharset( part->charset(),
-                                    KMMessage::preferredCharsets(), filename );
-    if ( encoding.isEmpty() )
-      encoding = "utf-8";
-    const QByteArray enc_name = KMMsgBase::encodeRFC2231String( filename + ".xia", encoding );
+    const QByteArray enc_name = KMMsgBase::encodeRFC2231StringAutoDetectCharset( filename + ".xia", part->charset() );
     const QByteArray cDisp = "attachment;\n\tfilename"
                              + ( QString( enc_name ) != filename + ".xia"
                                  ? "*=" + enc_name
@@ -2312,7 +2305,7 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
     return;
   }
 
-  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() && 
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() &&
        Kleo::MessageBox::showAuditLogButton( job.get() ) )
     Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Signing Operation") );
 

@@ -3201,9 +3201,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   QByteArray cte      = aPart->cteStr();
   QByteArray contDesc = aPart->contentDescriptionEncoded();
   QByteArray contDisp = aPart->contentDisposition();
-  QByteArray encoding = autoDetectCharset(charset, s->prefCharsets, aPart->name());
-  if (encoding.isEmpty()) encoding = "utf-8";
-  QByteArray name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
+  QByteArray name     =  KMMsgBase::encodeRFC2231StringAutoDetectCharset( aPart->name(), charset );
   bool RFC2231encoded = aPart->name() != QString(name);
   QByteArray paramAttr  = aPart->parameterAttribute();
 
@@ -3278,24 +3276,18 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
     }
   }
 
-  if (!paramAttr.isEmpty())
-  {
-    QByteArray encoding = autoDetectCharset(charset, s->prefCharsets,
-                                            aPart->parameterValue());
-    if (encoding.isEmpty()) encoding = "utf-8";
+  if ( !paramAttr.isEmpty() ) {
     QByteArray paramValue;
-    paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
-                                                encoding);
+    paramValue = KMMsgBase::encodeRFC2231StringAutoDetectCharset( aPart->parameterValue(), charset );
     DwParameter *param = new DwParameter;
-    if (aPart->parameterValue() != QString(paramValue))
-    {
-      param->SetAttribute((paramAttr + '*').data());
-      param->SetValue(paramValue.data(),true);
+    if ( aPart->parameterValue() != QString( paramValue ) ) {
+      param->SetAttribute( ( paramAttr + '*' ).data() );
+      param->SetValue( paramValue.data(), true );
     } else {
-      param->SetAttribute(paramAttr.data());
-      param->SetValue(paramValue.data());
+      param->SetAttribute( paramAttr.data() );
+      param->SetValue( paramValue.data() );
     }
-    ct.AddParameter(param);
+    ct.AddParameter( param );
   }
 
   if (!cte.isEmpty())
