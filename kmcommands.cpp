@@ -2272,19 +2272,18 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
 #if 0 //TODO port to akonadi
   setEmitsCompletedItself( true );
-    QList<KMime::Message*> msgList = retrievedMsgs();
-    QList<KMime::Message*>::const_iterator it;
-    for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
-      KMime::Message *msg = (*it);
-      partNode *rootNode = partNode::fromMessage( msg );
-      for ( partNode *child = rootNode; child;
-            child = child->firstChild() ) {
-        for ( partNode *node = child; node; node = node->nextSibling() ) {
-          if ( node->type() != DwMime::kTypeMultipart )
-            mAttachmentMap.insert( node, msg );
-        }
+  QList<Akonadi::Item> msgList = retrievedMsgs();
+  QList<Akonadi::Item>::const_iterator it;
+  for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
+    partNode *rootNode = partNode::fromMessage( msg );
+    for ( partNode *child = rootNode; child;
+          child = child->firstChild() ) {
+      for ( partNode *node = child; node; node = node->nextSibling() ) {
+        if ( node->type() != DwMime::kTypeMultipart )
+          mAttachmentMap.insert( node, msg );
       }
     }
+  }
   setDeletesItself( true );
   // load all parts
   KMLoadPartsCommand *command = new KMLoadPartsCommand( mAttachmentMap );
@@ -2472,7 +2471,6 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
 {
   KMime::Content *topContent  = content->topLevel();
   MessageViewer::NodeHelper *mNodeHelper = new MessageViewer::NodeHelper;
-#if 1 //TODO port to akonadi
   bool bSaveEncrypted = false;
   bool bEncryptedParts = mNodeHelper->encryptionState( content ) != KMMsgNotEncrypted;
   if( bEncryptedParts )
@@ -2581,11 +2579,9 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
                               i18n( "Error saving attachment" ) );
           return Failed;
         }
-    } else
+    }
+  else
     file.close();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   mNodeHelper->removeTempFiles();
   delete mNodeHelper;
   return OK;
