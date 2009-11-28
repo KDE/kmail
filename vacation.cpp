@@ -40,6 +40,9 @@ using KMime::Types::AddrSpecList;
 
 #include <akonadi/agentinstance.h>
 
+#include <kimap/loginjob.h>
+
+
 #include <QByteArray>
 #include <QDateTime>
 
@@ -502,19 +505,16 @@ namespace KMail {
       u.setPass( a->passwd() );
       u.setPort( a->port() );
       u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() ); //translate IMAP LOGIN to PLAIN
-      if ( !a->useSSL() && !a->useTLS() )
-        u.addQueryItem( "x-allow-unencrypted", "true" );
 #endif
-      qDebug()<<" a->sieveVacationFilename() :"<<a->sieveVacationFilename();
+      if ( a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ))
+        u.addQueryItem( "x-allow-unencrypted", "true" );
       u.setFileName( a->sieveVacationFilename() );
 
       return u;
     } else {
       KUrl u( a->sieveAlternateUrl() );
-#if 0
-      if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
+      if ( u.protocol().toLower() == "sieve" && (  a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ) ) && u.queryItem("x-allow-unencrypted").isEmpty() )
         u.addQueryItem( "x-allow-unencrypted", "true" );
-#endif
       u.setFileName( a->sieveVacationFilename() );
       return u;
     }
@@ -530,7 +530,6 @@ namespace KMail {
         if ( iface->isValid() ) {
           KUrl u = findUrlForAccount( iface );
           if ( !u.isEmpty() ) {
-            qDebug()<<" u :"<<u;
             delete iface;
             return u;
           }
