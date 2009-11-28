@@ -501,11 +501,40 @@ namespace KMail {
       u.setProtocol( "sieve" );
 #if 0
       u.setHost( a->host() );
-      u.setUser( a->login() );
-      u.setPass( a->passwd() );
-      u.setPort( a->port() );
-      u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() ); //translate IMAP LOGIN to PLAIN
 #endif
+      u.setUser( a->userName() );
+#if 0
+      u.setPass( a->password() );
+#endif
+      u.setPort( a->sievePort() );
+      QString authStr;
+      switch( a->authentication() ) {
+      case KIMAP::LoginJob::ClearText:
+        authStr = "PLAIN";
+        break;
+      case KIMAP::LoginJob::Login:
+        authStr = "LOGIN";
+        break;
+      case KIMAP::LoginJob::Plain:
+        authStr = "PLAIN";
+        break;
+      case KIMAP::LoginJob::CramMD5:
+        authStr = "CRAM-MD5";
+        break;
+      case KIMAP::LoginJob::DigestMD5:
+        authStr = "DIGEST-MD5";
+        break;
+      case KIMAP::LoginJob::GSSAPI:
+        authStr = "GSSAPI";
+        break;
+      case KIMAP::LoginJob::Anonymous:
+        authStr = "ANONYMOUS";
+        break;
+      default:
+        authStr = "PLAIN";
+        break;
+      }
+      u.addQueryItem( "x-mech", authStr );
       if ( a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ))
         u.addQueryItem( "x-allow-unencrypted", "true" );
       u.setFileName( a->sieveVacationFilename() );
