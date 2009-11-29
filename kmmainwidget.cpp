@@ -2136,8 +2136,11 @@ void KMMainWidget::setMessageSetStatus(
   // FIXME: Why we use SerNumList instead of QList< KMMsgBase * > here ?
   SerNumList serNums;
 
-  for( QList< KMMsgBase * >::Iterator it = selectedMessages.begin(); it != selectedMessages.end(); ++it )
-    serNums.append( ( *it )->getMsgSerNum() );
+  for ( QList<KMMsgBase *>::Iterator it = selectedMessages.begin(); it != selectedMessages.end(); ++it ) {
+    if ( *it ) {
+      serNums.append( (*it)->getMsgSerNum() );
+    }
+  }
 
   Q_ASSERT( !serNums.empty() );
 
@@ -2233,8 +2236,11 @@ void KMMainWidget::fillMessageClipboard()
 
   mMessageClipboard.clear();
 
-  for ( QList< KMMsgBase * >::Iterator it = selected.begin(); it != selected.end(); ++it )
-    mMessageClipboard.append( ( *it )->getMsgSerNum() );
+  for ( QList<KMMsgBase *>::Iterator it = selected.begin(); it != selected.end(); ++it ) {
+    if ( *it ) {
+      mMessageClipboard.append( (*it)->getMsgSerNum() );
+    }
+  }
 }
 
 void KMMainWidget::setMessageClipboardContents( const QList< quint32 > &msgs, bool move )
@@ -2475,7 +2481,9 @@ void KMMainWidget::slotApplyFilters()
     scheduler->setAutoDestruct( true );
 
     foreach ( KMMsgBase *msg, msgList ) {
-      scheduler->execFilters( msg );
+      if ( msg ) {
+        scheduler->execFilters( msg );
+      }
     }
 
     return;

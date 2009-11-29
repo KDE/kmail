@@ -70,7 +70,13 @@ public:
   virtual void truncateIndex();
 
   virtual const KMMsgBase* getMsgBase(int idx) const { return mMsgList[idx]; }
-  virtual KMMsgBase* getMsgBase(int idx) { return mMsgList[idx]; }
+  virtual KMMsgBase* getMsgBase(int idx) {
+    if ( idx < 0 || idx >= mMsgList.count() ) {
+      return 0;
+    } else {
+      return mMsgList[idx];
+    }
+  }
 
   virtual int find(const KMMsgBase* msg) const {
     return mMsgList.indexOf( const_cast<KMMsgBase*>( msg ) );

@@ -267,13 +267,16 @@ void KMCommand::slotStart()
   }
 
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
-    if ( !( (*it)->parent() ) ) {
-      emit messagesTransfered( Failed );
-      return;
-    } else {
-      keepFolderOpen( (*it)->parent() );
+  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it ) {
+    if ( *it ) {
+      if ( !( (*it)->parent() ) ) {
+        emit messagesTransfered( Failed );
+        return;
+      } else {
+        keepFolderOpen( (*it)->parent() );
+      }
     }
+  }
 
   // transfer the selected messages first
   transferSelectedMsgs();
@@ -328,6 +331,10 @@ void KMCommand::transferSelectedMsgs()
   for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
   {
     KMMsgBase *mb = (*it);
+    if ( !mb ) {
+      continue;
+    }
+
     // check if all messages are complete
     KMMessage *thisMsg = 0;
     if ( mb->isMessage() )
@@ -1941,6 +1948,9 @@ KMCommand::Result KMCopyCommand::execute()
   QList<KMMsgBase*>::const_iterator it;
   for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it ) {
     msgBase = (*it);
+    if ( !msgBase ) {
+      continue;
+    }
     KMFolder *srcFolder = msgBase->parent();
     isMessage = msgBase->isMessage();
     if ( isMessage ) {
@@ -2888,7 +2898,7 @@ KMCommand::Result KMResendMessageCommand::execute()
 
   // Restore the original bcc field as this is overwritten in applyIdentity
   newMsg->setBcc( msg->bcc() );
-  
+
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();
