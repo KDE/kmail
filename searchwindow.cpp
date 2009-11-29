@@ -84,8 +84,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mCloseRequested(false),
   mSortColumn(0),
   mSortOrder(Qt::AscendingOrder),
-  mResultModel( 0 ),
+  mSearchJob( 0 ),
   mTimer(new QTimer(this)),
+  mResultModel( 0 ),
   mLastFocus(0),
   mKMMainWidget(w)
 {
@@ -414,16 +415,10 @@ void SearchWindow::updStatus(void)
 //-----------------------------------------------------------------------------
 void SearchWindow::keyPressEvent(QKeyEvent *evt)
 {
-#if 0 //TODO port to akonadi
-    KMSearch const *search = (mFolder) ? mFolder->search() : 0;
-    bool searching = (search) ? search->running() : false;
-    if (evt->key() == Qt::Key_Escape && searching) {
-        mFolder->stopSearch();
+    if (evt->key() == Qt::Key_Escape && mSearchJob) {
+        slotStop();
         return;
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     KDialog::keyPressEvent(evt);
 }
 
@@ -482,45 +477,51 @@ void SearchWindow::slotSearch()
     }
     mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
   }
-  mFolder->stopSearch();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
+  if ( mSearchJob ) {
+    mSearchJob->kill( KJob::Quietly );
+    mSearchJob->deleteLater();
+    mSearchJob = 0;
+  }
+
   mSearchFolderEdt->setEnabled( false );
-  KMSearch *search = new KMSearch();
-  connect( search, SIGNAL( finished( bool ) ),
-           this, SLOT( searchDone() ) );
+#if 0
   if ( mChkbxAllFolders->isChecked() ) {
     search->setRecursive( true );
   } else {
     search->setRoot( mCbxFolders->folder() );
     search->setRecursive( mChkSubFolders->isChecked() );
   }
-
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+
   mPatternEdit->updateSearchPattern();
   KMSearchPattern *searchPattern = new KMSearchPattern();
   *searchPattern = *mSearchPattern; //deep copy
   searchPattern->purify();
-//   search->setSearchPattern( searchPattern );
   enableGUI();
 
   mTimer->start( 200 );
 
   kDebug() << searchPattern->asSparqlQuery();
-  Akonadi::SearchCreateJob *searchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern->asSparqlQuery(), this );
-  connect( searchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
+  mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern->asSparqlQuery(), this );
+  connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::searchDone( KJob* job )
 {
+    Q_ASSERT( job == mSearchJob );
     if ( job->error() )
       kWarning() << job->errorText(); // TODO
 
     if ( !mResultModel )
       mResultModel = new Akonadi::MessageModel( this );
-    Akonadi::SearchCreateJob* searchJob = static_cast<Akonadi::SearchCreateJob*>( job );
-    mFolder = searchJob->createdCollection();
+    mFolder = mSearchJob->createdCollection();
     mResultModel->setCollection( mFolder );
     mLbxMatches->setModel( mResultModel );
 
@@ -542,13 +543,12 @@ void SearchWindow::searchDone( KJob* job )
 //-----------------------------------------------------------------------------
 void SearchWindow::slotStop()
 {
-#if 0 //TODO port to akonadi
-  if ( mFolder ) {
-    mFolder->stopSearch();
+  if ( mSearchJob ) {
+    mSearchJob->kill( KJob::Quietly );
+    mSearchJob->deleteLater();
+    mSearchJob = 0;
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
   mStopped = true;
   enableButton( User2, false );
 }
@@ -563,19 +563,16 @@ void SearchWindow::slotClose()
 //-----------------------------------------------------------------------------
 void SearchWindow::closeEvent(QCloseEvent *e)
 {
-#if 0 //TODO port to akonadi
-  if ( mFolder && mFolder->search() && mFolder->search()->running() ) {
+  if ( mSearchJob ) {
     mCloseRequested = true;
-    //Cancel search in progress by setting the search folder search to
-    //the null search
-    mFolder->setSearch( new KMSearch() );
+    //Cancel search in progress
+    mSearchJob->kill( KJob::Quietly );
+    mSearchJob->deleteLater();
+    mSearchJob = 0;
     QTimer::singleShot( 0, this, SLOT( slotClose() ) );
   } else {
     KDialog::closeEvent( e );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -658,9 +655,7 @@ void SearchWindow::slotCurrentChanged( const Akonadi::Item &item )
 //-----------------------------------------------------------------------------
 void SearchWindow::enableGUI()
 {
-#if 0 //TODO port to akonadi
-    KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
-    bool searching = (search) ? (search->running()) : false;
+    const bool searching = mSearchJob != 0;
     enableButton(KDialog::Close, !searching);
     mCbxFolders->setEnabled(!searching && !mChkbxAllFolders->isChecked());
     mChkSubFolders->setEnabled(!searching && !mChkbxAllFolders->isChecked());
@@ -669,9 +664,6 @@ void SearchWindow::enableGUI()
     mPatternEdit->setEnabled(!searching);
     enableButton(User1, !searching);
     enableButton(User2, searching);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 
