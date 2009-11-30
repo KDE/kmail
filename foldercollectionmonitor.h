@@ -34,6 +34,8 @@ public:
   FolderCollectionMonitor(QObject *parent);
   ~FolderCollectionMonitor();
 
+  static QString mimetype();
+
   Akonadi::ChangeRecorder * monitor();
   void expireAllFolders(bool immediate );
   void compactAllFolders( bool immediate );

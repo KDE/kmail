@@ -86,7 +86,7 @@ using MailTransport::Transport;
 #include "messagehelper.h"
 #include "keyresolver.h"
 #include "templatesconfiguration_kfg.h"
-
+#include "foldercollectionmonitor.h"
 
 using Sonnet::DictionaryComboBox;
 using KMail::TemplateParser;
@@ -225,7 +225,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
                                                  mHeadersArea );
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
   mFcc = new Akonadi::CollectionComboBox( mHeadersArea );
-  mFcc->setMimeTypeFilter( QStringList() <<Akonadi::Collection::mimeType() );
+  mFcc->setMimeTypeFilter( QStringList()<<FolderCollectionMonitor::mimetype() );
 #if 0 //Port to akonadi
   mFcc->showOutboxFolder( false );
 #else

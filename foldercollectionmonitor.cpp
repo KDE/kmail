@@ -33,7 +33,7 @@ FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   mMonitor->setCollectionMonitored( Akonadi::Collection::root() );
   mMonitor->fetchCollection( true );
   mMonitor->setAllMonitored( true );
-  mMonitor->setMimeTypeMonitored( "message/rfc822" );
+  mMonitor->setMimeTypeMonitored( FolderCollectionMonitor::mimetype() );
   mMonitor->setResourceMonitored( "akonadi_search_resource" ,  true );
   // TODO: Only fetch the envelope etc if possible.
   mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
@@ -42,6 +42,12 @@ FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
 FolderCollectionMonitor::~FolderCollectionMonitor()
 {
 }
+
+QString FolderCollectionMonitor::mimetype()
+{
+  return "message/rfc822";
+}
+
 
 Akonadi::ChangeRecorder *FolderCollectionMonitor::monitor()
 {
