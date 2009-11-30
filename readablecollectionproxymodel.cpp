@@ -32,20 +32,15 @@
 class ReadableCollectionProxyModel::Private
 {
 public:
-  Private( ReadableCollectionProxyModel *parent )
-    : necessaryRight( Akonadi::Collection::AllRights ),
-      mParent( parent ),
-      enableCheck( false )
-    {
-    }
-  Akonadi::Collection::Rights necessaryRight;
-  ReadableCollectionProxyModel *mParent;
+  Private()
+    : enableCheck( false ) {
+  }
   bool enableCheck;
 };
 
 ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent )
-  : QSortFilterProxyModel( parent ),
-    d( new Private( this ) )
+  : Akonadi::EntityRightsFilterModel( parent ),
+    d( new Private )
 {
 }
 
@@ -65,9 +60,7 @@ Qt::ItemFlags ReadableCollectionProxyModel::flags( const QModelIndex & index ) c
     if ( Akonadi::CollectionUtils::isVirtual( collection ) ) {
       return Qt::NoItemFlags;
     }
-    if ( !( collection.rights() & d->necessaryRight )) {
-      return Qt::NoItemFlags;
-    }
+    return Akonadi::EntityRightsFilterModel::flags( index );
   }
 
   return QSortFilterProxyModel::flags( index );
@@ -78,42 +71,12 @@ void ReadableCollectionProxyModel::setEnabledCheck( bool enable )
   d->enableCheck = enable;
 }
 
-bool ReadableCollectionProxyModel::isEnabledCheck() const
+bool ReadableCollectionProxyModel::enabledCheck() const
 {
   return d->enableCheck;
 }
 
-void ReadableCollectionProxyModel::setNecessaryRight( Akonadi::Collection::Rights right )
-{
-  d->necessaryRight = right;
-}
 
-Akonadi::Collection::Rights ReadableCollectionProxyModel::necessaryRight() const
-{
-  return d->necessaryRight;
-}
-
-bool ReadableCollectionProxyModel::dropMimeData( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
-{
-  Q_ASSERT(sourceModel());
-  const QModelIndex sourceParent = mapToSource(parent);
-  return sourceModel()->dropMimeData(data, action, row, column, sourceParent);
-}
-
-QMimeData* ReadableCollectionProxyModel::mimeData( const QModelIndexList & indexes ) const
-{
-  Q_ASSERT(sourceModel());
-  QModelIndexList sourceIndexes;
-  foreach(const QModelIndex& index, indexes)
-    sourceIndexes << mapToSource(index);
-  return sourceModel()->mimeData(sourceIndexes);
-}
-
-QStringList ReadableCollectionProxyModel::mimeTypes() const
-{
-  Q_ASSERT(sourceModel());
-  return sourceModel()->mimeTypes();
-}
 
 #include "readablecollectionproxymodel.moc"
 

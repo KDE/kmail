@@ -21,9 +21,9 @@
 #define READABLECOLLECTIONPROXYMODEL_H
 
 
-#include <QtGui/QSortFilterProxyModel>
+#include <akonadi/entityrightsfiltermodel.h>
 #include <akonadi/collection.h>
-class ReadableCollectionProxyModel : public QSortFilterProxyModel
+class ReadableCollectionProxyModel : public Akonadi::EntityRightsFilterModel
 {
   Q_OBJECT
 
@@ -34,18 +34,10 @@ public:
 
   virtual Qt::ItemFlags flags ( const QModelIndex & index ) const;
 
-  // QAbstractProxyModel does not proxy all methods...
-  virtual bool dropMimeData( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
-  virtual QMimeData* mimeData( const QModelIndexList & indexes ) const;
-  virtual QStringList mimeTypes() const;
-
   void setEnabledCheck( bool enable );
-  bool isEnabledCheck() const;
+  bool enabledCheck() const;
 
   void setNecessaryRight( Akonadi::Collection::Rights right );
-
-  Akonadi::Collection::Rights necessaryRight() const;
-
 
 private:
   class Private;

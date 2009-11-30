@@ -212,21 +212,19 @@ void applyIdentity( const KMime::Message::Ptr &message, uint id )
     message->setHeader( header );
   }
 
-#if 0
-  /** TODO Port to KMime
   if (ident.drafts().isEmpty())
-    setDrafts( QString() );
-  else
-    setDrafts( ident.drafts() );
+    message->removeHeader("X-KMail-Drafts");
+  else {
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Drafts", message.get(), ident.drafts(), "utf-8" );
+    message->setHeader( header );
+  }
 
   if (ident.templates().isEmpty())
-    setTemplates( QString() );
-  else
-    setTemplates( ident.templates() );
-  */
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    message->removeHeader("X-KMail-Templates");
+  else {
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", message.get(), ident.templates(), "utf-8" );
+    message->setHeader( header );
+  }
 }
 
 KMime::Message::Ptr createReply( const Akonadi::Item & item,
@@ -1237,6 +1235,8 @@ void removePrivateHeaderFields( const KMime::Message::Ptr &msg ) {
   msg->removeHeader("X-KMail-Link-Type");
   msg->removeHeader("X-KMail-QuotePrefix");
   msg->removeHeader("X-KMail-CursorPos");
+  msg->removeHeader( "X-KMail-Templates" );
+  msg->removeHeader( "X-KMail-Drafts" );
 }
 
 QByteArray getRefStr( const KMime::Message::Ptr &msg )

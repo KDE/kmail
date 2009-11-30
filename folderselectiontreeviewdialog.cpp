@@ -44,7 +44,7 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, b
   treeview = new FolderSelectionTreeView( this );
   treeview->disableContextMenuAndExtraColumn();
   treeview->readableCollectionProxyModel()->setEnabledCheck( enableCheck );
-  treeview->readableCollectionProxyModel()->setNecessaryRight( Akonadi::Collection::CanCreateCollection );
+  treeview->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   treeview->folderTreeView()->setTooltipsPolicy( FolderSelectionTreeView::DisplayNever );
 
   layout->addWidget( treeview );
