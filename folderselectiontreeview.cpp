@@ -51,10 +51,10 @@ public:
      readableproxy( 0 )
   {
   }
+  Akonadi::StatisticsProxyModel *filterModel;
   FolderTreeView *collectionFolderView;
   Akonadi::EntityTreeModel *entityModel;
   Akonadi::QuotaColorProxyModel *quotaModel;
-  Akonadi::StatisticsProxyModel *filterModel;
   ReadableCollectionProxyModel *readableproxy;
 };
 
