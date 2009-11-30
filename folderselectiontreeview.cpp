@@ -32,6 +32,9 @@
 #include <akonadi/collection.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
+#include <akonadi_next/recursivecollectionfilterproxymodel.h>
+
+#include <KMime/Message>
 
 #include "imapaclattribute.h"
 
@@ -78,9 +81,13 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   collectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
   collectionModel->setHeaderGroup( Akonadi::EntityTreeModel::CollectionTreeHeaders );
 
-  // ... with statistics...
-  d->filterModel = new Akonadi::StatisticsProxyModel(this);
-  d->filterModel->setSourceModel( collectionModel );
+  Akonadi::RecursiveCollectionFilterProxyModel *recurfilter = new Akonadi::RecursiveCollectionFilterProxyModel( this );
+  recurfilter->addContentMimeTypeInclusionFilter( KMime::Message::mimeType() );
+  recurfilter->setSourceModel( collectionModel );
+
+//   // ... with statistics...
+  d->filterModel = new Akonadi::StatisticsProxyModel( this );
+  d->filterModel->setSourceModel( recurfilter );
   d->filterModel->setDynamicSortFilter( true );
   d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
 
