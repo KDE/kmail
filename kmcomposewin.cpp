@@ -225,6 +225,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
                                                  mHeadersArea );
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
   mFcc = new Akonadi::CollectionComboBox( mHeadersArea );
+  mFcc->setMimeTypeFilter( QStringList() <<Akonadi::Collection::mimeType() );
 #if 0 //Port to akonadi
   mFcc->showOutboxFolder( false );
 #else
@@ -609,7 +610,6 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   } else if ( !ident.fcc().isEmpty() ) {
     fccName = ident.fcc();
   }
-
   setFcc( fccName );
 }
 
@@ -1004,9 +1004,9 @@ void KMComposeWin::applyTemplate( uint uoid )
   const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() )
     return;
-#if 0
-  mMsg->setTemplates( ident.templates() );
-#endif
+  KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", mMsg.get(), ident.templates(), "utf-8" );
+  mMsg->setHeader( header );
+
   TemplateParser::Mode mode;
   switch ( mContext ) {
     case New:
@@ -1926,11 +1926,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   setModified( isModified );
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
-#if 0 //Port to akonadi
-  mPreventFccOverwrite = ( !mFcc->getFolder()->fileName().isEmpty() && ident.fcc() != mFcc->getFolder()->fileName() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  mPreventFccOverwrite = ( !mFcc->currentCollection().isValid() && ident.fcc() != QString::number( mFcc->currentCollection().id() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -2161,7 +2157,7 @@ void KMComposeWin::readyForSending()
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
   mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
-  
+
   if( mComposers.isEmpty() ) {
     setEnabled( true );
     return;
@@ -2186,7 +2182,7 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
 {
 
   QList< Message::Composer* > composers;
-  
+
   kDebug() << "filling crypto info";
 
   Kleo::KeyResolver* keyResolver = new Kleo::KeyResolver(  encryptToSelf(), showKeyApprovalDialog(),
@@ -2279,7 +2275,7 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
         kDebug() << "got resolved keys for:" << it->recipients;
       }
       Message::Composer* composer =  new Message::Composer;
-      
+
       composer->setEncryptionKeys( data );
       composer->setMessageCryptoFormat( concreteEncryptFormat );
 
@@ -2290,7 +2286,7 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
       }
 
       composer->setSignAndEncrypt( sign, encrypt );
-      
+
       composers.append( composer );
     }
   } else if( signSomething ) { // just signing, so check sign prefs
@@ -2392,9 +2388,9 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( dynamic_cast< Composer* >( job ) );
   Composer* composer = dynamic_cast< Composer* >( job );
-  
+
   Q_ASSERT( mComposers.contains( composer ) );
-  
+
   if( composer->error() == Composer::NoError ) {
     // The messages were composed successfully.
     // TODO handle drafts
@@ -2434,7 +2430,7 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( dynamic_cast< Composer* >( job ) );
   Composer* composer = dynamic_cast< Composer* >( job );
-  
+
   Q_ASSERT( mComposers.contains( composer ) );
 
 
