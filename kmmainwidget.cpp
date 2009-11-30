@@ -2411,7 +2411,9 @@ void KMMainWidget::slotApplyFilters()
     scheduler->setAutoDestruct( true );
 
     foreach ( KMMsgBase *msg, msgList ) {
-      scheduler->execFilters( msg );
+      if ( msg ) {
+        scheduler->execFilters( msg );
+      }
     }
 
     return;
