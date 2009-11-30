@@ -453,10 +453,10 @@ void SearchWindow::slotSearch()
 
   mLbxMatches->setModel( 0 );
 
-#if 0 //TODO port to akonadi
-  mSortColumn = mLbxMatches->sortColumn();
+  mSortColumn = mLbxMatches->header()->sortIndicatorSection();
   mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
   mLbxMatches->setSortingEnabled( false );
+#if 0 //TODO port to akonadi
   // If we haven't openend an existing search folder, find or create one.
   if ( !mFolder ) {
     KMFolderMgr *mgr = kmkernel->searchFolderMgr();
@@ -522,6 +522,7 @@ void SearchWindow::searchDone( KJob* job )
     if ( !mResultModel )
       mResultModel = new Akonadi::MessageModel( this );
     mFolder = mSearchJob->createdCollection();
+    mSearchJob = 0;
     mResultModel->setCollection( mFolder );
     mLbxMatches->setModel( mResultModel );
 
@@ -535,7 +536,7 @@ void SearchWindow::searchDone( KJob* job )
         close();
 
     mLbxMatches->setSortingEnabled( true );
-    mLbxMatches->sortByColumn( mSortColumn, mSortOrder );
+    mLbxMatches->header()->setSortIndicator( mSortColumn, mSortOrder );
 
     mSearchFolderEdt->setEnabled( true );
 }
