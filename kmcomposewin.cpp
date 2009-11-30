@@ -1712,7 +1712,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   MessageViewer::EmptySource emptySource;
   MessageViewer::ObjectTreeParser otp( &emptySource );//All default are ok
   otp.parseObjectTree( msgContent );
-  qDebug()<<" opt.textualContent :"<<otp.textualContent();
   mEditor->setText( otp.textualContent() );
 
   if ( otp.textualContent().isEmpty() ) {

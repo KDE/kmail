@@ -24,6 +24,7 @@
 #include <kdebug.h>
 //TODO needs to export to public class
 #include <akonadi/private/collectionutils_p.h>
+#include <akonadi/krecursivefilterproxymodel.h>
 
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
@@ -58,7 +59,7 @@ Qt::ItemFlags ReadableCollectionProxyModel::flags( const QModelIndex & index ) c
     Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
     if ( Akonadi::CollectionUtils::isVirtual( collection ) ) {
-      return Qt::NoItemFlags;
+      return KRecursiveFilterProxyModel::flags( index ) & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     }
     return Akonadi::EntityRightsFilterModel::flags( index );
   }
