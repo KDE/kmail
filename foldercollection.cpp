@@ -160,6 +160,7 @@ void FolderCollection::readConfig()
     KShortcut sc( shortcut );
     setShortcut( sc );
   }
+  configGroup.sync();
 }
 
 bool FolderCollection::isValid() const
