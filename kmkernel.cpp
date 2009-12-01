@@ -1137,26 +1137,21 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
 
 QString KMKernel::getFrom( quint32 serialNumber )
 {
-#if 0 //TODO port to akonadi
-  int idx = -1;
-  KMFolder *folder = 0;
-  KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
-  if (!folder || (idx == -1))
-    return QString();
-  KMFolderOpener openFolder(folder, "getFrom");
-  KMMsgBase *msgBase = folder->getMsgBase(idx);
-  if (!msgBase)
-    return QString();
-  bool unGet = !msgBase->isMessage();
-  KMMessage *msg = folder->getMsg(idx);
-  QString result = msg->from();
-  if (unGet)
-    folder->unGetMsg(idx);
-  return result;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return "";
-#endif
+  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
+  job->fetchScope().fetchFullPayload();
+  if ( job->exec() ) {
+    if ( job->items().count() >= 1 ) {
+      Akonadi::Item item = job->items().at( 0 );
+
+      if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+        kWarning() << "Payload is not a MessagePtr!";
+        return "";
+      }
+      KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+      return msg->from()->asUnicodeString();
+    }
+  }
+  return "";
 }
 
 QString KMKernel::debugScheduler()
