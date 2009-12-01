@@ -1,0 +1,10 @@
+SELECT ?message WHERE { 
+  { 
+    { 
+      { ?message <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#to> ?toPerson 
+      . ?toPerson <http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasEmailAddress> ?toAddress 
+      . ?toAddress <http://www.semanticdesktop.org/ontologies/2007/03/22/nco#emailAddress> "vkrause@kde.org"^^<http://www.w3.org/2001/XMLSchema#string> 
+      } 
+    }
+  }
+}

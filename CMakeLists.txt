@@ -35,13 +35,6 @@ add_custom_target(kmail_xml ALL
   COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
-add_subdirectory(about)
-add_subdirectory(pics)
-add_subdirectory(icons)
-add_subdirectory(avscripts)
-add_subdirectory(tests)
-add_subdirectory(kconf_update)
-
 include_directories(
   ${CMAKE_SOURCE_DIR}/libkdepim
   ${CMAKE_BINARY_DIR}/libkdepim
@@ -55,12 +48,20 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/../nepomuk_email_feeder/shared/
   ${CMAKE_CURRENT_BINARY_DIR}/../ontologies
  )
+
 if(Nepomuk_FOUND)
   include_directories( ${NEPOMUK_INCLUDES} )
 endif(Nepomuk_FOUND)
 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
+
+
+add_subdirectory(about)
+add_subdirectory(pics)
+add_subdirectory(icons)
+add_subdirectory(avscripts)
+add_subdirectory(tests)
+add_subdirectory(kconf_update)
 
 ########### kmailprivate ###############
 

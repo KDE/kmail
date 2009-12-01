@@ -1,22 +1,28 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 include_directories(
+  BEFORE
   ${CMAKE_SOURCE_DIR}/kmail
   ${CMAKE_BINARY_DIR}/kmail
-  ${Boost_INCLUDE_DIRS}
 )
 
-########### utiltests ###############
+MACRO(KMAIL_ADD_UNITTEST _source )
+  set(_test ${_source} ${ARGN})
+  get_filename_component(_name ${_source} NAME_WE)
+  kde4_add_unit_test(${_name} TESTNAME kmail-${_name} ${_test})
+  target_link_libraries(
+    ${_name}
+    ${QT_QTTEST_LIBRARY}
+    ${QT_QTCORE_LIBRARY}
+    ${KDE4_KIO_LIBS}
+    ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
+    ${KDEPIMLIBS_KMIME_LIBS}
+    messagecore
+    messageviewer
+    niefast_apps
+    kmailprivate
+  )
+ENDMACRO(KMAIL_ADD_UNITTEST)
 
-set(utiltests_SRCS utiltests.cpp ../util.cpp)
-kde4_add_unit_test(utiltests TESTNAME kmail-utiltests ${utiltests_SRCS})
-target_link_libraries(utiltests messageviewer
-  ${QT_QTTEST_LIBRARY}
-  ${QT_QTCORE_LIBRARY}
-  ${KDE4_KIO_LIBS}
-  ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
-  kmailprivate
-)
 
 ########### dbus test ###############
 set(dbustest_SRCS dbustest.cpp)
@@ -39,3 +45,8 @@ target_link_libraries(recipienteditortest ${KDE4_KIO_LIBS} kmailprivate kdepim)
 
 #kunittest_storagelayermodule_la_SOURCES = storagelayermodule.cpp messagedicttests.cpp ../kmdict.cpp
 
+kmail_add_unittest( utiltests.cpp ../util.cpp)
+kmail_add_unittest( searchpatterntest.cpp
+  ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/sparqlbuilder.cpp
+  ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/selectsparqlbuilder.cpp
+)

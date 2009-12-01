@@ -19,7 +19,6 @@
 
 #include "kmsearchpattern.h"
 #include "messageviewer/kmaddrbook.h"
-#include "kmmsgdict.h"
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmkernel.h"
@@ -903,6 +902,8 @@ QString KMSearchPattern::asSparqlQuery() const
 
   outerGroup.addGraphPattern( innerGroup );
   outerGroup.setUnion( false );
+  if ( outerGroup.isEmpty() )
+    return QString();
   queryBuilder.setGraphPattern( outerGroup );
   return queryBuilder.query();
 }
