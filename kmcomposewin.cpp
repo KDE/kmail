@@ -1691,10 +1691,17 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
       mTransport->setCurrentTransport( transport->id() );
   }
 
-  if ( !mBtnFcc->isChecked() ) {
-      setFcc( ident.fcc() );
+  QString kmailFcc;
+  if ( mMsg->headerByType( "X-KMail-Fcc" ) ) {
+    kmailFcc = mMsg->headerByType( "X-KMail-Fcc" )->asUnicodeString();
   }
-
+  if ( !mBtnFcc->isChecked() ) {
+    if ( kmailFcc.isEmpty() ) {
+      setFcc( ident.fcc() );
+    }
+    else
+      setFcc( kmailFcc );
+  }
   mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
 
@@ -1925,7 +1932,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   setModified( isModified );
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
-  mPreventFccOverwrite = ( !mFcc->currentCollection().isValid() && ident.fcc() != QString::number( mFcc->currentCollection().id() ) );
+  mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
 }
 
 //-----------------------------------------------------------------------------
