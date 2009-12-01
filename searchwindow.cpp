@@ -29,7 +29,6 @@
 #include <QLabel>
 #include <QMenu>
 #include <QRadioButton>
-#include <QTreeWidget>
 #include <QVBoxLayout>
 
 #include <KActionMenu>
@@ -693,7 +692,7 @@ Akonadi::Item SearchWindow::message()
 {
   return mLbxMatches->currentIndex().data( Akonadi::ItemModel::ItemRole ).value<Akonadi::Item>();
 }
-
+#if 0
 //-----------------------------------------------------------------------------
 void SearchWindow::slotMoveSelectedMessagesToFolder( QAction* act )
 {
@@ -722,6 +721,7 @@ void SearchWindow::slotCopySelectedMessagesToFolder( QAction* act )
   command->start();
 #endif
 }
+#endif
 
 //-----------------------------------------------------------------------------
 void SearchWindow::updateContextMenuActions()
@@ -736,6 +736,7 @@ void SearchWindow::updateContextMenuActions()
     mCutAction->setEnabled( count > 0 );
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
 {
@@ -787,7 +788,7 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
     menu->exec( QCursor::pos(), 0 );
     delete menu;
 }
-
+#endif
 //-----------------------------------------------------------------------------
 void SearchWindow::slotClearSelection()
 {

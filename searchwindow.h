@@ -24,7 +24,6 @@
 #include <QList>
 #include <QPointer>
 #include <QTimer>
-#include <QTreeWidget>
 
 #include <KDialog>
 #include <KXMLGUIClient>
@@ -118,9 +117,10 @@ protected slots:
   virtual bool slotViewMsg( const Akonadi::Item &item );
   void slotCurrentChanged(const Akonadi::Item&);
   virtual void updateContextMenuActions();
-  virtual void slotContextMenuRequested( QTreeWidgetItem* );
+#if 0
   void slotCopySelectedMessagesToFolder( QAction* );
   void slotMoveSelectedMessagesToFolder( QAction* );
+#endif
   virtual void slotFolderActivated();
   void slotClearSelection();
   void slotReplyToMsg();
