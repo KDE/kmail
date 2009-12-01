@@ -996,11 +996,11 @@ void KMOpenMsgCommand::slotResult( KJob *job )
       return;
     }
     KMReaderMainWin *win = new KMReaderMainWin();
-#if 0 //Port it
-    win->showMessage( mEncoding, msg );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    Akonadi::Item item;
+    KMime::Message::Ptr mMsg( msg );
+    item.setPayload( mMsg );
+    item.setMimeType( "message/rfc822" );
+    win->showMessage( mEncoding, item );
     win->show();
     if ( multipleMessages )
       KMessageBox::information( win,
