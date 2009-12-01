@@ -19,6 +19,8 @@ MACRO(KMAIL_ADD_UNITTEST _source )
     ${KDEPIMLIBS_AKONADI_CONTACT_LIBS}
     ${KDEPIMLIBS_KMIME_LIBS}
     ${SOPRANO_LIBRARIES}
+    ${NEPOMUK_LIBRARIES}
+    ${NEPOMUK_QUERY_LIBRARIES}
     messagecore
     messageviewer
     niefast_apps
