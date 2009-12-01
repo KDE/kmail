@@ -1344,6 +1344,10 @@ void KMMainWidget::slotCompose()
 
   if ( mCurrentFolder ) {
       KMail::MessageHelper::initHeader( msg, mCurrentFolder->identity() );
+      if ( mCurrentFolder->collection().isValid() && mCurrentFolder->putRepliesInSameFolder() ) {
+        KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg.get(), QString::number( mCurrentFolder->collection().id() ), "utf-8" );
+        msg->setHeader( header );
+      }
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
       parser.process( KMime::Message::Ptr(), mCurrentFolder->collection() );
