@@ -2502,6 +2502,7 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
   qjob->setMessage( message );
   qjob->setTransportId( infoPart->transportId() );
   // TODO dispatch mode.
+  kDebug()<<" BUG HERE !!!!!!!!!!!!!!!!!!!!!!!!!!! X-KMail-Fcc doesn't exist here !!!!! Look at why";
   if ( message->headerByType( "X-KMail-Fcc" ) ) {
     qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToCollection );
     qjob->setMoveToCollection(message->headerByType( "X-KMail-Fcc" )->asUnicodeString().toInt() );
