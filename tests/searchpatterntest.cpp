@@ -28,6 +28,17 @@
 class SearchPatternTest : public QObject
 {
   Q_OBJECT
+  private:
+    QString normalizeString( const QString &input )
+    {
+      QString output( input );
+      output.replace( "\n", " " );
+      output.replace( "\r", " " );
+      while ( output.contains( "  " ) )
+        output.replace( "  ", " " );
+      return output.trimmed();
+    }
+
   private slots:
     void testLoadAndToSparql_data()
     {
@@ -59,14 +70,10 @@ class SearchPatternTest : public QObject
 
       QFile file( sparqlFile );
       QVERIFY( file.open( QIODevice::ReadOnly ) );
-      QString expectedSparql = QString::fromUtf8( file.readAll() );
-      // normalize whitespaces, so we can have more readable queries in the reference files
-      expectedSparql.replace( "\n", " " );
-      expectedSparql.replace( "\r", " " );
-      while ( expectedSparql.contains( "  " ) )
-        expectedSparql.replace( "  ", " " );
+      const QString expectedSparql = normalizeString( QString::fromUtf8( file.readAll() ) );
+      const QString actualSparql = normalizeString( pattern.asSparqlQuery() );
 
-      QCOMPARE( pattern.asSparqlQuery().trimmed(), expectedSparql.trimmed() );
+      QCOMPARE( actualSparql, expectedSparql );
     }
 };
 

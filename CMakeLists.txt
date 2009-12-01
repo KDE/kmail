@@ -45,7 +45,6 @@ include_directories(
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
   ${CMAKE_SOURCE_DIR}/akonadi/
-  ${CMAKE_CURRENT_SOURCE_DIR}/../nepomuk_email_feeder/shared/
   ${CMAKE_CURRENT_BINARY_DIR}/../ontologies
  )
 
@@ -178,8 +177,6 @@ set(kmailprivate_LIB_SRCS
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
-   ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/sparqlbuilder.cpp
-   ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/selectsparqlbuilder.cpp
 )
 
 macro(add_resource_iface _kcfgFile _ifaceName _className)
@@ -298,7 +295,7 @@ target_link_libraries(kmailprivate
 )
 
 if(Nepomuk_FOUND)
-  target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES})
+  target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES} ${NEPOMUK_QUERY_LIBRARIES})
 endif(Nepomuk_FOUND)
 
 set_target_properties(kmailprivate

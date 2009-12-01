@@ -23,7 +23,8 @@
 #include <klocale.h>
 #include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
-#include <sparqlbuilder.h>
+
+#include <Nepomuk/Query/GroupTerm>
 
 #include <QList>
 #include <QString>
@@ -148,8 +149,8 @@ public:
   /** Returns the rule as string. For debugging.*/
   const QString asString() const;
 
-  /** Adds a query graph pattern to the given graph group. */
-  virtual void asQueryGraph( SparqlBuilder::GroupGraphPattern &graphGroup ) const = 0;
+  /** Adds query terms to the given term group. */
+  virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const = 0;
 
 private:
   static Function configValueToFunc( const char * str );
@@ -181,10 +182,13 @@ public:
   virtual bool requiresBody() const;
 
   virtual bool matches( KMime::Message * msg ) const;
-  virtual void asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const;
+  virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
   /** Helper for the main matches() method. Does the actual comparing. */
   bool matchesInternal( const QString & msgContents ) const;
+
+  private:
+    void addPersonTerm( Nepomuk::Query::GroupTerm &groupTerm, const QUrl &field ) const;
 };
 
 
@@ -201,7 +205,7 @@ public:
   virtual bool isEmpty() const ;
 
   virtual bool matches( KMime::Message * msg ) const;
-  virtual void asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const;
+  virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
   // Optimized matching not implemented, will use the unoptimized matching
   // from KMSearchRule
@@ -279,7 +283,7 @@ public:
 
    virtual bool isEmpty() const ;
    virtual bool matches( KMime::Message * msg ) const;
-   virtual void asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const;
+   virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
    //Not possible to implement optimized form for status searching
    using KMSearchRule::matches;

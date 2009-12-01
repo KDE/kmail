@@ -24,11 +24,16 @@ using KMail::FilterLog;
 #include "kmkernel.h"
 #include <kpimutils/email.h>
 
-#include <selectsqarqlbuilder.h>
 #include <nmo.h>
 #include <nco.h>
 
 #include <Nepomuk/Tag>
+#include <Nepomuk/Query/Query>
+#include <Nepomuk/Query/AndTerm>
+#include <Nepomuk/Query/OrTerm>
+#include <Nepomuk/Query/ComparisonTerm>
+#include <Nepomuk/Query/LiteralTerm>
+#include <Nepomuk/Query/ResourceTerm>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -82,6 +87,32 @@ static struct _statusNames statusNames[] = {
 
 static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNames );
 
+static Nepomuk::Query::ComparisonTerm::Comparator toNepomukComperator( KMSearchRule::Function function )
+{
+  switch ( function ) {
+    case KMSearchRule::FuncContains:
+    case KMSearchRule::FuncContainsNot:
+      return Nepomuk::Query::ComparisonTerm::Contains;
+    case KMSearchRule::FuncEquals:
+    case KMSearchRule::FuncNotEqual:
+      return Nepomuk::Query::ComparisonTerm::Equal;
+    case KMSearchRule::FuncIsGreater:
+      return Nepomuk::Query::ComparisonTerm::Greater;
+    case KMSearchRule::FuncIsGreaterOrEqual:
+      return Nepomuk::Query::ComparisonTerm::GreaterOrEqual;
+    case KMSearchRule::FuncIsLess:
+      return Nepomuk::Query::ComparisonTerm::Smaller;
+    case KMSearchRule::FuncIsLessOrEqual:
+      return Nepomuk::Query::ComparisonTerm::SmallerOrEqual;
+    case KMSearchRule::FuncRegExp:
+    case KMSearchRule::FuncNotRegExp:
+      return Nepomuk::Query::ComparisonTerm::Regexp;
+    default:
+      kDebug() << "Unhandled function type: " << function;
+  }
+
+  return Nepomuk::Query::ComparisonTerm::Contains;
+}
 
 //==================================================
 //
@@ -334,48 +365,37 @@ bool KMSearchRuleString::matches( KMime::Message * msg ) const
   return rc;
 }
 
-void KMSearchRuleString::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const
+void KMSearchRuleString::addPersonTerm(Nepomuk::Query::GroupTerm& groupTerm, const QUrl& field) const
 {
-  SparqlBuilder::GroupGraphPattern patternGroup;
-
   // TODO split contents() into address/name and adapt the query accordingly
-  if ( field() == "To" || field() == "<recipients>" || field() == "<any header>" ) {
-    SparqlBuilder::BasicGraphPattern pattern;
-    pattern.addTriple( "?message", Vocabulary::NMO::to(), SparqlBuilder::QueryVariable("?toPerson") );
-    pattern.addTriple( "?toPerson", Vocabulary::NCO::hasEmailAddress(), SparqlBuilder::QueryVariable("?toAddress") );
-    pattern.addTriple( "?toAddress", Vocabulary::NCO::emailAddress(), contents() );
-    patternGroup.addGraphPattern( pattern );
-  }
-  if ( field() == "Cc" || field() == "<recipients>" || field() == "<any header>" ) {
-    SparqlBuilder::BasicGraphPattern pattern;
-    pattern.addTriple( "?message", Vocabulary::NMO::cc(), SparqlBuilder::QueryVariable("?ccPerson") );
-    pattern.addTriple( "?ccPerson", Vocabulary::NCO::hasEmailAddress(), SparqlBuilder::QueryVariable("?ccAddress") );
-    pattern.addTriple( "?ccAddress", Vocabulary::NCO::emailAddress(), contents() );
-    patternGroup.addGraphPattern( pattern );
-  }
+  const Nepomuk::Query::ComparisonTerm valueTerm( Vocabulary::NCO::emailAddress(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+  const Nepomuk::Query::ComparisonTerm addressTerm( Vocabulary::NCO::hasEmailAddress(), valueTerm, Nepomuk::Query::ComparisonTerm::Equal );
+  const Nepomuk::Query::ComparisonTerm personTerm( field, addressTerm, Nepomuk::Query::ComparisonTerm::Equal );
+  groupTerm.addSubTerm( personTerm );
+}
 
-  // TODO split contents() into address/name and adapt the query accordingly
-  if ( field() == "From" || field() == "<any header>" ) {
-    SparqlBuilder::BasicGraphPattern pattern;
-    pattern.addTriple( "?message", Vocabulary::NMO::from(), SparqlBuilder::QueryVariable("?fromPerson") );
-    pattern.addTriple( "?fromPerson", Vocabulary::NCO::hasEmailAddress(), SparqlBuilder::QueryVariable("?fromAddress") );
-    pattern.addTriple( "?fromAddress", Vocabulary::NCO::emailAddress(), contents() );
-    patternGroup.addGraphPattern( pattern );
-  }
+void KMSearchRuleString::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
+{
+  Nepomuk::Query::OrTerm termGroup;
+  if ( field().toLower() == "to" || field() == "<recipients>" || field() == "<any header>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::to() );
+  if ( field().toLower() == "cc" || field() == "<recipients>" || field() == "<any header>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::cc() );
+  if ( field().toLower() == "bcc" || field() == "<recipients>" || field() == "<any header>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::bcc() );
 
-  if ( field() == "Subject" || field() == "<any header>" ) {
-    SparqlBuilder::BasicGraphPattern pattern;
-    pattern.addTriple( "?message", Vocabulary::NMO::messageSubject(), contents() );
-    patternGroup.addGraphPattern( pattern );
+  if ( field().toLower() == "from" || field() == "<any header>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::from() );
+
+  if ( field().toLower() == "subject" || field() == "<any header>" ) {
+    const Nepomuk::Query::ComparisonTerm subjectTerm( Vocabulary::NMO::messageSubject(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+    termGroup.addSubTerm( subjectTerm );
   }
 
   // TODO complete for other headers, generic headers and content
-  // TODO honor function()
 
-  if ( field() == "<recipients>" || field() == "<any header>" )
-    patternGroup.setUnion( true );
-  if ( !patternGroup.isEmpty() )
-    graphGroup.addGraphPattern( patternGroup );
+  if ( !termGroup.subTerms().isEmpty() )
+    groupTerm.addSubTerm( termGroup );
 }
 
 
@@ -593,11 +613,10 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
   return false;
 }
 
-void KMSearchRuleNumerical::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const
+void KMSearchRuleNumerical::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
 {
   // TODO
 }
-
 
 //==================================================
 //
@@ -678,37 +697,34 @@ bool KMSearchRuleStatus::matches( KMime::Message * msg ) const
   return rc;
 }
 
-void KMSearchRuleStatus::asQueryGraph(SparqlBuilder::GroupGraphPattern& graphGroup) const
+static void addTagTerm( Nepomuk::Query::GroupTerm &groupTerm, const QString &tagId )
 {
-  SparqlBuilder::BasicGraphPattern pattern;
+  // TODO handle function() == NOT
+  const Nepomuk::Tag tag( tagId );
+  groupTerm.addSubTerm( Nepomuk::Query::ComparisonTerm( Soprano::Vocabulary::NAO::hasTag(),
+                                                        Nepomuk::Query::ResourceTerm( tag.resourceUri() ),
+                                                        Nepomuk::Query::ComparisonTerm::Equal ) );
+}
 
+void KMSearchRuleStatus::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
+{
   if ( mStatus.isRead() || mStatus.isUnread() ) {
     bool read = false;
     if ( function() == FuncContains || function() == FuncEquals )
       read = true;
     if ( mStatus.isUnread() )
       read = !read;
-    pattern.addTriple( "?message", Vocabulary::NMO::isRead(), read );
+    groupTerm.addSubTerm( Nepomuk::Query::ComparisonTerm( Vocabulary::NMO::isRead(), Nepomuk::Query::LiteralTerm( read ), Nepomuk::Query::ComparisonTerm::Equal ) );
   }
 
-  if ( mStatus.isImportant() ) {
-    Nepomuk::Tag tag( "important" );
-    pattern.addTriple( "?message", Soprano::Vocabulary::NAO::hasTag(), tag.resourceUri() );
-  }
-
-  if ( mStatus.isToAct() ) {
-    Nepomuk::Tag tag( "todo" );
-    pattern.addTriple( "?message", Soprano::Vocabulary::NAO::hasTag(), tag.resourceUri() );
-  }
-
-  if ( mStatus.isWatched() ) {
-    Nepomuk::Tag tag( "watched" );
-    pattern.addTriple( "?message", Soprano::Vocabulary::NAO::hasTag(), tag.resourceUri() );
-  }
+  if ( mStatus.isImportant() )
+    addTagTerm( groupTerm, "important" );
+  if ( mStatus.isToAct() )
+    addTagTerm( groupTerm, "todo" );
+  if ( mStatus.isWatched() )
+    addTagTerm( groupTerm, "watched" );
 
   // TODO
-
-  graphGroup.addGraphPattern( pattern );
 }
 
 // ----------------------------------------------------------------------------
@@ -883,29 +899,29 @@ QString KMSearchPattern::asString() const {
   return result;
 }
 
+static Nepomuk::Query::GroupTerm makeGroupTerm( KMSearchPattern::Operator op )
+{
+  if ( op == KMSearchPattern::OpOr )
+    return Nepomuk::Query::OrTerm();
+  return Nepomuk::Query::AndTerm();
+}
+
 QString KMSearchPattern::asSparqlQuery() const
 {
-  SelectSparqlBuilder queryBuilder;
-  queryBuilder.addQueryVariable( "?message" );
+  Nepomuk::Query::Query query;
 
-  SparqlBuilder::GroupGraphPattern outerGroup;
-  // FIXME: type restriction seems to always fail
-//   SparqlBuilder::BasicGraphPattern typePattern;
-//   typePattern.addTriple( "?message", Soprano::Vocabulary::RDF::type(), Vocabulary::NMO::Email() );
-//   outerGroup.addGraphPattern( typePattern );
+  Nepomuk::Query::AndTerm outerGroup;
+  // TODO: add type restriction
 
-  SparqlBuilder::GroupGraphPattern innerGroup;
-  innerGroup.setUnion( mOperator == OpOr );
-
+  Nepomuk::Query::GroupTerm innerGroup = makeGroupTerm( mOperator );
   for ( const_iterator it = begin(); it != end(); ++it )
-    (*it)->asQueryGraph( innerGroup );
+    (*it)->addQueryTerms( innerGroup );
 
-  outerGroup.addGraphPattern( innerGroup );
-  outerGroup.setUnion( false );
-  if ( outerGroup.isEmpty() )
+  if ( innerGroup.subTerms().isEmpty() )
     return QString();
-  queryBuilder.setGraphPattern( outerGroup );
-  return queryBuilder.query();
+  outerGroup.addSubTerm( innerGroup );
+  query.setTerm( outerGroup );
+  return query.toSparqlQuery();
 }
 
 const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & other ) {

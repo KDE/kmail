@@ -46,7 +46,4 @@ target_link_libraries(recipienteditortest ${KDE4_KIO_LIBS} kmailprivate kdepim)
 #kunittest_storagelayermodule_la_SOURCES = storagelayermodule.cpp messagedicttests.cpp ../kmdict.cpp
 
 kmail_add_unittest( utiltests.cpp ../util.cpp)
-kmail_add_unittest( searchpatterntest.cpp
-  ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/sparqlbuilder.cpp
-  ${CMAKE_SOURCE_DIR}/nepomuk_email_feeder/shared/selectsparqlbuilder.cpp
-)
+kmail_add_unittest( searchpatterntest.cpp )
