@@ -1722,11 +1722,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   otp.parseObjectTree( msgContent );
   mEditor->setText( otp.textualContent() );
 
-  if ( otp.textualContent().isEmpty() ) {
-    //Temporary code
-    mEditor->setText( QString( msgContent->decodedContent() ) );
-  }
-
   if ( KMime::Content * n = MessageViewer::ObjectTreeParser::findType( msgContent, "text/html", true, true ) ) {
     KMime::Content *parentnode = n->parent();
     if ( parentnode &&
