@@ -4448,6 +4448,17 @@ void KMComposeWin::insertSignature( SignaturePlacement placement, int pos )
         mEditor->insertAt( mOldSigText, pos, 0 );
         break;
       case AtCursor:
+
+        // If there is text in the same line, add a newline so that the stuff in
+        // the current line moves after the signature. Also remove a leading newline, it is not
+        // needed here.
+        int index, paragraph;
+        mEditor->getCursorPosition( &paragraph, &index );
+        if ( mEditor->paragraphLength( paragraph ) > 0 )
+          mOldSigText = mOldSigText + "\n";
+        if ( mOldSigText.startsWith( "\n" ) )
+          mOldSigText = mOldSigText.remove( 0, 1 );
+
         mEditor->insertAt( mOldSigText, pos, 0 );
         break;
     }
