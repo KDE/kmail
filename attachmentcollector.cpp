@@ -66,29 +66,29 @@ void KMail::AttachmentCollector::collectAttachmentsFrom( KMime::Content * node )
     parent = node->parent();
 
     if ( node->topLevel()->textContent() == node ) {
-      node = MessageViewer::NodeHelper::nextSibling( node );
+      node = MessageViewer::NodeHelper::next( node );
       continue;
     }
 
     if ( isInSkipList( node ) ) {
-            node = MessageViewer::NodeHelper::nextSibling( node ); // skip even the children
+      node = MessageViewer::NodeHelper::next( node, false ); // skip even the children
       continue;
     }
 
     if ( isInExclusionList( node ) ) {
-      node = MessageViewer::NodeHelper::nextSibling( node );
+      node = MessageViewer::NodeHelper::next( node );
       continue;
     }
 
     if ( parent && parent->contentType()->isMultipart() &&
          parent->contentType()->subType() == "related" ) {
-      node = MessageViewer::NodeHelper::nextSibling( node );  // skip embedded images
+      node = MessageViewer::NodeHelper::next( node );  // skip embedded images
       continue;
     }
 
     if ( MessageViewer::NodeHelper::isHeuristicalAttachment( node ) ) {
       mAttachments.push_back( node );
-      node = MessageViewer::NodeHelper::nextSibling( node ); // just make double sure
+      node = MessageViewer::NodeHelper::next( node, false ); // just make double sure
       continue;
     }
 
