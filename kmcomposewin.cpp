@@ -2585,35 +2585,11 @@ bool KMComposeWin::queryExit ()
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach( KMime::Content *msgPart )
 {
-#if 0 // TODO port me!
-  mAtmList.append( msgPart );
-
-  // show the attachment listbox if it does not up to now
-  if ( mAtmList.count() == 1 ) {
-    mAtmListView->resize(mAtmListView->width(), 50);
-    mAtmListView->show();
-    resize(size());
-  }
-
-  // add a line in the attachment listbox
-  KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListView, msgPart );
-  msgPartToItem( msgPart, lvi );
-  mAtmItemList.append( lvi );
-
-  connect( lvi, SIGNAL( compress( KMAtmListViewItem* ) ),
-           this, SLOT( compressAttach( KMAtmListViewItem* ) ) );
-  connect( lvi, SIGNAL( uncompress( KMAtmListViewItem* ) ),
-           this, SLOT( uncompressAttach( KMAtmListViewItem* ) ) );
-
-  slotUpdateAttachActions();
-#else
-  kDebug() << "disabled code";
-#endif
   AttachmentPart::Ptr part( new AttachmentPart );
   part->setName( msgPart->contentDescription()->asUnicodeString() );
   part->setFileName( msgPart->contentDisposition()->filename() );
   part->setMimeType( msgPart->contentType()->mimeType() );
-  part->setData( msgPart->decodedContent() );
+  part->setData( msgPart->encodedContent() );
   mAttachmentController->addAttachment( part );
 }
 //-----------------------------------------------------------------------------
