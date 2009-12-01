@@ -122,7 +122,7 @@ void AkonadiSender::setSendQuotedPrintable( bool aSendQuotedPrintable )
 
 bool AkonadiSender::doSend( const KMime::Message::Ptr &aMsg, short sendNow  )
 {
-#if 0	
+#if 0
   KMFolder * const outbox = kmkernel->outboxFolder();
   const KMFolderOpener openOutbox( outbox, "AkonadiSender" );
 
@@ -193,6 +193,9 @@ void AkonadiSender::queueMessage( const KMime::Message::Ptr &message )
   kDebug() << "KMime::Message: \n[\n" << messagePtr->encodedContent().left( 1000 ) << "\n]\n";
 
   MessageQueueJob *qjob = new MessageQueueJob( this );
+  if ( message->headerByType( "X-KMail-Fcc" ) ) {
+    qjob->setMoveToCollection(message->headerByType( "X-KMail-Fcc" )->asUnicodeString().toInt() );
+  }
   qjob->setMessage( KMime::Message::Ptr(messagePtr) );
 
   // Get transport.

@@ -1999,7 +1999,7 @@ void KMComposeWin::setFcc( const QString &idString )
   }
 #else
   if ( idString.isEmpty() )
-     mFcc->setDefaultCollection( KMKernel::self()->sentCollectionFolder() );
+    mFcc->setDefaultCollection( KMKernel::self()->sentCollectionFolder() );
   else
     mFcc->setDefaultCollection( Akonadi::Collection( idString.toInt() ) );
 #endif
