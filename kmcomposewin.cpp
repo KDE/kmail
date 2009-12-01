@@ -2382,6 +2382,7 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
   // TODO splitAddressList and expandAliases ugliness should be handled by a
   // special AddressListEdit widget... (later: see RecipientsEditor)
 
+  infoPart->setFcc( QString::number( mFcc->currentCollection().id() ) );
   infoPart->setTransportId( mTransport->currentTransportId() );
   infoPart->setFrom( from() );
   infoPart->setTo( to );
@@ -2502,10 +2503,9 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
   qjob->setMessage( message );
   qjob->setTransportId( infoPart->transportId() );
   // TODO dispatch mode.
-  kDebug()<<" BUG HERE !!!!!!!!!!!!!!!!!!!!!!!!!!! X-KMail-Fcc doesn't exist here !!!!! Look at why";
-  if ( message->headerByType( "X-KMail-Fcc" ) ) {
+  if ( !infoPart->fcc().isEmpty() ) {
     qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToCollection );
-    qjob->setMoveToCollection(message->headerByType( "X-KMail-Fcc" )->asUnicodeString().toInt() );
+    qjob->setMoveToCollection(infoPart->fcc().toInt() );
   } else {
     qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
   }
