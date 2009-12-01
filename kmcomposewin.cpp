@@ -1538,11 +1538,36 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
   }
 }
 
+// Checks if the mail is a HTML mail.
+// The catch here is that encapsulated messages can also have a HTML part, so we make
+// sure that only messages where the first HTML part is in the same multipart/alternative container
+// as the frist plain text part are counted as HTML mail
+static bool isHTMLMail( KMime::Content *root )
+{
+  if ( !root )
+    return false;
+
+  using namespace MessageViewer;
+  KMime::Content *firstTextPart = ObjectTreeParser::findType( root, "text/plain", true, true );
+  KMime::Content *firstHtmlPart = ObjectTreeParser::findType( root, "text/html", true, true );
+  if ( !firstTextPart || !firstHtmlPart )
+    return false;
+
+  KMime::Content *parent = firstTextPart->parent();
+  if ( !parent || parent != firstHtmlPart->parent() )
+    return false;
+
+  if ( !parent->contentType()->isMultipart() ||
+       parent->contentType()->subType() != "alternative" )
+    return false;
+
+  return true;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
-//  kDebug() << "implement me!!!";
   if ( !newMsg ) {
     kDebug() << "newMsg == 0!";
     return;
@@ -1673,7 +1698,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   }
   slotUpdateSignatureAndEncrypionStateIndicators();
 
-#if 0 //TODO port to kmime
+#if 0 //TODO port to attachmentcontroller
 
   // "Attach my public key" is only possible if the user uses OpenPGP
   // support and he specified his key:
@@ -1712,9 +1737,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if ( newMsg->headerByType( "X-KMail-QuotePrefix" ) )
     mEditor->setQuotePrefixName( newMsg->headerByType( "X-KMail-QuotePrefix" )->asUnicodeString() );
 
-  // TODO fix crash in kmime
- // collectImages( mMsg->mainBodyPart( "text/html" ) ); // when using html, check for embedded images
-
   // First, we copy the message and then parse it to the object tree parser.
   // The otp gets the message text out of it, in textualContent(), and also decrypts
   // the message if necessary.
@@ -1736,59 +1758,29 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   // Set the editor text
   mEditor->setText( otp.textualContent() );
 
-  if ( KMime::Content * n = MessageViewer::ObjectTreeParser::findType( msgContent, "text/html", true, true ) ) {
-    KMime::Content *parentnode = n->parent();
-    if ( parentnode &&
-         parentnode->contentType()->isMultipart()) {
-      if ( mMsg->headerByType( "X-KMail-Markup" ) &&
-           mMsg->headerByType( "X-KMail-Markup" )->asUnicodeString() == "true" ) {
-        enableHtml();
-#if 0
+  // Set the HTML text and collect HTML images
+  if ( isHTMLMail( mMsg.get() ) ) {
+    KMime::Content *htmlNode = MessageViewer::ObjectTreeParser::findType( msgContent, "text/html", true, true );
+    Q_ASSERT( htmlNode );
+    KMime::Content *parentNode = htmlNode->parent();
+    if ( parentNode && parentNode->contentType()->isMultipart() ) {
+      enableHtml();
 
-        // get cte decoded body part
-        mCharset = n->msgPart().charset();
-        QByteArray bodyDecoded = n->msgPart().bodyDecoded();
-
-        // respect html part charset
-        const QTextCodec *codec = KMail::Util::codecForName( mCharset );
-        if ( codec ) {
-          mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
-        } else {
-          mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
-        }
-#endif
+      const QString htmlCharset = htmlNode->contentType()->charset();
+      const QByteArray htmlBodyDecoded = htmlNode->decodedContent();
+      const QTextCodec *codec = MessageViewer::NodeHelper::codecForName( htmlCharset.toAscii() );
+      if ( codec ) {
+        mEditor->setHtml( codec->toUnicode( htmlBodyDecoded ) );
+      } else {
+        mEditor->setHtml( QString::fromLocal8Bit( htmlBodyDecoded ) );
       }
     }
+    collectImages( mMsg.get() );
   }
 
 #if 0 //TODO port to kmime
 
   mCharset = otp.textualContentCharset();
-
-  if ( partNode * n = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml ) ) {
-    if ( partNode * p = n->parentNode() ) {
-      if ( p->hasType( DwMime::kTypeMultipart ) &&
-           p->hasSubType( DwMime::kSubtypeAlternative ) ) {
-        if ( mMsg->headerByType( "X-KMail-Markup" ) &&
-              mMsg->headerByType( "X-KMail-Markup" ).as7BitString() == "true" ) {
-          enableHtml();
-
-          // get cte decoded body part
-          mCharset = n->msgPart().charset();
-          QByteArray bodyDecoded = n->msgPart().bodyDecoded();
-
-          // respect html part charset
-          const QTextCodec *codec = KMail::Util::codecForName( mCharset );
-          if ( codec ) {
-            mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
-          } else {
-            mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
-          }
-        }
-      }
-    }
-  }
-
 
   if ( mCharset.isEmpty() ) {
     mCharset = mMsg->charset();
@@ -1867,29 +1859,9 @@ void KMComposeWin::collectImages( KMime::Content *root )
         if ( node->contentType()->isImage() ) {
           kDebug() << "found image in multipart/related : " << node->contentType()->name();
           QImage img;
-          img.loadFromData( KMime::Codec::codecForName( "base64" )->decode( node->body() )); // create image from the base64 encoded one
-          QTextBlock currentBlock = mEditor->document()->begin();
-          QTextBlock::iterator it;
-          while ( currentBlock.isValid() ) {
-            for (it = currentBlock.begin(); !(it.atEnd()); ++it) {
-              QTextFragment fragment = it.fragment();
-              if ( fragment.isValid() ) {
-                QTextImageFormat imageFormat = fragment.charFormat().toImageFormat();
-                if ( imageFormat.isValid() &&
-                     imageFormat.name() == "cid:" + node->contentID()->asUnicodeString() ) {
-                  kDebug() << "newImageFormat.Name="<< imageFormat.name();
-                  int pos = fragment.position();
-                  QTextCursor cursor( mEditor->document() );
-                  cursor.setPosition( pos );
-                  cursor.setPosition( pos + 1, QTextCursor::KeepAnchor );
-                  cursor.removeSelectedText();
-                  mEditor->document()->addResource( QTextDocument::ImageResource, QUrl( node->contentType()->name() ), QVariant( img ) );
-                  cursor.insertImage( node->contentType()->name() );
-                }
-              }
-            }
-            currentBlock = currentBlock.next();
-          }
+          img.loadFromData( node->decodedContent() );
+          mEditor->loadImage( img, "cid:" + node->contentID()->identifier(),
+                              node->contentType()->name() );
         }
         node = MessageViewer::NodeHelper::nextSibling( node );
       }
@@ -2589,7 +2561,7 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
   part->setName( msgPart->contentDescription()->asUnicodeString() );
   part->setFileName( msgPart->contentDisposition()->filename() );
   part->setMimeType( msgPart->contentType()->mimeType() );
-  part->setData( msgPart->body() );
+  part->setData( msgPart->decodedContent() );
   mAttachmentController->addAttachment( part );
 }
 //-----------------------------------------------------------------------------
