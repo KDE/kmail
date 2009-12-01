@@ -178,6 +178,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mTextSelection( textSelection ),
     mCustomTemplate( customTemplate ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
+    mFolder( Akonadi::Collection( -1 ) ),
     mForceDisableHtml( false ),
     mId( id ),
     mContext( context ),
@@ -261,7 +262,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mGrid = 0;
   //mAtmListView = 0;
   //mAtmModified = false;
-  mAutoDeleteMsg = false;
   //mAutoCharset = true;
   mFixedFontAction = 0;
   // the attachment view is separated from the editor by a splitter
@@ -403,19 +403,17 @@ KMComposeWin::~KMComposeWin()
 {
   writeConfig();
 
-#if 0
-  if ( mFolder && mMsg ) {
-    mAutoDeleteMsg = false;
-    mFolder->addMsg( mMsg );
-    // Ensure that the message is correctly and fully parsed
-    mFolder->unGetMsg( mFolder->count() - 1 );
+  // When we have a collection set, store the message back to that collection.
+  // Note that when we save the message or sent it, mFolder is set back to 0.
+  // So this for example kicks in when opening a draft and then closing the window.
+  if ( mFolder.isValid() && mMsg ) {
+    Akonadi::Item item;
+    item.setPayload( mMsg );
+    item.setMimeType( "message/rfc822" );
+    new Akonadi::ItemCreateJob( item, mFolder );
+    // FIXME: listen to the result signal. The whole thing needs to be moved
+    //        out of the destructor for this
   }
-
-  if ( mAutoDeleteMsg ) {
-    delete mMsg;
-    mMsg = 0;
-  }
-#endif
 
 #if 0
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.begin();
@@ -2369,6 +2367,7 @@ void KMComposeWin::slotCreateItemResult( KJob *job )
 
   if( mPendingCreateItemJobs == 0 ) {
     setModified( false );
+    mFolder = Akonadi::Collection( -1 );
     cleanupAutoSave();
     close();
   }
@@ -3849,7 +3848,7 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
 {
   kDebug() << "you killed me.";
   // TODO: need to handle templates here?
-  if ( (mFolder.isValid()) && (col.id() == mFolder.id()) ) {
+  if ( ( mFolder.isValid() ) && ( col.id() == mFolder.id() ) ) {
     mFolder = kmkernel->draftsCollectionFolder();
     kDebug() << "restoring drafts to" << mFolder.id();
   }

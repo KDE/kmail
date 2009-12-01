@@ -256,13 +256,6 @@ class KMComposeWin : public KMail::Composer
      */
     void setModified( bool modified );
 
-  public: // kmkernel, callback
-    /**
-     * If this flag is set the message of the composer is deleted when
-     * the composer is closed and the message was not sent. Default: false
-     */
-     inline void setAutoDelete( bool f ) { mAutoDeleteMsg = f; }
-
   public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after
@@ -710,11 +703,10 @@ class KMComposeWin : public KMail::Composer
     QString mCustomTemplate;
     QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId,
             *mEditAction, *mEditWithAction;
-    bool mAutoDeleteMsg;
     bool mSigningAndEncryptionExplicitlyDisabled;
     bool mLastSignActionState, mLastEncryptActionState;
     bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
-  Akonadi::Collection mFolder;
+    Akonadi::Collection mFolder;
     long mShowHeaders;
     bool mConfirmSend;
     //bool mDisableBreaking;

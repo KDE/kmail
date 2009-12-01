@@ -96,13 +96,6 @@ class Composer : public KMail::SecondaryWindow
      */
     virtual void setAutoSaveFilename( const QString &filename ) = 0;
 
-  public: // kmkernel, callback
-    /**
-     * If this flag is set the message of the composer is deleted when
-     * the composer is closed and the message was not sent. Default: false
-     */
-    virtual void setAutoDelete( bool f ) = 0;
-
   public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after
