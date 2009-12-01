@@ -72,6 +72,8 @@ using KMail::TemplateParser;
 #include <akonadi/itemfetchscope.h>
 #include "actionscheduler.h"
 
+#include <akonadi/itemfetchjob.h>
+
 #include <QByteArray>
 #include <QDir>
 #include <QList>
@@ -1118,37 +1120,18 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
         break;
     }
   }
-#if 0
   if ( mainWidget ) {
-    int idx = -1;
-    KMFolder *folder = 0;
-    KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
-    if (!folder || (idx == -1))
-      return false;
-    KMFolderOpener openFolder(folder, "showmail");
-    KMMsgBase *msgBase = folder->getMsgBase(idx);
-    if (!msgBase)
-      return false;
-    bool unGet = !msgBase->isMessage();
-    KMMessage *msg = folder->getMsg(idx);
-
-    KMReaderMainWin *win = new KMReaderMainWin( false, false );
-    KMime::Message *newMessage = new KMime::Message;
-    newMessage->setContent( msg->encodedContent() );
-    newMessage->setParent( msg->parent() );
-    newMessage->setMsgSerNum( msg->getMsgSerNum() );
-    newMessage->setReadyToShow( true );
-    win->showMessage( GlobalSettings::self()->overrideCharacterEncoding(), newMessage );
-    win->show();
-
-    if (unGet)
-      folder->unGetMsg(idx);
-    return true;
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
+    job->fetchScope().fetchFullPayload();
+    if ( job->exec() ) {
+      if ( job->items().count() >= 1 ) {
+        KMReaderMainWin *win = new KMReaderMainWin( false, false );
+        win->showMessage( GlobalSettings::self()->overrideCharacterEncoding(), job->items().at( 0 ) );
+        win->show();
+        return true;
+      }
+    }
   }
-
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return false;
 }
 
