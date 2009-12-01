@@ -448,6 +448,7 @@ KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
   :KMCommand( parent, msg ), mUrl( url ), mSelection( selection  )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMMailtoReplyCommand::execute()
@@ -477,6 +478,7 @@ KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
   :KMCommand( parent, msg ), mUrl( url )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMMailtoForwardCommand::execute()
@@ -640,6 +642,7 @@ KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, const Akonadi::Item
   :KMCommand( parent, msg )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMUseTemplateCommand::execute()
@@ -1018,6 +1021,7 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
   : KMCommand( parent, msg ), mSelection( selection )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMReplyToCommand::execute()
@@ -1072,6 +1076,7 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
  : KMCommand( parent, msg ), mSelection( selection )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMReplyListCommand::execute()
@@ -1100,6 +1105,7 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
   :KMCommand( parent, msg ), mSelection( selection )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMReplyToAllCommand::execute()
@@ -1129,6 +1135,7 @@ KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item
   : KMCommand( parent, msg ), mSelection( selection )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMReplyAuthorCommand::execute()
@@ -1158,6 +1165,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent,
     mIdentity( identity )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
@@ -1166,6 +1174,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
     mIdentity( identity )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMForwardCommand::execute()
@@ -1322,6 +1331,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
     mWin( QPointer<KMail::Composer>( win ))
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
@@ -1330,6 +1340,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
     mWin( QPointer< KMail::Composer >( win ))
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMForwardAttachedCommand::execute()
@@ -1394,6 +1405,7 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
   : KMCommand( parent, msg )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMRedirectCommand::execute()
@@ -1432,6 +1444,7 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, const Akonadi::
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMCustomReplyToCommand::execute()
@@ -1463,6 +1476,7 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, const Ako
   : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
@@ -1494,6 +1508,7 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
     mIdentity( identity ), mTemplate( tmpl )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
@@ -1502,6 +1517,7 @@ KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
     mIdentity( identity ), mTemplate( tmpl )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMCustomForwardCommand::execute()
@@ -2661,6 +2677,7 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
   :KMCommand( parent, msg )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMCommand::Result KMResendMessageCommand::execute()
