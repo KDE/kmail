@@ -1675,12 +1675,13 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
 
   // if these headers are present, the state of the message should be overruled
   if ( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
-    mLastSignActionState = (mMsg->headerByType( "X-KMail-SignatureActionEnabled" )->as7BitString() == "true");
+    mLastSignActionState = (mMsg->headerByType( "X-KMail-SignatureActionEnabled" )->as7BitString().contains( "true" ));
   if ( mMsg->headerByType( "X-KMail-EncryptActionEnabled" ) )
-    mLastEncryptActionState = (mMsg->headerByType( "X-KMail-EncryptActionEnabled" )->as7BitString() == "true");
-  if ( mMsg->headerByType( "X-KMail-CryptoMessageFormat" ) )
+    mLastEncryptActionState = (mMsg->headerByType( "X-KMail-EncryptActionEnabled" )->as7BitString().contains( "true") );
+  if ( mMsg->headerByType( "X-KMail-CryptoMessageFormat" ) ) {
     mCryptoModuleAction->setCurrentItem( format2cb( static_cast<Kleo::CryptoMessageFormat>(
                     mMsg->headerByType( "X-KMail-CryptoMessageFormat" )->asUnicodeString().toInt() ) ) );
+  }
 
   mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
@@ -2022,9 +2023,9 @@ bool KMComposeWin::userForgotAttachment()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::readyForSending( bool neverEncrypt )
+void KMComposeWin::readyForSending( bool noCrypto )
 {
-  kDebug() << "Entering";
+  kDebug() << "Entering, noCrypto:" << noCrypto;
 
   if(!mMsg) {
     kDebug() << "mMsg == 0!";
@@ -2042,7 +2043,7 @@ void KMComposeWin::readyForSending( bool neverEncrypt )
   // we first figure out if we need to create multiple messages with different crypto formats
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
-  if( neverEncrypt ) {
+  if( noCrypto ) {
     mComposers.append( new Message::Composer );
   } else {
     mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
@@ -2058,7 +2059,7 @@ void KMComposeWin::readyForSending( bool neverEncrypt )
     fillGlobalPart( composer->globalPart() );
     fillTextPart( composer->textPart() );
     fillInfoPart( composer->infoPart() );
-
+    
     composer->addAttachmentParts( mAttachmentModel->attachments() );
 
     connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
@@ -2270,6 +2271,16 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
   infoPart->setCc( cc );
   infoPart->setBcc( bcc );
   infoPart->setSubject( subject() );
+
+  KMime::Headers::Base::List extras;
+  if( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
+    extras << mMsg->headerByType( "X-KMail-SignatureActionEnabled" );
+  if( mMsg->headerByType( "X-KMail-EncryptActionEnabled" ) )
+    extras << mMsg->headerByType( "X-KMail-EncryptActionEnabled" );
+  if( mMsg->headerByType( "X-KMail-CryptoMessageFormat" ) )
+    extras << mMsg->headerByType( "X-KMail-CryptoMessageFormat" );
+  
+  infoPart->setExtraHeaders( extras );
 }
 
 void KMComposeWin::slotSendComposeResult( KJob *job )
@@ -3208,7 +3219,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   mMsg->date()->setDateTime( KDateTime::currentLocalDateTime() );
   mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), mTransport->currentText(), "utf-8" ) );
 
-  const bool neverEncrypt = ( GlobalSettings::self()->neverEncryptDrafts() ) ||
+  const bool neverEncrypt = ( saveIn != KMComposeWin::None && GlobalSettings::self()->neverEncryptDrafts() ) ||
     mSigningAndEncryptionExplicitlyDisabled;
 
   // Save the quote prefix which is used for this message. Each message can have
@@ -3268,7 +3279,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   }
 
   kDebug() << "Calling applyChanges()";
-  readyForSending( neverEncrypt ); // TODO rename and separate logic for print/sent/autosave
+  readyForSending( neverEncrypt );
 }
 
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
