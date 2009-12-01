@@ -92,7 +92,7 @@ void KMail::AttachmentCollector::collectAttachmentsFrom( KMime::Content * node )
       continue;
     }
 
-    node = MessageViewer::NodeHelper::nextSibling( node );
+    node = MessageViewer::NodeHelper::next( node );
   }
 }
 
