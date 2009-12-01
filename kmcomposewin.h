@@ -507,7 +507,7 @@ class KMComposeWin : public KMail::Composer
      * and signs/encrypts the message if activated.
      * Disables the controls of the composer window.
      */
-    void readyForSending();
+    void readyForSending( bool neverEncrypt = false );
     /**
      * Applies the user changes to the message object, but doesn't
      * sign nor decrypt, and doesn't disable the controls of the

@@ -2022,7 +2022,7 @@ bool KMComposeWin::userForgotAttachment()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::readyForSending()
+void KMComposeWin::readyForSending( bool neverEncrypt )
 {
   kDebug() << "Entering";
 
@@ -2042,8 +2042,12 @@ void KMComposeWin::readyForSending()
   // we first figure out if we need to create multiple messages with different crypto formats
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
-  mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
-
+  if( neverEncrypt ) {
+    mComposers.append( new Message::Composer );
+  } else {
+    mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
+  }
+  
   if( mComposers.isEmpty() ) {
     setEnabled( true );
     return;
@@ -3264,8 +3268,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   }
 
   kDebug() << "Calling applyChanges()";
-  //applyChanges( neverEncrypt );
-  readyForSending(); // TODO rename and separate logic for print/sent/autosave
+  readyForSending( neverEncrypt ); // TODO rename and separate logic for print/sent/autosave
 }
 
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
