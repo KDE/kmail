@@ -2651,6 +2651,7 @@ void KMMainWidget::slotOnlineStatus()
     kmkernel->stopNetworkJobs();
   } else {
     kmkernel->resumeNetworkJobs();
+    slotCheckVacation();
   }
 }
 
