@@ -759,8 +759,14 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
 
 static KURL subjectToUrl( const QString & subject )
 {
+  // We need to replace colons with underscores since those cause problems with KFileDialog (bug
+  // in KFileDialog though) and also on Windows filesystems.
+  // We also look at the special case of ": ", since converting that to "_ " would look strange,
+  // simply "_" looks better.
+  // https://issues.kolab.org/issue3805
   return KFileDialog::getSaveURL( subject.stripWhiteSpace()
                                            .replace( QDir::separator(), '_' )
+                                           .replace( ": ", "_" )
                                            .replace( ':', '_' ),
                                   "*.mbox" );
 }
