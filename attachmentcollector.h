@@ -45,7 +45,7 @@ namespace KMail {
     AttachmentCollector()
       {}
 
-    void collectAttachmentsFrom(  KMime::Content * node );
+    void collectAttachmentsFrom( KMime::Content * node );
 
     const std::vector<KMime::Content*> & attachments() const { return mAttachments; }
 

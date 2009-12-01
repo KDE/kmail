@@ -62,6 +62,7 @@ using MailTransport::Transport;
 #include <boost/shared_ptr.hpp>
 
 // KMail includes
+#include "attachmentcollector.h"
 #include "attachmentcontroller.h"
 #include "attachmentmodel.h"
 #include "attachmentview.h"
@@ -1714,12 +1715,25 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   // TODO fix crash in kmime
  // collectImages( mMsg->mainBodyPart( "text/html" ) ); // when using html, check for embedded images
 
+  // First, we copy the message and then parse it to the object tree parser.
+  // The otp gets the message text out of it, in textualContent(), and also decrypts
+  // the message if necessary.
   KMime::Content *msgContent = new KMime::Content;
   msgContent->setContent( mMsg->encodedContent() );
   msgContent->parse();
   MessageViewer::EmptySource emptySource;
   MessageViewer::ObjectTreeParser otp( &emptySource );//All default are ok
   otp.parseObjectTree( msgContent );
+
+  // Load the attachments
+  KMail::AttachmentCollector ac;
+  ac.collectAttachmentsFrom( msgContent );
+  for ( std::vector<KMime::Content*>::const_iterator it = ac.attachments().begin();
+        it != ac.attachments().end() ; ++it ) {
+    addAttach( *it );
+  }
+
+  // Set the editor text
   mEditor->setText( otp.textualContent() );
 
   if ( KMime::Content * n = MessageViewer::ObjectTreeParser::findType( msgContent, "text/html", true, true ) ) {
@@ -1749,24 +1763,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
 
 #if 0 //TODO port to kmime
 
-  partNode *root = partNode::fromMessage( mMsg );
-
-  KMail::ObjectTreeParser otp; // all defaults are ok
-  otp.parseObjectTree( root );
-
-  KMail::AttachmentCollector ac;
-  ac.setDiveIntoEncryptions( true );
-  ac.setDiveIntoSignatures( true );
-  ac.setDiveIntoMessages( false );
-
-  ac.collectAttachmentsFrom( root );
-
-  for ( std::vector<partNode*>::const_iterator it = ac.attachments().begin();
-        it != ac.attachments().end() ; ++it ) {
-    addAttach( new KMMessagePart( (*it)->msgPart() ) );
-  }
-
-  mEditor->setText( otp.textualContent() );
   mCharset = otp.textualContentCharset();
 
   if ( partNode * n = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml ) ) {
