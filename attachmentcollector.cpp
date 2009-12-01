@@ -69,10 +69,12 @@ void KMail::AttachmentCollector::collectAttachmentsFrom( KMime::Content * node )
       node = MessageViewer::NodeHelper::nextSibling( node );
       continue;
     }
+
     if ( isInSkipList( node ) ) {
             node = MessageViewer::NodeHelper::nextSibling( node ); // skip even the children
       continue;
     }
+
     if ( isInExclusionList( node ) ) {
       node = MessageViewer::NodeHelper::nextSibling( node );
       continue;
@@ -83,17 +85,14 @@ void KMail::AttachmentCollector::collectAttachmentsFrom( KMime::Content * node )
       node = MessageViewer::NodeHelper::nextSibling( node );  // skip embedded images
       continue;
     }
-#if 0 //TODO port to akonadi
-    if ( node->isHeuristicalAttachment() ) {
+
+    if ( MessageViewer::NodeHelper::isHeuristicalAttachment( node ) ) {
       mAttachments.push_back( node );
       node = MessageViewer::NodeHelper::nextSibling( node ); // just make double sure
       continue;
     }
 
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-      node = MessageViewer::NodeHelper::nextSibling( node );
+    node = MessageViewer::NodeHelper::nextSibling( node );
   }
 }
 
