@@ -2495,8 +2495,13 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
   qjob->setMessage( message );
   qjob->setTransportId( infoPart->transportId() );
   // TODO dispatch mode.
-  // TODO use the actually selected sent-mail collection
-  qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
+  if ( message->headerByType( "X-KMail-Fcc" ) ) {
+    qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToCollection );
+    qjob->setMoveToCollection(message->headerByType( "X-KMail-Fcc" )->asUnicodeString().toInt() );
+  } else {
+    qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
+  }
+
   fillQueueJobHeaders( qjob, message, infoPart );
 
   connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );

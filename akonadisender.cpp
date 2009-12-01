@@ -161,6 +161,7 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
       true );
   kDebug() << "Created ProgressItem" << mProgressItem;
 
+
 #if 0
   // Traverse outbox.
   KMFolder *outbox = kmkernel->outboxFolder();
@@ -194,7 +195,10 @@ void AkonadiSender::queueMessage( const KMime::Message::Ptr &message )
 
   MessageQueueJob *qjob = new MessageQueueJob( this );
   if ( message->headerByType( "X-KMail-Fcc" ) ) {
+    qjob->setSentBehaviour( SentBehaviourAttribute::MoveToCollection );
     qjob->setMoveToCollection(message->headerByType( "X-KMail-Fcc" )->asUnicodeString().toInt() );
+  } else {
+    qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
   }
   qjob->setMessage( KMime::Message::Ptr(messagePtr) );
 
