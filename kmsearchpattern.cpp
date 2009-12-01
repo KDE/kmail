@@ -24,6 +24,7 @@ using KMail::FilterLog;
 #include "kmkernel.h"
 #include <kpimutils/email.h>
 
+#include <nie.h>
 #include <nmo.h>
 #include <nco.h>
 
@@ -377,22 +378,31 @@ void KMSearchRuleString::addPersonTerm(Nepomuk::Query::GroupTerm& groupTerm, con
 void KMSearchRuleString::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
 {
   Nepomuk::Query::OrTerm termGroup;
-  if ( field().toLower() == "to" || field() == "<recipients>" || field() == "<any header>" )
+  if ( field().toLower() == "to" || field() == "<recipients>" || field() == "<any header>" || field() == "<message>" )
     addPersonTerm( termGroup, Vocabulary::NMO::to() );
-  if ( field().toLower() == "cc" || field() == "<recipients>" || field() == "<any header>" )
+  if ( field().toLower() == "cc" || field() == "<recipients>" || field() == "<any header>" || field() == "<message>" )
     addPersonTerm( termGroup, Vocabulary::NMO::cc() );
-  if ( field().toLower() == "bcc" || field() == "<recipients>" || field() == "<any header>" )
+  if ( field().toLower() == "bcc" || field() == "<recipients>" || field() == "<any header>" || field() == "<message>" )
     addPersonTerm( termGroup, Vocabulary::NMO::bcc() );
 
-  if ( field().toLower() == "from" || field() == "<any header>" )
+  if ( field().toLower() == "from" || field() == "<any header>" || field() == "<message>" )
     addPersonTerm( termGroup, Vocabulary::NMO::from() );
 
-  if ( field().toLower() == "subject" || field() == "<any header>" ) {
+  if ( field().toLower() == "subject" || field() == "<any header>" || field() == "<message>" ) {
     const Nepomuk::Query::ComparisonTerm subjectTerm( Vocabulary::NMO::messageSubject(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
     termGroup.addSubTerm( subjectTerm );
   }
 
-  // TODO complete for other headers, generic headers and content
+  // TODO complete for other headers, generic headers
+
+  if ( field() == "<body>" || field() == "<message>" ) {
+    const Nepomuk::Query::ComparisonTerm bodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+    termGroup.addSubTerm( bodyTerm );
+
+    const Nepomuk::Query::ComparisonTerm attachmentBodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+    const Nepomuk::Query::ComparisonTerm attachmentTerm( Vocabulary::NIE::isPartOf(), attachmentBodyTerm, Nepomuk::Query::ComparisonTerm::Equal );
+    termGroup.addSubTerm( attachmentTerm );
+  }
 
   if ( !termGroup.subTerms().isEmpty() )
     groupTerm.addSubTerm( termGroup );
