@@ -1156,7 +1156,7 @@ void KMMainWidget::slotSearch()
   }
   else
   {
-    mSearchWin->activateFolder(mCurrentFolder->collection());
+    mSearchWin->activateFolder(mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
   }
 
   mSearchWin->show();
