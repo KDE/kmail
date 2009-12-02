@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2004 Carsten Burghardt <burghardt@kde.org>
+ * Copyright (c) 2009 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -78,17 +79,6 @@ void FolderRequester::slotOpenDialog()
   if ( dlg->exec() && dlg ) {
     setFolder( dlg->selectedCollection() );
   }
-#if 0
-  AutoQPointer<FolderSelectionDialog> dlg( new FolderSelectionDialog( this, mFolderTree,
-                                                                      i18n("Select Folder"),
-                                                                      mMustBeReadWrite, false ) );
-  dlg->setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
-  dlg->setFolder( mFolder );
-
-  if ( dlg->exec() && dlg ) {
-    setFolder( dlg->folder() );
-  }
-#endif
 }
 
 //-----------------------------------------------------------------------------

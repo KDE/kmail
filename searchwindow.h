@@ -175,7 +175,7 @@ protected:
     *mSaveAtchAction, *mCopyAction, *mCutAction;
   KActionMenu *mForwardActionMenu;
   QTimer mRenameTimer;
-
+  QByteArray mHeaderState;
   // not owned by us
   KMMainWidget* mKMMainWidget;
   KMSearchPatternEdit *mPatternEdit;

@@ -196,20 +196,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 #endif
   mLbxMatches->setAllColumnsShowFocus( true );
   mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
+
 #if 0 // port me!
-  QStringList headerNames;
-  headerNames << i18nc("@title:column Subject of the found message.", "Subject")
-              << i18nc("@title:column Sender of the found message.", "Sender/Receiver")
-              << i18nc("@title:column date of receival ofthe found message.", "Date")
-              << i18nc("@title:column Folder in which the message is found.", "Folder") << "";
-  mLbxMatches->setHeaderLabels( headerNames );
   mLbxMatches->header()->setStretchLastSection( false );
   mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
-  mLbxMatches->setColumnWidth( 0, group.readEntry( "SubjectWidth", 150 ) );
-  mLbxMatches->setColumnWidth( 1, group.readEntry( "SenderWidth", 120 ) );
-  mLbxMatches->setColumnWidth( 2, group.readEntry( "DateWidth", 120 ) );
-  mLbxMatches->setColumnWidth( 3, group.readEntry( "FolderWidth", 100 ) );
-  mLbxMatches->setColumnWidth( 4, 0 );
 
   connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
            this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
@@ -349,15 +339,17 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 //-----------------------------------------------------------------------------
 SearchWindow::~SearchWindow()
 {
-  KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "SearchDialog" );
-  group.writeEntry( "SubjectWidth", mLbxMatches->columnWidth( 0 ) );
-  group.writeEntry( "SenderWidth", mLbxMatches->columnWidth( 1 ) );
-  group.writeEntry( "DateWidth", mLbxMatches->columnWidth( 2 ) );
-  group.writeEntry( "FolderWidth", mLbxMatches->columnWidth( 3 ) );
-  group.writeEntry( "SearchWidgetWidth", width());
-  group.writeEntry( "SearchWidgetHeight", height());
-  config->sync();
+  if ( mResultModel ) {
+    KSharedConfig::Ptr config = KMKernel::config();
+    KConfigGroup group( config, "SearchDialog" );
+    group.writeEntry( "SubjectWidth", mLbxMatches->columnWidth( 0 ) );
+    group.writeEntry( "SenderWidth", mLbxMatches->columnWidth( 1 ) );
+    group.writeEntry( "DateWidth", mLbxMatches->columnWidth( 2 ) );
+    group.writeEntry( "FolderWidth", mLbxMatches->columnWidth( 3 ) );
+    group.writeEntry( "SearchWidgetWidth", width());
+    group.writeEntry( "SearchWidgetHeight", height());
+    config->sync();
+  }
 }
 
 void SearchWindow::setEnabledSearchButton( bool )
@@ -449,6 +441,8 @@ void SearchWindow::slotSearch()
   }
   enableButton( User1, false );
   enableButton( User2, true );
+  if ( mResultModel )
+    mHeaderState = mLbxMatches->header()->saveState();
 
   mLbxMatches->setModel( 0 );
 
@@ -518,12 +512,27 @@ void SearchWindow::searchDone( KJob* job )
     if ( job->error() )
       kWarning() << job->errorText(); // TODO
 
-    if ( !mResultModel )
-      mResultModel = new Akonadi::MessageModel( this );
     mFolder = mSearchJob->createdCollection();
     mSearchJob = 0;
-    mResultModel->setCollection( mFolder );
-    mLbxMatches->setModel( mResultModel );
+
+    if ( !mResultModel ) {
+      mResultModel = new Akonadi::MessageModel( this );
+      mResultModel->setCollection( mFolder );
+      mLbxMatches->setModel( mResultModel );
+
+      KSharedConfig::Ptr config = KMKernel::config();
+      KConfigGroup group( config, "SearchDialog" );
+
+      mLbxMatches->setColumnWidth( 0, group.readEntry( "SubjectWidth", 150 ) );
+      mLbxMatches->setColumnWidth( 1, group.readEntry( "SenderWidth", 120 ) );
+      mLbxMatches->setColumnWidth( 2, group.readEntry( "DateWidth", 120 ) );
+      mLbxMatches->setColumnWidth( 3, group.readEntry( "FolderWidth", 100 ) );
+      mLbxMatches->setColumnWidth( 4, 0 );
+    } else {
+      mResultModel->setCollection( mFolder );
+      mLbxMatches->setModel( mResultModel );
+      mLbxMatches->header()->restoreState( mHeaderState );
+    }
 
     mTimer->stop();
     updStatus();
