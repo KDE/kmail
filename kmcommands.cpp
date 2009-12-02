@@ -768,7 +768,7 @@ static KURL subjectToUrl( const QString & subject )
                                            .replace( QDir::separator(), '_' )
                                            .replace( ": ", "_" )
                                            .replace( ':', '_' ),
-                                  "*.mbox" );
+                                  "*.mbox\n*.*" );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
