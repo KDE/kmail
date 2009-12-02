@@ -181,6 +181,7 @@ using KMail::TemplateParser;
 #include <akonadi/agentinstance.h>
 #include <akonadi/agenttype.h>
 
+#include "pop3settings.h"
 
 #include "kmagentmanager.h"
 #include "kmmainwidget.moc"
@@ -1610,43 +1611,28 @@ void KMMainWidget::slotRemoveFolder()
     }
     buttonLabel = i18nc("@action:button Delete folder", "&Delete");
   }
+
   if ( KMessageBox::warningContinueCancel( this, str, title,
                                            KGuiItem( buttonLabel, "edit-delete" ),
                                            KStandardGuiItem::cancel(), "",
                                            KMessageBox::Notify | KMessageBox::Dangerous )
       == KMessageBox::Continue )
   {
-#if 0
-    if ( mFolder->hasAccounts() ) {
-      // this folder has an account, so we need to change that to the inbox
-      for ( AccountList::Iterator it (mFolder->acctList()->begin() ),
-             end( mFolder->acctList()->end() ); it != end; ++it ) {
-        (*it)->setFolder( kmkernel->inboxFolder() );
-        KMessageBox::information(this,
-            i18n("<qt>The folder you deleted was associated with the account "
-              "<b>%1</b> which delivered mail into it. The folder the account "
-              "delivers new mail into was reset to the main Inbox folder.</qt>", (*it)->name()));
+    Akonadi::AgentInstance::List lst = KMKernel::self()->agentManager()->instanceList();
+    foreach ( const Akonadi::AgentInstance& type, lst ) {
+      if ( type.identifier().contains( "akonadi_pop3_resource" ) ) {
+        OrgKdeAkonadiPop3SettingsInterface *iface = new OrgKdeAkonadiPop3SettingsInterface( "org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus(), this );
+        Akonadi::Collection inboxCollection = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Inbox );
+        if ( iface->targetCollection() == mCurrentFolder->collection().id() ) {
+          iface->setTargetCollection( inboxCollection.id() );
+          KMessageBox::information(this,
+                                   i18n("<qt>The folder you deleted was associated with the account "
+                                        "<b>%1</b> which delivered mail into it. The folder the account "
+                                        "delivers new mail into was reset to the main Inbox folder.</qt>", type.name()));
+
+        }
       }
     }
-    if (mFolder->folderType() == KMFolderTypeImap)
-      kmkernel->imapFolderMgr()->remove(mFolder);
-    else if (mFolder->folderType() == KMFolderTypeCachedImap) {
-      // Deleted by user -> tell the account (see KMFolderCachedImap::listDirectory2)
-      KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>( mFolder->storage() );
-      KMAcctCachedImap* acct = storage->account();
-      if ( acct )
-        acct->addDeletedFolder( mFolder );
-
-      kmkernel->dimapFolderMgr()->remove(mFolder);
-    }
-    else
-    if (mFolder->folderType() == KMFolderTypeSearch)
-      kmkernel->searchFolderMgr()->remove(mFolder);
-    else
-      kmkernel->folderMgr()->remove(mFolder);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     mCurrentFolder->removeCollection();
   }
   delete mCurrentFolder;
