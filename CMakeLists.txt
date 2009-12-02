@@ -295,6 +295,8 @@ target_link_libraries(kmailprivate
   niefast_apps
 )
 
+add_dependencies(kmailprivate akonadi_imap_resource) # generate imapresource.kcfg first
+
 if(Nepomuk_FOUND)
   target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES} ${NEPOMUK_QUERY_LIBRARIES})
 endif(Nepomuk_FOUND)
