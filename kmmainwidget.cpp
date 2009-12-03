@@ -1204,12 +1204,8 @@ void KMMainWidget::slotManageSieveScripts()
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
-#if 0
   KMail::ManageSieveScriptsDialog * dlg = new KMail::ManageSieveScriptsDialog( this );
   dlg->show();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 

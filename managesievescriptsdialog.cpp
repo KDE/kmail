@@ -4,6 +4,9 @@
 
 #include "sievejob.h"
 #include "kmkernel.h"
+#include "util.h"
+#include "imapsettings.h"
+#include "kmagentmanager.h"
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -11,6 +14,9 @@
 #include <kinputdialog.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
+
+
+#include <akonadi/agentinstance.h>
 
 #include <QLayout>
 #include <QMenu>
@@ -74,47 +80,37 @@ void KMail::ManageSieveScriptsDialog::killAllJobs()
 void KMail::ManageSieveScriptsDialog::slotRefresh()
 {
   clear();
-#if 0
-  KMail::AccountManager * am = kmkernel->acctMgr();
-  assert( am );
   QTreeWidgetItem *last = 0;
-  QList<KMAccount*>::iterator accountIt = am->begin();
-  while ( accountIt != am->end() ) {
-    KMAccount *a = *accountIt;
-    ++accountIt;
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  foreach ( const Akonadi::AgentInstance& type, lst )
+  {
+    //TODO verify it.
+    if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
 
-    // Don't show POP3 accounts in the sieve list
-    if ( a->type() != KAccount::Imap &&
-         a->type() != KAccount::DImap )
-      continue;
+      OrgKdeAkonadiImapSettingsInterface *iface = new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
+      if ( iface->isValid() ) {
+        last = new QTreeWidgetItem( mListView, last );
+        last->setText( 0, type.name() );
+        last->setIcon( 0, SmallIcon( "network-server" ) );
 
-    last = new QTreeWidgetItem( mListView, last );
-    last->setText( 0, a->name() );
-    last->setIcon( 0, SmallIcon( "network-server" ) );
-#if 0 //TODO port to akonadi
-    if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
-      //TODO port it.
-      const KUrl u = KMail::Util::findSieveUrlForAccount( iab );
-      if ( u.isEmpty() ) {
-         QTreeWidgetItem *item = new QTreeWidgetItem( last );
-        item->setText( 0, i18n( "No Sieve URL configured" ) );
-        item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
-        mListView->expandItem( last );
-        continue;
+        const KUrl u = KMail::Util::findSieveUrlForAccount( iface );
+        if ( u.isEmpty() ) {
+          QTreeWidgetItem *item = new QTreeWidgetItem( last );
+          item->setText( 0, i18n( "No Sieve URL configured" ) );
+          item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
+          mListView->expandItem( last );
+        } else {
+          SieveJob * job = SieveJob::list( u );
+          connect( job, SIGNAL(item(KMail::SieveJob*,const QString&,bool)),
+                   this, SLOT(slotItem(KMail::SieveJob*,const QString&,bool)) );
+          connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
+                   this, SLOT(slotResult(KMail::SieveJob*,bool,const QString&,bool)) );
+          mJobs.insert( job, last );
+          mUrls.insert( last, u );
+        }
       }
-      SieveJob * job = SieveJob::list( u );
-      connect( job, SIGNAL(item(KMail::SieveJob*,const QString&,bool)),
-               this, SLOT(slotItem(KMail::SieveJob*,const QString&,bool)) );
-      connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
-               this, SLOT(slotResult(KMail::SieveJob*,bool,const QString&,bool)) );
-      mJobs.insert( job, last );
-      mUrls.insert( last, u );
     }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
-#endif
 }
 
 void KMail::ManageSieveScriptsDialog::slotResult( KMail::SieveJob * job, bool success, const QString &, bool )
