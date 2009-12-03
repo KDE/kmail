@@ -46,6 +46,8 @@
 #include <kglobal.h>
 #include <kascii.h>
 #include <KCharsets>
+#include "imapsettings.h"
+#include <kimap/loginjob.h>
 
 void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
 {
@@ -240,3 +242,66 @@ QByteArray autoDetectCharset(const QByteArray &_encoding, const QStringList &enc
     return 0;
 }
 
+
+KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a) {
+  assert( a );
+  if ( !a->sieveSupport() )
+    return KUrl();
+  if ( a->sieveReuseConfig() ) {
+    // assemble Sieve url from the settings of the account:
+    KUrl u;
+    u.setProtocol( "sieve" );
+    QString server;
+    QDBusReply<QString> reply = a->imapServer();
+    if ( reply.isValid() ) {
+      server = reply;
+      server = server.section( ':', 0, 0 );
+    } else {
+      return KUrl();
+    }
+    u.setHost( server );
+    u.setUser( a->userName() );
+#if 0
+    u.setPass( a->password() );
+#endif
+    u.setPort( a->sievePort() );
+    QString authStr;
+    switch( a->authentication() ) {
+    case KIMAP::LoginJob::ClearText:
+      authStr = "PLAIN";
+      break;
+    case KIMAP::LoginJob::Login:
+      authStr = "LOGIN";
+      break;
+    case KIMAP::LoginJob::Plain:
+      authStr = "PLAIN";
+      break;
+    case KIMAP::LoginJob::CramMD5:
+      authStr = "CRAM-MD5";
+      break;
+    case KIMAP::LoginJob::DigestMD5:
+      authStr = "DIGEST-MD5";
+      break;
+    case KIMAP::LoginJob::GSSAPI:
+      authStr = "GSSAPI";
+      break;
+    case KIMAP::LoginJob::Anonymous:
+      authStr = "ANONYMOUS";
+      break;
+    default:
+      authStr = "PLAIN";
+      break;
+    }
+    u.addQueryItem( "x-mech", authStr );
+    if ( a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ))
+      u.addQueryItem( "x-allow-unencrypted", "true" );
+    u.setFileName( a->sieveVacationFilename() );
+    return u;
+  } else {
+    KUrl u( a->sieveAlternateUrl() );
+    if ( u.protocol().toLower() == "sieve" && (  a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ) ) && u.queryItem("x-allow-unencrypted").isEmpty() )
+      u.addQueryItem( "x-allow-unencrypted", "true" );
+    u.setFileName( a->sieveVacationFilename() );
+    return u;
+  }
+}

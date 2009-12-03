@@ -50,6 +50,8 @@
 #include <kmime/kmime_message.h>
 class KUrl;
 
+class OrgKdeAkonadiImapSettingsInterface;
+
 namespace KMail
 {
     /**
@@ -124,7 +126,7 @@ namespace Util {
      */
      QByteArray autoDetectCharset(const QByteArray &encoding, const QStringList &encodingList, const QString &text);
 
-
+     KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a);
 }
 }
 

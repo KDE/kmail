@@ -37,8 +37,11 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
+#include "util.h"
+
 #include "kmkernel.h"
 #include "sievejob.h"
+#include "imapsettings.h"
 
 using KMail::SieveJob;
 using KMime::Types::AddrSpecList;
@@ -223,33 +226,6 @@ SieveDebugDialog::~SieveDebugDialog()
     kDebug() ;
 }
 
-#if 0 // TODO: port to Akonadi
-static KUrl urlFromAccount( const KMail::ImapAccountBase * a ) {
-    const SieveConfig sieve = a->sieveConfig();
-    if ( !sieve.managesieveSupported() )
-        return KUrl();
-
-    KUrl u;
-    if ( sieve.reuseConfig() ) {
-        // assemble Sieve url from the settings of the account:
-        u.setProtocol( "sieve" );
-        u.setHost( a->host() );
-        u.setUser( a->login() );
-        u.setPass( a->passwd() );
-        u.setPort( sieve.port() );
-
-        // Translate IMAP LOGIN to PLAIN:
-        u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() );
-        if ( !a->useSSL() && !a->useTLS() )
-            u.addQueryItem( "x-allow-unencrypted", "true" );
-    } else {
-        u = sieve.alternateURL();
-        if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
-            u.addQueryItem( "x-allow-unencrypted", "true" );
-    }
-    return u;
-}
-#endif
 
 void SieveDebugDialog::slotDiagNextAccount()
 {
@@ -266,7 +242,8 @@ void SieveDebugDialog::slotDiagNextAccount()
     if ( mAccountBase )
     {
         // Detect URL for this IMAP account
-        const KUrl url = urlFromAccount( mAccountBase );
+      //TODO port
+      const KUrl url = KMail::Util::findSieveUrlForAccount( mAccountBase );
         if ( !url.isValid() )
         {
             mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );

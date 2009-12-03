@@ -37,6 +37,7 @@ using KMime::Types::AddrSpecList;
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include "util.h"
 
 #include <akonadi/agentinstance.h>
 
@@ -491,69 +492,6 @@ namespace KMail {
     return script;
   }
 
-   static KUrl findUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a) {
-    assert( a );
-    if ( !a->sieveSupport() )
-      return KUrl();
-    if ( a->sieveReuseConfig() ) {
-      // assemble Sieve url from the settings of the account:
-      KUrl u;
-      u.setProtocol( "sieve" );
-      QString server;
-      QDBusReply<QString> reply = a->imapServer();
-      if ( reply.isValid() ) {
-        server = reply;
-        server = server.section( ':', 0, 0 );
-      } else {
-        return KUrl();
-      }
-      u.setHost( server );
-      u.setUser( a->userName() );
-#if 0
-      u.setPass( a->password() );
-#endif
-      u.setPort( a->sievePort() );
-      QString authStr;
-      switch( a->authentication() ) {
-      case KIMAP::LoginJob::ClearText:
-        authStr = "PLAIN";
-        break;
-      case KIMAP::LoginJob::Login:
-        authStr = "LOGIN";
-        break;
-      case KIMAP::LoginJob::Plain:
-        authStr = "PLAIN";
-        break;
-      case KIMAP::LoginJob::CramMD5:
-        authStr = "CRAM-MD5";
-        break;
-      case KIMAP::LoginJob::DigestMD5:
-        authStr = "DIGEST-MD5";
-        break;
-      case KIMAP::LoginJob::GSSAPI:
-        authStr = "GSSAPI";
-        break;
-      case KIMAP::LoginJob::Anonymous:
-        authStr = "ANONYMOUS";
-        break;
-      default:
-        authStr = "PLAIN";
-        break;
-      }
-      u.addQueryItem( "x-mech", authStr );
-      if ( a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ))
-        u.addQueryItem( "x-allow-unencrypted", "true" );
-      u.setFileName( a->sieveVacationFilename() );
-
-      return u;
-    } else {
-      KUrl u( a->sieveAlternateUrl() );
-      if ( u.protocol().toLower() == "sieve" && (  a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ) ) && u.queryItem("x-allow-unencrypted").isEmpty() )
-        u.addQueryItem( "x-allow-unencrypted", "true" );
-      u.setFileName( a->sieveVacationFilename() );
-      return u;
-    }
-  }
 
   KUrl Vacation::findURL() const {
     Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
@@ -563,7 +501,7 @@ namespace KMail {
       if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
         OrgKdeAkonadiImapSettingsInterface *iface = new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
         if ( iface->isValid() ) {
-          KUrl u = findUrlForAccount( iface );
+          KUrl u = KMail::Util::findSieveUrlForAccount( iface );
           if ( !u.isEmpty() ) {
             delete iface;
             return u;
