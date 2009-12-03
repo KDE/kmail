@@ -38,7 +38,8 @@
 #include <kpimidentities/identitymanager.h>
 
 #include "util.h"
-
+#include "kmagentmanager.h"
+#include <akonadi/agentinstance.h>
 #include "kmkernel.h"
 #include "sievejob.h"
 #include "imapsettings.h"
@@ -191,18 +192,13 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
     setCaption( i18n( "Sieve Diagnostics" ) );
     setButtons( Ok );
     // Collect all accounts
-#if 0 // TODO: port to Akonadi
-    AccountManager *am = kmkernel->acctMgr();
-    assert( am );
-    QList<KMAccount*>::iterator accountIt = am->begin();
-    while ( accountIt != am->end() ) {
-      KMAccount *account = *accountIt;
-      ++accountIt;
-      mAccountList.append( account );
+    Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+    foreach ( const Akonadi::AgentInstance& type, lst )
+    {
+      if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
+        mResourceIdentifier<<type.identifier();
+      }
     }
-#else
-   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
     mEdit = new KTextEdit( this );
     mEdit->setReadOnly( true );
@@ -212,7 +208,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
 
     setInitialSize( QSize( 640, 480 ) );
 
-    if ( !mAccountList.isEmpty() )
+    if ( !mResourceIdentifier.isEmpty() )
         QTimer::singleShot( 0, this, SLOT( slotDiagNextAccount() ) );
 }
 
@@ -229,21 +225,18 @@ SieveDebugDialog::~SieveDebugDialog()
 
 void SieveDebugDialog::slotDiagNextAccount()
 {
-    if ( mAccountList.isEmpty() )
+    if ( mResourceIdentifier.isEmpty() )
         return;
-#if 0 //Port to akonadi
-    KMAccount *acc = mAccountList.first();
-    mAccountList.pop_front();
+    QString ident = mResourceIdentifier.first();
+    mResourceIdentifier.pop_front();
 
-    mEdit->append( i18n( "Collecting data for account '%1'...\n", acc->name() ) );
+    mEdit->append( i18n( "Collecting data for account '%1'...\n", ident ) );
     mEdit->append( i18n( "------------------------------------------------------------\n" ) );
-#if 0  //TODO port to akonadi
-    mAccountBase = dynamic_cast<KMail::ImapAccountBase *>( acc );
-    if ( mAccountBase )
+    mImapSettingsInterface = KMail::Util::createImapSettingsInterface( ident );
+    if ( mImapSettingsInterface->isValid() )
     {
         // Detect URL for this IMAP account
-      //TODO port
-      const KUrl url = KMail::Util::findSieveUrlForAccount( mAccountBase );
+      const KUrl url = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface );
         if ( !url.isValid() )
         {
             mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
@@ -259,16 +252,12 @@ void SieveDebugDialog::slotDiagNextAccount()
             return;
         }
     } else
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     {
         mEdit->append( i18n( "(Account is not an IMAP account)\n\n" ) );
     }
 
     // Handle next account async
     QTimer::singleShot( 0, this, SLOT( slotDiagNextAccount() ) );
-#endif
 }
 
 void SieveDebugDialog::slotDiagNextScript()
@@ -285,11 +274,9 @@ void SieveDebugDialog::slotDiagNextScript()
     mScriptList.pop_front();
 
     mEdit->append( i18n( "Contents of script '%1':\n", scriptFile ) );
-#if 0 // TODO: port to Akonadi
-    mUrl = KMail::Util::findSieveUrlForAccount( mAccountBase );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
+    mUrl = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface );
+
     mUrl.setFileName( scriptFile );
 
     mSieveJob = SieveJob::get( mUrl );
