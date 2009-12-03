@@ -32,6 +32,7 @@
 #include <akonadi/agentmanager.h>
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
+#include <akonadi/private/collectionutils_p.h>
 
 #include "collectionannotationsattribute.h"
 
@@ -79,7 +80,7 @@ bool CollectionGeneralPage::isImapFolder( const Akonadi::Collection &col )
 
 CollectionGeneralPage::KMFolderType CollectionGeneralPage::folderType( const Akonadi::Collection &col )
 {
-  if (col.id() == 1) // Ugh;
+  if ( CollectionUtils::isVirtual( col ) )
     return KMFolderTypeSearch;
 
   Akonadi::AgentManager *agentManager = Akonadi::AgentManager::self();
