@@ -63,6 +63,8 @@ endmacro(add_resource_iface)
 
 add_resource_iface( imap/imapresource.kcfg
                     org.kde.Akonadi.Imap.Settings ImapSettings )
+add_resource_iface( pop3/pop3resource.kcfg
+                    org.kde.Akonadi.Pop3.Settings Pop3Settings )
 
 
 kmail_add_unittest( ${utiltest_SRCS} )

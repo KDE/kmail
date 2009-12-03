@@ -47,6 +47,7 @@
 #include <kascii.h>
 #include <KCharsets>
 #include "imapsettings.h"
+#include "pop3settings.h"
 #include <kimap/loginjob.h>
 
 void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
@@ -314,6 +315,10 @@ KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,
 
 OrgKdeAkonadiImapSettingsInterface *KMail::Util::createImapSettingsInterface( const QString &ident )
 {
-  OrgKdeAkonadiImapSettingsInterface *iface = new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus() );
-  return iface;
+  return new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus() );
+}
+
+OrgKdeAkonadiPop3SettingsInterface *KMail::Util::createPop3SettingsInterface( const QString & ident )
+{
+  return new OrgKdeAkonadiPop3SettingsInterface( "org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus());
 }
