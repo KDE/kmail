@@ -34,6 +34,8 @@
 #include <QStackedWidget>
 #include "messageviewer/autoqpointer.h"
 #include "imapaclattribute.h"
+#include "util.h"
+#include "imapsettings.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/collectionmodifyjob.h>
@@ -372,12 +374,14 @@ void CollectionAclPage::load(const Akonadi::Collection & col)
       item->setModified( true );
   }
 
-  QDBusInterface resourceSettings( QString("org.freedesktop.Akonadi.Resource.")+col.resource(),
-                                   "/Settings", "org.kde.Akonadi.Imap.Settings" );
-  QDBusReply<QString> reply = resourceSettings.call( "userName" );
-  if ( reply.isValid() ) {
-    mImapUserName = reply;
+  OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = KMail::Util::createImapSettingsInterface( col.resource() );
+  if ( imapSettingsInterface->isValid() ) {
+    QDBusReply<QString> reply = imapSettingsInterface->userName();
+    if ( reply.isValid() ) {
+      mImapUserName = reply;
+    }
   }
+  delete imapSettingsInterface;
 
   mUserRights = rights[mImapUserName.toUtf8()];
 
