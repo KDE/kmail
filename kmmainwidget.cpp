@@ -2903,6 +2903,7 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   // TODO: Port to partFetcher so that this is not necessary.
   ItemFetchJob *itemFetchJob = new ItemFetchJob( msg, this );
   itemFetchJob->fetchScope().fetchFullPayload( true );
+  itemFetchJob->fetchScope().fetchAllAttributes();
   itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
   connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForActivation(Akonadi::Item::List)) );
   connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob*)) );
@@ -4716,6 +4717,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
   // TODO: Port to partFetcher.
   ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
   itemFetchJob->fetchScope().fetchFullPayload( true );
+  itemFetchJob->fetchScope().fetchAllAttributes();
   itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
   connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(itemsReceived(Akonadi::Item::List)) );
   connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob *)) );
