@@ -499,9 +499,15 @@ namespace KMail {
       // assemble Sieve url from the settings of the account:
       KUrl u;
       u.setProtocol( "sieve" );
-#if 0
-      u.setHost( a->host() );
-#endif
+      QString server;
+      QDBusReply<QString> reply = a->imapServer();
+      if ( reply.isValid() ) {
+        server = reply;
+        server = server.section( ':', 0, 0 );
+      } else {
+        return KUrl();
+      }
+      u.setHost( server );
       u.setUser( a->userName() );
 #if 0
       u.setPass( a->password() );
