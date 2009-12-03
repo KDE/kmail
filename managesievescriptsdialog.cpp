@@ -93,7 +93,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
         last->setText( 0, type.name() );
         last->setIcon( 0, SmallIcon( "network-server" ) );
 
-        const KUrl u = KMail::Util::findSieveUrlForAccount( iface );
+        const KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
         if ( u.isEmpty() ) {
           QTreeWidgetItem *item = new QTreeWidgetItem( last );
           item->setText( 0, i18n( "No Sieve URL configured" ) );

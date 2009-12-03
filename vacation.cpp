@@ -501,7 +501,7 @@ namespace KMail {
       if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
         OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
         if ( iface->isValid() ) {
-          KUrl u = KMail::Util::findSieveUrlForAccount( iface );
+          KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
           if ( !u.isEmpty() ) {
             delete iface;
             return u;

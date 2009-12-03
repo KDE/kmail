@@ -243,7 +243,7 @@ QByteArray autoDetectCharset(const QByteArray &_encoding, const QStringList &enc
 }
 
 
-KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a) {
+KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a, const QString& ident) {
   assert( a );
   if ( !a->sieveSupport() )
     return KUrl();
@@ -261,9 +261,15 @@ KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a)
     }
     u.setHost( server );
     u.setUser( a->userName() );
-#if 0
-    u.setPass( a->password() );
-#endif
+
+    QDBusInterface resourceSettings( QString("org.freedesktop.Akonadi.Resource.")+ident,"/Settings", "org.kde.Akonadi.Imap.Wallet" );
+
+    QString pwd;
+    QDBusReply<QString> replyPass = resourceSettings.call( "password" );
+    if ( replyPass.isValid() ) {
+      pwd = replyPass;
+    }
+    u.setPass( pwd );
     u.setPort( a->sievePort() );
     QString authStr;
     switch( a->authentication() ) {

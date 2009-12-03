@@ -236,7 +236,7 @@ void SieveDebugDialog::slotDiagNextAccount()
     if ( mImapSettingsInterface->isValid() )
     {
         // Detect URL for this IMAP account
-      const KUrl url = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface );
+      const KUrl url = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface, ident );
         if ( !url.isValid() )
         {
             mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
@@ -275,7 +275,7 @@ void SieveDebugDialog::slotDiagNextScript()
 
     mEdit->append( i18n( "Contents of script '%1':\n", scriptFile ) );
 
-    mUrl = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface );
+    mUrl = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface, mResourceIdentifier.first() );
 
     mUrl.setFileName( scriptFile );
 
