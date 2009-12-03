@@ -3683,6 +3683,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   bool msgCleared = false;
   if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
        !initalChange ) {
+    //make sure potential initial content is removed (signature).
+    mEditor->clear(); //FIXME review if this is still necessary once the templates work again
     applyTemplate( uoid );
     msgCleared = true;
   }
