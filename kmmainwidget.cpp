@@ -181,7 +181,6 @@ using KMail::TemplateParser;
 #include <akonadi/agentinstance.h>
 #include <akonadi/agenttype.h>
 
-#include "pop3settings.h"
 
 #include "kmagentmanager.h"
 #include "kmmainwidget.moc"
@@ -1614,26 +1613,10 @@ void KMMainWidget::slotRemoveFolder()
                                            KMessageBox::Notify | KMessageBox::Dangerous )
       == KMessageBox::Continue )
   {
-    Akonadi::AgentInstance::List lst = KMKernel::self()->agentManager()->instanceList();
-    foreach ( const Akonadi::AgentInstance& type, lst ) {
-      if ( type.identifier().contains( "akonadi_pop3_resource" ) ) {
-        OrgKdeAkonadiPop3SettingsInterface *iface = KMail::Util::createPop3SettingsInterface( type.identifier() );
-        Akonadi::Collection inboxCollection = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Inbox );
-        if ( iface->targetCollection() == mCurrentFolder->collection().id() ) {
-          iface->setTargetCollection( inboxCollection.id() );
-          KMessageBox::information(this,
-                                   i18n("<qt>The folder you deleted was associated with the account "
-                                        "<b>%1</b> which delivered mail into it. The folder the account "
-                                        "delivers new mail into was reset to the main Inbox folder.</qt>", type.name()));
-        }
-        delete iface;
-      }
-    }
     mCurrentFolder->removeCollection();
   }
   delete mCurrentFolder;
   mCurrentFolder = 0;
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 }
 
 //-----------------------------------------------------------------------------

@@ -51,7 +51,6 @@
 class KUrl;
 
 class OrgKdeAkonadiImapSettingsInterface;
-class OrgKdeAkonadiPop3SettingsInterface;
 
 namespace KMail
 {
@@ -129,7 +128,6 @@ namespace Util {
 
      KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
      OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
-     OrgKdeAkonadiPop3SettingsInterface *createPop3SettingsInterface( const QString & ident );
 }
 }
 

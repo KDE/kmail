@@ -47,7 +47,6 @@
 #include <kascii.h>
 #include <KCharsets>
 #include "imapsettings.h"
-#include "pop3settings.h"
 #include <kimap/loginjob.h>
 
 void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
@@ -318,7 +317,3 @@ OrgKdeAkonadiImapSettingsInterface *KMail::Util::createImapSettingsInterface( co
   return new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus() );
 }
 
-OrgKdeAkonadiPop3SettingsInterface *KMail::Util::createPop3SettingsInterface( const QString & ident )
-{
-  return new OrgKdeAkonadiPop3SettingsInterface( "org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus());
-}
