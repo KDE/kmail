@@ -124,35 +124,6 @@ namespace Util {
      */
      QByteArray autoDetectCharset(const QByteArray &encoding, const QStringList &encodingList, const QString &text);
 
-    /**
-     * A LaterDeleter is intended to be used with the RAII ( Resource
-     * Acquisiation is Initialization ) paradigm. When an instance of it
-     * goes out of scope it deletes the associated object  It can be
-     * disabled, in case the deletion needs to be avoided for some
-     * reason, since going out-of-scope cannot be avoided.
-     */
-    class LaterDeleter
-    {
-      public:
-      LaterDeleter( QObject *o)
-        :m_object( o ), m_disabled( false )
-      {
-      }
-      virtual ~LaterDeleter()
-      {
-        if ( !m_disabled ) {
-          m_object->deleteLater();
-        }
-      }
-      void setDisabled( bool v )
-      {
-        m_disabled = v;
-      }
-      protected:
-      QObject *m_object;
-      bool m_disabled;
-    };
-
 
 }
 }
