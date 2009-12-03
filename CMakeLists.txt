@@ -72,6 +72,7 @@ set(kmailprivate_LIB_SRCS
    folderselectiontreeview.cpp
    folderselectiontreeviewdialog.cpp
    foldertreeview.cpp
+   collectionannotationsattribute.cpp
    collectiontemplatespage.cpp
    collectionmaintenancepage.cpp
    collectiongeneralpage.cpp
