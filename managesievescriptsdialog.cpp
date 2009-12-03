@@ -2,7 +2,6 @@
 #include "managesievescriptsdialog.h"
 #include "managesievescriptsdialog_p.h"
 
-#include "imapaccountbase.h"
 #include "sievejob.h"
 #include "kmkernel.h"
 
@@ -71,32 +70,6 @@ void KMail::ManageSieveScriptsDialog::killAllJobs()
   mJobs.clear();
 }
 
-static KUrl findUrlForAccount( const KMail::ImapAccountBase * a )
-{
-  assert( a );
-  const KMail::SieveConfig sieve = a->sieveConfig();
-  if ( !sieve.managesieveSupported() )
-    return KUrl();
-  if ( sieve.reuseConfig() ) {
-    // assemble Sieve url from the settings of the account:
-    KUrl u;
-    u.setProtocol( "sieve" );
-    u.setHost( a->host() );
-    u.setUser( a->login() );
-    u.setPass( a->passwd() );
-    u.setPort( sieve.port() );
-    // Translate IMAP LOGIN to PLAIN:
-    u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() );
-    if ( !a->useSSL() && !a->useTLS() )
-      u.addQueryItem( "x-allow-unencrypted", "true" );
-    return u;
-  } else {
-    KUrl u = sieve.alternateURL();
-    if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
-      u.addQueryItem( "x-allow-unencrypted", "true" );
-    return u;
-  }
-}
 
 void KMail::ManageSieveScriptsDialog::slotRefresh()
 {
@@ -120,7 +93,8 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
     last->setIcon( 0, SmallIcon( "network-server" ) );
 #if 0 //TODO port to akonadi
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
-      const KUrl u = ::findUrlForAccount( iab );
+      //TODO port it.
+      const KUrl u = KMail::Util::findSieveUrlForAccount( iab );
       if ( u.isEmpty() ) {
          QTreeWidgetItem *item = new QTreeWidgetItem( last );
         item->setText( 0, i18n( "No Sieve URL configured" ) );
