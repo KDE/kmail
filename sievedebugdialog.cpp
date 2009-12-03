@@ -286,7 +286,7 @@ void SieveDebugDialog::slotDiagNextScript()
 
     mEdit->append( i18n( "Contents of script '%1':\n", scriptFile ) );
 #if 0 // TODO: port to Akonadi
-    mUrl = urlFromAccount( mAccountBase );
+    mUrl = KMail::Util::findSieveUrlForAccount( mAccountBase );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif

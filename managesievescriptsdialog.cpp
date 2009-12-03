@@ -87,7 +87,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
     //TODO verify it.
     if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
 
-      OrgKdeAkonadiImapSettingsInterface *iface = new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
       if ( iface->isValid() ) {
         last = new QTreeWidgetItem( mListView, last );
         last->setText( 0, type.name() );

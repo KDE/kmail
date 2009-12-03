@@ -127,6 +127,7 @@ namespace Util {
      QByteArray autoDetectCharset(const QByteArray &encoding, const QStringList &encodingList, const QString &text);
 
      KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a);
+     OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
 }
 }
 

@@ -305,3 +305,9 @@ KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a)
     return u;
   }
 }
+
+OrgKdeAkonadiImapSettingsInterface *KMail::Util::createImapSettingsInterface( const QString &ident )
+{
+  OrgKdeAkonadiImapSettingsInterface *iface = new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus() );
+  return iface;
+}

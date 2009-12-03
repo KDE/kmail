@@ -499,7 +499,7 @@ namespace KMail {
     {
       //TODO verify it.
       if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
-        OrgKdeAkonadiImapSettingsInterface *iface = new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
+        OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
         if ( iface->isValid() ) {
           KUrl u = KMail::Util::findSieveUrlForAccount( iface );
           if ( !u.isEmpty() ) {
