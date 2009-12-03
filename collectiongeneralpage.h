@@ -40,8 +40,40 @@ public:
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
 
+  enum FolderContentsType
+  {
+    ContentsTypeMail = 0,
+    ContentsTypeCalendar,
+    ContentsTypeContact,
+    ContentsTypeNote,
+    ContentsTypeTask,
+    ContentsTypeJournal,
+    ContentsTypeLast = ContentsTypeJournal
+  };
+
+  enum KMFolderType
+  {
+    KMFolderTypeMbox = 0,
+    KMFolderTypeMaildir,
+    KMFolderTypeCachedImap,
+    KMFolderTypeImap,
+    KMFolderTypeSearch,
+    KMFolderTypeUnknown
+  };
+
+  enum IncidencesFor {
+    IncForNobody,
+    IncForAdmins,
+    IncForReaders
+  };
+
 protected:
   void init(const Akonadi::Collection&);
+  bool isImapFolder( const Akonadi::Collection &col );
+
+
+  KMFolderType folderType( const Akonadi::Collection &col );
+
 private slots:
   void slotFolderNameChanged(const QString & );
   void slotIdentityCheckboxChanged();
@@ -60,6 +92,7 @@ private:
   FolderCollection * mFolderCollection;
   bool mIsLocalSystemFolder;
   bool mIsResourceFolder;
+  bool mIsImapFolder;
 
 };
 
