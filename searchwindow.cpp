@@ -47,7 +47,6 @@
 #include "folderrequester.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
-#include "kmmsgdict.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 

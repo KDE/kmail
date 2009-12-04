@@ -22,7 +22,6 @@
 #include "kmcomposereditor.h"
 #include "kmcomposewin.h"
 #include "kmcommands.h"
-#include "kmmsgdict.h"
 #include "maillistdrag.h"
 
 #include <kmime/kmime_codecs.h>
