@@ -2639,6 +2639,13 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 QString KMCommand::cleanFileName( const QString &name )
 {
   QString fileName = name.trimmed();
+
+  // We need to replace colons with underscores since those cause problems with
+  // KFileDialog (bug in KFileDialog though) and also on Windows filesystems.
+  // We also look at the special case of ": ", since converting that to "_ "
+  // would look strange, simply "_" looks better.
+  // https://issues.kolab.org/issue3805
+  fileName.replace( ": ", "_" );
   // replace all ':' with '_' because ':' isn't allowed on FAT volumes
   fileName.replace( ':', '_' );
   // better not use a dir-delimiter in a filename
