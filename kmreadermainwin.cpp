@@ -167,7 +167,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
 {
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
-     FolderCollection fd( mReaderWin->message().parentCollection() );
+     FolderCollection fd( mReaderWin->message().parentCollection(),false );
      command = new KMForwardCommand( this, mReaderWin->message(),
                                      fd.identity() );
    } else {
@@ -181,7 +181,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 {
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
-     FolderCollection fd( mReaderWin->message().parentCollection() );
+     FolderCollection fd( mReaderWin->message().parentCollection(),false );
      command = new KMForwardAttachedCommand( this, mReaderWin->message(),
         fd.identity() );
    } else {
