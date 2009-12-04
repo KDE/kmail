@@ -149,8 +149,6 @@ bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
   if ( source->hasImage() && source->hasFormat( "image/png" ) )
     return true;
-  if ( KPIM::MailList::canDecode( source ) )
-    return true;
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
     return true;
   if ( source->hasUrls() )
