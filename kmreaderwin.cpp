@@ -381,7 +381,6 @@ void KMReaderWin::displayAboutPage()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTouchMessage()
 {
-//TODO(Andras) port to Akonadi
   if ( !message().isValid() )
     return;
   MessageStatus status;
