@@ -1229,6 +1229,8 @@ void KMMainWidget::slotCheckMail()
   }
   Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
   foreach( Akonadi::AgentInstance type, lst ) {
+    if ( !type.isOnline() )
+      type.setIsOnline( true );
     type.synchronize();
   }
 }
@@ -1246,6 +1248,9 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
 
   Akonadi::AgentInstance agent = kmkernel->agentManager()->instance( item->data().toString() );
   if ( agent.isValid() ) {
+    if ( !agent.isOnline() ) {
+      agent.setIsOnline( true );
+    }
     agent.synchronize();
   } else {
     kDebug() << "- account with name '" << item->data().toString() <<"' not found";
