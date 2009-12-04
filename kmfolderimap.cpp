@@ -107,15 +107,6 @@ KMFolderImap::~KMFolderImap()
 //-----------------------------------------------------------------------------
 void KMFolderImap::reallyDoClose()
 {
-  if ( isSelected() ) {
-    kWarning() <<"Trying to close the selected folder" << label()
-                   << "- ignoring!";
-//                   << "- ignoring!" << kBacktrace();
-    mOpenCount++;
-    //abort();
-    return;
-  }
-
   int idx = count();
   while ( --idx >= 0 ) {
     if ( mMsgList[idx]->isMessage() ) {
