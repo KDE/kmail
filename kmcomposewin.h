@@ -455,10 +455,6 @@ class KMComposeWin : public KMail::Composer
 
     void slotSpellCheckingStatus( const QString & status );
 
-  public: // kmkernel, attachmentlistview
-    // FIXME we need to remove these, but they're pure virtual in Composer.
-    bool addAttach( const KUrl &url ) { return false; }
-
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );

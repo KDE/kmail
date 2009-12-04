@@ -147,8 +147,6 @@ class Composer : public KMail::SecondaryWindow
     virtual void autoSaveMessage() = 0;
 
   public: // kmkernel, attachmentlistview
-    virtual bool addAttach( const KUrl &url ) = 0;
-
     virtual void disableWordWrap() = 0;
 
     virtual void forceDisableHtml() = 0;

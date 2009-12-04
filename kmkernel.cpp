@@ -508,7 +508,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     cWin->setFocusToSubject();
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
   for ( KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != attachURLs.constEnd() ; ++it )
-    cWin->addAttach( (*it) );
+    cWin->addAttachment( (*it), "" );
   if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
@@ -719,7 +719,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 
   //Add the attachment if we have one
   if ( !attachURL.isEmpty() && attachURL.isValid() ) {
-    win->addAttach( attachURL );
+    win->addAttachment( attachURL, "" );
   }
 
   //only show window when required
