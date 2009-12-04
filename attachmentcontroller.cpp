@@ -29,6 +29,8 @@
 #include "globalsettings.h"
 #include "kmkernel.h"
 #include "kmcomposewin.h"
+#include "kmcommands.h"
+#include "foldercollection.h"
 
 #include <QMenu>
 #include <QPointer>
@@ -363,6 +365,7 @@ AttachmentController::AttachmentController( AttachmentModel *model, AttachmentVi
 
   d->model = model;
   connect( model, SIGNAL(attachUrlsRequested(KUrl::List)), this, SLOT(addAttachments(KUrl::List)) );
+  connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List ) ), this, SLOT( addAttachmentItems( Akonadi::Item::List ) ) );
   connect( model, SIGNAL(attachmentRemoved(KPIM::AttachmentPart::Ptr)),
       this, SLOT(attachmentRemoved(KPIM::AttachmentPart::Ptr)) );
   connect( model, SIGNAL(attachmentCompressRequested(KPIM::AttachmentPart::Ptr,bool)),
@@ -668,6 +671,17 @@ void AttachmentController::addAttachments( const KUrl::List &urls )
   foreach( const KUrl &url, urls ) {
     addAttachment( url );
   }
+}
+
+void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items )
+{
+  uint identity = 0;
+  if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
+    FolderCollection fd( items.at( 0 ).parentCollection(),false );
+    identity = fd.identity();
+  }
+  KMCommand *command = new KMForwardAttachedCommand( d->composer, items,identity, d->composer );
+  command->start();
 }
 
 void AttachmentController::showAttachPublicKeyDialog()

@@ -25,6 +25,7 @@
 #include <KDE/KUrl>
 
 #include <messagecore/attachmentpart.h>
+#include <akonadi/item.h>
 
 namespace KMail {
 
@@ -104,6 +105,7 @@ class AttachmentModel : public QAbstractItemModel
     void encryptEnabled( bool enabled );
     void signEnabled( bool enabled );
     void attachUrlsRequested( const KUrl::List &urls );
+    void attachItemsRequester( const Akonadi::Item::List & );
     void attachmentRemoved( KPIM::AttachmentPart::Ptr part );
     void attachmentCompressRequested( KPIM::AttachmentPart::Ptr part, bool compress );
 

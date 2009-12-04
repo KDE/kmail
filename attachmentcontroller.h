@@ -30,7 +30,7 @@
 #include <KPIMIdentities/Identity>
 
 #include <messagecore/attachmentpart.h>
-
+#include <akonadi/item.h>
 
 class KMComposeWin;
 
@@ -69,6 +69,7 @@ class AttachmentController : public QObject
     void addAttachment( KPIM::AttachmentPart::Ptr part );
     void addAttachment( const KUrl &url );
     void addAttachments( const KUrl::List &urls );
+    void addAttachmentItems( const Akonadi::Item::List &items );
     void showAttachPublicKeyDialog();
     void attachMyPublicKey();
 

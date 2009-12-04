@@ -30,10 +30,11 @@
 #include <KTempDir>
 
 #include <kmime/kmime_util.h>
+#include <akonadi/item.h>
+#include "foldercollection.h"
+#include "kmcommands.h"
 
 #include <kpimutils/kfileio.h>
-
-#include <libkdepim/maillistdrag.h>
 
 using namespace KMail;
 using namespace KPIM;
@@ -106,45 +107,24 @@ bool AttachmentModel::dropMimeData( const QMimeData *data, Qt::DropAction action
   //} else if( action != Qt::CopyAction ) {
   //  return false;
   }
-
-  if( KPIM::MailList::canDecode( data ) ) {
-    // The dropped data is a list of messages.
-    kDebug() << "Port me to Akonadi..."; // TODO
-#if 0
-    // Decode the list of serial numbers stored as the drag data
-    QByteArray serNums = KPIM::MailList::serialsFromMimeData( md );
-    QBuffer serNumBuffer( &serNums );
-    serNumBuffer.open( QIODevice::ReadOnly );
-    QDataStream serNumStream( &serNumBuffer );
-    quint32 serNum;
-    KMFolder *folder = 0;
-    int idx;
-    QList<KMMsgBase*> messageList;
-    while( !serNumStream.atEnd() ) {
-      KMMsgBase *msgBase = 0;
-      serNumStream >> serNum;
-      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-      if( folder )
-        msgBase = folder->getMsgBase( idx );
-      if( msgBase )
-        messageList.append( msgBase );
+  // The dropped data is a list of URLs.
+  KUrl::List urls = KUrl::List::fromMimeData( data );
+  if( !urls.isEmpty() ) {
+    Akonadi::Item::List items;
+    foreach ( const KUrl &url, urls ) {
+      Akonadi::Item item = Akonadi::Item::fromUrl( url );
+      if ( item.isValid() ) {
+        items << item;
+      }
     }
-    serNumBuffer.close();
-    uint identity = folder ? folder->identity() : 0;
-    KMCommand *command = new KMForwardAttachedCommand( mComposer, messageList,
-                                                       identity, mComposer );
-    command->start();
-#endif
+    if ( items.isEmpty() )
+      emit attachUrlsRequested( urls );
+    else {
+      emit attachItemsRequester( items );
+    }
     return true;
   } else {
-    // The dropped data is a list of URLs.
-    KUrl::List urls = KUrl::List::fromMimeData( data );
-    if( !urls.isEmpty() ) {
-      emit attachUrlsRequested( urls );
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   }
 }
 
