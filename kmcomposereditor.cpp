@@ -205,8 +205,9 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     Akonadi::Item::List items;
     foreach ( const KUrl &url, urlList ) {
       Akonadi::Item item = Akonadi::Item::fromUrl( url );
-      if ( item.isValid() )
+      if ( item.isValid() ) {
         items << item;
+      }
     }
     if ( items.isEmpty() ) {
 
@@ -220,7 +221,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
         }
       } else if ( selectedAction == addAsAttachmentAction ) {
         foreach( const KUrl &url, urlList ) {
-          m_composerWin->addAttach( url );
+          m_composerWin->addAttachment( url,"" );
         }
       }
       return;
