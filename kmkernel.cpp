@@ -96,6 +96,8 @@ using KMail::TemplateParser;
 #include "kmailinterface.h"
 #include "foldercollectionmonitor.h"
 #include "kmagentmanager.h"
+#include "imapsettings.h"
+#include "util.h"
 
 static KMKernel * mySelf = 0;
 static bool s_askingToGoOnline = false;
@@ -1923,17 +1925,20 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
   if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ) )
     return true;
-#if 0 //TODO : will implement in imap akonadi ressource. Wait for the moment
-  QStringList actList = acctMgr()->getAccounts();
-  QStringList::Iterator it( actList.begin() );
-  for( ; it != actList.end() ; ++it ) {
-    KMAccount* act = acctMgr()->findByName( *it );
-    if ( act && ( act->trash() == QString::number( col.id() ) ) )
-      return true;
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  foreach ( const Akonadi::AgentInstance& type, lst ) {
+    //TODO verify it.
+    if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
+      if ( iface->isValid() ) {
+        if ( iface->trashCollection() == col.id() ) {
+          delete iface;
+          return true;
+        }
+      }
+      delete iface;
+    }
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return false;
 }
 
