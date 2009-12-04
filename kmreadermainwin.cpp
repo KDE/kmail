@@ -50,6 +50,7 @@
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "kmmsgdict.h"
+#include "util.h"
 #include "foldercollection.h"
 
 #include <akonadi/contact/contactsearchjob.h>
@@ -136,9 +137,10 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
     Q_ASSERT( nodeIdOffset != -1 );
     mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
   }
-  setCaption( msg.subject() );
 #endif
-
+  KMime::Message::Ptr message = KMail::Util::message( msg );
+  if ( message )
+    setCaption( message->subject()->asUnicodeString() );
   mReaderWin->slotTouchMessage();
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
