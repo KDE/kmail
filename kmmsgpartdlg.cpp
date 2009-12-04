@@ -399,10 +399,7 @@ void KMMsgPartDialogCompat::applyChanges()
   QString name = fileName();
   if ( !name.isEmpty() || !mMsgPart->name().isEmpty()) {
     mMsgPart->setName( name );
-    QByteArray encoding = KMMsgBase::autoDetectCharset( mMsgPart->charset(),
-      KMMessage::preferredCharsets(), name );
-    if ( encoding.isEmpty() ) encoding = "utf-8";
-    QByteArray encName = KMMsgBase::encodeRFC2231String( name, encoding );
+    QByteArray encName = KMMsgBase::encodeRFC2231StringAutoDetectCharset( name, mMsgPart->charset() );
 
     cDisp += "\n\tfilename";
     if ( name != QString( encName ) )

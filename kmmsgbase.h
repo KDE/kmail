@@ -125,7 +125,7 @@ public:
   virtual QString tagString( void ) const = 0;
   /**Get a pointer to the tag label list*/
   virtual KMMessageTagList *tagList( void ) const = 0;
-  /**Split @p aString at commas and set the tag list to the resulting 
+  /**Split @p aString at commas and set the tag list to the resulting
   list and set dirty*/
   virtual void setTagList( const QString &aString );
   /**Set the tag list to @p aTagList and set dirty*/
@@ -303,6 +303,13 @@ public:
     (parameters in MIME headers) */
   static QByteArray encodeRFC2231String( const QString &aStr,
                                          const QByteArray &charset );
+
+  /**
+   * Just like encodeRFC2231String, only that the encoding is auto-detected.
+   * @param defaultCharset If given, this will be the prefered charset
+   */
+  static QByteArray encodeRFC2231StringAutoDetectCharset( const QString &str,
+                                                          const QByteArray &defaultCharset = "" );
 
   /** Decode given string as described in RFC2231 */
   static QString decodeRFC2231String( const QByteArray &aStr );

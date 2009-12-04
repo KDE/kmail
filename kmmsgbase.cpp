@@ -690,6 +690,16 @@ QByteArray KMMsgBase::encodeRFC2231String( const QString& _str,
   return result;
 }
 
+//-----------------------------------------------------------------------------
+QByteArray KMMsgBase::encodeRFC2231StringAutoDetectCharset( const QString &str,
+                                                            const QByteArray &defaultCharset )
+{
+  QByteArray encoding = KMMsgBase::autoDetectCharset( defaultCharset,
+                                                      KMMessage::preferredCharsets(), str );
+  if ( encoding.isEmpty() )
+    encoding = "utf-8";
+  return KMMsgBase::encodeRFC2231String( str, encoding );
+}
 
 //-----------------------------------------------------------------------------
 QString KMMsgBase::decodeRFC2231String(const QByteArray& _str)
