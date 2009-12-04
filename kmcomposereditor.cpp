@@ -201,6 +201,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
   // If this is a URL list, add those files as attachments or text
   const KUrl::List urlList = KUrl::List::fromMimeData( source );
   if ( !urlList.isEmpty() ) {
+    //Search if it's message items.
     Akonadi::Item::List items;
     foreach ( const KUrl &url, urlList ) {
       Akonadi::Item item = Akonadi::Item::fromUrl( url );
@@ -229,7 +230,6 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
         FolderCollection fd( items.at( 0 ).parentCollection(),false );
         identity = fd.identity();
       }
-      qDebug()<<" items :"<<items.count();
       KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity );
       command->start();
       return;
