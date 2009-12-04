@@ -230,7 +230,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
         FolderCollection fd( items.at( 0 ).parentCollection(),false );
         identity = fd.identity();
       }
-      KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity );
+      KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
       command->start();
       return;
     }
