@@ -80,6 +80,7 @@ using MailTransport::Transport;
 #include "objecttreeparser.h"
 #include "recipientseditor.h"
 #include "messageviewer/stl_util.h"
+#include "messageviewer/util.h"
 #include "messageviewer/stringutil.h"
 #include "util.h"
 #include "kmmsgdict.h"
@@ -96,13 +97,12 @@ using KMail::TemplateParser;
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
-//#include <kcharsets.h>
-//#include <kcodecaction.h>
 
 #include <messageviewer/kcursorsaver.h>
 #include <messageviewer/objecttreeparser.h>
 #include <messageviewer/nodehelper.h>
 
+#include <kcharsets.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kencodingfiledialog.h>
@@ -152,8 +152,6 @@ using KMail::TemplateParser;
 #include "kmcomposewin.moc"
 
 #include "snippetwidget.h"
-
-using namespace KMail;
 
 KMail::Composer *KMail::makeComposer( const KMime::Message::Ptr &msg, Composer::TemplateContext context,
                                       uint identity, const QString & textSelection,
@@ -262,7 +260,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mGrid = 0;
   //mAtmListView = 0;
   //mAtmModified = false;
-  //mAutoCharset = true;
   mFixedFontAction = 0;
   // the attachment view is separated from the editor by a splitter
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
@@ -344,10 +341,10 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mBtnFcc->setFocusPolicy( Qt::NoFocus );
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
 
-  mAttachmentModel = new AttachmentModel( this );
-  mAttachmentView = new AttachmentView( mAttachmentModel, mSplitter );
+  mAttachmentModel = new KMail::AttachmentModel( this );
+  mAttachmentView = new KMail::AttachmentView( mAttachmentModel, mSplitter );
   mAttachmentView->hideIfEmpty();
-  mAttachmentController = new AttachmentController( mAttachmentModel, mAttachmentView, this );
+  mAttachmentController = new KMail::AttachmentController( mAttachmentModel, mAttachmentView, this );
 
   readConfig();
   setupStatusBar();
@@ -541,7 +538,6 @@ void KMComposeWin::addAttachment( const QString &name,
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig( bool reload /* = false */ )
 {
-  //mDefCharset = KMMessage::defaultCharset();
   mBtnIdentity->setChecked( GlobalSettings::self()->stickyIdentity() );
   if (mBtnIdentity->isChecked()) {
     mId = ( GlobalSettings::self()->previousIdentity() != 0 ) ?
@@ -1756,14 +1752,13 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
 
   // Set the editor text and charset
   mEditor->setText( otp.textualContent() );
-  /*mCharset = otp.textualContentCharset();
-  if ( mCharset.isEmpty() ) {
-    mCharset = mMsg->defaultCharset();
-  }
-  if ( mCharset.isEmpty() ) {
-    mCharset = mDefCharset;
-  }
-  setCharset( mCharset );*/
+  bool shouldSetCharset = true;
+  if ( !( mContext == Reply || mContext == ReplyToAll || mContext == Forward ) && GlobalSettings::forceReplyCharset() )
+    shouldSetCharset = false;
+  if ( shouldSetCharset && !otp.textualContentCharset().isEmpty() )
+    setCharset( otp.textualContentCharset() );
+  else
+    setAutoCharset();
 
   // Set the HTML text and collect HTML images
   if ( isHTMLMail( mMsg.get() ) ) {
@@ -1791,7 +1786,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
     mCharset=mMsg->charset();
     if ( mCharset.isEmpty() ||  mCharset == "default" ) {
-      mCharset = mDefCharset;
+      mCharset = Util::defaultCharset();
     }
 
     QByteArray bodyDecoded = mMsg->bodyDecoded();
@@ -1982,7 +1977,7 @@ bool KMComposeWin::userForgotAttachment()
   // check whether the subject contains one of the attachment key words
   // unless the message is a reply or a forwarded message
   QString subj = subject();
-  gotMatch = ( MessageHelper::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
+  gotMatch = ( KMail::MessageHelper::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
 
   if ( !gotMatch ) {
     // check whether the non-quoted text contains one of the attachment key
@@ -2595,48 +2590,44 @@ QString KMComposeWin::prettyMimeType( const QString &type )
     return pretty;
 }
 
-//-----------------------------------------------------------------------------
-void KMComposeWin::setCharset( const QByteArray &aCharset, bool forceDefault )
+void KMComposeWin::setAutoCharset()
 {
-  kDebug() << "implement me...";
-#if 0
-  if ( ( forceDefault && GlobalSettings::self()->forceReplyCharset() ) ||
-       aCharset.isEmpty() ) {
-    mCharset = mDefCharset;
-  } else {
-    mCharset = aCharset.toLower();
-  }
+  mCodecAction->setCurrentItem( 0 );
+}
 
-  if ( mCharset.isEmpty() || mCharset == "default" ) {
-    mCharset = mDefCharset;
-  }
-
-  if ( mAutoCharset ) {
-    mEncodingAction->setCurrentItem( 0 );
-    return;
-  }
-
-  QStringList encodings = mEncodingAction->items();
-  int i = 0;
-  bool charsetFound = false;
-  for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
-        ++it, i++ ) {
-    if (i > 0 && ((mCharset == "us-ascii" && i == 1) ||
-                  (i != 1 && KGlobal::charsets()->codecForName(
-                                     KGlobal::charsets()->encodingForName(*it))
-                   == KGlobal::charsets()->codecForName(mCharset))))
-      {
-        mEncodingAction->setCurrentItem( i );
-        slotSetCharset();
-        charsetFound = true;
-        break;
+// We can't simply use KCodecAction::setCurrentCodec(), since that doesn't
+// use fixEncoding().
+static QString selectCharset( KSelectAction *root, const QString &encoding )
+{
+  foreach( QAction *action, root->actions() ) {
+    KSelectAction *subMenu = dynamic_cast<KSelectAction *>( action );
+    if ( subMenu ) {
+      const QString codecNameToSet = selectCharset( subMenu, encoding );
+      if ( !codecNameToSet.isEmpty() )
+        return codecNameToSet;
+    }
+    else {
+      const QString fixedActionText = MessageViewer::NodeHelper::fixEncoding( action->text() );
+      if ( KGlobal::charsets()->codecForName(
+                  KGlobal::charsets()->encodingForName( fixedActionText ) )
+                 == KGlobal::charsets()->codecForName( encoding ) ) {
+        return action->text();
       }
+    }
   }
+  return QString();
+}
 
-  if ( !aCharset.isEmpty() && !charsetFound ) {
-    setCharset( "", true );
+//-----------------------------------------------------------------------------
+void KMComposeWin::setCharset( const QByteArray &charset )
+{
+  const QString codecNameToSet = selectCharset( mCodecAction, charset );
+  if ( codecNameToSet.isEmpty() ) {
+    kWarning() << "Could not find charset" << charset;
+    setAutoCharset();
   }
-#endif
+  else
+    mCodecAction->setCurrentCodec( codecNameToSet );
 }
 
 //-----------------------------------------------------------------------------
@@ -2752,20 +2743,6 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
           this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
 #endif
 }
-
-//-----------------------------------------------------------------------------
-#if 0
-void KMComposeWin::slotSetCharset()
-{
-  if ( mEncodingAction->currentItem() == 0 ) {
-    mAutoCharset = true;
-    return;
-  }
-  mAutoCharset = false;
-
-  mCharset =MessageViewer::NodeHelper::encodingForName( mEncodingAction->currentText() ).toLatin1();
-}
-#endif
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSelectCryptoModule( bool init )
@@ -2937,7 +2914,7 @@ void KMComposeWin::slotNewComposer()
   KMComposeWin *win;
   KMime::Message::Ptr msg( new KMime::Message );
 
-  MessageHelper::initHeader( msg );
+  KMail::MessageHelper::initHeader( msg );
   win = new KMComposeWin( msg );
   win->show();
 }
@@ -3180,15 +3157,15 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     }
 
     // Validate the To:, CC: and BCC fields
-    if ( !Util::validateAddresses( this, to().trimmed() ) ) {
+    if ( !KMail::Util::validateAddresses( this, to().trimmed() ) ) {
       return;
     }
 
-    if ( !Util::validateAddresses( this, cc().trimmed() ) ) {
+    if ( !KMail::Util::validateAddresses( this, cc().trimmed() ) ) {
       return;
     }
 
-    if ( !Util::validateAddresses( this, bcc().trimmed() ) ) {
+    if ( !KMail::Util::validateAddresses( this, bcc().trimmed() ) ) {
       return;
     }
 

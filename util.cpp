@@ -242,7 +242,6 @@ QByteArray autoDetectCharset(const QByteArray &_encoding, const QStringList &enc
     return 0;
 }
 
-
 KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a, const QString& ident) {
   assert( a );
   if ( !a->sieveSupport() )

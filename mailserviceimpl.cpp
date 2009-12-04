@@ -71,7 +71,6 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", true);
 
   KUrl::List attachUrls;
   for ( int i = 0, count = attachments.count(); i < count; ++i ) {
@@ -109,7 +108,6 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   msg->addContent( part );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", true);
   return true;
 }
 

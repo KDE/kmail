@@ -503,7 +503,6 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   }
 
   KMail::Composer * cWin = KMail::makeComposer( msg, context );
-  cWin->setCharset( "", true );
   if (!to.isEmpty())
     cWin->setFocusToSubject();
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
@@ -607,8 +606,6 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       && GlobalSettings::self()->legacyBodyInvites() );
   if ( noWordWrap )
     cWin->disableWordWrap();
-  else
-    cWin->setCharset( "" /* default charset */, true /* force default charset */ );
   if ( msgPart )
     cWin->addAttach( msgPart );
   if ( isICalInvitation ) {
@@ -668,7 +665,6 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
   const KMail::Composer::TemplateContext context = body.isEmpty() ? KMail::Composer::New :
                                                    KMail::Composer::NoTemplate;
   KMail::Composer * cWin = KMail::makeComposer( msg, context );
-  cWin->setCharset("", true);
   if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
@@ -748,7 +744,6 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).toUtf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", true);
   cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
     KMime::Content *msgPart = new KMime::Content;

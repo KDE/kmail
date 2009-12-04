@@ -2977,7 +2977,7 @@ void ComposerPage::CharsetTab::doLoadOther()
     }
 
   mCharsetListEditor->setStringList( charsets );
-  mKeepReplyCharsetCheck->setChecked( !GlobalSettings::forceReplyCharset() );
+  mKeepReplyCharsetCheck->setChecked( GlobalSettings::forceReplyCharset() );
 }
 
 void ComposerPage::CharsetTab::save()
@@ -2990,7 +2990,7 @@ void ComposerPage::CharsetTab::save()
     if ( (*it).endsWith( QLatin1String("(locale)") ) )
       (*it) = "locale";
   GlobalSettings::setPreferedCharsets( charsetList );
-  GlobalSettings::setForceReplyCharset( !mKeepReplyCharsetCheck->isChecked() );
+  GlobalSettings::setForceReplyCharset( mKeepReplyCharsetCheck->isChecked() );
 }
 
 QString ComposerPage::HeadersTab::helpAnchor() const

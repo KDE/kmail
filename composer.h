@@ -101,12 +101,6 @@ class Composer : public KMail::SecondaryWindow
      */
   virtual void setFolder( const Akonadi::Collection& ) = 0;
 
-  public: // kmkernel, kmcommand, mailserviceimpl
-    /**
-     * Recode to the specified charset
-     */
-    virtual void setCharset( const QByteArray &aCharset, bool forceDefault=false ) = 0;
-
   public: // kmcommand
     /**
      * Sets the focus to the edit-widget and the cursor below the

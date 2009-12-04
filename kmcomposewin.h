@@ -251,13 +251,6 @@ class KMComposeWin : public KMail::Composer
      */
   void setFolder(const Akonadi::Collection &aFolder ) { mFolder = aFolder; }
 
-  public: // kmkernel, kmcommand, mailserviceimpl
-
-    /**
-     * Reimplemented
-     */
-     virtual void setCharset( const QByteArray &aCharset, bool forceDefault = false );
-
   public: // kmcommand
     /**
      * Sets the focus to the edit-widget.
@@ -368,7 +361,6 @@ class KMComposeWin : public KMail::Composer
      */
     void slotInsertFile();
 
-    //void slotSetCharset();
     /**
      * Check spelling of text.
      */
@@ -569,6 +561,9 @@ class KMComposeWin : public KMail::Composer
      */
     void setFcc( const QString &idString );
 
+    void setCharset( const QByteArray &charset );
+    void setAutoCharset();
+
     /**
      * Ask for confirmation if the message was changed before close.
      */
@@ -717,13 +712,7 @@ class KMComposeWin : public KMail::Composer
     KAction *actionFormatReset;
 
     CodecAction *mCodecAction;
-    //KSelectAction *mEncodingAction;
     KSelectAction *mCryptoModuleAction;
-
-    //QByteArray mCharset;
-    //QByteArray mDefCharset;
-    //QStringList mCharsets;
-    //bool mAutoCharset;
 
     bool mAlwaysSend;
 

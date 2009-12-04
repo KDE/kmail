@@ -144,7 +144,6 @@ using namespace KMime;
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QList>
-#include <QTextCodec>
 #include <QProgressBar>
 
 #include <memory>
@@ -436,7 +435,6 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   msg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" );
 
   KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, id );
-  win->setCharset("", true);
   win->setFocusToSubject();
   win->show();
   return OK;
@@ -455,7 +453,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 {
   //TODO : consider factoring createReply into this method.
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() /*TODO Port || !msg->codec() */) { //TODO Reuse codec() from libmessageviewer/nodehelper
+  if ( !item.isValid() ) {
     return Failed;
   }
   KMime::Message::Ptr msg = KMail::Util::message( item );
@@ -465,7 +463,6 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   rmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -485,7 +482,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() /*|| !msg->codec() Port to KMime::message*/) {
+  if ( !item.isValid() ) {
     return Failed;
   }
   KMime::Message::Ptr msg = KMail::Util::message( item );
@@ -495,7 +492,6 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   fmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
-  win->setCharset( msg->defaultCharset(), true );
   win->show();
 
   return OK;
@@ -1036,7 +1032,6 @@ KMCommand::Result KMReplyToCommand::execute()
     return Failed;
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0, mSelection );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1063,7 +1058,6 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
     return Failed;
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ) );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus( false );
   win->show();
 
@@ -1092,7 +1086,6 @@ KMCommand::Result KMReplyListCommand::execute()
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ),
                                                0, mSelection );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus( false );
   win->show();
 
@@ -1122,7 +1115,6 @@ KMCommand::Result KMReplyToAllCommand::execute()
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1151,7 +1143,6 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1292,7 +1283,6 @@ KMCommand::Result KMForwardCommand::execute()
 
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
-      win->setCharset("");
       win->show();
       return OK;
     } else {
@@ -1303,7 +1293,7 @@ KMCommand::Result KMForwardCommand::execute()
 
   // forward a single message at most.
   Akonadi::Item item = msgList.first();
-  if ( !item.isValid() /*|| !item->codec() Port it*/ )
+  if ( !item.isValid() )
     return Failed;
 
   KMime::Message::Ptr msg = KMail::Util::message( item );
@@ -1317,7 +1307,6 @@ KMCommand::Result KMForwardCommand::execute()
     id = mIdentity;
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
-    win->setCharset( fwdMsg->defaultCharset(), true );
     win->show();
   }
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
@@ -1377,7 +1366,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     // set the part
     KMime::Content *msgPart = new KMime::Content( msg.get() );
     msgPart->contentType()->setMimeType( "message/rfc822" );
-    msgPart->contentType()->setCharset(msg->defaultCharset());
+    msgPart->contentType()->setCharset( NodeHelper::charset( msg.get() ) );
 
 
     msgPart->contentDisposition()->setFilename( "forwarded message" );
@@ -1411,7 +1400,7 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 KMCommand::Result KMRedirectCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() /*|| !msg->codec()*/ ) {
+  if ( !item.isValid() ) {
     return Failed;
   }
   AutoQPointer<RedirectDialog> dlg( new RedirectDialog( parentWidget(),
@@ -1451,7 +1440,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
 {
   KCursorSaver busy( KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() /*|| !msg->codec()*/ /*TODO port it */ ) {
+  if ( !item.isValid() ) {
     return Failed;
   }
   KMime::Message::Ptr msg = KMail::Util::message( item );
@@ -1461,7 +1450,6 @@ KMCommand::Result KMCustomReplyToCommand::execute()
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1483,7 +1471,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() /*|| !msg->codec() Port to kmime*/ ) {
+  if ( !item.isValid() ) {
     return Failed;
   }
   KMime::Message::Ptr msg = KMail::Util::message( item );
@@ -1493,7 +1481,6 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
-  win->setCharset( msg->defaultCharset(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1561,12 +1548,11 @@ KMCommand::Result KMCustomForwardCommand::execute()
     KCursorSaver busy( KBusyPtr::busy() );
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                  QString(), mTemplate );
-    win->setCharset("");
     win->show();
   } else { // forward a single message at most
 
     Akonadi::Item item = msgList.first();
-    if ( !item.isValid() /*|| !msg->codec() Port to akonadi*/ ) {
+    if ( !item.isValid() ) {
       return Failed;
     }
     KMime::Message::Ptr msg = KMail::Util::message( item );
@@ -1584,7 +1570,6 @@ KMCommand::Result KMCustomForwardCommand::execute()
     {
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                    QString(), mTemplate );
-      win->setCharset( fwdMsg->defaultCharset(), true );
       win->show();
     }
   }
@@ -2240,7 +2225,6 @@ KMCommand::Result KMUrlClickedCommand::execute()
       msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
 
     KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, mIdentity );
-    win->setCharset("", true);
     win->setFocusToSubject();
     win->show();
   }
@@ -2684,7 +2668,7 @@ KMCommand::Result KMResendMessageCommand::execute()
 {
 
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() /*|| !msg->codec()*/ ) {
+  if ( !item.isValid() ) {
     return Failed;
   }
   KMime::Message::Ptr msg = KMail::Util::message( item );
@@ -2692,7 +2676,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     return Failed;
 
   KMime::Message::Ptr newMsg = KMail::MessageHelper::createResend( item, msg );
-  newMsg->contentType()->setCharset( msg->defaultCharset() );
+  newMsg->contentType()->setCharset( NodeHelper::charset( msg.get() ) );
 
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
@@ -2794,7 +2778,7 @@ CreateTodoCommand::CreateTodoCommand(QWidget * parent, const Akonadi::Item &msg)
 KMCommand::Result CreateTodoCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() /*|| !msg->codec()*/ ) {
+  if ( !item.isValid() ) {
     return Failed;
   }
   KMime::Message::Ptr msg = KMail::Util::message( item );
