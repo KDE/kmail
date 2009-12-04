@@ -240,15 +240,15 @@ int KMFolderMaildir::expungeContents()
   return 0;
 }
 
-int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QStringList& entryList, bool& done )
+int KMFolderMaildir::compact( int startIndex, int nbMessages, const QStringList& entryList, bool& done )
 {
   QString subdirNew(location() + "/new/");
   QString subdirCur(location() + "/cur/");
 
-  unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
-                           qMin( mMsgList.count(), startIndex + nbMessages );
+  int stopIndex = nbMessages == -1 ? mMsgList.count() :
+                                     qMin( mMsgList.count(), startIndex + nbMessages );
   //kDebug() << "KMFolderMaildir: compacting from" << startIndex << "to" << stopIndex;
-  for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
+  for(int idx = startIndex; idx < stopIndex; ++idx) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
     if (!mi)
       continue;

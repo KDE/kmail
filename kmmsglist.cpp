@@ -26,7 +26,7 @@ KMMsgList::~KMMsgList()
 void KMMsgList::clear( bool doDelete, bool syncDict )
 {
   if ( mHigh > 0 )
-    for ( unsigned int i = mHigh; i > 0; i-- )
+    for ( int i = mHigh; i > 0; i-- )
     {
       KMMsgBase * msg = at(i-1);
       if ( msg ) {
@@ -43,14 +43,14 @@ void KMMsgList::clear( bool doDelete, bool syncDict )
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgList::resize( unsigned int aSize )
+bool KMMsgList::resize( int aSize )
 {
-  unsigned int oldSize = size();
+  int oldSize = size();
   KMMsgBase* msg;
 
   // delete messages that will get lost, if any
   if ( aSize < mHigh ) {
-    for ( unsigned int i = aSize; i < mHigh; i++ )
+    for ( int i = aSize; i < mHigh; i++ )
     {
       msg = operator[]( i );
       if ( msg ) {
@@ -65,7 +65,7 @@ bool KMMsgList::resize( unsigned int aSize )
   QVector<KMMsgBase*>::resize( aSize );
 
   // initialize new elements
-  for ( unsigned int i = oldSize; i < aSize; i++ )
+  for ( int i = oldSize; i < aSize; i++ )
     operator[]( i ) = 0;
 
   return true;
@@ -73,7 +73,7 @@ bool KMMsgList::resize( unsigned int aSize )
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgList::reset(unsigned int aSize)
+bool KMMsgList::reset(int aSize)
 {
   if ( !resize( aSize ) )
     return false;
@@ -84,10 +84,10 @@ bool KMMsgList::reset(unsigned int aSize)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::set( unsigned int idx, KMMsgBase* aMsg )
+void KMMsgList::set( int idx, KMMsgBase* aMsg )
 {
-  if ( idx >= static_cast<unsigned int>( size() ) )
-    resize( idx > 2 * static_cast<unsigned int>( size() ) ? idx + 16 : 2 * size() );
+  if ( idx >= size() )
+    resize( idx > 2 * size() ? idx + 16 : 2 * size() );
 
   if ( !at(idx) && aMsg )
     mCount++;
@@ -104,15 +104,15 @@ void KMMsgList::set( unsigned int idx, KMMsgBase* aMsg )
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::insert( unsigned int idx, KMMsgBase* aMsg, bool syncDict )
+void KMMsgList::insert( int idx, KMMsgBase* aMsg, bool syncDict )
 {
-  if ( idx >= static_cast<unsigned int>( size() ) )
-    resize( idx > 2 * static_cast<unsigned int>( size() ) ? idx + 16 : 2 * size() );
+  if ( idx >= size() )
+    resize( idx > 2 * size() ? idx + 16 : 2 * size() );
 
   if ( aMsg )
     mCount++;
 
-  for ( unsigned int i = mHigh; i > idx; i-- ) {
+  for ( int i = mHigh; i > idx; i-- ) {
     if ( syncDict )
       KMMsgDict::mutableInstance()->remove( at( i - 1 ) );
     operator[]( i ) = at( i-1 );
@@ -129,25 +129,25 @@ void KMMsgList::insert( unsigned int idx, KMMsgBase* aMsg, bool syncDict )
 
 
 //-----------------------------------------------------------------------------
-unsigned int KMMsgList::append( KMMsgBase* aMsg, bool syncDict )
+int KMMsgList::append( KMMsgBase* aMsg, bool syncDict )
 {
-  const unsigned int idx = mHigh;
+  const int idx = mHigh;
   insert( idx, aMsg, syncDict ); // mHigh gets modified in here
   return idx;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::remove( unsigned int idx )
+void KMMsgList::remove( int idx )
 {
-  assert( idx < static_cast<unsigned int>( size() ) );
+  assert( idx < size() );
   if ( at(idx) ) {
     mCount--;
     KMMsgDict::mutableInstance()->remove( at(idx) );
   }
 
   mHigh--;
-  for ( unsigned int i = idx; i < mHigh; i++ ) {
+  for ( int i = idx; i < mHigh; i++ ) {
     KMMsgDict::mutableInstance()->update( at(i + 1), i + 1, i );
     operator[]( i ) = at( i+1 );
   }
@@ -159,7 +159,7 @@ void KMMsgList::remove( unsigned int idx )
 
 
 //-----------------------------------------------------------------------------
-KMMsgBase* KMMsgList::take( unsigned int idx )
+KMMsgBase* KMMsgList::take( int idx )
 {
   KMMsgBase* msg = at( idx );
   remove( idx );
@@ -170,7 +170,7 @@ KMMsgBase* KMMsgList::take( unsigned int idx )
 //-----------------------------------------------------------------------------
 void KMMsgList::rethinkHigh()
 {
-  unsigned int sz = size();
+  int sz = size();
 
   if ( mHigh < sz && at(mHigh) )
   {

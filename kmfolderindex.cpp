@@ -462,10 +462,19 @@ void KMFolderIndex::truncateIndex()
     writeIndex( true );
 }
 
+KMMsgBase* KMFolderIndex::getMsgBase( int idx )
+{
+  if ( idx < 0 || idx >= mMsgList.count() ) {
+    return 0;
+  } else {
+    return mMsgList[idx];
+  }
+}
+
 void KMFolderIndex::fillMessageDict()
 {
   open( "fillDict" );
-  for ( unsigned int idx = 0; idx < mMsgList.high(); idx++ ) {
+  for ( int idx = 0; idx < mMsgList.high(); idx++ ) {
     KMMsgBase* msg = mMsgList.at( idx );
     if ( msg ) {
       KMMsgDict::mutableInstance()->insert( 0, msg, idx );

@@ -95,7 +95,7 @@ public:
 
   /** Remove some deleted messages from the folder. Returns zero on success
     and an errno on failure. This is only for use from MboxCompactionJob. */
-  int compact( unsigned int startIndex, int nbMessages, FILE* tmpFile,
+  int compact( int startIndex, int nbMessages, FILE* tmpFile,
                off_t& offs, bool& done );
 
   /** Is the folder read-only? */

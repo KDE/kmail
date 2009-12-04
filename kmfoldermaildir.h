@@ -91,7 +91,7 @@ public:
 
   /** Remove some deleted messages from the folder. Returns zero on success
     and an errno on failure. This is only for use from MaildirCompactionJob. */
-  int compact( unsigned int startIndex, int nbMessages, const QStringList& entryList, bool& done );
+  int compact( int startIndex, int nbMessages, const QStringList& entryList, bool& done );
 
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */

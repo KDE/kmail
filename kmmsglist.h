@@ -46,20 +46,20 @@ public:
 
   /** Remove message at given index without deleting it.
     Also removes from message dictionary. */
-  void remove(unsigned int idx);
+  void remove(int idx);
 
   /** Returns message at given index and removes it from the list.
     Also removes from message dictionary. */
-  KMMsgBase* take(unsigned int idx);
+  KMMsgBase* take(int idx);
 
   /** Insert message at given index. Resizes the array if necessary.
     If @p syncDict, also updates message dictionary. */
-  void insert(unsigned int idx, KMMsgBase* msg, bool syncDict = true);
+  void insert(int idx, KMMsgBase* msg, bool syncDict = true);
 
   /** Append given message after the last used message. Resizes the
     array if necessary. Returns index of new position.
     If @p syncDict, also updates message dictionary. */
-  unsigned int append(KMMsgBase* msg, bool syncDict = true);
+  int append(KMMsgBase* msg, bool syncDict = true);
 
   /** Clear messages. If autoDelete is set (default) the messages are
       deleted. The array is not resized.  If @p syncDict, also updates
@@ -68,28 +68,28 @@ public:
 
   /** Resize array and initialize new elements if any. Returns
     false if memory cannot be allocated. */
-  bool resize(unsigned int size);
+  bool resize(int size);
 
   /** Clear the array and resize it to given size. Returns false
     if memory cannot be allocated. */
-  bool reset(unsigned int size);
+  bool reset(int size);
 
   /** Set message at given index. The array is resized if necessary. If
    there is already a message at the given index this message is *not*
    deleted.  Does not sync the message dictionary. */
-  void set(unsigned int idx, KMMsgBase* msg);
+  void set(int idx, KMMsgBase* msg);
 
   /** Returns first unused index (index of last message plus one). */
-  unsigned int high() const { return mHigh; }
+  int high() const { return mHigh; }
 
   /** Number of messages in the array. */
-  unsigned int count() const { return mCount; }
+  int count() const { return mCount; }
 
 protected:
   /** Set mHigh to proper value */
   void rethinkHigh();
 
-  unsigned int mHigh, mCount;
+  int mHigh, mCount;
 };
 
 
