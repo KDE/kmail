@@ -51,10 +51,6 @@ public:
    * Then, the reader needs to know about that original message, so those to parameters are passed
    * onto setOriginalMsg() of KMReaderWin.
    */
-#if 0
-  void showMessage( const QString & encoding, KMime::Message *msg,
-                unsigned long serNumOfOriginalMessage = 0, int nodeIdOffset = -1 );
-#endif
   void showMessage( const QString & encoding, const Akonadi::Item &msg );
 private slots:
   void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );

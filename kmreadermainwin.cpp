@@ -132,12 +132,6 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 {
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
-#if 0 //TODO port it
-  if ( serNumOfOriginalMessage != 0 ) {
-    Q_ASSERT( nodeIdOffset != -1 );
-    mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
-  }
-#endif
   KMime::Message::Ptr message = KMail::Util::message( msg );
   if ( message )
     setCaption( message->subject()->asUnicodeString() );
