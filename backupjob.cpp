@@ -186,7 +186,7 @@ void BackupJob::finish()
 
   if ( mDeleteFoldersAfterCompletion ) {
     // Some safety checks first...
-    if ( archiveFileInfo.size() > 0 && mArchivedMessages > 0 && mArchivedSize > 0 ) {
+    if ( archiveFileInfo.size() > 0 && ( mArchivedSize > 0 || mArchivedMessages == 0 ) ) {
       // Sorry for any data loss!
       FolderUtil::deleteFolder( mRootFolder, mParentWidget );
     }
