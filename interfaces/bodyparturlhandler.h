@@ -37,7 +37,6 @@ class QString;
 class QPoint;
 
 namespace KMail {
-  class Callback;
 
   namespace Interface {
 

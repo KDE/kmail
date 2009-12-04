@@ -31,7 +31,6 @@ class QWidget;
 class KAction;
 class KActionMenu;
 class KActionCollection;
-class KMMessage;
 class KXMLGUIClient;
 
 namespace Akonadi {

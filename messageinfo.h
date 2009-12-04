@@ -25,8 +25,6 @@
 #include <QSet>
 #include <kiconloader.h>
 
-class KUrl;
-class QTextCodec;
 
 namespace KMime {
   class Content;

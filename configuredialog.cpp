@@ -45,7 +45,6 @@ using KMail::IdentityListViewItem;
 #include "messageviewer/kcursorsaver.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
-using KMail::ImapAccountBase;
 #include "kmmainwidget.h"
 #include "kmmessagetag.h"
 

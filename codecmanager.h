@@ -24,7 +24,6 @@
 #include <QObject>
 #include <QString>
 
-class KSelectAction;
 
 class CodecManagerPrivate;
 

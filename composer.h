@@ -30,8 +30,6 @@
 
 #include <boost/shared_ptr.hpp>
 
-class KMMessage;
-class KMFolder;
 class MailComposerIface;
 
 namespace KMime {

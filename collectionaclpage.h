@@ -40,7 +40,6 @@ class KMFolderImap;
 class KPushButton;
 class QStackedWidget;
 class KHBox;
-class QGroupBox;
 class QButtonGroup;
 class QTreeWidget;
 class QTreeWidgetItem;
@@ -136,8 +135,8 @@ private:
 private:
   // The widget containing the ACL widgets (listview and buttons)
   KHBox* mACLWidget;
-  //class ListView;
   class ListViewItem;
+
   QTreeWidget* mListView;
 
   KPushButton* mAddACL;

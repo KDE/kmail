@@ -35,23 +35,17 @@ using KPIM::MessageStatus;
 #include "interfaces/observer.h"
 #include <map>
 #include <messageviewer/viewer.h>
-class QSplitter;
-class KHBox;
-class QTreeWidgetItem;
 class QString;
-class QTextCodec;
 
 
 class KActionCollection;
 class KAction;
-class KSelectAction;
 class KToggleAction;
 class KToggleAction;
 class KHTMLPart;
 class KUrl;
 namespace KMail {
   namespace Interface {
-    class Observable;
     class BodyPartMemento;
   }
 }
@@ -62,11 +56,6 @@ namespace MessageViewer {
 
 namespace KParts {
   struct BrowserArguments;
-  class OpenUrlArguments;
-}
-
-namespace DOM {
-  class HTMLElement;
 }
 
 namespace MessageViewer {

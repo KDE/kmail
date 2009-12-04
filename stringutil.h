@@ -25,7 +25,6 @@
 class KUrl;
 namespace KMime
 {
-  class CharFreq;
   namespace Types
   {
     struct Address;

@@ -27,10 +27,6 @@
 #include <QPointer>
 #include <QHideEvent>
 
-namespace KMail {
-    class ImapAccountBase;
-}
-
 class ConfigureDialog : public KCMultiDialog
 {
   Q_OBJECT

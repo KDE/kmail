@@ -31,7 +31,6 @@ class ReadableCollectionProxyModel;
 
 namespace Akonadi {
   class EntityTreeModel;
-  class ChangeRecorder;
   class StatisticsProxyModel;
 }
 class KMAIL_EXPORT FolderSelectionTreeView : public QWidget

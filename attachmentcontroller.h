@@ -31,7 +31,6 @@
 
 #include <messagecore/attachmentpart.h>
 
-class KActionCollection;
 
 class KMComposeWin;
 

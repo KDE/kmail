@@ -44,13 +44,6 @@ using KPIM::StatusbarProgressWidget;
 
 class ActionManager;
 
-namespace KMail
-{
-  class FolderViewItem;
-}
-
-using namespace KMail; // Needed because moc is unable to properly map namespaces
-                       // in signal/slot parameters. No one includes this file anyway.
 
 class KMailPart: public KParts::ReadOnlyPart
 {

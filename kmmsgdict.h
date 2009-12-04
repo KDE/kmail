@@ -29,7 +29,6 @@ namespace KMime {
 }
 class KMMsgDictREntry;
 class KMDict;
-class QString;
 
 class KMMsgDictSingletonProvider;
 

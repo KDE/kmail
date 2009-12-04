@@ -43,7 +43,6 @@ namespace KMime
 
 namespace KMail
 {
-class ImapAccountBase;
 class SieveJob;
 
 /**

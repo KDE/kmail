@@ -11,7 +11,6 @@
 #include <akonadi/item.h>
 class KMReaderWin;
 class KAction;
-class KActionMenu;
 class KFontAction;
 class KFontSizeAction;
 class CustomTemplatesMenu;

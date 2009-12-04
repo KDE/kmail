@@ -48,7 +48,6 @@ namespace MessageList {
   class Pane;
 }
 namespace Akonadi {
-  class EntityTreeView;
 }
 
 namespace KMime {
@@ -60,7 +59,6 @@ class QSplitter;
 class QSignalMapper;
 
 class KActionMenu;
-class KConfig;
 class KToggleAction;
 class KTreeWidgetSearchLine;
 class FolderTreeView;
@@ -86,7 +84,6 @@ namespace KMail {
   class ImapAccountBase;
   class FavoriteFolderView;
   class StatusBarLabel;
-  class MainFolderView;
 }
 
 class FolderSelectionTreeView;

@@ -43,12 +43,10 @@ class KJob;
 
 namespace KMail {
   class FolderRequester;
-  class MatchListView;
 }
 
 namespace KMime {
   class Message;
-  class Content;
 }
 
 namespace Akonadi {

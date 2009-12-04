@@ -26,7 +26,6 @@
 #include <QObject>
 #include <akonadi/collection.h>
 #include <akonadi/item.h>
-class KMMsgBase;
 namespace KMail {
 
 /** A class for storing Undo information. */
