@@ -1928,7 +1928,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
   Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
   foreach ( const Akonadi::AgentInstance& type, lst ) {
     //TODO verify it.
-    if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
       OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
         if ( iface->trashCollection() == col.id() ) {

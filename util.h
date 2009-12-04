@@ -52,6 +52,8 @@ class KUrl;
 
 class OrgKdeAkonadiImapSettingsInterface;
 
+#define IMAP_RESOURCE_IDENTIFIER "akonadi_imap_resource"
+
 namespace KMail
 {
     /**

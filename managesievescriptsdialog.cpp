@@ -85,7 +85,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     //TODO verify it.
-    if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
 
       OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
       if ( iface->isValid() ) {

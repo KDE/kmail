@@ -43,7 +43,7 @@
 
 #include <kmkernel.h>
 #include "foldercollection.h"
-
+#include "util.h"
 
 using namespace Akonadi;
 
@@ -75,7 +75,7 @@ bool CollectionGeneralPage::isImapFolder( const Akonadi::Collection &col )
   // TODO: Put in KMKernel instead?
   Akonadi::AgentManager *agentManager = Akonadi::AgentManager::self();
   AgentInstance agentInstance = agentManager->instance( col.resource() );
-  return agentInstance.type().identifier() == "akonadi_imap_resource";
+  return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
 }
 
 CollectionGeneralPage::KMFolderType CollectionGeneralPage::folderType( const Akonadi::Collection &col )
@@ -87,7 +87,7 @@ CollectionGeneralPage::KMFolderType CollectionGeneralPage::folderType( const Ako
   AgentInstance agentInstance = agentManager->instance( col.resource() );
 
   QString agentType = agentInstance.type().identifier();
-  if ( agentType == "akonadi_imap_resource" )
+  if ( agentType == IMAP_RESOURCE_IDENTIFIER )
     return KMFolderTypeImap;
   if ( agentType == "akonadi_mbox_resource" )
     return KMFolderTypeMbox;

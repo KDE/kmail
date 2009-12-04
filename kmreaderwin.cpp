@@ -406,6 +406,8 @@ void KMReaderWin::slotTouchMessage()
        message()->encryptionState() != KMMsgNotEncrypted &&
        message()->encryptionState() != KMMsgEncryptionStateUnknown )
     return;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   Akonadi::Collection col = message().parentCollection();
   if ( col.isValid() &&

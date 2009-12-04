@@ -195,7 +195,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
     Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
     foreach ( const Akonadi::AgentInstance& type, lst )
     {
-      if ( type.identifier().contains( "akonadi_imap_resource" ) ) {
+      if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
         mResourceIdentifier<<type.identifier();
       }
     }
