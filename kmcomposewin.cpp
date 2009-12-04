@@ -3687,16 +3687,17 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     msgCleared = true;
   }
 
-  if ( msgCleared || oldSig.rawText().isEmpty() ) {
-    // Just append the signature if there is no old signature
+  //replace existing signatures
+  const bool replaced = mEditor->replaceSignature( oldSig, newSig );
+
+  // Just append the signature if there was no old signature
+  if ( !replaced && ( msgCleared || oldSig.rawText().isEmpty() ) ) {
     if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
       if ( GlobalSettings::self()->prependSignature() )
         newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::Start, true );
       else
         newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End, true );
     }
-  } else {
-    mEditor->replaceSignature( oldSig, newSig );
   }
 
   // disable certain actions if there is no PGP user identity set
