@@ -45,15 +45,10 @@
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
-#include "messageviewer/khtmlparthtmlwriter.h"
-using MessageViewer::HtmlWriter;
-#include "messageviewer/htmlstatusbar.h"
 #include "messagehelper.h"
 
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
-#include "isubject.h"
-using KMail::ISubject;
 #include "util.h"
 #include <kicon.h>
 #include "broadcaststatus.h"
