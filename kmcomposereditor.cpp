@@ -194,39 +194,6 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     return;
   }
 
-    // If this is a list of mails, attach those mails as forwards.
-  if ( KPIM::MailList::canDecode( source ) ) {
-#if 0 //Port it
-    // Decode the list of serial numbers stored as the drag data
-    QByteArray serNums = KPIM::MailList::serialsFromMimeData( source );
-    QBuffer serNumBuffer( &serNums );
-    serNumBuffer.open( QIODevice::ReadOnly );
-    QDataStream serNumStream( &serNumBuffer );
-    quint32 serNum;
-    KMFolder *folder = 0;
-    int idx;
-    QList<KMime::Message*> messageList;
-    while ( !serNumStream.atEnd() ) {
-      KMime::Message *msgBase = 0;
-      serNumStream >> serNum;
-      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-      if ( folder ) {
-        msgBase = folder->getMsgBase( idx );
-      }
-      if ( msgBase ) {
-        messageList.append( msgBase );
-      }
-    }
-    serNumBuffer.close();
-    uint identity = folder ? folder->identity() : 0;
-    KMCommand *command = new KMForwardAttachedCommand( m_composerWin, messageList,
-                                                       identity, m_composerWin );
-    command->start();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-    return;
-  }
 
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) ) {
     emit insertSnippet();
