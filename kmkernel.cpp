@@ -1909,6 +1909,24 @@ bool KMKernel::folderIsTemplates(const Akonadi::Collection &col)
   return false;
 }
 
+Akonadi::Collection KMKernel::trashCollectionFromResource( const Akonadi::Collection & col )
+{
+  Akonadi::Collection trashCol;
+  if ( col.isValid() ) {
+    if ( col.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( col.resource() );
+      if ( iface->isValid() ) {
+
+        trashCol =  Akonadi::Collection( iface->trashCollection() );
+        delete iface;
+        return trashCol;
+      }
+      delete iface;
+    }
+  }
+  return trashCol;
+}
+
 bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
   if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ) )

@@ -294,6 +294,8 @@ public:
   bool folderIsTemplates(const Akonadi::Collection &);
   bool folderIsTrash( const Akonadi::Collection & );
 
+  Akonadi::Collection trashCollectionFromResource( const Akonadi::Collection & col );
+
   /**
    * Returns true if the folder is one of the sent-mail folders.
    */

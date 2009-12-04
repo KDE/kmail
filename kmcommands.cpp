@@ -2180,19 +2180,12 @@ KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, cons
 
 Akonadi::Collection KMTrashMsgCommand::findTrashFolder( const Akonadi::Collection& folder )
 {
-  Akonadi::Collection col = kmkernel->trashCollectionFolder();
+  Akonadi::Collection col = kmkernel->trashCollectionFromResource( folder );
+  if ( !col.isValid() ) {
+    col = kmkernel->trashCollectionFolder();
+  }
   if ( folder != col )
     return col;
-#if 0 //port to akonadi
-  KMFolder* trash = folder->trashFolder();
-  if( !trash )
-    trash = kmkernel->trashFolder();
-  if( trash != folder )
-    return trash;
-  return 0;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return Akonadi::Collection();
 }
 
