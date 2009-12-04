@@ -204,6 +204,10 @@ QString TemplateParser::getLName( const QString &str )
 
 void TemplateParser::process( const KMime::Message::Ptr &aorig_msg, const Akonadi::Collection & afolder, bool append )
 {
+  if( aorig_msg == 0 ) {
+    kDebug() << "aorig_msg == 0!";
+    return;
+  }
   mAppend = append;
   mOrigMsg = aorig_msg;
   mFolder = afolder;
@@ -961,10 +965,13 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     KMail::AttachmentCollector ac;
     ac.collectAttachmentsFrom( root );
 
+#if 0 //TODO port to akonadi
     // Now, delete the old content and set the new content, which
     // is either only the new text or the new text with some attachments.
-    mMsg->clear();
-
+    mMsg->deleteBodyParts();
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     // Set To and CC from the template
     if ( !mTo.isEmpty() ) {
       mMsg->to()->fromUnicodeString( mMsg->to()->asUnicodeString() + ',' + mTo, "utf-8" );
