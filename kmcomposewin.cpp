@@ -1754,8 +1754,16 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     addAttach( *it );
   }
 
-  // Set the editor text
+  // Set the editor text and charset
   mEditor->setText( otp.textualContent() );
+  /*mCharset = otp.textualContentCharset();
+  if ( mCharset.isEmpty() ) {
+    mCharset = mMsg->defaultCharset();
+  }
+  if ( mCharset.isEmpty() ) {
+    mCharset = mDefCharset;
+  }
+  setCharset( mCharset );*/
 
   // Set the HTML text and collect HTML images
   if ( isHTMLMail( mMsg.get() ) ) {
@@ -1778,16 +1786,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   }
 
 #if 0 //TODO port to kmime
-
-  mCharset = otp.textualContentCharset();
-
-  if ( mCharset.isEmpty() ) {
-    mCharset = mMsg->charset();
-  }
-  if ( mCharset.isEmpty() ) {
-    mCharset = mDefCharset;
-  }
-  setCharset( mCharset );
 
   /* Handle the special case of non-mime mails */
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {

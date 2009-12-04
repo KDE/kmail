@@ -1486,13 +1486,6 @@ void KMKernel::init()
 #endif
   the_msgSender = new AkonadiSender;
   the_server_is_ready = true;
-  { // area for config group "Composer"
-    KConfigGroup group(cfg, "Composer");
-    if (group.readEntry("pref-charsets", QStringList() ).isEmpty())
-    {
-      group.writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
-    }
-  }
   readConfig();
   // filterMgr->dump();
 
