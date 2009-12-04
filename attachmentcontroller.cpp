@@ -32,6 +32,9 @@
 #include "kmcommands.h"
 #include "foldercollection.h"
 
+#include <akonadi/itemfetchjob.h>
+#include <kio/jobuidelegate.h>
+
 #include <QMenu>
 #include <QPointer>
 
@@ -675,6 +678,23 @@ void AttachmentController::addAttachments( const KUrl::List &urls )
 
 void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items )
 {
+  Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
+  itemFetchJob->fetchScope().fetchFullPayload( true );
+  itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+  connect( itemFetchJob, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
+}
+
+void AttachmentController::slotFetchJob( KJob *job )
+{
+  if ( job->error() ) {
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    return;
+  }
+  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+  if ( !fjob )
+    return;
+  Akonadi::Item::List items = fjob->items();
+
   uint identity = 0;
   if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
     FolderCollection fd( items.at( 0 ).parentCollection(),false );

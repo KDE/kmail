@@ -24,6 +24,10 @@
 #include "kmcommands.h"
 
 #include <kmime/kmime_codecs.h>
+#include <akonadi/itemfetchjob.h>
+
+#include <kio/jobuidelegate.h>
+
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 
 #include <KAction>
@@ -225,18 +229,35 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       }
       return;
     } else {
-      uint identity = 0;
-      if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-        FolderCollection fd( items.at( 0 ).parentCollection(),false );
-        identity = fd.identity();
-      }
-      KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
-      command->start();
+      Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
+      itemFetchJob->fetchScope().fetchFullPayload( true );
+      itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+      connect( itemFetchJob, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
       return;
     }
   }
 
   KPIMTextEdit::TextEdit::insertFromMimeData( source );
+}
+
+void KMComposerEditor::slotFetchJob( KJob * job )
+{
+  if ( job->error() ) {
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    return;
+  }
+  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+  if ( !fjob )
+    return;
+  Akonadi::Item::List items = fjob->items();
+
+  uint identity = 0;
+  if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
+    FolderCollection fd( items.at( 0 ).parentCollection(),false );
+    identity = fd.identity();
+  }
+  KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
+  command->start();
 }
 
 #include "kmcomposereditor.moc"

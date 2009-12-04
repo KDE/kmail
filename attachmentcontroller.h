@@ -31,6 +31,7 @@
 
 #include <messagecore/attachmentpart.h>
 #include <akonadi/item.h>
+#include <KJob>
 
 class KMComposeWin;
 
@@ -72,6 +73,9 @@ class AttachmentController : public QObject
     void addAttachmentItems( const Akonadi::Item::List &items );
     void showAttachPublicKeyDialog();
     void attachMyPublicKey();
+
+  private slots:
+    void slotFetchJob( KJob * job );
 
   private:
     class Private;

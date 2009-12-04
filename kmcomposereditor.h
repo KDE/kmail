@@ -23,6 +23,7 @@
 #define KMCOMPOSEREDITOR_H
 
 #include <kmeditor.h>
+#include <KJob>
 using namespace KPIM;
 
 class KAction;
@@ -89,10 +90,13 @@ class KMComposerEditor : public KMeditor
      QString m_quotePrefix;
      KAction *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
 
-  protected:
+protected:
 
-        virtual bool canInsertFromMimeData( const QMimeData *source ) const;
-        virtual void insertFromMimeData( const QMimeData *source );
+  virtual bool canInsertFromMimeData( const QMimeData *source ) const;
+  virtual void insertFromMimeData( const QMimeData *source );
+
+protected slots:
+  void slotFetchJob( KJob * job );
 
   signals:
      void insertSnippet();
