@@ -41,7 +41,6 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QSignalMapper>
-#include "kmmsgdict.h"
 #include "messagesender.h"
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/headerstrategy.h"

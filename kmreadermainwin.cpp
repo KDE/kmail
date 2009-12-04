@@ -49,7 +49,6 @@
 #include "messageviewer/csshelper.h"
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
-#include "kmmsgdict.h"
 #include "util.h"
 #include "foldercollection.h"
 
