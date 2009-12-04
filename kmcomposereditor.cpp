@@ -37,7 +37,7 @@
 #include <KInputDialog>
 
 #include "kmkernel.h"
-
+#include "foldercollection.h"
 #include <QTextCodec>
 #include <QBuffer>
 #include <QClipboard>
@@ -201,20 +201,39 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
   // If this is a URL list, add those files as attachments or text
   const KUrl::List urlList = KUrl::List::fromMimeData( source );
   if ( !urlList.isEmpty() ) {
-    KMenu p;
-    const QAction *addAsTextAction = p.addAction( i18n("Add as &Text") );
-    const QAction *addAsAttachmentAction = p.addAction( i18n("Add as &Attachment") );
-    const QAction *selectedAction = p.exec( QCursor::pos() );
-    if ( selectedAction == addAsTextAction ) {
-      foreach( const KUrl &url, urlList ) {
-        textCursor().insertText(url.url());
-      }
-    } else if ( selectedAction == addAsAttachmentAction ) {
-      foreach( const KUrl &url, urlList ) {
-        m_composerWin->addAttach( url );
-      }
+    Akonadi::Item::List items;
+    foreach ( const KUrl &url, urlList ) {
+      Akonadi::Item item = Akonadi::Item::fromUrl( url );
+      if ( item.isValid() )
+        items << item;
     }
-    return;
+    if ( items.isEmpty() ) {
+
+      KMenu p;
+      const QAction *addAsTextAction = p.addAction( i18n("Add as &Text") );
+      const QAction *addAsAttachmentAction = p.addAction( i18n("Add as &Attachment") );
+      const QAction *selectedAction = p.exec( QCursor::pos() );
+      if ( selectedAction == addAsTextAction ) {
+        foreach( const KUrl &url, urlList ) {
+          textCursor().insertText(url.url());
+        }
+      } else if ( selectedAction == addAsAttachmentAction ) {
+        foreach( const KUrl &url, urlList ) {
+          m_composerWin->addAttach( url );
+        }
+      }
+      return;
+    } else {
+      uint identity = 0;
+      if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
+        FolderCollection fd( items.at( 0 ).parentCollection(),false );
+        identity = fd.identity();
+      }
+      qDebug()<<" items :"<<items.count();
+      KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity );
+      command->start();
+      return;
+    }
   }
 
   KPIMTextEdit::TextEdit::insertFromMimeData( source );
