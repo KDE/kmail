@@ -170,7 +170,6 @@ set(kmailprivate_LIB_SRCS
    #localsubscriptiondialog.cpp
    messageactions.cpp
    statusbarlabel.cpp
-   procmailparser.cpp
    stringutil.cpp
    kmcomposewin.cpp
    attachmentcontroller.cpp
