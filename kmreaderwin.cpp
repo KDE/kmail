@@ -2518,7 +2518,8 @@ void KMReaderWin::setHtmlOverride( bool override )
   }
 
   // keep toggle display mode action state in sync.
-  mToggleDisplayModeAction->setChecked( htmlMail() );
+  if ( mToggleDisplayModeAction )
+    mToggleDisplayModeAction->setChecked( htmlMail() );
 }
 
 //-----------------------------------------------------------------------------
