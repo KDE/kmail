@@ -25,7 +25,7 @@
 #include <kurlrequester.h>
 #include <kfiledialog.h>
 #include <kstandarddirs.h>
-#include <Phonon/MediaObject>
+#include <phonon/mediaobject.h>
 
 #include <QHBoxLayout>
 

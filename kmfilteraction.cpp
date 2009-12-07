@@ -39,7 +39,7 @@ using KMail::RegExpLineEdit;
 #include <kdebug.h>
 #include <klocale.h>
 #include <kurlrequester.h>
-#include <Phonon/MediaObject>
+#include <phonon/mediaobject.h>
 #include <kshell.h>
 #include <kprocess.h>
 #include <kabc/addressbook.h>
