@@ -26,6 +26,7 @@ class QLabel;
 class KComboBox;
 class KIconButton;
 class FolderCollection;
+template <typename T> class QSharedPointer;
 
 namespace MessageList {
   namespace Utils {
@@ -65,7 +66,7 @@ private:
   MessageList::Utils::AggregationComboBox *mAggregationComboBox;
   QCheckBox *mUseDefaultThemeCheckBox;
   MessageList::Utils::ThemeComboBox *mThemeComboBox;
-  FolderCollection *mFolderCollection;
+  QSharedPointer<FolderCollection> mFolderCollection;
   Akonadi::Collection mCurrentCollection;
 };
 

@@ -439,7 +439,7 @@ private slots:
 
 private:
   void openReader( bool onlyCheck );
-  FolderCollection *currentFolderCollection();
+  QSharedPointer<FolderCollection> currentFolderCollection();
 
 
 

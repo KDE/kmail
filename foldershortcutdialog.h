@@ -40,6 +40,8 @@
 #define FOLDERSHORTCUTDIALOG_H
 
 #include <kdialog.h> // include for the base class
+#include <QSharedPointer>
+
 class KKeySequenceWidget;
 class KMMainWidget;
 class FolderCollection;
@@ -51,7 +53,7 @@ class FolderShortcutDialog : public KDialog
 {
 Q_OBJECT
 public:
-  FolderShortcutDialog( FolderCollection *folder, KMMainWidget *mw,
+  FolderShortcutDialog( const QSharedPointer<FolderCollection>& folder, KMMainWidget *mw,
                         QWidget *parent=0 );
   ~FolderShortcutDialog();
 
@@ -60,7 +62,7 @@ protected slots:
   void slotOk();
 
 private:
-  FolderCollection *mFolder;
+  QSharedPointer<FolderCollection> mFolder;
   KMMainWidget *mMainWidget;
   KKeySequenceWidget *mKeySeqWidget;
 

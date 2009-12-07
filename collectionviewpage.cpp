@@ -46,7 +46,6 @@ CollectionViewPage::CollectionViewPage(QWidget * parent) :
 
 CollectionViewPage::~CollectionViewPage()
 {
-  delete mFolderCollection;
 }
 
 void CollectionViewPage::init(const Akonadi::Collection & col)
@@ -218,7 +217,7 @@ void CollectionViewPage::slotSelectFolderTheme()
 void CollectionViewPage::load( const Akonadi::Collection & col )
 {
   init( col );
-  mFolderCollection = new FolderCollection( col );
+  mFolderCollection = FolderCollection::forCollection( col );
   if ( !mIsLocalSystemFolder ) {
     QString iconName;
     QString unreadIconName;

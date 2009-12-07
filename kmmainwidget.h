@@ -127,7 +127,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
 
-    FolderCollection * currentFolder() const;
+    QSharedPointer<FolderCollection> currentFolder() const;
 
     static void cleanup();
 
@@ -649,7 +649,7 @@ private:
     KMail::MessageActions *mMsgActions;
   Akonadi::StandardActionManager *mAkonadiStandardActionManager;
   MessageList::Pane *mMessagePane;
-  QPointer<FolderCollection> mCurrentFolder;
+  QSharedPointer<FolderCollection> mCurrentFolder;
 
   FolderSelectionTreeView *mCollectionFolderView;
     bool mOpenedImapFolder;

@@ -47,7 +47,7 @@
 
 using namespace KMail;
 
-MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, FolderCollection * col )
+MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, const QSharedPointer<FolderCollection> &col )
     : KDialog( parent ),
       mFolder( col )
 {

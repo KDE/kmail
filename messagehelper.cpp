@@ -250,9 +250,9 @@ KMime::Message::Ptr createReply( const Akonadi::Item & item,
   msg->contentType()->setCharset("utf-8");
 
   Akonadi::Collection parentCollection = item.parentCollection();
-  FolderCollection *fd = 0;
+  QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
-    fd = new FolderCollection( parentCollection, false /*don't save*/ );
+    fd = FolderCollection::forCollection( parentCollection );
     if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
       mailingListAddresses << fd->mailingListPostAddress();
     }
@@ -440,8 +440,6 @@ KMime::Message::Ptr createReply( const Akonadi::Item & item,
     msg->setHeader( header );
   }
 
-  delete fd;
-
 #if 0 //TODO port to akonadi
   // replies to an encrypted message should be encrypted as well
   if ( encryptionState() == KMMsgPartiallyEncrypted ||
@@ -476,9 +474,9 @@ MessageReply createReply2(const Akonadi::Item &item,
   msg->contentType()->setCharset("utf-8");
   // determine the mailing list posting address
   Akonadi::Collection parentCollection = item.parentCollection();
-  FolderCollection *fd = 0;
+  QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
-    fd = new FolderCollection( parentCollection, false /*don't save*/ );
+     fd = FolderCollection::forCollection( parentCollection );
     if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
       mailingListAddresses << fd->mailingListPostAddress();
     }
@@ -680,7 +678,6 @@ MessageReply createReply2(const Akonadi::Item &item,
   MessageReply reply;
   reply.msg = msg;
   reply.replyAll = replyAll;
-  delete fd;
   return reply;
 }
 
@@ -944,8 +941,8 @@ uint identityUoid( const Akonadi::Item & item , const KMime::Message::Ptr &msg )
 
   if ( id == 0 && item.isValid() ) {
     if ( item.parentCollection().isValid() ) {
-      FolderCollection fd( item.parentCollection(), false );
-      id = fd.identity();
+      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection() );
+      id = fd->identity();
     }
   }
   return id;

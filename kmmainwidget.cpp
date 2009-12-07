@@ -403,8 +403,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
     writeFolderConfig();
   }
 
-  delete mCurrentFolder;
-  mCurrentFolder = new FolderCollection( col );
+  mCurrentFolder = FolderCollection::forCollection( col );
 
 #ifdef OLD_FOLDERVIEW
   // FIXME: re-fetch the contents also if the folder is already open ?
@@ -1287,8 +1286,8 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     Akonadi::Collection col = kmkernel->findFolderCollectionById( *it );
 
     if ( col.isValid() ) {
-      FolderCollection fd( col,false /*don't write config*/ );
-      if (  !fd.ignoreNewMail() ) {
+      QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( col ) );
+      if (  !fd->ignoreNewMail() ) {
         showNotification = true;
         if ( GlobalSettings::self()->verboseNewMailNotification() ) {
           summary += "<br>" + i18np( "1 new message in %2",
@@ -1620,8 +1619,7 @@ void KMMainWidget::slotRemoveFolder()
   {
     mCurrentFolder->removeCollection();
   }
-  delete mCurrentFolder;
-  mCurrentFolder = 0;
+  mCurrentFolder.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -4025,7 +4023,7 @@ void KMMainWidget::slotIntro()
     mMessagePane->hide();
   mMsgView->displayAboutPage();
 
-  mCurrentFolder = 0;
+  mCurrentFolder.clear();
 }
 
 void KMMainWidget::slotShowStartupFolder()
@@ -4442,15 +4440,15 @@ void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
 {
   // remove the old one, no autodelete in Qt4
   slotFolderRemoved( col );
-  FolderCollection fd( col );
-  if ( fd.shortcut().isEmpty() )
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( col ) );
+  if ( fd->shortcut().isEmpty() )
     return;
 
   FolderShortcutCommand *c = new FolderShortcutCommand( this, col );
   mFolderShortcutCommands.insert( col.id(), c );
 
   QString actionlabel = i18n( "Folder Shortcut %1", col.name() );
-  QString actionname = i18n( "Folder Shortcut %1", fd.idString() );
+  QString actionname = i18n( "Folder Shortcut %1", fd->idString() );
   QString normalizedName = actionname.replace(' ', '_');
   KAction *action = actionCollection()->addAction( normalizedName );
   // The folder shortcut is set in the folder shortcut dialog.
@@ -4462,7 +4460,7 @@ void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
 #endif
   action->setText( actionlabel );
   connect( action, SIGNAL( triggered(bool) ), c, SLOT( start() ) );
-  action->setShortcuts( fd.shortcut() );
+  action->setShortcuts( fd->shortcut() );
 
   KIcon icon( "folder" );
   if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
@@ -4623,7 +4621,7 @@ const KMMainWidget::PtrList * KMMainWidget::mainWidgetList()
   return theMainWidgetList;
 }
 
-FolderCollection *KMMainWidget::currentFolder() const
+QSharedPointer<FolderCollection> KMMainWidget::currentFolder() const
 {
   return mCurrentFolder;
 }

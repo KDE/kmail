@@ -25,6 +25,8 @@ class QCheckBox;
 class TemplatesConfiguration;
 class FolderCollection;
 
+template <typename T> class QSharedPointer;
+
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
 {
   Q_OBJECT
@@ -46,7 +48,7 @@ private:
   TemplatesConfiguration* mWidget;
   KPushButton* mCopyGlobal;
   uint mIdentity;
-  FolderCollection *mFolderCollection;
+  QSharedPointer<FolderCollection> mFolderCollection;
   bool mIsLocalSystemFolder;
 };
 

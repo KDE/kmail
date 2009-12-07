@@ -3465,8 +3465,8 @@ void SecurityPage::GeneralTab::save()
       QList<Akonadi::Collection> collections = kmkernel->allFoldersCollection();
       for (int i = 0; i < collections.size(); ++i)
       {
-        FolderCollection fd( collections.at( i ) );
-        KConfigGroup config( KMKernel::config(), fd.configGroupName() );
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collections.at( i ) );
+        KConfigGroup config( KMKernel::config(), fd->configGroupName() );
         config.writeEntry("htmlMailOverride", false);
       }
     }

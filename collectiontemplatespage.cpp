@@ -38,7 +38,6 @@ CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
 
 CollectionTemplatesPage::~CollectionTemplatesPage()
 {
-  delete mFolderCollection;
 }
 
 bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
@@ -88,7 +87,7 @@ void CollectionTemplatesPage::init()
 
 void CollectionTemplatesPage::load(const Collection & col)
 {
-  mFolderCollection = new FolderCollection( col );
+  mFolderCollection = FolderCollection::forCollection( col );
   QString fid = mFolderCollection->idString();
 
   Templates t( fid );

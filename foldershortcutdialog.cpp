@@ -53,7 +53,7 @@
 
 using namespace KMail;
 
-FolderShortcutDialog::FolderShortcutDialog( FolderCollection *folder,
+FolderShortcutDialog::FolderShortcutDialog( const QSharedPointer<FolderCollection> &folder,
                                             KMMainWidget *mainwidget,
                                             QWidget *parent )
 :  KDialog( parent ),

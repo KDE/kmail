@@ -28,6 +28,28 @@
 #include "kmcommands.h"
 //#include "expirejob.h"
 
+#include <QMutex>
+#include <QMutexLocker>
+#include <QWeakPointer>
+
+using namespace Akonadi;
+
+static QMutex mapMutex;
+static QMap<Collection::Id,QWeakPointer<FolderCollection> > fcMap;
+
+QSharedPointer<FolderCollection> FolderCollection::forCollection( const Akonadi::Collection& coll )
+{
+  QMutexLocker lock( &mapMutex );
+
+  QSharedPointer<FolderCollection> sptr = fcMap.value( coll.id() ).toStrongRef();
+
+  if ( !sptr ) {
+    sptr = QSharedPointer<FolderCollection>( new FolderCollection( coll, true ) );
+    fcMap.insert( coll.id(), sptr );
+  }
+  return sptr;
+}
+
 FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writeconfig )
   : mCollection( col ),
     mPutRepliesInSameFolder( false ),

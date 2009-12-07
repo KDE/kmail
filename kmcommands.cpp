@@ -426,8 +426,8 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   uint id = 0;
 
   if ( mMessage.isValid() && mMessage.parentCollection().isValid() ) {
-    FolderCollection fd( mMessage.parentCollection() );
-    id = fd.identity();
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mMessage.parentCollection() );
+    id = fd->identity();
   }
 
   KMail::MessageHelper::initHeader( msg, id );
@@ -2678,7 +2678,7 @@ KMCommand::Result KMResendMessageCommand::execute()
   return OK;
 }
 
-KMMailingListCommand::KMMailingListCommand( QWidget *parent, FolderCollection *folder )
+KMMailingListCommand::KMMailingListCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
   : KMCommand( parent ), mFolder( folder )
 {
 }
@@ -2717,7 +2717,7 @@ void KMMailingListCommand::commandCompleted( KMCommand *command )
   deleteLater();
 }
 
-KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, FolderCollection *folder )
+KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -2726,7 +2726,7 @@ KUrl::List KMMailingListPostCommand::urls() const
   return mFolder->mailingList().postURLS();
 }
 
-KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, FolderCollection *folder )
+KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -2735,7 +2735,7 @@ KUrl::List KMMailingListSubscribeCommand::urls() const
   return mFolder->mailingList().subscribeURLS();
 }
 
-KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *parent, FolderCollection *folder )
+KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -2744,7 +2744,7 @@ KUrl::List KMMailingListUnsubscribeCommand::urls() const
   return mFolder->mailingList().unsubscribeURLS();
 }
 
-KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, FolderCollection *folder )
+KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
   : KMMailingListCommand( parent, folder )
 {
 }
@@ -2753,7 +2753,7 @@ KUrl::List KMMailingListArchivesCommand::urls() const
   return mFolder->mailingList().archiveURLS();
 }
 
-KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, FolderCollection *folder )
+KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
   : KMMailingListCommand( parent, folder )
 {
 }

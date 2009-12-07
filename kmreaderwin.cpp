@@ -722,8 +722,8 @@ void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
   KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>(mMainWindow);
   uint identity = 0;
   if ( item.isValid() && item.parentCollection().isValid() ) {
-    FolderCollection fd( item.parentCollection() );
-    identity = fd.identity();
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection() );
+    identity = fd->identity();
   }
 
   KMCommand *command = new KMUrlClickedCommand( url, identity, this,

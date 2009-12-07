@@ -33,7 +33,8 @@ class FolderCollection : public QObject
 {
   Q_OBJECT
 public:
-  FolderCollection( const Akonadi::Collection & col, bool writeConfig = true );
+  static QSharedPointer<FolderCollection> forCollection( const Akonadi::Collection& coll );
+
   ~FolderCollection();
 
   enum CompactOptions { CompactLater, CompactNow, CompactSilentlyNow };
@@ -219,6 +220,8 @@ signals:
   void shortcutChanged( const Akonadi::Collection & );
   void viewConfigChanged();
 private:
+
+  explicit FolderCollection( const Akonadi::Collection & col, bool writeConfig = true );
 
   Akonadi::Collection mCollection;
   bool         mExpireMessages;          // true if old messages are expired

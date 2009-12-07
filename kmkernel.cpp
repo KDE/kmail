@@ -692,7 +692,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 {
   KUrl attachURL( _attachURL );
   KMime::Message::Ptr msg( new KMime::Message );
-  FolderCollection *folder = 0;
+  QSharedPointer<FolderCollection> folder;
   uint id = 0;
 
   if ( useFolderId ) {
@@ -2167,10 +2167,10 @@ int KMKernel::timeOfLastMessageCountChange() const
 }
 
 
-FolderCollection *KMKernel::currentFolderCollection()
+QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
 {
   KMMainWidget *widget = getKMMainWidget();
-  FolderCollection * folder = 0;
+  QSharedPointer<FolderCollection> folder;
   if ( widget  ) {
     folder = widget->currentFolder();
   }

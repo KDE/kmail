@@ -29,7 +29,7 @@ using namespace KMail;
  */
 ExpiryPropertiesDialog::ExpiryPropertiesDialog(
   QWidget *tree,
-  FolderCollection* folder )
+  const QSharedPointer<FolderCollection> &folder )
     : KDialog( tree ),
       mFolder( folder )
 {

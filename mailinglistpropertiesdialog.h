@@ -45,7 +45,7 @@ class MailingListFolderPropertiesDialog : public KDialog
 {
   Q_OBJECT
 public:
-  MailingListFolderPropertiesDialog( QWidget *parent, FolderCollection *folder );
+  MailingListFolderPropertiesDialog( QWidget *parent, const QSharedPointer<FolderCollection>& folder );
   ~MailingListFolderPropertiesDialog() {}
 protected:
   void load();
@@ -65,7 +65,7 @@ private slots:
   void slotAddressChanged( int addr );
 
 private:
-  FolderCollection *mFolder;
+  QSharedPointer<FolderCollection> mFolder;
   void fillMLFromWidgets();
   void fillEditBox();
 

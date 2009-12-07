@@ -56,7 +56,6 @@ CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
 
 CollectionGeneralPage::~CollectionGeneralPage()
 {
-  delete mFolderCollection;
 }
 
 static void addLine( QWidget *parent, QVBoxLayout* layout )
@@ -516,7 +515,7 @@ bool FolderDialogGeneralTab::save()
 
 void CollectionGeneralPage::load(const Akonadi::Collection & col)
 {
-  mFolderCollection = new FolderCollection( col );
+  mFolderCollection = FolderCollection::forCollection( col );
   init( col );
   QString displayName;
   if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {

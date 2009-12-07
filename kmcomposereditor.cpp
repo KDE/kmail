@@ -253,8 +253,8 @@ void KMComposerEditor::slotFetchJob( KJob * job )
 
   uint identity = 0;
   if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-    FolderCollection fd( items.at( 0 ).parentCollection(),false );
-    identity = fd.identity();
+    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
+    identity = fd->identity();
   }
   KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
   command->start();
