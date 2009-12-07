@@ -3239,11 +3239,9 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiVirusWizard()));
   }
   {
-#if 0
     KAction *action = new KAction( i18n("&Account Wizard..."), this );
     actionCollection()->addAction( "accountWizard", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAccountWizard()) );
-#endif
   }
   if ( GlobalSettings::self()->allowOutOfOfficeSettings() )
   {
@@ -4590,13 +4588,15 @@ void KMMainWidget::slotAntiVirusWizard()
   AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this);
   wiz.exec();
 }
-#if 0 //Need to reimplement it
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAccountWizard()
 {
-  AccountWizard::start( kmkernel, this );
+  if( !QProcess::startDetached("accountwizard") )
+    KMessageBox::error( this, i18n( "Could not start accountwizard "
+                                    "please check your installation." ),
+                                    i18n( "KMail Error" ) );
 }
-#endif
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilterLogViewer()
 {

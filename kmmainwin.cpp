@@ -19,6 +19,7 @@
  */
 
 #include "kmmainwin.h"
+#include <QProcess>
 #include "kmmainwidget.h"
 #include "kstatusbar.h"
 #include "messagesender.h"
@@ -90,11 +91,16 @@ KMMainWin::KMMainWin(QWidget *)
   // Enable mail checks again (see destructor)
 #if 0
   kmkernel->enableMailCheck();
-  if ( kmkernel->firstStart() )
-    AccountWizard::start( kmkernel, this );
 #else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  if ( kmkernel->firstStart() )
+  {
+    if( !QProcess::startDetached("accountwizard") )
+    KMessageBox::error( this, i18n( "Could not start accountwizard "
+                                    "please check your installation." ),
+                        i18n( "KMail Error" ) );
+  }
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
 }
@@ -122,7 +128,7 @@ KMMainWin::~KMMainWin()
       //kmkernel->acctMgr()->cancelMailCheck();
 #else
       kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif      
+#endif
     }
   }
 }
