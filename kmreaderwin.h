@@ -35,6 +35,7 @@ using KPIM::MessageStatus;
 #include "interfaces/observer.h"
 #include <map>
 #include <messageviewer/viewer.h>
+#include <messageviewer/interfaces/bodypart.h>
 class QString;
 
 
@@ -44,31 +45,23 @@ class KToggleAction;
 class KToggleAction;
 class KHTMLPart;
 class KUrl;
-namespace KMail {
+namespace MessageViewer {
   namespace Interface {
     class BodyPartMemento;
   }
-}
-namespace MessageViewer {
   class HeaderStrategy;
   class HeaderStyle;
+  class Viewer;
+  class CSSHelper;
+  class AttachmentStrategy;
 }
 
 namespace KParts {
   struct BrowserArguments;
 }
 
-namespace MessageViewer {
-   class Viewer;
-}
-
 namespace Akonadi {
   class Item;
-}
-
-namespace MessageViewer {
-  class CSSHelper;
-  class AttachmentStrategy;
 }
 
 /**
@@ -287,7 +280,7 @@ private:
 
   /** Used only to be able to connect and disconnect finished() signal
       in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
-  std::map<QByteArray,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
+  std::map<QByteArray, MessageViewer::Interface::BodyPartMemento*> mBodyPartMementoMap;
   // an attachment should be updated
   bool mAtmUpdate;
   int mChoice;
