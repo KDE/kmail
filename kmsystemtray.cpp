@@ -329,7 +329,8 @@ void KMSystemTray::slotContextMenuAboutToShow()
 
     for(uint i=0; it != mFoldersWithUnread.end(); ++i)
     {
-      mPopupFolders.append( it.key() );
+      //TODO port it
+      //mPopupFolders.append( it.key() );
       QString folderText = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
       QAction *action = new QAction( folderText, this );
       connect( action, SIGNAL( triggered( bool ) ),
@@ -354,7 +355,7 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
 {
 
   QString rvalue = fldr->label();
-#if 0  
+#if 0
   if(fldr->folderType() == KMFolderTypeImap)
   {
 #if 0 //TODO port to akonadi
@@ -460,7 +461,7 @@ void KMSystemTray::hideKMail()
  */
 void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 {
-#if 0	
+#if 0
   //We don't want to count messages from search folders as they
   //  already counted as part of their original folders
   if( !fldr ||
@@ -478,7 +479,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   else {
     mUpdateTimer->start(150);
   }
-#endif  
+#endif
 }
 
 void KMSystemTray::updateNewMessages()
@@ -582,13 +583,9 @@ void KMSystemTray::selectedAccount(int id)
   assert(mainWidget);
 
   /** Select folder */
-  KMFolder * fldr = mPopupFolders.at(id);
-  if(!fldr) return;
-#ifdef OLD_FOLDERVIEW
-  KMail::MainFolderView * ftw = mainWidget->mainFolderView();
-  if ( !ftw ) return;
-  ftw->setCurrentFolder( fldr );
-#endif
+  Akonadi::Collection fldr = mPopupFolders.at(id);
+  if(!fldr.isValid()) return;
+  mainWidget->selectCollectionFolder( fldr );
 }
 
 bool KMSystemTray::hasUnreadMail() const

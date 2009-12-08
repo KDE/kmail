@@ -19,7 +19,7 @@
 #define KMSYSTEMTRAY_H
 
 #include <ksystemtrayicon.h>
-
+#include <akonadi/collection.h>
 #include <QMap>
 #include <QPointer>
 #include <QVector>
@@ -83,7 +83,7 @@ private:
   QAction *mSendQueued;
   QPixmap mDefaultIcon;
 
-  QVector<KMFolder*> mPopupFolders;
+  QVector<Akonadi::Collection> mPopupFolders;
   QMap<QPointer<KMFolder>, int> mFoldersWithUnread;
   QMap<QPointer<KMFolder>, bool> mPendingUpdates;
   QTimer *mUpdateTimer;
