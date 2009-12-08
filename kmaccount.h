@@ -50,27 +50,6 @@ using KPIM::KAccount;
 class KMAccount;
 typedef QList< ::KMAccount* > AccountList;
 
-class KMPrecommand : public QObject
-{
-  Q_OBJECT
-
-public:
-  explicit KMPrecommand(const QString &precommand, QObject *parent = 0);
-  virtual ~KMPrecommand();
-  bool start();
-
-signals:
-  void finished(bool);
-
-private slots:
-  void precommandExited(int errorCode, QProcess::ExitStatus status);
-
-private:
-  KProcess mPrecommandProcess;
-  QString mPrecommand;
-};
-
-
 class KMAccount: public QObject, public KAccount
 {
   Q_OBJECT

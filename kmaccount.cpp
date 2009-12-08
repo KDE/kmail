@@ -44,52 +44,6 @@ using KMail::FolderJob;
 #include "kmaccount.moc"
 
 //-----------------------------------------------------------------------------
-KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
-  : QObject( parent ), mPrecommand( precommand )
-{
-  BroadcastStatus::instance()->setStatusMsg(
-      i18n("Executing precommand %1", precommand ));
-
-  mPrecommandProcess.setShellCommand(precommand);
-
-  connect(&mPrecommandProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
-          SLOT(precommandExited(int, QProcess::ExitStatus)));
-}
-
-//-----------------------------------------------------------------------------
-KMPrecommand::~KMPrecommand()
-{
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMPrecommand::start()
-{
-  mPrecommandProcess.start();
-  const bool ok = mPrecommandProcess.waitForStarted();
-  if ( !ok ) {
-    KNotification::event( "mail-check-error",
-                          i18n( "Could not execute precommand '%1'.", mPrecommand ) );
-  }
-
-  return ok;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMPrecommand::precommandExited(int exitCode, QProcess::ExitStatus)
-{
-  if (exitCode != 0) {
-    KNotification::event( "mail-check-error",
-                          i18n( "The precommand exited with code %1:\n%2",
-                                 exitCode, strerror( exitCode ) ) );
-  }
-
-  emit finished(exitCode == 0);
-}
-
-
-//-----------------------------------------------------------------------------
 KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
   : KAccount( id, aName ),
     mTrash(QString::number( KMKernel::self()->trashCollectionFolder().id() )),
@@ -415,17 +369,6 @@ bool KMAccount::runPrecommand(const QString &precommand)
   if ( mPrecommandEventLoop != 0 )
     return true;
 
-  KMPrecommand precommandProcess(precommand, this);
-
-  BroadcastStatus::instance()->setStatusMsg(
-      i18n("Executing precommand %1", precommand ));
-
-  connect(&precommandProcess, SIGNAL(finished(bool)),
-          SLOT(precommandExited(bool)));
-
-  kDebug() << "Running precommand" << precommand;
-  if ( !precommandProcess.start() )
-    return false;
 
   // Start an event loop. This makes sure GUI events are still processed while
   // the precommand is running (which may take a while).
