@@ -83,7 +83,6 @@ using MailTransport::Transport;
 #include "messageviewer/util.h"
 #include "messageviewer/stringutil.h"
 #include "util.h"
-#include "kmmsgdict.h"
 #include "templateparser.h"
 #include "messagehelper.h"
 #include "keyresolver.h"
@@ -146,6 +145,7 @@ using KMail::TemplateParser;
 #include <akonadi/collectioncombobox.h>
 #include <akonadi/changerecorder.h>
 #include <akonadi/itemcreatejob.h>
+#include <akonadi/itemfetchjob.h>
 
 #include <messageviewer/objecttreeemptysource.h>
 // MOC
@@ -1028,23 +1028,23 @@ void KMComposeWin::applyTemplate( uint uoid )
     else
       parser.processWithIdentity( uoid, KMime::Message::Ptr() );
   } else {
-#if 0
-    // apply template to all original messages for non-New messages
-    foreach ( const QString& serNumStr,
-              mMsg->headerField( "X-KMail-Link-Message" ).split( ',' ) ) {
-      const ulong serNum = serNumStr.toULong();
-      int idx = -1;
-      KMFolder *folder;
-      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-      if ( folder ) {
-        KMMessage *originalMessage = folder->getMsg( idx );
-        if ( !mCustomTemplate.isEmpty() )
-          parser.process( mCustomTemplate, originalMessage, folder );
-        else
-          parser.processWithIdentity( uoid, originalMessage, folder );
+    if ( mMsg->headerByType( "X-KMail-Link-Message" ) ) {
+      foreach( const QString& serNumStr, mMsg->headerByType( "X-KMail-Link-Message" )->asUnicodeString().split( ',' ) ) {
+        const ulong serNum = serNumStr.toULong();
+        Akonadi::Item item( serNum );
+        Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( item, this );
+        itemFetchJob->fetchScope().fetchFullPayload( true );
+        itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+        //TODO convert to async
+        if ( itemFetchJob->exec() ) {
+          Akonadi::Item it = itemFetchJob->items().at( 0 );
+          if ( !mCustomTemplate.isEmpty() )
+            parser.process( mCustomTemplate, KMail::Util::message( it ) );
+          else
+            parser.processWithIdentity( uoid, KMail::Util::message( it ) );
+        }
       }
     }
-#endif
   }
 #if 0
   mEditor->setText( mMsg->bodyToUnicode() );
@@ -2041,7 +2041,7 @@ void KMComposeWin::readyForSending( bool noCrypto )
   } else {
     mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
   }
-  
+
   if( mComposers.isEmpty() ) {
     setEnabled( true );
     return;
@@ -2052,7 +2052,7 @@ void KMComposeWin::readyForSending( bool noCrypto )
     fillGlobalPart( composer->globalPart() );
     fillTextPart( composer->textPart() );
     fillInfoPart( composer->infoPart() );
-    
+
     composer->addAttachmentParts( mAttachmentModel->attachments() );
 
     connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
@@ -2272,7 +2272,7 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
     extras << mMsg->headerByType( "X-KMail-EncryptActionEnabled" );
   if( mMsg->headerByType( "X-KMail-CryptoMessageFormat" ) )
     extras << mMsg->headerByType( "X-KMail-CryptoMessageFormat" );
-  
+
   infoPart->setExtraHeaders( extras );
 }
 

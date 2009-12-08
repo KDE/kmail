@@ -100,7 +100,6 @@ using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
 #include "undostack.h"
 #include "kmcommands.h"
-#include "kmmsgdict.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "kmmessagetag.h"
