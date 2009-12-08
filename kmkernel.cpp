@@ -67,6 +67,7 @@ using KMail::TemplateParser;
 #include <kmime/kmime_util.h>
 #include <akonadi/kmime/specialmailcollections.h>
 #include <akonadi/kmime/specialmailcollectionsrequestjob.h>
+#include <akonadi/private/collectionutils_p.h>
 #include <akonadi/collection.h>
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/changerecorder.h>
@@ -961,7 +962,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
   QString _foldername = foldername.trimmed();
   _foldername = _foldername.remove( '\\' ); //try to prevent ESCAPE Sequences
-#if 0
+
   KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
     const QByteArray messageText =
@@ -971,7 +972,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
     KMime::Message *msg = new KMime::Message();
     msg->setContent( messageText );
-
+#if 0
     if ( foldername != mAddMessageLastFolder ) {
       if ( foldername.contains( '/' ) ) {
         QString tmp_fname = "";
@@ -1038,11 +1039,10 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     }
   } else {
     retval = -2;
+#endif
   }
 
   return retval;
-#endif
-  return -1;
 }
 
 void KMKernel::showImportArchiveDialog()
@@ -2295,6 +2295,27 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col )
 {
   Akonadi::AgentInstance agentInstance = agentManager()->instance( col.resource() );
   return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
+}
+
+
+KMFolderType KMKernel::folderType( const Akonadi::Collection &col )
+{
+  if ( Akonadi::CollectionUtils::isVirtual( col ) )
+    return KMFolderTypeSearch;
+
+  Akonadi::AgentInstance agentInstance = agentManager()->instance( col.resource() );
+
+  QString agentType = agentInstance.type().identifier();
+  if ( agentType == IMAP_RESOURCE_IDENTIFIER )
+    return KMFolderTypeImap;
+  if ( agentType == "akonadi_mbox_resource" )
+    return KMFolderTypeMbox;
+  if ( agentType == "akonadi_maildir_resource" )
+    return KMFolderTypeMaildir;
+  // Cached imap?
+
+  return KMFolderTypeUnknown;
+
 }
 
 #include "kmkernel.moc"

@@ -69,28 +69,6 @@ static void addLine( QWidget *parent, QVBoxLayout* layout )
    layout->addWidget( line );
 }
 
-
-CollectionGeneralPage::KMFolderType CollectionGeneralPage::folderType( const Akonadi::Collection &col )
-{
-  if ( CollectionUtils::isVirtual( col ) )
-    return KMFolderTypeSearch;
-
-  Akonadi::AgentManager *agentManager = Akonadi::AgentManager::self();
-  AgentInstance agentInstance = agentManager->instance( col.resource() );
-
-  QString agentType = agentInstance.type().identifier();
-  if ( agentType == IMAP_RESOURCE_IDENTIFIER )
-    return KMFolderTypeImap;
-  if ( agentType == "akonadi_mbox_resource" )
-    return KMFolderTypeMbox;
-  if ( agentType == "akonadi_maildir_resource" )
-    return KMFolderTypeMaildir;
-  // Cached imap?
-
-  return KMFolderTypeUnknown;
-
-}
-
 static QString incidencesForToString( CollectionGeneralPage::IncidencesFor r )
 {
   kDebug() << r;
@@ -369,7 +347,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     mIncidencesForComboBox = 0;
   }
 
-  if ( folderType( col ) == KMFolderTypeImap ) {
+  if ( KMKernel::self()->folderType( col ) == KMFolderTypeImap ) {
     mSharedSeenFlagsCheckBox = new QCheckBox( this );
     mSharedSeenFlagsCheckBox->setText( i18n( "Share unread state with all users" ) );
     mSharedSeenFlagsCheckBox->setChecked( sharedSeen );

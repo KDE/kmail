@@ -27,18 +27,32 @@
 #include <KLocale>
 #include <QFormLayout>
 #include <kio/global.h>
-
+#include "kmfoldertype.h"
+#include "kmkernel.h"
 
 using namespace Akonadi;
+
+
+static QString folderTypeDesc( KMFolderType type )
+{
+  switch ( type )
+  {
+  case KMFolderTypeMbox:       return ( i18nc( "type of folder storage", "Mailbox" ) );
+  case KMFolderTypeMaildir:    return ( i18nc( "type of folder storage", "Maildir" ) );
+  case KMFolderTypeCachedImap: return ( i18nc( "type of folder storage", "Disconnected IMAP" ) );
+  case KMFolderTypeImap:       return ( i18nc( "type of folder storage", "IMAP" ) );
+  case KMFolderTypeSearch:     return ( i18nc( "type of folder storage", "Search" ) );
+  default:                     return ( i18nc( "type of folder storage", "Unknown" ) );
+  }
+}
 
 CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
     CollectionPropertiesPage( parent )
 {
   setPageTitle(  i18n("Maintenance") );
-  init();
 }
 
-void CollectionMaintenancePage::init()
+void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 {
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setMargin( 0 );
@@ -57,11 +71,9 @@ void CollectionMaintenancePage::init()
   // get a buddy set (except in the cases where we do want one).
   box->addRow( new QLabel( i18nc( "@label:textbox Folder content type (eg. Mail)", "Contents:" ),
                            filesGroup ), label );
-#if 0
-  KMFolderType folderType = mFolder->folderType();
+  KMFolderType folderType = KMKernel::self()->folderType(col);
   QString folderDesc = folderTypeDesc( folderType );
-#endif
-  QString folderDesc;
+
   label = new QLabel( folderDesc, filesGroup );
   box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
 
@@ -227,6 +239,7 @@ void CollectionMaintenancePage::slotRebuildImap()
 
 void CollectionMaintenancePage::load(const Collection & col)
 {
+  init( col );
   if ( col.isValid() ) {
     mCollectionCount->setText( QString::number( col.statistics().count() ) );
     mCollectionUnread->setText( QString::number( col.statistics().unreadCount() ));

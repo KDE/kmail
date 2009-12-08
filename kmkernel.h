@@ -14,6 +14,7 @@
 #include <kconfig.h>
 #include <kurl.h>
 
+#include "kmfoldertype.h"
 #include "kmail_export.h"
 #include "kmmessagetag.h"
 #include "globalsettings.h"
@@ -294,6 +295,8 @@ public:
 
   bool folderIsTemplates(const Akonadi::Collection &);
   bool folderIsTrash( const Akonadi::Collection & );
+
+  KMFolderType folderType( const Akonadi::Collection &col );
 
   Akonadi::Collection trashCollectionFromResource( const Akonadi::Collection & col );
 

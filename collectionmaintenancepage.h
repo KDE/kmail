@@ -39,7 +39,7 @@ private slots:
   void updateFolderIndexSizes();
 #endif
 protected:
-  void init();
+  void init( const Akonadi::Collection&);
 private:
   QLabel *mFolderSizeLabel;
   QPushButton *mRebuildIndexButton;

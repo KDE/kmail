@@ -52,16 +52,6 @@ public:
     ContentsTypeLast = ContentsTypeJournal
   };
 
-  enum KMFolderType
-  {
-    KMFolderTypeMbox = 0,
-    KMFolderTypeMaildir,
-    KMFolderTypeCachedImap,
-    KMFolderTypeImap,
-    KMFolderTypeSearch,
-    KMFolderTypeUnknown
-  };
-
   enum IncidencesFor {
     IncForNobody,
     IncForAdmins,
@@ -70,8 +60,6 @@ public:
 
 protected:
   void init(const Akonadi::Collection&);
-
-  KMFolderType folderType( const Akonadi::Collection &col );
 
 private slots:
   void slotFolderNameChanged(const QString & );
