@@ -20,6 +20,7 @@
 #define BACKUPJOB_H
 
 #include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <kurl.h>
 #include <qlist.h>
 
@@ -74,7 +75,8 @@ class BackupJob : public QObject
     bool queueFolders( const Akonadi::Collection &root );
     void archiveNextFolder();
     void archiveNextMessage();
-    QString stripRootPath( const QString &path ) const;
+    QString pathForCollection( const Akonadi::Collection &collection ) const;
+    QString subdirPathForCollection( const Akonadi::Collection &collection ) const;
     bool hasChildren( const Akonadi::Collection &collection ) const;
     void finish();
     void abort( const QString &errorMessage );
@@ -92,9 +94,10 @@ class BackupJob : public QObject
     bool mDeleteFoldersAfterCompletion;
 
     Akonadi::Collection::List mPendingFolders;
+    Akonadi::Collection::List mAllFolders;
     Akonadi::Collection mCurrentFolder;
+    Akonadi::Item::List mPendingMessages;
 #if 0
-    QList<unsigned long> mPendingMessages;
     KMMessage *mCurrentMessage;
     FolderJob *mCurrentJob;
 #endif

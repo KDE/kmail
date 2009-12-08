@@ -21,6 +21,8 @@
 #include "progressmanager.h"
 
 #include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ItemFetchJob>
 
 #include <klocale.h>
 #include <kzip.h>
@@ -77,22 +79,13 @@ void BackupJob::setDeleteFoldersAfterCompletion( bool deleteThem )
   mDeleteFoldersAfterCompletion = deleteThem;
 }
 
-QString BackupJob::stripRootPath( const QString &path ) const
-{
-  QString ret = path;
-#if 0
-  ret = ret.remove( mRootFolder->path() );
-#endif
-  if ( ret.startsWith( QLatin1String( "/" ) ) )
-    ret = ret.right( ret.length() - 1 );
-  return ret;
-}
-
 bool BackupJob::queueFolders( const Akonadi::Collection &root )
 {
   mPendingFolders.append( root );
+  // TODO: This should be done async!
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( root,
       Akonadi::CollectionFetchJob::Recursive );
+  job->fetchScope().setAncestorRetrieval( Akonadi::CollectionFetchScope::All );
   job->exec();
   if ( job->error() ) {
     abort( i18n( "Unable to retrieve folder list." ) );
@@ -100,22 +93,18 @@ bool BackupJob::queueFolders( const Akonadi::Collection &root )
   }
 
   mPendingFolders += job->collections();
+  mAllFolders = mPendingFolders;
   return true;
 }
 
 bool BackupJob::hasChildren( const Akonadi::Collection &collection ) const
 {
-#if 0
-  KMFolderDir *dir = folder->child();
-  if ( dir ) {
-    QListIterator<KMFolderNode*> it( *dir );
-    while ( it.hasNext() ) {
-      KMFolderNode *node = it.next();
-      if ( !node->isDir() )
-        return true;
-    }
+  kDebug() << "PORTDEBUG col=" << collection.id();
+  foreach( const Akonadi::Collection &curCol, mAllFolders ) {
+    kDebug() << "PORTDEBUG curCol.parent()" << curCol.parentCollection();
+    if ( collection == curCol.parentCollection() )
+      return true;
   }
-#endif
   return false;
 }
 
@@ -357,8 +346,42 @@ void BackupJob::folderJobFinished( KMail::FolderJob *job )
 
 bool BackupJob::writeDirHelper( const QString &directoryPath )
 {
+  kDebug() << "PORTDEBUG Writing dir" << directoryPath;
   // PORT ME: Correct user/group
-  return mArchive->writeDir( stripRootPath( directoryPath ), "user", "group" );
+  kDebug() << "AKONDI PORT: Disabled code here!";
+  return mArchive->writeDir( directoryPath, "user", "group" );
+}
+
+QString BackupJob::pathForCollection( const Akonadi::Collection &collection ) const
+{
+  kDebug() << "PORTDEBUG Getting path for collection" << collection.name();
+  QString fullPath = collection.name();
+  Akonadi::Collection curCol = collection.parentCollection();
+  if ( collection != mRootFolder ) {
+    while( curCol != mRootFolder ) {
+      kDebug() << "PORTDEBUG Looking at" << curCol.name();
+      fullPath.prepend( curCol.name() + '/' );
+      curCol = curCol.parentCollection();
+    }
+    Q_ASSERT( curCol == mRootFolder );
+    kDebug() << "PORTDEBUG Done, adding" << curCol.name();
+    fullPath.prepend( curCol.name() + '/' );
+  }
+  kDebug() << "PORTDEBUG full path is:" << fullPath;
+  return fullPath;
+}
+
+QString BackupJob::subdirPathForCollection( const Akonadi::Collection &collection ) const
+{
+  QString path = pathForCollection( collection );
+  kDebug() << "PORTDEBUG Full path is:" << path;
+  const int parentDirEndIndex = path.lastIndexOf( collection.name() );
+  Q_ASSERT( parentDirEndIndex != -1 );
+  path = path.left( parentDirEndIndex );
+  kDebug() << "PORTDEBUG now" << path;
+  path.append( '.' + collection.name() + ".directory" );
+  kDebug() << "PORTDEBUG now" << path;
+  return path;
 }
 
 void BackupJob::archiveNextFolder()
@@ -371,59 +394,41 @@ void BackupJob::archiveNextFolder()
     return;
   }
 
-#if 0
   mCurrentFolder = mPendingFolders.takeAt( 0 );
-  kDebug() << "===> Archiving next folder: " << mCurrentFolder->name();
-  mProgressItem->setStatus( i18n( "Archiving folder %1", mCurrentFolder->name() ) );
-  if ( mCurrentFolder->open( "BackupJob" ) != 0 ) {
-    abort( i18n( "Unable to open folder '%1'.", mCurrentFolder->name() ) );
-    return;
-  }
-  mCurrentFolderOpen = true;
+  kDebug() << "===> Archiving next folder: " << mCurrentFolder.name();
+  mProgressItem->setStatus( i18n( "Archiving folder %1", mCurrentFolder.name() ) );
 
-  const QString folderName = mCurrentFolder->name();
+  const QString folderName = mCurrentFolder.name();
   bool success = true;
   if ( hasChildren( mCurrentFolder ) ) {
-    if ( !writeDirHelper( mCurrentFolder->subdirLocation(), mCurrentFolder->subdirLocation() ) )
+    if ( !writeDirHelper( subdirPathForCollection( mCurrentFolder ) ) )
       success = false;
   }
-  if ( !writeDirHelper( mCurrentFolder->location(), mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) ) )
     success = false;
-  if ( !writeDirHelper( mCurrentFolder->location() + "/cur", mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) + "/cur" ) )
     success = false;
-  if ( !writeDirHelper( mCurrentFolder->location() + "/new", mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) + "/new" ) )
     success = false;
-  if ( !writeDirHelper( mCurrentFolder->location() + "/tmp", mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) + "/tmp" ) )
     success = false;
   if ( !success ) {
     abort( i18n( "Unable to create folder structure for folder '%1' within archive file.",
-                 mCurrentFolder->name() ) );
+                 mCurrentFolder.name() ) );
     return;
   }
 
-  KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( mCurrentFolder->storage() );
-  /*if ( dimapFolder ) {
-    mArchive->addLocalFile( dimapFolder->uidCacheLocation(), stripRootPath( dimapFolder->uidCacheLocation() ) );
-    // TODO: error handling
-  }*/
-  //mArchive->addLocalFile( mCurrentFolder->indexLocation(), stripRootPath( mCurrentFolder->indexLocation() ) );
-  // TODO: error handling
-
-  for ( int i = 0; i < mCurrentFolder->count( false /* no cache */ ); i++ ) {
-    unsigned long serNum = KMMsgDict::instance()->getMsgSerNum( mCurrentFolder, i );
-    if ( serNum == 0 ) {
-      // Uh oh
-      kWarning() << "Got serial number zero in " << mCurrentFolder->name()
-                 << " at index " << i << "!";
-      // TODO: handle error in a nicer way. this is _very_ bad
-      abort( i18n( "Unable to backup messages in folder '%1', the index file is corrupted.",
-                   mCurrentFolder->name() ) );
-      return;
-    }
-    else
-      mPendingMessages.append( serNum );
+  // TODO: This should be done async!
+  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder );
+  job->exec();
+  if ( job->error() ) {
+    abort( i18n( "Unable to get message list for folder %1.", folderName ) );
+    return;
   }
-#endif
+  mPendingMessages += job->items();
+  foreach( const Akonadi::Item &item, mPendingMessages )
+    kDebug() << "PORTDEBUG Pending items:" << item.id();
+
   archiveNextMessage();
 }
 
