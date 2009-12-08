@@ -71,9 +71,7 @@ class BackupJob : public QObject
 
   private:
 
-#if 0
-    void queueFolders( KMFolder *root );
-#endif
+    bool queueFolders( const Akonadi::Collection &root );
     void archiveNextFolder();
     void archiveNextMessage();
     QString stripRootPath( const QString &path ) const;
@@ -93,7 +91,7 @@ class BackupJob : public QObject
     bool mAborted;
     bool mDeleteFoldersAfterCompletion;
 
-    QList<Akonadi::Collection> mPendingFolders;
+    Akonadi::Collection::List mPendingFolders;
     Akonadi::Collection mCurrentFolder;
 #if 0
     QList<unsigned long> mPendingMessages;

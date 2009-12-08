@@ -20,6 +20,8 @@
 
 #include "progressmanager.h"
 
+#include <Akonadi/CollectionFetchJob>
+
 #include <klocale.h>
 #include <kzip.h>
 #include <ktar.h>
@@ -86,24 +88,20 @@ QString BackupJob::stripRootPath( const QString &path ) const
   return ret;
 }
 
-#if 0
-void BackupJob::queueFolders( KMFolder *root )
+bool BackupJob::queueFolders( const Akonadi::Collection &root )
 {
   mPendingFolders.append( root );
-  kDebug() << "Queueing folder " << root->name();
-  KMFolderDir *dir = root->child();
-  if ( dir ) {
-    QListIterator<KMFolderNode*> it( *dir );
-    while ( it.hasNext() ) {
-      KMFolderNode *node = it.next();
-      if ( node->isDir() )
-        continue;
-      KMFolder *folder = static_cast<KMFolder*>( node );
-      queueFolders( folder );
-    }
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( root,
+      Akonadi::CollectionFetchJob::Recursive );
+  job->exec();
+  if ( job->error() ) {
+    abort( i18n( "Unable to retrieve folder list." ) );
+    return false;
   }
+
+  mPendingFolders += job->collections();
+  return true;
 }
-#endif
 
 bool BackupJob::hasChildren( const Akonadi::Collection &collection ) const
 {
@@ -434,9 +432,8 @@ void BackupJob::start()
   Q_ASSERT( !mMailArchivePath.isEmpty() );
   Q_ASSERT( mRootFolder.isValid() );
 
-#if 0
-  queueFolders( mRootFolder );
-#endif
+  if ( !queueFolders( mRootFolder ) )
+    return;
 
   switch ( mArchiveType ) {
     case Zip: {
