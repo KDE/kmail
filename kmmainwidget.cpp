@@ -3353,6 +3353,9 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("delete_folder", mRemoveFolderAction );
   connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
 
+  // ### PORT ME: Add this to the context menu. Not possible right now because
+  //              the context menu uses XMLGUI, and that would add the entry to
+  //              all collection context menus
   mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), this );
   actionCollection()->addAction( "archive_folder", mArchiveFolderAction );
   connect( mArchiveFolderAction, SIGNAL(triggered(bool)), SLOT(slotArchiveFolder()) );
