@@ -509,7 +509,6 @@ void CollectionGeneralPage::load(const Akonadi::Collection & col)
 
   const bool keepInFolder = !mFolderCollection->isReadOnly() && mFolderCollection->putRepliesInSameFolder();
   mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
-  qDebug()<<" mFolderCollection->isReadOnly()  :"<<mFolderCollection->isReadOnly();
   mKeepRepliesInSameFolderCheckBox->setDisabled( mFolderCollection->isReadOnly() );
   mHideInSelectionDialogCheckBox->setChecked( mFolderCollection->hideInSelectionDialog() );
 }

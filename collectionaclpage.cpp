@@ -694,19 +694,6 @@ void CollectionAclPage::slotRemoveACL()
 }
 
 #if 0
-FolderDialogTab::AcceptStatus CollectionAclPage::accept()
-{
-  if ( !mChanged || !mImapAccount )
-    return Accepted; // (no change made), ok for accepting the dialog immediately
-  // If there were changes, we need to apply them first (which is async)
-  save();
-  if ( mFolderType == KMFolderTypeCachedImap )
-    return Accepted; // cached imap: changes saved immediately into the folder
-  // disconnected imap: async job[s] running
-  mAccepting = true;
-  return Delayed;
-}
-
 bool CollectionAclPage::save()
 {
   if ( !mChanged || !mImapAccount ) // no changes
@@ -860,14 +847,5 @@ void CollectionAclPage::slotChanged( bool b )
   mChanged = b;
 }
 
-bool CollectionAclPage::supports( KMFolder* refFolder )
-{
-  ImapAccountBase* imapAccount = 0;
-  if ( refFolder->folderType() == KMFolderTypeImap )
-    imapAccount = static_cast<KMFolderImap*>( refFolder->storage() )->account();
-  else
-    imapAccount = static_cast<KMFolderCachedImap*>( refFolder->storage() )->account();
-  return imapAccount && imapAccount->hasACLSupport(); // support for ACLs (or not tried connecting yet)
-}
 #endif
 #include "collectionaclpage.moc"

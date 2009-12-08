@@ -36,7 +36,6 @@
 #include <kimap/acl.h>
 #include <KDialog>
 class KJob;
-class KMFolderImap;
 class KPushButton;
 class QStackedWidget;
 class KHBox;
@@ -93,12 +92,6 @@ public:
 protected:
   void init();
 #if 0
-  virtual void load();
-  virtual bool save();
-  virtual AcceptStatus accept();
-
-  static bool supports( KMFolder* refFolder );
-
 private slots:
   // Network (KIO) slots
   void slotConnectionResult( int, const QString& );
@@ -145,12 +138,10 @@ private:
   QStringList mRemovedACLs;
 #if 0
   QString mImapPath;
-  ImapAccountBase* mImapAccount;
 #endif
   QString mImapUserName;
   KIMAP::Acl::Rights mUserRights;
 #if 0
-  KMFolderType mFolderType;
   ACLList mInitialACLList;
   ACLList mACLList; // to be set
   IMAPUserIdFormat mUserIdFormat;
