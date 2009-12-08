@@ -98,7 +98,6 @@ set(kmailprivate_LIB_SRCS
    snippetitem.cpp
    kmfolder.cpp
    kmreaderwin.cpp
-   kmmsgdict.cpp
    actionscheduler.cpp
    messageproperty.cpp
    kmsystemtray.cpp
