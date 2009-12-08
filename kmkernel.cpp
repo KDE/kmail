@@ -23,7 +23,6 @@ using KPIM::BroadcastStatus;
 #include "kmmainwidget.h"
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
-#include "kmmsgdict.h"
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
@@ -1159,37 +1158,29 @@ QString KMKernel::debugScheduler()
 
 QString KMKernel::debugSernum( quint32 serialNumber )
 {
-#if 0
+
   QString res;
   if (serialNumber != 0) {
-    int idx = -1;
-    KMFolder *folder = 0;
-    KMime::Message *msg = 0;
-    KMMsgDict::instance()->getLocation( serialNumber, &folder, &idx );
-    // It's possible that the message has been deleted or moved into a
-    // different folder
-    if (folder && (idx != -1)) {
-      // everything is ok
-      KMFolderOpener openFolder( folder, "debugser" );
-      msg = folder->getMsgBase( idx );
-      if (msg) {
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
+    job->fetchScope().fetchFullPayload();
+    if ( job->exec() ) {
+      if ( job->items().count() >= 1 ) {
+        Akonadi::Item item = job->items().at( 0 );
+
+        if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+          kWarning() << "Payload is not a MessagePtr!";
+          return res.append( QString( "Invalid serial number." ) );
+        }
+        KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
         res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
-                             .arg( msg->subject()->asUnicodeString() )
+                    .arg( msg->subject()->asUnicodeString() )
                              .arg( KMail::MessageHelper::fromStrip(msg) )
                              .arg( msg->date()->asUnicodeString() ) );
-      } else {
-        res.append( QString( "Invalid serial number." ) );
+        return res;
       }
-    } else {
-      res.append( QString( "Invalid serial number." ) );
     }
   }
-  return res;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return "";
-
-#endif
+  return res.append( QString( "Invalid serial number." ) );
 }
 
 
