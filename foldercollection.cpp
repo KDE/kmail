@@ -314,14 +314,19 @@ void FolderCollection::setIdentity( uint identity )
 
 uint FolderCollection::identity() const
 {
-#if 0  //Port to akonadi
-  // if we don't have one set ourselves, check our account
-  if ( mUseDefaultIdentity && mStorage )
-    if ( KMAccount *act = mStorage->account() )
-      return act->identityId();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  if ( mUseDefaultIdentity ) {
+    int identityId = -1;
+    OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = KMail::Util::createImapSettingsInterface( mCollection.resource() );
+    if ( imapSettingsInterface->isValid() ) {
+      QDBusReply<int> reply = imapSettingsInterface->accountIdentity();
+      if ( reply.isValid() ) {
+        identityId = reply;
+      }
+    }
+    delete imapSettingsInterface;
+    if ( identityId != -1 )
+      return identityId;
+  }
   return mIdentity;
 }
 
