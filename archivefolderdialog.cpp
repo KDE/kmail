@@ -117,9 +117,7 @@ void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollectio
 {
   mFolderRequester->setFolder( defaultCollection );
   // TODO: what if the file already exists?
-#if 0
-  mUrlRequester->setUrl( standardArchivePath( defaultFolder->name() ) );
-#endif
+  mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
 }
 
 void ArchiveFolderDialog::slotButtonClicked( int button )
