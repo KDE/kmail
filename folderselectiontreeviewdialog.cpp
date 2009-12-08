@@ -123,6 +123,11 @@ Akonadi::Collection FolderSelectionTreeViewDialog::selectedCollection() const
   return treeview->selectedCollection();
 }
 
+void FolderSelectionTreeViewDialog::setSelectedCollection( const Akonadi::Collection &collection )
+{
+  treeview->selectCollectionFolder( collection );
+}
+
 Akonadi::Collection::List FolderSelectionTreeViewDialog::selectedCollections() const
 {
   return treeview->selectedCollections();

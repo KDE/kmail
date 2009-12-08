@@ -36,6 +36,7 @@ public:
   QAbstractItemView::SelectionMode selectionMode() const;
 
   Akonadi::Collection selectedCollection() const;
+  void setSelectedCollection( const Akonadi::Collection &collection );
 
   Akonadi::Collection::List selectedCollections() const;
 

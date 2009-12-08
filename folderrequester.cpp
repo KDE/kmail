@@ -75,6 +75,7 @@ void FolderRequester::slotOpenDialog()
   AutoQPointer<FolderSelectionTreeViewDialog> dlg( new FolderSelectionTreeViewDialog( this ) );
   dlg->setCaption( i18n("Select Folder") );
   dlg->setModal( false );
+  dlg->setSelectedCollection( mCollection );
 
   if ( dlg->exec() && dlg ) {
     setFolder( dlg->selectedCollection() );
