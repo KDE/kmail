@@ -764,13 +764,11 @@ int KMKernel::dbusAddMessage( const QString & foldername,
                               const QString & messageFile,
                               const QString & MsgStatusFlags)
 {
-#if 0  //Port to akonadi
   // FIXME: Remove code duplication between this method and dbusAddMessage_fastImport()!
   kDebug();
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
-
   int retval;
   bool readFolderMsgIds = false;
   QString _foldername = foldername.trimmed();
@@ -780,7 +778,6 @@ int KMKernel::dbusAddMessage( const QString & foldername,
     mAddMessageMsgIds.clear();
     readFolderMsgIds = true;
   }
-
   KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
 
@@ -791,7 +788,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
 
     KMime::Message *msg = new KMime::Message();
     msg->setContent( messageText );
-
+#if 0
     if (readFolderMsgIds) {
       if ( foldername.contains("/")) {
         QString tmp_fname = "";
@@ -834,7 +831,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,
 
       mAddMessageLastFolder = foldername;
     }
-
+#endif
+#if 0
     if ( mAddMsgCurrentFolder ) {
       if (readFolderMsgIds) {
 
@@ -937,10 +935,9 @@ int KMKernel::dbusAddMessage( const QString & foldername,
     }
   } else {
     retval = -2;
+#endif
   }
   return retval;
-#endif
-  return -1;
 }
 
 void KMKernel::dbusResetAddMessage()
@@ -953,7 +950,6 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
                                          const QString & messageFile,
                                          const QString & MsgStatusFlags)
 {
-#if 0
   // Use this function to import messages without
   // search for already existing emails.
   kDebug();
@@ -965,7 +961,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
   QString _foldername = foldername.trimmed();
   _foldername = _foldername.remove( '\\' ); //try to prevent ESCAPE Sequences
-
+#if 0
   KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
     const QByteArray messageText =
