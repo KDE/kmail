@@ -178,11 +178,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
-  void selectCollectionFolder( const Akonadi::Collection & col );
+    void selectCollectionFolder( const Akonadi::Collection & col );
 
-  FolderTreeView *folderTreeView() const {
-    return mCollectionFolderView->folderTreeView();
-  }
+    FolderTreeView *folderTreeView() const {
+      return mCollectionFolderView->folderTreeView();
+    }
 
     /** Returns the XML GUI client. */
     KXMLGUIClient* guiClient() const { return mGUIClient; }
@@ -277,7 +277,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
         in all selected messages */
     void slotUpdateMessageTagList( const QString &aLabel );
 
-
     /** If @p aCount is 0, disables all tag related actions in menus.
         If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
         If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
@@ -342,6 +341,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotExpireAll();
     void slotInvalidateIMAPFolders();
     void slotMarkAllAsRead();
+    void slotArchiveFolder();
     void slotRemoveFolder();
     void slotEmptyFolder();
     void slotCompactFolder();
@@ -455,13 +455,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotPrintMsg();
     void slotCreateTodo();
 
-  void slotConfigChanged();
+    void slotConfigChanged();
 
     /**
       Remove the shortcut actions associated with a folder.
     */
-  void slotFolderRemoved( const Akonadi::Collection& );
-  void slotCollectionRemoved( const Akonadi::Collection& );
+    void slotFolderRemoved( const Akonadi::Collection& );
+    void slotCollectionRemoved( const Akonadi::Collection& );
 
     /** Show a splash screen for the longer-lasting operation */
     void slotShowBusySplash();
@@ -475,9 +475,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateVactionScriptStatus( bool active );
 
 
-  void slotShowExpiryProperties();
-  void slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col);
-  void slotItemRemoved( const Akonadi::Item & );
+    void slotShowExpiryProperties();
+    void slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col);
+    void slotItemRemoved( const Akonadi::Item & );
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;
@@ -524,10 +524,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * The set parameter must not be null and the ownership is passed to this function.
      */
     void toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel );
-  /**
-   * This applies setMessageSetStatus() on the current thread.
-   */
-   void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
+    /**
+     * This applies setMessageSetStatus() on the current thread.
+     */
+    void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
   private slots:
     /**
      * Called when a "move to trash" operation is completed
@@ -545,10 +545,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCopyMessagesCompleted( KMCommand *command );
 
     void slotRequestFullSearchFromQuickSearch();
-  void slotFolderChanged( const Akonadi::Collection& );
+    void slotFolderChanged( const Akonadi::Collection& );
 
-  void itemsReceived(const Akonadi::Item::List &list );
-  void itemsFetchDone( KJob *job );
+    void itemsReceived(const Akonadi::Item::List &list );
+    void itemsFetchDone( KJob *job );
 
 private:
     // Message actions
@@ -565,7 +565,7 @@ private:
         *mListFilterAction;
 
     KAction *mNextMessageAction, *mPreviousMessageAction;
-  KAction *mExpireConfigAction;
+    KAction *mExpireConfigAction;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;
     CustomTemplatesMenu *mCustomTemplateMenus;
@@ -588,7 +588,7 @@ private:
     KTreeWidgetSearchLine *mFolderQuickSearch;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
-  Akonadi::Collection mTemplateFolder;
+    Akonadi::Collection mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
     bool          mIntegrated;
@@ -616,7 +616,8 @@ private:
     KAction *mRemoveFolderAction,
       *mExpireFolderAction, *mCompactFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
-      *mFolderShortCutCommandAction, *mTroubleshootFolderAction, *mRemoveDuplicatesAction,
+      *mFolderShortCutCommandAction, *mTroubleshootFolderAction,
+      *mRemoveDuplicatesAction, *mArchiveFolderAction,
       *mTroubleshootMaildirAction, *mPostToMailinglistAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
     KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
@@ -636,7 +637,7 @@ private:
     QList<QAction*> mFilterMenuActions;
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
-  QHash<Akonadi::Entity::Id,FolderShortcutCommand*> mFolderShortcutCommands;
+    QHash<Akonadi::Entity::Id,FolderShortcutCommand*> mFolderShortcutCommands;
 
     QList<MessageTagPtrPair> mMessageTagMenuActions;
     QList<QAction*> mMessageTagTBarActions;
@@ -647,11 +648,11 @@ private:
     KXMLGUIClient *mGUIClient;
 
     KMail::MessageActions *mMsgActions;
-  Akonadi::StandardActionManager *mAkonadiStandardActionManager;
-  MessageList::Pane *mMessagePane;
-  QSharedPointer<FolderCollection> mCurrentFolder;
+    Akonadi::StandardActionManager *mAkonadiStandardActionManager;
+    MessageList::Pane *mMessagePane;
+    QSharedPointer<FolderCollection> mCurrentFolder;
 
-  FolderSelectionTreeView *mCollectionFolderView;
+    FolderSelectionTreeView *mCollectionFolderView;
     bool mOpenedImapFolder;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;

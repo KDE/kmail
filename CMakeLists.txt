@@ -174,6 +174,10 @@ set(kmailprivate_LIB_SRCS
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
+   backupjob.cpp
+   importjob.cpp
+   archivefolderdialog.cpp
+   importarchivedialog.cpp
 )
 
 macro(add_resource_iface _kcfgFile _ifaceName _className)

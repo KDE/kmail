@@ -28,6 +28,8 @@ using KPIM::RecentAddresses;
 #include "kmsystemtray.h"
 #include "stringutil.h"
 #include "messagehelper.h"
+#include "importarchivedialog.h"
+#include "foldertreeview.h"
 
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
@@ -1047,6 +1049,15 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
   return -1;
 }
 
+void KMKernel::showImportArchiveDialog()
+{
+  KMMainWidget *mainWidget = getKMMainWidget();
+  KMail::ImportArchiveDialog *importDialog = new KMail::ImportArchiveDialog( mainWidget );
+  importDialog->setAttribute( Qt::WA_DeleteOnClose );
+  importDialog->setFolder( mainWidget->folderTreeView()->currentFolder() );
+  importDialog->show();
+}
+
 QStringList KMKernel::folderList() const
 {
 #if 0
@@ -2040,7 +2051,7 @@ KSharedConfig::Ptr KMKernel::config()
 
 void KMKernel::selectFolder( const QString &folderPath )
 {
-  kDebug()<<"Selecting a folder"<<folderPath;
+  kDebug()<< "Selecting a folder" << folderPath;
   const QString localPrefix = "/Local";
 #if 0
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );

@@ -23,7 +23,6 @@
 
 #include <config-kmail.h>
 #include <assert.h>
-
 #include <QByteArray>
 #include <QLabel>
 #include <QLayout>
@@ -105,7 +104,6 @@ using KMail::SearchWindow;
 #include "kmmessagetag.h"
 #include "vacation.h"
 using KMail::Vacation;
-
 //#include "subscriptiondialog.h"
 //using KMail::SubscriptionDialog;
 //#include "localsubscriptiondialog.h"
@@ -129,6 +127,7 @@ using KMail::TemplateParser;
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/collectionfetchscope.h>
 #include "util.h"
+#include "archivefolderdialog.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -203,6 +202,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mSplitter1( 0 ),
     mSplitter2( 0 ),
     mFolderViewSplitter( 0 ),
+    mArchiveFolderAction( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
@@ -1553,6 +1553,13 @@ void KMMainWidget::slotEmptyFolder()
   mEmptyFolderAction->setEnabled( false );
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotArchiveFolder()
+{
+  KMail::ArchiveFolderDialog archiveDialog;
+  archiveDialog.setFolder( mCurrentFolder->collection() );
+  archiveDialog.exec();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRemoveFolder()
@@ -3346,6 +3353,10 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("delete_folder", mRemoveFolderAction );
   connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
 
+  mArchiveFolderAction = new KAction( i18n( "&Archive Folder..." ), this );
+  actionCollection()->addAction( "archive_folder", mArchiveFolderAction );
+  connect( mArchiveFolderAction, SIGNAL(triggered(bool)), SLOT(slotArchiveFolder()) );
+
   mPreferHtmlAction = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
   actionCollection()->addAction("prefer_html", mPreferHtmlAction );
   connect(mPreferHtmlAction, SIGNAL(triggered(bool) ), SLOT(slotOverrideHtml()));
@@ -3996,6 +4007,8 @@ void KMMainWidget::updateFolderMenu()
 
 
   mRemoveFolderAction->setText( mCurrentFolder && CollectionUtils::isVirtual( mCurrentFolder->collection() ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
+  if ( mArchiveFolderAction )
+    mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder );
   mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
