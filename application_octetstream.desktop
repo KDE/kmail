@@ -1,5 +1,6 @@
 [Misc]
 Name=Application Octet Stream
+Name[ar]=تطبيق ثماني الدفق
 Name[cs]=Aplikace octetstream
 Name[da]=Programmet Octet Stream
 Name[de]=Application Octet Stream
@@ -31,6 +32,7 @@ Name[zh_CN]=应用程序 Octet 数据流
 Name[zh_TW]=Application/Octet-Stream
 Comment=A bodypart formatter plugin for application/octet-stream
 Comment[af]='n Inprop module wat die lyf gedeelte vir 'application/octet-stream' formateer
+Comment[ar]=ملحق منسق جزء الجسم لتطبيق/دفق ثماني
 Comment[bg]=Приставка за форматиране на двоични данни
 Comment[ca]=Un connector formatador del cos per application/octet-stream
 Comment[cs]=Modul formátovače těla pro application/octet-stream

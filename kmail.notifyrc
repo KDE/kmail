@@ -2,6 +2,7 @@
 IconName=kmail
 Comment=KMail
 Comment[af]=KMail
+Comment[ar]=برنامج البريد KMail
 Comment[bg]=KMail
 Comment[br]=KMail
 Comment[ca]=KMail
@@ -99,6 +100,7 @@ Action=Popup
 [Event/new-mail-arrived]
 Name=New Mail Arrived
 Name[af]=Nuwe pos het gearriveer
+Name[ar]=وصل بريد جديد
 Name[br]=Deuet eo ur postel nevez
 Name[ca]=Ha arribat correu nou
 Name[cs]=Přišla nová pošta
@@ -152,6 +154,7 @@ Name[zh_CN]=新邮件到达
 Name[zh_TW]=新郵件抵達
 Comment=New mail arrived
 Comment[af]=Nuwe pos het gearriveer
+Comment[ar]=وصل بريد جديد
 Comment[br]=Deuet eo ur postel nevez
 Comment[ca]=Ha arribat correu nou
 Comment[cs]=Přišla nová pošta

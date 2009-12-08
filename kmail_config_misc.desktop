@@ -14,6 +14,7 @@ X-KDE-Weight=600
 
 Name=Misc
 Name[af]=Allerlei
+Name[ar]=متفرقات
 Name[be]=Рознае
 Name[bg]=Разни
 Name[br]=A bep seurt
@@ -73,6 +74,7 @@ Name[zh_CN]=杂项
 Name[zh_TW]=其他
 Comment=Settings that don't fit elsewhere
 Comment[af]=Opstelling wat nêrens anders pas nie
+Comment[ar]=الإعدادات التي لا تندرج في أي مكان آخر
 Comment[bg]=Разни настройки
 Comment[ca]=Opcions que no van bé enlloc
 Comment[cs]=Nastavení nehodící se jinam
