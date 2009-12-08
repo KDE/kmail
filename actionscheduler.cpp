@@ -33,7 +33,6 @@
 #include "filterlog.h"
 #include "messageproperty.h"
 #include "kmfilter.h"
-#include "kmmsgdict.h"
 #include "kmcommands.h"
 #include "broadcaststatus.h"
 

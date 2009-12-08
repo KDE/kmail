@@ -22,7 +22,6 @@
 #include "undostack.h"
 
 #include "kmmainwin.h"
-#include "kmmsgdict.h"
 
 #include <kmessagebox.h>
 #include <klocale.h>

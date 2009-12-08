@@ -10,7 +10,6 @@ using KMail::FilterLog;
 #include "kmfilterdlg.h"
 #include "filterimporterexporter.h"
 using KMail::FilterImporterExporter;
-#include "kmmsgdict.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;
 
