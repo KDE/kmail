@@ -19,6 +19,8 @@
 #include "foldercollection.h"
 #include <kdebug.h>
 #include "kmkernel.h"
+#include "util.h"
+#include "imapsettings.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include <akonadi/itemfetchjob.h>
@@ -211,13 +213,22 @@ void FolderCollection::writeConfig() const
 
 
   configGroup.writeEntry( "UseDefaultIdentity", mUseDefaultIdentity );
-  if ( !mUseDefaultIdentity
-#if 0 //TODO port it
-       && ( !mStorage || !mStorage->account() ||
-                           mIdentity != mStorage->account()->identityId() )
-#endif
-       )
+
+  if ( !mUseDefaultIdentity ) {
+    int identityId = -1;
+    OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = KMail::Util::createImapSettingsInterface( mCollection.resource() );
+    if ( imapSettingsInterface->isValid() ) {
+      QDBusReply<int> reply = imapSettingsInterface->accountIdentity();
+      if ( reply.isValid() ) {
+        identityId = reply;
+      }
+    }
+    delete imapSettingsInterface;
+    if ( identityId != -1 && mIdentity != identityId )
       configGroup.writeEntry("Identity", mIdentity);
+    else
+      configGroup.deleteEntry( "Identity" );
+  }
   else
       configGroup.deleteEntry("Identity");
 
@@ -254,15 +265,7 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool _writeConf
     const KPIMIdentities::Identity & identity =
       kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
-    if ( kmkernel->isSystemFolderCollection(mCollection)
-#if 0
-         && folderType() != KMFolderTypeImap ) {
-
-
-#else
-         ) {
-         kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    if ( kmkernel->isSystemFolderCollection(mCollection) && !kmkernel->isImapFolder( mCollection ) ) {
       // local system folders
       if ( mCollection == kmkernel->inboxCollectionFolder() ||
            mCollection == kmkernel->trashCollectionFolder() )

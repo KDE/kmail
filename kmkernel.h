@@ -303,6 +303,8 @@ public:
 
   Akonadi::Collection findFolderCollectionById( const QString& id );
 
+  bool isImapFolder( const Akonadi::Collection& );
+
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 

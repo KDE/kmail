@@ -2284,4 +2284,10 @@ bool KMKernel::isSystemFolderCollection( const Akonadi::Collection &col)
            col == templatesCollectionFolder() );
 }
 
+bool KMKernel::isImapFolder( const Akonadi::Collection &col )
+{
+  Akonadi::AgentInstance agentInstance = agentManager()->instance( col.resource() );
+  return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
+}
+
 #include "kmkernel.moc"

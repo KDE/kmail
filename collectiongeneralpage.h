@@ -70,8 +70,6 @@ public:
 
 protected:
   void init(const Akonadi::Collection&);
-  bool isImapFolder( const Akonadi::Collection &col );
-
 
   KMFolderType folderType( const Akonadi::Collection &col );
 

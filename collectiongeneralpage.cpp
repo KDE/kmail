@@ -69,13 +69,6 @@ static void addLine( QWidget *parent, QVBoxLayout* layout )
    layout->addWidget( line );
 }
 
-bool CollectionGeneralPage::isImapFolder( const Akonadi::Collection &col )
-{
-  // TODO: Put in KMKernel instead?
-  Akonadi::AgentManager *agentManager = Akonadi::AgentManager::self();
-  AgentInstance agentInstance = agentManager->instance( col.resource() );
-  return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
-}
 
 CollectionGeneralPage::KMFolderType CollectionGeneralPage::folderType( const Akonadi::Collection &col )
 {
@@ -146,7 +139,7 @@ static QString folderContentDesc( CollectionGeneralPage::FolderContentsType type
 void CollectionGeneralPage::init(const Akonadi::Collection &col)
 {
   mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col );
-  mIsImapFolder = isImapFolder( col );
+  mIsImapFolder = KMKernel::self()->isImapFolder( col );
 
 #if 0
   mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
