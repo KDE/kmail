@@ -51,7 +51,6 @@
 #include "kmsearchpattern.h"
 
 #include "regexplineedit.h"
-#include "textsource.h"
 
 using namespace KPIM;
 

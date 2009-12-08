@@ -156,7 +156,6 @@ set(kmailprivate_LIB_SRCS
    distributionlistdialog.cpp
    expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
-   textsource.cpp
    managesievescriptsdialog.cpp
    util.cpp
    kmmessagetag.cpp
