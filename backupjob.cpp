@@ -85,12 +85,6 @@ void BackupJob::setDeleteFoldersAfterCompletion( bool deleteThem )
 
 bool BackupJob::queueFolders( const Akonadi::Collection &root )
 {
-  kDebug() << "PORTDEBUG ======== APPENDING FOLDER:" << root.id() << root.name();
-  Akonadi::Collection col = root.parentCollection();
-  while ( col.isValid() ) {
-    kDebug() << "PORTDEBUG parent=" << col.id();
-    col = col.parentCollection();
-  }
   mPendingFolders.append( root );
   // TODO: This should be done async!
   // We could do a recursive CollectionFetchJob, but we only fetch the first level
@@ -262,7 +256,6 @@ void BackupJob::itemFetchJobResult( KJob *job )
 
   Q_ASSERT( job == mCurrentJob );
   mCurrentJob = 0;
-  kDebug() << "PORTDEBUG job finished!";
 
   if ( job->error() ) {
     Q_ASSERT( mCurrentFolder.isValid() );
@@ -279,7 +272,6 @@ void BackupJob::itemFetchJobResult( KJob *job )
 
 bool BackupJob::writeDirHelper( const QString &directoryPath )
 {
-  kDebug() << "PORTDEBUG Writing dir" << directoryPath;
   // PORT ME: Correct user/group
   kDebug() << "AKONDI PORT: Disabled code here!";
   return mArchive->writeDir( directoryPath, "user", "group" );
@@ -287,9 +279,7 @@ bool BackupJob::writeDirHelper( const QString &directoryPath )
 
 QString BackupJob::collectionName( const Akonadi::Collection &collection ) const
 {
-  kDebug() << "PORTDEBUG Getting collection name for collection" << collection.id();
   foreach ( const Akonadi::Collection &curCol, mAllFolders ) {
-    kDebug() << "PORTDEBUG checking with" << curCol.id() << curCol.name();
     if ( curCol == collection )
       return curCol.name();
   }
@@ -299,38 +289,27 @@ QString BackupJob::collectionName( const Akonadi::Collection &collection ) const
 
 QString BackupJob::pathForCollection( const Akonadi::Collection &collection ) const
 {
-  kDebug() << "PORTDEBUG Getting path for collection" << collectionName( collection );
   QString fullPath = collectionName( collection );
   Akonadi::Collection curCol = collection.parentCollection();
   if ( collection != mRootFolder ) {
     Q_ASSERT( curCol.isValid() );
-    kDebug() << "PORTDEBUG curcol=" << curCol.id() << collectionName( curCol );
-    kDebug() << "PORTDEBUG entering while";
     while( curCol != mRootFolder ) {
-      kDebug() << "PORTDEBUG in while: cur col id=" << curCol.id();
-      kDebug() << "PORTDEBUG |-> Name:" << collectionName( curCol );
       fullPath.prepend( '.' + collectionName( curCol ) + ".directory" + '/' );
       curCol = curCol.parentCollection();
-      kDebug() << "PORTDEBUG in while: got parent, id=" << curCol.id();
     }
     Q_ASSERT( curCol == mRootFolder );
-    kDebug() << "PORTDEBUG Done, adding" << collectionName( curCol );
     fullPath.prepend( '.' + collectionName( curCol ) + ".directory" + '/' );
   }
-  kDebug() << "PORTDEBUG full path is:" << fullPath;
   return fullPath;
 }
 
 QString BackupJob::subdirPathForCollection( const Akonadi::Collection &collection ) const
 {
   QString path = pathForCollection( collection );
-  kDebug() << "PORTDEBUG Full path is:" << path;
   const int parentDirEndIndex = path.lastIndexOf( collection.name() );
   Q_ASSERT( parentDirEndIndex != -1 );
   path = path.left( parentDirEndIndex );
-  kDebug() << "PORTDEBUG now" << path;
   path.append( '.' + collection.name() + ".directory" );
-  kDebug() << "PORTDEBUG now" << path;
   return path;
 }
 
@@ -346,7 +325,6 @@ void BackupJob::archiveNextFolder()
 
   mCurrentFolder = mPendingFolders.takeAt( 0 );
   kDebug() << "===> Archiving next folder: " << mCurrentFolder.name();
-  kDebug() << "PORTDEBUG: Parent folder:" << mCurrentFolder.parentCollection().id();
   mProgressItem->setStatus( i18n( "Archiving folder %1", mCurrentFolder.name() ) );
 
   const QString folderName = mCurrentFolder.name();
@@ -370,7 +348,6 @@ void BackupJob::archiveNextFolder()
   }
 
   // TODO: This should be done async!
-  kDebug() << "PORTDEBUG going to fetch items for col" << mCurrentFolder.id() << mCurrentFolder.name();
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder );
   job->exec();
   if ( job->error() ) {
@@ -379,9 +356,6 @@ void BackupJob::archiveNextFolder()
     return;
   }
   mPendingMessages += job->items();
-  foreach( const Akonadi::Item &item, mPendingMessages )
-    kDebug() << "PORTDEBUG Pending items:" << item.id();
-
   archiveNextMessage();
 }
 
