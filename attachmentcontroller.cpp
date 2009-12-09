@@ -50,6 +50,9 @@
 #include <KRun>
 #include <KTemporaryFile>
 
+#include "kmreadermainwin.h"
+#include <kpimutils/kfileio.h>
+
 #include <libkleo/kleo/cryptobackendfactory.h>
 #include <libkleo/ui/keyselectiondialog.h>
 
@@ -92,6 +95,7 @@ class KMail::AttachmentController::Private
     KMComposeWin *composer;
     QHash<MessageViewer::EditorWatcher*,AttachmentPart::Ptr> editorPart;
     QHash<MessageViewer::EditorWatcher*,KTemporaryFile*> editorTempFile;
+    QList<KTemporaryFile*> mAttachmentTempList;
 
     QMenu *contextMenu;
     AttachmentPart::List selectedParts;
@@ -141,6 +145,7 @@ AttachmentController::Private::Private( AttachmentController *qq )
 
 AttachmentController::Private::~Private()
 {
+  qDeleteAll( mAttachmentTempList );
 }
 
 void AttachmentController::Private::identityChanged()
@@ -545,17 +550,16 @@ void AttachmentController::viewAttachment( AttachmentPart::Ptr part )
     pname = QString::fromLatin1( "unnamed" );
   }
 
-  kDebug() << "port me"; // TODO
-#if 0
   KTemporaryFile *atmTempFile = new KTemporaryFile();
   atmTempFile->open();
-  mAtmTempList.append( atmTempFile );
-  KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(),
+  d->mAttachmentTempList.append( atmTempFile );
+  KPIMUtils::kByteArrayToFile( part->/*bodyDecodedBinary()*/data(), atmTempFile->fileName(),
                                false, false, false );
+  KMime::Content *content = new KMime::Content;
+  content->setContent( part->data() );
   KMReaderMainWin *win =
-    new KMReaderMainWin( msgPart, false, atmTempFile->fileName(), pname, mCharset );
+    new KMReaderMainWin( content, false, atmTempFile->fileName(), pname, part->charset() );
   win->show();
-#endif
 }
 
 void AttachmentController::editAttachment( AttachmentPart::Ptr part, bool openWith )
