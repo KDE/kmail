@@ -30,7 +30,7 @@ KMAgentManager::KMAgentManager( QObject *parent )
 
 KMAgentManager::~KMAgentManager()
 {
-  qDebug()<<" KMAgentManager::~KMAgentManager";
+  //kDebug()<<" KMAgentManager::~KMAgentManager";
   QMapIterator<QString, KMAgentInstance*> i(lstAgentInstance);
   while (i.hasNext()) {
     i.next();
@@ -73,7 +73,7 @@ bool KMAgentManager::isEmpty() const
 
 void KMAgentManager::slotInstanceAdded( const Akonadi::AgentInstance & instance)
 {
-  qDebug()<<" KMAgentManager::slotInstanceAdded :"<<instance.name();
+  //kDebug()<<" KMAgentManager::slotInstanceAdded :"<<instance.name();
   if ( instance.type().mimeTypes().contains( "message/rfc822" ) ) {
     mListInstance << instance;
     KMAgentInstance *agent = new KMAgentInstance( this, instance );
@@ -83,7 +83,7 @@ void KMAgentManager::slotInstanceAdded( const Akonadi::AgentInstance & instance)
 
 void KMAgentManager::slotInstanceRemoved( const Akonadi::AgentInstance &instance )
 {
-  qDebug()<<" KMAgentManager::slotInstanceRemoved :"<<instance.name();
+  //kDebug()<<" KMAgentManager::slotInstanceRemoved :"<<instance.name();
   if ( mListInstance.contains( instance ) ) {
     mListInstance.removeAll( instance );
     lstAgentInstance.remove( instance.identifier() );
