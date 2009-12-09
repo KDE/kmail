@@ -69,7 +69,7 @@ public:
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false);
   virtual void truncateIndex();
 
-  virtual const KMMsgBase* getMsgBase(int idx) const { return mMsgList[idx]; }
+  virtual const KMMsgBase* getMsgBase(int idx) const;
   virtual KMMsgBase* getMsgBase( int idx );
 
   virtual int find(const KMMsgBase* msg) const {

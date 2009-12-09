@@ -463,6 +463,15 @@ void KMFolderIndex::truncateIndex()
     writeIndex( true );
 }
 
+const KMMsgBase* KMFolderIndex::getMsgBase( int idx ) const
+{
+  if ( idx < 0 || idx >= mMsgList.count() ) {
+    return 0;
+  } else {
+    return mMsgList[idx];
+  }
+}
+
 KMMsgBase* KMFolderIndex::getMsgBase( int idx )
 {
   if ( idx < 0 || idx >= mMsgList.count() ) {
