@@ -245,7 +245,8 @@ void BackupJob::processMessage( const Akonadi::Item &item )
   mArchivedMessages++;
   mArchivedSize += messageSize;
 
-  // ###
+  // Use a singleshot timer, otherwise the job started in archiveNextMessage()
+  // will hang
   QTimer::singleShot( 0, this, SLOT(archiveNextMessage()) );
 }
 
