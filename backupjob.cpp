@@ -20,6 +20,7 @@
 
 #include "progressmanager.h"
 
+#include <Akonadi/CollectionDeleteJob>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ItemFetchJob>
@@ -150,11 +151,7 @@ void BackupJob::abort( const QString &errorMessage )
     // The progressmanager will delete it
   }
 
-#if 0
-  QString text = i18n( "Failed to archive the folder '%1'.", mRootFolder->name() );
-#else
-  QString text;
-#endif
+  QString text = i18n( "Failed to archive the folder '%1'.", mRootFolder.name() );
   text += '\n' + errorMessage;
   KMessageBox::sorry( mParentWidget, text, i18n( "Archiving failed." ) );
   deleteLater();
@@ -175,13 +172,9 @@ void BackupJob::finish()
   mProgressItem = 0;
 
   QFileInfo archiveFileInfo( mMailArchivePath.path() );
-#if 0
   QString text = i18n( "Archiving folder '%1' successfully completed. "
                        "The archive was written to the file '%2'.",
-                       mRootFolder->name(), mMailArchivePath.path() );
-#else
-  QString text;
-#endif
+                       mRootFolder.name(), mMailArchivePath.path() );
   text += '\n' + i18np( "1 message of size %2 was archived.",
                         "%1 messages with the total size of %2 were archived.",
                         mArchivedMessages, KIO::convertSize( mArchivedSize ) );
@@ -193,9 +186,7 @@ void BackupJob::finish()
     // Some safety checks first...
     if ( archiveFileInfo.size() > 0 && ( mArchivedSize > 0 || mArchivedMessages == 0 ) ) {
       // Sorry for any data loss!
-#if 0
-      FolderUtil::deleteFolder( mRootFolder, mParentWidget );
-#endif
+      new Akonadi::CollectionDeleteJob( mRootFolder );
     }
   }
 
