@@ -28,10 +28,15 @@
 
 class KArchive;
 class KProcess;
+class KJob;
 class QWidget;
 
 namespace KPIM {
   class ProgressItem;
+}
+
+namespace Akonadi {
+  class ItemFetchJob;
 }
 
 namespace KMail
@@ -63,24 +68,27 @@ class BackupJob : public QObject
 
   private slots:
 
-#if 0
-    void messageRetrieved( KMMessage *message );
-    void folderJobFinished( KMail::FolderJob *job );
-#endif
-    void processCurrentMessage();
+    void itemFetchJobResult( KJob *job );
     void cancelJob();
+    void archiveNextFolder();
+    void archiveNextMessage();
 
   private:
 
     bool queueFolders( const Akonadi::Collection &root );
-    void archiveNextFolder();
-    void archiveNextMessage();
+    void processMessage( const Akonadi::Item &item );
     QString pathForCollection( const Akonadi::Collection &collection ) const;
     QString subdirPathForCollection( const Akonadi::Collection &collection ) const;
     bool hasChildren( const Akonadi::Collection &collection ) const;
     void finish();
     void abort( const QString &errorMessage );
     bool writeDirHelper( const QString &directoryPath );
+
+    // Helper function to return the name of the given collection.
+    // Some Collection's don't have the name fetched. However, in mAllFolders,
+    // we have a list of Collection's that have that information in them, so
+    // we can just look it up there.
+    QString collectionName( const Akonadi::Collection &collection ) const;
 
     KUrl mMailArchivePath;
     ArchiveType mArchiveType;
@@ -97,10 +105,7 @@ class BackupJob : public QObject
     Akonadi::Collection::List mAllFolders;
     Akonadi::Collection mCurrentFolder;
     Akonadi::Item::List mPendingMessages;
-#if 0
-    KMMessage *mCurrentMessage;
-    FolderJob *mCurrentJob;
-#endif
+    Akonadi::ItemFetchJob *mCurrentJob;
 };
 
 }
