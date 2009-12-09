@@ -96,7 +96,10 @@ KMMainWin::KMMainWin(QWidget *)
 #endif
   if ( kmkernel->firstStart() )
   {
-    if( !QProcess::startDetached("accountwizard") )
+    QStringList lst;
+    lst.append( "--type" );
+    lst.append( "\"message/rfc822\"" );
+    if( !QProcess::startDetached("accountwizard", lst) )
     KMessageBox::error( this, i18n( "Could not start accountwizard "
                                     "please check your installation." ),
                         i18n( "KMail Error" ) );
