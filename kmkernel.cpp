@@ -2008,22 +2008,23 @@ void KMKernel::slotEmptyTrash()
   {
     return;
   }
-#if 0 //TODO will be implement in imap ressource
-  QList<KMAccount*>::iterator accountIt = acctMgr()->begin();
-  while ( accountIt != acctMgr()->end() ) {
-    KMAccount *acct = *accountIt;
-    ++accountIt;
-    Akonadi::Collection trash = findFolderCollectionById(acct->trash());
-    if (trash.isValid())
-    {
-      trash->expunge();
+  Akonadi::Collection trash = trashCollectionFolder();
+  mFolderCollectionMonitor->expunge( trash );
+
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  foreach ( const Akonadi::AgentInstance& type, lst ) {
+    //TODO verify it.
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
+      if ( iface->isValid() ) {
+        int trashImap = iface->trashCollection();
+        if ( trashImap != trash.id() ) {
+          mFolderCollectionMonitor->expunge( Akonadi::Collection( trashImap ) );
+        }
+      }
+      delete iface;
     }
   }
-#else
-   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-   Akonadi::Collection trash = trashCollectionFolder();
-   mFolderCollectionMonitor->expunge( trash );
-#endif
 }
 
 KMKernel* KMKernel::self()

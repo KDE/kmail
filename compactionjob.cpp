@@ -30,9 +30,6 @@
 #include "kmfolder.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
-//TODO port to akonadi #include "kmfoldermbox.h"
-//TODO port to akonadi #include "kmfoldermaildir.h"
-
 #include <kdebug.h>
 #include <kde_file.h>
 #include <klocale.h>
