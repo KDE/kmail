@@ -144,7 +144,11 @@ int main(int argc, char *argv[])
   app.setEventLoopReached();
   app.delayedInstanceCreation();
 
-  Akonadi::Control::start( kmkernel->getKMMainWidget() );
+  if ( !Akonadi::Control::start( kmkernel->getKMMainWidget() ) ) {
+    //TODO: add message box after string freeze
+    kWarning() << "Unable to start Akonadi server, exit application";
+    return 1;
+  }
   // Go!
   int ret = qApp->exec();
   // clean up
