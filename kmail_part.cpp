@@ -166,22 +166,11 @@ void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
 }
 void KMailPart::slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames )
 {
-  if( !attributeNames.contains("ENTITYDISPLAY")) 
+  if( !attributeNames.contains("ENTITYDISPLAY"))
      return;
   slotFolderChanged(collection);
 }
 
-#ifdef OLD_FOLDERVIEW
-void KMailPart::slotIconChanged( FolderViewItem *fti )
-{
-  emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
-}
-
-void KMailPart::slotNameChanged( FolderViewItem *fti )
-{
-  emit textChanged( fti->folder()->label() );
-}
-#endif
 //-----------------------------------------------------------------------------
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)

@@ -2054,13 +2054,16 @@ void KMKernel::selectFolder( const QString &folderPath )
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )
     folder = the_folderMgr->getFolderByURL( folderPath.mid( localPrefix.length() ) );
+#endif
+
+#if 0
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
   if ( !widget )
     return;
-#endif
-#ifdef OLD_FOLDERVIEW
   widget->selectCollectionFolder( folder );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 

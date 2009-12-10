@@ -365,13 +365,15 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
   if (mMsgView)
     mMsgView->clear(true);
   bool newFolder = mCurrentFolder && ( mCurrentFolder->collection() != col );
-#ifdef OLD_FOLDERVIEW
+#if 0
   if ( mFolder && newFolder && ( mFolder->folderType() == KMFolderTypeImap ) && !mFolder->noContent() )
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
     if ( mFolder->needsCompacting() && imap->autoExpunge() )
       imap->expungeFolder(imap, true);
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   // Re-enable the msg list and quicksearch if we're showing a splash
   // screen. This is true either if there's no active folder, or if we
@@ -1085,9 +1087,11 @@ void KMMainWidget::createWidgets()
   {
     KAction *action = new KAction(i18n("Select Folder with Focus"), this);
     actionCollection()->addAction("select_current_folder", action );
-#ifdef OLD_FOLDERVIEW
+#if 0
     connect( action, SIGNAL( triggered( bool ) ),
              mMainFolderView, SLOT( slotSelectFocusedFolder() ) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Space ) );
   }
@@ -4043,7 +4047,7 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-#ifdef OLD_FOLDERVIEW
+#if 0
   if ( mMainFolderView )
   {
     mMainFolderView->readConfig();
@@ -4051,6 +4055,8 @@ void KMMainWidget::slotShowStartupFolder()
     // get rid of old-folders
     mMainFolderView->cleanupConfigFile();
   }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
            this, SLOT( initializeFilterActions() ) );
