@@ -1,4 +1,4 @@
-/*
+  /*
  * kmail: KDE mail client
  * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  *
@@ -306,7 +306,7 @@ public:
 
   /**
    * Just like encodeRFC2231String, only that the encoding is auto-detected.
-   * @param defaultCharset If given, this will be the prefered charset
+   * @param defaultCharset If given, this will be the preferred charset
    */
   static QByteArray encodeRFC2231StringAutoDetectCharset( const QString &str,
                                                           const QByteArray &defaultCharset = "" );
