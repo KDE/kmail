@@ -2386,7 +2386,7 @@ void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 void KMMainWidget::slotApplyFilters()
 {
   QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
-#ifdef OLD_MESSAGELIST
+#if 0
   if (KMail::ActionScheduler::isEnabled() || kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget())
   {
     // uses action scheduler
@@ -2460,6 +2460,8 @@ void KMMainWidget::slotApplyFilters()
 
   progressItem->setComplete();
   progressItem = 0;
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
