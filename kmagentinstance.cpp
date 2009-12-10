@@ -29,8 +29,9 @@ KMAgentInstance::KMAgentInstance( QObject *parent, const Akonadi::AgentInstance 
   :QObject( parent ), mAgentInstance( inst ), mProgressItem( 0 )
 {
   qDebug()<<" KMAgentInstance::KMAgentInstance";
-  ProgressItem *item = ProgressManager::createProgressItem( mAgentInstance.name() );
-  mProgressItem = ProgressManager::createProgressItem(item, "MailCheck"+mAgentInstance.name(),i18n("Preparing transmission from \"%1\"...", mAgentInstance.name() ) );
+// TODO implement me!
+//  ProgressItem *item = ProgressManager::createProgressItem( mAgentInstance.name() );
+//  mProgressItem = ProgressManager::createProgressItem(item, "MailCheck"+mAgentInstance.name(),i18n("Preparing transmission from \"%1\"...", mAgentInstance.name() ) );
 }
 
 KMAgentInstance::~KMAgentInstance()
