@@ -27,7 +27,6 @@
  */
 
 #include "compactionjob.h"
-#include "kmfolder.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include <kdebug.h>
@@ -50,7 +49,7 @@ using namespace KMail;
 // And wait this number of milliseconds before calling it again
 #define COMPACTIONJOB_TIMERINTERVAL 100
 
-MboxCompactionJob::MboxCompactionJob( KMFolder* folder, bool immediate )
+MboxCompactionJob::MboxCompactionJob( const Akonadi::Collection& folder, bool immediate )
  : ScheduledJob( folder, immediate ), mTimer( this ), mTmpFile( 0 ),
    mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
@@ -62,7 +61,7 @@ MboxCompactionJob::~MboxCompactionJob()
 
 void MboxCompactionJob::kill()
 {
-#if 0	
+#if 0
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() ) {
@@ -82,6 +81,7 @@ void MboxCompactionJob::kill()
 
 QString MboxCompactionJob::realLocation() const
 {
+#if 0
   QString location = mSrcFolder->location();
   QFileInfo inf( location );
   if (inf.isSymLink()) {
@@ -91,6 +91,8 @@ QString MboxCompactionJob::realLocation() const
     return KUrl( u, inf.readLink() ).toLocalFile();
   }
   return location;
+#endif
+  return "";
 }
 
 int MboxCompactionJob::executeNow( bool silent )
@@ -217,7 +219,7 @@ void MboxCompactionJob::done( int rc )
 
 ////
 
-MaildirCompactionJob::MaildirCompactionJob( KMFolder* folder, bool immediate )
+MaildirCompactionJob::MaildirCompactionJob( const Akonadi::Collection& folder, bool immediate )
  : ScheduledJob( folder, immediate ), mTimer( this ),
    mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
@@ -229,7 +231,7 @@ MaildirCompactionJob::~MaildirCompactionJob()
 
 void MaildirCompactionJob::kill()
 {
-#if 0	
+#if 0
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() ) {
@@ -321,9 +323,9 @@ void MaildirCompactionJob::done( int rc )
 
 ScheduledJob *ScheduledCompactionTask::run()
 {
+#if 0
   if ( !folder() || !folder()->needsCompacting() )
     return 0;
-#if 0  
   switch( folder()->storage()->folderType() ) {
   case KMFolderTypeMbox:
     return new MboxCompactionJob( folder(), isImmediate() );
@@ -334,7 +336,7 @@ ScheduledJob *ScheduledCompactionTask::run()
     return 0;
   }
 #endif
-return 0;  
+return 0;
 }
 
 #include "compactionjob.moc"

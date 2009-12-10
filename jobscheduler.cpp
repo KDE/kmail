@@ -28,12 +28,11 @@
 
 
 #include "jobscheduler.h"
-#include "kmfolder.h"
 #include <kdebug.h>
 
 using namespace KMail;
 
-ScheduledTask::ScheduledTask( KMFolder* folder, bool immediate )
+ScheduledTask::ScheduledTask( const Akonadi::Collection& folder, bool immediate )
   : mCurrentFolder( folder ), mImmediate( immediate )
 {
 }
@@ -64,6 +63,7 @@ JobScheduler::~JobScheduler()
 
 void JobScheduler::registerTask( ScheduledTask* task )
 {
+#if 0
   bool immediate = task->isImmediate();
   int typeId = task->taskTypeId();
   if ( typeId ) {
@@ -98,6 +98,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
     if ( !mCurrentTask && !mTimer.isActive() )
       restartTimer();
   }
+#endif
 }
 
 void JobScheduler::removeTask( TaskList::Iterator& it )
@@ -107,8 +108,9 @@ void JobScheduler::removeTask( TaskList::Iterator& it )
   mTaskList.erase( it );
 }
 
-void JobScheduler::notifyOpeningFolder( KMFolder* folder )
+void JobScheduler::notifyOpeningFolder( const Akonadi::Collection& folder )
 {
+#if 0
   if ( mCurrentTask && mCurrentTask->folder() == folder ) {
     if ( mCurrentJob->isOpeningFolder() ) { // set when starting a job for this folder
 #ifdef DEBUG_SCHEDULER
@@ -122,6 +124,7 @@ void JobScheduler::notifyOpeningFolder( KMFolder* folder )
         interruptCurrentTask();
     }
   }
+#endif
 }
 
 void JobScheduler::interruptCurrentTask()
@@ -138,6 +141,7 @@ void JobScheduler::interruptCurrentTask()
 
 void JobScheduler::slotRunNextJob()
 {
+#if 0	
   while ( !mCurrentJob ) {
 #ifdef DEBUG_SCHEDULER
     kDebug() << "JobScheduler: slotRunNextJob";
@@ -183,6 +187,7 @@ void JobScheduler::slotRunNextJob()
 
     runTaskNow( task );
   } // If nothing to do for that task, loop and find another one to run
+#endif
 }
 
 void JobScheduler::restartTimer()
@@ -225,7 +230,7 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
   // Register the job in the folder. This makes it autodeleted if the folder is deleted.
 #if 0
   mCurrentTask->folder()->storage()->addJob( mCurrentJob );
-#endif  
+#endif
   connect( mCurrentJob, SIGNAL( finished() ), this, SLOT( slotJobFinished() ) );
   mCurrentJob->start();
 }
@@ -259,7 +264,7 @@ void JobScheduler::resume()
 
 ////
 
-ScheduledJob::ScheduledJob( KMFolder* folder, bool immediate )
+ScheduledJob::ScheduledJob( const Akonadi::Collection& folder, bool immediate )
   : FolderJob( 0, tOther, folder ), mImmediate( immediate ),
     mOpeningFolder( false )
 {

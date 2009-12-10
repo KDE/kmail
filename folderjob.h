@@ -34,8 +34,7 @@
 #include <kmime/kmime_message.h>
 #include <QList>
 #include <QString>
-
-class KMFolder;
+#include <akonadi/collection.h>
 
 namespace KMail {
 
@@ -53,7 +52,8 @@ public:
    * @p jt and with a parent folder @p folder.
    */
   explicit FolderJob( KMime::Message *msg, JobType jt = tGetMessage,
-        KMFolder *folder = 0, const QString &partSpecifier = QString() );
+                      const Akonadi::Collection &folder = Akonadi::Collection(),
+                      const QString &partSpecifier = QString() );
 
   /**
    * Constructs a new job, operating on a message list @p msgList,
@@ -61,7 +61,7 @@ public:
    *
    */
   FolderJob( const QList<KMime::Message*>& msgList, const QString& sets,
-	     JobType jt = tGetMessage, KMFolder *folder = 0 );
+	     JobType jt = tGetMessage, const Akonadi::Collection & = Akonadi::Collection() );
   /**
    * This one should ONLY be used in derived folders, when a job
    * does something internal and needs to construct an empty parent
@@ -170,8 +170,8 @@ protected:
   QList<KMime::Message*>   mMsgList;
   JobType             mType;
   QString             mSets;
-  KMFolder*           mSrcFolder;
-  KMFolder*           mDestFolder;
+  Akonadi::Collection mSrcFolder;
+  Akonadi::Collection mDestFolder;
   QString             mPartSpecifier;
   int                 mErrorCode;
 

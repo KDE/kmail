@@ -28,7 +28,6 @@
 
 
 #include "expirejob.h"
-#include "kmfolder.h"
 #include "globalsettings.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
@@ -59,7 +58,7 @@ using namespace KMail;
 */
 
 
-ExpireJob::ExpireJob( KMFolder* folder, bool immediate )
+ExpireJob::ExpireJob( const Akonadi::Collection& folder, bool immediate )
  : ScheduledJob( folder, immediate ), mTimer( this ), mCurrentIndex( 0 ),
    mFolderOpen( false ), mMoveToFolder( 0 )
 {
@@ -71,7 +70,7 @@ ExpireJob::~ExpireJob()
 
 void ExpireJob::kill()
 {
-#if 0	
+#if 0
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() )
@@ -85,7 +84,7 @@ void ExpireJob::execute()
   mMaxUnreadTime = 0;
   mMaxReadTime = 0;
   mCurrentIndex = 0;
-
+#if 0
   int unreadDays, readDays;
   mSrcFolder->daysToExpire( unreadDays, readDays );
   if (unreadDays > 0) {
@@ -102,7 +101,6 @@ void ExpireJob::execute()
     delete this;
     return;
   }
-#if 0
   FolderStorage* storage = mSrcFolder->storage();
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open( "expirejob" );
@@ -113,13 +111,13 @@ void ExpireJob::execute()
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   mTimer.start( EXPIREJOB_TIMERINTERVAL );
   slotDoWork();
-#endif  
+#endif
   // do nothing here, we might be deleted!
 }
 
 void ExpireJob::slotDoWork()
 {
-#if 0	
+#if 0
   // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
   FolderStorage* storage = mSrcFolder->storage();
   int stopIndex = mImmediate ? 0 : qMax( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
@@ -151,6 +149,7 @@ void ExpireJob::slotDoWork()
 
 void ExpireJob::done()
 {
+#if 0
   mTimer.stop();
 
   QString str;
@@ -213,19 +212,19 @@ void ExpireJob::done()
   group.writeEntry( "Current", -1 ); // i.e. make it invalid, the serial number will be used
 
   if ( !moving ) {
-#if 0	  
+#if 0
     mSrcFolder->storage()->close( "expirejob" );
     mFolderOpen = false;
-#endif    
+#endif
     delete this;
   }
+#endif
 }
 
 void ExpireJob::slotMessagesMoved( KMCommand *command )
 {
-#if 0	
+#if 0
   mSrcFolder->storage()->close( "expirejob" );
-#endif  
   mFolderOpen = false;
   QString msg;
   switch ( command->result() ) {
@@ -267,6 +266,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
   BroadcastStatus::instance()->setStatusMsg( msg );
 
   deleteLater();
+#endif
 }
 
 #include "expirejob.moc"

@@ -1052,16 +1052,19 @@ void KMFolder::daysToExpire(int& unreadDays, int& readDays) {
 
 void KMFolder::expireOldMessages( bool immediate )
 {
+#if 0	
   KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(this, immediate);
   kmkernel->jobScheduler()->registerTask( task );
   if ( immediate ) {
     // #82259: compact after expiring.
     compact( CompactLater );
   }
+#endif  
 }
 
 void KMFolder::compact( CompactOptions options )
 {
+#if 0	
   if ( options == CompactLater ) {
     KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(this, false);
     kmkernel->jobScheduler()->registerTask( task );
@@ -1072,6 +1075,7 @@ void KMFolder::compact( CompactOptions options )
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   }
+#endif  
 }
 
 int KMFolder::writeIndex( bool createEmptyIndex )

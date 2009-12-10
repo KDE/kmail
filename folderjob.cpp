@@ -30,7 +30,6 @@
 
 #include "folderjob.h"
 
-#include "kmfolder.h"
 #include "globalsettings.h"
 
 #include <kdebug.h>
@@ -39,9 +38,9 @@
 namespace KMail {
 
 //----------------------------------------------------------------------------
-FolderJob::FolderJob( KMime::Message *msg, JobType jt, KMFolder* folder,
+  FolderJob::FolderJob( KMime::Message *msg, JobType jt, const Akonadi::Collection& folder,
                           const QString &partSpecifier )
-  : mType( jt ), mSrcFolder( 0 ), mDestFolder( folder ), mPartSpecifier( partSpecifier ),
+    : mType( jt ), mSrcFolder( Akonadi::Collection() ), mDestFolder( folder ), mPartSpecifier( partSpecifier ),
     mErrorCode( 0 ),
     mPassiveDestructor( false ), mStarted( false )
 {
@@ -54,9 +53,9 @@ FolderJob::FolderJob( KMime::Message *msg, JobType jt, KMFolder* folder,
 
 //----------------------------------------------------------------------------
 FolderJob::FolderJob( const QList<KMime::Message*>& msgList, const QString& sets,
-                          JobType jt, KMFolder *folder )
+                      JobType jt, const Akonadi::Collection& folder )
   : mMsgList( msgList ),mType( jt ),
-    mSets( sets ), mSrcFolder( 0 ), mDestFolder( folder ),
+    mSets( sets ), mSrcFolder( Akonadi::Collection() ), mDestFolder( folder ),
     mErrorCode( 0 ),
     mPassiveDestructor( false ), mStarted( false )
 {
