@@ -33,8 +33,6 @@ public:
   void save( Akonadi::Collection & col );
 private slots:
   void slotCompactNow();
-  void slotRebuildIndex();
-  void slotRebuildImap();
 #if 0
   void updateFolderIndexSizes();
 #endif

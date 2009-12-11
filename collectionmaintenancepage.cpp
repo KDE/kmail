@@ -84,29 +84,6 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   mFolderSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
   box->addRow( new QLabel( i18n("Size:"), filesGroup ), mFolderSizeLabel );
 
-#if 0
-  if ( folderType == KMFolderTypeMaildir )	// see KMMainWidget::slotTroubleshootMaildir()
-  {
-    mRebuildIndexButton = new KPushButton( i18n("Recreate Index"), filesGroup );
-    QObject::connect( mRebuildIndexButton, SIGNAL(clicked()), SLOT(slotRebuildIndex()) );
-
-    QHBoxLayout *hbl = new QHBoxLayout();	// to get an unstretched, right aligned button
-    hbl->addStretch( 1 );
-    hbl->addWidget( mRebuildIndexButton );
-    box->addRow( QString(), hbl );
-  }
-
-  if ( folderType == KMFolderTypeCachedImap )
-  {
-    mRebuildImapButton = new KPushButton( i18n("Rebuild Local IMAP Cache"), filesGroup );
-    QObject::connect( mRebuildImapButton, SIGNAL(clicked()), SLOT(slotRebuildImap()) );
-
-    QHBoxLayout *hbl = new QHBoxLayout();
-    hbl->addStretch( 1 );
-    hbl->addWidget( mRebuildImapButton );
-    box->addRow( QString(), hbl );
-  }
-#endif
   topLayout->addWidget( filesGroup );
 
   QGroupBox *messagesGroup = new QGroupBox( i18n("Messages"), this);
@@ -212,27 +189,6 @@ void CollectionMaintenancePage::slotCompactNow()
 
   updateControls();
   updateFolderIndexSizes();
-#endif
-}
-
-
-void CollectionMaintenancePage::slotRebuildIndex()
-{
-#if 0
-  QAction *act = kmkernel->getKMMainWidget()->action( "troubleshoot_maildir" );
-  if ( !act ) return;
-
-  act->activate( QAction::Trigger );
-  updateFolderIndexSizes();
-#endif
-}
-
-
-void CollectionMaintenancePage::slotRebuildImap()
-{
-#if 0
-  QAction *act = kmkernel->getKMMainWidget()->action( "troubleshoot_folder" );
-  if ( act ) act->activate( QAction::Trigger );
 #endif
 }
 

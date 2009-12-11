@@ -348,8 +348,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 #if 0
   void slotRefreshFolder();
 #endif
-    void slotTroubleshootFolder();
-    void slotTroubleshootMaildir();
     void slotCompactAll();
     void slotOverrideHtml();
     void slotOverrideHtmlLoadExt();
@@ -616,9 +614,9 @@ private:
     KAction *mRemoveFolderAction,
       *mExpireFolderAction, *mCompactFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
-      *mFolderShortCutCommandAction, *mTroubleshootFolderAction,
+      *mFolderShortCutCommandAction,
       *mRemoveDuplicatesAction, *mArchiveFolderAction,
-      *mTroubleshootMaildirAction, *mPostToMailinglistAction;
+      *mPostToMailinglistAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
     KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
 

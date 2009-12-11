@@ -1675,47 +1675,6 @@ void KMMainWidget::slotRefreshFolder()
 }
 #endif
 
-void KMMainWidget::slotTroubleshootFolder()
-{
-#if 0 //TODO port to akonadi
-  if (mFolder)
-  {
-    if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
-      KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( mFolder->storage() );
-      f->slotTroubleshoot();
-    }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-void KMMainWidget::slotTroubleshootMaildir()
-{
-#if 0 //TODO port to akonadi
-  if ( !mFolder || !mFolder->folderType() == KMFolderTypeMaildir )
-    return;
-  KMFolderMaildir* f = static_cast<KMFolderMaildir*>( mFolder->storage() );
-  if ( KMessageBox::warningContinueCancel( this,
-             i18nc( "@info",
-                    "You are about to recreate the index for folder <resource>%1</resource>.<nl/>"
-                    "<warning>This will destroy all message status information.</warning><nl/>"
-                    "Are you sure you want to continue?", mCurrentFolder->name() ),
-             i18nc( "@title", "Really recreate index?" ),
-             KGuiItem( i18nc( "@action:button", "Recreate Index" ) ),
-             KStandardGuiItem::cancel(), QString(),
-             KMessageBox::Notify | KMessageBox::Dangerous )
-        == KMessageBox::Continue ) {
-    f->createIndexFromContents();
-    KMessageBox::information( this,
-                              i18n( "The index of folder %1 has been recreated.",
-                                    mCurrentFolder->name() ),
-                              i18n( "Index recreated" ) );
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
 
 void KMMainWidget::slotInvalidateIMAPFolders() {
   if ( KMessageBox::warningContinueCancel( this,
@@ -3343,11 +3302,7 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("compact", mCompactFolderAction );
   connect(mCompactFolderAction, SIGNAL(triggered(bool) ), SLOT(slotCompactFolder()));
 
-  mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mTroubleshootMaildirAction = new KAction( KIcon("tools-wizard"), i18n("Rebuild Index..."), this );
-  actionCollection()->addAction( "troubleshoot_maildir", mTroubleshootMaildirAction );
-  connect( mTroubleshootMaildirAction, SIGNAL(triggered()), SLOT(slotTroubleshootMaildir()) );
 
   mEmptyFolderAction = new KAction(KIcon("user-trash"),
                                     "foo" /*set in updateFolderMenu*/, this);
@@ -3997,18 +3952,6 @@ void KMMainWidget::updateFolderMenu()
                                                   !mCurrentFolder->isSystemFolder() );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
 
-#if 0 //TODO port to akonadi
-  // This is the refresh-folder action in the menu. See kmfoldertree for the one in the RMB...
-  bool imap = mFolder && mFolder->folderType() == KMFolderTypeImap;
-  bool cachedImap = mFolder && mFolder->folderType() == KMFolderTypeCachedImap;
-  // For dimap, check that the imap path is known before allowing "check mail in this folder".
-  bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
-  if ( mTroubleshootFolderAction )
-    mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
-  mTroubleshootMaildirAction->setVisible( mFolder && mFolder->folderType() == KMFolderTypeMaildir );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
@@ -4429,23 +4372,9 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
   // Enable the "Refresh Local IMAP Cache" action if there's at least one "Disconnected IMAP" account
   mRefreshImapCacheAction->setEnabled( hasImapAccount );
 
-  if ( hasImapAccount == ( mTroubleshootFolderAction != 0 ) )
-    return; // nothing to do
-
   KXMLGUIFactory* factory = mGUIClient->factory();
   if ( factory )
     factory->removeClient( mGUIClient );
-
-  if ( !mTroubleshootFolderAction ) {
-    mTroubleshootFolderAction = new KAction(KIcon("tools-wizard"), i18n("&Troubleshoot IMAP Cache..."), this);
-    actionCollection()->addAction("troubleshoot_folder", mTroubleshootFolderAction );
-    connect(mTroubleshootFolderAction, SIGNAL(triggered(bool)), SLOT(slotTroubleshootFolder()));
-    if ( setState )
-      updateFolderMenu(); // set initial state of the action
-  } else {
-    delete mTroubleshootFolderAction ;
-    mTroubleshootFolderAction = 0;
-  }
 
   if ( factory )
     factory->addClient( mGUIClient );
