@@ -1721,9 +1721,11 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
   }
 }
 
-KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
+KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::Item> &item,
     SetTagMode mode )
-  : mTagLabel( tagLabel ), mSerNums( serNums ), mMode( mode )
+  : mTagLabel( tagLabel )
+  , mItem( item )
+  , mMode( mode )
 {
 }
 

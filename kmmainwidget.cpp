@@ -2057,33 +2057,11 @@ void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, cons
 {
   if ( select.isEmpty() )
     return;
-}
-
-#ifdef OLD_MESSAGELIST
-void KMMainWidget::toggleMessageSetTag(
-    KMail::MessageListView::MessageSet * set,
-    const QString &taglabel
-  )
-{
-  Q_ASSERT( set );
-
-  if ( !set->isValid() )
-  {
-    delete set;
-    return;
-  }
-
-  Q_ASSERT( set->folder() ); // must exist since the set is valid
-
-  QList< unsigned long > serNums = KMMsgDict::serNumList( set->contentsAsMsgBaseList() );
-  Q_ASSERT( !serNums.empty() );
-
-  // Create command for those messages
-  KMCommand *command = new KMSetTagCommand( taglabel, serNums, KMSetTagCommand::Toggle );
-  set->setParent( command ); // so it will be deleted when the command finishes
+  KMCommand *command = new KMSetTagCommand( taglabel, select, KMSetTagCommand::Toggle );
   command->start();
 }
-#endif
+
+
 void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 {
   // Create a persistent set from the current thread.

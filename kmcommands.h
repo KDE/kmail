@@ -577,14 +577,14 @@ class KMAIL_EXPORT KMSetTagCommand : public KMCommand
 public:
   enum SetTagMode { AddIfNotExisting, Toggle };
 
-  KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
+  KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::Item> &item,
                    SetTagMode mode=AddIfNotExisting );
 
 private:
   virtual Result execute();
 
   QString mTagLabel;
-  QList< unsigned long > mSerNums;
+  QList<Akonadi::Item> mItem;
   SetTagMode mMode;
 };
 
