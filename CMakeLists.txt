@@ -15,7 +15,7 @@ OPTION(WITH_IndicateQt "Required for KMail integration with libindicate Indicato
 if(WITH_IndicateQt)
   find_package(PkgConfig REQUIRED)
   pkg_check_modules(INDICATEQT indicate-qt>=0.2.1)
-  macro_log_feature(INDICATEQT_FOUND "indicate-qt" "Qt bindings for libindicate" "http://launchpad.net/libindicate-qt" FALSE "0.2.1" "Required for KMail integration with libindicate Indicators.")
+  macro_log_feature(INDICATEQT_FOUND "indicate-qt" "Qt bindings for libindicate" "http://launchpad.net/libindicate-qt" FALSE "0.2.1" "Needed for KMail integration with libindicate Indicators.")
   if(INDICATEQT_FOUND)
     include_directories(${INDICATEQT_INCLUDE_DIRS})
     link_directories(${INDICATEQT_LIBRARY_DIRS})
