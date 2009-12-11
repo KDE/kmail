@@ -88,6 +88,7 @@ using KMail::ActionScheduler;
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
+#include "kmmessagetag.h"
 //using KMail::FolderJob;
 #include "messageviewer/mailsourceviewer.h"
 using namespace MessageViewer;
@@ -1732,14 +1733,14 @@ KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-#if 0	
 #ifdef NEPOMUK_FOUND
   //Set the visible name for the tag
-  const KMime::MessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
+  const KMMessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
   Nepomuk::Tag n_tag( mTagLabel );
   if ( tagDesc )
     n_tag.setLabel( tagDesc->name() );
 #endif
+#if 0
   QList< KMime::Message * > msgList;
   foreach ( unsigned long serNum, mSerNums ) {
     KMFolder * folder;
