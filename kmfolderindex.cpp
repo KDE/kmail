@@ -22,6 +22,24 @@
 #include <sys/mman.h>
 #endif
 
+const KMMsgBase* KMFolderIndex::getMsgBase( int idx ) const
+{
+  if ( idx < 0 || idx >= mMsgList.count() ) {
+    return 0;
+  } else {
+    return mMsgList[idx];
+  }
+}
+
+KMMsgBase* KMFolderIndex::getMsgBase( int idx )
+{
+  if ( idx < 0 || idx >= mMsgList.count() ) {
+    return 0;
+  } else {
+    return mMsgList[idx];
+  }
+}
+
 #ifdef KMAIL_SQLITE_INDEX
 # include "kmfolderindex_sqlite.cpp"
 #else
@@ -461,24 +479,6 @@ void KMFolderIndex::truncateIndex()
     // The index file wasn't opened, so we don't know the header offset.
     // So let's just create a new empty index.
     writeIndex( true );
-}
-
-const KMMsgBase* KMFolderIndex::getMsgBase( int idx ) const
-{
-  if ( idx < 0 || idx >= mMsgList.count() ) {
-    return 0;
-  } else {
-    return mMsgList[idx];
-  }
-}
-
-KMMsgBase* KMFolderIndex::getMsgBase( int idx )
-{
-  if ( idx < 0 || idx >= mMsgList.count() ) {
-    return 0;
-  } else {
-    return mMsgList[idx];
-  }
 }
 
 void KMFolderIndex::fillMessageDict()
