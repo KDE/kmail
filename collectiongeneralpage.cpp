@@ -414,75 +414,8 @@ void FolderDialogGeneralTab::slotFolderContentsSelectionChanged( int )
   if ( mAlarmsBlockedCheckBox )
       mAlarmsBlockedCheckBox->setEnabled( enable );
 }
-
-
-//-----------------------------------------------------------------------------
-bool FolderDialogGeneralTab::save()
-{
-  KMFolder* folder = mDlg->folder();
-  QString fldName, oldFldName;
-  KMFolderCachedImap* dimap = 0;
-  if ( folder->folderType() == KMFolderTypeCachedImap )
-    dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
-
-  if ( !mIsLocalSystemFolder || mIsResourceFolder )
-  {
-    oldFldName = mDlg->folder()->name();
-    if (!mNameEdit->text().isEmpty())
-      fldName = mNameEdit->text();
-    else
-      fldName = oldFldName;
-
-    if ( mDlg->parentFolder() &&
-         mDlg->parentFolder()->folderType() != KMFolderTypeImap &&
-         mDlg->parentFolder()->folderType() != KMFolderTypeCachedImap )
-      fldName.remove('/');
-    fldName.remove(QRegExp("^\\.*"));
-    if (fldName.isEmpty()) fldName = i18n("unnamed");
-
-    // Set type field
-    if ( mContentsComboBox ) {
-      KMail::FolderContentsType type =
-        static_cast<KMail::FolderContentsType>( mContentsComboBox->currentIndex() );
-      folder->storage()->setContentsType( type );
-    }
-
-    if ( dimap ) {
-      if ( mIncidencesForComboBox ) {
-        KMFolderCachedImap::IncidencesFor incfor =
-               static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentIndex() );
-        if ( dimap->incidencesFor() != incfor ) {
-          dimap->setIncidencesFor( incfor );
-          dimap->writeConfig();
-        }
-      }
-      if ( mAlarmsBlockedCheckBox && mAlarmsBlockedCheckBox->isChecked() != dimap->alarmsBlocked() ) {
-        dimap->setAlarmsBlocked( mAlarmsBlockedCheckBox->isChecked() );
-        dimap->writeConfig();
-      }
-    }
-
-    if( folder->folderType() == KMFolderTypeImap )
-    {
-      KMFolderImap* imapFolder = static_cast<KMFolderImap*>( folder->storage() );
-      imapFolder->setIncludeInMailCheck(
-          mNewMailCheckBox->isChecked() );
-    }
-  }
-
-  if ( dimap && mSharedSeenFlagsCheckBox &&
-       mSharedSeenFlagsCheckBox->isChecked() != dimap->sharedSeenFlags() ) {
-    dimap->setSharedSeenFlags( mSharedSeenFlagsCheckBox->isChecked() );
-    dimap->writeConfig();
-  }
-
-  // make sure everything is on disk, connected slots will call readConfig()
-  // when creating a new folder.
-  folder->storage()->writeConfig();
-
-  return true;
-}
 #endif
+
 
 void CollectionGeneralPage::load(const Akonadi::Collection & col)
 {
