@@ -1740,47 +1740,48 @@ KMCommand::Result KMSetTagCommand::execute()
   if ( tagDesc )
     n_tag.setLabel( tagDesc->name() );
 #endif
-#if 0
-  QList< KMime::Message * > msgList;
-  foreach ( unsigned long serNum, mSerNums ) {
-    KMFolder * folder;
-    int idx;
-    KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-    if ( folder ) {
-      KMime::Message *msg = folder->getMsgBase( idx );
-#ifdef Nepomuk_FOUND
-      Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msgBase->getMsgSerNum() ) );
+
+  Q_FOREACH( Akonadi::Item item, mItem ) {
+    KMime::Message::Ptr msg = KMail::Util::message( item );
+    if ( !msg )
+      return Failed;
+#ifdef NEPOMUK_FOUND
+    Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( item.id() ) );
 #endif
 
-      KMime::MessageTagList tagList;
-      if ( msg->tagList() )
-        tagList = * msg->tagList();
-
-      int tagPosition = tagList.indexOf( mTagLabel );
-      if ( tagPosition == -1 ) {
-        tagList.append( mTagLabel );
-#ifdef NEPOMUK_FOUND
-        n_resource.addTag( n_tag );
-#endif
-      } else if ( mMode == Toggle ) {
-#ifdef NEPOMUK_FOUND
-        QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
-        for (int i = 0; i < n_tag_list.count(); ++i ) {
-          if ( n_tag_list[i].identifiers()[0] == mTagLabel ) {
-            n_tag_list.removeAt( i );
-            break;
-          }
-        }
-        n_resource.setTags( n_tag_list );
-#endif
-        tagList.removeAt( tagPosition );
-      }
-      msg->setTagList( tagList );
-    }
-  }
+    KMMessageTagList tagList;
+#if 0  //PORT it
+    if ( msg->tagList() )
+      tagList = * msg->tagList();
 #else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+
+    int tagPosition = tagList.indexOf( mTagLabel );
+    if ( tagPosition == -1 ) {
+      tagList.append( mTagLabel );
+#ifdef NEPOMUK_FOUND
+      n_resource.addTag( n_tag );
+#endif
+    } else if ( mMode == Toggle ) {
+#ifdef NEPOMUK_FOUND
+      QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
+      for (int i = 0; i < n_tag_list.count(); ++i ) {
+        if ( n_tag_list[i].identifiers()[0] == mTagLabel ) {
+          n_tag_list.removeAt( i );
+          break;
+        }
+      }
+      n_resource.setTags( n_tag_list );
+#endif
+      tagList.removeAt( tagPosition );
+    }
+#if 0//PORT it
+    msg->setTagList( tagList );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  }
   return OK;
 }
 
