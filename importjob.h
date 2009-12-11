@@ -23,8 +23,8 @@
 
 #include <kurl.h>
 
-#include <qobject.h>
-#include <qlist.h>
+#include <QObject>
+#include <QList>
 
 class QWidget;
 class KArchive;
@@ -64,30 +64,27 @@ class ImportJob : public QObject
 
   private:
 
-#if 0
     struct Folder
     {
-      KMFolder *parent;
+      Akonadi::Collection parent;
       const KArchiveDirectory *archiveDir;
     };
 
     struct Messages
     {
-      KMFolder *parent;
+      Akonadi::Collection parent;
       QList<const KArchiveFile*> files;
     };
-#endif
 
     void finish();
     void abort( const QString &errorMessage );
     void queueFolders();
     void importNextDirectory();
-#if 0
-    KMFolder* createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions );
-    KMFolder* getOrCreateSubFolder( KMFolder *parentFolder, const QString &subFolderName,
-                                    mode_t subFolderPermissions );
-    void enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder );
-#endif
+
+    Akonadi::Collection getOrCreateSubFolder( const Akonadi::Collection &parentFolder,
+                                              const QString &subFolderName );
+    void enqueueMessages( const KArchiveDirectory *dir, const Akonadi::Collection &folder );
+
     KArchive *mArchive;
 
     // The root folder which the user has selected as the folder to which everything should be
@@ -98,7 +95,6 @@ class ImportJob : public QObject
     KUrl mArchiveFile;
     int mNumberOfImportedMessages;
 
-#if 0
     // List of archive folders with their corresponding KMail parent folder that are awaiting
     // processing
     QList<Folder> mQueuedDirectories;
@@ -107,8 +103,8 @@ class ImportJob : public QObject
     QList<Messages> mQueuedMessages;
 
     // The folder to which we are currently importing messages
-    KMFolder *mCurrentFolder;
-#endif
+    Akonadi::Collection mCurrentFolder;
+
     KPIM::ProgressItem *mProgressItem;
     bool mAborted;
 };

@@ -87,7 +87,7 @@ void BackupJob::setDeleteFoldersAfterCompletion( bool deleteThem )
 bool BackupJob::queueFolders( const Akonadi::Collection &root )
 {
   mPendingFolders.append( root );
-  // TODO: This should be done async!
+  // FIXME: Get rid of the exec()
   // We could do a recursive CollectionFetchJob, but we only fetch the first level
   // and then recurse manually. This is needed because a recursive fetch doesn't
   // sort the collections the way we want. We need all first level children to be
@@ -339,7 +339,7 @@ void BackupJob::archiveNextFolder()
     return;
   }
 
-  // TODO: This should be done async!
+  // FIXME: Get rid of the exec()
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder );
   job->exec();
   if ( job->error() ) {
