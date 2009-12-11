@@ -67,6 +67,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   : QWidget( parent ), d( new FolderSelectionTreeViewPrivate() )
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
+  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
   QHBoxLayout *lay = new QHBoxLayout( this );
   lay->setMargin( 0 );
@@ -80,33 +81,32 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   collectionModel->setSourceModel( d->entityModel );
   collectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
   collectionModel->setHeaderGroup( Akonadi::EntityTreeModel::CollectionTreeHeaders );
+  collectionModel->setDynamicSortFilter( true );
+  collectionModel->setSortCaseSensitivity( Qt::CaseInsensitive );
 
+  //WARNING Akonadi::RecursiveCollectionFilterProxyModel doesn't work now
   Akonadi::RecursiveCollectionFilterProxyModel *recurfilter = new Akonadi::RecursiveCollectionFilterProxyModel( this );
   recurfilter->addContentMimeTypeInclusionFilter( KMime::Message::mimeType() );
   recurfilter->setSourceModel( collectionModel );
 
-//   // ... with statistics...
+  //   // ... with statistics...
   d->filterModel = new Akonadi::StatisticsProxyModel( this );
-  d->filterModel->setSourceModel( recurfilter );
-  d->filterModel->setDynamicSortFilter( true );
-  d->filterModel->setSortCaseSensitivity( Qt::CaseInsensitive );
+  d->filterModel->setSourceModel( /*recurfilter*/ collectionModel );
 
 
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
   d->quotaModel->setSourceModel( d->filterModel );
 
+  //WARNING: ReadableCollectionProxyModel doesn't work now
   d->readableproxy = new ReadableCollectionProxyModel( this );
   d->readableproxy->setSourceModel( d->quotaModel );
-
-  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
 
   connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ), this, SLOT( slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ) );
 
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
-  d->collectionFolderView->setModel( d->readableproxy );
-  d->collectionFolderView->expandAll();
+  d->collectionFolderView->setModel( /*d->readableproxy*/ d->quotaModel );
   lay->addWidget( d->collectionFolderView );
 
   readConfig();
