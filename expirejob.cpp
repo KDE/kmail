@@ -36,7 +36,7 @@ using KPIM::BroadcastStatus;
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfiggroup.h>
-
+#include "foldercollection.h"
 using namespace KMail;
 
 // Look at this number of messages in each slotDoWork call
@@ -84,9 +84,9 @@ void ExpireJob::execute()
   mMaxUnreadTime = 0;
   mMaxReadTime = 0;
   mCurrentIndex = 0;
-#if 0
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
   int unreadDays, readDays;
-  mSrcFolder->daysToExpire( unreadDays, readDays );
+  fd->daysToExpire( unreadDays, readDays );
   if (unreadDays > 0) {
     kDebug() << "ExpireJob: deleting unread older than"<< unreadDays << "days";
     mMaxUnreadTime = time(0) - unreadDays * 3600 * 24;
@@ -101,6 +101,7 @@ void ExpireJob::execute()
     delete this;
     return;
   }
+#if 0
   FolderStorage* storage = mSrcFolder->storage();
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open( "expirejob" );
