@@ -41,6 +41,7 @@
 // of messages from an IMAP server.
 
 #include "kmcommands.h"
+#include "config-kmail.h"
 
 #include <unistd.h> // link()
 #include <errno.h>
@@ -124,7 +125,7 @@ using namespace KMime;
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
 
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
   #include <nepomuk/tag.h>
 #endif
 
@@ -1723,7 +1724,7 @@ KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList< unsigned
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
   //Set the visible name for the tag
   const KMMessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
   Nepomuk::Tag n_tag( mTagLabel );
@@ -1738,8 +1739,8 @@ KMCommand::Result KMSetTagCommand::execute()
     KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
     if ( folder ) {
       KMMsgBase *msg = folder->getMsgBase( idx );
-#ifdef Nepomuk_FOUND
-      Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msgBase->getMsgSerNum() ) );
+#ifdef NEPOMUK_FOUND
+      Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msg->getMsgSerNum() ) );
 #endif
 
       KMMessageTagList tagList;
@@ -1749,11 +1750,11 @@ KMCommand::Result KMSetTagCommand::execute()
       int tagPosition = tagList.indexOf( mTagLabel );
       if ( tagPosition == -1 ) {
         tagList.append( mTagLabel );
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
         n_resource.addTag( n_tag );
 #endif
       } else if ( mMode == Toggle ) {
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
         QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
         for (int i = 0; i < n_tag_list.count(); ++i ) {
           if ( n_tag_list[i].identifiers()[0] == mTagLabel ) {
