@@ -324,9 +324,9 @@ void KMail::Util::launchAccountWizard( QWidget *w )
   lst.append( "\"message/rfc822\"" );
 
   if( !QProcess::startDetached("accountwizard", lst ) )
-    KMessageBox::error( w, i18n( "Could not start accountwizard "
-                                    "please check your installation." ),
-                        i18n( "KMail Error" ) );
+    KMessageBox::error( w, i18n( "Could not start the account wizard. "
+                                 "Please check your installation." ),
+                        i18n( "Unable to start account wizard" ) );
 
 }
 
