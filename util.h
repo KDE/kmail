@@ -130,6 +130,8 @@ namespace Util {
 
      KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
      OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
+
+     void launchAccountWizard( QWidget * );
 }
 }
 

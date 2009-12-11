@@ -316,3 +316,17 @@ OrgKdeAkonadiImapSettingsInterface *KMail::Util::createImapSettingsInterface( co
   return new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus() );
 }
 
+
+void KMail::Util::launchAccountWizard( QWidget *w )
+{
+  QStringList lst;
+  lst.append( "--type" );
+  lst.append( "\"message/rfc822\"" );
+
+  if( !QProcess::startDetached("accountwizard", lst ) )
+    KMessageBox::error( w, i18n( "Could not start accountwizard "
+                                    "please check your installation." ),
+                        i18n( "KMail Error" ) );
+
+}
+

@@ -26,6 +26,7 @@
 #include "progressdialog.h"
 #include "statusbarprogresswidget.h"
 #include "broadcaststatus.h"
+#include "util.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -96,13 +97,7 @@ KMMainWin::KMMainWin(QWidget *)
 #endif
   if ( kmkernel->firstStart() )
   {
-    QStringList lst;
-    lst.append( "--type" );
-    lst.append( "\"message/rfc822\"" );
-    if( !QProcess::startDetached("accountwizard", lst) )
-    KMessageBox::error( this, i18n( "Could not start accountwizard "
-                                    "please check your installation." ),
-                        i18n( "KMail Error" ) );
+    KMail::Util::launchAccountWizard( this );
   }
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
