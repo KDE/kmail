@@ -25,6 +25,7 @@
 #include <kmime/kmime_message.h>
 #include <akonadi/item.h>
 #include <messagecore/messagestatus.h>
+#include "kmmessagetag.h"
 namespace KMail {
   /**
    * Enumeration that defines the available reply "modes"
@@ -217,6 +218,9 @@ namespace MessageHelper {
    * and false otherwise. */
   QString skipKeyword(const QString& str, QChar sepChar=':',
 				 bool* keywordFound=0);
+
+  KMMessageTagList tagList(const KMime::Message::Ptr &msg);
+  void setTagList( const KMime::Message::Ptr& msg, KMMessageTagList lst );
 
   void link( const KMime::Message::Ptr &msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus );
 }

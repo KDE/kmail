@@ -1234,6 +1234,7 @@ void removePrivateHeaderFields( const KMime::Message::Ptr &msg ) {
   msg->removeHeader("X-KMail-CursorPos");
   msg->removeHeader( "X-KMail-Templates" );
   msg->removeHeader( "X-KMail-Drafts" );
+  msg->removeHeader( "X-KMail-Tag" );
 }
 
 QByteArray getRefStr( const KMime::Message::Ptr &msg )
@@ -1263,6 +1264,26 @@ QByteArray getRefStr( const KMime::Message::Ptr &msg )
   return retRefStr;
 }
 
+
+KMMessageTagList tagList(const KMime::Message::Ptr &msg)
+{
+  if ( !msg->headerByType( "X-KMail-Tag" ) )
+    return KMMessageTagList();
+  else
+    return KMMessageTagList( msg->headerByType( "X-KMail-Tag" )->asUnicodeString().split( ',' ) );
+}
+
+void setTagList( const KMime::Message::Ptr& msg, KMMessageTagList lst )
+{
+  if ( lst.isEmpty() )
+    msg->removeHeader( "X-KMail-Tag" );
+  else {
+    lst.prioritySort();
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Tag", msg.get(), lst.join( "," ), "utf-8" );
+    msg->setHeader( header );
+  }
+
+}
 
 QString msgId( const KMime::Message::Ptr &msg )
 {

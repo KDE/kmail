@@ -1749,13 +1749,7 @@ KMCommand::Result KMSetTagCommand::execute()
     Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( item.id() ) );
 #endif
 
-    KMMessageTagList tagList;
-#if 0  //PORT it
-    if ( msg->tagList() )
-      tagList = * msg->tagList();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    KMMessageTagList tagList = KMail::MessageHelper::tagList( msg );
 
     int tagPosition = tagList.indexOf( mTagLabel );
     if ( tagPosition == -1 ) {
@@ -1776,11 +1770,7 @@ KMCommand::Result KMSetTagCommand::execute()
 #endif
       tagList.removeAt( tagPosition );
     }
-#if 0//PORT it
-    msg->setTagList( tagList );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    KMail::MessageHelper::setTagList( msg, tagList );
   }
   return OK;
 }
