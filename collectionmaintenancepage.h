@@ -40,10 +40,7 @@ protected:
   void init( const Akonadi::Collection&);
 private:
   QLabel *mFolderSizeLabel;
-  QPushButton *mRebuildIndexButton;
-  QPushButton *mRebuildImapButton;
   QLabel *mCompactStatusLabel;
-  QPushButton *mCompactNowButton;
   KLineEdit *mCollectionLocation;
   QLabel *mCollectionCount;
   QLabel *mCollectionUnread;
