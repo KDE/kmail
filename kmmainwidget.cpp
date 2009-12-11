@@ -4029,26 +4029,22 @@ void KMMainWidget::updateMessageTagActions( const int count )
       kWarning() << "Payload is not a MessagePtr!";
       return;
     }
-#if 0
-    KMime::Message *currentMessage = new KMime::Message;
-    currentMessage->setContent( item.payloadData() );
-    currentMessage->parse();
-    KMime::MessageTagList *aTagList = currentMessage->tagList();
+    KMime::Message::Ptr msg = KMail::Util::message( item );
+    if ( !msg )
+      return;
+    KMMessageTagList aTagList = KMail::MessageHelper::tagList( msg );
     for ( QList<MessageTagPtrPair>::ConstIterator it =
-          mMessageTagMenuActions.constBegin();
+            mMessageTagMenuActions.constBegin();
           it != mMessageTagMenuActions.constEnd(); ++it )
     {
       bool list_present = false;
-      if ( aTagList )
+      if ( !aTagList.isEmpty() )
         list_present =
-           ( aTagList->indexOf( QString((*it).first->label() ) ) != -1 );
+           ( aTagList.indexOf( QString((*it).first->label() ) ) != -1 );
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setChecked( list_present );
       aToggler->setEnabled( true );
     }
-    delete currentMessage;
-#endif
-
   } else if ( count > 1 ) {
     for ( QList<MessageTagPtrPair>::ConstIterator it =
           mMessageTagMenuActions.constBegin();
