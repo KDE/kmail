@@ -41,6 +41,7 @@
 // of messages from an IMAP server.
 
 #include "kmcommands.h"
+#include "config-kmail.h"
 
 #include <unistd.h> // link()
 #include <errno.h>
@@ -129,7 +130,7 @@ using namespace KMime;
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
 
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
   #include <nepomuk/tag.h>
 #endif
 
@@ -1731,15 +1732,14 @@ KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-#if 0 //TODO port to akonadi
-#ifdef Nepomuk_FOUND
+#if 0	
+#ifdef NEPOMUK_FOUND
   //Set the visible name for the tag
   const KMime::MessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
   Nepomuk::Tag n_tag( mTagLabel );
   if ( tagDesc )
     n_tag.setLabel( tagDesc->name() );
 #endif
-
   QList< KMime::Message * > msgList;
   foreach ( unsigned long serNum, mSerNums ) {
     KMFolder * folder;
@@ -1758,11 +1758,11 @@ KMCommand::Result KMSetTagCommand::execute()
       int tagPosition = tagList.indexOf( mTagLabel );
       if ( tagPosition == -1 ) {
         tagList.append( mTagLabel );
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
         n_resource.addTag( n_tag );
 #endif
       } else if ( mMode == Toggle ) {
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
         QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
         for (int i = 0; i < n_tag_list.count(); ++i ) {
           if ( n_tag_list[i].identifiers()[0] == mTagLabel ) {

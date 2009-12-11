@@ -44,7 +44,7 @@
 #include <klocale.h>
 #include <krandom.h>
 
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
 #include <nepomuk/resourcemanager.h>
 #endif
 
@@ -163,7 +163,7 @@ KMMessageTagMgr::KMMessageTagMgr() : mDirty( 0 )
 {
   mTagDict = new QHash<QString,KMMessageTagDescription *>();
   mTagList = new QList<KMMessageTagDescription *>();
-  #ifdef Nepomuk_FOUND
+  #ifdef NEPOMUK_FOUND
   Nepomuk::ResourceManager::instance()->init(); 
   #endif
 }

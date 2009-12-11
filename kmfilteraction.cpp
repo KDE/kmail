@@ -1,6 +1,7 @@
 // kmfilteraction.cpp
 
 #include "kmfilteraction.h"
+#include "config-kmail.h"
 
 // other KMail headers:
 #include "customtemplates.h"
@@ -45,7 +46,7 @@ using KMail::RegExpLineEdit;
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/resource.h>
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
   #include <nepomuk/tag.h>
 #endif
 
@@ -929,7 +930,8 @@ KMFilterAction::ReturnCode KMFilterActionAddTag::process( const KMime::Message::
   const int tagPosition = tagList.indexOf( tagLabel );
   if ( tagPosition == -1 ) {
     tagList.append( tagLabel );
-#ifdef Nepomuk_FOUND
+#ifdef NEPOMUK_FOUND
+    Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msg->getMsgSerNum() ) );
     n_resource.addTag( mParameter );
 #endif
     msg->setTagList( tagList );
