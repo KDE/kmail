@@ -485,11 +485,15 @@ namespace KMail {
 
     QString userHTML;
 
+    // FIXME this is disabled since the exec() causes crashes and deadlocks :(
+#if 0
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
     job->setQuery( Akonadi::ContactSearchJob::Email, KPIMUtils::firstEmailAddress( message->from() ) );
     job->exec();
-
     const KABC::Addressee::List addresses = job->contacts();
+#else
+    const KABC::Addressee::List addresses;
+#endif
 
     QString photoURL;
     int photoWidth = 60;
