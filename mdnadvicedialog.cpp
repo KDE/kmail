@@ -28,12 +28,12 @@ MDNAdviceDialog::MDNAdviceDialog( const QString &text, bool canDeny, QWidget *pa
   setCaption( i18n( "Message Disposition Notification Request" ) );
   if ( canDeny ) {
     setButtons( KDialog::Yes | KDialog::User1 | KDialog::User2 );
-    setButtonText( KDialog::User2, "Send \"&denied\"" );
+    setButtonText( KDialog::User2, i18n("Send \"&denied\"") );
   } else {
     setButtons( KDialog::Yes | KDialog::User1 );
   }
-  setButtonText( KDialog::Yes, "&Ignore" );
-  setButtonText( KDialog::User1, "&Send" );
+  setButtonText( KDialog::Yes, i18n("&Ignore") );
+  setButtonText( KDialog::User1, i18n("&Send") );
   setEscapeButton( KDialog::Yes );
   KMessageBox::createKMessageBox( this, QMessageBox::Question, text,
                                   QStringList(), QString(), 0, KMessageBox::NoExec );
