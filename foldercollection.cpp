@@ -91,10 +91,7 @@ bool FolderCollection::isSystemFolder() const
 
 bool FolderCollection::noContent() const
 {
-  //TODO port !!!!
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-
-  return false;
+  return ( count()<= 0 );
 }
 
 bool FolderCollection::isReadOnly() const
