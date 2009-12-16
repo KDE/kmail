@@ -28,7 +28,8 @@
 #include <akonadi/collectiondeletejob.h>
 #include <kio/jobuidelegate.h>
 #include "kmcommands.h"
-//#include "expirejob.h"
+#include "expirejob.h"
+#include "compactionjob.h"
 
 #include <QMutex>
 #include <QMutexLocker>
@@ -512,8 +513,8 @@ void FolderCollection::slotDeletionCollectionResult( KJob * job )
 void FolderCollection::expireOldMessages( bool immediate )
 {
   kDebug() << "AKONADI PORT: port it  " << Q_FUNC_INFO;
+  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(mCollection, immediate);
 #if 0
-  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(this, immediate);
   kmkernel->jobScheduler()->registerTask( task );
   if ( immediate ) {
     // #82259: compact after expiring.
@@ -525,13 +526,15 @@ void FolderCollection::expireOldMessages( bool immediate )
 void FolderCollection::compact( FolderCollection::CompactOptions options )
 {
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#if 0
   if ( options == CompactLater ) {
-    KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(this, false);
+    KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(mCollection, false);
+#if 0
     kmkernel->jobScheduler()->registerTask( task );
-  } else {
-    mStorage->compact( options == CompactSilentlyNow );
-  }
 #endif
+  } else {
+#if 0
+    mStorage->compact( options == CompactSilentlyNow );
+#endif
+  }
 }
 
