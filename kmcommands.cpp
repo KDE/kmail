@@ -776,7 +776,8 @@ static KUrl subjectToUrl( const QString &subject )
   if ( !fileName.endsWith( ".mbox" ) )
     fileName += ".mbox";
 
-  return KFileDialog::getSaveUrl( KUrl::fromPath( fileName ), "*.mbox\n*.*" );
+  QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
+  return KFileDialog::getSaveUrl( KUrl::fromPath( fileName ), filter );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage *msg )
