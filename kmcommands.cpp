@@ -764,11 +764,12 @@ static KURL subjectToUrl( const QString & subject )
   // We also look at the special case of ": ", since converting that to "_ " would look strange,
   // simply "_" looks better.
   // https://issues.kolab.org/issue3805
+  QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
   return KFileDialog::getSaveURL( subject.stripWhiteSpace()
                                            .replace( QDir::separator(), '_' )
                                            .replace( ": ", "_" )
-                                           .replace( ':', '_' ),
-                                  "*.mbox|email messages (*.mbox)\n*|all non-hidden files (*)" );
+                                  .replace( ':', '_' ),
+                                  filter );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
