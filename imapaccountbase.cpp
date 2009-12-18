@@ -895,7 +895,7 @@ namespace KMail {
       bool readOnly = false;
       if (it != mapJobData.end()) {
           const KMFolder * const folder = (*it).parent;
-          if( !folder ) return error;
+          if( !folder ) return _error;
           const KMFolderCachedImap * const imap = dynamic_cast<const KMFolderCachedImap*>( folder->storage() );
           if ( imap ) {
             quotaAsString = imap->quotaInfo().toString();
