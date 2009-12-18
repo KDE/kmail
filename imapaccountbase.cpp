@@ -895,17 +895,17 @@ namespace KMail {
       bool readOnly = false;
       if (it != mapJobData.end()) {
           const KMFolder * const folder = (*it).parent;
-          assert(folder);
+          if( !folder ) return error;
           const KMFolderCachedImap * const imap = dynamic_cast<const KMFolderCachedImap*>( folder->storage() );
           if ( imap ) {
-              quotaAsString = imap->quotaInfo().toString();
+            quotaAsString = imap->quotaInfo().toString();
           }
           readOnly = folder->isReadOnly();
       }
       error = i18n("The folder is too close to its quota limit. (%1)").arg( quotaAsString );
       if ( readOnly ) {
           error += i18n("\nSince you do not have write privileges on this folder, "
-                  "please ask the owner of the folder to free up some space in it.");
+                        "please ask the owner of the folder to free up some space in it.");
       }
       return error;
   }
