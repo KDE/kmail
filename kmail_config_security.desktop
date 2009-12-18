@@ -11,6 +11,7 @@ X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 X-KDE-Weight=500
+X-DocPath=kmail/index.html#configure-security
 
 Name=Security
 Name[af]=Sekuriteit
