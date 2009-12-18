@@ -763,13 +763,18 @@ static KURL subjectToUrl( const QString & subject )
   // in KFileDialog though) and also on Windows filesystems.
   // We also look at the special case of ": ", since converting that to "_ " would look strange,
   // simply "_" looks better.
+  // We also don't allow filenames starting with a dot, since then the file is hidden and the poor
+  // user can't find it anymore.
   // https://issues.kolab.org/issue3805
-  QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
-  return KFileDialog::getSaveURL( subject.stripWhiteSpace()
-                                           .replace( QDir::separator(), '_' )
-                                           .replace( ": ", "_" )
-                                  .replace( ':', '_' ),
-                                  filter );
+  const QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
+  QString cleanSubject = subject.stripWhiteSpace()
+                                  .replace( QDir::separator(), '_' )
+                                  .replace( ": ", "_" )
+                                  .replace( ':', '_' );
+  if ( cleanSubject.startsWith( "." ) ) {
+    cleanSubject[0] = '_';
+  }
+  return KFileDialog::getSaveURL( cleanSubject, filter );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
