@@ -321,7 +321,7 @@ void KMail::Util::launchAccountWizard( QWidget *w )
 {
   QStringList lst;
   lst.append( "--type" );
-  lst.append( "\"message/rfc822\"" );
+  lst.append( "message/rfc822" );
 
   if( !QProcess::startDetached("accountwizard", lst ) )
     KMessageBox::error( w, i18n( "Could not start the account wizard. "
