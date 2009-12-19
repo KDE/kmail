@@ -32,9 +32,9 @@ using KMail::FilterLog;
 #include <Nepomuk/Query/Query>
 #include <Nepomuk/Query/AndTerm>
 #include <Nepomuk/Query/OrTerm>
-#include <Nepomuk/Query/ComparisonTerm>
 #include <Nepomuk/Query/LiteralTerm>
 #include <Nepomuk/Query/ResourceTerm>
+#include <Nepomuk/Query/NegationTerm>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -87,33 +87,6 @@ static struct _statusNames statusNames[] = {
 };
 
 static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNames );
-
-static Nepomuk::Query::ComparisonTerm::Comparator toNepomukComperator( KMSearchRule::Function function )
-{
-  switch ( function ) {
-    case KMSearchRule::FuncContains:
-    case KMSearchRule::FuncContainsNot:
-      return Nepomuk::Query::ComparisonTerm::Contains;
-    case KMSearchRule::FuncEquals:
-    case KMSearchRule::FuncNotEqual:
-      return Nepomuk::Query::ComparisonTerm::Equal;
-    case KMSearchRule::FuncIsGreater:
-      return Nepomuk::Query::ComparisonTerm::Greater;
-    case KMSearchRule::FuncIsGreaterOrEqual:
-      return Nepomuk::Query::ComparisonTerm::GreaterOrEqual;
-    case KMSearchRule::FuncIsLess:
-      return Nepomuk::Query::ComparisonTerm::Smaller;
-    case KMSearchRule::FuncIsLessOrEqual:
-      return Nepomuk::Query::ComparisonTerm::SmallerOrEqual;
-    case KMSearchRule::FuncRegExp:
-    case KMSearchRule::FuncNotRegExp:
-      return Nepomuk::Query::ComparisonTerm::Regexp;
-    default:
-      kDebug() << "Unhandled function type: " << function;
-  }
-
-  return Nepomuk::Query::ComparisonTerm::Contains;
-}
 
 //==================================================
 //
@@ -228,6 +201,53 @@ const QString KMSearchRule::asString() const
 
   return result;
 }
+
+Nepomuk::Query::ComparisonTerm::Comparator KMSearchRule::nepomukComparator() const
+{
+  switch ( function() ) {
+    case KMSearchRule::FuncContains:
+    case KMSearchRule::FuncContainsNot:
+      return Nepomuk::Query::ComparisonTerm::Contains;
+    case KMSearchRule::FuncEquals:
+    case KMSearchRule::FuncNotEqual:
+      return Nepomuk::Query::ComparisonTerm::Equal;
+    case KMSearchRule::FuncIsGreater:
+      return Nepomuk::Query::ComparisonTerm::Greater;
+    case KMSearchRule::FuncIsGreaterOrEqual:
+      return Nepomuk::Query::ComparisonTerm::GreaterOrEqual;
+    case KMSearchRule::FuncIsLess:
+      return Nepomuk::Query::ComparisonTerm::Smaller;
+    case KMSearchRule::FuncIsLessOrEqual:
+      return Nepomuk::Query::ComparisonTerm::SmallerOrEqual;
+    case KMSearchRule::FuncRegExp:
+    case KMSearchRule::FuncNotRegExp:
+      return Nepomuk::Query::ComparisonTerm::Regexp;
+    default:
+      kDebug() << "Unhandled function type: " << function();
+  }
+}
+
+void KMSearchRule::addAndNegateTerm(const Nepomuk::Query::Term& term, Nepomuk::Query::GroupTerm& termGroup) const
+{
+  bool negate = false;
+  switch ( function() ) {
+    case KMSearchRule::FuncContainsNot:
+    case KMSearchRule::FuncNotEqual:
+    case KMSearchRule::FuncNotRegExp:
+    case KMSearchRule::FuncHasNoAttachment:
+    case KMSearchRule::FuncIsNotInCategory:
+    case KMSearchRule::FuncIsNotInAddressbook:
+      negate = true;
+  }
+  if ( negate ) {
+    Nepomuk::Query::NegationTerm neg;
+    neg.setSubTerm( term );
+    termGroup.addSubTerm( neg );
+  } else {
+    termGroup.addSubTerm( term );
+  }
+}
+
 
 //==================================================
 //
@@ -369,7 +389,7 @@ bool KMSearchRuleString::matches( KMime::Message * msg ) const
 void KMSearchRuleString::addPersonTerm(Nepomuk::Query::GroupTerm& groupTerm, const QUrl& field) const
 {
   // TODO split contents() into address/name and adapt the query accordingly
-  const Nepomuk::Query::ComparisonTerm valueTerm( Vocabulary::NCO::emailAddress(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+  const Nepomuk::Query::ComparisonTerm valueTerm( Vocabulary::NCO::emailAddress(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
   const Nepomuk::Query::ComparisonTerm addressTerm( Vocabulary::NCO::hasEmailAddress(), valueTerm, Nepomuk::Query::ComparisonTerm::Equal );
   const Nepomuk::Query::ComparisonTerm personTerm( field, addressTerm, Nepomuk::Query::ComparisonTerm::Equal );
   groupTerm.addSubTerm( personTerm );
@@ -389,23 +409,23 @@ void KMSearchRuleString::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) con
     addPersonTerm( termGroup, Vocabulary::NMO::from() );
 
   if ( field().toLower() == "subject" || field() == "<any header>" || field() == "<message>" ) {
-    const Nepomuk::Query::ComparisonTerm subjectTerm( Vocabulary::NMO::messageSubject(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+    const Nepomuk::Query::ComparisonTerm subjectTerm( Vocabulary::NMO::messageSubject(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
     termGroup.addSubTerm( subjectTerm );
   }
 
   // TODO complete for other headers, generic headers
 
   if ( field() == "<body>" || field() == "<message>" ) {
-    const Nepomuk::Query::ComparisonTerm bodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+    const Nepomuk::Query::ComparisonTerm bodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
     termGroup.addSubTerm( bodyTerm );
 
-    const Nepomuk::Query::ComparisonTerm attachmentBodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), toNepomukComperator( function() ) );
+    const Nepomuk::Query::ComparisonTerm attachmentBodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
     const Nepomuk::Query::ComparisonTerm attachmentTerm( Vocabulary::NIE::isPartOf(), attachmentBodyTerm, Nepomuk::Query::ComparisonTerm::Equal );
     termGroup.addSubTerm( attachmentTerm );
   }
 
   if ( !termGroup.subTerms().isEmpty() )
-    groupTerm.addSubTerm( termGroup );
+    addAndNegateTerm( termGroup, groupTerm );
 }
 
 
@@ -625,7 +645,14 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
 
 void KMSearchRuleNumerical::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
 {
-  // TODO
+  if ( field() == "<size>" ) {
+    const Nepomuk::Query::ComparisonTerm sizeTerm( Vocabulary::NIE::byteSize(),
+                                                   Nepomuk::Query::LiteralTerm( contents().toInt() ),
+                                                   nepomukComparator() );
+    addAndNegateTerm( sizeTerm, groupTerm );
+  } else if ( field() == "<age in days>" ) {
+    // TODO
+  }
 }
 
 //==================================================
@@ -707,13 +734,14 @@ bool KMSearchRuleStatus::matches( KMime::Message * msg ) const
   return rc;
 }
 
-static void addTagTerm( Nepomuk::Query::GroupTerm &groupTerm, const QString &tagId )
+void KMSearchRuleStatus::addTagTerm( Nepomuk::Query::GroupTerm &groupTerm, const QString &tagId ) const
 {
   // TODO handle function() == NOT
   const Nepomuk::Tag tag( tagId );
-  groupTerm.addSubTerm( Nepomuk::Query::ComparisonTerm( Soprano::Vocabulary::NAO::hasTag(),
-                                                        Nepomuk::Query::ResourceTerm( tag.resourceUri() ),
-                                                        Nepomuk::Query::ComparisonTerm::Equal ) );
+  addAndNegateTerm( Nepomuk::Query::ComparisonTerm( Soprano::Vocabulary::NAO::hasTag(),
+                                                    Nepomuk::Query::ResourceTerm( tag.resourceUri() ),
+                                                    Nepomuk::Query::ComparisonTerm::Equal ),
+                                                    groupTerm );
 }
 
 void KMSearchRuleStatus::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const

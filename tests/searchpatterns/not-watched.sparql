@@ -1,0 +1,5 @@
+select distinct ?r where { 
+  OPTIONAL { 
+    ?v1 <http://www.semanticdesktop.org/ontologies/2007/08/15/nao#hasTag> <nepomuk:/res/46759a87-7956-431f-a171-ccb754ef239e> . FILTER(?v1=?r) . 
+  } . FILTER(!BOUND(?v1)) .
+}

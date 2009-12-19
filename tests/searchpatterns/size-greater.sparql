@@ -1,0 +1,3 @@
+select distinct ?r where { 
+  ?r <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#byteSize> ?v1 . FILTER(?v1>"1024"^^<http://www.w3.org/2001/XMLSchema#int>) . 
+}

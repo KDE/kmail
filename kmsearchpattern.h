@@ -25,6 +25,7 @@
 using KPIM::MessageStatus;
 
 #include <Nepomuk/Query/GroupTerm>
+#include <Nepomuk/Query/ComparisonTerm>
 
 #include <QList>
 #include <QString>
@@ -151,6 +152,13 @@ public:
 
   /** Adds query terms to the given term group. */
   virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const = 0;
+
+protected:
+  /** Converts function() into the corresponding Nepomuk query operator. */
+  Nepomuk::Query::ComparisonTerm::Comparator nepomukComparator() const;
+
+  /** Adds @p term to @p termGroup and adds a negation term inbetween if needed. */
+  void addAndNegateTerm( const Nepomuk::Query::Term &term, Nepomuk::Query::GroupTerm &termGroup ) const;
 
 private:
   static Function configValueToFunc( const char * str );
@@ -290,6 +298,9 @@ public:
 
 
    static MessageStatus statusFromEnglishName(const QString&);
+private:
+  void addTagTerm( Nepomuk::Query::GroupTerm &groupTerm, const QString &tagId ) const;
+
 private:
    MessageStatus mStatus;
 };
