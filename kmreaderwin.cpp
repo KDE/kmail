@@ -1468,9 +1468,7 @@ void KMReaderWin::updateReaderWin()
 
   htmlWriter()->reset();
 
-  KMFolder* folder = 0;
-  if (message(&folder))
-  {
+  if ( message() ) {
     if ( GlobalSettings::self()->showColorbar() ) {
       mColorBar->show();
     } else {
@@ -2568,25 +2566,25 @@ void KMReaderWin::update( bool force )
 }
 
 //-----------------------------------------------------------------------------
-KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
+KMMessage *KMReaderWin::message() const
 {
-  KMFolder*  tmpFolder;
-  KMFolder*& folder = aFolder ? *aFolder : tmpFolder;
-  folder = 0;
-  if (mMessage)
-      return mMessage;
-  if (mLastSerNum) {
-    KMMessage *message = 0;
+  if ( mMessage ) {
+    return mMessage;
+  }
+
+  KMMessage *message = 0;
+  if ( mLastSerNum ) {
+    KMFolder *folder;
     int index;
     KMMsgDict::instance()->getLocation( mLastSerNum, &folder, &index );
-    if (folder )
+    if ( folder && index >= 0 ) {
       message = folder->getMsg( index );
+    }
     if ( !message ) {
       kWarning() << "Attempt to reference invalid serial number" << mLastSerNum;
     }
-    return message;
   }
-  return 0;
+  return message;
 }
 
 //-----------------------------------------------------------------------------

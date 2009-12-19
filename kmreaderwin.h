@@ -293,7 +293,7 @@ public:
   KHTMLPart * htmlPart() const { return mViewer; }
 
   /** Returns the current message or 0 if none. */
-  KMMessage* message(KMFolder** folder=0) const;
+  KMMessage* message() const;
 
   void openAttachment( int id, const QString & name );
   void saveAttachment( const KUrl &tempFileName );

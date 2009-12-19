@@ -852,7 +852,7 @@ private:
 
   QString mDrafts;
   QString mTemplates;
-  mutable DwMessage* mMsg;
+  DwMessage* mMsg;
   mutable bool mNeedsAssembly :1;
   bool mDecodeHTML :1;
   bool mReadyToShow :1;
