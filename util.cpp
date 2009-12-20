@@ -49,12 +49,6 @@
 #include "imapsettings.h"
 #include <kimap/loginjob.h>
 
-void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
-{
-  QObject::disconnect( src, signal, dst, slot );
-  QObject::connect( src, signal, dst, slot );
-}
-
 
 size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 {
