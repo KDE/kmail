@@ -569,11 +569,8 @@ QString KMMessage::asQuotedString( const QString& aIndentStr,
 
   const QString indentStr = StringUtil::formatString( aIndentStr, from() );
 
-  kWarning() << "======== Text:" << content;
-  kWarning() << "======== Indent:" << indentStr;
   if ( s->smartQuote && s->wordWrap )
     content = StringUtil::smartQuote( content, s->wrapCol - indentStr.length() );
-  kWarning() << "======== Afterwards:" << content;
 
   content.replace( '\n', '\n' + indentStr );
   content.prepend( indentStr );
