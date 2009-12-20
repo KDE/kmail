@@ -551,12 +551,12 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
                                             MessageStatus& status )
 {
   // we keep our current directory to restore it later
-  char path_buffer[PATH_MAX];
-  if ( !::getcwd( path_buffer, PATH_MAX - 1 ) ) {
+  const QString current = QDir::currentPath();
+  if ( current.isEmpty() ) {
     return;
   }
 
-  ::chdir( QFile::encodeName( dir ) );
+  QDir::setCurrent( dir );
 
   // messages in the 'cur' directory are Read by default.. but may
   // actually be some other state (but not New)
@@ -773,7 +773,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
    if (mUnreadMsgs == 0) ++mUnreadMsgs;
   }
 
-  ::chdir(path_buffer);
+  QDir::setCurrent( current );
 }
 
 int KMFolderMaildir::createIndexFromContents()
