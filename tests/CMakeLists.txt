@@ -6,6 +6,8 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
 )
 
+add_definitions(-DKMAIL_UNITTESTS=YES)
+
 ########### htmlquotecolorertest ###############
 set(htmlquotecolorertest_SRCS htmlquotecolorertest.cpp ../htmlquotecolorer.cpp)
 kde4_add_unit_test(htmlquotecolorertest TESTNAME kmail-quotecolorertest ${htmlquotecolorertest_SRCS})
@@ -18,7 +20,7 @@ target_link_libraries(htmlquotecolorertest
 
 ########### utiltests ###############
 
-set(utiltests_SRCS utiltests.cpp ../util.cpp)
+set(utiltests_SRCS utiltests.cpp ../util.cpp ../stringutil.cpp)
 kde4_add_unit_test(utiltests TESTNAME kmail-utiltests ${utiltests_SRCS})
 target_link_libraries(utiltests mimelib
   ${QT_QTTEST_LIBRARY}
@@ -42,17 +44,6 @@ target_link_libraries(mimelibtests mimelib
   ${QT_QTCORE_LIBRARY}
   ${KDE4_KIO_LIBS}
   ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
-)
-
-########### stringutiltest ###############
-
-set(stringutiltest_SRCS stringutiltest.cpp ../stringutil.cpp)
-add_definitions(-DKMAIL_UNITTESTS=YES)
-kde4_add_unit_test(stringutiltest TESTNAME kmail-stringutiltest ${stringutiltest_SRCS})
-target_link_libraries(stringutiltest
-  ${QT_QTTEST_LIBRARY}
-  ${QT_QTCORE_LIBRARY}
-  ${KDE4_KIO_LIBS}
 )
 
 ########### dbus test ###############

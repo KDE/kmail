@@ -279,26 +279,23 @@ int FolderStorage::expungeOldMsg(int days)
 void FolderStorage::slotEmitChangedTimer()
 {
   emit changed();
-  mChanged = false;
+  mChanged=false;
 }
-
 //-----------------------------------------------------------------------------
-void FolderStorage::emitMsgAddedSignals( int idx )
+void FolderStorage::emitMsgAddedSignals(int idx)
 {
   quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
-  if ( !mQuiet ) {
-    emit msgAdded( idx );
+  if (!mQuiet) {
+    emit msgAdded(idx);
   } else {
     /** Restart always the timer or not. BTW we get a kmheaders refresh
      * each 3 seg.?*/
     if ( !mEmitChangedTimer->isActive() ) {
       mEmitChangedTimer->start( 3000 );
     }
-    mChanged = true;
+    mChanged=true;
   }
-  if ( serNum != 0 ) {
-    emit msgAdded( folder(), serNum );
-  }
+  emit msgAdded( folder(), serNum );
 }
 
 //-----------------------------------------------------------------------------
