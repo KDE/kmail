@@ -21,27 +21,18 @@
 
 #ifndef KMAIL_UNITTESTS
 
-#include "messageviewer/kmaddrbook.h"
-#include "kmkernel.h"
-
-#include <libkdepim/kaddrbookexternal.h>
-
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_header_parsing.h>
 #include <kmime/kmime_util.h>
 
+#include "kmkernel.h"
 #include <KPIMUtils/Email>
-#include <KPIMIdentities/IdentityManager>
 #include <kmime/kmime_util.h>
+#include <KPIMIdentities/IdentityManager>
 
-#include <kascii.h>
-#include <KConfigGroup>
 #include <KDebug>
 #include <KUrl>
-#include <kuser.h>
 
-#include <QHostInfo>
-#include <QRegExp>
 #endif
 #include <QStringList>
 
