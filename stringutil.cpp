@@ -56,137 +56,178 @@ namespace KMail
 namespace StringUtil
 {
 
+// Removes trailing spaces and tabs at the end of the line
 static void removeTrailingSpace( QString &line )
 {
-  int i = line.length()-1;
-  while( (i >= 0) && ((line[i] == ' ') || (line[i] == '\t')))
+  int i = line.length() - 1 ;
+  while( ( i >= 0 ) && ( ( line[i] == ' ' ) || ( line[i] == '\t' ) ) )
     i--;
-  line.truncate( i+1);
+  line.truncate( i + 1 );
 }
 
+// Spilts the line off in two parts: The quote prefixes and the actual text of the line.
+// For example, for the string "> > > Hello", it would be split up in "> > > " as the quote
+// prefix, and "Hello" as the actual text.
+// The actual text is written back to the "line" parameter, and the quote prefix is returned.
 static QString splitLine( QString &line)
 {
   removeTrailingSpace( line );
   int i = 0;
-  int j = -1;
-  int l = line.length();
+  int startOfActualText = -1;
 
   // TODO: Replace tabs with spaces first.
 
-  while(i < l)
+  // Loop through the chars in the line to find the place where the quote prefix stops
+  while( i < line.length() )
   {
-      QChar c = line[i];
-      if ((c == '>') || (c == ':') || (c == '|'))
-        j = i+1;
-      else if ((c != ' ') && (c != '\t'))
-        break;
-      i++;
+    const QChar c = line[i];
+    const bool isAllowedQuoteChar = (c == '>') || (c == ':') || (c == '|') ||
+                                    (c == ' ') || (c == '\t');
+    if ( isAllowedQuoteChar )
+      startOfActualText = i + 1;
+    else
+      break;
+    i++;
   }
 
-  if ( j <= 0 )
+  // If the quote prefix only consists of whitespace, don't consider it as a quote prefix at all
+  if ( line.left( startOfActualText ).trimmed().isEmpty() )
+    startOfActualText = 0;
+
+  // No quote prefix there -> nothing to do
+  if ( startOfActualText <= 0 )
   {
-      return "";
-  }
-  if ( i == l )
-  {
-      QString result = line.left(j);
-      line.clear();
-      return result;
+    return QString();
   }
 
-  QString result = line.left(j);
-  line = line.mid(j);
+  // Entire line consists of only the quote prefix
+  if ( i == line.length() )
+  {
+    const QString quotePrefix = line.left( startOfActualText );
+    line.clear();
+    return quotePrefix;
+  }
+
+  // Line contains both the quote prefix and the actual text, really split it up now
+  const QString quotePrefix = line.left( startOfActualText );
+  line = line.mid( startOfActualText );
+  return quotePrefix;
+}
+
+// Changes the given text so that each line of it fits into the given maximal length.
+// At each line, the "indent" string is prepended, which is usually the quote prefix.
+// The text parameter will be empty afterwards.
+// Example:
+//   text = "Hello World, this is a test."
+//   indent = "> "
+//   maxLength = 16
+//   Result: "> Hello World,\n"
+//           "> this is a test."
+static QString flowText( QString &text, const QString& indent, int maxLength )
+{
+  maxLength--;
+  if ( text.isEmpty() ) {
+    return indent + "\n";
+  }
+
+  QString result;
+  while ( !text.isEmpty() )
+  {
+    // Find the next point in the text where we have to do a line break. Start searching
+    // at maxLength position and then walk backwards looking for a space
+    int breakPosition;
+    if ( text.length() > maxLength )
+    {
+      breakPosition = maxLength;
+      while( ( breakPosition >= 0 ) && ( text[breakPosition] != ' ' ) )
+        breakPosition--;
+      if ( breakPosition <= 0 ) {
+        // Couldn't break before maxLength.
+        breakPosition = maxLength;
+      }
+    }
+    else {
+      breakPosition = text.length();
+    }
+
+    QString line = text.left( breakPosition );
+    if ( breakPosition < text.length() )
+      text = text.mid( breakPosition );
+    else
+      text.clear();
+
+    // Strip leading whitespace of new lines, since that looks strange
+    if ( !result.isEmpty() && line.startsWith( ' ' ) )
+      line = line.mid( 1 );
+
+    result += indent + line + '\n';
+  }
+
   return result;
 }
 
-
-static QString flowText(QString &text, const QString& indent, int maxLength)
+// Writes all lines/text parts contained in the "textParts" list to the output text, "msg".
+// Quote characters are added in front of each line, and no line is longer than
+// maxLength.
+//
+// Although the lines in textParts are considered seperate lines, they can actually be run
+// together into a single line in some cases. This is basically the main difference to flowText().
+//
+// Example:
+//   textParts = "Hello World, this is a test.", "Really"
+//   indent = ">"
+//   maxLength = 20
+//   Result: "> Hello World, this\n
+//            > is a test. Really"
+// Notice how in this example, the text line "Really" is no longer a seperate line, it was run
+// together with a previously broken line.
+//
+// "textParts" is cleared upon return.
+static bool flushPart( QString &msg, QStringList &textParts,
+                       const QString &indent, int maxLength )
 {
-   maxLength--;
-   if (text.isEmpty())
-   {
-      return indent+"<NULL>\n";
-   }
-   QString result;
-   while (1)
-   {
-      int i;
-      if ((int) text.length() > maxLength)
-      {
-         i = maxLength;
-         while( (i >= 0) && (text[i] != ' '))
-            i--;
-         if (i <= 0)
-         {
-            // Couldn't break before maxLength.
-            i = maxLength;
-//            while( (i < (int) text.length()) && (text[i] != ' '))
-//               i++;
-         }
-      }
+  maxLength -= indent.length();
+  if ( maxLength < 20 )
+    maxLength = 20;
+
+  // Remove empty lines at end of quote
+  while ( !textParts.isEmpty() && textParts.last().isEmpty() ) {
+    textParts.removeLast();
+  }
+
+  QString text;
+  foreach( const QString line, textParts ) {
+
+    // An empty line in the input means that an empty line should be in the output as well.
+    // Therefore, we write all of our text so far to the msg.
+    if ( line.isEmpty() ) {
+      if ( !text.isEmpty() )
+        msg += flowText( text, indent, maxLength );
+      msg += indent + '\n';
+    }
+
+    else {
+      if ( text.isEmpty() )
+        text = line;
       else
-      {
-         i = text.length();
-      }
+        text += ' ' + line.trimmed();
 
-      QString line = text.left(i);
-      if (i < (int) text.length())
-         text = text.mid(i);
-      else
-         text.clear();
+      // If the line doesn't need to be wrapped at all, just write it out as-is.
+      // When a line exceeds the maximum length and therefore needs to be broken, this statement
+      // if false, and therefore we keep adding lines to our text, so they get ran together in the
+      // next flowText call, as "text" contains several text parts/lines then.
+      if ( ( text.length() < maxLength ) || ( line.length() < ( maxLength - 10 ) ) )
+        msg += flowText( text, indent, maxLength );
+    }
+  }
 
-      result += indent + line + '\n';
+  // Write out pending text to the msg
+  if ( !text.isEmpty() )
+    msg += flowText( text, indent, maxLength );
 
-      if (text.isEmpty())
-         return result;
-   }
-}
-
-static bool flushPart(QString &msg, QStringList &part,
-                      const QString &indent, int maxLength)
-{
-   maxLength -= indent.length();
-   if (maxLength < 20) maxLength = 20;
-
-   // Remove empty lines at end of quote
-   while ((part.begin() != part.end()) && part.last().isEmpty())
-   {
-      part.removeLast();
-   }
-
-   QString text;
-   for(QStringList::Iterator it2 = part.begin();
-       it2 != part.end();
-       ++it2)
-   {
-      QString line = (*it2);
-
-      if (line.isEmpty())
-      {
-         if (!text.isEmpty())
-            msg += flowText(text, indent, maxLength);
-         msg += indent + '\n';
-      }
-      else
-      {
-         if (text.isEmpty())
-            text = line;
-         else
-            text += ' '+line.trimmed();
-
-         if (((int) text.length() < maxLength) || ((int) line.length() < (maxLength-10)))
-            msg += flowText(text, indent, maxLength);
-      }
-   }
-   if (!text.isEmpty())
-      msg += flowText(text, indent, maxLength);
-
-   bool appendEmptyLine = true;
-   if (!part.count())
-     appendEmptyLine = false;
-
-   part.clear();
-   return appendEmptyLine;
+  const bool appendEmptyLine = !textParts.isEmpty();
+  textParts.clear();
+  return appendEmptyLine;
 }
 
 QString stripSignature ( const QString & msg, bool clearSigned )
@@ -950,70 +991,89 @@ QString guessEmailAddressFromLoginName( const QString& loginName )
 }
 #endif
 
-QString smartQuote( const QString & msg, int maxLineLength )
+QString smartQuote( const QString &msg, int maxLineLength )
 {
-  QStringList part;
+  // The algorithm here is as follows:
+  // We split up the incomming msg into lines, and then iterate over each line.
+  // We keep adding lines with the same indent ( = quote prefix, e.g. "> " ) to a
+  // "textParts" list. So the textParts list contains only lines with the same quote
+  // prefix.
+  //
+  // When all lines with the same indent are collected in "textParts", we write those out
+  // to the result by calling flushPart(), which does all the nice formatting for us.
+
+  QStringList textParts;
   QString oldIndent;
   bool firstPart = true;
-
-  const QStringList lines = msg.split('\n');
-
   QString result;
-  for(QStringList::const_iterator it = lines.begin();
-      it != lines.end();
-      ++it)
-  {
-     QString line = *it;
+  foreach ( QString line, msg.split( '\n' ) ) {
 
-     const QString indent = splitLine( line );
+    // Split off the indent from the line
+    const QString indent = splitLine( line );
 
-     if ( line.isEmpty())
-     {
-        if (!firstPart)
-           part.append(QString());
-        continue;
-     };
+    if ( line.isEmpty() ) {
+      if ( !firstPart )
+        textParts.append( QString() );
+      continue;
+    };
 
-     if (firstPart)
-     {
-        oldIndent = indent;
-        firstPart = false;
-     }
+    if ( firstPart ) {
+      oldIndent = indent;
+      firstPart = false;
+    }
 
-     if (oldIndent != indent)
-     {
-        QString fromLine;
-        // Search if the last non-blank line could be "From" line
-        if (part.count() && (oldIndent.length() < indent.length()))
-        {
-           QStringList::Iterator it2 = part.isEmpty() ? part.end() : --part.end();
-           // FIXME: what if all strings are empty? Then we'll decrement part.begin().
-           // Shouldn't we also check for .begin()?
-           while( (it2 != part.end()) && (*it2).isEmpty())
-             --it2;
+    // The indent changed, that means we have to write everything contained in textParts to the
+    // result, which we do by calling flushPart().
+    if ( oldIndent != indent ) {
 
-           if ((it2 != part.end()) && ((*it2).endsWith(':')))
-           {
-              fromLine = oldIndent + (*it2) + '\n';
-              part.erase(it2);
-           }
+      // Check if the last non-blank line is a "From" line. A from line is the line containing the
+      // attribution to a quote, e.g. "Yesterday, you wrote:". We'll just check for the last colon
+      // here, to simply things.
+      // If there is a From line, remove it from the textParts to that flushPart won't break it.
+      // We'll manually add it to the result afterwards.
+      QString fromLine;
+      if ( !textParts.isEmpty() ) {
+        for ( int i = textParts.count() - 1; i >= 0; i-- ) {
+
+          // Check if we have found the From line
+          if ( textParts[i].endsWith( ':' ) ) {
+            fromLine = oldIndent + textParts[i] + '\n';
+            textParts.removeAt( i );
+            break;
+          }
+
+          // Abort on first non-empty line
+          if ( !textParts[i].trimmed().isEmpty() )
+            break;
         }
-        if (flushPart( result, part, oldIndent, maxLineLength))
-        {
-           if (oldIndent.length() > indent.length())
-              result += indent + '\n';
-           else
-              result += oldIndent + '\n';
-        }
-        if (!fromLine.isEmpty())
-        {
-           result += fromLine;
-        }
-        oldIndent = indent;
-     }
-     part.append(line);
+      }
+
+      // Write out all lines with the same indent using flushPart(). The textParts list
+      // is cleared for us.
+      if ( flushPart( result, textParts, oldIndent, maxLineLength ) ) {
+        if ( oldIndent.length() > indent.length() )
+          result += indent + '\n';
+        else
+          result += oldIndent + '\n';
+      }
+
+      if ( !fromLine.isEmpty() ) {
+        result += fromLine;
+      }
+
+      oldIndent = indent;
+    }
+
+    textParts.append( line );
   }
-  flushPart( result, part, oldIndent, maxLineLength);
+
+  // Write out anything still pending
+  flushPart( result, textParts, oldIndent, maxLineLength );
+
+  // Remove superflous newline which was appended in flowText
+  if ( !result.isEmpty() && result.endsWith( '\n' ) )
+    result.chop( 1 );
+
   return result;
 }
 
