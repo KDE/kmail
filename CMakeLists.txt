@@ -129,8 +129,6 @@ set(kmailprivate_LIB_SRCS
    vacation.cpp
    sievedebugdialog.cpp
    sievejob.cpp
-   #kmpopheaders.cpp
-   #kmpopfiltercnfrmdlg.cpp
    mailinglist-magic.cpp
    attachmentcollector.cpp
    kmcommands.cpp
@@ -175,8 +173,6 @@ set(kmailprivate_LIB_SRCS
    customtemplates.cpp
    customtemplatesmenu.cpp
    korghelper.cpp
-   #subscriptiondialog.cpp   
-   #localsubscriptiondialog.cpp
    messageactions.cpp
    statusbarlabel.cpp
    stringutil.cpp
@@ -190,6 +186,11 @@ set(kmailprivate_LIB_SRCS
    importjob.cpp
    archivefolderdialog.cpp
    importarchivedialog.cpp
+
+   #subscriptiondialog.cpp
+   #localsubscriptiondialog.cpp
+   #kmpopheaders.cpp
+   #kmpopfiltercnfrmdlg.cpp
 )
 
 macro(add_resource_iface _kcfgFile _ifaceName _className)
@@ -253,12 +254,6 @@ else(KDEPIM_ENTERPRISE_BUILD)
   set(DELETE_INVITATIONS_AFTER_REPLY_DEFAULT false)
   set(ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT false)
 endif(KDEPIM_ENTERPRISE_BUILD)
-
-if(WIN32)
-  set(MAILDIR_FILENAME_SEPARATOR "!")
-else(WIN32)
-  set(MAILDIR_FILENAME_SEPARATOR ":")
-endif(WIN32)
 
 configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
