@@ -128,7 +128,7 @@ public:
   void saveRelativePosition();
 
   /** Return selected text */
-  QString copyText();
+  QString copyText() const;
 
   /** Get/set auto-delete msg flag. */
   bool autoDelete(void) const;

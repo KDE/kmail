@@ -20,7 +20,6 @@
 
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
-//#define KMAIL_READER_HTML_DEBUG 1
 #include "kmreaderwin.h"
 
 #include <config-kmail.h>
@@ -445,7 +444,7 @@ void KMReaderWin::setMsgPart( KMime::Content* aMsgPart, bool aHTML,
 }
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::copyText()
+QString KMReaderWin::copyText() const
 {
   QString temp = mViewer->selectedText();
   return temp;
