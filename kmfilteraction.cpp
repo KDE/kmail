@@ -911,7 +911,7 @@ KMFilterActionAddTag::KMFilterActionAddTag()
   if ( tagDict ) {
     foreach ( const KMMessageTagDescription * tagDesc, *tagDict ) {
       mParameterList.append( tagDesc->name() );
-      mLabelList.append( tagDesc->label() );
+      mLabelList.append( tagDesc->tag().resourceUri().toString() );
     }
   }
 }

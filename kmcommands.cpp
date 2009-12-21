@@ -1733,32 +1733,16 @@ KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-#ifdef NEPOMUK_FOUND
   //Set the visible name for the tag
-  const KMMessageTagDescription *tagDesc = kmkernel->msgTagMgr()->find( mTagLabel );
-  Nepomuk::Tag n_tag( mTagLabel );
-  if ( tagDesc )
-    n_tag.setLabel( tagDesc->name() );
-#endif
-
-  Q_FOREACH( Akonadi::Item item, mItem ) {
-    KMime::Message::Ptr msg = KMail::Util::message( item );
-    if ( !msg )
-      return Failed;
-#ifdef NEPOMUK_FOUND
-    Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( item.id() ) );
-#endif
-
-    KMMessageTagList tagList = KMail::MessageHelper::tagList( msg );
+  const Nepomuk::Tag n_tag( mTagLabel );
+  Q_FOREACH( const Akonadi::Item item, mItem ) {
+    Nepomuk::Resource n_resource( item.url() );
+    const QList<Nepomuk::Tag> tagList = n_resource.tags();
 
     int tagPosition = tagList.indexOf( mTagLabel );
     if ( tagPosition == -1 ) {
-      tagList.append( mTagLabel );
-#ifdef NEPOMUK_FOUND
       n_resource.addTag( n_tag );
-#endif
     } else if ( mMode == Toggle ) {
-#ifdef NEPOMUK_FOUND
       QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
       for (int i = 0; i < n_tag_list.count(); ++i ) {
         if ( n_tag_list[i].identifiers()[0] == mTagLabel ) {
@@ -1767,10 +1751,7 @@ KMCommand::Result KMSetTagCommand::execute()
         }
       }
       n_resource.setTags( n_tag_list );
-#endif
-      tagList.removeAt( tagPosition );
     }
-    KMail::MessageHelper::setTagList( msg, tagList );
   }
   return OK;
 }

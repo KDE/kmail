@@ -219,8 +219,8 @@ namespace MessageHelper {
   QString skipKeyword(const QString& str, QChar sepChar=':',
 				 bool* keywordFound=0);
 
-  KMMessageTagList tagList(const KMime::Message::Ptr &msg);
-  void setTagList( const KMime::Message::Ptr& msg, KMMessageTagList lst );
+  QList<Nepomuk::Tag> tagList(const Akonadi::Item &msg);
+  void setTagList( const Akonadi::Item &msg, const QList<Nepomuk::Tag> &tags );
 
   void link( const KMime::Message::Ptr &msg, const Akonadi::Item & item,const KPIM::MessageStatus& aStatus );
 }

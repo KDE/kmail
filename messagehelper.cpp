@@ -1265,24 +1265,16 @@ QByteArray getRefStr( const KMime::Message::Ptr &msg )
 }
 
 
-KMMessageTagList tagList(const KMime::Message::Ptr &msg)
+QList<Nepomuk::Tag> tagList(const Akonadi::Item &msg)
 {
-  if ( !msg->headerByType( "X-KMail-Tag" ) )
-    return KMMessageTagList();
-  else
-    return KMMessageTagList( msg->headerByType( "X-KMail-Tag" )->asUnicodeString().split( ',' ) );
+  const Nepomuk::Resource res( msg.url() );
+  return res.tags();
 }
 
-void setTagList( const KMime::Message::Ptr& msg, KMMessageTagList lst )
+void setTagList( const Akonadi::Item& msg, const QList<Nepomuk::Tag> &tags )
 {
-  if ( lst.isEmpty() )
-    msg->removeHeader( "X-KMail-Tag" );
-  else {
-    lst.prioritySort();
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Tag", msg.get(), lst.join( "," ), "utf-8" );
-    msg->setHeader( header );
-  }
-
+  Nepomuk::Resource res( msg.url() );
+  res.setTags( tags );
 }
 
 QString msgId( const KMime::Message::Ptr &msg )

@@ -4024,15 +4024,8 @@ void KMMainWidget::updateMessageTagActions( const int count )
   KToggleAction *aToggler = 0;
   if ( 1 == count )
   {
-    Akonadi::Item item = mMessagePane->currentItem();
-    if ( !item.hasPayload<KMime::Message::Ptr>() ) {
-      kWarning() << "Payload is not a MessagePtr!";
-      return;
-    }
-    KMime::Message::Ptr msg = KMail::Util::message( item );
-    if ( !msg )
-      return;
-    KMMessageTagList aTagList = KMail::MessageHelper::tagList( msg );
+    const Akonadi::Item item = mMessagePane->currentItem();
+    QList<Nepomuk::Tag> aTagList = KMail::MessageHelper::tagList( item );
     for ( QList<MessageTagPtrPair>::ConstIterator it =
             mMessageTagMenuActions.constBegin();
           it != mMessageTagMenuActions.constEnd(); ++it )
@@ -4040,7 +4033,7 @@ void KMMainWidget::updateMessageTagActions( const int count )
       bool list_present = false;
       if ( !aTagList.isEmpty() )
         list_present =
-           ( aTagList.indexOf( QString((*it).first->label() ) ) != -1 );
+           ( aTagList.indexOf( (*it).first->tag() ) != -1 );
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setChecked( list_present );
       aToggler->setEnabled( true );
@@ -4127,13 +4120,13 @@ void KMMainWidget::initializeMessageTagActions()
       cleanName, this );
     tagAction->setShortcut( it.value()->shortcut() );
     tagAction->setIconText( iconText );
-    actionCollection()->addAction(it.value()->label().toLocal8Bit(), tagAction);
+    actionCollection()->addAction(it.value()->tag().resourceUri().toString().toLocal8Bit(), tagAction);
     connect(tagAction, SIGNAL(triggered(bool)), mMessageTagToggleMapper, SLOT(map()));
     // The shortcut configuration is done in the config dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
     // the tag descriptions correctly.
     tagAction->setShortcutConfigurable( false );
-    mMessageTagToggleMapper->setMapping( tagAction, it.value()->label() );
+    mMessageTagToggleMapper->setMapping( tagAction, it.value()->tag().resourceUri().toString() );
     MessageTagPtrPair ptr_pair( it.value(), tagAction );
     //Relies on the fact that filters are always numbered from 0
     mMessageTagMenuActions[it.value()->priority()] = ptr_pair;

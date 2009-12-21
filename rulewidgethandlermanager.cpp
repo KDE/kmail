@@ -1279,7 +1279,7 @@ namespace {
       valueCombo->setEditable( true );
       valueCombo->addItem( QString() ); // empty entry for user input
       foreach ( const KMMessageTagDescription * tagDesc, *kmkernel->msgTagMgr()->msgTagList() )
-        valueCombo->addItem( tagDesc->name(), tagDesc->label() );
+        valueCombo->addItem( tagDesc->name(), tagDesc->tag().resourceUri() );
       valueCombo->adjustSize();
       QObject::connect( valueCombo, SIGNAL( activated( int ) ),
                         receiver, SLOT( slotValueChanged() ) );

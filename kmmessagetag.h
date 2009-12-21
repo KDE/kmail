@@ -36,6 +36,8 @@
 #include <QList>
 
 #include <KShortcut>
+#include <Nepomuk/Tag>
+
 class KConfigGroup;
 
 /** This is the class holding information about how the tag modifies appearance
@@ -50,7 +52,7 @@ class KMMessageTagDescription
 
       @param aGroup The object the description is to be read from
     */
-    explicit KMMessageTagDescription( const KConfigGroup &aGroup );
+    explicit KMMessageTagDescription( const Nepomuk::Tag &tag, const KConfigGroup &aGroup );
 
     /** Constructor using a set of given parameters
       @param aLabel 10 letter random label that uniquely identifies the tag
@@ -62,32 +64,27 @@ class KMMessageTagDescription
       @param aBackgroundColor Background color.
       @param aTextFont Font of the text
       @param aInToolbar Whether the toggle button appears in the toolbar
-      @param aIconName The name for the corresponding icon that will appear in
-              the menus and toolbar. The default value is an icon packaged with
-              akregator.
-      */
-    KMMessageTagDescription( const QString &aLabel, const QString &aName,
+    */
+    KMMessageTagDescription( const Nepomuk::Tag &tag,
                   const int aPriority = -1,
                   const QColor &aTextColor = QColor(),
                   const QColor &aBackgroundColor = QColor(),
                   const QFont &aTextFont = QFont(),
                   const bool aInToolbar = false,
-                  const QString &aIconName = "feed-subscribe",
                   const KShortcut &aShortcut = KShortcut() );
 
     /** Accessor functions */
-    const QString label() const { return mLabel; }
-    const QString name() const { return mName; }
+    Nepomuk::Tag tag() const { return mTag; }
+    const QString name() const { return mTag.label(); }
     int priority() const { return mPriority; }
     const QColor textColor() const { return mTextColor; }
     const QColor backgroundColor() const { return mBackgroundColor; }
     const QFont textFont() const { return mTextFont; }
     bool inToolbar() const { return mInToolbar; }
-    const QString toolbarIconName() const { return mIconName; }
+    const QString toolbarIconName() const;
     bool isEmpty() const { return mEmpty; }
     const KShortcut shortcut() { return mShortcut; }
 
-    void setLabel( const QString & );
     void setName( const QString & );
     void setPriority( unsigned int aPriority ) { mPriority = aPriority; }
     void setBackgroundColor( const QColor & );
@@ -103,9 +100,8 @@ class KMMessageTagDescription
     void writeConfig( KConfigGroup & ) const;
 
   private:
+    Nepomuk::Tag mTag;
     int mPriority;
-    QString mName;
-    QString mLabel;
 
     QColor mBackgroundColor;
     QColor mTextColor;
@@ -113,7 +109,6 @@ class KMMessageTagDescription
     QFont mTextFont;
 
     bool mInToolbar;
-    QString mIconName;
 
     KShortcut mShortcut;
 

@@ -2276,7 +2276,8 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
   int tmp_index = mTagListBox->currentRow();
   if ( !( tmp_index < 0 ) ) {
     KMMessageTagDescription *tmp_desc = mMsgTagList->takeAt( tmp_index );
-    mMsgTagDict->remove( tmp_desc->label() );
+    mMsgTagDict->remove( tmp_desc->tag().resourceUri().toString() );
+    tmp_desc->tag().remove();
     delete tmp_desc;
     mPreviousTag = -1;
 
@@ -2320,15 +2321,10 @@ void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString
 void AppearancePage::MessageTagTab::slotAddNewTag()
 {
   int tmp_priority = mMsgTagList->count();
-  QString tmp_label = KRandom::randomString( 10 );
-    //Very unlikely, but if the tag already exists, regenerate label
-  while ( kmkernel->msgTagMgr()->find( tmp_label ) )
-    tmp_label = KRandom::randomString( 10 );
+  Nepomuk::Tag tmp_tag( mTagAddLineEdit->text() );
 
-  KMMessageTagDescription *tmp_desc = new KMMessageTagDescription( tmp_label,
-                                             mTagAddLineEdit->text(),
-                                             tmp_priority );
-  mMsgTagDict->insert( tmp_desc->label() , tmp_desc );
+  KMMessageTagDescription *tmp_desc = new KMMessageTagDescription( tmp_tag, tmp_priority );
+  mMsgTagDict->insert( tmp_desc->tag().resourceUri().toString() , tmp_desc );
   mMsgTagList->append( tmp_desc );
   slotEmitChangeCheck();
   mTagAddLineEdit->setText( QString() );
@@ -2351,7 +2347,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   QHashIterator<QString,KMMessageTagDescription*> it( *( kmkernel->msgTagMgr()->msgTagDict() ) );
   while (it.hasNext()) {
     it.next();
-    tmp_list.append( it.value()->label() );
+    tmp_list.append( it.value()->tag().resourceUri().toString() );
   }
   tmp_list.prioritySort();
 

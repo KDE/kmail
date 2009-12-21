@@ -44,42 +44,47 @@
 #include <klocale.h>
 #include <krandom.h>
 
-#ifdef NEPOMUK_FOUND
+#include <Nepomuk/Tag>
 #include <nepomuk/resourcemanager.h>
-#endif
 
 //----------------------------KMMessageTagDescription------------------------------------
-KMMessageTagDescription::KMMessageTagDescription( const QString &aLabel, 
-                             const QString &aName, 
+KMMessageTagDescription::KMMessageTagDescription(
+                            const Nepomuk::Tag &tag,
                             const int aPriority, const QColor &aTextColor, 
                             const QColor &aBackgroundColor, 
                             const QFont &aTextFont, const bool aInToolbar, 
-                            const QString &aIconName, 
-                            const KShortcut &aShortcut ) {
-  if ( aLabel.isEmpty() || aName.isEmpty() ) {
+                            const KShortcut &aShortcut ) : mTag( tag ) {
+  if ( !tag.isValid() ) {
     mEmpty = true;
     return;
   }
-  mLabel = aLabel;
-  mName = aName;
   mPriority = aPriority;
   mTextColor = aTextColor;
   mBackgroundColor = aBackgroundColor;
   mTextFont = aTextFont;
   mInToolbar = aInToolbar;
-  mIconName = aIconName;
   mShortcut = aShortcut;
   mEmpty = false;
 }
 
-KMMessageTagDescription::KMMessageTagDescription( const KConfigGroup& aGroup ) 
-            : mPriority( -1 ), mEmpty( false ) 
+KMMessageTagDescription::KMMessageTagDescription( const Nepomuk::Tag &tag, const KConfigGroup& aGroup )
+            : mTag( tag ), mPriority( -1 ), mEmpty( false )
 {
   readConfig(aGroup);
 }
 
-void KMMessageTagDescription::setLabel( const QString& aLabel ) { mLabel = aLabel; }
-void KMMessageTagDescription::setName( const QString& aName ) { mName = aName; }
+const QString KMMessageTagDescription::toolbarIconName() const
+{
+  if ( mTag.symbols().isEmpty() )
+    return QLatin1String( "mail-tagged" );
+  return mTag.symbols().first();
+}
+
+void KMMessageTagDescription::setName( const QString& aName )
+{
+  mTag.setLabel( aName );
+}
+
 void KMMessageTagDescription::setBackgroundColor( const QColor& aBackgroundColor )
 {
   mBackgroundColor = aBackgroundColor; 
@@ -94,7 +99,7 @@ void KMMessageTagDescription::setTextFont( const QFont& aTextFont )
 }
 void KMMessageTagDescription::setIconName( const QString& aIconName ) 
 {
-  mIconName = aIconName; 
+  mTag.setSymbols( QStringList( aIconName ) ); 
 }
 void KMMessageTagDescription::setShortcut( const KShortcut &aShortcut )
 {
@@ -103,16 +108,8 @@ void KMMessageTagDescription::setShortcut( const KShortcut &aShortcut )
 
 void KMMessageTagDescription::readConfig( const KConfigGroup& group ) 
 {
-  mEmpty = true;
-
-  mLabel = group.readEntry( "Label", QString() );
-  if ( mLabel.isEmpty() )
-    return;
-  mName = group.readEntry( "Name", QString() );
-  if ( mName.isEmpty() )
-    return;
-
   mEmpty = false;
+  mPriority = group.readEntry( "priority", -1 );
 
   //Empty is fine, uses default color
   mTextColor = group.readEntry( "text-color", QColor()); 
@@ -121,7 +118,6 @@ void KMMessageTagDescription::readConfig( const KConfigGroup& group )
   mTextFont = group.readEntry( "text-font", QFont() );
 
   mInToolbar = group.readEntry( "toolbar", false );
-  mIconName = group.readEntry( "icon", "mail-tagged" );
 
   QString shortcut( group.readEntry( "shortcut", QString() ) );
   if ( !shortcut.isEmpty() )
@@ -132,8 +128,7 @@ void KMMessageTagDescription::readConfig( const KConfigGroup& group )
 
 void KMMessageTagDescription::writeConfig( KConfigGroup &group ) const 
 {
-  group.writeEntry( "Label", mLabel );
-  group.writeEntry( "Name", mName );
+  group.writeEntry( "priority", mPriority );
   if ( mTextColor.isValid() ) 
     group.writeEntry( "text-color", mTextColor );
   if ( mBackgroundColor.isValid() )
@@ -148,7 +143,6 @@ void KMMessageTagDescription::writeConfig( KConfigGroup &group ) const
     group.writeEntry( "shortcut", mShortcut.toString() );
 
   group.writeEntry( "toolbar", mInToolbar );
-  group.writeEntry( "icon", mIconName );
 }
 
 void KMMessageTagDescription::purify() 
@@ -163,9 +157,7 @@ KMMessageTagMgr::KMMessageTagMgr() : mDirty( 0 )
 {
   mTagDict = new QHash<QString,KMMessageTagDescription *>();
   mTagList = new QList<KMMessageTagDescription *>();
-  #ifdef NEPOMUK_FOUND
   Nepomuk::ResourceManager::instance()->init(); 
-  #endif
 }
 
 KMMessageTagMgr::~KMMessageTagMgr() 
@@ -224,8 +216,9 @@ void KMMessageTagMgr::createInitialTags()
   };
   const int n = sizeof TagNames / sizeof *TagNames;
   for ( int i = 0; i < n; ++i ) {
-    KMMessageTagDescription* tmp_ptr = new KMMessageTagDescription( KRandom::randomString(10),
-                                       TagNames[i].name, i, TagNames[i].color );
+    Nepomuk::Tag tag;
+    tag.setLabel( TagNames[i].name );
+    KMMessageTagDescription* tmp_ptr = new KMMessageTagDescription( tag, i, TagNames[i].color );
     addTag( tmp_ptr, false );
   }
 }
@@ -234,7 +227,9 @@ void KMMessageTagMgr::addTag( KMMessageTagDescription *aDesc, bool emitChange )
 {
   if (! aDesc)
     return;
-  mTagDict->insert( aDesc->label(), aDesc );
+  if ( aDesc->priority() < 0 )
+    aDesc->setPriority( mTagList->size() );
+  mTagDict->insert( aDesc->tag().resourceUri().toString(), aDesc );
   QList<KMMessageTagDescription *>::iterator it = mTagList->begin(); 
   while ( it != mTagList->end() && (*it)->priority() < aDesc->priority() )
     it++;
@@ -249,36 +244,33 @@ void KMMessageTagMgr::addTag( KMMessageTagDescription *aDesc, bool emitChange )
 void KMMessageTagMgr::readConfig() 
 {
   KSharedConfig::Ptr config = KMKernel::config();
-  int numTags = 0;
   QString grpName;
 
   clear();
 
   KConfigGroup group( config, "General" );
-  numTags = group.readEntry( "messagetags", -1 );
 
-  if ( numTags < 0 ) {
+  QList<Nepomuk::Tag> tags = Nepomuk::Tag::allTags();
+  const int numTags = tags.size();
+
+  if ( numTags <= 0 ) {
     //Key doesn't exist, which probably means first run with the tag feature
     //Create some tags, put them into dictionary, set dirty
     createInitialTags(); 
   } else {
-    //j used to handle priorities properly, in case a tag definition is missing
-    int j = 0;
-    for ( int i=0; i < numTags; ++i ) {
-      grpName.sprintf( "MessageTag #%d", i );
-      if (! config->hasGroup( grpName ) ) {
+    foreach( const Nepomuk::Tag &nepomukTag, tags ) {
+      grpName = QString::fromLatin1( "MessageTag #%1" ).arg( nepomukTag.resourceUri().toString() );
+      if ( !config->hasGroup( grpName ) ) {
         //Something wrong, set dirty so the tag set is correctly written back
         mDirty = true;
-        continue;
       }
       KConfigGroup group( config, grpName );
-      KMMessageTagDescription *tag = new KMMessageTagDescription( group );
+      KMMessageTagDescription *tag = new KMMessageTagDescription( nepomukTag, group );
+      kDebug() << "loading tag" << nepomukTag.resourceUri() << tag->isEmpty();
       if ( tag->isEmpty() ) {
         delete tag;
       } else {
-        tag->setPriority(j);
         addTag( tag, false );
-        ++j;
       }
     }
   }
@@ -290,24 +282,19 @@ void KMMessageTagMgr::writeConfig( bool withSync )
 
   //first, delete all groups:
   QStringList tagGroups 
-      = config->groupList().filter( QRegExp( "MessageTag #\\d+" ) );
+      = config->groupList().filter( QRegExp( "MessageTag #.+" ) );
   foreach ( const QString& group, tagGroups )
     config->deleteGroup( group );
 
   // Now, write out the new stuff:
-  int i = 0;
   foreach ( KMMessageTagDescription *description, *mTagList ) {
     if ( ! description->isEmpty() ) {
-      QString grpName;
-      grpName.sprintf( "MessageTag #%d", i );
+      const QString grpName = QString::fromLatin1( "MessageTag #%1" ).arg( description->tag().resourceUri().toString() );
       KConfigGroup group( config, grpName );
       description->writeConfig( group );
-      ++i;
     }
   }
 
-  KConfigGroup group( config, "General" );
-  group.writeEntry( "messagetags", i );
   if (withSync) 
     config->sync();
   //mDirty = false;
