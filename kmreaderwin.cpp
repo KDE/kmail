@@ -1257,8 +1257,6 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
     if (message() != aMsg) {
       mMessage = aMsg;
       mLastSerNum = 0;
-      displayMessage();
-      return;
     }
   }
 
