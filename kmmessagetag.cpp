@@ -50,20 +50,14 @@
 //----------------------------KMMessageTagDescription------------------------------------
 KMMessageTagDescription::KMMessageTagDescription(
                             const Nepomuk::Tag &tag,
-                            const int aPriority, const QColor &aTextColor, 
-                            const QColor &aBackgroundColor, 
-                            const QFont &aTextFont, const bool aInToolbar, 
-                            const KShortcut &aShortcut ) : mTag( tag ) {
+                            const int aPriority,
+                            const QColor &aTextColor ) : mTag( tag ) {
   if ( !tag.isValid() ) {
     mEmpty = true;
     return;
   }
   mPriority = aPriority;
   mTextColor = aTextColor;
-  mBackgroundColor = aBackgroundColor;
-  mTextFont = aTextFont;
-  mInToolbar = aInToolbar;
-  mShortcut = aShortcut;
   mEmpty = false;
 }
 
@@ -73,7 +67,7 @@ KMMessageTagDescription::KMMessageTagDescription( const Nepomuk::Tag &tag, const
   readConfig(aGroup);
 }
 
-const QString KMMessageTagDescription::toolbarIconName() const
+const QString KMMessageTagDescription::iconName() const
 {
   if ( mTag.symbols().isEmpty() )
     return QLatin1String( "mail-tagged" );

@@ -2254,7 +2254,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mFontRequester->setFont( tmp_font );
 
   mIconButton->setEnabled( true );
-  mIconButton->setIcon( tmp_desc->toolbarIconName() );
+  mIconButton->setIcon( tmp_desc->iconName() );
 
   mKeySequenceWidget->setEnabled( true );
   mKeySequenceWidget->setKeySequence( tmp_desc->shortcut().primary(),
@@ -2341,7 +2341,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   mTagAddLineEdit->setText( QString() );
   QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
   newItem->setText( tmp_desc->name() );
-  newItem->setIcon( KIcon( tmp_desc->toolbarIconName() ) );
+  newItem->setIcon( KIcon( tmp_desc->iconName() ) );
   mTagListBox->addItem( newItem );
   mTagListBox->setCurrentItem( newItem );
 }
@@ -2370,7 +2370,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
         itl != tmp_list.end(); ++itl ) {
     const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( *itl );
     if ( tmp_desc ) {
-      new QListWidgetItem( KIcon( tmp_desc->toolbarIconName() ), tmp_desc->name(), mTagListBox );
+      new QListWidgetItem( KIcon( tmp_desc->iconName() ), tmp_desc->name(), mTagListBox );
       KMMessageTagDescription *insert_desc = new KMMessageTagDescription( *tmp_desc );
       mMsgTagDict->insert( *itl , insert_desc );
       mMsgTagList->append( insert_desc );

@@ -50,28 +50,21 @@ class KMMessageTagDescription
         @p aGroup . Calls readConfig( @p aGroup ) .It defaults to certain values
         for values that are not defined in the configuration.
 
+      @param tag The corresponding Nepomuk tag.
       @param aGroup The object the description is to be read from
     */
     explicit KMMessageTagDescription( const Nepomuk::Tag &tag, const KConfigGroup &aGroup );
 
     /** Constructor using a set of given parameters
-      @param aLabel 10 letter random label that uniquely identifies the tag
-      @param aName Visible name for the tag
+      @param tag The corresponding Nepomuk tag.
       @param aPriority Priority of the tag. 0 is the highest. Used in defining
             which tag to modify the appearance if the message has multiple
             tags. Note that Important and ToAct flags still dominate tags.
       @param aTextColor Text color
-      @param aBackgroundColor Background color.
-      @param aTextFont Font of the text
-      @param aInToolbar Whether the toggle button appears in the toolbar
     */
-    KMMessageTagDescription( const Nepomuk::Tag &tag,
-                  const int aPriority = -1,
-                  const QColor &aTextColor = QColor(),
-                  const QColor &aBackgroundColor = QColor(),
-                  const QFont &aTextFont = QFont(),
-                  const bool aInToolbar = false,
-                  const KShortcut &aShortcut = KShortcut() );
+    explicit KMMessageTagDescription( const Nepomuk::Tag &tag,
+                                      const int aPriority = -1,
+                                      const QColor &aTextColor = QColor() );
 
     /** Accessor functions */
     Nepomuk::Tag tag() const { return mTag; }
@@ -81,7 +74,7 @@ class KMMessageTagDescription
     const QColor backgroundColor() const { return mBackgroundColor; }
     const QFont textFont() const { return mTextFont; }
     bool inToolbar() const { return mInToolbar; }
-    const QString toolbarIconName() const;
+    const QString iconName() const;
     bool isEmpty() const { return mEmpty; }
     const KShortcut shortcut() { return mShortcut; }
 

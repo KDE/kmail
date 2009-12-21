@@ -4116,7 +4116,7 @@ void KMMainWidget::initializeMessageTagActions()
     QString cleanName = i18n("Message Tag %1", it.value()->name() );
     QString iconText = it.value()->name();
     cleanName.replace('&',"&&");
-    tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()),
+    tagAction = new KToggleAction( KIcon(it.value()->iconName()),
       cleanName, this );
     tagAction->setShortcut( it.value()->shortcut() );
     tagAction->setIconText( iconText );

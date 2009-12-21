@@ -1279,7 +1279,7 @@ namespace {
       valueCombo->setEditable( true );
       valueCombo->addItem( QString() ); // empty entry for user input
       foreach ( const KMMessageTagDescription * tagDesc, *kmkernel->msgTagMgr()->msgTagList() ) {
-        valueCombo->addItem( KIcon(tagDesc->toolbarIconName()),
+        valueCombo->addItem( KIcon(tagDesc->iconName()),
                              tagDesc->name(), tagDesc->tag().resourceUri() );
       }
       valueCombo->adjustSize();
