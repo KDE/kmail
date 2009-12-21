@@ -1278,8 +1278,10 @@ namespace {
       valueCombo->setObjectName( "tagRuleValueCombo" );
       valueCombo->setEditable( true );
       valueCombo->addItem( QString() ); // empty entry for user input
-      foreach ( const KMMessageTagDescription * tagDesc, *kmkernel->msgTagMgr()->msgTagList() )
-        valueCombo->addItem( tagDesc->name(), tagDesc->tag().resourceUri() );
+      foreach ( const KMMessageTagDescription * tagDesc, *kmkernel->msgTagMgr()->msgTagList() ) {
+        valueCombo->addItem( KIcon(tagDesc->toolbarIconName()),
+                             tagDesc->name(), tagDesc->tag().resourceUri() );
+      }
       valueCombo->adjustSize();
       QObject::connect( valueCombo, SIGNAL( activated( int ) ),
                         receiver, SLOT( slotValueChanged() ) );

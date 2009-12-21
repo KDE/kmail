@@ -2040,6 +2040,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mIconButton->setIconSize( 16 );
   mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
   settings->addWidget( mIconButton, 5, 1 );
+  connect( mIconButton, SIGNAL(iconChanged(QString)),
+           SLOT(slotIconNameChanged(QString)) );
 
   QLabel *iconlabel = new QLabel( i18n("Message tag &icon:"),
                                   mTagSettingGroupBox );
@@ -2147,6 +2149,7 @@ void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
                                                        const int second )
 {
   QString tmp_label = mTagListBox->item( first )->text();
+  QIcon tmp_icon = mTagListBox->item( first )->icon();
   KMMessageTagDescription *tmp_ptr = mMsgTagList->at( first );
 
   mMsgTagList->replace( first, mMsgTagList->at( second ) );
@@ -2155,7 +2158,9 @@ void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
   disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
           this, SLOT( slotSelectionChanged() ) );
   mTagListBox->item( first )->setText( mTagListBox->item( second )->text() );
+  mTagListBox->item( first )->setIcon( mTagListBox->item( second )->icon() );
   mTagListBox->item( second )->setText( tmp_label );
+  mTagListBox->item( second )->setIcon( tmp_icon );
   mTagListBox->setCurrentItem( mTagListBox->item( second ) );
   connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
           this, SLOT( slotSelectionChanged() ) );
@@ -2312,6 +2317,11 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
            this, SLOT( slotSelectionChanged() ) );
 }
 
+void AppearancePage::MessageTagTab::slotIconNameChanged( const QString &iconName )
+{
+  mTagListBox->currentItem()->setIcon( KIcon( iconName ) );
+}
+
 void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString
                                                             &aText )
 {
@@ -2322,6 +2332,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
 {
   int tmp_priority = mMsgTagList->count();
   Nepomuk::Tag tmp_tag( mTagAddLineEdit->text() );
+  tmp_tag.setLabel( mTagAddLineEdit->text() );
 
   KMMessageTagDescription *tmp_desc = new KMMessageTagDescription( tmp_tag, tmp_priority );
   mMsgTagDict->insert( tmp_desc->tag().resourceUri().toString() , tmp_desc );
@@ -2330,6 +2341,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   mTagAddLineEdit->setText( QString() );
   QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
   newItem->setText( tmp_desc->name() );
+  newItem->setIcon( KIcon( tmp_desc->toolbarIconName() ) );
   mTagListBox->addItem( newItem );
   mTagListBox->setCurrentItem( newItem );
 }
@@ -2358,7 +2370,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
         itl != tmp_list.end(); ++itl ) {
     const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( *itl );
     if ( tmp_desc ) {
-      mTagListBox->addItem( tmp_desc->name() );
+      new QListWidgetItem( KIcon( tmp_desc->toolbarIconName() ), tmp_desc->name(), mTagListBox );
       KMMessageTagDescription *insert_desc = new KMMessageTagDescription( *tmp_desc );
       mMsgTagDict->insert( *itl , insert_desc );
       mMsgTagList->append( insert_desc );

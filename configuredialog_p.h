@@ -526,6 +526,7 @@ private slots:
   /*Transfers changes in the tag name edit box to the list box for tags. Private
   since calling externally decouples the name in the list box from name edit box*/
   void slotNameLineTextChanged( const QString & );
+  void slotIconNameChanged( const QString &iconName );
 
 private:
   virtual void doLoadFromGlobalSettings();

@@ -415,6 +415,14 @@ void KMSearchRuleString::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) con
 
   // TODO complete for other headers, generic headers
 
+  if ( field() == "<tag>" ) {
+    const Nepomuk::Tag tag( contents() );
+    addAndNegateTerm( Nepomuk::Query::ComparisonTerm( Soprano::Vocabulary::NAO::hasTag(),
+                                                      Nepomuk::Query::ResourceTerm( tag.resourceUri() ),
+                                                      Nepomuk::Query::ComparisonTerm::Equal ),
+                                                      groupTerm );
+  }
+
   if ( field() == "<body>" || field() == "<message>" ) {
     const Nepomuk::Query::ComparisonTerm bodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
     termGroup.addSubTerm( bodyTerm );

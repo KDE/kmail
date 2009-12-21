@@ -36,6 +36,7 @@ class SearchPatternTest : public QObject
       output.replace( "\r", " " );
       while ( output.contains( "  " ) )
         output.replace( "  ", " " );
+      output.replace( QRegExp( "<nepomuk:[^>]*>" ), "<nepomuk:random-id>" );
       return output.trimmed();
     }
 
