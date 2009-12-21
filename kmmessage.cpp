@@ -1946,7 +1946,7 @@ QString KMMessage::headerField( const QByteArray& aName, EncodingMode encodingMo
     return QString();
   }
 
-  if ( !mMsg || !mMsg->Headers().FindField( aName ) ) {
+  if ( !mMsg || !mMsg->hasHeaders() || !mMsg->Headers().FindField( aName ) ) {
     return QString();
   }
 
@@ -1961,7 +1961,7 @@ QString KMMessage::headerField( const QByteArray& aName, EncodingMode encodingMo
 
 QStringList KMMessage::headerFields( const QByteArray& field ) const
 {
-  if ( field.isEmpty() || !mMsg->Headers().FindField( field ) )
+  if ( field.isEmpty() || !mMsg->hasHeaders() || !mMsg->Headers().FindField( field ) )
     return QStringList();
 
   std::vector<DwFieldBody*> v = mMsg->Headers().AllFieldBodies( field.data() );
