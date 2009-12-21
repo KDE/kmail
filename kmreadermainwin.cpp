@@ -111,8 +111,12 @@ void KMReaderMainWin::initKMReaderMainWin()
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
+#ifdef WEBKIT_BUILD
+  kWarning() << "WEBKIT: Disabled code in " << Q_FUNC_INFO;
+#else
   connect( mReaderWin->htmlPart(), SIGNAL( onURL( const QString& ) ),
            statusBar(), SLOT( showMessage(const QString& ) ) );
+#endif
 }
 
 //-----------------------------------------------------------------------------

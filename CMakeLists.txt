@@ -47,6 +47,7 @@ add_custom_target(kmail_xml ALL
   COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
+# CMAKE_BINARY_DIR/messageviewver/ is temporary for porting messageviewer to QtWebKit, to be removed once KHTML is removed
 include_directories(
   ${CMAKE_SOURCE_DIR}/libkdepim
   ${CMAKE_BINARY_DIR}/libkdepim
@@ -54,6 +55,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/messagelist
   ${CMAKE_SOURCE_DIR}/messageviewer/
+  ${CMAKE_BINARY_DIR}/messageviewer/
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
   ${CMAKE_SOURCE_DIR}/akonadi/

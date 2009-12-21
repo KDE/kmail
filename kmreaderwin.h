@@ -36,6 +36,7 @@ using KPIM::MessageStatus;
 #include <map>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
+#include "messageviewer/config-webkit.h"
 class QString;
 
 
@@ -44,6 +45,7 @@ class KAction;
 class KToggleAction;
 class KToggleAction;
 class KHTMLPart;
+class KWebView;
 class KUrl;
 namespace MessageViewer {
   namespace Interface {
@@ -184,7 +186,11 @@ public:
   void setUpdateAttachment( bool update = true ) { mAtmUpdate = update; }
   /** Access to the KHTMLPart used for the viewer. Use with
       care! */
+#ifdef WEBKIT_BUILD
+  KWebView * htmlPart() const;
+#else
   KHTMLPart * htmlPart() const;
+#endif
 
   Akonadi::Item message() const;
   /** Set the serial number of the message this reader window is currently
