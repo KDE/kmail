@@ -33,8 +33,11 @@
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfolder.h"
 
+#include <akonadi/item.h>
+
 #include <QPointer>
 #include <QObject>
+#include <QSet>
 
 class KMFilter;
 
@@ -62,10 +65,8 @@ class MessageProperty : public QObject
 
 public:
   /** If the message is being filtered  */
-  static bool filtering( quint32 );
-  static void setFiltering( quint32, bool filtering );
-  static bool filtering( KMime::Content* );
-  static void setFiltering( KMime::Content*, bool filtering );
+  static bool filtering( const Akonadi::Item &item );
+  static void setFiltering( const Akonadi::Item &item, bool filtering );
   /** The folder this message is to be moved into once
       filtering is finished, or null if the message is not
       scheduled to be moved */
@@ -122,6 +123,9 @@ private:
 
   // The folder a message is to be moved into once filtering is finished if any
   static QMap<quint32, QPointer<KMFolder> > sFolders;
+
+  // filtering flag
+  static QSet<Akonadi::Item::Id> sFilteredItems;
 
   // Whether the serial number of a message should be kept when moving it from
   // a local folder to an online IMAP folder. This is currently only used by

@@ -101,12 +101,13 @@ int KMFilterMgr::processPop( const KMime::Message::Ptr & msg ) const {
   return NoAction;
 }
 
-bool KMFilterMgr::beginFiltering(KMime::Content *msgBase) const
+bool KMFilterMgr::beginFiltering( const Akonadi::Item &item ) const
 {
-  if (MessageProperty::filtering( msgBase ))
+  if (MessageProperty::filtering( item ))
     return false;
-  MessageProperty::setFiltering( msgBase, true );
-  MessageProperty::setFilterFolder( msgBase, 0 );
+  MessageProperty::setFiltering( item, true );
+  // TODO: port me!
+//   MessageProperty::setFilterFolder( msgBase, 0 );
   if ( FilterLog::instance()->isLogging() ) {
     FilterLog::instance()->addSeparator();
   }
@@ -129,7 +130,7 @@ int KMFilterMgr::moveMessage( const KMime::Message::Ptr &msg) const
   return 0;
 }
 
-void KMFilterMgr::endFiltering(KMime::Content *msgBase) const
+void KMFilterMgr::endFiltering( const Akonadi::Item &item ) const
 {
 #if 0 //TODO port to akonadi
   KMFolder *parent = msgBase->parent();
@@ -147,10 +148,11 @@ void KMFilterMgr::endFiltering(KMime::Content *msgBase) const
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  MessageProperty::setFiltering( msgBase, false );
+  MessageProperty::setFiltering( item, false );
 }
 
-int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter ) {
+int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
+{
   bool stopIt = false;
   int result = 1;
 
@@ -159,17 +161,17 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter ) {
 
   if ( isMatching( item, filter ) ) {
     // do the actual filtering stuff
-    const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-    if ( !msg || !beginFiltering( msg.get() ) ) {
+    if ( !beginFiltering( item ) ) {
       return 1;
     }
-    if ( filter->execActions( msg, stopIt ) == KMFilter::CriticalError ) {
+    if ( filter->execActions( item, stopIt ) == KMFilter::CriticalError ) {
       return 2;
     }
 
+    const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
     KMFolder *targetFolder = MessageProperty::filterFolder( msg.get() );
 
-    endFiltering( msg.get() );
+    endFiltering( item );
     if ( targetFolder ) {
       tempOpenFolder( targetFolder );
       result = targetFolder->moveMsg( msg.get() );
@@ -193,9 +195,9 @@ int KMFilterMgr::process( const KMime::Message::Ptr &msg, FilterSet set,
   bool stopIt = false;
   bool atLeastOneRuleMatched = false;
 
+#if 0 //TODO port to akonadi
   if ( !beginFiltering( msg.get() ) )
     return 1;
-#if 0 //TODO port to akonadi
   for ( QList<KMFilter*>::const_iterator it = mFilters.constBegin();
         !stopIt && it != mFilters.constEnd() ; ++it ) {
 

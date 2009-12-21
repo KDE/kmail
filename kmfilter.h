@@ -87,12 +87,12 @@ public:
       @li 1 if the caller is still
       the owner of the message,
       @li 0 if processed successfully.
-      @param msg The message to which the actions should be applied.
+      @param item The message to which the actions should be applied.
       @param stopIt Contains
       true if the caller may apply other filters and false if he shall
       stop the filtering of this message.
   */
-  ReturnCode execActions( const KMime::Message::Ptr &msg, bool& stopIt ) const ;
+  ReturnCode execActions( const Akonadi::Item &item, bool& stopIt ) const ;
 
   /** Determines if the filter depends on the body of the message
   */

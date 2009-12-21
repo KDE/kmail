@@ -114,7 +114,7 @@ KMFilter::~KMFilter()
 }
 
 // only for !bPopFilter
-KMFilter::ReturnCode KMFilter::execActions( const KMime::Message::Ptr &msg, bool& stopIt ) const
+KMFilter::ReturnCode KMFilter::execActions( const Akonadi::Item &item, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
 
@@ -127,7 +127,7 @@ KMFilter::ReturnCode KMFilter::execActions( const KMime::Message::Ptr &msg, bool
       FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
 
-    KMFilterAction::ReturnCode result = (*it)->process( msg );
+    KMFilterAction::ReturnCode result = (*it)->process( item );
 
     switch ( result ) {
     case KMFilterAction::CriticalError:

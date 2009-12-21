@@ -30,6 +30,10 @@
 
 #include  <kmime/kmime_message.h>
 
+namespace Akonadi {
+  class Item;
+}
+
 class KTemporaryFile;
 class KMFolder;
 
@@ -92,12 +96,12 @@ public:
       is required, @p GoOn if the message shall be processed by
       further filters and @p Ok otherwise.
   */
-  virtual ReturnCode process( const KMime::Message::Ptr &msg) const = 0;
+  virtual ReturnCode process( const Akonadi::Item &item) const = 0;
 
   /** Execute an action on given message asynchronously.
       Emits a result signal on completion.
   */
-  virtual void processAsync( const KMime::Message::Ptr &msg ) const;
+  virtual void processAsync( const Akonadi::Item &item ) const;
 
   /** Determines if the action depends on the body of the message
   */
@@ -587,7 +591,7 @@ public:
       meaning the body of the message. */
   virtual QString substituteCommandLineArgsFor( const KMime::Message::Ptr &aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
 
-  virtual ReturnCode genericProcess( const KMime::Message::Ptr &aMsg, bool filtering ) const;
+  virtual ReturnCode genericProcess( const Akonadi::Item &item, bool filtering ) const;
 };
 
 

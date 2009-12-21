@@ -35,43 +35,23 @@
 using namespace KMail;
 
 QMap<quint32, QPointer<KMFolder> > MessageProperty::sFolders;
+QSet<Akonadi::Item::Id> MessageProperty::sFilteredItems;
 QMap<quint32, bool> MessageProperty::sKeepSerialNumber;
 QMap<quint32, QPointer<ActionScheduler> > MessageProperty::sHandlers;
 QMap<quint32, int > MessageProperty::sTransfers;
 QMap<KMime::Content*, long > MessageProperty::sSerialCache;
 
-bool MessageProperty::filtering( quint32 serNum )
+bool MessageProperty::filtering( const Akonadi::Item &item )
 {
-  return sFolders.contains( serNum );
+  return sFilteredItems.contains( item.id() );
 }
 
-void MessageProperty::setFiltering( quint32 serNum, bool filter )
+void MessageProperty::setFiltering( const Akonadi::Item &item, bool filter )
 {
-  assert(!filtering(serNum) || !filter);
-  if (filter && !filtering(serNum))
-    sFolders.insert(serNum, QPointer<KMFolder>(0) );
-  else if (!filter)
-    sFolders.remove(serNum);
-}
-
-bool MessageProperty::filtering( KMime::Content *msgBase )
-{
-#if 0 //TODO port to akonadi
-  return filtering( msgBase->getMsgSerNum() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return true;
-#endif
-  
-}
-
-void MessageProperty::setFiltering( KMime::Content *msgBase, bool filter )
-{
-#if 0 //TODO port to akonadi
-  setFiltering( msgBase->getMsgSerNum(), filter );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  if ( filter )
+    sFilteredItems.insert( item.id() );
+  else
+    sFilteredItems.remove( item.id() );
 }
 
 KMFolder* MessageProperty::filterFolder( quint32 serNum )

@@ -301,6 +301,7 @@ void ActionScheduler::execFilters(quint32 serNum)
     }
   }
 
+#if 0 // TODO port to Akonadi
   if (MessageProperty::filtering( serNum )) {
     // Not good someone else is already filtering this msg
     mResult = ResultError;
@@ -315,6 +316,7 @@ void ActionScheduler::execFilters(quint32 serNum)
       fetchMessageTimer->start( 0 );
     }
   }
+#endif
 }
 
 KMime::Content *ActionScheduler::messageBase(quint32 serNum)
@@ -544,6 +546,7 @@ void ActionScheduler::enqueue(quint32 serNum)
   if (mResult != ResultOk)
     return; // An error has already occurred don't even try to process this msg
 
+#if 0 // TODO: port to Akonadi!
   if (MessageProperty::filtering( serNum )) {
     // Not good someone else is already filtering this msg
     mResult = ResultError;
@@ -561,6 +564,7 @@ void ActionScheduler::enqueue(quint32 serNum)
       processMessageTimer->start( 0 );
     }
   }
+#endif
 }
 
 void ActionScheduler::processMessage()
@@ -600,6 +604,7 @@ void ActionScheduler::processMessage()
     return;
   }
 
+#if 0 //TODO port to akonadi
   MessageProperty::setFiltering( *mMessageIt, true );
   MessageProperty::setFilterHandler( *mMessageIt, this );
   MessageProperty::setFilterFolder( *mMessageIt, mDestFolder );
@@ -607,7 +612,6 @@ void ActionScheduler::processMessage()
     FilterLog::instance()->addSeparator();
   }
   mFilterIt = mFilters.begin();
-#if 0 //TODO port to akonadi
   mUnget = msgBase->isMessage();
   KMime::Message *msg = message( *mMessageIt );
   if (mResult != ResultOk) {

@@ -64,9 +64,9 @@ public:
       rule with "field equals value" */
   void createFilter( const QByteArray & field, const QString & value );
 
-  bool beginFiltering( KMime::Content *msgBase ) const;
+  bool beginFiltering( const Akonadi::Item &item ) const;
   int moveMessage( const KMime::Message::Ptr &msg ) const;
-  void endFiltering( KMime::Content *msgBase ) const;
+  void endFiltering( const Akonadi::Item &item ) const;
 
   /**
    * Returns whether at least one filter applies to this account,

@@ -76,10 +76,11 @@ KMFilterAction::~KMFilterAction()
 {
 }
 
-void KMFilterAction::processAsync( const KMime::Message::Ptr &msg ) const
+void KMFilterAction::processAsync( const Akonadi::Item &item ) const
 {
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   ActionScheduler *handler = MessageProperty::filterHandler( msg.get() );
-  ReturnCode result = process( msg );
+  ReturnCode result = process( item );
   if (handler)
     handler->actionMessage( result );
 }
@@ -509,8 +510,9 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( const KMime::Me
 }
 
 
-KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess( const KMime::Message::Ptr &aMsg, bool withOutput ) const
+KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess( const Akonadi::Item &item, bool withOutput ) const
 {
+  const KMime::Message::Ptr aMsg = item.payload<KMime::Message::Ptr>();
   Q_ASSERT( aMsg );
 
   if ( mParameter.isEmpty() )
@@ -604,7 +606,7 @@ class KMFilterActionSendReceipt : public KMFilterActionWithNone
 {
 public:
   KMFilterActionSendReceipt();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -618,11 +620,10 @@ KMFilterActionSendReceipt::KMFilterActionSendReceipt()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionSendReceipt::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionSendReceipt::process( const Akonadi::Item &item ) const
 {
-  kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
-
-  KMime::Message::Ptr receipt = KMail::MessageHelper::createDeliveryReceipt( Akonadi::Item(), msg );
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  const KMime::Message::Ptr receipt = KMail::MessageHelper::createDeliveryReceipt( item, msg );
   if ( !receipt ) return ErrorButGoOn;
 
   // Queue message. This is a) so that the user can check
@@ -643,7 +644,7 @@ class KMFilterActionTransport: public KMFilterActionWithString
 {
 public:
   KMFilterActionTransport();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -657,10 +658,11 @@ KMFilterActionTransport::KMFilterActionTransport()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionTransport::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionTransport::process( const Akonadi::Item &item ) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", msg.get(), mParameter, "utf-8");
   msg->setHeader( header );
   return GoOn;
@@ -675,7 +677,7 @@ class KMFilterActionReplyTo: public KMFilterActionWithString
 {
 public:
   KMFilterActionReplyTo();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -690,8 +692,9 @@ KMFilterActionReplyTo::KMFilterActionReplyTo()
   mParameter = "";
 }
 
-KMFilterAction::ReturnCode KMFilterActionReplyTo::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionReplyTo::process( const Akonadi::Item &item ) const
 {
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( "Reply-To", msg.get(), mParameter, "utf-8");
   msg->setHeader( header );
   return GoOn;
@@ -707,7 +710,7 @@ class KMFilterActionIdentity: public KMFilterActionWithUOID
 {
 public:
   KMFilterActionIdentity();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction();
 
   QWidget * createParamWidget( QWidget * parent ) const;
@@ -727,8 +730,9 @@ KMFilterActionIdentity::KMFilterActionIdentity()
   mParameter = kmkernel->identityManager()->defaultIdentity().uoid();
 }
 
-KMFilterAction::ReturnCode KMFilterActionIdentity::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionIdentity::process( const Akonadi::Item &item ) const
 {
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg.get(), QString::number(mParameter), "utf-8");
   msg->setHeader( header );
   return GoOn;
@@ -771,7 +775,7 @@ class KMFilterActionSetStatus: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionSetStatus();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   virtual bool requiresBody(KMime::Content*) const;
 
   static KMFilterAction* newAction();
@@ -828,7 +832,7 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionSetStatus::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionSetStatus::process( const Akonadi::Item &item ) const
 {
 #if 0 //TODO port to akonadi
   int idx = mParameterList.indexOf( mParameter );
@@ -884,7 +888,7 @@ class KMFilterActionAddTag: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionAddTag();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   virtual bool requiresBody( KMime::Content* ) const;
 
   static KMFilterAction* newAction();
@@ -916,7 +920,7 @@ KMFilterActionAddTag::KMFilterActionAddTag()
   }
 }
 
-KMFilterAction::ReturnCode KMFilterActionAddTag::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionAddTag::process( const Akonadi::Item &item ) const
 {
 #if 0 //TODO port to akonadi
   const int idx = mParameterList.indexOf( mParameter );
@@ -979,7 +983,7 @@ class KMFilterActionFakeDisposition: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionFakeDisposition();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction() {
     return (new KMFilterActionFakeDisposition);
   }
@@ -1023,11 +1027,12 @@ KMFilterActionFakeDisposition::KMFilterActionFakeDisposition()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process( const Akonadi::Item &item ) const
 {
   int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   if ( idx == 1 ) // ignore
     KMail::MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
   else // send
@@ -1072,7 +1077,7 @@ class KMFilterActionRemoveHeader: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionRemoveHeader();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   virtual QWidget* createParamWidget( QWidget* parent ) const;
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
 
@@ -1105,10 +1110,11 @@ QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
   return cb;
 }
 
-KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process( const Akonadi::Item &item ) const
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
+  KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   while ( msg->headerByType( mParameter.toLatin1() ) )
     msg->removeHeader( mParameter.toLatin1() );
   return GoOn;
@@ -1139,7 +1145,7 @@ class KMFilterActionAddHeader: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionAddHeader();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   virtual QWidget* createParamWidget( QWidget* parent ) const;
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
   virtual void applyParamWidgetValue( QWidget* paramWidget );
@@ -1170,10 +1176,11 @@ KMFilterActionAddHeader::KMFilterActionAddHeader()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionAddHeader::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionAddHeader::process( const Akonadi::Item &item ) const
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
+  KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( mParameter.toLatin1(), msg.get(), mValue, "utf-8" );
   msg->setHeader( header );
   return GoOn;
@@ -1283,7 +1290,7 @@ class KMFilterActionRewriteHeader: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionRewriteHeader();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   virtual QWidget* createParamWidget( QWidget* parent ) const;
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
   virtual void applyParamWidgetValue( QWidget* paramWidget );
@@ -1316,10 +1323,12 @@ KMFilterActionRewriteHeader::KMFilterActionRewriteHeader()
   mParameter = mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process( const Akonadi::Item &item ) const
 {
   if ( mParameter.isEmpty() || !mRegExp.isValid() )
     return ErrorButGoOn;
+
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   // QString::replace is not const.
   QString value = msg->headerByType( mParameter.toLatin1() ) ? msg->headerByType( mParameter.toLatin1() )->asUnicodeString(): "";
 
@@ -1459,7 +1468,7 @@ class KMFilterActionMove: public KMFilterActionWithFolder
 {
 public:
   KMFilterActionMove();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   virtual bool requiresBody(KMime::Content*) const;
   static KMFilterAction* newAction(void);
 };
@@ -1474,7 +1483,7 @@ KMFilterActionMove::KMFilterActionMove()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionMove::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionMove::process( const Akonadi::Item &item ) const
 {
   if ( !mFolder.isValid() )
     return ErrorButGoOn;
@@ -1511,8 +1520,8 @@ class KMFilterActionCopy: public KMFilterActionWithFolder
 {
 public:
   KMFilterActionCopy();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
-  virtual void processAsync( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
+  virtual void processAsync( const Akonadi::Item  &item ) const;
   virtual bool requiresBody( KMime::Content *) const;
   static KMFilterAction* newAction(void);
 };
@@ -1527,7 +1536,7 @@ KMFilterActionCopy::KMFilterActionCopy()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionCopy::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionCopy::process( const Akonadi::Item &item ) const
 {
 #if 0 //TODO port to akonadi
 
@@ -1553,8 +1562,9 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( const KMime::Message::Pt
   return GoOn;
 }
 
-void KMFilterActionCopy::processAsync( const KMime::Message::Ptr &msg ) const
+void KMFilterActionCopy::processAsync( const Akonadi::Item &item ) const
 {
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   ActionScheduler *handler = MessageProperty::filterHandler( msg.get() );
 #ifdef OLD_COMMAND
   KMCommand *cmd = new KMCopyCommand( mFolder, msg );
@@ -1579,7 +1589,7 @@ class KMFilterActionForward: public KMFilterActionWithAddress
   public:
     KMFilterActionForward();
     static KMFilterAction* newAction( void );
-    virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+    virtual ReturnCode process( const Akonadi::Item &item ) const;
     virtual QWidget* createParamWidget( QWidget* parent ) const;
     virtual void applyParamWidgetValue( QWidget* paramWidget );
     virtual void setParamWidgetValue( QWidget* paramWidget ) const;
@@ -1603,11 +1613,12 @@ KMFilterActionForward::KMFilterActionForward()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionForward::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionForward::process( const Akonadi::Item &item ) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   // avoid endless loops when this action is used in a filter
   // which applies to sent messages
   if ( MessageViewer::StringUtil::addressIsInAddressList( mParameter, QStringList( msg->to()->asUnicodeString() ) ) ) {
@@ -1758,7 +1769,7 @@ class KMFilterActionRedirect: public KMFilterActionWithAddress
 {
 public:
   KMFilterActionRedirect();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1772,7 +1783,7 @@ KMFilterActionRedirect::KMFilterActionRedirect()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionRedirect::process( const KMime::Message::Ptr &aMsg ) const
+KMFilterAction::ReturnCode KMFilterActionRedirect::process( const Akonadi::Item &item ) const
 {
   KMime::Message::Ptr msg;
   if ( mParameter.isEmpty() )
@@ -1800,7 +1811,7 @@ class KMFilterActionExec : public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExec();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1814,9 +1825,9 @@ KMFilterActionExec::KMFilterActionExec()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionExec::process( const KMime::Message::Ptr &aMsg ) const
+KMFilterAction::ReturnCode KMFilterActionExec::process( const Akonadi::Item &item ) const
 {
-  return KMFilterActionWithCommand::genericProcess( aMsg, false ); // ignore output
+  return KMFilterActionWithCommand::genericProcess( item, false ); // ignore output
 }
 
 //=============================================================================
@@ -1919,8 +1930,8 @@ class KMFilterActionExtFilter: public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExtFilter();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
-  virtual void processAsync( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item2 ) const;
+  virtual void processAsync( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1933,12 +1944,12 @@ KMFilterActionExtFilter::KMFilterActionExtFilter()
   : KMFilterActionWithCommand( "filter app", i18n("Pipe Through") )
 {
 }
-KMFilterAction::ReturnCode KMFilterActionExtFilter::process( const KMime::Message::Ptr &aMsg ) const
+KMFilterAction::ReturnCode KMFilterActionExtFilter::process( const Akonadi::Item &item ) const
 {
-  return KMFilterActionWithCommand::genericProcess( aMsg, true ); // use output
+  return KMFilterActionWithCommand::genericProcess( item, true ); // use output
 }
 
-void KMFilterActionExtFilter::processAsync( const KMime::Message::Ptr &aMsg ) const
+void KMFilterActionExtFilter::processAsync( const Akonadi::Item &item ) const
 {
 #if 0 //TODO port to akonadi
   ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
@@ -2002,7 +2013,7 @@ class KMFilterActionExecSound : public KMFilterActionWithTest
 public:
   KMFilterActionExecSound();
   ~KMFilterActionExecSound();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   virtual bool requiresBody(KMime::Content*) const;
   static KMFilterAction* newAction(void);
 private:
@@ -2073,7 +2084,7 @@ KMFilterAction* KMFilterActionExecSound::newAction(void)
   return (new KMFilterActionExecSound());
 }
 
-KMFilterAction::ReturnCode KMFilterActionExecSound::process( const KMime::Message::Ptr & ) const
+KMFilterAction::ReturnCode KMFilterActionExecSound::process( const Akonadi::Item& ) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
@@ -2147,7 +2158,7 @@ class KMFilterActionAddToAddressBook: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionAddToAddressBook();
-  virtual ReturnCode process( const KMime::Message::Ptr &msg ) const;
+  virtual ReturnCode process( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction();
 
   virtual bool isEmpty() const { return false; }
@@ -2214,8 +2225,9 @@ void KMFilterActionAddToAddressBook::updateResourceMaps( bool force ) const
   mResourceMapsInitalized = true;
 }
 
-KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( const KMime::Message::Ptr &msg ) const
+KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( const Akonadi::Item &item ) const
 {
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   QString headerLine;
   if ( mParameter == mFromStr )
     headerLine = msg->from()->asUnicodeString();
