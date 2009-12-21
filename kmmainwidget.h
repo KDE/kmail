@@ -126,6 +126,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
+    /** Access to the header list pane. */
+    MessageList::Pane* messageListPane() const { return mMessagePane; }
 
     QSharedPointer<FolderCollection> currentFolder() const;
 

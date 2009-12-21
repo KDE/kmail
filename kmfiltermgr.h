@@ -24,6 +24,9 @@
 #include "kmfolder.h"
 #include <akonadi/collection.h>
 
+namespace Akonadi {
+  class Item;
+}
 namespace KMime {
   class Message;
   class Content;
@@ -118,15 +121,9 @@ public:
   int process( const KMime::Message::Ptr &msg, FilterSet aSet = Inbound,
 	       bool account = false, uint accountId = 0 );
 
-  /** For ad-hoc filters. Applies @p filter to @p msg. Return codes
-      are as with the above method.
-      @deprecated Use int process( quint32, const KMFilter * )
-  */
-  int process( const KMime::Message::Ptr &msg, const KMFilter * filter );
-
-  /** For ad-hoc filters. Applies @p filter to message with @p serNum .
+  /** For ad-hoc filters. Applies @p filter to message @p item.
       Return codes are as with the above method. */
-  int process( quint32 serNum, const KMFilter * filter );
+  int process( const Akonadi::Item &item, const KMFilter * filter );
 
   void cleanup();
 
@@ -186,10 +183,7 @@ signals:
 private:
   int processPop( const KMime::Message::Ptr &msg ) const;
   /** Find out if a message matches the filter criteria */
-  bool isMatching( const KMime::Message::Ptr &msg, const KMFilter * filter );
-#if 0 // TODO port me!
-  bool isMatching( quint32 serNum, const KMFilter * filter );
-#endif
+  bool isMatching( const Akonadi::Item &item, const KMFilter * filter );
 
   QPointer<KMFilterDlg> mEditDialog;
   QVector<KMFolder *> mOpenFolders;

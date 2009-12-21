@@ -117,6 +117,7 @@ using KMail::TemplateParser;
 #include <akonadi/itemcopyjob.h>
 #include <akonadi/itemdeletejob.h>
 
+#include <messagelist/pane.h>
 #include "messageviewer/stringutil.h"
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/objecttreeemptysource.h"
@@ -1774,9 +1775,7 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               KMFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
-  QList<Akonadi::Item>::const_iterator it;
-  for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it )
-    serNumList.append( (*it).id() );
+  fetchScope().fetchFullPayload();
 }
 
 KMCommand::Result KMFilterActionCommand::execute()
@@ -1784,16 +1783,14 @@ KMCommand::Result KMFilterActionCommand::execute()
   KCursorSaver busy( KBusyPtr::busy() );
 
   int msgCount = 0;
-  int msgCountToFilter = serNumList.count();
+  int msgCountToFilter = retrievedMsgs().size();
   ProgressItem* progressItem =
      ProgressManager::createProgressItem (
          "filter"+ProgressManager::getUniqueID(),
          i18n( "Filtering messages" ) );
   progressItem->setTotalItems( msgCountToFilter );
 
-  QList<quint32>::const_iterator it;
-  for ( it = serNumList.constBegin(); it != serNumList.constEnd(); ++it ) {
-    quint32 serNum = *it;
+  foreach ( const Akonadi::Item &item, retrievedMsgs() ) {
     int diff = msgCountToFilter - ++msgCount;
     if ( diff < 10 || !( msgCount % 10 ) || msgCount <= 10 ) {
       progressItem->updateProgress();
@@ -1803,7 +1800,7 @@ KMCommand::Result KMFilterActionCommand::execute()
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
-    int filterResult = kmkernel->filterMgr()->process( serNum, mFilter );
+    int filterResult = kmkernel->filterMgr()->process( item, mFilter );
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
       kError() << "Critical error";
@@ -1838,20 +1835,14 @@ void KMMetaFilterActionCommand::start()
     scheduler->setAlwaysMatch( true );
     scheduler->setAutoDestruct( true );
     scheduler->setIgnoreFilterSet( true );
-#ifdef OLD_MESSAGELIST
-    QList<KMime::Message*> msgList = mMainWidget->messageListView()->selectionAsMsgBaseList();
+    QList<KMime::Message::Ptr> msgList = mMainWidget->messageListPane()->selectionAsMessageList();
 
-    KMime::Message *msg;
-    foreach( msg, msgList )
-      scheduler->execFilters( msg );
-#endif
+    foreach( const KMime::Message::Ptr &msg, msgList )
+      scheduler->execFilters( msg.get() );
   } else {
-#ifdef OLD_MESSAGELIST
     KMCommand *filterCommand = new KMFilterActionCommand(
-        mMainWidget, mMainWidget->messageListView()->selectionAsMsgBaseList(), mFilter
-      );
+        mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemList() , mFilter );
     filterCommand->start();
-#endif
   }
 }
 

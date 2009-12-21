@@ -150,90 +150,33 @@ void KMFilterMgr::endFiltering(KMime::Content *msgBase) const
   MessageProperty::setFiltering( msgBase, false );
 }
 
-int KMFilterMgr::process( const KMime::Message::Ptr & msg, const KMFilter * filter ) {
-  int result = 1;
-#if 0 //TODO port to akonadi
- bool stopIt = false;
-
-  if ( !msg || !filter || !beginFiltering( msg ))
-    return 1;
-
-  if ( isMatching( msg, filter ) ) {
-    if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
-      return 2;
-
-    KMFolder *folder = MessageProperty::filterFolder( msg );
-
-    endFiltering( msg );
-    if (folder) {
-      tempOpenFolder( folder );
-      result = folder->moveMsg( msg );
-    }
-  } else {
-    endFiltering( msg );
-    result = 1;
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  return result;
-}
-
-int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
+int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter ) {
   bool stopIt = false;
   int result = 1;
 
-  if ( !filter)
+  if ( !filter || !item.hasPayload<KMime::Message::Ptr>() )
     return 1;
 
-#if 0 //TODO port to akonadi
-  if ( isMatching( serNum, filter ) ) {
-    KMFolder *folder = 0;
-    int idx = -1;
-    // get the message with the serNum
-    KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
-    if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
-      return 1;
-    }
-    KMFolderOpener openFolder( folder, "filtermgr" );
-    KMMsgBase *msgBase = folder->getMsgBase( idx );
-    bool unGet = !msgBase->isMessage();
-    KMMessage *msg = folder->getMsg( idx );
+  if ( isMatching( item, filter ) ) {
     // do the actual filtering stuff
-    if ( !msg || !beginFiltering( msg ) ) {
-      if ( unGet) {
-        folder->unGetMsg( idx );
-        folder->close( "filtermgr" );
-      }
+    const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+    if ( !msg || !beginFiltering( msg.get() ) ) {
       return 1;
     }
     if ( filter->execActions( msg, stopIt ) == KMFilter::CriticalError ) {
-      if ( unGet ) {
-        folder->unGetMsg( idx );
-        folder->close( "filtermgr" );
-      }
       return 2;
     }
 
-    KMFolder *targetFolder = MessageProperty::filterFolder( msg );
+    KMFolder *targetFolder = MessageProperty::filterFolder( msg.get() );
 
-    endFiltering( msg );
+    endFiltering( msg.get() );
     if ( targetFolder ) {
       tempOpenFolder( targetFolder );
-      msg->setTransferInProgress( false );
-      result = targetFolder->moveMsg( msg );
-      msg->setTransferInProgress( true );
-    }
-    if ( unGet) {
-      folder->unGetMsg( idx );
-      folder->close( "filtermgr" );
+      result = targetFolder->moveMsg( msg.get() );
     }
   } else {
     result = 1;
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return result;
 }
 
@@ -293,7 +236,7 @@ int KMFilterMgr::process( const KMime::Message::Ptr &msg, FilterSet set,
   return 1;
 }
 
-bool KMFilterMgr::isMatching( const KMime::Message::Ptr & msg, const KMFilter * filter )
+bool KMFilterMgr::isMatching( const Akonadi::Item& item, const KMFilter * filter )
 {
   bool result = false;
   if ( FilterLog::instance()->isLogging() ) {
@@ -301,30 +244,7 @@ bool KMFilterMgr::isMatching( const KMime::Message::Ptr & msg, const KMFilter * 
     logText.append( filter->pattern()->asString() );
     FilterLog::instance()->add( logText, FilterLog::patternDesc );
   }
-#if 0 //TODO port to akonadi
-  if ( filter->pattern()->matches( msg ) ) {
-    if ( FilterLog::instance()->isLogging() ) {
-      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
-                                  FilterLog::patternResult );
-    }
-    result = true;
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  return result;
-}
-
-#if 0 // TODO port me!
-bool KMFilterMgr::isMatching( quint32 serNum, const KMFilter * filter )
-{
-  bool result = false;
-  if ( FilterLog::instance()->isLogging() ) {
-    QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
-    logText.append( filter->pattern()->asString() );
-    FilterLog::instance()->add( logText, FilterLog::patternDesc );
-  }
-  if ( filter->pattern()->matches( serNum ) ) {
+  if ( filter->pattern()->matches( item ) ) {
     if ( FilterLog::instance()->isLogging() ) {
       FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                   FilterLog::patternResult );
@@ -333,7 +253,6 @@ bool KMFilterMgr::isMatching( quint32 serNum, const KMFilter * filter )
   }
   return result;
 }
-#endif
 
 bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 {
