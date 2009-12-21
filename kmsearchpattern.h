@@ -30,6 +30,10 @@ using KPIM::MessageStatus;
 #include <QList>
 #include <QString>
 
+namespace Akonadi {
+  class Item;
+}
+
 namespace KMime {
   class Message;
 }
@@ -97,7 +101,7 @@ public:
       @return true if the rule matched, false otherwise. Must be
       implemented by subclasses.
   */
-  virtual bool matches( KMime::Message * msg ) const = 0;
+  virtual bool matches( const Akonadi::Item &item ) const = 0;
 
   /** Determine whether the rule is worth considering. It isn't if
       either the field is not set or the contents is empty.
@@ -189,7 +193,7 @@ public:
   virtual bool isEmpty() const ;
   virtual bool requiresBody() const;
 
-  virtual bool matches( KMime::Message * msg ) const;
+  virtual bool matches( const Akonadi::Item &item ) const;
   virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
   /** Helper for the main matches() method. Does the actual comparing. */
@@ -212,7 +216,7 @@ public:
                          Function function=FuncContains, const QString & contents=QString() );
   virtual bool isEmpty() const ;
 
-  virtual bool matches( KMime::Message * msg ) const;
+  virtual bool matches( const Akonadi::Item &item ) const;
   virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
   // Optimized matching not implemented, will use the unoptimized matching
@@ -290,7 +294,7 @@ public:
    explicit KMSearchRuleStatus( MessageStatus status, Function function=FuncContains );
 
    virtual bool isEmpty() const ;
-   virtual bool matches( KMime::Message * msg ) const;
+   virtual bool matches( const Akonadi::Item &item ) const;
    virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
    //Not possible to implement optimized form for status searching
@@ -361,7 +365,7 @@ public:
 
       @return true if the match was successful, false otherwise.
   */
-  bool matches( KMime::Message * msg, bool ignoreBody = false ) const;
+  bool matches( const Akonadi::Item &item, bool ignoreBody = false ) const;
 
   /** Returns true if the pattern only depends the DwString that backs
       a message */

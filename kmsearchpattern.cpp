@@ -225,6 +225,7 @@ Nepomuk::Query::ComparisonTerm::Comparator KMSearchRule::nepomukComparator() con
     default:
       kDebug() << "Unhandled function type: " << function();
   }
+  return Nepomuk::Query::ComparisonTerm::Equal;
 }
 
 void KMSearchRule::addAndNegateTerm(const Nepomuk::Query::Term& term, Nepomuk::Query::GroupTerm& termGroup) const
@@ -238,6 +239,8 @@ void KMSearchRule::addAndNegateTerm(const Nepomuk::Query::Term& term, Nepomuk::Q
     case KMSearchRule::FuncIsNotInCategory:
     case KMSearchRule::FuncIsNotInAddressbook:
       negate = true;
+    default:
+      break;
   }
   if ( negate ) {
     Nepomuk::Query::NegationTerm neg;
@@ -294,9 +297,10 @@ bool KMSearchRuleString::requiresBody() const
   return true;
 }
 
-bool KMSearchRuleString::matches( KMime::Message * msg ) const
+bool KMSearchRuleString::matches( const Akonadi::Item &item ) const
 {
-  assert( msg );
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  assert( msg.get() );
 
   if ( isEmpty() )
     return false;
@@ -570,16 +574,17 @@ bool KMSearchRuleNumerical::isEmpty() const
 }
 
 
-bool KMSearchRuleNumerical::matches( KMime::Message * msg ) const
+bool KMSearchRuleNumerical::matches( const Akonadi::Item &item ) const
 {
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
 
   QString msgContents;
-  int numericalMsgContents = 0;
-  int numericalValue = 0;
+  qint64 numericalMsgContents = 0;
+  qint64 numericalValue = 0;
 
   if ( field() == "<size>" ) {
-    numericalMsgContents = msg->storageSize(); //TODO check if this is really int( msg->msgLength() );
-    numericalValue = contents().toInt();
+    numericalMsgContents = item.size();
+    numericalValue = contents().toLongLong();
     msgContents.setNum( numericalMsgContents );
   } else if ( field() == "<age in days>" ) {
     QDateTime msgDateTime = msg->date()->dateTime().dateTime();
@@ -709,20 +714,21 @@ bool KMSearchRuleStatus::isEmpty() const
   return field().trimmed().isEmpty() || contents().isEmpty();
 }
 
-bool KMSearchRuleStatus::matches( KMime::Message * msg ) const
+bool KMSearchRuleStatus::matches( const Akonadi::Item &item ) const
 {
-
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  KPIM::MessageStatus status;
+  status.setStatusFromFlags( item.flags() );
   bool rc = false;
-#if 0  //TODO port to akonadi
   switch ( function() ) {
     case FuncEquals: // fallthrough. So that "<status> 'is' 'read'" works
     case FuncContains:
-      if (msg->messageStatus() & mStatus)
+      if (status & mStatus)
         rc = true;
       break;
     case FuncNotEqual: // fallthrough. So that "<status> 'is not' 'read'" works
     case FuncContainsNot:
-      if (! (msg->messageStatus() & mStatus) )
+      if (! (status & mStatus) )
         rc = true;
       break;
     // FIXME what about the remaining funcs, how can they make sense for
@@ -730,9 +736,6 @@ bool KMSearchRuleStatus::matches( KMime::Message * msg ) const
     default:
       break;
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if ( FilterLog::instance()->isLogging() ) {
     QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
                        : "<font color=#FF0000>0 = </font>" );
@@ -798,23 +801,25 @@ KMSearchPattern::~KMSearchPattern()
   qDeleteAll( *this );
 }
 
-bool KMSearchPattern::matches( KMime::Message * msg, bool ignoreBody ) const
+bool KMSearchPattern::matches( const Akonadi::Item &item, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
+  if ( !item.hasPayload<KMime::Message::Ptr>() )
+    return false;
 
   QList<KMSearchRule*>::const_iterator it;
   switch ( mOperator ) {
   case OpAnd: // all rules must match
     for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( !(*it)->matches( msg ) )
+        if ( !(*it)->matches( item ) )
           return false;
     return true;
   case OpOr:  // at least one rule must match
     for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( (*it)->matches( msg ) )
+        if ( (*it)->matches( item ) )
           return true;
     // fall through
   default:
