@@ -72,14 +72,14 @@ public:
    * which means that mail must be downloaded in order to be filtered,
    * for example;
    * */
-  bool atLeastOneFilterAppliesTo( unsigned int accountID ) const;
+  bool atLeastOneFilterAppliesTo( const QString& accountID ) const;
 
   /**
    * Returns whether at least one incoming filter applies to this account,
    * which means that mail must be downloaded in order to be filtered,
    * for example;
    * */
-  bool atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const;
+  bool atLeastOneIncomingFilterAppliesTo( const QString & accountID ) const;
 
   /** Returns whether at least one filter targets a folder on an
    * online IMAP account.

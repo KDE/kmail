@@ -517,7 +517,7 @@ void KMFilterDlg::slotApplicabilityChanged()
     // Advanced tab functionality - Update list of accounts this filter applies to
     QTreeWidgetItemIterator it( mAccountList );
     while( QTreeWidgetItem * item = *it ) {
-      int id = item->text( 2 ).toInt();
+      QString id = item->text( 2 );
       item->setCheckState( 0, mFilter->applyOnAccount( id ) ? Qt::Checked :
                                                               Qt::Unchecked );
       ++it;
@@ -539,7 +539,7 @@ void KMFilterDlg::slotApplicableAccountsChanged()
     QTreeWidgetItemIterator it( mAccountList );
 
     while( QTreeWidgetItem *item = *it ) {
-      int id = item->text( 2 ).toInt();
+      QString id = item->text( 2 );
       mFilter->setApplyOnAccount( id, item->checkState( 0 ) == Qt::Checked );
       ++it;
     }
@@ -599,10 +599,8 @@ void KMFilterDlg::slotUpdateAccountList()
     //listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
     listItem->setText( 2, QString( "%1" ).arg( lst.at( i ).identifier() ) );
     if ( mFilter )
-#if 0
       listItem->setCheckState( 0, mFilter->applyOnAccount( lst.at( i ).identifier() ) ?
                                   Qt::Checked : Qt::Unchecked );
-#endif
     top = listItem;
   }
   mAccountList->blockSignals( false );

@@ -205,13 +205,13 @@ public:
       set of accounts.
       @see setApplicability applyOnAccount
   */
-  void setApplyOnAccount( uint id, bool aApply=true );
+  void setApplyOnAccount( const QString& id, bool aApply=true );
 
   /** @return true if this filter should be applied on
       inbound messages from the account with id (@p id), false otherwise.
       @see setApplicability
   */
-  bool applyOnAccount( uint id ) const;
+  bool applyOnAccount( const QString& id ) const;
 
   void setStopProcessingHere( bool aStop ) { bStopProcessingHere = aStop; }
   bool stopProcessingHere() const { return bStopProcessingHere; }
@@ -317,7 +317,7 @@ public:
 private:
   KMSearchPattern mPattern;
   QList<KMFilterAction*> mActions;
-  QList<int> mAccounts;
+  QStringList mAccounts;
   KMPopFilterAction mAction;
   QString mIcon;
   QString mToolbarName;

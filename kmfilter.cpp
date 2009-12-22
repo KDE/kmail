@@ -100,7 +100,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     }
 
     mAccounts.clear();
-    QList<int>::ConstIterator it2;
+    QStringList::ConstIterator it2;
     for ( it2 = aFilter.mAccounts.begin() ; it2 != aFilter.mAccounts.end() ; ++it2 )
       mAccounts.append( *it2 );
   }
@@ -194,7 +194,7 @@ bool KMFilter::folderRemoved( const Akonadi::Collection & aFolder, const Akonadi
   return rem;
 }
 
-void KMFilter::setApplyOnAccount( uint id, bool aApply )
+void KMFilter::setApplyOnAccount( const QString& id, bool aApply )
 {
   if (aApply && !mAccounts.contains( id )) {
     mAccounts.append( id );
@@ -203,7 +203,7 @@ void KMFilter::setApplyOnAccount( uint id, bool aApply )
   }
 }
 
-bool KMFilter::applyOnAccount( uint id ) const
+bool KMFilter::applyOnAccount( const QString& id ) const
 {
   if ( applicability() == All )
     return true;
@@ -309,7 +309,7 @@ void KMFilter::readConfig(KConfigGroup & config)
               mPattern.name() ) );
     }
 
-    mAccounts = config.readEntry( "accounts-set",QList<int>() );
+    mAccounts = config.readEntry( "accounts-set",QStringList() );
   }
 }
 
@@ -392,7 +392,7 @@ void KMFilter::purify()
     }
 #else
  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif  
+#endif
   }
 }
 
@@ -460,7 +460,7 @@ const QString KMFilter::asString() const
           result += ' ' + kmkernel->acctMgr()->find( *it2 )->name();
       result += '\n';
 #else
-   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO; 
+   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
     }
     if ( bStopProcessingHere )

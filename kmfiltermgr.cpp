@@ -219,7 +219,7 @@ bool KMFilterMgr::isMatching( const Akonadi::Item& item, const KMFilter * filter
   return result;
 }
 
-bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
+bool KMFilterMgr::atLeastOneFilterAppliesTo( const QString& accountID ) const
 {
   QList<KMFilter*>::const_iterator it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it ) {
@@ -230,7 +230,7 @@ bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
   return false;
 }
 
-bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const
+bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( const QString& accountID ) const
 {
   QList<KMFilter*>::const_iterator it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it ) {
