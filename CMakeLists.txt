@@ -109,7 +109,6 @@ set(kmailprivate_LIB_SRCS
    snippetdlg.cpp
    snippetwidget.cpp
    snippetitem.cpp
-   kmfolder.cpp
    kmreaderwin.cpp
    actionscheduler.cpp
    messageproperty.cpp

@@ -29,7 +29,6 @@
 
 #include <time.h>
 
-class KMFolder;
 class QPoint;
 class QMenu;
 
@@ -56,7 +55,9 @@ public slots:
   void foldersChanged();
 
 private slots:
+#if 0
   void updateNewMessageNotification(KMFolder * folder);
+#endif
   void selectedAccount(int);
   void updateNewMessages();
   void slotActivated( QSystemTrayIcon::ActivationReason reason );
@@ -67,9 +68,9 @@ protected:
   void showKMail();
   void buildPopupMenu();
   void updateCount();
-
+#if 0
   QString prettyName(KMFolder *);
-
+#endif
 private:
 
   bool mParentVisible;
@@ -84,8 +85,10 @@ private:
   QPixmap mDefaultIcon;
 
   QVector<Akonadi::Collection> mPopupFolders;
+#if 0
   QMap<QPointer<KMFolder>, int> mFoldersWithUnread;
   QMap<QPointer<KMFolder>, bool> mPendingUpdates;
+#endif
   QTimer *mUpdateTimer;
   time_t mLastUpdate;
 };

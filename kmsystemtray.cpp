@@ -18,7 +18,6 @@
 
 
 #include "kmsystemtray.h"
-#include "kmfolder.h"
 #include "kmmainwidget.h"
 
 #include "globalsettings.h"
@@ -242,25 +241,26 @@ void KMSystemTray::foldersChanged()
    * Hide and remove all unread mappings to cover the case where the only
    * unread message was in a folder that was just removed.
    */
+#if 0
   mFoldersWithUnread.clear();
   mPendingUpdates.clear();
+#endif
   mCount = 0;
 
   if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
     hide();
   }
-
+#if 0
   /** Disconnect all previous connections */
   disconnect(this, SLOT(updateNewMessageNotification(KMFolder *)));
 
   QStringList folderNames;
   QList<QPointer<KMFolder> > folderList;
-#if 0
   kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-
+#if 0
   QStringList::iterator strIt = folderNames.begin();
 
   for(QList<QPointer<KMFolder> >::iterator it = folderList.begin();
@@ -286,6 +286,7 @@ void KMSystemTray::foldersChanged()
     }
 #endif
   }
+#endif
 }
 
 /**
@@ -317,7 +318,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     delete mNewMessagesPopup;
     mNewMessagesPopup = 0;
   }
-
+#if 0
   if ( mFoldersWithUnread.count() > 0 )
   {
     mNewMessagesPopup = new KMenu();
@@ -345,12 +346,14 @@ void KMSystemTray::slotContextMenuAboutToShow()
 
     kDebug() << "Folders added";
   }
+#endif
 }
 
 /**
  * Return the name of the folder in which the mail is deposited, prepended
  * with the account name if the folder is IMAP.
  */
+#if 0
 QString KMSystemTray::prettyName(KMFolder * fldr)
 {
 
@@ -377,7 +380,7 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
 #endif
   return rvalue;
 }
-
+#endif
 
 bool KMSystemTray::mainWindowIsOnCurrentDesktop()
 {
@@ -459,6 +462,7 @@ void KMSystemTray::hideKMail()
  * are new messages and the icon was hidden, or hides the system tray icon if there
  * are no more new messages.
  */
+#if 0
 void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 {
 #if 0
@@ -481,9 +485,11 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   }
 #endif
 }
+#endif
 
 void KMSystemTray::updateNewMessages()
 {
+#if 0
   for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
         it1 != mPendingUpdates.end(); ++it1)
   {
@@ -562,6 +568,7 @@ void KMSystemTray::updateNewMessages()
                                   mCount));
 
   mLastUpdate = time( 0 );
+#endif
 }
 
 /**
