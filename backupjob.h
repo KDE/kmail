@@ -27,7 +27,6 @@
 #include <qobject.h>
 
 class KArchive;
-class KProcess;
 class KJob;
 class QWidget;
 

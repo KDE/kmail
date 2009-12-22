@@ -52,7 +52,6 @@ enum IMAPUserIdFormat { FullEmail, UserName };
 struct ACLListEntry;
 typedef QVector<ACLListEntry> ACLList;
 
-class ImapAccountBase;
 
 /**
  * "New Access Control Entry" dialog.

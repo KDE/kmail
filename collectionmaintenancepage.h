@@ -20,7 +20,6 @@
 #define COLLECTIONMAINTENANCEPAGE_H
 #include <akonadi/collectionpropertiespage.h>
 class QLabel;
-class QPushButton;
 class KLineEdit;
 
 class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage

@@ -28,7 +28,6 @@ namespace Akonadi {
 }
 namespace KMime {
   class Message;
-  class Content;
 }
 
 class KMFolder;
