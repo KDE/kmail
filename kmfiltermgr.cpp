@@ -146,7 +146,7 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
 }
 
 int KMFilterMgr::process( const KMime::Message::Ptr &msg, FilterSet set,
-                          bool account, uint accountId ) {
+                          bool account, const QString& accountId ) {
   if ( bPopFilter )
     return processPop( msg );
 
