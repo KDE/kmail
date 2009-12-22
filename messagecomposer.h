@@ -407,6 +407,10 @@ class MessageComposer : public QObject {
 
     QByteArray mSignature;
 
+    // The hash algorithm that was used to create the signature.
+    // This is later used to replace the %hashalgo in the MIME header with the real algoritm.
+    QByteArray mSignatureHashAlgo;
+
     // This is the main body part, in the encoded version.
     // It is only used for signing and encrypting and created in composeMessage(), after the main
     // body part has been created.

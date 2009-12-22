@@ -1067,7 +1067,7 @@ static inline const char *toplevelContentType( Kleo::CryptoMessageFormat f, bool
       "multipart/signed;\n\t"
       "boundary=\"%boundary\";\n\t"
       "protocol=\"application/pgp-signature\";\n\t"
-      "micalg=pgp-sha1" // FIXME: obtain this parameter from gpgme!
+      "micalg=pgp-%hashalgo"
       :
     "multipart/encrypted;\n\t"
       "boundary=\"%boundary\";\n\t"
@@ -1078,7 +1078,7 @@ static inline const char *toplevelContentType( Kleo::CryptoMessageFormat f, bool
         "multipart/signed;\n\t"
         "boundary=\"%boundary\";\n\t"
         "protocol=\"application/pkcs7-signature\";\n\t"
-        "micalg=sha1"; // FIXME: obtain this parameter from gpgme!
+        "micalg=%hashalgo";
     // fall through (for encryption, there's no difference between
     // SMIME and SMIMEOpaque, since there is no mp/encrypted for
     // S/MIME):
@@ -2163,6 +2163,10 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       }
     }
 
+    if ( signing ) {
+      mainHeader.replace( "%hashalgo", mSignatureHashAlgo.toLower() );
+    }
+
     const QByteArray boundaryCStr = KMime::multiPartBoundary();
     // add "boundary" parameter
     if ( makeMultiMime( format, signing ) ) {
@@ -2482,6 +2486,8 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
     Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Signing Operation") );
 
   mSignature = signature;
+  mSignatureHashAlgo = res.createdSignature( 0 ).hashAlgorithmAsString();
+
   if ( mSignature.isEmpty() ) {
     KMessageBox::sorry( mComposeWin,
                         i18n( "The signing operation failed. "
