@@ -31,7 +31,6 @@
 #define messageproperty_h
 
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
-#include "kmfolder.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/item.h>

@@ -3,7 +3,7 @@
 
 // my header
 #include "kmfiltermgr.h"
-
+#include "kmkernel.h"
 // other kmail headers
 #include "filterlog.h"
 using KMail::FilterLog;

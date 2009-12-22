@@ -31,6 +31,7 @@
 #include "actionscheduler.h"
 
 #include "filterlog.h"
+#include "kmfolder.h"
 #include "messageproperty.h"
 #include "kmfilter.h"
 #include "kmcommands.h"
