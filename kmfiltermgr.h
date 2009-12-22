@@ -164,7 +164,7 @@ signals:
   void filterListUpdated();
 
 private:
-  int processPop( const KMime::Message::Ptr &msg ) const;
+  int processPop( const Akonadi::Item &item ) const;
   /** Find out if a message matches the filter criteria */
   bool isMatching( const Akonadi::Item &item, const KMFilter * filter );
 

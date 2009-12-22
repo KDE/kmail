@@ -85,18 +85,15 @@ void KMFilterMgr::writeConfig(bool withSync)
   if ( bPopFilter )
       group.writeEntry("popshowDLmsgs", mShowLater);
 
-  if ( withSync ) group.sync();
+ if ( withSync ) group.sync();
 }
 
-int KMFilterMgr::processPop( const KMime::Message::Ptr & msg ) const {
-#if 0 //TODO port to akonadi
+int KMFilterMgr::processPop( const Akonadi::Item & item ) const {
   for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
         it != mFilters.end() ; ++it )
-    if ( (*it)->pattern()->matches( msg ) )
+    if ( (*it)->pattern()->matches( item ) )
       return (*it)->action();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
   return NoAction;
 }
 
@@ -148,7 +145,6 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
 int KMFilterMgr::process( const Akonadi::Item &msg, FilterSet set,
                           bool account, const QString& accountId ) {
 
-#if 0
   if ( bPopFilter )
     return processPop( msg );
 
@@ -156,7 +152,6 @@ int KMFilterMgr::process( const Akonadi::Item &msg, FilterSet set,
     kDebug() << "KMFilterMgr: process() called with not filter set selected";
     return 1;
   }
-#endif
   bool stopIt = false;
   bool atLeastOneRuleMatched = false;
 
