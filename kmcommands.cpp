@@ -1624,8 +1624,8 @@ KMCommand::Result KMPrintCommand::execute()
 
 
 KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
-  const QList<quint32> &serNums, bool toggle )
-  : mStatus( status ), mSerNums( serNums ), mToggle( toggle ), messageStatusChanged( 0 )
+  const Akonadi::Item::List &items, bool toggle )
+  : KMCommand( 0, items ), mStatus( status ), mToggle( toggle ), messageStatusChanged( 0 )
 {
   setDeletesItself(true);
 }
@@ -1635,8 +1635,8 @@ KMCommand::Result KMSetStatusCommand::execute()
   bool parentStatus = false;
   // Toggle actions on threads toggle the whole thread
   // depending on the state of the parent.
-  if (mToggle) {
-    Akonadi::Item first( *mSerNums.begin() );
+  if ( mToggle ) {
+    const Akonadi::Item first = retrievedMsgs().first();
     MessageStatus pStatus;
     pStatus.setStatusFromFlags( first.flags() );
     if ( pStatus & mStatus )
@@ -1645,67 +1645,44 @@ KMCommand::Result KMSetStatusCommand::execute()
       parentStatus = false;
   }
 
-  QList<qint32> itemMap;
-  QList<quint32>::Iterator it;
-  for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
-    if (mToggle) {
-      Akonadi::Item tmpItem( *it );
+  foreach( const Akonadi::Item &it, retrievedMsgs() ) {
+    if ( mToggle ) {
       //kDebug()<<" item ::"<<tmpItem;
-      if (tmpItem.isValid()) {
+      if ( it.isValid() ) {
         bool myStatus;
         MessageStatus itemStatus;
-        itemStatus.setStatusFromFlags( tmpItem.flags() );
-        if ( itemStatus & mStatus)
+        itemStatus.setStatusFromFlags( it.flags() );
+        if ( itemStatus & mStatus )
           myStatus = true;
         else
           myStatus = false;
-        if (myStatus != parentStatus)
+        if ( myStatus != parentStatus )
           continue;
       }
     }
-    itemMap.append( *it );
-  }
 
-  for ( int i = 0; i < itemMap.size(); ++i ) {
-    Akonadi::ItemFetchJob *fetchJob = new Akonadi::ItemFetchJob( Akonadi::Item( itemMap[i] ),this );
-    connect( fetchJob, SIGNAL( result( KJob* ) ), this, SLOT( slotItemFetchDone( KJob* ) ) );
-    fetchJob->start();
-  }
+    Akonadi::Item item( it );
+    // Set a custom flag
+    MessageStatus itemStatus;
+    itemStatus.setStatusFromFlags( item.flags() );
 
-  return OK;
-}
-
-void KMSetStatusCommand::slotItemFetchDone( KJob* job)
-{
-  if ( job->error() ) {
-    kDebug()<<" Error in slotItemFetchDone :"<<job->errorText();
-    deleteLater();
-    return;
-  }
-  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
-  Q_ASSERT( fjob );
-  if( fjob->items().count() != 1 ) {
-    kError() << "Fetched" << fjob->items().count() << "items, expected 1.";
-    deleteLater();
-    return;
-  }
-  Akonadi::Item item = fjob->items().first();
-  // Set a custom flag
-  MessageStatus itemStatus;
-  itemStatus.setStatusFromFlags( item.flags() );
-
-  MessageStatus oldStatus = itemStatus;
-  if ( mToggle ) {
-    itemStatus.toggle( mStatus );
-  } else {
-    itemStatus.set( mStatus );
-  }
-  /*if ( itemStatus != oldStatus )*/ {
+//     MessageStatus oldStatus = itemStatus;
+    if ( mToggle ) {
+      itemStatus.toggle( mStatus );
+    } else {
+      itemStatus.set( mStatus );
+    }
+    /*if ( itemStatus != oldStatus )*/ {
       item.setFlags( itemStatus.getStatusFlags() );
       // Store back modified item
       Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
+      ++messageStatusChanged;
       connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
+    }
   }
+  if ( messageStatusChanged == 0 )
+    deleteLater();
+  return OK;
 }
 
 void KMSetStatusCommand::slotModifyItemDone( KJob * job )
@@ -1713,8 +1690,8 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
   if ( job->error() ) {
     kDebug()<<" Error in void KMSetStatusCommand::slotModifyItemDone( KJob * job ) :"<<job->errorText();
   }
-  messageStatusChanged++;
-  if ( messageStatusChanged == mSerNums.size() ) {
+  --messageStatusChanged;
+  if ( messageStatusChanged == 0 ) {
     QDBusMessage message =
       QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
     QDBusConnection::sessionBus().send( message );

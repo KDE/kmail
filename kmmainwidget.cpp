@@ -2083,15 +2083,8 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
 {
   if ( select.isEmpty() )
     return;
-    // FIXME: Why we use SerNumList instead of QList< KMMsgBase * > here ?
-  QList<quint32> serNums;
 
-  for( QList< Akonadi::Item >::const_iterator it = select.constBegin(); it != select.constEnd(); ++it )
-    serNums.append( ( *it ).id() );
-
-  Q_ASSERT( !serNums.empty() );
-
-  KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
+  KMCommand *command = new KMSetStatusCommand( status, select, toggle );
   command->start();
 }
 
@@ -2873,23 +2866,20 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
   win->show();
 }
 
-void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, const KPIM::MessageStatus & set, const KPIM::MessageStatus &clear )
+void KMMainWidget::slotMessageStatusChangeRequest( const Akonadi::Item &item, const KPIM::MessageStatus & set, const KPIM::MessageStatus &clear )
 {
   if ( !item.isValid() )
     return;
 
-  QList<quint32> serNums;
-  serNums.append( item.id() );
-
   if ( clear.toQInt32() != KPIM::MessageStatus().toQInt32() )
   {
-    KMCommand *command = new KMSetStatusCommand( clear, serNums, true );
+    KMCommand *command = new KMSetStatusCommand( clear, Akonadi::Item::List() << item, true );
     command->start();
   }
 
   if ( set.toQInt32() != KPIM::MessageStatus().toQInt32() )
   {
-    KMCommand *command = new KMSetStatusCommand( set, serNums, false );
+    KMCommand *command = new KMSetStatusCommand( set, Akonadi::Item::List() << item, false );
     command->start();
   }
 }
@@ -3750,21 +3740,21 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 void KMMainWidget::updateMessageActions()
 {
   int count;
-  QList< quint32 > selectedSernums;
-  QList< quint32 > selectedVisibleSernums;
+  Akonadi::Item::List selectedItems;
+  Akonadi::Item::List selectedVisibleItems;
   bool allSelectedBelongToSameThread = false;
   Akonadi::Item currentMessage;
   if (mCurrentFolder && mCurrentFolder->isValid() &&
-       mMessagePane->getSelectionStats( selectedSernums, selectedVisibleSernums, &allSelectedBelongToSameThread )
+       mMessagePane->getSelectionStats( selectedItems, selectedVisibleItems, &allSelectedBelongToSameThread )
      )
   {
-    count = selectedSernums.count();
+    count = selectedItems.count();
 
     currentMessage = mMessagePane->currentItem();
 
     mMsgActions->setCurrentMessage( currentMessage );
-    mMsgActions->setSelectedSernums( selectedSernums );
-    mMsgActions->setSelectedVisibleSernums( selectedVisibleSernums );
+    mMsgActions->setSelectedItem( selectedItems );
+    mMsgActions->setSelectedVisibleItems( selectedVisibleItems );
 
   } else {
     count = 0;
@@ -3805,7 +3795,7 @@ void KMMainWidget::updateMessageActions()
   // can we apply strictly single message actions ? (this is false if the whole selection contains more than one message)
   bool single_actions = count == 1;
   // can we apply loosely single message actions ? (this is false if the VISIBLE selection contains more than one message)
-  bool singleVisibleMessageSelected = selectedVisibleSernums.count() == 1;
+  bool singleVisibleMessageSelected = selectedVisibleItems.count() == 1;
   // can we apply "mass" actions to the selection ? (this is actually always true if the selection is non-empty)
   bool mass_actions = count >= 1;
   // does the selection identify a single thread ?

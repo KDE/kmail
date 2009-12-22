@@ -389,9 +389,9 @@ void KMReaderWin::slotTouchMessage()
   if ( !status.isNew() && !status.isUnread() )
     return;
 
-  QList<quint32> serNums;
-  serNums.append( message().id() );
-  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
+  Akonadi::Item::List items;
+  items.append( message() );
+  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), items );
   command->start();
 #if 0
   // should we send an MDN?

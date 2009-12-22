@@ -449,19 +449,18 @@ void FolderCollection::slotMarkNewAsUnreadfetchDone( KJob * job )
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
   Q_ASSERT( fjob );
 
-  QList<quint32> serNums;
-  Akonadi::Item::List items = fjob->items();
-  foreach( const Akonadi::Item &item, items ) {
+  Akonadi::Item::List items;
+  foreach( const Akonadi::Item &item, fjob->items() ) {
     MessageStatus status;
     status.setStatusFromFlags( item.flags() );
     if ( !status.isNew() ) {
-      serNums.append( item.id() );
+      items.append( item );
     }
   }
 
-  if (serNums.empty())
+  if ( items.empty() )
     return;
-  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusUnread(), serNums );
+  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusUnread(), items );
   command->start();
 }
 
@@ -480,18 +479,17 @@ void FolderCollection::slotMarkNewAsReadfetchDone( KJob * job)
 
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
   Q_ASSERT( fjob );
-  QList<quint32> serNums;
-  Akonadi::Item::List items = fjob->items();
-  foreach( const Akonadi::Item &item, items ) {
+  Akonadi::Item::List items;
+  foreach( const Akonadi::Item &item, fjob->items() ) {
     MessageStatus status;
     status.setStatusFromFlags( item.flags() );
     if (status.isNew() || status.isUnread()) {
-      serNums.append( item.id() );
+      items.append( item );
     }
   }
-  if (serNums.empty())
+  if ( items.empty() )
     return;
-  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
+  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), items );
   command->start();
 }
 

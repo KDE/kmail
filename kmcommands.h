@@ -551,18 +551,16 @@ class KMAIL_EXPORT KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( const MessageStatus& status, const QList<quint32> &,
+  KMSetStatusCommand( const MessageStatus& status, const Akonadi::Item::List &items,
                       bool toggle=false );
 
 protected slots:
-  void slotItemFetchDone( KJob* );
   void slotModifyItemDone( KJob * job );
 
 private:
   virtual Result execute();
 
   MessageStatus mStatus;
-  QList<quint32> mSerNums;
   int messageStatusChanged;
   bool mToggle;
 };

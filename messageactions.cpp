@@ -199,22 +199,22 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
   mCurrentItem = msg;
 
   if ( !msg.isValid() ) {
-    mSelectedSernums.clear();
-    mVisibleSernums.clear();
+    mSelectedItems.clear();
+    mVisibleItems.clear();
   }
   updateActions();
 }
 
 
-void MessageActions::setSelectedSernums(const QList< quint32 > & sernums)
+void MessageActions::setSelectedItem( const Akonadi::Item::List &items )
 {
-  mSelectedSernums = sernums;
+  mSelectedItems = items;
   updateActions();
 }
 
-void MessageActions::setSelectedVisibleSernums(const QList< quint32 > & sernums)
+void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 {
-  mVisibleSernums = sernums;
+  mVisibleItems = items;
   updateActions();
 }
 
@@ -229,7 +229,7 @@ void MessageActions::updateActions()
       singleMsg = false;
   }
 
-  const bool multiVisible = mVisibleSernums.count() > 0 || mCurrentItem.isValid();
+  const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
   const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags()
                               || !(parent.isValid() ? parent.rights() & Akonadi::Collection::ReadOnly : true);
 
@@ -420,12 +420,12 @@ void MessageActions::slotRunUrl( QAction *urlAction )
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
-  QList<quint32> serNums = mVisibleSernums;
-  if ( serNums.isEmpty() && mCurrentItem.isValid() )
-    serNums.append( mCurrentItem.id() );
-  if ( serNums.empty() )
+  Akonadi::Item::List items = mVisibleItems;
+  if ( items.isEmpty() && mCurrentItem.isValid() )
+    items.append( mCurrentItem );
+  if ( items.empty() )
     return;
-  KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
+  KMCommand *command = new KMSetStatusCommand( status, items, toggle );
   command->start();
 }
 
