@@ -23,6 +23,7 @@
 
 // other kmail headers
 #include "kmkernel.h"
+#include "kmagentmanager.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
 #include "filterlog.h"
@@ -381,18 +382,14 @@ void KMFilter::purify()
       if ( action->isEmpty() )
         mActions.removeAll ( action );
     }
-#if 0
     // Remove invalid accounts from mAccounts - just to be tidy
-    QList<int>::Iterator it2 = mAccounts.begin();
+    QStringList::Iterator it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
-      if ( !kmkernel->acctMgr()->find( *it2 ) )
+      if ( !kmkernel->agentManager()->find( *it2 ) )
          it2 = mAccounts.erase( it2 );
       else
          ++it2;
     }
-#else
- kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   }
 }
 

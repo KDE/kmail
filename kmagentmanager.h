@@ -37,6 +37,8 @@ public:
   Akonadi::AgentInstance::List instanceList() const;
   Akonadi::AgentInstance instance( const QString & );
 
+  bool find( const QString & ) const;
+
 protected slots:
   void slotInstanceAdded( const Akonadi::AgentInstance &);
   void slotInstanceRemoved( const Akonadi::AgentInstance &);
