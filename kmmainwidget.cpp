@@ -2354,7 +2354,6 @@ void KMMainWidget::slotApplyFilters()
     );
 
   progressItem->setTotalItems( msgCountToFilter );
-#if 0
   for ( QList<unsigned long>::ConstIterator it = serNums.constBegin(); it != serNums.constEnd(); ++it )
   {
     msgCount++;
@@ -2365,7 +2364,13 @@ void KMMainWidget::slotApplyFilters()
       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
+    ItemFetchJob *itemFetchJob = new ItemFetchJob( Akonadi::Item( *it ), this );
+    itemFetchJob->fetchScope().fetchFullPayload( true );
+    itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
+    connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)) );
 
+    connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchJobForFilterDone(KJob*)) );
+#if 0
     KMFolder *folder = 0;
     int idx;
     KMMsgDict::instance()->getLocation( *it, &folder, &idx );
@@ -2390,14 +2395,27 @@ void KMMainWidget::slotApplyFilters()
     } else {
       kDebug () << "A message went missing during filtering";
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     progressItem->incCompletedItems();
   }
 
   progressItem->setComplete();
   progressItem = 0;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+}
+
+void KMMainWidget::itemsFetchJobForFilterDone( KJob *job )
+{
+  if ( job->error() )
+    kDebug() << job->errorString();
+}
+
+void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
+{
+  if ( items.count()>1 )
+    kDebug()<<" More than 1 element was receiving!!!!";
+  slotFilterMsg( items.at( 0 ) );
 }
 
 int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
