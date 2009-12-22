@@ -2822,20 +2822,6 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
 
   Item msg = list.first();
 
-#if 0//Laurent port it
-  if (msg->parent() && !msg->isComplete())
-  {
-    FolderJob *job = msg->parent()->createJob(msg);
-    connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
-            SLOT(slotMessageActivated(KMime::Message*)));
-    job->start();
-    return;
-
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
