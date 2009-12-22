@@ -127,7 +127,7 @@ ActionScheduler::~ActionScheduler()
 {
   schedulerList->removeAll( this );
   tempCloseFolders();
-#if 0  
+#if 0
   disconnect( mSrcFolder, SIGNAL(closed()),
               this, SLOT(folderClosedOrExpunged()) );
   disconnect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
@@ -163,7 +163,7 @@ void ActionScheduler::setIgnoreFilterSet( bool ignore )
 
 void ActionScheduler::setSourceFolder( const Akonadi::Collection &srcFolder )
 {
-#if 0 //TODO port	
+#if 0 //TODO port
   srcFolder->open( "actionschedsrc" );
   if ( mSrcFolder ) {
     disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
@@ -191,7 +191,7 @@ void ActionScheduler::setSourceFolder( const Akonadi::Collection &srcFolder )
     connect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
              this, SLOT(folderClosedOrExpunged()) );
   }
-#endif  
+#endif
 }
 
 void ActionScheduler::setFilterList( QList<KMFilter*> filters )
@@ -211,18 +211,18 @@ void ActionScheduler::setFilterList( QList<KMFilter*> filters )
 
 void ActionScheduler::folderClosedOrExpunged()
 {
-#if 0 //TODO port to akonadi	
+#if 0 //TODO port to akonadi
   // mSrcFolder has been closed. reopen it.
   if ( mSrcFolder )
   {
     mSrcFolder->open( "actionsched" );
   }
-#endif  
+#endif
 }
 
-int ActionScheduler::tempOpenFolder( /*KMFolder *aFolder*/const Akonadi::Collection& )
+int ActionScheduler::tempOpenFolder( const Akonadi::Collection& )
 {
-#if 0 //TODO port to akonadi	
+#if 0 //TODO port to akonadi
   assert( aFolder );
   tempCloseFoldersTimer->stop();
   if ( aFolder == mSrcFolder.operator->() ) {
@@ -235,13 +235,13 @@ int ActionScheduler::tempOpenFolder( /*KMFolder *aFolder*/const Akonadi::Collect
   }
 
   mOpenFolders.append( aFolder );
-#endif  
+#endif
   return 0;
 }
 
 void ActionScheduler::tempCloseFolders()
 {
-#if 0 //PORT to akonadi	
+#if 0 //PORT to akonadi
   // close temp opened folders
   QList<QPointer<KMFolder> >::ConstIterator it;
   for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it ) {
@@ -326,7 +326,7 @@ KMime::Content *ActionScheduler::messageBase(quint32 serNum)
 {
   int idx = -1;
   KMime::Content *msg = 0;
-#if 0 //TODO port to akonadi  
+#if 0 //TODO port to akonadi
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
@@ -350,7 +350,7 @@ KMime::Message *ActionScheduler::message(quint32 serNum)
 {
   int idx = -1;
   KMime::Message *msg = 0;
-#if 0 //TODO port to akonadi  
+#if 0 //TODO port to akonadi
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
@@ -917,7 +917,7 @@ void ActionScheduler::fetchTimeOut()
 
 QString ActionScheduler::debug()
 {
-#if 0	
+#if 0
   QString res;
   QList<ActionScheduler*>::iterator it;
   int i = 1;
@@ -949,7 +949,7 @@ QString ActionScheduler::debug()
   return res;
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-return QString();  
+return QString();
 #endif
 }
 

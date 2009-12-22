@@ -19,7 +19,11 @@
 */
 
 #include "kmfilterdlg.h"
+#include "kmagentmanager.h"
 #include <klistwidgetsearchline.h>
+
+#include <akonadi/agentinstance.h>
+
 
 // other KMail headers:
 #include "kmsearchpatternedit.h"
@@ -584,22 +588,21 @@ void KMFilterDlg::slotUpdateAccountList()
   mAccountList->clear();
 
   QTreeWidgetItem *top = 0;
-#if 0
   // Block the signals here, otherwise we end up calling
   // slotApplicableAccountsChanged(), which will read the incomplete item
   // state and write that back to the filter
   mAccountList->blockSignals( true );
-  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
-  while ( accountIt != kmkernel->acctMgr()->end() ) {
-    KMAccount *account = *accountIt;
-    ++accountIt;
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  for ( int i = 0; i <lst.count(); ++i ) {
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
-    listItem->setText( 0, account->name() );
-    listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-    listItem->setText( 2, QString( "%1" ).arg( account->id() ) );
+    listItem->setText( 0, lst.at( i ).name() );
+    //listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
+    //listItem->setText( 2, QString( "%1" ).arg( lst.at( i ).id() ) );
+#if 0
     if ( mFilter )
       listItem->setCheckState( 0, mFilter->applyOnAccount( account->id() ) ?
                                   Qt::Checked : Qt::Unchecked );
+#endif
     top = listItem;
   }
   mAccountList->blockSignals( false );
@@ -613,9 +616,6 @@ void KMFilterDlg::slotUpdateAccountList()
   if ( top ) {
     mAccountList->setCurrentItem( top );
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif  
 }
 
 //=============================================================================
