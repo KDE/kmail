@@ -2323,7 +2323,7 @@ void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 void KMMainWidget::slotApplyFilters()
 {
   QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
-#if 0
+
   if (KMail::ActionScheduler::isEnabled() || kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget())
   {
     // uses action scheduler
@@ -2332,15 +2332,15 @@ void KMMainWidget::slotApplyFilters()
     KMail::ActionScheduler *scheduler = new KMail::ActionScheduler( set, filters );
     scheduler->setAutoDestruct( true );
 
-    foreach ( KMMsgBase *msg, msgList ) {
-      if ( msg ) {
-        scheduler->execFilters( msg );
+    foreach ( const Akonadi::Item &item, selectedMessages ) {
+      if ( item.isValid() ) {
+        scheduler->execFilters( item );
       }
     }
 
     return;
   }
-
+#if 0
   //prevent issues with stale message pointers by using serial numbers instead
   QList<unsigned long> serNums = KMMsgDict::serNumList( msgList );
   if ( serNums.isEmpty() )

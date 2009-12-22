@@ -1833,10 +1833,10 @@ void KMMetaFilterActionCommand::start()
     scheduler->setAlwaysMatch( true );
     scheduler->setAutoDestruct( true );
     scheduler->setIgnoreFilterSet( true );
-    QList<KMime::Message::Ptr> msgList = mMainWidget->messageListPane()->selectionAsMessageList();
+    QList<Akonadi::Item> msgList = mMainWidget->messageListPane()->selectionAsMessageItemList();
 
-    foreach( const KMime::Message::Ptr &msg, msgList )
-      scheduler->execFilters( msg.get() );
+    foreach( const Akonadi::Item &item, msgList )
+      scheduler->execFilters( item );
   } else {
     KMCommand *filterCommand = new KMFilterActionCommand(
         mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemList() , mFilter );

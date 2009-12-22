@@ -254,33 +254,9 @@ void ActionScheduler::tempCloseFolders()
 #endif
 }
 
-void ActionScheduler::execFilters( const QList<quint32> serNums )
+void ActionScheduler::execFilters( const Akonadi::Item & item )
 {
-  QList<quint32>::const_iterator it;
-  for ( it = serNums.constBegin(); it != serNums.constEnd(); ++it ) {
-    execFilters( *it );
-  }
-}
-
-void ActionScheduler::execFilters( const QList<KMime::Content*> msgList )
-{
-  KMime::Content *msgBase;
-  foreach ( msgBase, msgList ) {
-#if 0 //TODO port to akonadi
-    execFilters( msgBase->getMsgSerNum() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  }
-}
-
-void ActionScheduler::execFilters( KMime::Content *msgBase )
-{
-#if 0 //TODO port to akonadi
-  execFilters( msgBase->getMsgSerNum() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  //TODO
 }
 
 void ActionScheduler::execFilters(quint32 serNum)

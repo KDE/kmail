@@ -92,10 +92,9 @@ public:
   void clearAccountId() { mAccountId = 0; mAccount = false; }
 
   /** Queue a message for filtering */
-  void execFilters(const QList<quint32> serNums);
-  void execFilters(const QList<KMime::Content*> msgList);
-  void execFilters(KMime::Content* msgBase);
   void execFilters(quint32 serNum);
+
+  void execFilters( const Akonadi::Item & );
 
   static QString debug();
   static bool isEnabled();
