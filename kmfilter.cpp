@@ -455,9 +455,13 @@ const QString KMFilter::asString() const
 #if 0 // TODO: port to Akonadi
       if ( mAccounts.isEmpty() )
         result += " None";
-      else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 )
-        if ( kmkernel->acctMgr()->find( *it2 ) )
-          result += ' ' + kmkernel->acctMgr()->find( *it2 )->name();
+      else {
+        for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 ) {
+          if ( kmkernel->acctMgr()->find( *it2 ) ) {
+            result += ' ' + kmkernel->acctMgr()->find( *it2 )->name();
+          }
+        }
+      }
       result += '\n';
 #else
    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
