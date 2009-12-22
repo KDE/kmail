@@ -162,11 +162,6 @@ void ActionScheduler::setIgnoreFilterSet( bool ignore )
   mIgnoreFilterSet = ignore;
 }
 
-void ActionScheduler::setDefaultDestinationFolder( KMFolder *destFolder )
-{
-  mDestFolder = destFolder;
-}
-
 void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
 {
   srcFolder->open( "actionschedsrc" );
@@ -323,9 +318,9 @@ void ActionScheduler::execFilters(quint32 serNum)
 KMime::Content *ActionScheduler::messageBase(quint32 serNum)
 {
   int idx = -1;
-  KMFolder *folder = 0;
   KMime::Content *msg = 0;
-#if 0 //TODO port to akonadi
+#if 0 //TODO port to akonadi  
+  KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
   // different folder
@@ -347,9 +342,9 @@ KMime::Content *ActionScheduler::messageBase(quint32 serNum)
 KMime::Message *ActionScheduler::message(quint32 serNum)
 {
   int idx = -1;
-  KMFolder *folder = 0;
   KMime::Message *msg = 0;
-#if 0 //TODO port to akonadi
+#if 0 //TODO port to akonadi  
+  KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
   // different folder

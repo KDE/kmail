@@ -76,9 +76,6 @@ public:
    */
   void setIgnoreFilterSet( bool ignore );
 
-  /** Set a default folder to move messages into */
-  void setDefaultDestinationFolder( KMFolder* );
-
   /** Set a folder to monitor for new messages to filter */
   void setSourceFolder( KMFolder* );
 
