@@ -35,9 +35,6 @@ namespace Akonadi {
 }
 
 class KTemporaryFile;
-class KMFolder;
-
-
 class QWidget;
 
 //=========================================================
@@ -147,10 +144,6 @@ public:
 
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction();
-
-  /** Temporarily open folder. Will be closed by the next
-    KMFilterMgr::cleanup() call.  */
-  static int tempOpenFolder(KMFolder* aFolder);
 
   /** Automates the sending of MDNs from filter actions. */
   static void sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::DispositionType d,

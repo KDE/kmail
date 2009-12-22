@@ -137,12 +137,6 @@ public:
       that have been temporarily opened with tempOpenFolder(). */
   void deref(bool force = false);
 
-  /** Open given folder and mark it as temporarily open. The folder
-    will be closed upon next call of cleanip(). This method is
-    usually only called from within filter actions during process().
-    Returns returncode from KMFolder::open() call. */
-  int tempOpenFolder(KMFolder* aFolder);
-
   /** Called at the beginning of an filter list update. Currently a
       no-op */
   void beginUpdate() {}

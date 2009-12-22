@@ -172,10 +172,12 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
     KMFolder *targetFolder = MessageProperty::filterFolder( msg.get() );
 
     endFiltering( item );
+#if 0 // TODO port to Akonadi
     if ( targetFolder ) {
       tempOpenFolder( targetFolder );
       result = targetFolder->moveMsg( msg.get() );
     }
+#endif
   } else {
     result = 1;
   }
@@ -328,28 +330,7 @@ void KMFilterMgr::deref( bool force )
   if ( mRefCount && !force ) {
     return;
   }
-  QVector< KMFolder *>::const_iterator it;
-  for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it ) {
-    (*it)->close( "filtermgr" );
-  }
-  mOpenFolders.clear();
 }
-
-
-//-----------------------------------------------------------------------------
-int KMFilterMgr::tempOpenFolder( KMFolder *aFolder )
-{
-  assert( aFolder );
-
-  int rc = aFolder->open( "filtermgr" );
-  if ( rc ) {
-    return rc;
-  }
-
-  mOpenFolders.append( aFolder );
-  return 0;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )

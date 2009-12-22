@@ -33,6 +33,8 @@ using KMail::RegExpLineEdit;
 #include <kpimidentities/identitycombo.h>
 #include <kpimutils/kfileio.h>
 #include <kpimutils/email.h>
+#include <akonadi/itemcopyjob.h>
+#include <akonadi/itemmodifyjob.h>
 
 // KDE headers
 #include <kcombobox.h>
@@ -46,9 +48,7 @@ using KMail::RegExpLineEdit;
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/resource.h>
-#ifdef NEPOMUK_FOUND
-  #include <nepomuk/tag.h>
-#endif
+#include <nepomuk/tag.h>
 
 #include <kmime/kmime_message.h>
 
@@ -115,11 +115,6 @@ void KMFilterAction::clearParamWidget( QWidget * ) const
 bool KMFilterAction::folderRemoved(const Akonadi::Collection&, const Akonadi::Collection&)
 {
   return false;
-}
-
-int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
-{
-  return kmkernel->filterMgr()->tempOpenFolder(aFolder);
 }
 
 void KMFilterAction::sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::DispositionType d,
@@ -834,14 +829,14 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
 
 KMFilterAction::ReturnCode KMFilterActionSetStatus::process( const Akonadi::Item &item ) const
 {
-#if 0 //TODO port to akonadi
   int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
-  msg->setStatus( stati[idx-1] );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  KPIM::MessageStatus status;
+  status.set( stati[ idx ] );
+  Akonadi::Item i( item );
+  i.setFlags( status.getStatusFlags() );
+  new Akonadi::ItemModifyJob( i, kmkernel->filterMgr() ); // TODO handle error
   return GoOn;
 }
 
@@ -922,27 +917,11 @@ KMFilterActionAddTag::KMFilterActionAddTag()
 
 KMFilterAction::ReturnCode KMFilterActionAddTag::process( const Akonadi::Item &item ) const
 {
-#if 0 //TODO port to akonadi
   const int idx = mParameterList.indexOf( mParameter );
   if ( idx == -1 ) return ErrorButGoOn;
 
-  KMMessageTagList tagList;
-  if ( msg->tagList() )
-    tagList = * msg->tagList();
-
-  const QString& tagLabel = mLabelList.at( idx );
-  const int tagPosition = tagList.indexOf( tagLabel );
-  if ( tagPosition == -1 ) {
-    tagList.append( tagLabel );
-#ifdef NEPOMUK_FOUND
-    Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msg->getMsgSerNum() ) );
-    n_resource.addTag( mParameter );
-#endif
-    msg->setTagList( tagList );
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  Nepomuk::Resource n_resource( item.url() );
+  n_resource.addTag( mParameter );
   return GoOn;
 }
 
@@ -1538,27 +1517,8 @@ KMFilterActionCopy::KMFilterActionCopy()
 
 KMFilterAction::ReturnCode KMFilterActionCopy::process( const Akonadi::Item &item ) const
 {
-#if 0 //TODO port to akonadi
-
-  // TODO opening and closing the folder is a trade off.
-  // Perhaps Copy is a seldomly used action for now,
-  // but I gonna look at improvements ASAP.
-  if ( !mFolder.isValid() || mFolder->open( "filtercopy" ) != 0 ) {
-    return ErrorButGoOn;
-  }
-
   // copy the message 1:1
-  KMime::Message* msgCopy = new KMime::Message;
-  msgCopy->setContent( msg->encodedContent() );
-  int index;
-  int rc = mFolder->addMsg( msgCopy, &index );
-  if ( rc == 0 && index != -1 ) {
-    mFolder->unGetMsg( index );
-  }
-  mFolder->close( "filtercopy" );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  new Akonadi::ItemCopyJob( item, mFolder, kmkernel->filterMgr() ); // TODO handle error
   return GoOn;
 }
 
