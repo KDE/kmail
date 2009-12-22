@@ -26,6 +26,7 @@
 #include "kmagentmanager.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
+#include "util.h"
 #include "filterlog.h"
 using KMail::FilterLog;
 
@@ -209,13 +210,12 @@ bool KMFilter::applyOnAccount( const QString& id ) const
   if ( applicability() == All )
     return true;
   if ( applicability() == ButImap ) {
-#if 0 //TODO port to akonadi
-    KMAccount *account = kmkernel->acctMgr()->find( id );
-    bool result =  account && !dynamic_cast<KMAcctImap*>(account);
-    return result;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    Akonadi::AgentInstance instance = kmkernel->agentManager()->instance( id );
+    if ( instance.isValid() ) {
+      return ( instance.type().identifier()== IMAP_RESOURCE_IDENTIFIER );
+    } else {
+      return false;
+    }
   }
   if ( applicability() == Checked )
     return mAccounts.contains( id );
