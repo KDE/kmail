@@ -447,22 +447,18 @@ const QString KMFilter::asString() const
     } else if ( bApplyOnInbound && mApplicability == ButImap ) {
       result += "This filter applies to all but online IMAP accounts.\n";
     } else if ( bApplyOnInbound ) {
-      QList<int>::ConstIterator it2;
+      QStringList::ConstIterator it2;
       result += "This filter applies to the following accounts:";
-#if 0 // TODO: port to Akonadi
       if ( mAccounts.isEmpty() )
         result += " None";
       else {
         for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 ) {
-          if ( kmkernel->acctMgr()->find( *it2 ) ) {
-            result += ' ' + kmkernel->acctMgr()->find( *it2 )->name();
+          if ( kmkernel->agentManager()->find( *it2 ) ) {
+            result += ' ' + kmkernel->agentManager()->name( *it2 );
           }
         }
       }
       result += '\n';
-#else
-   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     }
     if ( bStopProcessingHere )
       result += "If it matches, processing stops at this filter.\n";

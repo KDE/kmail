@@ -65,6 +65,16 @@ bool KMAgentManager::find( const QString &id ) const
   return false;
 }
 
+QString KMAgentManager::name( const QString &id ) const
+{
+  for ( int i = 0; i< mListInstance.count() ; ++i ) {
+    if ( mListInstance.at( i ).identifier() == id )
+      return mListInstance.at( i ).name();
+  }
+  return QString();
+
+}
+
 Akonadi::AgentInstance::List KMAgentManager::instanceList() const
 {
   return mListInstance;
