@@ -59,7 +59,7 @@ bool ActionScheduler::sEnabledChecked = false;
 
 ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
                                  QList<KMFilter*> filters,
-                                 KMFolder *srcFolder)
+                                 const Akonadi::Collection & srcFolder)
   : mSet( set ),
     mIgnoreFilterSet( false )
 {
@@ -102,7 +102,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   for (; it != filters.end(); ++it)
     mFilters.append( *it );
   mDestFolder = 0;
-  if (srcFolder) {
+  if (srcFolder.isValid()) {
     mDeleteSrcFolder = false;
     setSourceFolder( srcFolder );
   } else {
@@ -162,8 +162,9 @@ void ActionScheduler::setIgnoreFilterSet( bool ignore )
   mIgnoreFilterSet = ignore;
 }
 
-void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
+void ActionScheduler::setSourceFolder( const Akonadi::Collection &srcFolder )
 {
+#if 0 //TODO port	
   srcFolder->open( "actionschedsrc" );
   if ( mSrcFolder ) {
     disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
@@ -191,6 +192,7 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
     connect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
              this, SLOT(folderClosedOrExpunged()) );
   }
+#endif  
 }
 
 void ActionScheduler::setFilterList( QList<KMFilter*> filters )
@@ -210,15 +212,18 @@ void ActionScheduler::setFilterList( QList<KMFilter*> filters )
 
 void ActionScheduler::folderClosedOrExpunged()
 {
+#if 0 //TODO port to akonadi	
   // mSrcFolder has been closed. reopen it.
   if ( mSrcFolder )
   {
     mSrcFolder->open( "actionsched" );
   }
+#endif  
 }
 
 int ActionScheduler::tempOpenFolder( KMFolder *aFolder )
 {
+#if 0 //TODO port to akonadi	
   assert( aFolder );
   tempCloseFoldersTimer->stop();
   if ( aFolder == mSrcFolder.operator->() ) {
@@ -231,6 +236,7 @@ int ActionScheduler::tempOpenFolder( KMFolder *aFolder )
   }
 
   mOpenFolders.append( aFolder );
+#endif  
   return 0;
 }
 

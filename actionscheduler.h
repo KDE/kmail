@@ -41,6 +41,7 @@
 #include <QList>
 #include <QTime>
 #include <QPointer>
+#include <akonadi/collection.h>
 
 class KMHeaders;
 
@@ -56,7 +57,7 @@ public:
 
   ActionScheduler(KMFilterMgr::FilterSet set,
 		  QList<KMFilter*> filters,
-		  KMFolder *srcFolder = 0);
+		  const Akonadi::Collection &srcFolder = Akonadi::Collection());
   ~ActionScheduler();
 
   /** The action scheduler will be deleted after the finish signal is emitted
@@ -77,7 +78,7 @@ public:
   void setIgnoreFilterSet( bool ignore );
 
   /** Set a folder to monitor for new messages to filter */
-  void setSourceFolder( KMFolder* );
+  void setSourceFolder( const Akonadi::Collection& );
 
   /** Set a list of filters to work with
    The current list will not be updated until the queue
