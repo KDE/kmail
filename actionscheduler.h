@@ -92,8 +92,6 @@ public:
   void clearAccountId() { mAccountId = 0; mAccount = false; }
 
   /** Queue a message for filtering */
-  void execFilters(quint32 serNum);
-
   void execFilters( const Akonadi::Item & );
 
   static QString debug();

@@ -256,11 +256,6 @@ void ActionScheduler::tempCloseFolders()
 
 void ActionScheduler::execFilters( const Akonadi::Item & item )
 {
-  //TODO
-}
-
-void ActionScheduler::execFilters(quint32 serNum)
-{
   if ( mResult != ResultOk ) {
     if ( ( mResult != ResultCriticalError ) &&
          !mExecuting && !mExecutingLock && !mFetchExecuting ) {
@@ -280,22 +275,20 @@ void ActionScheduler::execFilters(quint32 serNum)
     }
   }
 
-#if 0 // TODO port to Akonadi
-  if (MessageProperty::filtering( serNum )) {
+  if (MessageProperty::filtering( item )) {
     // Not good someone else is already filtering this msg
     mResult = ResultError;
     if (!mExecuting && !mFetchExecuting)
       finishTimer->start( 0 );
   } else {
     // Everything is ok async fetch this message
-    mFetchSerNums.append( serNum );
+    mFetchSerNums.append( item.id() );
     if (!mFetchExecuting) {
       //Need to (re)start incomplete msg fetching chain
       mFetchExecuting = true;
       fetchMessageTimer->start( 0 );
     }
   }
-#endif
 }
 
 KMime::Content *ActionScheduler::messageBase(quint32 serNum)
@@ -874,8 +867,11 @@ void ActionScheduler::timeOut()
   mExecutingLock = false;
   mExecuting = false;
   finishTimer->start( 0 );
+#if 0 //Port to akonadi itemFetchJob(Akonadi::Item(mOriginalSerNum)) ?
+
   if (mOriginalSerNum) // Try again
       execFilters( mOriginalSerNum );
+#endif
 }
 
 void ActionScheduler::fetchTimeOut()
