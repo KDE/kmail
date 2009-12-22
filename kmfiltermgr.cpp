@@ -142,11 +142,11 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
   return result;
 }
 
-int KMFilterMgr::process( const Akonadi::Item &msg, FilterSet set,
+int KMFilterMgr::process( const Akonadi::Item &item, FilterSet set,
                           bool account, const QString& accountId ) {
 
   if ( bPopFilter )
-    return processPop( msg );
+    return processPop( item );
 
   if ( set == NoSet ) {
     kDebug() << "KMFilterMgr: process() called with not filter set selected";
@@ -155,8 +155,7 @@ int KMFilterMgr::process( const Akonadi::Item &msg, FilterSet set,
   bool stopIt = false;
   bool atLeastOneRuleMatched = false;
 
-#if 0 //TODO port to akonadi
-  if ( !beginFiltering( msg.get() ) )
+  if ( !beginFiltering( item ) )
     return 1;
   for ( QList<KMFilter*>::const_iterator it = mFilters.constBegin();
         !stopIt && it != mFilters.constEnd() ; ++it ) {
@@ -169,32 +168,28 @@ int KMFilterMgr::process( const Akonadi::Item &msg, FilterSet set,
          ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
         // filter is applicable
 
-      if ( isMatching( msg, (*it) ) ) {
+      if ( isMatching( item, (*it) ) ) {
         // filter matches
         atLeastOneRuleMatched = true;
         // execute actions:
-        if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
+        if ( (*it)->execActions(item, stopIt) == KMFilter::CriticalError )
           return 2;
       }
     }
   }
 
-  KMFolder *folder = MessageProperty::filterFolder( msg );
+  Akonadi::Collection targetFolder = MessageProperty::filterFolder( item );
   /* endFilter does a take() and addButKeepUID() to ensure the changed
    * message is on disk. This is unnessecary if nothing matched, so just
    * reset state and don't update the listview at all. */
   if ( atLeastOneRuleMatched )
-    endFiltering( msg );
+    endFiltering( item );
   else
-    MessageProperty::setFiltering( msg, false );
-  if (folder) {
-    tempOpenFolder( folder );
-    folder->moveMsg(msg);
+    MessageProperty::setFiltering( item, false );
+  if ( targetFolder.isValid() ) {
+    new Akonadi::ItemMoveJob( item, targetFolder, this ); // TODO: check result
     return 0;
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return 1;
 }
 
