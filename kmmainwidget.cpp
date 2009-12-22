@@ -2370,34 +2370,6 @@ void KMMainWidget::slotApplyFilters()
     connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)) );
 
     connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchJobForFilterDone(KJob*)) );
-#if 0
-    KMFolder *folder = 0;
-    int idx;
-    KMMsgDict::instance()->getLocation( *it, &folder, &idx );
-    KMime::Message *msg = 0;
-    if (folder)
-      msg = folder->getMsg(idx);
-    if (msg)
-    {
-      if (msg->transferInProgress())
-        continue;
-      msg->setTransferInProgress(true);
-      if ( !msg->isComplete() )
-      {
-        FolderJob *job = mFolder->createJob(msg);
-        connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
-                this, SLOT(slotFilterMsg(KMime::Message*)));
-        job->start();
-      } else {
-        if (slotFilterMsg(msg) == 2)
-          break;
-      }
-    } else {
-      kDebug () << "A message went missing during filtering";
-    }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
     progressItem->incCompletedItems();
   }
 
@@ -2433,18 +2405,6 @@ int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
     kmkernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
     return 2;
   }
-#if 0 //TODO port to akonadi
-  if (msg->parent())
-  { // unGet this msg
-    int idx = -1;
-    KMFolder * p = 0;
-    KMMsgDict::instance()->getLocation( msg, &p, &idx );
-    assert( p == msg->parent() ); assert( idx >= 0 );
-    p->unGetMsg( idx );
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return filterResult;
 }
 
