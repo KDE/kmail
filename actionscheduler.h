@@ -36,6 +36,7 @@
 #include "kmfilter.h"
 #include "kmfiltermgr.h" // KMFilterMgr::FilterSet
 #include "kmcommands.h"
+#include "folderjob.h"
 
 #include <QList>
 #include <QTime>

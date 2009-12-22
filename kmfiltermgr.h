@@ -21,7 +21,6 @@
 #define kmfiltermgr_h
 
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
-#include "kmfolder.h"
 #include <akonadi/collection.h>
 
 namespace Akonadi {
@@ -32,6 +31,7 @@ namespace KMime {
   class Content;
 }
 
+class KMFolder;
 class KMFilter;
 class KMFilterDlg;
 
@@ -127,16 +127,6 @@ public:
 
   void cleanup();
 
-  /** Increment the reference count for the filter manager.
-      Call this method before processing messages with process() */
-  void ref();
-  /** Decrement the reference count for the filter manager.
-      Call this method after processing messages with process().
-      Shall be called after all messages are processed.
-      If the reference count is zero then this method closes all folders
-      that have been temporarily opened with tempOpenFolder(). */
-  void deref(bool force = false);
-
   /** Called at the beginning of an filter list update. Currently a
       no-op */
   void beginUpdate() {}
@@ -180,14 +170,11 @@ private:
   bool isMatching( const Akonadi::Item &item, const KMFilter * filter );
 
   QPointer<KMFilterDlg> mEditDialog;
-  QVector<KMFolder *> mOpenFolders;
   QList<KMFilter *> mFilters;
   bool bPopFilter;
   bool mShowLater;
   bool mDirtyBufferedFolderTarget;
   bool mBufferedFolderTarget;
-
-  int mRefCount;
 };
 
 #endif /*kmfiltermgr_h*/

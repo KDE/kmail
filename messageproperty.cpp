@@ -34,8 +34,7 @@
 #include <kmime/kmime_content.h>
 using namespace KMail;
 
-QMap<quint32, QPointer<KMFolder> > MessageProperty::sFolders;
-QSet<Akonadi::Item::Id> MessageProperty::sFilteredItems;
+QMap<Akonadi::Item::Id, Akonadi::Collection> MessageProperty::sFolders;
 QMap<quint32, bool> MessageProperty::sKeepSerialNumber;
 QMap<quint32, QPointer<ActionScheduler> > MessageProperty::sHandlers;
 QMap<quint32, int > MessageProperty::sTransfers;
@@ -43,45 +42,26 @@ QMap<KMime::Content*, long > MessageProperty::sSerialCache;
 
 bool MessageProperty::filtering( const Akonadi::Item &item )
 {
-  return sFilteredItems.contains( item.id() );
+  return sFolders.contains( item.id() );
 }
 
 void MessageProperty::setFiltering( const Akonadi::Item &item, bool filter )
 {
   if ( filter )
-    sFilteredItems.insert( item.id() );
+    sFolders.insert( item.id(), Akonadi::Collection() );
   else
-    sFilteredItems.remove( item.id() );
+    sFolders.remove( item.id() );
 }
 
-KMFolder* MessageProperty::filterFolder( quint32 serNum )
+
+void MessageProperty::setFilterFolder( const Akonadi::Item &item, const Akonadi::Collection &folder)
 {
-  QMap<quint32, QPointer<KMFolder> >::ConstIterator it = sFolders.constFind( serNum );
-  return it == sFolders.constEnd() ? 0 : (*it).operator->();
+  sFolders.insert( item.id(), folder );
 }
 
-void MessageProperty::setFilterFolder( quint32 serNum, KMFolder* folder )
+Akonadi::Collection MessageProperty::filterFolder( const Akonadi::Item &item )
 {
-  sFolders.insert(serNum, QPointer<KMFolder>(folder) );
-}
-
-KMFolder* MessageProperty::filterFolder( KMime::Content *msgBase )
-{
-#if 0 //TODO port to akonadi
-  return filterFolder( msgBase->getMsgSerNum() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return 0;
-#endif
-}
-
-void MessageProperty::setFilterFolder( KMime::Content *msgBase, KMFolder* folder )
-{
-#if 0 //TODO port to akonadi
-  setFilterFolder( msgBase->getMsgSerNum(), folder );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  return sFolders.value( item.id() );
 }
 
 ActionScheduler* MessageProperty::filterHandler( quint32 serNum )

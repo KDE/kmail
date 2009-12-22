@@ -226,7 +226,6 @@ void KMCommand::slotStart()
 {
   connect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
-  kmkernel->filterMgr()->ref();
 
   if ( mMsgList.contains(Akonadi::Item()) ) {
       emit messagesTransfered( Failed );
@@ -265,7 +264,6 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
     result = execute();
   }
   mResult = result;
-  kmkernel->filterMgr()->deref();
   if ( !emitsCompletedItself() )
     emit completed( this );
   if ( !deletesItself() )

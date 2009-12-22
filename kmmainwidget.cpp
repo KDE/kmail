@@ -92,6 +92,7 @@ using KPIM::BroadcastStatus;
 #include "foldershortcutdialog.h"
 #include "composer.h"
 #include "kmfiltermgr.h"
+#include "kmfolder.h"
 #include "messagesender.h"
 #include "messageviewer/kmaddrbook.h"
 #include "kmversion.h"

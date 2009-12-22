@@ -36,8 +36,7 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
     bPopFilter( popFilter ),
     mShowLater( false ),
     mDirtyBufferedFolderTarget( true ),
-    mBufferedFolderTarget( true ),
-    mRefCount( 0 )
+    mBufferedFolderTarget( true )
 {
   if ( bPopFilter ) {
     kDebug() << "pPopFilter set";
@@ -50,7 +49,6 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
 //-----------------------------------------------------------------------------
 KMFilterMgr::~KMFilterMgr()
 {
-  deref( true );
   writeConfig( false );
   clear();
 }
@@ -168,16 +166,13 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
       return 2;
     }
 
-    const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-    KMFolder *targetFolder = MessageProperty::filterFolder( msg.get() );
-
+    const Akonadi::Collection targetFolder = MessageProperty::filterFolder( item );
     endFiltering( item );
+    if ( targetFolder.isValid() ) {
 #if 0 // TODO port to Akonadi
-    if ( targetFolder ) {
-      tempOpenFolder( targetFolder );
       result = targetFolder->moveMsg( msg.get() );
-    }
 #endif
+    }
   } else {
     result = 1;
   }
@@ -310,26 +305,6 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
   }
   mBufferedFolderTarget = false;
   return false;
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterMgr::ref( void )
-{
-  mRefCount++;
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterMgr::deref( bool force )
-{
-  if ( !force ) {
-    mRefCount--;
-  }
-  if ( mRefCount < 0 ) {
-    mRefCount = 0;
-  }
-  if ( mRefCount && !force ) {
-    return;
-  }
 }
 
 //-----------------------------------------------------------------------------
