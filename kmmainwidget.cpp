@@ -2402,9 +2402,9 @@ void KMMainWidget::slotApplyFilters()
 #endif
 }
 
-int KMMainWidget::slotFilterMsg( const KMime::Message::Ptr &msg )
+int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 {
-  if ( !msg ) return 2; // messageRetrieve(0) is always possible
+  if ( !msg.isValid() ) return 2; // messageRetrieve(0) is always possible
 #if 0 //TODO port to akonadi
   msg->setTransferInProgress(false);
 #else

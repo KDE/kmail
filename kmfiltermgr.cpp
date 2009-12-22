@@ -145,8 +145,10 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
   return result;
 }
 
-int KMFilterMgr::process( const KMime::Message::Ptr &msg, FilterSet set,
+int KMFilterMgr::process( const Akonadi::Item &msg, FilterSet set,
                           bool account, const QString& accountId ) {
+
+#if 0
   if ( bPopFilter )
     return processPop( msg );
 
@@ -154,7 +156,7 @@ int KMFilterMgr::process( const KMime::Message::Ptr &msg, FilterSet set,
     kDebug() << "KMFilterMgr: process() called with not filter set selected";
     return 1;
   }
-
+#endif
   bool stopIt = false;
   bool atLeastOneRuleMatched = false;
 

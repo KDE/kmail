@@ -117,7 +117,7 @@ public:
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  int process( const KMime::Message::Ptr &msg, FilterSet aSet = Inbound,
+  int process( const Akonadi::Item &item, FilterSet aSet = Inbound,
 	       bool account = false, const QString & accountId = QString() );
 
   /** For ad-hoc filters. Applies @p filter to message @p item.
