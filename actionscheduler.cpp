@@ -29,9 +29,8 @@
 */
 
 #include "actionscheduler.h"
-
+#include "kmkernel.h"
 #include "filterlog.h"
-#include "kmfolder.h"
 #include "messageproperty.h"
 #include "kmfilter.h"
 #include "kmcommands.h"
@@ -101,7 +100,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   QList<KMFilter*>::Iterator it = filters.begin();
   for (; it != filters.end(); ++it)
     mFilters.append( *it );
-  mDestFolder = 0;
+  //mDestFolder = 0;
   if (srcFolder.isValid()) {
     mDeleteSrcFolder = false;
     setSourceFolder( srcFolder );
@@ -128,12 +127,12 @@ ActionScheduler::~ActionScheduler()
 {
   schedulerList->removeAll( this );
   tempCloseFolders();
+#if 0  
   disconnect( mSrcFolder, SIGNAL(closed()),
               this, SLOT(folderClosedOrExpunged()) );
   disconnect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
               this, SLOT(folderClosedOrExpunged()) );
   mSrcFolder->close( "actionschedsrc" );
-#if 0
   if ( mDeleteSrcFolder ) {
     tempFolderMgr->remove( mSrcFolder );
   }
@@ -221,7 +220,7 @@ void ActionScheduler::folderClosedOrExpunged()
 #endif  
 }
 
-int ActionScheduler::tempOpenFolder( KMFolder *aFolder )
+int ActionScheduler::tempOpenFolder( /*KMFolder *aFolder*/const Akonadi::Collection& )
 {
 #if 0 //TODO port to akonadi	
   assert( aFolder );
@@ -242,6 +241,7 @@ int ActionScheduler::tempOpenFolder( KMFolder *aFolder )
 
 void ActionScheduler::tempCloseFolders()
 {
+#if 0 //PORT to akonadi	
   // close temp opened folders
   QList<QPointer<KMFolder> >::ConstIterator it;
   for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it ) {
@@ -251,6 +251,7 @@ void ActionScheduler::tempCloseFolders()
     }
   }
   mOpenFolders.clear();
+#endif
 }
 
 void ActionScheduler::execFilters( const QList<quint32> serNums )
@@ -537,7 +538,7 @@ void ActionScheduler::messageFetched( KMime::Message *msg )
 #endif
 }
 
-void ActionScheduler::msgAdded( KMFolder*, quint32 serNum )
+void ActionScheduler::msgAdded( const Akonadi::Collection &, quint32 serNum )
 {
   if ( !mIgnoredSerNums.removeOne(serNum) )
     enqueue( serNum );
@@ -832,10 +833,10 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
                   "target folder failed. Message will stay unfiltered.";
     kWarning() << "This might be because you're using GMail, see bug 166150.";
   }
-
+#if 0 //Port to akonadi
   if (!mSrcFolder->count())
     mSrcFolder->expunge();
-
+#endif
   KMime::Message *msg = 0;
   ReturnCode mOldReturnCode = mResult;
   if (mOriginalSerNum) {

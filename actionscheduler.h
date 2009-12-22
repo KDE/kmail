@@ -124,13 +124,13 @@ private slots:
 
   void folderClosedOrExpunged();
 
-  int tempOpenFolder(KMFolder* aFolder);
+  int tempOpenFolder(const Akonadi::Collection&);
   void tempCloseFolders();
 
   //Fetching slots
   void fetchMessage();
   void messageFetched( KMime::Message *msg );
-  void msgAdded( KMFolder*, quint32 );
+  void msgAdded(const Akonadi::Collection &, quint32 );
   void enqueue(quint32 serNum);
 
   //Filtering slots
@@ -181,12 +181,12 @@ private:
   //List of serial numbers to be ignored in msgAdded()
   QList<quint32> mIgnoredSerNums;
 
-  QList<QPointer<KMFolder> > mOpenFolders;
+  //QList<QPointer<KMFolder> > mOpenFolders;
   QList<KMFilter*> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;
   KMFilterMgr::FilterSet mSet;
   KMHeaders *mHeaders;
-  QPointer<KMFolder> mSrcFolder, mDestFolder;
+  Akonadi::Collection mSrcFolder, mDestFolder;
   bool mExecuting, mExecutingLock, mFetchExecuting;
   bool mUnget, mFetchUnget;
   bool mFiltersAreQueued;
