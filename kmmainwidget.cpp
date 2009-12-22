@@ -92,7 +92,6 @@ using KPIM::BroadcastStatus;
 #include "foldershortcutdialog.h"
 #include "composer.h"
 #include "kmfiltermgr.h"
-#include "kmfolder.h"
 #include "messagesender.h"
 #include "messageviewer/kmaddrbook.h"
 #include "kmversion.h"
@@ -2085,7 +2084,7 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
   if ( select.isEmpty() )
     return;
     // FIXME: Why we use SerNumList instead of QList< KMMsgBase * > here ?
-  SerNumList serNums;
+  QList<quint32> serNums;
 
   for( QList< Akonadi::Item >::const_iterator it = select.constBegin(); it != select.constEnd(); ++it )
     serNums.append( ( *it ).id() );
@@ -2874,7 +2873,7 @@ void KMMainWidget::slotMessageStatusChangeRequest(  const Akonadi::Item &item, c
   if ( !item.isValid() )
     return;
 
-  SerNumList serNums;
+  QList<quint32> serNums;
   serNums.append( item.id() );
 
   if ( clear.toQInt32() != KPIM::MessageStatus().toQInt32() )
