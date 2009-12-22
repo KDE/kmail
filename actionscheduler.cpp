@@ -578,6 +578,7 @@ void ActionScheduler::processMessage()
   if (mExecutingLock)
     return;
   mExecutingLock = true;
+#if 0 //TODO port to akonadi
   mMessageIt = mSerNums.begin();
   while (mMessageIt != mSerNums.end()) {
     if (!MessageProperty::transferInProgress(*mMessageIt))
@@ -605,7 +606,6 @@ void ActionScheduler::processMessage()
     return;
   }
 
-#if 0 //TODO port to akonadi
   MessageProperty::setFiltering( *mMessageIt, true );
   MessageProperty::setFilterHandler( *mMessageIt, this );
   MessageProperty::setFilterFolder( *mMessageIt, mDestFolder );

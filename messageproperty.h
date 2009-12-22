@@ -86,23 +86,6 @@ public:
   static quint32 serialCache( KMime::Content* );
 
   /**
-   * Set the transferInProgress for a message.
-   *
-   * The number of calls to setTransferInProgress() with transfer = true is counted,
-   * e.g. if you call setTransferInProgress() with transfer = true two times, and
-   * then setTransferInProgress() with transfer = false once, transferInProgres()
-   * will return true. transferInProgress() only returns false after an additional
-   * call to setTransferInProgress() with transfer = false.
-   *
-   * This property becomes invalid when the message is destructed or
-   * assigned a new value.
-   */
-  static void setTransferInProgress( KMime::Content*, bool, bool = false );
-  static bool transferInProgress( KMime::Content* );
-  static void setTransferInProgress( quint32, bool, bool = false );
-  static bool transferInProgress( quint32 );
-
-  /**
    * Set this property to true if you want to keep the serial number when moving
    * a message from a local folder to an online IMAP folder.
    * Setting this to true will cause the ImapJob to save the meta data, like the
@@ -131,9 +114,6 @@ private:
 
   // The action scheduler currently processing a message if any
   static QMap<quint32, QPointer<ActionScheduler> > sHandlers;
-
-  // The transferInProgres state of a message if any.
-  static QMap<quint32, int > sTransfers;
 
   // The cached serial number of a message if any.
   static QMap<KMime::Content*, long> sSerialCache;

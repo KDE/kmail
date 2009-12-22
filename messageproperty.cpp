@@ -37,7 +37,6 @@ using namespace KMail;
 QMap<Akonadi::Item::Id, Akonadi::Collection> MessageProperty::sFolders;
 QMap<quint32, bool> MessageProperty::sKeepSerialNumber;
 QMap<quint32, QPointer<ActionScheduler> > MessageProperty::sHandlers;
-QMap<quint32, int > MessageProperty::sTransfers;
 QMap<KMime::Content*, long > MessageProperty::sSerialCache;
 
 bool MessageProperty::filtering( const Akonadi::Item &item )
@@ -97,50 +96,6 @@ void MessageProperty::setFilterHandler( KMime::Content *msgBase, ActionScheduler
 #endif
 }
 
-bool MessageProperty::transferInProgress( quint32 serNum )
-{
-  QMap<quint32, int >::ConstIterator it = sTransfers.constFind( serNum );
-  return it == sTransfers.constEnd() ? false : *it;
-}
-
-void MessageProperty::setTransferInProgress( quint32 serNum, bool transfer, bool force )
-{
-  int transferInProgress = 0;
-  QMap<quint32, int >::ConstIterator it = sTransfers.constFind( serNum );
-  if (it != sTransfers.constEnd())
-    transferInProgress = *it;
-  if ( force && !transfer )
-    transferInProgress = 0;
-  else
-    transfer ? ++transferInProgress : --transferInProgress;
-  if ( transferInProgress < 0 )
-    transferInProgress = 0;
-  if (transferInProgress)
-    sTransfers.insert( serNum, transferInProgress );
-  else
-    sTransfers.remove( serNum );
-}
-
-bool MessageProperty::transferInProgress( KMime::Content *msgBase )
-{
-#if 0 //TODO port to akonadi
-  return transferInProgress( msgBase->getMsgSerNum() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return true;
-#endif
-}
-
-void MessageProperty::setTransferInProgress( KMime::Content *msgBase, bool transfer, bool force )
-{
-#if 0 //TODO port to akonadi
-  setTransferInProgress( msgBase->getMsgSerNum(), transfer, force );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-
-}
-
 quint32 MessageProperty::serialCache( KMime::Content *msgBase )
 {
   QMap<KMime::Content*, long >::ConstIterator it = sSerialCache.constFind( msgBase );
@@ -177,8 +132,6 @@ void MessageProperty::forget( KMime::Content *msgBase )
 {
   quint32 serNum = serialCache( msgBase );
   if (serNum) {
-    Q_ASSERT( !transferInProgress( serNum ) );
-    sTransfers.remove( serNum );
     sSerialCache.remove( msgBase );
     sKeepSerialNumber.remove( serNum );
   }
