@@ -1466,22 +1466,7 @@ KMFilterAction::ReturnCode KMFilterActionMove::process( const Akonadi::Item &ite
 {
   if ( !mFolder.isValid() )
     return ErrorButGoOn;
-#if 0
-  ActionScheduler *handler = MessageProperty::filterHandler( msg );
-  if (handler) {
-    MessageProperty::setFilterFolder( msg, mFolder );
-  } else {
-    // The old filtering system does not support online imap targets.
-    // Skip online imap targets when using the old system.
-    KMFolder *check;
-    check = kmkernel->imapFolderMgr()->findIdString( argsAsString() );
-    if (mFolder && (check != mFolder)) {
-      MessageProperty::setFilterFolder( msg, mFolder );
-    }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  MessageProperty::setFilterFolder( item, mFolder );
   return GoOn;
 }
 

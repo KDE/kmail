@@ -14,6 +14,7 @@ using KMail::FilterImporterExporter;
 using KMail::MessageProperty;
 
 #include <akonadi/changerecorder.h>
+#include <akonadi/itemmovejob.h>
 
 // other KDE headers
 #include <kdebug.h>
@@ -104,48 +105,14 @@ bool KMFilterMgr::beginFiltering( const Akonadi::Item &item ) const
   if (MessageProperty::filtering( item ))
     return false;
   MessageProperty::setFiltering( item, true );
-  // TODO: port me!
-//   MessageProperty::setFilterFolder( msgBase, 0 );
   if ( FilterLog::instance()->isLogging() ) {
     FilterLog::instance()->addSeparator();
   }
   return true;
 }
 
-int KMFilterMgr::moveMessage( const KMime::Message::Ptr &msg) const
-{
-#if 0 //TODO port to akonadi
-  if (MessageProperty::filterFolder(msg)->moveMsg( msg ) == 0) {
-    if ( kmkernel->folderIsTrash( MessageProperty::filterFolder( msg )))
-      KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
-  } else {
-    kDebug() << "KMfilterAction - couldn't move msg";
-    return 2;
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  return 0;
-}
-
 void KMFilterMgr::endFiltering( const Akonadi::Item &item ) const
 {
-#if 0 //TODO port to akonadi
-  KMFolder *parent = msgBase->parent();
-  if ( parent ) {
-    if ( parent == MessageProperty::filterFolder( msgBase ) ) {
-      parent->take( parent->find( msgBase ) );
-    }
-    else if ( ! MessageProperty::filterFolder( msgBase ) ) {
-      int index = parent->find( msgBase );
-      KMMessage *msg = parent->getMsg( index );
-      parent->take( index );
-      parent->addMsgKeepUID( msg );
-    }
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   MessageProperty::setFiltering( item, false );
 }
 
@@ -169,9 +136,8 @@ int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
     const Akonadi::Collection targetFolder = MessageProperty::filterFolder( item );
     endFiltering( item );
     if ( targetFolder.isValid() ) {
-#if 0 // TODO port to Akonadi
-      result = targetFolder->moveMsg( msg.get() );
-#endif
+      new Akonadi::ItemMoveJob( item, targetFolder, this ); // TODO: check result
+      result = 0;
     }
   } else {
     result = 1;

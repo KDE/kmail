@@ -65,7 +65,6 @@ public:
   void createFilter( const QByteArray & field, const QString & value );
 
   bool beginFiltering( const Akonadi::Item &item ) const;
-  int moveMessage( const KMime::Message::Ptr &msg ) const;
   void endFiltering( const Akonadi::Item &item ) const;
 
   /**
