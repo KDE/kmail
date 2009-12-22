@@ -57,7 +57,6 @@ class CodecAction;
 class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
-class KMFolder;
 class KMMessage;
 class KMMessagePart;
 class KSelectAction;
@@ -717,7 +716,6 @@ class KMComposeWin : public KMail::Composer
     bool mAlwaysSend;
 
     QStringList mFolderNames;
-    QList<QPointer<KMFolder> > mFolderList;
 
   private:
     void continueAutoSave();
@@ -752,7 +750,7 @@ class KMComposeWin : public KMail::Composer
     inline int signingRootCertNearExpiryWarningThresholdInDays();
     inline int encryptChainCertNearExpiryWarningThresholdInDays();
     inline int signingChainCertNearExpiryWarningThresholdInDays();
-    
+
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();
