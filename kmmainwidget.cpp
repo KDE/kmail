@@ -2323,6 +2323,8 @@ void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 void KMMainWidget::slotApplyFilters()
 {
   QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  if ( selectedMessages.isEmpty() )
+    return;
 
   if (KMail::ActionScheduler::isEnabled() || kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget())
   {
@@ -2340,9 +2342,12 @@ void KMMainWidget::slotApplyFilters()
 
     return;
   }
-#if 0
-  //prevent issues with stale message pointers by using serial numbers instead
-  QList<unsigned long> serNums = KMMsgDict::serNumList( msgList );
+
+
+  QList<unsigned long> serNums;
+  foreach( const Akonadi::Item &item, selectedMessages ) {
+    serNums << item.id();
+  }
   if ( serNums.isEmpty() )
     return;
 
@@ -2350,13 +2355,13 @@ void KMMainWidget::slotApplyFilters()
   int msgCount = 0;
   int msgCountToFilter = serNums.count();
 
-  ProgressItem* progressItem = ProgressManager::createProgressItem (
-      "filter"+ProgressManager::getUniqueID(),
+  KPIM::ProgressItem* progressItem = KPIM::ProgressManager::createProgressItem (
+                                                                                "filter"+KPIM::ProgressManager::getUniqueID(),
       i18n( "Filtering messages" )
     );
 
   progressItem->setTotalItems( msgCountToFilter );
-
+#if 0
   for ( QList<unsigned long>::ConstIterator it = serNums.constBegin(); it != serNums.constEnd(); ++it )
   {
     msgCount++;
