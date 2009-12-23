@@ -209,18 +209,20 @@ void BackupJob::archiveNextMessage()
   mPendingMessages.pop_front();
 
   KMFolder *folder;
-  int index = -1;
-  KMMsgDict::instance()->getLocation( serNum, &folder, &index );
-  if ( index == -1 ) {
+  mMessageIndex = -1;
+  KMMsgDict::instance()->getLocation( serNum, &folder, &mMessageIndex );
+  if ( mMessageIndex == -1 ) {
     kdWarning(5006) << "Failed to get message location for sernum " << serNum << endl;
     abort( i18n( "Unable to retrieve a message for folder '%1'." ).arg( mCurrentFolder->name() ) );
     return;
   }
 
   Q_ASSERT( folder == mCurrentFolder );
-  KMMessage *message = mCurrentFolder->getMsg( index );
+  const KMMsgBase *base = mCurrentFolder->getMsgBase( mMessageIndex );
+  mUnget = base && !base->isMessage();
+  KMMessage *message = mCurrentFolder->getMsg( mMessageIndex );
   if ( !message ) {
-    kdWarning(5006) << "Failed to retrieve message with index " << index << endl;
+    kdWarning(5006) << "Failed to retrieve message with index " << mMessageIndex << endl;
     abort( i18n( "Unable to retrieve a message for folder '%1'." ).arg( mCurrentFolder->name() ) );
     return;
   }
@@ -318,6 +320,11 @@ void BackupJob::processCurrentMessage()
                                modificationTime, creationTime, messageString ) ) {
       abort( i18n( "Failed to write a message into the archive folder '%1'." ).arg( mCurrentFolder->name() ) );
       return;
+    }
+
+    if ( mUnget ) {
+      Q_ASSERT( mMessageIndex >= 0 );
+      mCurrentFolder->unGetMsg( mMessageIndex );
     }
 
     mArchivedMessages++;
