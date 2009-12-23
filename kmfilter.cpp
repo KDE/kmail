@@ -450,9 +450,11 @@ const QString KMFilter::asString() const
       result += "This filter applies to the following accounts:";
       if ( mAccounts.isEmpty() )
         result += " None";
-      else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 )
-        if ( kmkernel->acctMgr()->find( *it2 ) )
-          result += ' ' + kmkernel->acctMgr()->find( *it2 )->name();
+      else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 ) {
+        KMAccount *acct = kmkernel->acctMgr()->find( *it2 );
+        if ( acct )
+          result += ' ' + acct->name();
+      }
       result += '\n';
     }
     if ( bStopProcessingHere )
