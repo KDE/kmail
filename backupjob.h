@@ -92,6 +92,11 @@ class BackupJob : public QObject
     bool mAborted;
     bool mDeleteFoldersAfterCompletion;
 
+    // True if we obtained ownership of the kMMessage after calling getMsg(), since we need
+    // to call ungetMsg() then. For that, we also remember the original index.
+    bool mUnget;
+    int mMessageIndex;
+
     QList<KMFolder*> mPendingFolders;
     KMFolder *mCurrentFolder;
     QList<unsigned long> mPendingMessages;
