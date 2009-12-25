@@ -78,8 +78,7 @@ KMFilterAction::~KMFilterAction()
 
 void KMFilterAction::processAsync( const Akonadi::Item &item ) const
 {
-  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-  ActionScheduler *handler = MessageProperty::filterHandler( msg.get() );
+  ActionScheduler *handler = MessageProperty::filterHandler( item );
   ReturnCode result = process( item );
   if (handler)
     handler->actionMessage( result );
@@ -1509,9 +1508,9 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( const Akonadi::Item &ite
 
 void KMFilterActionCopy::processAsync( const Akonadi::Item &item ) const
 {
-  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-  ActionScheduler *handler = MessageProperty::filterHandler( msg.get() );
+  ActionScheduler *handler = MessageProperty::filterHandler( item );
 #ifdef OLD_COMMAND
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMCommand *cmd = new KMCopyCommand( mFolder, msg );
   QObject::connect( cmd, SIGNAL( completed( KMCommand * ) ),
                     handler, SLOT( copyMessageFinished( KMCommand * ) ) );
@@ -1896,8 +1895,7 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process( const Akonadi::Item
 
 void KMFilterActionExtFilter::processAsync( const Akonadi::Item &item ) const
 {
-#if 0 //TODO port to akonadi
-  ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
+  ActionScheduler *handler = MessageProperty::filterHandler( item );
   KTemporaryFile *inFile = new KTemporaryFile;
   inFile->setAutoRemove(false);
   if ( !inFile->open() ) {
@@ -1909,6 +1907,7 @@ void KMFilterActionExtFilter::processAsync( const Akonadi::Item &item ) const
   QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
 
+#if 0 //TODO port to akonadi
   QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
   if ( commandLine.isEmpty() ) {
     handler->actionMessage( ErrorButGoOn );

@@ -35,9 +35,7 @@
 using namespace KMail;
 
 QMap<Akonadi::Item::Id, Akonadi::Collection> MessageProperty::sFolders;
-QMap<quint32, bool> MessageProperty::sKeepSerialNumber;
-QMap<quint32, QPointer<ActionScheduler> > MessageProperty::sHandlers;
-QMap<KMime::Content*, long > MessageProperty::sSerialCache;
+QMap<Akonadi::Item::Id, QPointer<ActionScheduler> > MessageProperty::sHandlers;
 
 bool MessageProperty::filtering( const Akonadi::Item &item )
 {
@@ -63,78 +61,22 @@ Akonadi::Collection MessageProperty::filterFolder( const Akonadi::Item &item )
   return sFolders.value( item.id() );
 }
 
-ActionScheduler* MessageProperty::filterHandler( quint32 serNum )
+ActionScheduler* MessageProperty::filterHandler( const Akonadi::Item &item )
 {
-  QMap<quint32, QPointer<ActionScheduler> >::ConstIterator it = sHandlers.constFind( serNum );
+  QMap<Akonadi::Item::Id, QPointer<ActionScheduler> >::ConstIterator it = sHandlers.constFind( item.id() );
   return it == sHandlers.constEnd() ? 0 : (*it).operator->();
 }
 
-void MessageProperty::setFilterHandler( quint32 serNum, ActionScheduler* handler )
+void MessageProperty::setFilterHandler( const Akonadi::Item &item, ActionScheduler* handler )
 {
   if (handler)
-    sHandlers.insert( serNum, QPointer<ActionScheduler>(handler) );
+    sHandlers.insert( item.id(), QPointer<ActionScheduler>(handler) );
   else
-    sHandlers.remove( serNum );
+    sHandlers.remove( item.id() );
 }
 
-ActionScheduler* MessageProperty::filterHandler( KMime::Content *msgBase )
-{
-#if 0 //TODO port to akonadi
-  return filterHandler( msgBase->getMsgSerNum() );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return 0;
-#endif
-}
-
-void MessageProperty::setFilterHandler( KMime::Content *msgBase, ActionScheduler* handler )
-{
-#if 0 //TODO port to akonadi
-  setFilterHandler( msgBase->getMsgSerNum(), handler );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-quint32 MessageProperty::serialCache( KMime::Content *msgBase )
-{
-  QMap<KMime::Content*, long >::ConstIterator it = sSerialCache.constFind( msgBase );
-  return it == sSerialCache.constEnd() ? 0 : *it;
-}
-
-void MessageProperty::setSerialCache( KMime::Content *msgBase, quint32 serNum )
-{
-  if (serNum)
-    sSerialCache.insert( msgBase, serNum );
-  else
-    sSerialCache.remove( msgBase );
-}
-
-void MessageProperty::setKeepSerialNumber( quint32 serialNumber, bool keepForMoving )
-{
-  if ( serialNumber ) {
-    if ( sKeepSerialNumber.contains( serialNumber ) )
-      sKeepSerialNumber[ serialNumber ] = keepForMoving;
-    else
-      sKeepSerialNumber.insert( serialNumber, keepForMoving );
-  }
-}
-
-bool MessageProperty::keepSerialNumber( quint32 serialNumber )
-{
-  if ( sKeepSerialNumber.contains( serialNumber ) )
-    return sKeepSerialNumber[ serialNumber ];
-  else
-    return false;
-}
- 
 void MessageProperty::forget( KMime::Content *msgBase )
 {
-  quint32 serNum = serialCache( msgBase );
-  if (serNum) {
-    sSerialCache.remove( msgBase );
-    sKeepSerialNumber.remove( serNum );
-  }
 }
 
 #include "messageproperty.moc"

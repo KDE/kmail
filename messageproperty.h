@@ -73,27 +73,8 @@ public:
   static Akonadi::Collection filterFolder( const Akonadi::Item &item );
   static void setFilterFolder( const Akonadi::Item &item, const Akonadi::Collection &folder );
   /* Set the filterHandler for a message */
-  static ActionScheduler* filterHandler( quint32 );
-  static void setFilterHandler( quint32, ActionScheduler* filterHandler );
-  static ActionScheduler* filterHandler( KMime::Content* );
-  static void setFilterHandler( KMime::Content*, ActionScheduler* filterHandler );
-
-  /* Caches the serial number for a message, or more correctly for a
-     KMMsgBase based instance representing a message.
-     This property becomes invalid when the message is destructed or
-     assigned a new value */
-  static void setSerialCache( KMime::Content*, quint32 );
-  static quint32 serialCache( KMime::Content* );
-
-  /**
-   * Set this property to true if you want to keep the serial number when moving
-   * a message from a local folder to an online IMAP folder.
-   * Setting this to true will cause the ImapJob to save the meta data, like the
-   * serial number, of the message in a map, which is later read when the
-   * message arrives in the new location. Then the serial number is restored.
-   */
-  static void setKeepSerialNumber( quint32 serialNumber, bool keepForMoving );
-  static bool keepSerialNumber( quint32 serialNumber );
+  static ActionScheduler* filterHandler( const Akonadi::Item &item );
+  static void setFilterHandler( const Akonadi::Item &item, ActionScheduler* filterHandler );
 
   /** Some properties, namely complete, transferInProgress, and
       serialCache must be forgotten when a message class instance is
@@ -105,18 +86,8 @@ private:
   // The folder a message is to be moved into once filtering is finished if any
   static QMap<Akonadi::Item::Id, Akonadi::Collection> sFolders;
 
-  // Whether the serial number of a message should be kept when moving it from
-  // a local folder to an online IMAP folder. This is currently only used by
-  // the action scheduler (in ActionScheduler::moveMessage()), to make the IMAP
-  // job aware that it should try to preserve the serial number when moving, see
-  // ImapJob::init().
-  static QMap<quint32, bool> sKeepSerialNumber;
-
   // The action scheduler currently processing a message if any
-  static QMap<quint32, QPointer<ActionScheduler> > sHandlers;
-
-  // The cached serial number of a message if any.
-  static QMap<KMime::Content*, long> sSerialCache;
+  static QMap<Akonadi::Item::Id, QPointer<ActionScheduler> > sHandlers;
 };
 
 }
