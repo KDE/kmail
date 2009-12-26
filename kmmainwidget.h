@@ -659,6 +659,7 @@ private:
     KMail::StatusBarLabel *mVacationScriptIndicator;
     bool mVacationIndicatorActive;
     bool mGoToFirstUnreadMessageInSelectedFolder;
+    KPIM::ProgressItem *mFilterProgressItem;
 
 };
 

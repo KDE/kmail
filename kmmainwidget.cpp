@@ -208,7 +208,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mMsgActions( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
-    mCurrentFolder( 0 )
+    mCurrentFolder( 0 ),
+    mFilterProgressItem( 0 )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -2305,7 +2306,7 @@ void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 
 void KMMainWidget::slotApplyFilters()
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
 
@@ -2313,7 +2314,7 @@ void KMMainWidget::slotApplyFilters()
   {
     // uses action scheduler
     KMFilterMgr::FilterSet set = KMFilterMgr::Explicit;
-    QList<KMFilter*> filters = kmkernel->filterMgr()->filters();
+    const QList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     KMail::ActionScheduler *scheduler = new KMail::ActionScheduler( set, filters );
     scheduler->setAutoDestruct( true );
 
@@ -2326,68 +2327,51 @@ void KMMainWidget::slotApplyFilters()
     return;
   }
 
-
-  QList<unsigned long> serNums;
-  foreach( const Akonadi::Item &item, selectedMessages ) {
-    serNums << item.id();
-  }
-  if ( serNums.isEmpty() )
-    return;
-
   KCursorSaver busy( KBusyPtr::busy() );
-  int msgCount = 0;
-  int msgCountToFilter = serNums.count();
+  const int msgCountToFilter = selectedMessages.size();
 
-  KPIM::ProgressItem* progressItem = KPIM::ProgressManager::createProgressItem (
-                                                                                "filter"+KPIM::ProgressManager::getUniqueID(),
+  mFilterProgressItem = KPIM::ProgressManager::createProgressItem (
+      "filter" + KPIM::ProgressManager::getUniqueID(),
       i18n( "Filtering messages" )
     );
 
-  progressItem->setTotalItems( msgCountToFilter );
-  for ( QList<unsigned long>::ConstIterator it = serNums.constBegin(); it != serNums.constEnd(); ++it )
-  {
-    msgCount++;
-    if ( msgCountToFilter - msgCount < 10 || !( msgCount % 10 ) || msgCount <= 10 )
-    {
-      progressItem->updateProgress();
-      QString statusMsg = i18n( "Filtering message %1 of %2", msgCount, msgCountToFilter );
-      KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
-      qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
-    }
-    ItemFetchJob *itemFetchJob = new ItemFetchJob( Akonadi::Item( *it ), this );
-    itemFetchJob->fetchScope().fetchFullPayload( true );
-    itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
-    connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)) );
-
-    connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchJobForFilterDone(KJob*)) );
-    progressItem->incCompletedItems();
-  }
-
-  progressItem->setComplete();
-  progressItem = 0;
+  mFilterProgressItem->setTotalItems( msgCountToFilter );
+  ItemFetchJob *itemFetchJob = new ItemFetchJob( selectedMessages, this );
+  itemFetchJob->fetchScope().fetchFullPayload( true );
+  itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
+  connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)) );
+  connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchJobForFilterDone(KJob*)) );
 }
 
 void KMMainWidget::itemsFetchJobForFilterDone( KJob *job )
 {
   if ( job->error() )
     kDebug() << job->errorString();
+  mFilterProgressItem->setComplete();
+  mFilterProgressItem = 0;
 }
 
 void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
 {
-  if ( items.count()>1 )
-    kDebug()<<" More than 1 element was receiving!!!!";
-  slotFilterMsg( items.at( 0 ) );
+  foreach ( const Akonadi::Item &item, items ) {
+    if ( mFilterProgressItem->totalItems() - mFilterProgressItem->completedItems() < 10 ||
+      !( mFilterProgressItem->completedItems() % 10 ) ||
+         mFilterProgressItem->completedItems() <= 10 )
+    {
+      mFilterProgressItem->updateProgress();
+      const QString statusMsg = i18n( "Filtering message %1 of %2", mFilterProgressItem->completedItems(),
+                                      mFilterProgressItem->totalItems() );
+      KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+      qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
+    }
+    mFilterProgressItem->incCompletedItems();
+    slotFilterMsg( item );
+  }
 }
 
 int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 {
   if ( !msg.isValid() ) return 2; // messageRetrieve(0) is always possible
-#if 0 //TODO port to akonadi
-  msg->setTransferInProgress(false);
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   int filterResult = kmkernel->filterMgr()->process(msg, KMFilterMgr::Explicit);
   if (filterResult == 2)
   {
