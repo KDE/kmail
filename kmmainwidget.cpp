@@ -365,16 +365,6 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
   if (mMsgView)
     mMsgView->clear(true);
   bool newFolder = mCurrentFolder && ( mCurrentFolder->collection() != col );
-#if 0
-  if ( mFolder && newFolder && ( mFolder->folderType() == KMFolderTypeImap ) && !mFolder->noContent() )
-  {
-    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
-    if ( mFolder->needsCompacting() && imap->autoExpunge() )
-      imap->expungeFolder(imap, true);
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   // Re-enable the msg list and quicksearch if we're showing a splash
   // screen. This is true either if there's no active folder, or if we
   // have a timer that is no longer active (i.e. it has already fired)

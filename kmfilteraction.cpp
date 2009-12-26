@@ -1509,13 +1509,11 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( const Akonadi::Item &ite
 void KMFilterActionCopy::processAsync( const Akonadi::Item &item ) const
 {
   ActionScheduler *handler = MessageProperty::filterHandler( item );
-#ifdef OLD_COMMAND
-  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-  KMCommand *cmd = new KMCopyCommand( mFolder, msg );
+
+  KMCommand *cmd = new KMCopyCommand( mFolder, item );
   QObject::connect( cmd, SIGNAL( completed( KMCommand * ) ),
                     handler, SLOT( copyMessageFinished( KMCommand * ) ) );
   cmd->start();
-#endif
 }
 
 bool KMFilterActionCopy::requiresBody( KMime::Content *msg ) const
