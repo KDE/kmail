@@ -392,24 +392,12 @@ void KMCommand::slotTransferCancelled()
       imapFolder->account()->killAllJobs();
     }
   }
-  KMCommand::mCountJobs = 0;
-  mCountMsgs = 0;
-  // unget the transferred messages
-  QList<KMime::Message*>::const_iterator it;
-  for ( it = mRetrievedMsgs.constBegin(); it != mRetrievedMsgs.constEnd(); ++it ) {
-    KMime::Message* msg = (*it);
-    KMFolder *folder = msg->parent();
-    ++it;
-    if (!folder)
-      continue;
-    msg->setTransferInProgress(false);
-    int idx = folder->find(msg);
-    if (idx > 0) folder->unGetMsg(idx);
-  }
-  mRetrievedMsgs.clear();
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+  KMCommand::mCountJobs = 0;
+  mCountMsgs = 0;
+  mRetrievedMsgs.clear();
   emit messagesTransfered( Canceled );
 }
 
@@ -610,9 +598,6 @@ KMCommand::Result KMEditMsgCommand::execute()
   Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
   connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDeleteItem( KJob* ) ) );
   KMail::Composer *win = KMail::makeComposer();
-#if 0
-  msg->setTransferInProgress( false ); // From here on on, the composer owns the message.
-#endif
   win->setMsg( msg, false, true );
   win->setFolder( item.parentCollection() );
   win->show();
@@ -661,7 +646,6 @@ KMCommand::Result KMUseTemplateCommand::execute()
   newMsg->removeHeader("Message-ID");
 
   KMail::Composer *win = KMail::makeComposer();
-  //newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
   win->setMsg( newMsg, false, true );
   win->show();
 #if 0
@@ -687,7 +671,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
     mMsgListIndex( 0 ),
     mStandAloneMessage( 0 ),
     mOffset( 0 ),
-    mTotalSize( /* TODO port to akonadi msg ? msg->msgSize() :*/ 0 )
+    mTotalSize( msg.size() )
 {
   if ( !msg.isValid() ) {
     return;
@@ -708,7 +692,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-  fetchScope().fetchFullPayload( true );
+  fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
@@ -743,7 +727,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   KMime::Message *msgBase = *(msgList.begin());
   mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase ) );
 #endif
-  fetchScope().fetchFullPayload( true );
+  fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
 KUrl KMSaveMsgCommand::url()
@@ -835,9 +819,6 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(const Akonadi::Item &msg)
     QByteArray str( msg->mboxMessageSeparator() );
     str += KMFolderMbox::escapeFrom( msg->asDwString() );
     str += '\n';
-#if 0  //TODO port to akonadi
-    msg->setTransferInProgress(false);
-#endif
     mData = str;
     mData.resize(mData.size() - 1);
     mOffset = 0;
@@ -854,15 +835,6 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(const Akonadi::Item &msg)
     mOffset += size;
   }
   ++mMsgListIndex;
-  // Get rid of the message.
-  if ( msg && msg->parent() && msg->getMsgSerNum() ) {
-    int idx = -1;
-    KMFolder * p = 0;
-    KMMsgDict::instance()->getLocation( msg, &p, &idx );
-    assert( p == msg->parent() ); assert( idx >= 0 );
-    p->unGetMsg( idx );
-    p->close( "kmcommand" );
-  }
 #endif
 }
 
@@ -1947,17 +1919,6 @@ KMCommand::Result KMMoveCommand::execute()
   }
 
 #if 0 //TODO port to akonadi
-  setEmitsCompletedItself( true );
-  setDeletesItself( true );
-  typedef QMap< KMFolder*, QList<KMime::Message*>* > FolderToMessageListMap;
-  FolderToMessageListMap folderDeleteList;
-
-  if ( mDestFolder && mDestFolder->open( "kmcommand" ) != 0 ) {
-    completeMove( Failed );
-    return Failed;
-  }
-  KCursorSaver busy( KBusyPtr::busy() );
-
   // TODO set SSL state according to source and destfolder connection?
   Q_ASSERT( !mProgressItem );
   mProgressItem =
@@ -1965,113 +1926,6 @@ KMCommand::Result KMMoveCommand::execute()
          mDestFolder ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
   connect( mProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
            this, SLOT( slotMoveCanceled() ) );
-
-  KMime::Message *msg;
-  int rc = 0;
-  int index;
-  QList<KMime::Message*> list;
-  int undoId = -1;
-  mCompleteWithAddedMsg = false;
-
-  if (mDestFolder) {
-    connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
-             this, SLOT(slotMsgAddedToDestFolder(KMFolder*, quint32)));
-    mLostBoys = mSerNumList;
-  }
-  mProgressItem->setTotalItems( mSerNumList.count() );
-
-  for ( QList<quint32>::ConstIterator it = mSerNumList.constBegin(); it != mSerNumList.constEnd(); ++it ) {
-    if ( *it == 0 ) {
-      kDebug() << "serial number == 0!";
-      continue; // invalid message
-    }
-    KMFolder *srcFolder = 0;
-    int idx = -1;
-    KMMsgDict::instance()->getLocation( *it, &srcFolder, &idx );
-    if (srcFolder == mDestFolder)
-      continue;
-    assert(srcFolder);
-    assert(idx != -1);
-    if ( !srcFolder->isOpened() ) {
-      srcFolder->open( "kmcommand" );
-      mOpenedFolders.append( srcFolder );
-    }
-    msg = srcFolder->getMsg(idx);
-    if ( !msg ) {
-      kDebug() << "No message found for serial number" << *it;
-      continue;
-    }
-    bool undo = msg->enableUndo();
-
-    if ( msg->transferInProgress() &&
-         srcFolder->folderType() == KMFolderTypeImap )
-    {
-      // cancel the download
-      msg->setTransferInProgress( false, true );
-      static_cast<KMFolderImap*>(srcFolder->storage())->ignoreJobsForMessage( msg );
-    }
-
-    if (mDestFolder) {
-      if (mDestFolder->folderType() == KMFolderTypeImap) {
-        /* If we are moving to an imap folder, connect to it's completed
-         * signal so we notice when all the mails should have showed up in it
-         * but haven't for some reason. */
-        KMFolderImap *imapFolder = static_cast<KMFolderImap*> ( mDestFolder->storage() );
-        disconnect (imapFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
-                 this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
-
-        connect (imapFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
-                 this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
-        list.append(msg);
-      } else {
-        // We are moving to a local folder.
-        if ( srcFolder->folderType() == KMFolderTypeImap ) {
-          // do not complete here but wait until all messages are transferred
-          mCompleteWithAddedMsg = true;
-        }
-        rc = mDestFolder->moveMsg(msg, &index);
-        if (rc == 0 && index != -1) {
-          KMime::Message *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
-          if (undo && mb)
-          {
-            if ( undoId == -1 )
-              undoId = kmkernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
-            kmkernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
-          }
-        } else if (rc != 0) {
-          // Something  went wrong. Stop processing here, it is likely that the
-          // other moves would fail as well.
-          completeMove( Failed );
-          return Failed;
-        }
-      }
-    } else {
-      // really delete messages that are already in the trash folder or if
-      // we are really, really deleting, not just moving to trash
-      if (srcFolder->folderType() == KMFolderTypeImap) {
-        if (!folderDeleteList[srcFolder])
-          folderDeleteList[srcFolder] = new QList<KMime::Message*>;
-        folderDeleteList[srcFolder]->append( msg );
-      } else {
-        srcFolder->removeMsg(idx);
-        delete msg;
-      }
-    }
-  }
-  if (!list.isEmpty() && mDestFolder) {
-    // will be completed with folderComplete signal
-    mDestFolder->moveMsg(list, &index);
-  } else {
-    FolderToMessageListMap::Iterator it;
-    for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
-      it.key()->removeMessages(*it.value());
-      delete it.value();
-    }
-    if ( !mCompleteWithAddedMsg ) {
-      // imap folders will be completed in slotMsgAddedToDestFolder
-      completeMove( OK );
-    }
-  }
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
@@ -2082,14 +1936,6 @@ KMCommand::Result KMMoveCommand::execute()
 
 void KMMoveCommand::completeMove( Result result )
 {
-#if 0
-  if ( mDestFolder )
-    mDestFolder->close( "kmcommand" );
-  while ( !mOpenedFolders.empty() ) {
-    KMFolder *folder = mOpenedFolders.back();
-    mOpenedFolders.pop_back();
-    folder->close( "kmcommand" );
-  }
   if ( mProgressItem ) {
     mProgressItem->setComplete();
     mProgressItem = 0;
@@ -2097,7 +1943,6 @@ void KMMoveCommand::completeMove( Result result )
   setResult( result );
   emit completed( this );
   deleteLater();
-#endif
 }
 
 void KMMoveCommand::slotMoveCanceled()
@@ -2728,11 +2573,7 @@ KMCommand::Result CreateTodoCommand::execute()
     return Failed;
   }
   QString uri = "kmail:" + QString::number( item.id() ) + '/' + KMail::MessageHelper::msgId(msg);
-#if 0
-  tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  tf.write( msg->encodedContent() );
   OrgKdeKorganizerCalendarInterface *iface =
       new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
                                              QDBusConnection::sessionBus(), this );
