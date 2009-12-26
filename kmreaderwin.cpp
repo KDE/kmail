@@ -44,7 +44,6 @@
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
-#include "messageviewer/config-webkit.h"
 #include "messagehelper.h"
 
 #include "messageviewer/csshelper.h"
@@ -650,11 +649,7 @@ const HeaderStyle * KMReaderWin::headerStyle() const
   return mViewer->headerStyle();
 }
 
-#ifdef WEBKIT_BUILD
 KWebView * KMReaderWin::htmlPart() const
-#else
-KHTMLPart * KMReaderWin::htmlPart() const
-#endif
 {
   return mViewer->htmlPart();
 }
