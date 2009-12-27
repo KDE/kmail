@@ -3171,8 +3171,6 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("find_in_messages", mFindInMessageAction );
   connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
   mFindInMessageAction->setShortcut(KStandardShortcut::find());
-  //For this shortcut to work, the same shortcut from khtml must be disabled in
-  //kmreaderwin.cpp
 
   {
     KAction *action = new KAction(i18n("Select &All Messages"), this);

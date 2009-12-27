@@ -41,7 +41,6 @@
 #include <KFontAction>
 #include <KFontSizeAction>
 #include <kstatusbar.h>
-#include <khtml_part.h>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"

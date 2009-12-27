@@ -43,7 +43,6 @@ class KActionCollection;
 class KAction;
 class KToggleAction;
 class KToggleAction;
-class KHTMLPart;
 class KWebView;
 class KUrl;
 namespace MessageViewer {

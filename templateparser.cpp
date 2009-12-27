@@ -38,8 +38,6 @@
 
 #include <libkpgp/kpgpblock.h>
 
-#include <khtml_part.h>
-
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_content.h>
 
@@ -59,6 +57,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
+#include <QWebElement>
 
 namespace KMail {
 
@@ -1281,17 +1280,10 @@ QString TemplateParser::asPlainTextFromObjectTree( const KMime::Message::Ptr &ms
 
   // html -> plaintext conversion, if necessary:
   if ( isHTML /* TODO port it && mDecodeHTML*/ ) {
-    KHTMLPart htmlPart;
-    htmlPart.setOnlyLocalReferences( true );
-    htmlPart.setMetaRefreshEnabled( false );
-    htmlPart.setPluginsEnabled( false );
-    htmlPart.setJScriptEnabled( false );
-    htmlPart.setJavaEnabled( false );
-    htmlPart.begin();
-    htmlPart.write( result );
-    htmlPart.end();
-    htmlPart.selectAll();
-    result = htmlPart.selectedText();
+    // TODO: WEBKIT check to make sure that this does not access external resources or executes any scripts
+    QWebElement doc = QWebElement();
+    doc.prependInside( result );
+    result = doc.toPlainText();
   }
 
   // strip the signature (footer):

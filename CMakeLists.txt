@@ -266,7 +266,6 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 target_link_libraries(kmailprivate
-  ${KDE4_KHTML_LIBRARY}
   ${KDE4_THREADWEAVER_LIBRARY}
   ${KDE4_KMIME_LIBRARY}
   ${KDE4_AKONADI_LIBS}
@@ -298,6 +297,7 @@ target_link_libraries(kmailprivate
   akonadi_next
   ${SOPRANO_LIBRARIES}
   niefast_apps
+  ${QT_QTWEBKIT_LIBRARY}
 )
 
 add_dependencies(kmail_xml akonadi_imap_resource) # generate imapresource.kcfg first
