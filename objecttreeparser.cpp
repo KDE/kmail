@@ -1826,7 +1826,7 @@ namespace KMail {
                                                      cryptoProtocol(),
                                                      node->trueFromAddress() ) );
           insertAndParseNewChildNode( *node,
-                                      &*(const char*)decryptedData,
+                                      decryptedData.constData(),
                                       "encrypted data" );
           if ( mReader )
             htmlWriter()->queue( writeSigstatFooter( messagePart ) );
