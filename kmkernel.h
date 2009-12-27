@@ -42,14 +42,12 @@ class KJob;
 */
 namespace KMail {
   class MailServiceImpl;
-  class MailManagerImpl;
   class UndoStack;
   class JobScheduler;
   class MessageSender;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
-using KMail::MailManagerImpl;
 using KMail::UndoStack;
 using KMail::JobScheduler;
 using KPIM::ProgressDialog;
@@ -495,7 +493,6 @@ private:
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
-  MailManagerImpl *mMailManager;
 
   // the time of the last change of the unread or total count of a folder;
   // this can be queried via D-Bus in order to determine whether the counts

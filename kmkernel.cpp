@@ -41,8 +41,6 @@ using KPIM::RecentAddresses;
 #include <kwindowsystem.h>
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
-#include "mailmanagerimpl.h"
-using KMail::MailManagerImpl;
 #include "jobscheduler.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
@@ -110,7 +108,7 @@ static bool s_askingToGoOnline = false;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0), mMailService(0),
-  mMailManager( 0 ), mContextMenuShown( false )
+  mContextMenuShown( false )
 {
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
   mAgentManager = new KMAgentManager( this );
@@ -188,8 +186,6 @@ KMKernel::~KMKernel ()
   }
   delete mMailService;
   mMailService = 0;
-  delete mMailManager;
-  mMailManager = 0;
 
   GlobalSettings::self()->writeConfig();
   mySelf = 0;
@@ -220,8 +216,7 @@ void KMKernel::setupDBus()
   (void) new KmailAdaptor( this );
   qDBusRegisterMetaType<QVector<QStringList> >();
   QDBusConnection::sessionBus().registerObject( "/KMail", this );
-  mMailService =  new MailServiceImpl();
-  mMailManager =  new MailManagerImpl();
+  mMailService = new MailServiceImpl();
 }
 
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )

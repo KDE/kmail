@@ -137,7 +137,6 @@ set(kmailprivate_LIB_SRCS
    folderjob.cpp
    aboutdata.cpp
    mailserviceimpl.cpp
-   mailmanagerimpl.cpp
    kmcomposereditor.cpp
    kmlineeditspell.cpp
    composer.cpp
@@ -216,10 +215,6 @@ qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
 qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
   ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
   KMail::MailServiceImpl
-)
-qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
-  ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.freedesktop.email.metadata.Manager.xml mailmanagerimpl.h
-  KMail::MailManagerImpl
 )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
