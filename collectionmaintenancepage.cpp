@@ -19,6 +19,8 @@
 #include "collectionmaintenancepage.h"
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/collection.h>
+#include <Akonadi/AgentType>
+#include <Akonadi/AgentManager>
 #include <klineedit.h>
 #include <QLabel>
 #include <QHBoxLayout>
@@ -27,24 +29,10 @@
 #include <KLocale>
 #include <QFormLayout>
 #include <kio/global.h>
-#include "kmfoldertype.h"
 #include "kmkernel.h"
 
 using namespace Akonadi;
 
-
-static QString folderTypeDesc( KMFolderType type )
-{
-  switch ( type )
-  {
-  case KMFolderTypeMbox:       return ( i18nc( "type of folder storage", "Mailbox" ) );
-  case KMFolderTypeMaildir:    return ( i18nc( "type of folder storage", "Maildir" ) );
-  case KMFolderTypeCachedImap: return ( i18nc( "type of folder storage", "Disconnected IMAP" ) );
-  case KMFolderTypeImap:       return ( i18nc( "type of folder storage", "IMAP" ) );
-  case KMFolderTypeSearch:     return ( i18nc( "type of folder storage", "Search" ) );
-  default:                     return ( i18nc( "type of folder storage", "Unknown" ) );
-  }
-}
 
 CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
     CollectionPropertiesPage( parent )
@@ -71,8 +59,8 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   // get a buddy set (except in the cases where we do want one).
   box->addRow( new QLabel( i18nc( "@label:textbox Folder content type (eg. Mail)", "Contents:" ),
                            filesGroup ), label );
-  KMFolderType folderType = KMKernel::self()->folderType(col);
-  QString folderDesc = folderTypeDesc( folderType );
+  const AgentInstance instance = Akonadi::AgentManager::self()->instance( col.resource() );
+  const QString folderDesc = instance.type().name();
 
   label = new QLabel( folderDesc, filesGroup );
   box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );

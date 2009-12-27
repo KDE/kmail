@@ -347,7 +347,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     mIncidencesForComboBox = 0;
   }
 
-  if ( KMKernel::self()->folderType( col ) == KMFolderTypeImap ) {
+  if ( KMKernel::self()->isImapFolder( col ) ) {
     mSharedSeenFlagsCheckBox = new QCheckBox( this );
     mSharedSeenFlagsCheckBox->setText( i18n( "Share unread state with all users" ) );
     mSharedSeenFlagsCheckBox->setChecked( sharedSeen );

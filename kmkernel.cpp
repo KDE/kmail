@@ -2296,25 +2296,4 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col )
   return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
 }
 
-
-KMFolderType KMKernel::folderType( const Akonadi::Collection &col )
-{
-  if ( Akonadi::CollectionUtils::isVirtual( col ) )
-    return KMFolderTypeSearch;
-
-  Akonadi::AgentInstance agentInstance = agentManager()->instance( col.resource() );
-
-  QString agentType = agentInstance.type().identifier();
-  if ( agentType == IMAP_RESOURCE_IDENTIFIER )
-    return KMFolderTypeImap;
-  if ( agentType == "akonadi_mbox_resource" )
-    return KMFolderTypeMbox;
-  if ( agentType == "akonadi_maildir_resource" )
-    return KMFolderTypeMaildir;
-  // Cached imap?
-
-  return KMFolderTypeUnknown;
-
-}
-
 #include "kmkernel.moc"
