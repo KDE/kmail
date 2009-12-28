@@ -704,9 +704,6 @@ public slots:
   void slotMoveResult( KJob * job );
 protected:
   void setDestFolder( const Akonadi::Collection& folder ) { mDestFolder = folder; }
-  void addMsg( const Akonadi::Item &msg ) {
-    mItem.append( msg );
-  }
 
 signals:
   void moveDone( KMMoveCommand* );
@@ -719,8 +716,6 @@ private:
   KPIM::ProgressItem *mProgressItem;
   MessageList::Core::MessageItemSetReference mRef;
   bool mCompleteWithAddedMsg;
-
-  QList<Akonadi::Item> mItem;
 };
 
 class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand

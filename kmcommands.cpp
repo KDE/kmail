@@ -148,6 +148,8 @@ using namespace KMime;
 #include <QList>
 #include <QProgressBar>
 
+#include <boost/bind.hpp>
+#include <algorithm>
 #include <memory>
 
 /// Small helper function to get the composer context from a reply
@@ -1877,17 +1879,17 @@ void KMCopyCommand::slotCopyResult( KJob * job )
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                               const QList<Akonadi::Item> &msgList,
                               MessageList::Core::MessageItemSetReference ref)
-    : mDestFolder( destFolder ), mProgressItem( 0 ), mRef( ref )
+    : KMCommand( 0, msgList ), mDestFolder( destFolder ), mProgressItem( 0 ), mRef( ref )
 {
-  mItem = msgList;
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMMoveCommand::KMMoveCommand( const Akonadi::Collection& destFolder,
                               const Akonadi::Item& msg ,
                               MessageList::Core::MessageItemSetReference ref)
-  : mDestFolder( destFolder ), mProgressItem( 0 ), mRef( ref )
+  : KMCommand( 0, msg ), mDestFolder( destFolder ), mProgressItem( 0 ), mRef( ref )
 {
-  mItem.append( msg );
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 void KMMoveCommand::slotMoveResult( KJob * job )
@@ -1910,11 +1912,27 @@ KMCommand::Result KMMoveCommand::execute()
   setEmitsCompletedItself( true );
   setDeletesItself( true );
   if ( mDestFolder.isValid() ) {
-    Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mItem, mDestFolder,this );
+    Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( retrievedMsgs(), mDestFolder, this );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
+
+    // group by source folder for undo
+    Akonadi::Item::List items = retrievedMsgs();
+    std::sort( items.begin(), items.end(), boost::bind( &Akonadi::Item::storageCollectionId, _1 ) <
+                                           boost::bind( &Akonadi::Item::storageCollectionId, _2 ) );
+    Akonadi::Collection parent;
+    int undoId = -1;
+    foreach ( const Akonadi::Item &item, items ) {
+      if ( item.storageCollectionId() <= 0 )
+        continue;
+      if ( parent.id() != item.storageCollectionId() ) {
+        parent = Akonadi::Collection( item.storageCollectionId() );
+        undoId = kmkernel->undoStack()->newUndoAction( parent, mDestFolder );
+      }
+      kmkernel->undoStack()->addMsgToAction( undoId, item );
+    }
   }
   else {
-    Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( mItem );
+    Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( retrievedMsgs(), this );
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotMoveResult( KJob* ) ) );
   }
 
