@@ -33,7 +33,7 @@ class UndoInfo
 {
 public:
   int          id;
-  QList<ulong> serNums;
+  Akonadi::Item::List items;
   Akonadi::Collection srcFolder;
   Akonadi::Collection destFolder;
 };
@@ -49,10 +49,10 @@ public:
   void clear();
   int  size() const { return mStack.count(); }
   int  newUndoAction( const Akonadi::Collection& srcFolder, const Akonadi::Collection & destFolder );
-  void addMsgToAction( int undoId, ulong serNum );
+  void addMsgToAction( int undoId, const Akonadi::Item &item );
   void undo();
 
-  void pushSingleAction(ulong serNum, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
+  void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
   void msgDestroyed( const Akonadi::Item &msg);
   void folderDestroyed( const Akonadi::Collection &folder);
 protected:

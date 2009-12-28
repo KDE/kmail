@@ -22,6 +22,9 @@
 #include "undostack.h"
 
 #include "kmmainwin.h"
+#include "kmkernel.h"
+
+#include <akonadi/itemmovejob.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -64,7 +67,7 @@ int UndoStack::newUndoAction( const Akonadi::Collection &srcFolder, const Akonad
   return info->id;
 }
 
-void UndoStack::addMsgToAction( int undoId, ulong serNum )
+void UndoStack::addMsgToAction( int undoId, const Akonadi::Item &item )
 {
   if ( !mCachedInfo || mCachedInfo->id != undoId ) {
     QList<UndoInfo*>::const_iterator itr = mStack.constBegin();
@@ -78,35 +81,17 @@ void UndoStack::addMsgToAction( int undoId, ulong serNum )
   }
 
   Q_ASSERT( mCachedInfo );
-  mCachedInfo->serNums.append( serNum );
+  mCachedInfo->items.append( item );
 }
 
 void UndoStack::undo()
 {
-#if 0 //TODO port to akonadi
-  KMMessage *msg;
-  ulong serNum;
-  int idx = -1;
-  KMFolder *curFolder;
   if ( mStack.count() > 0 )
   {
     UndoInfo *info = mStack.takeFirst();
     emit undoStackChanged();
-    QList<ulong>::iterator itr;
-    KMFolderOpener openDestFolder( info->destFolder, "undodest" );
-    for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
-      serNum = *itr;
-      KMMsgDict::instance()->getLocation(serNum, &curFolder, &idx);
-      if ( idx == -1 || curFolder != info->destFolder ) {
-        kDebug()<<"Serious undo error!";
-        delete info;
-        return;
-      }
-      msg = curFolder->getMsg( idx );
-      info->srcFolder->moveMsg( msg );
-      if ( info->srcFolder->count() > 1 )
-        info->srcFolder->unGetMsg( info->srcFolder->count() - 1 );
-    }
+    Akonadi::ItemMoveJob( info->items, info->srcFolder, this );
+    // TODO: handle job error?
     delete info;
   }
   else
@@ -114,16 +99,13 @@ void UndoStack::undo()
     // Sorry.. stack is empty..
     KMessageBox::sorry( kmkernel->mainWin(), i18n("There is nothing to undo."));
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void
-UndoStack::pushSingleAction(ulong serNum, const Akonadi::Collection &folder, const Akonadi::Collection &destFolder)
+UndoStack::pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &folder, const Akonadi::Collection &destFolder)
 {
   int id = newUndoAction( folder, destFolder );
-  addMsgToAction( id, serNum );
+  addMsgToAction( id, item );
 }
 
 void
