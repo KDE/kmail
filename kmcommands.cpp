@@ -1871,7 +1871,7 @@ void KMMetaFilterActionCommand::start()
 
 FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
                                               KMFolder *folder )
-    : mMainWidget( mainwidget ), mFolder( folder ), mAction( 0 )
+    : QObject( mainwidget ), mMainWidget( mainwidget ), mFolder( folder ), mAction( 0 )
 {
 }
 
