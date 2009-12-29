@@ -830,7 +830,7 @@ namespace KMail {
 
       // attachments
       headerStr +=
-        "<div class=\"noprint\" style=\"zindex=-1; position: absolute; top: 60px; right: 20px;\">"
+        "<div class=\"noprint\" style=\"position: absolute; top: 60px; right: 20px;\">"
         "<div id=\"attachmentInjectionPoint\"></div>"
         "</div>\n";
     }
