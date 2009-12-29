@@ -35,13 +35,19 @@
 **   your version.
 **
 *******************************************************************************/
-
-
 #include "util.h"
+
 #include "kmmessage.h"
-#include <stdlib.h>
+#include "iconnamecache.h"
+
 #include <mimelib/string.h>
+
 #include <kpimutils/email.h>
+
+#include <KDebug>
+#include <KMimeType>
+
+#include <stdlib.h>
 
 size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 {
@@ -149,6 +155,31 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
   return true;
 }
 #endif
+
+QString KMail::Util::fileNameForMimetype( const QString &mimeType, int iconSize,
+                                          const QString &fallbackFileName1,
+                                          const QString &fallbackFileName2 )
+{
+  QString fileName;
+  KMimeType::Ptr mime = KMimeType::mimeType( mimeType, KMimeType::ResolveAliases );
+  if ( mime ) {
+    fileName = mime->iconName();
+  } else {
+    kWarning(5006) << "unknown mimetype" << mimeType;
+  }
+
+  if ( fileName.isEmpty() )
+  {
+    fileName = fallbackFileName1;
+    if ( fileName.isEmpty() )
+      fileName = fallbackFileName2;
+    if ( !fileName.isEmpty() ) {
+      fileName = KMimeType::findByPath( "/tmp/" + fileName, 0, true )->iconName();
+    }
+  }
+
+  return KMail::IconNameCache::instance()->iconPath( fileName, iconSize );
+}
 
 #ifdef Q_WS_MACX
 #include <QDesktopServices>
