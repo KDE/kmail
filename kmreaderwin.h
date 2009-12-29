@@ -27,6 +27,7 @@
 #include <QEvent>
 #include <QList>
 #include <QResizeEvent>
+#include <Q3ListViewItem>
 #include <kurl.h>
 #include <kservice.h>
 #include <messagestatus.h>
@@ -473,6 +474,12 @@ protected slots:
       In the very end it deletes the KMReaderWin window that was created
       for the purpose of rendering. */
   void slotPrintMsg();
+
+  /** Helper functions used to change message selection in the message list after deleting
+   *  an attachment, see slotDeleteAttachment()
+   */
+  void disconnectMsgAdded();
+  void msgAdded( Q3ListViewItem *item );
 
 protected:
   /** reimplemented in order to update the frame width in case of a changed

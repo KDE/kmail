@@ -75,7 +75,9 @@ using KMail::ISubject;
 using KMail::URLHandlerManager;
 #include "interfaces/observable.h"
 #include "util.h"
+#include "kmheaders.h"
 #include <kicon.h>
+
 #include "broadcaststatus.h"
 
 #include <kmime/kmime_mdn.h>
@@ -2734,7 +2736,19 @@ void KMReaderWin::slotDeleteAttachment(partNode * node)
   if ( msg && nodeId != -1 ) {
     KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( nodeId, msg, this );
     command->start();
-    connect( command, SIGNAL(completed( KMCommand * ) ), this, SLOT( updateReaderWin()  ) );
+    connect( command, SIGNAL( completed( KMCommand * ) ),
+             this, SLOT( updateReaderWin() ) );
+    connect( command, SIGNAL( completed( KMCommand * ) ),
+             this, SLOT( disconnectMsgAdded() ) );
+
+    // ### HACK: Since the command will do delete + add, a new message will arrive. However, we don't
+    // want the selection to change. Therefore, as soon as a new message arrives, select it, and then
+    // disconnect.
+    // Of course the are races, another message can arrive before ours, but we take the risk.
+    // And it won't work properly with multiple main windows
+    const KMHeaders * const headers = KMKernel::self()->getKMMainWidget()->headers();
+    connect( headers, SIGNAL( msgAddedToListView( Q3ListViewItem* ) ),
+             this, SLOT( msgAdded( Q3ListViewItem* ) ) );
   }
 
   // If we are operating on a copy of parts of the message, make sure to update the copy as well.
@@ -2742,6 +2756,25 @@ void KMReaderWin::slotDeleteAttachment(partNode * node)
     message()->deleteBodyPart( node->nodeId() );
     update( true );
   }
+}
+
+void KMReaderWin::msgAdded( Q3ListViewItem *item )
+{
+  // A new message was added to the message list view. Select it.
+  // This is only connected right after we started a attachment delete command, so we expect a new
+  // message. Disconnect right afterwards, we only want this particular message to be selected.
+  disconnectMsgAdded();
+  KMHeaders * const headers = KMKernel::self()->getKMMainWidget()->headers();
+  headers->setCurrentItem( item );
+  headers->clearSelection();
+  headers->setSelected( item, true );
+}
+
+void KMReaderWin::disconnectMsgAdded()
+{
+  const KMHeaders *const headers = KMKernel::self()->getKMMainWidget()->headers();
+  disconnect( headers, SIGNAL( msgAddedToListView( Q3ListViewItem* ) ),
+              this, SLOT( msgAdded( Q3ListViewItem* ) ) );
 }
 
 void KMReaderWin::slotEditAttachment(partNode * node)
