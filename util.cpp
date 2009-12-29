@@ -154,7 +154,6 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
   }
   return true;
 }
-#endif
 
 QString KMail::Util::fileNameForMimetype( const QString &mimeType, int iconSize,
                                           const QString &fallbackFileName1,
@@ -180,6 +179,7 @@ QString KMail::Util::fileNameForMimetype( const QString &mimeType, int iconSize,
 
   return KMail::IconNameCache::instance()->iconPath( fileName, iconSize );
 }
+#endif
 
 #ifdef Q_WS_MACX
 #include <QDesktopServices>
