@@ -912,7 +912,7 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
 
   // No selection text, therefore we need to parse the object tree ourselves to get
   partNode *root = parsedObjectTree();
-  return mOrigMsg->asPlainTextFromObjectTree( root, true, mAllowDecryption );
+  return mOrigMsg->asPlainTextFromObjectTree( root, mSmartQuote, mAllowDecryption );
 }
 
 partNode* TemplateParser::parsedObjectTree()
