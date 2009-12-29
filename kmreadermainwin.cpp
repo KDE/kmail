@@ -41,6 +41,7 @@
 #include <KFontAction>
 #include <KFontSizeAction>
 #include <kstatusbar.h>
+#include <kwebview.h>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
@@ -110,11 +111,8 @@ void KMReaderMainWin::initKMReaderMainWin()
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
-  kWarning() << "WEBKIT: Disabled code in " << Q_FUNC_INFO;
-#if 0
-  connect( mReaderWin->htmlPart(), SIGNAL( onURL( const QString& ) ),
-           statusBar(), SLOT( showMessage(const QString& ) ) );
-#endif
+  connect( mReaderWin->htmlPart()->page(), SIGNAL( linkHovered( const QString &, const QString &, const QString & ) ),
+           statusBar(), SLOT( slotshowMessage(const QString & )));
 }
 
 //-----------------------------------------------------------------------------
