@@ -777,9 +777,10 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
   }
   mUserWhoField = whoField;
 
-  if (writeConfig)
+  if ( writeConfig ) {
     mStorage->writeConfig();
-  emit viewConfigChanged();
+    emit viewConfigChanged();
+  }
 }
 
 void KMFolder::correctUnreadMsgsCount()
