@@ -454,6 +454,12 @@ protected slots:
   void slotDelayedResize();
   void slotHandleAttachment( int );
 
+  /** Helper functions used to change message selection in the message list after deleting
+   *  an attachment, see slotDeleteAttachment()
+   */
+  void disconnectMsgAdded();
+  void msgAdded( QListViewItem *item );
+
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
