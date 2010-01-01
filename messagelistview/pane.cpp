@@ -25,6 +25,7 @@
 #include <messagelist/core/view.h>
 #include <messagelist/core/manager.h>
 #include <messagelist/core/settings.h>
+#include <messagelist/core/model.h>
 
 #include <KLineEdit>
 #include <KLocale>
@@ -670,6 +671,9 @@ void Pane::setCurrentThreadExpanded( bool expand )
   if ( !w )
     return;
 
+  if ( w->view()->model()->isLoading() )
+    return;
+
   return w->view()->setCurrentThreadExpanded( expand );
 }
 
@@ -677,6 +681,9 @@ void Pane::setAllThreadsExpanded( bool expand )
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
+    return;
+
+  if ( w->view()->model()->isLoading() )
     return;
 
   return w->view()->setAllThreadsExpanded( expand );
@@ -694,6 +701,11 @@ bool Pane::selectNextMessageItem(
   if ( !w )
     return false;
 
+  // Ignore this request for now, but pretent it was successful, otherwise the caller might try
+  // things like selecting the next folder
+  if ( w->view()->model()->isLoading() )
+    return true;
+
   return w->view()->selectNextMessageItem( messageTypeFilter, existingSelectionBehaviour, centerItem, loop );
 }
 
@@ -702,6 +714,9 @@ bool Pane::selectFirstMessage( Core::MessageTypeFilter messageTypeFilter, bool c
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
+
+  if ( w->view()->model()->isLoading() )
+    return true;
 
   return w->view()->selectFirstMessageItem( messageTypeFilter, centerItem );
 }
@@ -717,6 +732,9 @@ bool Pane::selectPreviousMessageItem(
   if ( !w )
     return false;
 
+  if ( w->view()->model()->isLoading() )
+    return true;
+
   return w->view()->selectPreviousMessageItem( messageTypeFilter, existingSelectionBehaviour, centerItem, loop );
 }
 
@@ -725,6 +743,9 @@ bool Pane::focusNextMessageItem( Core::MessageTypeFilter messageTypeFilter, bool
   Widget * w = currentMessageListViewWidget();
   if ( !w )
     return false;
+
+  if ( w->view()->model()->isLoading() )
+    return true;
 
   return w->view()->focusNextMessageItem( messageTypeFilter, centerItem, loop );
 }
@@ -735,6 +756,9 @@ bool Pane::focusPreviousMessageItem( Core::MessageTypeFilter messageTypeFilter, 
   if ( !w )
     return false;
 
+  if ( w->view()->model()->isLoading() )
+    return true;
+
   return w->view()->focusPreviousMessageItem( messageTypeFilter, centerItem, loop );
 }
 
@@ -744,6 +768,9 @@ void Pane::selectFocusedMessageItem( bool centerItem )
   if ( !w )
     return;
 
+  if ( w->view()->model()->isLoading() )
+    return;
+
   w->view()->selectFocusedMessageItem( centerItem );
 }
 
@@ -751,6 +778,9 @@ void Pane::selectAll()
 {
   Widget * w = currentMessageListViewWidget();
   if ( !w )
+    return;
+
+  if ( w->view()->model()->isLoading() )
     return;
 
   w->view()->setAllGroupsExpanded( true );
