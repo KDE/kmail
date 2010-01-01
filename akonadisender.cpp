@@ -154,7 +154,7 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
 
   // Watch progress of the MDA.
   mProgressItem = ProgressManager::createProgressItem( 0,
-      DispatcherInterface::self()->dispatcherInstance(),
+      DispatcherInterface().dispatcherInstance(),
       "Sender",
       i18n( "Sending messages" ),
       i18n( "Initiating sending process..." ),
@@ -195,10 +195,14 @@ void AkonadiSender::queueMessage( const KMime::Message::Ptr &message )
 
   MessageQueueJob *qjob = new MessageQueueJob( this );
   if ( message->headerByType( "X-KMail-Fcc" ) ) {
-    qjob->setSentBehaviour( SentBehaviourAttribute::MoveToCollection );
-    qjob->setMoveToCollection(message->headerByType( "X-KMail-Fcc" )->asUnicodeString().toInt() );
+    qjob->sentBehaviourAttribute().setSentBehaviour(
+                                 SentBehaviourAttribute::MoveToCollection );
+    const int sentCollectionId = message->headerByType( "X-KMail-Fcc" )->asUnicodeString().toInt();
+    qjob->sentBehaviourAttribute().setMoveToCollection(
+                                 Akonadi::Collection( sentCollectionId ) );
   } else {
-    qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
+    qjob->sentBehaviourAttribute().setSentBehaviour(
+           MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
   }
   qjob->setMessage( KMime::Message::Ptr(messagePtr) );
 
@@ -216,16 +220,16 @@ void AkonadiSender::queueMessage( const KMime::Message::Ptr &message )
   Transport *transport = TransportManager::self()->transportByName( transportName );
   Q_ASSERT( transport );
   kDebug() << "Using transport (" << transportName << "," << transport->id() << ")";
-  qjob->setTransportId( transport->id() );
+  qjob->transportAttribute().setTransportId( transport->id() );
 
   // Get addresses.
   QStringList to, cc, bcc;
   QString from;
   extractSenderToCCAndBcc( message, from, to, cc, bcc );
-  qjob->setFrom( from );
-  qjob->setTo( to );
-  qjob->setCc( cc );
-  qjob->setBcc( bcc );
+  qjob->addressAttribute().setFrom( from );
+  qjob->addressAttribute().setTo( to );
+  qjob->addressAttribute().setCc( cc );
+  qjob->addressAttribute().setBcc( bcc );
 #if 0
   msg->setTransferInProgress( false ); // we are done with the KMMessage
 #else

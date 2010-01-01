@@ -2387,13 +2387,16 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
   const Message::InfoPart *infoPart = composer->infoPart();
   MailTransport::MessageQueueJob *qjob = new MailTransport::MessageQueueJob( this );
   qjob->setMessage( message );
-  qjob->setTransportId( infoPart->transportId() );
+  qjob->transportAttribute().setTransportId( infoPart->transportId() );
   // TODO dispatch mode.
   if ( !infoPart->fcc().isEmpty() ) {
-    qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToCollection );
-    qjob->setMoveToCollection(infoPart->fcc().toInt() );
+    qjob->sentBehaviourAttribute().setSentBehaviour(
+                      MailTransport::SentBehaviourAttribute::MoveToCollection );
+    const Akonadi::Collection sentCollection( infoPart->fcc().toInt() );
+    qjob->sentBehaviourAttribute().setMoveToCollection( sentCollection );
   } else {
-    qjob->setSentBehaviour( MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
+    qjob->sentBehaviourAttribute().setSentBehaviour(
+           MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
   }
 
   fillQueueJobHeaders( qjob, message, infoPart );
@@ -2407,7 +2410,7 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
 
 void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message, const Message::InfoPart* infoPart )
 {
-  qjob->setFrom( infoPart->from() );
+  qjob->addressAttribute().setFrom( infoPart->from() );
 
   if( mEncryptAction->isChecked() && !infoPart->bcc().isEmpty() ) // have to deal with multiple message contents
   {
@@ -2418,11 +2421,11 @@ void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KM
         bcc << QString::fromUtf8( address );
       }
       kDebug() << "sending with-bcc encr mail to a secondary recipient:" << bcc;
-      qjob->setTo( bcc );
+      qjob->addressAttribute().setTo( bcc );
     } else {
       // the main mail in the encrypted set, just don't set the bccs here
-      qjob->setTo( infoPart->to() );
-      qjob->setCc( infoPart->cc() );
+      qjob->addressAttribute().setTo( infoPart->to() );
+      qjob->addressAttribute().setCc( infoPart->cc() );
 
       kDebug() << "sending with-bcc encrypted mail to orig recipients:" <<infoPart->to() << infoPart->cc();
 
@@ -2430,9 +2433,9 @@ void KMComposeWin::fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KM
   } else {
     // continue as normal
     kDebug() << "no bccs";
-    qjob->setTo( infoPart->to() );
-    qjob->setCc( infoPart->cc() );
-    qjob->setBcc( infoPart->bcc() );
+    qjob->addressAttribute().setTo( infoPart->to() );
+    qjob->addressAttribute().setCc( infoPart->cc() );
+    qjob->addressAttribute().setBcc( infoPart->bcc() );
   }
 }
 
