@@ -906,7 +906,7 @@ QString TemplateParser::getSignature() const
   if ( signature.type() == KPIMIdentities::Signature::Inlined &&
        signature.isInlinedHtml() ) {
     // templates don't support HTML; convert to plain text
-    return signature.plainText();
+    return signature.toPlainText();
   }
   else {
     return signature.rawText();
