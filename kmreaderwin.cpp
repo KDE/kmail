@@ -1107,7 +1107,7 @@ void KMReaderWin::initHtmlWidget(void)
   if ( !metaTypesRegistered ) {
     qRegisterMetaType<KParts::OpenUrlArguments>( "KParts::OpenUrlArguments" );
     qRegisterMetaType<KParts::BrowserArguments>( "KParts::BrowserArguments" );
-    qRegisterMetaType<KParts::BrowserArguments>( "KParts::WindowArgs" );
+    qRegisterMetaType<KParts::WindowArgs>( "KParts::WindowArgs" );
     metaTypesRegistered = true;
   }
 
