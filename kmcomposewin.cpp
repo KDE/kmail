@@ -3842,18 +3842,16 @@ void KMComposeWin::insertSignatureHelper( KPIMIdentities::Signature::Placement p
   KPIMIdentities::Identity &ident = const_cast<KPIMIdentities::Identity&>(
       kmkernel->identityManager()->identityForUoidOrDefault(
                                 mIdentity->currentIdentity() ) );
-  KPIMIdentities::Signature signature = ident.signature();
+  const KPIMIdentities::Signature signature = ident.signature();
 
   if ( signature.isInlinedHtml() &&
        signature.type() == KPIMIdentities::Signature::Inlined ) {
-    kDebug() << "HTML signature, turning editor into HTML mode";
     enableHtml();
-    signature.insertIntoTextEdit( mEditor, placement,
-                               GlobalSettings::self()->dashDashSignature(), true );
   }
-  else
-    signature.insertIntoTextEdit( mEditor, placement,
-                               GlobalSettings::self()->dashDashSignature(), true );
+  KPIMIdentities::Signature::AddedText addedText = KPIMIdentities::Signature::AddNewLines;
+    if ( GlobalSettings::self()->dashDashSignature() )
+      addedText |= KPIMIdentities::Signature::AddSeparator;
+  signature.insertIntoTextEdit( placement, addedText, mEditor );
 }
 
 //-----------------------------------------------------------------------------
@@ -4060,13 +4058,16 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 
   if ( msgCleared || oldSig.rawText().isEmpty() || mEditor->toPlainText().isEmpty() ) {
     // Just append the signature if there is no old signature
-    if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
+    if ( GlobalSettings::self()->autoTextSignature() == "auto" ) {
+      KPIMIdentities::Signature::AddedText addedText = KPIMIdentities::Signature::AddNewLines;
+      if ( GlobalSettings::self()->dashDashSignature() )
+        addedText |= KPIMIdentities::Signature::AddSeparator;
       if ( GlobalSettings::self()->prependSignature() )
-        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::Start,
-                                   GlobalSettings::self()->dashDashSignature(), true );
+        newSig.insertIntoTextEdit( KPIMIdentities::Signature::Start,
+                                   addedText, mEditor );
       else
-        newSig.insertIntoTextEdit( mEditor, KPIMIdentities::Signature::End,
-                                   GlobalSettings::self()->dashDashSignature(), true );
+        newSig.insertIntoTextEdit( KPIMIdentities::Signature::End,
+                                   addedText, mEditor );
     }
   } else {
     mEditor->replaceSignature( oldSig, newSig );
