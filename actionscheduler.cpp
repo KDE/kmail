@@ -253,21 +253,21 @@ void ActionScheduler::finish()
       processMessageTimer->start( 0 );
       return;
     }
-#if 0 //TODO port to akonadi
     // If an error has occurred and a permanent source folder has
     // been set then move all the messages left in the source folder
     // to the inbox. If no permanent source folder has been set
     // then abandon filtering of queued messages.
-    if (!mDeleteSrcFolder && !mDestFolder.isNull() ) {
+    if (!mDeleteSrcFolder && mDestFolder.isValid() ) {
+#if 0 //TODO port to akonadi
       while ( mSrcFolder->count() > 0 ) {
         KMime::Message *msg = mSrcFolder->getMsg( 0 );
         mDestFolder->moveMsg( msg );
       }
-    }
-
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+    }
+
     mItems.clear(); //abandon
     mFetchItems.clear(); //abandon
 
@@ -514,59 +514,59 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
 
 void ActionScheduler::moveMessage()
 {
-#if 0 //TODO port to akonadi
-  KMime::Content *msgBase = messageBase( *mMessageIt );
-  if (!msgBase)
+  if ( mMessageIt->hasPayload<KMime::Message::Ptr>() )
     return;
+  const KMime::Message::Ptr msg = mMessageIt->payload<KMime::Message::Ptr>();
 
-  MessageProperty::setTransferInProgress( *mMessageIt, false, true );
-  KMime::Message *msg = message( *mMessageIt );
-  KMFolder *folder = MessageProperty::filterFolder( *mMessageIt );
+  Akonadi::Collection folder = MessageProperty::filterFolder( *mMessageIt );
+#if 0 // TODO port to Akonadi
   QString serNumS = msg->headerField( "X-KMail-Filtered" );
   if (!serNumS.isEmpty())
     mOriginalSerNum = serNumS.toUInt();
   else
     mOriginalSerNum = 0;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   MessageProperty::setFilterHandler( *mMessageIt, 0 );
   MessageProperty::setFiltering( *mMessageIt, false );
 
-  mSerNums.removeAll( *mMessageIt );
-
-  KMime::Message *orgMsg = 0;
+  KMime::Message::Ptr orgMsg;
   ReturnCode mOldReturnCode = mResult;
-  if (mOriginalSerNum)
-    orgMsg = message( mOriginalSerNum );
+  if ( mOriginalItem.hasPayload<KMime::Message::Ptr>() )
+    orgMsg = mOriginalItem.payload<KMime::Message::Ptr>();
   mResult = mOldReturnCode; // ignore errors in deleting original message
   if (!orgMsg || !orgMsg->parent()) {
     // Original message is gone, no point filtering it anymore
+#if 0 // TODO port to Akonadi
     mSrcFolder->removeMsg( mSrcFolder->find( msg ) );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+
     kDebug() << "The original serial number is missing."
                  << "Cannot complete the filtering.";
     mExecutingLock = false;
     processMessageTimer->start( 0 );
     return;
   } else {
-    if (!folder) // no filter folder specified leave in current place
-      folder = orgMsg->parent();
+    if (!folder.isValid()) // no filter folder specified leave in current place
+      folder = mOriginalItem.parentCollection();
   }
 
-  mIgnoredSerNums.append( msg->getMsgSerNum() );
-  assert( msg->parent() == mSrcFolder.operator->() );
+  assert( mMessageIt->parentCollection() == mSrcFolder );
+#if 0 // TODO port to Akonadi
   mSrcFolder->take( mSrcFolder->find( msg ) );
   mSrcFolder->addMsg( msg );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 
-  if (msg && folder && kmkernel->folderIsTrash( folder ))
+  if ( mMessageIt->isValid() && folder.isValid() && kmkernel->folderIsTrash( folder ))
     KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
 
-  // If the target folder is an online IMAP folder, make sure to keep the same
-  // serial number (otherwise the move commands thinks the message wasn't moved
-  // correctly, which would trigger the error case in moveMessageFinished().
-  Q_ASSERT( folder );
-  if ( msg && folder && folder->storage() && dynamic_cast<KMFolderImap*>( folder->storage() ) )
-    MessageProperty::setKeepSerialNumber( msg->getMsgSerNum(), true );
-
   timeOutTime = QTime::currentTime();
-  KMCommand *cmd = new KMMoveCommand( folder, msg );
+  KMCommand *cmd = new KMMoveCommand( folder, *mMessageIt );
   connect( cmd, SIGNAL( completed( KMCommand * ) ),
            this, SLOT( moveMessageFinished( KMCommand * ) ) );
   cmd->start();
@@ -574,9 +574,6 @@ void ActionScheduler::moveMessage()
   // and move onto the next message
   lastCommand = cmd;
   timeOutTimer->start( 60 * 1000 );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void ActionScheduler::moveMessageFinished( KMCommand *command )
