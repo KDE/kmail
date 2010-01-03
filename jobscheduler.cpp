@@ -41,12 +41,11 @@ ScheduledTask::~ScheduledTask()
 {
 }
 
-JobScheduler::JobScheduler( QObject* parent, const char* name )
+JobScheduler::JobScheduler( QObject* parent )
   : QObject( parent ), mTimer( this ),
     mPendingImmediateTasks( 0 ),
     mCurrentTask( 0 ), mCurrentJob( 0 )
 {
-  setObjectName( name );
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotRunNextJob() ) );
   // No need to start the internal timer yet, we wait for a task to be scheduled
 }
@@ -63,11 +62,10 @@ JobScheduler::~JobScheduler()
 
 void JobScheduler::registerTask( ScheduledTask* task )
 {
-#if 0
   bool immediate = task->isImmediate();
   int typeId = task->taskTypeId();
   if ( typeId ) {
-    KMFolder* folder = task->folder();
+    const Akonadi::Collection folder = task->folder();
     // Search for an identical task already scheduled
     for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       if ( (*it)->taskTypeId() == typeId && (*it)->folder() == folder ) {
@@ -90,7 +88,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
   else {
 #ifdef DEBUG_SCHEDULER
     kDebug() << "JobScheduler: adding task" << task << "(type" << task->taskTypeId()
-                  << ") for folder" << task->folder() << task->folder()->label();
+                  << ") for folder" << task->folder() << task->folder().name();
 #endif
     mTaskList.append( task );
     if ( immediate )
@@ -98,7 +96,6 @@ void JobScheduler::registerTask( ScheduledTask* task )
     if ( !mCurrentTask && !mTimer.isActive() )
       restartTimer();
   }
-#endif
 }
 
 void JobScheduler::removeTask( TaskList::Iterator& it )
@@ -110,11 +107,10 @@ void JobScheduler::removeTask( TaskList::Iterator& it )
 
 void JobScheduler::notifyOpeningFolder( const Akonadi::Collection& folder )
 {
-#if 0
   if ( mCurrentTask && mCurrentTask->folder() == folder ) {
     if ( mCurrentJob->isOpeningFolder() ) { // set when starting a job for this folder
 #ifdef DEBUG_SCHEDULER
-      kDebug() << "JobScheduler: got the opening-notification for" << folder->label() << "as expected.";
+      kDebug() << "JobScheduler: got the opening-notification for" << folder.name() << "as expected.";
 #endif
     } else {
       // Jobs scheduled from here should always be cancellable.
@@ -124,7 +120,6 @@ void JobScheduler::notifyOpeningFolder( const Akonadi::Collection& folder )
         interruptCurrentTask();
     }
   }
-#endif
 }
 
 void JobScheduler::interruptCurrentTask()
@@ -141,7 +136,6 @@ void JobScheduler::interruptCurrentTask()
 
 void JobScheduler::slotRunNextJob()
 {
-#if 0	
   while ( !mCurrentJob ) {
 #ifdef DEBUG_SCHEDULER
     kDebug() << "JobScheduler: slotRunNextJob";
@@ -151,8 +145,8 @@ void JobScheduler::slotRunNextJob()
     // Find a task suitable for being run
     for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       // Remove if folder died
-      KMFolder* folder = (*it)->folder();
-      if ( folder == 0 ) {
+      const Akonadi::Collection folder = (*it)->folder();
+      if ( !folder.isValid() ) {
 #ifdef DEBUG_SCHEDULER
         kDebug() << "  folder for task" << (*it) << "was deleted";
 #endif
@@ -163,23 +157,12 @@ void JobScheduler::slotRunNextJob()
           mTimer.stop();
         return;
       }
-      // The condition is that the folder must be unused (not open)
-      // But first we ask search folders to release their access to it
-#if 0
-      kmkernel->searchFolderMgr()->tryReleasingFolder( folder );
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 #ifdef DEBUG_SCHEDULER
-      kDebug() << "  looking at folder" << folder->label()
-                    << folder->location()
-                    << "isOpened=" << (*it)->folder()->isOpened();
+      kDebug() << "  looking at folder" << folder.name();
 #endif
-      if ( !folder->isOpened() ) {
-        task = *it;
-        removeTask( it );
-        break;
-      }
+      task = *it;
+      removeTask( it );
+      break;
     }
 
     if ( !task ) // found nothing to run, i.e. folder was opened
@@ -187,7 +170,6 @@ void JobScheduler::slotRunNextJob()
 
     runTaskNow( task );
   } // If nothing to do for that task, loop and find another one to run
-#endif
 }
 
 void JobScheduler::restartTimer()
