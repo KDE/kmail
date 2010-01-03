@@ -55,7 +55,7 @@ class ActionScheduler;
    These properties do not need to be stored persistantly on disk but
    rather only are required while KMail is running.
 
-   Furthermore some properties, namely complete, transferInProgress, and
+   Furthermore some properties, namely complete and
    serialCache should only exist during the lifetime of a particular
    KMMsgBase based instance.
  */
@@ -76,7 +76,7 @@ public:
   static ActionScheduler* filterHandler( const Akonadi::Item &item );
   static void setFilterHandler( const Akonadi::Item &item, ActionScheduler* filterHandler );
 
-  /** Some properties, namely complete, transferInProgress, and
+  /** Some properties, namely complete and
       serialCache must be forgotten when a message class instance is
       destructed or assigned a new value */
   static void forget( KMime::Content* );

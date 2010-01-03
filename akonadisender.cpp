@@ -183,11 +183,6 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
 void AkonadiSender::queueMessage( const KMime::Message::Ptr &message )
 {
   Q_ASSERT( message );
-#if 0 //TODO port to akonadi
-  msg->setTransferInProgress( true );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   // Translate message to KMime.
   KMime::Message::Ptr messagePtr = KMime::Message::Ptr( new KMime::Message );
   messagePtr->setContent( MessageHelper::asSendableString( message ) );
@@ -230,11 +225,6 @@ void AkonadiSender::queueMessage( const KMime::Message::Ptr &message )
   qjob->addressAttribute().setTo( to );
   qjob->addressAttribute().setCc( cc );
   qjob->addressAttribute().setBcc( bcc );
-#if 0
-  msg->setTransferInProgress( false ); // we are done with the KMMessage
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
   // Default sent-mail collection for now.
   // Send immediately (queuing is done by KMail's outbox for now...)
