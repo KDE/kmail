@@ -694,7 +694,7 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
 
 public:
   KMMoveCommand( const Akonadi::Collection& destFolder, const QList<Akonadi::Item> &msgList, MessageList::Core::MessageItemSetReference ref );
-  KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg, MessageList::Core::MessageItemSetReference ref );
+  KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg, MessageList::Core::MessageItemSetReference ref = MessageList::Core::MessageItemSetReference() );
   Akonadi::Collection destFolder() const { return mDestFolder; }
 
   MessageList::Core::MessageItemSetReference refSet() const { return mRef; }

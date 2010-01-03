@@ -117,11 +117,6 @@ public slots:
 private slots:
   void finish();
 
-  void folderClosedOrExpunged();
-
-  int tempOpenFolder(const Akonadi::Collection&);
-  void tempCloseFolders();
-
   //Fetching slots
   void fetchMessage();
   void messageFetched( const Akonadi::Item& item );
@@ -192,7 +187,7 @@ private:
   Akonadi::Item mOriginalItem;
   bool mDeleteSrcFolder;
   ReturnCode mResult;
-  QTimer *finishTimer, *fetchMessageTimer, *tempCloseFoldersTimer;
+  QTimer *finishTimer, *fetchMessageTimer;
   QTimer *processMessageTimer, *filterMessageTimer;
   QTimer *timeOutTimer;
   QTime timeOutTime;

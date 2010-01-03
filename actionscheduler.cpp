@@ -82,9 +82,6 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   fetchMessageTimer = new QTimer( this );
   fetchMessageTimer->setSingleShot( true );
   connect( fetchMessageTimer, SIGNAL(timeout()), this, SLOT(fetchMessage()));
-  tempCloseFoldersTimer = new QTimer( this );
-  tempCloseFoldersTimer->setSingleShot( true );
-  connect( tempCloseFoldersTimer, SIGNAL(timeout()), this, SLOT(tempCloseFolders()));
   processMessageTimer = new QTimer( this );
   processMessageTimer->setSingleShot( true );
   connect( processMessageTimer, SIGNAL(timeout()), this, SLOT(processMessage()));
@@ -124,13 +121,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
 ActionScheduler::~ActionScheduler()
 {
   schedulerList->removeAll( this );
-  tempCloseFolders();
 #if 0
-  disconnect( mSrcFolder, SIGNAL(closed()),
-              this, SLOT(folderClosedOrExpunged()) );
-  disconnect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
-              this, SLOT(folderClosedOrExpunged()) );
-  mSrcFolder->close( "actionschedsrc" );
   if ( mDeleteSrcFolder ) {
     tempFolderMgr->remove( mSrcFolder );
   }
@@ -162,32 +153,18 @@ void ActionScheduler::setIgnoreFilterSet( bool ignore )
 void ActionScheduler::setSourceFolder( const Akonadi::Collection &srcFolder )
 {
 #if 0 //TODO port
-  srcFolder->open( "actionschedsrc" );
   if ( mSrcFolder ) {
     disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
 		this, SLOT(msgAdded(KMFolder*, quint32)) );
-    disconnect( mSrcFolder, SIGNAL(closed()),
-                this, SLOT(folderClosedOrExpunged()) );
-    disconnect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
-                this, SLOT(folderClosedOrExpunged()) );
-    mSrcFolder->close( "actionschedsrc" );
   }
   mSrcFolder = srcFolder;
-#if 0 //TODO port to akonadi
   int i = 0;
   for ( i = 0; i < mSrcFolder->count(); ++i ) {
     enqueue( mSrcFolder->getMsgBase( i )->getMsgSerNum() );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if ( mSrcFolder ) {
     connect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
              this, SLOT(msgAdded(KMFolder*, quint32)) );
-    connect( mSrcFolder, SIGNAL(closed()),
-             this, SLOT(folderClosedOrExpunged()) );
-    connect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
-             this, SLOT(folderClosedOrExpunged()) );
   }
 #endif
 }
@@ -205,51 +182,6 @@ void ActionScheduler::setFilterList( QList<KMFilter*> filters )
       mFiltersAreQueued = false;
       mQueuedFilters.clear();
   }
-}
-
-void ActionScheduler::folderClosedOrExpunged()
-{
-#if 0 //TODO port to akonadi
-  // mSrcFolder has been closed. reopen it.
-  if ( mSrcFolder )
-  {
-    mSrcFolder->open( "actionsched" );
-  }
-#endif
-}
-
-int ActionScheduler::tempOpenFolder( const Akonadi::Collection& )
-{
-#if 0 //TODO port to akonadi
-  assert( aFolder );
-  tempCloseFoldersTimer->stop();
-  if ( aFolder == mSrcFolder.operator->() ) {
-    return 0;
-  }
-
-  int rc = aFolder->open( "actionsched" );
-  if ( rc ) {
-    return rc;
-  }
-
-  mOpenFolders.append( aFolder );
-#endif
-  return 0;
-}
-
-void ActionScheduler::tempCloseFolders()
-{
-#if 0 //PORT to akonadi
-  // close temp opened folders
-  QList<QPointer<KMFolder> >::ConstIterator it;
-  for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it ) {
-    KMFolder *folder = *it;
-    if ( folder ) {
-      folder->close( "actionsched" );
-    }
-  }
-  mOpenFolders.clear();
-#endif
 }
 
 void ActionScheduler::execFilters( const Akonadi::Item & item )
@@ -331,10 +263,6 @@ void ActionScheduler::finish()
         KMime::Message *msg = mSrcFolder->getMsg( 0 );
         mDestFolder->moveMsg( msg );
       }
-
-      // Wait a little while before closing temp folders, just in case
-      // new messages arrive for filtering.
-      tempCloseFoldersTimer->start( 60*1000 );
     }
 
 #else
@@ -674,20 +602,19 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
                   "target folder failed. Message will stay unfiltered.";
     kWarning() << "This might be because you're using GMail, see bug 166150.";
   }
-  KMime::Message *msg = 0;
   ReturnCode mOldReturnCode = mResult;
   if ( mOriginalItem.isValid() ) {
     emit filtered( mOriginalItem );
   }
 
   mResult = mOldReturnCode; // ignore errors in deleting original message
-#if 0 //TODO port to akonadi
+
   // Delete the original message, because we have just moved the filtered message
   // from the temporary filtering folder to the target folder, and don't need the
   // old unfiltered message there anymore.
   KMCommand *cmd = 0;
-  if ( msg && msg->parent() && !movingFailed ) {
-    cmd = new KMMoveCommand( 0, msg );
+  if ( mOriginalItem.isValid() && !movingFailed ) {
+    cmd = new KMMoveCommand( Akonadi::Collection(), mOriginalItem );
   }
   // When the above deleting is finished, filtering that single mail is complete.
   // The next state is processMessage(), which will start filtering the next
@@ -710,9 +637,6 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   }
   else
     processMessageTimer->start( 0 );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void ActionScheduler::copyMessageFinished( KMCommand *command )
