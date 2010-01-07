@@ -2808,6 +2808,7 @@ void KMReaderWin::slotDeleteAttachment(partNode * node)
   if ( msg && nodeId != -1 ) {
     KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( nodeId, msg, this );
     command->start();
+    connect( command, SIGNAL(completed( KMCommand * ) ), this, SLOT( updateReaderWin()  ) );
   }
 
   // If we are operating on a copy of parts of the message, make sure to update the copy as well.
