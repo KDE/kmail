@@ -931,7 +931,7 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
   otp.setAllowAsync( false );
   otp.parseObjectTree( Akonadi::Item(), mOrigRoot );
 
-  return asPlainTextFromObjectTree( mOrigMsg, mOrigRoot, &otp, true, mAllowDecryption );
+  return asPlainTextFromObjectTree( mOrigMsg, mOrigRoot, &otp, mSmartQuote, mAllowDecryption );
 }
 
 KMime::Content* TemplateParser::parsedObjectTree()
