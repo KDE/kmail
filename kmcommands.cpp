@@ -797,7 +797,8 @@ static KUrl subjectToUrl( const QString &subject )
   if ( !fileName.endsWith( ".mbox" ) )
     fileName += ".mbox";
 
-  return KFileDialog::getSaveUrl( KUrl::fromPath( fileName ), "*.mbox\n*.*" );
+  const QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
+  return KFileDialog::getSaveUrl( KUrl::fromPath( fileName ), filter );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage *msg )
@@ -2652,6 +2653,11 @@ QString KMCommand::cleanFileName( const QString &name )
   // better not use a dir-delimiter in a filename
   fileName.replace( '/', '_' );
   fileName.replace( '\\', '_' );
+
+  // Avoid hidden files be replacing the first dot
+  if ( fileName.startsWith( "." ) ) {
+    fileName[0] = '_';
+  }
 
   return fileName;
 }
