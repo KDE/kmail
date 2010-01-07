@@ -30,6 +30,7 @@
 #include "partNode.h"
 #include "attachmentcollector.h"
 #include "objecttreeparser.h"
+#include "util.h"
 
 #include <mimelib/bodypart.h>
 
@@ -921,7 +922,7 @@ partNode* TemplateParser::parsedObjectTree()
     return mOrigRoot;
 
   mOrigRoot = partNode::fromMessage( mOrigMsg );
-  KMail::ObjectTreeParser otp; // all defaults are ok
+  ObjectTreeParser otp; // all defaults are ok
   otp.parseObjectTree( mOrigRoot );
   return mOrigRoot;
 }
@@ -939,7 +940,7 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
 
     // Get the attachments of the original mail
     partNode *root = parsedObjectTree();
-    KMail::AttachmentCollector ac;
+    AttachmentCollector ac;
     ac.collectAttachmentsFrom( root );
 
     // Now, delete the old content and set the new content, which
@@ -978,6 +979,7 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
       mMsg->addDwBodyPart( mMsg->createDWBodyPart( &textPart ) );
       mMsg->assembleIfNeeded();
 
+      int attachmentNumber = 1;
       foreach( const partNode *attachment, ac.attachments() ) {
 
         // When adding this body part, make sure to _not_ add the next bodypart
@@ -986,8 +988,27 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
         // Body::AddBodyPart is very misleading here...
         attachment->dwPart()->SetNext( 0 );
 
-        mMsg->addDwBodyPart( static_cast<DwBodyPart*>( attachment->dwPart()->Clone() ) );
+        DwBodyPart *cloned = static_cast<DwBodyPart*>( attachment->dwPart()->Clone() );
+
+        // If the content type has no name or filename parameter, add one, since otherwise the name
+        // would be empty in the attachment view of the composer, which looks confusing
+        if ( cloned->Headers().HasContentType() ) {
+          DwMediaType &ct = cloned->Headers().ContentType();
+
+          // Converting to a string here, since DwMediaType does not have a HasParameter() function
+          QString ctStr = ct.AsString().c_str();
+          if ( !ctStr.toLower().contains( "name=" ) && !ctStr.toLower().contains( "filename=" ) ) {
+            DwParameter *nameParameter = new DwParameter;
+            nameParameter->SetAttribute( "name" );
+            nameParameter->SetValue( Util::dwString( KMMsgBase::encodeRFC2231StringAutoDetectCharset(
+                       i18n( "Attachment %1", attachmentNumber ) ) ) );
+            ct.AddParameter( nameParameter );
+          }
+        }
+
+        mMsg->addDwBodyPart( cloned );
         mMsg->assembleIfNeeded();
+        attachmentNumber++;
       }
     }
   }
