@@ -40,7 +40,7 @@ static QString standardArchivePath( const QString &folderName )
 {
   return KGlobalSettings::documentPath() +
           i18n( "Start of the filename for a mail archive file" , "Archive" ) + "_" + folderName +
-           "_" + QDate::currentDate().toString( Qt::ISODate ) + ".zip";
+           "_" + QDate::currentDate().toString( Qt::ISODate ) + ".tar.bz2";
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
@@ -78,7 +78,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mFormatComboBox->insertItem( i18n( "Uncompressed Archive (.tar)" ) );
   mFormatComboBox->insertItem( i18n( "BZ2-Compressed Tar Archive (.tar.bz2)" ) );
   mFormatComboBox->insertItem( i18n( "GZ-Compressed Tar Archive (.tar.gz)" ) );
-  mFormatComboBox->setCurrentItem( 0 );
+  mFormatComboBox->setCurrentItem( 2 );
   connect( mFormatComboBox, SIGNAL(activated(int)),
            this, SLOT(slotFixFileExtension()) );
   mainLayout->addWidget( mFormatComboBox, row, 1 );
