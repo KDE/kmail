@@ -354,7 +354,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl
       } else {
         menu->addAction( mReaderWin->openAddrBookAction() );
       }
-      menu->addAction( mReaderWin->copyAction() );
+      menu->addAction( mReaderWin->copyURLAction() );
       copyAdded = true;
     } else {
       // popup on a not-mailto URL
