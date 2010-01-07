@@ -3138,7 +3138,10 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
         int rc = KMessageBox::questionYesNo( this,
                                              i18n("To: field is empty. "
                                                   "Send message anyway?"),
-                                             i18n("No To: specified") );
+                                             i18n("No To: specified"),
+                                             KStandardGuiItem::yes(),
+                                             KStandardGuiItem::no(),
+                                             ":kmail_no_to_field_specified" );
         if ( rc == KMessageBox::No ) {
           return;
         }
