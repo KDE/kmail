@@ -5,7 +5,7 @@
 #include "kmmessage.h"
 #include "globalsettings.h"
 #include "stringutil.h"
-#include "iconnamecache.h"
+#include "util.h"
 
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>
@@ -308,25 +308,7 @@ QString KMMessagePart::iconName( int size ) const
   QByteArray mimeType( mType + '/' + mSubtype );
   kAsciiToLower( mimeType.data() );
 
-  QString fileName;
-  KMimeType::Ptr mime = KMimeType::mimeType( mimeType, KMimeType::ResolveAliases );
-  if (mime) {
-    fileName = mime->iconName();
-  } else {
-    kWarning() <<"unknown mimetype" << mimeType;
-  }
-
-  if ( fileName.isEmpty() )
-  {
-    fileName = this->fileName();
-    if ( fileName.isEmpty() ) fileName = this->name();
-    if ( !fileName.isEmpty() )
-    {
-      fileName = KMimeType::findByPath( "/tmp/"+fileName, 0, true )->iconName();
-    }
-  }
-
-  return IconNameCache::instance()->iconPath( fileName, size );
+  return KMail::Util::fileNameForMimetype( mimeType, size, fileName(), name() );
 }
 
 //-----------------------------------------------------------------------------

@@ -35,20 +35,24 @@
 **   your version.
 **
 *******************************************************************************/
-
-
 #include "util.h"
+
+#include "kmmessage.h"
+#include "iconnamecache.h"
 #include "stringutil.h"
-#include <stdlib.h>
-#include <mimelib/string.h>
+
 #include <kpimutils/email.h>
+
+#include <KDebug>
+#include <KMimeType>
+
+#include <stdlib.h>
 
 void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
 {
   QObject::disconnect( src, signal, dst, slot );
   QObject::connect( src, signal, dst, slot );
 }
-
 
 size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 {
@@ -154,6 +158,31 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
     return false;
   }
   return true;
+}
+
+QString KMail::Util::fileNameForMimetype( const QString &mimeType, int iconSize,
+                                          const QString &fallbackFileName1,
+                                          const QString &fallbackFileName2 )
+{
+  QString fileName;
+  KMimeType::Ptr mime = KMimeType::mimeType( mimeType, KMimeType::ResolveAliases );
+  if ( mime ) {
+    fileName = mime->iconName();
+  } else {
+    kWarning() << "unknown mimetype" << mimeType;
+  }
+
+  if ( fileName.isEmpty() )
+  {
+    fileName = fallbackFileName1;
+    if ( fileName.isEmpty() )
+      fileName = fallbackFileName2;
+    if ( !fileName.isEmpty() ) {
+      fileName = KMimeType::findByPath( "/tmp/" + fileName, 0, true )->iconName();
+    }
+  }
+
+  return KMail::IconNameCache::instance()->iconPath( fileName, iconSize );
 }
 #endif
 
