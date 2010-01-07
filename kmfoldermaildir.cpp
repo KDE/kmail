@@ -353,7 +353,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     aMsg->removeHeaderField("Content-Type");        // the line above
 
 
-  const QString uidHeader = aMsg->headerField( "X-UID", KMMessage::NoEncoding );
+  const QString uidHeader = aMsg->headerField( "X-UID" );
   if ( !uidHeader.isEmpty() && stripUid )
     aMsg->removeHeaderField( "X-UID" );
 

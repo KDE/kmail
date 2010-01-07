@@ -511,14 +511,6 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray &aStr,
   QByteArray usedCharset;
   QByteArray fallback = fallbackCharsetForRFC2047Decoding( prefCharset );
 
-  if ( str.indexOf( "=?" ) < 0 ) {
-    const QTextCodec *codec = KMMsgBase::codecForName( fallback );
-    if ( !codec ) {
-      codec = kmkernel->networkCodec();
-    }
-    return codec->toUnicode( str );
-  }
-
   return KMime::decodeRFC2047String( str, usedCharset, fallback );
 }
 

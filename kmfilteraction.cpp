@@ -569,7 +569,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
        unfortunate, as we need to removed the original from the folder
        using that, and look it up in the message. When the (new) message
        is uploaded, the header is stripped anyhow. */
-      QString uid = aMsg->headerField( "X-UID", KMMessage::NoEncoding );
+      QString uid = aMsg->headerField( "X-UID" );
       aMsg->fromString( msgText );
       aMsg->setHeaderField( "X-UID", uid, KMMessage::Unstructured, false, KMMessage::NoEncoding );
     }
@@ -1850,7 +1850,7 @@ class PipeJob : public ThreadWeaver::Job
         // unfortunate, as we need to removed the original from the folder
         // using that, and look it up in the message. When the (new) message
         // is uploaded, the header is stripped anyhow. */
-        const QString uid = mMsg->headerField( "X-UID", KMMessage::NoEncoding );
+        const QString uid = mMsg->headerField( "X-UID" );
         mMsg->fromString( ba );
         if ( !uid.isEmpty() )
           mMsg->setHeaderField( "X-UID", uid, KMMessage::Unstructured, false, KMMessage::NoEncoding );
