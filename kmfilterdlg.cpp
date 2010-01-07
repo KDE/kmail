@@ -137,7 +137,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     setCaption( i18n("Filter Rules") );
   setButtons( Help|Ok|Apply|Cancel|User1|User2 );
   setModal( false );
-  setButtonFocus( Cancel );
+  setButtonFocus( Ok );
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)) );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
   setButtonText( User1, i18n("Import...") );
