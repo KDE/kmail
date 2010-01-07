@@ -1234,8 +1234,9 @@ bool KMKernel::isOffline()
 bool KMKernel::askToGoOnline()
 {
   // already asking means we are offline and need to wait anyhow
-  if ( s_askingToGoOnline )
+  if ( s_askingToGoOnline ) {
     return false;
+  }
 
   if ( kmkernel->isOffline() ) {
     s_askingToGoOnline = true;
