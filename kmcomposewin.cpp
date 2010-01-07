@@ -1187,7 +1187,6 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "select_recipients", action );
   connect( action, SIGNAL( triggered(bool) ),
            mRecipientsEditor, SLOT( selectRecipients()) );
-  action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_L ) );
   action = new KAction( i18n("Save &Distribution List..."), this );
   actionCollection()->addAction( "save_distribution_list", action );
   connect( action, SIGNAL( triggered(bool) ),
@@ -1408,19 +1407,6 @@ void KMComposeWin::setupActions( void )
   QAction *configureAction = actionCollection()->action( "options_configure" );
   if ( configureAction ) {
     configureAction->setText( i18n("Configure KMail..." ) );
-  }
-
-  // Check against conflicting shortcuts between the check mail and the strike out action.
-  // We can not get hold of the strike out action in an easier way.
-  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
-  if ( mainWidget ) {
-    KAction *checkMail = qobject_cast<KAction*>( mainWidget->action( "check_mail" ) );
-    KAction *strikeOut = qobject_cast<KAction*>( actionCollection()->action( "format_text_strikeout" ) );
-    if ( checkMail && strikeOut ) {
-      if ( checkMail->shortcut() == strikeOut->shortcut() ) {
-        strikeOut->setShortcut( KShortcut() );
-      }
-    }
   }
 }
 
