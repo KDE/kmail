@@ -1537,6 +1537,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   //  - this can only be done *after* calling parseObjectTree()
   KMMsgEncryptionState encryptionState = mRootNode->overallEncryptionState();
   KMMsgSignatureState  signatureState  = mRootNode->overallSignatureState();
+  // Don't crash when switching message while GPG passphrase entry dialog is shown #53185
+  if (aMsg != message()) {
+    displayMessage();
+    return;
+  }
   aMsg->setEncryptionState( encryptionState );
   // Don't reset the signature state to "not signed" (e.g. if one canceled the
   // decryption of a signed messages which has already been decrypted before).
