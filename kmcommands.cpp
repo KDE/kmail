@@ -1797,7 +1797,7 @@ void KMMetaFilterActionCommand::start()
 
 FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
                                               const Akonadi::Collection&col  )
-    : mMainWidget( mainwidget ), mCollectionFolder( col ), mAction( 0 )
+    : QObject( mainwidget ), mMainWidget( mainwidget ), mCollectionFolder( col ), mAction( 0 )
 {
 }
 
