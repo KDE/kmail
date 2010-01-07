@@ -36,7 +36,7 @@ public:
   };
 
   /**
-    Defines the bitfields that compared with features(), returns their existance
+    Defines the bitfields that compared with features(), returns their existence
   */
   enum Supports {
     None         = 0 << 0, /** no mailinglist fields exist */
