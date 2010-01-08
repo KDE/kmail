@@ -1687,13 +1687,13 @@ KMCommand::Result KMSetTagCommand::execute()
     Nepomuk::Resource n_resource( item.url() );
     const QList<Nepomuk::Tag> tagList = n_resource.tags();
 
-    int tagPosition = tagList.indexOf( mTagLabel );
+    const int tagPosition = tagList.indexOf( mTagLabel );
     if ( tagPosition == -1 ) {
       n_resource.addTag( n_tag );
     } else if ( mMode == Toggle ) {
       QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
       for (int i = 0; i < n_tag_list.count(); ++i ) {
-        if ( n_tag_list[i].identifiers()[0] == mTagLabel ) {
+        if ( n_tag_list[i].resourceUri() == mTagLabel ) {
           n_tag_list.removeAt( i );
           break;
         }
