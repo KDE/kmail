@@ -239,7 +239,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mNoopTimer.stop();
 
   // reset namespace todo
-  if ( folder == mFolder ) {
+  if ( folder == mFolder && !namespaces().isEmpty() ) {
     QStringList nsToList = namespaces()[PersonalNS];
     QStringList otherNSToCheck = namespaces()[OtherUsersNS];
     otherNSToCheck += namespaces()[SharedNS];
