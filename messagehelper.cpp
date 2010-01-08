@@ -28,6 +28,7 @@
 #include "mdnadvicedialog.h"
 #include "mailinglist-magic.h"
 #include "foldercollection.h"
+#include "util.h"
 
 #include <messageviewer/objecttreeparser.h>
 #include <messageviewer/kcursorsaver.h>
@@ -579,8 +580,12 @@ KMime::Message::Ptr createResend( const Akonadi::Item & item, const KMime::Messa
   return msg;
 }
 
-KMime::Message::Ptr createRedirect( const Akonadi::Item & item, const KMime::Message::Ptr &origMsg, const QString &toStr )
+KMime::Message::Ptr createRedirect( const Akonadi::Item & item, const QString &toStr )
 {
+  const KMime::Message::Ptr origMsg = KMail::Util::message( item );
+  if ( !origMsg )
+    return KMime::Message::Ptr();
+
   // copy the message 1:1
   KMime::Message::Ptr msg( new KMime::Message );
   msg->setContent( origMsg->encodedContent() );

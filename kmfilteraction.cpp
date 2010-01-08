@@ -12,6 +12,7 @@
 #include "kmmainwidget.h"
 #include "kmfawidgets.h"
 #include "folderrequester.h"
+#include "util.h"
 
 using KMail::FolderRequester;
 #include "messageproperty.h"
@@ -1723,16 +1724,15 @@ KMFilterActionRedirect::KMFilterActionRedirect()
 
 KMFilterAction::ReturnCode KMFilterActionRedirect::process( const Akonadi::Item &item ) const
 {
-  KMime::Message::Ptr msg;
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
-#if 0
-  msg = KMail::MessageHelper::createRedirect( aMsg, mParameter );
 
-  sendMDN( aMsg, KMime::MDN::Dispatched );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  KMime::Message::Ptr msg = KMail::MessageHelper::createRedirect( item, mParameter );
+  if ( !msg )
+    return ErrorButGoOn;
+
+  sendMDN( KMail::Util::message( item ), KMime::MDN::Dispatched );
+
   if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
     kDebug() << "KMFilterAction: could not redirect message (sending failed)";
     return ErrorButGoOn; // error: couldn't send

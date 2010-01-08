@@ -93,9 +93,12 @@ namespace MessageHelper {
     is not stored in any folder. Marks this message as replied.
     Redirects differ from forwards so they are forwarded to some other
     user, mail is not changed and the reply-to field is set to
-    the email address of the original sender
+    the email address of the original sender.
+
+    Note: This returns a null KMime::Message::Ptr when for some reason the original
+          message could not be retrieved from the item.
    */
-  KMime::Message::Ptr createRedirect( const Akonadi::Item &, const KMime::Message::Ptr &origMsg, const QString &toStr );
+  KMime::Message::Ptr createRedirect( const Akonadi::Item &, const QString &toStr );
 
   KMime::Message::Ptr createResend( const Akonadi::Item &, const KMime::Message::Ptr &origMsg );
 

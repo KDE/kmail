@@ -1381,12 +1381,12 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
   }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
-  if ( !msg )
+
+  KMime::Message::Ptr newMsg = KMail::MessageHelper::createRedirect( item, dlg->to() );
+  if ( !newMsg )
     return Failed;
 
-  KMime::Message::Ptr newMsg = KMail::MessageHelper::createRedirect( item, msg, dlg->to() );
-  KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
+  KMFilterAction::sendMDN( KMail::Util::message( item ), KMime::MDN::Dispatched );
 
   const KMail::MessageSender::SendMethod method = dlg->sendImmediate()
     ? KMail::MessageSender::SendImmediate
