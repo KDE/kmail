@@ -69,16 +69,6 @@ namespace MessageHelper {
                      ///  template
   };
 
-    /** Create a new message that is a reply to this message, filling all
-      required header fields with the proper values. The returned message
-      is not stored in any folder. Marks this message as replied. */
-  KMime::Message::Ptr createReply(const Akonadi::Item &item, const KMime::Message::Ptr &origMsg,
-                              KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                              const QString &selection = QString(), bool noQuote = false,
-                              bool allowDecryption = true, bool selectionIsBody = false,
-                              const QString &tmpl = QString() );
-
-
   /**
    * Create a new message that is a reply to this message, filling all
    * required header fields with the proper values. The returned message
@@ -86,8 +76,7 @@ namespace MessageHelper {
    *
    * @return the reply created, including the reply mode
    */
-//TODO see if this can be merged with the above one!
-  MessageReply createReply2(const Akonadi::Item & item, const KMime::Message::Ptr &origMsg,
+  MessageReply createReply( const Akonadi::Item & item, const KMime::Message::Ptr &origMsg,
                             KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
                             const QString &selection=QString(), bool noQuote=false,
                             bool allowDecryption=true, bool selectionIsBody=false,

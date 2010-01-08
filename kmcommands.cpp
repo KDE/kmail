@@ -449,7 +449,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMime::Message::Ptr rmsg( KMail::MessageHelper::createReply( item, msg, KMail::ReplyNone, mSelection ) );
+  KMime::Message::Ptr rmsg( KMail::MessageHelper::createReply( item, msg, KMail::ReplyNone, mSelection ).msg );
   rmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
@@ -1004,7 +1004,7 @@ KMCommand::Result KMReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplySmart, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0, mSelection );
   win->setReplyFocus();
   win->show();
@@ -1030,7 +1030,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplySmart, "", true);
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, "", true);
   KMail::Composer *win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ) );
   win->setReplyFocus( false );
   win->show();
@@ -1057,7 +1057,7 @@ KMCommand::Result KMReplyListCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplyList, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ),
                                                0, mSelection );
   win->setReplyFocus( false );
@@ -1086,7 +1086,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplyAll, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection );
   win->setReplyFocus();
@@ -1114,7 +1114,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplyAuthor, mSelection );
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection );
   win->setReplyFocus();
@@ -1420,7 +1420,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplySmart, mSelection,
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
@@ -1451,7 +1451,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply2( item, msg, KMail::ReplyAll, mSelection,
+  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyAll, mSelection,
                                                     false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
