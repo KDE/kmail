@@ -65,7 +65,6 @@ using KMail::TemplateParser;
 #include <kmime/kmime_util.h>
 #include <akonadi/kmime/specialmailcollections.h>
 #include <akonadi/kmime/specialmailcollectionsrequestjob.h>
-#include <akonadi/private/collectionutils_p.h>
 #include <akonadi/collection.h>
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/changerecorder.h>
