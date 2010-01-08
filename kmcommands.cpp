@@ -1597,7 +1597,7 @@ KMCommand::Result KMPrintCommand::execute()
 
 KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
   const Akonadi::Item::List &items, bool toggle )
-  : KMCommand( 0, items ), mStatus( status ), mToggle( toggle ), messageStatusChanged( 0 )
+  : KMCommand( 0, items ), mStatus( status ), messageStatusChanged( 0 ), mToggle( toggle )
 {
   setDeletesItself(true);
 }
