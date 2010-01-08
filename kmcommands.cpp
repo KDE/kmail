@@ -132,9 +132,7 @@ using namespace KMime;
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
 
-#ifdef NEPOMUK_FOUND
-  #include <nepomuk/tag.h>
-#endif
+#include <nepomuk/tag.h>
 
 #include <gpgme++/error.h>
 
