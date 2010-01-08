@@ -83,6 +83,7 @@ Name[sv]=Fel vid kontroll av post
 Name[tr]=E-posta Kontrol Edilirken Hata Oluştu
 Name[uk]=Помилка під час спроби отримання пошти
 Name[x-test]=xxError While Checking Mailxx
+Name[zh_CN]=检查邮件时出错
 Name[zh_TW]=檢查郵件時發生錯誤
 Comment=There was an error while checking for new mail
 Comment[ca]=S'ha produït un error en comprovar el coreu nou
@@ -106,6 +107,7 @@ Comment[sv]=Ett fel uppstod vid kontroll av ny post
 Comment[tr]=Yeni e-postalar denetlenirken bir hata oluştu
 Comment[uk]=Під час спроби перевірки наявності нової пошти сталася помилка
 Comment[x-test]=xxThere was an error while checking for new mailxx
+Comment[zh_CN]=检查新邮件时发生错误
 Comment[zh_TW]=檢查郵件時發生錯誤
 Action=Popup
 
