@@ -279,8 +279,17 @@ MessageReply createReply( const Akonadi::Item &item,
       toStr = mailingListAddresses[0];
     }
     else {
+
       // doesn't seem to be a mailing list, reply to From: address
       toStr = origMsg->from()->asUnicodeString();
+
+      if( kmkernel->identityManager()->thatIsMe( KPIMUtils::extractEmailAddress( toStr ) ) ) {
+        // sender seems to be one of our own identities, so we assume that this
+        // is a reply to a "sent" mail where the users wants to add additional
+        // information for the recipient.
+        toStr = origMsg->to()->asUnicodeString();
+      }
+
       replyAll = false;
     }
     // strip all my addresses from the list of recipients
