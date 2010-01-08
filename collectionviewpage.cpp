@@ -21,7 +21,6 @@
 
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
-#include <akonadi/private/collectionutils_p.h>
 #include <kmkernel.h>
 #include <QGroupBox>
 #include <QHBoxLayout>
@@ -228,7 +227,7 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
     }
 
     if ( iconName.isEmpty() ) {
-      iconName = Akonadi::CollectionUtils::defaultIconName( col );
+      iconName = QLatin1String( "folder" );
       iconWasEmpty = true;
     }
     mNormalIconButton->setIcon( iconName );
