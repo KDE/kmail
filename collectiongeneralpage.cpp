@@ -32,7 +32,6 @@
 #include <akonadi/agentmanager.h>
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
-#include <akonadi/private/collectionutils_p.h>
 
 #include "collectionannotationsattribute.h"
 
