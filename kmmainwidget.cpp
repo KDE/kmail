@@ -157,8 +157,6 @@ using KMail::TemplateParser;
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/entitytreeviewstatesaver.h>
-//TODO needs to export to public class
-#include <akonadi/private/collectionutils_p.h>
 
 #include <messageviewer/viewer.h>
 
@@ -1567,7 +1565,7 @@ void KMMainWidget::slotRemoveFolder()
   if ( mCurrentFolder->isReadOnly() ) return;
   QString title;
   QString buttonLabel;
-  if ( CollectionUtils::isVirtual( mCurrentFolder->collection() ) ) {
+  if ( mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ) {
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
                 "Any messages it shows will still be available in their original folder.</qt>",
@@ -3864,10 +3862,11 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mCurrentFolder && !mCurrentFolder->isSystemFolder() && mCurrentFolder->canDeleteMessages() && !multiFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection()) && ( mCurrentFolder->collection()!= Akonadi::Collection::root() ) && !CollectionUtils::isResource( mCurrentFolder->collection() ) );
+  mRemoveFolderAction->setEnabled( mCurrentFolder
+                                   && !multiFolder
+                                   && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection ) );
 
-
-  mRemoveFolderAction->setText( mCurrentFolder && CollectionUtils::isVirtual( mCurrentFolder->collection() ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
+  mRemoveFolderAction->setText( mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
   if ( mArchiveFolderAction )
     mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder );
   mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() );
@@ -3880,7 +3879,6 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mFolderShortCutCommandAction->setEnabled( !multiFolder &&mCurrentFolder);
-  mCollectionProperties->setVisible( mCurrentFolder && !CollectionUtils::isVirtualParent( mCurrentFolder->collection() ) && !CollectionUtils::isResource( mCurrentFolder->collection() ));
 }
 
 //-----------------------------------------------------------------------------
