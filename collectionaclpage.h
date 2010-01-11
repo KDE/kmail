@@ -90,17 +90,6 @@ public:
   void save( Akonadi::Collection & col );
 protected:
   void init();
-#if 0
-private slots:
-  // Network (KIO) slots
-  void slotConnectionResult( int, const QString& );
-  void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
-  void slotMultiSetACLResult(KJob *);
-  void slotACLChanged( const QString&, int );
-  void slotReceivedUserRights( KMFolder* folder );
-  void slotDirectoryListingFinished(KMFolderImap*);
-
-#endif
 private slots:
   // User (QTreeWidget) slots
   void slotEditACL( QTreeWidgetItem* );
@@ -114,12 +103,6 @@ private slots:
 #if 0
   void slotChanged( bool b );
 
-private:
-  KUrl imapURL() const;
-  void initializeWithValuesFromFolder( KMFolder* folder );
-  void startListing();
-  void loadListView( const KMail::ACLList& aclList );
-  void loadFinished( const KMail::ACLList& aclList );
 #endif
 private:
   void addACLs( const QStringList& userIds, KIMAP::Acl::Rights permissions );
