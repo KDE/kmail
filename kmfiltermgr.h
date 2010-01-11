@@ -143,10 +143,6 @@ public:
     occurred. */
   bool folderRemoved(const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder);
 
-  /** Called from the folder manager when a new folder has been
-      created. Forwards this to the filter dialog if that is open. */
-  void folderCreated(KMFolder*) {}
-
   /** Set the global option 'Show Download Later Messages' */
   void setShowLaterMsgs( bool show ) {
     mShowLater = show;
