@@ -30,7 +30,6 @@ namespace KMime {
   class Message;
 }
 
-class KMFolder;
 class KMFilter;
 class KMFilterDlg;
 
