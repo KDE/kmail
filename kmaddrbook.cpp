@@ -112,8 +112,8 @@ QString KabcBridge::expandNickName( const QString& nickName )
 
   const QString lowerNickName = nickName.toLower();
 
-  //TODO: optimize this by search contact by nickname
   Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
+  job->setQuery( Akonadi::ContactSearchJob::NickName, lowerNickName );
   if ( !job->exec() )
     return QString();
 
