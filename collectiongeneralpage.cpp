@@ -182,8 +182,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
             "messages. This is useful for ignoring any new/unread mail in "
             "your trash and spam folder.</p></qt>" ) );
   hbl->addWidget( mNotifyOnNewMailCheckBox );
-#if 0
-  if ( mDlg->folder()->folderType() == KMFolderTypeImap ) {
+  if ( KMKernel::self()->isImapFolder( col ) ) {
     // should this folder be included in new-mail-checks?
 
     QHBoxLayout *nml = new QHBoxLayout();
@@ -200,7 +199,6 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     nml->addWidget( mNewMailCheckBox );
     nml->addStretch( 1 );
   }
-#endif
   // should replies to mails in this folder be kept in this same folder?
   hbl = new QHBoxLayout();
   topLayout->addItem( hbl );
