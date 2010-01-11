@@ -4130,6 +4130,8 @@ void KMMainWidget::removeDuplicates()
     else
       msg = i18n("No duplicate messages found.");
   BroadcastStatus::instance()->setStatusMsg( msg );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 }
 
