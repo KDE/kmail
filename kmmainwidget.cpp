@@ -371,8 +371,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
   // when the new folder is also an IMAP folder, because that's an
   // async operation and we don't want flicker if it results in just
   // a new splash.
-  //TODO port it
-  bool isNewImapFolder = false;//aFolder && ( aFolder->folderType() == KMFolderTypeImap ) && newFolder;
+  bool isNewImapFolder = col.isValid() && KMKernel::self()->isImapFolder( col ) && newFolder;
   if( ( !mCurrentFolder  )
       || ( !isNewImapFolder && mShowBusySplashTimer )
       || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
