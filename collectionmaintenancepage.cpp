@@ -131,23 +131,6 @@ void FolderDialogMaintenanceTab::updateControls()
     mCompactNowButton->setEnabled( mFolder->needsCompacting() );
 }
 
-void FolderDialogMaintenanceTab::updateFolderIndexSizes()
-{
-  qint64 folderSize = mFolder->storage()->folderSize();
-  if ( folderSize != -1 )
-  {
-    mFolderSizeLabel->setText( convertSizeWithBytes( folderSize ) );
-  }
-
-  KUrl u;
-  u.setPath( mFolder->indexLocation() );
-  if ( u.isValid() && u.isLocalFile() )
-  {
-    // the index should always be a file
-    QFileInfo fi( u.toLocalFile() );
-    mIndexSizeLabel->setText( convertSizeWithBytes( fi.size() ) );
-  }
-}
 #endif
 
 void CollectionMaintenancePage::slotCompactNow()

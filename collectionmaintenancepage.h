@@ -32,9 +32,6 @@ public:
   void save( Akonadi::Collection & col );
 private slots:
   void slotCompactNow();
-#if 0
-  void updateFolderIndexSizes();
-#endif
 protected:
   void init( const Akonadi::Collection&);
 private:
