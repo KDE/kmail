@@ -486,7 +486,7 @@ void KMMainWidget::readPreConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readFolderConfig()
 {
-  if ( !mCurrentFolder->isValid() )
+  if ( !mCurrentFolder || !mCurrentFolder->isValid() )
     return;
 
   KSharedConfig::Ptr config = KMKernel::config();
