@@ -3824,13 +3824,6 @@ void KMMainWidget::updateMessageActions()
   qDebug()<<" Fix enable/disable send_queued action";
 #endif
 
-#ifdef OLD_MESSAGELIST
-  if ( ( count == 1 ) && currentMessage.isValid() )
-  {
-    if ((KMFolder*)mFolder == kmkernel->outboxFolder())
-      editAction()->setEnabled( !currentMessage->transferInProgress() );
-  }
-#endif
   slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
   if (action( "kmail_undo" ))
     action( "kmail_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
