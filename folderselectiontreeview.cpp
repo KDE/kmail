@@ -212,7 +212,7 @@ void FolderSelectionTreeView::readConfig()
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   changeToolTipsPolicyConfig( ( ToolTipDisplayPolicy )checkedFolderToolTipsPolicy );
 
-  d->collectionFolderView->askDndActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
+  d->collectionFolderView->setShowDropActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
   readQuotaConfig();
 }
 
