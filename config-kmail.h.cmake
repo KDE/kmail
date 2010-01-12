@@ -9,8 +9,6 @@
 
 #cmakedefine HAVE_SYS_INOTIFY_H 1
 
-#cmakedefine NEPOMUK_FOUND 1
-
 #cmakedefine HAVE_MMAP 1
 
 #cmakedefine KDEPIM_FOLDEROPEN_PROFILE 1

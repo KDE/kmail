@@ -58,11 +58,8 @@ include_directories(
   ${Boost_INCLUDE_DIR}
   ${CMAKE_SOURCE_DIR}/akonadi/
   ${CMAKE_CURRENT_BINARY_DIR}/../ontologies
+  ${NEPOMUK_INCLUDES}
  )
-
-if(Nepomuk_FOUND)
-  include_directories( ${NEPOMUK_INCLUDES} )
-endif(Nepomuk_FOUND)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 
@@ -300,13 +297,11 @@ target_link_libraries(kmailprivate
   ${SOPRANO_LIBRARIES}
   niefast_apps
   ${QT_QTWEBKIT_LIBRARY}
+  ${NEPOMUK_LIBRARIES}
+  ${NEPOMUK_QUERY_LIBRARIES}
 )
 
 add_dependencies(kmail_xml akonadi_imap_resource) # generate imapresource.kcfg first
-
-if(Nepomuk_FOUND)
-  target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES} ${NEPOMUK_QUERY_LIBRARIES})
-endif(Nepomuk_FOUND)
 
 set_target_properties(kmailprivate
   PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION}
