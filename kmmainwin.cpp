@@ -27,6 +27,7 @@
 #include "statusbarprogresswidget.h"
 #include "broadcaststatus.h"
 #include "util.h"
+#include "tagging.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -177,14 +178,14 @@ void KMMainWin::slotUpdateToolbars()
 {
   // remove dynamically created actions before editing
   mKMMainWidget->clearFilterActions();
-  mKMMainWidget->clearMessageTagActions();//OnurAdd
+  mKMMainWidget->tagActionManager()->clearActions();
 
   createGUI("kmmainwin.rc");
   applyMainWindowSettings(KMKernel::config()->group( "Main Window") );
 
   // plug dynamically created actions again
   mKMMainWidget->initializeFilterActions();
-  mKMMainWidget->initializeMessageTagActions();
+  mKMMainWidget->tagActionManager()->createActions();
 }
 
 void KMMainWin::setupStatusBar()

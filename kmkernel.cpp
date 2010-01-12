@@ -111,7 +111,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 {
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
   mAgentManager = new KMAgentManager( this );
-  mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
   kDebug();
   setObjectName( name );
   mySelf = this;
@@ -125,7 +124,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_popFilterMgr = 0;
   the_filterActionDict = 0;
   the_msgSender = 0;
-  the_msgTagMgr = 0;
   mWin = 0;
   mSmartQuote = false;
   mWordWrap = false;
@@ -199,15 +197,6 @@ KMAgentManager *KMKernel::agentManager()
 Akonadi::ChangeRecorder * KMKernel::monitor()
 {
   return mFolderCollectionMonitor->monitor();
-}
-
-int KMKernel::storageDebug()
-{
-  KMKernel *theKernel = self();
-  if ( theKernel )
-    return theKernel->mStorageDebug;
-  else
-    return 0;
 }
 
 void KMKernel::setupDBus()
@@ -1312,29 +1301,6 @@ void KMKernel::slotSenderFinished()
 /********************************************************************/
 /*            Init, Exit, and handler  methods                      */
 /********************************************************************/
-void KMKernel::testDir( const char *_name )
-{
-  QString foldersPath = QDir::homePath() + QString( _name );
-  QFileInfo info( foldersPath );
-  if ( !info.exists() ) {
-    if ( KDE_mkdir( QFile::encodeName( foldersPath ), S_IRWXU ) == -1 ) {
-      KMessageBox::sorry( 0, i18n( "KMail could not create folder '%1';\n"
-                                   "please make sure that you can view and "
-                                   "modify the content of the folder '%2'.",
-                                   foldersPath, QDir::homePath() ) );
-      ::exit(-1);
-    }
-  }
-  if ( !info.isDir() || !info.isReadable() || !info.isWritable() ) {
-    KMessageBox::sorry( 0, i18n( "The permissions of the folder '%1' are "
-                                 "incorrect;\n"
-                                 "please make sure that you can view and "
-                                 "modify the content of this folder.",
-                                 foldersPath ) );
-    ::exit(-1);
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 // Open a composer for each message found in the dead.letter folder
@@ -1423,40 +1389,6 @@ void KMKernel::init()
   the_previousVersion = group.readEntry("previous-version");
   group.writeEntry("previous-version", KMAIL_VERSION);
 
-  QString foldersPath = group.readPathEntry( "folders", QString() );
-  QString standardFolderPath = localDataPath() + "mail";
-  kDebug() << "foldersPath (from config):" << foldersPath;
-
-  if ( foldersPath.isEmpty() ) {
-    foldersPath = standardFolderPath;
-    if ( transferMail( foldersPath ) ) {
-      group.writePathEntry( "folders", foldersPath );
-    }
-    kDebug() << "foldersPath (after transferMail):" << foldersPath;
-  }
-  else {
-    // Check if the folder path from config really exists.
-    // When migrating from KDE3 to KDE4, some distros change the home directory
-    // from .kde to .kde4, and if the user has copied the config file + app data
-    // over to .kde4, the config file then contains the incorrect entry.
-    // Therefore, we fall back to KDEHOME/share/apps/kmail/mail if the folders
-    // can't be found.
-    QDir configFolderDir( foldersPath );
-    if ( foldersPath.contains( ".kde/share/apps/kmail/mail" ) &&
-         !configFolderDir.exists() ) {
-      QDir standardConfigDir( standardFolderPath );
-      if ( standardConfigDir.exists() ) {
-        foldersPath = standardFolderPath;
-        kDebug() << "foldersPath from config doesn't exist, using standard "
-                    "path instead";
-      }
-    }
-  }
-
-  //Here because folderMgr's need it when they read the index and sort tags
-  the_msgTagMgr = new KMMessageTagMgr();
-  the_msgTagMgr->readConfig();
-
   readConfig();
 
   the_undoStack     = new UndoStack(20);
@@ -1491,7 +1423,6 @@ void KMKernel::init()
 
 void KMKernel::readConfig()
 {
-  KConfigGroup config( KMKernel::config(), "Composer" );
   mSmartQuote = GlobalSettings::self()->smartQuote();
   mWordWrap = GlobalSettings::self()->wordWrap();
   mWrapCol = GlobalSettings::self()->lineWrapWidth();
@@ -1564,8 +1495,6 @@ void KMKernel::cleanup(void)
   the_msgSender = 0;
   delete the_filterActionDict;
   the_filterActionDict = 0;
-  delete the_msgTagMgr;
-  the_msgTagMgr = 0;
   delete the_undoStack;
   the_undoStack = 0;
   delete the_popFilterMgr;
@@ -1593,92 +1522,6 @@ void KMKernel::cleanup(void)
     RecentAddresses::self( config.data() )->save( config.data() );
   config->sync();
 }
-
-bool KMKernel::transferMail( QString & destinationDir )
-{
-  QString dir;
-
-  // check whether the user has a ~/KMail folder
-  QFileInfo fi( QDir::home(), "KMail" );
-  if ( fi.exists() && fi.isDir() ) {
-    dir = QDir::homePath() + "/KMail";
-    // the following two lines can be removed once moving mail is reactivated
-    destinationDir = dir;
-    return true;
-  }
-
-  if ( dir.isEmpty() ) {
-    // check whether the user has a ~/Mail folder
-    fi.setFile( QDir::home(), "Mail" );
-    if ( fi.exists() && fi.isDir() &&
-         QFile::exists( QDir::homePath() + "/Mail/.inbox.index" ) ) {
-      // there's a ~/Mail folder which seems to be used by KMail (because of the
-      // index file)
-      dir = QDir::homePath() + "/Mail";
-      // the following two lines can be removed once moving mail is reactivated
-      destinationDir = dir;
-      return true;
-    }
-  }
-
-  if ( dir.isEmpty() ) {
-    return true; // there's no old mail folder
-  }
-
-#if 0
-  // disabled for now since moving fails in certain cases (e.g. if symbolic links are involved)
-  const QString kmailName = KGlobal::mainComponent().aboutData()()->programName();
-  QString msg;
-  if ( KIO::NetAccess::exists( destinationDir, KIO::NetAccess::SourceSide, 0 ) ) {
-    // if destinationDir exists, we need to warn about possible
-    // overwriting of files. otherwise, we don't have to
-    msg = ki18nc( "%1-%3 is the application name, %4-%7 are folder path",
-                  "<qt>The <i>%4</i> folder exists. "
-                  "%1 now uses the <i>%5</i> folder for "
-                  "its messages.<p>"
-                  "%2 can move the contents of <i>%6</i> into this folder for "
-                  "you, though this may replace any existing files with "
-                  "the same name in <i>%7</i>.</p><p>"
-                  "<strong>Would you like %3 to move the mail "
-                  "files now?</strong></p></qt>" )
-          .subs( kmailName ).subs( kmailName ).subs( kmailName )
-          .subs( dir ).subs( destinationDir ).subs( dir ).subs( destinationDir )
-          .toString();
-  }
-  else {
-    msg = ki18nc( "%1-%3 is the application name, %4-%6 are folder path",
-                  "<qt>The <i>%4</i> folder exists. "
-                  "%1 now uses the <i>%5</i> folder for "
-                  "its messages. %2 can move the contents of <i>%6</i> into "
-                  "this folder for you.<p>"
-                  "<strong>Would you like %3 to move the mail "
-                  "files now?</strong></p></qt>" )
-          .subs( kmailName ).subs( kmailName ).subs( kmailName )
-          .subs( dir ).subs( destinationDir ).subs( dir )
-          .toString();
-  }
-  QString title = i18n( "Migrate Mail Files?" );
-  QString buttonText = i18n( "Move" );
-
-  if ( KMessageBox::questionYesNo( 0, msg, title, buttonText, i18n("Do Not Move") ) ==
-       KMessageBox::No ) {
-    destinationDir = dir;
-    return true;
-  }
-
-  if ( !KIO::NetAccess::move( dir, destinationDir ) ) {
-    kDebug() << "Moving" << dir << "to" << destinationDir << "failed:" << KIO::NetAccess::lastErrorString();
-    kDebug() << "Deleting" << destinationDir;
-    KIO::NetAccess::del( destinationDir, 0 );
-    destinationDir = dir;
-    return false;
-  }
-#endif
-
-  return true;
-}
-
-
 
 void KMKernel::dumpDeadLetters()
 {

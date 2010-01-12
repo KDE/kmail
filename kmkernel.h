@@ -15,7 +15,6 @@
 #include <kurl.h>
 
 #include "kmail_export.h"
-#include "kmmessagetag.h"
 #include "globalsettings.h"
 #include <kcomponentdata.h>
 #include <akonadi/kmime/specialmailcollections.h>
@@ -66,7 +65,6 @@ class KMainWindow;
 class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
-class KMMessageTagMgr;
 class FolderCollectionMonitor;
 class KMAgentManager;
 
@@ -255,7 +253,6 @@ public:
 
   static KMKernel *self();
   static KSharedConfig::Ptr config();
-  static int storageDebug();
 
   void init();
   void setupDBus();
@@ -266,18 +263,11 @@ public:
   Akonadi::ChangeRecorder *monitor();
 
 //TODO port to akonadi   void cleanupImapFolders();
-  void testDir(const char *_name);
   void recoverDeadLetters();
   void initFolders();
   void closeAllKMailWindows();
   void cleanup(void);
   void quit();
-  /**
-   * Returns true if the transfer was successful, otherwise false. In any case
-   * destinationDir contains the path to the current mail storage when the
-   * method returns.
-   */
-  bool transferMail( QString & destinationDir );
   bool doSessionManagement();
   bool firstInstance() { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
@@ -323,7 +313,6 @@ public:
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   KMail::MessageSender *msgSender();
-  KMMessageTagMgr *msgTagMgr() { return the_msgTagMgr; }
 
   ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
@@ -369,8 +358,6 @@ public:
   /// Reimplemented from KMailIface
   void emergencyExit( const QString& reason );
 
-  /** Returns a message serial number that hasn't been used yet. */
-  unsigned long getNextMsgSerNum();
   QTextCodec *networkCodec() { return netCodec; }
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
@@ -457,7 +444,6 @@ private:
   KMFilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   AkonadiSender *the_msgSender;
-  KMMessageTagMgr *the_msgTagMgr;
   struct putData
   {
     KUrl url;

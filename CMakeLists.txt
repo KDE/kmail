@@ -164,7 +164,6 @@ set(kmailprivate_LIB_SRCS
    mailinglistpropertiesdialog.cpp
    managesievescriptsdialog.cpp
    util.cpp
-   kmmessagetag.cpp
    templateparser.cpp
    templatesconfiguration.cpp
    templatesinsertcommand.cpp
@@ -184,11 +183,19 @@ set(kmailprivate_LIB_SRCS
    importjob.cpp
    archivefolderdialog.cpp
    importarchivedialog.cpp
+   tagging.cpp
 
    #subscriptiondialog.cpp
    #localsubscriptiondialog.cpp
    #kmpopheaders.cpp
    #kmpopfiltercnfrmdlg.cpp
+)
+
+soprano_add_ontology(kmailprivate_LIB_SRCS
+  ${CMAKE_SOURCE_DIR}/messagecore/messagetag.trig
+  "MessageTag"
+  "Vocabulary"
+  "trig"
 )
 
 macro(add_resource_iface _kcfgFile _ifaceName _className)

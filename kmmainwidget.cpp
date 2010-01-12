@@ -101,7 +101,6 @@ using KMail::SearchWindow;
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
-#include "kmmessagetag.h"
 #include "vacation.h"
 using KMail::Vacation;
 //#include "subscriptiondialog.h"
@@ -128,6 +127,7 @@ using KMail::TemplateParser;
 #include <akonadi/collectionfetchscope.h>
 #include "util.h"
 #include "archivefolderdialog.h"
+#include "tagging.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -220,7 +220,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mFolderHtmlLoadExtPref = false;
   mSystemTray = 0;
   mDestructed = false;
-  mMessageTagToggleMapper = 0;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout( this );
   mTopLayout->setMargin( 0 );
@@ -242,9 +241,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   // is extended in kdelibs.
   mToolbarActionSeparator = new QAction( this );
   mToolbarActionSeparator->setSeparator( true );
-
-  mMessageTagToolbarActionSeparator = new QAction( this );
-  mMessageTagToolbarActionSeparator->setSeparator( true );
 
   theMainWidgetList->append( this );
 
@@ -273,6 +269,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   connect( kmkernel, SIGNAL( onlineStatusChanged( GlobalSettings::EnumNetworkState::type ) ),
            this, SLOT( slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type ) ) );
+
+  connect( mTagActionManager, SIGNAL( tagActionTriggered( const QString & ) ),
+           this, SLOT( slotUpdateMessageTagList( const QString & )) );
 
   toggleSystemTray();
 
@@ -3565,6 +3564,8 @@ void KMMainWidget::setupActions()
   updateMessageActions();
   updateCustomTemplateMenus();
   updateFolderMenu();
+  mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
+                                                   mGUIClient );
 }
 
 //-----------------------------------------------------------------------------
@@ -3755,7 +3756,7 @@ void KMMainWidget::updateMessageActions()
   {
     MessageStatus status;
     status.setStatusFromFlags( currentMessage.flags() );
-    updateMessageTagActions( count );
+    mTagActionManager->updateActionStates ( count, mMessagePane->currentItem() );
     if (thread_actions)
     {
       mToggleThreadToActAction->setChecked( status.isToAct() );
@@ -3905,15 +3906,12 @@ void KMMainWidget::slotShowStartupFolder()
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
            this, SLOT( initializeFilterActions() ) );
 
-  connect( kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
-           this, SLOT( initializeMessageTagActions() ) );
-
   // Plug various action lists. This can't be done in the constructor, as that is called before
   // the main window or Kontact calls createGUI().
   // This function however is called with a single shot timer.
   initializeFilterActions();
   initializeFolderShortcutActions();
-  initializeMessageTagActions();
+  mTagActionManager->createActions();
   messageActions()->setupForwardingActionsList( mGUIClient );
 
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
@@ -3939,133 +3937,9 @@ void KMMainWidget::slotShowTip()
   KTipDialog::showTip( this, QString(), true );
 }
 
-void KMMainWidget::updateMessageTagActions( const int count )
-{
-  //TODO: Behaves differently according to number of messages selected
-  KToggleAction *aToggler = 0;
-  if ( 1 == count )
-  {
-    const Akonadi::Item item = mMessagePane->currentItem();
-    QList<Nepomuk::Tag> aTagList = KMail::MessageHelper::tagList( item );
-    for ( QList<MessageTagPtrPair>::ConstIterator it =
-            mMessageTagMenuActions.constBegin();
-          it != mMessageTagMenuActions.constEnd(); ++it )
-    {
-      bool list_present = false;
-      if ( !aTagList.isEmpty() )
-        list_present =
-           ( aTagList.indexOf( (*it).first->tag() ) != -1 );
-      aToggler = static_cast<KToggleAction*>( (*it).second );
-      aToggler->setChecked( list_present );
-      aToggler->setEnabled( true );
-    }
-  } else if ( count > 1 ) {
-    for ( QList<MessageTagPtrPair>::ConstIterator it =
-          mMessageTagMenuActions.constBegin();
-          it != mMessageTagMenuActions.constEnd(); ++it )
-    {
-      aToggler = static_cast<KToggleAction*>( (*it).second );
-      aToggler->setChecked( false );
-      aToggler->setEnabled( true );
-      aToggler->setText( i18n("Toggle Message Tag %1", (*it).first->name() ) );
-    }
-  } else {
-    for ( QList<MessageTagPtrPair>::ConstIterator it =
-          mMessageTagMenuActions.constBegin();
-          it != mMessageTagMenuActions.constEnd(); ++it )
-    {
-      aToggler = static_cast<KToggleAction*>( (*it).second );
-      aToggler->setEnabled( false );
-    }
-  }
-}
-
 QList<KActionCollection*> KMMainWidget::actionCollections() const {
   return QList<KActionCollection*>() << actionCollection();
 }
-
-
-void KMMainWidget::clearMessageTagActions()
-{
-  //Remove the tag actions from the toolbar
-  if ( !mMessageTagTBarActions.isEmpty() ) {
-    if ( mGUIClient->factory() )
-      mGUIClient->unplugActionList( "toolbar_messagetag_actions" );
-    mMessageTagTBarActions.clear();
-  }
-
-  //Remove the tag actions from the status menu and the action collection,
-  //then delete them.
-  for ( QList<MessageTagPtrPair>::ConstIterator it =
-        mMessageTagMenuActions.constBegin();
-        it != mMessageTagMenuActions.constEnd(); ++it ) {
-    mMsgActions->messageStatusMenu()->removeAction( (*it).second );
-
-    // This removes and deletes the action at the same time
-    actionCollection()->removeAction( (*it).second );
-  }
-
-  mMessageTagMenuActions.clear();
-  delete mMessageTagToggleMapper;
-  mMessageTagToggleMapper = 0;
-}
-
-void KMMainWidget::initializeMessageTagActions()
-{
-  clearMessageTagActions();
-  const QHash<QString,KMMessageTagDescription*> *tagDict = kmkernel->msgTagMgr()->msgTagDict();
-  if ( !tagDict )
-    return;
-  //Use a mapper to understand which tag button is triggered
-  mMessageTagToggleMapper = new QSignalMapper( this );
-  connect( mMessageTagToggleMapper, SIGNAL( mapped( const QString& ) ),
-    this, SLOT( slotUpdateMessageTagList( const QString& ) ) );
-
-  //TODO: No need to do this anymore, just use the ordered list
-  const int numTags = tagDict->count();
-  if ( !numTags ) return;
-  for ( int i = 0; i < numTags; ++i ) {
-    mMessageTagMenuActions.append( MessageTagPtrPair( 0, 0 ) );
-  }
-  KAction *tagAction = 0;
-
-  QHashIterator<QString,KMMessageTagDescription*> it( *tagDict );
-  while( it.hasNext() ) {
-    it.next();
-    if ( ! it.value() || it.value()->isEmpty() )
-      continue;
-    QString cleanName = i18n("Message Tag %1", it.value()->name() );
-    QString iconText = it.value()->name();
-    cleanName.replace('&',"&&");
-    tagAction = new KToggleAction( KIcon(it.value()->iconName()),
-      cleanName, this );
-    tagAction->setShortcut( it.value()->shortcut() );
-    tagAction->setIconText( iconText );
-    actionCollection()->addAction(it.value()->tag().resourceUri().toString().toLocal8Bit(), tagAction);
-    connect(tagAction, SIGNAL(triggered(bool)), mMessageTagToggleMapper, SLOT(map()));
-    // The shortcut configuration is done in the config dialog.
-    // The shortcut set in the shortcut dialog would not be saved back to
-    // the tag descriptions correctly.
-    tagAction->setShortcutConfigurable( false );
-    mMessageTagToggleMapper->setMapping( tagAction, it.value()->tag().resourceUri().toString() );
-    MessageTagPtrPair ptr_pair( it.value(), tagAction );
-    //Relies on the fact that filters are always numbered from 0
-    mMessageTagMenuActions[it.value()->priority()] = ptr_pair;
-  }
-  for ( int i=0; i < numTags; ++i ) {
-    mMsgActions->messageStatusMenu()->menu()->addAction( mMessageTagMenuActions[i].second );
-    if ( ( mMessageTagMenuActions[i].first )->inToolbar() )
-      mMessageTagTBarActions.append( mMessageTagMenuActions[i].second );
-  }
-
-  if ( !mMessageTagTBarActions.isEmpty() && mGUIClient->factory() ) {
-    //Separator doesn't work
-    //mMessageTagTBarActions.prepend( mMessageTagToolbarActionSeparator );
-    mGUIClient->plugActionList( "toolbar_messagetag_actions",
-                                mMessageTagTBarActions );
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::removeDuplicates()

@@ -381,7 +381,6 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 #include "kmkernel.h"
-#include "kmmessagetag.h"
 
 #include <kcombobox.h>
 #include <klocale.h>
@@ -1278,9 +1277,13 @@ namespace {
       valueCombo->setObjectName( "tagRuleValueCombo" );
       valueCombo->setEditable( true );
       valueCombo->addItem( QString() ); // empty entry for user input
-      foreach ( const KMMessageTagDescription * tagDesc, *kmkernel->msgTagMgr()->msgTagList() ) {
-        valueCombo->addItem( KIcon(tagDesc->iconName()),
-                             tagDesc->name(), tagDesc->tag().resourceUri() );
+      foreach( const Nepomuk::Tag &tag, Nepomuk::Tag::allTags() ) {
+        QString iconName( "mail-tagged" );
+        if ( !tag.symbols().isEmpty() ) {
+          iconName = tag.symbols().first();
+        }
+        valueCombo->addItem( KIcon( iconName ),
+                             tag.label(), tag.resourceUri() );
       }
       valueCombo->adjustSize();
       QObject::connect( valueCombo, SIGNAL( activated( int ) ),
@@ -1428,13 +1431,13 @@ namespace {
     } else {
       // set combo box value
       int valueIndex = -1;
-      const QList< KMMessageTagDescription* >* tagList = kmkernel->msgTagMgr()->msgTagList();
-      for ( int i = 0, end = tagList->size(); i < end; ++i ) {
-        const KMMessageTagDescription * tagDesc = tagList->at( i );
-        if ( tagDesc->name() == rule->contents() ) {
-          valueIndex = i;
+      int tagIndex = 0;
+      foreach( const Nepomuk::Tag &tag, Nepomuk::Tag::allTags() ) {
+        if ( tag.label() == rule->contents() ) {
+          valueIndex = tagIndex;
           break;
         }
+        tagIndex++;
       }
 
       KComboBox *tagCombo = valueStack->findChild<KComboBox*>( "tagRuleValueCombo" );

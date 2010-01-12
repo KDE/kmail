@@ -126,6 +126,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
   : QWidget(aParent, aFlags ),
+    mMainWindow( mainWindow ),
     mActionCollection( actionCollection ),
     mMailToComposeAction( 0 ),
     mMailToReplyAction( 0 ),
@@ -133,8 +134,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAddAddrBookAction( 0 ),
     mOpenAddrBookAction( 0 ),
     mUrlSaveAsAction( 0 ),
-    mAddBookmarksAction( 0 ),
-    mMainWindow( mainWindow )
+    mAddBookmarksAction( 0 )
 {
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );

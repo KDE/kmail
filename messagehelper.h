@@ -20,12 +20,15 @@
 #ifndef KMAIL_MESSAGE_HELPER_H
 #define KMAIL_MESSAGE_HELPER_H
 
+#include <messagecore/messagestatus.h>
+
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_message.h>
 #include <akonadi/item.h>
-#include <messagecore/messagestatus.h>
-#include "kmmessagetag.h"
+
+#include <Nepomuk/Tag>
+
 namespace KMail {
   /**
    * Enumeration that defines the available reply "modes"

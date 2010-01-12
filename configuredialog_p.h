@@ -19,6 +19,7 @@
 #include <QStackedWidget>
 #include <QTreeWidget>
 #include <QHash>
+#include <QSharedPointer>
 
 #include <klineedit.h>
 #include <kcombobox.h>
@@ -78,6 +79,9 @@ namespace KMail {
   class IdentityDialog;
   class IdentityListView;
   class IdentityListViewItem;
+  class Tag;
+  class Tag;
+  typedef QSharedPointer<Tag> TagPtr;
 }
 namespace Kleo {
   class BackendConfigWidget;
@@ -533,6 +537,7 @@ private:
   void swapTagsInListBox( const int first, const int second );
 
 private: // data
+
   KLineEdit *mTagNameLineEdit, *mTagAddLineEdit;
   QPushButton *mTagAddButton, *mTagRemoveButton,
               *mTagUpButton, *mTagDownButton;
@@ -552,8 +557,12 @@ private: // data
 
   KKeySequenceWidget *mKeySequenceWidget;
 
-  QHash<QString,KMMessageTagDescription*> *mMsgTagDict;
-  QList<KMMessageTagDescription*> *mMsgTagList;
+  // Maps Nepomuk::Tag resource URIs to Tags
+  QHash<QString,KMail::TagPtr> mMsgTagDict;
+
+  // List of all Tags currently in the list
+  QList<KMail::TagPtr> mMsgTagList;
+
   /*If true, changes to the widgets activate the Apply button*/
   bool mEmitChanges;
   /*Used to safely call slotRecordTagSettings when the selection in

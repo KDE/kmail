@@ -65,7 +65,6 @@ class FolderTreeView;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
 class KMSystemTray;
-typedef QPair<KMMessageTagDescription*,KAction*> MessageTagPtrPair;
 class CustomTemplatesMenu;
 
 
@@ -84,6 +83,7 @@ namespace KMail {
   class ImapAccountBase;
   class FavoriteFolderView;
   class StatusBarLabel;
+  class TagActionManager;
 }
 
 class FolderSelectionTreeView;
@@ -189,6 +189,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Returns the XML GUI client. */
     KXMLGUIClient* guiClient() const { return mGUIClient; }
 
+    KMail::TagActionManager *tagActionManager() const { return mTagActionManager; }
+
 
   public slots:
     // Moving messages around
@@ -229,8 +231,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void slotMessageSelected( const Akonadi::Item & );
 
-  void slotItemsFetchedForActivation( const Akonadi::Item::List &list );
-  void slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & );
+    void slotItemsFetchedForActivation( const Akonadi::Item::List &list );
+    void slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & );
 
 
     void slotReplaceMsgByUnencryptedVersion();
@@ -265,12 +267,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void initializeFolderShortcutActions();
 
     /** Add, remove or adjust the folder's shortcut. */
-  void slotShortcutChanged( const Akonadi::Collection & );
-
-    /** Clear and create actions for message tag toggling */
-    void clearMessageTagActions();
-
-    void initializeMessageTagActions();
+    void slotShortcutChanged( const Akonadi::Collection & );
 
     /** Trigger the dialog for editing out-of-office scripts.  */
     void slotEditVacation();
@@ -278,13 +275,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
     void slotUpdateMessageTagList( const QString &aLabel );
-
-    /** If @p aCount is 0, disables all tag related actions in menus.
-        If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
-        If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
-       @param aCount Number of selected messages
-    */
-    void updateMessageTagActions( const int aCount );
 
     /**
      * Convenience function to get the action collection in a list.
@@ -307,7 +297,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void deleteWidgets();
     void layoutSplitters();
     void updateFileMenu();
-  void newFromTemplate( const Akonadi::Item& );
+    void newFromTemplate( const Akonadi::Item& );
     void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
     void copySelectedMessagesToFolder( const Akonadi::Collection& dest );
 
@@ -370,7 +360,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotStartCertManager();
     void slotStartWatchGnuPG();
     void slotApplyFilters();
-  int slotFilterMsg( const Akonadi::Item &msg );
+    int slotFilterMsg( const Akonadi::Item &msg );
     void slotExpandThread();
     void slotExpandAllThreads();
     void slotCollapseThread();
@@ -549,8 +539,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void itemsReceived(const Akonadi::Item::List &list );
     void itemsFetchDone( KJob *job );
-  void itemsFetchJobForFilterDone( KJob *job );
-  void slotItemsFetchedForFilter( const Akonadi::Item::List & );
+    void itemsFetchJobForFilterDone( KJob *job );
+    void slotItemsFetchedForFilter( const Akonadi::Item::List & );
 private:
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
@@ -632,7 +622,6 @@ private:
 #endif
     KActionCollection *mActionCollection;
     QAction *mToolbarActionSeparator;
-    QAction *mMessageTagToolbarActionSeparator;
     QVBoxLayout *mTopLayout;
     bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
     QList<QAction*> mFilterMenuActions;
@@ -640,10 +629,7 @@ private:
     QList<KMMetaFilterActionCommand*> mFilterCommands;
     QHash<Akonadi::Entity::Id,FolderShortcutCommand*> mFolderShortcutCommands;
 
-    QList<MessageTagPtrPair> mMessageTagMenuActions;
-    QList<QAction*> mMessageTagTBarActions;
-    QSignalMapper *mMessageTagToggleMapper;
-
+    KMail::TagActionManager *mTagActionManager;
     KMSystemTray *mSystemTray;
     KSharedConfig::Ptr mConfig;
     KXMLGUIClient *mGUIClient;

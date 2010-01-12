@@ -47,6 +47,7 @@
 #include <akonadi/changerecorder.h>
 #include "folderselectiontreeview.h"
 #include "foldertreeview.h"
+#include "tagging.h"
 
 #include <QLayout>
 #include <kglobal.h>
@@ -178,7 +179,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   kDebug();
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
-  mainWidget->initializeMessageTagActions();
+  mainWidget->tagActionManager()->createActions();
   mainWidget->initializeFolderShortcutActions();
   mainWidget->updateVactionScriptStatus();
 }

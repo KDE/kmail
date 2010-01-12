@@ -88,7 +88,6 @@ using KMail::ActionScheduler;
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
-#include "kmmessagetag.h"
 //using KMail::FolderJob;
 #include "messageviewer/mailsourceviewer.h"
 using namespace MessageViewer;

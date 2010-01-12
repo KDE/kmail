@@ -46,7 +46,7 @@ using KMail::IdentityListViewItem;
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "kmmainwidget.h"
-#include "kmmessagetag.h"
+#include "tagging.h"
 
 #include "folderselectiontreeview.h"
 
@@ -1902,8 +1902,6 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 {
   mEmitChanges = true;
   mPreviousTag = -1;
-  mMsgTagDict = new QHash<QString,KMMessageTagDescription*>();
-  mMsgTagList = new QList<KMMessageTagDescription*>();
 
   QHBoxLayout *maingrid = new QHBoxLayout( this );
   maingrid->setMargin( KDialog::marginHint() );
@@ -1926,12 +1924,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
   addremovegrid->addWidget( mTagAddLineEdit );
 
-  mTagAddButton = new QPushButton( mTagsGroupBox );
+  mTagAddButton = new KPushButton( mTagsGroupBox );
   mTagAddButton->setToolTip( i18n("Add new tag") );
   mTagAddButton->setIcon( KIcon( "list-add" ) );
   addremovegrid->addWidget( mTagAddButton );
 
-  mTagRemoveButton = new QPushButton( mTagsGroupBox );
+  mTagRemoveButton = new KPushButton( mTagsGroupBox );
   mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
   mTagRemoveButton->setIcon( KIcon( "list-remove" ) );
   addremovegrid->addWidget( mTagRemoveButton );
@@ -1940,13 +1938,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QHBoxLayout *updowngrid = new QHBoxLayout();
   tageditgrid->addLayout( updowngrid );
 
-  mTagUpButton = new QPushButton( mTagsGroupBox );
+  mTagUpButton = new KPushButton( mTagsGroupBox );
   mTagUpButton->setToolTip( i18n("Increase tag priority") );
   mTagUpButton->setIcon( KIcon( "arrow-up" ) );
   mTagUpButton->setAutoRepeat( true );
   updowngrid->addWidget( mTagUpButton );
 
-  mTagDownButton = new QPushButton( mTagsGroupBox );
+  mTagDownButton = new KPushButton( mTagsGroupBox );
   mTagDownButton->setToolTip( i18n("Decrease tag priority") );
   mTagDownButton->setIcon( KIcon( "arrow-down" ) );
   mTagDownButton->setAutoRepeat( true );
@@ -2067,10 +2065,10 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
   //Seventh for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
-                                   mTagSettingGroupBox );
+                                    mTagSettingGroupBox );
   settings->addWidget( mInToolbarCheck, 7, 0 );
   connect( mInToolbarCheck, SIGNAL( stateChanged( int ) ),
-          this, SLOT( slotEmitChangeCheck( void ) ) );
+           this, SLOT( slotEmitChangeCheck( void ) ) );
 
   tagsettinggrid->addStretch( 10 );
 
@@ -2106,9 +2104,6 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
 AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
 {
-  qDeleteAll(*mMsgTagDict);
-  delete mMsgTagDict;
-  delete mMsgTagList;
 }
 
 void AppearancePage::MessageTagTab::slotEmitChangeCheck()
@@ -2145,25 +2140,26 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
   if ( 0 == tmp_index )
     mTagUpButton->setEnabled( true );
 }
+
 void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
                                                        const int second )
 {
-  QString tmp_label = mTagListBox->item( first )->text();
-  QIcon tmp_icon = mTagListBox->item( first )->icon();
-  KMMessageTagDescription *tmp_ptr = mMsgTagList->at( first );
+  const QString tmp_label = mTagListBox->item( first )->text();
+  const QIcon tmp_icon = mTagListBox->item( first )->icon();
+  KMail::Tag::Ptr tmp_ptr = mMsgTagList.at( first );
 
-  mMsgTagList->replace( first, mMsgTagList->at( second ) );
-  mMsgTagList->replace( second, tmp_ptr );
+  mMsgTagList.replace( first, mMsgTagList.at( second ) );
+  mMsgTagList.replace( second, tmp_ptr );
 
   disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
-          this, SLOT( slotSelectionChanged() ) );
+              this, SLOT( slotSelectionChanged() ) );
   mTagListBox->item( first )->setText( mTagListBox->item( second )->text() );
   mTagListBox->item( first )->setIcon( mTagListBox->item( second )->icon() );
   mTagListBox->item( second )->setText( tmp_label );
   mTagListBox->item( second )->setIcon( tmp_icon );
   mTagListBox->setCurrentItem( mTagListBox->item( second ) );
   connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
-          this, SLOT( slotSelectionChanged() ) );
+           this, SLOT( slotSelectionChanged() ) );
 
   mPreviousTag = second;
 
@@ -2175,25 +2171,25 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
   if ( ( aIndex < 0 ) || ( aIndex >= int( mTagListBox->count() ) ) )
     return;
 
-  KMMessageTagDescription *tmp_desc = mMsgTagList->at( aIndex );
+  KMail::Tag::Ptr tmp_desc = mMsgTagList.at( aIndex );
 
-  tmp_desc->setName( mTagListBox->item( aIndex )->text() );
+  tmp_desc->tagName = mTagListBox->item( aIndex )->text();
 
-  tmp_desc->setTextColor( mTextColorCheck->isChecked() ?
-                          mTextColorCombo->color() : QColor() );
+  tmp_desc->textColor = mTextColorCheck->isChecked() ?
+                          mTextColorCombo->color() : QColor();
 
-  tmp_desc->setBackgroundColor( mBackgroundColorCheck->isChecked() ?
-                                mBackgroundColorCombo->color() : QColor() );
+  tmp_desc->backgroundColor = mBackgroundColorCheck->isChecked() ?
+                                mBackgroundColorCombo->color() : QColor();
 
-  tmp_desc->setTextFont( mTextFontCheck->isChecked() ?
-                          mFontRequester->font() : QFont() );
+  tmp_desc->textFont = mTextFontCheck->isChecked() ?
+                          mFontRequester->font() : QFont();
 
-  tmp_desc->setIconName( mIconButton->icon() );
+  tmp_desc->iconName = mIconButton->icon();
 
   mKeySequenceWidget->applyStealShortcut();
-  tmp_desc->setShortcut( KShortcut(mKeySequenceWidget->keySequence()) );
+  tmp_desc->shortcut = KShortcut( mKeySequenceWidget->keySequence() );
 
-  tmp_desc->setInToolbar( mInToolbarCheck->isChecked() );
+  tmp_desc->inToolbar = mInToolbarCheck->isChecked();
 }
 
 void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
@@ -2223,14 +2219,14 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mTagRemoveButton->setEnabled( true );
   mTagUpButton->setEnabled( ( 0 != aIndex ) );
   mTagDownButton->setEnabled(
-                          ( ( int( mMsgTagList->count() ) - 1 ) != aIndex ) );
+                          ( ( int( mMsgTagList.count() ) - 1 ) != aIndex ) );
 
-  KMMessageTagDescription *tmp_desc = mMsgTagList->at( mTagListBox->currentRow() );
+  KMail::Tag::Ptr tmp_desc = mMsgTagList.at( mTagListBox->currentRow() );
 
   mTagNameLineEdit->setEnabled( true );
-  mTagNameLineEdit->setText( tmp_desc->name() );
+  mTagNameLineEdit->setText( tmp_desc->tagName );
 
-  QColor tmp_color = tmp_desc->textColor();
+  QColor tmp_color = tmp_desc->textColor;
   mTextColorCheck->setEnabled( true );
   if ( tmp_color.isValid() ) {
     mTextColorCombo->setColor( tmp_color );
@@ -2239,7 +2235,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mTextColorCheck->setChecked( false );
   }
 
-  tmp_color = tmp_desc->backgroundColor();
+  tmp_color = tmp_desc->backgroundColor;
   mBackgroundColorCheck->setEnabled( true );
   if ( tmp_color.isValid() ) {
     mBackgroundColorCombo->setColor( tmp_color );
@@ -2248,29 +2244,26 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mBackgroundColorCheck->setChecked( false );
   }
 
-  QFont tmp_font = tmp_desc->textFont();
+  QFont tmp_font = tmp_desc->textFont;
   mTextFontCheck->setEnabled( true );
   mTextFontCheck->setChecked( ( tmp_font != QFont() ) );
   mFontRequester->setFont( tmp_font );
 
   mIconButton->setEnabled( true );
-  mIconButton->setIcon( tmp_desc->iconName() );
+  mIconButton->setIcon( tmp_desc->iconName );
 
   mKeySequenceWidget->setEnabled( true );
-  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut().primary(),
+  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut.primary(),
                                       KKeySequenceWidget::NoValidate );
 
   mInToolbarCheck->setEnabled( true );
-  mInToolbarCheck->setChecked( tmp_desc->inToolbar() );
+  mInToolbarCheck->setChecked( tmp_desc->inToolbar );
 
   mEmitChanges = true;
 }
 
 void AppearancePage::MessageTagTab::slotSelectionChanged()
 {
-  //monur: Shouldn't be calling in this case
-  //if (aIndex == mPreviousTag)
-  //return;
   slotRecordTagSettings( mPreviousTag );
   slotUpdateTagSettingWidgets( mTagListBox->currentRow() );
   mPreviousTag = mTagListBox->currentRow();
@@ -2280,10 +2273,10 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
 {
   int tmp_index = mTagListBox->currentRow();
   if ( !( tmp_index < 0 ) ) {
-    KMMessageTagDescription *tmp_desc = mMsgTagList->takeAt( tmp_index );
-    mMsgTagDict->remove( tmp_desc->tag().resourceUri().toString() );
-    tmp_desc->tag().remove();
-    delete tmp_desc;
+    KMail::Tag::Ptr tmp_desc = mMsgTagList.takeAt( tmp_index );
+    mMsgTagDict.remove( tmp_desc->nepomukResourceUri.toString() );
+    Nepomuk::Tag nepomukTag( tmp_desc->nepomukResourceUri );
+    nepomukTag.remove();
     mPreviousTag = -1;
 
     //Before deleting the current item, make sure the selectionChanged signal
@@ -2322,60 +2315,55 @@ void AppearancePage::MessageTagTab::slotIconNameChanged( const QString &iconName
   mTagListBox->currentItem()->setIcon( KIcon( iconName ) );
 }
 
-void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString
-                                                            &aText )
+void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText )
 {
-  mTagAddButton->setEnabled( ! aText.isEmpty() );
+  mTagAddButton->setEnabled( !aText.isEmpty() );
 }
 
 void AppearancePage::MessageTagTab::slotAddNewTag()
 {
-  int tmp_priority = mMsgTagList->count();
-  Nepomuk::Tag tmp_tag( mTagAddLineEdit->text() );
-  tmp_tag.setLabel( mTagAddLineEdit->text() );
+  const int tmp_priority = mMsgTagList.count();
 
-  KMMessageTagDescription *tmp_desc = new KMMessageTagDescription( tmp_tag, tmp_priority );
-  mMsgTagDict->insert( tmp_desc->tag().resourceUri().toString() , tmp_desc );
-  mMsgTagList->append( tmp_desc );
+  Nepomuk::Tag nepomukTag( mTagAddLineEdit->text() );
+  nepomukTag.setLabel( mTagAddLineEdit->text() );
+
+  KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
+  tag->priority = tmp_priority;
+  mMsgTagDict.insert( tag->nepomukResourceUri.toString() , tag );
+  mMsgTagList.append( tag );
   slotEmitChangeCheck();
   mTagAddLineEdit->setText( QString() );
   QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
-  newItem->setText( tmp_desc->name() );
-  newItem->setIcon( KIcon( tmp_desc->iconName() ) );
+  newItem->setText( tag->tagName );
+  newItem->setIcon( KIcon( tag->iconName ) );
   mTagListBox->addItem( newItem );
   mTagListBox->setCurrentItem( newItem );
 }
 
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
-  mMsgTagDict->clear();
-  qDeleteAll(*mMsgTagList);
-  mMsgTagList->clear();
+  mMsgTagDict.clear();
+  mMsgTagList.clear();
   mTagListBox->clear();
 
-  //Used for sorting, go through this routine so that mMsgTagList is properly
-  //ordered
-  KMMessageTagList tmp_list;
-  QHashIterator<QString,KMMessageTagDescription*> it( *( kmkernel->msgTagMgr()->msgTagDict() ) );
-  while (it.hasNext()) {
-    it.next();
-    tmp_list.append( it.value()->tag().resourceUri().toString() );
+  foreach( const Nepomuk::Tag &nepomukTag, Nepomuk::Tag::allTags() ) {
+    KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
+    mMsgTagDict.insert( nepomukTag.resourceUri().toString(), tag );
+    mMsgTagList.append( tag );
   }
-  tmp_list.prioritySort();
+
+  qSort( mMsgTagList.begin(), mMsgTagList.end(), KMail::Tag::compare );
+
+  foreach( const KMail::Tag::Ptr tag, mMsgTagList ) {
+    new QListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
+    if ( tag->priority == -1 )
+      tag->priority = mTagListBox->count() - 1;
+  }
 
   //Disconnect so that insertItem's do not trigger an update procedure
   disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
               this, SLOT( slotSelectionChanged() ) );
-  for ( KMMessageTagList::Iterator itl = tmp_list.begin();
-        itl != tmp_list.end(); ++itl ) {
-    const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( *itl );
-    if ( tmp_desc ) {
-      new QListWidgetItem( KIcon( tmp_desc->iconName() ), tmp_desc->name(), mTagListBox );
-      KMMessageTagDescription *insert_desc = new KMMessageTagDescription( *tmp_desc );
-      mMsgTagDict->insert( *itl , insert_desc );
-      mMsgTagList->append( insert_desc );
-    }
-  }
+
   connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
            this, SLOT( slotSelectionChanged() ) );
   slotUpdateTagSettingWidgets( -1 );
@@ -2386,7 +2374,21 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 void AppearancePage::MessageTagTab::save()
 {
   slotRecordTagSettings( mTagListBox->currentRow() );
-  kmkernel->msgTagMgr()->fillTagsFromList( mMsgTagList );
+
+  foreach( const KMail::Tag::Ptr &tag, mMsgTagList ) {
+
+    tag->priority = mMsgTagList.indexOf( tag );
+
+    KMail::Tag::SaveFlags saveFlags = 0;
+    if ( mTextColorCheck->isChecked() )
+      saveFlags |= KMail::Tag::TextColor;
+    if ( mBackgroundColorCheck->isChecked() )
+      saveFlags |= KMail::Tag::BackgroundColor;
+    if ( mTextFontCheck->isChecked() )
+      saveFlags |= KMail::Tag::Font;
+
+    tag->saveToNepomuk( saveFlags );
+  }
 }
 
 

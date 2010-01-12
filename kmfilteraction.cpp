@@ -23,7 +23,6 @@ using KMail::ActionScheduler;
 using KMail::RegExpLineEdit;
 #include "stringutil.h"
 #include "messageviewer/stringutil.h"
-#include "kmmessagetag.h"
 
 #include "messagehelper.h"
 #include "messageinfo.h"
@@ -906,12 +905,9 @@ KMFilterAction* KMFilterActionAddTag::newAction()
 KMFilterActionAddTag::KMFilterActionAddTag()
   : KMFilterActionWithStringList( "add tag", i18n("Add Tag") )
 {
-  const QHash<QString, KMMessageTagDescription *> * tagDict = kmkernel->msgTagMgr()->msgTagDict();
-  if ( tagDict ) {
-    foreach ( const KMMessageTagDescription * tagDesc, *tagDict ) {
-      mParameterList.append( tagDesc->name() );
-      mLabelList.append( tagDesc->tag().resourceUri().toString() );
-    }
+  foreach( const Nepomuk::Tag &tag, Nepomuk::Tag::allTags() ) {
+    mParameterList.append( tag.label() );
+    mLabelList.append( tag.resourceUri().toString() );
   }
 }
 
