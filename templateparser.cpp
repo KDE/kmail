@@ -964,13 +964,12 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     KMail::AttachmentCollector ac;
     ac.collectAttachmentsFrom( root );
 
-#if 0 //TODO port to akonadi
     // Now, delete the old content and set the new content, which
     // is either only the new text or the new text with some attachments.
-    mMsg->deleteBodyParts();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    KMime::Content::List parts = mMsg->contents();
+    foreach ( KMime::Content *content, parts )
+      mMsg->removeContent( content, true /*delete*/ );
+
     // Set To and CC from the template
     if ( !mTo.isEmpty() ) {
       mMsg->to()->fromUnicodeString( mMsg->to()->asUnicodeString() + ',' + mTo, "utf-8" );
@@ -991,27 +990,18 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
     // add the normal body as well as the attachments
     else
     {
+      const QByteArray boundary = KMime::multiPartBoundary();
       mMsg->contentType()->setMimeType( "multipart/mixed" );
+      mMsg->contentType()->setBoundary( boundary );
 
       KMime::Content *textPart = new KMime::Content( mMsg.get() );
-      textPart->setBody( body.toUtf8() );
+      textPart->contentType()->setMimeType( "text/plain" );
+      textPart->fromUnicodeString( body );
       mMsg->addContent( textPart );
-      mMsg->assemble();
-#if 0 //TODO port to akonadi
       foreach( KMime::Content *attachment, ac.attachments() ) {
-
-        // When adding this body part, make sure to _not_ add the next bodypart
-        // as well, which mimelib would do, therefore creating a mail with many
-        // duplicate attachments (so many that KMail runs out of memory, in fact).
-        // Body::AddBodyPart is very misleading here...
-        attachment->dwPart()->SetNext( 0 );
-
-        mMsg->addDwBodyPart( static_cast<DwBodyPart*>( attachment->dwPart()->Clone() ) );
-        mMsg->assembleIfNeeded();
+        mMsg->addContent( attachment );
       }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+      mMsg->assemble();
     }
   }
 }
