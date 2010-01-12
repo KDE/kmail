@@ -33,6 +33,7 @@
 #include "kmfilteraction.h"
 #include "util.h"
 #include "messageviewer/autoqpointer.h"
+#include "messageviewer/util.h"
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -197,7 +198,7 @@ void FilterImporterExporter::exportFilters(const QList<KMFilter *> &filters )
     KUrl saveUrl = KFileDialog::getSaveUrl( QDir::homePath(), QString(),
                                             mParent, i18n("Export Filters") );
 
-    if ( saveUrl.isEmpty() || !Util::checkOverwrite( saveUrl, mParent ) )
+    if ( saveUrl.isEmpty() || !MessageViewer::Util::checkOverwrite( saveUrl, mParent ) )
         return;
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig( saveUrl.toLocalFile() );

@@ -22,7 +22,7 @@
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "folderrequester.h"
-#include "util.h"
+#include "messageviewer/util.h"
 
 #include <Akonadi/Collection>
 
@@ -128,7 +128,7 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
   }
   Q_ASSERT( button == KDialog::Ok );
 
-  if ( !Util::checkOverwrite( mUrlRequester->url(), this ) ) {
+  if ( !MessageViewer::Util::checkOverwrite( mUrlRequester->url(), this ) ) {
     return;
   }
 

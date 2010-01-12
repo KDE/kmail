@@ -49,71 +49,6 @@
 #include "imapsettings.h"
 #include <kimap/loginjob.h>
 
-
-size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
-{
-    if ( !str || strLen == 0 )
-        return 0;
-
-    const char* source = str;
-    const char* sourceEnd = source + strLen;
-
-    // search the first occurrence of "\r\n"
-    for ( ; source < sourceEnd - 1; ++source ) {
-        if ( *source == '\r' && *( source + 1 ) == '\n' )
-            break;
-    }
-
-    if ( source == sourceEnd - 1 ) {
-        // no "\r\n" found
-        return strLen;
-    }
-
-    // replace all occurrences of "\r\n" with "\n" (in place)
-    char* target = const_cast<char*>( source ); // target points to '\r'
-    ++source; // source points to '\n'
-    for ( ; source < sourceEnd; ++source ) {
-        if ( *source != '\r' || *( source + 1 ) != '\n' )
-            * target++ = *source;
-    }
-    *target = '\0'; // terminate result
-    return target - str;
-}
-
-QByteArray KMail::Util::lf2crlf( const QByteArray & src )
-{
-    QByteArray result;
-    result.resize( 2*src.size() );  // maximal possible length
-
-    QByteArray::ConstIterator s = src.begin();
-    QByteArray::Iterator d = result.begin();
-  // we use cPrev to make sure we insert '\r' only there where it is missing
-    char cPrev = '?';
-    const char* end = src.end();
-    while ( s != end ) {
-        if ( ('\n' == *s) && ('\r' != cPrev) )
-            *d++ = '\r';
-        cPrev = *s;
-        *d++ = *s++;
-    }
-    result.truncate( d - result.begin() );
-    return result;
-}
-
-bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
-{
-  if ( KIO::NetAccess::exists( url, KIO::NetAccess::DestinationSide, w ) ) {
-    if ( KMessageBox::Cancel == KMessageBox::warningContinueCancel(
-         w,
-         i18n( "A file named \"%1\" already exists. "
-             "Are you sure you want to overwrite it?", url.prettyUrl() ),
-             i18n( "Overwrite File?" ),
-                   KStandardGuiItem::overwrite() ) )
-      return false;
-  }
-  return true;
-}
-
 #ifndef KMAIL_UNITTESTS
 bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
 {
@@ -145,17 +80,6 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
 #include <QDesktopServices>
 #endif
 
-bool KMail::Util::handleUrlOnMac( const KUrl& url )
-{
-#ifdef Q_WS_MACX
-  QDesktopServices::openUrl( url );
-  return true;
-#else
-  Q_UNUSED( url );
-  return false;
-#endif
-}
-
 KMime::Message::Ptr KMail::Util::message( const Akonadi::Item & item )
 {
   if ( !item.hasPayload<KMime::Message::Ptr>() ) {
@@ -163,77 +87,6 @@ KMime::Message::Ptr KMail::Util::message( const Akonadi::Item & item )
     return KMime::Message::Ptr();
   }
   return item.payload<boost::shared_ptr<KMime::Message> >();
-}
-
-QByteArray toUsAscii(const QString& _str, bool *ok)
-{
-  bool all_ok =true;
-  QString result = _str;
-  int len = result.length();
-  for (int i = 0; i < len; i++)
-    if (result.at(i).unicode() >= 128) {
-      result[i] = '?';
-      all_ok = false;
-    }
-  if (ok)
-    *ok = all_ok;
-  return result.toLatin1();
-}
-
-const QTextCodec* codecForName(const QByteArray& _str)
-{
-  // cberzan: kill this
-  if (_str.isEmpty())
-    return 0;
-  QByteArray codec = _str;
-  kAsciiToLower(codec.data()); // TODO cberzan: I don't think this is needed anymore
-                               // (see kdelibs/kdecore/localization/kcharsets.cpp:
-                               // it already toLowers stuff).
-  return KGlobal::charsets()->codecForName(codec);
-}
-
-//-----------------------------------------------------------------------------
-QByteArray autoDetectCharset(const QByteArray &_encoding, const QStringList &encodingList, const QString &text)
-{
-    QStringList charsets = encodingList;
-    if (!_encoding.isEmpty())
-    {
-       QString currentCharset = QString::fromLatin1(_encoding);
-       charsets.removeAll(currentCharset);
-       charsets.prepend(currentCharset);
-    }
-
-    // cberzan: moved this crap to CodecManager ==================================
-    QStringList::ConstIterator it = charsets.constBegin();
-    for (; it != charsets.constEnd(); ++it)
-    {
-       QByteArray encoding = (*it).toLatin1();
-       if (encoding == "locale")
-       {
-         encoding = KMKernel::self()->networkCodec()->name();
-         kAsciiToLower(encoding.data());
-       }
-       if (text.isEmpty())
-         return encoding;
-       if (encoding == "us-ascii") {
-         bool ok;
-         (void) toUsAscii(text, &ok);
-         if (ok)
-            return encoding;
-       }
-       else
-       {
-         const QTextCodec *codec = codecForName(encoding);
-         if (!codec) {
-           kDebug() << "Auto-Charset: Something is wrong and I can not get a codec. [" << encoding <<"]";
-         } else {
-           if (codec->canEncode(text))
-              return encoding;
-         }
-       }
-    }
-    // cberzan: till here =====================================================
-    return 0;
 }
 
 KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a, const QString& ident) {

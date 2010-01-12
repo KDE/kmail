@@ -62,9 +62,6 @@ namespace KMail
      */
 namespace Util {
 
-    // return true if we should proceed, false if we should abort
-    bool checkOverwrite( const KUrl &url, QWidget *w );
-
     /** Test if all required settings are set.
       Reports problems to user via dialogs and returns false.
       Returns true if everything is Ok. */
@@ -80,20 +77,6 @@ namespace Util {
      */
     size_t crlf2lf( char* str, const size_t strLen );
 
-
-    /**
-     * Delegates opening a URL to the Max OSX mechanisms for that.
-     * Returns false if it did nothing (such as on other platforms.
-     */
-    bool handleUrlOnMac( const KUrl& url );
-
-    /**
-     * Convert "\n" line endings to "\r\n".
-     * @param src The source string to convert.
-     * @return The result string.
-     */
-    QByteArray lf2crlf( const QByteArray & src );
-
     /**
      * Validates a list of email addresses.
      * @return true if all addresses are valid.
@@ -103,28 +86,10 @@ namespace Util {
 
     KMime::Message::Ptr message( const Akonadi::Item & item );
 
-    /** Convert all non-ascii characters to question marks
-     * If ok is non-null, *ok will be set to true if all characters
-     * where ascii, *ok will be set to false otherwise */
-    QByteArray toUsAscii(const QString& _str, bool *ok=0);
+    KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
+    OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
 
-
-    /** Return a QTextCodec for the specified charset.
-     * This function is a bit more tolerant, than QTextCodec::codecForName */
-    const QTextCodec* codecForName(const QByteArray& _str);
-
-
-    /**
-     * Find out preferred charset for 'text'.
-     * First @p encoding is tried and if that one is not suitable,
-     * the encodings in @p encodingList are tried.
-     */
-     QByteArray autoDetectCharset(const QByteArray &encoding, const QStringList &encodingList, const QString &text);
-
-     KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
-     OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
-
-     void launchAccountWizard( QWidget * );
+    void launchAccountWizard( QWidget * );
 }
 }
 

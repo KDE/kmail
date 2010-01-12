@@ -41,27 +41,6 @@ namespace KMail
 namespace StringUtil
 {
   /**
-   * Used to determine if the visible part of the anchor contains
-   * only the name part and not the given emailAddr or the full address.
-   */
-  enum Display {
-    DisplayNameOnly,
-    DisplayFullAddress
-  };
-
-  /** Used to determine if the address should be a link or not */
-  enum Link {
-    ShowLink,
-    HideLink
-  };
-
-  /** Used to determine if the address field should be expandable/collapsable */
-  enum AddressMode {
-    ExpandableAddresses,
-    FullAddresses
-  };
-
-  /**
    * Strips all the user's addresses from an address list. This is used
    * when replying.
    */
