@@ -998,8 +998,19 @@ void TemplateParser::addProcessedBodyToMessage( const QString &body )
       textPart->contentType()->setMimeType( "text/plain" );
       textPart->fromUnicodeString( body );
       mMsg->addContent( textPart );
+
+      int attachmentNumber = 1;
       foreach( KMime::Content *attachment, ac.attachments() ) {
         mMsg->addContent( attachment );
+        // If the content type has no name or filename parameter, add one, since otherwise the name
+        // would be empty in the attachment view of the composer, which looks confusing
+        if ( attachment->contentType( false ) ) {
+          if ( !attachment->contentType()->hasParameter( "name" ) &&
+               !attachment->contentType()->hasParameter( "filename" ) ) {
+            attachment->contentType()->setParameter( "name", i18n( "Attachment %1", attachmentNumber ) );
+          }
+        }
+        attachmentNumber++;
       }
       mMsg->assemble();
     }
