@@ -728,6 +728,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "message/rfc822" );
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
+
   connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
            SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
   connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
