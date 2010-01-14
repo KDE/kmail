@@ -46,7 +46,7 @@ class ArchiveFolderDialog : public KDialog
   protected slots:
 
     void slotFixFileExtension();
-
+    void slotFolderChanged( const Akonadi::Collection& );
     /** reimp */
     virtual void slotButtonClicked( int button );
 

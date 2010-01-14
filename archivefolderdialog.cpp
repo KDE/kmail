@@ -66,6 +66,8 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
   mFolderRequester = new FolderRequester( mainWidget );
+  mFolderRequester->setMustBeReadWrite( false );
+  connect( mFolderRequester, SIGNAL( folderChanged( const Akonadi::Collection& ) ), SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
   folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
@@ -113,11 +115,17 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   resize( 500, minimumSize().height() );
 }
 
+void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
+{
+  mDeleteCheckBox->setEnabled( folder.rights() & Akonadi::Collection::CanDeleteItem );
+}
+
 void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollection )
 {
   mFolderRequester->setFolder( defaultCollection );
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
+  mDeleteCheckBox->setEnabled( defaultCollection.rights() & Akonadi::Collection::CanDeleteItem );
 }
 
 void ArchiveFolderDialog::slotButtonClicked( int button )
@@ -143,7 +151,7 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
   backupJob->setRootFolder( mFolderRequester->folderCollection() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );
-  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() );
+  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() && mFolderRequester->folderCollection().rights() & Akonadi::Collection::CanDeleteItem );
   backupJob->start();
   accept();
 }
