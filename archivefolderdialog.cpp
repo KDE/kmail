@@ -66,6 +66,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mainLayout->addWidget( folderLabel, row, 0 );
   mFolderRequester = new FolderRequester( mainWidget );
   mFolderRequester->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
+  connect( mFolderRequester, SIGNAL( folderChanged( KMFolder* ) ), SLOT( slotFolderChanged( KMFolder* ) ) );
   folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
@@ -113,11 +114,17 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   resize( 500, minimumSize().height() );
 }
 
+void ArchiveFolderDialog::slotFolderChanged( KMFolder *folder )
+{
+  mDeleteCheckBox->setEnabled( folder->canDeleteMessages() );
+}
+
 void ArchiveFolderDialog::setFolder( KMFolder *defaultFolder )
 {
   mFolderRequester->setFolder( defaultFolder );
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultFolder->name() ) );
+  mDeleteCheckBox->setEnabled( defaultFolder->canDeleteMessages() );
 }
 
 void ArchiveFolderDialog::slotButtonClicked( int button )
@@ -143,7 +150,7 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
   backupJob->setRootFolder( mFolderRequester->folder() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );
-  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() );
+  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() && mFolderRequester->folder()->canDeleteMessages());
   backupJob->start();
   accept();
 }
