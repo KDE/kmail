@@ -57,8 +57,6 @@ class CodecAction;
 class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
-class KMMessage;
-class KMMessagePart;
 class KSelectAction;
 class KSelectAction;
 class KAction;
