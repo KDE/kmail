@@ -21,6 +21,7 @@
 #include <agentprogressmonitor.h>
 #include <QDebug>
 #include <KLocale>
+#include <KDebug>
 #include "progressmanager.h"
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
@@ -28,7 +29,7 @@ using KPIM::ProgressManager;
 KMAgentInstance::KMAgentInstance( QObject *parent, const Akonadi::AgentInstance & inst )
   :QObject( parent ), mAgentInstance( inst ), mProgressItem( 0 )
 {
-  qDebug()<<" KMAgentInstance::KMAgentInstance";
+  kDebug()<<" KMAgentInstance::KMAgentInstance";
 // TODO implement me!
 //  ProgressItem *item = ProgressManager::createProgressItem( mAgentInstance.name() );
 //  mProgressItem = ProgressManager::createProgressItem(item, "MailCheck"+mAgentInstance.name(),i18n("Preparing transmission from \"%1\"...", mAgentInstance.name() ) );
@@ -36,7 +37,7 @@ KMAgentInstance::KMAgentInstance( QObject *parent, const Akonadi::AgentInstance 
 
 KMAgentInstance::~KMAgentInstance()
 {
-  qDebug()<<" KMAgentInstance::~KMAgentInstance";
+  //kDebug()<<" KMAgentInstance::~KMAgentInstance";
 }
 
 #include "kmagentinstance.moc"
