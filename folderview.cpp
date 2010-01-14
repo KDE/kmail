@@ -1489,7 +1489,7 @@ void FolderView::fillContextMenuFolderServiceRelatedActions( KMenu *menu, Folder
   if ( item->folderType() != FolderViewItem::Root ) // non account level folder
   {
     menu->addAction( mMainWidget->action( "folder_shortcut_command" ) );
-    if ( !folder->noContent() )
+    if ( !folder->noContent() && folder->canDeleteMessages())
       menu->addAction( i18n("Expire..."), item, SLOT( slotShowExpiryProperties() ) );
 
     // properties
