@@ -62,7 +62,6 @@ class KConfig;
 class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
-class KMMessageTagDescription;
 class KColorCombo;
 class KFontRequester;
 class KIconButton;
