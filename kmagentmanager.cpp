@@ -44,7 +44,7 @@ void KMAgentManager::init()
   Akonadi::AgentInstance::List lst = mAgentManager->instances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
-    if ( type.type().mimeTypes().contains(  "message/rfc822" ) ) {
+    if ( type.type().mimeTypes().contains(  "message/rfc822" ) && type.type().capabilities().contains( "Resource" )) {
       mListInstance << type;
       KMAgentInstance *agent = new KMAgentInstance( this, type );
       lstAgentInstance.insert( type.identifier(), agent );
