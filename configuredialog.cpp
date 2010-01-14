@@ -2392,6 +2392,8 @@ void AppearancePage::MessageTagTab::save()
 
     tag->saveToNepomuk( saveFlags );
   }
+
+  KMail::TagActionManager::triggerUpdate();
 }
 
 

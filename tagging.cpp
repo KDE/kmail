@@ -114,6 +114,8 @@ bool Tag::compare( Tag::Ptr &tag1, Tag::Ptr &tag2 )
   return tag1->priority < tag2->priority;
 }
 
+QList<TagActionManager*> TagActionManager::mInstances;
+
 TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCollection,
                                     MessageActions *messageActions, KXMLGUIClient *guiClient )
   : QObject( parent ),
@@ -123,11 +125,19 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mGUIClient( guiClient ),
     mSopranoModel( new Soprano::Util::SignalCacheModel( Nepomuk::ResourceManager::instance()->mainModel() ) )
 {
+  mInstances.append( this );
+
   // Listen to Nepomuk tag updates
-  connect( mSopranoModel.data(), SIGNAL(statementAdded(Soprano::Statement)),
+  // ### This is way too slow for now, we use triggerUpdate() instead
+  /*connect( mSopranoModel.data(), SIGNAL(statementAdded(Soprano::Statement)),
            SLOT(statementChanged(Soprano::Statement)) );
   connect( mSopranoModel.data(), SIGNAL(statementRemoved(Soprano::Statement)),
-           SLOT(statementChanged(Soprano::Statement)) );
+           SLOT(statementChanged(Soprano::Statement)) );*/
+}
+
+TagActionManager::~TagActionManager()
+{
+  mInstances.removeAll( this );
 }
 
 void TagActionManager::statementChanged( Soprano::Statement statement )
@@ -236,5 +246,12 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
     for ( ; it != mTagActions.constEnd(); it++ ) {
       it.value()->setEnabled( false );
     }
+  }
+}
+
+void TagActionManager::triggerUpdate()
+{
+  foreach( TagActionManager *instance, mInstances )   {
+    instance->createActions();
   }
 }

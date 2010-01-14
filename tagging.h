@@ -118,6 +118,8 @@ namespace KMail {
       TagActionManager( QObject *parent, KActionCollection *actionCollection,
                         MessageActions *messageActions, KXMLGUIClient *guiClient );
 
+      ~TagActionManager();
+
       /**
         * Removes all actions from the GUI again
         */
@@ -137,6 +139,12 @@ namespace KMail {
         */
       void updateActionStates( int numberOfSelectedMessages,
                                const Akonadi::Item &selectedItem );
+
+      /**
+        * Triggers an update of all instances of TagActionManager.
+        */
+      static void triggerUpdate();
+
 
     Q_SIGNALS:
 
@@ -166,6 +174,8 @@ namespace KMail {
 
       // Needed so we can listen to Nepomuk Tag changes
       QScopedPointer<Soprano::Util::SignalCacheModel> mSopranoModel;
+
+      static QList<TagActionManager*> mInstances;
   };
 
 }
