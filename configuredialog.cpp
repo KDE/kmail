@@ -788,6 +788,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   Akonadi::AgentTypeDialog dlg( this );
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
   filter->addMimeTypeFilter( "message/rfc822" );
+  filter->addCapabilityFilter( "Resource" );
   if ( dlg.exec() ) {
     const Akonadi::AgentType agentType = dlg.agentType();
 
