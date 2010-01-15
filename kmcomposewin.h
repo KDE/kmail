@@ -348,6 +348,7 @@ class KMComposeWin : public KMail::Composer
     void slotEditDone( KMail::EditorWatcher* watcher );
     void slotLanguageChanged( const QString &language );
 
+    void slotEditorTextChanged();
   public slots: // kmkernel
     /**
        Tell the composer to always send the message, even if the user
@@ -791,6 +792,8 @@ class KMComposeWin : public KMail::Composer
 
     KSelectAction *mEncodingAction;
     KSelectAction *mCryptoModuleAction;
+
+    KAction * mFindText, *mFindNextText, *mReplaceText;
 
     QByteArray mCharset;
     QByteArray mDefCharset;
