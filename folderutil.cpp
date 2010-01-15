@@ -74,7 +74,7 @@ KMFolder *KMail::FolderUtil::createSubFolder( KMFolder *parentFolder, KMFolderDi
   } else {
     // local folder
     Q_ASSERT( localFolderType == KMFolderTypeMaildir || localFolderType == KMFolderTypeMbox );
-    newFolder = kmkernel->folderMgr()->createFolder( folderName, false, KMFolderTypeMaildir,
+    newFolder = kmkernel->folderMgr()->createFolder( folderName, false, localFolderType,
                                                      parentDir );
     return newFolder;
   }
