@@ -65,8 +65,9 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
   mFolderRequester = new FolderRequester( mainWidget, kmkernel->getKMMainWidget()->folderTree() );
-   connect( mFolderRequester, SIGNAL(folderChanged(KMFolder *)),
-            SLOT(slotFolderChanged(KMFolder *)) );
+  mFolderRequester->setMustBeReadWrite( false );
+  connect( mFolderRequester, SIGNAL(folderChanged(KMFolder *)),
+           SLOT(slotFolderChanged(KMFolder *)) );
   folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
