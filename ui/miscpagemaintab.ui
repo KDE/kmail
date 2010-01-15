@@ -173,41 +173,6 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="mQuotaLabel">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>&amp;Quota units:</string>
-       </property>
-       <property name="buddy">
-        <cstring>mQuotaCmbBox</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="KComboBox" name="mQuotaCmbBox">
-       <item>
-        <property name="text">
-         <string>KB</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>MB</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>GB</string>
-        </property>
-       </item>
-      </widget>
-     </item>
      <item row="7" column="1">
       <widget class="KMail::FolderRequester" name="mOnStartupOpenFolder" native="true"/>
      </item>

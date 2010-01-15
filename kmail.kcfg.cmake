@@ -139,16 +139,6 @@
         <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
          <default>85</default>
       </entry>
-      <entry name="QuotaUnit"  type="Enum">
-        <label></label>
-        <whatsthis></whatsthis>
-        <choices>
-          <choice name="KB"/>
-          <choice name="MB"/>
-          <choice name="GB"/>
-        </choices>
-        <default>MB</default>
-      </entry>
     </group>
 <!-- General -->
 

@@ -4041,10 +4041,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   connect( mMMTab.mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  //TODO: 4.3 Change the strings in mQuotaCmbBox into something better.
-  connect( mMMTab.mQuotaCmbBox, SIGNAL( activated( int )  ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings()
@@ -4056,7 +4052,6 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
   mMMTab.mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
   mMMTab.mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
   mMMTab.mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
-  mMMTab.mQuotaCmbBox->setCurrentIndex( GlobalSettings::self()->quotaUnit() );
 }
 
 void MiscPage::FolderTab::doLoadOther()
@@ -4088,7 +4083,6 @@ void MiscPage::FolderTab::save()
   GlobalSettings::self()->setShowPopupAfterDnD( mMMTab.mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mMMTab.mExcludeImportantFromExpiry->isChecked() );
-  GlobalSettings::self()->setQuotaUnit( mMMTab.mQuotaCmbBox->currentIndex() );
 }
 
 QString MiscPage::InviteTab::helpAnchor() const
