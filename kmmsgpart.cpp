@@ -453,7 +453,7 @@ QString KMMessagePart::fileName( void ) const
   if ( bRFC2231encoded ) {
     return KMMsgBase::decodeRFC2231String( str );
   } else {
-    return KMMsgBase::decodeRFC2047String( str, charset() );
+    return KMMsgBase::decodeRFC2047String( str );
   }
 }
 
