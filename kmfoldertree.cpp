@@ -1113,7 +1113,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     folderToPopupMenu( CopyFolder, this, &mMenuToFolder, copyMenu );
     folderMenu->insertItem( i18n("&Copy Folder To"), copyMenu );
 
-    if ( fti->folder()->isMoveable() )
+    if ( fti->folder()->isMoveable() && fti->folder()->canDeleteMessages() )
     {
       QPopupMenu *moveMenu = new QPopupMenu( folderMenu );
       folderToPopupMenu( MoveFolder, this, &mMenuToFolder, moveMenu );
