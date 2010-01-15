@@ -95,6 +95,8 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
   mUrlRequester->fileDialog()->setKeepLocation( true );
   fileNameLabel->setBuddy( mUrlRequester );
+  connect( mUrlRequester->lineEdit(), SIGNAL(textChanged(const QString &)),
+           SLOT(slotUrlChanged(const QString &)) );
   connect( mUrlRequester, SIGNAL(urlSelected(const QString&)),
            this, SLOT(slotFixFileExtension()) );
   mainLayout->addWidget( mUrlRequester, row, 1 );
@@ -114,6 +116,11 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   // Make it a bit bigger, else the folder requester cuts off the text too early
   resize( 500, minimumSize().height() );
+}
+
+void ArchiveFolderDialog::slotUrlChanged( const QString &text )
+{
+  enableButton( Ok, !text.isEmpty() );
 }
 
 void ArchiveFolderDialog::slotFolderChanged( KMFolder *folder )
