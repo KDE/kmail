@@ -596,11 +596,7 @@ void KMFilterDlg::slotUpdateAccountList()
   for ( int i = 0; i <lst.count(); ++i ) {
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
     listItem->setText( 0, lst.at( i ).name() );
-#if 0 //Port to akonadi
-    listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-#else
-    kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
-#endif
+    listItem->setText( 1, lst.at( i ).type().name() );
     listItem->setText( 2, QString( "%1" ).arg( lst.at( i ).identifier() ) );
     if ( mFilter )
       listItem->setCheckState( 0, mFilter->applyOnAccount( lst.at( i ).identifier() ) ?
