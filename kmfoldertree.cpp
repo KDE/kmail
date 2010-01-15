@@ -1186,7 +1186,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         fti,
         SLOT(assignShortcut()));
 
-    if ( !fti->folder()->noContent() ) {
+    if ( !fti->folder()->noContent() && fti->folder()->canDeleteMessages() ) {
       folderMenu->insertItem( i18n("Expire..."), fti,
                               SLOT( slotShowExpiryProperties() ) );
     }
