@@ -46,6 +46,9 @@ namespace KMail {
     bool activateVacation() const;
     virtual void setActivateVacation( bool activate );
 
+    bool domainCheck() const;
+    virtual void setDomainCheck( bool check );
+
     QString messageText() const;
     virtual void setMessageText( const QString & text );
 
