@@ -1,6 +1,6 @@
 /***************************************************************************
  *   snippet feature from kdevelop/plugins/snippet/                        *
- *                                                                         * 
+ *                                                                         *
  *   Copyright (C) 2007 by Robert Gruber                                   *
  *   rgruber@users.sourceforge.net                                         *
  *                                                                         *
@@ -39,6 +39,9 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
     setModal( modal );
 
     keyWidget->setCheckActionCollections( QList<KActionCollection*>() << ac );
+    btnAdd->setEnabled( false );
+    connect( snippetName, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotTextChanged( const QString & ) ) );
+    connect( snippetName, SIGNAL( returnPressed() ), this, SLOT( slotReturnPressed() ) );
 }
 
 /*
@@ -48,6 +51,18 @@ SnippetDlg::~SnippetDlg()
 {
     // no need to delete child widgets, Qt does it all for us
 }
+
+void SnippetDlg::slotTextChanged( const QString & text )
+{
+  btnAdd->setEnabled( !text.isEmpty() );
+}
+
+void SnippetDlg::slotReturnPressed()
+{
+  if ( !snippetName->text().isEmpty() )
+    accept();
+}
+
 
 void SnippetDlg::setGroupMode( bool groupMode )
 {
