@@ -588,7 +588,7 @@ QString KMMessagePart::fileName(void) const
     const QCString str = mContentDisposition.mid(startOfFilename,
                                 endOfFilename-startOfFilename+1)
                            .stripWhiteSpace();
-    return KMMsgBase::decodeRFC2047String(str, charset());
+    return KMMsgBase::decodeRFC2047String(str);
   }
 
   return QString::null;
