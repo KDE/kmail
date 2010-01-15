@@ -15,7 +15,7 @@ class SnippetDlg : public QDialog, public SnippetDlgBase
 {
     Q_OBJECT
 
-public:
+  public:
     explicit SnippetDlg( KActionCollection *ac, QWidget *parent = 0,
                          bool modal = false, Qt::WindowFlags f = 0 );
     ~SnippetDlg();
@@ -23,6 +23,10 @@ public:
     void setGroupMode( bool groupMode );
 
     KActionCollection* actionCollection;
+
+  protected slots:
+    void slotTextChanged( const QString & );
+    void slotReturnPressed();
 };
 
 #endif // SNIPPETDLG_H
