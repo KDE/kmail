@@ -43,6 +43,8 @@ class ArchiveFolderDialog : public KDialogBase
 
     void slotFixFileExtension();
 
+    void slotFolderChanged( KMFolder * );
+
     /** reimp */
     virtual void slotOk();
 
