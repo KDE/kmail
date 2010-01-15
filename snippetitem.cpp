@@ -23,6 +23,7 @@ SnippetItem::SnippetItem(QListView * parent, QString name, QString text )
   strName = name;
   strText = text;
   iParent = -1;
+  setOpen( true );
 }
 
 SnippetItem::SnippetItem(QListViewItem * parent, QString name, QString text)
@@ -31,6 +32,7 @@ SnippetItem::SnippetItem(QListViewItem * parent, QString name, QString text)
   strName = name;
   strText = text;
   iParent = ((SnippetGroup *)parent)->getId();
+  setOpen( true );
 }
 
 SnippetItem::~SnippetItem()
