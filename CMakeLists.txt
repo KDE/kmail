@@ -194,7 +194,7 @@ soprano_add_ontology(kmailprivate_LIB_SRCS
 )
 
 macro(add_resource_iface _kcfgFile _ifaceName _className)
-  kcfg_generate_dbus_interface(${kdepim-runtime_SOURCE_DIR}/resources/${_kcfgFile} ${_ifaceName})
+  kcfg_generate_dbus_interface(${CMAKE_CURRENT_SOURCE_DIR}/${_kcfgFile} ${_ifaceName})
   string(TOLOWER ${_className} _codeFile)
   set_source_files_properties( ${CMAKE_CURRENT_BINARY_DIR}/${_ifaceName}.xml PROPERTIES INCLUDE "metatype.h")
   qt4_add_dbus_interface(kmailprivate_LIB_SRCS
@@ -202,8 +202,7 @@ macro(add_resource_iface _kcfgFile _ifaceName _className)
   )
 endmacro(add_resource_iface)
 
-add_resource_iface( imap/imapresource.kcfg
-                    org.kde.Akonadi.Imap.Settings ImapSettings )
+add_resource_iface( imapresource.kcfg org.kde.Akonadi.Imap.Settings ImapSettings )
 
 # TODO PORT
 # qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
