@@ -109,7 +109,7 @@ void MainFolderView::fillContextMenuTreeStructureRelatedActions( KMenu *menu, Fo
       folderToPopupMenu( CopyFolder, this, copyMenu );
 
       // FIXME: if AT LEAST ONE folder is moveable
-      if ( folder && folder->isMoveable() )
+      if ( folder && folder->isMoveable() && folder->canDeleteMessages())
       {
         QMenu *moveMenu = menu->addMenu( KIcon( "go-jump" ),
                                          multiSelection ? i18n( "&Move Folders To" ) :
