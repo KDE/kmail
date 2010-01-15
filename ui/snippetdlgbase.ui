@@ -213,21 +213,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>snippetName</sender>
-   <signal>returnPressed()</signal>
-   <receiver>SnippetDlgBase</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>301</x>
-     <y>25</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>117</x>
-     <y>340</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
 </ui>
