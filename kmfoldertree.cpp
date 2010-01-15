@@ -1127,7 +1127,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       folderMenu->addMenu( KIcon("edit-copy"), i18n("&Copy Folder To" ) );
     folderToPopupMenu( CopyFolder, this, &mMenuToFolder, copyMenu );
 
-    if ( fti->folder()->isMoveable() ) {
+    if ( fti->folder()->isMoveable() && fti->folder()->canDeleteMessages() ) {
       QMenu *moveMenu =
         folderMenu->addMenu( KIcon( "go-jump" ), i18n( "&Move Folder To" ) );
       folderToPopupMenu( MoveFolder, this, &mMenuToFolder, moveMenu );
