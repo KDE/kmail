@@ -192,11 +192,23 @@ namespace KMail {
     }
   }
 
-  bool VacationDialog::sendForSpam() const {
+  bool VacationDialog::domainCheck() const
+  {
+    return mDomainCheck->isChecked();
+  }
+
+  void VacationDialog::setDomainCheck( bool check )
+  {
+    mDomainCheck->setChecked( check );
+  }
+
+  bool VacationDialog::sendForSpam() const
+  {
     return !mSpamCheck->isChecked();
   }
 
-  void VacationDialog::setSendForSpam( bool enable ) {
+  void VacationDialog::setSendForSpam( bool enable )
+  {
     mSpamCheck->setChecked( !enable );
   }
 
