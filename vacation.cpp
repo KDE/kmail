@@ -676,6 +676,7 @@ namespace KMail {
     mDialog->setMailAliases( defaultMailAliases().join(", ") );
     mDialog->setSendForSpam( defaultSendForSpam() );
     mDialog->setDomainName( defaultDomainName() );
+    mDialog->setDomainCheck( false );
   }
 
   void Vacation::slotDialogOk() {
