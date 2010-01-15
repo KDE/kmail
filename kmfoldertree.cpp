@@ -1204,7 +1204,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
         fti,
         SLOT(assignShortcut()));
 
-    if ( !fti->folder()->noContent() ) {
+    if ( !fti->folder()->noContent() && fti->folder()->canDeleteMessages() ) {
       folderMenu->addAction( i18n("Expire..."), fti,
                               SLOT( slotShowExpiryProperties() ) );
     }
