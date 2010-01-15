@@ -22,6 +22,9 @@ public:
     void setGroupMode( bool groupMode );
 
     KActionCollection* actionCollection;
+protected slots:
+    void slotTextChanged( const QString& );
+    void slotReturnPressed();
 };
 
 #endif // SNIPPETDLG_H
