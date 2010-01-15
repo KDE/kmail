@@ -20,7 +20,7 @@ class SnippetDlg : public SnippetDlgBase
 {
     Q_OBJECT
 
-public:
+  public:
     SnippetDlg( KActionCollection* ac, QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
     ~SnippetDlg();
 
@@ -31,12 +31,13 @@ public:
     KKeyButton* keyButton;
     KActionCollection* actionCollection;
 
-private slots:
-    void slotCapturedShortcut( const KShortcut& );
-
-protected slots:
+  protected slots:
+    void slotTextChanged( const QString& );
+    void slotReturnPressed();
     virtual void languageChange();
 
+  private slots:
+    void slotCapturedShortcut( const KShortcut& );
 };
 
 #endif // SNIPPETDLG_H

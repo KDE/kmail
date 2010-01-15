@@ -1,6 +1,6 @@
 /***************************************************************************
  *   snippet feature from kdevelop/plugins/snippet/                        *
- *                                                                         * 
+ *                                                                         *
  *   Copyright (C) 2007 by Robert Gruber                                   *
  *   rgruber@users.sourceforge.net                                         *
  *                                                                         *
@@ -14,6 +14,7 @@
 #include "snippetdlg.h"
 
 #include <kdialog.h>
+#include <klineedit.h>
 #include <klocale.h>
 
 #include <qlabel.h>
@@ -41,6 +42,12 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, const char* name
     keyButton = new KKeyButton( this );
     connect( keyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
              this, SLOT( slotCapturedShortcut( const KShortcut& ) ) );
+
+    btnAdd->setEnabled( false );
+    connect( snippetName, SIGNAL(textChanged(const QString &)),
+             this, SLOT(slotTextChanged(const QString &)) );
+    connect( snippetName, SIGNAL(returnPressed()),
+             this, SLOT(slotReturnPressed()) );
 
     layout3->addWidget( textLabel3, 7, 0 );
     layout3->addWidget( keyButton, 7, 1 );
@@ -103,6 +110,18 @@ void SnippetDlg::setShowShortcut( bool show )
 {
     textLabel3->setShown( show );
     keyButton->setShown( show );
+}
+
+void SnippetDlg::slotTextChanged( const QString &text )
+{
+  btnAdd->setEnabled( !text.isEmpty() );
+}
+
+void SnippetDlg::slotReturnPressed()
+{
+  if ( !snippetName->text().isEmpty() ) {
+    accept();
+  }
 }
 
 #include "snippetdlg.moc"
