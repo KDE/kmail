@@ -21,7 +21,6 @@
 #define kmfilter_h
 
 #include "kmsearchpattern.h"
-#include "kmpopheaders.h"
 
 #include <kshortcut.h>
 #include <akonadi/collection.h>
@@ -34,6 +33,11 @@ class KMFilterAction;
 
 // maximum number of filter actions per filter
 const int FILTER_MAX_ACTIONS = 8;
+
+//Keep these corresponding to the column numbers in the dialog for easier coding
+//or change mapToAction and mapToColumn in PopHeadersView
+enum KMPopFilterAction { Down=0, Later=1, Delete=2, NoAction=3 };
+
 
 class KMFilter
 {

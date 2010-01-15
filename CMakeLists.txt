@@ -184,8 +184,6 @@ set(kmailprivate_LIB_SRCS
 
    #subscriptiondialog.cpp
    #localsubscriptiondialog.cpp
-   #kmpopheaders.cpp
-   #kmpopfiltercnfrmdlg.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS
