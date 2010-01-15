@@ -29,6 +29,7 @@
 #include <kcombobox.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
+#include <kfiledialog.h>
 
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -89,6 +90,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mUrlRequester = new KURLRequester( mainWidget );
   mUrlRequester->setMode( KFile::LocalOnly );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
+  mUrlRequester->fileDialog()->setKeepLocation( true );
   fileNameLabel->setBuddy( mUrlRequester );
   connect( mUrlRequester, SIGNAL(urlSelected(const QString&)),
            this, SLOT(slotFixFileExtension()) );
