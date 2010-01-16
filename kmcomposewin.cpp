@@ -702,7 +702,7 @@ void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum 
                                       filename,
                                       errorMessage,
                                       file.errorString() ),
-                          i18n( "autosave" ) );
+                          i18n( "Autosaving Message Failed" ) );
 
       // Error dialog shown, hide the errors the next time
       mAutoSaveErrorShown = true;

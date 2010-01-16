@@ -1391,11 +1391,13 @@ void KMKernel::recoverDeadLetters()
         KMessageBox::sorry( 0, i18n( "Failed to delete the autosave file at %1\n"
                                      "You may want to manually remove this file to stop KMail"
                                      " from recovering the same message on each startup.",
-                                   dir.absoluteFilePath( file ) ), i18n( "autosave" ) );
+                                     dir.absoluteFilePath( file ) ),
+                            i18n( "Deleting Autosave File Failed" ) );
       }
     } else {
       KMessageBox::sorry( 0, i18n( "Failed to open autosave file at %1.\nReason: %2" ,
-                                  file, autoSaveFile.errorString() ), i18n( "autosave" ) );
+                                   file, autoSaveFile.errorString() ),
+                          i18n( "Opening Autosave File Failed" ) );
     }
   }
 }
