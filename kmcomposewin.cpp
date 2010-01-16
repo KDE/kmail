@@ -673,6 +673,7 @@ void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum 
   const QString filename = KMKernel::localDataPath() + "autosave/" +
     mAutoSaveUUID + "." + QString::number( msgNum );
   KSaveFile file( filename );
+  QString errorMessage;
   kDebug() << "Opening autosavefile" << filename;
 
   if( file.open() ) {
@@ -681,33 +682,31 @@ void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum 
 
     kDebug() << "autosaving message in" << filename;
     if( file.write( message->encodedContent() ) !=
-      static_cast<qint64>( message->encodedContent().size() ) ) {
-      KMessageBox::sorry( this, i18n("Autosaving the message as %1 "
-                                "failed. Could not write all data to file.\n"
-                                "Reason: %2",
-                                filename,
-                                file.errorString() ), i18n( "autosave" ) );
+        static_cast<qint64>( message->encodedContent().size() ) ) {
+      errorMessage = i18n( "Could not write all data to file." );
     }
 
     kDebug() << "closing autosave file.";
     if( !file.finalize() ) {
-      KMessageBox::sorry( this, i18n("Autosaving the message as %1 "
-                                "failed. Could not finalize the file.\n"
-                                "Reason: %2",
-                                filename,
-                                file.errorString() ), i18n( "autosave" ) );
-    }
-  } else {
-    if( mAutoSaveErrorShown == false ) {
-      KMessageBox::sorry( this, i18n("Autosaving the message as %1 "
-                                "failed. Could not open file. \n"
-                                "Reason: %2",
-                                filename,
-                                file.errorString() ), i18n( "autosave" ) );
-      // Prevent the error message being shown twice
-      mAutoSaveErrorShown = true;
+      errorMessage = i18n( "Could not finalize the file." );
     }
   }
+  else {
+    errorMessage = i18n( "Could not open file." );
+  }
+
+  if ( !errorMessage.isEmpty() ) {
+    if ( mAutoSaveErrorShown == false ) {
+      KMessageBox::sorry( this, i18n( "Autosaving the message as %1 failed.\n"
+                                      "%2\n"
+                                      "Reason: %3",
+                                      filename,
+                                      errorMessage,
+                                      file.errorString() ),
+                          i18n( "autosave" ) );
+    }
+  }
+  mAutoSaveErrorShown = true;
 }
 
 
