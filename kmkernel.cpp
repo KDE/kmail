@@ -1394,7 +1394,7 @@ void KMKernel::recoverDeadLetters()
                                    dir.absoluteFilePath( file ) ), i18n( "autosave" ) );
       }
     } else {
-      KMessageBox::sorry( 0, i18n( "Failed to open autosave file at %1 because %2" ,
+      KMessageBox::sorry( 0, i18n( "Failed to open autosave file at %1.\nReason: %2" ,
                                   file, autoSaveFile.errorString() ), i18n( "autosave" ) );
     }
   }
