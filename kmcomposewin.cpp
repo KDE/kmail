@@ -310,7 +310,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   }
 
   mEditor = new KMComposerEditor( this, editorAndCryptoStateIndicators );
-
+  connect( mEditor, SIGNAL(textChanged()),
+           this, SLOT(slotEditorTextChanged()) );
   vbox->addLayout( hbox );
   vbox->addWidget( mEditor );
   mSnippetSplitter->insertWidget( 0, editorAndCryptoStateIndicators );
@@ -437,6 +438,14 @@ KMComposeWin::~KMComposeWin()
 QString KMComposeWin::dbusObjectPath() const
 {
   return mdbusObjectPath;
+}
+
+void KMComposeWin::slotEditorTextChanged()
+{
+  const bool textIsNotEmpty = !mEditor->document()->isEmpty();
+  mFindText->setEnabled( textIsNotEmpty );
+  mFindNextText->setEnabled( textIsNotEmpty );
+  mReplaceText->setEnabled( textIsNotEmpty );
 }
 
 //-----------------------------------------------------------------------------
@@ -1207,12 +1216,12 @@ void KMComposeWin::setupActions( void )
   KStandardAction::pasteText( this, SLOT(slotPaste()), actionCollection() );
   KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
 
-  KStandardAction::find( mEditor, SLOT(slotFind()), actionCollection() );
-  KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
+  mFindText = KStandardAction::find( mEditor, SLOT(slotFind()), actionCollection() );
+  mFindNextText = KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
 
-  KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
+  mReplaceText = KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
   actionCollection()->addAction( KStandardAction::Spelling, "spellcheck",
-                                 mEditor, SLOT( checkSpelling() ) );
+                                 mEditor, SLOT(checkSpelling()) );
 
   action = new KAction( i18n("Paste as Attac&hment"), this );
   actionCollection()->addAction( "paste_att", action );
