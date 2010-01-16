@@ -224,12 +224,6 @@ class KMComposeWin : public KMail::Composer
      */
     KMime::Message::Ptr msg() const { return mMsg; }
 
-  public: // kmkernel
-    /**
-     * Set the filename which is used for autosaving.
-     */
-    void setAutoSaveFilename( const QString & filename );
-
   private:
     /**
      * Returns true if the message was modified by the user.
@@ -481,12 +475,6 @@ class KMComposeWin : public KMail::Composer
      * Disables the controls of the composer window.
      */
     void readyForSending( bool noCrypto = false );
-    /**
-     * Applies the user changes to the message object, but doesn't
-     * sign nor decrypt, and doesn't disable the controls of the
-     * composer window.
-     */
-    void applyAutoSave();
 
     QList< Message::Composer* > generateCryptoMessages( bool sign, bool encrypt );
     void fillGlobalPart( Message::GlobalPart *globalPart );
@@ -716,7 +704,13 @@ class KMComposeWin : public KMail::Composer
     QStringList mFolderNames;
 
   private:
-    void continueAutoSave();
+
+    /**
+    * Writes out autosave data to the disk from the KMime::Message message.
+    * Also appends the msgNum to the filename as a message can have a number of
+    * KMime::Messages
+    */
+    void writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNumber );
 
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
@@ -801,8 +795,8 @@ class KMComposeWin : public KMail::Composer
     int mLabelWidth;
 
     QTimer *mAutoSaveTimer;
-    QString mAutoSaveFilename;
-    int mLastAutoSaveErrno; // holds the errno of the last try to autosave
+    QString mAutoSaveUUID;
+    bool mAutoSaveErrorShown; // Stops an error message being shown every time autosave is executed.
 
     QMenu *mActNowMenu;
     QMenu *mActLaterMenu;

@@ -1360,32 +1360,44 @@ void KMKernel::slotSenderFinished()
 // Open a composer for each message found in the dead.letter folder
 void KMKernel::recoverDeadLetters()
 {
-#if 0 //TODO port to akonadi
   const QString pathName = localDataPath();
   QDir dir( pathName );
   if ( !dir.exists( "autosave" ) )
     return;
 
-  KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
-  KMFolderOpener openFolder( &folder, "recover" );
-  if ( !folder.isOpened() ) {
-    kError() << "Cannot open autosave folder!";
-    return;
-  }
+  dir.cd( localDataPath() + "autosave" );
+  const QStringList autoSaveFiles = dir.entryList();
+  foreach( const QString &file, autoSaveFiles ) {
+    // Disregard the '.' and '..' folders
+    if( file == "." || file == ".." )
+      continue;
+    kDebug() << "Opening autosave file:" << dir.absoluteFilePath( file );
+    QFile autoSaveFile( dir.absoluteFilePath( file ) );
+    if( autoSaveFile.open( QIODevice::ReadOnly ) ) {
+      const KMime::Message::Ptr autoSaveMessage( new KMime::Message() );
+      const QByteArray msgData = autoSaveFile.readAll();
+      kDebug() << "Got message data" << msgData;
+      autoSaveMessage->setContent( msgData );
+      autoSaveMessage->parse();
 
-  const int num = folder.count();
-  for ( int i = 0; i < num; i++ ) {
-    KMMessage *msg = folder.take( 0 );
-    if ( msg ) {
-      KMail::Composer * win = KMail::makeComposer();
-      win->setMsg( msg, false, false, true );
-      win->setAutoSaveFilename( msg->fileName() );
-      win->show();
+      // Show the a new composer dialog for the message
+      KMail::Composer * autoSaveWin = KMail::makeComposer();
+      autoSaveWin->setMsg( autoSaveMessage );
+      autoSaveWin->show();
+      autoSaveFile.close();
+
+      // Delete the recoverd message
+      if( !dir.remove( dir.absoluteFilePath( file ) ) ) {
+        KMessageBox::sorry( 0, i18n( "Failed to delete the autosave file at %1\n"
+                                     "You may want to manually remove this file to stop KMail"
+                                     " from recovering the same message on each startup.",
+                                   dir.absoluteFilePath( file ) ), i18n( "autosave" ) );
+      }
+    } else {
+      KMessageBox::sorry( 0, i18n( "Failed to open autosave file at %1 because %2" ,
+                                  file, autoSaveFile.errorString() ), i18n( "autosave" ) );
     }
   }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 void KMKernel::findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type type )

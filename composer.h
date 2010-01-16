@@ -88,12 +88,6 @@ class Composer : public KMail::SecondaryWindow
      */
     virtual void setCustomTemplate( const QString& customTemplate ) = 0;
 
-  public: // kmkernel
-    /**
-     * Set the filename which is used for autosaving.
-     */
-    virtual void setAutoSaveFilename( const QString &filename ) = 0;
-
   public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after

@@ -134,6 +134,8 @@ using KMail::TemplateParser;
 #include <QEvent>
 #include <QSplitter>
 #include <QTextList>
+#include <QUuid>
+#include <QDir>
 
 // System includes
 #include <stdlib.h>
@@ -195,7 +197,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mPendingQueueJobs( 0 ),
     mPendingCreateItemJobs( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
+    mAutoSaveTimer( 0 ), mAutoSaveErrorShown( false ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
     mIgnoreStickyFields( false )
@@ -639,73 +641,75 @@ void KMComposeWin::writeConfig( void )
 //-----------------------------------------------------------------------------
 void KMComposeWin::autoSaveMessage()
 {
-  kDebug() << "Implement me.";
-
-  if ( !mMsg || !mComposers.isEmpty() || mAutoSaveFilename.isEmpty() ) {
-    return;
-  }
   kDebug() << "autosaving message";
 
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
   }
 
-  applyAutoSave();
-}
-
-void KMComposeWin::continueAutoSave()
-{
-  Q_ASSERT( false );
-#if 0
-  // Ok, it's done now - continue dead letter saving
-  if ( mComposedMessages.isEmpty() ) {
-    kDebug() << "Composing the message failed (composed 0 messages).";
+  // Construct a KMime::Message to be autosaved:
+  kDebug() << "autosaving applying";
+  if( !mComposers.isEmpty() ) {
+    // This may happen if e.g. the autosave timer calls applyChanges.
+    kDebug() << "Called while composer active; ignoring.";
     return;
   }
-  Message::Ptr msg = mComposedMessages.first();
 
-  // BLAAAAAARG need to convert KMMessage -> KMime::Message
+  kDebug() << "composer for autosaving started";
 
-  kDebug() <<"opening autoSaveFile" << mAutoSaveFilename;
-  const QString filename =
-    KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
-  KSaveFile autoSaveFile( filename );
-  int status = 0;
-  bool opened = autoSaveFile.open();
-  kDebug() <<"autoSaveFile.open() =" << opened;
-  if ( opened ) { // no error
-    autoSaveFile.setPermissions( QFile::ReadUser|QFile::WriteUser );
-    kDebug() <<"autosaving message in" << filename;
-    int fd = autoSaveFile.handle();
-    const DwString &msgStr = msg->asDwString();
-    if ( ::write( fd, msgStr.data(), msgStr.length() ) == -1 ) {
-      status = errno;
-    }
-  }
-  if ( status == 0 ) {
-    kDebug() <<"closing autoSaveFile";
-    autoSaveFile.finalize();
-    mLastAutoSaveErrno = 0;
-  } else {
-    kDebug() <<"autosaving failed";
-    autoSaveFile.abort();
-    if ( status != mLastAutoSaveErrno ) {
-      // don't show the same error message twice
-      KMessageBox::queuedMessageBox( 0, KMessageBox::Sorry,
-                                     i18n("Autosaving the message as %1 "
-                                          "failed.\n"
-                                          "Reason: %2",
-                                          filename, strerror( status ) ),
-                                     i18n("Autosaving Failed") );
-      mLastAutoSaveErrno = status;
-    }
-  }
+  Message::Composer* composer = new Message::Composer;
+  fillGlobalPart( composer->globalPart() );
+  fillTextPart( composer->textPart() );
+  fillInfoPart( composer->infoPart() );
+  composer->addAttachmentParts( mAttachmentModel->attachments() );
 
-  if ( autoSaveInterval() > 0 ) {
-    updateAutoSave();
-  }
-#endif
+  mComposers.append( composer );
+  connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposeResult(KJob*)) );
+  composer->start();
 }
+
+void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum )
+{
+  const QString filename = KMKernel::localDataPath() + "autosave/" +
+    mAutoSaveUUID + "." + QString::number( msgNum );
+  KSaveFile file( filename );
+  kDebug() << "Opening autosavefile" << filename;
+
+  if( file.open() ) {
+    kDebug() << "Succesfully opened autosave file.";
+    file.setPermissions( QFile::ReadUser | QFile::WriteUser );
+
+    kDebug() << "autosaving message in" << filename;
+    if( file.write( message->encodedContent() ) !=
+      static_cast<qint64>( message->encodedContent().size() ) ) {
+      KMessageBox::sorry( this, i18n("Autosaving the message as %1 "
+                                "failed. Could not write all data to file.\n"
+                                "Reason: %2",
+                                filename,
+                                file.errorString() ), i18n( "autosave" ) );
+    }
+
+    kDebug() << "closing autosave file.";
+    if( !file.finalize() ) {
+      KMessageBox::sorry( this, i18n("Autosaving the message as %1 "
+                                "failed. Could not finalize the file.\n"
+                                "Reason: %2",
+                                filename,
+                                file.errorString() ), i18n( "autosave" ) );
+    }
+  } else {
+    if( mAutoSaveErrorShown == false ) {
+      KMessageBox::sorry( this, i18n("Autosaving the message as %1 "
+                                "failed. Could not open file. \n"
+                                "Reason: %2",
+                                filename,
+                                file.errorString() ), i18n( "autosave" ) );
+      // Prevent the error message being shown twice
+      mAutoSaveErrorShown = true;
+    }
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotView( void )
@@ -2188,29 +2192,6 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
   return composers;
 }
 
-
-void KMComposeWin::applyAutoSave()
-{
-  kDebug() << "autosaving applying";
-  if( !mComposers.isEmpty() ) {
-    // This may happen if e.g. the autosave timer calls applyChanges.
-    kDebug() << "Called while composer active; ignoring.";
-    return;
-  }
-
-  kDebug() << "composer for autosaving started";
-
-  Message::Composer* composer = new Message::Composer;
-  fillGlobalPart( composer->globalPart() );
-  fillTextPart( composer->textPart() );
-  fillInfoPart( composer->infoPart() );
-  composer->addAttachmentParts( mAttachmentModel->attachments() );
-
-  mComposers.append( composer );
-  connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposerResult(KJob*)) );
-  composer->start();
-}
-
 void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
 {
   globalPart->setParentWidgetForGui( this );
@@ -2316,10 +2297,19 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
 
 
    if( composer->error() == Composer::NoError ) {
-     continueAutoSave();
-   }
 
-   mComposers.removeAll( composer );}
+     // The messages were composed successfully.
+     for( int i = 0; i < composer->resultMessages().size(); ++i ) {
+       writeAutoSaveToDisk( KMime::Message::Ptr( composer->resultMessages()[i] ), i );
+     }
+    if( autoSaveInterval() > 0 ) {
+      updateAutoSave();
+    }
+    mComposers.removeAll( composer );
+  } else {
+   kWarning() << "Composer failed" << composer->errorString();
+  }
+}
 
 void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveIn saveIn )
 {
@@ -3751,16 +3741,20 @@ int KMComposeWin::autoSaveInterval() const
 
 void KMComposeWin::initAutoSave()
 {
-#if 0 //TODO port to akonadi
-  kDebug() ;
-  // make sure the autosave folder exists
-  KMFolderMaildir::createMaildirFolders( KMKernel::localDataPath() + "autosave" );
-  if ( mAutoSaveFilename.isEmpty() ) {
-    mAutoSaveFilename = KMFolderMaildir::constructValidFileName();
+  kDebug() << "initalising autosave";
+
+  // Ensure that the autosave directory exsits.
+  QDir dataDirectory( KMKernel::localDataPath() );
+  if( !dataDirectory.exists( "autosave" ) ) {
+    kDebug() << "Creating autosave directory.";
+    dataDirectory.mkdir( "autosave" );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+
+  // Construct a file name
+  if ( mAutoSaveUUID.isEmpty() ) {
+    mAutoSaveUUID = QUuid::createUuid().toString();
+  }
+
   updateAutoSave();
 }
 
@@ -3778,32 +3772,30 @@ void KMComposeWin::updateAutoSave()
   }
 }
 
-void KMComposeWin::setAutoSaveFilename( const QString &filename )
-{
-#if 0 //TODO port to akonadi
-  if ( !mAutoSaveFilename.isEmpty() ) {
-    KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
-                                 mAutoSaveFilename );
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  mAutoSaveFilename = filename;
-}
-
 void KMComposeWin::cleanupAutoSave()
 {
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
-  if ( !mAutoSaveFilename.isEmpty() ) {
-    kDebug() <<"deleting autosave file"
-                 << mAutoSaveFilename;
-#if 0 //TODO port to akonadi
-   KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
-                                 mAutoSaveFilename );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-    mAutoSaveFilename.clear();
+  if ( !mAutoSaveUUID.isEmpty() ) {
+
+    kDebug() << "deleting autosave files" << mAutoSaveUUID;
+
+    // Delete the autosave files
+    QDir autoSaveDir( KMKernel::localDataPath() + "autosave" );
+
+    // Filter out only this composer window's autosave files
+    QStringList autoSaveFilter;
+    autoSaveFilter << mAutoSaveUUID + "*";
+    autoSaveDir.setNameFilters( autoSaveFilter );
+
+    // Return the files to be removed
+    QStringList autoSaveFiles = autoSaveDir.entryList();
+    kDebug() << "There are" << autoSaveFiles.count() << "to be deleted.";
+
+    // Delete each file
+    foreach( const QString &file, autoSaveFiles ) {
+      autoSaveDir.remove( file );
+    }
+    mAutoSaveUUID.clear();
   }
 }
 
