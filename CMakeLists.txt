@@ -53,7 +53,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/messagelist
-  ${CMAKE_SOURCE_DIR}/messageviewer/
+  ${CMAKE_SOURCE_DIR}/messageviewer
+  ${CMAKE_SOURCE_DIR}/korganizer
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
   ${CMAKE_SOURCE_DIR}/akonadi/
@@ -296,6 +297,7 @@ target_link_libraries(kmailprivate
   ${QT_QTWEBKIT_LIBRARY}
   ${NEPOMUK_LIBRARIES}
   ${NEPOMUK_QUERY_LIBRARIES}
+  korg_incidenceeditor
 )
 
 add_dependencies(kmail_xml akonadi_imap_resource) # generate imapresource.kcfg first
