@@ -674,21 +674,19 @@ void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum 
     mAutoSaveUUID + "." + QString::number( msgNum );
   KSaveFile file( filename );
   QString errorMessage;
-  kDebug() << "Opening autosavefile" << filename;
+  kDebug() << "Writing message to disk as" << filename;
 
   if( file.open() ) {
-    kDebug() << "Succesfully opened autosave file.";
     file.setPermissions( QFile::ReadUser | QFile::WriteUser );
 
-    kDebug() << "autosaving message in" << filename;
     if( file.write( message->encodedContent() ) !=
         static_cast<qint64>( message->encodedContent().size() ) ) {
       errorMessage = i18n( "Could not write all data to file." );
     }
-
-    kDebug() << "closing autosave file.";
-    if( !file.finalize() ) {
-      errorMessage = i18n( "Could not finalize the file." );
+    else {
+      if( !file.finalize() ) {
+        errorMessage = i18n( "Could not finalize the file." );
+      }
     }
   }
   else {
@@ -696,7 +694,8 @@ void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum 
   }
 
   if ( !errorMessage.isEmpty() ) {
-    if ( mAutoSaveErrorShown == false ) {
+    kWarning() << "Auto saving failed:" << errorMessage << file.errorString();
+    if ( !mAutoSaveErrorShown ) {
       KMessageBox::sorry( this, i18n( "Autosaving the message as %1 failed.\n"
                                       "%2\n"
                                       "Reason: %3",
@@ -704,9 +703,15 @@ void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum 
                                       errorMessage,
                                       file.errorString() ),
                           i18n( "autosave" ) );
+
+      // Error dialog shown, hide the errors the next time
+      mAutoSaveErrorShown = true;
     }
   }
-  mAutoSaveErrorShown = true;
+  else {
+    // No error occurred, the next error should be shown again
+    mAutoSaveErrorShown = false;
+  }
 }
 
 
