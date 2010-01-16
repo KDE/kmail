@@ -3196,6 +3196,9 @@ void KMMainWidget::setupActions()
   // and it should be followed by a "...", but slotExpireFolder() performs
   // an immediate expiry.
   //
+  // TODO: expire action should be disabled if there is no content or if
+  // the folder can't delete messages.
+  //
   // Leaving the action here for the moment, it and the "Expire" option in the
   // folder popup menu should be combined or at least made consistent.  Same for
   // slotExpireFolder() and FolderViewItem::slotShowExpiryProperties().
