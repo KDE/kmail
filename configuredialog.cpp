@@ -27,8 +27,6 @@
 #include "configuredialog_p.h"
 #include "ui_accountspagereceivingtab.h"
 
-#include <config-kmail.h>
-
 #include "globalsettings.h"
 #include "templatesconfiguration_kfg.h"
 #include "configuredialoglistview.h"

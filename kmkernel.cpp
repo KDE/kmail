@@ -2,8 +2,6 @@
 
 #include "kmkernel.h"
 
-#include <config-kmail.h>
-
 #include "globalsettings.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;

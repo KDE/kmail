@@ -22,8 +22,6 @@
 // filehtmlwriter.out in the current working directory
 #include "kmreaderwin.h"
 
-#include <config-kmail.h>
-
 #include "globalsettings.h"
 #include "kmversion.h"
 #include "kmmainwidget.h"
@@ -72,7 +70,6 @@ using namespace MessageViewer;
 // for the click on attachment stuff (dnaber):
 #include <kcharsets.h>
 #include <kmenu.h>
-#include <kstandarddirs.h>  // Sven's : for access and getpid
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -111,12 +108,6 @@ using namespace MessageViewer;
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-
-#ifdef HAVE_PATHS_H
-#include <paths.h>
-#include <kvbox.h>
-#include <QTextDocument>
-#endif
 
 using namespace KMail;
 

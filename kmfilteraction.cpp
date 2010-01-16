@@ -1,7 +1,6 @@
 // kmfilteraction.cpp
 
 #include "kmfilteraction.h"
-#include "config-kmail.h"
 
 // other KMail headers:
 #include "customtemplates.h"

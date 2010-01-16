@@ -21,7 +21,6 @@
 
 //#define TEST_DOCKWIDGETS 1
 
-#include <config-kmail.h>
 #include <assert.h>
 #include <QByteArray>
 #include <QLabel>

@@ -1,11 +1,6 @@
 project(kmail)
 
 include(CheckIncludeFiles)
-check_include_files(fcntl.h HAVE_FCNTL_H)
-check_include_files(byteswap.h HAVE_BYTESWAP_H)
-check_include_files(paths.h HAVE_PATHS_H)
-check_include_files(sys/inotify.h SYS_INOTIFY_H_FOUND)
-macro_bool_to_01(SYS_INOTIFY_H_FOUND HAVE_SYS_INOTIFY_H)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
@@ -34,7 +29,6 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
   endif (KdeSubversion_FOUND)
 endif (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
 
-configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h)
 
 qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)

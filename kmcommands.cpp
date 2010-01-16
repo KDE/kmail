@@ -41,7 +41,6 @@
 // of messages from an IMAP server.
 
 #include "kmcommands.h"
-#include "config-kmail.h"
 
 #include <unistd.h> // link()
 #include <errno.h>
