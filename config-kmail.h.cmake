@@ -8,5 +8,3 @@
 #cmakedefine HAVE_PATHS_H 1
 
 #cmakedefine HAVE_SYS_INOTIFY_H 1
-
-#cmakedefine HAVE_MMAP 1

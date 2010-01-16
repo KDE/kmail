@@ -5,7 +5,6 @@ check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
 check_include_files(paths.h HAVE_PATHS_H)
 check_include_files(sys/inotify.h SYS_INOTIFY_H_FOUND)
-check_function_exists(mmap HAVE_MMAP)
 macro_bool_to_01(SYS_INOTIFY_H_FOUND HAVE_SYS_INOTIFY_H)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
