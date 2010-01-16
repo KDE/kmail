@@ -1376,7 +1376,6 @@ void KMKernel::recoverDeadLetters()
     if( autoSaveFile.open( QIODevice::ReadOnly ) ) {
       const KMime::Message::Ptr autoSaveMessage( new KMime::Message() );
       const QByteArray msgData = autoSaveFile.readAll();
-      kDebug() << "Got message data" << msgData;
       autoSaveMessage->setContent( msgData );
       autoSaveMessage->parse();
 

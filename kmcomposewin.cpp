@@ -641,22 +641,19 @@ void KMComposeWin::writeConfig( void )
 //-----------------------------------------------------------------------------
 void KMComposeWin::autoSaveMessage()
 {
-  kDebug() << "autosaving message";
+  kDebug() << "Autosaving message";
 
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
   }
 
-  // Construct a KMime::Message to be autosaved:
-  kDebug() << "autosaving applying";
   if( !mComposers.isEmpty() ) {
     // This may happen if e.g. the autosave timer calls applyChanges.
     kDebug() << "Called while composer active; ignoring.";
     return;
   }
 
-  kDebug() << "composer for autosaving started";
-
+  // Construct a KMime::Message to be autosaved:
   Message::Composer* composer = new Message::Composer;
   fillGlobalPart( composer->globalPart() );
   fillTextPart( composer->textPart() );
@@ -2293,25 +2290,24 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
 {
   using Message::Composer;
 
-  kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( dynamic_cast< Composer* >( job ) );
   Composer* composer = dynamic_cast< Composer* >( job );
 
   Q_ASSERT( mComposers.contains( composer ) );
 
 
-   if( composer->error() == Composer::NoError ) {
+  if( composer->error() == Composer::NoError ) {
 
-     // The messages were composed successfully.
-     for( int i = 0; i < composer->resultMessages().size(); ++i ) {
-       writeAutoSaveToDisk( KMime::Message::Ptr( composer->resultMessages()[i] ), i );
-     }
+    // The messages were composed successfully.
+    for( int i = 0; i < composer->resultMessages().size(); ++i ) {
+      writeAutoSaveToDisk( KMime::Message::Ptr( composer->resultMessages()[i] ), i );
+    }
     if( autoSaveInterval() > 0 ) {
       updateAutoSave();
     }
     mComposers.removeAll( composer );
   } else {
-   kWarning() << "Composer failed" << composer->errorString();
+    kWarning() << "Composer failed:" << composer->errorString();
   }
 }
 
