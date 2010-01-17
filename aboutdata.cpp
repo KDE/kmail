@@ -237,7 +237,7 @@ namespace KMail {
   };
 
   AboutData::AboutData()
-    : KAboutData( "kmail", 0, ki18n("KMail (Akonadi based)"),KMAIL_VERSION,
+    : KAboutData( "kmail", 0, ki18n("KMail"),KMAIL_VERSION,
                   ki18n("KDE Email Client"), License_GPL,
                   ki18n("(c) 1997-2010, The KMail developers"), KLocalizedString(),
                   "http://kontact.kde.org/kmail/" )
