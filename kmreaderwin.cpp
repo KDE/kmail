@@ -42,6 +42,7 @@
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
+#include "messageviewer/mailwebview.h"
 #include "messagehelper.h"
 
 #include "messageviewer/csshelper.h"
