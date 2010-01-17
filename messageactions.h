@@ -77,11 +77,13 @@ class MessageActions : public QObject
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
 
     KAction* editAction() const { return mEditAction; }
+    KAction* annotateAction() const { return mAnnotateAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
 
   public slots:
     void editCurrentMessage();
+    void annotateMessage();
 
   private:
     void updateActions();
@@ -128,7 +130,7 @@ class MessageActions : public QObject
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
     KToggleAction *mToggleFlagAction, *mToggleToActAction;
-    KAction *mEditAction;
+    KAction *mEditAction, *mAnnotateAction;
     bool mKorganizerIsOnSystem;
 };
 

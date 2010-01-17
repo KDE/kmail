@@ -2910,6 +2910,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
     menu->addAction( mMsgActions->messageStatusMenu() );
     menu->addSeparator();
 
+    menu->addAction( mMsgActions->annotateAction() );
     menu->addAction( viewSourceAction() );
     if ( mMsgView ) {
       menu->addAction( mMsgView->toggleFixFontAction() );

@@ -24,6 +24,10 @@
 #include "kmkernel.h"
 #include "util.h"
 
+#include "messagecore/annotationdialog.h"
+
+#include <Nepomuk/Resource>
+
 #include <KAction>
 #include <KActionMenu>
 #include <KActionCollection>
@@ -152,6 +156,11 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
            this, SLOT(editCurrentMessage()) );
   mEditAction->setShortcut( Qt::Key_T );
 
+  mAnnotateAction = new KAction( KIcon( "view-pim-notes" ), i18n( "Add Note..."), this );
+  mActionCollection->addAction( "annotate", mAnnotateAction );
+  connect( mAnnotateAction, SIGNAL(triggered(bool)),
+           this, SLOT(annotateMessage()) );
+
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   mActionCollection->addAction("message_forward", mForwardActionMenu );
 
@@ -241,6 +250,15 @@ void MessageActions::updateActions()
   mReplyAllAction->setEnabled( singleMsg );
   mReplyListAction->setEnabled( singleMsg );
   mNoQuoteReplyAction->setEnabled( singleMsg );
+
+  mAnnotateAction->setEnabled( singleMsg );
+  if( mCurrentItem.isValid() ) {
+    Nepomuk::Resource resource( mCurrentItem.url() );
+    if ( resource.description().isEmpty() )
+      mAnnotateAction->setText( i18n( "Add Note..." ) );
+    else
+      mAnnotateAction->setText( i18n( "Edit Note...") );
+  }
 
   mStatusMenu->setEnabled( multiVisible );
   mToggleFlagAction->setEnabled( flagsAvailable );
@@ -482,6 +500,16 @@ void MessageActions::editCurrentMessage()
   else
     command = new KMResendMessageCommand( mParent, mCurrentItem );
   command->start();
+}
+
+void MessageActions::annotateMessage()
+{
+  if ( !mCurrentItem.isValid() )
+    return;
+
+  KPIM::AnnotationEditDialog *dialog = new KPIM::AnnotationEditDialog( mCurrentItem.url() );
+  dialog->setAttribute( Qt::WA_DeleteOnClose );
+  dialog->show();
 }
 
 #include "messageactions.moc"
